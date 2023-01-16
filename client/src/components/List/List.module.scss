@@ -42,24 +42,19 @@
   .cardsInnerWrapper {
     max-height: calc(100vh - 268px);
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     scrollbar-width: thin;
-    width: 290px;
-
-    &:hover {
-      width: 272px;
-    }
+    scrollbar-color: #646464 #a6a6a6;
+    width: 275px;
 
     &::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: transparent;
+      width: 8px;
+      background-color: #a6a6a6;
     }
 
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;
+      background-color: #646464;
     }
   }
 
