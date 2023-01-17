@@ -147,9 +147,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: 'Добавить еще одну карточку',
-      addAnotherList: 'Добавить еще один список',
-      addAnotherTask: 'Добавить еще одну задачу',
       addCard: 'Добавить карточку',
       addComment: 'Добавить комментарий',
       addList: 'Добавить список',

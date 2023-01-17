@@ -70,7 +70,7 @@ const Tasks = React.memo(({ items, canEdit, onCreate, onUpdate, onMove, onDelete
               {canEdit && (
                 <Add onCreate={onCreate}>
                   <button type="button" className={styles.taskButton}>
-                    <span className={styles.taskButtonText}>{items.length > 0 ? t('action.addAnotherTask') : t('action.addTask')}</span>
+                    <span className={styles.taskButtonText}>{t('action.addTask')}</span>
                   </button>
                 </Add>
               )}

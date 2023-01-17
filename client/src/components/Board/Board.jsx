@@ -137,7 +137,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                       ) : (
                         <button type="button" className={styles.addListButton} onClick={handleAddListClick}>
                           <PlusMathIcon className={styles.addListButtonIcon} />
-                          <span className={styles.addListButtonText}>{listIds.length > 0 ? t('action.addAnotherList') : t('action.addList')}</span>
+                          <span className={styles.addListButtonText}>{t('action.addList')}</span>
                         </button>
                       )}
                     </div>

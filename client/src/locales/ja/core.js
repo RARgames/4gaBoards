@@ -141,9 +141,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: '別のカードを追加',
-      addAnotherList: '別のリストを追加',
-      addAnotherTask: '別のタスクを追加',
       addCard: 'カードを追加',
       addCard_title: 'カードを追加',
       addComment: 'コメントを追加',

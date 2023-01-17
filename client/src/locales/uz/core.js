@@ -137,9 +137,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: "Yana karta qo'shish",
-      addAnotherList: "Yana ro'yxat qo'shish",
-      addAnotherTask: "Yana vazifa qo'shish",
       addCard: "Karta qo'shish",
       addCard_title: "Karta Qo'shish",
       addComment: "Izoh qo'shish",

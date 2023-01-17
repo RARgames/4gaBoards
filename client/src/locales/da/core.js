@@ -141,9 +141,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: 'Tilføj endnu et kort',
-      addAnotherList: 'Tilføj endnu en liste',
-      addAnotherTask: 'Tilføj endnu en opgave',
       addCard: 'Tilføj kort',
       addCard_title: 'Tilføj kort',
       addComment: 'Tilføj kommentar',

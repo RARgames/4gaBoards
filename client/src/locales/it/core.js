@@ -151,9 +151,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: "Aggiungi un'altra card",
-      addAnotherList: "Aggiungi un'altra lista",
-      addAnotherTask: 'Aggiungi un altro task',
       addCard: 'Aggiungi card',
       addCard_title: 'Aggiungi Card',
       addComment: 'Aggiungi commento',

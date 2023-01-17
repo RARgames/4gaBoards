@@ -137,9 +137,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: '添加别的卡片',
-      addAnotherList: '添加别的列表',
-      addAnotherTask: '添加别的任务',
       addCard: '添加卡片',
       addCard_title: '添加卡片',
       addComment: '添加评论',

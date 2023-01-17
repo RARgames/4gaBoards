@@ -130,9 +130,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: 'Añadir otra tarjeta',
-      addAnotherList: 'Añadir otra lista',
-      addAnotherTask: 'Añadir otra tarea',
       addCard: 'Añadir tarjeta',
       addCard_title: 'Añadir tarjeta',
       addComment: 'Añadir comentario',

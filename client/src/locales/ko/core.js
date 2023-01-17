@@ -147,9 +147,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: '다른 항목카드 추가',
-      addAnotherList: '다른 리스트 추가',
-      addAnotherTask: '다른 TASK 추가',
       addCard: '항목카드 추가',
       addCard_title: '항목카드 추가',
       addComment: '댓글 추가',

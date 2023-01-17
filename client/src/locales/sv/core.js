@@ -141,9 +141,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: 'Lägg till ytterligare ett kort',
-      addAnotherList: 'Lägg till ytterligare en lista',
-      addAnotherTask: 'Lägg till ytterligare en uppgift',
       addCard: 'Lägg till kort',
       addCard_title: 'Lägg Till Kort',
       addComment: 'Lägg till kommentar',

@@ -81,7 +81,7 @@ export default {
       editUsername_title: 'Edit Username',
       email: 'E-mail',
       emailAlreadyInUse: 'E-mail already in use',
-      enterCardTitle: 'Enter card title... [Ctrl+Enter] to auto-open',
+      enterCardTitle: 'Enter card title... [Ctrl+Enter] to open',
       enterDescription: 'Enter description...',
       enterFilename: 'Enter filename',
       enterListTitle: 'Enter list title...',
@@ -158,9 +158,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: 'Add another card',
-      addAnotherList: 'Add another list',
-      addAnotherTask: 'Add another task',
       addCard: 'Add card',
       addCard_title: 'Add Card',
       addComment: 'Add comment',

@@ -141,9 +141,6 @@ export default {
     },
 
     action: {
-      addAnotherCard: 'Přidat další kartu',
-      addAnotherList: 'Přidat další seznam',
-      addAnotherTask: 'Přidat další úkol',
       addCard: 'Přidat kartu',
       addCard_title: 'Přidat kartu',
       addComment: 'Přidat komentář',
