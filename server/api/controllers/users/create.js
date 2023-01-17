@@ -65,16 +65,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const values = _.pick(inputs, [
-      'email',
-      'password',
-      'name',
-      'username',
-      'phone',
-      'organization',
-      'language',
-      'subscribeToOwnCards',
-    ]);
+    const values = _.pick(inputs, ['email', 'password', 'name', 'username', 'phone', 'organization', 'language', 'subscribeToOwnCards']);
 
     const user = await sails.helpers.users.createOne
       .with({

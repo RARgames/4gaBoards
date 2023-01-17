@@ -283,12 +283,8 @@ const createSocketEventsChannel = () =>
 
 export default function* socketWatchers() {
   yield all([
-    yield takeEvery(EntryActionTypes.SOCKET_DISCONNECT_HANDLE, () =>
-      services.handleSocketDisconnect(),
-    ),
-    yield takeEvery(EntryActionTypes.SOCKET_RECONNECT_HANDLE, () =>
-      services.handleSocketReconnect(),
-    ),
+    yield takeEvery(EntryActionTypes.SOCKET_DISCONNECT_HANDLE, () => services.handleSocketDisconnect()),
+    yield takeEvery(EntryActionTypes.SOCKET_RECONNECT_HANDLE, () => services.handleSocketReconnect()),
   ]);
 
   const socketEventsChannel = yield call(createSocketEventsChannel);

@@ -53,9 +53,7 @@ module.exports = {
       throw Errors.PROJECT_NOT_FOUND; // Forbidden
     }
 
-    const upload = util.promisify((options, callback) =>
-      this.req.file('file').upload(options, (error, files) => callback(error, files)),
-    );
+    const upload = util.promisify((options, callback) => this.req.file('file').upload(options, (error, files) => callback(error, files)));
 
     let files;
     try {
@@ -73,17 +71,15 @@ module.exports = {
 
     const file = _.last(files);
 
-    const fileData = await sails.helpers.projects
-      .processUploadedBackgroundImageFile(file)
-      .intercept('fileIsNotImage', () => {
-        try {
-          rimraf.sync(file.fd);
-        } catch (error) {
-          console.warn(error.stack); // eslint-disable-line no-console
-        }
+    const fileData = await sails.helpers.projects.processUploadedBackgroundImageFile(file).intercept('fileIsNotImage', () => {
+      try {
+        rimraf.sync(file.fd);
+      } catch (error) {
+        console.warn(error.stack); // eslint-disable-line no-console
+      }
 
-        return Errors.FILE_IS_NOT_IMAGE;
-      });
+      return Errors.FILE_IS_NOT_IMAGE;
+    });
 
     project = await sails.helpers.projects.updateOne.with({
       record: project,

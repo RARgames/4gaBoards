@@ -44,11 +44,7 @@ module.exports = {
       values.background = {
         type: 'image',
       };
-    } else if (
-      _.isNull(values.backgroundImage) &&
-      inputs.record.background &&
-      inputs.record.background.type === 'image'
-    ) {
+    } else if (_.isNull(values.backgroundImage) && inputs.record.background && inputs.record.background.type === 'image') {
       values.background = null;
     }
 
@@ -77,26 +73,15 @@ module.exports = {
     }
 
     if (project) {
-      if (
-        inputs.record.backgroundImage &&
-        (!project.backgroundImage ||
-          project.backgroundImage.dirname !== inputs.record.backgroundImage.dirname)
-      ) {
+      if (inputs.record.backgroundImage && (!project.backgroundImage || project.backgroundImage.dirname !== inputs.record.backgroundImage.dirname)) {
         try {
-          rimraf.sync(
-            path.join(
-              sails.config.custom.projectBackgroundImagesPath,
-              inputs.record.backgroundImage.dirname,
-            ),
-          );
+          rimraf.sync(path.join(sails.config.custom.projectBackgroundImagesPath, inputs.record.backgroundImage.dirname));
         } catch (error) {
           console.warn(error.stack); // eslint-disable-line no-console
         }
       }
 
-      const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(
-        project.id,
-      );
+      const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(project.id);
 
       projectRelatedUserIds.forEach((userId) => {
         sails.sockets.broadcast(

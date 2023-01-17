@@ -16,12 +16,7 @@ const PreferencesPane = React.memo(({ subscribeToOwnCards, onUpdate }) => {
 
   return (
     <Tab.Pane attached={false} className={styles.wrapper}>
-      <Radio
-        toggle
-        checked={subscribeToOwnCards}
-        label={t('common.subscribeToMyOwnCardsByDefault')}
-        onChange={handleSubscribeToOwnCardsChange}
-      />
+      <Radio toggle checked={subscribeToOwnCards} label={t('common.subscribeToMyOwnCardsByDefault')} onChange={handleSubscribeToOwnCardsChange} />
     </Tab.Pane>
   );
 });

@@ -12,11 +12,7 @@ import globalStyles from '../../styles.module.scss';
 function Background({ type, name, imageUrl }) {
   return (
     <div
-      className={classNames(
-        styles.wrapper,
-        type === ProjectBackgroundTypes.GRADIENT &&
-          globalStyles[`background${upperFirst(camelCase(name))}`],
-      )}
+      className={classNames(styles.wrapper, type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(name))}`])}
       style={{
         background: type === 'image' && `url("${imageUrl}") center / cover`,
       }}

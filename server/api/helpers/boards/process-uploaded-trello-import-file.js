@@ -17,13 +17,7 @@ module.exports = {
     const content = await fs.readFile(inputs.file.fd);
     const trelloBoard = JSON.parse(content);
 
-    if (
-      !trelloBoard ||
-      !_.isArray(trelloBoard.lists) ||
-      !_.isArray(trelloBoard.cards) ||
-      !_.isArray(trelloBoard.checklists) ||
-      !_.isArray(trelloBoard.actions)
-    ) {
+    if (!trelloBoard || !_.isArray(trelloBoard.lists) || !_.isArray(trelloBoard.cards) || !_.isArray(trelloBoard.checklists) || !_.isArray(trelloBoard.actions)) {
       throw 'invalidFile';
     }
 

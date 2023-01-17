@@ -83,12 +83,7 @@ const CommentAdd = React.memo(({ onCreate }) => {
       />
       {isOpened && (
         <div className={styles.controls}>
-          <Button
-            positive
-            content={t('action.addComment')}
-            onMouseOver={handleControlMouseOver}
-            onMouseOut={handleControlMouseOut}
-          />
+          <Button positive content={t('action.addComment')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
         </div>
       )}
     </Form>

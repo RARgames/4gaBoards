@@ -21,8 +21,7 @@ export default {
       addUser_title: 'Ajouter un utilisateur',
       administrator: 'Administrateur',
       all: 'Tout',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'Toutes les modifications seront automatiquement enregistrées <br /> une fois la connexion rétablie',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Toutes les modifications seront automatiquement enregistrées <br /> une fois la connexion rétablie',
       areYouSureYouWantToDeleteThisAttachment: 'Voulez-vous vraiment supprimer cette pièce jointe?',
       areYouSureYouWantToDeleteThisBoard: 'Êtes-vous sûr de vouloir supprimer ce forum?',
       areYouSureYouWantToDeleteThisCard: 'Voulez-vous vraiment supprimer cette carte?',
@@ -32,8 +31,7 @@ export default {
       areYouSureYouWantToDeleteThisProject: 'Êtes-vous sûr de vouloir supprimer ce projet?',
       areYouSureYouWantToDeleteThisTask: 'Êtes-vous sûr de vouloir supprimer cette tâche?',
       areYouSureYouWantToDeleteThisUser: 'Êtes-vous sûr de vouloir supprimer cet utilisateur?',
-      areYouSureYouWantToRemoveThisMemberFromProject:
-        'Êtes-vous sûr de vouloir supprimer ce membre du projet?',
+      areYouSureYouWantToRemoveThisMemberFromProject: 'Êtes-vous sûr de vouloir supprimer ce membre du projet?',
       attachment: 'Attachement',
       attachments: 'Pièces jointes',
       authentication: 'Authentification',
@@ -122,12 +120,9 @@ export default {
       title: 'Titre',
       userActions_title: "Actions de l'utilisateur",
       userAddedThisCardToList: '<0> {{user}} </0> <1> a ajouté cette carte à {{list}} </1>',
-      userLeftNewCommentToCard:
-        '{{user}} a laissé un nouveau commentaire {{comment}} à <2> {{card}} </2>',
-      userMovedCardFromListToList:
-        '{{user}} a déplacé <2> {{card}} </2> de {{fromList}} vers {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0> {{user}} </0> <1> a déplacé cette carte de {{fromList}} vers {{toList}} </1>',
+      userLeftNewCommentToCard: '{{user}} a laissé un nouveau commentaire {{comment}} à <2> {{card}} </2>',
+      userMovedCardFromListToList: '{{user}} a déplacé <2> {{card}} </2> de {{fromList}} vers {{toList}}',
+      userMovedThisCardFromListToList: '<0> {{user}} </0> <1> a déplacé cette carte de {{fromList}} vers {{toList}} </1>',
       username: "Nom d'utilisateur",
       usernameAlreadyInUse: "Nom d'utilisateur déjà utilisé",
       users: 'Utilisateurs',

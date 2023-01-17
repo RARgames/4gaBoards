@@ -11,17 +11,4 @@ import Attachment from './Attachment';
 import Activity from './Activity';
 import Notification from './Notification';
 
-export {
-  User,
-  Project,
-  ProjectManager,
-  Board,
-  BoardMembership,
-  Label,
-  List,
-  Card,
-  Task,
-  Attachment,
-  Activity,
-  Notification,
-};
+export { User, Project, ProjectManager, Board, BoardMembership, Label, List, Card, Task, Attachment, Activity, Notification };

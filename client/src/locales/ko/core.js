@@ -24,8 +24,7 @@ export default {
       addUser_title: '사용자 추가',
       administrator: '시스템 관리자',
       all: 'All',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        '모든 변경 사항은 연결이 복원된 후 자동으로 저장됩니다',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: '모든 변경 사항은 연결이 복원된 후 자동으로 저장됩니다',
       areYouSureYouWantToDeleteThisAttachment: '첨부 파일을 삭제하시겠습니까?',
       areYouSureYouWantToDeleteThisBoard: '보드를 삭제하시겠습니까?',
       areYouSureYouWantToDeleteThisCard: '항목카드를 삭제하시겠습니까?',
@@ -119,8 +118,7 @@ export default {
       organization: '조직',
       phone: '전화번호',
       preferences: '환경설정',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Tip: 클립보드에서 첨부 파일을 추가하려면 Ctrl-V(Mac의 경우 Cmd-V) 입니다..',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: 클립보드에서 첨부 파일을 추가하려면 Ctrl-V(Mac의 경우 Cmd-V) 입니다..',
       project: '프로젝트',
       projectNotFound_title: '프로젝트가 존재하지 않습니다.',
       removeManager_title: '관리자 삭제',
@@ -133,18 +131,15 @@ export default {
       subscribeToMyOwnCardsByDefault: '내 항목카드는 기본으로 구독',
       taskActions_title: '태스크 활동',
       tasks: '태스크',
-      thereIsNoPreviewAvailableForThisAttachment:
-        '이 첨부 파일에 사용할 수 있는 미리보기가 없습니다.',
+      thereIsNoPreviewAvailableForThisAttachment: '이 첨부 파일에 사용할 수 있는 미리보기가 없습니다.',
       time: '시간',
       timer: '활동시간',
       title: '제목',
       userActions_title: '',
       userAddedThisCardToList: '<0>{{user}}</0><1>이 카드를 {{list}}</1>에 추가했습니다.',
-      userLeftNewCommentToCard:
-        '{{user}}이(가) <2>{{card}}</2>에 «{{comment}}»라는 댓글을 남겼습니다',
+      userLeftNewCommentToCard: '{{user}}이(가) <2>{{card}}</2>에 «{{comment}}»라는 댓글을 남겼습니다',
       userMovedCardFromListToList: '{{user}} moved <2>{{card}}</2> from {{fromList}} to {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> 이 항목카드를  {{fromList}} 에서 {{toList}} 으로 이동했습니다. </1>',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> 이 항목카드를  {{fromList}} 에서 {{toList}} 으로 이동했습니다. </1>',
       username: '아이디',
       usernameAlreadyInUse: '이미 사용중인 사용자입니다.',
       users: '사용자',

@@ -24,14 +24,7 @@ const Editor = React.memo(({ data, onFieldChange }) => {
   return (
     <>
       <div className={styles.text}>{t('common.title')}</div>
-      <Input
-        fluid
-        ref={nameField}
-        name="name"
-        value={data.name}
-        className={styles.field}
-        onChange={onFieldChange}
-      />
+      <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={onFieldChange} />
       <div className={styles.text}>{t('common.color')}</div>
       <div className={styles.colorButtons}>
         {LabelColors.map((color) => (
@@ -40,11 +33,7 @@ const Editor = React.memo(({ data, onFieldChange }) => {
             type="button"
             name="color"
             value={color}
-            className={classNames(
-              styles.colorButton,
-              color === data.color && styles.colorButtonActive,
-              globalStyles[`background${upperFirst(camelCase(color))}`],
-            )}
+            className={classNames(styles.colorButton, color === data.color && styles.colorButtonActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
             onClick={onFieldChange}
           />
         ))}

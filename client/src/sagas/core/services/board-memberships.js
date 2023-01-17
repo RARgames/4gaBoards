@@ -69,9 +69,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
 
     const { boardId } = yield select(selectors.selectPath);
 
-    yield put(
-      actions.handleBoardMembershipCreate.fetchProject(board2.projectId, currentUserId, boardId),
-    );
+    yield put(actions.handleBoardMembershipCreate.fetchProject(board2.projectId, currentUserId, boardId));
 
     try {
       ({
@@ -88,19 +86,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
     } catch {} // eslint-disable-line no-empty
 
     if (body && body.project && body.project.id === board2.projectId) {
-      ({
-        project,
-        board: board1,
-        users: users2,
-        boardMemberships: boardMemberships2,
-        labels,
-        lists,
-        cards,
-        cardMemberships,
-        cardLabels,
-        tasks,
-        attachments,
-      } = body);
+      ({ project, board: board1, users: users2, boardMemberships: boardMemberships2, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments } = body);
 
       if (body.card) {
         deletedNotifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
@@ -160,9 +146,7 @@ export function* deleteBoardMembership(id) {
   const { boardId, projectId } = yield select(selectors.selectPath);
 
   if (boardMembership.userId === currentUserId && boardMembership.boardId === boardId) {
-    const isCurrentUserManager = yield select(
-      selectors.selectIsCurrentUserManagerForCurrentProject,
-    );
+    const isCurrentUserManager = yield select(selectors.selectIsCurrentUserManagerForCurrentProject);
 
     if (!isCurrentUserManager) {
       yield call(goToProject, projectId);
@@ -186,9 +170,7 @@ export function* handleBoardMembershipDelete(boardMembership) {
   const { boardId, projectId } = yield select(selectors.selectPath);
 
   if (boardMembership.userId === currentUserId && boardMembership.boardId === boardId) {
-    const isCurrentUserManager = yield select(
-      selectors.selectIsCurrentUserManagerForCurrentProject,
-    );
+    const isCurrentUserManager = yield select(selectors.selectIsCurrentUserManagerForCurrentProject);
 
     if (!isCurrentUserManager) {
       yield call(goToProject, projectId);

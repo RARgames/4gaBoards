@@ -7,18 +7,7 @@ import UserAddPopupContainer from '../../containers/UserAddPopupContainer';
 import Item from './Item';
 
 const UsersModal = React.memo(
-  ({
-    items,
-    onUpdate,
-    onUsernameUpdate,
-    onUsernameUpdateMessageDismiss,
-    onEmailUpdate,
-    onEmailUpdateMessageDismiss,
-    onPasswordUpdate,
-    onPasswordUpdateMessageDismiss,
-    onDelete,
-    onClose,
-  }) => {
+  ({ items, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete, onClose }) => {
     const [t] = useTranslation();
 
     const handleUpdate = useCallback(

@@ -44,9 +44,7 @@ module.exports = {
   async fn(inputs, exits) {
     const { currentUser } = this.req;
 
-    const { card } = await sails.helpers.cards
-      .getProjectPath(inputs.cardId)
-      .intercept('pathNotFound', () => Errors.CARD_NOT_FOUND);
+    const { card } = await sails.helpers.cards.getProjectPath(inputs.cardId).intercept('pathNotFound', () => Errors.CARD_NOT_FOUND);
 
     const boardMembership = await BoardMembership.findOne({
       boardId: card.boardId,
@@ -61,9 +59,7 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const upload = util.promisify((options, callback) =>
-      this.req.file('file').upload(options, (error, files) => callback(error, files)),
-    );
+    const upload = util.promisify((options, callback) => this.req.file('file').upload(options, (error, files) => callback(error, files)));
 
     let files;
     try {

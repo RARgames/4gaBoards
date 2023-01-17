@@ -5,8 +5,7 @@ import socket from './socket';
 
 const createAccessToken = (data, headers) => http.post('/access-tokens', data, headers);
 
-const deleteCurrentAccessToken = (headers) =>
-  socket.delete('/access-tokens/me', undefined, headers);
+const deleteCurrentAccessToken = (headers) => socket.delete('/access-tokens/me', undefined, headers);
 
 export default {
   createAccessToken,

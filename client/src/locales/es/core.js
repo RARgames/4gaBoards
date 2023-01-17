@@ -21,8 +21,7 @@ export default {
       addUser_title: 'Añadir usuario',
       administrator: 'Administrador',
       all: 'Todos',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'Todos los cambios serán automáticamente guardados<br />después de que se restaure la conexión',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Todos los cambios serán automáticamente guardados<br />después de que se restaure la conexión',
       areYouSureYouWantToDeleteThisAttachment: '¿Estás seguro de que quieres borrar este adjunto?',
       areYouSureYouWantToDeleteThisBoard: '¿Estás seguro de que quieres borrar este tablero?',
       areYouSureYouWantToDeleteThisCard: '¿Estás seguro de que quieres borrar esta tarjeta?',
@@ -32,8 +31,7 @@ export default {
       areYouSureYouWantToDeleteThisProject: '¿Estás seguro de que quieres borrar este proyecto?',
       areYouSureYouWantToDeleteThisTask: '¿Estás seguro de que quieres borrar esta tarea?',
       areYouSureYouWantToDeleteThisUser: '¿Estás seguro de que quieres borrar este usuario?',
-      areYouSureYouWantToRemoveThisMemberFromProject:
-        '¿Estás seguro de que quieres remover a este miembro del proyecto?',
+      areYouSureYouWantToRemoveThisMemberFromProject: '¿Estás seguro de que quieres remover a este miembro del proyecto?',
       attachment: 'Adjunto',
       attachments: 'Adjuntos',
       authentication: 'Autenticación',
@@ -105,8 +103,7 @@ export default {
       organization: 'Organización',
       phone: 'Teléfono',
       preferences: 'Preferencias',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Tip: presiona Ctrl-V (Cmd-V en Mac) para añadir adjuntos desde el portapapeles',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: presiona Ctrl-V (Cmd-V en Mac) para añadir adjuntos desde el portapapeles',
       project: 'Proyecto',
       projectNotFound_title: 'Proyecto no encontrado',
       removeMember_title: 'Remover Miembro',
@@ -123,11 +120,9 @@ export default {
       title: 'Título',
       userActions_title: 'Acciones de Usuario',
       userAddedThisCardToList: '<0>{{user}}</0><1> añadido a esta tarjeta en {{list}}</1>',
-      userLeftNewCommentToCard:
-        '{{user}} dejó un nuevo comentario «{{comment}}» en <2>{{card}}</2>',
+      userLeftNewCommentToCard: '{{user}} dejó un nuevo comentario «{{comment}}» en <2>{{card}}</2>',
       userMovedCardFromListToList: '{{user}} movió <2>{{card}}</2> de {{fromList}} a {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> movió esta tarjeta de {{fromList}} a {{toList}}</1>',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> movió esta tarjeta de {{fromList}} a {{toList}}</1>',
       username: 'Nombre de usuario',
       usernameAlreadyInUse: 'El nombre de usuario ya está en uso',
       users: 'Usuarios',

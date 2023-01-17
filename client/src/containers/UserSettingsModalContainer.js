@@ -6,20 +6,8 @@ import entryActions from '../entry-actions';
 import UserSettingsModal from '../components/UserSettingsModal';
 
 const mapStateToProps = (state) => {
-  const {
-    email,
-    name,
-    username,
-    avatarUrl,
-    phone,
-    organization,
-    language,
-    subscribeToOwnCards,
-    isAvatarUpdating,
-    emailUpdateForm,
-    passwordUpdateForm,
-    usernameUpdateForm,
-  } = selectors.selectCurrentUser(state);
+  const { email, name, username, avatarUrl, phone, organization, language, subscribeToOwnCards, isAvatarUpdating, emailUpdateForm, passwordUpdateForm, usernameUpdateForm } =
+    selectors.selectCurrentUser(state);
 
   return {
     email,

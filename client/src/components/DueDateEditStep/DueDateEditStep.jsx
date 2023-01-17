@@ -118,20 +118,10 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
               <Input ref={timeField} name="time" value={data.time} onChange={handleFieldChange} />
             </div>
           </div>
-          <DatePicker
-            inline
-            disabledKeyboardNavigation
-            selected={nullableDate}
-            onChange={handleDatePickerChange}
-          />
+          <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <Button positive content={t('action.save')} />
         </Form>
-        <Button
-          negative
-          content={t('action.remove')}
-          className={styles.deleteButton}
-          onClick={handleClearClick}
-        />
+        <Button negative content={t('action.remove')} className={styles.deleteButton} onClick={handleClearClick} />
       </Popup.Content>
     </>
   );

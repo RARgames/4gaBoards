@@ -18,8 +18,7 @@ export default {
       addUser_title: 'Aggiungi Utente',
       administrator: 'Amministratore',
       all: 'tutto',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'All changes will be automatically saved<br />after connection restored',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'All changes will be automatically saved<br />after connection restored',
       areYouSureYouWantToDeleteThisAttachment: 'Sei sicuro di voler eliminare questo allegato?',
       areYouSureYouWantToDeleteThisBoard: 'Sei sicuro di voler eliminare questa bacheca?',
       areYouSureYouWantToDeleteThisCard: 'Sei sicuro di voler eliminare questa card?',
@@ -31,10 +30,8 @@ export default {
       areYouSureYouWantToDeleteThisUser: 'Sei sicuro di voler eliminare questo utente?',
       areYouSureYouWantToLeaveBoard: 'Sei sicuro di voler abbandonare la bacheca?',
       areYouSureYouWantToLeaveProject: 'Sei sicuro di voler abbandonare il progetto?',
-      areYouSureYouWantToRemoveThisManagerFromProject:
-        'Sei sicuro di voler rimuovere questo amministratore dal progetto?',
-      areYouSureYouWantToRemoveThisMemberFromBoard:
-        'Sei sicuro di voler rimuovere questo membro dalla bacheca?',
+      areYouSureYouWantToRemoveThisManagerFromProject: 'Sei sicuro di voler rimuovere questo amministratore dal progetto?',
+      areYouSureYouWantToRemoveThisMemberFromBoard: 'Sei sicuro di voler rimuovere questo membro dalla bacheca?',
       attachment: 'Allegato',
       attachments: 'Allegati',
       authentication: 'Autenticazione',
@@ -120,8 +117,7 @@ export default {
       organization: 'Organizazzione',
       phone: 'Telefono',
       preferences: 'Preferenze',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Tip: prmi Ctrl-V (Cmd-V on Mac) per aggiungere un allegato dalla clipboard',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: prmi Ctrl-V (Cmd-V on Mac) per aggiungere un allegato dalla clipboard',
       project: 'Progetto',
       projectNotFound_title: 'Progetto non trovato',
       removeManager_title: 'Rimuovi Manager',
@@ -138,18 +134,15 @@ export default {
       subscribeToMyOwnCardsByDefault: 'Abbonati alle mie card per impostazione predefinita',
       taskActions_title: 'Task Azioni',
       tasks: 'Tasks',
-      thereIsNoPreviewAvailableForThisAttachment:
-        'Non è disponibile alcuna anteprima per questo allegato',
+      thereIsNoPreviewAvailableForThisAttachment: 'Non è disponibile alcuna anteprima per questo allegato',
       time: 'Tempo',
       timer: 'Timer',
       title: 'Titolo',
       userActions_title: 'Azioni Utente',
       userAddedThisCardToList: '<0>{{user}}</0><1> ha aggiunto questa card a {{list}}</1>',
-      userLeftNewCommentToCard:
-        '{{user}} ha lasciato un nuovo commento «{{comment}}» a <2>{{card}}</2>',
+      userLeftNewCommentToCard: '{{user}} ha lasciato un nuovo commento «{{comment}}» a <2>{{card}}</2>',
       userMovedCardFromListToList: '{{user}} ha mosso <2>{{card}}</2> da {{fromList}} a {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> ha mosso questa card da {{fromList}} a {{toList}}</1>',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> ha mosso questa card da {{fromList}} a {{toList}}</1>',
       username: 'Username',
       usernameAlreadyInUse: 'Username già in uso',
       users: 'Utenti',

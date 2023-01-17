@@ -60,10 +60,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     [submit],
   );
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(
-    close,
-    isOpened,
-  );
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(close, isOpened);
 
   const handleSubmit = useCallback(() => {
     submit();
@@ -94,12 +91,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
       />
       <div className={styles.controls}>
         {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-        <Button
-          positive
-          content={t('action.save')}
-          onMouseOver={handleControlMouseOver}
-          onMouseOut={handleControlMouseOut}
-        />
+        <Button positive content={t('action.save')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );

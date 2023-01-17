@@ -30,125 +30,94 @@ const createMessage = (error) => {
   }
 };
 
-const UserPasswordEditStep = React.memo(
-  ({
-    defaultData,
-    isSubmitting,
-    error,
-    usePasswordConfirmation,
-    onUpdate,
-    onMessageDismiss,
-    onBack,
-    onClose,
-  }) => {
-    const [t] = useTranslation();
-    const wasSubmitting = usePrevious(isSubmitting);
+const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, usePasswordConfirmation, onUpdate, onMessageDismiss, onBack, onClose }) => {
+  const [t] = useTranslation();
+  const wasSubmitting = usePrevious(isSubmitting);
 
-    const [data, handleFieldChange, setData] = useForm({
-      password: '',
-      currentPassword: '',
-      ...defaultData,
-    });
+  const [data, handleFieldChange, setData] = useForm({
+    password: '',
+    currentPassword: '',
+    ...defaultData,
+  });
 
-    const message = useMemo(() => createMessage(error), [error]);
-    const [focusCurrentPasswordFieldState, focusCurrentPasswordField] = useToggle();
+  const message = useMemo(() => createMessage(error), [error]);
+  const [focusCurrentPasswordFieldState, focusCurrentPasswordField] = useToggle();
 
-    const passwordField = useRef(null);
-    const currentPasswordField = useRef(null);
+  const passwordField = useRef(null);
+  const currentPasswordField = useRef(null);
 
-    const handleSubmit = useCallback(() => {
-      if (!data.password || !isPassword(data.password)) {
-        passwordField.current.select();
-        return;
-      }
+  const handleSubmit = useCallback(() => {
+    if (!data.password || !isPassword(data.password)) {
+      passwordField.current.select();
+      return;
+    }
 
-      if (usePasswordConfirmation && !data.currentPassword) {
-        currentPasswordField.current.focus();
-        return;
-      }
-
-      onUpdate(usePasswordConfirmation ? data : omit(data, 'currentPassword'));
-    }, [usePasswordConfirmation, onUpdate, data]);
-
-    useEffect(() => {
-      passwordField.current.focus({
-        preventScroll: true,
-      });
-    }, []);
-
-    useEffect(() => {
-      if (wasSubmitting && !isSubmitting) {
-        if (!error) {
-          onClose();
-        } else if (error.message === 'Invalid current password') {
-          setData((prevData) => ({
-            ...prevData,
-            currentPassword: '',
-          }));
-          focusCurrentPasswordField();
-        }
-      }
-    }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
-
-    useDidUpdate(() => {
+    if (usePasswordConfirmation && !data.currentPassword) {
       currentPasswordField.current.focus();
-    }, [focusCurrentPasswordFieldState]);
+      return;
+    }
 
-    return (
-      <>
-        <Popup.Header onBack={onBack}>
-          {t('common.editPassword', {
-            context: 'title',
-          })}
-        </Popup.Header>
-        <Popup.Content>
-          {message && (
-            <Message
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...{
-                [message.type]: true,
-              }}
-              visible
-              content={t(message.content)}
-              onDismiss={onMessageDismiss}
-            />
+    onUpdate(usePasswordConfirmation ? data : omit(data, 'currentPassword'));
+  }, [usePasswordConfirmation, onUpdate, data]);
+
+  useEffect(() => {
+    passwordField.current.focus({
+      preventScroll: true,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (wasSubmitting && !isSubmitting) {
+      if (!error) {
+        onClose();
+      } else if (error.message === 'Invalid current password') {
+        setData((prevData) => ({
+          ...prevData,
+          currentPassword: '',
+        }));
+        focusCurrentPasswordField();
+      }
+    }
+  }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
+
+  useDidUpdate(() => {
+    currentPasswordField.current.focus();
+  }, [focusCurrentPasswordFieldState]);
+
+  return (
+    <>
+      <Popup.Header onBack={onBack}>
+        {t('common.editPassword', {
+          context: 'title',
+        })}
+      </Popup.Header>
+      <Popup.Content>
+        {message && (
+          <Message
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...{
+              [message.type]: true,
+            }}
+            visible
+            content={t(message.content)}
+            onDismiss={onMessageDismiss}
+          />
+        )}
+        <Form onSubmit={handleSubmit}>
+          <div className={styles.text}>{t('common.newPassword')}</div>
+          <Input.Password withStrengthBar fluid ref={passwordField} name="password" value={data.password} className={styles.field} onChange={handleFieldChange} />
+          {usePasswordConfirmation && (
+            <>
+              <div className={styles.text}>{t('common.currentPassword')}</div>
+              <Input.Password fluid ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
+            </>
           )}
-          <Form onSubmit={handleSubmit}>
-            <div className={styles.text}>{t('common.newPassword')}</div>
-            <Input.Password
-              withStrengthBar
-              fluid
-              ref={passwordField}
-              name="password"
-              value={data.password}
-              className={styles.field}
-              onChange={handleFieldChange}
-            />
-            {usePasswordConfirmation && (
-              <>
-                <div className={styles.text}>{t('common.currentPassword')}</div>
-                <Input.Password
-                  fluid
-                  ref={currentPasswordField}
-                  name="currentPassword"
-                  value={data.currentPassword}
-                  className={styles.field}
-                  onChange={handleFieldChange}
-                />
-              </>
-            )}
-            <Button
-              positive
-              content={t('action.save')}
-              loading={isSubmitting}
-              disabled={isSubmitting}
-            />
-          </Form>
-        </Popup.Content>
-      </>
-    );
-  },
-);
+          <Button positive content={t('action.save')} loading={isSubmitting} disabled={isSubmitting} />
+        </Form>
+      </Popup.Content>
+    </>
+  );
+});
 
 UserPasswordEditStep.propTypes = {
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

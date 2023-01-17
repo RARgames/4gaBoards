@@ -17,11 +17,7 @@ const backgroundValidator = (value) => {
     return false;
   }
 
-  if (
-    value.type === Project.BackgroundTypes.GRADIENT &&
-    _.size(value) === 2 &&
-    Project.BACKGROUND_GRADIENTS.includes(value.name)
-  ) {
+  if (value.type === Project.BackgroundTypes.GRADIENT && _.size(value) === 2 && Project.BACKGROUND_GRADIENTS.includes(value.name)) {
     return true;
   }
 

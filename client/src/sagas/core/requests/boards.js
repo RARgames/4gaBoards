@@ -35,18 +35,7 @@ export function* fetchBoardByCurrentPath() {
     if (boardId) {
       ({
         item: board,
-        included: {
-          users,
-          projects,
-          boardMemberships,
-          labels,
-          lists,
-          cards,
-          cardMemberships,
-          cardLabels,
-          tasks,
-          attachments,
-        },
+        included: { users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments },
       } = yield call(request, api.getBoard, boardId, true));
     }
   }

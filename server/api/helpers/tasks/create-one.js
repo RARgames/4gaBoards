@@ -31,10 +31,7 @@ module.exports = {
 
     const tasks = await sails.helpers.cards.getTasks(values.card.id);
 
-    const { position, repositions } = sails.helpers.utils.insertToPositionables(
-      values.position,
-      tasks,
-    );
+    const { position, repositions } = sails.helpers.utils.insertToPositionables(values.position, tasks);
 
     repositions.forEach(async ({ id, position: nextPosition }) => {
       await Task.update({

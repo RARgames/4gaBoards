@@ -22,8 +22,7 @@ export default {
       addUser_title: 'ユーザーを追加',
       administrator: '管理者',
       all: 'すべて',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        '全ての変更は接続回復後自動的に保存されます',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: '全ての変更は接続回復後自動的に保存されます',
       areYouSureYouWantToDeleteThisAttachment: 'この添付ファイルを削除してもよろしいですか？',
       areYouSureYouWantToDeleteThisBoard: 'このボードを削除してもよろしいですか？',
       areYouSureYouWantToDeleteThisCard: 'このカードを削除してもよろしいですか？',
@@ -35,10 +34,8 @@ export default {
       areYouSureYouWantToDeleteThisUser: 'このユーザーを削除してもよろしいですか？',
       areYouSureYouWantToLeaveBoard: 'ボードから退出してもよろしいですか？',
       areYouSureYouWantToLeaveProject: 'プロジェクトから退出してもよろしいですか？',
-      areYouSureYouWantToRemoveThisManagerFromProject:
-        'このマネージャーをプロジェクトから外してもよろしいですか？',
-      areYouSureYouWantToRemoveThisMemberFromBoard:
-        'このメンバーをボードから外してもよろしいですか？',
+      areYouSureYouWantToRemoveThisManagerFromProject: 'このマネージャーをプロジェクトから外してもよろしいですか？',
+      areYouSureYouWantToRemoveThisMemberFromBoard: 'このメンバーをボードから外してもよろしいですか？',
       attachment: '添付ファイル',
       attachments: '添付ファイル',
       authentication: '認証',
@@ -116,8 +113,7 @@ export default {
       organization: '組織',
       phone: '電話番号',
       preferences: '環境設定',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'ヒント: Ctrl-V(MacではCmd-V)を押して、クリップボードから添付ファイルを追加します',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'ヒント: Ctrl-V(MacではCmd-V)を押して、クリップボードから添付ファイルを追加します',
       project: 'プロジェクト',
       projectNotFound_title: 'プロジェクトがありません',
       removeManager_title: 'マネージャーを削除',
@@ -135,12 +131,9 @@ export default {
       title: 'タイトル',
       userActions_title: 'ユーザーのアクション',
       userAddedThisCardToList: '<0>{{user}}</0> は <1>{{list}} をこのカードに追加しました</1>',
-      userLeftNewCommentToCard:
-        '{{user}} は <2> {{card}} </2> に新しいコメント «{{comment}}» を残しました',
-      userMovedCardFromListToList:
-        '{{user}} は <2> {{card}} </2> を {{fromList}} から {{toList}} に移動しました',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0> <1>はこのカードを {{fromList}} から {{toList}} に移動しました</1>',
+      userLeftNewCommentToCard: '{{user}} は <2> {{card}} </2> に新しいコメント «{{comment}}» を残しました',
+      userMovedCardFromListToList: '{{user}} は <2> {{card}} </2> を {{fromList}} から {{toList}} に移動しました',
+      userMovedThisCardFromListToList: '<0>{{user}}</0> <1>はこのカードを {{fromList}} から {{toList}} に移動しました</1>',
       username: 'ユーザー名',
       usernameAlreadyInUse: 'ユーザー名は既に使われています',
       users: 'ユーザー',

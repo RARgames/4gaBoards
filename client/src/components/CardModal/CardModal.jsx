@@ -164,13 +164,7 @@ const CardModal = React.memo(
           <Grid.Column width={16} className={styles.headerPadding}>
             <div className={styles.headerWrapper}>
               <Icon name="list alternate outline" className={styles.moduleIcon} />
-              <div className={styles.headerTitleWrapper}>
-                {canEdit ? (
-                  <NameField defaultValue={name} onUpdate={handleNameUpdate} />
-                ) : (
-                  <div className={styles.headerTitle}>{name}</div>
-                )}
-              </div>
+              <div className={styles.headerTitleWrapper}>{canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} /> : <div className={styles.headerTitle}>{name}</div>}</div>
             </div>
           </Grid.Column>
         </Grid.Row>
@@ -188,12 +182,7 @@ const CardModal = React.memo(
                     {users.map((user) => (
                       <span key={user.id} className={styles.attachment}>
                         {canEdit ? (
-                          <BoardMembershipsPopup
-                            items={allBoardMemberships}
-                            currentUserIds={userIds}
-                            onUserSelect={onUserAdd}
-                            onUserDeselect={onUserRemove}
-                          >
+                          <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
                             <User name={user.name} avatarUrl={user.avatarUrl} />
                           </BoardMembershipsPopup>
                         ) : (
@@ -202,16 +191,8 @@ const CardModal = React.memo(
                       </span>
                     ))}
                     {canEdit && (
-                      <BoardMembershipsPopup
-                        items={allBoardMemberships}
-                        currentUserIds={userIds}
-                        onUserSelect={onUserAdd}
-                        onUserDeselect={onUserRemove}
-                      >
-                        <button
-                          type="button"
-                          className={classNames(styles.attachment, styles.dueDate)}
-                        >
+                      <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
+                        <button type="button" className={classNames(styles.attachment, styles.dueDate)}>
                           <Icon name="add" size="small" className={styles.addAttachment} />
                         </button>
                       </BoardMembershipsPopup>
@@ -257,10 +238,7 @@ const CardModal = React.memo(
                         onMove={onLabelMove}
                         onDelete={onLabelDelete}
                       >
-                        <button
-                          type="button"
-                          className={classNames(styles.attachment, styles.dueDate)}
-                        >
+                        <button type="button" className={classNames(styles.attachment, styles.dueDate)}>
                           <Icon name="add" size="small" className={styles.addAttachment} />
                         </button>
                       </LabelsPopup>
@@ -302,16 +280,8 @@ const CardModal = React.memo(
                       )}
                     </span>
                     {canEdit && (
-                      <button
-                        onClick={handleToggleTimerClick}
-                        type="button"
-                        className={classNames(styles.attachment, styles.dueDate)}
-                      >
-                        <Icon
-                          name={timer.startedAt ? 'pause' : 'play'}
-                          size="small"
-                          className={styles.addAttachment}
-                        />
+                      <button onClick={handleToggleTimerClick} type="button" className={classNames(styles.attachment, styles.dueDate)}>
+                        <Icon name={timer.startedAt ? 'pause' : 'play'} size="small" className={styles.addAttachment} />
                       </button>
                     )}
                   </div>
@@ -326,19 +296,14 @@ const CardModal = React.memo(
                   {canEdit ? (
                     <DescriptionEdit defaultValue={description} onUpdate={handleDescriptionUpdate}>
                       {description ? (
-                        <button
-                          type="button"
-                          className={classNames(styles.descriptionText, styles.cursorPointer)}
-                        >
+                        <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
                           <Markdown linkStopPropagation linkTarget="_blank">
                             {description}
                           </Markdown>
                         </button>
                       ) : (
                         <button type="button" className={styles.descriptionButton}>
-                          <span className={styles.descriptionButtonText}>
-                            {t('action.addMoreDetailedDescription')}
-                          </span>
+                          <span className={styles.descriptionButtonText}>{t('action.addMoreDetailedDescription')}</span>
                         </button>
                       )}
                     </DescriptionEdit>
@@ -357,14 +322,7 @@ const CardModal = React.memo(
                 <div className={styles.moduleWrapper}>
                   <Icon name="check square outline" className={styles.moduleIcon} />
                   <div className={styles.moduleHeader}>{t('common.tasks')}</div>
-                  <Tasks
-                    items={tasks}
-                    canEdit={canEdit}
-                    onCreate={onTaskCreate}
-                    onUpdate={onTaskUpdate}
-                    onMove={onTaskMove}
-                    onDelete={onTaskDelete}
-                  />
+                  <Tasks items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
                 </div>
               </div>
             )}
@@ -404,12 +362,7 @@ const CardModal = React.memo(
             <Grid.Column width={4} className={styles.sidebarPadding}>
               <div className={styles.actions}>
                 <span className={styles.actionsTitle}>{t('action.addToCard')}</span>
-                <BoardMembershipsPopup
-                  items={allBoardMemberships}
-                  currentUserIds={userIds}
-                  onUserSelect={onUserAdd}
-                  onUserDeselect={onUserRemove}
-                >
+                <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
                   <Button fluid className={styles.actionButton}>
                     <Icon name="user outline" className={styles.actionIcon} />
                     {t('common.members')}
@@ -453,11 +406,7 @@ const CardModal = React.memo(
               </div>
               <div className={styles.actions}>
                 <span className={styles.actionsTitle}>{t('common.actions')}</span>
-                <Button
-                  fluid
-                  className={styles.actionButton}
-                  onClick={handleToggleSubscriptionClick}
-                >
+                <Button fluid className={styles.actionButton} onClick={handleToggleSubscriptionClick}>
                   <Icon name="paper plane outline" className={styles.actionIcon} />
                   {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
                 </Button>
@@ -472,11 +421,7 @@ const CardModal = React.memo(
                   onTransfer={onTransfer}
                   onBoardFetch={onBoardFetch}
                 >
-                  <Button
-                    fluid
-                    className={styles.actionButton}
-                    onClick={handleToggleSubscriptionClick}
-                  >
+                  <Button fluid className={styles.actionButton} onClick={handleToggleSubscriptionClick}>
                     <Icon name="share square outline" className={styles.actionIcon} />
                     {t('action.move')}
                   </Button>
@@ -503,11 +448,7 @@ const CardModal = React.memo(
 
     return (
       <Modal open closeIcon centered={false} onClose={handleClose} className={styles.wrapper}>
-        {canEdit ? (
-          <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone>
-        ) : (
-          contentNode
-        )}
+        {canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}
       </Modal>
     );
   },

@@ -20,11 +20,7 @@ const Markdown = React.memo(({ linkStopPropagation, ...props }) => {
                                   jsx-a11y/no-static-element-interactions */
       <a
         {...linkProps} // eslint-disable-line react/jsx-props-no-spreading
-        rel={
-          ABSOLUTE_URL_REGEX.test(linkProps.href) && linkProps.target === '_blank'
-            ? 'noreferrer'
-            : undefined
-        }
+        rel={ABSOLUTE_URL_REGEX.test(linkProps.href) && linkProps.target === '_blank' ? 'noreferrer' : undefined}
         onClick={linkStopPropagation ? handleLinkClick : undefined}
       />
     ),

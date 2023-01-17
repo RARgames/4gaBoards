@@ -69,18 +69,7 @@ export function* handleLocationChange() {
         try {
           ({
             item: board,
-            included: {
-              users,
-              projects,
-              boardMemberships,
-              labels,
-              lists,
-              cards,
-              cardMemberships,
-              cardLabels,
-              tasks,
-              attachments,
-            },
+            included: { users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments },
           } = yield call(request, api.getBoard, currentBoard.id, true));
         } catch (error) {} // eslint-disable-line no-empty
       }
@@ -90,14 +79,9 @@ export function* handleLocationChange() {
 
         if (notificationIds && notificationIds.length > 0) {
           try {
-            ({ items: deletedNotifications } = yield call(
-              request,
-              api.updateNotifications,
-              notificationIds,
-              {
-                isRead: true,
-              },
-            ));
+            ({ items: deletedNotifications } = yield call(request, api.updateNotifications, notificationIds, {
+              isRead: true,
+            }));
           } catch (error) {} // eslint-disable-line no-empty
         }
       }
@@ -107,22 +91,7 @@ export function* handleLocationChange() {
     default:
   }
 
-  yield put(
-    actions.handleLocationChange(
-      board,
-      users,
-      projects,
-      boardMemberships,
-      labels,
-      lists,
-      cards,
-      cardMemberships,
-      cardLabels,
-      tasks,
-      attachments,
-      deletedNotifications,
-    ),
-  );
+  yield put(actions.handleLocationChange(board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments, deletedNotifications));
 }
 
 export default {

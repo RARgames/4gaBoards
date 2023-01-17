@@ -19,11 +19,7 @@ const timerValidator = (value) => {
     return false;
   }
 
-  if (
-    !_.isNull(value.startedAt) &&
-    _.isString(value.startedAt) &&
-    !moment(value.startedAt, moment.ISO_8601, true).isValid()
-  ) {
+  if (!_.isNull(value.startedAt) && _.isString(value.startedAt) && !moment(value.startedAt, moment.ISO_8601, true).isValid()) {
     return false;
   }
 
@@ -78,9 +74,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const { list } = await sails.helpers.lists
-      .getProjectPath(inputs.listId)
-      .intercept('pathNotFound', () => Errors.LIST_NOT_FOUND);
+    const { list } = await sails.helpers.lists.getProjectPath(inputs.listId).intercept('pathNotFound', () => Errors.LIST_NOT_FOUND);
 
     const boardMembership = await BoardMembership.findOne({
       boardId: list.boardId,

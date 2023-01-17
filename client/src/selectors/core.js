@@ -11,9 +11,7 @@ export const selectIsCoreInitializing = ({ core: { isInitializing } }) => isInit
 export const selectIsLogouting = ({ core: { isLogouting } }) => isLogouting;
 
 const nextPosition = (items, index, excludedId) => {
-  const filteredItems = isUndefined(excludedId)
-    ? items
-    : items.filter((item) => item.id !== excludedId);
+  const filteredItems = isUndefined(excludedId) ? items : items.filter((item) => item.id !== excludedId);
 
   if (isUndefined(index)) {
     const lastItem = filteredItems[filteredItems.length - 1];
@@ -93,7 +91,6 @@ export const selectNextCardPosition = createSelector(
       return listModel;
     }
 
-    // eslint-disable-next-line prettier/prettier
     return nextPosition(listModel.getFilteredOrderedCardsModelArray(), index, excludedId);
   },
 );

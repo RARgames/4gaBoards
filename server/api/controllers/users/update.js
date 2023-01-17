@@ -68,14 +68,7 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, [
-        'isAdmin',
-        'name',
-        'phone',
-        'organization',
-        'language',
-        'subscribeToOwnCards',
-      ]),
+      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'language', 'subscribeToOwnCards']),
       avatar: inputs.avatarUrl,
     };
 

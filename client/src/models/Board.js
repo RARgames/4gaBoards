@@ -200,9 +200,7 @@ export default class extends BaseModel {
   }
 
   isAvailableForUser(userId) {
-    return (
-      this.project && (this.project.hasManagerForUser(userId) || this.hasMembershipForUser(userId))
-    );
+    return this.project && (this.project.hasManagerForUser(userId) || this.hasMembershipForUser(userId));
   }
 
   deleteRelated(exceptMemberUserId) {

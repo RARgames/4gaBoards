@@ -5,9 +5,7 @@ import EntryActionTypes from '../../../constants/EntryActionTypes';
 
 export default function* loginWatchers() {
   yield all([
-    takeEvery(EntryActionTypes.AUTHENTICATE, ({ payload: { data } }) =>
-      services.authenticate(data),
-    ),
+    takeEvery(EntryActionTypes.AUTHENTICATE, ({ payload: { data } }) => services.authenticate(data)),
     takeEvery(EntryActionTypes.AUTHENTICATE_ERROR_CLEAR, () => services.clearAuthenticateError()),
   ]);
 }

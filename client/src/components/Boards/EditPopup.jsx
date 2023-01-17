@@ -77,21 +77,10 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.title')}</div>
-          <Input
-            fluid
-            ref={nameField}
-            name="name"
-            value={data.name}
-            className={styles.field}
-            onChange={handleFieldChange}
-          />
+          <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <Button positive content={t('action.save')} />
         </Form>
-        <Button
-          content={t('action.delete')}
-          className={styles.deleteButton}
-          onClick={handleDeleteClick}
-        />
+        <Button content={t('action.delete')} className={styles.deleteButton} onClick={handleDeleteClick} />
       </Popup.Content>
     </>
   );

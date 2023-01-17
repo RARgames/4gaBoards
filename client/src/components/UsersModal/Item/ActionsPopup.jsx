@@ -24,18 +24,7 @@ const StepTypes = {
 };
 
 const ActionsStep = React.memo(
-  ({
-    user,
-    onUpdate,
-    onUsernameUpdate,
-    onUsernameUpdateMessageDismiss,
-    onEmailUpdate,
-    onEmailUpdateMessageDismiss,
-    onPasswordUpdate,
-    onPasswordUpdateMessageDismiss,
-    onDelete,
-    onClose,
-  }) => {
+  ({ user, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete, onClose }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
 
@@ -62,14 +51,7 @@ const ActionsStep = React.memo(
     if (step) {
       switch (step.type) {
         case StepTypes.EDIT_INFORMATION:
-          return (
-            <UserInformationEditStep
-              defaultData={pick(user, ['name', 'phone', 'organization'])}
-              onUpdate={onUpdate}
-              onBack={handleBack}
-              onClose={onClose}
-            />
-          );
+          return <UserInformationEditStep defaultData={pick(user, ['name', 'phone', 'organization'])} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
         case StepTypes.EDIT_USERNAME:
           return (
             <UserUsernameEditStep

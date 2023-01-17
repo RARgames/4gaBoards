@@ -5,14 +5,8 @@ import EntryActionTypes from '../../../constants/EntryActionTypes';
 
 export default function* notificationsWatchers() {
   yield all([
-    takeEvery(EntryActionTypes.NOTIFICATION_CREATE_HANDLE, ({ payload: { notification } }) =>
-      services.handleNotificationCreate(notification),
-    ),
-    takeEvery(EntryActionTypes.NOTIFICATION_DELETE, ({ payload: { id } }) =>
-      services.deleteNotification(id),
-    ),
-    takeEvery(EntryActionTypes.NOTIFICATION_DELETE_HANDLE, ({ payload: { notification } }) =>
-      services.handleNotificationDelete(notification),
-    ),
+    takeEvery(EntryActionTypes.NOTIFICATION_CREATE_HANDLE, ({ payload: { notification } }) => services.handleNotificationCreate(notification)),
+    takeEvery(EntryActionTypes.NOTIFICATION_DELETE, ({ payload: { id } }) => services.deleteNotification(id)),
+    takeEvery(EntryActionTypes.NOTIFICATION_DELETE_HANDLE, ({ payload: { notification } }) => services.handleNotificationDelete(notification)),
   ]);
 }

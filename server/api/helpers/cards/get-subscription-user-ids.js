@@ -14,10 +14,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const cardSubscriptions = await sails.helpers.cards.getCardSubscriptions(
-      inputs.idOrIds,
-      inputs.exceptUserIdOrIds,
-    );
+    const cardSubscriptions = await sails.helpers.cards.getCardSubscriptions(inputs.idOrIds, inputs.exceptUserIdOrIds);
 
     return sails.helpers.utils.mapRecords(cardSubscriptions, 'userId', _.isArray(inputs.idOrIds));
   },

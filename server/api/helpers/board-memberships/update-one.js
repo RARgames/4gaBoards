@@ -20,9 +20,7 @@ module.exports = {
     if (role === BoardMembership.Roles.EDITOR) {
       values.canComment = null;
     } else if (role === BoardMembership.Roles.VIEWER) {
-      const canComment = _.isUndefined(values.canComment)
-        ? inputs.record.canComment
-        : values.canComment;
+      const canComment = _.isUndefined(values.canComment) ? inputs.record.canComment : values.canComment;
 
       if (_.isNull(canComment)) {
         values.canComment = false;

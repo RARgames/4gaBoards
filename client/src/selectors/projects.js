@@ -67,12 +67,10 @@ export const selectBoardsForCurrentProject = createSelector(
       return projectModel;
     }
 
-    return projectModel
-      .getOrderedBoardsModelArrayAvailableForUser(currentUserId)
-      .map((boardModel) => ({
-        ...boardModel.ref,
-        isPersisted: !isLocalId(boardModel.id),
-      }));
+    return projectModel.getOrderedBoardsModelArrayAvailableForUser(currentUserId).map((boardModel) => ({
+      ...boardModel.ref,
+      isPersisted: !isLocalId(boardModel.id),
+    }));
   },
 );
 

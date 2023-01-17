@@ -70,11 +70,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
           <Editor data={data} onFieldChange={handleFieldChange} />
           <Button positive content={t('action.save')} />
         </Form>
-        <Button
-          content={t('action.delete')}
-          className={styles.deleteButton}
-          onClick={handleDeleteClick}
-        />
+        <Button content={t('action.delete')} className={styles.deleteButton} onClick={handleDeleteClick} />
       </Popup.Content>
     </>
   );

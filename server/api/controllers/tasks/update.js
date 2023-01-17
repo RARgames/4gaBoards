@@ -38,9 +38,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const path = await sails.helpers.tasks
-      .getProjectPath(inputs.id)
-      .intercept('pathNotFound', () => Errors.TASK_NOT_FOUND);
+    const path = await sails.helpers.tasks.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.TASK_NOT_FOUND);
 
     let { task } = path;
     const { board } = path;

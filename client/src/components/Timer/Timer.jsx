@@ -48,16 +48,7 @@ const Timer = React.memo(({ as, startedAt, total, size, isDisabled, onClick }) =
   );
 
   const contentNode = (
-    <span
-      className={classNames(
-        styles.wrapper,
-        styles[`wrapper${upperFirst(size)}`],
-        startedAt && styles.wrapperActive,
-        onClick && styles.wrapperHoverable,
-      )}
-    >
-      {formatTimer({ startedAt, total })}
-    </span>
+    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], startedAt && styles.wrapperActive, onClick && styles.wrapperHoverable)}>{formatTimer({ startedAt, total })}</span>
   );
 
   const ElementType = as;

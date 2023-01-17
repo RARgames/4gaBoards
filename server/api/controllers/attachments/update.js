@@ -32,9 +32,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const path = await sails.helpers.attachments
-      .getProjectPath(inputs.id)
-      .intercept('pathNotFound', () => Errors.ATTACHMENT_NOT_FOUND);
+    const path = await sails.helpers.attachments.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.ATTACHMENT_NOT_FOUND);
 
     let { attachment } = path;
     const { board } = path;

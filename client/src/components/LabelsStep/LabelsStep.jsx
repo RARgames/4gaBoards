@@ -19,199 +19,158 @@ const StepTypes = {
   EDIT: 'EDIT',
 };
 
-const LabelsStep = React.memo(
-  ({
-    items,
-    currentIds,
-    title,
-    canEdit,
-    onSelect,
-    onDeselect,
-    onCreate,
-    onUpdate,
-    onMove,
-    onDelete,
-    onBack,
-  }) => {
-    const [t] = useTranslation();
-    const [step, openStep, handleBack] = useSteps();
-    const [search, handleSearchChange] = useField('');
-    const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
+const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, onDeselect, onCreate, onUpdate, onMove, onDelete, onBack }) => {
+  const [t] = useTranslation();
+  const [step, openStep, handleBack] = useSteps();
+  const [search, handleSearchChange] = useField('');
+  const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
-    const filteredItems = useMemo(
-      () =>
-        items.filter(
-          (label) =>
-            (label.name && label.name.toLowerCase().includes(cleanSearch)) ||
-            label.color.includes(cleanSearch),
-        ),
-      [items, cleanSearch],
-    );
+  const filteredItems = useMemo(() => items.filter((label) => (label.name && label.name.toLowerCase().includes(cleanSearch)) || label.color.includes(cleanSearch)), [items, cleanSearch]);
 
-    const searchField = useRef(null);
+  const searchField = useRef(null);
 
-    const handleAddClick = useCallback(() => {
-      openStep(StepTypes.ADD);
-    }, [openStep]);
+  const handleAddClick = useCallback(() => {
+    openStep(StepTypes.ADD);
+  }, [openStep]);
 
-    const handleEdit = useCallback(
-      (id) => {
-        openStep(StepTypes.EDIT, {
-          id,
-        });
-      },
-      [openStep],
-    );
-
-    const handleSelect = useCallback(
-      (id) => {
-        onSelect(id);
-      },
-      [onSelect],
-    );
-
-    const handleDeselect = useCallback(
-      (id) => {
-        onDeselect(id);
-      },
-      [onDeselect],
-    );
-
-    const handleDragEnd = useCallback(
-      ({ draggableId, source, destination }) => {
-        if (!destination || source.index === destination.index) {
-          return;
-        }
-
-        onMove(draggableId, destination.index);
-      },
-      [onMove],
-    );
-
-    const handleUpdate = useCallback(
-      (id, data) => {
-        onUpdate(id, data);
-      },
-      [onUpdate],
-    );
-
-    const handleDelete = useCallback(
-      (id) => {
-        onDelete(id);
-      },
-      [onDelete],
-    );
-
-    useEffect(() => {
-      searchField.current.focus({
-        preventScroll: true,
+  const handleEdit = useCallback(
+    (id) => {
+      openStep(StepTypes.EDIT, {
+        id,
       });
-    }, []);
+    },
+    [openStep],
+  );
 
-    if (step) {
-      switch (step.type) {
-        case StepTypes.ADD:
-          return (
-            <AddStep
-              defaultData={{
-                name: search,
-              }}
-              onCreate={onCreate}
-              onBack={handleBack}
-            />
-          );
-        case StepTypes.EDIT: {
-          const currentItem = items.find((item) => item.id === step.params.id);
+  const handleSelect = useCallback(
+    (id) => {
+      onSelect(id);
+    },
+    [onSelect],
+  );
 
-          if (currentItem) {
-            return (
-              <EditStep
-                defaultData={pick(currentItem, ['name', 'color'])}
-                onUpdate={(data) => handleUpdate(currentItem.id, data)}
-                onDelete={() => handleDelete(currentItem.id)}
-                onBack={handleBack}
-              />
-            );
-          }
+  const handleDeselect = useCallback(
+    (id) => {
+      onDeselect(id);
+    },
+    [onDeselect],
+  );
 
-          openStep(null);
-
-          break;
-        }
-        default:
+  const handleDragEnd = useCallback(
+    ({ draggableId, source, destination }) => {
+      if (!destination || source.index === destination.index) {
+        return;
       }
-    }
 
-    return (
-      <>
-        <Popup.Header onBack={onBack}>
-          {t(title, {
-            context: 'title',
-          })}
-        </Popup.Header>
-        <Popup.Content>
-          <Input
-            fluid
-            ref={searchField}
-            value={search}
-            placeholder={t('common.searchLabels')}
-            icon="search"
-            onChange={handleSearchChange}
+      onMove(draggableId, destination.index);
+    },
+    [onMove],
+  );
+
+  const handleUpdate = useCallback(
+    (id, data) => {
+      onUpdate(id, data);
+    },
+    [onUpdate],
+  );
+
+  const handleDelete = useCallback(
+    (id) => {
+      onDelete(id);
+    },
+    [onDelete],
+  );
+
+  useEffect(() => {
+    searchField.current.focus({
+      preventScroll: true,
+    });
+  }, []);
+
+  if (step) {
+    switch (step.type) {
+      case StepTypes.ADD:
+        return (
+          <AddStep
+            defaultData={{
+              name: search,
+            }}
+            onCreate={onCreate}
+            onBack={handleBack}
           />
-          {filteredItems.length > 0 && (
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable droppableId="labels" type={DroppableTypes.LABEL}>
-                {({ innerRef, droppableProps, placeholder }) => (
-                  <div
-                    {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-                    ref={innerRef}
-                    className={styles.items}
-                  >
-                    {filteredItems.map((item, index) => (
-                      <Item
-                        key={item.id}
-                        id={item.id}
-                        index={index}
-                        name={item.name}
-                        color={item.color}
-                        isPersisted={item.isPersisted}
-                        isActive={currentIds.includes(item.id)}
-                        canEdit={canEdit}
-                        onSelect={() => handleSelect(item.id)}
-                        onDeselect={() => handleDeselect(item.id)}
-                        onEdit={() => handleEdit(item.id)}
-                      />
-                    ))}
-                    {placeholder}
-                  </div>
-                )}
-              </Droppable>
-              <Droppable droppableId="labels:hack" type={DroppableTypes.LABEL}>
-                {({ innerRef, droppableProps, placeholder }) => (
-                  <div
-                    {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-                    ref={innerRef}
-                    className={styles.droppableHack}
-                  >
-                    {placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          )}
-          {canEdit && (
-            <Button
-              fluid
-              content={t('action.createNewLabel')}
-              className={styles.addButton}
-              onClick={handleAddClick}
-            />
-          )}
-        </Popup.Content>
-      </>
-    );
-  },
-);
+        );
+      case StepTypes.EDIT: {
+        const currentItem = items.find((item) => item.id === step.params.id);
+
+        if (currentItem) {
+          return (
+            <EditStep defaultData={pick(currentItem, ['name', 'color'])} onUpdate={(data) => handleUpdate(currentItem.id, data)} onDelete={() => handleDelete(currentItem.id)} onBack={handleBack} />
+          );
+        }
+
+        openStep(null);
+
+        break;
+      }
+      default:
+    }
+  }
+
+  return (
+    <>
+      <Popup.Header onBack={onBack}>
+        {t(title, {
+          context: 'title',
+        })}
+      </Popup.Header>
+      <Popup.Content>
+        <Input fluid ref={searchField} value={search} placeholder={t('common.searchLabels')} icon="search" onChange={handleSearchChange} />
+        {filteredItems.length > 0 && (
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="labels" type={DroppableTypes.LABEL}>
+              {({ innerRef, droppableProps, placeholder }) => (
+                <div
+                  {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
+                  ref={innerRef}
+                  className={styles.items}
+                >
+                  {filteredItems.map((item, index) => (
+                    <Item
+                      key={item.id}
+                      id={item.id}
+                      index={index}
+                      name={item.name}
+                      color={item.color}
+                      isPersisted={item.isPersisted}
+                      isActive={currentIds.includes(item.id)}
+                      canEdit={canEdit}
+                      onSelect={() => handleSelect(item.id)}
+                      onDeselect={() => handleDeselect(item.id)}
+                      onEdit={() => handleEdit(item.id)}
+                    />
+                  ))}
+                  {placeholder}
+                </div>
+              )}
+            </Droppable>
+            <Droppable droppableId="labels:hack" type={DroppableTypes.LABEL}>
+              {({ innerRef, droppableProps, placeholder }) => (
+                <div
+                  {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
+                  ref={innerRef}
+                  className={styles.droppableHack}
+                >
+                  {placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        )}
+        {canEdit && <Button fluid content={t('action.createNewLabel')} className={styles.addButton} onClick={handleAddClick} />}
+      </Popup.Content>
+    </>
+  );
+});
 
 LabelsStep.propTypes = {
   /* eslint-disable react/forbid-prop-types */

@@ -44,11 +44,7 @@ export default (state = initialState, { type, payload }) => {
       return state;
     case ActionTypes.PROJECT_MANAGER_DELETE:
     case ActionTypes.PROJECT_MANAGER_DELETE_HANDLE:
-      if (
-        state.currentModal === ModalTypes.PROJECT_SETTINGS &&
-        payload.isCurrentUser &&
-        payload.isCurrentProject
-      ) {
+      if (state.currentModal === ModalTypes.PROJECT_SETTINGS && payload.isCurrentUser && payload.isCurrentProject) {
         return {
           ...state,
           currentModal: null,

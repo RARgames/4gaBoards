@@ -39,14 +39,7 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <div className={styles.text}>{t('common.title')}</div>
-      <Input
-        fluid
-        ref={nameField}
-        name="name"
-        value={data.name}
-        className={styles.field}
-        onChange={handleFieldChange}
-      />
+      <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
       <Button positive disabled={dequal(cleanData, defaultData)} content={t('action.save')} />
     </Form>
   );

@@ -36,162 +36,122 @@ const createMessage = (error) => {
   }
 };
 
-const UserAddStep = React.memo(
-  ({ defaultData, isSubmitting, error, onCreate, onMessageDismiss, onClose }) => {
-    const [t] = useTranslation();
-    const wasSubmitting = usePrevious(isSubmitting);
+const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, onMessageDismiss, onClose }) => {
+  const [t] = useTranslation();
+  const wasSubmitting = usePrevious(isSubmitting);
 
-    const [data, handleFieldChange] = useForm(() => ({
-      email: '',
-      password: '',
-      name: '',
-      username: '',
-      ...defaultData,
-    }));
+  const [data, handleFieldChange] = useForm(() => ({
+    email: '',
+    password: '',
+    name: '',
+    username: '',
+    ...defaultData,
+  }));
 
-    const message = useMemo(() => createMessage(error), [error]);
+  const message = useMemo(() => createMessage(error), [error]);
 
-    const emailField = useRef(null);
-    const passwordField = useRef(null);
-    const nameField = useRef(null);
-    const usernameField = useRef(null);
+  const emailField = useRef(null);
+  const passwordField = useRef(null);
+  const nameField = useRef(null);
+  const usernameField = useRef(null);
 
-    const handleSubmit = useCallback(() => {
-      const cleanData = {
-        ...data,
-        email: data.email.trim(),
-        name: data.name.trim(),
-        username: data.username.trim() || null,
-      };
+  const handleSubmit = useCallback(() => {
+    const cleanData = {
+      ...data,
+      email: data.email.trim(),
+      name: data.name.trim(),
+      username: data.username.trim() || null,
+    };
 
-      if (!isEmail(cleanData.email)) {
-        emailField.current.select();
-        return;
-      }
+    if (!isEmail(cleanData.email)) {
+      emailField.current.select();
+      return;
+    }
 
-      if (!cleanData.password || !isPassword(cleanData.password)) {
-        passwordField.current.focus();
-        return;
-      }
+    if (!cleanData.password || !isPassword(cleanData.password)) {
+      passwordField.current.focus();
+      return;
+    }
 
-      if (!cleanData.name) {
-        nameField.current.select();
-        return;
-      }
+    if (!cleanData.name) {
+      nameField.current.select();
+      return;
+    }
 
-      if (cleanData.username && !isUsername(cleanData.username)) {
-        usernameField.current.select();
-        return;
-      }
+    if (cleanData.username && !isUsername(cleanData.username)) {
+      usernameField.current.select();
+      return;
+    }
 
-      onCreate(cleanData);
-    }, [onCreate, data]);
+    onCreate(cleanData);
+  }, [onCreate, data]);
 
-    useEffect(() => {
-      emailField.current.focus({
-        preventScroll: true,
-      });
-    }, []);
+  useEffect(() => {
+    emailField.current.focus({
+      preventScroll: true,
+    });
+  }, []);
 
-    useEffect(() => {
-      if (wasSubmitting && !isSubmitting) {
-        if (error) {
-          switch (error.message) {
-            case 'Email already in use':
-              emailField.current.select();
+  useEffect(() => {
+    if (wasSubmitting && !isSubmitting) {
+      if (error) {
+        switch (error.message) {
+          case 'Email already in use':
+            emailField.current.select();
 
-              break;
-            case 'Username already in use':
-              usernameField.current.select();
+            break;
+          case 'Username already in use':
+            usernameField.current.select();
 
-              break;
-            default:
-          }
-        } else {
-          onClose();
+            break;
+          default:
         }
+      } else {
+        onClose();
       }
-    }, [isSubmitting, wasSubmitting, error, onClose]);
+    }
+  }, [isSubmitting, wasSubmitting, error, onClose]);
 
-    return (
-      <>
-        <Popup.Header>
-          {t('common.addUser', {
-            context: 'title',
-          })}
-        </Popup.Header>
-        <Popup.Content>
-          {message && (
-            <Message
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...{
-                [message.type]: true,
-              }}
-              visible
-              content={t(message.content)}
-              onDismiss={onMessageDismiss}
-            />
-          )}
-          <Form onSubmit={handleSubmit}>
-            <div className={styles.text}>{t('common.email')}</div>
-            <Input
-              fluid
-              ref={emailField}
-              name="email"
-              value={data.email}
-              readOnly={isSubmitting}
-              className={styles.field}
-              onChange={handleFieldChange}
-            />
-            <div className={styles.text}>{t('common.password')}</div>
-            <Input.Password
-              withStrengthBar
-              fluid
-              ref={passwordField}
-              name="password"
-              value={data.password}
-              readOnly={isSubmitting}
-              className={styles.field}
-              onChange={handleFieldChange}
-            />
-            <div className={styles.text}>{t('common.name')}</div>
-            <Input
-              fluid
-              ref={nameField}
-              name="name"
-              value={data.name}
-              readOnly={isSubmitting}
-              className={styles.field}
-              onChange={handleFieldChange}
-            />
-            <div className={styles.text}>
-              {t('common.username')} (
-              {t('common.optional', {
-                context: 'inline',
-              })}
-              )
-            </div>
-            <Input
-              fluid
-              ref={usernameField}
-              name="username"
-              value={data.username}
-              readOnly={isSubmitting}
-              className={styles.field}
-              onChange={handleFieldChange}
-            />
-            <Button
-              positive
-              content={t('action.addUser')}
-              loading={isSubmitting}
-              disabled={isSubmitting}
-            />
-          </Form>
-        </Popup.Content>
-      </>
-    );
-  },
-);
+  return (
+    <>
+      <Popup.Header>
+        {t('common.addUser', {
+          context: 'title',
+        })}
+      </Popup.Header>
+      <Popup.Content>
+        {message && (
+          <Message
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...{
+              [message.type]: true,
+            }}
+            visible
+            content={t(message.content)}
+            onDismiss={onMessageDismiss}
+          />
+        )}
+        <Form onSubmit={handleSubmit}>
+          <div className={styles.text}>{t('common.email')}</div>
+          <Input fluid ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <div className={styles.text}>{t('common.password')}</div>
+          <Input.Password withStrengthBar fluid ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <div className={styles.text}>{t('common.name')}</div>
+          <Input fluid ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <div className={styles.text}>
+            {t('common.username')} (
+            {t('common.optional', {
+              context: 'inline',
+            })}
+            )
+          </div>
+          <Input fluid ref={usernameField} name="username" value={data.username} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Button positive content={t('action.addUser')} loading={isSubmitting} disabled={isSubmitting} />
+        </Form>
+      </Popup.Content>
+    </>
+  );
+});
 
 UserAddStep.propTypes = {
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

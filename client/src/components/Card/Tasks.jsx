@@ -26,28 +26,16 @@ const Tasks = React.memo(({ items }) => {
                                    jsx-a11y/no-static-element-interactions */}
       <div className={styles.button} onClick={handleToggleClick}>
         <span className={styles.progressWrapper}>
-          <Progress
-            autoSuccess
-            value={completedItems.length}
-            total={items.length}
-            color="blue"
-            size="tiny"
-            className={styles.progress}
-          />
+          <Progress autoSuccess value={completedItems.length} total={items.length} color="blue" size="tiny" className={styles.progress} />
         </span>
-        <span
-          className={classNames(styles.count, isOpened ? styles.countOpened : styles.countClosed)}
-        >
+        <span className={classNames(styles.count, isOpened ? styles.countOpened : styles.countClosed)}>
           {completedItems.length}/{items.length}
         </span>
       </div>
       {isOpened && (
         <ul className={styles.tasks}>
           {items.map((item) => (
-            <li
-              key={item.id}
-              className={classNames(styles.task, item.isCompleted && styles.taskCompleted)}
-            >
+            <li key={item.id} className={classNames(styles.task, item.isCompleted && styles.taskCompleted)}>
               {item.name}
             </li>
           ))}

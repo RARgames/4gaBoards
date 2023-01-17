@@ -46,18 +46,7 @@ const NameField = React.memo(({ defaultValue, onUpdate }) => {
     }
   }, [defaultValue, prevDefaultValue, setValue]);
 
-  return (
-    <TextArea
-      as={TextareaAutosize}
-      value={value}
-      spellCheck={false}
-      className={styles.field}
-      onFocus={handleFocus}
-      onKeyDown={handleKeyDown}
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
-  );
+  return <TextArea as={TextareaAutosize} value={value} spellCheck={false} className={styles.field} onFocus={handleFocus} onKeyDown={handleKeyDown} onChange={handleChange} onBlur={handleBlur} />;
 });
 
 NameField.propTypes = {

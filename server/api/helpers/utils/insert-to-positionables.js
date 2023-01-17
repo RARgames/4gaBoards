@@ -43,9 +43,7 @@ const getRepositionsMap = (positions) => {
     }
 
     if (!_.isUndefined(nextPosition) && prevPosition + MIN_GAP * 2 <= nextPosition) {
-      (repositionsMap[position] || (repositionsMap[position] = [])).push(
-        prevPosition + (nextPosition - prevPosition) / 2,
-      );
+      (repositionsMap[position] || (repositionsMap[position] = [])).push(prevPosition + (nextPosition - prevPosition) / 2);
 
       break;
     }
@@ -96,13 +94,9 @@ module.exports = {
 
     const beginnings = findBeginnings([...lowers, inputs.position]);
 
-    const repositionsMap =
-      getRepositionsMap([...beginnings, ...uppers]) ||
-      getFullRepositionsMap([...lowers, inputs.position, ...uppers]);
+    const repositionsMap = getRepositionsMap([...beginnings, ...uppers]) || getFullRepositionsMap([...lowers, inputs.position, ...uppers]);
 
-    const position = repositionsMap[inputs.position]
-      ? repositionsMap[inputs.position].pop()
-      : inputs.position;
+    const position = repositionsMap[inputs.position] ? repositionsMap[inputs.position].pop() : inputs.position;
 
     const repositions = [];
 

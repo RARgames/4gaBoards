@@ -105,10 +105,7 @@ module.exports = {
 
       const cards = await sails.helpers.lists.getCards(listId, inputs.record.id);
 
-      const { position, repositions } = sails.helpers.utils.insertToPositionables(
-        values.position,
-        cards,
-      );
+      const { position, repositions } = sails.helpers.utils.insertToPositionables(values.position, cards);
 
       values.position = position;
 

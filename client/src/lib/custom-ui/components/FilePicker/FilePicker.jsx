@@ -28,13 +28,7 @@ const FilePicker = React.memo(({ children, accept, onSelect }) => {
   return (
     <>
       {tigger}
-      <input
-        ref={field}
-        type="file"
-        accept={accept}
-        className={styles.field}
-        onChange={handleFieldChange}
-      />
+      <input ref={field} type="file" accept={accept} className={styles.field} onChange={handleFieldChange} />
     </>
   );
 });

@@ -18,8 +18,7 @@ export default {
       addUser_title: "Foydalanuvchi Qo'shish",
       administrator: 'Administrator',
       all: 'Barchasi',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        "Barcha o'zgarishlar tarmoq ulanishi tiklangandan so'ng<br /> avtomatik saqlanadi",
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: "Barcha o'zgarishlar tarmoq ulanishi tiklangandan so'ng<br /> avtomatik saqlanadi",
       areYouSureYouWantToDeleteThisAttachment: "Ushbu biriktirmani o'chirmoqchimisiz?",
       areYouSureYouWantToDeleteThisBoard: "Ushbu doskani o'chirmoqchimisiz?",
       areYouSureYouWantToDeleteThisCard: "Ushbu kartani o'chirmoqchimisiz?",
@@ -31,8 +30,7 @@ export default {
       areYouSureYouWantToDeleteThisUser: "Ushbu foydalanuvchini o'chirmoqchimisiz?",
       areYouSureYouWantToLeaveBoard: 'Ushbu doskadan chiqmoqchimisiz?',
       areYouSureYouWantToLeaveProject: 'Ushbu loyihadan chiqmoqchimisiz?',
-      areYouSureYouWantToRemoveThisManagerFromProject:
-        "Ushbu boshqaruvchini loyihadan o'chirmoqchimisiz?",
+      areYouSureYouWantToRemoveThisManagerFromProject: "Ushbu boshqaruvchini loyihadan o'chirmoqchimisiz?",
       areYouSureYouWantToRemoveThisMemberFromBoard: "Ushbu a'zoni doskadan o'chirmoqchimisiz?",
       attachment: 'Ilova',
       attachments: 'Ilovalar',
@@ -111,8 +109,7 @@ export default {
       organization: 'Tashkilot',
       phone: 'Telefon',
       preferences: 'Afzalliklar',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        "Tip: Buferdan ilova qo'shish uchun Ctrl-V (Mac da Cmd-V) ni bosing",
+      pressPasteShortcutToAddAttachmentFromClipboard: "Tip: Buferdan ilova qo'shish uchun Ctrl-V (Mac da Cmd-V) ni bosing",
       project: 'Loyiha',
       projectNotFound_title: 'Loyiha Topilmadi',
       removeManager_title: "Boshqaruvchini O'chirish",
@@ -131,10 +128,8 @@ export default {
       userActions_title: 'Foydalanuvchi Amallari',
       userAddedThisCardToList: "<1>Ushbu kartani {{list}} ga</1><0>{{user}}</0> qo'shdi",
       userLeftNewCommentToCard: '{{user}} <2>{{card}}</2> ga yangi izoh qoldirdi «{{comment}}»',
-      userMovedCardFromListToList:
-        "{{user}} <2>{{card}}</2> ni {{fromList}} dan {{toList}} ga ko'chirdi",
-      userMovedThisCardFromListToList:
-        "<0>{{user}}</0><1> ushbu kartani {{fromList}} dan {{toList}}</1> ga ko'chirdi",
+      userMovedCardFromListToList: "{{user}} <2>{{card}}</2> ni {{fromList}} dan {{toList}} ga ko'chirdi",
+      userMovedThisCardFromListToList: "<0>{{user}}</0><1> ushbu kartani {{fromList}} dan {{toList}}</1> ga ko'chirdi",
       username: 'Foydalanuvchi nomi',
       usernameAlreadyInUse: 'Foydalanuvchi nomi allaqachon mavjud',
       users: 'Foydalanuvchilar',

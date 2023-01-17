@@ -50,24 +50,8 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
         </Header>
         <p>{t('common.enterFilename')}</p>
         <Form onSubmit={handleSubmit}>
-          <Input
-            fluid
-            inverted
-            ref={nameField}
-            name="name"
-            value={data.name}
-            label=".txt"
-            labelPosition="right"
-            className={styles.field}
-            onChange={handleFieldChange}
-          />
-          <Button
-            inverted
-            color="green"
-            icon="checkmark"
-            content={t('action.createFile')}
-            floated="right"
-          />
+          <Input fluid inverted ref={nameField} name="name" value={data.name} label=".txt" labelPosition="right" className={styles.field} onChange={handleFieldChange} />
+          <Button inverted color="green" icon="checkmark" content={t('action.createFile')} floated="right" />
         </Form>
       </Modal.Content>
     </Modal>

@@ -90,22 +90,13 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
               <div key={item.id} className={styles.item}>
                 {item.card && item.activity ? (
                   <>
-                    <User
-                      name={item.activity.user.name}
-                      avatarUrl={item.activity.user.avatarUrl}
-                      size="large"
-                    />
+                    <User name={item.activity.user.name} avatarUrl={item.activity.user.avatarUrl} size="large" />
                     <span className={styles.itemContent}>{renderItemContent(item)}</span>
                   </>
                 ) : (
                   <div className={styles.itemDeleted}>{t('common.cardOrActionAreDeleted')}</div>
                 )}
-                <Button
-                  type="button"
-                  icon="trash alternate outline"
-                  className={styles.itemButton}
-                  onClick={() => handleDelete(item.id)}
-                />
+                <Button type="button" icon="trash alternate outline" className={styles.itemButton} onClick={() => handleDelete(item.id)} />
               </div>
             ))}
           </div>

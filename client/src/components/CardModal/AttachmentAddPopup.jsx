@@ -38,9 +38,7 @@ const AttachmentAddStep = React.memo(({ onCreate, onClose }) => {
           </FilePicker>
         </Menu>
         <hr className={styles.divider} />
-        <div className={styles.tip}>
-          {t('common.pressPasteShortcutToAddAttachmentFromClipboard')}
-        </div>
+        <div className={styles.tip}>{t('common.pressPasteShortcutToAddAttachmentFromClipboard')}</div>
       </Popup.Content>
     </>
   );

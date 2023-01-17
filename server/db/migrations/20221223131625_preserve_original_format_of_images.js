@@ -13,9 +13,7 @@ const migrateImage = async (knex, tableName, fieldName, prevFieldName) => {
 
   await knex(tableName)
     .update({
-      [fieldName]: knex.raw('format(\'{"dirname":"%s","extension":"jpg"}\', ??)::jsonb', [
-        prevFieldName,
-      ]),
+      [fieldName]: knex.raw('format(\'{"dirname":"%s","extension":"jpg"}\', ??)::jsonb', [prevFieldName]),
     })
     .whereNotNull(prevFieldName);
 

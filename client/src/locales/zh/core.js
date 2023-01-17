@@ -109,8 +109,7 @@ export default {
       organization: '组织机构',
       phone: '电话',
       preferences: '偏好',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        '提示: 点击 Ctrl-V (Mac: Cmd-V) 从剪切板添加附件',
+      pressPasteShortcutToAddAttachmentFromClipboard: '提示: 点击 Ctrl-V (Mac: Cmd-V) 从剪切板添加附件',
       project: '项目',
       projectNotFound_title: '项目未找到',
       removeManager_title: '删除管理员',
@@ -129,10 +128,8 @@ export default {
       userActions_title: '用户操作',
       userAddedThisCardToList: '<0>{{user}}</0><1> 向列表 {{list}} 添加了该卡片</1>',
       userLeftNewCommentToCard: '{{user}} 给 {{card}} 添加了一个新评论 «{{comment}}»',
-      userMovedCardFromListToList:
-        '{{user}} 将卡片 <2>{{card}}</2> 从 {{fromList}} 移动到 {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> 将该卡片从 {{fromList}} 移动到 {{toList}}</1>',
+      userMovedCardFromListToList: '{{user}} 将卡片 <2>{{card}}</2> 从 {{fromList}} 移动到 {{toList}}',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> 将该卡片从 {{fromList}} 移动到 {{toList}}</1>',
       username: '用户名',
       usernameAlreadyInUse: '用户名已占用',
       users: '用户',

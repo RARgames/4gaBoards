@@ -18,8 +18,7 @@ const mapStateToProps = (state) => {
   const filterLabels = selectors.selectFilterLabelsForCurrentBoard(state);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-  const isCurrentUserEditor =
-    !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+  const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
   return {
     cardCount,

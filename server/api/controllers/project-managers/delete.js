@@ -28,10 +28,7 @@ module.exports = {
       throw Errors.PROJECT_MANAGER_NOT_FOUND;
     }
 
-    const isProjectManager = await sails.helpers.users.isProjectManager(
-      currentUser.id,
-      projectManager.projectId,
-    );
+    const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, projectManager.projectId);
 
     if (!isProjectManager) {
       throw Errors.PROJECT_MANAGER_NOT_FOUND; // Forbidden

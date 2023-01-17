@@ -14,142 +14,137 @@ import { ProjectBackgroundTypes } from '../../constants/Enums';
 import styles from './BackgroundPane.module.scss';
 import globalStyles from '../../styles.module.scss';
 
-const BackgroundPane = React.memo(
-  ({ item, imageCoverUrl, isImageUpdating, onUpdate, onImageUpdate, onImageDelete }) => {
-    const [t] = useTranslation();
+const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpdate, onImageUpdate, onImageDelete }) => {
+  const [t] = useTranslation();
 
-    const field = useRef(null);
+  const field = useRef(null);
 
-    const handleGradientClick = useCallback(
-      (_, { value }) => {
-        const background = {
-          type: ProjectBackgroundTypes.GRADIENT,
-          name: value,
-        };
-
-        if (!dequal(background, item)) {
-          onUpdate(background);
-        }
-      },
-      [item, onUpdate],
-    );
-
-    const handleImageClick = useCallback(() => {
+  const handleGradientClick = useCallback(
+    (_, { value }) => {
       const background = {
-        type: ProjectBackgroundTypes.IMAGE,
+        type: ProjectBackgroundTypes.GRADIENT,
+        name: value,
       };
 
       if (!dequal(background, item)) {
         onUpdate(background);
       }
-    }, [item, onUpdate]);
+    },
+    [item, onUpdate],
+  );
 
-    const handleFileSelect = useCallback(
-      (file) => {
-        onImageUpdate({
-          file,
-        });
-      },
-      [onImageUpdate],
-    );
+  const handleImageClick = useCallback(() => {
+    const background = {
+      type: ProjectBackgroundTypes.IMAGE,
+    };
 
-    const handleDeleteImageClick = useCallback(() => {
-      onImageDelete();
-    }, [onImageDelete]);
+    if (!dequal(background, item)) {
+      onUpdate(background);
+    }
+  }, [item, onUpdate]);
 
-    const handleRemoveClick = useCallback(() => {
-      onUpdate(null);
-    }, [onUpdate]);
+  const handleFileSelect = useCallback(
+    (file) => {
+      onImageUpdate({
+        file,
+      });
+    },
+    [onImageUpdate],
+  );
 
-    useEffect(() => {
-      field.current.focus();
-    }, []);
+  const handleDeleteImageClick = useCallback(() => {
+    onImageDelete();
+  }, [onImageDelete]);
 
-    return (
-      <>
-        <div className={styles.gradientButtons}>
-          {ProjectBackgroundGradients.map((gradient) => (
+  const handleRemoveClick = useCallback(() => {
+    onUpdate(null);
+  }, [onUpdate]);
+
+  useEffect(() => {
+    field.current.focus();
+  }, []);
+
+  return (
+    <>
+      <div className={styles.gradientButtons}>
+        {ProjectBackgroundGradients.map((gradient) => (
+          <Button
+            key={gradient}
+            type="button"
+            name="gradient"
+            value={gradient}
+            className={classNames(
+              styles.gradientButton,
+              item && item.type === ProjectBackgroundTypes.GRADIENT && gradient === item.name && styles.gradientButtonActive,
+              globalStyles[`background${upperFirst(camelCase(gradient))}`],
+            )}
+            onClick={handleGradientClick}
+          />
+        ))}
+      </div>
+      {imageCoverUrl && (
+        // TODO: wrap in button
+        <Image
+          src={imageCoverUrl}
+          label={
+            item &&
+            item.type === 'image' && {
+              corner: 'left',
+              size: 'small',
+              icon: {
+                name: 'star',
+                color: 'grey',
+                inverted: true,
+              },
+              className: styles.imageLabel,
+            }
+          }
+          className={styles.image}
+          onClick={handleImageClick}
+        />
+      )}
+      <div className={styles.actions}>
+        <div className={styles.action}>
+          <FilePicker accept="image/*" onSelect={handleFileSelect}>
             <Button
-              key={gradient}
-              type="button"
-              name="gradient"
-              value={gradient}
-              className={classNames(
-                styles.gradientButton,
-                item &&
-                  item.type === ProjectBackgroundTypes.GRADIENT &&
-                  gradient === item.name &&
-                  styles.gradientButtonActive,
-                globalStyles[`background${upperFirst(camelCase(gradient))}`],
-              )}
-              onClick={handleGradientClick}
+              ref={field}
+              content={t('action.uploadNewImage', {
+                context: 'title',
+              })}
+              loading={isImageUpdating}
+              disabled={isImageUpdating}
+              className={styles.actionButton}
             />
-          ))}
+          </FilePicker>
         </div>
         {imageCoverUrl && (
-          // TODO: wrap in button
-          <Image
-            src={imageCoverUrl}
-            label={
-              item &&
-              item.type === 'image' && {
-                corner: 'left',
-                size: 'small',
-                icon: {
-                  name: 'star',
-                  color: 'grey',
-                  inverted: true,
-                },
-                className: styles.imageLabel,
-              }
-            }
-            className={styles.image}
-            onClick={handleImageClick}
-          />
-        )}
-        <div className={styles.actions}>
           <div className={styles.action}>
-            <FilePicker accept="image/*" onSelect={handleFileSelect}>
-              <Button
-                ref={field}
-                content={t('action.uploadNewImage', {
-                  context: 'title',
-                })}
-                loading={isImageUpdating}
-                disabled={isImageUpdating}
-                className={styles.actionButton}
-              />
-            </FilePicker>
+            <Button
+              content={t('action.deleteImage', {
+                context: 'title',
+              })}
+              disabled={isImageUpdating}
+              className={styles.actionButton}
+              onClick={handleDeleteImageClick}
+            />
           </div>
-          {imageCoverUrl && (
-            <div className={styles.action}>
-              <Button
-                content={t('action.deleteImage', {
-                  context: 'title',
-                })}
-                disabled={isImageUpdating}
-                className={styles.actionButton}
-                onClick={handleDeleteImageClick}
-              />
-            </div>
-          )}
-          {item && (
-            <div className={styles.action}>
-              <Button
-                content={t('action.removeBackground', {
-                  context: 'title',
-                })}
-                disabled={isImageUpdating}
-                className={styles.actionButton}
-                onClick={handleRemoveClick}
-              />
-            </div>
-          )}
-        </div>
-      </>
-    );
-  },
-);
+        )}
+        {item && (
+          <div className={styles.action}>
+            <Button
+              content={t('action.removeBackground', {
+                context: 'title',
+              })}
+              disabled={isImageUpdating}
+              className={styles.actionButton}
+              onClick={handleRemoveClick}
+            />
+          </div>
+        )}
+      </div>
+    </>
+  );
+});
 
 BackgroundPane.propTypes = {
   item: PropTypes.object, // eslint-disable-line react/forbid-prop-types

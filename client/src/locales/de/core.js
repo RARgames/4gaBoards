@@ -22,27 +22,20 @@ export default {
       addUser_title: 'Benutzer hinzufügen',
       administrator: 'Administrator',
       all: 'Alle',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'Alle Änderungen werden automatisch gespeichert, sobald die Verbindung wiederhergestellt wurde.',
-      areYouSureYouWantToDeleteThisAttachment:
-        'Sind Sie sicher, dass Sie diesen Anhang löschen möchten?',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Alle Änderungen werden automatisch gespeichert, sobald die Verbindung wiederhergestellt wurde.',
+      areYouSureYouWantToDeleteThisAttachment: 'Sind Sie sicher, dass Sie diesen Anhang löschen möchten?',
       areYouSureYouWantToDeleteThisBoard: 'Sind Sie sicher, dass Sie dieses Board löschen möchten?',
       areYouSureYouWantToDeleteThisCard: 'Sind Sie sicher, dass Sie diese Karte löschen möchten?',
-      areYouSureYouWantToDeleteThisComment:
-        'Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?',
+      areYouSureYouWantToDeleteThisComment: 'Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?',
       areYouSureYouWantToDeleteThisLabel: 'Sind Sie sicher, dass Sie dieses Label löschen möchten?',
       areYouSureYouWantToDeleteThisList: 'Sind Sie sicher, dass Sie diese Liste löschen möchten?',
-      areYouSureYouWantToDeleteThisProject:
-        'Sind Sie sicher, dass Sie dieses Projekt löschen möchten?',
+      areYouSureYouWantToDeleteThisProject: 'Sind Sie sicher, dass Sie dieses Projekt löschen möchten?',
       areYouSureYouWantToDeleteThisTask: 'Sind Sie sicher, dass Sie diese Aufgabe löschen möchten?',
-      areYouSureYouWantToDeleteThisUser:
-        'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?',
+      areYouSureYouWantToDeleteThisUser: 'Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?',
       areYouSureYouWantToLeaveBoard: 'Sind Sie sicher, dass Sie das Board verlassen möchten?',
       areYouSureYouWantToLeaveProject: 'Sind Sie sicher, dass Sie das Projekt verlassen möchten?',
-      areYouSureYouWantToRemoveThisManagerFromProject:
-        'Sind Sie sicher, dass Sie diesen Manager aus dem Projekt entfernen möchten?',
-      areYouSureYouWantToRemoveThisMemberFromBoard:
-        'Sind Sie sicher, dass Sie dieses Mitglied aus dem Board entfernen möchten?',
+      areYouSureYouWantToRemoveThisManagerFromProject: 'Sind Sie sicher, dass Sie diesen Manager aus dem Projekt entfernen möchten?',
+      areYouSureYouWantToRemoveThisMemberFromBoard: 'Sind Sie sicher, dass Sie dieses Mitglied aus dem Board entfernen möchten?',
       attachment: 'Anhang',
       attachments: 'Anhänge',
       authentication: 'Authentifizierung',
@@ -55,8 +48,7 @@ export default {
       color: 'Farbe',
       createBoard_title: 'Board erstellen',
       createLabel_title: 'Label erstellen',
-      createNewOneOrSelectExistingOne:
-        'Erstellen Sie ein neues oder wählen Sie ein bestehendes aus.',
+      createNewOneOrSelectExistingOne: 'Erstellen Sie ein neues oder wählen Sie ein bestehendes aus.',
       createProject_title: 'Projekt erstellen',
       createTextFile_title: 'Textdatei erstellen',
       currentPassword: 'Derzeitiges Passwort',
@@ -123,8 +115,7 @@ export default {
       organization: 'Organisation',
       phone: 'Telefon',
       preferences: 'Voreinstellungen',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Tipp: Drücken Sie STRG-V (Cmd-V auf Mac), um einen Anhang aus der Zwischenablage hinzuzufügen',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Tipp: Drücken Sie STRG-V (Cmd-V auf Mac), um einen Anhang aus der Zwischenablage hinzuzufügen',
       project: 'Projekt',
       projectNotFound_title: 'Projekt nicht gefunden',
       removeManager_title: 'Manager entfernen',
@@ -143,12 +134,9 @@ export default {
       title: 'Titel',
       userActions_title: 'Benutzeraktionen',
       userAddedThisCardToList: '<0>{{user}}</0><1> hat diese Karte hinzugefügt zu {{list}}</1>',
-      userLeftNewCommentToCard:
-        '{{user}} hat einen neuen Kommentar verfasst: «{{comment}}» in <2>{{card}}</2>',
-      userMovedCardFromListToList:
-        '{{user}} bewegte <2>{{card}}</2> von {{fromList}} nach {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> bewegte diese Karte von {{fromList}} nach {{toList}}</1>',
+      userLeftNewCommentToCard: '{{user}} hat einen neuen Kommentar verfasst: «{{comment}}» in <2>{{card}}</2>',
+      userMovedCardFromListToList: '{{user}} bewegte <2>{{card}}</2> von {{fromList}} nach {{toList}}',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> bewegte diese Karte von {{fromList}} nach {{toList}}</1>',
       username: 'Benutzername',
       usernameAlreadyInUse: 'Benutzername wird bereits verwendet',
       users: 'Benutzer',

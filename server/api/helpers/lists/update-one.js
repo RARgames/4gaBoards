@@ -32,10 +32,7 @@ module.exports = {
     if (!_.isUndefined(values.position)) {
       const lists = await sails.helpers.boards.getLists(inputs.record.boardId, inputs.record.id);
 
-      const { position, repositions } = sails.helpers.utils.insertToPositionables(
-        values.position,
-        lists,
-      );
+      const { position, repositions } = sails.helpers.utils.insertToPositionables(values.position, lists);
 
       values.position = position;
 

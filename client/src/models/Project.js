@@ -58,11 +58,7 @@ export default class extends BaseModel {
         const project = Project.withId(payload.id);
         project.update(payload.data);
 
-        if (
-          payload.data.backgroundImage === null &&
-          project.background &&
-          project.background.type === ProjectBackgroundTypes.IMAGE
-        ) {
+        if (payload.data.backgroundImage === null && project.background && project.background.type === ProjectBackgroundTypes.IMAGE) {
           project.background = null;
         }
 

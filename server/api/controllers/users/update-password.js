@@ -58,10 +58,7 @@ module.exports = {
       throw Errors.USER_NOT_FOUND;
     }
 
-    if (
-      inputs.id === currentUser.id &&
-      !bcrypt.compareSync(inputs.currentPassword, user.password)
-    ) {
+    if (inputs.id === currentUser.id && !bcrypt.compareSync(inputs.currentPassword, user.password)) {
       throw Errors.INVALID_CURRENT_PASSWORD;
     }
 

@@ -104,9 +104,7 @@ module.exports = {
   customToJSON() {
     return {
       ..._.omit(this, ['password', 'avatar', 'passwordChangedAt']),
-      avatarUrl:
-        this.avatar &&
-        `${sails.config.custom.userAvatarsUrl}/${this.avatar.dirname}/square-100.${this.avatar.extension}`,
+      avatarUrl: this.avatar && `${sails.config.custom.userAvatarsUrl}/${this.avatar.dirname}/square-100.${this.avatar.extension}`,
     };
   },
 };

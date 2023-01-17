@@ -51,15 +51,13 @@ module.exports = {
     })
       .intercept(
         {
-          message:
-            'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_email_unique"',
+          message: 'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_email_unique"',
         },
         'emailAlreadyInUse',
       )
       .intercept(
         {
-          message:
-            'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_username_unique"',
+          message: 'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_username_unique"',
         },
         'usernameAlreadyInUse',
       )

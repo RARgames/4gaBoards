@@ -111,46 +111,17 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
           <div className={styles.fieldWrapper}>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.hours')}</div>
-              <Input.Mask
-                ref={hoursField}
-                name="hours"
-                value={data.hours}
-                mask="9999"
-                maskChar={null}
-                disabled={!isEditing}
-                onChange={handleFieldChange}
-              />
+              <Input.Mask ref={hoursField} name="hours" value={data.hours} mask="9999" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
             </div>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.minutes')}</div>
-              <Input.Mask
-                ref={minutesField}
-                name="minutes"
-                value={data.minutes}
-                mask="99"
-                maskChar={null}
-                disabled={!isEditing}
-                onChange={handleFieldChange}
-              />
+              <Input.Mask ref={minutesField} name="minutes" value={data.minutes} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
             </div>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.seconds')}</div>
-              <Input.Mask
-                ref={secondsField}
-                name="seconds"
-                value={data.seconds}
-                mask="99"
-                maskChar={null}
-                disabled={!isEditing}
-                onChange={handleFieldChange}
-              />
+              <Input.Mask ref={secondsField} name="seconds" value={data.seconds} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
             </div>
-            <Button
-              type="button"
-              icon={isEditing ? 'close' : 'edit'}
-              className={styles.iconButton}
-              onClick={handleToggleEditingClick}
-            />
+            <Button type="button" icon={isEditing ? 'close' : 'edit'} className={styles.iconButton} onClick={handleToggleEditingClick} />
           </div>
           {isEditing && <Button positive content={t('action.save')} />}
         </Form>
@@ -160,12 +131,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
           ) : (
             <Button positive content={t('action.start')} icon="play" onClick={handleStartClick} />
           ))}
-        <Button
-          negative
-          content={t('action.remove')}
-          className={styles.deleteButton}
-          onClick={handleClearClick}
-        />
+        <Button negative content={t('action.remove')} className={styles.deleteButton} onClick={handleClearClick} />
       </Popup.Content>
     </>
   );

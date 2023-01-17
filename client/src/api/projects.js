@@ -11,8 +11,7 @@ const getProject = (id, headers) => socket.get(`/projects/${id}`, undefined, hea
 
 const updateProject = (id, data, headers) => socket.patch(`/projects/${id}`, data, headers);
 
-const updateProjectBackgroundImage = (id, data, headers) =>
-  http.post(`/projects/${id}/background-image`, data, headers);
+const updateProjectBackgroundImage = (id, data, headers) => http.post(`/projects/${id}/background-image`, data, headers);
 
 const deleteProject = (id, headers) => socket.delete(`/projects/${id}`, undefined, headers);
 

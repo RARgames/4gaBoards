@@ -42,19 +42,12 @@ module.exports = {
         );
       };
 
-      const isProjectManager = await sails.helpers.users.isProjectManager(
-        inputs.record.userId,
-        inputs.project.id,
-      );
+      const isProjectManager = await sails.helpers.users.isProjectManager(inputs.record.userId, inputs.project.id);
 
       if (!isProjectManager) {
-        sails.sockets.removeRoomMembersFromRooms(
-          `@user:${boardMembership.userId}`,
-          `board:${boardMembership.boardId}`,
-          () => {
-            notify(`board:${boardMembership.boardId}`);
-          },
-        );
+        sails.sockets.removeRoomMembersFromRooms(`@user:${boardMembership.userId}`, `board:${boardMembership.boardId}`, () => {
+          notify(`board:${boardMembership.boardId}`);
+        });
       }
 
       notify(`user:${boardMembership.userId}`);
@@ -63,14 +56,10 @@ module.exports = {
         const tempRoom = uuid();
 
         sails.sockets.addRoomMembersToRooms(`board:${boardMembership.boardId}`, tempRoom, () => {
-          sails.sockets.removeRoomMembersFromRooms(
-            `user:${boardMembership.userId}`,
-            tempRoom,
-            () => {
-              notify(tempRoom);
-              sails.sockets.removeRoomMembersFromRooms(tempRoom, tempRoom);
-            },
-          );
+          sails.sockets.removeRoomMembersFromRooms(`user:${boardMembership.userId}`, tempRoom, () => {
+            notify(tempRoom);
+            sails.sockets.removeRoomMembersFromRooms(tempRoom, tempRoom);
+          });
         });
       }
     }

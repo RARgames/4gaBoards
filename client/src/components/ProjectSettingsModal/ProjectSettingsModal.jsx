@@ -8,20 +8,7 @@ import BackgroundPane from './BackgroundPane';
 import GeneralPane from './GeneralPane';
 
 const ProjectSettingsModal = React.memo(
-  ({
-    name,
-    background,
-    backgroundImage,
-    isBackgroundImageUpdating,
-    managers,
-    allUsers,
-    onUpdate,
-    onBackgroundImageUpdate,
-    onDelete,
-    onManagerCreate,
-    onManagerDelete,
-    onClose,
-  }) => {
+  ({ name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete, onClose }) => {
     const [t] = useTranslation();
 
     const handleBackgroundUpdate = useCallback(
@@ -50,14 +37,7 @@ const ProjectSettingsModal = React.memo(
         menuItem: t('common.managers', {
           context: 'title',
         }),
-        render: () => (
-          <ManagersPane
-            items={managers}
-            allUsers={allUsers}
-            onCreate={onManagerCreate}
-            onDelete={onManagerDelete}
-          />
-        ),
+        render: () => <ManagersPane items={managers} allUsers={allUsers} onCreate={onManagerCreate} onDelete={onManagerDelete} />,
       },
       {
         menuItem: t('common.background', {

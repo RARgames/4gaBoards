@@ -69,9 +69,7 @@ module.exports = {
 
     let boardImport;
     if (inputs.importType && Object.values(Board.ImportTypes).includes(inputs.importType)) {
-      const upload = util.promisify((options, callback) =>
-        this.req.file('importFile').upload(options, (error, files) => callback(error, files)),
-      );
+      const upload = util.promisify((options, callback) => this.req.file('importFile').upload(options, (error, files) => callback(error, files)));
 
       let files;
       try {

@@ -44,10 +44,7 @@ module.exports = {
       inputs.request,
     );
 
-    const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(
-      action.cardId,
-      action.userId,
-    );
+    const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
 
     await Promise.all(
       subscriptionUserIds.map(async (userId) =>

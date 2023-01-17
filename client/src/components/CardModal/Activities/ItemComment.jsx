@@ -11,67 +11,56 @@ import DeletePopup from '../../DeletePopup';
 
 import styles from './ItemComment.module.scss';
 
-const ItemComment = React.memo(
-  ({ data, createdAt, isPersisted, user, canEdit, onUpdate, onDelete }) => {
-    const [t] = useTranslation();
+const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, onUpdate, onDelete }) => {
+  const [t] = useTranslation();
 
-    const commentEdit = useRef(null);
+  const commentEdit = useRef(null);
 
-    const handleEditClick = useCallback(() => {
-      commentEdit.current.open();
-    }, []);
+  const handleEditClick = useCallback(() => {
+    commentEdit.current.open();
+  }, []);
 
-    return (
-      <Comment>
-        <span className={styles.user}>
-          <User name={user.name} avatarUrl={user.avatarUrl} />
-        </span>
-        <div className={classNames(styles.content)}>
-          <div className={styles.title}>
-            <span className={styles.author}>{user.name}</span>
-            <span className={styles.date}>
-              {t('format:longDateTime', {
-                postProcess: 'formatDate',
-                value: createdAt,
-              })}
-            </span>
-          </div>
-          <CommentEdit ref={commentEdit} defaultData={data} onUpdate={onUpdate}>
-            <>
-              <div className={styles.text}>
-                <Markdown linkTarget="_blank">{data.text}</Markdown>
-              </div>
-              {canEdit && (
-                <Comment.Actions>
-                  <Comment.Action
-                    as="button"
-                    content={t('action.edit')}
-                    disabled={!isPersisted}
-                    onClick={handleEditClick}
-                  />
-                  <DeletePopup
-                    title={t('common.deleteComment', {
-                      context: 'title',
-                    })}
-                    content={t('common.areYouSureYouWantToDeleteThisComment')}
-                    buttonContent={t('action.deleteComment')}
-                    onConfirm={onDelete}
-                  >
-                    <Comment.Action
-                      as="button"
-                      content={t('action.delete')}
-                      disabled={!isPersisted}
-                    />
-                  </DeletePopup>
-                </Comment.Actions>
-              )}
-            </>
-          </CommentEdit>
+  return (
+    <Comment>
+      <span className={styles.user}>
+        <User name={user.name} avatarUrl={user.avatarUrl} />
+      </span>
+      <div className={classNames(styles.content)}>
+        <div className={styles.title}>
+          <span className={styles.author}>{user.name}</span>
+          <span className={styles.date}>
+            {t('format:longDateTime', {
+              postProcess: 'formatDate',
+              value: createdAt,
+            })}
+          </span>
         </div>
-      </Comment>
-    );
-  },
-);
+        <CommentEdit ref={commentEdit} defaultData={data} onUpdate={onUpdate}>
+          <>
+            <div className={styles.text}>
+              <Markdown linkTarget="_blank">{data.text}</Markdown>
+            </div>
+            {canEdit && (
+              <Comment.Actions>
+                <Comment.Action as="button" content={t('action.edit')} disabled={!isPersisted} onClick={handleEditClick} />
+                <DeletePopup
+                  title={t('common.deleteComment', {
+                    context: 'title',
+                  })}
+                  content={t('common.areYouSureYouWantToDeleteThisComment')}
+                  buttonContent={t('action.deleteComment')}
+                  onConfirm={onDelete}
+                >
+                  <Comment.Action as="button" content={t('action.delete')} disabled={!isPersisted} />
+                </DeletePopup>
+              </Comment.Actions>
+            )}
+          </>
+        </CommentEdit>
+      </div>
+    </Comment>
+  );
+});
 
 ItemComment.propTypes = {
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

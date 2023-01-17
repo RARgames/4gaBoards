@@ -22,8 +22,7 @@ export default {
       addUser_title: 'Přidat uživatele',
       administrator: 'Administrátor',
       all: 'Vše',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'Všechny změny budou automaticky uloženy<br />po obnově spojení',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Všechny změny budou automaticky uloženy<br />po obnově spojení',
       areYouSureYouWantToDeleteThisAttachment: 'Opravdu chcete smazat tuto přílohu?',
       areYouSureYouWantToDeleteThisBoard: 'Opravdu chcete smazat tuto tabuli?',
       areYouSureYouWantToDeleteThisCard: 'Opravdu chcete smazat tuto kartu?',
@@ -35,10 +34,8 @@ export default {
       areYouSureYouWantToDeleteThisUser: 'Opravdu chcete smazat tohoto uživatele?',
       areYouSureYouWantToLeaveBoard: 'Opravdu chcete opustit tuto tabuli?',
       areYouSureYouWantToLeaveProject: 'Opravdu chcete opustit projekt?',
-      areYouSureYouWantToRemoveThisManagerFromProject:
-        'Are you sure you want to remove this manager from the project?',
-      areYouSureYouWantToRemoveThisMemberFromBoard:
-        'Opravdu chcete odstranit tohoto člena z tabule?',
+      areYouSureYouWantToRemoveThisManagerFromProject: 'Are you sure you want to remove this manager from the project?',
+      areYouSureYouWantToRemoveThisMemberFromBoard: 'Opravdu chcete odstranit tohoto člena z tabule?',
       attachment: 'Příloha',
       attachments: 'Přílohy',
       authentication: 'Ověření',
@@ -116,8 +113,7 @@ export default {
       organization: 'Společnost',
       phone: 'Telefon',
       preferences: 'Volby',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Tip: dejte Ctrl-V (Cmd-V na Mac) pro vložení přílohy ze schránky',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: dejte Ctrl-V (Cmd-V na Mac) pro vložení přílohy ze schránky',
       project: 'Projekt',
       projectNotFound_title: 'Projekt nenalezen',
       removeManager_title: 'Odstranit vedoucího',
@@ -137,8 +133,7 @@ export default {
       userAddedThisCardToList: '<0>{{user}}</0><1> přidal kartu do {{list}}</1>',
       userLeftNewCommentToCard: '{{user}} zanechal nový komentář «{{comment}}» k <2>{{card}}</2>',
       userMovedCardFromListToList: '{{user}} přesunul <2>{{card}}</2> z {{fromList}} do {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> přesunul tuto kartu z {{fromList}} do {{toList}}</1>',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> přesunul tuto kartu z {{fromList}} do {{toList}}</1>',
       username: 'Uživatelské jméno',
       usernameAlreadyInUse: 'Uživatelské jméno se již používá',
       users: 'Uživatelé',

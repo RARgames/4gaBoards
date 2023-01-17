@@ -25,17 +25,12 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const { board, project } = await sails.helpers.boards
-      .getProjectPath(inputs.id)
-      .intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND);
+    const { board, project } = await sails.helpers.boards.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND);
 
     const isBoardMember = await sails.helpers.users.isBoardMember(currentUser.id, board.id);
 
     if (!isBoardMember) {
-      const isProjectManager = await sails.helpers.users.isProjectManager(
-        currentUser.id,
-        project.id,
-      );
+      const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
 
       if (!isProjectManager) {
         throw Errors.BOARD_NOT_FOUND; // Forbidden

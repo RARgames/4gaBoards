@@ -84,10 +84,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
   }, [focusNameFieldState]);
 
   return (
-    <Form
-      className={classNames(styles.wrapper, !isOpened && styles.wrapperClosed)}
-      onSubmit={handleSubmit}
-    >
+    <Form className={classNames(styles.wrapper, !isOpened && styles.wrapperClosed)} onSubmit={handleSubmit}>
       <div className={styles.fieldWrapper}>
         <TextArea
           ref={nameField}
@@ -105,13 +102,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
       </div>
       <div className={styles.controls}>
         {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-        <Button
-          positive
-          content={t('action.addCard')}
-          className={styles.submitButton}
-          onMouseOver={handleControlMouseOver}
-          onMouseOut={handleControlMouseOut}
-        />
+        <Button positive content={t('action.addCard')} className={styles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );

@@ -28,11 +28,7 @@ const timerValidator = (value) => {
     return false;
   }
 
-  if (
-    !_.isNull(value.startedAt) &&
-    _.isString(value.startedAt) &&
-    !moment(value.startedAt, moment.ISO_8601, true).isValid()
-  ) {
+  if (!_.isNull(value.startedAt) && _.isString(value.startedAt) && !moment(value.startedAt, moment.ISO_8601, true).isValid()) {
     return false;
   }
 
@@ -113,9 +109,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const path = await sails.helpers.cards
-      .getProjectPath(inputs.id)
-      .intercept('pathNotFound', () => Errors.CARD_NOT_FOUND);
+    const path = await sails.helpers.cards.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.CARD_NOT_FOUND);
 
     let { card } = path;
     const { list, board } = path;
@@ -135,9 +129,7 @@ module.exports = {
 
     let nextBoard;
     if (!_.isUndefined(inputs.boardId)) {
-      ({ board: nextBoard } = await sails.helpers.boards
-        .getProjectPath(inputs.boardId)
-        .intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND));
+      ({ board: nextBoard } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND));
 
       boardMembership = await BoardMembership.findOne({
         boardId: nextBoard.id,
@@ -165,15 +157,7 @@ module.exports = {
       }
     }
 
-    const values = _.pick(inputs, [
-      'coverAttachmentId',
-      'position',
-      'name',
-      'description',
-      'dueDate',
-      'timer',
-      'isSubscribed',
-    ]);
+    const values = _.pick(inputs, ['coverAttachmentId', 'position', 'name', 'description', 'dueDate', 'timer', 'isSubscribed']);
 
     card = await sails.helpers.cards.updateOne
       .with({

@@ -49,24 +49,13 @@ const Memberships = React.memo(
                 onUpdate={(data) => onUpdate(item.id, data)}
                 onDelete={() => onDelete(item.id)}
               >
-                <User
-                  name={item.user.name}
-                  avatarUrl={item.user.avatarUrl}
-                  size="large"
-                  isDisabled={!item.isPersisted}
-                />
+                <User name={item.user.name} avatarUrl={item.user.avatarUrl} size="large" isDisabled={!item.isPersisted} />
               </ActionsPopup>
             </span>
           ))}
         </span>
         {canEdit && (
-          <AddPopup
-            users={allUsers}
-            currentUserIds={items.map((item) => item.user.id)}
-            permissionsSelectStep={permissionsSelectStep}
-            title={addTitle}
-            onCreate={onCreate}
-          >
+          <AddPopup users={allUsers} currentUserIds={items.map((item) => item.user.id)} permissionsSelectStep={permissionsSelectStep} title={addTitle} onCreate={onCreate}>
             <Button icon="add user" className={styles.addUser} />
           </AddPopup>
         )}

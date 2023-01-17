@@ -10,21 +10,7 @@ import LabelsPopup from '../LabelsPopup';
 import styles from './Filters.module.scss';
 
 const Filters = React.memo(
-  ({
-    users,
-    labels,
-    allBoardMemberships,
-    allLabels,
-    canEdit,
-    onUserAdd,
-    onUserRemove,
-    onLabelAdd,
-    onLabelRemove,
-    onLabelCreate,
-    onLabelUpdate,
-    onLabelMove,
-    onLabelDelete,
-  }) => {
+  ({ users, labels, allBoardMemberships, allLabels, canEdit, onUserAdd, onUserRemove, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelMove, onLabelDelete }) => {
     const [t] = useTranslation();
 
     const handleRemoveUserClick = useCallback(
@@ -60,12 +46,7 @@ const Filters = React.memo(
           </BoardMembershipsPopup>
           {users.map((user) => (
             <span key={user.id} className={styles.filterItem}>
-              <User
-                name={user.name}
-                avatarUrl={user.avatarUrl}
-                size="tiny"
-                onClick={() => handleRemoveUserClick(user.id)}
-              />
+              <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" onClick={() => handleRemoveUserClick(user.id)} />
             </span>
           ))}
         </span>
@@ -91,12 +72,7 @@ const Filters = React.memo(
           </LabelsPopup>
           {labels.map((label) => (
             <span key={label.id} className={styles.filterItem}>
-              <Label
-                name={label.name}
-                color={label.color}
-                size="small"
-                onClick={() => handleRemoveLabelClick(label.id)}
-              />
+              <Label name={label.name} color={label.color} size="small" onClick={() => handleRemoveLabelClick(label.id)} />
             </span>
           ))}
         </span>

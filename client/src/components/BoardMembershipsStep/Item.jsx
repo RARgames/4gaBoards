@@ -17,18 +17,11 @@ const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDese
   }, [isActive, onUserSelect, onUserDeselect]);
 
   return (
-    <Menu.Item
-      active={isActive}
-      disabled={!isPersisted}
-      className={classNames(styles.menuItem, isActive && styles.menuItemActive)}
-      onClick={handleToggleClick}
-    >
+    <Menu.Item active={isActive} disabled={!isPersisted} className={classNames(styles.menuItem, isActive && styles.menuItemActive)} onClick={handleToggleClick}>
       <span className={styles.user}>
         <User name={user.name} avatarUrl={user.avatarUrl} />
       </span>
-      <div className={classNames(styles.menuItemText, isActive && styles.menuItemTextActive)}>
-        {user.name}
-      </div>
+      <div className={classNames(styles.menuItemText, isActive && styles.menuItemTextActive)}>{user.name}</div>
     </Menu.Item>
   );
 });

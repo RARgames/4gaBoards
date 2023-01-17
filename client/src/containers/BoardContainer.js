@@ -11,8 +11,7 @@ const mapStateToProps = (state) => {
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const listIds = selectors.selectListIdsForCurrentBoard(state);
 
-  const isCurrentUserEditor =
-    !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+  const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
   return {
     listIds,

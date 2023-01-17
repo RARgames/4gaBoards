@@ -19,8 +19,7 @@ export default {
       addUser_title: 'Add User',
       administrator: 'Administrator',
       all: 'All',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'All changes will be automatically saved<br />after connection restored',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'All changes will be automatically saved<br />after connection restored',
       areYouSureYouWantToDeleteThisAttachment: 'Are you sure you want to delete this attachment?',
       areYouSureYouWantToDeleteThisBoard: 'Are you sure you want to delete this board?',
       areYouSureYouWantToDeleteThisCard: 'Are you sure you want to delete this card?',
@@ -32,10 +31,8 @@ export default {
       areYouSureYouWantToDeleteThisUser: 'Are you sure you want to delete this user?',
       areYouSureYouWantToLeaveBoard: 'Are you sure you want to leave the board?',
       areYouSureYouWantToLeaveProject: 'Are you sure you want to leave the project?',
-      areYouSureYouWantToRemoveThisManagerFromProject:
-        'Are you sure you want to remove this manager from the project?',
-      areYouSureYouWantToRemoveThisMemberFromBoard:
-        'Are you sure you want to remove this member from the board?',
+      areYouSureYouWantToRemoveThisManagerFromProject: 'Are you sure you want to remove this manager from the project?',
+      areYouSureYouWantToRemoveThisMemberFromBoard: 'Are you sure you want to remove this member from the board?',
       attachment: 'Attachment',
       attachments: 'Attachments',
       authentication: 'Authentication',
@@ -123,8 +120,7 @@ export default {
       organization: 'Organization',
       phone: 'Phone',
       preferences: 'Preferences',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Tip: press Ctrl-V (Cmd-V on Mac) to add an attachment from the clipboard',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: press Ctrl-V (Cmd-V on Mac) to add an attachment from the clipboard',
       project: 'Project',
       projectNotFound_title: 'Project Not Found',
       removeManager_title: 'Remove Manager',
@@ -141,8 +137,7 @@ export default {
       subscribeToMyOwnCardsByDefault: 'Subscribe to my own cards by default',
       taskActions_title: 'Task Actions',
       tasks: 'Tasks',
-      thereIsNoPreviewAvailableForThisAttachment:
-        'There is no preview available for this attachment',
+      thereIsNoPreviewAvailableForThisAttachment: 'There is no preview available for this attachment',
       time: 'Time',
       timer: 'Timer',
       title: 'Title',
@@ -150,8 +145,7 @@ export default {
       userAddedThisCardToList: '<0>{{user}}</0><1> added this card to {{list}}</1>',
       userLeftNewCommentToCard: '{{user}} left a new comment «{{comment}}» to <2>{{card}}</2>',
       userMovedCardFromListToList: '{{user}} moved <2>{{card}}</2> from {{fromList}} to {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> moved this card from {{fromList}} to {{toList}}</1>',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> moved this card from {{fromList}} to {{toList}}</1>',
       username: 'Username',
       usernameAlreadyInUse: 'Username already in use',
       users: 'Users',

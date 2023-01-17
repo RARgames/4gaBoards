@@ -47,16 +47,7 @@ const Tasks = React.memo(({ items, canEdit, onCreate, onUpdate, onMove, onDelete
 
   return (
     <>
-      {items.length > 0 && (
-        <Progress
-          autoSuccess
-          value={completedItems.length}
-          total={items.length}
-          color="blue"
-          size="tiny"
-          className={styles.progress}
-        />
-      )}
+      {items.length > 0 && <Progress autoSuccess value={completedItems.length} total={items.length} color="blue" size="tiny" className={styles.progress} />}
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <Droppable droppableId="tasks" type={DroppableTypes.TASK}>
           {({ innerRef, droppableProps, placeholder }) => (
@@ -79,9 +70,7 @@ const Tasks = React.memo(({ items, canEdit, onCreate, onUpdate, onMove, onDelete
               {canEdit && (
                 <Add onCreate={onCreate}>
                   <button type="button" className={styles.taskButton}>
-                    <span className={styles.taskButtonText}>
-                      {items.length > 0 ? t('action.addAnotherTask') : t('action.addTask')}
-                    </span>
+                    <span className={styles.taskButtonText}>{items.length > 0 ? t('action.addAnotherTask') : t('action.addTask')}</span>
                   </button>
                 </Add>
               )}

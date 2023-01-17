@@ -42,9 +42,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const { board } = await sails.helpers.boards
-      .getProjectPath(inputs.boardId)
-      .intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND);
+    const { board } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND);
 
     const boardMembership = await BoardMembership.findOne({
       boardId: board.id,

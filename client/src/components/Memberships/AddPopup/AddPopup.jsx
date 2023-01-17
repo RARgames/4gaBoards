@@ -13,119 +13,91 @@ const StepTypes = {
   SELECT_PERMISSIONS: 'SELECT_PERMISSIONS',
 };
 
-const AddStep = React.memo(
-  ({ users, currentUserIds, permissionsSelectStep, title, onCreate, onClose }) => {
-    const [t] = useTranslation();
-    const [step, openStep, handleBack] = useSteps();
-    const [search, handleSearchChange] = useField('');
-    const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
+const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, title, onCreate, onClose }) => {
+  const [t] = useTranslation();
+  const [step, openStep, handleBack] = useSteps();
+  const [search, handleSearchChange] = useField('');
+  const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
-    const filteredUsers = useMemo(
-      () =>
-        users.filter(
-          (user) =>
-            user.email.includes(cleanSearch) ||
-            user.name.toLowerCase().includes(cleanSearch) ||
-            (user.username && user.username.includes(cleanSearch)),
-        ),
-      [users, cleanSearch],
-    );
+  const filteredUsers = useMemo(
+    () => users.filter((user) => user.email.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch))),
+    [users, cleanSearch],
+  );
 
-    const searchField = useRef(null);
+  const searchField = useRef(null);
 
-    const handleUserSelect = useCallback(
-      (id) => {
-        if (permissionsSelectStep) {
-          openStep(StepTypes.SELECT_PERMISSIONS, {
-            userId: id,
-          });
-        } else {
-          onCreate({
-            userId: id,
-          });
-
-          onClose();
-        }
-      },
-      [permissionsSelectStep, onCreate, onClose, openStep],
-    );
-
-    const handleRoleSelect = useCallback(
-      (data) => {
-        onCreate({
-          userId: step.params.userId,
-          ...data,
+  const handleUserSelect = useCallback(
+    (id) => {
+      if (permissionsSelectStep) {
+        openStep(StepTypes.SELECT_PERMISSIONS, {
+          userId: id,
         });
-      },
-      [onCreate, step],
-    );
+      } else {
+        onCreate({
+          userId: id,
+        });
 
-    useEffect(() => {
-      searchField.current.focus({
-        preventScroll: true,
-      });
-    }, []);
-
-    if (step) {
-      switch (step.type) {
-        case StepTypes.SELECT_PERMISSIONS: {
-          const currentUser = users.find((user) => user.id === step.params.userId);
-
-          if (currentUser) {
-            const PermissionsSelectStep = permissionsSelectStep;
-
-            return (
-              <PermissionsSelectStep
-                buttonContent="action.addMember"
-                onSelect={handleRoleSelect}
-                onBack={handleBack}
-                onClose={onClose}
-              />
-            );
-          }
-
-          openStep(null);
-
-          break;
-        }
-        default:
+        onClose();
       }
-    }
+    },
+    [permissionsSelectStep, onCreate, onClose, openStep],
+  );
 
-    return (
-      <>
-        <Popup.Header>
-          {t(title, {
-            context: 'title',
-          })}
-        </Popup.Header>
-        <Popup.Content>
-          <Input
-            fluid
-            ref={searchField}
-            value={search}
-            placeholder={t('common.searchUsers')}
-            icon="search"
-            onChange={handleSearchChange}
-          />
-          {filteredUsers.length > 0 && (
-            <div className={styles.users}>
-              {filteredUsers.map((user) => (
-                <UserItem
-                  key={user.id}
-                  name={user.name}
-                  avatarUrl={user.avatarUrl}
-                  isActive={currentUserIds.includes(user.id)}
-                  onSelect={() => handleUserSelect(user.id)}
-                />
-              ))}
-            </div>
-          )}
-        </Popup.Content>
-      </>
-    );
-  },
-);
+  const handleRoleSelect = useCallback(
+    (data) => {
+      onCreate({
+        userId: step.params.userId,
+        ...data,
+      });
+    },
+    [onCreate, step],
+  );
+
+  useEffect(() => {
+    searchField.current.focus({
+      preventScroll: true,
+    });
+  }, []);
+
+  if (step) {
+    switch (step.type) {
+      case StepTypes.SELECT_PERMISSIONS: {
+        const currentUser = users.find((user) => user.id === step.params.userId);
+
+        if (currentUser) {
+          const PermissionsSelectStep = permissionsSelectStep;
+
+          return <PermissionsSelectStep buttonContent="action.addMember" onSelect={handleRoleSelect} onBack={handleBack} onClose={onClose} />;
+        }
+
+        openStep(null);
+
+        break;
+      }
+      default:
+    }
+  }
+
+  return (
+    <>
+      <Popup.Header>
+        {t(title, {
+          context: 'title',
+        })}
+      </Popup.Header>
+      <Popup.Content>
+        <Input fluid ref={searchField} value={search} placeholder={t('common.searchUsers')} icon="search" onChange={handleSearchChange} />
+        {filteredUsers.length > 0 && (
+          <div className={styles.users}>
+            {filteredUsers.map((user) => (
+              <UserItem key={user.id} name={user.name} avatarUrl={user.avatarUrl} isActive={currentUserIds.includes(user.id)} onSelect={() => handleUserSelect(user.id)} />
+            ))}
+          </div>
+        )}
+      </Popup.Content>
+    </>
+  );
+});
 
 AddStep.propTypes = {
   /* eslint-disable react/forbid-prop-types */

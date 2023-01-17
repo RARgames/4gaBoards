@@ -83,24 +83,19 @@ module.exports = {
       .set({ ...values })
       .intercept(
         {
-          message:
-            'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_email_unique"',
+          message: 'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_email_unique"',
         },
         'emailAlreadyInUse',
       )
       .intercept(
         {
-          message:
-            'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_username_unique"',
+          message: 'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_username_unique"',
         },
         'usernameAlreadyInUse',
       );
 
     if (user) {
-      if (
-        inputs.record.avatar &&
-        (!user.avatar || user.avatar.dirname !== inputs.record.avatar.dirname)
-      ) {
+      if (inputs.record.avatar && (!user.avatar || user.avatar.dirname !== inputs.record.avatar.dirname)) {
         try {
           rimraf.sync(path.join(sails.config.custom.userAvatarsPath, inputs.record.avatar.dirname));
         } catch (error) {

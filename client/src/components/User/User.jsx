@@ -15,15 +15,7 @@ const SIZES = {
   MASSIVE: 'massive',
 };
 
-const COLORS = [
-  'emerald',
-  'peter-river',
-  'wisteria',
-  'carrot',
-  'alizarin',
-  'turquoise',
-  'midnight-blue',
-];
+const COLORS = ['emerald', 'peter-river', 'wisteria', 'carrot', 'alizarin', 'turquoise', 'midnight-blue'];
 
 const getColor = (name) => {
   let sum = 0;
@@ -38,12 +30,7 @@ const User = React.memo(({ name, avatarUrl, size, isDisabled, onClick }) => {
   const contentNode = (
     <span
       title={name}
-      className={classNames(
-        styles.wrapper,
-        styles[`wrapper${upperFirst(size)}`],
-        onClick && styles.wrapperHoverable,
-        !avatarUrl && styles[`background${upperFirst(camelCase(getColor(name)))}`],
-      )}
+      className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable, !avatarUrl && styles[`background${upperFirst(camelCase(getColor(name)))}`])}
       style={{
         background: avatarUrl && `url("${avatarUrl}") center / cover`,
       }}

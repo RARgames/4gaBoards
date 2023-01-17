@@ -22,8 +22,7 @@ export default {
       addUser_title: 'Tilføj bruger',
       administrator: 'Administrator',
       all: 'Alle',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'Alle ændringer vil automatisk blive gemt<br />ved genforbindelse',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Alle ændringer vil automatisk blive gemt<br />ved genforbindelse',
       areYouSureYouWantToDeleteThisAttachment: 'Vil du slette den vedhæftede fil?',
       areYouSureYouWantToDeleteThisBoard: 'Vil du slette dette bræt?',
       areYouSureYouWantToDeleteThisCard: 'Vil du slette dette kort?',
@@ -35,8 +34,7 @@ export default {
       areYouSureYouWantToDeleteThisUser: 'Vil du slette denne bruger?',
       areYouSureYouWantToLeaveBoard: 'Vil du forlade dette bræt?',
       areYouSureYouWantToLeaveProject: 'Vil du forlade dette projekt?',
-      areYouSureYouWantToRemoveThisManagerFromProject:
-        'Vil du slette denne projektleder fra projektet?',
+      areYouSureYouWantToRemoveThisManagerFromProject: 'Vil du slette denne projektleder fra projektet?',
       areYouSureYouWantToRemoveThisMemberFromBoard: 'Vil du slette dette medlem fra projektet?',
       attachment: 'Vedhæftede fil',
       attachments: 'Vedhæftede filer',
@@ -115,8 +113,7 @@ export default {
       organization: 'Organisation',
       phone: 'Telefon',
       preferences: 'Præferencer',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Tip: Tryk Ctrl-V (Cmd-V på Mac) for at vedhæfte direkte fra udklipsholder',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: Tryk Ctrl-V (Cmd-V på Mac) for at vedhæfte direkte fra udklipsholder',
       project: 'Projekt',
       projectNotFound_title: 'Projekt ej fundet',
       removeManager_title: 'Fjern projektleder',
@@ -135,10 +132,8 @@ export default {
       userActions_title: 'Brugerhandlinger',
       userAddedThisCardToList: '<0>{{user}}</0><1> tilføjede kortet til {{list}}</1>',
       userLeftNewCommentToCard: '{{user}} skrevet en ny kommentar «{{comment}}» på <2>{{card}}</2>',
-      userMovedCardFromListToList:
-        '{{user}} flyttede <2>{{card}}</2> fra {{fromList}} til {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> flyttede kortet fra {{fromList}} til {{toList}}</1>',
+      userMovedCardFromListToList: '{{user}} flyttede <2>{{card}}</2> fra {{fromList}} til {{toList}}',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> flyttede kortet fra {{fromList}} til {{toList}}</1>',
       username: 'Brugernavn',
       usernameAlreadyInUse: 'Brugernavn allerede i brug',
       users: 'Brugere',

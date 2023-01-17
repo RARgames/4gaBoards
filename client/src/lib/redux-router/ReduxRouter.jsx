@@ -20,12 +20,7 @@ function ReduxRouter({ children, history, selector, basename }) {
   }, [history, dispatch]);
 
   return (
-    <Router
-      basename={basename}
-      location={state.location}
-      navigationType={state.action}
-      navigator={history}
-    >
+    <Router basename={basename} location={state.location} navigationType={state.action} navigator={history}>
       {children}
     </Router>
   );

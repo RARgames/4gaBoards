@@ -22,13 +22,7 @@ const DueDate = React.memo(({ value, size, isDisabled, onClick }) => {
   const [t] = useTranslation();
 
   const contentNode = (
-    <span
-      className={classNames(
-        styles.wrapper,
-        styles[`wrapper${upperFirst(size)}`],
-        onClick && styles.wrapperHoverable,
-      )}
-    >
+    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable)}>
       {t(`format:${FORMATS[size]}`, {
         value,
         postProcess: 'formatDate',

@@ -90,10 +90,7 @@ const Card = React.memo(
           {labels.length > 0 && (
             <span className={styles.labels}>
               {labels.map((label) => (
-                <span
-                  key={label.id}
-                  className={classNames(styles.attachment, styles.attachmentLeft)}
-                >
+                <span key={label.id} className={classNames(styles.attachment, styles.attachmentLeft)}>
                   <Label name={label.name} color={label.color} size="tiny" />
                 </span>
               ))}
@@ -103,17 +100,7 @@ const Card = React.memo(
           {tasks.length > 0 && <Tasks items={tasks} />}
           {(dueDate || timer || notificationsTotal > 0) && (
             <span className={styles.attachments}>
-              {notificationsTotal > 0 && (
-                <span
-                  className={classNames(
-                    styles.attachment,
-                    styles.attachmentLeft,
-                    styles.notification,
-                  )}
-                >
-                  {notificationsTotal}
-                </span>
-              )}
+              {notificationsTotal > 0 && <span className={classNames(styles.attachment, styles.attachmentLeft, styles.notification)}>{notificationsTotal}</span>}
               {dueDate && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
                   <DueDate value={dueDate} size="tiny" />
@@ -121,13 +108,7 @@ const Card = React.memo(
               )}
               {timer && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Timer
-                    as="span"
-                    startedAt={timer.startedAt}
-                    total={timer.total}
-                    size="tiny"
-                    onClick={canEdit ? handleToggleTimerClick : undefined}
-                  />
+                  <Timer as="span" startedAt={timer.startedAt} total={timer.total} size="tiny" onClick={canEdit ? handleToggleTimerClick : undefined} />
                 </span>
               )}
             </span>
@@ -135,10 +116,7 @@ const Card = React.memo(
           {users.length > 0 && (
             <span className={classNames(styles.attachments, styles.attachmentsRight)}>
               {users.map((user) => (
-                <span
-                  key={user.id}
-                  className={classNames(styles.attachment, styles.attachmentRight)}
-                >
+                <span key={user.id} className={classNames(styles.attachment, styles.attachmentRight)}>
                   <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
                 </span>
               ))}
@@ -157,11 +135,7 @@ const Card = React.memo(
               <div className={styles.card}>
                 {isPersisted ? (
                   <>
-                    <Link
-                      to={Paths.CARDS.replace(':id', id)}
-                      className={styles.content}
-                      onClick={handleClick}
-                    >
+                    <Link to={Paths.CARDS.replace(':id', id)} className={styles.content} onClick={handleClick}>
                       {contentNode}
                     </Link>
                     {canEdit && (

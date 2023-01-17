@@ -53,12 +53,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
   );
 
   const itemsNode = items.map((item, index) => (
-    <Draggable
-      key={item.id}
-      draggableId={item.id}
-      index={index}
-      isDragDisabled={!item.isPersisted || !canEdit}
-    >
+    <Draggable key={item.id} draggableId={item.id} index={index} isDragDisabled={!item.isPersisted || !canEdit}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...draggableProps} ref={innerRef} className={styles.tabWrapper}>
@@ -74,11 +69,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                   {item.name}
                 </Link>
                 {canEdit && (
-                  <EditPopup
-                    defaultData={pick(item, 'name')}
-                    onUpdate={(data) => handleUpdate(item.id, data)}
-                    onDelete={() => handleDelete(item.id)}
-                  >
+                  <EditPopup defaultData={pick(item, 'name')} onUpdate={(data) => handleUpdate(item.id, data)} onDelete={() => handleDelete(item.id)}>
                     <Button className={classNames(styles.editButton, styles.target)}>
                       <Icon fitted name="pencil" size="small" />
                     </Button>

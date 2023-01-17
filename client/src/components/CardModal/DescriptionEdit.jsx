@@ -60,25 +60,7 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate }, 
       autofocus: true,
       spellChecker: false,
       status: false,
-      toolbar: [
-        'bold',
-        'italic',
-        'heading',
-        'strikethrough',
-        '|',
-        'quote',
-        'unordered-list',
-        'ordered-list',
-        'table',
-        '|',
-        'link',
-        'image',
-        '|',
-        'undo',
-        'redo',
-        '|',
-        'guide',
-      ],
+      toolbar: ['bold', 'italic', 'heading', 'strikethrough', '|', 'quote', 'unordered-list', 'ordered-list', 'table', '|', 'link', 'image', '|', 'undo', 'redo', '|', 'guide'],
     }),
     [],
   );
@@ -91,14 +73,7 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate }, 
 
   return (
     <Form onSubmit={handleSubmit}>
-      <SimpleMDE
-        value={value}
-        options={mdEditorOptions}
-        placeholder={t('common.enterDescription')}
-        className={styles.field}
-        onKeyDown={handleFieldKeyDown}
-        onChange={setValue}
-      />
+      <SimpleMDE value={value} options={mdEditorOptions} placeholder={t('common.enterDescription')} className={styles.field} onKeyDown={handleFieldKeyDown} onChange={setValue} />
       <div className={styles.controls}>
         {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
         <Button positive content={t('action.save')} />

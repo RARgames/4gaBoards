@@ -1,5 +1,4 @@
-const recordsOrIdsValidator = (value) =>
-  _.every(value, _.isPlainObject) || _.every(value, _.isString);
+const recordsOrIdsValidator = (value) => _.every(value, _.isPlainObject) || _.every(value, _.isString);
 
 module.exports = {
   inputs: {

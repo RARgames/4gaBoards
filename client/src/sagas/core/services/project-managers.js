@@ -61,13 +61,7 @@ export function* handleProjectManagerCreate(projectManager) {
   if (isCurrentUser) {
     const { boardId } = yield select(selectors.selectPath);
 
-    yield put(
-      actions.handleProjectManagerCreate.fetchProject(
-        projectManager.projectId,
-        currentUserId,
-        boardId,
-      ),
-    );
+    yield put(actions.handleProjectManagerCreate.fetchProject(projectManager.projectId, currentUserId, boardId));
 
     try {
       ({
@@ -84,19 +78,7 @@ export function* handleProjectManagerCreate(projectManager) {
     } catch {} // eslint-disable-line no-empty
 
     if (body && body.project && body.project.id === projectManager.projectId) {
-      ({
-        project,
-        board,
-        users: users2,
-        boardMemberships: boardMemberships2,
-        labels,
-        lists,
-        cards,
-        cardMemberships,
-        cardLabels,
-        tasks,
-        attachments,
-      } = body);
+      ({ project, board, users: users2, boardMemberships: boardMemberships2, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments } = body);
 
       if (body.card) {
         deletedNotifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
@@ -137,13 +119,7 @@ export function* deleteProjectManager(id) {
   const currentUserId = yield select(selectors.selectCurrentUserId);
   const { projectId } = yield select(selectors.selectPath);
 
-  yield put(
-    actions.deleteProjectManager(
-      id,
-      projectManager.userId === currentUserId,
-      projectManager.projectId === projectId,
-    ),
-  );
+  yield put(actions.deleteProjectManager(id, projectManager.userId === currentUserId, projectManager.projectId === projectId));
 
   try {
     ({ item: projectManager } = yield call(request, api.deleteProjectManager, id));
@@ -159,13 +135,7 @@ export function* handleProjectManagerDelete(projectManager) {
   const currentUserId = yield select(selectors.selectCurrentUserId);
   const { projectId } = yield select(selectors.selectPath);
 
-  yield put(
-    actions.handleProjectManagerDelete(
-      projectManager,
-      projectManager.userId === currentUserId,
-      projectManager.projectId === projectId,
-    ),
-  );
+  yield put(actions.handleProjectManagerDelete(projectManager, projectManager.userId === currentUserId, projectManager.projectId === projectId));
 }
 
 export default {

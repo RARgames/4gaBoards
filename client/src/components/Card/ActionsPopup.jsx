@@ -102,15 +102,7 @@ const ActionsStep = React.memo(
     if (step) {
       switch (step.type) {
         case StepTypes.USERS:
-          return (
-            <BoardMembershipsStep
-              items={boardMemberships}
-              currentUserIds={currentUserIds}
-              onUserSelect={onUserAdd}
-              onUserDeselect={onUserRemove}
-              onBack={handleBack}
-            />
-          );
+          return <BoardMembershipsStep items={boardMemberships} currentUserIds={currentUserIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
         case StepTypes.LABELS:
           return (
             <LabelsStep
@@ -126,23 +118,9 @@ const ActionsStep = React.memo(
             />
           );
         case StepTypes.EDIT_DUE_DATE:
-          return (
-            <DueDateEditStep
-              defaultValue={card.dueDate}
-              onUpdate={handleDueDateUpdate}
-              onBack={handleBack}
-              onClose={onClose}
-            />
-          );
+          return <DueDateEditStep defaultValue={card.dueDate} onUpdate={handleDueDateUpdate} onBack={handleBack} onClose={onClose} />;
         case StepTypes.EDIT_TIMER:
-          return (
-            <TimerEditStep
-              defaultValue={card.timer}
-              onUpdate={handleTimerUpdate}
-              onBack={handleBack}
-              onClose={onClose}
-            />
-          );
+          return <TimerEditStep defaultValue={card.timer} onUpdate={handleTimerUpdate} onBack={handleBack} onClose={onClose} />;
         case StepTypes.MOVE:
           return (
             <CardMoveStep

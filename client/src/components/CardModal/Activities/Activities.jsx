@@ -10,20 +10,7 @@ import Item from './Item';
 import styles from './Activities.module.scss';
 
 const Activities = React.memo(
-  ({
-    items,
-    isFetching,
-    isAllFetched,
-    isDetailsVisible,
-    isDetailsFetching,
-    canEdit,
-    canEditAllComments,
-    onFetch,
-    onDetailsToggle,
-    onCommentCreate,
-    onCommentUpdate,
-    onCommentDelete,
-  }) => {
+  ({ items, isFetching, isAllFetched, isDetailsVisible, isDetailsFetching, canEdit, canEditAllComments, onFetch, onDetailsToggle, onCommentCreate, onCommentUpdate, onCommentDelete }) => {
     const [t] = useTranslation();
 
     const handleToggleDetailsClick = useCallback(() => {
@@ -50,11 +37,7 @@ const Activities = React.memo(
           <Icon name="list ul" className={styles.moduleIcon} />
           <div className={styles.moduleHeader}>
             {t('common.actions')}
-            <Button
-              content={isDetailsVisible ? t('action.hideDetails') : t('action.showDetails')}
-              className={styles.toggleButton}
-              onClick={handleToggleDetailsClick}
-            />
+            <Button content={isDetailsVisible ? t('action.hideDetails') : t('action.showDetails')} className={styles.toggleButton} onClick={handleToggleDetailsClick} />
           </div>
           {canEdit && <CommentAdd onCreate={onCommentCreate} />}
           <div className={styles.wrapper}>
@@ -72,22 +55,12 @@ const Activities = React.memo(
                     onDelete={() => handleCommentDelete(item.id)}
                   />
                 ) : (
-                  <Item
-                    key={item.id}
-                    type={item.type}
-                    data={item.data}
-                    createdAt={item.createdAt}
-                    user={item.user}
-                  />
+                  <Item key={item.id} type={item.type} data={item.data} createdAt={item.createdAt} user={item.user} />
                 ),
               )}
             </Comment.Group>
           </div>
-          {isFetching || isDetailsFetching ? (
-            <Loader active inverted inline="centered" size="small" className={styles.loader} />
-          ) : (
-            !isAllFetched && <Visibility fireOnMount onOnScreen={onFetch} />
-          )}
+          {isFetching || isDetailsFetching ? <Loader active inverted inline="centered" size="small" className={styles.loader} /> : !isAllFetched && <Visibility fireOnMount onOnScreen={onFetch} />}
         </div>
       </div>
     );

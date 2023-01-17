@@ -17,14 +17,12 @@ module.exports = {
       throw 'pathNotFound';
     }
 
-    const path = await sails.helpers.lists
-      .getProjectPath(card.listId)
-      .intercept('pathNotFound', (nodes) => ({
-        pathNotFound: {
-          card,
-          ...nodes,
-        },
-      }));
+    const path = await sails.helpers.lists.getProjectPath(card.listId).intercept('pathNotFound', (nodes) => ({
+      pathNotFound: {
+        card,
+        ...nodes,
+      },
+    }));
 
     return {
       card,

@@ -53,11 +53,7 @@ const AccountPane = React.memo(
 
     return (
       <Tab.Pane attached={false} className={styles.wrapper}>
-        <AvatarEditPopup
-          defaultValue={avatarUrl}
-          onUpdate={onAvatarUpdate}
-          onDelete={handleAvatarDelete}
-        >
+        <AvatarEditPopup defaultValue={avatarUrl} onUpdate={onAvatarUpdate} onDelete={handleAvatarDelete}>
           <User name={name} avatarUrl={avatarUrl} size="massive" isDisabled={isAvatarUpdating} />
         </AvatarEditPopup>
         <br />

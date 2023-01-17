@@ -19,11 +19,7 @@ module.exports.up = (knex) =>
       table.timestamp('updated_at', true);
       table.timestamp('deleted_at', true);
     })
-    .raw(
-      'ALTER TABLE "user_account" ADD CONSTRAINT "user_email_unique" EXCLUDE ("email" WITH =) WHERE ("deleted_at" IS NULL)',
-    )
-    .raw(
-      'ALTER TABLE "user_account" ADD CONSTRAINT "user_username_unique" EXCLUDE ("username" WITH =) WHERE ("username" IS NOT NULL AND "deleted_at" IS NULL)',
-    );
+    .raw('ALTER TABLE "user_account" ADD CONSTRAINT "user_email_unique" EXCLUDE ("email" WITH =) WHERE ("deleted_at" IS NULL)')
+    .raw('ALTER TABLE "user_account" ADD CONSTRAINT "user_username_unique" EXCLUDE ("username" WITH =) WHERE ("username" IS NOT NULL AND "deleted_at" IS NULL)');
 
 module.exports.down = (knex) => knex.schema.dropTable('user_account');

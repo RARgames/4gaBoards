@@ -31,8 +31,7 @@ module.exports = {
       return Object.values(result);
     };
 
-    const getTrelloCardsOfList = (listId) =>
-      inputs.trelloBoard.cards.filter((card) => card.idList === listId && !card.closed);
+    const getTrelloCardsOfList = (listId) => inputs.trelloBoard.cards.filter((card) => card.idList === listId && !card.closed);
 
     const getAllTrelloCheckItemsOfCard = (cardId) =>
       inputs.trelloBoard.checklists
@@ -40,17 +39,9 @@ module.exports = {
         .map((checklist) => checklist.checkItems)
         .flat();
 
-    const getTrelloCommentsOfCard = (cardId) =>
-      inputs.trelloBoard.actions.filter(
-        (action) =>
-          action.type === 'commentCard' &&
-          action.data &&
-          action.data.card &&
-          action.data.card.id === cardId,
-      );
+    const getTrelloCommentsOfCard = (cardId) => inputs.trelloBoard.actions.filter((action) => action.type === 'commentCard' && action.data && action.data.card && action.data.card.id === cardId);
 
-    const getPlankaLabelColor = (trelloLabelColor) =>
-      Label.COLORS.find((color) => color.indexOf(trelloLabelColor) !== -1) || 'desert-sand';
+    const getPlankaLabelColor = (trelloLabelColor) => Label.COLORS.find((color) => color.indexOf(trelloLabelColor) !== -1) || 'desert-sand';
 
     const importCardLabels = async (plankaCard, trelloCard) => {
       return Promise.all(

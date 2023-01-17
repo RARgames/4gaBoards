@@ -73,20 +73,11 @@ const ActionsStep = React.memo(
         case StepTypes.DELETE:
           return (
             <DeleteStep
-              title={t(
-                membership.user.isCurrent ? leaveConfirmationTitle : deleteConfirmationTitle,
-                {
-                  context: 'title',
-                },
-              )}
-              content={t(
-                membership.user.isCurrent ? leaveConfirmationContent : deleteConfirmationContent,
-              )}
-              buttonContent={t(
-                membership.user.isCurrent
-                  ? leaveConfirmationButtonContent
-                  : deleteConfirmationButtonContent,
-              )}
+              title={t(membership.user.isCurrent ? leaveConfirmationTitle : deleteConfirmationTitle, {
+                context: 'title',
+              })}
+              content={t(membership.user.isCurrent ? leaveConfirmationContent : deleteConfirmationContent)}
+              buttonContent={t(membership.user.isCurrent ? leaveConfirmationButtonContent : deleteConfirmationButtonContent)}
               onConfirm={onDelete}
               onBack={handleBack}
             />
@@ -104,31 +95,10 @@ const ActionsStep = React.memo(
           <div className={styles.name}>{membership.user.name}</div>
           <div className={styles.email}>{membership.user.email}</div>
         </span>
-        {permissionsSelectStep && canEdit && (
-          <Button
-            fluid
-            content={t('action.editPermissions')}
-            className={styles.button}
-            onClick={handleEditPermissionsClick}
-          />
-        )}
+        {permissionsSelectStep && canEdit && <Button fluid content={t('action.editPermissions')} className={styles.button} onClick={handleEditPermissionsClick} />}
         {membership.user.isCurrent
-          ? canLeave && (
-              <Button
-                fluid
-                content={t(leaveButtonContent)}
-                className={styles.button}
-                onClick={handleDeleteClick}
-              />
-            )
-          : canEdit && (
-              <Button
-                fluid
-                content={t(deleteButtonContent)}
-                className={styles.button}
-                onClick={handleDeleteClick}
-              />
-            )}
+          ? canLeave && <Button fluid content={t(leaveButtonContent)} className={styles.button} onClick={handleDeleteClick} />
+          : canEdit && <Button fluid content={t(deleteButtonContent)} className={styles.button} onClick={handleDeleteClick} />}
       </>
     );
   },

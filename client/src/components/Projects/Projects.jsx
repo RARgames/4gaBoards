@@ -22,31 +22,18 @@ const Projects = React.memo(({ items, canAdd, onAdd }) => {
       <Grid className={styles.gridFix}>
         {items.map((item) => (
           <Grid.Column key={item.id} mobile={8} computer={4}>
-            <Link
-              to={
-                item.firstBoardId
-                  ? Paths.BOARDS.replace(':id', item.firstBoardId)
-                  : Paths.PROJECTS.replace(':id', item.id)
-              }
-            >
+            <Link to={item.firstBoardId ? Paths.BOARDS.replace(':id', item.firstBoardId) : Paths.PROJECTS.replace(':id', item.id)}>
               <div
                 className={classNames(
                   styles.card,
                   styles.open,
-                  item.background &&
-                    item.background.type === ProjectBackgroundTypes.GRADIENT &&
-                    globalStyles[`background${upperFirst(camelCase(item.background.name))}`],
+                  item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`],
                 )}
                 style={{
-                  background:
-                    item.background &&
-                    item.background.type === 'image' &&
-                    `url("${item.backgroundImage.coverUrl}") center / cover`,
+                  background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
                 }}
               >
-                {item.notificationsTotal > 0 && (
-                  <span className={styles.notification}>{item.notificationsTotal}</span>
-                )}
+                {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
                 <div className={styles.cardOverlay} />
                 <div className={styles.openTitle}>{item.name}</div>
               </div>

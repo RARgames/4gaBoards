@@ -21,8 +21,7 @@ export default {
       addUser_title: 'Dodaj Użytkownika',
       administrator: 'Administrator',
       all: 'Wszyscy',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'Wszystkie zmiany zostaną automatycznie zapisane<br />po przywróceniu połączenia',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Wszystkie zmiany zostaną automatycznie zapisane<br />po przywróceniu połączenia',
       areYouSureYouWantToDeleteThisAttachment: 'Jesteś pewien że chcesz usunąć ten załącznik?',
       areYouSureYouWantToDeleteThisBoard: 'Jesteś pewien że chcesz usunąć tę tablicę?',
       areYouSureYouWantToDeleteThisCard: 'Jesteś pewien że chcesz usunąć tę kartę?',
@@ -32,8 +31,7 @@ export default {
       areYouSureYouWantToDeleteThisProject: 'Jesteś pewien że chcesz usunąć ten projekt?',
       areYouSureYouWantToDeleteThisTask: 'Jesteś pewien że chcesz usunąć to zadanie?',
       areYouSureYouWantToDeleteThisUser: 'Jesteś pewien że chcesz usunąć tego użytkownika?',
-      areYouSureYouWantToRemoveThisMemberFromProject:
-        'Jesteś pewien że chcesz usunąć tego członka z projektu?',
+      areYouSureYouWantToRemoveThisMemberFromProject: 'Jesteś pewien że chcesz usunąć tego członka z projektu?',
       attachment: 'Załącznik',
       attachments: 'Załączniki',
       authentication: 'Uwierzytelnianie',
@@ -105,8 +103,7 @@ export default {
       organization: 'Organizacja',
       phone: 'Telefon',
       preferences: 'Preferencje',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Podpowiedź: naciśnij Ctrl-V (Cmd-V na Macu) aby dodać załącznik ze schowka',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Podpowiedź: naciśnij Ctrl-V (Cmd-V na Macu) aby dodać załącznik ze schowka',
       project: 'Projekt',
       projectNotFound_title: 'Projekt Nie Znaleziony',
       removeMember_title: 'Usuń Członka',
@@ -124,10 +121,8 @@ export default {
       userActions_title: 'Akcje użytkownika',
       userAddedThisCardToList: '<0>{{user}}</0><1> dodał tę kartę w {{list}}</1>',
       userLeftNewCommentToCard: '{{user}} zamieścił nowy komentarz «{{comment}}» w <2>{{card}}</2>',
-      userMovedCardFromListToList:
-        '{{user}} przeniósł <2>{{card}}</2> z {{fromList}} do {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> przeniósł tę kartę z {{fromList}} do {{toList}}</1>',
+      userMovedCardFromListToList: '{{user}} przeniósł <2>{{card}}</2> z {{fromList}} do {{toList}}',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> przeniósł tę kartę z {{fromList}} do {{toList}}</1>',
       username: 'Nazwa Użytkownika',
       usernameAlreadyInUse: 'Nazwa użytkownika jest już używana',
       users: 'Użytkownicy',

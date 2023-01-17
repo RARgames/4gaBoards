@@ -67,10 +67,7 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
         return;
       }
 
-      if (
-        ['input', 'textarea'].includes(event.target.tagName.toLowerCase()) &&
-        event.target === document.activeElement
-      ) {
+      if (['input', 'textarea'].includes(event.target.tagName.toLowerCase()) && event.target === document.activeElement) {
         return;
       }
 
@@ -100,13 +97,7 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <input {...getInputProps()} />
       </div>
-      {modal && (
-        <TextFileAddModal
-          content={modal.content}
-          onCreate={handleFileCreate}
-          onClose={handleModalClose}
-        />
-      )}
+      {modal && <TextFileAddModal content={modal.content} onCreate={handleFileCreate} onClose={handleModalClose} />}
     </>
   );
 });

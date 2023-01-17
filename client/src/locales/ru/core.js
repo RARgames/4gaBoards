@@ -21,8 +21,7 @@ export default {
       addUser: 'Добавление пользователя',
       administrator: 'Администратор',
       all: 'Все',
-      allChangesWillBeAutomaticallySavedAfterConnectionRestored:
-        'Все изменения сохранятся автоматически,<br />как только подключение восстановится',
+      allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Все изменения сохранятся автоматически,<br />как только подключение восстановится',
       areYouSureYouWantToDeleteThisAttachment: 'Вы уверены, что хотите удалить это вложение?',
       areYouSureYouWantToDeleteThisBoard: 'Вы уверены, что хотите удалить эту доску?',
       areYouSureYouWantToDeleteThisCard: 'Вы уверены, что хотите удалить эту карточку?',
@@ -32,8 +31,7 @@ export default {
       areYouSureYouWantToDeleteThisProject: 'Вы уверены, что хотите удалить этот проект?',
       areYouSureYouWantToDeleteThisTask: 'Вы уверены, что хотите удалить эту задачу?',
       areYouSureYouWantToDeleteThisUser: 'Вы уверены, что хотите удалить этого пользователя?',
-      areYouSureYouWantToRemoveThisMemberFromProject:
-        'Вы уверены, что хотите удалить этого участника из проекта?',
+      areYouSureYouWantToRemoveThisMemberFromProject: 'Вы уверены, что хотите удалить этого участника из проекта?',
       attachment: 'Вложение',
       attachments: 'Вложения',
       authentication: 'Аутентификация',
@@ -115,8 +113,7 @@ export default {
       organization: 'Организация',
       phone: 'Телефон',
       preferences: 'Предпочтения',
-      pressPasteShortcutToAddAttachmentFromClipboard:
-        'Совет: нажмите Ctrl-V (Cmd-V на Mac), чтобы добавить вложение из буфера обмена',
+      pressPasteShortcutToAddAttachmentFromClipboard: 'Совет: нажмите Ctrl-V (Cmd-V на Mac), чтобы добавить вложение из буфера обмена',
       project: 'Проект',
       projectActions: 'Действия с проектом',
       projectNotFound: 'Проект не найден',
@@ -140,10 +137,8 @@ export default {
       userActions: 'Действия с пользователем',
       userAddedThisCardToList: '<0>{{user}}</0><1> добавил(а) эту карточку в {{list}}</1>',
       userLeftNewCommentToCard: '{{user}} оставил(а) комментарий «{{comment}}» к <2>{{card}}</2>',
-      userMovedCardFromListToList:
-        '{{user}} переместил(а) <2>{{card}}</2> из {{fromList}} в {{toList}}',
-      userMovedThisCardFromListToList:
-        '<0>{{user}}</0><1> переместил(а) эту карточку из {{fromList}} в {{toList}}</1>',
+      userMovedCardFromListToList: '{{user}} переместил(а) <2>{{card}}</2> из {{fromList}} в {{toList}}',
+      userMovedThisCardFromListToList: '<0>{{user}}</0><1> переместил(а) эту карточку из {{fromList}} в {{toList}}</1>',
       username: 'Имя пользователя',
       usernameAlreadyInUse: 'Имя пользователя уже занято',
       users: 'Пользователи',

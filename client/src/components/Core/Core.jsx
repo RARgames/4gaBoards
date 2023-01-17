@@ -13,46 +13,40 @@ import Background from '../Background';
 
 import styles from './Core.module.scss';
 
-const Core = React.memo(
-  ({ isInitializing, isSocketDisconnected, currentModal, currentProject }) => {
-    const [t] = useTranslation();
+const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, currentProject }) => {
+  const [t] = useTranslation();
 
-    return (
-      <>
-        {isInitializing ? (
-          <Loader active size="massive" />
-        ) : (
-          <>
-            {currentProject && currentProject.background && (
-              <Background
-                type={currentProject.background.type}
-                name={currentProject.background.name}
-                imageUrl={currentProject.backgroundImage && currentProject.backgroundImage.url}
-              />
-            )}
-            <FixedContainer />
-            <StaticContainer />
-            {currentModal === ModalTypes.USERS && <UsersModalContainer />}
-            {currentModal === ModalTypes.USER_SETTINGS && <UserSettingsModalContainer />}
-            {currentModal === ModalTypes.PROJECT_ADD && <ProjectAddModalContainer />}
-          </>
-        )}
-        {isSocketDisconnected && (
-          <div className={styles.message}>
-            <div className={styles.messageHeader}>{t('common.noConnectionToServer')}</div>
-            <div className={styles.messageContent}>
-              <Trans i18nKey="common.allChangesWillBeAutomaticallySavedAfterConnectionRestored">
-                All changes will be automatically saved
-                <br />
-                after connection restored
-              </Trans>
-            </div>
+  return (
+    <>
+      {isInitializing ? (
+        <Loader active size="massive" />
+      ) : (
+        <>
+          {currentProject && currentProject.background && (
+            <Background type={currentProject.background.type} name={currentProject.background.name} imageUrl={currentProject.backgroundImage && currentProject.backgroundImage.url} />
+          )}
+          <FixedContainer />
+          <StaticContainer />
+          {currentModal === ModalTypes.USERS && <UsersModalContainer />}
+          {currentModal === ModalTypes.USER_SETTINGS && <UserSettingsModalContainer />}
+          {currentModal === ModalTypes.PROJECT_ADD && <ProjectAddModalContainer />}
+        </>
+      )}
+      {isSocketDisconnected && (
+        <div className={styles.message}>
+          <div className={styles.messageHeader}>{t('common.noConnectionToServer')}</div>
+          <div className={styles.messageContent}>
+            <Trans i18nKey="common.allChangesWillBeAutomaticallySavedAfterConnectionRestored">
+              All changes will be automatically saved
+              <br />
+              after connection restored
+            </Trans>
           </div>
-        )}
-      </>
-    );
-  },
-);
+        </div>
+      )}
+    </>
+  );
+});
 
 Core.propTypes = {
   isInitializing: PropTypes.bool.isRequired,

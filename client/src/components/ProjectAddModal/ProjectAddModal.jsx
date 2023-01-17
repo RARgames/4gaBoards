@@ -46,25 +46,8 @@ const ProjectAddModal = React.memo(({ defaultData, isSubmitting, onCreate, onClo
         </Header>
         <p>{t('common.enterProjectTitle')}</p>
         <Form onSubmit={handleSubmit}>
-          <Input
-            fluid
-            inverted
-            ref={nameField}
-            name="name"
-            value={data.name}
-            readOnly={isSubmitting}
-            className={styles.field}
-            onChange={handleFieldChange}
-          />
-          <Button
-            inverted
-            color="green"
-            icon="checkmark"
-            content={t('action.createProject')}
-            floated="right"
-            loading={isSubmitting}
-            disabled={isSubmitting}
-          />
+          <Input fluid inverted ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Button inverted color="green" icon="checkmark" content={t('action.createProject')} floated="right" loading={isSubmitting} disabled={isSubmitting} />
         </Form>
       </Modal.Content>
     </Modal>

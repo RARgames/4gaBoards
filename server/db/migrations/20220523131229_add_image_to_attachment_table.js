@@ -17,9 +17,7 @@ module.exports.up = async (knex) => {
   // eslint-disable-next-line no-restricted-syntax
   for (attachment of attachments) {
     if (attachment.is_image) {
-      const image = sharp(
-        path.join(config.custom.attachmentsPath, attachment.dirname, attachment.filename),
-      );
+      const image = sharp(path.join(config.custom.attachmentsPath, attachment.dirname, attachment.filename));
 
       let metadata;
       try {

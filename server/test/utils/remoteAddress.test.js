@@ -52,11 +52,7 @@ describe('remoteAddress', () => {
     it('should get IPv4 remote address while behind proxy and TRUST_PROXY=true', async () => {
       const expectedAddress = '172.2.109.132';
 
-      mockRequest(`::ffff:${expectedAddress}`, [
-        `::ffff:${expectedAddress}`,
-        '::ffff:192.182.23.111',
-        '::ffff:120.210.132.14',
-      ]);
+      mockRequest(`::ffff:${expectedAddress}`, [`::ffff:${expectedAddress}`, '::ffff:192.182.23.111', '::ffff:120.210.132.14']);
       mockProxyFlag(true);
 
       expect(getRemoteAddress(MOCK_REQUEST)).to.be.equal(expectedAddress);
@@ -65,11 +61,7 @@ describe('remoteAddress', () => {
     it('should get IPv6 remote address while behind proxy and TRUST_PROXY=true', async () => {
       const expectedAddress = 'f53f:5832:9f1c:fe38:ce3d:1be8:81a2:115e';
 
-      mockRequest(expectedAddress, [
-        expectedAddress,
-        '9d74:fb18:3b95:801f:8751:8d18:8207:b322',
-        '598e:4291:e1b3:2991:5d17:00af:1b6b:802c',
-      ]);
+      mockRequest(expectedAddress, [expectedAddress, '9d74:fb18:3b95:801f:8751:8d18:8207:b322', '598e:4291:e1b3:2991:5d17:00af:1b6b:802c']);
       mockProxyFlag(true);
 
       expect(getRemoteAddress(MOCK_REQUEST)).to.be.equal(expectedAddress);

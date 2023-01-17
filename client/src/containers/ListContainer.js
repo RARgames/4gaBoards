@@ -19,8 +19,7 @@ const makeMapStateToProps = () => {
     const filteredCardIds = selectFilteredCardIdsByListId(state, id);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-    const isCurrentUserEditor =
-      !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+    const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
     return {
       id,

@@ -10,9 +10,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(
-      inputs.record.projectId,
-    );
+    const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(inputs.record.projectId);
 
     const projectManager = await ProjectManager.destroyOne(inputs.record.id);
 
