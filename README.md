@@ -1,8 +1,8 @@
 # 4ga Boards
 
-![David (path)](https://img.shields.io/github/package-json/v/rargames/4gaBoards) ![Docker Pulls](https://img.shields.io/docker/pulls/rargames/4gaBoards) ![GitHub](https://img.shields.io/github/license/rargames/4gaBoards)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/RARgames/4gaBoards?color=orange&style=flat-square)![GitHub](https://img.shields.io/github/license/rargames/4gaBoards?style=flat-square)![GitHub contributors](https://img.shields.io/github/contributors/rargames/4gaboards?style=flat-square)
 
-A kanban boards inspired by discontinued Gitkraken Glo Boards.
+Kanban boards inspired by discontinued Gitkraken Glo Boards.
 
 ![](https://raw.githubusercontent.com/plankanban/planka/master/demo.gif)
 
