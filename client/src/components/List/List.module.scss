@@ -42,7 +42,7 @@
   .cardsInnerWrapper {
     max-height: calc(100vh - 268px);
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #646464 #a6a6a6;
     width: 275px;
