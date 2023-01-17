@@ -5,10 +5,10 @@
   "homepage": "https://plankanban.github.io/planka",
   "repository": {
     "type": "git",
-    "url": "https://github.com/plankanban/planka.git"
+    "url": "https://github.com/RARgames/4gaBoards.git"
   },
   "license": "MIT",
-  "author": "Maksim Eltyshev",
+  "author": "RARgames",
   "scripts": {
     "client:build": "npm run build --prefix client",
     "client:lint": "npm run lint --prefix client",

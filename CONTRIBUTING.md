@@ -4,7 +4,7 @@ First off, thanks for taking the time to contribute!
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Planka Code of Conduct](https://github.com/plankanban/planka/blob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+This project and everyone participating in it is governed by the [Planka Code of Conduct](https://github.com/RARgames/4gaBoards/blob/main/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## How Can I Contribute?
 
@@ -22,8 +22,8 @@ Before submitting a pull request please discuss with the core team by creating o
 
 If you’re looking for ways to get started, here's a list of ways to help us improve Planka:
 
-- [Translation](https://github.com/plankanban/planka/issues/66) into other languages
-- Issues with [`good first issue`](https://github.com/plankanban/planka/labels/good%20first%20issue) label
+- [Translation](https://github.com/RARgames/4gaBoards/issues/66) into other languages
+- Issues with [`good first issue`](https://github.com/RARgames/4gaBoards/labels/good%20first%20issue) label
 - Performance improvements, both on client and server
 - Developer happiness and documentation
 - Bugs and other issues listed on GitHub

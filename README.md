@@ -1,10 +1,10 @@
-# Planka
+# 4ga Boards
 
-![David (path)](https://img.shields.io/github/package-json/v/plankanban/planka) ![Docker Pulls](https://img.shields.io/docker/pulls/meltyshev/planka) ![GitHub](https://img.shields.io/github/license/plankanban/planka)
+![David (path)](https://img.shields.io/github/package-json/v/rargames/4gaBoards) ![Docker Pulls](https://img.shields.io/docker/pulls/rargames/4gaBoards) ![GitHub](https://img.shields.io/github/license/rargames/4gaBoards)
 
 A Trello-like kanban board built with React and Redux.
 
-![](https://raw.githubusercontent.com/plankanban/planka/master/demo.gif)
+![](https://raw.githubusercontent.com/plankanban/planka/main/demo.gif)
 
 [**Client demo**](https://plankanban.github.io/planka) (without server features).
 
@@ -28,17 +28,17 @@ There are 2 types of installation:
 
 ### 1. Docker Compose
 
-[![](https://d207aa93qlcgug.cloudfront.net/1.95.5.qa/img/nav/docker-logo-loggedout.png)](https://github.com/plankanban/planka/pkgs/container/planka)
+[![](https://d207aa93qlcgug.cloudfront.net/1.95.5.qa/img/nav/docker-logo-loggedout.png)](https://github.com/RARgames/4gaBoards/pkgs/container/planka)
 
 - Make sure you have [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/) installed and operational.
-- Create `docker-compose.yml` based on [the example](https://raw.githubusercontent.com/plankanban/planka/master/docker-compose.yml). This is the ONLY file you will need. You can create this file on your own machine by copy and pasting the content.
+- Create `docker-compose.yml` based on [the example](https://raw.githubusercontent.com/plankanban/planka/main/docker-compose.yml). This is the ONLY file you will need. You can create this file on your own machine by copy and pasting the content.
 - Edit `BASE_URL` to match your domain name or IP address.
 - Edit `SECRET_KEY` with random value. You can generate it by `openssl rand -hex 64`.
 
 Download the docker-compose.yml:
 
 ```
-curl -L https://raw.githubusercontent.com/plankanban/planka/master/docker-compose.yml -o docker-compose.yml
+curl -L https://raw.githubusercontent.com/plankanban/planka/main/docker-compose.yml -o docker-compose.yml
 ```
 
 Pull images and start services:
@@ -58,7 +58,7 @@ Installing without Docker is a bit more complicated, here's what you need to do:
 ```bash
 mkdir -p /var/www/planka
 cd /var/www/planka
-git clone https://github.com/plankanban/planka.git .
+git clone https://github.com/RARgames/4gaBoards.git .
 ```
 
 2. Install dependencies for client and build it.
@@ -268,7 +268,7 @@ It's already available in Planka, or you can also use the great tool [trello2pla
 Clone the repository and install dependencies:
 
 ```
-git clone https://github.com/plankanban/planka.git
+git clone https://github.com/RARgames/4gaBoards.git
 
 cd planka
 npm install
@@ -302,4 +302,6 @@ Demo user: demo@demo.demo demo
 
 ## License
 
-Planka is [MIT licensed](https://github.com/plankanban/planka/blob/master/LICENSE).
+4ga Boards are [MIT licensed](https://github.com/RARgames/4gaBoards/blob/main/LICENSE).
+
+Project was separated from [Planka](https://github.com/plankanban/planka) by [meltyshev](https://github.com/meltyshev) to preserve the MIT license, change project vision, and add some new features.
