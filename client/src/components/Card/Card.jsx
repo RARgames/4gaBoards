@@ -83,6 +83,16 @@ const Card = React.memo(
       nameEdit.current.open();
     }, []);
 
+    const getStyle = (style, snapshot) => {
+      if (!snapshot.isDropAnimating) {
+        return style;
+      }
+      return {
+        ...style,
+        transitionDuration: `0.1s`,
+      };
+    };
+
     const contentNode = (
       <>
         {coverUrl && <img src={coverUrl} alt="" className={styles.cover} />}
@@ -128,9 +138,9 @@ const Card = React.memo(
 
     return (
       <Draggable draggableId={`card:${id}`} index={index} isDragDisabled={!isPersisted || !canEdit}>
-        {({ innerRef, draggableProps, dragHandleProps }) => (
+        {(provided, snapshot) => (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={styles.wrapper}>
+          <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={styles.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
             <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
               <div className={styles.card}>
                 {isPersisted ? (
