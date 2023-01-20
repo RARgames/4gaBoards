@@ -66,6 +66,10 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
     }
   }, [filteredCardIds, isAddCardOpened]);
 
+  const cardsCountText = () => {
+    return [isFiltered ? `${filteredCardIds.length} ${t('common.of')} ${cardIds.length} ` : `${cardIds.length} `] + [cardIds.length !== 1 ? t('common.cards') : t('common.card')];
+  };
+
   const cardsNode = (
     <Droppable droppableId={`list:${id}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
       {({ innerRef, droppableProps, placeholder }) => (
@@ -84,7 +88,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
   );
 
   const addCardNode = (
-    <Droppable droppableId={`list:${id}:${cardIds.length}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
+    <Droppable droppableId={`listAdd:${id}:${cardIds.length}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
       {({ innerRef, droppableProps, placeholder }) => (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef}>
@@ -100,9 +104,22 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
     </Droppable>
   );
 
-  const cardsCountText = () => {
-    return [isFiltered ? `${filteredCardIds.length} ${t('common.of')} ${cardIds.length} ` : `${cardIds.length} `] + [cardIds.length !== 1 ? t('common.cards') : t('common.card')];
-  };
+  const collapsedListNode = (
+    <Droppable droppableId={`listCollapsed:${id}:${cardIds.length}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
+      {({ innerRef, droppableProps, placeholder }) => (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <div {...droppableProps} ref={innerRef} className={styles.headerCollapsedInner}>
+          {placeholder}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+          <div className={classNames(styles.headerCollapseButtonCollapsed, canEdit && styles.headerEditable)} onClick={handleToggleCollapseClick}>
+            <Icon fitted name="triangle down" />
+          </div>
+          <div className={styles.headerNameCollapsed}>{name}</div>
+          <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
+        </div>
+      )}
+    </Droppable>
+  );
 
   if (isCollapsed) {
     return (
@@ -115,12 +132,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
                 {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
                 className={styles.headerCollapsed}
               >
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <div className={classNames(styles.headerCollapseButtonCollapsed, canEdit && styles.headerEditable)} onClick={handleToggleCollapseClick}>
-                  <Icon fitted name="triangle down" />
-                </div>
-                <div className={styles.headerNameCollapsed}>{name}</div>
-                <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
+                {collapsedListNode}
               </div>
             </div>
           </div>
