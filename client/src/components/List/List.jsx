@@ -83,6 +83,23 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
     </Droppable>
   );
 
+  const addCardNode = (
+    <Droppable droppableId={`list:${id}:${cardIds.length}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
+      {({ innerRef, droppableProps, placeholder }) => (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <div {...droppableProps} ref={innerRef}>
+          {placeholder}
+          {!isAddCardOpened && canEdit && (
+            <button type="button" disabled={!isPersisted} className={styles.addCardButton} onClick={handleAddCardClick}>
+              <PlusMathIcon className={styles.addCardButtonIcon} />
+              <span className={styles.addCardButtonText}>{t('action.addCard')}</span>
+            </button>
+          )}
+        </div>
+      )}
+    </Droppable>
+  );
+
   const cardsCountText = () => {
     return [isFiltered ? `${filteredCardIds.length} ${t('common.of')} ${cardIds.length} ` : `${cardIds.length} `] + [cardIds.length !== 1 ? t('common.cards') : t('common.card')];
   };
@@ -143,12 +160,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
             <div ref={listWrapper} className={classNames(styles.cardsInnerWrapper, (isAddCardOpened || !canEdit) && styles.cardsInnerWrapperFull)}>
               <div className={styles.cardsOuterWrapper}>{cardsNode}</div>
             </div>
-            {!isAddCardOpened && canEdit && (
-              <button type="button" disabled={!isPersisted} className={classNames(styles.addCardButton)} onClick={handleAddCardClick}>
-                <PlusMathIcon className={styles.addCardButtonIcon} />
-                <span className={styles.addCardButtonText}>{t('action.addCard')}</span>
-              </button>
-            )}
+            {addCardNode}
           </div>
         </div>
       )}

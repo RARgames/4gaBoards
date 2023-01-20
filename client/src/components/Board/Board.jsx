@@ -12,7 +12,7 @@ import { ReactComponent as PlusMathIcon } from '../../assets/images/plus-math-ic
 
 import styles from './Board.module.scss';
 
-const parseDndId = (dndId) => dndId.split(':')[1];
+const parseDndDestination = (dndId) => dndId.split(':');
 
 const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove }) => {
   const [t] = useTranslation();
@@ -39,17 +39,21 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
         return;
       }
 
-      const id = parseDndId(draggableId);
+      const [, id] = parseDndDestination(draggableId);
 
       switch (type) {
         case DroppableTypes.LIST:
           onListMove(id, destination.index);
 
           break;
-        case DroppableTypes.CARD:
-          onCardMove(id, parseDndId(destination.droppableId), destination.index);
+        case DroppableTypes.CARD: {
+          const [, listId, indexOverride] = parseDndDestination(destination.droppableId);
+          const [, sourceListId] = parseDndDestination(source.droppableId);
+
+          onCardMove(id, listId, (listId === sourceListId ? indexOverride - 1 : indexOverride) || destination.index);
 
           break;
+        }
         default:
       }
     },
