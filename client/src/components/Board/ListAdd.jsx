@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Input } from 'semantic-ui-react';
+import TextareaAutosize from 'react-textarea-autosize';
+import { Button, Form, TextArea } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 
 import { useClosableForm, useForm } from '../../hooks';
@@ -20,18 +21,14 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
 
   const nameField = useRef(null);
 
-  const handleFieldKeyDown = useCallback(
-    (event) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    },
-    [onClose],
-  );
+  const close = useCallback(() => {
+    setData(DEFAULT_DATA);
+    onClose();
+  }, [onClose, setData]);
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(onClose);
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close);
 
-  const handleSubmit = useCallback(() => {
+  const submit = useCallback(() => {
     const cleanData = {
       ...data,
       name: data.name.trim(),
@@ -43,10 +40,38 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     }
 
     onCreate(cleanData);
-
     setData(DEFAULT_DATA);
+    handleClearModified();
     focusNameField();
-  }, [onCreate, data, setData, focusNameField]);
+  }, [data, onCreate, setData, handleClearModified, focusNameField]);
+
+  const handleSubmit = useCallback(() => {
+    submit();
+  }, [submit]);
+
+  const handleCancel = useCallback(() => {
+    setData(DEFAULT_DATA);
+    handleClearModified();
+    onClose();
+  }, [handleClearModified, onClose, setData]);
+
+  const handleFieldKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case 'Enter': {
+          event.preventDefault();
+          submit();
+          break;
+        }
+        case 'Escape': {
+          handleCancel();
+          break;
+        }
+        default:
+      }
+    },
+    [handleCancel, submit],
+  );
 
   useEffect(() => {
     nameField.current.focus();
@@ -56,21 +81,32 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     nameField.current.focus();
   }, [focusNameFieldState]);
 
+  const handleChange = useCallback(
+    (_, { name: fieldName, value }) => {
+      handleFieldChange(_, { name: fieldName, value });
+      handleValueChange(value, DEFAULT_DATA.name);
+    },
+    [handleFieldChange, handleValueChange],
+  );
+
   return (
     <Form className={styles.wrapper} onSubmit={handleSubmit}>
-      <Input
+      <TextArea
         ref={nameField}
+        as={TextareaAutosize}
         name="name"
         value={data.name}
         placeholder={t('common.enterListTitle')}
+        minRows={1}
+        spellCheck
         className={styles.field}
         onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
+        onChange={handleChange}
         onBlur={handleFieldBlur}
       />
       <div className={styles.controls}>
-        {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-        <Button positive content={t('action.addList')} className={styles.button} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button type="button" negative content={t('action.cancel')} className={styles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button positive content={t('action.addList')} className={styles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );

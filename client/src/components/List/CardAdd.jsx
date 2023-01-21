@@ -68,7 +68,6 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
       switch (event.key) {
         case 'Enter': {
           event.preventDefault();
-
           const autoOpen = event.ctrlKey;
           submit(autoOpen);
           break;
