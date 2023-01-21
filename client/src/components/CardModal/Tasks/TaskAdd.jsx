@@ -7,7 +7,7 @@ import { useDidUpdate, useToggle } from '../../../lib/hooks';
 
 import { useClosableForm, useForm } from '../../../hooks';
 
-import styles from './Add.module.scss';
+import styles from './TaskAdd.module.scss';
 
 const DEFAULT_DATA = {
   name: '',

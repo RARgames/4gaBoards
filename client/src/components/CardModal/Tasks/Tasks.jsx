@@ -7,7 +7,7 @@ import { closePopup } from '../../../lib/popup';
 
 import DroppableTypes from '../../../constants/DroppableTypes';
 import Item from './Item';
-import Add from './Add';
+import TaskAdd from './TaskAdd';
 
 import styles from './Tasks.module.scss';
 
@@ -68,11 +68,11 @@ const Tasks = React.memo(({ items, canEdit, onCreate, onUpdate, onMove, onDelete
               ))}
               {placeholder}
               {canEdit && (
-                <Add onCreate={onCreate}>
+                <TaskAdd onCreate={onCreate}>
                   <button type="button" className={styles.taskButton}>
                     <span className={styles.taskButtonText}>{t('action.addTask')}</span>
                   </button>
-                </Add>
+                </TaskAdd>
               )}
             </div>
           )}
