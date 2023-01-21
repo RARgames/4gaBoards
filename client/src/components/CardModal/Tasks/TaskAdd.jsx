@@ -8,6 +8,7 @@ import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { useClosableForm, useForm } from '../../../hooks';
 
 import styles from './TaskAdd.module.scss';
+import gStyles from '../../Core/Core.module.scss';
 
 const DEFAULT_DATA = {
   name: '',
@@ -26,8 +27,11 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
   }, []);
 
   const close = useCallback(() => {
+    setData(DEFAULT_DATA);
     setIsOpened(false);
-  }, []);
+  }, [setData]);
+
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpened);
 
   const submit = useCallback(() => {
     const cleanData = {
@@ -41,10 +45,20 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
     }
 
     onCreate(cleanData);
-
     setData(DEFAULT_DATA);
+    handleClearModified();
     focusNameField();
-  }, [onCreate, data, setData, focusNameField]);
+  }, [data, onCreate, setData, handleClearModified, focusNameField]);
+
+  const handleSubmit = useCallback(() => {
+    submit();
+  }, [submit]);
+
+  const handleCancel = useCallback(() => {
+    setData(DEFAULT_DATA);
+    handleClearModified();
+    close();
+  }, [close, handleClearModified, setData]);
 
   useImperativeHandle(
     ref,
@@ -63,18 +77,13 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
     (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
-
         submit();
+      } else if (event.key === 'Escape') {
+        handleCancel();
       }
     },
-    [submit],
+    [handleCancel, submit],
   );
-
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(close, isOpened);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
 
   useEffect(() => {
     if (isOpened) {
@@ -85,6 +94,14 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
   useDidUpdate(() => {
     nameField.current.ref.current.focus();
   }, [focusNameFieldState]);
+
+  const handleChange = useCallback(
+    (_, { name: fieldName, value }) => {
+      handleFieldChange(_, { name: fieldName, value });
+      handleValueChange(value, DEFAULT_DATA.name);
+    },
+    [handleFieldChange, handleValueChange],
+  );
 
   if (!isOpened) {
     return React.cloneElement(children, {
@@ -100,16 +117,16 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
         name="name"
         value={data.name}
         placeholder={t('common.enterTaskDescription')}
-        minRows={2}
-        spellCheck={false}
+        minRows={1}
+        spellCheck
         className={styles.field}
         onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
+        onChange={handleChange}
         onBlur={handleFieldBlur}
       />
-      <div className={styles.controls}>
-        {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-        <Button positive content={t('action.addTask')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+      <div className={gStyles.controls}>
+        <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button positive content={t('action.addCard')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );
