@@ -78,17 +78,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   return (
     <Form onSubmit={handleSubmit} className={styles.wrapper}>
-      <TextArea
-        ref={field}
-        as={TextareaAutosize}
-        value={value}
-        minRows={2}
-        spellCheck={false}
-        className={styles.field}
-        onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
-        onBlur={handleFieldBlur}
-      />
+      <TextArea ref={field} as={TextareaAutosize} value={value} minRows={2} spellCheck className={styles.field} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleFieldBlur} />
       <div className={styles.controls}>
         {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
         <Button positive content={t('action.save')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />

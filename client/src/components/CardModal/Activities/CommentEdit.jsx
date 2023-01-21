@@ -89,7 +89,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
         name="text"
         value={data.text}
         minRows={3}
-        spellCheck={false}
+        spellCheck
         className={styles.field}
         onKeyDown={handleFieldKeyDown}
         onChange={handleFieldChange}

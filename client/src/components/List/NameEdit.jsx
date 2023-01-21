@@ -84,7 +84,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
       ref={field}
       as={TextareaAutosize}
       value={value}
-      spellCheck={false}
+      spellCheck
       className={styles.field}
       onClick={handleFieldClick}
       onKeyDown={handleFieldKeyDown}
