@@ -2,9 +2,10 @@ import { useCallback, useEffect, useRef } from 'react';
 
 export default (close, isOpened = true) => {
   const isClosable = useRef(null);
+  const isModified = useRef(null);
 
   const handleFieldBlur = useCallback(() => {
-    if (isClosable.current) {
+    if (isClosable.current && !isModified.current) {
       close();
     }
   }, [close]);
@@ -17,6 +18,14 @@ export default (close, isOpened = true) => {
     isClosable.current = true;
   }, []);
 
+  const handleValueChange = useCallback((value, initValue) => {
+    isModified.current = value.trim() !== initValue.trim();
+  }, []);
+
+  const handleClearModified = useCallback(() => {
+    isModified.current = false;
+  }, []);
+
   useEffect(() => {
     if (isOpened) {
       isClosable.current = true;
@@ -25,5 +34,5 @@ export default (close, isOpened = true) => {
     }
   }, [isOpened]);
 
-  return [handleFieldBlur, handleControlMouseOver, handleControlMouseOut];
+  return [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified];
 };

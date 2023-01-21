@@ -21,6 +21,13 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
 
   const nameField = useRef(null);
 
+  const close = useCallback(() => {
+    setData(DEFAULT_DATA);
+    onClose();
+  }, [onClose, setData]);
+
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close);
+
   const submit = useCallback(
     (autoOpen) => {
       const cleanData = {
@@ -35,6 +42,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
 
       onCreate(cleanData, autoOpen);
       setData(DEFAULT_DATA);
+      handleClearModified();
 
       if (autoOpen) {
         onClose();
@@ -42,8 +50,18 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
         focusNameField();
       }
     },
-    [onCreate, onClose, data, setData, focusNameField],
+    [data, onCreate, setData, handleClearModified, onClose, focusNameField],
   );
+
+  const handleSubmit = useCallback(() => {
+    submit();
+  }, [submit]);
+
+  const handleCancel = useCallback(() => {
+    setData(DEFAULT_DATA);
+    handleClearModified();
+    onClose();
+  }, [handleClearModified, onClose, setData]);
 
   const handleFieldKeyDown = useCallback(
     (event) => {
@@ -53,25 +71,17 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
 
           const autoOpen = event.ctrlKey;
           submit(autoOpen);
-
           break;
         }
         case 'Escape': {
-          onClose();
-
+          handleCancel();
           break;
         }
         default:
       }
     },
-    [onClose, submit],
+    [submit, handleCancel],
   );
-
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(onClose);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
 
   useEffect(() => {
     if (isOpened) {
@@ -83,6 +93,14 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
     nameField.current.ref.current.focus();
   }, [focusNameFieldState]);
 
+  const handleChange = useCallback(
+    (_, { name: fieldName, value }) => {
+      handleFieldChange(_, { name: fieldName, value });
+      handleValueChange(value, DEFAULT_DATA.name);
+    },
+    [handleFieldChange, handleValueChange],
+  );
+
   return (
     <Form className={classNames(styles.wrapper, !isOpened && styles.wrapperClosed)} onSubmit={handleSubmit}>
       <div className={styles.fieldWrapper}>
@@ -92,16 +110,16 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
           name="name"
           value={data.name}
           placeholder={t('common.enterCardTitle')}
-          minRows={3}
-          spellCheck={false}
+          minRows={1}
+          spellCheck
           className={styles.field}
           onKeyDown={handleFieldKeyDown}
-          onChange={handleFieldChange}
+          onChange={handleChange}
           onBlur={handleFieldBlur}
         />
       </div>
       <div className={styles.controls}>
-        {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
+        <Button type="button" negative content={t('action.cancel')} className={styles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
         <Button positive content={t('action.addCard')} className={styles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>

@@ -7,19 +7,33 @@
     padding: 0;
     resize: none;
     width: 100%;
+    background-color: #bdbdbd;
   }
 
   .fieldWrapper {
-    background: #fff;
-    border-radius: 3px;
+    background-color: #bdbdbd;
+    border-radius: 2px;
     box-shadow: 0 1px 0 #ccc;
     margin-bottom: 8px;
     min-height: 20px;
     padding: 6px 8px 2px;
   }
 
+  .controls {
+    height: 32px;
+    text-align: right;
+  }
+
   .submitButton {
-    vertical-align: top;
+    margin: 0px;
+    padding: 4px 6px 3px 6px;
+    box-shadow: none;
+  }
+
+  .cancelButton {
+    margin-right: 7.5px;
+    padding: 4px 6px 3px 6px;
+    box-shadow: none;
   }
 
   .wrapper {
