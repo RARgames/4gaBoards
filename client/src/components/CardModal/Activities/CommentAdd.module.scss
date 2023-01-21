@@ -1,14 +1,9 @@
 :global(#app) {
-  .controls {
-    clear: both;
-    margin-top: 6px;
-  }
-
   .field {
-    background: #fff;
+    background: #bdbdbd;
     border: 0;
     box-sizing: border-box;
-    color: #333;
+
     display: block;
     line-height: 1.5;
     font-size: 14px;
@@ -18,8 +13,8 @@
     resize: none;
     width: 100%;
 
-    &:focus {
-      outline: none;
+    &::placeholder {
+      color: #737373;
     }
   }
 }

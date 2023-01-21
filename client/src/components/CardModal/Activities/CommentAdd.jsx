@@ -8,6 +8,7 @@ import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { useClosableForm, useForm } from '../../../hooks';
 
 import styles from './CommentAdd.module.scss';
+import gStyles from '../../Core/Core.module.scss';
 
 const DEFAULT_DATA = {
   text: '',
@@ -17,13 +18,16 @@ const CommentAdd = React.memo(({ onCreate }) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
-  const [selectTextFieldState, selectTextField] = useToggle();
+  const [focusTextFieldState, focusTextField] = useToggle();
 
   const textField = useRef(null);
 
   const close = useCallback(() => {
+    setData(DEFAULT_DATA);
     setIsOpened(false);
-  }, []);
+  }, [setData]);
+
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close);
 
   const submit = useCallback(() => {
     const cleanData = {
@@ -37,10 +41,20 @@ const CommentAdd = React.memo(({ onCreate }) => {
     }
 
     onCreate(cleanData);
-
     setData(DEFAULT_DATA);
-    selectTextField();
-  }, [onCreate, data, setData, selectTextField]);
+    handleClearModified();
+    focusTextField();
+  }, [data, onCreate, setData, handleClearModified, focusTextField]);
+
+  const handleSubmit = useCallback(() => {
+    submit();
+  }, [submit]);
+
+  const handleCancel = useCallback(() => {
+    setData(DEFAULT_DATA);
+    handleClearModified();
+    close();
+  }, [close, handleClearModified, setData]);
 
   const handleFieldFocus = useCallback(() => {
     setIsOpened(true);
@@ -50,20 +64,24 @@ const CommentAdd = React.memo(({ onCreate }) => {
     (event) => {
       if (event.ctrlKey && event.key === 'Enter') {
         submit();
+      } else if (event.key === 'Escape') {
+        handleCancel();
       }
     },
-    [submit],
+    [handleCancel, submit],
   );
-
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(close);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
 
   useDidUpdate(() => {
     textField.current.ref.current.focus();
-  }, [selectTextFieldState]);
+  }, [focusTextFieldState]);
+
+  const handleChange = useCallback(
+    (_, { name: fieldName, value }) => {
+      handleFieldChange(_, { name: fieldName, value });
+      handleValueChange(value, DEFAULT_DATA.text);
+    },
+    [handleFieldChange, handleValueChange],
+  );
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -73,17 +91,18 @@ const CommentAdd = React.memo(({ onCreate }) => {
         name="text"
         value={data.text}
         placeholder={t('common.writeComment')}
-        minRows={isOpened ? 3 : 1}
-        spellCheck={false}
+        minRows={1}
+        spellCheck
         className={styles.field}
         onFocus={handleFieldFocus}
         onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
+        onChange={handleChange}
         onBlur={handleFieldBlur}
       />
       {isOpened && (
-        <div className={styles.controls}>
-          <Button positive content={t('action.addComment')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <div className={gStyles.controls}>
+          <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+          <Button positive content={t('action.addComment')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
         </div>
       )}
     </Form>

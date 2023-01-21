@@ -154,7 +154,7 @@ export default {
       users: 'Users',
       version: 'Version',
       viewer: 'Viewer',
-      writeComment: 'Write a comment...',
+      writeComment: 'Write a comment... [Ctrl+Enter] to submit',
     },
 
     action: {

@@ -1,22 +1,4 @@
 :global(#app) {
-  .submitButton {
-    margin: 0px;
-    padding: 4px 6px 3px 6px;
-    box-shadow: none;
-  }
-
-  .cancelButton {
-    margin-right: 7.5px;
-    padding: 4px 6px 3px 6px;
-    box-shadow: none;
-  }
-
-  .controls {
-    height: 32px;
-    margin-top: 5px;
-    text-align: right;
-  }
-
   .field {
     background-color: #bdbdbd;
     border-radius: 2px;

@@ -9,6 +9,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { useClosableForm, useForm } from '../../hooks';
 
 import styles from './CardAdd.module.scss';
+import gStyles from '../Core/Core.module.scss';
 
 const DEFAULT_DATA = {
   name: '',
@@ -117,9 +118,9 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
           onBlur={handleFieldBlur}
         />
       </div>
-      <div className={styles.controls}>
-        <Button type="button" negative content={t('action.cancel')} className={styles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button positive content={t('action.addCard')} className={styles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+      <div className={gStyles.controls}>
+        <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button positive content={t('action.addCard')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );
