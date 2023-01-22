@@ -7,11 +7,12 @@ import { Button, Form, TextArea } from 'semantic-ui-react';
 import { useClosableForm, useField } from '../../hooks';
 
 import styles from './NameEdit.module.scss';
+import gStyles from '../Core/Core.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue] = useField(defaultValue);
+  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
   const field = useRef(null);
 
@@ -25,6 +26,8 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     setValue(null);
   }, [setValue]);
 
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpened);
+
   const submit = useCallback(() => {
     const cleanValue = value.trim();
 
@@ -37,8 +40,18 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
       onUpdate(cleanValue);
     }
 
+    handleClearModified();
     close();
-  }, [defaultValue, onUpdate, value, close]);
+  }, [value, defaultValue, handleClearModified, close, onUpdate]);
+
+  const handleSubmit = useCallback(() => {
+    submit();
+  }, [submit]);
+
+  const handleCancel = useCallback(() => {
+    handleClearModified();
+    close();
+  }, [close, handleClearModified]);
 
   useImperativeHandle(
     ref,
@@ -54,31 +67,30 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
       switch (event.key) {
         case 'Enter':
           event.preventDefault();
-
           submit();
-
           break;
         case 'Escape':
-          close();
-
+          handleCancel();
           break;
         default:
       }
     },
-    [close, submit],
+    [handleCancel, submit],
   );
-
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(close, isOpened);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
 
   useEffect(() => {
     if (isOpened) {
       field.current.ref.current.focus();
     }
   }, [isOpened]);
+
+  const handleChange = useCallback(
+    (_, { value: nextValue }) => {
+      handleFieldChange(_, { value: nextValue });
+      handleValueChange(nextValue, defaultValue);
+    },
+    [defaultValue, handleFieldChange, handleValueChange],
+  );
 
   if (!isOpened) {
     return children;
@@ -91,18 +103,18 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
           ref={field}
           as={TextareaAutosize}
           value={value}
-          minRows={3}
-          maxRows={8}
+          minRows={1}
           spellCheck
           className={styles.field}
           onKeyDown={handleFieldKeyDown}
-          onChange={handleFieldChange}
+          onChange={handleChange}
           onBlur={handleFieldBlur}
+          onFocus={handleFocus}
         />
       </div>
-      <div className={styles.controls}>
-        {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-        <Button positive content={t('action.save')} className={styles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+      <div className={gStyles.controls}>
+        <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button positive content={t('action.save')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );
