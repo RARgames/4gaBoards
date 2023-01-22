@@ -10,5 +10,9 @@ export default (initialData) => {
     }));
   }, []);
 
-  return [data, handleFieldChange, setData];
+  const handleFocus = useCallback((_) => {
+    _.currentTarget.setSelectionRange(_.currentTarget.value.length, _.currentTarget.value.length);
+  }, []);
+
+  return [data, handleFieldChange, setData, handleFocus];
 };

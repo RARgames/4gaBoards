@@ -7,5 +7,9 @@ export default (initialValue) => {
     setValue(nextValue);
   }, []);
 
-  return [value, handleChange, setValue];
+  const handleFocus = useCallback((_) => {
+    _.currentTarget.setSelectionRange(_.currentTarget.value.length, _.currentTarget.value.length);
+  }, []);
+
+  return [value, handleChange, setValue, handleFocus];
 };
