@@ -1,11 +1,6 @@
 :global(#app) {
-  .controls {
-    clear: both;
-    margin-top: 6px;
-  }
-
   .field {
-    background: #fff;
+    background: #bdbdbd;
     border: 1px solid rgba(9, 30, 66, 0.13);
     border-radius: 3px;
     box-sizing: border-box;
@@ -18,9 +13,5 @@
     padding: 8px 12px;
     resize: none;
     width: 100%;
-
-    &:focus {
-      outline: none;
-    }
   }
 }

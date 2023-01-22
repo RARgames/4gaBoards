@@ -8,11 +8,12 @@ import { Button, Form, TextArea } from 'semantic-ui-react';
 import { useClosableForm, useForm } from '../../../hooks';
 
 import styles from './CommentEdit.module.scss';
+import gStyles from '../../Core/Core.module.scss';
 
 const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [data, handleFieldChange, setData] = useForm(null);
+  const [data, handleFieldChange, setData, handleFocus] = useForm(null);
 
   const textField = useRef(null);
 
@@ -29,6 +30,8 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
     setData(null);
   }, [setData]);
 
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpened);
+
   const submit = useCallback(() => {
     const cleanData = {
       ...data,
@@ -44,8 +47,18 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
       onUpdate(cleanData);
     }
 
+    handleClearModified();
     close();
-  }, [defaultData, onUpdate, data, close]);
+  }, [data, defaultData, handleClearModified, close, onUpdate]);
+
+  const handleSubmit = useCallback(() => {
+    submit();
+  }, [submit]);
+
+  const handleCancel = useCallback(() => {
+    handleClearModified();
+    close();
+  }, [close, handleClearModified]);
 
   useImperativeHandle(
     ref,
@@ -60,22 +73,26 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
     (event) => {
       if (event.ctrlKey && event.key === 'Enter') {
         submit();
+      } else if (event.key === 'Escape') {
+        handleCancel();
       }
     },
-    [submit],
+    [handleCancel, submit],
   );
-
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(close, isOpened);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
 
   useEffect(() => {
     if (isOpened) {
       textField.current.ref.current.focus();
     }
   }, [isOpened]);
+
+  const handleChange = useCallback(
+    (_, { name: fieldName, value }) => {
+      handleFieldChange(_, { name: fieldName, value });
+      handleValueChange(value, defaultData.text);
+    },
+    [defaultData, handleFieldChange, handleValueChange],
+  );
 
   if (!isOpened) {
     return children;
@@ -88,16 +105,17 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
         as={TextareaAutosize}
         name="text"
         value={data.text}
-        minRows={3}
+        minRows={1}
         spellCheck
         className={styles.field}
         onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
+        onChange={handleChange}
         onBlur={handleFieldBlur}
+        onFocus={handleFocus}
       />
-      <div className={styles.controls}>
-        {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-        <Button positive content={t('action.save')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+      <div className={gStyles.controls}>
+        <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button positive content={t('action.save')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );
