@@ -9,7 +9,7 @@ import styles from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue] = useField(defaultValue);
+  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
   const field = useRef(null);
 
@@ -71,7 +71,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   useEffect(() => {
     if (isOpened) {
-      field.current.ref.current.select();
+      field.current.ref.current.focus();
     }
   }, [isOpened]);
 
@@ -90,6 +90,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
       onKeyDown={handleFieldKeyDown}
       onChange={handleFieldChange}
       onBlur={handleFieldBlur}
+      onFocus={handleFocus}
     />
   );
 });
