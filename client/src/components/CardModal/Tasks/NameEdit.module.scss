@@ -1,8 +1,8 @@
 :global(#app) {
   .field {
-    background: #fff;
-    border: 1px solid rgba(9, 30, 66, 0.13);
-    border-radius: 3px;
+    background: #bdbdbd;
+    border: 0px;
+    border-radius: 2px;
     box-sizing: border-box;
     color: #17394d;
     display: block;
@@ -11,13 +11,9 @@
     overflow: hidden;
     padding: 8px 12px;
     resize: none;
-
-    &:focus {
-      outline: none;
-    }
   }
 
   .wrapper {
-    padding: 9px 32px 16px 40px;
+    padding: 9px 0px 9px 40px;
   }
 }
