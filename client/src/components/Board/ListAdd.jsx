@@ -8,7 +8,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { useClosableForm, useForm } from '../../hooks';
 
 import styles from './ListAdd.module.scss';
-import gStyles from '../Core/Core.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const DEFAULT_DATA = {
   name: '',

@@ -8,7 +8,7 @@ import { Button, Form, TextArea } from 'semantic-ui-react';
 import { useClosableForm, useForm } from '../../../hooks';
 
 import styles from './CommentEdit.module.scss';
-import gStyles from '../../Core/Core.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) => {
   const [t] = useTranslation();
