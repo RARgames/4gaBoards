@@ -109,7 +109,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
       const headerOffset = nameEditHeight || headerNameHeight;
       listWrapper.current.style.maxHeight = `calc(100vh - ${wrapperOffset}px - (${headerOffset}px - ${styleVars.headerNameDefaultHeight}px)`;
     }
-  }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpened, styleVars]);
+  }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpened, styleVars, isCollapsed]);
 
   const cardsCountText = () => {
     return [isFiltered ? `${filteredCardIds.length} ${t('common.of')} ${cardIds.length} ` : `${cardIds.length} `] + [cardIds.length !== 1 ? t('common.cards') : t('common.card')];
