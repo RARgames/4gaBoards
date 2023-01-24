@@ -91,7 +91,6 @@ const CommentAdd = React.memo(({ onCreate }) => {
         name="text"
         value={data.text}
         placeholder={t('common.writeComment')}
-        minRows={1}
         spellCheck
         className={styles.field}
         onFocus={handleFieldFocus}

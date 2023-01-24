@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
+import classNames from 'classnames';
 import { Button, Form, TextArea } from 'semantic-ui-react';
 
 import { useClosableForm, useField } from '../../hooks';
@@ -103,9 +104,9 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
           ref={field}
           as={TextareaAutosize}
           value={value}
-          minRows={1}
+          maxRows={3}
           spellCheck
-          className={styles.field}
+          className={classNames(styles.field, gStyles.scrollable)}
           onKeyDown={handleFieldKeyDown}
           onChange={handleChange}
           onBlur={handleFieldBlur}

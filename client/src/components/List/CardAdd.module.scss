@@ -3,7 +3,6 @@
     border: none;
     margin-bottom: 4px;
     outline: none;
-    overflow: hidden;
     padding: 0;
     resize: none;
     width: 100%;
@@ -16,7 +15,7 @@
     box-shadow: 0 1px 0 #ccc;
     margin-bottom: 5px;
     min-height: 20px;
-    padding: 6px 8px 2px;
+    padding: 6px 0px 2px 8px;
   }
 
   .wrapper {

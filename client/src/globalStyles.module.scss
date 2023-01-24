@@ -16,4 +16,21 @@
     padding: 4px 6px 3px 6px;
     box-shadow: none;
   }
+
+  .scrollable {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #646464 #a6a6a6;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #a6a6a6;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #646464;
+    }
+  }
 }

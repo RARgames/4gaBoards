@@ -110,9 +110,9 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
           name="name"
           value={data.name}
           placeholder={t('common.enterCardTitle')}
-          minRows={1}
+          maxRows={3}
           spellCheck
-          className={styles.field}
+          className={classNames(styles.field, gStyles.scrollable)}
           onKeyDown={handleFieldKeyDown}
           onChange={handleChange}
           onBlur={handleFieldBlur}

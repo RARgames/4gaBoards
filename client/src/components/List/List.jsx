@@ -14,6 +14,7 @@ import ActionsPopup from './ActionsPopup';
 import { ReactComponent as PlusMathIcon } from '../../assets/images/plus-math-icon.svg';
 
 import styles from './List.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
   const [t] = useTranslation();
@@ -214,7 +215,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               )}
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>
             </div>
-            <div ref={listWrapper} className={styles.cardsInnerWrapper}>
+            <div ref={listWrapper} className={classNames(styles.cardsInnerWrapper, gStyles.scrollable)}>
               <div className={styles.cardsOuterWrapper}>{cardsNode}</div>
             </div>
             {addCardNode}

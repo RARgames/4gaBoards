@@ -117,7 +117,6 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
         name="name"
         value={data.name}
         placeholder={t('common.enterTaskDescription')}
-        minRows={1}
         spellCheck
         className={styles.field}
         onKeyDown={handleFieldKeyDown}

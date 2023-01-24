@@ -9,10 +9,6 @@
     line-height: 20px;
     margin: 0;
     outline: none;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #646464 #a6a6a6;
     padding: 4px 8px;
     resize: none;
     width: 100%;
@@ -21,16 +17,6 @@
       background: #fff;
       border-color: #5ba4cf;
       box-shadow: 0 0 0 1px #5ba4cf;
-    }
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background-color: #a6a6a6;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #646464;
     }
   }
 }

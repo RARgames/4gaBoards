@@ -2,11 +2,13 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import { ResizeObserver } from '@juggle/resize-observer';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
+import classNames from 'classnames';
 import { TextArea } from 'semantic-ui-react';
 
 import { useField } from '../../hooks';
 
 import styles from './NameEdit.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, onHeightChange }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
@@ -108,7 +110,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
         value={value}
         spellCheck
         maxRows={2}
-        className={styles.field}
+        className={classNames(styles.field, gStyles.scrollable)}
         onClick={handleFieldClick}
         onKeyDown={handleFieldKeyDown}
         onChange={handleFieldChange}

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
+import classNames from 'classnames';
 import { Button, Form, TextArea } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 
@@ -98,9 +99,9 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
         name="name"
         value={data.name}
         placeholder={t('common.enterListTitle')}
-        minRows={1}
+        maxRows={2}
         spellCheck
-        className={styles.field}
+        className={classNames(styles.field, gStyles.scrollable)}
         onKeyDown={handleFieldKeyDown}
         onChange={handleChange}
         onBlur={handleFieldBlur}

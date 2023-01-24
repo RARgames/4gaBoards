@@ -105,7 +105,6 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
         as={TextareaAutosize}
         name="text"
         value={data.text}
-        minRows={1}
         spellCheck
         className={styles.field}
         onKeyDown={handleFieldKeyDown}
