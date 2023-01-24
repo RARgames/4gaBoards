@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import { ResizeObserver } from '@juggle/resize-observer';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -17,9 +18,21 @@ import styles from './List.module.scss';
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
   const [t] = useTranslation();
   const [isAddCardOpened, setIsAddCardOpened] = useState(false);
+  const [headerNameHeight, setHeaderNameHeight] = useState(0);
+  const [nameEditHeight, setNameEditHeight] = useState(0);
 
   const nameEdit = useRef(null);
   const listWrapper = useRef(null);
+  const resizeObserver = useRef(null);
+
+  const styleVars = useMemo(() => {
+    const computedStyle = getComputedStyle(document.body);
+    return {
+      cardsInnerWrapperFullOffset: parseInt(computedStyle.getPropertyValue('--cardsInnerWrapperFullOffset'), 10),
+      cardsInnerWrapperOffset: parseInt(computedStyle.getPropertyValue('--cardsInnerWrapperOffset'), 10),
+      headerNameDefaultHeight: parseInt(computedStyle.getPropertyValue('--headerNameDefaultHeight'), 10),
+    };
+  }, []);
 
   const handleToggleCollapseClick = useCallback(() => {
     if (isPersisted && canEdit) {
@@ -56,8 +69,16 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
     nameEdit.current.open();
   }, []);
 
+  const handleNameEditClose = useCallback(() => {
+    setNameEditHeight(null);
+  }, []);
+
   const handleCardAdd = useCallback(() => {
     setIsAddCardOpened(true);
+  }, []);
+
+  const handleNameEditHeightChange = useCallback((height) => {
+    setNameEditHeight(height);
   }, []);
 
   useEffect(() => {
@@ -65,6 +86,30 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
       listWrapper.current.scrollTop = listWrapper.current.scrollHeight;
     }
   }, [filteredCardIds, isAddCardOpened]);
+
+  const handleHeaderNameHeightChange = useCallback((element) => {
+    if (resizeObserver.current) {
+      resizeObserver.current.disconnect();
+    }
+
+    if (!element) {
+      resizeObserver.current = null;
+      return;
+    }
+
+    resizeObserver.current = new ResizeObserver(() => {
+      setHeaderNameHeight(element.clientHeight);
+    });
+    resizeObserver.current.observe(element);
+  }, []);
+
+  useEffect(() => {
+    if (listWrapper.current) {
+      const wrapperOffset = isAddCardOpened || !canEdit ? styleVars.cardsInnerWrapperFullOffset : styleVars.cardsInnerWrapperOffset;
+      const headerOffset = nameEditHeight || headerNameHeight;
+      listWrapper.current.style.maxHeight = `calc(100vh - ${wrapperOffset}px - (${headerOffset}px - ${styleVars.headerNameDefaultHeight}px)`;
+    }
+  }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpened, styleVars]);
 
   const cardsCountText = () => {
     return [isFiltered ? `${filteredCardIds.length} ${t('common.of')} ${cardIds.length} ` : `${cardIds.length} `] + [cardIds.length !== 1 ? t('common.cards') : t('common.card')];
@@ -154,9 +199,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               <div className={classNames(styles.headerCollapseButton, canEdit && styles.headerEditable)} onClick={handleToggleCollapseClick}>
                 <Icon fitted name="triangle right" />
               </div>
-              <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
+              <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <div className={classNames(styles.headerName, canEdit && styles.headerEditable)} onClick={handleHeaderNameClick}>
+                <div className={classNames(styles.headerName, canEdit && styles.headerEditable)} onClick={handleHeaderNameClick} ref={handleHeaderNameHeightChange}>
                   {name}
                 </div>
               </NameEdit>
@@ -169,7 +214,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               )}
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>
             </div>
-            <div ref={listWrapper} className={classNames(styles.cardsInnerWrapper, (isAddCardOpened || !canEdit) && styles.cardsInnerWrapperFull)}>
+            <div ref={listWrapper} className={styles.cardsInnerWrapper}>
               <div className={styles.cardsOuterWrapper}>{cardsNode}</div>
             </div>
             {addCardNode}
