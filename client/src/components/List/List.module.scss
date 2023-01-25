@@ -55,21 +55,14 @@
 
   .header {
     outline: none;
-    padding: 4px 36px 4px 10px;
+    padding: 4px 8px;
     position: relative;
-
-    &:hover .target {
-      opacity: 1;
-    }
+    float: left;
   }
 
   .headerCollapsed {
     outline: none;
     height: calc(100vh - 191px);
-
-    &:hover .target {
-      opacity: 1;
-    }
   }
 
   .headerCollapsedInner {
@@ -81,22 +74,11 @@
   }
 
   .headerButton {
-    background: none;
-    box-shadow: none;
-    color: #798d99;
-    line-height: 32px;
-    margin: 0;
-    opacity: 0;
-    padding: 0;
-    position: absolute;
-    right: 2px;
-    top: 2px;
-    width: 32px;
-
-    &:hover {
-      background: rgba(9, 30, 66, 0.13);
-      color: #516b7a;
-    }
+    position: relative;
+    float: right;
+    right: -3px;
+    width: 10px;
+    height: 20px;
   }
 
   .headerName {
@@ -104,6 +86,11 @@
     font-weight: bold;
     line-height: 20px;
     max-height: 40px;
+    width: 236px;
+    text-indent: 8px;
+    position: relative;
+    float: left;
+    left: -10px;
     outline: none;
     overflow: hidden;
     overflow-wrap: break-word;
@@ -126,22 +113,24 @@
   }
 
   .headerCollapseButton {
+    z-index: 100;
+    position: relative;
+    float: left;
+    left: -2px;
     width: 10px;
-    height: 30px;
-    padding: 2px 0px 0px 2px;
-    position: absolute;
-    left: 2px;
-    top: 2px;
+    height: 20px;
   }
 
   .headerCollapseButtonCollapsed {
     height: 30px;
-    text-align: center;
+    width: 30px;
   }
 
   .headerCardsCount {
     color: #798d99;
     font-size: 12px;
+    position: relative;
+    float: left;
   }
 
   .headerCardsCountCollapsed {

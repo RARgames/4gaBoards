@@ -156,10 +156,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef} className={styles.headerCollapsedInner}>
           {placeholder}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-          <div className={classNames(styles.headerCollapseButtonCollapsed, canEdit && styles.headerEditable)} onClick={handleToggleCollapseClick}>
+          <Button className={classNames(styles.headerCollapseButtonCollapsed, gStyles.iconButton, canEdit && styles.headerEditable)} onClick={handleToggleCollapseClick}>
             <Icon fitted name="triangle down" />
-          </div>
+          </Button>
           <div className={styles.headerNameCollapsed}>{name}</div>
           <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
         </div>
@@ -196,10 +195,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
               className={styles.header}
             >
-              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <div className={classNames(styles.headerCollapseButton, canEdit && styles.headerEditable)} onClick={handleToggleCollapseClick}>
+              <Button className={classNames(styles.headerCollapseButton, gStyles.iconButton, canEdit && styles.headerEditable)} onClick={handleToggleCollapseClick}>
                 <Icon fitted name="triangle right" />
-              </div>
+              </Button>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <div className={classNames(styles.headerName, canEdit && styles.headerEditable)} onClick={handleHeaderNameClick} ref={handleHeaderNameHeightChange}>
@@ -208,8 +206,8 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               </NameEdit>
               {isPersisted && canEdit && (
                 <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete}>
-                  <Button className={classNames(styles.headerButton, styles.target)}>
-                    <Icon fitted name="pencil" size="small" />
+                  <Button className={classNames(styles.headerButton, gStyles.iconButton, styles.target)}>
+                    <Icon fitted name="ellipsis vertical" size="small" />
                   </Button>
                 </ActionsPopup>
               )}
