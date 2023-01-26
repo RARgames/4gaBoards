@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { ResizeObserver } from '@juggle/resize-observer';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import classNames from 'classnames';
 import { TextArea } from 'semantic-ui-react';
 
-import { useField } from '../../hooks';
+import { useField, useResizeObserverSize } from '../../hooks';
+import { ResizeObserverSizeTypes } from '../../constants/Enums';
 
 import styles from './NameEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -15,12 +15,14 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
   const field = useRef(null);
-  const resizeObserver = useRef(null);
+  const [nameEditElement, setNameEditElement] = useState();
+  const [nameEditHeight] = useResizeObserverSize(nameEditElement, ResizeObserverSizeTypes.CLIENT_HEIGHT);
 
   const open = useCallback(() => {
     setIsOpened(true);
     setValue(defaultValue);
-  }, [defaultValue, setValue]);
+    onHeightChange(nameEditHeight);
+  }, [defaultValue, nameEditHeight, onHeightChange, setValue]);
 
   const close = useCallback(() => {
     setIsOpened(false);
@@ -51,23 +53,11 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
     event.stopPropagation();
   }, []);
 
-  const handleHeightChange = useCallback(
-    (element) => {
-      if (resizeObserver.current) {
-        resizeObserver.current.disconnect();
-      }
-
-      if (!element) {
-        resizeObserver.current = null;
-        return;
-      }
-      resizeObserver.current = new ResizeObserver(() => {
-        onHeightChange(element.clientHeight);
-      });
-      resizeObserver.current.observe(element);
-    },
-    [onHeightChange],
-  );
+  useEffect(() => {
+    if (nameEditHeight) {
+      onHeightChange(nameEditHeight);
+    }
+  }, [nameEditHeight, onHeightChange]);
 
   const handleFieldKeyDown = useCallback(
     (event) => {
@@ -103,7 +93,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
   }
 
   return (
-    <div className={styles.wrapper} ref={handleHeightChange}>
+    <div className={styles.wrapper} ref={setNameEditElement}>
       <TextArea
         ref={field}
         as={TextareaAutosize}

@@ -44,13 +44,19 @@
   }
 
   .cardsInnerWrapper {
-    width: 275px;
+    width: 272px;
   }
 
   .cardsOuterWrapper {
-    padding: 0 8px;
+    padding: 0 6px;
     white-space: normal;
     width: 272px;
+  }
+
+  .cardsOuterWrapperScrollable {
+    padding: 0 0 0 6px;
+    white-space: normal;
+    width: 260px;
   }
 
   .header {

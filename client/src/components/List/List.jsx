@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { ResizeObserver } from '@juggle/resize-observer';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +6,8 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Button, Icon } from 'semantic-ui-react';
 
 import DroppableTypes from '../../constants/DroppableTypes';
+import { useResizeObserverSize } from '../../hooks';
+import { ResizeObserverSizeTypes } from '../../constants/Enums';
 import CardContainer from '../../containers/CardContainer';
 import NameEdit from './NameEdit';
 import CardAdd from './CardAdd';
@@ -19,12 +20,14 @@ import gStyles from '../../globalStyles.module.scss';
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
   const [t] = useTranslation();
   const [isAddCardOpened, setIsAddCardOpened] = useState(false);
-  const [headerNameHeight, setHeaderNameHeight] = useState(0);
   const [nameEditHeight, setNameEditHeight] = useState(0);
+  const [headerNameElement, setHeaderNameElement] = useState();
+  const [headerNameHeight] = useResizeObserverSize(headerNameElement, ResizeObserverSizeTypes.CLIENT_HEIGHT);
+  const [listOuterWrapperElement, setListOuterWrapperElement] = useState();
+  const [listOuterWrapperScrollable] = useResizeObserverSize(listOuterWrapperElement, ResizeObserverSizeTypes.SCROLLABLE);
 
   const nameEdit = useRef(null);
   const listWrapper = useRef(null);
-  const resizeObserver = useRef(null);
 
   const styleVars = useMemo(() => {
     const computedStyle = getComputedStyle(document.body);
@@ -83,26 +86,10 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
   }, []);
 
   useEffect(() => {
-    if (isAddCardOpened) {
+    if (isAddCardOpened && listWrapper.current) {
       listWrapper.current.scrollTop = listWrapper.current.scrollHeight;
     }
   }, [filteredCardIds, isAddCardOpened]);
-
-  const handleHeaderNameHeightChange = useCallback((element) => {
-    if (resizeObserver.current) {
-      resizeObserver.current.disconnect();
-    }
-
-    if (!element) {
-      resizeObserver.current = null;
-      return;
-    }
-
-    resizeObserver.current = new ResizeObserver(() => {
-      setHeaderNameHeight(element.clientHeight);
-    });
-    resizeObserver.current.observe(element);
-  }, []);
 
   useEffect(() => {
     if (listWrapper.current) {
@@ -200,7 +187,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               </Button>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <div className={classNames(styles.headerName, canEdit && styles.headerEditable)} onClick={handleHeaderNameClick} ref={handleHeaderNameHeightChange}>
+                <div className={classNames(styles.headerName, canEdit && styles.headerEditable)} onClick={handleHeaderNameClick} ref={setHeaderNameElement}>
                   {name}
                 </div>
               </NameEdit>
@@ -213,8 +200,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               )}
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>
             </div>
-            <div ref={listWrapper} className={classNames(styles.cardsInnerWrapper, gStyles.scrollable)}>
-              <div className={styles.cardsOuterWrapper}>{cardsNode}</div>
+            {/* eslint-disable-next-line prettier/prettier */}
+            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(styles.cardsInnerWrapper, gStyles.scrollable)}>
+              <div className={classNames(styles.cardsOuterWrapper, listOuterWrapperScrollable && styles.cardsOuterWrapperScrollable)}>{cardsNode}</div>
             </div>
             {addCardNode}
           </div>
