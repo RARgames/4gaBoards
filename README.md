@@ -108,9 +108,11 @@ cp ../docker-start.sh start.sh
 
 Additional information available [here](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md).
 
-### Import from Trello
+## Import from Trello
 
 It's already available in 4ga Boards. Just add a project, then click Import while creating a new board.
+
+## [Migration from Planka](https://github.com/RARgames/4gaBoards/blob/main/docs/MIGRATION.md)
 
 ## Development
 
@@ -150,6 +152,10 @@ npm start
 ```
 
 Demo user: demo@demo.demo demo
+
+## [Contributing](https://github.com/RARgames/4gaBoards/blob/main/docs/CONTRIBUTING.md)
+
+## [Security](https://github.com/RARgames/4gaBoards/blob/main/docs/SECURITY.md)
 
 ## Tech stack
 
