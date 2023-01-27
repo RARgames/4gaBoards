@@ -116,7 +116,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
           <Grid verticalAlign="middle" className={styles.fullHeightPaddingFix}>
             <Grid.Column>
               <div className={styles.loginWrapper}>
-                <Header as="h1" textAlign="center" content={t('common.logInToPlanka')} className={styles.formTitle} />
+                <Header as="h1" textAlign="center" content={t('common.logInToBoards')} className={styles.formTitle} />
                 <div>
                   {message && (
                     <Message
@@ -148,7 +148,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
         <Grid.Column widescreen={12} largeScreen={11} computer={10} only="computer" className={classNames(styles.cover, styles.fullHeight)}>
           <div className={styles.descriptionWrapperOverlay} />
           <div className={styles.descriptionWrapper}>
-            <Header inverted as="h1" content="Planka" className={styles.descriptionTitle} />
+            <Header inverted as="h1" content="4ga Boards" className={styles.descriptionTitle} />
             <Header inverted as="h2" content={t('common.projectManagement')} className={styles.descriptionSubtitle} />
           </div>
         </Grid.Column>

@@ -28,7 +28,7 @@ There are 2 types of installation:
 
 ### 1. Docker Compose
 
-[![](https://d207aa93qlcgug.cloudfront.net/1.95.5.qa/img/nav/docker-logo-loggedout.png)](https://github.com/RARgames/4gaBoards/pkgs/container/planka)
+[![](https://d207aa93qlcgug.cloudfront.net/1.95.5.qa/img/nav/docker-logo-loggedout.png)](https://github.com/RARgames/4gaBoards/pkgs/container/4gaBoards)
 
 - Make sure you have [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/) installed and operational.
 - Create `docker-compose.yml` based on [the example](https://raw.githubusercontent.com/RARgames/4gaBoards/main/docker-compose.yml). This is the ONLY file you will need. You can create this file on your own machine by copy and pasting the content.
@@ -106,7 +106,7 @@ cp ../docker-start.sh start.sh
 
 ## Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)
 
-Additional information available [here](https://github.com/RARgames/4gaBoards/blob/main/ADDITIONAL_INFO.md).
+Additional information available [here](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md).
 
 ### Import from Trello
 

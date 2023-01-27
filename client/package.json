@@ -1,5 +1,5 @@
 {
-  "name": "planka-client",
+  "name": "4gaboards-client",
   "private": true,
   "scripts": {
     "build": "react-app-rewired build",

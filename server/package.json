@@ -1,5 +1,5 @@
 {
-  "name": "planka-server",
+  "name": "4gaboards-server",
   "private": true,
   "main": "app.js",
   "scripts": {

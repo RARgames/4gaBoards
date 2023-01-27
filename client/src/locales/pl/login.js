@@ -4,7 +4,7 @@ export default {
       emailOrUsername: 'E-mail lub nazwa użytkownika',
       invalidEmailOrUsername: 'Błędny e-mail lub nazwa użytkownika',
       invalidPassword: 'Błędne Hasło',
-      logInToPlanka: 'Zaloguj do Planki',
+      logInToBoards: 'Zaloguj do 4ga Boards',
       noInternetConnection: 'Brak połączenia z internetem',
       pageNotFound_title: 'Nie znaleziono strony',
       password: 'Hasło',

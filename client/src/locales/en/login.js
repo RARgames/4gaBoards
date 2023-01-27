@@ -4,7 +4,7 @@ export default {
       emailOrUsername: 'E-mail or username',
       invalidEmailOrUsername: 'Invalid e-mail or username',
       invalidPassword: 'Invalid password',
-      logInToPlanka: 'Log in to Planka',
+      logInToBoards: 'Log in to 4ga Boards',
       noInternetConnection: 'No internet connection',
       pageNotFound_title: 'Page Not Found',
       password: 'Password',

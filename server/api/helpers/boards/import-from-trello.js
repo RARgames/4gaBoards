@@ -15,7 +15,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const trelloToPlankaLabels = {};
+    const trelloTo4gaBoardsLabels = {};
 
     const getTrelloLists = () => inputs.trelloBoard.lists.filter((list) => !list.closed);
 
@@ -41,25 +41,25 @@ module.exports = {
 
     const getTrelloCommentsOfCard = (cardId) => inputs.trelloBoard.actions.filter((action) => action.type === 'commentCard' && action.data && action.data.card && action.data.card.id === cardId);
 
-    const getPlankaLabelColor = (trelloLabelColor) => Label.COLORS.find((color) => color.indexOf(trelloLabelColor) !== -1) || 'desert-sand';
+    const get4gaBoardsLabelColor = (trelloLabelColor) => Label.COLORS.find((color) => color.indexOf(trelloLabelColor) !== -1) || 'desert-sand';
 
-    const importCardLabels = async (plankaCard, trelloCard) => {
+    const importCardLabels = async (boardsCard, trelloCard) => {
       return Promise.all(
         trelloCard.labels.map(async (trelloLabel) => {
           return CardLabel.create({
-            cardId: plankaCard.id,
-            labelId: trelloToPlankaLabels[trelloLabel.id].id,
+            cardId: boardsCard.id,
+            labelId: trelloTo4gaBoardsLabels[trelloLabel.id].id,
           });
         }),
       );
     };
 
-    const importTasks = async (plankaCard, trelloCard) => {
+    const importTasks = async (boardsCard, trelloCard) => {
       // TODO find workaround for tasks/checklist mismapping, see issue trello2planka#5
       return Promise.all(
         getAllTrelloCheckItemsOfCard(trelloCard.id).map(async (trelloCheckItem) => {
           return Task.create({
-            cardId: plankaCard.id,
+            cardId: boardsCard.id,
             position: trelloCheckItem.pos,
             name: trelloCheckItem.name,
             isCompleted: trelloCheckItem.state === 'complete',
@@ -68,14 +68,14 @@ module.exports = {
       );
     };
 
-    const importComments = async (plankaCard, trelloCard) => {
+    const importComments = async (boardsCard, trelloCard) => {
       const trelloComments = getTrelloCommentsOfCard(trelloCard.id);
       trelloComments.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
       return Promise.all(
         trelloComments.map(async (trelloComment) => {
           return Action.create({
-            cardId: plankaCard.id,
+            cardId: boardsCard.id,
             userId: inputs.user.id,
             type: 'commentCard',
             data: {
@@ -88,23 +88,23 @@ module.exports = {
       );
     };
 
-    const importCards = async (plankaList, trelloList) => {
+    const importCards = async (boardsList, trelloList) => {
       return Promise.all(
         getTrelloCardsOfList(trelloList.id).map(async (trelloCard) => {
-          const plankaCard = await Card.create({
+          const boardsCard = await Card.create({
             boardId: inputs.board.id,
-            listId: plankaList.id,
+            listId: boardsList.id,
             creatorUserId: inputs.user.id,
             position: trelloCard.pos,
             name: trelloCard.name,
             description: trelloCard.desc || null,
           }).fetch();
 
-          await importCardLabels(plankaCard, trelloCard);
-          await importTasks(plankaCard, trelloCard);
-          await importComments(plankaCard, trelloCard);
+          await importCardLabels(boardsCard, trelloCard);
+          await importTasks(boardsCard, trelloCard);
+          await importComments(boardsCard, trelloCard);
 
-          return plankaCard;
+          return boardsCard;
         }),
       );
     };
@@ -112,13 +112,13 @@ module.exports = {
     const importLabels = async () => {
       return Promise.all(
         getUsedTrelloLabels().map(async (trelloLabel) => {
-          const plankaLabel = await Label.create({
+          const boardsLabel = await Label.create({
             boardId: inputs.board.id,
             name: trelloLabel.name || null,
-            color: getPlankaLabelColor(trelloLabel.color),
+            color: get4gaBoardsLabelColor(trelloLabel.color),
           }).fetch();
 
-          trelloToPlankaLabels[trelloLabel.id] = plankaLabel;
+          trelloTo4gaBoardsLabels[trelloLabel.id] = boardsLabel;
         }),
       );
     };
@@ -126,13 +126,13 @@ module.exports = {
     const importLists = async () => {
       return Promise.all(
         getTrelloLists().map(async (trelloList) => {
-          const plankaList = await List.create({
+          const boardsList = await List.create({
             boardId: inputs.board.id,
             name: trelloList.name,
             position: trelloList.pos,
           }).fetch();
 
-          return importCards(plankaList, trelloList);
+          return importCards(boardsList, trelloList);
         }),
       );
     };

@@ -9,7 +9,7 @@ export default {
 
   translation: {
     common: {
-      aboutPlanka: 'About Planka',
+      about: 'About 4ga Boards',
       account: 'Account',
       actions: 'Actions',
       addAttachment_title: 'Add Attachment',

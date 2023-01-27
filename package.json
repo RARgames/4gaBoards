@@ -1,8 +1,8 @@
 {
-  "name": "planka",
-  "version": "1.10.1",
+  "name": "4gaboards",
+  "version": "1.10.4",
   "private": true,
-  "homepage": "https://plankanban.github.io/planka",
+  "homepage": "https://4gastudios.com/boards",
   "repository": {
     "type": "git",
     "url": "https://github.com/RARgames/4gaBoards.git"
@@ -14,8 +14,8 @@
     "client:lint": "npm run lint --prefix client",
     "client:start": "npm start --prefix client",
     "client:test": "npm test --prefix client",
-    "docker:build": "docker build -t ghcr.io/plankanban/planka:local -f Dockerfile .",
-    "docker:build:base": "docker build -t ghcr.io/plankanban/planka:base-local -f Dockerfile.base .",
+    "docker:build": "docker build -t ghcr.io/RARgames/4gaboards:local -f Dockerfile .",
+    "docker:build:base": "docker build -t ghcr.io/RARgames/4gaboards:base-local -f Dockerfile.base .",
     "postinstall": "(cd server && npm i && cd ../client && npm i)",
     "lint": "npm run server:lint && npm run client:lint",
     "prepare": "husky install",

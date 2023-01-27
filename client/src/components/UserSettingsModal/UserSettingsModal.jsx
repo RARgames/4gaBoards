@@ -71,7 +71,7 @@ const UserSettingsModal = React.memo(
         render: () => <PreferencesPane subscribeToOwnCards={subscribeToOwnCards} onUpdate={onUpdate} />,
       },
       {
-        menuItem: t('common.aboutPlanka', {
+        menuItem: t('common.about', {
           context: 'title',
         }),
         render: () => <AboutPane />,

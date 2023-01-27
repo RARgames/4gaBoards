@@ -6,7 +6,7 @@ const winston = require('winston');
  */
 const defaultLogTimestampFormat = 'YYYY-MM-DD HH:mm:ss';
 
-const logfile = `${process.cwd()}/logs/planka.log`;
+const logfile = `${process.cwd()}/logs/4gaBoards.log`;
 
 /**
  * Log level for both console and file log sinks.

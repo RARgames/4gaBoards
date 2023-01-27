@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  planka:
-    image: ghcr.io/rargames/planka:latest
+  4gaBoards:
+    image: ghcr.io/rargames/4gaboards:latest
     command: >
       bash -c
         "for i in `seq 1 30`; do
@@ -21,7 +21,7 @@ services:
     environment:
       - BASE_URL=http://localhost:3000
       - TRUST_PROXY=0
-      - DATABASE_URL=postgresql://postgres@postgres/planka
+      - DATABASE_URL=postgresql://postgres@postgres/4gaBoards
       - SECRET_KEY=notsecretkey
     depends_on:
       - postgres
@@ -32,7 +32,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=planka
+      - POSTGRES_DB=4gaBoards
       - POSTGRES_HOST_AUTH_METHOD=trust
 
 volumes:

@@ -3,7 +3,7 @@
 Here is an example of Nginx configuration for 4ga Boards, make sure to replace `<domain>` with your domain name, and make sure to configure the SSL.
 
 ```nginx
-upstream planka {
+upstream 4gaBoards {
    server localhost:1337;
    keepalive 32;
 }
@@ -13,8 +13,8 @@ server {
     listen [::]:443 ssl http2;
     server_name <domain>;
 
-    access_log /var/log/nginx/planka-access.log;
-    error_log  /var/log/nginx/planka-error.log error;
+    access_log /var/log/nginx/4gaBoards-access.log;
+    error_log  /var/log/nginx/4gaBoards-error.log error;
 
     # SSL Configuration - Replace the example <domain> with your domain
     ssl_certificate /etc/letsencrypt/live/<domain>/fullchain.pem;
@@ -48,7 +48,7 @@ server {
         proxy_connect_timeout 1d;
         proxy_send_timeout 1d;
         proxy_read_timeout 1d;
-        proxy_pass http://planka;
+        proxy_pass http://4gaBoards;
     }
 
     location / {
@@ -67,16 +67,16 @@ server {
         proxy_cache_use_stale timeout;
         proxy_cache_lock on;
         proxy_http_version 1.1;
-        proxy_pass http://planka;
+        proxy_pass http://4gaBoards;
     }
 }
 ```
 
 ### Logging
 
-Planka currently allows you to expose the application's logfile directory to the host machine via a shared volume. This feature is not enabled by default.
+4ga Boards currently allow you to expose the application's logfile directory to the host machine via a shared volume. This feature is not enabled by default.
 
-To expose the logfile director to the host machine, add the item `./logs/:/app/logs/` under `services.planka.volumes`.
+To expose the logfile director to the host machine, add the item `./logs/:/app/logs/` under `services.4gaBoards.volumes`.
 
 Note that the directory to the left of the semicolon is regarding the host machine while the directory to the right of the semicolon is regarding the Docker container.
 
@@ -86,12 +86,12 @@ For example, in the above step, `./logs/:/app/logs/` will create the folder `log
 
 Logrotate is designed to ease administration of systems that generate large numbers of log files. It allows automatic rotation, compression, removal, and mailing of log files. Each log file may be handled daily, weekly, monthly, or when it grows too large.
 
-#### Setup logrotate for Planka logs
+#### Setup logrotate for 4ga Boards logs
 
-Create a file in `/etc/logrotate.d` named `planka` with the following contents:
+Create a file in `/etc/logrotate.d` named `4gaBoards` with the following contents:
 
 ```
-/path/to/planka/logs/planka.log {
+/path/to/4gaBoards/logs/4gaBoards.log {
   daily
   missingok
   rotate 14
@@ -103,7 +103,7 @@ Create a file in `/etc/logrotate.d` named `planka` with the following contents:
 }
 ```
 
-Ensure to replace logfile directory with your installation’s `/logs/planka.log` location.
+Ensure to replace logfile directory with your installation’s `/logs/4gaBoards.log` location.
 
 Restart the logrotate service.
 
@@ -111,11 +111,11 @@ Restart the logrotate service.
 
 Fail2ban is a service that uses iptables to automatically drop connections for a pre-defined amount of time from IPs that continuously failed to authenticate to the configured services.
 
-#### Setup a filter and a jail for Planka
+#### Setup a filter and a jail for 4ga Boards
 
-A filter defines regex rules to identify when users fail to authenticate on Planka's user interface.
+A filter defines regex rules to identify when users fail to authenticate on 4ga Boards's user interface.
 
-Create a file in `/etc/fail2ban/filter.d` named `planka.conf` with the following contents:
+Create a file in `/etc/fail2ban/filter.d` named `4gaBoards.conf` with the following contents:
 
 ```conf
 [Definition]
@@ -123,24 +123,24 @@ failregex = ^(.*) Invalid (email or username:|password!) (\"(.*)\"!)? ?\(IP: <AD
 ignoreregex =
 ```
 
-The jail file defines how to handle the failed authentication attempts found by the Planka filter.
+The jail file defines how to handle the failed authentication attempts found by the 4ga Boards filter.
 
-Create a file in `/etc/fail2ban/jail.d` named `planka.local` with the following contents:
+Create a file in `/etc/fail2ban/jail.d` named `4gaBoards.local` with the following contents:
 
 ```conf
-[planka]
+[4gaBoards]
 enabled = true
 port = http,https
-filter = planka
-logpath = /path/to/planka/logs/planka.log
+filter = 4gaBoards
+logpath = /path/to/4gaBoards/logs/4gaBoards.log
 maxretry = 5
 bantime = 900
 ```
 
-Ensure to replace `logpath`'s value with your installation’s `/logs/planka.log` location. If you are using ports other than 80 and 443 for your Web server you should replace those too. The bantime and findtime are defined in seconds.
+Ensure to replace `logpath`'s value with your installation’s `/logs/4gaBoards.log` location. If you are using ports other than 80 and 443 for your Web server you should replace those too. The bantime and findtime are defined in seconds.
 
-Restart the fail2ban service. You can check the status of your Planka jail by running:
+Restart the fail2ban service. You can check the status of your 4ga Boards jail by running:
 
 ```bash
-fail2ban-client status planka
+fail2ban-client status 4gaBoards
 ```
