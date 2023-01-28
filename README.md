@@ -93,7 +93,7 @@ nano .env
 6. Copy start script from the root directory to the `server` directory.
 
 ```bash
-cp ../docker-start.sh start.sh
+cp ../start.sh .
 ```
 
 7. Start the server.
