@@ -84,14 +84,37 @@ export const selectNextCardPosition = createSelector(
   (_, listId) => listId,
   (_, __, index) => index,
   (_, __, ___, excludedId) => excludedId,
-  ({ List }, listId, index, excludedId) => {
+  (_, __, ___, ____, isMovingcard) => isMovingcard,
+  ({ List }, listId, index, excludedId, isMovingcard) => {
     const listModel = List.withId(listId);
 
     if (!listModel) {
       return listModel;
     }
 
-    return nextPosition(listModel.getFilteredOrderedCardsModelArray(), index, excludedId);
+    const cardsList = listModel.getOrderedCardsModelArray();
+    const filteredCardsList = listModel.getFilteredOrderedCardsModelArray();
+
+    if (isMovingcard && listModel.getIsFiltered() && index <= filteredCardsList.length) {
+      // this handles moveCard if filtering is on and card is not dropped onto AddCard button
+      // TODO index <= filteredCardsList.length - hacky way not to handle dropping onto AddCard button
+
+      const elBeforeIndex = filteredCardsList[index - 1];
+      const elAfterIndex = filteredCardsList[index];
+
+      let listIndex = 0; // if there is no element before and no element after
+      if ((elBeforeIndex && elAfterIndex) || elBeforeIndex) {
+        const listIndexBeforeIndex = cardsList.findIndex((el) => el.id === elBeforeIndex.id);
+        listIndex = listIndexBeforeIndex + 1;
+      } else {
+        const listIndexAfterIndex = cardsList.findIndex((el) => el.id === elAfterIndex.id);
+        listIndex = listIndexAfterIndex;
+      }
+
+      return nextPosition(cardsList, listIndex, excludedId);
+    }
+
+    return nextPosition(cardsList, index, excludedId);
   },
 );
 

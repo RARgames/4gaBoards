@@ -71,7 +71,7 @@ export function* handleCardUpdate(card) {
 }
 
 export function* moveCard(id, listId, index) {
-  const position = yield select(selectors.selectNextCardPosition, listId, index, id);
+  const position = yield select(selectors.selectNextCardPosition, listId, index, id, true);
 
   yield call(updateCard, id, {
     listId,
@@ -85,9 +85,10 @@ export function* moveCurrentCard(listId, index) {
   yield call(moveCard, cardId, listId, index);
 }
 
+// eslint-disable-next-line no-unused-vars
 export function* transferCard(id, boardId, listId, index) {
   const { cardId: currentCardId, boardId: currentBoardId } = yield select(selectors.selectPath);
-  const position = yield select(selectors.selectNextCardPosition, listId, index, id);
+  const position = yield select(selectors.selectNextCardPosition, listId, undefined, id); // index = undefined for last position in list after transfer
 
   if (id === currentCardId) {
     yield call(goToBoard, currentBoardId);
