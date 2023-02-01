@@ -143,13 +143,23 @@
     line-height: 24px;
   }
 
+  .headerListField {
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-align: left;
+  }
+
   .headerTitleWrapper {
     margin: 4px 0;
     padding: 6px 0 0;
   }
 
   .headerWrapper {
-    margin: 12px 48px 12px 56px;
+    margin: 12px 48px 12px 22px;
     position: relative;
   }
 

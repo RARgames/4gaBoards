@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -23,8 +23,10 @@ import DueDateEditPopup from '../DueDateEditPopup';
 import TimerEditPopup from '../TimerEditPopup';
 import CardMovePopup from '../CardMovePopup';
 import DeletePopup from '../DeletePopup';
+import ListField from './ListField';
 
 import styles from './CardModal.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const CardModal = React.memo(
   ({
@@ -81,6 +83,13 @@ const CardModal = React.memo(
     const [t] = useTranslation();
 
     const isGalleryOpened = useRef(false);
+    const listField = useRef(null);
+
+    const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
+
+    const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
+
+    const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
 
     const handleToggleTimerClick = useCallback(() => {
       onUpdate({
@@ -155,6 +164,12 @@ const CardModal = React.memo(
       onClose();
     }, [onClose]);
 
+    const handleListFieldClick = useCallback(() => {
+      if (canEdit) {
+        listField.current.open();
+      }
+    }, [canEdit]);
+
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
 
@@ -163,8 +178,26 @@ const CardModal = React.memo(
         <Grid.Row className={styles.headerPadding}>
           <Grid.Column width={16} className={styles.headerPadding}>
             <div className={styles.headerWrapper}>
-              <Icon name="list alternate outline" className={styles.moduleIcon} />
               <div className={styles.headerTitleWrapper}>{canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} /> : <div className={styles.headerTitle}>{name}</div>}</div>
+              <div className={styles.headerListFieldWrapper}>
+                <ListField
+                  ref={listField}
+                  projectsToLists={allProjectsToLists}
+                  defaultPath={{
+                    projectId,
+                    boardId,
+                    listId,
+                  }}
+                  onMove={onMove}
+                  onTransfer={onTransfer}
+                  onBoardFetch={onBoardFetch}
+                >
+                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+                  <div className={classNames(styles.headerListField, canEdit && gStyles.cursorPointer)} onClick={handleListFieldClick}>
+                    <Icon fitted name="triangle down" /> {selectedList.name}
+                  </div>
+                </ListField>
+              </div>
             </div>
           </Grid.Column>
         </Grid.Row>
