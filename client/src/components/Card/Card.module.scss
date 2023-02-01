@@ -1,26 +1,15 @@
 :global(#app) {
   .actionsButton {
-    background: none;
-    box-shadow: none;
-    border-radius: 2px;
     box-sizing: content-box;
-    color: #798d99;
     display: inline-block;
-    margin: 0;
     min-height: auto;
     opacity: 0;
-    outline: none;
     padding: 4px;
     position: absolute;
     right: 2px;
     top: 2px;
     transition: background 85ms ease;
-    width: 20px;
-
-    &:hover {
-      background: #ebeef0;
-      color: #516b7a;
-    }
+    width: 10px;
   }
 
   .attachment {

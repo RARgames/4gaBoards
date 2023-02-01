@@ -16,6 +16,7 @@ import DueDate from '../DueDate';
 import Timer from '../Timer';
 
 import styles from './Card.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const Card = React.memo(
   ({
@@ -177,8 +178,8 @@ const Card = React.memo(
                         onLabelMove={onLabelMove}
                         onLabelDelete={onLabelDelete}
                       >
-                        <Button className={classNames(styles.actionsButton, styles.target)}>
-                          <Icon fitted name="pencil" size="small" />
+                        <Button className={classNames(gStyles.iconButton, styles.actionsButton, styles.target)}>
+                          <Icon fitted name="ellipsis vertical" size="small" />
                         </Button>
                       </ActionsPopup>
                     )}
