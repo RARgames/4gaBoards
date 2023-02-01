@@ -98,6 +98,7 @@ const Card = React.memo(
       <>
         {coverUrl && <img src={coverUrl} alt="" className={styles.cover} />}
         <div className={styles.details}>
+          <div className={styles.name}>{name}</div>
           {labels.length > 0 && (
             <span className={styles.labels}>
               {labels.map((label) => (
@@ -107,7 +108,6 @@ const Card = React.memo(
               ))}
             </span>
           )}
-          <div className={styles.name}>{name}</div>
           {tasks.length > 0 && <Tasks items={tasks} />}
           {(dueDate || timer || notificationsTotal > 0) && (
             <span className={styles.attachments}>
