@@ -49,15 +49,6 @@ module.exports = {
       inputs.request,
     );
 
-    if (!values.card.coverAttachmentId && attachment.image) {
-      await sails.helpers.cards.updateOne.with({
-        record: values.card,
-        values: {
-          coverAttachmentId: attachment.id,
-        },
-      });
-    }
-
     return attachment;
   },
 };
