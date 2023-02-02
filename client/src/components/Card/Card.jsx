@@ -96,9 +96,11 @@ const Card = React.memo(
 
     const contentNode = (
       <>
-        {coverUrl && <img src={coverUrl} alt="" className={styles.cover} />}
         <div className={styles.details}>
           <div className={styles.name}>{name}</div>
+        </div>
+        {coverUrl && <img src={coverUrl} alt="" className={styles.cover} />}
+        <div className={styles.details}>
           {labels.length > 0 && (
             <span className={styles.labels}>
               {labels.map((label) => (
