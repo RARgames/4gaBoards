@@ -2,13 +2,11 @@ export default {
   translation: {
     common: {
       emailOrUsername: 'Correo o nombre de usuario',
-      invalidEmailOrUsername: 'Correo o nombre de usuario incorrecto',
-      invalidPassword: 'Contraseña incorrecta',
+      invalidUsernameOrPassword: 'Nombre de usuario o contraseña incorrecto',
       logInToBoards: 'Iniciar sesión en 4ga Boards',
       noInternetConnection: 'Sin conexión a internet',
       pageNotFound_title: 'Página no encontrada',
       password: 'Contraseña',
-      projectManagement: 'Gestión de Proyectos',
       serverConnectionFailed: 'Conexión con el servidor fallida',
       unknownError: 'Error desconocido, intenta más tarde',
     },

@@ -4,11 +4,8 @@ const validator = require('validator');
 const { getRemoteAddress } = require('../../../utils/remoteAddress');
 
 const Errors = {
-  INVALID_EMAIL_OR_USERNAME: {
-    invalidEmailOrUsername: 'Invalid email or username',
-  },
-  INVALID_PASSWORD: {
-    invalidPassword: 'Invalid password',
+  INVALID_USERNAME_PASSWORD: {
+    invalidUsernamePassword: 'Invalid username or password',
   },
 };
 
@@ -28,10 +25,7 @@ module.exports = {
   },
 
   exits: {
-    invalidEmailOrUsername: {
-      responseType: 'unauthorized',
-    },
-    invalidPassword: {
+    invalidUsernamePassword: {
       responseType: 'unauthorized',
     },
   },
@@ -43,12 +37,12 @@ module.exports = {
 
     if (!user) {
       sails.log.warn(`Invalid email or username: "${inputs.emailOrUsername}"! (IP: ${remoteAddress})`);
-      throw Errors.INVALID_EMAIL_OR_USERNAME;
+      throw Errors.INVALID_USERNAME_PASSWORD;
     }
 
     if (!bcrypt.compareSync(inputs.password, user.password)) {
       sails.log.warn(`Invalid password! (IP: ${remoteAddress})`);
-      throw Errors.INVALID_PASSWORD;
+      throw Errors.INVALID_USERNAME_PASSWORD;
     }
 
     const accessToken = sails.helpers.utils.createToken(user.id);

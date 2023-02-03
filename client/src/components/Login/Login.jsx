@@ -18,15 +18,10 @@ const createMessage = (error) => {
   }
 
   switch (error.message) {
-    case 'Invalid email or username':
+    case 'Invalid username or password':
       return {
         type: 'error',
-        content: 'common.invalidEmailOrUsername',
-      };
-    case 'Invalid password':
-      return {
-        type: 'error',
-        content: 'common.invalidPassword',
+        content: 'common.invalidUsernameOrPassword',
       };
     case 'Failed to fetch':
       return {
@@ -88,17 +83,8 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
   useEffect(() => {
     if (wasSubmitting && !isSubmitting && error) {
       switch (error.message) {
-        case 'Invalid email or username':
-          emailOrUsernameField.current.select();
-
-          break;
-        case 'Invalid password':
-          setData((prevData) => ({
-            ...prevData,
-            password: '',
-          }));
+        case 'Invalid username or password':
           focusPasswordField();
-
           break;
         default:
       }
@@ -112,7 +98,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
   return (
     <div className={classNames(styles.wrapper, styles.fullHeight)}>
       <Grid verticalAlign="middle" className={styles.fullHeightPaddingFix}>
-        <Grid.Column widescreen={4} largeScreen={5} computer={6} tablet={16} mobile={16}>
+        <Grid.Column>
           <Grid verticalAlign="middle" className={styles.fullHeightPaddingFix}>
             <Grid.Column>
               <div className={styles.loginWrapper}>
@@ -120,6 +106,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                 <div>
                   {message && (
                     <Message
+                      className={styles.message}
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       {...{
                         [message.type]: true,
@@ -144,13 +131,6 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
               </div>
             </Grid.Column>
           </Grid>
-        </Grid.Column>
-        <Grid.Column widescreen={12} largeScreen={11} computer={10} only="computer" className={classNames(styles.cover, styles.fullHeight)}>
-          <div className={styles.descriptionWrapperOverlay} />
-          <div className={styles.descriptionWrapper}>
-            <Header inverted as="h1" content="4ga Boards" className={styles.descriptionTitle} />
-            <Header inverted as="h2" content={t('common.projectManagement')} className={styles.descriptionSubtitle} />
-          </div>
         </Grid.Column>
       </Grid>
     </div>

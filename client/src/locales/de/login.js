@@ -2,13 +2,11 @@ export default {
   translation: {
     common: {
       emailOrUsername: 'E-Mail-Adresse oder Benutzername',
-      invalidEmailOrUsername: 'Ungültige E-Mail-Adresse oder Benutzername',
-      invalidPassword: 'Ungültiges Passwort',
+      invalidUsernameOrPassword: 'Ungültige Benutzername oder Passwort',
       logInToBoards: 'Einloggen',
       noInternetConnection: 'Keine Internetverbindung',
       pageNotFound_title: 'Seite nicht gefunden',
       password: 'Passwort',
-      projectManagement: 'Projekt-Management',
       serverConnectionFailed: 'Serververbindung fehlgeschlagen',
       unknownError: 'Unbekannter Fehler, bitte später erneut versuchen',
     },
