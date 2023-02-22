@@ -37,7 +37,8 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
       };
 
       if (!cleanData.name) {
-        nameField.current.ref.current.select();
+        setData(DEFAULT_DATA);
+        focusNameField();
         return;
       }
 
