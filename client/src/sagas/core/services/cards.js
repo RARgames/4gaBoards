@@ -6,6 +6,8 @@ import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
 import { createLocalId } from '../../../utils/local-id';
+import { addLabelToCard } from './labels';
+import { addUserToCard } from './users';
 
 export function* createCard(listId, data, autoOpen) {
   const { boardId } = yield select(selectors.selectListById, listId);
@@ -35,6 +37,20 @@ export function* createCard(listId, data, autoOpen) {
   }
 
   yield put(actions.createCard.success(localId, card));
+
+  if (nextData.labelIds) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const labelId of nextData.labelIds) {
+      yield call(addLabelToCard, labelId, card.id);
+    }
+  }
+
+  if (nextData.userIds) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const userId of nextData.userIds) {
+      yield call(addUserToCard, userId, card.id);
+    }
+  }
 
   if (autoOpen) {
     yield call(goToCard, card.id);
