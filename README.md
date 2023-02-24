@@ -47,7 +47,8 @@ Pull images and start services:
 docker-compose up -d
 ```
 
-Demo user: demo@demo.demo demo
+Demo user: demo
+Demo password: demo
 
 ### 2. Without Docker
 
@@ -61,52 +62,40 @@ cd /var/www/4gaBoards
 git clone https://github.com/RARgames/4gaBoards.git .
 ```
 
-2. Install dependencies and build client.
+2. Install dependencies, build client, copy build to the `server` directory.
 
 ```bash
 npm i
-cd client
-npm run build
+npm run client:build
+
+cp -r client/build server/public
+cp client/build/index.html server/views/index.ejs
 ```
 
 **Note**: You can use `yarn` or `pnpm` instead of `npm`.
 
-3. Copy the `build` directory to the `server/public` directory.
+3. Configure environment variables.
 
 ```bash
-cp -r build ../server/public
-cp build/index.html ../server/views/index.ejs
-```
-
-5. Configure environment variables.
-
-```bash
-cd ../server
-cp .env.sample .env
+cp server/.env.sample server/.env
 
 # Edit .env file (You could use nano, vim, etc.)
-nano .env
+nano server/.env
 ```
 
 **Note**: Before continuing, make sure you have your selected database created and running.
 
-6. Copy start script from the root directory to the `server` directory.
+4. Copy start script from the root directory to the `server` directory and start the server.
 
 ```bash
-cp ../start.sh .
-```
-
-7. Start the server.
-
-```bash
+cp start.sh server
+cd server
 ./start.sh
 ```
 
 **Note**: You can use `pm2` or `systemd` to run the server in the background.
 
-## Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)
-
-Additional information available [here](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md).
+## [Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
 
 ## Import from Trello
 
@@ -116,21 +105,12 @@ It's already available in 4ga Boards. Just add a project, then click Import whil
 
 ## Development
 
-Clone the repository and install dependencies:
+Clone the repository into a directory of your choice, install dependencies, copy .env:
 
 ```
-git clone https://github.com/RARgames/4gaBoards.git
-
-cd 4gaBoards
+git clone https://github.com/RARgames/4gaBoards.git .
 npm i
-
-cd client
-npm run build
-cp -r build ../server/public
-cp build/index.html ../server/views/index.ejs
-cd ../server
-cp .env.sample .env
-cd ..
+cp server/.env.sample server/.env
 ```
 
 Either use a local database or start the provided development database:
@@ -151,7 +131,8 @@ Start the development server:
 npm start
 ```
 
-Demo user: demo@demo.demo demo
+Demo user: demo
+Demo password: demo
 
 ## [Contributing](https://github.com/RARgames/4gaBoards/blob/main/docs/CONTRIBUTING.md)
 
