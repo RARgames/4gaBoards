@@ -37,7 +37,7 @@
     "moment": "^2.29.4",
     "move-file": "^2.1.0",
     "rimraf": "^3.0.2",
-    "sails": "^1.5.3",
+    "sails": "^1.5.4",
     "sails-hook-orm": "^4.0.2",
     "sails-hook-sockets": "^2.0.3",
     "sails-postgresql": "^5.0.1",
