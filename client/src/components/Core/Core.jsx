@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Loader } from 'semantic-ui-react';
@@ -13,8 +13,23 @@ import Background from '../Background';
 
 import styles from './Core.module.scss';
 
-const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, currentProject }) => {
+const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, currentProject, currentBoard, currentCard }) => {
   const [t] = useTranslation();
+  const mainTitle = useRef(document.title);
+
+  useEffect(() => {
+    let title = `${mainTitle.current}`;
+    if (currentProject) {
+      title = `${currentProject.name} | ${mainTitle.current}`;
+      if (currentBoard) {
+        title = `${currentBoard.name} · ${currentProject.name} | ${mainTitle.current}`;
+        if (currentCard) {
+          title = `${currentCard.name} - ${currentBoard.name} · ${currentProject.name} | ${mainTitle.current}`;
+        }
+      }
+    }
+    document.title = title;
+  }, [currentBoard, currentCard, currentProject]);
 
   return (
     <>
@@ -53,11 +68,15 @@ Core.propTypes = {
   isSocketDisconnected: PropTypes.bool.isRequired,
   currentModal: PropTypes.oneOf(Object.values(ModalTypes)),
   currentProject: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  currentBoard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  currentCard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 Core.defaultProps = {
   currentModal: undefined,
   currentProject: undefined,
+  currentBoard: undefined,
+  currentCard: undefined,
 };
 
 export default Core;
