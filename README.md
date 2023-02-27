@@ -47,6 +47,7 @@ Pull images and start services:
 docker-compose up -d
 ```
 
+Default url: http://localhost:3000
 Demo user: demo
 Demo password: demo
 
@@ -94,6 +95,10 @@ cd server
 ```
 
 **Note**: You can use `pm2` or `systemd` to run the server in the background.
+
+Default url: http://localhost:1337
+Demo user: demo
+Demo password: demo
 
 ## [Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
 
