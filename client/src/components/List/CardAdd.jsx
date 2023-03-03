@@ -15,7 +15,7 @@ const DEFAULT_DATA = {
   name: '',
 };
 
-const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
+const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }) => {
   const [t] = useTranslation();
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
@@ -34,6 +34,9 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose }) => {
       const cleanData = {
         ...data,
         name: data.name.trim(),
+        // TODO remove example - how to submit
+        // labelIds: ['895796152710988857', '907861629801072269', '920273931925980818'],
+        // userIds: ['895703383690707969'],
       };
 
       if (!cleanData.name) {
@@ -131,6 +134,10 @@ CardAdd.propTypes = {
   isOpened: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  labelIds: PropTypes.array.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  memberIds: PropTypes.array.isRequired,
 };
 
 export default CardAdd;

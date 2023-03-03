@@ -17,7 +17,7 @@ import { ReactComponent as PlusMathIcon } from '../../assets/images/plus-math-ic
 import styles from './List.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
+const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
   const [t] = useTranslation();
   const [isAddCardOpened, setIsAddCardOpened] = useState(false);
   const [nameEditHeight, setNameEditHeight] = useState(0);
@@ -113,7 +113,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               <CardContainer key={cardId} id={cardId} index={cardIndex} />
             ))}
             {placeholder}
-            {canEdit && <CardAdd isOpened={isAddCardOpened} onCreate={onCardCreate} onClose={handleAddCardClose} />}
+            {canEdit && <CardAdd isOpened={isAddCardOpened} onCreate={onCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
           </div>
         </div>
       )}
@@ -221,6 +221,8 @@ List.propTypes = {
   cardIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFiltered: PropTypes.bool.isRequired,
   filteredCardIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  labelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
