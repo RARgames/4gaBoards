@@ -31,20 +31,6 @@ const mentions = {
       avatar: 'https://avatars0.githubusercontent.com/u/7525670?s=200&v=4',
       prefix: '#',
     },
-    {
-      id: 'labelId-4',
-      name: 'Label4',
-      link: 'https://twitter.com/jyopur',
-      avatar: 'https://avatars0.githubusercontent.com/u/2182307?v=3&s=400',
-      prefix: '#',
-    },
-    {
-      id: 'labelId-3',
-      name: 'Label3',
-      link: 'https://twitter.com/mxstbr',
-      avatar: 'https://avatars0.githubusercontent.com/u/7525670?s=200&v=4',
-      prefix: '#',
-    },
   ],
 };
 

@@ -48,28 +48,30 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
     return { plugins, MentionSuggestions };
   }, []);
 
-  // // Add member mentions
+  // Add member mentions
   // Simply uncomment these two functions and suggestions will be populated with labelIds and userIds
-  // const memberMentions = memberIds.map((member) => {
-  //   const memberData = {};
-  //   memberData.id = member.user.id;
-  //   memberData.name = member.user.name;
-  //   memberData.username = member.user.username;
-  //   memberData.avatar = member.user.avatarUrl;
-  //   return memberData;
-  // });
+  const memberMentions = memberIds.map((member) => {
+    const memberData = {};
+    memberData.id = member.user.id;
+    memberData.name = member.user.name;
+    memberData.username = member.user.username;
+    memberData.avatar = member.user.avatarUrl;
+    memberData.prefix = '@';
+    return memberData;
+  });
 
-  // mentions['@'] = memberMentions;
+  mentions['@'] = memberMentions;
 
-  // // Add label mentions
-  // const labelMentions = labelIds.map((label) => {
-  //   const labelData = {};
-  //   labelData.id = label.id;
-  //   labelData.name = label.name;
-  //   return labelData;
-  // });
+  // Add label mentions
+  const labelMentions = labelIds.map((label) => {
+    const labelData = {};
+    labelData.id = label.id;
+    labelData.name = label.name;
+    labelData.prefix = '#';
+    return labelData;
+  });
 
-  // mentions['#'] = labelMentions;
+  mentions['#'] = labelMentions;
 
   // Helper methods
   const clearEditor = useCallback(() => {
