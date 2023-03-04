@@ -11,8 +11,6 @@ import '@draft-js-plugins/mention/lib/plugin.css';
 import styles from './CardAdd.module.scss';
 
 function MentionEditor({ editorRef, editorState, setEditorState, plugins, suggestions, setSuggestions, MentionSuggestions, onBlur, handleFieldKeyDown, keyBindingFn, open, setOpen }) {
-  // const [open, setOpen] = useState(false);
-
   const onOpenChange = (_open) => {
     setOpen(_open);
   };

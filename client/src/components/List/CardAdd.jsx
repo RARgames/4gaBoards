@@ -55,7 +55,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
   //   memberData.id = member.user.id;
   //   memberData.name = member.user.name;
   //   memberData.username = member.user.username;
-  //   memberData.display = member.user.avatarUrl;
+  //   memberData.avatar = member.user.avatarUrl;
   //   return memberData;
   // });
 
