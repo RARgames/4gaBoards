@@ -10,8 +10,8 @@ import mentions from './mentions';
 import '@draft-js-plugins/mention/lib/plugin.css';
 import styles from './CardAdd.module.scss';
 
-function MentionEditor({ editorRef, editorState, setEditorState, plugins, suggestions, setSuggestions, MentionSuggestions, onBlur, handleFieldKeyDown, keyBindingFn }) {
-  const [open, setOpen] = useState(false);
+function MentionEditor({ editorRef, editorState, setEditorState, plugins, suggestions, setSuggestions, MentionSuggestions, onBlur, handleFieldKeyDown, keyBindingFn, open, setOpen }) {
+  // const [open, setOpen] = useState(false);
 
   const onOpenChange = (_open) => {
     setOpen(_open);
@@ -45,6 +45,8 @@ MentionEditor.propTypes = {
   onBlur: PropTypes.func.isRequired,
   handleFieldKeyDown: PropTypes.func.isRequired,
   keyBindingFn: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
 };
 
 export default MentionEditor;

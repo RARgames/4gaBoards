@@ -32,6 +32,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
   /** **************** Mentions using DraftJS Editor and DraftJS Mentions plugin ************* */
   // Each editor needs to have its own editor state and custom mentions plugins
   const nameField = useRef(null);
+  const [open, setOpen] = useState(false);
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [suggestions, setSuggestions] = useState(mentions['#']);
 
@@ -48,6 +49,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
   }, []);
 
   // // Add member mentions
+  // Simply uncomment these two functions and suggestions will be populated with labelIds and userIds
   // const memberMentions = memberIds.map((member) => {
   //   const memberData = {};
   //   memberData.id = member.user.id;
@@ -152,12 +154,15 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
         submit(false);
       }
       if (command === 'cancel') {
-        if (!getTextWithoutPrefix(editorState).trim()) {
-          handleCancel();
+        if (open) {
+          setOpen(false);
+          return;
         }
+
+        handleCancel();
       }
     },
-    [editorState, handleCancel, submit],
+    [handleCancel, open, submit],
   );
   /** ****************************Handle Key Down events end*********************************** */
   useEffect(() => {
@@ -173,6 +178,8 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
   return (
     <Form className={classNames(styles.wrapper, !isOpened && styles.wrapperClosed)} onSubmit={handleSubmit}>
       <MentionEditor
+        open={open}
+        setOpen={setOpen}
         onBlur={handleFieldBlur}
         editorRef={nameField}
         editorState={editorState}
