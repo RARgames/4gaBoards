@@ -5,8 +5,11 @@ export default (close, editorState, isOpened = true) => {
   const isModified = useRef(null);
 
   const handleFieldBlur = useCallback(() => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText().trim();
+    let text;
+    if (editorState) {
+      const contentState = editorState.getCurrentContent();
+      text = contentState.getPlainText().trim();
+    }
     if (isClosable.current && !isModified.current && !text) {
       close();
     }
