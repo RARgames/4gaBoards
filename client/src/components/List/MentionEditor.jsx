@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Editor from '@draft-js-plugins/editor';
 import { defaultSuggestionsFilter } from '@draft-js-plugins/mention';
@@ -20,7 +20,7 @@ function MentionEditor({ editorRef, editorState, setEditorState, plugins, sugges
   };
 
   const handleAddMention = (currMention) => {
-    console.log('Mention Add Event', currMention);
+    console.log('Mention Added', currMention);
   };
 
   return (

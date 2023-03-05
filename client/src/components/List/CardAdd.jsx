@@ -40,6 +40,10 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
     const mentionPlugin = createMentionPlugin({
       mentionTrigger: ['@', '#'],
       supportWhitespace: true,
+      popperOptions: {
+        strategy: 'fixed',
+        placement: 'bottom-start',
+      },
     });
     // eslint-disable-next-line no-shadow
     const { MentionSuggestions } = mentionPlugin;
