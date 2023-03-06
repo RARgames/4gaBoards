@@ -1,32 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Editor from '@draft-js-plugins/editor';
-import { defaultSuggestionsFilter } from '@draft-js-plugins/mention';
+
+import EntryComponent from './EntryComponent';
 
 // Mentions
 import mentions from './mentions';
 
 // CSS
 import '@draft-js-plugins/mention/lib/plugin.css';
-import styles from './CardAdd.module.scss';
+import styles from '../List/CardAdd.module.scss';
+import './styles.css';
 
 function MentionEditor({ editorRef, editorState, setEditorState, plugins, suggestions, setSuggestions, MentionSuggestions, onBlur, handleFieldKeyDown, keyBindingFn, open, setOpen }) {
   const onOpenChange = (_open) => {
     setOpen(_open);
   };
 
-  const onSearchChange = ({ trigger, value }) => {
-    setSuggestions(defaultSuggestionsFilter(value, mentions, trigger));
+  const customSuggestionsFilter = (value, mentionsList, trigger) => {
+    const filteredSuggestions = mentionsList[trigger].filter((suggestion) => suggestion.name.toLowerCase().startsWith(value.toLowerCase()));
+    return filteredSuggestions;
   };
 
-  const handleAddMention = (currMention) => {
-    console.log('Mention Added', currMention);
+  const onSearchChange = ({ trigger, value }) => {
+    if (value.length > 0) {
+      setSuggestions(customSuggestionsFilter(value, mentions, trigger));
+    } else {
+      setSuggestions([]);
+    }
   };
+
+  const handleAddMention = (mention) => {};
 
   return (
     <div className={styles.fieldWrapper}>
       <Editor ref={editorRef} spellCheck keyBindingFn={keyBindingFn} handleKeyCommand={handleFieldKeyDown} editorState={editorState} onChange={setEditorState} plugins={plugins} onBlur={onBlur} />
-      <MentionSuggestions open={open} onOpenChange={onOpenChange} suggestions={suggestions} onSearchChange={onSearchChange} onAddMention={handleAddMention} />
+      <MentionSuggestions entryComponent={EntryComponent} open={open} onOpenChange={onOpenChange} suggestions={suggestions} onSearchChange={onSearchChange} onAddMention={handleAddMention} />
     </div>
   );
 }

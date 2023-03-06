@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, TextArea } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 
 // For MentionEditor component
-import { EditorState, ContentState, KeyBindingUtil, convertToRaw } from 'draft-js';
+import { EditorState, ContentState, KeyBindingUtil } from 'draft-js';
 
 import createMentionPlugin from '@draft-js-plugins/mention';
-import { getTextWithPrefix, getTextWithoutPrefix, getMentionsData } from './draftjs-utils';
-import MentionEditor from './MentionEditor';
-import mentions from './mentions';
+import { getTextWithPrefix, getTextWithoutPrefix, getMentionsData } from '../MentionEditor/draftjs-utils';
+import MentionEditor from '../MentionEditor/MentionEditor';
+import mentions from '../MentionEditor/mentions';
 //
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 
@@ -18,6 +18,7 @@ import { useClosableForm, useForm } from '../../hooks';
 
 import styles from './CardAdd.module.scss';
 import gStyles from '../../globalStyles.module.scss';
+import MentionComponent from '../MentionEditor/MentionComponent';
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -38,6 +39,11 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
 
   const { MentionSuggestions, plugins } = useMemo(() => {
     const mentionPlugin = createMentionPlugin({
+      theme: {
+        mentionSuggestionsPopup: 'suggestionPopup',
+        mentionSuggestionsEntry: 'entryComponentContainer',
+      },
+      mentionComponent: MentionComponent,
       mentionTrigger: ['@', '#'],
       supportWhitespace: true,
       popperOptions: {
@@ -59,7 +65,8 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
     memberData.id = member.user.id;
     memberData.name = member.user.name;
     memberData.username = member.user.username;
-    memberData.avatar = member.user.avatarUrl;
+    // memberData.avatar = member.user.avatarUrl;
+    memberData.avatar = 'https://avatars0.githubusercontent.com/u/2182307?v=3&s=400';
     memberData.prefix = '@';
     return memberData;
   });
@@ -72,6 +79,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
     labelData.id = label.id;
     labelData.name = label.name;
     labelData.prefix = '#';
+    labelData.color = label.color;
     return labelData;
   });
 
@@ -104,6 +112,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
         name: getTextWithPrefix(editorState).trim(),
         labelIds: mentionsData.labels,
         userIds: mentionsData.users,
+        raw: getTextWithoutPrefix(editorState),
       };
 
       console.log('cleanData', cleanData);
