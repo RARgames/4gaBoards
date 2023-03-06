@@ -1,14 +1,19 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-export default (close, isOpened = true) => {
+export default (close, editorState, isOpened = true) => {
   const isClosable = useRef(null);
   const isModified = useRef(null);
 
   const handleFieldBlur = useCallback(() => {
-    if (isClosable.current && !isModified.current) {
+    let text;
+    if (editorState) {
+      const contentState = editorState.getCurrentContent();
+      text = contentState.getPlainText().trim();
+    }
+    if (isClosable.current && !isModified.current && !text) {
       close();
     }
-  }, [close]);
+  }, [close, editorState]);
 
   const handleControlMouseOver = useCallback(() => {
     isClosable.current = false;

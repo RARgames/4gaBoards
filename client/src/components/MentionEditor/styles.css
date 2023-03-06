@@ -1,0 +1,20 @@
+.mention-text {
+  padding: 5px;
+  background: #414141;
+  color:#ebebec;
+  padding: 7px
+}
+
+.mention-text:focus,
+.mention-text:hover,
+.mention-focused {
+  background: #1e1e1e;
+  color: #ebebec;
+  cursor: pointer;
+}
+
+.suggestionPopup {
+  width: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+}
