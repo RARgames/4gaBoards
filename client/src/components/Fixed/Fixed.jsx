@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import HeaderContainer from '../../containers/HeaderContainer';
 import ProjectContainer from '../../containers/ProjectContainer';
-import BoardActionsContainer from '../../containers/BoardActionsContainer';
+// import BoardActionsContainer from '../../containers/BoardActionsContainer';
 
 import styles from './Fixed.module.scss';
 
@@ -12,7 +12,7 @@ function Fixed({ projectId, board }) {
     <div className={styles.wrapper}>
       <HeaderContainer />
       {projectId && <ProjectContainer />}
-      {board && !board.isFetching && <BoardActionsContainer />}
+      {/* {board && !board.isFetching && <BoardActionsContainer />} */}
     </div>
   );
 }
