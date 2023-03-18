@@ -7,6 +7,8 @@ import { Icon, Menu } from 'semantic-ui-react';
 import Paths from '../../constants/Paths';
 import NotificationsPopup from './NotificationsPopup';
 import UserPopup from '../UserPopup';
+import BoardActionsContainer from '../../containers/BoardActionsContainer';
+import BoardsContainer from '../../containers/BoardsContainer';
 
 import styles from './Header.module.scss';
 
@@ -33,6 +35,8 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
             <Menu.Item className={classNames(styles.item, canEditProject && styles.itemHoverable, styles.title)} onClick={handleProjectSettingsClick}>
               {project.name}
             </Menu.Item>
+            <Menu.Item as={BoardsContainer} />
+            <Menu.Item as={BoardActionsContainer} />
           </Menu.Menu>
         )}
         <Menu.Menu position="right">

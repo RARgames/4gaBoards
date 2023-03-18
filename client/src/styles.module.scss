@@ -6,7 +6,7 @@
       border: 0;
       color: #444444;
       font-size: 14px;
-      font-family: "Museo Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
+      font-family: 'Museo Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
       font-weight: 400;
       width: 100%;
       padding-bottom: 8px;
@@ -104,6 +104,10 @@
 
     .pswp .pswp__img--placeholder {
       display: none !important;
+    }
+
+    .ui.dimmer {
+      background-color: transparent;
     }
   }
 
@@ -261,7 +265,17 @@
   }
 
   .backgroundBlueDanube {
-    background: radial-gradient(circle, rgba(9, 9, 121, 1) 0%, rgba(2, 0, 36, 1) 0%, rgba(2, 29, 66, 1) 0%, rgba(2, 41, 78, 1) 0%, rgba(2, 57, 95, 1) 0%, rgba(1, 105, 144, 1) 100%, rgba(1, 151, 192, 1) 100%, rgba(0, 212, 255, 1) 100%) !important;
+    background: radial-gradient(
+      circle,
+      rgba(9, 9, 121, 1) 0%,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(2, 29, 66, 1) 0%,
+      rgba(2, 41, 78, 1) 0%,
+      rgba(2, 57, 95, 1) 0%,
+      rgba(1, 105, 144, 1) 100%,
+      rgba(1, 151, 192, 1) 100%,
+      rgba(0, 212, 255, 1) 100%
+    ) !important;
   }
 
   .backgroundSundownStripe {
@@ -365,7 +379,15 @@
   }
 
   .backgroundTheBow {
-    background: radial-gradient(circle farthest-corner at -8.9% 51.2%, rgba(255, 124, 0, 1) 0%, rgba(255, 124, 0, 1) 15.9%, rgba(255, 163, 77, 1) 15.9%, rgba(255, 163, 77, 1) 24.4%, rgba(19, 30, 37, 1) 24.5%, rgba(19, 30, 37, 1) 66%) !important;
+    background: radial-gradient(
+      circle farthest-corner at -8.9% 51.2%,
+      rgba(255, 124, 0, 1) 0%,
+      rgba(255, 124, 0, 1) 15.9%,
+      rgba(255, 163, 77, 1) 15.9%,
+      rgba(255, 163, 77, 1) 24.4%,
+      rgba(19, 30, 37, 1) 24.5%,
+      rgba(19, 30, 37, 1) 66%
+    ) !important;
   }
 
   .backgroundGreenMist {

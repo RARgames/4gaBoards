@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button, Icon } from 'semantic-ui-react';
@@ -17,6 +17,7 @@ import Timer from '../Timer';
 
 import styles from './Card.module.scss';
 import gStyles from '../../globalStyles.module.scss';
+import useCurrentPath from '../../hooks/use-current-path';
 
 const Card = React.memo(
   ({
@@ -52,6 +53,15 @@ const Card = React.memo(
     onLabelMove,
     onLabelDelete,
   }) => {
+    const router = useCurrentPath([{ path: Paths.CARDS }])?.at(0);
+
+    const [isSelectedCard, setIsSelectedCard] = useState(false);
+
+    useEffect(() => {
+      if (router && router.params?.id === id) setIsSelectedCard(true);
+      else setIsSelectedCard(false);
+    }, [router, id]);
+
     const nameEdit = useRef(null);
 
     const handleClick = useCallback(() => {
@@ -145,7 +155,7 @@ const Card = React.memo(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={styles.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
             <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div className={styles.card}>
+              <div className={isSelectedCard ? `${styles.card} ${styles.isSelectedCard}` : styles.card}>
                 {isPersisted ? (
                   <>
                     <Link to={Paths.CARDS.replace(':id', id)} className={styles.content} onClick={handleClick}>

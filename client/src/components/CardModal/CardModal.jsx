@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, Grid, Icon, Modal } from 'semantic-ui-react';
+import { Button, Grid, Icon } from 'semantic-ui-react';
 import { Markdown } from '../../lib/custom-ui';
 
 import { startTimer, stopTimer } from '../../utils/timer';
@@ -176,7 +176,7 @@ const CardModal = React.memo(
     const contentNode = (
       <Grid className={styles.grid}>
         <Grid.Row className={styles.headerPadding}>
-          <Grid.Column width={16} className={styles.headerPadding}>
+          <Grid.Column width={14} className={styles.headerPadding}>
             <div className={styles.headerWrapper}>
               <div className={styles.headerTitleWrapper}>{canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} /> : <div className={styles.headerTitle}>{name}</div>}</div>
               <div className={styles.headerListFieldWrapper}>
@@ -199,6 +199,9 @@ const CardModal = React.memo(
                 </ListField>
               </div>
             </div>
+          </Grid.Column>
+          <Grid.Column>
+            <Button style={{ marginTop: '10px' }} icon="close" onClick={handleClose} />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row className={styles.modalPadding}>
@@ -479,11 +482,7 @@ const CardModal = React.memo(
       </Grid>
     );
 
-    return (
-      <Modal open closeIcon centered={false} onClose={handleClose} className={styles.wrapper}>
-        {canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}
-      </Modal>
-    );
+    return canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode;
   },
 );
 
