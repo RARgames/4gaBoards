@@ -101,7 +101,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
         placeholder={t('common.enterListTitle')}
         maxRows={2}
         spellCheck
-        className={classNames(styles.field, gStyles.scrollable)}
+        className={classNames(styles.field, gStyles.scrollableY)}
         onKeyDown={handleFieldKeyDown}
         onChange={handleChange}
         onBlur={handleFieldBlur}

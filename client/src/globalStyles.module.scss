@@ -24,9 +24,26 @@
     box-shadow: none;
   }
 
-  .scrollable {
+  .scrollableY {
     overflow-x: hidden;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #646464 #a6a6a6;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #a6a6a6;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #646464;
+    }
+  }
+
+  .scrollableX {
+    overflow-x: auto;
+    overflow-y: hidden;
     scrollbar-width: thin;
     scrollbar-color: #646464 #a6a6a6;
 
