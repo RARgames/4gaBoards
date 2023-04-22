@@ -122,7 +122,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
     <div className={styles.mainWrapper}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div ref={wrapper} className={classNames(styles.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
-        <div>
+        <div className={isCardModalOpened && styles.listsModalOpen}>
           <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
               {({ innerRef, droppableProps, placeholder }) => (
@@ -130,7 +130,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   data-drag-scroller
                   ref={innerRef}
-                  className={isCardModalOpened ? styles.listsModalOpen : styles.lists}
+                  className={styles.lists}
                 >
                   {listIds.map((listId, index) => (
                     <ListContainer key={listId} id={listId} index={index} />
