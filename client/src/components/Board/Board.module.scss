@@ -13,7 +13,7 @@
     text-align: left;
     transition: background 85ms ease-in, opacity 40ms ease-in,
       border-color 85ms ease-in;
-    width: 100%;
+    width: 272px;
 
     &:active {
       outline: none;
@@ -48,6 +48,13 @@
     min-width: 100%;
   }
 
+  .listsModalOpen {
+    display: inline-flex;
+    height: 100%;
+    min-width: 100%;
+    width: calc(100vw - 672px);
+  }
+
   .panel {
     align-items: center;
     display: flex;
@@ -59,6 +66,10 @@
   }
 
   .wrapper {
-    margin: 0 20px;
+    margin: 0 2px 0 20px;
+  }
+
+  .mainWrapper {
+    display: flex;
   }
 }

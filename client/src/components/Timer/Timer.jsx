@@ -65,7 +65,7 @@ const Timer = React.memo(({ as, startedAt, total, size, isDisabled, onClick }) =
 Timer.propTypes = {
   as: PropTypes.elementType,
   startedAt: PropTypes.instanceOf(Date),
-  total: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
+  total: PropTypes.number.isRequired,
   size: PropTypes.oneOf(Object.values(SIZES)),
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func,

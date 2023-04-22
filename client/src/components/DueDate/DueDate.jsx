@@ -23,10 +23,12 @@ const DueDate = React.memo(({ value, size, isDisabled, onClick }) => {
 
   const contentNode = (
     <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable)}>
-      {t(`format:${FORMATS[size]}`, {
-        value,
-        postProcess: 'formatDate',
-      })}
+      {value
+        ? t(`format:${FORMATS[size]}`, {
+            value,
+            postProcess: 'formatDate',
+          })
+        : ''}
     </span>
   );
 
@@ -40,13 +42,14 @@ const DueDate = React.memo(({ value, size, isDisabled, onClick }) => {
 });
 
 DueDate.propTypes = {
-  value: PropTypes.instanceOf(Date).isRequired,
+  value: PropTypes.instanceOf(Date),
   size: PropTypes.oneOf(Object.values(SIZES)),
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
 DueDate.defaultProps = {
+  value: undefined,
   size: SIZES.MEDIUM,
   isDisabled: false,
   onClick: undefined,

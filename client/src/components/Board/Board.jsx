@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import classNames from 'classnames';
 import { closePopup } from '../../lib/popup';
 
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -11,6 +12,7 @@ import ListAdd from './ListAdd';
 import { ReactComponent as PlusMathIcon } from '../../assets/images/plus-math-icon.svg';
 
 import styles from './Board.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
 
@@ -117,9 +119,9 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [handleWindowMouseUp, handleWindowMouseMove]);
 
   return (
-    <>
+    <div className={styles.mainWrapper}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div ref={wrapper} className={styles.wrapper} onMouseDown={handleMouseDown}>
+      <div ref={wrapper} className={classNames(styles.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
         <div>
           <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
@@ -128,7 +130,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   data-drag-scroller
                   ref={innerRef}
-                  className={styles.lists}
+                  className={isCardModalOpened ? styles.listsModalOpen : styles.lists}
                 >
                   {listIds.map((listId, index) => (
                     <ListContainer key={listId} id={listId} index={index} />
@@ -153,7 +155,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
         </div>
       </div>
       {isCardModalOpened && <CardModalContainer />}
-    </>
+    </div>
   );
 });
 

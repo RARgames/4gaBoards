@@ -19,7 +19,7 @@
 
   .checkboxWrapper {
     display: inline-block;
-    padding: 10px 15px 0px 8px;
+    padding: 10px 15px 0px 0px;
     position: absolute;
     text-align: center;
     top: 0;
@@ -59,7 +59,7 @@
     font-size: 15px;
     line-height: 1.5;
     min-height: 32px;
-    padding: 0 32px 0 40px;
+    padding: 0 32px 0 24px;
     width: 100%;
   }
 
@@ -70,7 +70,6 @@
   .wrapper {
     border-radius: 3px;
     cursor: auto;
-    margin-left: -40px;
     min-height: 32px;
     position: relative;
     width: calc(100% + 40px);

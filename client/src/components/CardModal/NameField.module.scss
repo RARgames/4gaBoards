@@ -5,14 +5,14 @@
     border-radius: 3px;
     box-shadow: none;
     color: #17394d;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 20px;
     margin: -5px;
     overflow: hidden;
     padding: 4px;
     resize: none;
-    width: 100%;
+    width: calc(100% - 60px);
 
     &:focus {
       background: #fff;

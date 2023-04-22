@@ -127,9 +127,14 @@
     width: 100%;
   }
 
+  .moduleBody {
+    margin-left: 4px;
+  }
+
   .grid {
     background: #f5f6f7;
     margin: 0;
+    height: calc(100vh - 191px);
   }
 
   .headerPadding {
@@ -138,19 +143,25 @@
 
   .headerTitle {
     color: #17394d;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 24px;
+    line-height: 20px;
+    width: calc(100% - 60px);
+    margin: -4px;
+    padding: 4px;
+    display: inline-block;
   }
 
   .headerListField {
     overflow: hidden;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 75%;
+    display: inline-block;
+  }
+
+  .headerListFieldIcon {
+    display: inline-block;
   }
 
   .headerTitleWrapper {
@@ -159,8 +170,12 @@
   }
 
   .headerWrapper {
-    margin: 12px 48px 12px 22px;
+    margin: 10px 15px;
     position: relative;
+  }
+
+  .headerButton {
+    float: right;
   }
 
   .modalPadding {
@@ -173,19 +188,15 @@
     font-weight: bold;
     line-height: 20px;
     margin: 0 0 4px;
-    padding: 8px 0;
+    padding: 8px 0 8px 0;
+    display: inline-block;
   }
 
   .moduleIcon {
     color: #17394d;
     font-size: 17px;
-    height: 32px;
-    left: -40px;
-    line-height: 32px;
-    margin-right: 0;
-    position: absolute;
-    top: 2px;
-    width: 32px;
+    margin-right: 4px;
+    display: inline-block;
   }
 
   .moduleWrapper {
@@ -208,7 +219,9 @@
   }
 
   .wrapper {
-    width: 880px;
+    width: 650px;
+    position: absolute;
+    right: 0;
   }
 
   @media (max-width: 926px) {
