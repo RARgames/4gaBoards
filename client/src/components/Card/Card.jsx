@@ -30,6 +30,7 @@ const Card = React.memo(
     listId,
     projectId,
     isPersisted,
+    isOpen,
     notificationsTotal,
     users,
     labels,
@@ -145,7 +146,7 @@ const Card = React.memo(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={styles.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
             <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div className={styles.card}>
+              <div className={classNames(styles.card, isOpen && styles.cardOpen)}>
                 {isPersisted ? (
                   <>
                     <Link to={Paths.CARDS.replace(':id', id)} className={styles.content} onClick={handleClick}>
@@ -209,6 +210,7 @@ Card.propTypes = {
   listId: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   isPersisted: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   notificationsTotal: PropTypes.number.isRequired,
   /* eslint-disable react/forbid-prop-types */
   users: PropTypes.array.isRequired,
