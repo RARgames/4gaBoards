@@ -189,7 +189,7 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
         />
         <Icon fitted name="triangle down" className={classNames(styles.dropdownIcon, gStyles.iconButtonSolid)} />
       </div>
-      <div className={classNames(styles.dropdownMenu, gStyles.scrollableY, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>
+      <div className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>
         {getOptions().map((item, index) => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
           <div

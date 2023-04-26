@@ -37,37 +37,75 @@
     box-shadow: none;
   }
 
+  //TODO to change to match dark theme
   .scrollableY {
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #646464 #a6a6a6;
 
-    &::-webkit-scrollbar {
-      width: 8px;
-      background-color: #a6a6a6;
-    }
-
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;
       background-color: #646464;
     }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #a6a6a6;
+    }
   }
 
+  //TODO to change to match dark theme
   .scrollableX {
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: thin;
     scrollbar-color: #646464 #a6a6a6;
 
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #646464;
+    }
+
     &::-webkit-scrollbar {
       width: 8px;
       background-color: #a6a6a6;
     }
+  }
+
+  .scrollableYList {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #7b7b7c #252527;
+    // TODO other variant
+    // scrollbar-color: #7b7b7c var(--backgroundColorTmpDarkerField);
 
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;
-      background-color: #646464;
+      background-color: #7b7b7c;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #252527;
+    }
+  }
+
+  .scrollableXList {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #7b7b7c #252527;
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #7b7b7c;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #252527;
     }
   }
 
