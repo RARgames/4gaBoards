@@ -83,7 +83,7 @@ const CardModal = React.memo(
     const [t] = useTranslation();
 
     const isGalleryOpened = useRef(false);
-    const listField = useRef(null);
+    const nameField = useRef(null);
     const dropdown = useRef(null);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
@@ -157,6 +157,10 @@ const CardModal = React.memo(
       });
     }, [isSubscribed, onUpdate]);
 
+    const handleNameEdit = useCallback(() => {
+      nameField.current.open();
+    }, []);
+
     const handleGalleryOpen = useCallback(() => {
       isGalleryOpened.current = true;
     }, []);
@@ -187,12 +191,11 @@ const CardModal = React.memo(
 
     const headerNode = (
       <div className={styles.header}>
-        {canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} /> : <div className={styles.headerTitle}>{name}</div>}
+        {canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameField} /> : <div className={styles.headerTitle}>{name}</div>}
 
         <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
           <Icon fitted name="close" />
         </Button>
-        {/* TODO added here card actions - to edit */}
         {canEdit && (
           <ActionsPopup
             card={{
@@ -207,7 +210,7 @@ const CardModal = React.memo(
             currentUserIds={users.map((user) => user.id)}
             labels={allLabels}
             currentLabelIds={labels.map((label) => label.id)}
-            // onNameEdit={handleNameEdit}
+            onNameEdit={handleNameEdit}
             onUpdate={onUpdate}
             onMove={onMove}
             onTransfer={onTransfer}
@@ -227,7 +230,6 @@ const CardModal = React.memo(
             </Button>
           </ActionsPopup>
         )}
-        {/* TODO added here card actions end - to edit */}
         {canEdit && (
           <DeletePopup
             title={t('common.deleteCard', {
@@ -256,7 +258,7 @@ const CardModal = React.memo(
             submitOnBlur
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <div className={canEdit && gStyles.cursorPointer} onClick={handleDropdownClick}>
+            <div className={classNames(canEdit && gStyles.cursorPointer)} onClick={handleDropdownClick}>
               <div className={classNames(styles.headerListField)}>{selectedList.name}</div>
               <Icon fitted name="triangle down" className={classNames(styles.headerListFieldIcon, gStyles.iconButtonSolid)} />
             </div>

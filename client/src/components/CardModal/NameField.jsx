@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import { TextArea } from 'semantic-ui-react';
@@ -8,12 +8,25 @@ import { useField } from '../../hooks';
 
 import styles from './NameField.module.scss';
 
-const NameField = React.memo(({ defaultValue, onUpdate }) => {
+const NameField = React.forwardRef(({ defaultValue, onUpdate }, ref) => {
   const prevDefaultValue = usePrevious(defaultValue);
   const [value, handleChange, setValue] = useField(defaultValue);
 
   const isFocused = useRef(false);
+  const textArea = useRef(null);
   const [isSpellCheck, setIsSpellCheck] = useState(false);
+
+  const open = useCallback(() => {
+    textArea.current.focus();
+  }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      open,
+    }),
+    [open],
+  );
 
   const handleFocus = useCallback(() => {
     isFocused.current = true;
@@ -50,7 +63,17 @@ const NameField = React.memo(({ defaultValue, onUpdate }) => {
   }, [defaultValue, prevDefaultValue, setValue]);
 
   return (
-    <TextArea as={TextareaAutosize} spellCheck={isSpellCheck} value={value} className={styles.field} onFocus={handleFocus} onKeyDown={handleKeyDown} onChange={handleChange} onBlur={handleBlur} />
+    <TextArea
+      ref={textArea}
+      as={TextareaAutosize}
+      spellCheck={isSpellCheck}
+      value={value}
+      className={styles.field}
+      onFocus={handleFocus}
+      onKeyDown={handleKeyDown}
+      onChange={handleChange}
+      onBlur={handleBlur}
+    />
   );
 });
 
@@ -59,4 +82,4 @@ NameField.propTypes = {
   onUpdate: PropTypes.func.isRequired,
 };
 
-export default NameField;
+export default React.memo(NameField);
