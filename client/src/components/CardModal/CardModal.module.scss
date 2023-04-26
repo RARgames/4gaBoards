@@ -141,43 +141,6 @@
     padding: 0;
   }
 
-  .headerTitle {
-    color: #17394d;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 20px;
-    width: calc(100% - 60px);
-    margin: -4px;
-    padding: 4px;
-    display: inline-block;
-  }
-
-  .headerListField {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 75%;
-    display: inline-block;
-  }
-
-  .headerListFieldIcon {
-    display: inline-block;
-  }
-
-  .headerTitleWrapper {
-    margin: 4px 0;
-    padding: 6px 0 0;
-  }
-
-  .headerWrapper {
-    margin: 10px 15px;
-    position: relative;
-  }
-
-  .headerButton {
-    float: right;
-  }
-
   .modalPadding {
     padding: 0px;
   }
@@ -222,11 +185,61 @@
     width: 650px;
     position: fixed;
     right: 0;
+    display: inline-flex;
+    // top: 164px;
   }
 
   @media (max-width: 926px) {
     .wrapper {
       width: 95%;
     }
+  }
+
+
+  //TODO standarized starts here - recheck
+  .mainContainer {
+    background: var(--backgroundColorTmpBackground);
+    margin: 0;
+    padding: 0;
+    height: calc(100vh - 174px);
+    width: 100%;
+  }
+
+  .header {
+    background: var(--backgroundColorTmpHeader);
+    position: relative;
+    padding: 15px;
+  }
+
+  .headerTitle {
+    color: var(--textColorWhite);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 20px;
+    width: calc(100% - 60px);
+    display: inline-block;
+    padding: 3px;
+  }
+
+  .headerButton {
+    float: right;
+  }
+
+  .headerListFieldWrapper {
+    padding: 3px;
+  }
+
+  .headerListField {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 60px);
+    display: inline-block;
+    color: var(--textColor1);
+  }
+
+  .headerListFieldIcon {
+    display: inline-block;
+    overflow: hidden;
   }
 }

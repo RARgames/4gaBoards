@@ -2,6 +2,19 @@
   --backgroundColor0: #1e1e1e;
   --backgroundColor1: #252526;
   --backgroundColor2: #333333;
+  --backgroundColorTmp0: #282c30;
+  --backgroundColorTmp1: #292d33;
+  --backgroundColorTmp2: #242d34;
+  --backgroundColorTmp3: #1b2126;
+  --backgroundColorTmpHeader: #2c3e51;
+  --backgroundColorTmpBackground: #223140;
+  --backgroundColorTmpDarkerField: #1e2d39;
+  --backgroundColorTmpDarkerField2: #17232c;
+  --backgroundColorTmpSeparatorLight: #263443;
+  --backgroundColorTmpHighlighted: #2d3b4b;
+  --backgroundColorTmpTest: #2c3e51;
+  --borderOutline: #5ba4cf;
+  --textColorWhite: #ffffff;
   --textColor0: #ebebec;
   --textColor1: #d3d3d3;
   --textColor2: #999999;
@@ -74,14 +87,14 @@
   .iconButtonSolid {
     background: none;
     box-shadow: none;
-    color: #686868;
+    color: var(--textColor1);
     margin: 0;
     padding: 0;
     min-height: 20px;
     width: 20px;
 
     &:hover {
-      color: #000000;
+      color: var(--textColor2);
     }
   }
 

@@ -23,8 +23,8 @@ import DueDateEditPopup from '../DueDateEditPopup';
 import TimerEditPopup from '../TimerEditPopup';
 import CardMovePopup from '../CardMovePopup';
 import DeletePopup from '../DeletePopup';
-import ListField from './ListField';
 import ActionsPopup from '../Card/ActionsPopup';
+import Dropdown from './Dropdown';
 
 import styles from './CardModal.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -85,6 +85,7 @@ const CardModal = React.memo(
 
     const isGalleryOpened = useRef(false);
     const listField = useRef(null);
+    const dropdown = useRef(null);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
 
@@ -173,93 +174,94 @@ const CardModal = React.memo(
       onClose();
     }, [onClose]);
 
-    const handleListFieldClick = useCallback(() => {
+    const handleDropdownClick = useCallback(() => {
       if (canEdit) {
-        listField.current.open();
+        dropdown.current.open();
       }
     }, [canEdit]);
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
 
-    const headerNode = (
-      <div className={styles.headerWrapper}>
-        <div className={styles.headerTitleWrapper}>
-          {canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} /> : <div className={styles.headerTitle}>{name}</div>}
+    // eslint-disable-next-line no-param-reassign
+    // canEdit = false;
 
-          <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
-            <Icon fitted name="close" />
-          </Button>
-          {/* TODO added here card actions - to edit */}
-          {canEdit && (
-            <ActionsPopup
-              card={{
-                dueDate,
-                timer,
-                boardId,
-                listId,
-                projectId,
-              }}
-              projectsToLists={allProjectsToLists}
-              boardMemberships={allBoardMemberships}
-              currentUserIds={users.map((user) => user.id)}
-              labels={allLabels}
-              currentLabelIds={labels.map((label) => label.id)}
-              // onNameEdit={handleNameEdit}
-              onUpdate={onUpdate}
-              onMove={onMove}
-              onTransfer={onTransfer}
-              onDelete={onDelete}
-              onUserAdd={onUserAdd}
-              onUserRemove={onUserRemove}
-              onBoardFetch={onBoardFetch}
-              onLabelAdd={onLabelAdd}
-              onLabelRemove={onLabelRemove}
-              onLabelCreate={onLabelCreate}
-              onLabelUpdate={onLabelUpdate}
-              onLabelMove={onLabelMove}
-              onLabelDelete={onLabelDelete}
-            >
-              <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
-                <Icon fitted name="ellipsis vertical" />
-              </Button>
-            </ActionsPopup>
-          )}
-          {/* TODO added here card actions end - to edit */}
-          {canEdit && (
-            <DeletePopup
-              title={t('common.deleteCard', {
-                context: 'title',
-              })}
-              content={t('common.areYouSureYouWantToDeleteThisCard')}
-              buttonContent={t('action.deleteCard')}
-              onConfirm={onDelete}
-            >
-              <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
-                <Icon fitted name="trash" />
-              </Button>
-            </DeletePopup>
-          )}
-        </div>
-        <div className={styles.headerListFieldWrapper}>
-          <ListField
-            ref={listField}
-            projectsToLists={allProjectsToLists}
-            defaultPath={{
-              projectId,
+    const headerNode = (
+      <div className={styles.header}>
+        {canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} /> : <div className={styles.headerTitle}>{name}</div>}
+
+        <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
+          <Icon fitted name="close" />
+        </Button>
+        {/* TODO added here card actions - to edit */}
+        {canEdit && (
+          <ActionsPopup
+            card={{
+              dueDate,
+              timer,
               boardId,
               listId,
+              projectId,
             }}
+            projectsToLists={allProjectsToLists}
+            boardMemberships={allBoardMemberships}
+            currentUserIds={users.map((user) => user.id)}
+            labels={allLabels}
+            currentLabelIds={labels.map((label) => label.id)}
+            // onNameEdit={handleNameEdit}
+            onUpdate={onUpdate}
             onMove={onMove}
             onTransfer={onTransfer}
+            onDelete={onDelete}
+            onUserAdd={onUserAdd}
+            onUserRemove={onUserRemove}
             onBoardFetch={onBoardFetch}
+            onLabelAdd={onLabelAdd}
+            onLabelRemove={onLabelRemove}
+            onLabelCreate={onLabelCreate}
+            onLabelUpdate={onLabelUpdate}
+            onLabelMove={onLabelMove}
+            onLabelDelete={onLabelDelete}
+          >
+            <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
+              <Icon fitted name="ellipsis vertical" />
+            </Button>
+          </ActionsPopup>
+        )}
+        {/* TODO added here card actions end - to edit */}
+        {canEdit && (
+          <DeletePopup
+            title={t('common.deleteCard', {
+              context: 'title',
+            })}
+            content={t('common.areYouSureYouWantToDeleteThisCard')}
+            buttonContent={t('action.deleteCard')}
+            onConfirm={onDelete}
+          >
+            <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
+              <Icon fitted name="trash" />
+            </Button>
+          </DeletePopup>
+        )}
+        <div className={styles.headerListFieldWrapper}>
+          <Dropdown
+            ref={dropdown}
+            options={selectedBoard.lists.map((list) => ({
+              name: list.name,
+              id: list.id,
+            }))}
+            placeholder={selectedList.name}
+            defaultItem={selectedList}
+            isSearchable
+            onChange={onMove}
+            submitOnBlur
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <div className={canEdit && gStyles.cursorPointer} onClick={handleListFieldClick}>
+            <div className={canEdit && gStyles.cursorPointer} onClick={handleDropdownClick}>
               <div className={classNames(styles.headerListField)}>{selectedList.name}</div>
-              <Icon fitted name="triangle down" className={classNames(styles.headerListField, gStyles.iconButtonSolid)} />
+              <Icon fitted name="triangle down" className={classNames(styles.headerListFieldIcon, gStyles.iconButtonSolid)} />
             </div>
-          </ListField>
+          </Dropdown>
         </div>
       </div>
     );
@@ -383,6 +385,13 @@ const CardModal = React.memo(
     );
 
     const contentNode = (
+      <div className={styles.mainContainer}>
+        {headerNode}
+        testasdasdjk127893128hjadnsnk12outestasdasdjk127893128hjadnsnk12outestasdasdjk127893128hjadnsnk12outestasdasdjk127893128hjadnsnk12ou
+      </div>
+    );
+
+    const contentNode0 = (
       <Grid className={classNames(styles.grid, gStyles.scrollableY)}>
         <Grid.Row className={styles.headerPadding}>
           <Grid.Column width={16} className={styles.headerPadding}>
