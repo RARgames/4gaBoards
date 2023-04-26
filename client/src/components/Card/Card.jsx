@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button, Icon } from 'semantic-ui-react';
@@ -54,6 +54,15 @@ const Card = React.memo(
     onLabelDelete,
   }) => {
     const nameEdit = useRef(null);
+    const cardRef = useRef(null);
+
+    const scrollCardIntoView = useCallback(() => {
+      cardRef.current.scrollIntoView({
+        behavior: 'auto',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }, []);
 
     const handleClick = useCallback(() => {
       if (document.activeElement) {
@@ -61,16 +70,17 @@ const Card = React.memo(
       }
     }, []);
 
-    const handleToggleTimerClick = useCallback(
-      (event) => {
-        event.preventDefault();
+    useEffect(() => {
+      if (isOpen) {
+        scrollCardIntoView();
+      }
+    }, [isOpen, scrollCardIntoView]);
 
-        onUpdate({
-          timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
-        });
-      },
-      [timer, onUpdate],
-    );
+    const handleToggleTimerClick = useCallback(() => {
+      onUpdate({
+        timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
+      });
+    }, [timer, onUpdate]);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -146,7 +156,7 @@ const Card = React.memo(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={styles.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
             <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div className={classNames(styles.card, isOpen && styles.cardOpen)}>
+              <div ref={cardRef} className={classNames(styles.card, isOpen && styles.cardOpen)}>
                 {isPersisted ? (
                   <>
                     <Link to={Paths.CARDS.replace(':id', id)} className={styles.content} onClick={handleClick}>
