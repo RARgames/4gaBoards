@@ -201,7 +201,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>
             </div>
             {/* eslint-disable-next-line prettier/prettier */}
-            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(styles.cardsInnerWrapper, gStyles.scrollableY)}>
+            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(styles.cardsInnerWrapper, gStyles.scrollableY, listOuterWrapperScrollable && styles.cardsInnerWrapperScrollable)}>
               <div className={classNames(styles.cardsOuterWrapper, listOuterWrapperScrollable && styles.cardsOuterWrapperScrollable)}>{cardsNode}</div>
             </div>
             {addCardNode}
