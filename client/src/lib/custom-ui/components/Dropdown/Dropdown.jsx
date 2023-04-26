@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react';
 import classNames from 'classnames';
 
 import styles from './Dropdown.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import gStyles from '../../../../globalStyles.module.scss';
 
 const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder, isSearchable, onChange, onBlur, onClose, onCancel, submitOnBlur }, ref) => {
   const [isOpened, setIsOpened] = useState(false);

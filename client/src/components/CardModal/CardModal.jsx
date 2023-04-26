@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, Icon, Modal } from 'semantic-ui-react';
-import { FilePicker, Markdown } from '../../lib/custom-ui';
+import { FilePicker, Markdown, Dropdown } from '../../lib/custom-ui';
 
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
@@ -24,7 +24,6 @@ import TimerEditPopup from '../TimerEditPopup';
 import CardMovePopup from '../CardMovePopup';
 import DeletePopup from '../DeletePopup';
 import ActionsPopup from '../Card/ActionsPopup';
-import Dropdown from './Dropdown';
 
 import styles from './CardModal.module.scss';
 import gStyles from '../../globalStyles.module.scss';
