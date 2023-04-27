@@ -4,11 +4,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'yyyy/M/d',
+    date: 'd.MM.yyyy',
     time: 'HH:mm',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMMMd日',
-    longDateTime: "MMMMd'日 ' HH:MM",
   },
 
   translation: {

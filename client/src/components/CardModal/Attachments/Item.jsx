@@ -73,7 +73,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
       <div className={styles.details}>
         <span className={styles.name}>{name}</span>
         <span className={styles.date}>
-          {t('format:longDateTime', {
+          {t('format:dateTime', {
             postProcess: 'formatDate',
             value: createdAt,
           })}

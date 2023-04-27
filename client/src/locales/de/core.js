@@ -7,8 +7,6 @@ export default {
     date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'd. MMM',
-    longDateTime: "d. MMMM 'um' p",
   },
 
   translation: {

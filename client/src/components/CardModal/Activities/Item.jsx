@@ -66,7 +66,7 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
       <div className={classNames(styles.content)}>
         <div>{contentNode}</div>
         <span className={styles.date}>
-          {t('format:longDateTime', {
+          {t('format:dateTime', {
             postProcess: 'formatDate',
             value: createdAt,
           })}

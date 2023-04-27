@@ -12,23 +12,15 @@ const SIZES = {
   MEDIUM: 'medium',
 };
 
-const FORMATS = {
-  tiny: 'longDate',
-  small: 'longDate',
-  medium: 'longDateTime',
-};
-
 const DueDate = React.memo(({ value, size, isDisabled, onClick }) => {
   const [t] = useTranslation();
 
-  const contentNode = (
+  const contentNode = value && (
     <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable)}>
-      {value
-        ? t(`format:${FORMATS[size]}`, {
-            value,
-            postProcess: 'formatDate',
-          })
-        : ''}
+      {t(`format:date`, {
+        value,
+        postProcess: 'formatDate',
+      })}
     </span>
   );
 

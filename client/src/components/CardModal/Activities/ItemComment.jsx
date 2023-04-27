@@ -29,7 +29,7 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
         <div className={styles.title}>
           <span className={styles.author}>{user.name}</span>
           <span className={styles.date}>
-            {t('format:longDateTime', {
+            {t('format:dateTime', {
               postProcess: 'formatDate',
               value: createdAt,
             })}
