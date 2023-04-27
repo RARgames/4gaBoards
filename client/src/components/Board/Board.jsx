@@ -98,11 +98,11 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
     prevPosition.current = null;
   }, [prevPosition]);
 
-  // useEffect(() => {
-  //   if (isListAddOpened) {
-  //     mainWrapper.scroll(document.body.scrollWidth, 0);
-  //   }
-  // }, [listIds, isListAddOpened]);
+  useEffect(() => {
+    if (isListAddOpened) {
+      mainWrapper.current.scrollLeft = mainWrapper.current.scrollWidth;
+    }
+  }, [listIds, isListAddOpened]);
 
   useEffect(() => {
     window.addEventListener('mouseup', handleWindowMouseUp);
