@@ -1,6 +1,7 @@
 :global(#app) {
   .dropzone {
-    background: white;
+    color: var(--textColorWhite);
+    background: var(--backgroundColorTmpDarkerField2);
     font-size: 20px;
     font-weight: 700;
     height: 100%;
@@ -15,5 +16,6 @@
 
   .wrapper {
     overflow: hidden;
+    width: 100%;
   }
 }
