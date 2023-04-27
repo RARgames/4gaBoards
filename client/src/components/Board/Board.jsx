@@ -21,6 +21,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   const [isListAddOpened, setIsListAddOpened] = useState(false);
 
   const wrapper = useRef(null);
+  const mainWrapper = useRef(null);
   const prevPosition = useRef(null);
 
   const handleAddListClick = useCallback(() => {
@@ -64,11 +65,16 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
 
   const handleMouseDown = useCallback(
     (event) => {
-      if (event.target !== wrapper.current && !event.target.dataset.dragScroller) {
+      if (event.button && event.button !== 0) {
         return;
       }
 
-      prevPosition.current = event.clientX;
+      if (event.target !== wrapper.current && !event.target.dataset.dragScroller) {
+        return;
+      }
+      event.preventDefault();
+
+      prevPosition.current = event.screenX;
     },
     [wrapper],
   );
@@ -78,14 +84,12 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
       if (!prevPosition.current) {
         return;
       }
-
       event.preventDefault();
 
-      window.scrollBy({
-        left: prevPosition.current - event.clientX,
+      mainWrapper.current.scrollBy({
+        left: prevPosition.current - event.screenX,
       });
-
-      prevPosition.current = event.clientX;
+      prevPosition.current = event.screenX;
     },
     [prevPosition],
   );
@@ -94,19 +98,11 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
     prevPosition.current = null;
   }, [prevPosition]);
 
-  useEffect(() => {
-    document.body.style.overflowX = 'auto';
-
-    return () => {
-      document.body.style.overflowX = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isListAddOpened) {
-      window.scroll(document.body.scrollWidth, 0);
-    }
-  }, [listIds, isListAddOpened]);
+  // useEffect(() => {
+  //   if (isListAddOpened) {
+  //     mainWrapper.scroll(document.body.scrollWidth, 0);
+  //   }
+  // }, [listIds, isListAddOpened]);
 
   useEffect(() => {
     window.addEventListener('mouseup', handleWindowMouseUp);
@@ -119,9 +115,9 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [handleWindowMouseUp, handleWindowMouseMove]);
 
   return (
-    <div className={styles.mainWrapper}>
+    <div ref={mainWrapper} className={classNames(styles.mainWrapper, gStyles.scrollableX)}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div ref={wrapper} className={classNames(styles.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
+      <div ref={wrapper} className={classNames(styles.wrapper)} onMouseDown={handleMouseDown}>
         <div className={classNames(isCardModalOpened && styles.listsModalOpen)}>
           <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
