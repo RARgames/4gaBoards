@@ -1,22 +1,40 @@
 import upperFirst from 'lodash/upperFirst';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import styles from './DueDate.module.scss';
 
-const SIZES = {
-  TINY: 'tiny',
-  SMALL: 'small',
-  MEDIUM: 'medium',
+const VARIANTS = {
+  CARD: 'card',
+  CARDMODAL: 'cardModal',
 };
 
-const DueDate = React.memo(({ value, size, isDisabled, onClick }) => {
+const DueDate = React.memo(({ value, variant, isDisabled, onClick }) => {
   const [t] = useTranslation();
+  const [dueStyle, setDueStyle] = useState('Normal');
+
+  useEffect(() => {
+    if (value) {
+      const msPerDay = 1000 * 60 * 60 * 24;
+      const currDate = new Date();
+      const utc1 = Date.UTC(value.getFullYear(), value.getMonth(), value.getDate());
+      const utc2 = Date.UTC(currDate.getFullYear(), currDate.getMonth(), currDate.getDate());
+      const diff = (utc2 - utc1) / msPerDay;
+
+      if (diff >= -14 && diff <= 0) {
+        setDueStyle('Close');
+      } else if (diff > 0) {
+        setDueStyle('Over');
+      } else {
+        setDueStyle('Normal');
+      }
+    }
+  }, [dueStyle, value, variant]);
 
   const contentNode = value && (
-    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable)}>
+    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], onClick && styles.wrapperHoverable, styles[`due${dueStyle}`])}>
       {t(`format:date`, {
         value,
         postProcess: 'formatDate',
@@ -35,14 +53,14 @@ const DueDate = React.memo(({ value, size, isDisabled, onClick }) => {
 
 DueDate.propTypes = {
   value: PropTypes.instanceOf(Date),
-  size: PropTypes.oneOf(Object.values(SIZES)),
+  variant: PropTypes.oneOf(Object.values(VARIANTS)),
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
 DueDate.defaultProps = {
   value: undefined,
-  size: SIZES.MEDIUM,
+  variant: VARIANTS.CARDMODAL,
   isDisabled: false,
   onClick: undefined,
 };

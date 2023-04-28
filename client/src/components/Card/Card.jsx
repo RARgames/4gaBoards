@@ -127,7 +127,7 @@ const Card = React.memo(
               {notificationsTotal > 0 && <span className={classNames(styles.attachment, styles.attachmentLeft, styles.notification)}>{notificationsTotal}</span>}
               {dueDate && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <DueDate value={dueDate} size="tiny" />
+                  <DueDate value={dueDate} variant="card" />
                 </span>
               )}
               {timer && (

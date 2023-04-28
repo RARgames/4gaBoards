@@ -267,46 +267,15 @@ const CardModal = React.memo(
       </div>
     );
 
-    const membersNode = (
-      <div className={styles.attachments}>
-        <div className={styles.text}>
-          {t('common.members', {
-            context: 'title',
-          })}
-        </div>
-        {users.map((user) => (
-          <span key={user.id} className={styles.attachment}>
-            {canEdit ? (
-              <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
-                <User name={user.name} avatarUrl={user.avatarUrl} />
-              </BoardMembershipsPopup>
-            ) : (
-              <User name={user.name} avatarUrl={user.avatarUrl} />
-            )}
-          </span>
-        ))}
-        {canEdit && (
-          <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
-            <button type="button" className={classNames(styles.attachment, styles.dueDate)}>
-              <Icon name="add" size="small" className={styles.addAttachment} />
-            </button>
-          </BoardMembershipsPopup>
-        )}
-      </div>
-    );
-
     const labelsNode = (
-      <div className={styles.attachments}>
-        <div className={styles.text}>
-          {t('common.labels', {
-            context: 'title',
-          })}
-        </div>
-        {labels.map((label) => (
-          <span key={label.id} className={styles.attachment}>
-            {canEdit ? (
+      <div className={styles.moduleContainer}>
+        <div className={styles.attachments}>
+          <div className={styles.text}>
+            {t('common.labels', {
+              context: 'title',
+            })}
+            {canEdit && (
               <LabelsPopup
-                key={label.id}
                 items={allLabels}
                 currentIds={labelIds}
                 onSelect={onLabelAdd}
@@ -316,29 +285,40 @@ const CardModal = React.memo(
                 onMove={onLabelMove}
                 onDelete={onLabelDelete}
               >
-                <Label name={label.name} color={label.color} />
+                <Button className={gStyles.iconButtonSolid}>
+                  <Icon fitted size="small" name="add" />
+                </Button>
               </LabelsPopup>
-            ) : (
-              <Label name={label.name} color={label.color} />
             )}
+          </div>
+          {labels.map((label) => (
+            <span key={label.id} className={styles.attachment}>
+              <Label name={label.name} color={label.color} size="small" />
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+
+    const membersNode = (
+      <div className={styles.attachments}>
+        <div className={styles.text}>
+          {t('common.members', {
+            context: 'title',
+          })}
+          {canEdit && (
+            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name="add" />
+              </Button>
+            </BoardMembershipsPopup>
+          )}
+        </div>
+        {users.map((user) => (
+          <span key={user.id} className={styles.attachment}>
+            <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
           </span>
         ))}
-        {canEdit && (
-          <LabelsPopup
-            items={allLabels}
-            currentIds={labelIds}
-            onSelect={onLabelAdd}
-            onDeselect={onLabelRemove}
-            onCreate={onLabelCreate}
-            onUpdate={onLabelUpdate}
-            onMove={onLabelMove}
-            onDelete={onLabelDelete}
-          >
-            <button type="button" className={classNames(styles.attachment, styles.dueDate)}>
-              <Icon name="add" size="small" className={styles.addAttachment} />
-            </button>
-          </LabelsPopup>
-        )}
       </div>
     );
 
@@ -348,6 +328,11 @@ const CardModal = React.memo(
           {t('common.dueDate', {
             context: 'title',
           })}
+          {canEdit && (
+            <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
+              <Button className={gStyles.iconButtonSolid}>{dueDate ? <Icon fitted size="small" name="pencil" /> : <Icon fitted size="small" name="add" />}</Button>
+            </DueDateEditPopup>
+          )}
         </div>
         <span className={styles.attachment}>
           {canEdit ? (
@@ -378,119 +363,171 @@ const CardModal = React.memo(
           )}
         </span>
         {canEdit && (
-          <button onClick={handleToggleTimerClick} type="button" className={classNames(styles.attachment, styles.dueDate)}>
+          <button onClick={handleToggleTimerClick} type="button" className={classNames(styles.attachment, styles.addButton)}>
             <Icon name={timer && timer.startedAt ? 'pause' : 'play'} size="small" className={styles.addAttachment} />
           </button>
         )}
       </div>
     );
 
-    const contentNode = (
-      <div className={styles.mainContainer}>
-        {headerNode}
-        testasdasdjk127893128hjadnsnk12outestasdasdjk127893128hjadnsnk12outestasdasdjk127893128hjadnsnk12outestasdasdjk127893128hjadnsnk12ou
+    const membersDueTimerNode = (
+      <div className={styles.moduleContainer}>
+        {membersNode}
+        {dueDateNode}
+        {timerNode}
       </div>
     );
 
-    const contentNode0 = (
-      <Grid className={classNames(styles.grid, gStyles.scrollableY)}>
-        <Grid.Row className={styles.headerPadding}>
-          <Grid.Column width={16} className={styles.headerPadding}>
-            {headerNode}
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row className={styles.modalPadding}>
-          <Grid.Column width={16} className={styles.contentPadding}>
-            <div className={styles.moduleWrapper}>
-              {membersNode}
-              {labelsNode}
-              {dueDateNode}
-              {timerNode}
-              {/* Temp added here subscribe - move to actions */}
-              <Button onClick={handleToggleSubscriptionClick}>
-                <Icon name="paper plane outline" />
-                {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
-              </Button>
-            </div>
-            {(description || canEdit) && (
-              <div className={styles.contentModule}>
-                <Icon name="align justify" className={styles.moduleIcon} />
-                <div className={styles.moduleHeader}>{t('common.description')}</div>
-                <div className={styles.moduleBody}>
-                  {canEdit ? (
-                    <DescriptionEdit defaultValue={description} onUpdate={handleDescriptionUpdate}>
-                      {description ? (
-                        <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
-                          <Markdown linkStopPropagation linkTarget="_blank">
-                            {description}
-                          </Markdown>
-                        </button>
-                      ) : (
-                        <button type="button" className={styles.descriptionButton}>
-                          <span className={styles.descriptionButtonText}>{t('action.addMoreDetailedDescription')}</span>
-                        </button>
-                      )}
-                    </DescriptionEdit>
-                  ) : (
-                    <div className={styles.descriptionText}>
-                      <Markdown linkStopPropagation linkTarget="_blank">
-                        {description}
-                      </Markdown>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-            {(tasks.length > 0 || canEdit) && (
-              <div className={styles.contentModule}>
-                <Icon name="check" className={styles.moduleIcon} />
-                <div className={styles.moduleHeader}>{t('common.tasks')}</div>
-                <div className={styles.moduleBody}>
-                  <Tasks items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
-                </div>
-              </div>
-            )}
+    // const dueDateNode = (
+    //   <div className={styles.attachments}>
+    //     <div className={styles.text}>
+    //       {t('common.dueDate', {
+    //         context: 'title',
+    //       })}
+    //     </div>
+    //     <span className={styles.attachment}>
+    //       {canEdit ? (
+    //         <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
+    //           <DueDate value={dueDate} />
+    //         </DueDateEditPopup>
+    //       ) : (
+    //         <DueDate value={dueDate} />
+    //       )}
+    //     </span>
+    //   </div>
+    // );
 
-            <div className={styles.contentModule}>
-              <Icon name="attach" className={styles.moduleIcon} />
-              <div className={styles.moduleHeader}>{t('common.attachments')}</div>
-              <div className={styles.moduleBody}>
-                <Attachments
-                  items={attachments}
-                  canEdit={canEdit}
-                  onUpdate={onAttachmentUpdate}
-                  onDelete={onAttachmentDelete}
-                  onCoverUpdate={handleCoverUpdate}
-                  onGalleryOpen={handleGalleryOpen}
-                  onGalleryClose={handleGalleryClose}
-                />
-                <AttachmentAddPopup onCreate={onAttachmentCreate}>
-                  <Button fluid className={styles.actionButton}>
-                    <Icon name="attach" className={styles.actionIcon} />
-                    {t('common.attachment')}
-                  </Button>
-                </AttachmentAddPopup>
-              </div>
-            </div>
-            {/* TODO fix activities in other file (style and not in order) */}
-            <Activities
-              items={activities}
-              isFetching={isActivitiesFetching}
-              isAllFetched={isAllActivitiesFetched}
-              isDetailsVisible={isActivitiesDetailsVisible}
-              isDetailsFetching={isActivitiesDetailsFetching}
-              canEdit={canEditCommentActivities}
-              canEditAllComments={canEditAllCommentActivities}
-              onFetch={onActivitiesFetch}
-              onDetailsToggle={onActivitiesDetailsToggle}
-              onCommentCreate={onCommentActivityCreate}
-              onCommentUpdate={onCommentActivityUpdate}
-              onCommentDelete={onCommentActivityDelete}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+    // const timerNode = (
+    //   <div className={styles.attachments}>
+    //     <div className={styles.text}>
+    //       {t('common.timer', {
+    //         context: 'title',
+    //       })}
+    //     </div>
+    //     <span className={styles.attachment}>
+    //       {canEdit ? (
+    //         <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
+    //           <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} />
+    //         </TimerEditPopup>
+    //       ) : (
+    //         <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} />
+    //       )}
+    //     </span>
+    //     {canEdit && (
+    //       <button onClick={handleToggleTimerClick} type="button" className={classNames(styles.attachment, styles.addButton)}>
+    //         <Icon name={timer && timer.startedAt ? 'pause' : 'play'} size="small" className={styles.addAttachment} />
+    //       </button>
+    //     )}
+    //   </div>
+    // );
+
+    const contentNode = (
+      <div className={styles.mainContainer}>
+        {headerNode}
+        {labelsNode}
+        {membersDueTimerNode}
+      </div>
     );
+
+    // const contentNode0 = (
+    //   <Grid className={classNames(styles.grid, gStyles.scrollableY)}>
+    //     <Grid.Row className={styles.headerPadding}>
+    //       <Grid.Column width={16} className={styles.headerPadding}>
+    //         {headerNode}
+    //       </Grid.Column>
+    //     </Grid.Row>
+    //     <Grid.Row className={styles.modalPadding}>
+    //       <Grid.Column width={16} className={styles.contentPadding}>
+    //         <div className={styles.moduleWrapper}>
+    //           {membersNode}
+    //           {labelsNode}
+    //           {dueDateNode}
+    //           {timerNode}
+    //           {/* Temp added here subscribe - move to actions */}
+    //           <Button onClick={handleToggleSubscriptionClick}>
+    //             <Icon name="paper plane outline" />
+    //             {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
+    //           </Button>
+    //         </div>
+    //         {(description || canEdit) && (
+    //           <div className={styles.contentModule}>
+    //             <Icon name="align justify" className={styles.moduleIcon} />
+    //             <div className={styles.moduleHeader}>{t('common.description')}</div>
+    //             <div className={styles.moduleBody}>
+    //               {canEdit ? (
+    //                 <DescriptionEdit defaultValue={description} onUpdate={handleDescriptionUpdate}>
+    //                   {description ? (
+    //                     <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
+    //                       <Markdown linkStopPropagation linkTarget="_blank">
+    //                         {description}
+    //                       </Markdown>
+    //                     </button>
+    //                   ) : (
+    //                     <button type="button" className={styles.descriptionButton}>
+    //                       <span className={styles.descriptionButtonText}>{t('action.addMoreDetailedDescription')}</span>
+    //                     </button>
+    //                   )}
+    //                 </DescriptionEdit>
+    //               ) : (
+    //                 <div className={styles.descriptionText}>
+    //                   <Markdown linkStopPropagation linkTarget="_blank">
+    //                     {description}
+    //                   </Markdown>
+    //                 </div>
+    //               )}
+    //             </div>
+    //           </div>
+    //         )}
+    //         {(tasks.length > 0 || canEdit) && (
+    //           <div className={styles.contentModule}>
+    //             <Icon name="check" className={styles.moduleIcon} />
+    //             <div className={styles.moduleHeader}>{t('common.tasks')}</div>
+    //             <div className={styles.moduleBody}>
+    //               <Tasks items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
+    //             </div>
+    //           </div>
+    //         )}
+
+    //         <div className={styles.contentModule}>
+    //           <Icon name="attach" className={styles.moduleIcon} />
+    //           <div className={styles.moduleHeader}>{t('common.attachments')}</div>
+    //           <div className={styles.moduleBody}>
+    //             <Attachments
+    //               items={attachments}
+    //               canEdit={canEdit}
+    //               onUpdate={onAttachmentUpdate}
+    //               onDelete={onAttachmentDelete}
+    //               onCoverUpdate={handleCoverUpdate}
+    //               onGalleryOpen={handleGalleryOpen}
+    //               onGalleryClose={handleGalleryClose}
+    //             />
+    //             <AttachmentAddPopup onCreate={onAttachmentCreate}>
+    //               <Button fluid className={styles.actionButton}>
+    //                 <Icon name="attach" className={styles.actionIcon} />
+    //                 {t('common.attachment')}
+    //               </Button>
+    //             </AttachmentAddPopup>
+    //           </div>
+    //         </div>
+    //         {/* TODO fix activities in other file (style and not in order) */}
+    //         <Activities
+    //           items={activities}
+    //           isFetching={isActivitiesFetching}
+    //           isAllFetched={isAllActivitiesFetched}
+    //           isDetailsVisible={isActivitiesDetailsVisible}
+    //           isDetailsFetching={isActivitiesDetailsFetching}
+    //           canEdit={canEditCommentActivities}
+    //           canEditAllComments={canEditAllCommentActivities}
+    //           onFetch={onActivitiesFetch}
+    //           onDetailsToggle={onActivitiesDetailsToggle}
+    //           onCommentCreate={onCommentActivityCreate}
+    //           onCommentUpdate={onCommentActivityUpdate}
+    //           onCommentDelete={onCommentActivityDelete}
+    //         />
+    //       </Grid.Column>
+    //     </Grid.Row>
+    //   </Grid>
+    // );
 
     return <div className={styles.wrapper}>{canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}</div>;
   },

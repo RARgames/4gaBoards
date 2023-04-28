@@ -46,13 +46,13 @@
 
   .attachment {
     display: inline-block;
-    margin: 0 4px 4px 0;
+    margin: 0 3px 4px 0;
     max-width: 100%;
   }
 
   .attachments {
     display: inline-block;
-    margin: 0 8px 8px 0;
+    margin: 0 0 2px 0;
     max-width: 100%;
     vertical-align: top;
   }
@@ -67,26 +67,6 @@
 
   .cursorPointer {
     cursor: pointer;
-  }
-
-  .dueDate {
-    background: rgba(9, 30, 66, 0.04);
-    border: none;
-    border-radius: 3px;
-    color: #6b808c;
-    cursor: pointer;
-    line-height: 20px;
-    outline: none;
-    padding: 6px 14px;
-    text-align: left;
-    text-decoration: underline;
-    transition: background 0.3s ease;
-    vertical-align: top;
-
-    &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #17394d;
-    }
   }
 
   .descriptionButton {
@@ -241,5 +221,10 @@
   .headerListFieldIcon {
     display: inline-block;
     overflow: hidden;
+  }
+
+  .moduleContainer {
+    position: relative;
+    padding: 3px 0 0 15px;
   }
 }

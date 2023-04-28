@@ -9,38 +9,43 @@
   }
 
   .wrapper {
-    background: #dce0e4;
     border: none;
     border-radius: 3px;
-    color: #6a808b;
     display: inline-block;
     outline: none;
     text-align: left;
-    transition: background 0.3s ease;
     vertical-align: top;
   }
 
   .wrapperHoverable:hover {
-    background: #d2d8dc;
-    color: #17394d;
+    filter: brightness(85%); //TODO do everywhere hover by filter
   }
 
-  /* Sizes */
+  /* Colors */
 
-  .wrapperTiny {
+  .dueNormal {
+    color: var(--textColor2);
+  }
+
+  .dueClose {
+    color: var(--textColorYellow);
+  }
+
+  .dueOver {
+    color: var(--textColorRed);
+  }
+
+  /* Variants */
+
+  .wrapperCard {
     font-size: 12px;
     line-height: 20px;
-    padding: 0px 6px;
+    padding: 0;
   }
 
-  .wrapperSmall {
-    font-size: 12px;
+  .wrapperCardModal {
+    font-size: 14px;
     line-height: 20px;
-    padding: 2px 6px;
-  }
-
-  .wrapperMedium {
-    line-height: 20px;
-    padding: 6px 12px;
+    padding: 2px 0px;
   }
 }
