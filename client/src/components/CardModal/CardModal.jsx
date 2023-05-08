@@ -352,80 +352,29 @@ const CardModal = React.memo(
           {t('common.timer', {
             context: 'title',
           })}
+          {canEdit && (
+            <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name="pencil" />
+              </Button>
+            </TimerEditPopup>
+          )}
         </div>
         <span className={styles.attachment}>
-          {canEdit ? (
-            <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
-              <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} />
-            </TimerEditPopup>
-          ) : (
-            <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} />
-          )}
+          <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} variant="cardModal" onClick={canEdit ? handleToggleTimerClick : undefined} />
         </span>
-        {canEdit && (
-          <button onClick={handleToggleTimerClick} type="button" className={classNames(styles.attachment, styles.addButton)}>
-            <Icon name={timer && timer.startedAt ? 'pause' : 'play'} size="small" className={styles.addAttachment} />
-          </button>
-        )}
       </div>
     );
-
-    const membersDueTimerNode = (
-      <div className={styles.moduleContainer}>
-        {membersNode}
-        {dueDateNode}
-        {timerNode}
-      </div>
-    );
-
-    // const dueDateNode = (
-    //   <div className={styles.attachments}>
-    //     <div className={styles.text}>
-    //       {t('common.dueDate', {
-    //         context: 'title',
-    //       })}
-    //     </div>
-    //     <span className={styles.attachment}>
-    //       {canEdit ? (
-    //         <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-    //           <DueDate value={dueDate} />
-    //         </DueDateEditPopup>
-    //       ) : (
-    //         <DueDate value={dueDate} />
-    //       )}
-    //     </span>
-    //   </div>
-    // );
-
-    // const timerNode = (
-    //   <div className={styles.attachments}>
-    //     <div className={styles.text}>
-    //       {t('common.timer', {
-    //         context: 'title',
-    //       })}
-    //     </div>
-    //     <span className={styles.attachment}>
-    //       {canEdit ? (
-    //         <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
-    //           <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} />
-    //         </TimerEditPopup>
-    //       ) : (
-    //         <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} />
-    //       )}
-    //     </span>
-    //     {canEdit && (
-    //       <button onClick={handleToggleTimerClick} type="button" className={classNames(styles.attachment, styles.addButton)}>
-    //         <Icon name={timer && timer.startedAt ? 'pause' : 'play'} size="small" className={styles.addAttachment} />
-    //       </button>
-    //     )}
-    //   </div>
-    // );
 
     const contentNode = (
       <div className={styles.mainContainer}>
         {headerNode}
         {labelsNode}
-        {membersDueTimerNode}
+        <div className={styles.moduleContainer}>
+          {membersNode}
+          {dueDateNode}
+          {timerNode}
+        </div>
       </div>
     );
 

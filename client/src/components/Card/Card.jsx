@@ -132,7 +132,7 @@ const Card = React.memo(
               )}
               {timer && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Timer as="span" startedAt={timer.startedAt} total={timer.total} size="tiny" onClick={canEdit ? handleToggleTimerClick : undefined} />
+                  <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
                 </span>
               )}
             </span>
