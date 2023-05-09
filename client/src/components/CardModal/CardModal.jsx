@@ -366,6 +366,17 @@ const CardModal = React.memo(
       </div>
     );
 
+    const subscribeNode = (
+      <div className={styles.attachments}>
+        <div className={styles.text}>{t('common.notifications')}</div>
+        <span className={styles.attachment}>
+          <Button onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
+            {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
+          </Button>
+        </span>
+      </div>
+    );
+
     const contentNode = (
       <div className={styles.mainContainer}>
         {headerNode}
@@ -374,10 +385,7 @@ const CardModal = React.memo(
           {membersNode}
           {dueDateNode}
           {timerNode}
-          {/* <Button onClick={handleToggleSubscriptionClick}>
-            <Icon name="paper plane outline" />
-            {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
-          </Button> */}
+          {subscribeNode}
         </div>
       </div>
     );
