@@ -293,7 +293,7 @@ const CardModal = React.memo(
           </div>
           {labels.map((label) => (
             <span key={label.id} className={styles.attachment}>
-              <Label name={label.name} color={label.color} size="small" />
+              <Label name={label.name} color={label.color} variant="cardModal" />
             </span>
           ))}
         </div>
@@ -374,6 +374,10 @@ const CardModal = React.memo(
           {membersNode}
           {dueDateNode}
           {timerNode}
+          {/* <Button onClick={handleToggleSubscriptionClick}>
+            <Icon name="paper plane outline" />
+            {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
+          </Button> */}
         </div>
       </div>
     );

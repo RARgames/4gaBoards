@@ -22,11 +22,12 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const handleSubmit = useCallback(() => {
     const cleanData = {
       ...data,
-      name: data.name.trim() || null,
+      name: data.name.trim(),
     };
-
-    onCreate(cleanData);
-    onBack();
+    if (cleanData.name) {
+      onCreate(cleanData);
+      onBack();
+    }
   }, [data, onCreate, onBack]);
 
   return (

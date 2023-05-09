@@ -116,7 +116,7 @@ const Card = React.memo(
             <span className={styles.labels}>
               {labels.map((label) => (
                 <span key={label.id} className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Label name={label.name} color={label.color} size="tiny" />
+                  <Label name={label.name} color={label.color} variant="card" />
                 </span>
               ))}
             </span>

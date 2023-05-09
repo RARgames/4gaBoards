@@ -72,7 +72,7 @@ const Filters = React.memo(
           </LabelsPopup>
           {labels.map((label) => (
             <span key={label.id} className={styles.filterItem}>
-              <Label name={label.name} color={label.color} size="small" onClick={() => handleRemoveLabelClick(label.id)} />
+              <Label name={label.name} color={label.color} variant="labels" onClick={() => handleRemoveLabelClick(label.id)} />
             </span>
           ))}
         </span>

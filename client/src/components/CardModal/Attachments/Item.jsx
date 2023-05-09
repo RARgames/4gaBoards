@@ -57,7 +57,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
           isCover && (
             <Label
               corner="left"
-              size="mini"
+              variant="cardModal"
               icon={{
                 name: 'star',
                 color: 'grey',

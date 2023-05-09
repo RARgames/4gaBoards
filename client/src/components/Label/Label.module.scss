@@ -21,31 +21,27 @@
     white-space: nowrap;
   }
 
-  .wrapperNameless {
-    width: 40px;
-  }
-
   .wrapperHoverable:hover {
     opacity: 0.75;
   }
 
-  /* Sizes */
+  /* VARIANTS */
 
-  .wrapperTiny {
+  .wrapperCard {
     font-size: 12px;
     line-height: 20px;
     max-width: 176px;
-    padding: 0 6px;
+    padding: 1px 6px;
   }
 
-  .wrapperSmall {
+  .wrapperCardModal {
     font-size: 14px;
     line-height: 20px;
     max-width: 176px;
     padding: 1px 6px;
   }
 
-  .wrapperMedium {
+  .wrapperLabels {
     font-size: 14px;
     line-height: 32px;
     max-width: 230px;
