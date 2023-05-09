@@ -11,27 +11,31 @@ const VARIANTS = {
   CARDMODAL: 'cardModal',
 };
 
+const getDueStyle = (value) => {
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const currDate = new Date();
+  const utc1 = Date.UTC(value.getFullYear(), value.getMonth(), value.getDate());
+  const utc2 = Date.UTC(currDate.getFullYear(), currDate.getMonth(), currDate.getDate());
+  const diff = (utc2 - utc1) / msPerDay;
+
+  if (diff >= -14 && diff <= 0) {
+    return 'Close';
+  }
+  if (diff > 0) {
+    return 'Over';
+  }
+  return 'Normal';
+};
+
 const DueDate = React.memo(({ value, variant, isDisabled, onClick }) => {
   const [t] = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
 
   useEffect(() => {
     if (value) {
-      const msPerDay = 1000 * 60 * 60 * 24;
-      const currDate = new Date();
-      const utc1 = Date.UTC(value.getFullYear(), value.getMonth(), value.getDate());
-      const utc2 = Date.UTC(currDate.getFullYear(), currDate.getMonth(), currDate.getDate());
-      const diff = (utc2 - utc1) / msPerDay;
-
-      if (diff >= -14 && diff <= 0) {
-        setDueStyle('Close');
-      } else if (diff > 0) {
-        setDueStyle('Over');
-      } else {
-        setDueStyle('Normal');
-      }
+      setDueStyle(getDueStyle(value));
     }
-  }, [dueStyle, value, variant]);
+  }, [value]);
 
   const contentNode = value && (
     <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], onClick && styles.wrapperHoverable, styles[`due${dueStyle}`])}>
