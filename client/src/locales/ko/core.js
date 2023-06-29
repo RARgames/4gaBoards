@@ -148,7 +148,7 @@ export default {
       addCard_title: '항목카드 추가',
       addComment: '댓글 추가',
       addList: '리스트 추가',
-      addMoreDetailedDescription: '자세한 설명 추가',
+      addDescription: '자세한 설명 추가',
       addTask: '태스트 추가',
       addUser: '사용자 추가',
       createBoard: '보드 생성',

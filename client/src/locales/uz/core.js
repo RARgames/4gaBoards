@@ -138,7 +138,7 @@ export default {
       addCard_title: "Karta Qo'shish",
       addComment: "Izoh qo'shish",
       addList: "Ro'yxat qo'shish",
-      addMoreDetailedDescription: "Batafsil izoh qo'shish",
+      addDescription: "Batafsil izoh qo'shish",
       addTask: "Vazifa qo'shish",
       addUser: "Foydalanuvchi qo'shish",
       createBoard: 'Doska yaratish',

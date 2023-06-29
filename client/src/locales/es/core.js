@@ -131,7 +131,7 @@ export default {
       addCard_title: 'Añadir tarjeta',
       addComment: 'Añadir comentario',
       addList: 'Añadir lista',
-      addMoreDetailedDescription: 'Añadir una descripción más detallada',
+      addDescription: 'Añadir una descripción más detallada',
       addTask: 'Añadir tarea',
       addUser: 'Añadir usuario',
       createBoard: 'Crear tablero',

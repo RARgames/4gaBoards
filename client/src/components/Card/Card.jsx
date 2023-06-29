@@ -57,11 +57,13 @@ const Card = React.memo(
     const cardRef = useRef(null);
 
     const scrollCardIntoView = useCallback(() => {
-      cardRef.current.scrollIntoView({
-        behavior: 'auto',
-        block: 'nearest',
-        inline: 'nearest',
-      });
+      if (cardRef.current) {
+        cardRef.current.scrollIntoView({
+          behavior: 'auto',
+          block: 'nearest',
+          inline: 'nearest',
+        });
+      }
     }, []);
 
     const handleClick = useCallback(() => {
@@ -70,9 +72,15 @@ const Card = React.memo(
       }
     }, []);
 
+    // TODO should be possible without 200ms timeout, but it's not due to other issues - somewhere else
+    // eslint-disable-next-line consistent-return
     useEffect(() => {
       if (isOpen) {
-        scrollCardIntoView();
+        const timeout = setTimeout(() => {
+          scrollCardIntoView();
+        }, 200);
+
+        return () => clearTimeout(timeout);
       }
     }, [isOpen, scrollCardIntoView]);
 

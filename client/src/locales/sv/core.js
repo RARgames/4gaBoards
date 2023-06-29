@@ -142,7 +142,7 @@ export default {
       addCard_title: 'Lägg Till Kort',
       addComment: 'Lägg till kommentar',
       addList: 'Lägg till lista',
-      addMoreDetailedDescription: 'Lägg till en mer detaljerad beskrivning',
+      addDescription: 'Lägg till en mer detaljerad beskrivning',
       addTask: 'Lägg till uppgift',
       addUser: 'Lägg till användare',
       createBoard: 'Skapa tavla',

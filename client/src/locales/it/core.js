@@ -153,7 +153,7 @@ export default {
       addComment: 'Aggiungi commento',
       addList: 'Aggiungi lista',
       addMember: 'Add membro',
-      addMoreDetailedDescription: 'Aggiungi una descrizione più dettagliata',
+      addDescription: 'Aggiungi una descrizione più dettagliata',
       addTask: 'Aggiungi task',
       addUser: 'Aggiungi utente',
       createBoard: 'Crea bacheca',

@@ -142,7 +142,7 @@ export default {
       addCard_title: 'Tilføj kort',
       addComment: 'Tilføj kommentar',
       addList: 'Tilføj liste',
-      addMoreDetailedDescription: 'Tilføj en uddybende beskrivelse',
+      addDescription: 'Tilføj en uddybende beskrivelse',
       addTask: 'Tilføj opgave',
       addUser: 'Tilføj bruger',
       createBoard: 'Opret bræt',

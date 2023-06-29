@@ -57,58 +57,12 @@
     vertical-align: top;
   }
 
-  .contentModule {
-    margin-bottom: 24px;
-  }
-
   .contentPadding {
     padding: 8px 8px 0 16px;
   }
 
   .cursorPointer {
     cursor: pointer;
-  }
-
-  .descriptionButton {
-    background: rgba(9, 30, 66, 0.04);
-    border: none;
-    border-radius: 3px;
-    display: block;
-    color: #6b808c;
-    cursor: pointer;
-    min-height: 54px;
-    outline: none;
-    padding: 8px 12px;
-    position: relative;
-    text-align: left;
-    text-decoration: none;
-    width: 100%;
-
-    &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
-    }
-  }
-
-  .descriptionButtonText {
-    position: absolute;
-    top: 12px;
-  }
-
-  .descriptionText {
-    background: transparent;
-    border: none;
-    color: #17394d;
-    margin-bottom: 8px;
-    outline: none;
-    overflow: hidden;
-    padding: 0;
-    text-align: left;
-    width: 100%;
-  }
-
-  .moduleBody {
-    margin-left: 4px;
   }
 
   .grid {
@@ -125,23 +79,6 @@
     padding: 0px;
   }
 
-  .moduleHeader {
-    color: #17394d;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 20px;
-    margin: 0 0 4px;
-    padding: 8px 0 8px 0;
-    display: inline-block;
-  }
-
-  .moduleIcon {
-    color: #17394d;
-    font-size: 17px;
-    margin-right: 4px;
-    display: inline-block;
-  }
-
   .moduleWrapper {
     margin: 0 0 0 40px;
     position: relative;
@@ -149,16 +86,6 @@
 
   .sidebarPadding {
     padding: 8px 16px 0 8px;
-  }
-
-  .text {
-    color: #6b808c;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.3px;
-    line-height: 20px;
-    margin: 0 8px 4px 0;
-    text-transform: uppercase;
   }
 
   .wrapper {
@@ -183,6 +110,11 @@
     padding: 0;
     height: calc(100vh - 174px);
     width: 100%;
+  }
+
+  .moduleContainer {
+    position: relative;
+    padding: 3px 15px 0 15px;
   }
 
   .header {
@@ -223,9 +155,14 @@
     overflow: hidden;
   }
 
-  .moduleContainer {
-    position: relative;
-    padding: 3px 0 0 15px;
+  .text {
+    color: var(--textColor1);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    line-height: 20px;
+    margin: 0 8px 4px 0;
+    text-transform: uppercase;
   }
 
   .subscribeButton {
@@ -233,5 +170,72 @@
     margin: 3px 0;
     width: 95px;
     min-height: 28px;
+  }
+
+  .contentModule {
+    margin-bottom: 24px;
+  }
+
+  .moduleIcon {
+    color: var(--textColor1);
+    font-size: 17px;
+    display: inline-block;
+  }
+
+  .moduleHeader {
+    color: var(--textColor1);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0 0 4px;
+    padding: 6px 0 0 0;
+    display: inline-block;
+  }
+
+  .moduleBody {
+    // margin-left: 4px;
+  }
+
+  .descriptionButton {
+    background: var(--backgroundColorTmpDarkerField2);
+    border: none;
+    border-radius: 3px;
+    display: block;
+    color: var(--textColor1);
+    cursor: pointer;
+    min-height: 54px;
+    outline: none;
+    padding: 8px 12px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    width: 100%;
+
+    &:hover {
+      color: var(--textColor2);
+    }
+  }
+
+  .descriptionButtonText {
+    position: absolute;
+    top: 12px;
+  }
+
+  .descriptionText {
+    background: transparent;
+    border: none;
+    color: #17394d;
+    margin-bottom: 8px;
+    outline: none;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .localChangesLoaded {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--textColorYellow);
   }
 }

@@ -145,7 +145,7 @@ export default {
       addCard_title: 'Karte hinzufügen',
       addComment: 'Kommentar hinzufügen',
       addList: 'Liste hinzufügen',
-      addMoreDetailedDescription: 'Eine detaillierte Beschreibung hinzufügen',
+      addDescription: 'Eine detaillierte Beschreibung hinzufügen',
       addTask: 'Aufgabe hinzufügen',
       addUser: 'Benutzer hinzufügen',
       createBoard: 'Board erstellen',

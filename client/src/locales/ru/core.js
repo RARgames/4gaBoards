@@ -148,7 +148,7 @@ export default {
       addComment: 'Добавить комментарий',
       addList: 'Добавить список',
       addMember: 'Добавить участника',
-      addMoreDetailedDescription: 'Добавить более подробное описание',
+      addDescription: 'Добавить более подробное описание',
       addTask: 'Добавить задачу',
       addUser: 'Добавить пользователя',
       createBoard: 'Создать доску',

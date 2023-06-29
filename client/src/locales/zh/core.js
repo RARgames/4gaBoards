@@ -138,7 +138,7 @@ export default {
       addCard_title: '添加卡片',
       addComment: '添加评论',
       addList: '添加列表',
-      addMoreDetailedDescription: '添加更多详细描述',
+      addDescription: '添加更多详细描述',
       addTask: '添加任务',
       addUser: '添加用户',
       createBoard: '创建面板',

@@ -143,7 +143,7 @@ export default {
       addCard_title: 'Pridať kartu',
       addComment: 'Pridať komentár',
       addList: 'Pridať zoznam',
-      addMoreDetailedDescription: 'Pridať ďalší detailný popis',
+      addDescription: 'Pridať ďalší detailný popis',
       addTask: 'Pridať úlohu',
       addUser: 'Pridať používateľa',
       createBoard: 'Vytvoriť tabuľu',

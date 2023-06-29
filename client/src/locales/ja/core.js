@@ -142,7 +142,7 @@ export default {
       addCard_title: 'カードを追加',
       addComment: 'コメントを追加',
       addList: 'リストを追加',
-      addMoreDetailedDescription: 'より詳細な説明を追加',
+      addDescription: 'より詳細な説明を追加',
       addTask: 'タスクを追加',
       addUser: 'ユーザーを追加',
       createBoard: 'ボードを作成',

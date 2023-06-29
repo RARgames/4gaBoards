@@ -1,9 +1,11 @@
-import React, { useMemo, useCallback, useRef } from 'react';
+import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, Grid, Icon, Modal } from 'semantic-ui-react';
-import { FilePicker, Markdown, Dropdown } from '../../lib/custom-ui';
+import { Button, Icon } from 'semantic-ui-react';
+import MDEditor from '@uiw/react-md-editor';
+import rehypeSanitize from 'rehype-sanitize';
+import { FilePicker, Dropdown } from '../../lib/custom-ui';
 
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
@@ -24,6 +26,7 @@ import TimerEditPopup from '../TimerEditPopup';
 import CardMovePopup from '../CardMovePopup';
 import DeletePopup from '../DeletePopup';
 import ActionsPopup from '../Card/ActionsPopup';
+import { useLocalStorage } from '../../hooks';
 
 import styles from './CardModal.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -31,6 +34,7 @@ import gStyles from '../../globalStyles.module.scss';
 const CardModal = React.memo(
   ({
     name,
+    id,
     description,
     dueDate,
     timer,
@@ -85,12 +89,16 @@ const CardModal = React.memo(
     const isGalleryOpened = useRef(false);
     const nameField = useRef(null);
     const dropdown = useRef(null);
+    const descriptionRef = useRef(null);
+    const [localChangesLoaded, setLocalChangesLoaded] = useState(false);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
 
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
 
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
+
+    const [setLocalDescription, getLocalDescription] = useLocalStorage(`description-${id}`);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -109,6 +117,14 @@ const CardModal = React.memo(
       },
       [onUpdate],
     );
+
+    const handleLocalDescriptionChange = useCallback((desc) => {
+      if (desc) {
+        setLocalChangesLoaded(true);
+      } else {
+        setLocalChangesLoaded(false);
+      }
+    }, []);
 
     const handleDueDateUpdate = useCallback(
       (newDueDate) => {
@@ -157,6 +173,12 @@ const CardModal = React.memo(
       });
     }, [isSubscribed, onUpdate]);
 
+    const handleDescriptionOpen = useCallback(() => {
+      if (descriptionRef.current && !descriptionRef.current.isOpened) {
+        descriptionRef.current.open();
+      }
+    }, []);
+
     const handleNameEdit = useCallback(() => {
       nameField.current.open();
     }, []);
@@ -182,6 +204,20 @@ const CardModal = React.memo(
         dropdown.current.open();
       }
     }, [canEdit]);
+
+    useEffect(() => {
+      if (descriptionRef.current) {
+        descriptionRef.current.close();
+      }
+    }, [id]);
+
+    useEffect(() => {
+      setLocalChangesLoaded(false);
+      if (descriptionRef.current && getLocalDescription()) {
+        setLocalChangesLoaded(true);
+        descriptionRef.current.open();
+      }
+    }, [getLocalDescription, id]);
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
@@ -268,35 +304,33 @@ const CardModal = React.memo(
     );
 
     const labelsNode = (
-      <div className={styles.moduleContainer}>
-        <div className={styles.attachments}>
-          <div className={styles.text}>
-            {t('common.labels', {
-              context: 'title',
-            })}
-            {canEdit && (
-              <LabelsPopup
-                items={allLabels}
-                currentIds={labelIds}
-                onSelect={onLabelAdd}
-                onDeselect={onLabelRemove}
-                onCreate={onLabelCreate}
-                onUpdate={onLabelUpdate}
-                onMove={onLabelMove}
-                onDelete={onLabelDelete}
-              >
-                <Button className={gStyles.iconButtonSolid}>
-                  <Icon fitted size="small" name="add" />
-                </Button>
-              </LabelsPopup>
-            )}
-          </div>
-          {labels.map((label) => (
-            <span key={label.id} className={styles.attachment}>
-              <Label name={label.name} color={label.color} variant="cardModal" />
-            </span>
-          ))}
+      <div className={styles.attachments}>
+        <div className={styles.text}>
+          {t('common.labels', {
+            context: 'title',
+          })}
+          {canEdit && (
+            <LabelsPopup
+              items={allLabels}
+              currentIds={labelIds}
+              onSelect={onLabelAdd}
+              onDeselect={onLabelRemove}
+              onCreate={onLabelCreate}
+              onUpdate={onLabelUpdate}
+              onMove={onLabelMove}
+              onDelete={onLabelDelete}
+            >
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name="add" />
+              </Button>
+            </LabelsPopup>
+          )}
         </div>
+        {labels.map((label) => (
+          <span key={label.id} className={styles.attachment}>
+            <Label name={label.name} color={label.color} variant="cardModal" />
+          </span>
+        ))}
       </div>
     );
 
@@ -330,7 +364,9 @@ const CardModal = React.memo(
           })}
           {canEdit && (
             <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-              <Button className={gStyles.iconButtonSolid}>{dueDate ? <Icon fitted size="small" name="pencil" /> : <Icon fitted size="small" name="add" />}</Button>
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name={dueDate ? 'pencil' : 'add'} />
+              </Button>
             </DueDateEditPopup>
           )}
         </div>
@@ -377,118 +413,108 @@ const CardModal = React.memo(
       </div>
     );
 
+    const descriptionNode = (description || canEdit) && (
+      <div className={styles.contentModule}>
+        <Icon name="bars" className={styles.moduleIcon} />
+        <div className={styles.moduleHeader}>
+          {t('common.description')}
+          {canEdit && (
+            <Button onClick={handleDescriptionOpen} className={gStyles.iconButtonSolid}>
+              <Icon fitted size="small" name={description ? 'pencil' : 'add'} />
+            </Button>
+          )}
+          {canEdit && localChangesLoaded && <span className={styles.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
+        </div>
+        <div className={styles.moduleBody}>
+          {canEdit ? (
+            <DescriptionEdit ref={descriptionRef} defaultValue={description} onUpdate={handleDescriptionUpdate} cardId={id} onLocalDescriptionChange={handleLocalDescriptionChange}>
+              {description ? (
+                <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
+                  <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} />
+                </button>
+              ) : (
+                <button type="button" className={styles.descriptionButton}>
+                  <span className={styles.descriptionButtonText}>{t('action.addDescription')}</span>
+                </button>
+              )}
+            </DescriptionEdit>
+          ) : (
+            <div className={styles.descriptionText}>
+              <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+
+    const tasksNode = (tasks.length > 0 || canEdit) && (
+      <div className={styles.contentModule}>
+        <Icon name="check" className={styles.moduleIcon} />
+        <div className={styles.moduleHeader}>{t('common.tasks')}</div>
+        <div className={styles.moduleBody}>
+          <Tasks items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
+        </div>
+      </div>
+    );
+
+    const attachmentsNode = (
+      <div className={styles.contentModule}>
+        <Icon name="attach" className={styles.moduleIcon} />
+        <div className={styles.moduleHeader}>{t('common.attachments')}</div>
+        <div className={styles.moduleBody}>
+          <Attachments
+            items={attachments}
+            canEdit={canEdit}
+            onUpdate={onAttachmentUpdate}
+            onDelete={onAttachmentDelete}
+            onCoverUpdate={handleCoverUpdate}
+            onGalleryOpen={handleGalleryOpen}
+            onGalleryClose={handleGalleryClose}
+          />
+          <AttachmentAddPopup onCreate={onAttachmentCreate}>
+            <Button fluid className={styles.actionButton}>
+              <Icon name="attach" className={styles.actionIcon} />
+              {t('common.attachment')}
+            </Button>
+          </AttachmentAddPopup>
+        </div>
+      </div>
+    );
+
+    // TODO fix activities in other file (style and not in order)
+    const activitiesNode = (
+      <Activities
+        items={activities}
+        isFetching={isActivitiesFetching}
+        isAllFetched={isAllActivitiesFetched}
+        isDetailsVisible={isActivitiesDetailsVisible}
+        isDetailsFetching={isActivitiesDetailsFetching}
+        canEdit={canEditCommentActivities}
+        canEditAllComments={canEditAllCommentActivities}
+        onFetch={onActivitiesFetch}
+        onDetailsToggle={onActivitiesDetailsToggle}
+        onCommentCreate={onCommentActivityCreate}
+        onCommentUpdate={onCommentActivityUpdate}
+        onCommentDelete={onCommentActivityDelete}
+      />
+    );
+
     const contentNode = (
       <div className={styles.mainContainer}>
         {headerNode}
-        {labelsNode}
         <div className={styles.moduleContainer}>
+          {labelsNode}
           {membersNode}
           {dueDateNode}
           {timerNode}
           {subscribeNode}
         </div>
+        <div className={styles.moduleContainer}>{descriptionNode}</div>
+        {/* <div className={styles.moduleContainer}>{tasksNode}</div>
+        <div className={styles.moduleContainer}>{attachmentsNode}</div>
+        <div className={styles.moduleContainer}>{activitiesNode}</div> */}
       </div>
     );
-
-    // const contentNode0 = (
-    //   <Grid className={classNames(styles.grid, gStyles.scrollableY)}>
-    //     <Grid.Row className={styles.headerPadding}>
-    //       <Grid.Column width={16} className={styles.headerPadding}>
-    //         {headerNode}
-    //       </Grid.Column>
-    //     </Grid.Row>
-    //     <Grid.Row className={styles.modalPadding}>
-    //       <Grid.Column width={16} className={styles.contentPadding}>
-    //         <div className={styles.moduleWrapper}>
-    //           {membersNode}
-    //           {labelsNode}
-    //           {dueDateNode}
-    //           {timerNode}
-    //           {/* Temp added here subscribe - move to actions */}
-    //           <Button onClick={handleToggleSubscriptionClick}>
-    //             <Icon name="paper plane outline" />
-    //             {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
-    //           </Button>
-    //         </div>
-    //         {(description || canEdit) && (
-    //           <div className={styles.contentModule}>
-    //             <Icon name="align justify" className={styles.moduleIcon} />
-    //             <div className={styles.moduleHeader}>{t('common.description')}</div>
-    //             <div className={styles.moduleBody}>
-    //               {canEdit ? (
-    //                 <DescriptionEdit defaultValue={description} onUpdate={handleDescriptionUpdate}>
-    //                   {description ? (
-    //                     <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
-    //                       <Markdown linkStopPropagation linkTarget="_blank">
-    //                         {description}
-    //                       </Markdown>
-    //                     </button>
-    //                   ) : (
-    //                     <button type="button" className={styles.descriptionButton}>
-    //                       <span className={styles.descriptionButtonText}>{t('action.addMoreDetailedDescription')}</span>
-    //                     </button>
-    //                   )}
-    //                 </DescriptionEdit>
-    //               ) : (
-    //                 <div className={styles.descriptionText}>
-    //                   <Markdown linkStopPropagation linkTarget="_blank">
-    //                     {description}
-    //                   </Markdown>
-    //                 </div>
-    //               )}
-    //             </div>
-    //           </div>
-    //         )}
-    //         {(tasks.length > 0 || canEdit) && (
-    //           <div className={styles.contentModule}>
-    //             <Icon name="check" className={styles.moduleIcon} />
-    //             <div className={styles.moduleHeader}>{t('common.tasks')}</div>
-    //             <div className={styles.moduleBody}>
-    //               <Tasks items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
-    //             </div>
-    //           </div>
-    //         )}
-
-    //         <div className={styles.contentModule}>
-    //           <Icon name="attach" className={styles.moduleIcon} />
-    //           <div className={styles.moduleHeader}>{t('common.attachments')}</div>
-    //           <div className={styles.moduleBody}>
-    //             <Attachments
-    //               items={attachments}
-    //               canEdit={canEdit}
-    //               onUpdate={onAttachmentUpdate}
-    //               onDelete={onAttachmentDelete}
-    //               onCoverUpdate={handleCoverUpdate}
-    //               onGalleryOpen={handleGalleryOpen}
-    //               onGalleryClose={handleGalleryClose}
-    //             />
-    //             <AttachmentAddPopup onCreate={onAttachmentCreate}>
-    //               <Button fluid className={styles.actionButton}>
-    //                 <Icon name="attach" className={styles.actionIcon} />
-    //                 {t('common.attachment')}
-    //               </Button>
-    //             </AttachmentAddPopup>
-    //           </div>
-    //         </div>
-    //         {/* TODO fix activities in other file (style and not in order) */}
-    //         <Activities
-    //           items={activities}
-    //           isFetching={isActivitiesFetching}
-    //           isAllFetched={isAllActivitiesFetched}
-    //           isDetailsVisible={isActivitiesDetailsVisible}
-    //           isDetailsFetching={isActivitiesDetailsFetching}
-    //           canEdit={canEditCommentActivities}
-    //           canEditAllComments={canEditAllCommentActivities}
-    //           onFetch={onActivitiesFetch}
-    //           onDetailsToggle={onActivitiesDetailsToggle}
-    //           onCommentCreate={onCommentActivityCreate}
-    //           onCommentUpdate={onCommentActivityUpdate}
-    //           onCommentDelete={onCommentActivityDelete}
-    //         />
-    //       </Grid.Column>
-    //     </Grid.Row>
-    //   </Grid>
-    // );
 
     return <div className={styles.wrapper}>{canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}</div>;
   },
@@ -496,6 +522,7 @@ const CardModal = React.memo(
 
 CardModal.propTypes = {
   name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   description: PropTypes.string,
   dueDate: PropTypes.instanceOf(Date),
   timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
