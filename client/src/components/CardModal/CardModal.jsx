@@ -90,6 +90,7 @@ const CardModal = React.memo(
     const nameField = useRef(null);
     const dropdown = useRef(null);
     const descriptionRef = useRef(null);
+    const tasksRef = useRef(null);
     const [localChangesLoaded, setLocalChangesLoaded] = useState(false);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
@@ -176,6 +177,12 @@ const CardModal = React.memo(
     const handleDescriptionOpen = useCallback(() => {
       if (descriptionRef.current && !descriptionRef.current.isOpened) {
         descriptionRef.current.open();
+      }
+    }, []);
+
+    const handleTaskAddOpen = useCallback(() => {
+      if (tasksRef.current) {
+        tasksRef.current.open();
       }
     }, []);
 
@@ -450,9 +457,16 @@ const CardModal = React.memo(
     const tasksNode = (tasks.length > 0 || canEdit) && (
       <div className={styles.contentModule}>
         <Icon name="check" className={styles.moduleIcon} />
-        <div className={styles.moduleHeader}>{t('common.tasks')}</div>
+        <div className={styles.moduleHeader}>
+          {t('common.tasks')}
+          {canEdit && (
+            <Button onClick={handleTaskAddOpen} className={gStyles.iconButtonSolid}>
+              <Icon fitted size="small" name="add" />
+            </Button>
+          )}
+        </div>
         <div className={styles.moduleBody}>
-          <Tasks items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
+          <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
         </div>
       </div>
     );
@@ -510,8 +524,8 @@ const CardModal = React.memo(
           {subscribeNode}
         </div>
         <div className={styles.moduleContainer}>{descriptionNode}</div>
-        {/* <div className={styles.moduleContainer}>{tasksNode}</div>
-        <div className={styles.moduleContainer}>{attachmentsNode}</div>
+        <div className={styles.moduleContainer}>{tasksNode}</div>
+        {/* <div className={styles.moduleContainer}>{attachmentsNode}</div>
         <div className={styles.moduleContainer}>{activitiesNode}</div> */}
       </div>
     );

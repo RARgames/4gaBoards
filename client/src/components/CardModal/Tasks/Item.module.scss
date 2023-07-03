@@ -1,5 +1,6 @@
 :global(#app) {
   .button {
+    color: var(--textColor1);
     background: transparent;
     box-shadow: none;
     line-height: 28px;
@@ -13,8 +14,10 @@
     width: 28px;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
+      color: var(--textColor2);
     }
+
+    //TODO combine with gStyles.iconButtonSolid
   }
 
   .checkboxWrapper {
@@ -54,7 +57,7 @@
   .text {
     background: transparent;
     border-radius: 3px;
-    color: #17394d;
+    color: var(--textColor1);
     display: inline-block;
     font-size: 15px;
     line-height: 1.5;
@@ -72,6 +75,6 @@
     cursor: auto;
     min-height: 32px;
     position: relative;
-    width: calc(100% + 40px);
+    width: 100%;
   }
 }

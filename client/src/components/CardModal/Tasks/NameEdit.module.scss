@@ -1,10 +1,10 @@
 :global(#app) {
   .field {
-    background: #bdbdbd;
-    border: 0px;
+    background: var(--backgroundColorTmpDarkerField2);
+    color: var(--textColor1);
+    border: 2px solid var(--borderOutlin2); //TODO invisible
     border-radius: 2px;
     box-sizing: border-box;
-    color: #17394d;
     display: block;
     font-size: 14px;
     line-height: 1.5;

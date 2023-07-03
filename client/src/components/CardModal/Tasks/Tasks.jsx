@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -11,8 +11,23 @@ import TaskAdd from './TaskAdd';
 
 import styles from './Tasks.module.scss';
 
-const Tasks = React.memo(({ items, canEdit, onCreate, onUpdate, onMove, onDelete }) => {
+const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, onDelete }, ref) => {
   const [t] = useTranslation();
+  const taskAddRef = useRef(null);
+
+  const open = useCallback(() => {
+    if (taskAddRef.current) {
+      taskAddRef.current.open();
+    }
+  }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      open,
+    }),
+    [open],
+  );
 
   const handleDragStart = useCallback(() => {
     closePopup();
@@ -68,7 +83,7 @@ const Tasks = React.memo(({ items, canEdit, onCreate, onUpdate, onMove, onDelete
               ))}
               {placeholder}
               {canEdit && (
-                <TaskAdd onCreate={onCreate}>
+                <TaskAdd ref={taskAddRef} onCreate={onCreate}>
                   <button type="button" className={styles.taskButton}>
                     <span className={styles.taskButtonText}>{t('action.addTask')}</span>
                   </button>

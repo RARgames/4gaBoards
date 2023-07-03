@@ -1,9 +1,9 @@
 :global(#app) {
   .field {
-    background: #bdbdbd;
-    border: 1px solid rgba(9, 30, 66, 0.08);
+    background: var(--backgroundColorTmpDarkerField2);
+    color: var(--textColor1);
+    border: 1px solid var(--borderOutlin2);
     border-radius: 2px;
-    color: #17394d;
     display: block;
     line-height: 1.5;
     font-size: 14px;
