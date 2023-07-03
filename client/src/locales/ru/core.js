@@ -4,11 +4,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'P',
+    date: 'd.MM.yyyy',
     time: 'HH:mm',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'd MMM',
-    longDateTime: "d MMMM 'в' p",
   },
 
   translation: {
@@ -113,7 +111,6 @@ export default {
       organization: 'Организация',
       phone: 'Телефон',
       preferences: 'Предпочтения',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Совет: нажмите Ctrl-V (Cmd-V на Mac), чтобы добавить вложение из буфера обмена',
       project: 'Проект',
       projectActions: 'Действия с проектом',
       projectNotFound: 'Проект не найден',
@@ -151,9 +148,8 @@ export default {
       addComment: 'Добавить комментарий',
       addList: 'Добавить список',
       addMember: 'Добавить участника',
-      addMoreDetailedDescription: 'Добавить более подробное описание',
+      addDescription: 'Добавить более подробное описание',
       addTask: 'Добавить задачу',
-      addToCard: 'Добавить на карточку',
       addUser: 'Добавить пользователя',
       createBoard: 'Создать доску',
       createFile: 'Создать файл',

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import classNames from 'classnames';
 import { closePopup } from '../../lib/popup';
 
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -11,6 +12,7 @@ import ListAdd from './ListAdd';
 import { ReactComponent as PlusMathIcon } from '../../assets/images/plus-math-icon.svg';
 
 import styles from './Board.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
 
@@ -19,6 +21,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   const [isListAddOpened, setIsListAddOpened] = useState(false);
 
   const wrapper = useRef(null);
+  const mainWrapper = useRef(null);
   const prevPosition = useRef(null);
 
   const handleAddListClick = useCallback(() => {
@@ -62,11 +65,16 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
 
   const handleMouseDown = useCallback(
     (event) => {
-      if (event.target !== wrapper.current && !event.target.dataset.dragScroller) {
+      if (event.button && event.button !== 0) {
         return;
       }
 
-      prevPosition.current = event.clientX;
+      if (event.target !== wrapper.current && !event.target.dataset.dragScroller) {
+        return;
+      }
+      event.preventDefault();
+
+      prevPosition.current = event.screenX;
     },
     [wrapper],
   );
@@ -76,14 +84,12 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
       if (!prevPosition.current) {
         return;
       }
-
       event.preventDefault();
 
-      window.scrollBy({
-        left: prevPosition.current - event.clientX,
+      mainWrapper.current.scrollBy({
+        left: prevPosition.current - event.screenX,
       });
-
-      prevPosition.current = event.clientX;
+      prevPosition.current = event.screenX;
     },
     [prevPosition],
   );
@@ -93,16 +99,8 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [prevPosition]);
 
   useEffect(() => {
-    document.body.style.overflowX = 'auto';
-
-    return () => {
-      document.body.style.overflowX = null;
-    };
-  }, []);
-
-  useEffect(() => {
     if (isListAddOpened) {
-      window.scroll(document.body.scrollWidth, 0);
+      mainWrapper.current.scrollLeft = mainWrapper.current.scrollWidth;
     }
   }, [listIds, isListAddOpened]);
 
@@ -117,10 +115,10 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [handleWindowMouseUp, handleWindowMouseMove]);
 
   return (
-    <>
+    <div ref={mainWrapper} className={classNames(styles.mainWrapper, gStyles.scrollableX)}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div ref={wrapper} className={styles.wrapper} onMouseDown={handleMouseDown}>
-        <div>
+      <div ref={wrapper} className={classNames(styles.wrapper)} onMouseDown={handleMouseDown}>
+        <div className={classNames(isCardModalOpened && styles.listsModalOpen)}>
           <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
               {({ innerRef, droppableProps, placeholder }) => (
@@ -153,7 +151,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
         </div>
       </div>
       {isCardModalOpened && <CardModalContainer />}
-    </>
+    </div>
   );
 });
 

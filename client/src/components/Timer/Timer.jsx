@@ -2,19 +2,19 @@ import upperFirst from 'lodash/upperFirst';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Icon } from 'semantic-ui-react';
 import { useForceUpdate, usePrevious } from '../../lib/hooks';
 
 import { formatTimer } from '../../utils/timer';
 
 import styles from './Timer.module.scss';
 
-const SIZES = {
-  TINY: 'tiny',
-  SMALL: 'small',
-  MEDIUM: 'medium',
+const VARIANTS = {
+  CARD: 'card',
+  CARDMODAL: 'cardModal',
 };
 
-const Timer = React.memo(({ as, startedAt, total, size, isDisabled, onClick }) => {
+const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }) => {
   const prevStartedAt = usePrevious(startedAt);
   const forceUpdate = useForceUpdate();
 
@@ -48,7 +48,10 @@ const Timer = React.memo(({ as, startedAt, total, size, isDisabled, onClick }) =
   );
 
   const contentNode = (
-    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], startedAt && styles.wrapperActive, onClick && styles.wrapperHoverable)}>{formatTimer({ startedAt, total })}</span>
+    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], startedAt && styles.wrapperActive, onClick && styles.wrapperHoverable)}>
+      <Icon name={startedAt ? 'pause' : 'play'} size="tiny" className={styles.icon} />
+      {formatTimer({ startedAt, total })}
+    </span>
   );
 
   const ElementType = as;
@@ -65,8 +68,8 @@ const Timer = React.memo(({ as, startedAt, total, size, isDisabled, onClick }) =
 Timer.propTypes = {
   as: PropTypes.elementType,
   startedAt: PropTypes.instanceOf(Date),
-  total: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
-  size: PropTypes.oneOf(Object.values(SIZES)),
+  total: PropTypes.number.isRequired,
+  variant: PropTypes.oneOf(Object.values(VARIANTS)),
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
@@ -74,7 +77,7 @@ Timer.propTypes = {
 Timer.defaultProps = {
   as: 'button',
   startedAt: undefined,
-  size: SIZES.MEDIUM,
+  variant: VARIANTS.CARDMODAL,
   isDisabled: false,
   onClick: undefined,
 };

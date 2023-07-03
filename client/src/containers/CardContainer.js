@@ -14,6 +14,9 @@ const makeMapStateToProps = () => {
   const selectNotificationsTotalByCardId = selectors.makeSelectNotificationsTotalByCardId();
 
   return (state, { id, index }) => {
+    const currentCardId = selectors.selectPath(state).cardId;
+    const isOpen = currentCardId === id;
+
     const { projectId } = selectors.selectPath(state);
     const allProjectsToLists = selectors.selectProjectsToListsForCurrentUser(state);
     const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
@@ -40,6 +43,7 @@ const makeMapStateToProps = () => {
       listId,
       projectId,
       isPersisted,
+      isOpen,
       notificationsTotal,
       users,
       labels,

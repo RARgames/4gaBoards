@@ -22,40 +22,38 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
 
   return (
     <Comment>
-      <span className={styles.user}>
-        <User name={user.name} avatarUrl={user.avatarUrl} />
-      </span>
       <div className={classNames(styles.content)}>
         <div className={styles.title}>
+          <span className={styles.user}>
+            <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
+          </span>
           <span className={styles.author}>{user.name}</span>
           <span className={styles.date}>
-            {t('format:longDateTime', {
+            {t('format:dateTime', {
               postProcess: 'formatDate',
               value: createdAt,
             })}
           </span>
+          {canEdit && (
+            <Comment.Actions className={styles.buttons}>
+              <Comment.Action as="button" content={t('action.edit')} disabled={!isPersisted} onClick={handleEditClick} className={styles.button} />
+              <DeletePopup
+                title={t('common.deleteComment', {
+                  context: 'title',
+                })}
+                content={t('common.areYouSureYouWantToDeleteThisComment')}
+                buttonContent={t('action.deleteComment')}
+                onConfirm={onDelete}
+              >
+                <Comment.Action as="button" content={t('action.delete')} disabled={!isPersisted} className={styles.button} />
+              </DeletePopup>
+            </Comment.Actions>
+          )}
         </div>
         <CommentEdit ref={commentEdit} defaultData={data} onUpdate={onUpdate}>
-          <>
-            <div className={styles.text}>
-              <Markdown linkTarget="_blank">{data.text}</Markdown>
-            </div>
-            {canEdit && (
-              <Comment.Actions>
-                <Comment.Action as="button" content={t('action.edit')} disabled={!isPersisted} onClick={handleEditClick} />
-                <DeletePopup
-                  title={t('common.deleteComment', {
-                    context: 'title',
-                  })}
-                  content={t('common.areYouSureYouWantToDeleteThisComment')}
-                  buttonContent={t('action.deleteComment')}
-                  onConfirm={onDelete}
-                >
-                  <Comment.Action as="button" content={t('action.delete')} disabled={!isPersisted} />
-                </DeletePopup>
-              </Comment.Actions>
-            )}
-          </>
+          <div className={styles.text}>
+            <Markdown linkTarget="_blank">{data.text}</Markdown>
+          </div>
         </CommentEdit>
       </div>
     </Comment>

@@ -36,22 +36,21 @@
     color: #17394d;
   }
 
-  /* Sizes */
+  .icon {
+    vertical-align: 40%;
+  }
 
-  .wrapperTiny {
+  /* Variants */
+
+  .wrapperCard {
     font-size: 12px;
     line-height: 20px;
     padding: 0 6px;
   }
 
-  .wrapperSmall {
-    font-size: 12px;
+  .wrapperCardModal {
+    font-size: 14px;
     line-height: 20px;
-    padding: 2px 6px;
-  }
-
-  .wrapperMedium {
-    line-height: 20px;
-    padding: 6px 12px;
+    padding: 4px 6px;
   }
 }

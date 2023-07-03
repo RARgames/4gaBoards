@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 import { Button, Form } from 'semantic-ui-react';
-import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Input, Popup } from '../../lib/custom-ui';
 
 import { useForm } from '../../hooks';
@@ -28,10 +27,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
     };
   });
 
-  const [selectTimeFieldState, selectTimeField] = useToggle();
-
   const dateField = useRef(null);
-  const timeField = useRef(null);
 
   const nullableDate = useMemo(() => {
     const date = t('format:date', {
@@ -55,9 +51,8 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
           value: date,
         }),
       }));
-      selectTimeField();
     },
-    [setData, selectTimeField, t],
+    [setData, t],
   );
 
   const handleSubmit = useCallback(() => {
@@ -70,11 +65,6 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
       postProcess: 'parseDate',
       value: `${data.date} ${data.time}`,
     });
-
-    if (Number.isNaN(value.getTime())) {
-      timeField.current.select();
-      return;
-    }
 
     if (!defaultValue || value.getTime() !== defaultValue.getTime()) {
       onUpdate(value);
@@ -95,10 +85,6 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
     dateField.current.select();
   }, []);
 
-  useDidUpdate(() => {
-    timeField.current.select();
-  }, [selectTimeFieldState]);
-
   return (
     <>
       <Popup.Header onBack={onBack}>
@@ -112,10 +98,6 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.date')}</div>
               <Input ref={dateField} name="date" value={data.date} onChange={handleFieldChange} />
-            </div>
-            <div className={styles.fieldBox}>
-              <div className={styles.text}>{t('common.time')}</div>
-              <Input ref={timeField} name="time" value={data.time} onChange={handleFieldChange} />
             </div>
           </div>
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />

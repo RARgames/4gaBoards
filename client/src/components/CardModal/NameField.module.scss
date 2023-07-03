@@ -4,20 +4,18 @@
     border: 1px solid transparent;
     border-radius: 3px;
     box-shadow: none;
-    color: #17394d;
-    font-size: 20px;
+    color: var(--textColorWhite);
+    font-size: 18px;
     font-weight: 700;
-    line-height: 24px;
-    margin: -5px;
+    line-height: 20px;
     overflow: hidden;
-    padding: 4px;
     resize: none;
-    width: 100%;
+    width: calc(100% - 60px);
 
     &:focus {
-      background: #fff;
-      border-color: #5ba4cf;
-      box-shadow: 0 0 2px 0 #5ba4cf;
+      background: var(--backgroundColorTmpDarkerField);
+      border-color: var(--borderOutline);
+      box-shadow: 0 0 2px 0 var(--borderOutline);
       outline: 0;
     }
   }

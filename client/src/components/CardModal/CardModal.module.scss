@@ -1,27 +1,20 @@
 :global(#app) {
   .actionButton {
-    background: #ebeef0;
+    background: var(--backgroundColorTmpDarkerField2);
+    color: var(--textColor1);
     box-shadow: 0 1px 0 0 rgba(9, 30, 66, 0.13);
-    color: #444;
     margin-top: 8px;
     overflow: hidden;
-    padding: 6px 8px 6px 18px;
+    padding: 8px;
     text-align: left;
     text-overflow: ellipsis;
     transition: background 85ms ease;
     white-space: nowrap;
+    font-weight: normal;
 
     &:hover {
-      background: #dfe3e6;
-      box-shadow: 0 1px 0 0 rgba(9, 30, 66, 0.25);
-      color: #4c4c4c;
+      color: var(--textColor2);
     }
-  }
-
-  .actionIcon {
-    color: #17394d;
-    display: inline;
-    margin-right: 8px;
   }
 
   .actions {
@@ -46,19 +39,15 @@
 
   .attachment {
     display: inline-block;
-    margin: 0 4px 4px 0;
+    margin: 0 3px 4px 0;
     max-width: 100%;
   }
 
   .attachments {
     display: inline-block;
-    margin: 0 8px 8px 0;
+    margin: 0 0 2px 0;
     max-width: 100%;
     vertical-align: top;
-  }
-
-  .contentModule {
-    margin-bottom: 24px;
   }
 
   .contentPadding {
@@ -69,50 +58,157 @@
     cursor: pointer;
   }
 
-  .dueDate {
-    background: rgba(9, 30, 66, 0.04);
-    border: none;
-    border-radius: 3px;
-    color: #6b808c;
-    cursor: pointer;
-    line-height: 20px;
-    outline: none;
-    padding: 6px 14px;
-    text-align: left;
-    text-decoration: underline;
-    transition: background 0.3s ease;
-    vertical-align: top;
+  .grid {
+    background: #f5f6f7;
+    margin: 0;
+    height: calc(100vh - 174px);
+  }
 
-    &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #17394d;
+  .headerPadding {
+    padding: 0;
+  }
+
+  .modalPadding {
+    padding: 0px;
+  }
+
+  .sidebarPadding {
+    padding: 8px 16px 0 8px;
+  }
+
+  .wrapper {
+    width: 650px;
+    position: fixed;
+    right: 0;
+    display: inline-flex;
+    // top: 164px;
+  }
+
+  @media (max-width: 926px) {
+    .wrapper {
+      width: 95%;
     }
   }
 
+
+  //TODO standarized starts here - recheck
+  .mainContainer {
+    background: var(--backgroundColorTmpBackground);
+    margin: 0;
+    padding: 0;
+    height: calc(100vh - 174px);
+    width: 100%;
+  }
+
+  .moduleContainer {
+    position: relative;
+    padding: 3px 15px 0 15px;
+  }
+
+  .header {
+    background: var(--backgroundColorTmpHeader);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 15px 15px 12px 15px;
+  }
+
+  .headerTitle {
+    color: var(--textColorWhite);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 20px;
+    width: calc(100% - 60px);
+    display: inline-block;
+    padding: 3px;
+  }
+
+  .headerButton {
+    float: right;
+  }
+
+  .headerListFieldWrapper {
+    padding: 3px;
+  }
+
+  .headerListField {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 60px);
+    display: inline-block;
+    color: var(--textColor1);
+  }
+
+  .headerListFieldIcon {
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  .text {
+    color: var(--textColor1);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    line-height: 20px;
+    margin: 0 8px 4px 0;
+    text-transform: uppercase;
+  }
+
+  .subscribeButton {
+    padding: 2px 6px 0px 6px;
+    margin: 3px 0;
+    width: 95px;
+    min-height: 28px;
+  }
+
+  .contentModule {
+    margin-bottom: 24px;
+  }
+
+  .moduleIcon {
+    color: var(--textColor1);
+    font-size: 17px;
+    display: inline-block;
+  }
+
+  .moduleHeader {
+    color: var(--textColor1);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0 0 4px;
+    padding: 6px 0 0 0;
+    display: inline-block;
+  }
+
+  .moduleBody {
+    // margin-left: 4px;
+  }
+
   .descriptionButton {
-    background: rgba(9, 30, 66, 0.04);
+    background: var(--backgroundColorTmpDarkerField2);
     border: none;
     border-radius: 3px;
     display: block;
-    color: #6b808c;
+    color: var(--textColor1);
     cursor: pointer;
-    min-height: 54px;
+    min-height: 36px;
     outline: none;
-    padding: 8px 12px;
+    padding: 8px 10px;
     position: relative;
     text-align: left;
     text-decoration: none;
     width: 100%;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      color: var(--textColor2);
     }
   }
 
   .descriptionButtonText {
     position: absolute;
-    top: 12px;
+    top: 10px;
   }
 
   .descriptionText {
@@ -127,93 +223,9 @@
     width: 100%;
   }
 
-  .grid {
-    background: #f5f6f7;
-    margin: 0;
-  }
-
-  .headerPadding {
-    padding: 0;
-  }
-
-  .headerTitle {
-    color: #17394d;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-  }
-
-  .headerListField {
-    overflow: hidden;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    text-align: left;
-  }
-
-  .headerTitleWrapper {
-    margin: 4px 0;
-    padding: 6px 0 0;
-  }
-
-  .headerWrapper {
-    margin: 12px 48px 12px 22px;
-    position: relative;
-  }
-
-  .modalPadding {
-    padding: 0px;
-  }
-
-  .moduleHeader {
-    color: #17394d;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 20px;
-    margin: 0 0 4px;
-    padding: 8px 0;
-  }
-
-  .moduleIcon {
-    color: #17394d;
-    font-size: 17px;
-    height: 32px;
-    left: -40px;
-    line-height: 32px;
-    margin-right: 0;
-    position: absolute;
-    top: 2px;
-    width: 32px;
-  }
-
-  .moduleWrapper {
-    margin: 0 0 0 40px;
-    position: relative;
-  }
-
-  .sidebarPadding {
-    padding: 8px 16px 0 8px;
-  }
-
-  .text {
-    color: #6b808c;
+  .localChangesLoaded {
     font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 0.3px;
-    line-height: 20px;
-    margin: 0 8px 4px 0;
-    text-transform: uppercase;
-  }
-
-  .wrapper {
-    width: 880px;
-  }
-
-  @media (max-width: 926px) {
-    .wrapper {
-      width: 95%;
-    }
+    font-style: italic;
+    color: var(--textColorYellow);
   }
 }

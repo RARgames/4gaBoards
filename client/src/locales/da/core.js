@@ -4,11 +4,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'd/M/yyyy',
+    date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMM d',
-    longDateTime: "MMMM d 'at' p",
   },
 
   translation: {
@@ -113,7 +111,6 @@ export default {
       organization: 'Organisation',
       phone: 'Telefon',
       preferences: 'Præferencer',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: Tryk Ctrl-V (Cmd-V på Mac) for at vedhæfte direkte fra udklipsholder',
       project: 'Projekt',
       projectNotFound_title: 'Projekt ej fundet',
       removeManager_title: 'Fjern projektleder',
@@ -145,9 +142,8 @@ export default {
       addCard_title: 'Tilføj kort',
       addComment: 'Tilføj kommentar',
       addList: 'Tilføj liste',
-      addMoreDetailedDescription: 'Tilføj en uddybende beskrivelse',
+      addDescription: 'Tilføj en uddybende beskrivelse',
       addTask: 'Tilføj opgave',
-      addToCard: 'Tilføj til kort',
       addUser: 'Tilføj bruger',
       createBoard: 'Opret bræt',
       createFile: 'Opret fil',

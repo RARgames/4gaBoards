@@ -116,7 +116,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
           placeholder={t('common.enterCardTitle')}
           maxRows={3}
           spellCheck
-          className={classNames(styles.field, gStyles.scrollable)}
+          className={classNames(styles.field, gStyles.scrollableY)}
           onKeyDown={handleFieldKeyDown}
           onChange={handleChange}
           onBlur={handleFieldBlur}

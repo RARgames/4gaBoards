@@ -13,6 +13,7 @@ const SIZES = {
   MEDIUM: 'medium',
   LARGE: 'large',
   MASSIVE: 'massive',
+  CARD: 'card',
 };
 
 const COLORS = ['emerald', 'peter-river', 'wisteria', 'carrot', 'alizarin', 'turquoise', 'midnight-blue'];

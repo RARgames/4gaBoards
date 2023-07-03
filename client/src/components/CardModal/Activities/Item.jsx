@@ -13,6 +13,7 @@ import styles from './Item.module.scss';
 const Item = React.memo(({ type, data, createdAt, user }) => {
   const [t] = useTranslation();
 
+  // TODO fully rewrite contentNodes
   let contentNode;
   switch (type) {
     case ActivityTypes.CREATE_CARD:
@@ -24,7 +25,7 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
             list: data.list.name,
           }}
         >
-          <span className={styles.author}>{user.name}</span>
+          {/* <span className={styles.author}>{user.name}</span> */}
           <span className={styles.text}>
             {' added this card to '}
             {data.list.name}
@@ -43,7 +44,7 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
             toList: data.toList.name,
           }}
         >
-          <span className={styles.author}>{user.name}</span>
+          {/* <span className={styles.author}>{user.name}</span> */}
           <span className={styles.text}>
             {' moved this card from '}
             {data.fromList.name}
@@ -60,17 +61,13 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
 
   return (
     <Comment>
-      <span className={styles.user}>
-        <User name={user.name} avatarUrl={user.avatarUrl} />
-      </span>
       <div className={classNames(styles.content)}>
-        <div>{contentNode}</div>
-        <span className={styles.date}>
-          {t('format:longDateTime', {
-            postProcess: 'formatDate',
-            value: createdAt,
-          })}
+        <span className={styles.user}>
+          <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
         </span>
+        <span className={styles.author}>{user.name}</span>
+        <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>
+        <div className={styles.contentText}>{contentNode}</div>
       </div>
     </Comment>
   );

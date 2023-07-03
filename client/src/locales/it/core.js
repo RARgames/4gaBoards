@@ -1,10 +1,8 @@
 export default {
   format: {
-    date: 'd/M/yyyy',
+    date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMM d',
-    longDateTime: "MMMM d 'at' p",
   },
 
   translation: {
@@ -117,7 +115,6 @@ export default {
       organization: 'Organizazzione',
       phone: 'Telefono',
       preferences: 'Preferenze',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: prmi Ctrl-V (Cmd-V on Mac) per aggiungere un allegato dalla clipboard',
       project: 'Progetto',
       projectNotFound_title: 'Progetto non trovato',
       removeManager_title: 'Rimuovi Manager',
@@ -156,9 +153,8 @@ export default {
       addComment: 'Aggiungi commento',
       addList: 'Aggiungi lista',
       addMember: 'Add membro',
-      addMoreDetailedDescription: 'Aggiungi una descrizione più dettagliata',
+      addDescription: 'Aggiungi una descrizione più dettagliata',
       addTask: 'Aggiungi task',
-      addToCard: 'Aggiungi alla card',
       addUser: 'Aggiungi utente',
       createBoard: 'Crea bacheca',
       createFile: 'Crea file',

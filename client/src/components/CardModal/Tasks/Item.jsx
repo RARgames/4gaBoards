@@ -57,7 +57,7 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
                 {isPersisted && canEdit && (
                   <ActionsPopup onNameEdit={handleNameEdit} onDelete={onDelete}>
                     <Button className={classNames(styles.button, styles.target)}>
-                      <Icon fitted name="pencil" size="small" />
+                      <Icon fitted name="ellipsis vertical" size="small" />
                     </Button>
                   </ActionsPopup>
                 )}

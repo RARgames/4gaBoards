@@ -4,11 +4,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'M/d/yyyy',
+    date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMM d',
-    longDateTime: "MMMM d 'a' p",
   },
 
   translation: {
@@ -103,7 +101,6 @@ export default {
       organization: 'Organización',
       phone: 'Teléfono',
       preferences: 'Preferencias',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: presiona Ctrl-V (Cmd-V en Mac) para añadir adjuntos desde el portapapeles',
       project: 'Proyecto',
       projectNotFound_title: 'Proyecto no encontrado',
       removeMember_title: 'Remover Miembro',
@@ -134,9 +131,8 @@ export default {
       addCard_title: 'Añadir tarjeta',
       addComment: 'Añadir comentario',
       addList: 'Añadir lista',
-      addMoreDetailedDescription: 'Añadir una descripción más detallada',
+      addDescription: 'Añadir una descripción más detallada',
       addTask: 'Añadir tarea',
-      addToCard: 'Añadir a la tarjeta',
       addUser: 'Añadir usuario',
       createBoard: 'Crear tablero',
       createFile: 'Crear archivo',

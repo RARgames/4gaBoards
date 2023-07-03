@@ -2,9 +2,27 @@
   --backgroundColor0: #1e1e1e;
   --backgroundColor1: #252526;
   --backgroundColor2: #333333;
+  --backgroundColorTmp0: #282c30;
+  --backgroundColorTmp1: #292d33;
+  --backgroundColorTmp2: #242d34;
+  --backgroundColorTmp3: #1b2126;
+  --backgroundColorTmpHeader: #2c3e51;
+  --backgroundColorTmpBackground: #223140;
+  --backgroundColorTmpDarkerField: #1e2d39;
+  --backgroundColorTmpDarkerField2: #17232c;
+  --backgroundColorTmpSeparatorLight: #263443;
+  --backgroundColorTmpHighlighted: #2d3b4b;
+  --backgroundColorTmpTest: #2c3e51;
+  --borderOutline: #5ba4cf;
+  --borderOutline2: #34b7cd;
+  --selectionBackground: #0664d4;
+  --textColorWhite: #ffffff;
   --textColor0: #ebebec;
   --textColor1: #d3d3d3;
   --textColor2: #999999;
+  --textColor3: #6d6d6d;
+  --textColorYellow: #fdd41e;
+  --textColorRed: #ff0000;
 
   .controls {
     height: 32px;
@@ -24,20 +42,75 @@
     box-shadow: none;
   }
 
-  .scrollable {
+  //TODO to change to match dark theme
+  .scrollableY {
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #646464 #a6a6a6;
 
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #646464;
+    }
+
     &::-webkit-scrollbar {
       width: 8px;
       background-color: #a6a6a6;
     }
+  }
+
+  //TODO to change to match dark theme
+  .scrollableX {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #646464 #a6a6a6;
 
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;
       background-color: #646464;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #a6a6a6;
+    }
+  }
+
+  .scrollableYList {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #7b7b7c #252527;
+    // TODO other variant
+    // scrollbar-color: #7b7b7c var(--backgroundColorTmpDarkerField);
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #7b7b7c;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #252527;
+    }
+  }
+
+  .scrollableXList {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #7b7b7c #252527;
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #7b7b7c;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #252527;
     }
   }
 
@@ -51,6 +124,20 @@
 
     &:hover {
       color: #000000;
+    }
+  }
+
+  .iconButtonSolid {
+    background: none;
+    box-shadow: none;
+    color: var(--textColor1);
+    margin: 0;
+    padding: 0;
+    min-height: 20px;
+    width: 20px;
+
+    &:hover {
+      color: var(--textColor2);
     }
   }
 

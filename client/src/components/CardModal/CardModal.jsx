@@ -1,11 +1,13 @@
-import React, { useMemo, useCallback, useRef } from 'react';
+import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, Grid, Icon, Modal } from 'semantic-ui-react';
-import { Markdown } from '../../lib/custom-ui';
+import { Button, Icon } from 'semantic-ui-react';
+import MDEditor from '@uiw/react-md-editor';
+import rehypeSanitize from 'rehype-sanitize';
+import { FilePicker, Dropdown } from '../../lib/custom-ui';
 
-import { startTimer, stopTimer } from '../../utils/timer';
+import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
 import DescriptionEdit from './DescriptionEdit';
 import Tasks from './Tasks';
@@ -23,7 +25,8 @@ import DueDateEditPopup from '../DueDateEditPopup';
 import TimerEditPopup from '../TimerEditPopup';
 import CardMovePopup from '../CardMovePopup';
 import DeletePopup from '../DeletePopup';
-import ListField from './ListField';
+import ActionsPopup from '../Card/ActionsPopup';
+import { useLocalStorage } from '../../hooks';
 
 import styles from './CardModal.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -31,6 +34,7 @@ import gStyles from '../../globalStyles.module.scss';
 const CardModal = React.memo(
   ({
     name,
+    id,
     description,
     dueDate,
     timer,
@@ -83,7 +87,11 @@ const CardModal = React.memo(
     const [t] = useTranslation();
 
     const isGalleryOpened = useRef(false);
-    const listField = useRef(null);
+    const nameField = useRef(null);
+    const dropdown = useRef(null);
+    const descriptionRef = useRef(null);
+    const tasksRef = useRef(null);
+    const [localChangesLoaded, setLocalChangesLoaded] = useState(false);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
 
@@ -91,11 +99,7 @@ const CardModal = React.memo(
 
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
 
-    const handleToggleTimerClick = useCallback(() => {
-      onUpdate({
-        timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
-      });
-    }, [timer, onUpdate]);
+    const [setLocalDescription, getLocalDescription] = useLocalStorage(`description-${id}`);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -115,6 +119,14 @@ const CardModal = React.memo(
       [onUpdate],
     );
 
+    const handleLocalDescriptionChange = useCallback((desc) => {
+      if (desc) {
+        setLocalChangesLoaded(true);
+      } else {
+        setLocalChangesLoaded(false);
+      }
+    }, []);
+
     const handleDueDateUpdate = useCallback(
       (newDueDate) => {
         onUpdate({
@@ -133,6 +145,20 @@ const CardModal = React.memo(
       [onUpdate],
     );
 
+    const handleToggleTimerClick = useCallback(() => {
+      // TODO hacky way of creating new timer - should be created using TimerEditStep
+      if (!timer) {
+        const newTimer = createTimer({ hours: 0, minutes: 0, seconds: 0 });
+        onUpdate({
+          timer: newTimer.startedAt ? stopTimer(newTimer) : startTimer(newTimer),
+        });
+      } else {
+        onUpdate({
+          timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
+        });
+      }
+    }, [onUpdate, timer]);
+
     const handleCoverUpdate = useCallback(
       (newCoverAttachmentId) => {
         onUpdate({
@@ -147,6 +173,22 @@ const CardModal = React.memo(
         isSubscribed: !isSubscribed,
       });
     }, [isSubscribed, onUpdate]);
+
+    const handleDescriptionOpen = useCallback(() => {
+      if (descriptionRef.current && !descriptionRef.current.isOpened) {
+        descriptionRef.current.open();
+      }
+    }, []);
+
+    const handleTaskAddOpen = useCallback(() => {
+      if (tasksRef.current) {
+        tasksRef.current.open();
+      }
+    }, []);
+
+    const handleNameEdit = useCallback(() => {
+      nameField.current.open();
+    }, []);
 
     const handleGalleryOpen = useCallback(() => {
       isGalleryOpened.current = true;
@@ -164,331 +206,336 @@ const CardModal = React.memo(
       onClose();
     }, [onClose]);
 
-    const handleListFieldClick = useCallback(() => {
+    const handleDropdownClick = useCallback(() => {
       if (canEdit) {
-        listField.current.open();
+        dropdown.current.open();
       }
     }, [canEdit]);
+
+    useEffect(() => {
+      if (descriptionRef.current) {
+        descriptionRef.current.close();
+      }
+    }, [id]);
+
+    useEffect(() => {
+      setLocalChangesLoaded(false);
+      if (descriptionRef.current && getLocalDescription()) {
+        setLocalChangesLoaded(true);
+        descriptionRef.current.open();
+      }
+    }, [getLocalDescription, id]);
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
 
-    const contentNode = (
-      <Grid className={styles.grid}>
-        <Grid.Row className={styles.headerPadding}>
-          <Grid.Column width={16} className={styles.headerPadding}>
-            <div className={styles.headerWrapper}>
-              <div className={styles.headerTitleWrapper}>{canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} /> : <div className={styles.headerTitle}>{name}</div>}</div>
-              <div className={styles.headerListFieldWrapper}>
-                <ListField
-                  ref={listField}
-                  projectsToLists={allProjectsToLists}
-                  defaultPath={{
-                    projectId,
-                    boardId,
-                    listId,
-                  }}
-                  onMove={onMove}
-                  onTransfer={onTransfer}
-                  onBoardFetch={onBoardFetch}
-                >
-                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                  <div className={classNames(styles.headerListField, canEdit && gStyles.cursorPointer)} onClick={handleListFieldClick}>
-                    <Icon fitted name="triangle down" /> {selectedList.name}
-                  </div>
-                </ListField>
-              </div>
+    // TODO remove after testing
+    // eslint-disable-next-line no-param-reassign
+    // canEdit = false;
+
+    const headerNode = (
+      <div className={styles.header}>
+        {canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameField} /> : <div className={styles.headerTitle}>{name}</div>}
+
+        <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
+          <Icon fitted name="close" />
+        </Button>
+        {canEdit && (
+          <ActionsPopup
+            card={{
+              dueDate,
+              timer,
+              boardId,
+              listId,
+              projectId,
+            }}
+            projectsToLists={allProjectsToLists}
+            boardMemberships={allBoardMemberships}
+            currentUserIds={users.map((user) => user.id)}
+            labels={allLabels}
+            currentLabelIds={labels.map((label) => label.id)}
+            onNameEdit={handleNameEdit}
+            onUpdate={onUpdate}
+            onMove={onMove}
+            onTransfer={onTransfer}
+            onDelete={onDelete}
+            onUserAdd={onUserAdd}
+            onUserRemove={onUserRemove}
+            onBoardFetch={onBoardFetch}
+            onLabelAdd={onLabelAdd}
+            onLabelRemove={onLabelRemove}
+            onLabelCreate={onLabelCreate}
+            onLabelUpdate={onLabelUpdate}
+            onLabelMove={onLabelMove}
+            onLabelDelete={onLabelDelete}
+          >
+            <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
+              <Icon fitted name="ellipsis vertical" />
+            </Button>
+          </ActionsPopup>
+        )}
+        {canEdit && (
+          <DeletePopup
+            title={t('common.deleteCard', {
+              context: 'title',
+            })}
+            content={t('common.areYouSureYouWantToDeleteThisCard')}
+            buttonContent={t('action.deleteCard')}
+            onConfirm={onDelete}
+          >
+            <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
+              <Icon fitted name="trash" />
+            </Button>
+          </DeletePopup>
+        )}
+        <div className={styles.headerListFieldWrapper}>
+          <Dropdown
+            ref={dropdown}
+            options={selectedBoard.lists.map((list) => ({
+              name: list.name,
+              id: list.id,
+            }))}
+            placeholder={selectedList.name}
+            defaultItem={selectedList}
+            isSearchable
+            onChange={onMove}
+            submitOnBlur
+          >
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+            <div className={classNames(canEdit && gStyles.cursorPointer)} onClick={handleDropdownClick}>
+              <div className={classNames(styles.headerListField)}>{selectedList.name}</div>
+              <Icon fitted name="triangle down" className={classNames(styles.headerListFieldIcon, gStyles.iconButtonSolid)} />
             </div>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row className={styles.modalPadding}>
-          <Grid.Column width={canEdit ? 12 : 16} className={styles.contentPadding}>
-            {(users.length > 0 || labels.length > 0 || dueDate || timer) && (
-              <div className={styles.moduleWrapper}>
-                {users.length > 0 && (
-                  <div className={styles.attachments}>
-                    <div className={styles.text}>
-                      {t('common.members', {
-                        context: 'title',
-                      })}
-                    </div>
-                    {users.map((user) => (
-                      <span key={user.id} className={styles.attachment}>
-                        {canEdit ? (
-                          <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
-                            <User name={user.name} avatarUrl={user.avatarUrl} />
-                          </BoardMembershipsPopup>
-                        ) : (
-                          <User name={user.name} avatarUrl={user.avatarUrl} />
-                        )}
-                      </span>
-                    ))}
-                    {canEdit && (
-                      <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
-                        <button type="button" className={classNames(styles.attachment, styles.dueDate)}>
-                          <Icon name="add" size="small" className={styles.addAttachment} />
-                        </button>
-                      </BoardMembershipsPopup>
-                    )}
-                  </div>
-                )}
-                {labels.length > 0 && (
-                  <div className={styles.attachments}>
-                    <div className={styles.text}>
-                      {t('common.labels', {
-                        context: 'title',
-                      })}
-                    </div>
-                    {labels.map((label) => (
-                      <span key={label.id} className={styles.attachment}>
-                        {canEdit ? (
-                          <LabelsPopup
-                            key={label.id}
-                            items={allLabels}
-                            currentIds={labelIds}
-                            onSelect={onLabelAdd}
-                            onDeselect={onLabelRemove}
-                            onCreate={onLabelCreate}
-                            onUpdate={onLabelUpdate}
-                            onMove={onLabelMove}
-                            onDelete={onLabelDelete}
-                          >
-                            <Label name={label.name} color={label.color} />
-                          </LabelsPopup>
-                        ) : (
-                          <Label name={label.name} color={label.color} />
-                        )}
-                      </span>
-                    ))}
-                    {canEdit && (
-                      <LabelsPopup
-                        items={allLabels}
-                        currentIds={labelIds}
-                        onSelect={onLabelAdd}
-                        onDeselect={onLabelRemove}
-                        onCreate={onLabelCreate}
-                        onUpdate={onLabelUpdate}
-                        onMove={onLabelMove}
-                        onDelete={onLabelDelete}
-                      >
-                        <button type="button" className={classNames(styles.attachment, styles.dueDate)}>
-                          <Icon name="add" size="small" className={styles.addAttachment} />
-                        </button>
-                      </LabelsPopup>
-                    )}
-                  </div>
-                )}
-                {dueDate && (
-                  <div className={styles.attachments}>
-                    <div className={styles.text}>
-                      {t('common.dueDate', {
-                        context: 'title',
-                      })}
-                    </div>
-                    <span className={styles.attachment}>
-                      {canEdit ? (
-                        <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-                          <DueDate value={dueDate} />
-                        </DueDateEditPopup>
-                      ) : (
-                        <DueDate value={dueDate} />
-                      )}
-                    </span>
-                  </div>
-                )}
-                {timer && (
-                  <div className={styles.attachments}>
-                    <div className={styles.text}>
-                      {t('common.timer', {
-                        context: 'title',
-                      })}
-                    </div>
-                    <span className={styles.attachment}>
-                      {canEdit ? (
-                        <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
-                          <Timer startedAt={timer.startedAt} total={timer.total} />
-                        </TimerEditPopup>
-                      ) : (
-                        <Timer startedAt={timer.startedAt} total={timer.total} />
-                      )}
-                    </span>
-                    {canEdit && (
-                      <button onClick={handleToggleTimerClick} type="button" className={classNames(styles.attachment, styles.dueDate)}>
-                        <Icon name={timer.startedAt ? 'pause' : 'play'} size="small" className={styles.addAttachment} />
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-            {(description || canEdit) && (
-              <div className={styles.contentModule}>
-                <div className={styles.moduleWrapper}>
-                  <Icon name="align justify" className={styles.moduleIcon} />
-                  <div className={styles.moduleHeader}>{t('common.description')}</div>
-                  {canEdit ? (
-                    <DescriptionEdit defaultValue={description} onUpdate={handleDescriptionUpdate}>
-                      {description ? (
-                        <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
-                          <Markdown linkStopPropagation linkTarget="_blank">
-                            {description}
-                          </Markdown>
-                        </button>
-                      ) : (
-                        <button type="button" className={styles.descriptionButton}>
-                          <span className={styles.descriptionButtonText}>{t('action.addMoreDetailedDescription')}</span>
-                        </button>
-                      )}
-                    </DescriptionEdit>
-                  ) : (
-                    <div className={styles.descriptionText}>
-                      <Markdown linkStopPropagation linkTarget="_blank">
-                        {description}
-                      </Markdown>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-            {(tasks.length > 0 || canEdit) && (
-              <div className={styles.contentModule}>
-                <div className={styles.moduleWrapper}>
-                  <Icon name="check square outline" className={styles.moduleIcon} />
-                  <div className={styles.moduleHeader}>{t('common.tasks')}</div>
-                  <Tasks items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
-                </div>
-              </div>
-            )}
-            {attachments.length > 0 && (
-              <div className={styles.contentModule}>
-                <div className={styles.moduleWrapper}>
-                  <Icon name="attach" className={styles.moduleIcon} />
-                  <div className={styles.moduleHeader}>{t('common.attachments')}</div>
-                  <Attachments
-                    items={attachments}
-                    canEdit={canEdit}
-                    onUpdate={onAttachmentUpdate}
-                    onDelete={onAttachmentDelete}
-                    onCoverUpdate={handleCoverUpdate}
-                    onGalleryOpen={handleGalleryOpen}
-                    onGalleryClose={handleGalleryClose}
-                  />
-                </div>
-              </div>
-            )}
-            <Activities
-              items={activities}
-              isFetching={isActivitiesFetching}
-              isAllFetched={isAllActivitiesFetched}
-              isDetailsVisible={isActivitiesDetailsVisible}
-              isDetailsFetching={isActivitiesDetailsFetching}
-              canEdit={canEditCommentActivities}
-              canEditAllComments={canEditAllCommentActivities}
-              onFetch={onActivitiesFetch}
-              onDetailsToggle={onActivitiesDetailsToggle}
-              onCommentCreate={onCommentActivityCreate}
-              onCommentUpdate={onCommentActivityUpdate}
-              onCommentDelete={onCommentActivityDelete}
-            />
-          </Grid.Column>
-          {canEdit && (
-            <Grid.Column width={4} className={styles.sidebarPadding}>
-              <div className={styles.actions}>
-                <span className={styles.actionsTitle}>{t('action.addToCard')}</span>
-                <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
-                  <Button fluid className={styles.actionButton}>
-                    <Icon name="user outline" className={styles.actionIcon} />
-                    {t('common.members')}
-                  </Button>
-                </BoardMembershipsPopup>
-                <LabelsPopup
-                  items={allLabels}
-                  currentIds={labelIds}
-                  onSelect={onLabelAdd}
-                  onDeselect={onLabelRemove}
-                  onCreate={onLabelCreate}
-                  onUpdate={onLabelUpdate}
-                  onMove={onLabelMove}
-                  onDelete={onLabelDelete}
-                >
-                  <Button fluid className={styles.actionButton}>
-                    <Icon name="bookmark outline" className={styles.actionIcon} />
-                    {t('common.labels')}
-                  </Button>
-                </LabelsPopup>
-                <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-                  <Button fluid className={styles.actionButton}>
-                    <Icon name="calendar check outline" className={styles.actionIcon} />
-                    {t('common.dueDate', {
-                      context: 'title',
-                    })}
-                  </Button>
-                </DueDateEditPopup>
-                <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
-                  <Button fluid className={styles.actionButton}>
-                    <Icon name="clock outline" className={styles.actionIcon} />
-                    {t('common.timer')}
-                  </Button>
-                </TimerEditPopup>
-                <AttachmentAddPopup onCreate={onAttachmentCreate}>
-                  <Button fluid className={styles.actionButton}>
-                    <Icon name="attach" className={styles.actionIcon} />
-                    {t('common.attachment')}
-                  </Button>
-                </AttachmentAddPopup>
-              </div>
-              <div className={styles.actions}>
-                <span className={styles.actionsTitle}>{t('common.actions')}</span>
-                <Button fluid className={styles.actionButton} onClick={handleToggleSubscriptionClick}>
-                  <Icon name="paper plane outline" className={styles.actionIcon} />
-                  {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
-                </Button>
-                <CardMovePopup
-                  projectsToLists={allProjectsToLists}
-                  defaultPath={{
-                    projectId,
-                    boardId,
-                    listId,
-                  }}
-                  onMove={onMove}
-                  onTransfer={onTransfer}
-                  onBoardFetch={onBoardFetch}
-                >
-                  <Button fluid className={styles.actionButton} onClick={handleToggleSubscriptionClick}>
-                    <Icon name="share square outline" className={styles.actionIcon} />
-                    {t('action.move')}
-                  </Button>
-                </CardMovePopup>
-                <DeletePopup
-                  title={t('common.deleteCard', {
-                    context: 'title',
-                  })}
-                  content={t('common.areYouSureYouWantToDeleteThisCard')}
-                  buttonContent={t('action.deleteCard')}
-                  onConfirm={onDelete}
-                >
-                  <Button fluid className={styles.actionButton}>
-                    <Icon name="trash alternate outline" className={styles.actionIcon} />
-                    {t('action.delete')}
-                  </Button>
-                </DeletePopup>
-              </div>
-            </Grid.Column>
-          )}
-        </Grid.Row>
-      </Grid>
+          </Dropdown>
+        </div>
+      </div>
     );
 
-    return (
-      <Modal open closeIcon centered={false} onClose={handleClose} className={styles.wrapper}>
-        {canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}
-      </Modal>
+    const labelsNode = (
+      <div className={styles.attachments}>
+        <div className={styles.text}>
+          {t('common.labels', {
+            context: 'title',
+          })}
+          {canEdit && (
+            <LabelsPopup
+              items={allLabels}
+              currentIds={labelIds}
+              onSelect={onLabelAdd}
+              onDeselect={onLabelRemove}
+              onCreate={onLabelCreate}
+              onUpdate={onLabelUpdate}
+              onMove={onLabelMove}
+              onDelete={onLabelDelete}
+            >
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name="add" />
+              </Button>
+            </LabelsPopup>
+          )}
+        </div>
+        {labels.map((label) => (
+          <span key={label.id} className={styles.attachment}>
+            <Label name={label.name} color={label.color} variant="cardModal" />
+          </span>
+        ))}
+      </div>
     );
+
+    const membersNode = (
+      <div className={styles.attachments}>
+        <div className={styles.text}>
+          {t('common.members', {
+            context: 'title',
+          })}
+          {canEdit && (
+            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name="add" />
+              </Button>
+            </BoardMembershipsPopup>
+          )}
+        </div>
+        {users.map((user) => (
+          <span key={user.id} className={styles.attachment}>
+            <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
+          </span>
+        ))}
+      </div>
+    );
+
+    const dueDateNode = (
+      <div className={styles.attachments}>
+        <div className={styles.text}>
+          {t('common.dueDate', {
+            context: 'title',
+          })}
+          {canEdit && (
+            <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name={dueDate ? 'pencil' : 'add'} />
+              </Button>
+            </DueDateEditPopup>
+          )}
+        </div>
+        <span className={styles.attachment}>
+          {canEdit ? (
+            <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
+              <DueDate value={dueDate} />
+            </DueDateEditPopup>
+          ) : (
+            <DueDate value={dueDate} />
+          )}
+        </span>
+      </div>
+    );
+
+    const timerNode = (
+      <div className={styles.attachments}>
+        <div className={styles.text}>
+          {t('common.timer', {
+            context: 'title',
+          })}
+          {canEdit && (
+            <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name="pencil" />
+              </Button>
+            </TimerEditPopup>
+          )}
+        </div>
+        <span className={styles.attachment}>
+          <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} variant="cardModal" onClick={canEdit ? handleToggleTimerClick : undefined} />
+        </span>
+      </div>
+    );
+
+    const subscribeNode = (
+      <div className={styles.attachments}>
+        <div className={styles.text}>{t('common.notifications')}</div>
+        <span className={styles.attachment}>
+          <Button onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
+            {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
+          </Button>
+        </span>
+      </div>
+    );
+
+    const descriptionNode = (description || canEdit) && (
+      <div className={styles.contentModule}>
+        <Icon name="bars" className={styles.moduleIcon} />
+        <div className={styles.moduleHeader}>
+          {t('common.description')}
+          {canEdit && (
+            <Button onClick={handleDescriptionOpen} className={gStyles.iconButtonSolid}>
+              <Icon fitted size="small" name={description ? 'pencil' : 'add'} />
+            </Button>
+          )}
+          {canEdit && localChangesLoaded && <span className={styles.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
+        </div>
+        <div className={styles.moduleBody}>
+          {canEdit ? (
+            <DescriptionEdit ref={descriptionRef} defaultValue={description} onUpdate={handleDescriptionUpdate} cardId={id} onLocalDescriptionChange={handleLocalDescriptionChange}>
+              {description ? (
+                <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
+                  <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} />
+                </button>
+              ) : (
+                <button type="button" className={styles.descriptionButton}>
+                  <span className={styles.descriptionButtonText}>{t('action.addDescription')}</span>
+                </button>
+              )}
+            </DescriptionEdit>
+          ) : (
+            <div className={styles.descriptionText}>
+              <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+
+    const tasksNode = (tasks.length > 0 || canEdit) && (
+      <div className={styles.contentModule}>
+        <Icon name="check" className={styles.moduleIcon} />
+        <div className={styles.moduleHeader}>
+          {t('common.tasks')}
+          {canEdit && (
+            <Button onClick={handleTaskAddOpen} className={gStyles.iconButtonSolid}>
+              <Icon fitted size="small" name="add" />
+            </Button>
+          )}
+        </div>
+        <div className={styles.moduleBody}>
+          <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
+        </div>
+      </div>
+    );
+
+    const attachmentsNode = (
+      <div className={styles.contentModule}>
+        <Icon name="attach" className={styles.moduleIcon} />
+        <div className={styles.moduleHeader}>{t('common.attachments')}</div>
+        <div className={styles.moduleBody}>
+          <Attachments
+            items={attachments}
+            canEdit={canEdit}
+            onUpdate={onAttachmentUpdate}
+            onDelete={onAttachmentDelete}
+            onCoverUpdate={handleCoverUpdate}
+            onGalleryOpen={handleGalleryOpen}
+            onGalleryClose={handleGalleryClose}
+          />
+          <AttachmentAddPopup onCreate={onAttachmentCreate}>
+            <Button fluid className={styles.actionButton}>
+              {t('common.addAttachment', { context: 'title' })}
+            </Button>
+          </AttachmentAddPopup>
+        </div>
+      </div>
+    );
+
+    const activitiesNode = (
+      <Activities
+        items={activities}
+        isFetching={isActivitiesFetching}
+        isAllFetched={isAllActivitiesFetched}
+        isDetailsVisible={isActivitiesDetailsVisible}
+        isDetailsFetching={isActivitiesDetailsFetching}
+        canEdit={canEditCommentActivities}
+        canEditAllComments={canEditAllCommentActivities}
+        onFetch={onActivitiesFetch}
+        onDetailsToggle={onActivitiesDetailsToggle}
+        onCommentCreate={onCommentActivityCreate}
+        onCommentUpdate={onCommentActivityUpdate}
+        onCommentDelete={onCommentActivityDelete}
+      />
+    );
+
+    const contentNode = (
+      <div className={classNames(styles.mainContainer, gStyles.scrollableY)}>
+        {headerNode}
+        <div className={styles.moduleContainer}>
+          {labelsNode}
+          {membersNode}
+          {dueDateNode}
+          {timerNode}
+          {subscribeNode}
+        </div>
+        <div className={styles.moduleContainer}>{descriptionNode}</div>
+        <div className={styles.moduleContainer}>{tasksNode}</div>
+        <div className={styles.moduleContainer}>{attachmentsNode}</div>
+        <div className={styles.moduleContainer}>{activitiesNode}</div>
+      </div>
+    );
+
+    return <div className={styles.wrapper}>{canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}</div>;
   },
 );
 
 CardModal.propTypes = {
   name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   description: PropTypes.string,
   dueDate: PropTypes.instanceOf(Date),
   timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types

@@ -1,16 +1,19 @@
 :global(#app) {
   .field {
-    background: #bdbdbd;
-    border: 1px solid rgba(9, 30, 66, 0.08);
+    background: var(--backgroundColorTmpDarkerField2);
+    color: var(--textColor1);
     border-radius: 2px;
-    color: #17394d;
     display: block;
     line-height: 1.5;
     font-size: 14px;
     margin-bottom: 4px;
     overflow: hidden;
-    padding: 8px 12px;
+    padding: 8px 10px;
     resize: none;
+
+    &:focus {
+      border: 1px solid var(--borderOutline2);
+    }
   }
 
   .wrapper {

@@ -4,11 +4,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'd/M/yyyy',
+    date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMM d',
-    longDateTime: "MMMM d 'at' p",
   },
 
   translation: {
@@ -113,7 +111,6 @@ export default {
       organization: 'Organisation',
       phone: 'Telefon',
       preferences: 'Preferenser',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Tips: tryck på Ctrl-V (Cmd-V på Mac) för att lägga till en bilaga från urklipp',
       project: 'Projekt',
       projectNotFound_title: 'Projekt Ej Funnet',
       removeManager_title: 'Ta Bort Projektledare',
@@ -145,9 +142,8 @@ export default {
       addCard_title: 'Lägg Till Kort',
       addComment: 'Lägg till kommentar',
       addList: 'Lägg till lista',
-      addMoreDetailedDescription: 'Lägg till en mer detaljerad beskrivning',
+      addDescription: 'Lägg till en mer detaljerad beskrivning',
       addTask: 'Lägg till uppgift',
-      addToCard: 'Lägg till i kort',
       addUser: 'Lägg till användare',
       createBoard: 'Skapa tavla',
       createFile: 'Skapa fil',

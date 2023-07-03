@@ -1,10 +1,8 @@
 export default {
   format: {
-    date: 'M/d/yyyy',
+    date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMM d',
-    longDateTime: "MMMM d 'at' p",
   },
 
   translation: {
@@ -109,7 +107,6 @@ export default {
       organization: '组织机构',
       phone: '电话',
       preferences: '偏好',
-      pressPasteShortcutToAddAttachmentFromClipboard: '提示: 点击 Ctrl-V (Mac: Cmd-V) 从剪切板添加附件',
       project: '项目',
       projectNotFound_title: '项目未找到',
       removeManager_title: '删除管理员',
@@ -141,9 +138,8 @@ export default {
       addCard_title: '添加卡片',
       addComment: '添加评论',
       addList: '添加列表',
-      addMoreDetailedDescription: '添加更多详细描述',
+      addDescription: '添加更多详细描述',
       addTask: '添加任务',
-      addToCard: '添加擦篇',
       addUser: '添加用户',
       createBoard: '创建面板',
       createFile: '创建文件',

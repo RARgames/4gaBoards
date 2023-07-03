@@ -1,0 +1,64 @@
+:global(#app) {
+  .dropdownContainer {
+    position: relative;
+    text-align: left;
+    width: calc(100% - 50px);
+    z-index: 1;
+  }
+
+  .dropdownSearchInput {
+    width: 100%;
+    padding: 3px;
+    background: var(--backgroundColorTmpDarkerField);
+    color: var(--textColor1);
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid var(--borderOutline);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .dropdownIcon {
+    display: inline-block;
+    overflow: hidden;
+    position: absolute;
+    right: 0px;
+    top: 2px;
+    cursor: text;
+  }
+
+  .dropdownMenu {
+    position: absolute;
+    width: 100%;
+    max-height: calc(100vh/3);
+    background: var(--backgroundColorTmpDarkerField);
+    color: var(--textColor1);
+  }
+
+  .dropdownMenuWithChildren {
+    border: 1px solid var(--borderOutline);
+    border-radius: 3px;
+  }
+
+  .dropdownItem {
+    padding: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--backgroundColorTmpHighlighted);
+    }
+  }
+
+  .dropdownItemSelected {
+    background: var(--backgroundColorTmpHighlighted);
+  }
+
+  .dropdownItemDefault {
+    background: var(--backgroundColorTmpDarkerField2);
+    font-weight: 900;
+  }
+}

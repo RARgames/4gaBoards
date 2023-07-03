@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button, Icon } from 'semantic-ui-react';
@@ -30,6 +30,7 @@ const Card = React.memo(
     listId,
     projectId,
     isPersisted,
+    isOpen,
     notificationsTotal,
     users,
     labels,
@@ -53,6 +54,17 @@ const Card = React.memo(
     onLabelDelete,
   }) => {
     const nameEdit = useRef(null);
+    const cardRef = useRef(null);
+
+    const scrollCardIntoView = useCallback(() => {
+      if (cardRef.current) {
+        cardRef.current.scrollIntoView({
+          behavior: 'auto',
+          block: 'nearest',
+          inline: 'nearest',
+        });
+      }
+    }, []);
 
     const handleClick = useCallback(() => {
       if (document.activeElement) {
@@ -60,16 +72,23 @@ const Card = React.memo(
       }
     }, []);
 
-    const handleToggleTimerClick = useCallback(
-      (event) => {
-        event.preventDefault();
+    // TODO should be possible without 200ms timeout, but it's not due to other issues - somewhere else
+    // eslint-disable-next-line consistent-return
+    useEffect(() => {
+      if (isOpen) {
+        const timeout = setTimeout(() => {
+          scrollCardIntoView();
+        }, 200);
 
-        onUpdate({
-          timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
-        });
-      },
-      [timer, onUpdate],
-    );
+        return () => clearTimeout(timeout);
+      }
+    }, [isOpen, scrollCardIntoView]);
+
+    const handleToggleTimerClick = useCallback(() => {
+      onUpdate({
+        timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
+      });
+    }, [timer, onUpdate]);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -105,7 +124,7 @@ const Card = React.memo(
             <span className={styles.labels}>
               {labels.map((label) => (
                 <span key={label.id} className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Label name={label.name} color={label.color} size="tiny" />
+                  <Label name={label.name} color={label.color} variant="card" />
                 </span>
               ))}
             </span>
@@ -116,21 +135,21 @@ const Card = React.memo(
               {notificationsTotal > 0 && <span className={classNames(styles.attachment, styles.attachmentLeft, styles.notification)}>{notificationsTotal}</span>}
               {dueDate && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <DueDate value={dueDate} size="tiny" />
+                  <DueDate value={dueDate} variant="card" />
                 </span>
               )}
               {timer && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Timer as="span" startedAt={timer.startedAt} total={timer.total} size="tiny" onClick={canEdit ? handleToggleTimerClick : undefined} />
+                  <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
                 </span>
               )}
             </span>
           )}
           {users.length > 0 && (
-            <span className={classNames(styles.attachments, styles.attachmentsRight)}>
+            <span className={classNames(styles.attachments, styles.attachmentsRight, styles.users)}>
               {users.map((user) => (
-                <span key={user.id} className={classNames(styles.attachment, styles.attachmentRight)}>
-                  <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
+                <span key={user.id} className={classNames(styles.attachment, styles.attachmentRight, styles.user)}>
+                  <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
                 </span>
               ))}
             </span>
@@ -145,7 +164,7 @@ const Card = React.memo(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={styles.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
             <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div className={styles.card}>
+              <div ref={cardRef} className={classNames(styles.card, isOpen && styles.cardOpen)}>
                 {isPersisted ? (
                   <>
                     <Link to={Paths.CARDS.replace(':id', id)} className={styles.content} onClick={handleClick}>
@@ -209,6 +228,7 @@ Card.propTypes = {
   listId: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   isPersisted: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   notificationsTotal: PropTypes.number.isRequired,
   /* eslint-disable react/forbid-prop-types */
   users: PropTypes.array.isRequired,

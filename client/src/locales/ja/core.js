@@ -4,11 +4,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'yyyy/M/d',
+    date: 'd.MM.yyyy',
     time: 'HH:mm',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMMMd日',
-    longDateTime: "MMMMd'日 ' HH:MM",
   },
 
   translation: {
@@ -113,7 +111,6 @@ export default {
       organization: '組織',
       phone: '電話番号',
       preferences: '環境設定',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'ヒント: Ctrl-V(MacではCmd-V)を押して、クリップボードから添付ファイルを追加します',
       project: 'プロジェクト',
       projectNotFound_title: 'プロジェクトがありません',
       removeManager_title: 'マネージャーを削除',
@@ -145,9 +142,8 @@ export default {
       addCard_title: 'カードを追加',
       addComment: 'コメントを追加',
       addList: 'リストを追加',
-      addMoreDetailedDescription: 'より詳細な説明を追加',
+      addDescription: 'より詳細な説明を追加',
       addTask: 'タスクを追加',
-      addToCard: 'カードに追加',
       addUser: 'ユーザーを追加',
       createBoard: 'ボードを作成',
       createFile: 'ファイルを作成',

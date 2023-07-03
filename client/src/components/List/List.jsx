@@ -193,7 +193,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               </NameEdit>
               {isPersisted && canEdit && (
                 <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete}>
-                  <Button className={classNames(styles.headerButton, gStyles.iconButton, styles.target)}>
+                  <Button className={classNames(styles.headerButton, gStyles.iconButton)}>
                     <Icon fitted name="ellipsis vertical" size="small" />
                   </Button>
                 </ActionsPopup>
@@ -201,7 +201,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>
             </div>
             {/* eslint-disable-next-line prettier/prettier */}
-            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(styles.cardsInnerWrapper, gStyles.scrollable)}>
+            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(styles.cardsInnerWrapper, gStyles.scrollableY, listOuterWrapperScrollable && styles.cardsInnerWrapperScrollable)}>
               <div className={classNames(styles.cardsOuterWrapper, listOuterWrapperScrollable && styles.cardsOuterWrapperScrollable)}>{cardsNode}</div>
             </div>
             {addCardNode}

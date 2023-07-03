@@ -6,11 +6,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'yyyy/M/d',
+    date: 'd.MM.yyyy',
     time: 'HH:mm',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMMMd일',
-    longDateTime: "MMMMd'일 ' HH:MM",
   },
 
   translation: {
@@ -118,7 +116,6 @@ export default {
       organization: '조직',
       phone: '전화번호',
       preferences: '환경설정',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: 클립보드에서 첨부 파일을 추가하려면 Ctrl-V(Mac의 경우 Cmd-V) 입니다..',
       project: '프로젝트',
       projectNotFound_title: '프로젝트가 존재하지 않습니다.',
       removeManager_title: '관리자 삭제',
@@ -151,9 +148,8 @@ export default {
       addCard_title: '항목카드 추가',
       addComment: '댓글 추가',
       addList: '리스트 추가',
-      addMoreDetailedDescription: '자세한 설명 추가',
+      addDescription: '자세한 설명 추가',
       addTask: '태스트 추가',
-      addToCard: '항목카드 추가',
       addUser: '사용자 추가',
       createBoard: '보드 생성',
       createFile: '파일 생성',

@@ -9,25 +9,16 @@ import LabelColors from '../../constants/LabelColors';
 import styles from './Label.module.scss';
 import globalStyles from '../../styles.module.scss';
 
-const SIZES = {
-  TINY: 'tiny',
-  SMALL: 'small',
-  MEDIUM: 'medium',
+const VARIANTS = {
+  CARD: 'card',
+  CARDMODAL: 'cardModal',
+  LABELS: 'labels',
 };
 
-const Label = React.memo(({ name, color, size, isDisabled, onClick }) => {
+const Label = React.memo(({ name, color, variant, isDisabled, onClick }) => {
   const contentNode = (
-    <div
-      title={name}
-      className={classNames(
-        styles.wrapper,
-        !name && styles.wrapperNameless,
-        styles[`wrapper${upperFirst(size)}`],
-        onClick && styles.wrapperHoverable,
-        globalStyles[`background${upperFirst(camelCase(color))}`],
-      )}
-    >
-      {name || '\u00A0'}
+    <div title={name} className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], onClick && styles.wrapperHoverable, globalStyles[`background${upperFirst(camelCase(color))}`])}>
+      {name}
     </div>
   );
 
@@ -41,16 +32,15 @@ const Label = React.memo(({ name, color, size, isDisabled, onClick }) => {
 });
 
 Label.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   color: PropTypes.oneOf(LabelColors).isRequired,
-  size: PropTypes.oneOf(Object.values(SIZES)),
+  variant: PropTypes.oneOf(Object.values(VARIANTS)),
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
 Label.defaultProps = {
-  name: undefined,
-  size: SIZES.MEDIUM,
+  variant: VARIANTS.CARDMODAL,
   isDisabled: false,
   onClick: undefined,
 };

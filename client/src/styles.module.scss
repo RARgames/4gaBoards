@@ -2,6 +2,39 @@
   #app {
     background: #22252a;
 
+    // TODO quick fix - change react md editor style
+    .w-md-editor {
+      padding-bottom: 0;
+    }
+
+    .w-md-editor-toolbar {
+      background-color: var(--backgroundColorTmpDarkerField);
+    }
+
+    .w-md-editor-area {
+      scrollbar-width: thin;
+      background-color: var(--backgroundColorTmpDarkerField2);
+      border-radius: 2px;
+    }
+
+    .w-md-editor-preview {
+      scrollbar-width: thin;
+      background-color: var(--backgroundColorTmpDarkerField2);
+
+      .wmde-markdown {
+        padding: 0;
+        border-radius: 0;
+      }
+    }
+
+    .wmde-markdown {
+      padding: 2px;
+      border-radius: 2px;
+      background-color: var(--backgroundColorTmpDarkerField2);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+    }
+
     .react-datepicker {
       border: 0;
       color: #444444;

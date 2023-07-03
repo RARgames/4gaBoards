@@ -100,7 +100,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
         value={value}
         spellCheck
         maxRows={2}
-        className={classNames(styles.field, gStyles.scrollable)}
+        className={classNames(styles.field, gStyles.scrollableY)}
         onClick={handleFieldClick}
         onKeyDown={handleFieldKeyDown}
         onChange={handleFieldChange}

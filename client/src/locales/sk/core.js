@@ -4,11 +4,9 @@ export default {
   dateFns,
 
   format: {
-    date: 'd.M.yyyy',
+    date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'd MMM',
-    longDateTime: "d MMMM 'v' p",
   },
 
   translation: {
@@ -114,7 +112,6 @@ export default {
       organization: 'Spoločnosť',
       phone: 'Telefón',
       preferences: 'Voľby',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Tip: stlačte Ctrl-V (Cmd-V na Mac) pre vloženie prílohy zo schránky',
       project: 'Projekt',
       projectNotFound_title: 'Projekt neexistuje',
       removeManager_title: 'Odstrániť správcu',
@@ -146,9 +143,8 @@ export default {
       addCard_title: 'Pridať kartu',
       addComment: 'Pridať komentár',
       addList: 'Pridať zoznam',
-      addMoreDetailedDescription: 'Pridať ďalší detailný popis',
+      addDescription: 'Pridať ďalší detailný popis',
       addTask: 'Pridať úlohu',
-      addToCard: 'Pridať na kartu',
       addUser: 'Pridať používateľa',
       createBoard: 'Vytvoriť tabuľu',
       createFile: 'Vytvoriť súbor',

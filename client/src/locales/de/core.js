@@ -7,8 +7,6 @@ export default {
     date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'd. MMM',
-    longDateTime: "d. MMMM 'um' p",
   },
 
   translation: {
@@ -115,7 +113,6 @@ export default {
       organization: 'Organisation',
       phone: 'Telefon',
       preferences: 'Voreinstellungen',
-      pressPasteShortcutToAddAttachmentFromClipboard: 'Tipp: Drücken Sie STRG-V (Cmd-V auf Mac), um einen Anhang aus der Zwischenablage hinzuzufügen',
       project: 'Projekt',
       projectNotFound_title: 'Projekt nicht gefunden',
       removeManager_title: 'Manager entfernen',
@@ -148,9 +145,8 @@ export default {
       addCard_title: 'Karte hinzufügen',
       addComment: 'Kommentar hinzufügen',
       addList: 'Liste hinzufügen',
-      addMoreDetailedDescription: 'Eine detaillierte Beschreibung hinzufügen',
+      addDescription: 'Eine detaillierte Beschreibung hinzufügen',
       addTask: 'Aufgabe hinzufügen',
-      addToCard: 'Zu Karte hinzufügen',
       addUser: 'Benutzer hinzufügen',
       createBoard: 'Board erstellen',
       createFile: 'Datei erstellen',

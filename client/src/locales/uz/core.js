@@ -1,10 +1,8 @@
 export default {
   format: {
-    date: 'M/d/yyyy',
+    date: 'd.MM.yyyy',
     time: 'p',
     dateTime: '$t(format:date) $t(format:time)',
-    longDate: 'MMM d',
-    longDateTime: "MMMM d 'at' p",
   },
 
   translation: {
@@ -109,7 +107,6 @@ export default {
       organization: 'Tashkilot',
       phone: 'Telefon',
       preferences: 'Afzalliklar',
-      pressPasteShortcutToAddAttachmentFromClipboard: "Tip: Buferdan ilova qo'shish uchun Ctrl-V (Mac da Cmd-V) ni bosing",
       project: 'Loyiha',
       projectNotFound_title: 'Loyiha Topilmadi',
       removeManager_title: "Boshqaruvchini O'chirish",
@@ -141,9 +138,8 @@ export default {
       addCard_title: "Karta Qo'shish",
       addComment: "Izoh qo'shish",
       addList: "Ro'yxat qo'shish",
-      addMoreDetailedDescription: "Batafsil izoh qo'shish",
+      addDescription: "Batafsil izoh qo'shish",
       addTask: "Vazifa qo'shish",
-      addToCard: "Kartaga qo'shish",
       addUser: "Foydalanuvchi qo'shish",
       createBoard: 'Doska yaratish',
       createFile: 'Fayl yaratish',
