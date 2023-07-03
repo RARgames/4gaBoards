@@ -1,6 +1,7 @@
 :global(#app) {
   .button {
     background: transparent;
+    color: var(--textColor1);
     box-shadow: none;
     line-height: 28px;
     margin: 0;
@@ -13,7 +14,7 @@
     width: 28px;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
+      color: var(--textColor2);
     }
   }
 
@@ -48,7 +49,7 @@
   }
 
   .name {
-    color: #17394d;
+    color: var(--textColor1);
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;
@@ -64,7 +65,7 @@
     padding: 0;
 
     &:hover {
-      color: #172b4d;
+      color: #6b808cce;
     }
   }
 

@@ -10,7 +10,7 @@ export default {
       about: 'About 4ga Boards',
       account: 'Account',
       actions: 'Actions',
-      addAttachment_title: 'Add Attachment',
+      addAttachment_title: 'Add attachment',
       addComment: 'Add comment',
       addManager_title: 'Add Manager',
       addMember_title: 'Add Member',

@@ -487,8 +487,7 @@ const CardModal = React.memo(
           />
           <AttachmentAddPopup onCreate={onAttachmentCreate}>
             <Button fluid className={styles.actionButton}>
-              <Icon name="attach" className={styles.actionIcon} />
-              {t('common.attachment')}
+              {t('common.addAttachment', { context: 'title' })}
             </Button>
           </AttachmentAddPopup>
         </div>
@@ -525,8 +524,8 @@ const CardModal = React.memo(
         </div>
         <div className={styles.moduleContainer}>{descriptionNode}</div>
         <div className={styles.moduleContainer}>{tasksNode}</div>
-        {/* <div className={styles.moduleContainer}>{attachmentsNode}</div>
-        <div className={styles.moduleContainer}>{activitiesNode}</div> */}
+        <div className={styles.moduleContainer}>{attachmentsNode}</div>
+        {/* <div className={styles.moduleContainer}>{activitiesNode}</div> */}
       </div>
     );
 

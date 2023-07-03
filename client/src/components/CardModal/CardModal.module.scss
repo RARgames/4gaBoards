@@ -1,27 +1,19 @@
 :global(#app) {
   .actionButton {
-    background: #ebeef0;
+    background: var(--backgroundColorTmpDarkerField2);
+    color: var(--textColor1);
     box-shadow: 0 1px 0 0 rgba(9, 30, 66, 0.13);
-    color: #444;
     margin-top: 8px;
     overflow: hidden;
-    padding: 6px 8px 6px 18px;
+    padding: 8px;
     text-align: left;
     text-overflow: ellipsis;
     transition: background 85ms ease;
     white-space: nowrap;
 
     &:hover {
-      background: #dfe3e6;
-      box-shadow: 0 1px 0 0 rgba(9, 30, 66, 0.25);
-      color: #4c4c4c;
+      color: var(--textColor2);
     }
-  }
-
-  .actionIcon {
-    color: #17394d;
-    display: inline;
-    margin-right: 8px;
   }
 
   .actions {
@@ -203,9 +195,9 @@
     display: block;
     color: var(--textColor1);
     cursor: pointer;
-    min-height: 40px;
+    min-height: 36px;
     outline: none;
-    padding: 8px 12px;
+    padding: 8px 10px;
     position: relative;
     text-align: left;
     text-decoration: none;
@@ -218,7 +210,7 @@
 
   .descriptionButtonText {
     position: absolute;
-    top: 12px;
+    top: 10px;
   }
 
   .descriptionText {
