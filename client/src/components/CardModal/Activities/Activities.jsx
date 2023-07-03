@@ -8,6 +8,7 @@ import CommentAdd from './CommentAdd';
 import Item from './Item';
 
 import styles from './Activities.module.scss';
+import cStyles from '../CardModal.module.scss';
 
 const Activities = React.memo(
   ({ items, isFetching, isAllFetched, isDetailsVisible, isDetailsFetching, canEdit, canEditAllComments, onFetch, onDetailsToggle, onCommentCreate, onCommentUpdate, onCommentDelete }) => {
@@ -31,37 +32,35 @@ const Activities = React.memo(
       [onCommentDelete],
     );
 
+    // TODO fix activities not in order - by date
+
     return (
-      <div className={styles.contentModule}>
-        <div className={styles.moduleWrapper}>
-          <Icon name="list ul" className={styles.moduleIcon} />
-          <div className={styles.moduleHeader}>
-            {t('common.actions')}
-            <Button content={isDetailsVisible ? t('action.hideDetails') : t('action.showDetails')} className={styles.toggleButton} onClick={handleToggleDetailsClick} />
-          </div>
-          {canEdit && <CommentAdd onCreate={onCommentCreate} />}
-          <div className={styles.wrapper}>
-            <Comment.Group>
-              {items.map((item) =>
-                item.type === ActivityTypes.COMMENT_CARD ? (
-                  <Item.Comment
-                    key={item.id}
-                    data={item.data}
-                    createdAt={item.createdAt}
-                    isPersisted={item.isPersisted}
-                    user={item.user}
-                    canEdit={(item.user.isCurrent && canEdit) || canEditAllComments}
-                    onUpdate={(data) => handleCommentUpdate(item.id, data)}
-                    onDelete={() => handleCommentDelete(item.id)}
-                  />
-                ) : (
-                  <Item key={item.id} type={item.type} data={item.data} createdAt={item.createdAt} user={item.user} />
-                ),
-              )}
-            </Comment.Group>
-          </div>
-          {isFetching || isDetailsFetching ? <Loader active inverted inline="centered" size="small" className={styles.loader} /> : !isAllFetched && <Visibility fireOnMount onOnScreen={onFetch} />}
+      <div className={cStyles.contentModule}>
+        <Icon name="comments" className={cStyles.moduleIcon} />
+        <div className={cStyles.moduleHeader}>{t('common.actions')}</div>
+        <Button content={isDetailsVisible ? t('action.hideDetails') : t('action.showDetails')} className={styles.toggleButton} onClick={handleToggleDetailsClick} />
+        {canEdit && <CommentAdd onCreate={onCommentCreate} />}
+        <div className={cStyles.moduleBody}>
+          <Comment.Group>
+            {items.map((item) =>
+              item.type === ActivityTypes.COMMENT_CARD ? (
+                <Item.Comment
+                  key={item.id}
+                  data={item.data}
+                  createdAt={item.createdAt}
+                  isPersisted={item.isPersisted}
+                  user={item.user}
+                  canEdit={(item.user.isCurrent && canEdit) || canEditAllComments}
+                  onUpdate={(data) => handleCommentUpdate(item.id, data)}
+                  onDelete={() => handleCommentDelete(item.id)}
+                />
+              ) : (
+                <Item key={item.id} type={item.type} data={item.data} createdAt={item.createdAt} user={item.user} />
+              ),
+            )}
+          </Comment.Group>
         </div>
+        {isFetching || isDetailsFetching ? <Loader active inverted inline="centered" size="small" className={styles.loader} /> : !isAllFetched && <Visibility fireOnMount onOnScreen={onFetch} />}
       </div>
     );
   },

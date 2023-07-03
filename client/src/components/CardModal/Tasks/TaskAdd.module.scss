@@ -2,7 +2,6 @@
   .field {
     background: var(--backgroundColorTmpDarkerField2);
     color: var(--textColor1);
-    border: 1px solid var(--borderOutlin2);
     border-radius: 2px;
     display: block;
     line-height: 1.5;
@@ -11,6 +10,10 @@
     overflow: hidden;
     padding: 8px 10px;
     resize: none;
+
+    &:focus {
+      border: 1px solid var(--borderOutline2);
+    }
   }
 
   .wrapper {

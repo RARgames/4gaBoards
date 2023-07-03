@@ -1,21 +1,23 @@
 :global(#app) {
   .author {
-    color: #17394d;
+    color: var(--textColor0);
     display: inline-block;
     font-weight: bold;
     line-height: 20px;
+    margin-right: 8px;
+    padding: 6px 0px 4px 0px;
   }
 
   .content {
     border-bottom: 1px solid #092d4221;
     display: inline-block;
-    padding-bottom: 14px;
+    padding-bottom: 4px;
     vertical-align: top;
-    width: calc(100% - 40px);
+    width: 100%;
   }
 
   .date {
-    color: #6b808c;
+    color: var(--textColor2);
     display: inline-block;
     font-size: 12px;
     line-height: 20px;
@@ -23,6 +25,11 @@
 
   .text {
     line-height: 20px;
+  }
+
+  .contentText {
+    background: var(--backgroundColorTmpDarkerField);
+    color: var(--textColor2);
   }
 
   .user {

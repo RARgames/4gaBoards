@@ -229,6 +229,7 @@ const CardModal = React.memo(
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
 
+    // TODO remove after testing
     // eslint-disable-next-line no-param-reassign
     // canEdit = false;
 
@@ -494,7 +495,6 @@ const CardModal = React.memo(
       </div>
     );
 
-    // TODO fix activities in other file (style and not in order)
     const activitiesNode = (
       <Activities
         items={activities}
@@ -525,7 +525,7 @@ const CardModal = React.memo(
         <div className={styles.moduleContainer}>{descriptionNode}</div>
         <div className={styles.moduleContainer}>{tasksNode}</div>
         <div className={styles.moduleContainer}>{attachmentsNode}</div>
-        {/* <div className={styles.moduleContainer}>{activitiesNode}</div> */}
+        <div className={styles.moduleContainer}>{activitiesNode}</div>
       </div>
     );
 

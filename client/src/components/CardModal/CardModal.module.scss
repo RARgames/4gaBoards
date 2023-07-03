@@ -10,6 +10,7 @@
     text-overflow: ellipsis;
     transition: background 85ms ease;
     white-space: nowrap;
+    font-weight: normal;
 
     &:hover {
       color: var(--textColor2);
@@ -69,11 +70,6 @@
 
   .modalPadding {
     padding: 0px;
-  }
-
-  .moduleWrapper {
-    margin: 0 0 0 40px;
-    position: relative;
   }
 
   .sidebarPadding {
