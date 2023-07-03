@@ -513,7 +513,7 @@ const CardModal = React.memo(
     );
 
     const contentNode = (
-      <div className={styles.mainContainer}>
+      <div className={classNames(styles.mainContainer, gStyles.scrollableY)}>
         {headerNode}
         <div className={styles.moduleContainer}>
           {labelsNode}

@@ -107,8 +107,10 @@
 
   .header {
     background: var(--backgroundColorTmpHeader);
-    position: relative;
-    padding: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 15px 15px 12px 15px;
   }
 
   .headerTitle {
