@@ -1,4 +1,4 @@
-import React, { useCallback, useImperativeHandle, useState, useRef } from 'react';
+import React, { useCallback, useImperativeHandle, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
@@ -6,6 +6,7 @@ import MDEditor, { commands } from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
 import { useLocalStorage } from '../../hooks';
 
+// eslint-disable-next-line no-unused-vars
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
@@ -117,7 +118,7 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
         />
       </svg>
     ),
-    execute: (state, api) => {
+    execute: () => {
       window.open('https://www.markdownguide.org/basic-syntax/', '_blank');
     },
   };
