@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Icon } from 'semantic-ui-react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
-import { FilePicker, Dropdown } from '../../lib/custom-ui';
+import { Dropdown } from '../../lib/custom-ui';
 
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
@@ -23,7 +23,6 @@ import BoardMembershipsPopup from '../BoardMembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
 import DueDateEditPopup from '../DueDateEditPopup';
 import TimerEditPopup from '../TimerEditPopup';
-import CardMovePopup from '../CardMovePopup';
 import DeletePopup from '../DeletePopup';
 import ActionsPopup from '../Card/ActionsPopup';
 import { useLocalStorage } from '../../hooks';
@@ -99,7 +98,7 @@ const CardModal = React.memo(
 
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
 
-    const [setLocalDescription, getLocalDescription] = useLocalStorage(`description-${id}`);
+    const [, getLocalDescription] = useLocalStorage(`description-${id}`);
 
     const handleNameUpdate = useCallback(
       (newName) => {
