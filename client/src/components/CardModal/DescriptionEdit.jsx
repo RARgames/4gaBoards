@@ -29,10 +29,12 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
       if (ctrlKey) {
         return;
       }
-      setIsOpened(true);
-      setValue(getLocalValue() || defaultValue || '');
+      if (!isOpened) {
+        setIsOpened(true);
+        setValue(getLocalValue() || defaultValue || '');
+      }
     },
-    [defaultValue, getLocalValue],
+    [defaultValue, getLocalValue, isOpened],
   );
 
   const close = useCallback(
@@ -50,9 +52,8 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
     () => ({
       open,
       close,
-      isOpened,
     }),
-    [open, close, isOpened],
+    [open, close],
   );
 
   const isChanged = useCallback(() => {

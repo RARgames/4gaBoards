@@ -174,7 +174,7 @@ const CardModal = React.memo(
     }, [isSubscribed, onUpdate]);
 
     const handleDescriptionOpen = useCallback(() => {
-      if (descriptionRef.current && !descriptionRef.current.isOpened) {
+      if (descriptionRef.current) {
         descriptionRef.current.open();
       }
     }, []);
@@ -437,7 +437,7 @@ const CardModal = React.memo(
             <DescriptionEdit ref={descriptionRef} defaultValue={description} onUpdate={handleDescriptionUpdate} cardId={id} onLocalDescriptionChange={handleLocalDescriptionChange}>
               {description ? (
                 <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
-                  <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} />
+                  <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} className={styles.markdownPreview} />
                 </button>
               ) : (
                 <button type="button" className={styles.descriptionButton}>
@@ -447,7 +447,7 @@ const CardModal = React.memo(
             </DescriptionEdit>
           ) : (
             <div className={styles.descriptionText}>
-              <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} />
+              <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} className={styles.markdownPreview} />
             </div>
           )}
         </div>
