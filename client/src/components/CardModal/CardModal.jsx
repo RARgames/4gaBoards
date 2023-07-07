@@ -88,17 +88,15 @@ const CardModal = React.memo(
     const isGalleryOpened = useRef(false);
     const nameField = useRef(null);
     const dropdown = useRef(null);
-    const descriptionRef = useRef(null);
     const tasksRef = useRef(null);
-    const [localChangesLoaded, setLocalChangesLoaded] = useState(false);
+    const descEditRef = useRef(null);
+    const [unsavedDesc, setUnsavedDesc] = useState(false);
+    const [, getLocalDesc] = useLocalStorage(`desc-${id}`);
+    const [isDescOpened, setIsDescOpened] = useState(false);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
-
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
-
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
-
-    const [, getLocalDescription] = useLocalStorage(`description-${id}`);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -118,11 +116,11 @@ const CardModal = React.memo(
       [onUpdate],
     );
 
-    const handleLocalDescriptionChange = useCallback((desc) => {
+    const handleLocalDescChange = useCallback((desc) => {
       if (desc) {
-        setLocalChangesLoaded(true);
+        setUnsavedDesc(true);
       } else {
-        setLocalChangesLoaded(false);
+        setUnsavedDesc(false);
       }
     }, []);
 
@@ -173,12 +171,6 @@ const CardModal = React.memo(
       });
     }, [isSubscribed, onUpdate]);
 
-    const handleDescriptionOpen = useCallback(() => {
-      if (descriptionRef.current) {
-        descriptionRef.current.open();
-      }
-    }, []);
-
     const handleTaskAddOpen = useCallback(() => {
       if (tasksRef.current) {
         tasksRef.current.open();
@@ -201,7 +193,6 @@ const CardModal = React.memo(
       if (isGalleryOpened.current) {
         return;
       }
-
       onClose();
     }, [onClose]);
 
@@ -211,19 +202,39 @@ const CardModal = React.memo(
       }
     }, [canEdit]);
 
-    useEffect(() => {
-      if (descriptionRef.current) {
-        descriptionRef.current.close();
+    const handleDescButtonClick = useCallback(() => {
+      if (!isDescOpened) {
+        setIsDescOpened(true);
+      } else if (descEditRef.current) {
+        descEditRef.current.focus();
       }
-    }, [id]);
+    }, [isDescOpened]);
 
-    useEffect(() => {
-      setLocalChangesLoaded(false);
-      if (descriptionRef.current && getLocalDescription()) {
-        setLocalChangesLoaded(true);
-        descriptionRef.current.open();
+    const handleDescClick = useCallback((e) => {
+      if (e.ctrlKey) {
+        return;
       }
-    }, [getLocalDescription, id]);
+      setIsDescOpened(true);
+    }, []);
+
+    const handleDescClose = useCallback(() => {
+      setIsDescOpened(false);
+    }, []);
+
+    // eslint-disable-next-line consistent-return
+    useEffect(() => {
+      // TODO here reset state of all inner components
+      setUnsavedDesc(false);
+      setIsDescOpened(false);
+      if (getLocalDesc()) {
+        setUnsavedDesc(true);
+        const timeout = setTimeout(() => {
+          setIsDescOpened(true);
+        }, 0);
+
+        return () => clearTimeout(timeout);
+      }
+    }, [getLocalDesc, id]);
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
@@ -420,31 +431,37 @@ const CardModal = React.memo(
       </div>
     );
 
+    const descriptionEditOpenNode = description ? (
+      <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)} onClick={handleDescClick}>
+        <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} className={styles.markdownPreview} />
+      </button>
+    ) : (
+      <button type="button" className={styles.descriptionButton} onClick={handleDescClick}>
+        <span className={styles.descriptionButtonText}>{t('action.addDescription')}</span>
+      </button>
+    );
+
+    const descriptionEditNode = isDescOpened ? (
+      <DescriptionEdit ref={descEditRef} defaultValue={description} onUpdate={handleDescriptionUpdate} cardId={id} onLocalDescChange={handleLocalDescChange} onClose={handleDescClose} />
+    ) : (
+      descriptionEditOpenNode
+    );
+
     const descriptionNode = (description || canEdit) && (
       <div className={styles.contentModule}>
         <Icon name="bars" className={styles.moduleIcon} />
         <div className={styles.moduleHeader}>
           {t('common.description')}
           {canEdit && (
-            <Button onClick={handleDescriptionOpen} className={gStyles.iconButtonSolid}>
+            <Button onClick={handleDescButtonClick} className={gStyles.iconButtonSolid}>
               <Icon fitted size="small" name={description ? 'pencil' : 'add'} />
             </Button>
           )}
-          {canEdit && localChangesLoaded && <span className={styles.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
+          {canEdit && unsavedDesc && <span className={styles.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
         </div>
         <div className={styles.moduleBody}>
           {canEdit ? (
-            <DescriptionEdit ref={descriptionRef} defaultValue={description} onUpdate={handleDescriptionUpdate} cardId={id} onLocalDescriptionChange={handleLocalDescriptionChange}>
-              {description ? (
-                <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)}>
-                  <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} className={styles.markdownPreview} />
-                </button>
-              ) : (
-                <button type="button" className={styles.descriptionButton}>
-                  <span className={styles.descriptionButtonText}>{t('action.addDescription')}</span>
-                </button>
-              )}
-            </DescriptionEdit>
+            descriptionEditNode
           ) : (
             <div className={styles.descriptionText}>
               <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} className={styles.markdownPreview} />

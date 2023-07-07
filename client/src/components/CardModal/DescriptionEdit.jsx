@@ -1,59 +1,67 @@
-import React, { useCallback, useImperativeHandle, useState } from 'react';
+import React, { useCallback, useImperativeHandle, useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
 import MDEditor, { commands } from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
+import { selectWord, getBreaksNeededForEmptyLineBefore, getBreaksNeededForEmptyLineAfter } from '@uiw/react-md-editor/lib/utils/markdownUtils';
 import { useLocalStorage } from '../../hooks';
 
 // eslint-disable-next-line no-unused-vars
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, cardId, onLocalDescriptionChange }, ref) => {
+const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();
-  const [isOpened, setIsOpened] = useState(false);
-  const [value, setValue] = useState(null);
-  const [setLocalValue, getLocalValue] = useLocalStorage(`description-${cardId}`);
+  const [value, setValue] = useState(undefined);
+  const textareaRef = useRef(null);
+  const [setLocalValue, getLocalValue] = useLocalStorage(`desc-${cardId}`);
 
   const setLocalDescription = useCallback(
     (desc) => {
       setLocalValue(desc);
-      onLocalDescriptionChange(desc);
+      onLocalDescChange(desc);
     },
-    [onLocalDescriptionChange, setLocalValue],
+    [onLocalDescChange, setLocalValue],
   );
 
-  const open = useCallback(
-    (ctrlKey = null) => {
-      if (ctrlKey) {
-        return;
-      }
-      if (!isOpened) {
-        setIsOpened(true);
-        setValue(getLocalValue() || defaultValue || '');
-      }
-    },
-    [defaultValue, getLocalValue, isOpened],
-  );
+  // eslint-disable-next-line consistent-return
+  const focus = useCallback(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    } else {
+      const timeout = setTimeout(() => {
+        textareaRef.current.focus();
+      }, 0);
+      return () => clearTimeout(timeout);
+    }
+  }, []);
+
+  const open = useCallback(() => {
+    setValue(getLocalValue() || defaultValue || '');
+    const timeout = setTimeout(() => {
+      focus();
+    }, 0);
+
+    return () => clearTimeout(timeout);
+  }, [defaultValue, focus, getLocalValue]);
 
   const close = useCallback(
-    (removeLocalStorage = false) => {
-      if (removeLocalStorage) {
+    (removeLocalDesc = false) => {
+      if (removeLocalDesc) {
         setLocalDescription(null);
+        onClose();
       }
-      setIsOpened(false);
     },
-    [setLocalDescription],
+    [onClose, setLocalDescription],
   );
 
   useImperativeHandle(
     ref,
     () => ({
-      open,
-      close,
+      focus,
     }),
-    [open, close],
+    [focus],
   );
 
   const isChanged = useCallback(() => {
@@ -87,15 +95,6 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
     }
   }, [isChanged, value, handleCancel, getLocalValue, setLocalDescription]);
 
-  const handleChildrenClick = useCallback(
-    (e) => {
-      if (!getSelection().toString()) {
-        open(e.ctrlKey);
-      }
-    },
-    [open],
-  );
-
   const handleEditorKeyDown = useCallback(
     (event) => {
       if (event.key === 'Escape') {
@@ -106,6 +105,13 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
     },
     [handleCancel, handleSubmit],
   );
+
+  useEffect(() => {
+    open();
+    return () => {
+      close(false);
+    };
+  }, [close, open]);
 
   const help = {
     name: 'help',
@@ -124,21 +130,19 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
     },
   };
 
-  if (!isOpened) {
-    return React.cloneElement(children, {
-      onClick: handleChildrenClick,
-    });
-  }
-
   return (
     <>
       <MDEditor
         value={value}
+        ref={(node) => {
+          if (node && node.textarea && !textareaRef.current) {
+            textareaRef.current = node.textarea;
+          }
+        }}
         onChange={setValue}
         onBlur={handleBlur}
         height={400}
         maxHeight={650}
-        autoFocus
         onKeyDown={handleEditorKeyDown}
         preview="edit"
         textareaProps={{
@@ -149,6 +153,19 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
           rehypePlugins: [[rehypeSanitize]],
         }}
         commands={[...commands.getCommands(), help]}
+        // commands={[...commands.getCommands(), help, focusCommand]}
+        // components={{
+        //   // eslint-disable-next-line react/no-unstable-nested-components
+        //   textarea: (source, state, dispath) => {
+        //     return <TextArea />;
+        //   },
+        // }}
+        // components={{
+        //   textarea: (props, opts) => {s
+        //     const { dispatch, onChange, useContext, shortcuts } = opts;
+        //     return node(props, dispatch, onChange, useContext, shortcuts);
+        //   },
+        // }}
       />
       <div className={gStyles.controls}>
         <Button negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} />
@@ -158,12 +175,107 @@ const DescriptionEdit = React.forwardRef(({ children, defaultValue, onUpdate, ca
   );
 });
 
+// function insertBeforeEachLine(selectedText, insertBefore) {
+//   const lines = selectedText.split(/\n/);
+
+//   let insertionLength = 0;
+//   const modifiedText = lines
+//     .map((item, index) => {
+//       if (typeof insertBefore === 'string') {
+//         insertionLength += insertBefore.length;
+//         return insertBefore + item;
+//       }
+//       if (typeof insertBefore === 'function') {
+//         const insertionResult = insertBefore(item, index);
+//         insertionLength += insertionResult.length;
+//         return insertBefore(item, index) + item;
+//       }
+//       throw Error('insertion is expected to be either a string or a function');
+//     })
+//     .join('\n');
+
+//   return { modifiedText, insertionLength };
+// }
+
+// const makeList = (state, api, insertBefore) => {
+//   // Adjust the selection to encompass the whole word if the caret is inside one
+//   const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
+//   const state1 = api.setSelectionRange(newSelectionRange);
+
+//   const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(state1.text, state1.selection.start);
+//   const breaksBefore = Array(breaksBeforeCount + 1).join('\n');
+
+//   const breaksAfterCount = getBreaksNeededForEmptyLineAfter(state1.text, state1.selection.end);
+//   const breaksAfter = Array(breaksAfterCount + 1).join('\n');
+
+//   const modifiedText = insertBeforeEachLine(state1.selectedText, insertBefore);
+
+//   api.replaceSelection(`${breaksBefore}${modifiedText.modifiedText}${breaksAfter}`);
+
+//   // Specifically when the text has only one line, we can exclude the "- ", for example, from the selection
+//   const oneLinerOffset = state1.selectedText.indexOf('\n') === -1 ? modifiedText.insertionLength : 0;
+
+//   const selectionStart = state1.selection.start + breaksBeforeCount + oneLinerOffset;
+//   const selectionEnd = selectionStart + modifiedText.modifiedText.length - oneLinerOffset;
+
+//   // Adjust the selection to not contain the **
+//   api.setSelectionRange({
+//     start: selectionStart,
+//     end: selectionEnd,
+//   });
+// };
+
+// const focusCommand = {
+//   name: 'unordered-list',
+//   keyCommand: 'list',
+//   shortcuts: 'ctrl+shift+u',
+//   value: '- ',
+//   buttonProps: {
+//     'aria-label': 'Add unordered list (ctrl + shift + u)',
+//     title: 'Add unordered list (ctrl + shift + u)',
+//   },
+//   icon: (
+//     <svg data-name="unordered-list" width="12" height="12" viewBox="0 0 512 512">
+//       <path
+//         fill="currentColor"
+//         d="M96 96c0 26.51-21.49 48-48 48S0 122.51 0 96s21.49-48 48-48 48 21.49 48 48zM48 208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm0 160c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm96-236h352c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H144c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h352c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H144c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h352c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H144c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+//       />
+//     </svg>
+//   ),
+//   execute: (state, api) => {
+//     makeList(state, api, '- ');
+//   },
+// };
+
+// const node = useCallback(
+//   (props, dispatch, onChange, useContext, shortcuts) => (
+//     <textarea
+//       // eslint-disable-next-line react/jsx-props-no-spreading
+//       {...props}
+//       id={cardId}
+//       onKeyDown={(e) => {
+//         if (shortcuts && useContext) {
+//           // eslint-disable-next-line no-shadow
+//           const { commands, commandOrchestrator } = useContext;
+//           if (commands) {
+//             shortcuts(e, commands, commandOrchestrator);
+//           }
+//         }
+//       }}
+//       onChange={(e) => {
+//         if (onChange) onChange(e);
+//       }}
+//     />
+//   ),
+//   [cardId],
+// );
+
 DescriptionEdit.propTypes = {
-  children: PropTypes.element.isRequired,
   defaultValue: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   cardId: PropTypes.string.isRequired,
-  onLocalDescriptionChange: PropTypes.func.isRequired,
+  onLocalDescChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 DescriptionEdit.defaultProps = {

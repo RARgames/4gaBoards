@@ -20,6 +20,7 @@
     .w-md-editor-preview {
       scrollbar-width: thin;
       background-color: var(--backgroundColorTmpDarkerField2);
+      white-space: pre-wrap;
 
       .wmde-markdown {
         padding: 0;
