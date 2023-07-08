@@ -126,7 +126,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, onLo
       </svg>
     ),
     execute: () => {
-      window.open('https://www.markdownguide.org/basic-syntax/', '_blank');
+      window.open('https://www.markdownguide.org/basic-syntax/', '_blank', 'noreferrer');
     },
   };
 

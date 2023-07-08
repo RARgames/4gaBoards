@@ -20,7 +20,7 @@
     .w-md-editor-preview {
       scrollbar-width: thin;
       background-color: var(--backgroundColorTmpDarkerField2);
-      white-space: pre-wrap;
+      padding: 10px;
 
       .wmde-markdown {
         padding: 0;
@@ -29,11 +29,57 @@
     }
 
     .wmde-markdown {
-      padding: 2px;
+      padding: 10px;
       border-radius: 2px;
       background-color: var(--backgroundColorTmpDarkerField2);
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 14px;
+    }
+
+    .wmde-markdown>p {
+      white-space: pre-wrap;
+    }
+
+    .wmde-markdown>ul {
+      white-space: normal;
+      line-height: 15px;
+      padding-left: 1em;
+    }
+
+    .wmde-markdown>ul>li {
+      white-space: pre-wrap;
+    }
+
+    .wmde-markdown>ol {
+      white-space: normal;
+      line-height: 15px;
+      padding-left: 1.5em;
+    }
+
+    .wmde-markdown>ol>li {
+      white-space: pre-wrap;
+    }
+
+    //TODO verify in Firefox later: https://connect.mozilla.org/t5/ideas/when-is-has-css-selector-going-to-be-fully-implemented-in/idi-p/23794
+    .wmde-markdown>ul:has(> li.task-list-item) {
+      padding-left: 0em;
+    }
+
+    .wmde-markdown>hr {
+      margin: 10px 0;
+    }
+
+    .wmde-markdown>h1,
+    .wmde-markdown>h2,
+    .wmde-markdown>h3,
+    .wmde-markdown>h4,
+    .wmde-markdown>h5,
+    .wmde-markdown>h6 {
+      margin: 12px 0 8px 0;
+    }
+
+    .wmde-markdown>blockquote>p {
+      white-space: pre-wrap;
     }
 
     .react-datepicker {
