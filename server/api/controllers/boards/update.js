@@ -18,6 +18,12 @@ module.exports = {
       type: 'string',
       isNotEmptyString: true,
     },
+    isGithubConnected: {
+      type: 'boolean',
+    },
+    githubRepo: {
+      type: 'string',
+    },
   },
 
   exits: {
@@ -41,7 +47,7 @@ module.exports = {
       throw Errors.BOARD_NOT_FOUND; // Forbidden
     }
 
-    const values = _.pick(inputs, ['position', 'name']);
+    const values = _.pick(inputs, ['position', 'name', 'isGithubConnected', 'githubRepo']);
 
     board = await sails.helpers.boards.updateOne.with({
       values,

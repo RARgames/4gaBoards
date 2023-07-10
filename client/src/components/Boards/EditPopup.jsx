@@ -50,7 +50,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
   }, [openStep]);
 
   useEffect(() => {
-    nameField.current.select();
+    nameField.current.focus();
   }, []);
 
   if (step && step.type === StepTypes.DELETE) {

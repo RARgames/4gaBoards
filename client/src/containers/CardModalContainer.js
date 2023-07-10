@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
   const tasks = selectors.selectTasksForCurrentCard(state);
   const attachments = selectors.selectAttachmentsForCurrentCard(state);
   const activities = selectors.selectActivitiesForCurrentCard(state);
+  const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
 
   let isCurrentUserEditor = false;
   let isCurrentUserEditorOrCanComment = false;
@@ -53,6 +54,8 @@ const mapStateToProps = (state) => {
     tasks,
     attachments,
     activities,
+    isGithubConnected,
+    githubRepo,
     allProjectsToLists,
     allBoardMemberships,
     allLabels,

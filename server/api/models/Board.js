@@ -25,6 +25,15 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    isGithubConnected: {
+      type: 'boolean',
+      required: true,
+      columnName: 'is_github_connected',
+    },
+    githubRepo: {
+      type: 'string',
+      columnName: 'github_repo',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

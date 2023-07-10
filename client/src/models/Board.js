@@ -10,6 +10,8 @@ export default class extends BaseModel {
     id: attr(),
     position: attr(),
     name: attr(),
+    isGithubConnected: attr(),
+    githubRepo: attr(),
     isFetching: attr({
       getDefault: () => null,
     }),

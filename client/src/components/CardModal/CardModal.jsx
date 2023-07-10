@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Icon } from 'semantic-ui-react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
+import remarkGithub from 'remark-github';
 import { Dropdown } from '../../lib/custom-ui';
 
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
@@ -50,6 +51,8 @@ const CardModal = React.memo(
     tasks,
     attachments,
     activities,
+    isGithubConnected,
+    githubRepo,
     allProjectsToLists,
     allBoardMemberships,
     allLabels,
@@ -431,9 +434,12 @@ const CardModal = React.memo(
       </div>
     );
 
+    const rehypePlugins = [rehypeSanitize];
+    const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
+
     const descriptionEditOpenNode = description ? (
       <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)} onClick={handleDescClick}>
-        <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} className={styles.markdownPreview} />
+        <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={rehypePlugins} remarkPlugins={remarkPlugins} />
       </button>
     ) : (
       <button type="button" className={styles.descriptionButton} onClick={handleDescClick}>
@@ -442,7 +448,18 @@ const CardModal = React.memo(
     );
 
     const descriptionEditNode = isDescOpened ? (
-      <DescriptionEdit ref={descEditRef} defaultValue={description} onUpdate={handleDescriptionUpdate} cardId={id} onLocalDescChange={handleLocalDescChange} onClose={handleDescClose} />
+      <DescriptionEdit
+        ref={descEditRef}
+        defaultValue={description}
+        onUpdate={handleDescriptionUpdate}
+        cardId={id}
+        onLocalDescChange={handleLocalDescChange}
+        onClose={handleDescClose}
+        isGithubConnected={isGithubConnected}
+        githubRepo={githubRepo}
+        rehypePlugins={rehypePlugins}
+        remarkPlugins={remarkPlugins}
+      />
     ) : (
       descriptionEditOpenNode
     );
@@ -464,7 +481,7 @@ const CardModal = React.memo(
             descriptionEditNode
           ) : (
             <div className={styles.descriptionText}>
-              <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={[rehypeSanitize]} className={styles.markdownPreview} />
+              <MDEditor.Markdown source={description} linkTarget="_blank" rehypePlugins={rehypePlugins} remarkPlugins={remarkPlugins} />
             </div>
           )}
         </div>
@@ -569,6 +586,8 @@ CardModal.propTypes = {
   tasks: PropTypes.array.isRequired,
   attachments: PropTypes.array.isRequired,
   activities: PropTypes.array.isRequired,
+  isGithubConnected: PropTypes.bool.isRequired,
+  githubRepo: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
   allBoardMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,

@@ -46,6 +46,7 @@ export default {
       cardOrActionAreDeleted: 'Card or action are deleted',
       cards: 'cards',
       color: 'Color',
+      connectToGithub: 'Connect to Github',
       createBoard_title: 'Create Board',
       createLabel_title: 'Create Label',
       createNewOneOrSelectExistingOne: 'Create a new one or select<br />an existing one',

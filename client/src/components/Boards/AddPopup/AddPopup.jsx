@@ -21,6 +21,8 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
   const [data, handleFieldChange, setData] = useForm({
     name: '',
     import: null,
+    isGithubConnected: false,
+    githubRepo: '',
   });
 
   const [step, openStep, handleBack] = useSteps();

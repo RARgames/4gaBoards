@@ -28,6 +28,13 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    isGithubConnected: {
+      type: 'boolean',
+      required: true,
+    },
+    githubRepo: {
+      type: 'string',
+    },
     importType: {
       type: 'string',
       isIn: Object.values(Board.ImportTypes),
@@ -65,7 +72,7 @@ module.exports = {
       throw Errors.PROJECT_NOT_FOUND; // Forbidden
     }
 
-    const values = _.pick(inputs, ['position', 'name']);
+    const values = _.pick(inputs, ['position', 'name', 'isGithubConnected', 'githubRepo']);
 
     let boardImport;
     if (inputs.importType && Object.values(Board.ImportTypes).includes(inputs.importType)) {

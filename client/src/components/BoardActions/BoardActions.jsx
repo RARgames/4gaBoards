@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { Icon } from 'semantic-ui-react';
+import pick from 'lodash/pick';
 import Filters from './Filters';
 import Memberships from '../Memberships';
 import BoardMembershipPermissionsSelectStep from '../BoardMembershipPermissionsSelectStep';
+import Connections from './Connections';
 
 import styles from './BoardActions.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const BoardActions = React.memo(
   ({
@@ -19,6 +23,7 @@ const BoardActions = React.memo(
     allUsers,
     canEdit,
     canEditMemberships,
+    boardData,
     onMembershipCreate,
     onMembershipUpdate,
     onMembershipDelete,
@@ -30,8 +35,16 @@ const BoardActions = React.memo(
     onLabelUpdate,
     onLabelMove,
     onLabelDelete,
+    onBoardUpdate,
   }) => {
     const [t] = useTranslation();
+
+    const handleConnectionsUpdate = useCallback(
+      (data) => {
+        onBoardUpdate(boardData.id, data);
+      },
+      [boardData.id, onBoardUpdate],
+    );
 
     return (
       <div className={styles.wrapper}>
@@ -67,6 +80,11 @@ const BoardActions = React.memo(
               onLabelDelete={onLabelDelete}
             />
           </div>
+          <div>
+            <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate}>
+              <Icon fitted name="github" color={boardData.isGithubConnected ? 'green' : 'grey'} className={gStyles.iconButtonSolid} />
+            </Connections>
+          </div>
         </div>
       </div>
     );
@@ -84,6 +102,7 @@ BoardActions.propTypes = {
   /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,
   canEditMemberships: PropTypes.bool.isRequired,
+  boardData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onMembershipCreate: PropTypes.func.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,
   onMembershipDelete: PropTypes.func.isRequired,
@@ -95,6 +114,7 @@ BoardActions.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
+  onBoardUpdate: PropTypes.func.isRequired,
 };
 
 export default BoardActions;

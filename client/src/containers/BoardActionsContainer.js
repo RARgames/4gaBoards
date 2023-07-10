@@ -20,6 +20,8 @@ const mapStateToProps = (state) => {
 
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
+  const boardData = selectors.selectCurrentBoard(state);
+
   return {
     cardCount,
     memberships,
@@ -29,6 +31,7 @@ const mapStateToProps = (state) => {
     allUsers,
     canEdit: isCurrentUserEditor,
     canEditMemberships: isCurrentUserManager,
+    boardData,
   };
 };
 
@@ -46,6 +49,7 @@ const mapDispatchToProps = (dispatch) =>
       onLabelUpdate: entryActions.updateLabel,
       onLabelMove: entryActions.moveLabel,
       onLabelDelete: entryActions.deleteLabel,
+      onBoardUpdate: entryActions.updateBoard,
     },
     dispatch,
   );

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
 import MDEditor, { commands } from '@uiw/react-md-editor';
-import rehypeSanitize from 'rehype-sanitize';
 import { selectWord, getBreaksNeededForEmptyLineBefore, getBreaksNeededForEmptyLineAfter } from '@uiw/react-md-editor/lib/utils/markdownUtils';
 import { useLocalStorage } from '../../hooks';
 
@@ -11,7 +10,7 @@ import { useLocalStorage } from '../../hooks';
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, onLocalDescChange, onClose }, ref) => {
+const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(undefined);
   const textareaRef = useRef(null);
@@ -130,6 +129,29 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, onLo
     },
   };
 
+  // const textAreaNode = useCallback(
+  //   (props, dispatch, onChange, shortcuts, useContext) => (
+  //     <textarea
+  //       // eslint-disable-next-line react/jsx-props-no-spreading
+  //       {...props}
+  //       onKeyDown={(e) => {
+  //         if (shortcuts && useContext) {
+  //           // eslint-disable-next-line no-shadow, prefer-const
+  //           const { commands, commandOrchestrator } = useContext;
+  //           console.log(commands, commandOrchestrator, shortcuts);
+  //           if (commands) {
+  //             shortcuts(e, commands, commandOrchestrator);
+  //           }
+  //         }
+  //       }}
+  //       onChange={(e) => {
+  //         if (onChange) onChange(e);
+  //       }}
+  //     />
+  //   ),
+  //   [],
+  // );
+
   return (
     <>
       <MDEditor
@@ -150,20 +172,40 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, onLo
           spellCheck: 'true',
         }}
         previewOptions={{
-          rehypePlugins: [[rehypeSanitize]],
+          linkTarget: '_blank',
+          rehypePlugins,
+          remarkPlugins,
         }}
         commands={[...commands.getCommands(), help]}
         // commands={[...commands.getCommands(), help, focusCommand]}
         // components={{
-        //   // eslint-disable-next-line react/no-unstable-nested-components
-        //   textarea: (source, state, dispath) => {
-        //     return <TextArea />;
+        //   textarea: (props, opts) => {
+        //     const { dispatch, onChange, shortcuts, useContext } = opts;
+        //     return textAreaNode(props, dispatch, onChange, shortcuts, useContext);
         //   },
         // }}
         // components={{
-        //   textarea: (props, opts) => {s
+        //   // eslint-disable-next-line react/no-unstable-nested-components
+        //   textarea: (props, opts) => {
         //     const { dispatch, onChange, useContext, shortcuts } = opts;
-        //     return node(props, dispatch, onChange, useContext, shortcuts);
+        //     return (
+        //       <textarea
+        //         // eslint-disable-next-line react/jsx-props-no-spreading
+        //         {...props}
+        //         onKeyDown={(e) => {
+        //           if (shortcuts && useContext) {
+        //             // eslint-disable-next-line no-shadow
+        //             const { commands, commandOrchestrator } = useContext;
+        //             if (commands) {
+        //               shortcuts(e, commands, commandOrchestrator);
+        //             }
+        //           }
+        //         }}
+        //         onChange={(e) => {
+        //           if (onChange) onChange(e);
+        //         }}
+        //       />
+        //     );
         //   },
         // }}
       />
@@ -247,39 +289,21 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, onLo
 //   },
 // };
 
-// const node = useCallback(
-//   (props, dispatch, onChange, useContext, shortcuts) => (
-//     <textarea
-//       // eslint-disable-next-line react/jsx-props-no-spreading
-//       {...props}
-//       id={cardId}
-//       onKeyDown={(e) => {
-//         if (shortcuts && useContext) {
-//           // eslint-disable-next-line no-shadow
-//           const { commands, commandOrchestrator } = useContext;
-//           if (commands) {
-//             shortcuts(e, commands, commandOrchestrator);
-//           }
-//         }
-//       }}
-//       onChange={(e) => {
-//         if (onChange) onChange(e);
-//       }}
-//     />
-//   ),
-//   [cardId],
-// );
-
 DescriptionEdit.propTypes = {
   defaultValue: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   cardId: PropTypes.string.isRequired,
+  isGithubConnected: PropTypes.bool.isRequired,
+  githubRepo: PropTypes.string.isRequired,
+  rehypePlugins: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  remarkPlugins: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onLocalDescChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
 DescriptionEdit.defaultProps = {
   defaultValue: undefined,
+  remarkPlugins: null,
 };
 
 export default React.memo(DescriptionEdit);
