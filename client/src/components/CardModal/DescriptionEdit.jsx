@@ -157,7 +157,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
       <MDEditor
         value={value}
         ref={(node) => {
-          if (node && node.textarea && !textareaRef.current) {
+          if (node && node.textarea) {
             textareaRef.current = node.textarea;
           }
         }}
