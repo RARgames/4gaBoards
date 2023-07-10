@@ -36,6 +36,10 @@
       font-size: 14px;
     }
 
+    .wmde-markdown>pre>code {
+      scrollbar-width: thin;
+    }
+
     .wmde-markdown>p {
       white-space: pre-wrap;
     }
