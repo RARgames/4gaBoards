@@ -17,6 +17,14 @@
       border-radius: 2px;
     }
 
+    .w-md-editor-text-input {
+      &::selection {
+        color: var(--textColorWhite);
+        -webkit-text-fill-color: var(--textColorWhite);
+        background: var(--selectionBackground);
+      }
+    }
+
     .w-md-editor-preview {
       scrollbar-width: thin;
       background-color: var(--backgroundColorTmpDarkerField2);

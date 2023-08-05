@@ -6,7 +6,7 @@ import { Button, Form, TextArea } from 'semantic-ui-react';
 
 import { useClosableForm, useField } from '../../../hooks';
 
-import styles from './NameEdit.module.scss';
+import styles from './TaskEdit.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {

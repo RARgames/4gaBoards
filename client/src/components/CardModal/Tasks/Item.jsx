@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { Button, Checkbox, Icon } from 'semantic-ui-react';
 
-import NameEdit from './NameEdit';
+import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
 
 import styles from './Item.module.scss';
@@ -47,10 +47,9 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
             <span className={styles.checkboxWrapper}>
               <Checkbox checked={isCompleted} disabled={!isPersisted || !canEdit} className={styles.checkbox} onChange={handleToggleChange} />
             </span>
-            <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
+            <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
               <div className={classNames(canEdit && styles.contentHoverable)}>
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-                                               jsx-a11y/no-static-element-interactions */}
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <span className={classNames(styles.text, canEdit && styles.textEditable)} onClick={handleClick}>
                   <span className={classNames(styles.task, isCompleted && styles.taskCompleted)}>{name}</span>
                 </span>
@@ -62,7 +61,7 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
                   </ActionsPopup>
                 )}
               </div>
-            </NameEdit>
+            </TaskEdit>
           </div>
         );
 

@@ -14,6 +14,11 @@
     &:focus {
       border: 1px solid var(--borderOutline2);
     }
+
+    &::selection {
+      color: var(--textColorWhite);
+      background: var(--selectionBackground);
+    }
   }
 
   .wrapper {

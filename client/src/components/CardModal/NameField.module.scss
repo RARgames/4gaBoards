@@ -18,5 +18,10 @@
       box-shadow: 0 0 2px 0 var(--borderOutline);
       outline: 0;
     }
+
+    &::selection {
+      color: var(--textColorWhite);
+      background: var(--selectionBackground);
+    }
   }
 }
