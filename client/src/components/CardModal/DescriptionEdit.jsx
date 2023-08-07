@@ -94,15 +94,80 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
     }
   }, [isChanged, value, handleCancel, getLocalValue, setLocalDescription]);
 
+  const getLinePos = useCallback((text, lineNumber) => {
+    const lines = text.split('\n');
+    if (lineNumber < lines.length) {
+      let startPos = 0;
+      for (let i = 0; i < lineNumber; i += 1) {
+        startPos += lines[i].length + 1;
+      }
+      const endPos = startPos + lines[lineNumber].length;
+      return { startPos, endPos };
+    }
+    return { startPos: -1, endPos: -1 };
+  }, []);
+
+  const handleBlockSelection = useCallback(
+    (text, startLine, endLine) => {
+      textareaRef.current.setSelectionRange(getLinePos(text, startLine).startPos, getLinePos(text, endLine).endPos);
+    },
+    [getLinePos],
+  );
+
+  const handleLineMove = useCallback(
+    (direction) => {
+      const textarea = textareaRef.current;
+      const startPos = textarea.selectionStart;
+      const endPos = textarea.selectionEnd;
+
+      const textBeforeStartPos = value.slice(0, startPos);
+      const textBeforeEndPos = value.slice(0, endPos);
+
+      const lines = value.split('\n');
+
+      const blockStartLine = textBeforeStartPos.split('\n').length - 1;
+      const blockEndLine = textBeforeEndPos.split('\n').length - 1;
+      if ((direction < 0 && blockStartLine === 0) || (direction > 0 && blockEndLine === lines.length - 1)) {
+        return;
+      }
+      const blockStartPos = getLinePos(value, blockStartLine).startPos;
+      const blockEndPos = getLinePos(value, blockEndLine).endPos;
+
+      const blockText = value.slice(blockStartPos, blockEndPos);
+      if (direction < 0) {
+        const prevLine = textBeforeStartPos.split('\n').length - 2;
+        const prevLineText = lines[prevLine];
+        const updatedText = value.replace(`${prevLineText}\n${blockText}`, `${blockText}\n${prevLineText}`);
+        setValue(updatedText);
+        setTimeout(() => {
+          handleBlockSelection(textarea.value, blockStartLine - 1, blockEndLine - 1);
+        }, 0);
+      } else {
+        const nextLine = textBeforeEndPos.split('\n').length;
+        const nextLineText = lines[nextLine];
+        const updatedText = value.replace(`${blockText}\n${nextLineText}`, `${nextLineText}\n${blockText}`);
+        setValue(updatedText);
+        setTimeout(() => {
+          handleBlockSelection(textarea.value, blockStartLine + 1, blockEndLine + 1);
+        }, 0);
+      }
+    },
+    [getLinePos, handleBlockSelection, value],
+  );
+
   const handleEditorKeyDown = useCallback(
     (event) => {
       if (event.key === 'Escape') {
         handleCancel();
       } else if (event.ctrlKey && event.key === 'Enter') {
         handleSubmit();
+      } else if (event.altKey && event.key === 'ArrowUp') {
+        handleLineMove(-1);
+      } else if (event.altKey && event.key === 'ArrowDown') {
+        handleLineMove(1);
       }
     },
-    [handleCancel, handleSubmit],
+    [handleCancel, handleLineMove, handleSubmit],
   );
 
   useEffect(() => {
