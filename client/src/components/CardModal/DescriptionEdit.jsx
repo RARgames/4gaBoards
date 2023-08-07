@@ -136,17 +136,31 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
       const blockText = value.slice(blockStartPos, blockEndPos);
       if (direction < 0) {
         const prevLine = textBeforeStartPos.split('\n').length - 2;
+        const prevLineStartPos = getLinePos(value, prevLine).startPos;
         const prevLineText = lines[prevLine];
-        const updatedText = value.replace(`${prevLineText}\n${blockText}`, `${blockText}\n${prevLineText}`);
-        setValue(updatedText);
+
+        textarea.setSelectionRange(prevLineStartPos, blockEndPos);
+        const isSuccess = document.execCommand && document.execCommand('insertText', false, `${blockText}\n${prevLineText}`);
+        if (!isSuccess) {
+          // Fallback on some browsers
+          const updatedText = `${value.slice(0, prevLineStartPos)}${blockText}\n${prevLineText}${value.slice(blockEndPos)}`;
+          setValue(updatedText);
+        }
         setTimeout(() => {
           handleBlockSelection(textarea.value, blockStartLine - 1, blockEndLine - 1);
         }, 0);
       } else {
         const nextLine = textBeforeEndPos.split('\n').length;
+        const nextLineEndPos = getLinePos(value, nextLine).endPos;
         const nextLineText = lines[nextLine];
-        const updatedText = value.replace(`${blockText}\n${nextLineText}`, `${nextLineText}\n${blockText}`);
-        setValue(updatedText);
+
+        textarea.setSelectionRange(blockStartPos, nextLineEndPos);
+        const isSuccess = document.execCommand && document.execCommand('insertText', false, `${nextLineText}\n${blockText}`);
+        if (!isSuccess) {
+          // Fallback on some browsers
+          const updatedText = `${value.slice(0, blockStartPos)}${nextLineText}\n${blockText}${value.slice(nextLineEndPos)}`;
+          setValue(updatedText);
+        }
         setTimeout(() => {
           handleBlockSelection(textarea.value, blockStartLine + 1, blockEndLine + 1);
         }, 0);
