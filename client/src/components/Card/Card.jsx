@@ -5,6 +5,8 @@ import { Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 
+import { faBarsStaggered, faPaperclip, faComments } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { startTimer, stopTimer } from '../../utils/timer';
 import Paths from '../../constants/Paths';
 import Tasks from './Tasks';
@@ -35,6 +37,8 @@ const Card = React.memo(
     users,
     labels,
     tasks,
+    description,
+    attachmentsCount,
     allProjectsToLists,
     allBoardMemberships,
     allLabels,
@@ -130,8 +134,18 @@ const Card = React.memo(
             </span>
           )}
           {tasks.length > 0 && <Tasks items={tasks} />}
-          {(dueDate || timer || notificationsTotal > 0) && (
+          {(description || attachmentsCount > 0 || dueDate || timer || notificationsTotal > 0) && (
             <span className={styles.attachments}>
+              {description && (
+                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+                  <FontAwesomeIcon icon={faBarsStaggered} className={styles.detailsIcon} />
+                </span>
+              )}
+              {attachmentsCount > 0 && (
+                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+                  <FontAwesomeIcon icon={faPaperclip} className={styles.detailsIcon} />
+                </span>
+              )}
               {notificationsTotal > 0 && <span className={classNames(styles.attachment, styles.attachmentLeft, styles.notification)}>{notificationsTotal}</span>}
               {dueDate && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
@@ -234,6 +248,8 @@ Card.propTypes = {
   users: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
   tasks: PropTypes.array.isRequired,
+  description: PropTypes.string,
+  attachmentsCount: PropTypes.number.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
   allBoardMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,
@@ -258,6 +274,7 @@ Card.defaultProps = {
   dueDate: undefined,
   timer: undefined,
   coverUrl: undefined,
+  description: undefined,
 };
 
 export default Card;

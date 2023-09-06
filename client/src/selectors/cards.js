@@ -130,6 +130,23 @@ export const makeSelectNotificationsTotalByCardId = () =>
 
 export const selectNotificationsTotalByCardId = makeSelectNotificationsTotalByCardId();
 
+export const makeSelectAttachmentsCountByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Card }, id) => {
+      const cardModel = Card.withId(id);
+
+      if (!cardModel) {
+        return cardModel;
+      }
+
+      return cardModel.getAttachmentsCount();
+    },
+  );
+
+export const selectAttachmentsCountByCardId = makeSelectAttachmentsCountByCardId();
+
 export const selectCurrentCard = createSelector(
   orm,
   (state) => selectPath(state).cardId,
@@ -298,6 +315,8 @@ export default {
   selectNotificationsByCardId,
   makeSelectNotificationsTotalByCardId,
   selectNotificationsTotalByCardId,
+  makeSelectAttachmentsCountByCardId,
+  selectAttachmentsCountByCardId,
   selectCurrentCard,
   selectUsersForCurrentCard,
   selectLabelsForCurrentCard,

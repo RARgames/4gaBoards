@@ -53,6 +53,8 @@
     }
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@juggle/resize-observer": "^3.4.0",
     "@react-hook/resize-observer": "^1.2.6",
     "@uiw/react-md-editor": "^3.23.3",

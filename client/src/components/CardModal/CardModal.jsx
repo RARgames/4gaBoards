@@ -6,8 +6,10 @@ import { Button, Icon } from 'semantic-ui-react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGithub from 'remark-github';
-import { Dropdown } from '../../lib/custom-ui';
 
+import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Dropdown } from '../../lib/custom-ui';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
 import DescriptionEdit from './DescriptionEdit';
@@ -466,7 +468,7 @@ const CardModal = React.memo(
 
     const descriptionNode = (description || canEdit) && (
       <div className={styles.contentModule}>
-        <Icon name="bars" className={styles.moduleIcon} />
+        <FontAwesomeIcon icon={faBarsStaggered} className={styles.moduleIconFA} />
         <div className={styles.moduleHeader}>
           {t('common.description')}
           {canEdit && (

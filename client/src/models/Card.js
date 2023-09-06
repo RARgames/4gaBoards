@@ -247,6 +247,10 @@ export default class extends BaseModel {
     return this.attachments.orderBy('id', false);
   }
 
+  getAttachmentsCount() {
+    return this.attachments.count();
+  }
+
   getFilteredOrderedInCardActivitiesQuerySet() {
     const filter = {
       isInCard: true,
