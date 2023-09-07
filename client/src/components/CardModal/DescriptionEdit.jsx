@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
 import MDEditor, { commands } from '@uiw/react-md-editor';
-import { selectWord, getBreaksNeededForEmptyLineBefore, getBreaksNeededForEmptyLineAfter } from '@uiw/react-md-editor/lib/utils/markdownUtils';
+// import { selectWord, getBreaksNeededForEmptyLineBefore, getBreaksNeededForEmptyLineAfter } from '@uiw/react-md-editor/lib/utils/markdownUtils';
 import { useLocalStorage } from '../../hooks';
 
 // eslint-disable-next-line no-unused-vars
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
+// eslint-disable-next-line no-unused-vars
 const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(undefined);
@@ -124,9 +125,9 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
       const textBeforeEndPos = value.slice(0, endPos);
 
       const lines = value.split('\n');
-
       const blockStartLine = textBeforeStartPos.split('\n').length - 1;
       const blockEndLine = textBeforeEndPos.split('\n').length - 1;
+
       if ((direction < 0 && blockStartLine === 0) || (direction > 0 && blockEndLine === lines.length - 1)) {
         return;
       }

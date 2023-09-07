@@ -18,6 +18,9 @@ export default class extends BaseModel {
     isSubscribed: attr({
       getDefault: () => false,
     }),
+    commentsCount: attr({
+      getDefault: () => 0,
+    }),
     isActivitiesFetching: attr({
       getDefault: () => false,
     }),

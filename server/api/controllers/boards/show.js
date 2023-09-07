@@ -57,6 +57,7 @@ module.exports = {
     const cardLabels = await sails.helpers.cards.getCardLabels(cardIds);
     const tasks = await sails.helpers.cards.getTasks(cardIds);
     const attachments = await sails.helpers.cards.getAttachments(cardIds);
+    const comments = await sails.helpers.cards.getComments(cardIds);
 
     const isSubscribedByCardId = cardSubscriptions.reduce(
       (result, cardSubscription) => ({
@@ -67,8 +68,8 @@ module.exports = {
     );
 
     cards.forEach((card) => {
-      // eslint-disable-next-line no-param-reassign
-      card.isSubscribed = isSubscribedByCardId[card.id] || false;
+      card.isSubscribed = isSubscribedByCardId[card.id] || false; // eslint-disable-line no-param-reassign
+      card.commentsCount = comments.filter((comment) => comment.cardId === card.id).length; // eslint-disable-line no-param-reassign
     });
 
     if (inputs.subscribe && this.req.isSocket) {

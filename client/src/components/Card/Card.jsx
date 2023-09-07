@@ -39,6 +39,7 @@ const Card = React.memo(
     tasks,
     description,
     attachmentsCount,
+    commentsCount,
     allProjectsToLists,
     allBoardMemberships,
     allLabels,
@@ -134,7 +135,7 @@ const Card = React.memo(
             </span>
           )}
           {tasks.length > 0 && <Tasks items={tasks} />}
-          {(description || attachmentsCount > 0 || dueDate || timer || notificationsTotal > 0) && (
+          {(description || attachmentsCount > 0 || commentsCount > 0 || dueDate || timer || notificationsTotal > 0) && (
             <span className={styles.attachments}>
               {description && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
@@ -144,6 +145,11 @@ const Card = React.memo(
               {attachmentsCount > 0 && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
                   <FontAwesomeIcon icon={faPaperclip} className={styles.detailsIcon} />
+                </span>
+              )}
+              {commentsCount > 0 && (
+                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+                  <FontAwesomeIcon icon={faComments} className={styles.detailsIcon} />
                 </span>
               )}
               {notificationsTotal > 0 && <span className={classNames(styles.attachment, styles.attachmentLeft, styles.notification)}>{notificationsTotal}</span>}
@@ -250,6 +256,7 @@ Card.propTypes = {
   tasks: PropTypes.array.isRequired,
   description: PropTypes.string,
   attachmentsCount: PropTypes.number.isRequired,
+  commentsCount: PropTypes.number.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
   allBoardMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,
