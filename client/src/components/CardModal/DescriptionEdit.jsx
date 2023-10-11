@@ -2,8 +2,7 @@ import React, { useCallback, useImperativeHandle, useState, useRef, useEffect } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
-import MDEditor, { commands } from '@uiw/react-md-editor';
-// import { selectWord, getBreaksNeededForEmptyLineBefore, getBreaksNeededForEmptyLineAfter } from '@uiw/react-md-editor/lib/utils/markdownUtils';
+import MDEditor, { commands } from '@rargames/react-md-editor-enhanced';
 import { useLocalStorage } from '../../hooks';
 
 // eslint-disable-next-line no-unused-vars
@@ -95,94 +94,15 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
     }
   }, [isChanged, value, handleCancel, getLocalValue, setLocalDescription]);
 
-  const getLinePos = useCallback((text, lineNumber) => {
-    const lines = text.split('\n');
-    if (lineNumber < lines.length) {
-      let startPos = 0;
-      for (let i = 0; i < lineNumber; i += 1) {
-        startPos += lines[i].length + 1;
-      }
-      const endPos = startPos + lines[lineNumber].length;
-      return { startPos, endPos };
-    }
-    return { startPos: -1, endPos: -1 };
-  }, []);
-
-  const handleBlockSelection = useCallback(
-    (text, startLine, endLine) => {
-      textareaRef.current.setSelectionRange(getLinePos(text, startLine).startPos, getLinePos(text, endLine).endPos);
-    },
-    [getLinePos],
-  );
-
-  const handleLineMove = useCallback(
-    (direction) => {
-      const textarea = textareaRef.current;
-      const startPos = textarea.selectionStart;
-      const endPos = textarea.selectionEnd;
-
-      const textBeforeStartPos = value.slice(0, startPos);
-      const textBeforeEndPos = value.slice(0, endPos);
-
-      const lines = value.split('\n');
-      const blockStartLine = textBeforeStartPos.split('\n').length - 1;
-      const blockEndLine = textBeforeEndPos.split('\n').length - 1;
-
-      if ((direction < 0 && blockStartLine === 0) || (direction > 0 && blockEndLine === lines.length - 1)) {
-        return;
-      }
-      const blockStartPos = getLinePos(value, blockStartLine).startPos;
-      const blockEndPos = getLinePos(value, blockEndLine).endPos;
-
-      const blockText = value.slice(blockStartPos, blockEndPos);
-      if (direction < 0) {
-        const prevLine = textBeforeStartPos.split('\n').length - 2;
-        const prevLineStartPos = getLinePos(value, prevLine).startPos;
-        const prevLineText = lines[prevLine];
-
-        textarea.setSelectionRange(prevLineStartPos, blockEndPos);
-        const isSuccess = document.execCommand && document.execCommand('insertText', false, `${blockText}\n${prevLineText}`);
-        if (!isSuccess) {
-          // Fallback on some browsers
-          const updatedText = `${value.slice(0, prevLineStartPos)}${blockText}\n${prevLineText}${value.slice(blockEndPos)}`;
-          setValue(updatedText);
-        }
-        setTimeout(() => {
-          handleBlockSelection(textarea.value, blockStartLine - 1, blockEndLine - 1);
-        }, 0);
-      } else {
-        const nextLine = textBeforeEndPos.split('\n').length;
-        const nextLineEndPos = getLinePos(value, nextLine).endPos;
-        const nextLineText = lines[nextLine];
-
-        textarea.setSelectionRange(blockStartPos, nextLineEndPos);
-        const isSuccess = document.execCommand && document.execCommand('insertText', false, `${nextLineText}\n${blockText}`);
-        if (!isSuccess) {
-          // Fallback on some browsers
-          const updatedText = `${value.slice(0, blockStartPos)}${nextLineText}\n${blockText}${value.slice(nextLineEndPos)}`;
-          setValue(updatedText);
-        }
-        setTimeout(() => {
-          handleBlockSelection(textarea.value, blockStartLine + 1, blockEndLine + 1);
-        }, 0);
-      }
-    },
-    [getLinePos, handleBlockSelection, value],
-  );
-
   const handleEditorKeyDown = useCallback(
     (event) => {
       if (event.key === 'Escape') {
         handleCancel();
       } else if (event.ctrlKey && event.key === 'Enter') {
         handleSubmit();
-      } else if (event.altKey && event.key === 'ArrowUp') {
-        handleLineMove(-1);
-      } else if (event.altKey && event.key === 'ArrowDown') {
-        handleLineMove(1);
       }
     },
-    [handleCancel, handleLineMove, handleSubmit],
+    [handleCancel, handleSubmit],
   );
 
   useEffect(() => {
@@ -191,46 +111,6 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
       close(false);
     };
   }, [close, open]);
-
-  const help = {
-    name: 'help',
-    keyCommand: 'help',
-    buttonProps: { 'aria-label': 'Open help', title: 'Open help' },
-    icon: (
-      <svg viewBox="0 0 16 16" width="12px" height="12px">
-        <path
-          d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm.9 13H7v-1.8h1.9V13Zm-.1-3.6v.5H7.1v-.6c.2-2.1 2-1.9 1.9-3.2.1-.7-.3-1.1-1-1.1-.8 0-1.2.7-1.2 1.6H5c0-1.7 1.2-3 2.9-3 2.3 0 3 1.4 3 2.3.1 2.3-1.9 2-2.1 3.5Z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
-    execute: () => {
-      window.open('https://www.markdownguide.org/basic-syntax/', '_blank', 'noreferrer');
-    },
-  };
-
-  // const textAreaNode = useCallback(
-  //   (props, dispatch, onChange, shortcuts, useContext) => (
-  //     <textarea
-  //       // eslint-disable-next-line react/jsx-props-no-spreading
-  //       {...props}
-  //       onKeyDown={(e) => {
-  //         if (shortcuts && useContext) {
-  //           // eslint-disable-next-line no-shadow, prefer-const
-  //           const { commands, commandOrchestrator } = useContext;
-  //           console.log(commands, commandOrchestrator, shortcuts);
-  //           if (commands) {
-  //             shortcuts(e, commands, commandOrchestrator);
-  //           }
-  //         }
-  //       }}
-  //       onChange={(e) => {
-  //         if (onChange) onChange(e);
-  //       }}
-  //     />
-  //   ),
-  //   [],
-  // );
 
   return (
     <>
@@ -256,38 +136,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
           rehypePlugins,
           remarkPlugins,
         }}
-        commands={[...commands.getCommands(), help]}
-        // commands={[...commands.getCommands(), help, focusCommand]}
-        // components={{
-        //   textarea: (props, opts) => {
-        //     const { dispatch, onChange, shortcuts, useContext } = opts;
-        //     return textAreaNode(props, dispatch, onChange, shortcuts, useContext);
-        //   },
-        // }}
-        // components={{
-        //   // eslint-disable-next-line react/no-unstable-nested-components
-        //   textarea: (props, opts) => {
-        //     const { dispatch, onChange, useContext, shortcuts } = opts;
-        //     return (
-        //       <textarea
-        //         // eslint-disable-next-line react/jsx-props-no-spreading
-        //         {...props}
-        //         onKeyDown={(e) => {
-        //           if (shortcuts && useContext) {
-        //             // eslint-disable-next-line no-shadow
-        //             const { commands, commandOrchestrator } = useContext;
-        //             if (commands) {
-        //               shortcuts(e, commands, commandOrchestrator);
-        //             }
-        //           }
-        //         }}
-        //         onChange={(e) => {
-        //           if (onChange) onChange(e);
-        //         }}
-        //       />
-        //     );
-        //   },
-        // }}
+        commands={[...commands.getCommands()]}
       />
       <div className={gStyles.controls}>
         <Button negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} />
@@ -297,61 +146,10 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
   );
 });
 
-// function insertBeforeEachLine(selectedText, insertBefore) {
-//   const lines = selectedText.split(/\n/);
-
-//   let insertionLength = 0;
-//   const modifiedText = lines
-//     .map((item, index) => {
-//       if (typeof insertBefore === 'string') {
-//         insertionLength += insertBefore.length;
-//         return insertBefore + item;
-//       }
-//       if (typeof insertBefore === 'function') {
-//         const insertionResult = insertBefore(item, index);
-//         insertionLength += insertionResult.length;
-//         return insertBefore(item, index) + item;
-//       }
-//       throw Error('insertion is expected to be either a string or a function');
-//     })
-//     .join('\n');
-
-//   return { modifiedText, insertionLength };
-// }
-
-// const makeList = (state, api, insertBefore) => {
-//   // Adjust the selection to encompass the whole word if the caret is inside one
-//   const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
-//   const state1 = api.setSelectionRange(newSelectionRange);
-
-//   const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(state1.text, state1.selection.start);
-//   const breaksBefore = Array(breaksBeforeCount + 1).join('\n');
-
-//   const breaksAfterCount = getBreaksNeededForEmptyLineAfter(state1.text, state1.selection.end);
-//   const breaksAfter = Array(breaksAfterCount + 1).join('\n');
-
-//   const modifiedText = insertBeforeEachLine(state1.selectedText, insertBefore);
-
-//   api.replaceSelection(`${breaksBefore}${modifiedText.modifiedText}${breaksAfter}`);
-
-//   // Specifically when the text has only one line, we can exclude the "- ", for example, from the selection
-//   const oneLinerOffset = state1.selectedText.indexOf('\n') === -1 ? modifiedText.insertionLength : 0;
-
-//   const selectionStart = state1.selection.start + breaksBeforeCount + oneLinerOffset;
-//   const selectionEnd = selectionStart + modifiedText.modifiedText.length - oneLinerOffset;
-
-//   // Adjust the selection to not contain the **
-//   api.setSelectionRange({
-//     start: selectionStart,
-//     end: selectionEnd,
-//   });
-// };
-
 // const focusCommand = {
 //   name: 'unordered-list',
 //   keyCommand: 'list',
 //   shortcuts: 'ctrl+shift+u',
-//   value: '- ',
 //   buttonProps: {
 //     'aria-label': 'Add unordered list (ctrl + shift + u)',
 //     title: 'Add unordered list (ctrl + shift + u)',

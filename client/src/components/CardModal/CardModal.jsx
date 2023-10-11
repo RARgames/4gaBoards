@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from 'semantic-ui-react';
-import MDEditor from '@uiw/react-md-editor';
+import MDEditor from '@rargames/react-md-editor-enhanced';
 import rehypeSanitize from 'rehype-sanitize';
 import remarkGithub from 'remark-github';
 
