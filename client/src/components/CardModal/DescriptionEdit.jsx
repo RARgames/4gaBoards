@@ -2,7 +2,7 @@ import React, { useCallback, useImperativeHandle, useState, useRef, useEffect } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
-import MDEditor, { commands } from '@rargames/react-md-editor-enhanced';
+import MDEditor, { commands } from '@uiw/react-md-editor';
 import { useLocalStorage } from '../../hooks';
 
 // eslint-disable-next-line no-unused-vars
@@ -136,7 +136,9 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
           rehypePlugins,
           remarkPlugins,
         }}
-        commands={[...commands.getCommands()]}
+        commands={[...commands.getCommands(), commands.divider, commands.issue]}
+        // TODO add mention
+        // TODO add fukll functionality to mention and issue
       />
       <div className={gStyles.controls}>
         <Button negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} />
