@@ -439,9 +439,7 @@ const CardModal = React.memo(
       </div>
     );
 
-    const colorNames = ['black', 'silver', 'grey', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua'];
-
-    // 'orange', 'pink', 'brown',
+    const colorNames = ['black', 'silver', 'grey', 'white', 'brown', 'red', 'purple', 'pink', 'green', 'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'cyan', 'orange'];
 
     function recolorPlugin() {
       function transformer(tree) {

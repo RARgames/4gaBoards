@@ -8,20 +8,16 @@
       color: #000000;
     }
 
-    .silver {
-      color: #C0C0C0;
-    }
-
     .grey {
-      color: #808080;
+      color: var(--textColor1);
     }
 
     .white {
       color: #FFFFFF;
     }
 
-    .maroon {
-      color: #800000;
+    .brown {
+      color: #aa4e0c;
     }
 
     .red {
@@ -29,43 +25,35 @@
     }
 
     .purple {
-      color: #800080;
+      color: #9b0b9b;
     }
 
-    .fuchsia {
+    .pink {
       color: #FF00FF;
     }
 
     .green {
-      color: #008000;
+      color: #088f08;
     }
 
     .lime {
       color: #00FF00;
     }
 
-    .olive {
-      color: #808000;
-    }
-
     .yellow {
       color: #FFFF00;
     }
 
-    .navy {
-      color: #000080;
-    }
-
     .blue {
-      color: #0000FF;
+      color: #006eff;
     }
 
-    .teal {
-      color: #008080;
-    }
-
-    .aqua {
+    .cyan {
       color: #00FFFF;
+    }
+
+    .orange {
+      color: #FFA500;
     }
 
     .w-md-editor {
