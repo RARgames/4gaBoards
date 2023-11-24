@@ -2,7 +2,9 @@ import React, { useCallback, useImperativeHandle, useState, useRef, useEffect } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
-import MDEditor, { commands } from '@uiw/react-md-editor';
+import MDEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
+import { faFillDrip } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocalStorage } from '../../hooks';
 
 // eslint-disable-next-line no-unused-vars
@@ -10,141 +12,183 @@ import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 // eslint-disable-next-line no-unused-vars
-const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
-  const [t] = useTranslation();
-  const [value, setValue] = useState(undefined);
-  const textareaRef = useRef(null);
-  const [setLocalValue, getLocalValue] = useLocalStorage(`desc-${cardId}`);
+const DescriptionEdit = React.forwardRef(
+  ({ defaultValue, onUpdate, cardId, descriptionHeight, availableColors, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
+    const [t] = useTranslation();
+    const [value, setValue] = useState(undefined);
+    const textareaRef = useRef(null);
+    const [setLocalValue, getLocalValue] = useLocalStorage(`desc-${cardId}`);
 
-  const setLocalDescription = useCallback(
-    (desc) => {
-      setLocalValue(desc);
-      onLocalDescChange(desc);
-    },
-    [onLocalDescChange, setLocalValue],
-  );
+    const setLocalDescription = useCallback(
+      (desc) => {
+        setLocalValue(desc);
+        onLocalDescChange(desc);
+      },
+      [onLocalDescChange, setLocalValue],
+    );
 
-  // eslint-disable-next-line consistent-return
-  const focus = useCallback(() => {
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    } else {
-      const timeout = setTimeout(() => {
+    // eslint-disable-next-line consistent-return
+    const focus = useCallback(() => {
+      if (textareaRef.current) {
         textareaRef.current.focus();
+      } else {
+        const timeout = setTimeout(() => {
+          textareaRef.current.focus();
+        }, 0);
+        return () => clearTimeout(timeout);
+      }
+    }, []);
+
+    const open = useCallback(() => {
+      setValue(getLocalValue() || defaultValue || '');
+      const timeout = setTimeout(() => {
+        focus();
       }, 0);
+
       return () => clearTimeout(timeout);
-    }
-  }, []);
+    }, [defaultValue, focus, getLocalValue]);
 
-  const open = useCallback(() => {
-    setValue(getLocalValue() || defaultValue || '');
-    const timeout = setTimeout(() => {
-      focus();
-    }, 0);
+    const close = useCallback(
+      (removeLocalDesc = false) => {
+        if (removeLocalDesc) {
+          setLocalDescription(null);
+          onClose();
+        }
+      },
+      [onClose, setLocalDescription],
+    );
 
-    return () => clearTimeout(timeout);
-  }, [defaultValue, focus, getLocalValue]);
+    useImperativeHandle(
+      ref,
+      () => ({
+        focus,
+      }),
+      [focus],
+    );
 
-  const close = useCallback(
-    (removeLocalDesc = false) => {
-      if (removeLocalDesc) {
-        setLocalDescription(null);
-        onClose();
-      }
-    },
-    [onClose, setLocalDescription],
-  );
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      focus,
-    }),
-    [focus],
-  );
-
-  const isChanged = useCallback(() => {
-    const cleanValue = value.trim() || null;
-    return cleanValue !== defaultValue;
-  }, [defaultValue, value]);
-
-  const handleSubmit = useCallback(() => {
-    const cleanValue = value.trim() || null;
-    if (cleanValue !== defaultValue) {
-      onUpdate(cleanValue);
-    }
-    setValue(null);
-    close(true);
-  }, [defaultValue, onUpdate, value, close]);
-
-  const handleCancel = useCallback(() => {
-    setValue(null);
-    close(true);
-  }, [close]);
-
-  const handleBlur = useCallback(() => {
-    if (!isChanged()) {
-      setLocalDescription(null);
-      handleCancel();
-    } else if (value) {
+    const isChanged = useCallback(() => {
       const cleanValue = value.trim() || null;
-      if (cleanValue !== getLocalValue()) {
-        setLocalDescription(cleanValue);
-      }
-    }
-  }, [isChanged, value, handleCancel, getLocalValue, setLocalDescription]);
+      return cleanValue !== defaultValue;
+    }, [defaultValue, value]);
 
-  const handleEditorKeyDown = useCallback(
-    (event) => {
-      if (event.key === 'Escape') {
+    const handleSubmit = useCallback(() => {
+      const cleanValue = value.trim() || null;
+      if (cleanValue !== defaultValue) {
+        onUpdate(cleanValue);
+      }
+      setValue(null);
+      close(true);
+    }, [defaultValue, onUpdate, value, close]);
+
+    const handleCancel = useCallback(() => {
+      setValue(null);
+      close(true);
+    }, [close]);
+
+    const handleBlur = useCallback(() => {
+      if (!isChanged()) {
+        setLocalDescription(null);
         handleCancel();
-      } else if (event.ctrlKey && event.key === 'Enter') {
-        handleSubmit();
+      } else if (value) {
+        const cleanValue = value.trim() || null;
+        if (cleanValue !== getLocalValue()) {
+          setLocalDescription(cleanValue);
+        }
       }
-    },
-    [handleCancel, handleSubmit],
-  );
+    }, [isChanged, value, handleCancel, getLocalValue, setLocalDescription]);
 
-  useEffect(() => {
-    open();
-    return () => {
-      close(false);
-    };
-  }, [close, open]);
+    const handleEditorKeyDown = useCallback(
+      (event) => {
+        if (event.key === 'Escape') {
+          handleCancel();
+        } else if (event.ctrlKey && event.key === 'Enter') {
+          handleSubmit();
+        }
+      },
+      [handleCancel, handleSubmit],
+    );
 
-  return (
-    <>
-      <MDEditor
-        value={value}
-        ref={(node) => {
-          if (node && node.textarea) {
-            textareaRef.current = node.textarea;
-          }
-        }}
-        onChange={setValue}
-        onBlur={handleBlur}
-        height={Math.min(Math.max(descriptionHeight + 0.31 * descriptionHeight, 200), 650)}
-        onKeyDown={handleEditorKeyDown}
-        preview="edit"
-        textareaProps={{
-          placeholder: t('common.enterDescription'),
-          spellCheck: 'true',
-        }}
-        previewOptions={{
-          remarkPlugins,
-          rehypePlugins,
-        }}
-        commands={[...commands.getCommands(), commands.divider, commands.issue]}
-        // TODO add mention
-        // TODO add fukll functionality to mention and issue
-      />
-      <div className={gStyles.controls}>
-        <Button negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} />
-        <Button positive content={t('action.save')} className={gStyles.submitButton} onClick={handleSubmit} />
-      </div>
-    </>
-  );
-});
+    useEffect(() => {
+      open();
+      return () => {
+        close(false);
+      };
+    }, [close, open]);
+
+    const coloredText = useCallback((color) => {
+      return {
+        name: `${color}Color`,
+        keyCommand: `${color}Color`,
+        prefix: `<!--${color}-->`,
+        suffix: `<!--${color}-end-->`,
+        buttonProps: { 'aria-label': `Add ${color} text`, title: `Add ${color} text` },
+        icon: <div style={{ fontSize: 14, textAlign: 'left', color }}>{color}</div>,
+        execute: (state, api) => {
+          const newSelectionRange = selectWord({
+            text: state.text,
+            selection: state.selection,
+            prefix: state.command.prefix,
+            suffix: state.command.suffix,
+          });
+          const state1 = api.setSelectionRange(newSelectionRange);
+          executeCommand({
+            api,
+            selectedText: state1.selectedText,
+            selection: state.selection,
+            prefix: state.command.prefix,
+            suffix: state.command.suffix,
+          });
+        },
+      };
+    }, []);
+
+    return (
+      <>
+        <MDEditor
+          value={value}
+          ref={(node) => {
+            if (node && node.textarea) {
+              textareaRef.current = node.textarea;
+            }
+          }}
+          onChange={setValue}
+          onBlur={handleBlur}
+          height={Math.min(Math.max(descriptionHeight + 0.31 * descriptionHeight, 200), 650)}
+          onKeyDown={handleEditorKeyDown}
+          preview="edit"
+          textareaProps={{
+            placeholder: t('common.enterDescription'),
+            spellCheck: 'true',
+          }}
+          previewOptions={{
+            remarkPlugins,
+            rehypePlugins,
+          }}
+          commands={[
+            ...commands.getCommands(),
+            commands.divider,
+            commands.issue,
+            commands.group(
+              availableColors.map((color) => coloredText(color)),
+              {
+                name: 'color',
+                groupName: 'color',
+                buttonProps: { 'aria-label': 'Add colored text', title: 'Add colored text' },
+                icon: <FontAwesomeIcon icon={faFillDrip} width="13" height="13" />,
+              },
+            ),
+          ]}
+          // TODO add mention
+          // TODO add full functionality to mention and issue
+        />
+        <div className={gStyles.controls}>
+          <Button negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} />
+          <Button positive content={t('action.save')} className={gStyles.submitButton} onClick={handleSubmit} />
+        </div>
+      </>
+    );
+  },
+);
 
 // const focusCommand = {
 //   name: 'unordered-list',
@@ -172,6 +216,7 @@ DescriptionEdit.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   cardId: PropTypes.string.isRequired,
   descriptionHeight: PropTypes.number.isRequired,
+  availableColors: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   rehypePlugins: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

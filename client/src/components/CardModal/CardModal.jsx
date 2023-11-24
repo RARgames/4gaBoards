@@ -451,7 +451,7 @@ const CardModal = React.memo(
         let currentColorClass = null;
         visit(tree, (node, index, parent) => {
           if (node.type === 'comment') {
-            const commentContent = node.value.trim().split(' ');
+            const commentContent = node.value.trim().split('-');
             const colorIndex = colorNames.indexOf(commentContent[0]);
             if (colorIndex !== -1) {
               currentColorClass = commentContent[1] === 'end' ? null : colorNames[colorIndex];
@@ -584,6 +584,7 @@ const CardModal = React.memo(
         onLocalDescChange={handleLocalDescChange}
         onClose={handleDescClose}
         descriptionHeight={descriptionHeight}
+        availableColors={colorNames}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
         rehypePlugins={rehypePlugins}
