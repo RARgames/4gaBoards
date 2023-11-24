@@ -10,7 +10,7 @@ import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 // eslint-disable-next-line no-unused-vars
-const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
+const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(undefined);
   const textareaRef = useRef(null);
@@ -123,8 +123,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
         }}
         onChange={setValue}
         onBlur={handleBlur}
-        height={400}
-        maxHeight={650}
+        height={Math.min(Math.max(descriptionHeight + 0.31 * descriptionHeight, 200), 650)}
         onKeyDown={handleEditorKeyDown}
         preview="edit"
         textareaProps={{
@@ -172,6 +171,7 @@ DescriptionEdit.propTypes = {
   defaultValue: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   cardId: PropTypes.string.isRequired,
+  descriptionHeight: PropTypes.number.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   rehypePlugins: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

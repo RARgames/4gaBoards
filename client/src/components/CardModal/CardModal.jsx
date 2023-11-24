@@ -97,6 +97,8 @@ const CardModal = React.memo(
     const dropdown = useRef(null);
     const tasksRef = useRef(null);
     const descEditRef = useRef(null);
+    const descriptionEditButtonRef = useRef(null);
+    const [descriptionHeight, setDescriptionHeight] = useState(0);
     const [unsavedDesc, setUnsavedDesc] = useState(false);
     const [, getLocalDesc] = useLocalStorage(`desc-${id}`);
     const [isDescOpened, setIsDescOpened] = useState(false);
@@ -218,6 +220,9 @@ const CardModal = React.memo(
     }, [isDescOpened]);
 
     const handleDescClick = useCallback((e) => {
+      if (descriptionEditButtonRef.current) {
+        setDescriptionHeight(descriptionEditButtonRef.current.offsetHeight);
+      }
       if (e.ctrlKey) {
         // TODO add check for clicking toolbar buttons/copy code button
         return;
@@ -561,7 +566,7 @@ const CardModal = React.memo(
     const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
 
     const descriptionEditOpenNode = description ? (
-      <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)} onClick={handleDescClick}>
+      <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)} onClick={handleDescClick} ref={descriptionEditButtonRef}>
         <MDEditor.Markdown source={description} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} />
       </button>
     ) : (
@@ -578,6 +583,7 @@ const CardModal = React.memo(
         cardId={id}
         onLocalDescChange={handleLocalDescChange}
         onClose={handleDescClose}
+        descriptionHeight={descriptionHeight}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
         rehypePlugins={rehypePlugins}
