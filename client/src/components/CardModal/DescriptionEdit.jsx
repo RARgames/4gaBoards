@@ -132,9 +132,8 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, isGi
           spellCheck: 'true',
         }}
         previewOptions={{
-          linkTarget: '_blank',
-          rehypePlugins,
           remarkPlugins,
+          rehypePlugins,
         }}
         commands={[...commands.getCommands(), commands.divider, commands.issue]}
         // TODO add mention

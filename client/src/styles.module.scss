@@ -2,7 +2,72 @@
   #app {
     background: #22252a;
 
-    // TODO quick fix - change react md editor style
+    // TODO quick fix - change react md editor style, move to separate file
+    // TODO move color classes
+    .black {
+      color: #000000;
+    }
+
+    .silver {
+      color: #C0C0C0;
+    }
+
+    .grey {
+      color: #808080;
+    }
+
+    .white {
+      color: #FFFFFF;
+    }
+
+    .maroon {
+      color: #800000;
+    }
+
+    .red {
+      color: #FF0000;
+    }
+
+    .purple {
+      color: #800080;
+    }
+
+    .fuchsia {
+      color: #FF00FF;
+    }
+
+    .green {
+      color: #008000;
+    }
+
+    .lime {
+      color: #00FF00;
+    }
+
+    .olive {
+      color: #808000;
+    }
+
+    .yellow {
+      color: #FFFF00;
+    }
+
+    .navy {
+      color: #000080;
+    }
+
+    .blue {
+      color: #0000FF;
+    }
+
+    .teal {
+      color: #008080;
+    }
+
+    .aqua {
+      color: #00FFFF;
+    }
+
     .w-md-editor {
       padding-bottom: 0;
     }
@@ -55,7 +120,13 @@
     .wmde-markdown>ul {
       white-space: normal;
       line-height: 15px;
-      padding-left: 1em;
+      padding-left: 0.8em;
+    }
+
+    ul.contains-task-list {
+      white-space: normal;
+      line-height: 15px;
+      padding-left: 1.3em;
     }
 
     .wmde-markdown>ul>li {
@@ -65,16 +136,11 @@
     .wmde-markdown>ol {
       white-space: normal;
       line-height: 15px;
-      padding-left: 1.5em;
+      padding-left: 1em;
     }
 
     .wmde-markdown>ol>li {
       white-space: pre-wrap;
-    }
-
-    //TODO verify in Firefox later: https://connect.mozilla.org/t5/ideas/when-is-has-css-selector-going-to-be-fully-implemented-in/idi-p/23794
-    .wmde-markdown>ul:has(> li.task-list-item) {
-      padding-left: 0em;
     }
 
     .wmde-markdown>hr {
