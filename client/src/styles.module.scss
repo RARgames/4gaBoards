@@ -117,13 +117,17 @@
       white-space: pre-wrap;
     }
 
+    .wmde-markdown>ul>li>p {
+      margin-top: 0px;
+    }
+
     .wmde-markdown>ul {
       white-space: normal;
       line-height: 15px;
       padding-left: 0.8em;
     }
 
-    ul.contains-task-list {
+    .wmde-markdown>ul.contains-task-list {
       white-space: normal;
       line-height: 15px;
       padding-left: 1.3em;
