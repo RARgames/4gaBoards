@@ -456,14 +456,6 @@ const CardModal = React.memo(
           }
 
           if (currentColorClass !== null) {
-            // TODO legacy remove later
-            // if (node.type === 'element' && node.children && node.children.length > 0) {
-            //   // eslint-disable-next-line no-param-reassign
-            //   node.properties = {
-            //     ...(node.properties || {}),
-            //     className: currentColorClass,
-            //   };
-            // } else
             if (node.type === 'text' && node.value !== '\n') {
               // eslint-disable-next-line no-param-reassign
               parent.children[index] = {
@@ -475,10 +467,8 @@ const CardModal = React.memo(
             }
           }
         });
-
         return tree;
       }
-
       return transformer;
     }
 
@@ -532,10 +522,8 @@ const CardModal = React.memo(
             ];
           }
         });
-
         return tree;
       }
-
       return transformer;
     }
 
