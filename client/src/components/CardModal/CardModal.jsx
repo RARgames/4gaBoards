@@ -125,12 +125,8 @@ const CardModal = React.memo(
       [onUpdate],
     );
 
-    const handleLocalDescChange = useCallback((desc) => {
-      if (desc) {
-        setUnsavedDesc(true);
-      } else {
-        setUnsavedDesc(false);
-      }
+    const handleLocalDescChange = useCallback((isLocallyChanged) => {
+      setUnsavedDesc(isLocallyChanged);
     }, []);
 
     const handleDueDateUpdate = useCallback(
@@ -224,7 +220,6 @@ const CardModal = React.memo(
         setDescriptionHeight(descriptionEditButtonRef.current.offsetHeight);
       }
       if (e.ctrlKey) {
-        // TODO add check for clicking toolbar buttons/copy code button
         return;
       }
       setIsDescOpened(true);
@@ -232,6 +227,7 @@ const CardModal = React.memo(
 
     const handleDescClose = useCallback(() => {
       setIsDescOpened(false);
+      setUnsavedDesc(false);
     }, []);
 
     // eslint-disable-next-line consistent-return

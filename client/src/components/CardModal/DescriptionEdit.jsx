@@ -22,9 +22,8 @@ const DescriptionEdit = React.forwardRef(
     const setLocalDescription = useCallback(
       (desc) => {
         setLocalValue(desc);
-        onLocalDescChange(desc);
       },
-      [onLocalDescChange, setLocalValue],
+      [setLocalValue],
     );
 
     // eslint-disable-next-line consistent-return
@@ -66,11 +65,6 @@ const DescriptionEdit = React.forwardRef(
       [focus],
     );
 
-    const isChanged = useCallback(() => {
-      const cleanValue = value.trim() || null;
-      return cleanValue !== defaultValue;
-    }, [defaultValue, value]);
-
     const handleSubmit = useCallback(() => {
       const cleanValue = value.trim() || null;
       if (cleanValue !== defaultValue) {
@@ -86,16 +80,24 @@ const DescriptionEdit = React.forwardRef(
     }, [close]);
 
     const handleBlur = useCallback(() => {
-      if (!isChanged()) {
-        setLocalDescription(null);
-        handleCancel();
-      } else if (value) {
-        const cleanValue = value.trim() || null;
-        if (cleanValue !== getLocalValue()) {
+      const cleanValue = value.trim() || null;
+      if (cleanValue !== getLocalValue()) {
+        if (cleanValue !== defaultValue) {
           setLocalDescription(cleanValue);
+        } else {
+          setLocalDescription(null);
         }
       }
-    }, [isChanged, value, handleCancel, getLocalValue, setLocalDescription]);
+    }, [value, getLocalValue, defaultValue, setLocalDescription]);
+
+    const handleChange = useCallback(
+      (newValue) => {
+        setValue(newValue);
+        const cleanValue = newValue.trim() || null;
+        onLocalDescChange(cleanValue !== getLocalValue() && cleanValue !== defaultValue);
+      },
+      [defaultValue, getLocalValue, onLocalDescChange],
+    );
 
     const handleEditorKeyDown = useCallback(
       (event) => {
@@ -151,7 +153,7 @@ const DescriptionEdit = React.forwardRef(
               textareaRef.current = node.textarea;
             }
           }}
-          onChange={setValue}
+          onChange={handleChange}
           onBlur={handleBlur}
           height={Math.min(Math.max(descriptionHeight + 0.31 * descriptionHeight, 200), 650)}
           onKeyDown={handleEditorKeyDown}

@@ -102,7 +102,7 @@ export default {
       leaveProject_title: 'Leave Project',
       list: 'List',
       listActions_title: 'List Actions',
-      unsavedChanges: 'Unsaved changes',
+      unsavedChanges: 'Local changes',
       managers: 'Managers',
       members: 'Members',
       minutes: 'Minutes',

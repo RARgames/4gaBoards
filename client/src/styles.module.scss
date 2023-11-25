@@ -75,6 +75,10 @@
       border-radius: 2px;
     }
 
+    .w-md-editor-text {
+      min-height: 100% !important;
+    }
+
     .w-md-editor-text-input {
       &::selection {
         color: var(--textColorWhite);
