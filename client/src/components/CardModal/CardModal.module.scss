@@ -41,11 +41,11 @@
     display: inline-block;
     margin: 0 3px 4px 0;
     max-width: 100%;
+    max-height: 28px;
   }
 
   .attachments {
     display: inline-block;
-    margin: 0 0 2px 0;
     max-width: 100%;
     vertical-align: top;
   }
@@ -90,6 +90,14 @@
     }
   }
 
+  .hr {
+    border-width: 1px;
+    border-color: var(--nodeOutline);
+  }
+
+  .iconButtonToggle {
+    float: right;
+  }
 
   //TODO standarized starts here - recheck
   .mainContainer {
@@ -102,7 +110,7 @@
 
   .moduleContainer {
     position: relative;
-    padding: 3px 15px 0 15px;
+    padding: 0 15px 0 15px;
   }
 
   .header {
@@ -111,6 +119,7 @@
     top: 0;
     z-index: 1;
     padding: 15px 15px 12px 15px;
+    margin-bottom: 6px;
   }
 
   .headerTitle {
@@ -156,14 +165,13 @@
   }
 
   .subscribeButton {
-    padding: 2px 6px 0px 6px;
-    margin: 3px 0;
+    padding: 0px 6px 0px 6px;
     width: 95px;
     min-height: 28px;
   }
 
   .contentModule {
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
   }
 
   .moduleIcon {
@@ -184,9 +192,8 @@
     font-size: 16px;
     font-weight: bold;
     line-height: 20px;
-    margin: 0 0 4px;
+    margin: 0 0 6px;
     padding: 6px 0 0 0;
-    display: inline-block;
   }
 
   .moduleBody {

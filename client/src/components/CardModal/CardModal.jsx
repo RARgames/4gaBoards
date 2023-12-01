@@ -31,6 +31,7 @@ import TimerEditPopup from '../TimerEditPopup';
 import DeletePopup from '../DeletePopup';
 import ActionsPopup from '../Card/ActionsPopup';
 import { useLocalStorage } from '../../hooks';
+import { useToggle } from '../../lib/hooks';
 
 import styles from './CardModal.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -55,6 +56,8 @@ const CardModal = React.memo(
     tasks,
     attachments,
     activities,
+    expandedNodes,
+    descriptionMode,
     isGithubConnected,
     githubRepo,
     allProjectsToLists,
@@ -102,6 +105,10 @@ const CardModal = React.memo(
     const [unsavedDesc, setUnsavedDesc] = useState(false);
     const [, getLocalDesc] = useLocalStorage(`desc-${id}`);
     const [isDescOpened, setIsDescOpened] = useState(false);
+    const [descShown, toggleDescShown] = useToggle(expandedNodes.desc);
+    const [tasksShown, toggleTasksShown] = useToggle(expandedNodes.tasks);
+    const [attacShown, toggleAttacShown] = useToggle(expandedNodes.attac);
+    const [commShown, toggleCommShown] = useToggle(expandedNodes.comm);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
@@ -177,10 +184,14 @@ const CardModal = React.memo(
     }, [isSubscribed, onUpdate]);
 
     const handleTaskAddOpen = useCallback(() => {
-      if (tasksRef.current) {
-        tasksRef.current.open();
+      if (!tasksShown) {
+        toggleTasksShown();
       }
-    }, []);
+      const timeout = setTimeout(() => {
+        tasksRef.current?.open();
+      }, 0);
+      return () => clearTimeout(timeout);
+    }, [tasksShown, toggleTasksShown]);
 
     const handleNameEdit = useCallback(() => {
       nameField.current.open();
@@ -208,12 +219,15 @@ const CardModal = React.memo(
     }, [canEdit]);
 
     const handleDescButtonClick = useCallback(() => {
+      if (!descShown) {
+        toggleDescShown();
+      }
       if (!isDescOpened) {
         setIsDescOpened(true);
       } else if (descEditRef.current) {
         descEditRef.current.focus();
       }
-    }, [isDescOpened]);
+    }, [descShown, isDescOpened, toggleDescShown]);
 
     const handleDescClick = useCallback((e) => {
       if (descriptionEditButtonRef.current) {
@@ -232,7 +246,7 @@ const CardModal = React.memo(
 
     // eslint-disable-next-line consistent-return
     useEffect(() => {
-      // TODO here reset state of all inner components
+      // TODO here reset state of all inner components (tasks, comments)
       setUnsavedDesc(false);
       setIsDescOpened(false);
       if (getLocalDesc()) {
@@ -581,6 +595,7 @@ const CardModal = React.memo(
         onClose={handleDescClose}
         descriptionHeight={descriptionHeight}
         availableColors={colorNames}
+        descriptionMode={descriptionMode}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
         rehypePlugins={rehypePlugins}
@@ -592,8 +607,8 @@ const CardModal = React.memo(
 
     const descriptionNode = (description || canEdit) && (
       <div className={styles.contentModule}>
-        <FontAwesomeIcon icon={faBarsStaggered} className={styles.moduleIconFA} />
         <div className={styles.moduleHeader}>
+          <FontAwesomeIcon icon={faBarsStaggered} className={styles.moduleIconFA} />
           {t('common.description')}
           {canEdit && (
             <Button onClick={handleDescButtonClick} className={gStyles.iconButtonSolid}>
@@ -601,11 +616,13 @@ const CardModal = React.memo(
             </Button>
           )}
           {canEdit && unsavedDesc && <span className={styles.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
+          <Button onClick={toggleDescShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
+            <Icon fitted size="small" name={descShown ? 'minus' : 'add'} />
+          </Button>
         </div>
         <div className={styles.moduleBody}>
-          {canEdit ? (
-            descriptionEditNode
-          ) : (
+          {descShown && canEdit && descriptionEditNode}
+          {descShown && !canEdit && (
             <div className={styles.descriptionText}>
               <MDEditor.Markdown source={description} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} />
             </div>
@@ -616,40 +633,59 @@ const CardModal = React.memo(
 
     const tasksNode = (tasks.length > 0 || canEdit) && (
       <div className={styles.contentModule}>
-        <Icon name="check" className={styles.moduleIcon} />
         <div className={styles.moduleHeader}>
+          <Icon name="check" className={styles.moduleIcon} />
           {t('common.tasks')}
           {canEdit && (
             <Button onClick={handleTaskAddOpen} className={gStyles.iconButtonSolid}>
               <Icon fitted size="small" name="add" />
             </Button>
           )}
+          <Button onClick={toggleTasksShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
+            <Icon fitted size="small" name={tasksShown ? 'minus' : 'add'} />
+          </Button>
         </div>
         <div className={styles.moduleBody}>
-          <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />
+          {tasksShown && <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />}
         </div>
       </div>
     );
 
     const attachmentsNode = (
       <div className={styles.contentModule}>
-        <Icon name="attach" className={styles.moduleIcon} />
-        <div className={styles.moduleHeader}>{t('common.attachments')}</div>
+        <div className={styles.moduleHeader}>
+          <Icon name="attach" className={styles.moduleIcon} />
+          {t('common.attachments')}
+          {canEdit && (
+            <AttachmentAddPopup onCreate={onAttachmentCreate}>
+              <Button className={gStyles.iconButtonSolid}>
+                <Icon fitted size="small" name="add" />
+              </Button>
+            </AttachmentAddPopup>
+          )}
+          <Button onClick={toggleAttacShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
+            <Icon fitted size="small" name={attacShown ? 'minus' : 'add'} />
+          </Button>
+        </div>
         <div className={styles.moduleBody}>
-          <Attachments
-            items={attachments}
-            canEdit={canEdit}
-            onUpdate={onAttachmentUpdate}
-            onDelete={onAttachmentDelete}
-            onCoverUpdate={handleCoverUpdate}
-            onGalleryOpen={handleGalleryOpen}
-            onGalleryClose={handleGalleryClose}
-          />
-          <AttachmentAddPopup onCreate={onAttachmentCreate}>
-            <Button fluid className={styles.actionButton}>
-              {t('common.addAttachment', { context: 'title' })}
-            </Button>
-          </AttachmentAddPopup>
+          {attacShown && (
+            <>
+              <Attachments
+                items={attachments}
+                canEdit={canEdit}
+                onUpdate={onAttachmentUpdate}
+                onDelete={onAttachmentDelete}
+                onCoverUpdate={handleCoverUpdate}
+                onGalleryOpen={handleGalleryOpen}
+                onGalleryClose={handleGalleryClose}
+              />
+              <AttachmentAddPopup onCreate={onAttachmentCreate}>
+                <Button fluid className={styles.actionButton}>
+                  {t('common.addAttachment', { context: 'title' })}
+                </Button>
+              </AttachmentAddPopup>
+            </>
+          )}
         </div>
       </div>
     );
@@ -668,6 +704,8 @@ const CardModal = React.memo(
         onCommentCreate={onCommentActivityCreate}
         onCommentUpdate={onCommentActivityUpdate}
         onCommentDelete={onCommentActivityDelete}
+        toggleCommShown={toggleCommShown}
+        commShown={commShown}
       />
     );
 
@@ -680,11 +718,24 @@ const CardModal = React.memo(
           {dueDateNode}
           {timerNode}
           {subscribeNode}
+          <hr className={styles.hr} />
         </div>
-        <div className={styles.moduleContainer}>{descriptionNode}</div>
-        <div className={styles.moduleContainer}>{tasksNode}</div>
-        <div className={styles.moduleContainer}>{attachmentsNode}</div>
-        <div className={styles.moduleContainer}>{activitiesNode}</div>
+        <div className={styles.moduleContainer}>
+          {descriptionNode}
+          <hr className={styles.hr} />
+        </div>
+        <div className={styles.moduleContainer}>
+          {tasksNode}
+          <hr className={styles.hr} />
+        </div>
+        <div className={styles.moduleContainer}>
+          {attachmentsNode}
+          <hr className={styles.hr} />
+        </div>
+        <div className={styles.moduleContainer}>
+          {activitiesNode}
+          <hr className={styles.hr} />
+        </div>
       </div>
     );
 
@@ -712,6 +763,8 @@ CardModal.propTypes = {
   tasks: PropTypes.array.isRequired,
   attachments: PropTypes.array.isRequired,
   activities: PropTypes.array.isRequired,
+  expandedNodes: PropTypes.object.isRequired,
+  descriptionMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,

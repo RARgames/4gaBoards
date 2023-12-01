@@ -25,6 +25,9 @@ const mapStateToProps = (state) => {
   const tasks = selectors.selectTasksForCurrentCard(state);
   const attachments = selectors.selectAttachmentsForCurrentCard(state);
   const activities = selectors.selectActivitiesForCurrentCard(state);
+  const expandedNodes = { desc: false, tasks: false, attac: false, comm: false }; // TODO implement getting from db
+  const descriptionMode = 'live'; // TODO implement getting from db
+  // TODO on change implement saving to db (CardModal, DescriptionEdit)
   const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
 
   let isCurrentUserEditor = false;
@@ -54,6 +57,8 @@ const mapStateToProps = (state) => {
     tasks,
     attachments,
     activities,
+    expandedNodes,
+    descriptionMode,
     isGithubConnected,
     githubRepo,
     allProjectsToLists,
@@ -68,6 +73,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      // TODO here create onPrefsUpdate
       onUpdate: entryActions.updateCurrentCard,
       onMove: entryActions.moveCurrentCard,
       onTransfer: entryActions.transferCurrentCard,

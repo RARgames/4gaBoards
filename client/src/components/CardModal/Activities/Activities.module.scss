@@ -6,16 +6,18 @@
   .toggleButton {
     background: transparent;
     box-shadow: none;
-    color: var(--textColor2);
+    color: var(--textColor1);
     float: right;
     font-weight: normal;
     margin-right: 0;
-    padding: 6px 0 6px 6px;
+    padding: 0;
+    height: 20px;
+    min-height: 20px;
     text-align: left;
     transition: none;
 
     &:hover {
-      color: var(--textColor3);
+      color: var(--textColor2);
     }
   }
 }

@@ -13,7 +13,7 @@ import gStyles from '../../globalStyles.module.scss';
 
 // eslint-disable-next-line no-unused-vars
 const DescriptionEdit = React.forwardRef(
-  ({ defaultValue, onUpdate, cardId, descriptionHeight, availableColors, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
+  ({ defaultValue, onUpdate, cardId, descriptionHeight, availableColors, descriptionMode, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
     const [t] = useTranslation();
     const [value, setValue] = useState(undefined);
     const textareaRef = useRef(null);
@@ -32,7 +32,7 @@ const DescriptionEdit = React.forwardRef(
         textareaRef.current.focus();
       } else {
         const timeout = setTimeout(() => {
-          textareaRef.current.focus();
+          textareaRef.current?.focus();
         }, 0);
         return () => clearTimeout(timeout);
       }
@@ -157,7 +157,7 @@ const DescriptionEdit = React.forwardRef(
           onBlur={handleBlur}
           height={Math.min(Math.max(descriptionHeight + 0.31 * descriptionHeight, 200), 650)}
           onKeyDown={handleEditorKeyDown}
-          preview="edit"
+          preview={descriptionMode}
           textareaProps={{
             placeholder: t('common.enterDescription'),
             spellCheck: 'true',
@@ -219,6 +219,7 @@ DescriptionEdit.propTypes = {
   cardId: PropTypes.string.isRequired,
   descriptionHeight: PropTypes.number.isRequired,
   availableColors: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  descriptionMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   rehypePlugins: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
