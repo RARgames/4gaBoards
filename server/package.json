@@ -39,7 +39,7 @@
     "rimraf": "^3.0.2",
     "sails": "^1.5.7",
     "sails-hook-orm": "^4.0.2",
-    "sails-hook-sockets": "^2.0.3",
+    "sails-hook-sockets": "^2.0.4",
     "sails-postgresql-redacted": "^1.0.2-9",
     "sharp": "^0.32.6",
     "stream-to-array": "^2.3.0",
@@ -54,7 +54,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "mocha": "^10.1.0",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.0.2",
     "supertest": "^6.3.1"
   },
   "engines": {
