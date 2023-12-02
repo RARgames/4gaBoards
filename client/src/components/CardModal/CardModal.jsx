@@ -56,8 +56,12 @@ const CardModal = React.memo(
     tasks,
     attachments,
     activities,
-    expandedNodes,
     descriptionMode,
+    descriptionShown,
+    tasksShown,
+    attachmentsShown,
+    commentsShown,
+    userId,
     isGithubConnected,
     githubRepo,
     allProjectsToLists,
@@ -66,6 +70,7 @@ const CardModal = React.memo(
     canEdit,
     canEditCommentActivities,
     canEditAllCommentActivities,
+    onUserUpdate,
     onUpdate,
     onMove,
     onTransfer,
@@ -105,14 +110,50 @@ const CardModal = React.memo(
     const [unsavedDesc, setUnsavedDesc] = useState(false);
     const [, getLocalDesc] = useLocalStorage(`desc-${id}`);
     const [isDescOpened, setIsDescOpened] = useState(false);
-    const [descShown, toggleDescShown] = useToggle(expandedNodes.desc);
-    const [tasksShown, toggleTasksShown] = useToggle(expandedNodes.tasks);
-    const [attacShown, toggleAttacShown] = useToggle(expandedNodes.attac);
-    const [commShown, toggleCommShown] = useToggle(expandedNodes.comm);
+    const [descShown, toggleDescShown] = useToggle(descriptionShown);
+    const [taskShown, toggleTasksShown] = useToggle(tasksShown);
+    const [attacShown, toggleAttacShown] = useToggle(attachmentsShown);
+    const [commShown, toggleCommShown] = useToggle(commentsShown);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
+
+    const handleToggleDescShown = useCallback(() => {
+      toggleDescShown();
+      // TODO hacky way to update UI faster
+      const timeout = setTimeout(() => {
+        onUserUpdate(userId, { descriptionShown: !descShown });
+      }, 0);
+      return () => clearTimeout(timeout);
+    }, [descShown, onUserUpdate, toggleDescShown, userId]);
+
+    const handleToggleTasksShown = useCallback(() => {
+      toggleTasksShown();
+      // TODO hacky way to update UI faster
+      const timeout = setTimeout(() => {
+        onUserUpdate(userId, { tasksShown: !taskShown });
+      }, 0);
+      return () => clearTimeout(timeout);
+    }, [onUserUpdate, taskShown, toggleTasksShown, userId]);
+
+    const handleToggleAttacShown = useCallback(() => {
+      toggleAttacShown();
+      // TODO hacky way to update UI faster
+      const timeout = setTimeout(() => {
+        onUserUpdate(userId, { attachmentsShown: !attacShown });
+      }, 0);
+      return () => clearTimeout(timeout);
+    }, [attacShown, onUserUpdate, toggleAttacShown, userId]);
+
+    const handleToggleCommShown = useCallback(() => {
+      toggleCommShown();
+      // TODO hacky way to update UI faster
+      const timeout = setTimeout(() => {
+        onUserUpdate(userId, { commentsShown: !commShown });
+      }, 0);
+      return () => clearTimeout(timeout);
+    }, [commShown, onUserUpdate, toggleCommShown, userId]);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -184,14 +225,14 @@ const CardModal = React.memo(
     }, [isSubscribed, onUpdate]);
 
     const handleTaskAddOpen = useCallback(() => {
-      if (!tasksShown) {
-        toggleTasksShown();
+      if (!taskShown) {
+        handleToggleTasksShown();
       }
       const timeout = setTimeout(() => {
         tasksRef.current?.open();
       }, 0);
       return () => clearTimeout(timeout);
-    }, [tasksShown, toggleTasksShown]);
+    }, [handleToggleTasksShown, taskShown]);
 
     const handleNameEdit = useCallback(() => {
       nameField.current.open();
@@ -220,14 +261,14 @@ const CardModal = React.memo(
 
     const handleDescButtonClick = useCallback(() => {
       if (!descShown) {
-        toggleDescShown();
+        handleToggleDescShown();
       }
       if (!isDescOpened) {
         setIsDescOpened(true);
       } else if (descEditRef.current) {
         descEditRef.current.focus();
       }
-    }, [descShown, isDescOpened, toggleDescShown]);
+    }, [descShown, handleToggleDescShown, isDescOpened]);
 
     const handleDescClick = useCallback((e) => {
       if (descriptionEditButtonRef.current) {
@@ -596,6 +637,8 @@ const CardModal = React.memo(
         descriptionHeight={descriptionHeight}
         availableColors={colorNames}
         descriptionMode={descriptionMode}
+        userId={userId}
+        onUserUpdate={onUserUpdate}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
         rehypePlugins={rehypePlugins}
@@ -616,7 +659,7 @@ const CardModal = React.memo(
             </Button>
           )}
           {canEdit && unsavedDesc && <span className={styles.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
-          <Button onClick={toggleDescShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
+          <Button onClick={handleToggleDescShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
             <Icon fitted size="small" name={descShown ? 'minus' : 'add'} />
           </Button>
         </div>
@@ -641,12 +684,12 @@ const CardModal = React.memo(
               <Icon fitted size="small" name="add" />
             </Button>
           )}
-          <Button onClick={toggleTasksShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
-            <Icon fitted size="small" name={tasksShown ? 'minus' : 'add'} />
+          <Button onClick={handleToggleTasksShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
+            <Icon fitted size="small" name={taskShown ? 'minus' : 'add'} />
           </Button>
         </div>
         <div className={styles.moduleBody}>
-          {tasksShown && <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />}
+          {taskShown && <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />}
         </div>
       </div>
     );
@@ -663,7 +706,7 @@ const CardModal = React.memo(
               </Button>
             </AttachmentAddPopup>
           )}
-          <Button onClick={toggleAttacShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
+          <Button onClick={handleToggleAttacShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
             <Icon fitted size="small" name={attacShown ? 'minus' : 'add'} />
           </Button>
         </div>
@@ -704,7 +747,7 @@ const CardModal = React.memo(
         onCommentCreate={onCommentActivityCreate}
         onCommentUpdate={onCommentActivityUpdate}
         onCommentDelete={onCommentActivityDelete}
-        toggleCommShown={toggleCommShown}
+        toggleCommShown={handleToggleCommShown}
         commShown={commShown}
       />
     );
@@ -763,8 +806,12 @@ CardModal.propTypes = {
   tasks: PropTypes.array.isRequired,
   attachments: PropTypes.array.isRequired,
   activities: PropTypes.array.isRequired,
-  expandedNodes: PropTypes.object.isRequired,
   descriptionMode: PropTypes.string.isRequired,
+  descriptionShown: PropTypes.bool.isRequired,
+  tasksShown: PropTypes.bool.isRequired,
+  attachmentsShown: PropTypes.bool.isRequired,
+  commentsShown: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
@@ -774,6 +821,7 @@ CardModal.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   canEditCommentActivities: PropTypes.bool.isRequired,
   canEditAllCommentActivities: PropTypes.bool.isRequired,
+  onUserUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,

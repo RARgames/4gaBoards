@@ -42,6 +42,23 @@ module.exports = {
     subscribeToOwnCards: {
       type: 'boolean',
     },
+    descriptionMode: {
+      type: 'string',
+      isIn: User.DESCRIPTION_MODES,
+      isNotEmptyString: true,
+    },
+    descriptionShown: {
+      type: 'boolean',
+    },
+    tasksShown: {
+      type: 'boolean',
+    },
+    attachmentsShown: {
+      type: 'boolean',
+    },
+    commentsShown: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -68,7 +85,7 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'language', 'subscribeToOwnCards']),
+      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'language', 'subscribeToOwnCards', 'descriptionMode', 'descriptionShown', 'tasksShown', 'attachmentsShown', 'commentsShown']),
       avatar: inputs.avatarUrl,
     };
 

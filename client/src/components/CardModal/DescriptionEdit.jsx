@@ -13,7 +13,25 @@ import gStyles from '../../globalStyles.module.scss';
 
 // eslint-disable-next-line no-unused-vars
 const DescriptionEdit = React.forwardRef(
-  ({ defaultValue, onUpdate, cardId, descriptionHeight, availableColors, descriptionMode, isGithubConnected, githubRepo, rehypePlugins, remarkPlugins, onLocalDescChange, onClose }, ref) => {
+  (
+    {
+      defaultValue,
+      onUpdate,
+      cardId,
+      descriptionHeight,
+      availableColors,
+      descriptionMode,
+      isGithubConnected,
+      githubRepo,
+      onUserUpdate,
+      userId,
+      rehypePlugins,
+      remarkPlugins,
+      onLocalDescChange,
+      onClose,
+    },
+    ref,
+  ) => {
     const [t] = useTranslation();
     const [value, setValue] = useState(undefined);
     const textareaRef = useRef(null);
@@ -117,6 +135,17 @@ const DescriptionEdit = React.forwardRef(
       };
     }, [close, open]);
 
+    const handlePreviewUpdate = useCallback(
+      (preview) => {
+        // TODO hacky way to update UI faster
+        const timeout = setTimeout(() => {
+          onUserUpdate(userId, { descriptionMode: preview });
+        }, 0);
+        return () => clearTimeout(timeout);
+      },
+      [onUserUpdate, userId],
+    );
+
     const coloredText = useCallback((color) => {
       return {
         name: `${color}Color`,
@@ -149,8 +178,13 @@ const DescriptionEdit = React.forwardRef(
         <MDEditor
           value={value}
           ref={(node) => {
-            if (node && node.textarea) {
-              textareaRef.current = node.textarea;
+            if (node) {
+              if (node.preview !== descriptionMode) {
+                handlePreviewUpdate(node.preview);
+              }
+              if (node.textarea) {
+                textareaRef.current = node.textarea;
+              }
             }
           }}
           onChange={handleChange}
@@ -222,6 +256,8 @@ DescriptionEdit.propTypes = {
   descriptionMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
+  onUserUpdate: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
   rehypePlugins: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   remarkPlugins: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onLocalDescChange: PropTypes.func.isRequired,

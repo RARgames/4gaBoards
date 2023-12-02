@@ -43,6 +43,11 @@ export default class extends BaseModel {
     organization: attr(),
     language: attr(),
     subscribeToOwnCards: attr(),
+    descriptionMode: attr(),
+    descriptionShown: attr(),
+    tasksShown: attr(),
+    attachmentsShown: attr(),
+    commentsShown: attr(),
     deletedAt: attr(),
     isAdmin: attr({
       getDefault: () => false,

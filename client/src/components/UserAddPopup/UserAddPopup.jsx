@@ -45,6 +45,11 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     password: '',
     name: '',
     username: '',
+    descriptionMode: 'edit',
+    descriptionShown: true,
+    tasksShown: true,
+    attachmentsShown: true,
+    commentsShown: true,
     ...defaultData,
   }));
 

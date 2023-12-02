@@ -53,6 +53,23 @@ module.exports = {
     subscribeToOwnCards: {
       type: 'boolean',
     },
+    descriptionMode: {
+      type: 'string',
+      isIn: User.DESCRIPTION_MODES,
+      isNotEmptyString: true,
+    },
+    descriptionShown: {
+      type: 'boolean',
+    },
+    tasksShown: {
+      type: 'boolean',
+    },
+    attachmentsShown: {
+      type: 'boolean',
+    },
+    commentsShown: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -65,7 +82,21 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const values = _.pick(inputs, ['email', 'password', 'name', 'username', 'phone', 'organization', 'language', 'subscribeToOwnCards']);
+    const values = _.pick(inputs, [
+      'email',
+      'password',
+      'name',
+      'username',
+      'phone',
+      'organization',
+      'language',
+      'subscribeToOwnCards',
+      'descriptionMode',
+      'descriptionShown',
+      'tasksShown',
+      'attachmentsShown',
+      'commentsShown',
+    ]);
 
     const user = await sails.helpers.users.createOne
       .with({
