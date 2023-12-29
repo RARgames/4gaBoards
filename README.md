@@ -44,7 +44,7 @@ curl -L https://raw.githubusercontent.com/RARgames/4gaBoards/main/docker-compose
 Pull images and start services:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 Default url: http://localhost:3000
@@ -127,7 +127,7 @@ cp server/.env.sample server/.env
 Either use a local database or start the provided development database:
 
 ```
-docker-compose -f docker-compose-dev.yml up
+docker compose -f docker-compose-dev.yml up
 ```
 
 Edit `DATABASE_URL` in `server/.env` if needed, then initialize the database:
