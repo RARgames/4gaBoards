@@ -102,6 +102,12 @@ Demo password: demo
 
 ## [Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
 
+## Backup and Restore
+
+To backup your data use: `./boards-backup.sh`.
+
+To restore it use: `./boards-restore.sh 4gaBoards-backup.tgz`.
+
 ## Import from Trello
 
 It's already available in 4ga Boards. Just add a project, then click Import while creating a new board.

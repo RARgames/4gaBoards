@@ -2,7 +2,7 @@ version: '3'
 
 services:
   4gaBoards:
-    image: ghcr.io/rargames/4gaboards:latest
+    image: ghcr.io/rargames/4gaboards:local
     command: >
       bash -c
         "for i in `seq 1 30`; do
