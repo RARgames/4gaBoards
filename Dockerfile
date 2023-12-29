@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY server/package.json server/package-lock.json .
 
-RUN npm install npm@latest --global \
-  && npm clean-install --omit=dev
+RUN npm install npm@latest --global
+RUN npm clean-install --omit=dev --fetch-timeout=60000
 
 FROM node:lts AS client
 
@@ -13,8 +13,8 @@ WORKDIR /app
 
 COPY client/package.json client/package-lock.json .
 
-RUN npm install npm@latest --global \
-  && npm clean-install --omit=dev
+RUN npm install npm@latest --global
+RUN npm clean-install --omit=dev --fetch-timeout=60000
 
 COPY client .
 RUN DISABLE_ESLINT_PLUGIN=true npm run build
