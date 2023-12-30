@@ -31,7 +31,7 @@ RUN apk add bash --no-cache
 USER node
 WORKDIR /app
 
-COPY --chown=node:node start.sh .
+COPY --chown=node:node --chmod=775 start.sh .
 COPY --chown=node:node server .
 
 RUN mv .env.sample .env
