@@ -4,19 +4,19 @@ WORKDIR /app
 
 COPY server/package.json server/package-lock.json .
 
-RUN npm install npm@latest --global
-RUN npm install pnpm --global
+RUN npm install npm@latest --global --no-cache
+RUN npm install pnpm --global --no-cache
 RUN pnpm import
 RUN pnpm install --prod
 
-FROM node:lts AS client
+FROM node:20-alpine AS client
 
 WORKDIR /app
 
 COPY client/package.json client/package-lock.json .
 
-RUN npm install npm@latest --global
-RUN npm install pnpm --global
+RUN npm install npm@latest --global --no-cache
+RUN npm install pnpm --global --no-cache
 RUN pnpm import
 RUN pnpm install --prod
 
