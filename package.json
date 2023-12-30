@@ -15,8 +15,6 @@
     "client:start": "npm start --prefix client",
     "client:test": "npm test --prefix client",
     "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
-    "docker:build:local": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile.local .",
-    "docker:build:base": "docker build -t ghcr.io/rargames/4gaboards:base-local -f Dockerfile.base .",
     "postinstall": "(cd server && npm i && cd ../client && npm i)",
     "lint": "npm run server:lint && npm run client:lint",
     "prepare": "husky install",

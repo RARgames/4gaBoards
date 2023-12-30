@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY server/package.json server/package-lock.json .
 
-RUN exec sh && npm install npm@latest --global
-RUN exec sh && npm install pnpm --global
+RUN npm install npm@latest --global
+RUN npm install pnpm --global
 RUN pnpm import
 RUN pnpm install --prod
 
@@ -15,8 +15,8 @@ WORKDIR /app
 
 COPY client/package.json client/package-lock.json .
 
-RUN exec sh && npm install npm@latest --global
-RUN exec sh && npm install pnpm --global
+RUN npm install npm@latest --global
+RUN npm install pnpm --global
 RUN pnpm import
 RUN pnpm install --prod
 
