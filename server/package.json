@@ -39,7 +39,7 @@
     "rimraf": "^3.0.2",
     "sails": "^1.5.8",
     "sails-hook-orm": "^4.0.2",
-    "sails-hook-sockets": "^2.0.4",
+    "sails-hook-sockets": "^3.0.0",
     "sails-postgresql": "^5.0.1",
     "sharp": "^0.32.6",
     "stream-to-array": "^2.3.0",
