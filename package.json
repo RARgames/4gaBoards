@@ -55,7 +55,7 @@
     }
   },
   "dependencies": {
-    "concurrently": "^7.6.0",
+    "concurrently": "^8.2.2",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.3"
   },
