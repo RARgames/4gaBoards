@@ -29,7 +29,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.0.3",
-    "dotenv-cli": "^6.0.0",
+    "dotenv-cli": "^7.3.0",
     "filenamify": "^4.3.0",
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.4.0",
