@@ -55,7 +55,7 @@
     "eslint-plugin-import": "^2.29.1",
     "mocha": "^10.1.0",
     "nodemon": "^3.0.2",
-    "supertest": "^6.3.1"
+    "supertest": "^6.3.3"
   },
   "engines": {
     "node": "^20.10"
