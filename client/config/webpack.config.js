@@ -16,6 +16,7 @@ const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const UrlReplaceWebpackPlugin = require('./UrlReplaceWebpackPlugin');
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -196,7 +197,7 @@ module.exports = function (webpackEnv) {
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: paths.publicUrlOrPath,
+      publicPath: isEnvProduction ? 'BASE_URL_PLACEHOLDER' : isEnvDevelopment && paths.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
         ? (info) => path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/')
@@ -541,7 +542,12 @@ module.exports = function (webpackEnv) {
       // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
       // It will be an empty string unless you specify "homepage"
       // in `package.json`, in which case it will be the pathname of that URL.
-      new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
+      isEnvDevelopment && new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
+      isEnvProduction &&
+        new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
+          ...env.raw,
+          PUBLIC_URL: 'BASE_URL_PLACEHOLDER',
+        }),
       // This gives some necessary context to module not found errors, such as
       // the requesting resource.
       new ModuleNotFoundPlugin(paths.appPath),
@@ -674,6 +680,7 @@ module.exports = function (webpackEnv) {
             },
           },
         }),
+      new UrlReplaceWebpackPlugin(),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
