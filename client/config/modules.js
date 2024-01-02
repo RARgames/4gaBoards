@@ -102,9 +102,11 @@ function getModules() {
   // based on tsconfig.json
   if (hasTsConfig) {
     // eslint-disable-next-line import/no-dynamic-require, global-require
-    const ts = require(resolve.sync('typescript', {
-      basedir: paths.appNodeModules,
-    }));
+    const ts = require(
+      resolve.sync('typescript', {
+        basedir: paths.appNodeModules,
+      }),
+    );
     config = ts.readConfigFile(paths.appTsConfig, ts.sys.readFile).config;
     // Otherwise we'll check if there is jsconfig.json
     // for non TS projects.
