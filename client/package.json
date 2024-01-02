@@ -133,7 +133,7 @@
     "remark-github": "^11.2.4",
     "reselect": "^4.1.7",
     "resolve": "^1.20.0",
-    "resolve-url-loader": "^4.0.0",
+    "resolve-url-loader": "^5.0.0",
     "sails.io.js": "^1.2.1",
     "sass": "^1.69.5",
     "sass-loader": "^12.3.0",
