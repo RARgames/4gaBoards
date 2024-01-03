@@ -64,11 +64,10 @@ jobs:
     - name: push
       if: steps.increment_version.outputs.new_tag
       run: |
-      new_tag=${{ steps.increment_version.outputs.new_tag }}
       git add .
       git config --local user.email "action@github.com"
       git config --local user.name "GitHub Action"
-      git tag $new_tag
+      git tag ${{ steps.increment_version.outputs.new_tag }}
       git push
       git push --tags
 
@@ -78,8 +77,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.process_tag.outputs.processed_tag }}
-        release_name: 4ga Boards ${{ steps.process_tag.outputs.processed_tag }}
+        tag_name: ${{ steps.increment_version.outputs.new_tag }}
+        release_name: 4ga Boards ${{ steps.increment_version.outputs.new_tag }}
         draft: false
         prerelease: false
         body: |
@@ -87,4 +86,4 @@ jobs:
           ${{ steps.Changelog.outputs.changelog }}
 
           Install this release using:
-          `docker pull ghcr.io/rargames/4gaboards:${{ steps.process_tag.outputs.processed_tag }}`
+          `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.new_tag }}`
