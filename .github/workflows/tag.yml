@@ -18,6 +18,13 @@ jobs:
       id: get-latest-tag
       run: echo "::set-output name=tag::$(git describe --tags `git rev-list --tags --max-count=1`)"
 
+    - name: Process tag
+      id: process_tag
+      run: |
+        raw_tag=${{ steps.get-latest-tag.outputs.tag }}
+        processed_tag=$(echo "$raw_tag" | sed 's/^v//')
+        echo "::set-output name=processed_tag::$processed_tag"
+
     - name: Changelog
       uses: Bullrich/generate-release-changelog@master
       id: Changelog
@@ -25,16 +32,26 @@ jobs:
         REPO: ${{ github.repository }}
 
     - name: Update package.json version
-      run: jq '.version = "'${{ steps.get-latest-tag.outputs.tag }}'"' package.json > temp.json && mv temp.json package.json
+      run: jq '.version = "'${{ steps.process_tag.outputs.processed_tag }}'"' package.json > temp.json && mv temp.json package.json
 
     - name: Update package-lock.json version
-      run: jq '.version = "'${{ steps.get-latest-tag.outputs.tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+      run: jq '.version = "'${{ steps.process_tag.outputs.processed_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
     - name: Update second package-lock.json version
-      run: jq '.packages[]?.version = "'${{ steps.get-latest-tag.outputs.tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+      run: jq '.packages[]?.version = "'${{ steps.process_tag.outputs.processed_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
 
     - name: Update .env version
-      run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.get-latest-tag.outputs.tag }}' >> temp.txt && mv temp.txt client/.env
+      run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION${{ steps.process_tag.outputs.processed_tag }}' >> temp.txt && mv temp.txt client/.env
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        # Optional. Commit message for the created commit.
+        # Defaults to "Apply automatic changes"
+        commit_message: Automated Change - TAGS ${{ steps.process_tag.outputs.processed_tag }}
+        branch: main
+        commit_options: '--no-verify --signoff'
 
     - name: release
       id: create_release
@@ -42,8 +59,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.get-latest-tag.outputs.tag }}
-        release_name: 4ga Boards ${{ steps.get-latest-tag.outputs.tag }}
+        tag_name: ${{ steps.process_tag.outputs.processed_tag }}
+        release_name: 4ga Boards ${{ steps.process_tag.outputs.processed_tag }}
         draft: false
         prerelease: false
         body: |
@@ -51,4 +68,4 @@ jobs:
           ${{ steps.Changelog.outputs.changelog }}
 
           Install this release using:
-          `docker pull ghcr.io/rargames/4gaboards:${{ steps.get-latest-tag.outputs.tag }}`
+          `docker pull ghcr.io/rargames/4gaboards:${{ steps.process_tag.outputs.processed_tag }}`
