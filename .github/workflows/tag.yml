@@ -43,10 +43,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.get-latest-tag.outputs.tag }}
-        release_name: Release ${{ steps.get-latest-tag.outputs.tag }}
+        release_name: 4ga Boards ${{ steps.get-latest-tag.outputs.tag }}
         draft: false
         prerelease: false
         body: |
+          Changes since last release:
           ${{ steps.Changelog.outputs.changelog }}
+
           Install this release using:
           `docker pull ghcr.io/rargames/4gaboards:${{ steps.get-latest-tag.outputs.tag }}`
