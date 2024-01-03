@@ -160,3 +160,4 @@ Demo password: demo
 4ga Boards are [MIT licensed](https://github.com/RARgames/4gaBoards/blob/main/LICENSE).
 
 Project was separated from [Planka](https://github.com/plankanban/planka) by [meltyshev](https://github.com/meltyshev) to preserve the MIT license, change project vision, and add some new features.
+
