@@ -28,18 +28,17 @@ jobs:
       id: increment_version
       run: |
         latest_tag=${{ steps.get-latest-tag.outputs.tag }}
-        commit_message=${{ steps.latest_commit.outputs.message }}
         major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
         minor=$(echo $latest_tag | cut -d. -f2)
         patch=$(echo $latest_tag | cut -d. -f3)
-        if [[ $commit_message == *"[MAJOR]"* ]]; then
+        if [[ ${{ steps.latest_commit.outputs.message }} == *"[MAJOR]"* ]]; then
           major=$((major + 1))
           minor=0
           patch=0
-        elif [[ $commit_message == *"[MINOR]"* ]]; then
+        elif [[ ${{ steps.latest_commit.outputs.message }} == *"[MINOR]"* ]]; then
           minor=$((minor + 1))
           patch=0
-        elif [[ $commit_message == *"[PATCH]"* ]]; then
+        elif [[ ${{ steps.latest_commit.outputs.message }} == *"[PATCH]"* ]]; then
           patch=$((patch + 1))
         else
           echo "No version increment needed"
