@@ -69,17 +69,18 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "Automatic commit for ${{ steps.increment_version.outputs.new_tag }}"
-        git tag ${{ steps.increment_version.outputs.new_tag }}
         git push
+        git tag ${{ steps.increment_version.outputs.new_tag }}
         git push --tags
 #
     - name: release
+      if: steps.increment_version.outputs.new_tag
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.increment_version.outputs.fixed_tag }}
+        tag_name: ${{ steps.increment_version.outputs.new_tag }}
         release_name: 4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}
         draft: false
         prerelease: false
