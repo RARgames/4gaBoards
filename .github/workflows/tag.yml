@@ -47,7 +47,7 @@ jobs:
         # Optional. Commit message for the created commit.
         # Defaults to "Apply automatic changes"
         commit_message: Automated Change - TAGS ${{ steps.process_tag.outputs.processed_tag }}
-        branch: main
+        # branch: main
         commit_options: '--no-verify --signoff'
 
     - name: release
