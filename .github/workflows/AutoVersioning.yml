@@ -27,7 +27,7 @@ jobs:
     - name: Increment version
       id: increment_version
       run: |
-        latest_tag=${{ steps.get_latest_tag.outputs.tag }}
+        latest_tag=${{ steps.get-latest-tag.outputs.tag }}
         commit_message=${{ steps.latest_commit.outputs.message }}
         major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
         minor=$(echo $latest_tag | cut -d. -f2)
@@ -47,19 +47,21 @@ jobs:
           exit 0
         fi
         new_tag="v$major.$minor.$patch"
+        fixed_tag="$major.$minor.$patch"
         echo "::set-output name=new_tag::$new_tag"
+        echo "::set-output name=fixed_tag::$fixed_tag"
 
     - name: Update package.json version
       if: steps.increment_version.outputs.new_tag
-      run: jq '.version = "'${{ steps.increment_version.outputs.new_tag }}'"' package.json > temp.json && mv temp.json package.json
+      run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package.json > temp.json && mv temp.json package.json
 
     - name: Update package-lock.json version
       if: steps.increment_version.outputs.new_tag
-      run: jq '.version = "'${{ steps.increment_version.outputs.new_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.new_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+      run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
     - name: Update .env version
       if: steps.increment_version.outputs.new_tag
-      run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.new_tag }}' >> temp.txt && mv temp.txt client/.env
+      run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.fixed_tag }}' >> temp.txt && mv temp.txt client/.env
 
     - name: push
       if: steps.increment_version.outputs.new_tag
@@ -77,8 +79,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.increment_version.outputs.new_tag }}
-        release_name: 4ga Boards ${{ steps.increment_version.outputs.new_tag }}
+        tag_name: ${{ steps.increment_version.outputs.fixed_tag }}
+        release_name: 4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}
         draft: false
         prerelease: false
         body: |
@@ -86,4 +88,4 @@ jobs:
           ${{ steps.Changelog.outputs.changelog }}
 
           Install this release using:
-          `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.new_tag }}`
+          `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}`
