@@ -73,6 +73,13 @@ jobs:
         git tag ${{ steps.increment_version.outputs.new_tag }}
         git push --tags
 
+    - name: Changelog
+      if: steps.increment_version.outputs.new_tag
+      uses: Bullrich/generate-release-changelog@master
+      id: Changelog
+      env:
+        REPO: ${{ github.repository }}
+
     - name: release
       if: steps.increment_version.outputs.new_tag
       id: create_release
