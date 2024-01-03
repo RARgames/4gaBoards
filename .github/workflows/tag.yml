@@ -25,7 +25,7 @@ jobs:
         REPO: ${{ github.repository }}
 
     - name: Update package.json version
-      run: sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"${{ steps.get-latest-tag.outputs.tag }}\"/" package.json
+      run: jq '.version = "'${{ steps.get-latest-tag.outputs.tag }}'"' package.json > temp.json && mv temp.json package.json
 
     - name: Update package-lock.json version
       run: jq '.version = "'${{ steps.get-latest-tag.outputs.tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
