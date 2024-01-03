@@ -40,8 +40,6 @@ jobs:
     - name: Update second package-lock.json version
       run: jq '.packages[]?.version = "'${{ steps.process_tag.outputs.processed_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
-    - uses: stefanzweifel/git-auto-commit-action@v4
-
     - name: Update .env version
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION${{ steps.process_tag.outputs.processed_tag }}' >> temp.txt && mv temp.txt client/.env
 
