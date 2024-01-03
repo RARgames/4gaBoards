@@ -1,0 +1,98 @@
+name: Auto Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Fetch tags
+      run: git fetch --tags
+
+    - name: Get latest commit message
+      id: latest_commit
+      run: echo "::set-output name=message::$(git log -1 --pretty=%B)"
+
+    - name: Get latest tag
+      id: get-latest-tag
+      run: echo "::set-output name=tag::$(git describe --tags `git rev-list --tags --max-count=1`)"
+
+    - name: Increment version
+      id: increment_version
+      run: |
+        latest_tag=${{ steps.get-latest-tag.outputs.tag }}
+        major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
+        minor=$(echo $latest_tag | cut -d. -f2)
+        patch=$(echo $latest_tag | cut -d. -f3)
+        if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
+          major=$((major + 1))
+          minor=0
+          patch=0
+        elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
+          minor=$((minor + 1))
+          patch=0
+        elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
+          patch=$((patch + 1))
+        else
+          echo "No version increment needed"
+          echo "::set-output name=new_tag::"
+          exit 0
+        fi
+        new_tag="v$major.$minor.$patch"
+        fixed_tag="$major.$minor.$patch"
+        echo "::set-output name=new_tag::$new_tag"
+        echo "::set-output name=fixed_tag::$fixed_tag"
+
+    - name: Update package.json version
+      if: steps.increment_version.outputs.new_tag
+      run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package.json > temp.json && mv temp.json package.json
+
+    - name: Update package-lock.json version
+      if: steps.increment_version.outputs.new_tag
+      run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+
+    - name: Update .env version
+      if: steps.increment_version.outputs.new_tag
+      run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.fixed_tag }}' >> temp.txt && mv temp.txt client/.env
+
+    - name: push
+      if: steps.increment_version.outputs.new_tag
+      run: |
+        git add .
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Release ${{ steps.increment_version.outputs.fixed_tag }}"
+        git push
+        git tag ${{ steps.increment_version.outputs.new_tag }}
+        git push --tags
+
+    - name: Changelog
+      if: steps.increment_version.outputs.new_tag
+      uses: Bullrich/generate-release-changelog@master
+      id: Changelog
+      env:
+        REPO: ${{ github.repository }}
+
+    - name: release
+      if: steps.increment_version.outputs.new_tag
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.increment_version.outputs.new_tag }}
+        release_name: 4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}
+        draft: false
+        prerelease: false
+        body: |
+          Changes since last release:
+          ${{ steps.Changelog.outputs.changelog }}
+
+          Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}`
