@@ -8,6 +8,8 @@ import Paths from '../../constants/Paths';
 import NotificationsPopup from './NotificationsPopup';
 import UserPopup from '../UserPopup';
 
+import logo from '../../assets/images/4gaboardsLogo128w-white.png';
+
 import styles from './Header.module.scss';
 
 const Header = React.memo(({ project, user, notifications, isLogouting, canEditProject, canEditUsers, onProjectSettingsClick, onUsersClick, onNotificationDelete, onUserSettingsClick, onLogout }) => {
@@ -21,7 +23,7 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
     <div className={styles.wrapper}>
       {!project && (
         <Link to={Paths.ROOT} className={classNames(styles.logo, styles.title)}>
-          4ga Boards
+          <img src={logo} alt="4ga Boards" className={styles.logoIcon} />
         </Link>
       )}
       <Menu inverted size="large" className={styles.menu}>

@@ -3,7 +3,7 @@ export default {
     common: {
       emailOrUsername: 'E-mail или имя пользователя',
       invalidUsernameOrPassword: 'Неверное имя пользователя или пароль',
-      logInToBoards: 'Вход в 4ga Boards',
+      logInToBoards: 'Вход',
       noInternetConnection: 'Нет соединения',
       pageNotFound: 'Страница не найдена',
       password: 'Пароль',

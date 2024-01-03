@@ -3,7 +3,7 @@ export default {
     common: {
       emailOrUsername: 'Eメールまたはユーザー名',
       invalidUsernameOrPassword: 'ユーザーネームまたはパスワードが違います',
-      logInToBoards: '4ga Boards にログインする',
+      logInToBoards: 'にログインする',
       noInternetConnection: 'インターネットに接続されていません。',
       pageNotFound_title: 'ページが見つかりません。',
       password: 'パスワード',

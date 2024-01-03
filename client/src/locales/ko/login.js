@@ -5,7 +5,7 @@ export default {
     common: {
       emailOrUsername: '이메일 혹은 아이디',
       invalidUsernameOrPassword: '잘못된 사용자 이름 또는 비밀번호',
-      logInToBoards: '4ga Boards에 로그인',
+      logInToBoards: '에 로그인',
       noInternetConnection: '인터넷에 연결되지 않음',
       pageNotFound_title: '페이지를 찾을수 없습니다',
       password: '패스워드',

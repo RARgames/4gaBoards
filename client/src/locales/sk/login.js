@@ -3,7 +3,7 @@ export default {
     common: {
       emailOrUsername: 'E-mail alebo používateľské meno',
       invalidUsernameOrPassword: 'Nesprávne užívateľské meno alebo heslo',
-      logInToBoards: 'Prihlásiť sa do 4ga Boards',
+      logInToBoards: 'Prihlásiť',
       noInternetConnection: 'Bez pripojenia k internetu',
       pageNotFound_title: 'Stránka neexistuje',
       password: 'Heslo',

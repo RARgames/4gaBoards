@@ -27,10 +27,16 @@
     padding: 0 16px;
     text-transform: uppercase;
     width: 200px;
+    height: 50px;
 
     &:before {
       background: none;
     }
+  }
+
+  .logoIcon {
+    margin: 2px 0 0 2px;
+    height: 46px;
   }
 
   .menu {

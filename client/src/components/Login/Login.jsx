@@ -3,12 +3,13 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Form, Grid, Header, Message } from 'semantic-ui-react';
+import { Form, Grid, Header, Message, Image } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input } from '../../lib/custom-ui';
 
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
+import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
 import styles from './Login.module.scss';
 
@@ -102,6 +103,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
           <Grid verticalAlign="middle" className={styles.fullHeightPaddingFix}>
             <Grid.Column>
               <div className={styles.loginWrapper}>
+                <Image centered src={logo} size="large" alt="4ga Boards" />
                 <Header as="h1" textAlign="center" content={t('common.logInToBoards')} className={styles.formTitle} />
                 <div>
                   {message && (

@@ -3,7 +3,7 @@ export default {
     common: {
       emailOrUsername: '邮箱或用户名',
       invalidUsernameOrPassword: '用户名或密码错误',
-      logInToBoards: '登录至 4ga Boards',
+      logInToBoards: '登录',
       noInternetConnection: '没有网络连接',
       pageNotFound_title: '页面找不到',
       password: '密码',
