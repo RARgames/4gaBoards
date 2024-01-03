@@ -64,12 +64,12 @@ jobs:
     - name: push
       if: steps.increment_version.outputs.new_tag
       run: |
-      git add .
-      git config --local user.email "action@github.com"
-      git config --local user.name "GitHub Action"
-      git tag ${{ steps.increment_version.outputs.new_tag }}
-      git push
-      git push --tags
+        git add .
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git tag ${{ steps.increment_version.outputs.new_tag }}
+        git push
+        git push --tags
 
     - name: release
       id: create_release
