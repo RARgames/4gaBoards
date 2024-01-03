@@ -1,0 +1,52 @@
+name: Build and push Docker image
+
+on:
+  push:
+    tags: "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Fetch tags
+      run: git fetch --tags
+
+    - name: Get latest tag
+      id: get-latest-tag
+      run: echo "::set-output name=tag::$(git describe --tags `git rev-list --tags --max-count=1`)"
+
+    - name: Changelog
+      uses: Bullrich/generate-release-changelog@master
+      id: Changelog
+      env:
+        REPO: ${{ github.repository }}
+
+    - name: Update package.json version
+      run: sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"${{ steps.get-latest-tag.outputs.tag }}\"/" package.json
+
+    - name: Update package-lock.json version
+      run: jq '.version = "'${{ steps.get-latest-tag.outputs.tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+
+    - name: Update second package-lock.json version
+      run: jq '.packages[]?.version = "'${{ steps.get-latest-tag.outputs.tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+
+    - name: Update .env version
+      run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.get-latest-tag.outputs.tag }}' >> temp.txt && mv temp.txt client/.env
+
+    - name: release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get-latest-tag.outputs.tag }}
+        release_name: Release ${{ steps.get-latest-tag.outputs.tag }}
+        draft: false
+        prerelease: false
+        body: |
+          ${{ steps.Changelog.outputs.changelog }}
+          Install this release using:
+          `docker pull ghcr.io/rargames/4gaboards:${{ steps.get-latest-tag.outputs.tag }}`
