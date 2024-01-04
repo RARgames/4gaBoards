@@ -31,68 +31,110 @@ jobs:
         major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
         minor=$(echo $latest_tag | cut -d. -f2)
         patch=$(echo $latest_tag | cut -d. -f3)
+
         if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
           major=$((major + 1))
           minor=0
           patch=0
+          flag=true
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
           minor=$((minor + 1))
           patch=0
+          flag=true
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
           patch=$((patch + 1))
+          flag=true
         else
-          echo "No version increment needed"
-          echo "::set-output name=new_tag::"
-          exit 0
+          flag=false
         fi
+
         new_tag="v$major.$minor.$patch"
         fixed_tag="$major.$minor.$patch"
+
         echo "::set-output name=new_tag::$new_tag"
         echo "::set-output name=fixed_tag::$fixed_tag"
+        echo "::set-output name=flag::$flag"
 
     - name: Update package.json version
-      if: steps.increment_version.outputs.new_tag
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package.json > temp.json && mv temp.json package.json
 
     - name: Update package-lock.json version
-      if: steps.increment_version.outputs.new_tag
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
     - name: Update .env version
-      if: steps.increment_version.outputs.new_tag
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.fixed_tag }}' >> temp.txt && mv temp.txt client/.env
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3.0.0
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3.0.0
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3.0.0
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Build and push
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
+      uses: docker/build-push-action@v5.1.0
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          ghcr.io/rargames/4gaboards:latest
+          ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}
+    
+    - name: Build and push beta
+      if: contains(steps.increment_version.outputs.flag, 'true') == false
+      uses: docker/build-push-action@v5.1.0
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: |
+          ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}-${{ github.sha }}
+
     - name: push
-      if: steps.increment_version.outputs.new_tag
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: |
         git add .
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "Release ${{ steps.increment_version.outputs.fixed_tag }}"
         git push
+
+    - name: push-tag
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
+      run: |
         git tag ${{ steps.increment_version.outputs.new_tag }}
         git push --tags
 
     - name: Changelog
-      if: steps.increment_version.outputs.new_tag
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       uses: Bullrich/generate-release-changelog@master
       id: Changelog
       env:
         REPO: ${{ github.repository }}
 
     - name: release
-      if: steps.increment_version.outputs.new_tag
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ steps.increment_version.outputs.new_tag }}
-        release_name: 4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}
-        draft: false
-        prerelease: false
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        tag_name: "${{ steps.increment_version.outputs.new_tag }}"
+        name: "4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}"
         body: |
           Changes since last release:
           ${{ steps.Changelog.outputs.changelog }}
 
           Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}`
+        draft: false
+        prerelease: false
