@@ -44,7 +44,7 @@ jobs:
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
           patch=$((patch + 1))
           flag=true
-        else:
+        else
           flag=false
         fi
 
