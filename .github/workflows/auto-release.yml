@@ -91,6 +91,11 @@ jobs:
           ghcr.io/rargames/4gaboards:latest
           ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}
     
+    - name: Get short SHA
+      if: contains(steps.increment_version.outputs.flag, 'true') == false
+      id: slug
+      run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+    
     - name: Build and push beta
       if: contains(steps.increment_version.outputs.flag, 'true') == false
       uses: docker/build-push-action@v5.1.0
@@ -99,7 +104,7 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}-${{ github.sha::7 }}
+          ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}-${{ steps.slug.outputs.sha7 }}
 
     - name: push
       if: contains(steps.increment_version.outputs.flag, 'true') == true
