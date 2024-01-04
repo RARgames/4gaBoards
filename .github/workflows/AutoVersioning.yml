@@ -28,9 +28,9 @@ jobs:
       id: increment_version
       run: |
         latest_tag=${{ steps.get-latest-tag.outputs.tag }}
-        major=$(echo $base_version | cut -d. -f1 | sed 's/v//')
-        minor=$(echo $base_version | cut -d. -f2)
-        patch=$(echo $base_version | cut -d. -f3)
+        major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
+        minor=$(echo $latest_tag | cut -d. -f2)
+        patch=$(echo $latest_tag | cut -d. -f3)
 
         if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
           major=$((major + 1))
