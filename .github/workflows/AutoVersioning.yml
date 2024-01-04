@@ -1,4 +1,4 @@
-name: Auto Versioning
+name: Auto Release
 on:
   push:
     branches:
@@ -9,15 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pages: write
-      id-token: write
-    concurrency:
-      group: "pages"
-      cancel-in-progress: false
-
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4.1.1
 
     - name: Fetch tags
       run: git fetch --tags
@@ -34,82 +28,102 @@ jobs:
       id: increment_version
       run: |
         latest_tag=${{ steps.get-latest-tag.outputs.tag }}
-        base_version=$(echo $latest_tag | sed -E 's/(v[0-9]+\.[0-9]+\.[0-9]+).*/\1/')
         major=$(echo $base_version | cut -d. -f1 | sed 's/v//')
         minor=$(echo $base_version | cut -d. -f2)
         patch=$(echo $base_version | cut -d. -f3)
-        beta=$(echo $latest_tag | grep -oE 'beta-[0-9]+' | cut -d- -f2)
 
         if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
           major=$((major + 1))
           minor=0
           patch=0
-          beta=""
+          flag=true
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
           minor=$((minor + 1))
           patch=0
-          beta=""
+          flag=true
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
           patch=$((patch + 1))
-          beta=""
-        else
-          echo "Incrementing beta version"
-          if [[ -z "$beta" ]]; then
-            beta=1
-          else
-            beta=$((beta + 1))
-          fi
-        fi
+          flag=true
+        else:
+          flag=false
 
-        if [[ -n "$beta" ]]; then
-          new_tag="${base_version}-beta-$beta"
-          fixed_tag="${base_version:1}-beta-$beta"
-        else
-          new_tag="v$major.$minor.$patch"
-          fixed_tag="$major.$minor.$patch"
-        fi
+        new_tag="v$major.$minor.$patch"
+        fixed_tag="$major.$minor.$patch"
 
         echo "::set-output name=new_tag::$new_tag"
         echo "::set-output name=fixed_tag::$fixed_tag"
+        echo "::set-output name=flag::$flag"
 
     - name: Update package.json version
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package.json > temp.json && mv temp.json package.json
 
     - name: Update package-lock.json version
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
     - name: Update .env version
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.fixed_tag }}' >> temp.txt && mv temp.txt client/.env
 
+    # - name: Set up QEMU
+    #   uses: docker/setup-qemu-action@v3.0.0
 
+    # - name: Set up Docker Buildx
+    #   uses: docker/setup-buildx-action@v3.0.0
+
+    # - name: Login to GitHub Container Registry
+    #   uses: docker/login-action@v3.0.0
+    #   with:
+    #     registry: ghcr.io
+    #     username: ${{ github.repository_owner }}
+    #     password: ${{ secrets.GITHUB_TOKEN }}
+
+    # - name: Build and push
+    #   if: contains(steps.increment_version.outputs.flag, 'true') == true
+    #   uses: docker/build-push-action@v5.1.0
+    #   with:
+    #     context: .
+    #     platforms: linux/amd64,linux/arm64
+    #     push: true
+    #     tags: |
+    #       ghcr.io/rargames/4gaboards:latest
+    #       ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}
+
+    # - name: Build and push
+    #   if: contains(steps.increment_version.outputs.flag, 'true') == true
+    #   uses: docker/build-push-action@v5.1.0
+    #   with:
+    #     context: .
+    #     platforms: linux/amd64,linux/arm64
+    #     push: true
+    #     tags: |
+    #       ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}-${{ github.sha }}
 
     - name: push
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: |
         git add .
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "Automatic commit for ${{ steps.increment_version.outputs.new_tag }}"
+        git commit -m "Release ${{ steps.increment_version.outputs.fixed_tag }}"
         git push
 
     - name: push-tag
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       run: |
         git tag ${{ steps.increment_version.outputs.new_tag }}
         git push --tags
 
     - name: Changelog
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       uses: Bullrich/generate-release-changelog@master
       id: Changelog
       env:
         REPO: ${{ github.repository }}
 
     - name: release
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
+      if: contains(steps.increment_version.outputs.flag, 'true') == true
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
@@ -120,7 +134,6 @@ jobs:
           Changes since last release:
           ${{ steps.Changelog.outputs.changelog }}
 
-          Install this release using:
-          `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}`
+          Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}`
         draft: false
         prerelease: false
