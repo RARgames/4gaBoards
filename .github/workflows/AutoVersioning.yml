@@ -34,9 +34,10 @@ jobs:
       id: increment_version
       run: |
         latest_tag=${{ steps.get-latest-tag.outputs.tag }}
-        major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
-        minor=$(echo $latest_tag | cut -d. -f2)
-        patch=$(echo $latest_tag | cut -d. -f3)
+        base_version=$(echo $latest_tag | sed -E 's/(v[0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+        major=$(echo $base_version | cut -d. -f1 | sed 's/v//')
+        minor=$(echo $base_version | cut -d. -f2)
+        patch=$(echo $base_version | cut -d. -f3)
         beta=$(echo $latest_tag | grep -oE 'beta-[0-9]+' | cut -d- -f2)
 
         if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
@@ -61,8 +62,8 @@ jobs:
         fi
 
         if [[ -n "$beta" ]]; then
-          new_tag="v$major.$minor.$patch-beta-$beta"
-          fixed_tag="$major.$minor.$patch-beta-$beta"
+          new_tag="${base_version}-beta-$beta"
+          fixed_tag="${base_version:1}-beta-$beta"
         else
           new_tag="v$major.$minor.$patch"
           fixed_tag="$major.$minor.$patch"
