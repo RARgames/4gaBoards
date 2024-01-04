@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+
     steps:
     - name: Checkout repo
       uses: actions/checkout@v2
@@ -49,7 +55,7 @@ jobs:
         fixed_tag="$major.$minor.$patch"
         echo "::set-output name=new_tag::$new_tag"
         echo "::set-output name=fixed_tag::$fixed_tag"
-# ////
+
     - name: Update package.json version
       if: steps.increment_version.outputs.new_tag
       run: jq '.version = "'${{ steps.increment_version.outputs.fixed_tag }}'"' package.json > temp.json && mv temp.json package.json
@@ -84,11 +90,10 @@ jobs:
       if: steps.increment_version.outputs.new_tag
       id: create_release
       uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.increment_version.outputs.new_tag }}
-        release_name: 4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ steps.increment_version.outputs.new_tag }}"
+        title: "4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}"
         draft: false
         prerelease: false
         body: |
