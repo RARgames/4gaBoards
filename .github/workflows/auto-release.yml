@@ -57,15 +57,15 @@ jobs:
         echo "beta=$beta" >> $GITHUB_OUTPUT
 
     - name: Update package.json version
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
 
     - name: Update package-lock.json version
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
     - name: Update .env version
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.ghcr_tag }}' >> temp.txt && mv temp.txt client/.env
 
     - name: Set up QEMU
@@ -82,7 +82,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Build and push
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       uses: docker/build-push-action@v5.1.0
       with:
         context: .
@@ -92,13 +92,13 @@ jobs:
           ghcr.io/rargames/4gaboards:latest
           ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}
     
-    - name: Get short SHA
-      if: steps.increment_version.outputs.beta == false
+    - name: Get short SHA for beta
+      if: steps.increment_version.outputs.beta
       id: slug
       run: echo "sha7=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
     
     - name: Build and push beta
-      if: steps.increment_version.outputs.beta == false
+      if: steps.increment_version.outputs.beta
       uses: docker/build-push-action@v5.1.0
       with:
         context: .
@@ -108,7 +108,7 @@ jobs:
           ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}-${{ steps.slug.outputs.sha7 }}
 
     - name: push
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       run: |
         git add .
         git config --local user.email "action@github.com"
@@ -117,20 +117,20 @@ jobs:
         git push
 
     - name: push-tag
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       run: |
         git tag ${{ steps.increment_version.outputs.new_tag }}
         git push --tags
 
     - name: Changelog
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       uses: Bullrich/generate-release-changelog@2.0.2
       id: Changelog
       env:
         REPO: ${{ github.repository }}
 
     - name: release
-      if: steps.increment_version.outputs.beta
+      if: steps.increment_version.outputs.beta == false
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
