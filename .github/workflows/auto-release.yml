@@ -105,7 +105,7 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}-${{ steps.slug.outputs.sha7 }}
+          ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.fixed_tag }}-${{ steps.slug.outputs.sha7 }}
 
     - name: push
       if: contains(steps.increment_version.outputs.flag, 'true') == true
