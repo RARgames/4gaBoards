@@ -84,15 +84,18 @@ jobs:
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.fixed_tag }}' >> temp.txt && mv temp.txt client/.env
 
     - name: push
+      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
       run: |
         git add .
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "Automatic commit for ${{ steps.increment_version.outputs.new_tag }}"
         git push
+
+    - name: push-tag
+      run: |
         git tag ${{ steps.increment_version.outputs.new_tag }}
         git push --tags
-
 
     - name: Changelog
       if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
