@@ -89,16 +89,16 @@ jobs:
     - name: release
       if: steps.increment_version.outputs.new_tag
       id: create_release
-      uses: marvinpinto/action-automatic-releases@latest
+      uses: softprops/action-gh-release@v1
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{ steps.increment_version.outputs.new_tag }}"
-        title: "4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}"
-        draft: false
-        prerelease: false
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        tag_name: "${{ steps.increment_version.outputs.new_tag }}"
+        name: "4ga Boards ${{ steps.increment_version.outputs.fixed_tag }}"
         body: |
           Changes since last release:
           ${{ steps.Changelog.outputs.changelog }}
 
           Install this release using:
           `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.fixed_tag }}`
+        draft: false
+        prerelease: false
