@@ -125,7 +125,7 @@ jobs:
     - name: Changelog
       if: steps.increment_version.outputs.beta == false
       uses: Bullrich/generate-release-changelog@2.0.2
-      id: Changelog
+      id: changelog
       env:
         REPO: ${{ github.repository }}
 
@@ -139,7 +139,7 @@ jobs:
         name: "4ga Boards ${{ steps.increment_version.outputs.ghcr_tag }}"
         body: |
           Changes since last release:
-          ${{ steps.Changelog.outputs.changelog }}
+          ${{ steps.changelog.outputs.changelog }}
 
           Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}`
         draft: false
