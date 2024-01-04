@@ -84,7 +84,6 @@ jobs:
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.fixed_tag }}' >> temp.txt && mv temp.txt client/.env
 
     - name: push
-      if: contains(steps.increment_version.outputs.new_tag, 'beta') == false
       run: |
         git add .
         git config --local user.email "action@github.com"
