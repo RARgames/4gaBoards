@@ -1,6 +1,6 @@
 module.exports.up = (knex) =>
   knex.schema.alterTable('user_account', (table) => {
-    table.string('description_mode').notNullable().defaultTo('edit');
+    table.string('description_mode').notNullable().defaultTo('code');
     table.boolean('description_shown').defaultTo(true);
     table.boolean('tasks_shown').defaultTo(true);
     table.boolean('attachments_shown').defaultTo(true);

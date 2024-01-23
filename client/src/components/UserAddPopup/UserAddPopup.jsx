@@ -45,7 +45,9 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     password: '',
     name: '',
     username: '',
-    descriptionMode: 'edit',
+    descriptionMode: 'code',
+    // TODO descriptionMode is not updated corectly, later and not used!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // TODO create migration to change every "edit" to "code" in this field
     descriptionShown: true,
     tasksShown: true,
     attachmentsShown: true,
