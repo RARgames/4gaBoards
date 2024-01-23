@@ -32,19 +32,20 @@ jobs:
         major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
         minor=$(echo $latest_tag | cut -d. -f2)
         patch=$(echo $latest_tag | cut -d. -f3)
-        beta=false
+        beta=true
 
         if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
           major=$((major + 1))
           minor=0
           patch=0
+          beta=false
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
           minor=$((minor + 1))
           patch=0
+          beta=false
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
           patch=$((patch + 1))
-        else
-          beta=true
+          beta=false
         fi
 
         new_tag="v$major.$minor.$patch"
