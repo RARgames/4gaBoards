@@ -19,7 +19,7 @@ jobs:
 
     - name: Get latest commit message
       id: latest_commit
-      run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+      run: echo "message=$(git log -1 --pretty=%s)" >> $GITHUB_OUTPUT
 
     - name: Get latest tag
       id: latest-tag
@@ -32,21 +32,19 @@ jobs:
         major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
         minor=$(echo $latest_tag | cut -d. -f2)
         patch=$(echo $latest_tag | cut -d. -f3)
+        beta=false
 
         if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
           major=$((major + 1))
           minor=0
           patch=0
-          beta=true
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
           minor=$((minor + 1))
           patch=0
-          beta=true
         elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
           patch=$((patch + 1))
-          beta=true
         else
-          beta=false
+          beta=true
         fi
 
         new_tag="v$major.$minor.$patch"
