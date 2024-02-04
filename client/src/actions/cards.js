@@ -89,6 +89,32 @@ const handleCardDelete = (card) => ({
   },
 });
 
+const duplicateCard = (card) => ({
+  type: ActionTypes.CARD_DUPLICATE,
+  payload: {
+    card,
+  },
+});
+
+duplicateCard.success = (card, tasks, attachments, cardMemberships, cardLabels) => ({
+  type: ActionTypes.CARD_DUPLICATE__SUCCESS,
+  payload: {
+    card,
+    tasks,
+    attachments,
+    cardMemberships,
+    cardLabels,
+  },
+});
+
+duplicateCard.failure = (id, error) => ({
+  type: ActionTypes.CARD_DUPLICATE__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
 export default {
   createCard,
   handleCardCreate,
@@ -96,4 +122,5 @@ export default {
   handleCardUpdate,
   deleteCard,
   handleCardDelete,
+  duplicateCard,
 };

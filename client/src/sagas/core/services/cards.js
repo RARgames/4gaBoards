@@ -123,6 +123,33 @@ export function* transferCurrentCard(boardId, listId, index) {
   yield call(transferCard, cardId, boardId, listId, index);
 }
 
+export function* duplicateCard(id) {
+  yield put(actions.duplicateCard(id));
+
+  let card;
+  let tasks;
+  let attachments;
+  let cardMemberships;
+  let cardLabels;
+  try {
+    ({
+      item: card,
+      included: { tasks, attachments, cardMemberships, cardLabels },
+    } = yield call(request, api.duplicateCard, id));
+  } catch (error) {
+    yield put(actions.duplicateCard.failure(id, error));
+    return;
+  }
+
+  yield put(actions.duplicateCard.success(card, tasks, attachments, cardMemberships, cardLabels));
+}
+
+export function* duplicateCurrentCard() {
+  const { cardId } = yield select(selectors.selectPath);
+
+  yield call(duplicateCard, cardId);
+}
+
 export function* deleteCard(id) {
   const { cardId, boardId } = yield select(selectors.selectPath);
 
@@ -169,6 +196,8 @@ export default {
   transferCard,
   transferCurrentCard,
   handleCardUpdate,
+  duplicateCard,
+  duplicateCurrentCard,
   deleteCard,
   deleteCurrentCard,
   handleCardDelete,

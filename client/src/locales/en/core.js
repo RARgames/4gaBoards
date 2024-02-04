@@ -160,6 +160,7 @@ export default {
       addCard: 'Add card',
       addCard_title: 'Add Card',
       addComment: 'Add comment',
+      duplicateCard: 'Duplicate Card',
       addList: 'Add list',
       addMember: 'Add member',
       addDescription: 'Add description',
