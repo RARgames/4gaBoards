@@ -57,6 +57,8 @@ module.exports = {
     const tasks = await Task.find({ cardId: card.id });
     const attachments = await Attachment.find({ cardId: card.id });
     const actions = await Action.find({ cardId: card.id });
+    const coverAttachment = attachments.find((attachment) => attachment.id === card.coverAttachmentId);
+    const coverAttachmentDirname = coverAttachment != null ? coverAttachment.dirname : undefined;
 
     const copiedItemsPromises = [
       ...cardLabels.map((cardLabel) => CardLabel.create({ cardId: copiedCard.id, labelId: cardLabel.labelId })),
@@ -74,6 +76,10 @@ module.exports = {
     const createdTasks = await sails.helpers.cards.getTasks(copiedCard.id);
     const createdActions = await sails.helpers.cards.getActions(copiedCard.id);
     const createdAttachments = await sails.helpers.cards.getAttachments(copiedCard.id);
+    const createdCoverAttachment = await createdAttachments.find((attachment) => attachment.dirname === coverAttachmentDirname);
+    const createdCoverAttachmentId = createdCoverAttachment != null ? createdCoverAttachment.id : undefined;
+    await Card.updateOne({ id: copiedCard.id }).set({ coverAttachmentId: createdCoverAttachmentId });
+
     return {
       item: copiedCard,
       included: {
@@ -82,6 +88,7 @@ module.exports = {
         tasks: createdTasks,
         attachments: createdAttachments,
         actions: createdActions,
+        coverAttachmentId: createdCoverAttachmentId,
       },
     };
   },

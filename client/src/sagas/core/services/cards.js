@@ -131,17 +131,18 @@ export function* duplicateCard(id) {
   let attachments;
   let cardMemberships;
   let cardLabels;
+  let coverAttachmentId;
   try {
     ({
       item: card,
-      included: { tasks, attachments, cardMemberships, cardLabels },
+      included: { tasks, attachments, cardMemberships, cardLabels, coverAttachmentId },
     } = yield call(request, api.duplicateCard, id));
   } catch (error) {
     yield put(actions.duplicateCard.failure(id, error));
     return;
   }
 
-  yield put(actions.duplicateCard.success(card, tasks, attachments, cardMemberships, cardLabels));
+  yield put(actions.duplicateCard.success(card, tasks, attachments, cardMemberships, cardLabels, coverAttachmentId));
 }
 
 export function* duplicateCurrentCard() {

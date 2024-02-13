@@ -171,6 +171,7 @@ export default class extends BaseModel {
       case ActionTypes.CARD_CREATE_HANDLE:
       case ActionTypes.CARD_UPDATE__SUCCESS:
       case ActionTypes.CARD_UPDATE_HANDLE:
+      case ActionTypes.CARD_DUPLICATE:
       case ActionTypes.CARD_DUPLICATE_HANDLE:
         Card.upsert(payload.card);
         break;
@@ -182,6 +183,7 @@ export default class extends BaseModel {
         payload.cardMemberships.forEach((member) => {
           Card.withId(payload.card.id).users.add(member.userId);
         });
+        Card.withId(payload.card.id).update({ coverAttachmentId: payload.coverAttachmentId });
         break;
       case ActionTypes.CARD_CREATE__SUCCESS:
         Card.withId(payload.localId).delete();
@@ -190,10 +192,6 @@ export default class extends BaseModel {
         break;
       case ActionTypes.CARD_UPDATE:
         Card.withId(payload.id).update(payload.data);
-
-        break;
-      case ActionTypes.CARD_DUPLICATE:
-        Card.upsert(payload.card);
 
         break;
       case ActionTypes.CARD_DELETE:
