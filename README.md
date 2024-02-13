@@ -48,8 +48,8 @@ docker compose up -d
 ```
 
 Default url: http://localhost:3000
-Demo user: demo
-Demo password: demo
+Demo user: `demo`
+Demo password: `demo`
 
 ### 2. Without Docker
 
@@ -97,16 +97,16 @@ cd server
 **Note**: You can use `pm2` or `systemd` to run the server in the background.
 
 Default url: http://localhost:1337
-Demo user: demo
-Demo password: demo
+Demo user: `demo`
+Demo password: `demo`
 
 ## [Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
 
 ## Backup and Restore
 
-To backup your data use: `./boards-backup.sh`.
+To backup your data use: `./boards-backup.sh`
 
-To restore it use: `./boards-restore.sh 4gaBoards-backup.tgz`.
+To restore it use: `./boards-restore.sh 4gaBoards-backup.tgz`
 
 ## Import from Trello
 
@@ -142,8 +142,8 @@ Start the development server:
 npm start
 ```
 
-Demo user: demo
-Demo password: demo
+Demo user: `demo`
+Demo password: `demo`
 
 ## [Contributing](https://github.com/RARgames/4gaBoards/blob/main/docs/CONTRIBUTING.md)
 
