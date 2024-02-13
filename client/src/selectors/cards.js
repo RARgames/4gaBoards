@@ -258,6 +258,7 @@ export const selectAttachmentsForCurrentCard = createSelector(
 
     return cardModel
       .getOrderedAttachmentsQuerySet()
+      .orderBy('createdAt')
       .toRefArray()
       .map((attachment) => ({
         ...attachment,

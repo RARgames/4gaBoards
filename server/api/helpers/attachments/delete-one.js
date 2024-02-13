@@ -34,10 +34,15 @@ module.exports = {
     const attachment = await Attachment.archiveOne(inputs.record.id);
 
     if (attachment) {
-      try {
-        rimraf.sync(path.join(sails.config.custom.attachmentsPath, attachment.dirname));
-      } catch (error) {
-        console.warn(error.stack); // eslint-disable-line no-console
+      const sameDirnameAttachments = await Attachment.find({
+        dirname: attachment.dirname,
+      });
+      if (sameDirnameAttachments.length === 0) {
+        try {
+          rimraf.sync(path.join(sails.config.custom.attachmentsPath, attachment.dirname));
+        } catch (error) {
+          console.warn(error.stack); // eslint-disable-line no-console
+        }
       }
 
       sails.sockets.broadcast(
