@@ -36,7 +36,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "move-file": "^2.1.0",
-    "rimraf": "^3.0.2",
+    "rimraf": "^5.0.5",
     "sails": "^1.5.8",
     "sails-hook-orm": "^4.0.2",
     "sails-hook-sockets": "^3.0.0",
