@@ -151,6 +151,10 @@ export function* duplicateCurrentCard() {
   yield call(duplicateCard, cardId);
 }
 
+export function* handleCardDuplicate(card) {
+  yield put(actions.handleCardDuplicate(card));
+}
+
 export function* deleteCard(id) {
   const { cardId, boardId } = yield select(selectors.selectPath);
 
@@ -199,6 +203,7 @@ export default {
   handleCardUpdate,
   duplicateCard,
   duplicateCurrentCard,
+  handleCardDuplicate,
   deleteCard,
   deleteCurrentCard,
   handleCardDelete,

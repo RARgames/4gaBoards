@@ -86,6 +86,13 @@ const duplicateCurrentCard = () => ({
   payload: {},
 });
 
+const handleCardDuplicate = (card) => ({
+  type: EntryActionTypes.CARD_DUPLICATE_HANDLE,
+  payload: {
+    card,
+  },
+});
+
 const deleteCard = (id) => ({
   type: EntryActionTypes.CARD_DELETE,
   payload: {
@@ -117,6 +124,7 @@ export default {
   transferCurrentCard,
   duplicateCard,
   duplicateCurrentCard,
+  handleCardDuplicate,
   deleteCard,
   deleteCurrentCard,
   handleCardDelete,

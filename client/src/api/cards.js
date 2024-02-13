@@ -86,6 +86,8 @@ const makeHandleCardUpdate = makeHandleCardCreate;
 
 const makeHandleCardDelete = makeHandleCardCreate;
 
+const makeHandleCardDuplicate = makeHandleCardCreate;
+
 export default {
   createCard,
   getCard,
@@ -95,4 +97,5 @@ export default {
   makeHandleCardCreate,
   makeHandleCardUpdate,
   makeHandleCardDelete,
+  makeHandleCardDuplicate,
 };

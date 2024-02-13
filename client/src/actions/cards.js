@@ -116,6 +116,13 @@ duplicateCard.failure = (id, error) => ({
   },
 });
 
+const handleCardDuplicate = (card) => ({
+  type: ActionTypes.CARD_DUPLICATE_HANDLE,
+  payload: {
+    card,
+  },
+});
+
 export default {
   createCard,
   handleCardCreate,
@@ -124,4 +131,5 @@ export default {
   deleteCard,
   handleCardDelete,
   duplicateCard,
+  handleCardDuplicate,
 };
