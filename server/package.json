@@ -53,7 +53,7 @@
     "eslint": "^8.28.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
-    "mocha": "^10.2.0",
+    "mocha": "^10.3.0",
     "nodemon": "^3.0.2",
     "supertest": "^6.3.3"
   },
