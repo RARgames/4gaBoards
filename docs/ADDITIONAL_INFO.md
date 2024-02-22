@@ -1,6 +1,12 @@
-### Nginx configuration
+## Web server configuration (Nginx/Apache)
 
-Here is an example of Nginx configuration for 4ga Boards, make sure to replace `demo.4gaboards.com` with your domain name, and make sure to configure the SSL.
+### Nginx example (/etc/nginx/conf.d/4gaBoards.conf)
+
+Replace `demo.4gaboards.com` with your domain name, and configure SSL in the SSL Variant.
+
+#### SSL Variant
+
+Set `BASE_URL=https://demo.4gaboards.com` in `docker-compose.yml`.
 
 ```nginx
 upstream 4gaBoards {
@@ -25,10 +31,6 @@ server {
     ssl_prefer_server_ciphers on;
 
     client_max_body_size 50M;
-    add_header Access-Control-Allow-Origin *;
-    add_header Access-Control-Max-Age 3600;
-    add_header Access-Control-Expose-Headers Content-Length;
-    add_header Access-Control-Allow-Headers Range;
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -62,7 +64,10 @@ server {
 }
 ```
 
-Non-SSL Version:
+#### Non-SSL Variant
+
+Set `BASE_URL=http://demo.4gaboards.com` in `docker-compose.yml`.
+
 ```nginx
 upstream 4gaBoards {
     server localhost:3000;
@@ -73,14 +78,10 @@ server {
     server_name demo.4gaboards.com;
     listen 80;
     listen [::]:80;
-    access_log  /var/log/nginx/4galabs.access.log;
-    error_log   /var/log/nginx/4galabs.error.log;
+    access_log  /var/log/nginx/4gaBoards.access.log;
+    error_log   /var/log/nginx/4gaBoards.error.log;
 
     client_max_body_size 50M;
-    add_header Access-Control-Allow-Origin *;
-    add_header Access-Control-Max-Age 3600;
-    add_header Access-Control-Expose-Headers Content-Length;
-    add_header Access-Control-Allow-Headers Range;
     proxy_set_header Host $http_host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -112,6 +113,141 @@ server {
         proxy_pass http://4gaBoards;
     }
 }
+```
+
+#### Redirect to 4gaBoards directory e.g. demo.4gaboards.com/4gaBoards (Favicon not showing)
+
+Set `BASE_URL=http://demo.4gaboards.com/4gaBoards` in `docker-compose.yml`.
+
+```nginx
+upstream 4gaBoards {
+    server localhost:3000;
+    keepalive 32;
+}
+
+server {
+    server_name demo.4gaboards.com/4gaBoards;
+    listen 80;
+    listen [::]:80;
+    access_log  /var/log/nginx/4gaBoards.access.log;
+    error_log   /var/log/nginx/4gaBoards.error.log;
+
+    client_max_body_size 50M;
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Frame-Options SAMEORIGIN;
+    proxy_buffers 256 16k;
+    proxy_buffer_size 16k;
+
+    location ~* \.io {
+        rewrite ^/4gaBoards/(.*)$ /$1 break;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 1d;
+        client_body_timeout 60;
+        send_timeout 300;
+        lingering_timeout 5;
+        proxy_connect_timeout 1d;
+        proxy_send_timeout 1d;
+        proxy_pass http://4gaBoards;
+    }
+
+    location /4gaBoards {
+        rewrite ^/4gaBoards/(.*)$ /$1 break;
+        proxy_set_header Connection "";
+        proxy_read_timeout 600s;
+        proxy_cache_revalidate on;
+        proxy_cache_min_uses 2;
+        proxy_cache_use_stale timeout;
+        proxy_cache_lock on;
+        proxy_http_version 1.1;
+        proxy_pass http://4gaBoards;
+    }
+}
+```
+
+### Apache example (/etc/httpd/conf/httpd.conf)
+
+Replace `demo.4gaboards.com` with your domain name, and configure SSL in the SSL Variant.
+
+#### SSL Variant
+
+Set `BASE_URL=https://demo.4gaboards.com` in `docker-compose.yml`.
+
+```
+LoadModule ssl_module modules/mod_ssl.so
+
+Listen 443
+<VirtualHost *:443>#
+    ServerName demo.4gaboards.com
+    SSLEngine on
+    SSLCertificateFile "/etc/letsencrypt/live/demo.4gaboards.com/fullchain.pem"
+    SSLCertificateKeyFile "/etc/letsencrypt/live/demo.4gaboards.com/privkey.pem"
+    
+    RewriteEngine On
+        RewriteCond %{HTTP:Upgrade} =websocket [NC]
+        RewriteRule /socket.io/(.*) ws://localhost:3000/socket.io/$1 [P,L]
+
+    ProxyPreserveHost On
+    ProxyRequests Off
+            ProxyPass /.well-known !
+            ProxyPassReverse /.well-known !
+            ProxyPass /robots.txt !
+            ProxyPassReverse /robots.txt !
+            ProxyPass / http://localhost:3000/
+            ProxyPassReverse / http://localhost:3000/
+
+</VirtualHost>
+```
+
+#### Non-SSL Variant
+
+Set `BASE_URL=http://demo.4gaboards.com` in `docker-compose.yml`.
+
+```
+<VirtualHost *:80>#
+    ServerName http://demo.4gaboards.com
+
+    RewriteEngine On
+        RewriteCond %{HTTP:Upgrade} =websocket [NC]
+        RewriteRule /socket.io/(.*) ws://localhost:3000/socket.io/$1 [P,L]
+
+    ProxyPreserveHost On
+    ProxyRequests Off
+            ProxyPass /.well-known !
+            ProxyPassReverse /.well-known !
+            ProxyPass /robots.txt !
+            ProxyPassReverse /robots.txt !
+            ProxyPass / http://localhost:3000/
+            ProxyPassReverse / http://localhost:3000/
+
+</VirtualHost>
+```
+
+#### Redirect to 4gaBoards directory e.g. demo.4gaboards.com/4gaBoards
+
+Set `BASE_URL=http://demo.4gaboards.com/4gaBoards` in `docker-compose.yml`.
+
+```
+<VirtualHost *:80>#
+    ServerName http://demo.4gaboards.com
+
+    RewriteEngine On
+        RewriteCond %{HTTP:Upgrade} =websocket [NC]
+        RewriteRule /4gaBoards/socket.io/(.*) ws://localhost:3000/socket.io/$1 [P,L]
+
+    ProxyPreserveHost On
+    ProxyRequests Off
+            ProxyPass /.well-known !
+            ProxyPassReverse /.well-known !
+            ProxyPass /robots.txt !
+            ProxyPassReverse /robots.txt !
+            ProxyPass /4gaBoards/ http://localhost:3000/
+            ProxyPassReverse /4gaBoards/ http://localhost:3000/
+
+</VirtualHost>
 ```
 
 ### Logging
