@@ -3,14 +3,6 @@ version: '3'
 services:
   4gaBoards:
     image: ghcr.io/rargames/4gaboards:latest
-    command: >
-      bash -c
-        "for i in `seq 1 30`; do
-          ./start.sh &&
-          s=$$? && break || s=$$?;
-          echo \"Tried $$i times. Waiting 5 seconds...\";
-          sleep 5;
-        done; (exit $$s)"
     restart: always
     volumes:
       - user-avatars:/app/public/user-avatars
@@ -24,7 +16,8 @@ services:
       - DATABASE_URL=postgresql://postgres@postgres/4gaBoards
       - TRUST_PROXY=0
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   postgres:
     image: postgres:16-alpine
@@ -36,6 +29,11 @@ services:
     environment:
       - POSTGRES_DB=4gaBoards
       - POSTGRES_HOST_AUTH_METHOD=trust
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d 4gaBoards"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   user-avatars:

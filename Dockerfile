@@ -2,7 +2,7 @@ FROM node:20-alpine as server-dependencies
 
 WORKDIR /app
 
-COPY server/package.json server/package-lock.json .
+COPY server/package.json server/package-lock.json ./
 
 RUN npm install npm@latest --global
 RUN npm install pnpm --global
@@ -13,7 +13,7 @@ FROM node:20-alpine AS client
 
 WORKDIR /app
 
-COPY client/package.json client/package-lock.json .
+COPY client/package.json client/package-lock.json ./
 
 RUN npm install npm@latest --global
 RUN npm install pnpm --global
