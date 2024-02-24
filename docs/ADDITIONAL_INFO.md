@@ -250,6 +250,11 @@ Set `BASE_URL=http://demo.4gaboards.com/4gaBoards` in `docker-compose.yml`.
 </VirtualHost>
 ```
 
+### SSL
+
+You can get a free SSL Certificate using Let's Encrypt.
+Tutorial for Rocky Linux 9: https://docs.rockylinux.org/guides/security/generating_ssl_keys_lets_encrypt/
+
 ### Logging
 
 4ga Boards currently allow you to expose the application's logfile directory to the host machine via a shared volume. This feature is not enabled by default.
