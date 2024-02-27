@@ -31,15 +31,15 @@ There are 2 types of installation:
 [![](https://d207aa93qlcgug.cloudfront.net/1.95.5.qa/img/nav/docker-logo-loggedout.png)](https://github.com/RARgames/4gaBoards/pkgs/container/4gaBoards)
 
 - Make sure you have [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/) installed and operational.
-- Create `docker-compose.yml` based on [the example](https://raw.githubusercontent.com/RARgames/4gaBoards/main/docker-compose.yml). This is the ONLY file you will need. You can create this file on your own machine by copy and pasting the content.
-- Edit `BASE_URL` to match your domain name or IP address.
-- Edit `SECRET_KEY` with random value. You can generate it by `openssl rand -hex 64`.
-
-Download the docker-compose.yml:
+- Create `docker-compose.yml` based on [the example](https://raw.githubusercontent.com/RARgames/4gaBoards/main/docker-compose.yml). This is the ONLY file you will need. You can create this file on your machine by copying and pasting the content or download it:
 
 ```
 curl -L https://raw.githubusercontent.com/RARgames/4gaBoards/main/docker-compose.yml -o docker-compose.yml
 ```
+
+- Edit `BASE_URL` to match your domain name or IP address.
+- Edit `SECRET_KEY` with random value. You can generate it by `openssl rand -hex 64`.
+- Replace 2 occurrences of `notpassword` with generated db password in `POSTGRES_PASSWORD` and `DATABASE_URL`.
 
 Pull images and start services:
 
@@ -47,9 +47,7 @@ Pull images and start services:
 docker compose up -d
 ```
 
-Default url: http://localhost:3000
-Demo user: `demo`
-Demo password: `demo`
+Default url: http://localhost:3000 Demo user: `demo` Demo password: `demo`
 
 ### 2. Without Docker
 
@@ -96,9 +94,7 @@ cd server
 
 **Note**: You can use `pm2` or `systemd` to run the server in the background.
 
-Default url: http://localhost:1337
-Demo user: `demo`
-Demo password: `demo`
+Default url: http://localhost:1337 Demo user: `demo` Demo password: `demo`
 
 ## [Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
 
@@ -142,8 +138,7 @@ Start the development server:
 npm start
 ```
 
-Demo user: `demo`
-Demo password: `demo`
+Demo user: `demo` Demo password: `demo`
 
 ## [Contributing](https://github.com/RARgames/4gaBoards/blob/main/docs/CONTRIBUTING.md)
 

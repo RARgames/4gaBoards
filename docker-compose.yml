@@ -1,6 +1,23 @@
 version: '3'
 
 services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 3001:5432
+    environment:
+      POSTGRES_DB: 4gaBoards
+      POSTGRES_PASSWORD: notpassword
+      POSTGRES_INITDB_ARGS: "-A scram-sha-256"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d 4gaBoards"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   4gaBoards:
     image: ghcr.io/rargames/4gaboards:latest
     restart: always
@@ -11,29 +28,13 @@ services:
     ports:
       - 3000:1337
     environment:
-      - BASE_URL=http://localhost:3000
-      - SECRET_KEY=notsecretkey
-      - DATABASE_URL=postgresql://postgres@postgres/4gaBoards
-      - TRUST_PROXY=0
+      BASE_URL: http://localhost:3000
+      SECRET_KEY: notsecretkey
+      DATABASE_URL: postgresql://postgres:notpassword@db/4gaBoards
+      NODE_ENV: production
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
-
-  postgres:
-    image: postgres:16-alpine
-    restart: always
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    ports:
-      - 5000:5432
-    environment:
-      - POSTGRES_DB=4gaBoards
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d 4gaBoards"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
 volumes:
   user-avatars:
