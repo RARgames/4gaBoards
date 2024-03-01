@@ -100,9 +100,9 @@ Default url: http://localhost:1337 Demo user: `demo` Demo password: `demo`
 
 ## Backup and Restore
 
-To backup your data use: `./boards-backup.sh`
+To backup your data use: `./boards-backup.sh db_password`
 
-To restore it use: `./boards-restore.sh 4gaBoards-backup.tgz`
+To restore it use: `./boards-restore.sh db_password 4gaBoards-backup.tgz`
 
 ## Import from Trello
 
