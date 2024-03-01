@@ -1,9 +1,12 @@
 #!/bin/bash
 set -e
 
-POSTGRES="4gaboards-postgres-1"
-BOARDS="4gaboards-4gaBoards-1"
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 DATABASE_PASSWORD"
+    exit 1
+fi
 
+DB_PASSWD=$1
 TIMESTAMP=$(date --utc +%FT%H-%M-%SZ)
 BACKUP_DIR="4gaBoards-backup-$TIMESTAMP"
 HOST_PWD=""
@@ -12,10 +15,17 @@ if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
 else
     HOST_PWD="$(pwd)"
 fi
+POSTGRES="$(basename $HOST_PWD)-db-1"
+BOARDS="$(basename $HOST_PWD)-4gaBoards-1"
 
 mkdir -p $BACKUP_DIR
 echo "Exporting db..."
-docker exec -t $POSTGRES pg_dumpall -c -U postgres > $BACKUP_DIR/postgres.sql
+{ 
+    for i in {1..4}; do
+        echo $DB_PASSWD
+        sleep 0.1
+    done
+} | docker exec -i $POSTGRES pg_dumpall -c -U postgres > $BACKUP_DIR/postgres.sql
 echo "Exporting attachments..."
 docker run --rm --volumes-from $BOARDS -v $HOST_PWD/$BACKUP_DIR:/backup alpine sh -c 'cp -r /app/private/attachments /backup/attachments'
 echo "Exporting user-avatars..."

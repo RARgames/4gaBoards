@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 
-POSTGRES="4gaboards-postgres-1"
-BOARDS="4gaboards-4gaBoards-1"
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 DATABASE_PASSWORD BACKUP_FILE_LOCATION"
+    exit 1
+fi
 
-BACKUP_FILE=$1
+DB_PASSWD=$1
+BACKUP_FILE=$2
 BACKUP_DIR=$(basename $BACKUP_FILE .tgz)
 HOST_PWD=""
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
@@ -12,11 +15,17 @@ if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
 else
     HOST_PWD="$(pwd)"
 fi
+POSTGRES="$(basename $HOST_PWD)-db-1"
+BOARDS="$(basename $HOST_PWD)-4gaBoards-1"
 
 echo "Extracting $BACKUP_FILE..."
 tar -xzf $BACKUP_FILE
 echo "Importing db..."
-cat $BACKUP_DIR/postgres.sql | docker exec -i $POSTGRES psql -U postgres
+{ 
+    echo $DB_PASSWD
+    sleep 0.1
+    echo "\i $(<"$BACKUP_DIR/postgres.sql")"
+} | docker exec -i $POSTGRES psql -U postgres
 echo "Importing attachments ... "
 docker run --rm --volumes-from $BOARDS -v $HOST_PWD/$BACKUP_DIR:/backup alpine sh -c 'cp -rf /backup/attachments /app/private/'
 echo "Importing user-avatars..."
