@@ -6,15 +6,17 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-DB_PASSWD=$1
-TIMESTAMP=$(date --utc +%FT%H-%M-%SZ)
-BACKUP_DIR="4gaBoards-backup-$TIMESTAMP"
+cd "$(dirname "$0")" #Docker compose dir
 HOST_PWD=""
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
     HOST_PWD="$(pwd -W)"
 else
     HOST_PWD="$(pwd)"
 fi
+
+DB_PASSWD=$1
+TIMESTAMP="$(date --utc +%FT%H-%M-%SZ)"
+BACKUP_DIR="4gaBoards-backup-$TIMESTAMP"
 POSTGRES="$(basename $HOST_PWD)-db-1"
 BOARDS="$(basename $HOST_PWD)-4gaBoards-1"
 
@@ -33,7 +35,8 @@ docker run --rm --volumes-from $BOARDS -v $HOST_PWD/$BACKUP_DIR:/backup alpine s
 echo "Exporting project-background-images..."
 docker run --rm --volumes-from $BOARDS -v $HOST_PWD/$BACKUP_DIR:/backup alpine sh -c 'cp -r /app/public/project-background-images /backup/project-background-images'
 echo "Compressing backup..."
-tar -czf $BACKUP_DIR.tgz $BACKUP_DIR/postgres.sql $BACKUP_DIR/attachments $BACKUP_DIR/user-avatars $BACKUP_DIR/project-background-images
+cd $BACKUP_DIR && tar -czf $BACKUP_DIR.tgz postgres.sql attachments user-avatars project-background-images && cd -
+mv $BACKUP_DIR/$BACKUP_DIR.tgz $HOST_PWD
 
 echo "Cleaning up temp files..."
 rm -rf $BACKUP_DIR

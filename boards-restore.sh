@@ -8,7 +8,13 @@ fi
 
 DB_PASSWD=$1
 BACKUP_FILE=$2
-BACKUP_DIR=$(basename $BACKUP_FILE .tgz)
+BACKUP_DIR="$(basename $BACKUP_FILE .tgz)"
+TMP_DIR="$(dirname "$0")/$BACKUP_DIR"
+echo "Extracting $BACKUP_FILE..."
+mkdir -p $TMP_DIR
+tar -xzf $BACKUP_FILE -C $TMP_DIR
+
+cd "$(dirname "$0")" #Docker compose dir
 HOST_PWD=""
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
     HOST_PWD="$(pwd -W)"
@@ -18,8 +24,6 @@ fi
 POSTGRES="$(basename $HOST_PWD)-db-1"
 BOARDS="$(basename $HOST_PWD)-4gaBoards-1"
 
-echo "Extracting $BACKUP_FILE..."
-tar -xzf $BACKUP_FILE
 echo "Importing db..."
 { 
     echo $DB_PASSWD
