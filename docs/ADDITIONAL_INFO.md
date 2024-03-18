@@ -79,7 +79,7 @@ server {
     listen 80;
     listen [::]:80;
     access_log  /var/log/nginx/4gaBoards.access.log;
-    error_log   /var/log/nginx/4gaBoards.error.log;
+    error_log   /var/log/nginx/4gaBoards.error.log error;
 
     client_max_body_size 50M;
     proxy_set_header Host $http_host;
@@ -130,7 +130,7 @@ server {
     listen 80;
     listen [::]:80;
     access_log  /var/log/nginx/4gaBoards.access.log;
-    error_log   /var/log/nginx/4gaBoards.error.log;
+    error_log   /var/log/nginx/4gaBoards.error.log error;
 
     client_max_body_size 50M;
     proxy_set_header Host $http_host;
