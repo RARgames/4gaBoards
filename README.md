@@ -100,9 +100,13 @@ Default url: http://localhost:1337 Demo user: `demo` Demo password: `demo`
 
 ## Backup and Restore
 
-To backup your data use: `./boards-backup.sh db_password`
+Before executing backup/restore scripts, change current directory to the directory where docker-compose is located.
 
-To restore it use: `./boards-restore.sh db_password 4gaBoards-backup.tgz`
+To backup your data use: `./boards-backup.sh`
+
+To restore it use: `./boards-restore.sh 4gaBoards-backup.tgz` You can use any relative path.
+
+When restoring, the password has to match docker-compose password (If you don't remember it, you can set new password in docker-compose, but you have to skip altering the default user in backup.tgz/postgres.sql file e.g. comment line `ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'XXX'` before restoring the backup).
 
 ## Import from Trello
 

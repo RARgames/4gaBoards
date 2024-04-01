@@ -1,33 +1,28 @@
 #!/bin/bash
 set -e
+echo "Make sure that you execute this script from docker-compose directory"
 
-if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 DATABASE_PASSWORD BACKUP_FILE_LOCATION"
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 BACKUP_FILE_LOCATION"
     exit 1
 fi
 
-DB_PASSWD=$1
-BACKUP_FILE=$2
+HOST_PWD="$(if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then pwd -W; else pwd; fi)"
+DB_PASSWD=$(grep POSTGRES_PASSWORD docker-compose.yml | awk '{print $2}' | sed 's/"//g')
+BACKUP_FILE=$1
 BACKUP_DIR="$(basename $BACKUP_FILE .tgz)"
-TMP_DIR="$(dirname "$0")/$BACKUP_DIR"
-echo "Extracting $BACKUP_FILE..."
-mkdir -p $TMP_DIR
-tar -xzf $BACKUP_FILE -C $TMP_DIR
+BASE_LOWERCASE=$(basename "$HOST_PWD" | awk '{print tolower($0)}')
+POSTGRES="$BASE_LOWERCASE-db-1"
+BOARDS="$BASE_LOWERCASE-4gaBoards-1"
 
-cd "$(dirname "$0")" #Docker compose dir
-HOST_PWD=""
-if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
-    HOST_PWD="$(pwd -W)"
-else
-    HOST_PWD="$(pwd)"
-fi
-POSTGRES="$(basename $HOST_PWD)-db-1"
-BOARDS="$(basename $HOST_PWD)-4gaBoards-1"
+echo "Extracting $BACKUP_FILE..."
+mkdir -p $BACKUP_DIR
+tar -xzf $BACKUP_FILE -C $BACKUP_DIR
 
 echo "Importing db..."
 { 
     echo $DB_PASSWD
-    sleep 0.1
+    sleep 0.2
     echo "\i $(<"$BACKUP_DIR/postgres.sql")"
 } | docker exec -i $POSTGRES psql -U postgres
 echo "Importing attachments ... "
