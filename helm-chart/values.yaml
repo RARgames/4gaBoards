@@ -1,0 +1,73 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/rargames/4gaboards
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: "app-4gaboards"
+fullnameOverride: "app-4gaboards"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 1337
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 200m
+    memory: 200Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+autoscaling:
+  enabled: false
+serviceAccount:
+  create: false
+postgresql:
+  auth:
+    postgresPassword: "adminPassword"
+    username: "user"
+    password: "password"
+    database: "4gaBoards"
+  volumePermissions:
+    enabled: true
+env:
+  SECRET_KEY: notsecretkey
+  BASE_URL: http://localhost:8080
+
+pv:
+  storageClass: standard
+  useravatars:
+    pvcname: user-avatars
+    size: 5Gi
+  projectbackgroundimages:
+    pvcname: project-background-images
+    size: 5Gi
+  attachments:
+    pvcname: attachments
+    size: 5Gi
