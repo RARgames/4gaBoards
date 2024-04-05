@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "4ga-boards.fullname" . }}
+  labels:
+    {{- include "4ga-boards.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 80
+      targetPort: 1337
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "4ga-boards.selectorLabels" . | nindent 4 }}
