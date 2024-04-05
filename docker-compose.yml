@@ -4,10 +4,10 @@ services:
   db:
     image: postgres:16-alpine
     restart: always
+    networks:
+      - boards-network
     volumes:
       - db-data:/var/lib/postgresql/data
-    ports:
-      - 3001:5432
     environment:
       POSTGRES_DB: 4gaBoards
       POSTGRES_PASSWORD: notpassword
@@ -21,6 +21,8 @@ services:
   4gaBoards:
     image: ghcr.io/rargames/4gaboards:latest
     restart: always
+    networks:
+      - boards-network
     volumes:
       - user-avatars:/app/public/user-avatars
       - project-background-images:/app/public/project-background-images
@@ -41,3 +43,5 @@ volumes:
   project-background-images:
   attachments:
   db-data:
+networks:
+  boards-network:
