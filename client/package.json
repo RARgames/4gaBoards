@@ -117,7 +117,7 @@
     "react-i18next": "^12.0.0",
     "react-input-mask": "^2.0.4",
     "react-markdown": "^8.0.3",
-    "react-photoswipe-gallery": "^2.2.2",
+    "react-photoswipe-gallery": "^3.0.1",
     "react-redux": "^8.0.5",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^6.4.3",
