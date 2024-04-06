@@ -119,7 +119,7 @@
     "react-markdown": "^8.0.3",
     "react-photoswipe-gallery": "^3.0.1",
     "react-redux": "^8.0.5",
-    "react-refresh": "^0.11.0",
+    "react-refresh": "^0.14.0",
     "react-router-dom": "^6.4.3",
     "react-textarea-autosize": "^8.4.0",
     "redux": "^4.2.0",
