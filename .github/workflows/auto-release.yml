@@ -104,7 +104,7 @@ jobs:
         push: true
         tags: |
           ghcr.io/rargames/4gaboards:beta-latest
-          ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}-${{ steps.slug.outputs.sha7 }}
+          ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}
 
     - name: Push
       if: steps.increment_version.outputs.beta == 'false'
