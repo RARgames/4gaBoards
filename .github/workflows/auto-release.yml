@@ -25,6 +25,10 @@ jobs:
       id: latest-tag
       run: echo "tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_OUTPUT
 
+    - name: Get short SHA for beta
+      id: slug
+      run: echo "sha7=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
+
     - name: Increment version
       id: increment_version
       run: |
@@ -32,6 +36,7 @@ jobs:
         major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
         minor=$(echo $latest_tag | cut -d. -f2)
         patch=$(echo $latest_tag | cut -d. -f3)
+        beta_tag=""
 
         if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
           major=$((major + 1))
@@ -47,25 +52,23 @@ jobs:
           beta=false
         else
           beta=true
+          beta_tag="-${{ steps.slug.outputs.sha7 }}"
         fi
 
         new_tag="v$major.$minor.$patch"
-        ghcr_tag="$major.$minor.$patch"
+        ghcr_tag="$major.$minor.$patch$beta_tag"
 
         echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
         echo "ghcr_tag=$ghcr_tag" >> $GITHUB_OUTPUT
         echo "beta=$beta" >> $GITHUB_OUTPUT
 
     - name: Update package.json version
-      if: steps.increment_version.outputs.beta == 'false'
       run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
 
     - name: Update package-lock.json version
-      if: steps.increment_version.outputs.beta == 'false'
       run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
     - name: Update .env version
-      if: steps.increment_version.outputs.beta == 'false'
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.ghcr_tag }}' >> temp.txt && mv temp.txt client/.env
 
     - name: Set up QEMU
@@ -92,11 +95,6 @@ jobs:
           ghcr.io/rargames/4gaboards:latest
           ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}
     
-    - name: Get short SHA for beta
-      if: steps.increment_version.outputs.beta == 'true'
-      id: slug
-      run: echo "sha7=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
-    
     - name: Build and push beta
       if: steps.increment_version.outputs.beta == 'true'
       uses: docker/build-push-action@v5.1.0
@@ -105,9 +103,10 @@ jobs:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
+          ghcr.io/rargames/4gaboards:beta-latest
           ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}-${{ steps.slug.outputs.sha7 }}
 
-    - name: push
+    - name: Push
       if: steps.increment_version.outputs.beta == 'false'
       run: |
         git add .
@@ -116,7 +115,7 @@ jobs:
         git commit -m "Release ${{ steps.increment_version.outputs.ghcr_tag }}"
         git push
 
-    - name: push-tag
+    - name: Push-tag
       if: steps.increment_version.outputs.beta == 'false'
       run: |
         git tag ${{ steps.increment_version.outputs.new_tag }}
@@ -129,10 +128,10 @@ jobs:
       env:
         REPO: ${{ github.repository }}
 
-    - name: release
+    - name: Release
       if: steps.increment_version.outputs.beta == 'false'
       id: create_release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2.0.4
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"
         tag_name: "${{ steps.increment_version.outputs.new_tag }}"
