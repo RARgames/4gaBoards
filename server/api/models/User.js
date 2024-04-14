@@ -22,12 +22,17 @@ module.exports = {
     },
     password: {
       type: 'string',
-      required: true,
+      allowNull: true,
     },
     isAdmin: {
       type: 'boolean',
       defaultsTo: false,
       columnName: 'is_admin',
+    },
+    isSso: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'is_sso',
     },
     name: {
       type: 'string',

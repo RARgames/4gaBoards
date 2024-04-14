@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onAuthenticate: entryActions.authenticate,
+      onAuthenticateGoogleSso: entryActions.authenticateGoogleSso,
       onMessageDismiss: entryActions.clearAuthenticateError,
     },
     dispatch,

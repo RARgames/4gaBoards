@@ -21,6 +21,25 @@ authenticate.failure = (error) => ({
   },
 });
 
+const authenticateGoogleSso = () => ({
+  type: ActionTypes.GOOGLE_SSO_AUTHENTICATE,
+  payload: {},
+});
+
+authenticateGoogleSso.success = (accessToken) => ({
+  type: ActionTypes.AUTHENTICATE__SUCCESS,
+  payload: {
+    accessToken,
+  },
+});
+
+authenticateGoogleSso.failure = (error) => ({
+  type: ActionTypes.AUTHENTICATE__FAILURE,
+  payload: {
+    error,
+  },
+});
+
 const clearAuthenticateError = () => ({
   type: ActionTypes.AUTHENTICATE_ERROR_CLEAR,
   payload: {},
@@ -28,5 +47,6 @@ const clearAuthenticateError = () => ({
 
 export default {
   authenticate,
+  authenticateGoogleSso,
   clearAuthenticateError,
 };

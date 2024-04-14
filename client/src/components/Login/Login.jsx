@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Form, Grid, Header, Message, Image } from 'semantic-ui-react';
+import { Form, Grid, Header, Message, Image, Button } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input } from '../../lib/custom-ui';
 
@@ -42,7 +42,7 @@ const createMessage = (error) => {
   }
 };
 
-const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onMessageDismiss }) => {
+const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss }) => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
@@ -128,6 +128,9 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                       <Input.Password fluid ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
                     </div>
                     <Form.Button primary size="large" icon="right arrow" labelPosition="right" content={t('action.logIn')} floated="right" loading={isSubmitting} disabled={isSubmitting} />
+                    <Button type="button" onClick={onAuthenticateGoogleSso}>
+                      {t('common.logInWithSSO')}
+                    </Button>
                   </Form>
                 </div>
               </div>
@@ -144,6 +147,7 @@ Login.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onAuthenticate: PropTypes.func.isRequired,
+  onAuthenticateGoogleSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
 };
 

@@ -1,8 +1,8 @@
 import { call, put, select } from 'redux-saga/effects';
 import { push } from '../../../lib/redux-router';
-
 import selectors from '../../../selectors';
 import Paths from '../../../constants/Paths';
+import { authenticateGoogleSsoCallback } from './login';
 
 export function* goToLogin() {
   yield put(push(Paths.LOGIN));
@@ -27,6 +27,11 @@ export function* handleLocationChange() {
       yield call(goToLogin);
 
       break;
+    case Paths.GOOGLE_CALLBACK: {
+      yield call(authenticateGoogleSsoCallback);
+
+      break;
+    }
     default:
   }
 }
