@@ -94,6 +94,7 @@ jobs:
         tags: |
           ghcr.io/rargames/4gaboards:latest
           ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}
+        labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
     
     - name: Build and push beta
       if: steps.increment_version.outputs.beta == 'true'
@@ -105,6 +106,7 @@ jobs:
         tags: |
           ghcr.io/rargames/4gaboards:beta-latest
           ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}
+        labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
 
     - name: Push
       if: steps.increment_version.outputs.beta == 'false'
