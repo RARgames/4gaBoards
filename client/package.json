@@ -114,7 +114,7 @@
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
-    "react-i18next": "^12.0.0",
+    "react-i18next": "^12.3.1",
     "react-input-mask": "^2.0.4",
     "react-markdown": "^8.0.3",
     "react-photoswipe-gallery": "^3.0.1",
