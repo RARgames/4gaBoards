@@ -18,6 +18,8 @@ We'll work on a **demo** when we finish all tasks from the [#1 issue](https://gi
 - Real-time updates
 - User notifications
 - Internationalization
+- Github 2-way sync [Coming soon]
+- Google/Microsoft/Github SSO [Coming soon]
 
 ## Deploy
 
