@@ -96,7 +96,7 @@
     "jest-resolve": "^29.7.0",
     "jest-watch-typeahead": "^2.2.2",
     "js-cookie": "^3.0.1",
-    "jwt-decode": "^3.1.2",
+    "jwt-decode": "^4.0.0",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.7.6",
     "photoswipe": "^5.4.3",
