@@ -501,23 +501,30 @@ const CardModal = React.memo(
 
     function recolorPlugin() {
       function transformer(tree) {
-        let currentColorClass = null;
+        const currentColorClass = [];
         visit(tree, (node, index, parent) => {
           if (node.type === 'comment') {
             const commentContent = node.value.trim().split('-');
             const colorIndex = colorNames.indexOf(commentContent[0]);
             if (colorIndex !== -1) {
-              currentColorClass = commentContent[1] === 'end' ? null : colorNames[colorIndex];
+              if (commentContent[1] === 'end') {
+                const cIndex = currentColorClass.indexOf(colorNames[colorIndex]);
+                if (cIndex !== -1) {
+                  currentColorClass.splice(cIndex, 1);
+                }
+              } else {
+                currentColorClass.unshift(colorNames[colorIndex]);
+              }
             }
           }
 
-          if (currentColorClass !== null) {
+          if (currentColorClass.length > 0) {
             if (node.type === 'text' && node.value !== '\n') {
               // eslint-disable-next-line no-param-reassign
               parent.children[index] = {
                 type: 'element',
                 tagName: 'span',
-                properties: { className: currentColorClass },
+                properties: { className: currentColorClass[0] },
                 children: [{ type: 'text', value: node.value }],
               };
             }
