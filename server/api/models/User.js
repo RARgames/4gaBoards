@@ -5,7 +5,7 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
-const DESCRIPTION_MODES = ['code', 'live', 'preview'];
+const DESCRIPTION_MODES = ['edit', 'live', 'preview'];
 
 module.exports = {
   DESCRIPTION_MODES,
