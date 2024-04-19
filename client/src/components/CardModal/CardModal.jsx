@@ -351,14 +351,7 @@ const CardModal = React.memo(
           </ActionsPopup>
         )}
         {canEdit && (
-          <DeletePopup
-            title={t('common.deleteCard', {
-              context: 'title',
-            })}
-            content={t('common.areYouSureYouWantToDeleteThisCard')}
-            buttonContent={t('action.deleteCard')}
-            onConfirm={onDelete}
-          >
+          <DeletePopup title={t('common.deleteCard', { context: 'title' })} content={t('common.areYouSureYouWantToDeleteThisCard')} buttonContent={t('action.deleteCard')} onConfirm={onDelete}>
             <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
               <Icon fitted name="trash" />
             </Button>
@@ -390,9 +383,7 @@ const CardModal = React.memo(
     const labelsNode = (
       <div className={styles.attachments}>
         <div className={styles.text}>
-          {t('common.labels', {
-            context: 'title',
-          })}
+          {t('common.labels', { context: 'title' })}
           {canEdit && (
             <LabelsPopup
               items={allLabels}
@@ -421,9 +412,7 @@ const CardModal = React.memo(
     const membersNode = (
       <div className={styles.attachments}>
         <div className={styles.text}>
-          {t('common.members', {
-            context: 'title',
-          })}
+          {t('common.members', { context: 'title' })}
           {canEdit && (
             <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
               <Button className={gStyles.iconButtonSolid}>
@@ -443,9 +432,7 @@ const CardModal = React.memo(
     const dueDateNode = (
       <div className={styles.attachments}>
         <div className={styles.text}>
-          {t('common.dueDate', {
-            context: 'title',
-          })}
+          {t('common.dueDate', { context: 'title' })}
           {canEdit && (
             <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
               <Button className={gStyles.iconButtonSolid}>
@@ -469,9 +456,7 @@ const CardModal = React.memo(
     const timerNode = (
       <div className={styles.attachments}>
         <div className={styles.text}>
-          {t('common.timer', {
-            context: 'title',
-          })}
+          {t('common.timer', { context: 'title' })}
           {canEdit && (
             <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
               <Button className={gStyles.iconButtonSolid}>
