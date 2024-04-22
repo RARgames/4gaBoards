@@ -76,7 +76,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "classnames": "^2.3.2",
     "css-loader": "^6.8.1",
-    "css-minimizer-webpack-plugin": "^4.2.2",
+    "css-minimizer-webpack-plugin": "^6.0.0",
     "date-fns": "^2.29.3",
     "dequal": "^2.0.3",
     "dotenv": "^16.3.1",
