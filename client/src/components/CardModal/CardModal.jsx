@@ -381,7 +381,7 @@ const CardModal = React.memo(
     );
 
     const labelsNode = (
-      <div className={styles.attachments}>
+      <div className={styles.headerItems}>
         <div className={styles.text}>
           {t('common.labels', { context: 'title' })}
           {canEdit && (
@@ -402,7 +402,7 @@ const CardModal = React.memo(
           )}
         </div>
         {labels.map((label) => (
-          <span key={label.id} className={styles.attachment}>
+          <span key={label.id} className={styles.headerItem}>
             <Label name={label.name} color={label.color} variant="cardModal" />
           </span>
         ))}
@@ -410,7 +410,7 @@ const CardModal = React.memo(
     );
 
     const membersNode = (
-      <div className={styles.attachments}>
+      <div className={styles.headerItems}>
         <div className={styles.text}>
           {t('common.members', { context: 'title' })}
           {canEdit && (
@@ -422,7 +422,7 @@ const CardModal = React.memo(
           )}
         </div>
         {users.map((user) => (
-          <span key={user.id} className={styles.attachment}>
+          <span key={user.id} className={styles.headerItem}>
             <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
           </span>
         ))}
@@ -430,7 +430,7 @@ const CardModal = React.memo(
     );
 
     const dueDateNode = (
-      <div className={styles.attachments}>
+      <div className={styles.headerItems}>
         <div className={styles.text}>
           {t('common.dueDate', { context: 'title' })}
           {canEdit && (
@@ -441,7 +441,7 @@ const CardModal = React.memo(
             </DueDateEditPopup>
           )}
         </div>
-        <span className={styles.attachment}>
+        <span className={styles.headerItem}>
           {canEdit ? (
             <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
               <DueDate value={dueDate} />
@@ -454,7 +454,7 @@ const CardModal = React.memo(
     );
 
     const timerNode = (
-      <div className={styles.attachments}>
+      <div className={styles.headerItems}>
         <div className={styles.text}>
           {t('common.timer', { context: 'title' })}
           {canEdit && (
@@ -465,16 +465,16 @@ const CardModal = React.memo(
             </TimerEditPopup>
           )}
         </div>
-        <span className={styles.attachment}>
+        <span className={styles.headerItem}>
           <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} variant="cardModal" onClick={canEdit ? handleToggleTimerClick : undefined} />
         </span>
       </div>
     );
 
     const subscribeNode = (
-      <div className={styles.attachments}>
+      <div className={styles.headerItems}>
         <div className={styles.text}>{t('common.notifications')}</div>
-        <span className={styles.attachment}>
+        <span className={styles.headerItem}>
           <Button onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
             {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
           </Button>
