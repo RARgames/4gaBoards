@@ -13,7 +13,6 @@ export default {
     common: {
       account: 'Cuenta',
       actions: 'Acciones',
-      addAttachment_title: 'Añadir un adjunto',
       addComment: 'Añadir un comentario',
       addMember_title: 'Añadir un miembro',
       addUser_title: 'Añadir usuario',
@@ -77,7 +76,6 @@ export default {
       enterTaskDescription: 'Escribe la descripción de la tarea...',
       filterByLabels_title: 'Filtrar por Etiquetas',
       filterByMembers_title: 'Filtrar por Miembros',
-      fromComputer_title: 'Desde Computador',
       hours: 'Horas',
       invalidCurrentPassword: 'Contraseña actual invalida',
       labels: 'Etíquetas',

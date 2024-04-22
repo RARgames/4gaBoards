@@ -84,7 +84,6 @@ export default {
       enterTaskDescription: 'Aufgabenbeschreibung eingeben...',
       filterByLabels_title: 'Nach Label filtern',
       filterByMembers_title: 'Nach Mitgliedern filtern',
-      fromComputer_title: 'Vom Computer',
       general: 'Allgemein',
       hours: 'Stunden',
       invalidCurrentPassword: 'Das aktuelle Passwort ist falsch',

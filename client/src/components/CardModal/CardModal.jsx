@@ -18,7 +18,7 @@ import DescriptionEdit from './DescriptionEdit';
 import Tasks from './Tasks';
 import Attachments from './Attachments';
 import AttachmentAddZone from './AttachmentAddZone';
-import AttachmentAddPopup from './AttachmentAddPopup';
+import AttachmentAdd from './AttachmentAdd';
 import Activities from './Activities';
 import User from '../User';
 import Label from '../Label';
@@ -694,11 +694,11 @@ const CardModal = React.memo(
           <Icon name="attach" className={styles.moduleIcon} />
           {t('common.attachments')}
           {canEdit && (
-            <AttachmentAddPopup onCreate={onAttachmentCreate}>
+            <AttachmentAdd onCreate={onAttachmentCreate}>
               <Button className={gStyles.iconButtonSolid}>
                 <Icon fitted size="small" name="add" />
               </Button>
-            </AttachmentAddPopup>
+            </AttachmentAdd>
           )}
           <Button onClick={handleToggleAttacShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
             <Icon fitted size="small" name={attacShown ? 'minus' : 'add'} />
@@ -716,11 +716,11 @@ const CardModal = React.memo(
                 onGalleryOpen={handleGalleryOpen}
                 onGalleryClose={handleGalleryClose}
               />
-              <AttachmentAddPopup onCreate={onAttachmentCreate}>
-                <Button fluid className={styles.actionButton}>
-                  {t('common.addAttachment', { context: 'title' })}
+              <AttachmentAdd onCreate={onAttachmentCreate}>
+                <Button fluid className={styles.addAttachmentButton}>
+                  {t('common.addAttachment')} <span className={styles.hint}>{t('common.addAttachmentExtra')}</span>
                 </Button>
-              </AttachmentAddPopup>
+              </AttachmentAdd>
             </>
           )}
         </div>

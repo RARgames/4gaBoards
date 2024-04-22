@@ -13,7 +13,6 @@ export default {
     common: {
       account: 'Konto',
       actions: 'Handlinger',
-      addAttachment_title: 'Vedhæft fil',
       addComment: 'Skriv kommentar',
       addManager_title: 'Tilføj projektleder',
       addMember_title: 'Tilføj medlem',
@@ -83,7 +82,6 @@ export default {
       enterTaskDescription: 'Angiv opgavens beskrivelse...',
       filterByLabels_title: 'Filtrer på mærkater',
       filterByMembers_title: 'Filtrer på medlemmer',
-      fromComputer_title: 'Fra computer',
       general: 'Generelt',
       hours: 'Timer',
       invalidCurrentPassword: 'Nuværende adgangskode are ugyldig',

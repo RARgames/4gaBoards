@@ -13,7 +13,6 @@ export default {
     common: {
       account: 'Konto',
       actions: 'Akcje',
-      addAttachment_title: 'Dodaj Załącznik',
       addComment: 'Dodaj komentarz',
       addMember_title: 'Dodaj Członka',
       addUser_title: 'Dodaj Użytkownika',
@@ -77,7 +76,6 @@ export default {
       enterTaskDescription: 'Podaj opis zadania...',
       filterByLabels_title: 'Filtrowanie Po Oznaczeniach',
       filterByMembers_title: 'Filtrowanie Po Członkach',
-      fromComputer_title: 'Z komputera',
       hours: 'Godzin',
       invalidCurrentPassword: 'Błędne aktualne hasło',
       labels: 'Oznaczenia',

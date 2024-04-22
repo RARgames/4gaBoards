@@ -15,7 +15,6 @@ export default {
     common: {
       account: '계정',
       actions: '활동',
-      addAttachment_title: '첨부파일 추가',
       addComment: '댓글',
       addManager_title: '관리자 추가',
       addMember_title: '회원 추가',
@@ -87,7 +86,6 @@ export default {
       enterTaskDescription: '태스크 설명을 입력하세요...',
       filterByLabels_title: '라벨 검색',
       filterByMembers_title: '회원으로 검색',
-      fromComputer_title: 'PC로 부터',
       general: 'General',
       hours: '시',
       invalidCurrentPassword: '현재 패스워드는 유효하지 않습니다.',

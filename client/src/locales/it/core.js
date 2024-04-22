@@ -9,7 +9,6 @@ export default {
     common: {
       account: 'Account',
       actions: 'Azioni',
-      addAttachment_title: 'Aggiungi Allegato',
       addComment: 'Aggiungi commento',
       addManager_title: 'Aggiungi Manager',
       addMember_title: 'Aggiungi Membro',
@@ -86,7 +85,6 @@ export default {
       enterTaskDescription: 'Inserire descrizione del task...',
       filterByLabels_title: 'Filtra per Etichetta',
       filterByMembers_title: 'Filtra per Membro',
-      fromComputer_title: 'Dal Computer',
       general: 'Generale',
       hours: 'Ore',
       invalidCurrentPassword: 'Password corrente non valida',

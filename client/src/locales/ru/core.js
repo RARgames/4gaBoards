@@ -13,7 +13,6 @@ export default {
     common: {
       account: 'Учетная запись',
       actions: 'Действия',
-      addAttachment: 'Добавление вложения',
       addComment: 'Добавление комментария',
       addMember: 'Добавление участника',
       addUser: 'Добавление пользователя',
@@ -86,7 +85,6 @@ export default {
       enterTaskDescription: 'Введите описание задачи...',
       filterByLabels: 'Фильтр по меткам',
       filterByMembers: 'Фильтр по участникам',
-      fromComputer: 'С компьютера',
       hours: 'Часы',
       invalidCurrentPassword: 'Неверный текущий пароль',
       labels: 'Метки',

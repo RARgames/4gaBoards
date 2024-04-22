@@ -24,13 +24,15 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
 
   const handleDropAccepted = useCallback(
     (files) => {
-      submit(files[0]);
+      files.forEach((file) => {
+        submit(file);
+      });
     },
     [submit],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    multiple: false,
+    multiple: true,
     noClick: true,
     noKeyboard: true,
     onDropAccepted: handleDropAccepted,

@@ -13,7 +13,6 @@ export default {
     common: {
       account: 'アカウント',
       actions: 'アクション',
-      addAttachment_title: '添付ファイルを追加',
       addComment: 'コメントを追加',
       addManager_title: 'マネージャーを追加',
       addMember_title: 'メンバーを追加',
@@ -83,7 +82,6 @@ export default {
       enterTaskDescription: 'タスクの説明を入力...',
       filterByLabels_title: 'ラベルで絞り込む',
       filterByMembers_title: 'メンバーで絞り込む',
-      fromComputer_title: 'コンピューターから',
       general: '一般',
       hours: '時間',
       invalidCurrentPassword: '現在のパスワードが無効',

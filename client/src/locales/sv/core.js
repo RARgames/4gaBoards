@@ -13,7 +13,6 @@ export default {
     common: {
       account: 'Konto',
       actions: 'Åtgärder',
-      addAttachment_title: 'Bifoga',
       addComment: 'Kommentera',
       addManager_title: 'Lägg till Projektledare',
       addMember_title: 'Lägg till Medlem',
@@ -83,7 +82,6 @@ export default {
       enterTaskDescription: 'Ange uppgiftsbeskrivning...',
       filterByLabels_title: 'Filtrera Efter Etiketter',
       filterByMembers_title: 'Filtrera Efter Medlemmar',
-      fromComputer_title: 'Från dator',
       general: 'Allmänt',
       hours: 'Timmar',
       invalidCurrentPassword: 'Ogiltigt nuvarande lösenord',

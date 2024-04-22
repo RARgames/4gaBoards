@@ -13,7 +13,6 @@ export default {
     common: {
       account: 'Účet',
       actions: 'Akce',
-      addAttachment_title: 'Přidat přílohu',
       addComment: 'Přidat komentář',
       addManager_title: 'Přidat vedoucího',
       addMember_title: 'Přidat člena',
@@ -83,7 +82,6 @@ export default {
       enterTaskDescription: 'Vlož popis úkolu...',
       filterByLabels_title: 'Filtruj podle štítku',
       filterByMembers_title: 'Filtruj podle člena',
-      fromComputer_title: 'Z počítače',
       general: 'Obecné',
       hours: 'Hodiny',
       invalidCurrentPassword: 'Neplatné aktuální heslo',

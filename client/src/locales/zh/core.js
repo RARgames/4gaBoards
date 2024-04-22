@@ -9,7 +9,6 @@ export default {
     common: {
       account: '账号',
       actions: '操作',
-      addAttachment_title: '添加附件',
       addComment: '添加评论',
       addManager_title: '添加管理员',
       addMember_title: '添加成员',
@@ -79,7 +78,6 @@ export default {
       enterTaskDescription: '输入任务描述...',
       filterByLabels_title: '通过标签筛选',
       filterByMembers_title: '通过成员筛选',
-      fromComputer_title: '从电脑',
       general: '全体',
       hours: '小时',
       invalidCurrentPassword: '当前密码错误',

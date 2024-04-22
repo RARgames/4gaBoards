@@ -12,8 +12,10 @@ const FilePicker = React.memo(({ children, accept, onSelect }) => {
 
   const handleFieldChange = useCallback(
     ({ target }) => {
-      if (target.files[0]) {
-        onSelect(target.files[0]);
+      if (target.files.length > 0) {
+        Array.from(target.files).forEach((file) => {
+          onSelect(file);
+        });
 
         target.value = null; // eslint-disable-line no-param-reassign
       }
@@ -28,7 +30,7 @@ const FilePicker = React.memo(({ children, accept, onSelect }) => {
   return (
     <>
       {tigger}
-      <input ref={field} type="file" accept={accept} className={styles.field} onChange={handleFieldChange} />
+      <input ref={field} type="file" accept={accept} className={styles.field} onChange={handleFieldChange} multiple />
     </>
   );
 });

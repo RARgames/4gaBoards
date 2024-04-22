@@ -9,7 +9,6 @@ export default {
     common: {
       account: 'Profil',
       actions: 'Amallar',
-      addAttachment_title: "Ilova Qo'shish",
       addComment: "Izoh qo'shish",
       addManager_title: "Boshqaruvchi Qo'shish",
       addMember_title: "Yangi a'zo Qo'shish",
@@ -79,7 +78,6 @@ export default {
       enterTaskDescription: 'Topshiriq sarlavhasini kiriting...',
       filterByLabels_title: "Yorliq bo'yicha filter",
       filterByMembers_title: "A'zolar bo'yicha filter",
-      fromComputer_title: 'Kompyuterdan',
       general: 'Umumiy',
       hours: 'Soat',
       invalidCurrentPassword: 'Hozirgi parol xato',
