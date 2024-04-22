@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Comment } from 'semantic-ui-react';
+import { Comment, Icon } from 'semantic-ui-react';
 import { Markdown } from '../../../lib/custom-ui';
 
 import CommentEdit from './CommentEdit';
@@ -36,16 +36,18 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
           </span>
           {canEdit && (
             <Comment.Actions className={styles.buttons}>
-              <Comment.Action as="button" content={t('action.edit')} disabled={!isPersisted} onClick={handleEditClick} className={styles.button} />
+              <Comment.Action title={t('common.editComment')} as="button" disabled={!isPersisted} onClick={handleEditClick} className={styles.button}>
+                <Icon fitted size="small" name="pencil" />
+              </Comment.Action>
               <DeletePopup
-                title={t('common.deleteComment', {
-                  context: 'title',
-                })}
+                title={t('common.deleteComment', { context: 'title' })}
                 content={t('common.areYouSureYouWantToDeleteThisComment')}
                 buttonContent={t('action.deleteComment')}
                 onConfirm={onDelete}
               >
-                <Comment.Action as="button" content={t('action.delete')} disabled={!isPersisted} className={styles.button} />
+                <Comment.Action title={t('common.deleteComment')} as="button" disabled={!isPersisted} className={styles.button}>
+                  <Icon fitted size="small" name="trash" />
+                </Comment.Action>
               </DeletePopup>
             </Comment.Actions>
           )}

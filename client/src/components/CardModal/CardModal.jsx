@@ -312,7 +312,7 @@ const CardModal = React.memo(
       <div className={styles.header}>
         {canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameField} /> : <div className={styles.headerTitle}>{name}</div>}
 
-        <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
+        <Button title={t('common.closeCard')} className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
           <Icon fitted name="close" />
         </Button>
         {canEdit && (
@@ -345,14 +345,14 @@ const CardModal = React.memo(
             onLabelMove={onLabelMove}
             onLabelDelete={onLabelDelete}
           >
-            <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
+            <Button title={t('common.cardActions', { context: 'title' })} className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
               <Icon fitted name="ellipsis vertical" />
             </Button>
           </ActionsPopup>
         )}
         {canEdit && (
           <DeletePopup title={t('common.deleteCard', { context: 'title' })} content={t('common.areYouSureYouWantToDeleteThisCard')} buttonContent={t('action.deleteCard')} onConfirm={onDelete}>
-            <Button className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
+            <Button title={t('common.deleteCard', { context: 'title' })} className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
               <Icon fitted name="trash" />
             </Button>
           </DeletePopup>
