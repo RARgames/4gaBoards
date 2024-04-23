@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Progress } from 'semantic-ui-react';
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useToggle } from '../../lib/hooks';
 
 import styles from './Tasks.module.scss';
@@ -28,8 +30,9 @@ const Tasks = React.memo(({ items }) => {
         <span className={styles.progressWrapper}>
           <Progress autoSuccess value={completedItems.length} total={items.length} color="blue" size="tiny" className={styles.progress} />
         </span>
-        <span className={classNames(styles.count, isOpened ? styles.countOpened : styles.countClosed)}>
+        <span className={styles.count}>
           {completedItems.length}/{items.length}
+          <FontAwesomeIcon icon={isOpened ? faCaretDown : faCaretUp} className={styles.countToggleIcon} />
         </span>
       </div>
       {isOpened && (

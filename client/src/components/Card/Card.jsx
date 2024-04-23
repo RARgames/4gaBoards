@@ -121,8 +121,12 @@ const Card = React.memo(
 
     const contentNode = (
       <>
-        <div className={styles.details}>
-          <div className={styles.name}>{name}</div>
+        <div className={styles.cardTitle}>
+          <div className={styles.details}>
+            <div className={styles.name}>{name}</div>
+          </div>
+          {notificationsTotal > 0 && <span className={styles.notification}>{notificationsTotal}</span>}
+          {notificationsTotal > 9 && <span className={classNames(styles.notification, styles.notificationFull)}>9+</span>}
         </div>
         {coverUrl && <img src={coverUrl} alt="" className={styles.cover} />}
         <div className={styles.details}>
@@ -136,7 +140,7 @@ const Card = React.memo(
             </span>
           )}
           {tasks.length > 0 && <Tasks items={tasks} />}
-          {(description || attachmentsCount > 0 || commentsCount > 0 || dueDate || timer || notificationsTotal > 0) && (
+          {(description || attachmentsCount > 0 || commentsCount > 0 || dueDate || timer) && (
             <span className={styles.attachments}>
               {description && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
@@ -153,7 +157,6 @@ const Card = React.memo(
                   <FontAwesomeIcon icon={faComments} className={styles.detailsIcon} />
                 </span>
               )}
-              {notificationsTotal > 0 && <span className={classNames(styles.attachment, styles.attachmentLeft, styles.notification)}>{notificationsTotal}</span>}
               {dueDate && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
                   <DueDate value={dueDate} variant="card" />

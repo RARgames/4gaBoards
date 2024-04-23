@@ -10,7 +10,7 @@
   }
 
   .count {
-    color: #888;
+    color: var(--textColor1);
     display: inline-block;
     font-size: 12px;
     line-height: 12px;
@@ -18,28 +18,14 @@
     vertical-align: top;
     width: 50px;
 
-    &:after {
-      content: "";
-      opacity: 0.4;
-    }
-
     &:hover {
-      opacity: 0.75;
+      color: var(--textColor2);
     }
   }
 
-  .countOpened:after {
-    background: url("data:image/gif;base64,R0lGODlhCwALAJEAAAAAAP///xUVFf///yH5BAEAAAMALAAAAAALAAsAAAIPnI+py+0/hJzz0IruwjsVADs=")
-      no-repeat center right;
-    margin-left: 2px;
-    padding: 6px 6px 0px;
-  }
-
-  .countClosed:after {
-    background: url("data:image/gif;base64,R0lGODlhCwALAJEAAAAAAP///xUVFf///yH5BAEAAAMALAAAAAALAAsAAAIRnC2nKLnT4or00Puy3rx7VQAAOw==")
-      no-repeat center right;
-    margin-left: 2px;
-    padding: 0 6px 6px;
+  .countToggleIcon {
+    font-size: 12px;
+    margin: 0 3px 0 3px;
   }
 
   .progress {
@@ -69,12 +55,12 @@
   }
 
   .taskCompleted {
-    color: #aaa;
+    color: var(--textColor2);
     text-decoration: line-through;
   }
 
   .tasks {
-    color: #333;
+    color: var(--textColor1);
     list-style: none;
     margin: -2px 0 0;
     padding-left: 0;

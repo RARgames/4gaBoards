@@ -4,12 +4,12 @@
   --headerNameDefaultHeight: 20;
 
   .addCardButton {
-    background: #dfe3e6;
+    background: var(--backgroundList);
     border: none;
-    color: #6b808c;
+    color: var(--textColor2);
     cursor: pointer;
     display: block;
-    fill: #6b808c;
+    fill: var(--textColor2);
     flex: 0 0 auto;
     font-weight: normal;
     height: 36px;
@@ -19,9 +19,7 @@
     width: 272px;
 
     &:hover {
-      background: #c3cbd0;
-      color: #17394d;
-      fill: #17394d;
+      background: var(--backgroundListButton);
     }
   }
 
@@ -89,7 +87,7 @@
   }
 
   .headerName {
-    color: #17394d;
+    color: var(--textColor0);
     font-weight: bold;
     line-height: 20px;
     max-height: 40px;
@@ -108,7 +106,7 @@
   }
 
   .headerNameCollapsed {
-    color: #17394d;
+    color: var(--textColor0);
     font-weight: bold;
     outline: none;
     overflow: hidden;
@@ -134,14 +132,14 @@
   }
 
   .headerCardsCount {
-    color: #798d99;
+    color: var(--textColor2);
     font-size: 12px;
     position: relative;
     float: left;
   }
 
   .headerCardsCountCollapsed {
-    color: #798d99;
+    color: var(--textColor2);
     font-size: 12px;
     max-height: 10%;
     writing-mode: vertical-rl;
@@ -159,7 +157,7 @@
   }
 
   .outerWrapper {
-    background: #dfe3e6;
+    background: var(--backgroundList);
     border-radius: 1px;
     overflow: hidden;
   }

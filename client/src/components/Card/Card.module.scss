@@ -39,13 +39,13 @@
   }
 
   .card {
-    background: #fff;
+    background: var(--backgroundColorTmpHeader);
     border-radius: 2px;
-    box-shadow: 0 1px 0 #ccc;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     position: relative;
 
     &:hover {
-      background: #f5f6f7;
+      background: var(--backgroundCardSelected);
 
       .target {
         opacity: 1;
@@ -57,7 +57,7 @@
     box-shadow: 0 0 5px var(--borderOutline2);
     border-radius: 2px;
     border: 2px solid var(--borderOutline2);
-    background: #d6d6d6 !important; //TODO change color - dark mode
+    background: var(--backgroundCardOpened);
   }
 
   .content {
@@ -87,8 +87,12 @@
     overflow: hidden;
   }
 
+  .detailsNotification {
+    padding: 6px 0px 0;
+  }
+
   .name {
-    color: #17394d;
+    color: var(--textColor1);
     font-size: 14px;
     line-height: 18px;
     padding-bottom: 6px;
@@ -101,18 +105,21 @@
   }
 
   .notification {
-    background: #eb5a46;
-    color: #fff;
-    font-size: 12px;
-    line-height: 20px;
-    padding: 0px 6px;
-    border: none;
+    background: var(--notificationRed);
+    color: var(--textColorWhite);
+    font-size: 10px;
+    line-height: 12px;
+    padding: 0 3px 0 2px;
     border-radius: 3px;
-    display: inline-block;
-    outline: none;
-    text-align: left;
-    transition: background 0.3s ease;
-    vertical-align: top;
+    max-height: 13px;
+    max-width: 13px;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+  }
+
+  .notificationFull {
+    padding: 0 3px 0 1px;
   }
 
   .wrapper {

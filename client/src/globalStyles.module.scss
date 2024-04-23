@@ -2,6 +2,10 @@
   --backgroundColor0: #1e1e1e;
   --backgroundColor1: #252526;
   --backgroundColor2: #333333;
+  --backgroundList: #1f2d3c;
+  --backgroundListButton: #1b2835;
+  --backgroundCardSelected: #1c3546;
+  --backgroundCardOpened: #11576b;
   --backgroundColorTmp0: #282c30;
   --backgroundColorTmp1: #292d33;
   --backgroundColorTmp2: #242d34;
@@ -12,7 +16,6 @@
   --backgroundColorTmpDarkerField2: #17232c;
   --backgroundColorTmpSeparatorLight: #263443;
   --backgroundColorTmpHighlighted: #2d3b4b;
-  --backgroundColorTmpTest: #2c3e51;
   --nodeOutline: rgba(54, 75, 97, 0.5);
   --borderOutline: #5ba4cf;
   --borderOutline2: #34b7cd;
@@ -24,6 +27,7 @@
   --textColor3: #6d6d6d;
   --textColorYellow: #fdd41e;
   --textColorRed: #ff0000;
+  --notificationRed: #eb5a46;
 
   .controls {
     height: 32px;
@@ -118,13 +122,13 @@
   .iconButton {
     background: none;
     box-shadow: none;
-    color: #686868;
+    color: var(--textColor1);
     margin: 0;
     padding: 0;
     min-height: 10px;
 
     &:hover {
-      color: #000000;
+      color: var(--textColor2);
     }
   }
 
