@@ -3,6 +3,8 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Icon } from 'semantic-ui-react';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForceUpdate, usePrevious } from '../../lib/hooks';
 
 import { formatTimer } from '../../utils/timer';
@@ -49,7 +51,7 @@ const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }
 
   const contentNode = (
     <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], startedAt && styles.wrapperActive, onClick && styles.wrapperHoverable)}>
-      <Icon name={startedAt ? 'pause' : 'play'} size="tiny" className={styles.icon} />
+      <FontAwesomeIcon icon={startedAt ? faPause : faPlay} className={styles.timerIcon} />
       {formatTimer({ startedAt, total })}
     </span>
   );

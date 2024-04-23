@@ -10,10 +10,10 @@
   }
 
   .wrapper {
-    background: #dce0e4;
+    background: var(--textColor2);
     border: none;
     border-radius: 3px;
-    color: #6a808b;
+    color: var(--backgroundList);
     display: inline-block;
     font-variant-numeric: tabular-nums;
     outline: none;
@@ -23,22 +23,23 @@
   }
 
   .wrapperActive {
-    background: #21ba45;
-    color: #fff;
+    background: var(--timerGreen);
+    color: var(--textColorWhite);
 
     &.wrapperHoverable:hover {
-      background: #16ab39;
-      color: #fff;
+      background: var(--timerGreenHover);
+      color: var(--textColorWhite);
     }
   }
 
   .wrapperHoverable:hover {
-    background: #d2d8dc;
-    color: #17394d;
+    background: var(--textColor3);
   }
 
-  .icon {
-    vertical-align: 40%;
+  .timerIcon {
+    font-size: 7px;
+    padding: 0 3px 0 1px;
+    vertical-align: 5%;
   }
 
   /* Variants */

@@ -43,5 +43,11 @@ export const getTimerParts = (timer) => {
 export const formatTimer = (timer) => {
   const { hours, minutes, seconds } = getTimerParts(timer);
 
-  return [hours, ...[minutes, seconds].map((part) => (part < 10 ? `0${part}` : part))].join(':');
+  const timeParts = [minutes, seconds].map((part) => (part < 10 ? `0${part}` : part));
+
+  if (hours > 0) {
+    timeParts.unshift(hours);
+  }
+
+  return timeParts.join(':');
 };
