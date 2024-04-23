@@ -22,13 +22,30 @@ const Tasks = React.memo(({ items }) => {
 
   const completedItems = items.filter((item) => item.isCompleted);
 
+  const getTaskbarColor = () => {
+    const percentage = (completedItems.length / items.length) * 100;
+    if (percentage < 25) {
+      return 'red';
+    }
+    if (percentage < 50) {
+      return 'orange';
+    }
+    if (percentage < 75) {
+      return 'yellow';
+    }
+    if (percentage < 90) {
+      return 'olive';
+    }
+    return 'green';
+  };
+
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
                                    jsx-a11y/no-static-element-interactions */}
       <div className={styles.button} onClick={handleToggleClick}>
         <span className={styles.progressWrapper}>
-          <Progress autoSuccess value={completedItems.length} total={items.length} color="blue" size="tiny" className={styles.progress} />
+          <Progress autoSuccess value={completedItems.length} total={items.length} color={getTaskbarColor()} size="tiny" className={styles.progress} />
         </span>
         <span className={styles.count}>
           {completedItems.length}/{items.length}
