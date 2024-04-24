@@ -2,7 +2,6 @@ import upperFirst from 'lodash/upperFirst';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Icon } from 'semantic-ui-react';
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForceUpdate, usePrevious } from '../../lib/hooks';

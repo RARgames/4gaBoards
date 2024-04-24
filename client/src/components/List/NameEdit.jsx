@@ -69,13 +69,13 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
 
           break;
         case 'Escape':
-          submit();
+          close();
 
           break;
         default:
       }
     },
-    [submit],
+    [close, submit],
   );
 
   const handleFieldBlur = useCallback(() => {
