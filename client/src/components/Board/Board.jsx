@@ -126,7 +126,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   data-drag-scroller
                   ref={innerRef}
-                  className={styles.lists}
+                  className={classNames(styles.lists, gStyles.cursorGrab)}
                 >
                   {listIds.map((listId, index) => (
                     <ListContainer key={listId} id={listId} index={index} />
