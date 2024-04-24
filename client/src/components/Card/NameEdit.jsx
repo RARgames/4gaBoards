@@ -99,20 +99,18 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   return (
     <Form onSubmit={handleSubmit}>
-      <div className={styles.fieldWrapper}>
-        <TextArea
-          ref={field}
-          as={TextareaAutosize}
-          value={value}
-          maxRows={3}
-          spellCheck
-          className={classNames(styles.field, gStyles.scrollableY)}
-          onKeyDown={handleFieldKeyDown}
-          onChange={handleChange}
-          onBlur={handleFieldBlur}
-          onFocus={handleFocus}
-        />
-      </div>
+      <TextArea
+        ref={field}
+        as={TextareaAutosize}
+        value={value}
+        maxRows={3}
+        spellCheck
+        className={classNames(styles.field, gStyles.scrollableY)}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleChange}
+        onBlur={handleFieldBlur}
+        onFocus={handleFocus}
+      />
       <div className={gStyles.controls}>
         <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
         <Button positive content={t('action.save')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
