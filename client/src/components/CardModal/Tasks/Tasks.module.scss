@@ -1,6 +1,7 @@
 :global(#app) {
   .progress {
     margin: 0 0 16px;
+    background-color: var(--backgroundColorTmpDarkerField2);
   }
 
   .taskButton {

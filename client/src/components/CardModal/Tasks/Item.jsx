@@ -8,6 +8,7 @@ import { Button, Checkbox, Icon } from 'semantic-ui-react';
 import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
 
+import gStyles from '../../../globalStyles.module.scss';
 import styles from './Item.module.scss';
 
 const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, onUpdate, onDelete }) => {
@@ -55,7 +56,7 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
                 </span>
                 {isPersisted && canEdit && (
                   <ActionsPopup onNameEdit={handleNameEdit} onDelete={onDelete}>
-                    <Button className={classNames(styles.button, styles.target)}>
+                    <Button className={classNames(gStyles.iconButtonSolid, styles.button, styles.target)}>
                       <Icon fitted name="ellipsis vertical" size="small" />
                     </Button>
                   </ActionsPopup>

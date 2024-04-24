@@ -60,9 +60,26 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
 
   const completedItems = items.filter((item) => item.isCompleted);
 
+  const getTaskbarColor = () => {
+    const percentage = (completedItems.length / items.length) * 100;
+    if (percentage < 25) {
+      return 'red';
+    }
+    if (percentage < 50) {
+      return 'orange';
+    }
+    if (percentage < 75) {
+      return 'yellow';
+    }
+    if (percentage < 90) {
+      return 'olive';
+    }
+    return 'green';
+  };
+
   return (
     <>
-      {items.length > 0 && <Progress autoSuccess value={completedItems.length} total={items.length} color="blue" size="tiny" className={styles.progress} />}
+      {items.length > 0 && <Progress autoSuccess value={completedItems.length} total={items.length} color={getTaskbarColor()} size="tiny" className={styles.progress} />}
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <Droppable droppableId="tasks" type={DroppableTypes.TASK}>
           {({ innerRef, droppableProps, placeholder }) => (

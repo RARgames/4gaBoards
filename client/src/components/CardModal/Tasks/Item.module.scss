@@ -1,23 +1,10 @@
 :global(#app) {
   .button {
-    color: var(--textColor1);
-    background: transparent;
-    box-shadow: none;
-    line-height: 28px;
-    margin: 0;
-    min-height: auto;
     opacity: 0;
-    padding: 0;
+    line-height: 28px;
     position: absolute;
     right: 2px;
     top: 2px;
-    width: 28px;
-
-    &:hover {
-      color: var(--textColor2);
-    }
-
-    //TODO combine with gStyles.iconButtonSolid
   }
 
   .checkboxWrapper {
@@ -33,7 +20,7 @@
   }
 
   .contentHoverable:hover {
-    background: rgba(9, 30, 66, 0.04);
+    background: var(--backgroundColorTmpDarkerField2);
 
     .target {
       opacity: 1;
@@ -41,6 +28,7 @@
   }
 
   .task {
+    color: var(--textColor1);
     display: inline-block;
     overflow: hidden;
     overflow-wrap: break-word;
@@ -50,7 +38,7 @@
   }
 
   .taskCompleted {
-    color: #aaa;
+    color: var(--textColor2);
     text-decoration: line-through;
   }
 
