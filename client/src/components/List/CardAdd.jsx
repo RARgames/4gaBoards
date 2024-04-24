@@ -107,21 +107,19 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
 
   return (
     <Form className={classNames(styles.wrapper, !isOpened && styles.wrapperClosed)} onSubmit={handleSubmit}>
-      <div className={styles.fieldWrapper}>
-        <TextArea
-          ref={nameField}
-          as={TextareaAutosize}
-          name="name"
-          value={data.name}
-          placeholder={t('common.enterCardTitle')}
-          maxRows={3}
-          spellCheck
-          className={classNames(styles.field, gStyles.scrollableY)}
-          onKeyDown={handleFieldKeyDown}
-          onChange={handleChange}
-          onBlur={handleFieldBlur}
-        />
-      </div>
+      <TextArea
+        ref={nameField}
+        as={TextareaAutosize}
+        name="name"
+        value={data.name}
+        placeholder={t('common.enterCardTitle')}
+        maxRows={3}
+        spellCheck
+        className={classNames(styles.field, gStyles.scrollableY)}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleChange}
+        onBlur={handleFieldBlur}
+      />
       <div className={gStyles.controls}>
         <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
         <Button positive content={t('action.addCard')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
