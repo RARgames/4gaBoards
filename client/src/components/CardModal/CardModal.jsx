@@ -102,7 +102,7 @@ const CardModal = React.memo(
     const [t] = useTranslation();
 
     const isGalleryOpened = useRef(false);
-    const nameField = useRef(null);
+    const nameEdit = useRef(null);
     const dropdown = useRef(null);
     const tasksRef = useRef(null);
     const descEditRef = useRef(null);
@@ -236,8 +236,10 @@ const CardModal = React.memo(
     }, [handleToggleTasksShown, taskShown]);
 
     const handleNameEdit = useCallback(() => {
-      nameField.current.open();
-    }, []);
+      if (canEdit) {
+        nameEdit.current.open();
+      }
+    }, [canEdit]);
 
     const handleGalleryOpen = useCallback(() => {
       isGalleryOpened.current = true;
@@ -310,8 +312,12 @@ const CardModal = React.memo(
 
     const headerNode = (
       <div className={styles.header}>
-        {canEdit ? <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameField} /> : <div className={styles.headerTitle}>{name}</div>}
-
+        <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
+          {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+          <div className={classNames(styles.headerTitle, canEdit && gStyles.cursorPointer)} onClick={handleNameEdit}>
+            {name}
+          </div>
+        </NameField>
         <Button title={t('common.closeCard')} className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
           <Icon fitted name="close" />
         </Button>

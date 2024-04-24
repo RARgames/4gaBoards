@@ -1,83 +1,93 @@
-import React, { useCallback, useState, useRef, useImperativeHandle } from 'react';
+import React, { useCallback, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import { TextArea } from 'semantic-ui-react';
-import { useDidUpdate, usePrevious } from '../../lib/hooks';
 
 import { useField } from '../../hooks';
 
 import styles from './NameField.module.scss';
 
-const NameField = React.forwardRef(({ defaultValue, onUpdate }, ref) => {
-  const prevDefaultValue = usePrevious(defaultValue);
-  const [value, handleChange, setValue] = useField(defaultValue);
-
-  const isFocused = useRef(false);
-  const textArea = useRef(null);
-  const [isSpellCheck, setIsSpellCheck] = useState(false);
+const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
+  const [isOpened, setIsOpened] = useState(false);
+  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const field = useRef(null);
 
   const open = useCallback(() => {
-    textArea.current.focus();
-  }, []);
+    setIsOpened(true);
+    setValue(defaultValue);
+  }, [defaultValue, setValue]);
+
+  const close = useCallback(() => {
+    setIsOpened(false);
+    setValue(null);
+  }, [setValue]);
+
+  const submit = useCallback(() => {
+    const cleanValue = value.trim();
+
+    if (cleanValue && cleanValue !== defaultValue) {
+      onUpdate(cleanValue);
+    }
+
+    close();
+  }, [defaultValue, onUpdate, value, close]);
 
   useImperativeHandle(
     ref,
     () => ({
       open,
+      close,
     }),
-    [open],
+    [open, close],
   );
 
-  const handleFocus = useCallback(() => {
-    isFocused.current = true;
-    setIsSpellCheck(true);
-  }, []);
-
-  const handleKeyDown = useCallback((event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-
-      event.target.blur();
-    }
-  }, []);
-
-  const handleBlur = useCallback(() => {
-    isFocused.current = false;
-    setIsSpellCheck(false);
-
-    const cleanValue = value.trim();
-
-    if (cleanValue) {
-      if (cleanValue !== defaultValue) {
-        onUpdate(cleanValue);
+  const handleKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case 'Enter':
+          event.preventDefault();
+          submit();
+          break;
+        case 'Escape':
+          close();
+          break;
+        default:
       }
-    } else {
-      setValue(defaultValue);
-    }
-  }, [defaultValue, onUpdate, value, setValue]);
+    },
+    [close, submit],
+  );
 
-  useDidUpdate(() => {
-    if (!isFocused.current && defaultValue !== prevDefaultValue) {
-      setValue(defaultValue);
+  const handleFieldBlur = useCallback(() => {
+    submit();
+  }, [submit]);
+
+  useEffect(() => {
+    if (isOpened) {
+      field.current.ref.current.focus();
     }
-  }, [defaultValue, prevDefaultValue, setValue]);
+  }, [isOpened]);
+
+  if (!isOpened) {
+    return children;
+  }
 
   return (
     <TextArea
-      ref={textArea}
+      ref={field}
       as={TextareaAutosize}
-      spellCheck={isSpellCheck}
+      spellCheck
       value={value}
       className={styles.field}
-      onFocus={handleFocus}
       onKeyDown={handleKeyDown}
-      onChange={handleChange}
-      onBlur={handleBlur}
+      onChange={handleFieldChange}
+      onBlur={handleFieldBlur}
+      onFocus={handleFocus}
     />
   );
 });
 
 NameField.propTypes = {
+  children: PropTypes.element.isRequired,
   defaultValue: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

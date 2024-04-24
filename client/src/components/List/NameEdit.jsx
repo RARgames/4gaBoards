@@ -49,10 +49,6 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
     [open, close],
   );
 
-  const handleFieldClick = useCallback((event) => {
-    event.stopPropagation();
-  }, []);
-
   useEffect(() => {
     if (nameEditHeight) {
       onHeightChange(nameEditHeight);
@@ -101,7 +97,6 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
         spellCheck
         maxRows={2}
         className={classNames(styles.field, gStyles.scrollableY)}
-        onClick={handleFieldClick}
         onKeyDown={handleFieldKeyDown}
         onChange={handleFieldChange}
         onBlur={handleFieldBlur}
