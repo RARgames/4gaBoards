@@ -126,7 +126,7 @@ jobs:
 
     - name: Changelog
       if: steps.increment_version.outputs.beta == 'false'
-      uses: jaywcjlove/changelog-generator@v2.0.0
+      uses: jaywcjlove/changelog-generator@v2.1.0
       id: changelog
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
