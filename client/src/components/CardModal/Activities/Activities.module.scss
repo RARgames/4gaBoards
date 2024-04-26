@@ -4,20 +4,17 @@
   }
 
   .toggleButton {
-    background: transparent;
-    box-shadow: none;
     color: var(--textColor1);
     float: right;
-    font-weight: normal;
-    margin-right: 0;
-    padding: 0;
+    width: auto;
     height: 20px;
-    min-height: 20px;
-    text-align: left;
-    transition: none;
 
     &:hover {
       color: var(--textColor2);
     }
+  }
+
+  .icon {
+    vertical-align: baseline;
   }
 }

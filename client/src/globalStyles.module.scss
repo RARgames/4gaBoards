@@ -123,6 +123,7 @@
   }
 
   .iconButton {
+    //TODO skip in new butttons
     background: none;
     box-shadow: none;
     color: var(--textColor1);
@@ -136,6 +137,7 @@
   }
 
   .iconButtonSolid {
+    //TODO skip in new butttons
     background: none;
     box-shadow: none;
     color: var(--textColor1);
@@ -143,6 +145,7 @@
     padding: 0;
     min-height: 20px;
     width: 20px;
+    height: 20px;
 
     &:hover {
       color: var(--textColor2);

@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Button, Icon } from 'semantic-ui-react';
+import { Icons, IconType, IconSize } from '../Icons';
+import { ButtonTmp, ButtonType } from '../ButtonTmp';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import { useResizeObserverSize } from '../../hooks';
@@ -182,9 +184,14 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
               className={styles.header}
             >
-              <Button className={classNames(styles.headerCollapseButton, gStyles.iconButton, !canEdit && gStyles.cursorDefault)} onClick={handleToggleCollapseClick}>
-                <Icon fitted name="triangle right" />
-              </Button>
+              <ButtonTmp
+                type={ButtonType.Icon}
+                title={t('common.collapseList')}
+                onClick={handleToggleCollapseClick}
+                className={classNames(styles.headerCollapseButton, !canEdit && gStyles.cursorDefault)}
+              >
+                <Icons type={IconType.TriangleDown} size={IconSize.Size8} className={styles.iconRotateRight} />
+              </ButtonTmp>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <div className={classNames(styles.headerName, canEdit && gStyles.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement}>

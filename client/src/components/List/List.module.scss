@@ -126,6 +126,11 @@
     height: 20px;
   }
 
+  .iconRotateRight {
+    transform: rotate(-90deg);
+    vertical-align: middle;
+  }
+
   .headerCollapseButtonCollapsed {
     height: 30px;
     width: 30px;

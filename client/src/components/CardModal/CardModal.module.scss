@@ -1,8 +1,9 @@
 :global(#app) {
   .addAttachmentButton {
+    //TODO: recheck - most of this style not needed
     background: var(--backgroundColorTmpDarkerField2);
     color: var(--textColor1);
-    margin-top: 8px;
+    // margin-top: 4px;
     overflow: hidden;
     padding: 8px;
     text-align: left;
@@ -60,7 +61,7 @@
     border-color: var(--nodeOutline);
   }
 
-  .iconButtonToggle {
+  .buttonToggle {
     float: right;
   }
 
@@ -114,8 +115,16 @@
   }
 
   .headerListFieldIcon {
+    //TODO remove
     display: inline-block;
     overflow: hidden;
+    //TODO remove end
+    vertical-align: text-top;
+    margin-left: 4px;
+  }
+
+  .textFirst {
+    margin: 0 4px 4px 0 !important;
   }
 
   .text {
@@ -125,23 +134,24 @@
     letter-spacing: 0.3px;
     line-height: 20px;
     max-height: 20px;
-    margin: 0 8px 4px 0;
+    margin: 0 4px 4px 4px;
     text-transform: uppercase;
   }
 
   .subscribeButton {
     padding: 0px 6px 0px 6px;
-    width: 95px;
-    min-height: 28px;
+    width: auto;
+    min-width: 84px;
+    height: 28px;
+    text-align: center;
+  }
+
+  .alignCenter {
+    display: flex;
+    justify-content: center;
   }
 
   .moduleIcon {
-    color: var(--textColor1);
-    font-size: 17px;
-    display: inline-block;
-  }
-
-  .moduleIconFA {
     color: var(--textColor1);
     font-size: 17px;
     display: inline-block;
@@ -197,5 +207,13 @@
     font-size: 12px;
     font-style: italic;
     color: var(--textColorYellow);
+  }
+
+  .iconAddButton {
+    vertical-align: baseline;
+  }
+
+  .iconAddButton2 {
+    vertical-align: middle;
   }
 }

@@ -1,0 +1,26 @@
+:global(#app) {
+  .defaultIcon {
+    fill: var(--textColor1);
+    vertical-align: sub;
+  }
+
+  .size8 {
+    width: 8px;
+    height: 8px;
+  }
+
+  .size10 {
+    width: 10px;
+    height: 10px;
+  }
+
+  .size14 {
+    width: 14px;
+    height: 14px;
+  }
+
+  .size20 {
+    width: 20px;
+    height: 20px;
+  }
+}

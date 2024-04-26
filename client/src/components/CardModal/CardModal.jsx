@@ -2,15 +2,13 @@ import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from 'semantic-ui-react';
 import MDEditor from '@uiw/react-md-editor';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeExternalLinks from 'rehype-external-links';
 import { visit } from 'unist-util-visit';
 import remarkGithub from 'remark-github';
-
-import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icons, IconType, IconSize } from '../Icons';
+import { ButtonTmp, ButtonType } from '../ButtonTmp';
 import { Dropdown } from '../../lib/custom-ui';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
@@ -318,9 +316,9 @@ const CardModal = React.memo(
             {name}
           </div>
         </NameField>
-        <Button title={t('common.closeCard')} className={classNames(gStyles.iconButtonSolid, styles.headerButton)} onClick={handleClose}>
-          <Icon fitted name="close" />
-        </Button>
+        <ButtonTmp type={ButtonType.Icon} title={t('common.closeCard')} onClick={handleClose} className={styles.headerButton}>
+          <Icons type={IconType.Close} />
+        </ButtonTmp>
         {canEdit && (
           <ActionsPopup
             card={{
@@ -351,16 +349,16 @@ const CardModal = React.memo(
             onLabelMove={onLabelMove}
             onLabelDelete={onLabelDelete}
           >
-            <Button title={t('common.cardActions', { context: 'title' })} className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
-              <Icon fitted name="ellipsis vertical" />
-            </Button>
+            <ButtonTmp type={ButtonType.Icon} title={t('common.cardActions', { context: 'title' })} className={styles.headerButton}>
+              <Icons type={IconType.EllipsisVertical} />
+            </ButtonTmp>
           </ActionsPopup>
         )}
         {canEdit && (
           <DeletePopup title={t('common.deleteCard', { context: 'title' })} content={t('common.areYouSureYouWantToDeleteThisCard')} buttonContent={t('action.deleteCard')} onConfirm={onDelete}>
-            <Button title={t('common.deleteCard', { context: 'title' })} className={classNames(gStyles.iconButtonSolid, styles.headerButton)}>
-              <Icon fitted name="trash" />
-            </Button>
+            <ButtonTmp type={ButtonType.Icon} title={t('common.deleteCard', { context: 'title' })} className={styles.headerButton}>
+              <Icons type={IconType.Trash} />
+            </ButtonTmp>
           </DeletePopup>
         )}
         <div className={styles.headerListFieldWrapper}>
@@ -379,7 +377,7 @@ const CardModal = React.memo(
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div className={classNames(canEdit && gStyles.cursorPointer)} onClick={handleDropdownClick}>
               <div className={classNames(styles.headerListField)}>{selectedList.name}</div>
-              <Icon fitted name="triangle down" className={classNames(styles.headerListFieldIcon, gStyles.iconButtonSolid)} />
+              <Icons type={IconType.TriangleDown} title={t('common.moveCardToList')} size={IconSize.Size10} className={styles.headerListFieldIcon} />
             </div>
           </Dropdown>
         </div>
@@ -401,9 +399,9 @@ const CardModal = React.memo(
               onMove={onLabelMove}
               onDelete={onLabelDelete}
             >
-              <Button className={gStyles.iconButtonSolid}>
-                <Icon fitted size="small" name="add" />
-              </Button>
+              <ButtonTmp type={ButtonType.Icon} title={t('common.addLabel')}>
+                <Icons type={IconType.Add} size={IconSize.Size10} className={styles.iconAddButton2} />
+              </ButtonTmp>
             </LabelsPopup>
           )}
         </div>
@@ -417,13 +415,13 @@ const CardModal = React.memo(
 
     const membersNode = (
       <div className={styles.headerItems}>
-        <div className={styles.text}>
+        <div className={classNames(styles.text, styles.textFirst)}>
           {t('common.members', { context: 'title' })}
           {canEdit && (
             <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
-              <Button className={gStyles.iconButtonSolid}>
-                <Icon fitted size="small" name="add" />
-              </Button>
+              <ButtonTmp type={ButtonType.Icon} title={t('common.addMember')}>
+                <Icons type={IconType.Add} size={IconSize.Size10} className={styles.iconAddButton2} />
+              </ButtonTmp>
             </BoardMembershipsPopup>
           )}
         </div>
@@ -441,9 +439,9 @@ const CardModal = React.memo(
           {t('common.dueDate', { context: 'title' })}
           {canEdit && (
             <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-              <Button className={gStyles.iconButtonSolid}>
-                <Icon fitted size="small" name={dueDate ? 'pencil' : 'add'} />
-              </Button>
+              <ButtonTmp type={ButtonType.Icon} title={dueDate ? t('common.editDueDate') : t('common.addDueDate')}>
+                <Icons type={dueDate ? IconType.Pencil : IconType.Add} size={IconSize.Size10} className={styles.iconAddButton2} />
+              </ButtonTmp>
             </DueDateEditPopup>
           )}
         </div>
@@ -465,9 +463,9 @@ const CardModal = React.memo(
           {t('common.timer', { context: 'title' })}
           {canEdit && (
             <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
-              <Button className={gStyles.iconButtonSolid}>
-                <Icon fitted size="small" name="pencil" />
-              </Button>
+              <ButtonTmp type={ButtonType.Icon} title={t('common.editTimer')}>
+                <Icons type={IconType.Pencil} size={IconSize.Size10} className={styles.iconAddButton2} />
+              </ButtonTmp>
             </TimerEditPopup>
           )}
         </div>
@@ -480,10 +478,10 @@ const CardModal = React.memo(
     const subscribeNode = (
       <div className={styles.headerItems}>
         <div className={styles.text}>{t('common.notifications')}</div>
-        <span className={styles.headerItem}>
-          <Button onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
-            {isSubscribed ? t('action.unsubscribe') : t('action.subscribe')}
-          </Button>
+        <span className={classNames(styles.headerItem, styles.alignCenter)}>
+          <ButtonTmp title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
+            {isSubscribed ? t('common.subscribed') : t('action.subscribe')}
+          </ButtonTmp>
         </span>
       </div>
     );
@@ -651,17 +649,17 @@ const CardModal = React.memo(
     const descriptionNode = (description || canEdit) && (
       <div className={styles.contentModule}>
         <div className={styles.moduleHeader}>
-          <FontAwesomeIcon icon={faBarsStaggered} className={styles.moduleIconFA} />
+          <Icons type={IconType.BarsStaggered} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.description')}
           {canEdit && (
-            <Button onClick={handleDescButtonClick} className={gStyles.iconButtonSolid}>
-              <Icon fitted size="small" name={description ? 'pencil' : 'add'} />
-            </Button>
+            <ButtonTmp type={ButtonType.Icon} title={description ? t('common.editDescription') : t('common.addDescription')} onClick={handleDescButtonClick}>
+              <Icons type={description ? IconType.Pencil : IconType.Add} size={IconSize.Size10} className={styles.iconAddButton} />
+            </ButtonTmp>
           )}
           {canEdit && unsavedDesc && <span className={styles.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
-          <Button onClick={handleToggleDescShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
-            <Icon fitted size="small" name={descShown ? 'minus' : 'add'} />
-          </Button>
+          <ButtonTmp type={ButtonType.Icon} title={t('common.toggleDescription')} onClick={handleToggleDescShown} className={styles.buttonToggle}>
+            <Icons type={descShown ? IconType.Minus : IconType.Add} size={IconSize.Size10} />
+          </ButtonTmp>
         </div>
         <div className={styles.moduleBody}>
           {descShown && canEdit && descriptionEditNode}
@@ -677,16 +675,16 @@ const CardModal = React.memo(
     const tasksNode = (tasks.length > 0 || canEdit) && (
       <div className={styles.contentModule}>
         <div className={styles.moduleHeader}>
-          <Icon name="check" className={styles.moduleIcon} />
+          <Icons type={IconType.Check} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.tasks')}
           {canEdit && (
-            <Button onClick={handleTaskAddOpen} className={gStyles.iconButtonSolid}>
-              <Icon fitted size="small" name="add" />
-            </Button>
+            <ButtonTmp type={ButtonType.Icon} title={t('common.addTask')} onClick={handleTaskAddOpen}>
+              <Icons type={IconType.Add} size={IconSize.Size10} className={styles.iconAddButton} />
+            </ButtonTmp>
           )}
-          <Button onClick={handleToggleTasksShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
-            <Icon fitted size="small" name={taskShown ? 'minus' : 'add'} />
-          </Button>
+          <ButtonTmp type={ButtonType.Icon} title={t('common.toggleTasks')} onClick={handleToggleTasksShown} className={styles.buttonToggle}>
+            <Icons type={taskShown ? IconType.Minus : IconType.Add} size={IconSize.Size10} />
+          </ButtonTmp>
         </div>
         <div className={styles.moduleBody}>
           {taskShown && <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />}
@@ -697,18 +695,18 @@ const CardModal = React.memo(
     const attachmentsNode = (
       <div className={styles.contentModule}>
         <div className={styles.moduleHeader}>
-          <Icon name="attach" className={styles.moduleIcon} />
+          <Icons type={IconType.Attach} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.attachments')}
           {canEdit && (
             <AttachmentAdd onCreate={onAttachmentCreate}>
-              <Button className={gStyles.iconButtonSolid}>
-                <Icon fitted size="small" name="add" />
-              </Button>
+              <ButtonTmp type={ButtonType.Icon} title={t('common.addAttachmentButton')}>
+                <Icons type={IconType.Add} size={IconSize.Size10} className={styles.iconAddButton} />
+              </ButtonTmp>
             </AttachmentAdd>
           )}
-          <Button onClick={handleToggleAttacShown} className={classNames(gStyles.iconButtonSolid, styles.iconButtonToggle)}>
-            <Icon fitted size="small" name={attacShown ? 'minus' : 'add'} />
-          </Button>
+          <ButtonTmp type={ButtonType.Icon} title={t('common.toggleAttachments')} onClick={handleToggleAttacShown} className={styles.buttonToggle}>
+            <Icons type={attacShown ? IconType.Minus : IconType.Add} size={IconSize.Size10} />
+          </ButtonTmp>
         </div>
         <div className={styles.moduleBody}>
           {attacShown && (
@@ -723,9 +721,9 @@ const CardModal = React.memo(
                 onGalleryClose={handleGalleryClose}
               />
               <AttachmentAdd onCreate={onAttachmentCreate}>
-                <Button fluid className={styles.addAttachmentButton}>
+                <ButtonTmp title={t('common.addAttachmentButton')} className={styles.addAttachmentButton}>
                   {t('common.addAttachment')} <span className={styles.hint}>{t('common.addAttachmentExtra')}</span>
-                </Button>
+                </ButtonTmp>
               </AttachmentAdd>
             </>
           )}
@@ -756,8 +754,8 @@ const CardModal = React.memo(
       <div className={classNames(styles.mainContainer, gStyles.scrollableY)}>
         {headerNode}
         <div className={styles.moduleContainer}>
-          {labelsNode}
           {membersNode}
+          {labelsNode}
           {dueDateNode}
           {timerNode}
           {subscribeNode}

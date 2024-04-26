@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Comment, Icon, Loader, Visibility } from 'semantic-ui-react';
+import { Comment, Loader, Visibility } from 'semantic-ui-react';
 
-import classNames from 'classnames';
 import { ActivityTypes } from '../../../constants/Enums';
 import CommentAdd from './CommentAdd';
 import Item from './Item';
+import { Icons, IconType, IconSize } from '../../Icons';
+import { ButtonTmp, ButtonType } from '../../ButtonTmp';
 
 import styles from './Activities.module.scss';
 import cStyles from '../CardModal.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
 
 const Activities = React.memo(
   ({
@@ -62,12 +62,19 @@ const Activities = React.memo(
     return (
       <div className={cStyles.contentModule}>
         <div className={cStyles.moduleHeader}>
-          <Icon name="comments" className={cStyles.moduleIcon} />
+          <Icons type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
           {t('common.actions')}
-          <Button onClick={toggleCommShown} className={classNames(gStyles.iconButtonSolid, cStyles.iconButtonToggle)}>
-            <Icon fitted size="small" name={commShown ? 'minus' : 'add'} />
-          </Button>
-          <Button content={isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')} className={styles.toggleButton} onClick={handleToggleDetailsClick} />
+          <ButtonTmp type={ButtonType.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
+            <Icons type={commShown ? IconType.Minus : IconType.Add} size={IconSize.Size10} className={styles.icon} />
+          </ButtonTmp>
+          <ButtonTmp
+            type={ButtonType.Icon}
+            title={isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')}
+            onClick={handleToggleDetailsClick}
+            className={styles.toggleButton}
+          >
+            {isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')}
+          </ButtonTmp>
         </div>
         <div className={cStyles.moduleBody}>
           {commShown && (
