@@ -20,12 +20,20 @@
 
     &:hover {
       color: var(--textColor2);
+
+      .countToggleIcon {
+        fill: var(--textColor2)
+      }
     }
   }
 
   .countToggleIcon {
-    font-size: 12px;
-    margin: 0 3px 0 3px;
+    margin: 0 2px;
+    vertical-align: 0%;
+  }
+
+  .countToggleIconOpened {
+    transform: rotate(-90deg);
   }
 
   .progress {

@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
 import MDEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
-import { faFillDrip } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocalStorage } from '../../hooks';
+import { Icons, IconType, IconSize } from '../Icons';
 
-// eslint-disable-next-line no-unused-vars
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-// eslint-disable-next-line no-unused-vars
 const DescriptionEdit = React.forwardRef(
   (
     {
@@ -210,7 +207,7 @@ const DescriptionEdit = React.forwardRef(
                 name: 'color',
                 groupName: 'color',
                 buttonProps: { 'aria-label': 'Add colored text', title: 'Add colored text' },
-                icon: <FontAwesomeIcon icon={faFillDrip} width="13" height="13" />,
+                icon: <Icons type={IconType.FillDrip} size={IconSize.Size13} className={styles.coloredTextButton} />,
               },
             ),
           ]}

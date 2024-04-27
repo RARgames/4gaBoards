@@ -177,6 +177,8 @@ export default {
       notConnectedToGithub: 'Not connected to Github',
       startTimer: 'Start Timer',
       stopTimer: 'Stop Timer',
+      showTasks: 'Show Tasks',
+      hideTasks: 'Hide Tasks',
     },
 
     action: {

@@ -1,14 +1,15 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { Progress } from 'semantic-ui-react';
-import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useToggle } from '../../lib/hooks';
+import { Icons, IconType, IconSize } from '../Icons';
 
 import styles from './Tasks.module.scss';
 
 const Tasks = React.memo(({ items }) => {
+  const [t] = useTranslation();
   const [isOpened, toggleOpened] = useToggle();
 
   const handleToggleClick = useCallback(
@@ -47,9 +48,9 @@ const Tasks = React.memo(({ items }) => {
         <span className={styles.progressWrapper}>
           <Progress autoSuccess value={completedItems.length} total={items.length} color={getTaskbarColor()} size="tiny" className={styles.progress} />
         </span>
-        <span className={styles.count}>
+        <span className={styles.count} title={isOpened ? t('common.hideTasks') : t('common.showTasks')}>
           {completedItems.length}/{items.length}
-          <FontAwesomeIcon icon={isOpened ? faCaretDown : faCaretUp} className={styles.countToggleIcon} />
+          <Icons type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpened && styles.countToggleIconOpened)} />
         </span>
       </div>
       {isOpened && (

@@ -55,6 +55,7 @@ const IconType = {
 const IconSize = {
   Size8: 'size8',
   Size10: 'size10',
+  Size13: 'size13',
   Size14: 'size14',
   Size20: 'size20',
 };
