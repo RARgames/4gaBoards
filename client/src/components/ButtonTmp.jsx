@@ -21,12 +21,11 @@ const ButtonTmp = React.memo(({ children, type, className, ...rest }) => {
 
 ButtonTmp.propTypes = {
   children: PropTypes.node.isRequired,
-  type: PropTypes.oneOf(Object.values(ButtonType)),
+  type: PropTypes.oneOf(Object.values(ButtonType)).isRequired,
   className: PropTypes.string,
 };
 
 ButtonTmp.defaultProps = {
-  type: ButtonType.Default,
   className: undefined,
 };
 

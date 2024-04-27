@@ -18,7 +18,6 @@
     font-variant-numeric: tabular-nums;
     outline: none;
     text-align: left;
-    transition: background 0.3s ease;
     vertical-align: top;
   }
 
@@ -26,9 +25,12 @@
     background: var(--timerGreen);
     color: var(--textColorWhite);
 
+    .timerIcon {
+      fill: var(--textColorWhite);
+    }
+
     &.wrapperHoverable:hover {
       background: var(--timerGreenHover);
-      color: var(--textColorWhite);
     }
   }
 
@@ -37,23 +39,31 @@
   }
 
   .timerIcon {
-    font-size: 7px;
-    padding: 0 3px 0 1px;
-    vertical-align: 5%;
+    fill: var(--backgroundList);
   }
 
   /* Variants */
 
   .wrapperCard {
     font-size: 12px;
-    line-height: 20px;
-    padding: 0 6px;
+    line-height: 14px;
+    padding: 0 3px 0 1px;
+
+    .timerIcon {
+      margin: 0 2px;
+      vertical-align: middle;
+    }
   }
 
   .wrapperCardModal {
     font-size: 14px;
-    line-height: 20px;
-    padding: 4px 6px;
-    margin: -1px 0 0 0;
+    line-height: 28px;
+    padding: 0 4px 0 2px;
+    margin-top: -1px;
+
+    .timerIcon {
+      margin: 0 2px;
+      vertical-align: 5%;
+    }
   }
 }

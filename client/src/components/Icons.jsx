@@ -69,12 +69,11 @@ const Icons = React.memo(({ type, size, className, ...rest }) => {
 
 Icons.propTypes = {
   type: PropTypes.oneOf(Object.values(IconType)).isRequired,
-  size: PropTypes.oneOf(Object.values(IconSize)),
+  size: PropTypes.oneOf(Object.values(IconSize)).isRequired,
   className: PropTypes.string,
 };
 
 Icons.defaultProps = {
-  size: IconSize.Size14,
   className: undefined,
 };
 

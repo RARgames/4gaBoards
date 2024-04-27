@@ -5,8 +5,7 @@ import { Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { faBarsStaggered, faPaperclip, faComments } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Icons, IconType, IconSize } from '../Icons';
 import { startTimer, stopTimer } from '../../utils/timer';
 import Paths from '../../constants/Paths';
 import Tasks from './Tasks';
@@ -144,17 +143,17 @@ const Card = React.memo(
             <span className={styles.attachments}>
               {description && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <FontAwesomeIcon icon={faBarsStaggered} className={styles.detailsIcon} />
+                  <Icons type={IconType.BarsStaggered} size={IconSize.Size14} className={styles.detailsIcon} />
                 </span>
               )}
               {attachmentsCount > 0 && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <FontAwesomeIcon icon={faPaperclip} className={styles.detailsIcon} />
+                  <Icons type={IconType.Attach} size={IconSize.Size14} className={styles.detailsIcon} />
                 </span>
               )}
               {commentsCount > 0 && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <FontAwesomeIcon icon={faComments} className={styles.detailsIcon} />
+                  <Icons type={IconType.Comment} size={IconSize.Size14} className={styles.detailsIcon} />
                 </span>
               )}
               {dueDate && (

@@ -173,6 +173,10 @@ export default {
       editTimer: 'Edit Timer',
       subscribed: 'Subscribed',
       collapseList: 'Collapse List',
+      connectedToGithub: 'Connected to Github',
+      notConnectedToGithub: 'Not connected to Github',
+      startTimer: 'Start Timer',
+      stopTimer: 'Stop Timer',
     },
 
     action: {

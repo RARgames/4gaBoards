@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pick from 'lodash/pick';
 import Filters from './Filters';
 import Memberships from '../Memberships';
 import BoardMembershipPermissionsSelectStep from '../BoardMembershipPermissionsSelectStep';
 import Connections from './Connections';
+import { Icons, IconType, IconSize } from '../Icons';
 
 import styles from './BoardActions.module.scss';
 
@@ -82,7 +81,12 @@ const BoardActions = React.memo(
           </div>
           <div>
             <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate}>
-              <FontAwesomeIcon icon={faGithub} className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)} />
+              <Icons
+                type={IconType.Github}
+                size={IconSize.Size14}
+                className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+                title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+              />
             </Connections>
           </div>
         </div>

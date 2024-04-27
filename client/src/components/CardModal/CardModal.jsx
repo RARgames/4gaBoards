@@ -317,7 +317,7 @@ const CardModal = React.memo(
           </div>
         </NameField>
         <ButtonTmp type={ButtonType.Icon} title={t('common.closeCard')} onClick={handleClose} className={styles.headerButton}>
-          <Icons type={IconType.Close} />
+          <Icons type={IconType.Close} size={IconSize.Size14} />
         </ButtonTmp>
         {canEdit && (
           <ActionsPopup
@@ -350,14 +350,14 @@ const CardModal = React.memo(
             onLabelDelete={onLabelDelete}
           >
             <ButtonTmp type={ButtonType.Icon} title={t('common.cardActions', { context: 'title' })} className={styles.headerButton}>
-              <Icons type={IconType.EllipsisVertical} />
+              <Icons type={IconType.EllipsisVertical} size={IconSize.Size14} />
             </ButtonTmp>
           </ActionsPopup>
         )}
         {canEdit && (
           <DeletePopup title={t('common.deleteCard', { context: 'title' })} content={t('common.areYouSureYouWantToDeleteThisCard')} buttonContent={t('action.deleteCard')} onConfirm={onDelete}>
             <ButtonTmp type={ButtonType.Icon} title={t('common.deleteCard', { context: 'title' })} className={styles.headerButton}>
-              <Icons type={IconType.Trash} />
+              <Icons type={IconType.Trash} size={IconSize.Size14} />
             </ButtonTmp>
           </DeletePopup>
         )}
@@ -381,6 +381,26 @@ const CardModal = React.memo(
             </div>
           </Dropdown>
         </div>
+      </div>
+    );
+
+    const membersNode = (
+      <div className={styles.headerItems}>
+        <div className={styles.text}>
+          {t('common.members', { context: 'title' })}
+          {canEdit && (
+            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
+              <ButtonTmp type={ButtonType.Icon} title={t('common.addMember')}>
+                <Icons type={IconType.Add} size={IconSize.Size10} className={styles.iconAddButton2} />
+              </ButtonTmp>
+            </BoardMembershipsPopup>
+          )}
+        </div>
+        {users.map((user) => (
+          <span key={user.id} className={styles.headerItem}>
+            <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
+          </span>
+        ))}
       </div>
     );
 
@@ -408,26 +428,6 @@ const CardModal = React.memo(
         {labels.map((label) => (
           <span key={label.id} className={styles.headerItem}>
             <Label name={label.name} color={label.color} variant="cardModal" />
-          </span>
-        ))}
-      </div>
-    );
-
-    const membersNode = (
-      <div className={styles.headerItems}>
-        <div className={classNames(styles.text, styles.textFirst)}>
-          {t('common.members', { context: 'title' })}
-          {canEdit && (
-            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
-              <ButtonTmp type={ButtonType.Icon} title={t('common.addMember')}>
-                <Icons type={IconType.Add} size={IconSize.Size10} className={styles.iconAddButton2} />
-              </ButtonTmp>
-            </BoardMembershipsPopup>
-          )}
-        </div>
-        {users.map((user) => (
-          <span key={user.id} className={styles.headerItem}>
-            <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
           </span>
         ))}
       </div>
@@ -478,8 +478,8 @@ const CardModal = React.memo(
     const subscribeNode = (
       <div className={styles.headerItems}>
         <div className={styles.text}>{t('common.notifications')}</div>
-        <span className={classNames(styles.headerItem, styles.alignCenter)}>
-          <ButtonTmp title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
+        <span className={styles.headerItem}>
+          <ButtonTmp type={ButtonType.Default} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
             {isSubscribed ? t('common.subscribed') : t('action.subscribe')}
           </ButtonTmp>
         </span>
@@ -721,7 +721,7 @@ const CardModal = React.memo(
                 onGalleryClose={handleGalleryClose}
               />
               <AttachmentAdd onCreate={onAttachmentCreate}>
-                <ButtonTmp title={t('common.addAttachmentButton')} className={styles.addAttachmentButton}>
+                <ButtonTmp type={ButtonType.Default} title={t('common.addAttachmentButton')} className={styles.addAttachmentButton}>
                   {t('common.addAttachment')} <span className={styles.hint}>{t('common.addAttachmentExtra')}</span>
                 </ButtonTmp>
               </AttachmentAdd>

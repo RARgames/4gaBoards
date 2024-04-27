@@ -37,6 +37,7 @@
     display: inline-block;
     max-width: 100%;
     vertical-align: top;
+    margin-right: 4px;
   }
 
   .cursorPointer {
@@ -123,10 +124,6 @@
     margin-left: 4px;
   }
 
-  .textFirst {
-    margin: 0 4px 4px 0 !important;
-  }
-
   .text {
     color: var(--textColor1);
     font-size: 12px;
@@ -134,7 +131,7 @@
     letter-spacing: 0.3px;
     line-height: 20px;
     max-height: 20px;
-    margin: 0 4px 4px 4px;
+    margin-bottom: 4px;
     text-transform: uppercase;
   }
 

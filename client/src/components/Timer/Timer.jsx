@@ -1,10 +1,10 @@
 import upperFirst from 'lodash/upperFirst';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForceUpdate, usePrevious } from '../../lib/hooks';
+import { Icons, IconType, IconSize } from '../Icons';
 
 import { formatTimer } from '../../utils/timer';
 
@@ -16,6 +16,7 @@ const VARIANTS = {
 };
 
 const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }) => {
+  const [t] = useTranslation();
   const prevStartedAt = usePrevious(startedAt);
   const forceUpdate = useForceUpdate();
 
@@ -50,7 +51,7 @@ const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }
 
   const contentNode = (
     <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], startedAt && styles.wrapperActive, onClick && styles.wrapperHoverable)}>
-      <FontAwesomeIcon icon={startedAt ? faPause : faPlay} className={styles.timerIcon} />
+      <Icons type={startedAt ? IconType.Pause : IconType.Play} size={IconSize.Size8} className={styles.timerIcon} />
       {formatTimer({ startedAt, total })}
     </span>
   );
@@ -58,7 +59,7 @@ const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }
   const ElementType = as;
 
   return onClick ? (
-    <ElementType type="button" disabled={isDisabled} className={styles.button} onClick={onClick}>
+    <ElementType type="button" disabled={isDisabled} className={styles.button} onClick={onClick} title={startedAt ? t('common.stopTimer') : t('common.startTimer')}>
       {contentNode}
     </ElementType>
   ) : (
