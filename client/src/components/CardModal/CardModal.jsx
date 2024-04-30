@@ -615,9 +615,12 @@ const CardModal = React.memo(
     const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
 
     const descriptionEditOpenNode = description ? (
-      <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)} onClick={handleDescClick} ref={descriptionEditButtonRef}>
-        <MDEditor.Markdown source={description} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} />
-      </button>
+      <>
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)} onClick={handleDescClick} ref={descriptionEditButtonRef}>
+          <MDEditor.Markdown source={description} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} />
+        </button>
+      </>
     ) : (
       <button type="button" className={styles.descriptionButton} onClick={handleDescClick}>
         <span className={styles.descriptionButtonText}>{t('action.addDescription')}</span>
