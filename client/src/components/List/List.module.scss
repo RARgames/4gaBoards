@@ -5,15 +5,11 @@
 
   .addCardButton {
     background: var(--backgroundList);
-    border: none;
     color: var(--textColor2);
     cursor: pointer;
     display: block;
     fill: var(--textColor2);
-    flex: 0 0 auto;
-    font-weight: normal;
     height: 36px;
-    outline: none;
     padding: 8px;
     text-align: left;
     width: 272px;
@@ -24,9 +20,8 @@
   }
 
   .addCardButtonIcon {
-    height: 20px;
-    padding: 0.64px;
-    width: 20px;
+    vertical-align: -20%;
+    fill: var(--textColor2);
   }
 
   .addCardButtonText {

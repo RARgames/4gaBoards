@@ -14,7 +14,6 @@ import CardContainer from '../../containers/CardContainer';
 import NameEdit from './NameEdit';
 import CardAdd from './CardAdd';
 import ActionsPopup from './ActionsPopup';
-import { ReactComponent as PlusMathIcon } from '../../assets/images/plus-math-icon.svg';
 
 import styles from './List.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -129,10 +128,10 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         <div {...droppableProps} ref={innerRef}>
           {placeholder}
           {!isAddCardOpened && canEdit && (
-            <button type="button" disabled={!isPersisted} className={styles.addCardButton} onClick={handleAddCardClick}>
-              <PlusMathIcon className={styles.addCardButtonIcon} />
+            <ButtonTmp type={ButtonType.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
+              <Icons type={IconType.PlusMath} size={IconSize.Size13} className={styles.addCardButtonIcon} />
               <span className={styles.addCardButtonText}>{t('action.addCard')}</span>
-            </button>
+            </ButtonTmp>
           )}
         </div>
       )}

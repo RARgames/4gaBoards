@@ -28,7 +28,7 @@ import { ReactComponent as Users } from '../assets/icons/Users.svg';
 import styles from './Icons.module.scss';
 
 const IconType = {
-  Add,
+  Add, // TODO rename add to Plus
   ArrowDown,
   Attach,
   BarsStaggered,

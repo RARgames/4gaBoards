@@ -1,9 +1,10 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
+import { ButtonTmp, ButtonType } from '../ButtonTmp';
 
 import { Icons, IconType, IconSize } from '../Icons';
 import { startTimer, stopTimer } from '../../utils/timer';
@@ -17,7 +18,6 @@ import DueDate from '../DueDate';
 import Timer from '../Timer';
 
 import styles from './Card.module.scss';
-import gStyles from '../../globalStyles.module.scss';
 
 const Card = React.memo(
   ({
@@ -58,6 +58,7 @@ const Card = React.memo(
     onLabelMove,
     onLabelDelete,
   }) => {
+    const [t] = useTranslation();
     const nameEdit = useRef(null);
     const cardRef = useRef(null);
 
@@ -223,9 +224,9 @@ const Card = React.memo(
                         onLabelMove={onLabelMove}
                         onLabelDelete={onLabelDelete}
                       >
-                        <Button className={classNames(gStyles.iconButton, styles.actionsButton, styles.target)}>
-                          <Icon fitted name="ellipsis vertical" size="small" />
-                        </Button>
+                        <ButtonTmp type={ButtonType.Icon} title={t('common.cardActions')} className={classNames(styles.actionsButton, styles.target)}>
+                          <Icons type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                        </ButtonTmp>
                       </ActionsPopup>
                     )}
                   </>

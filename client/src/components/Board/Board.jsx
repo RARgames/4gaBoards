@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { closePopup } from '../../lib/popup';
+import { Icons, IconType, IconSize } from '../Icons';
+import { ButtonTmp, ButtonType } from '../ButtonTmp';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import ListContainer from '../../containers/ListContainer';
 import CardModalContainer from '../../containers/CardModalContainer';
 import ListAdd from './ListAdd';
-import { ReactComponent as PlusMathIcon } from '../../assets/images/plus-math-icon.svg';
 
 import styles from './Board.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -137,10 +138,10 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                       {isListAddOpened ? (
                         <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
                       ) : (
-                        <button type="button" className={styles.addListButton} onClick={handleAddListClick}>
-                          <PlusMathIcon className={styles.addListButtonIcon} />
+                        <ButtonTmp type={ButtonType.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
+                          <Icons type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
                           <span className={styles.addListButtonText}>{t('action.addList')}</span>
-                        </button>
+                        </ButtonTmp>
                       )}
                     </div>
                   )}

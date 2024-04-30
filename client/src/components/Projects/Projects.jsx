@@ -6,10 +6,11 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
+import { Icons, IconType, IconSize } from '../Icons';
+import { ButtonTmp, ButtonType } from '../ButtonTmp';
 
 import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
-import { ReactComponent as PlusIcon } from '../../assets/images/plus-icon.svg';
 
 import styles from './Projects.module.scss';
 import globalStyles from '../../styles.module.scss';
@@ -42,14 +43,10 @@ const Projects = React.memo(({ items, canAdd, onAdd }) => {
         ))}
         {canAdd && (
           <Grid.Column mobile={8} computer={4}>
-            <button type="button" className={classNames(styles.card, styles.add)} onClick={onAdd}>
-              <div className={styles.addTitleWrapper}>
-                <div className={styles.addTitle}>
-                  <PlusIcon className={styles.addGridIcon} />
-                  {t('action.createProject')}
-                </div>
-              </div>
-            </button>
+            <ButtonTmp type={ButtonType.Icon} title={t('common.createProject')} onClick={onAdd} className={classNames(styles.card, styles.add)}>
+              <Icons type={IconType.Add} size={IconSize.Size20} className={styles.addGridIcon} />
+              {t('common.createProject')}
+            </ButtonTmp>
           </Grid.Column>
         )}
       </Grid>

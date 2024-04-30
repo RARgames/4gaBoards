@@ -179,6 +179,12 @@ export default {
       stopTimer: 'Stop Timer',
       showTasks: 'Show Tasks',
       hideTasks: 'Hide Tasks',
+      renameBoard: 'Rename Board',
+      addBoard: 'Add Board',
+      cardActions: 'Card Actions',
+      addCard: 'Add Card',
+      addList: 'Add List',
+      createProject: 'Create Project',
     },
 
     action: {

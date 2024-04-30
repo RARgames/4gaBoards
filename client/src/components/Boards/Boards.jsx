@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Button, Icon } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 import { closePopup } from '../../lib/popup';
+import { Icons, IconType, IconSize } from '../Icons';
+import { ButtonTmp, ButtonType } from '../ButtonTmp';
 
 import Paths from '../../constants/Paths';
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -15,6 +17,7 @@ import EditPopup from './EditPopup';
 import styles from './Boards.module.scss';
 
 const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMove, onDelete }) => {
+  const [t] = useTranslation();
   const tabsWrapper = useRef(null);
 
   const handleWheel = useCallback(({ deltaY }) => {
@@ -70,9 +73,9 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 </Link>
                 {canEdit && (
                   <EditPopup defaultData={pick(item, 'name')} onUpdate={(data) => handleUpdate(item.id, data)} onDelete={() => handleDelete(item.id)}>
-                    <Button className={classNames(styles.editButton, styles.target)}>
-                      <Icon fitted name="pencil" size="small" />
-                    </Button>
+                    <ButtonTmp type={ButtonType.Icon} title={t('common.renameBoard')} className={classNames(styles.editButton, styles.target)}>
+                      <Icons type={IconType.Pencil} size={IconSize.Size13} />
+                    </ButtonTmp>
                   </EditPopup>
                 )}
               </>
@@ -100,7 +103,9 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 {placeholder}
                 {canEdit && (
                   <AddPopup onCreate={onCreate}>
-                    <Button icon="plus" className={styles.addButton} />
+                    <ButtonTmp type={ButtonType.Icon} title={t('common.addBoard')} className={classNames(styles.addButton)}>
+                      <Icons type={IconType.Add} size={IconSize.Size13} />
+                    </ButtonTmp>
                   </AddPopup>
                 )}
               </div>
