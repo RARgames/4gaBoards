@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation, Trans } from 'react-i18next';
-import { Icon, Loader } from 'semantic-ui-react';
+import { Loader } from 'semantic-ui-react';
 
 import ProjectsContainer from '../../containers/ProjectsContainer';
 import BoardContainer from '../../containers/BoardContainer';
@@ -66,7 +66,6 @@ function Static({ projectId, cardId, board }) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperFlex, styles.wrapperProject)}>
         <div className={styles.message}>
-          <Icon inverted name="hand point up outline" size="huge" className={styles.messageIcon} />
           <h1 className={styles.messageTitle}>
             {t('common.openBoard', {
               context: 'title',

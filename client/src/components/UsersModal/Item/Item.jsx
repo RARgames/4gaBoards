@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, Radio, Table } from 'semantic-ui-react';
+import { Radio, Table } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { Icons, IconType, IconSize } from '../../Icons';
+import { ButtonTmp, ButtonType } from '../../ButtonTmp';
 
 import ActionsPopup from './ActionsPopup';
 import User from '../../User';
@@ -28,6 +31,7 @@ const Item = React.memo(
     onPasswordUpdateMessageDismiss,
     onDelete,
   }) => {
+    const [t] = useTranslation();
     const handleIsAdminChange = useCallback(() => {
       onUpdate({
         isAdmin: !isAdmin,
@@ -67,9 +71,9 @@ const Item = React.memo(
             onPasswordUpdateMessageDismiss={onPasswordUpdateMessageDismiss}
             onDelete={onDelete}
           >
-            <Button className={styles.button}>
-              <Icon fitted name="pencil" />
-            </Button>
+            <ButtonTmp type={ButtonType.Icon} title={t('common.editUser')} className={styles.editbutton}>
+              <Icons type={IconType.Pencil} size={IconSize.Size14} />
+            </ButtonTmp>
           </ActionsPopup>
         </Table.Cell>
       </Table.Row>

@@ -9,7 +9,7 @@ import { visit } from 'unist-util-visit';
 import remarkGithub from 'remark-github';
 import { Icons, IconType, IconSize } from '../Icons';
 import { ButtonTmp, ButtonType } from '../ButtonTmp';
-import { Dropdown } from '../../lib/custom-ui';
+import { Dropdown } from '../Utils';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
 import DescriptionEdit from './DescriptionEdit';
@@ -349,7 +349,7 @@ const CardModal = React.memo(
             onLabelMove={onLabelMove}
             onLabelDelete={onLabelDelete}
           >
-            <ButtonTmp type={ButtonType.Icon} title={t('common.cardActions', { context: 'title' })} className={styles.headerButton}>
+            <ButtonTmp type={ButtonType.Icon} title={t('common.editCard')} className={styles.headerButton}>
               <Icons type={IconType.EllipsisVertical} size={IconSize.Size14} />
             </ButtonTmp>
           </ActionsPopup>

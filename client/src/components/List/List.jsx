@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { Button, Icon } from 'semantic-ui-react';
 import { Icons, IconType, IconSize } from '../Icons';
 import { ButtonTmp, ButtonType } from '../ButtonTmp';
 
@@ -144,9 +143,14 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef} className={styles.headerCollapsedInner}>
           {placeholder}
-          <Button className={classNames(styles.headerCollapseButtonCollapsed, gStyles.iconButton, !canEdit && gStyles.cursorDefault)} onClick={handleToggleCollapseClick}>
-            <Icon fitted name="triangle down" />
-          </Button>
+          <ButtonTmp
+            type={ButtonType.Icon}
+            title={t('common.expandList')}
+            onClick={handleToggleCollapseClick}
+            className={classNames(styles.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}
+          >
+            <Icons type={IconType.TriangleDown} size={IconSize.Size8} />
+          </ButtonTmp>
           <div className={styles.headerNameCollapsed}>{name}</div>
           <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
         </div>
@@ -199,9 +203,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               </NameEdit>
               {isPersisted && canEdit && (
                 <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete}>
-                  <Button className={classNames(styles.headerButton, gStyles.iconButton)}>
-                    <Icon fitted name="ellipsis vertical" size="small" />
-                  </Button>
+                  <ButtonTmp type={ButtonType.Icon} title={t('common.editList')} className={styles.headerButton}>
+                    <Icons type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                  </ButtonTmp>
                 </ActionsPopup>
               )}
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon, Label, Loader } from 'semantic-ui-react';
+import { Icons, IconType, IconSize } from '../../Icons';
+import { ButtonTmp, ButtonType } from '../../ButtonTmp';
 
 import EditPopup from './EditPopup';
 
@@ -79,20 +81,15 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
           })}
         </span>
         {coverUrl && canEdit && (
-          <span className={styles.options}>
-            <button type="button" className={styles.option} onClick={handleToggleCoverClick}>
-              <Icon name="window maximize outline" flipped="vertically" size="small" className={styles.optionIcon} />
-              <span className={styles.optionText}>
-                {isCover
-                  ? t('action.removeCover', {
-                      context: 'title',
-                    })
-                  : t('action.makeCover', {
-                      context: 'title',
-                    })}
-              </span>
-            </button>
-          </span>
+          <ButtonTmp
+            type={ButtonType.NoBackground}
+            title={isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}
+            onClick={handleToggleCoverClick}
+            className={styles.optionButton}
+          >
+            <Icons type={IconType.Outline} size={IconSize.Size10} className={styles.optionIcon} />
+            <span className={styles.optionText}>{isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}</span>
+          </ButtonTmp>
         )}
       </div>
       {canEdit && (

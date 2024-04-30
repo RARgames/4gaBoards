@@ -1,8 +1,9 @@
 import zxcvbn from 'zxcvbn';
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Input, Progress } from 'semantic-ui-react';
+import { Input, Progress } from 'semantic-ui-react';
 import { useToggle } from '../../../hooks';
+import { Icons, IconType, IconSize } from '../../../../components/Icons';
 
 import styles from './InputPassword.module.css';
 
@@ -27,7 +28,7 @@ const InputPassword = React.forwardRef(({ value, withStrengthBar, minStrengthSco
     ...props,
     ref,
     type: isVisible ? 'text' : 'password',
-    icon: <Icon link name={isVisible ? 'eye' : 'eye slash'} onClick={handleToggleClick} />,
+    icon: <Icons type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} onClick={handleToggleClick} className={styles.passwordIcon} />,
   };
 
   if (!withStrengthBar) {

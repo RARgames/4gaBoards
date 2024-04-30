@@ -224,7 +224,7 @@ const Card = React.memo(
                         onLabelMove={onLabelMove}
                         onLabelDelete={onLabelDelete}
                       >
-                        <ButtonTmp type={ButtonType.Icon} title={t('common.cardActions')} className={classNames(styles.actionsButton, styles.target)}>
+                        <ButtonTmp type={ButtonType.Icon} title={t('common.editCard')} className={classNames(styles.actionsButton, styles.target)}>
                           <Icons type={IconType.EllipsisVertical} size={IconSize.Size13} />
                         </ButtonTmp>
                       </ActionsPopup>

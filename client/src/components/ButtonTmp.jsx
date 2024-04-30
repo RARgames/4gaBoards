@@ -7,6 +7,7 @@ import styles from './ButtonTmp.module.scss';
 const ButtonType = {
   Default: 'defaultButton',
   Icon: 'iconButton',
+  NoBackground: 'noBackgroundButton',
 };
 // TODO change name to Button
 // TODO default should be icon (probably rename icon to without background)

@@ -181,10 +181,16 @@ export default {
       hideTasks: 'Hide Tasks',
       renameBoard: 'Rename Board',
       addBoard: 'Add Board',
-      cardActions: 'Card Actions',
+      editCard: 'Edit Card',
       addCard: 'Add Card',
       addList: 'Add List',
       createProject: 'Create Project',
+      editUser: 'Edit User',
+      expandList: 'Expand List',
+      editList: 'Edit List',
+      projects: 'Projects',
+      projectSettings: 'Project Settings',
+      editTask: 'Edit Task',
     },
 
     action: {

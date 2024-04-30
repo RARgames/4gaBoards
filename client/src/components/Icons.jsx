@@ -21,6 +21,7 @@ import { ReactComponent as Pause } from '../assets/icons/Pause.svg';
 import { ReactComponent as Pencil } from '../assets/icons/Pencil.svg';
 import { ReactComponent as Play } from '../assets/icons/Play.svg';
 import { ReactComponent as PlusMath } from '../assets/icons/PlusMath.svg';
+import { ReactComponent as Settings } from '../assets/icons/Settings.svg';
 import { ReactComponent as Trash } from '../assets/icons/Trash.svg';
 import { ReactComponent as TriangleDown } from '../assets/icons/TriangleDown.svg';
 import { ReactComponent as Users } from '../assets/icons/Users.svg';
@@ -47,6 +48,7 @@ const IconType = {
   Pencil,
   Play,
   PlusMath,
+  Settings,
   Trash,
   TriangleDown,
   Users,
@@ -57,6 +59,7 @@ const IconSize = {
   Size10: 'size10',
   Size13: 'size13',
   Size14: 'size14',
+  Size18: 'size18',
   Size20: 'size20',
 };
 

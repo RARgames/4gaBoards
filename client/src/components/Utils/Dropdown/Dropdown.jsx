@@ -1,10 +1,10 @@
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'semantic-ui-react';
 import classNames from 'classnames';
+import { Icons, IconType, IconSize } from '../../Icons';
 
 import styles from './Dropdown.module.scss';
-import gStyles from '../../../../globalStyles.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder, isSearchable, onChange, onBlur, onClose, onCancel, submitOnBlur }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
@@ -187,7 +187,7 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
           readOnly={!isSearchable}
           placeholder={getDisplay()}
         />
-        <Icon fitted name="triangle down" className={classNames(styles.dropdownIcon, gStyles.iconButtonSolid)} />
+        <Icons type={IconType.TriangleDown} size={IconSize.Size10} className={styles.dropdownIcon} />
       </div>
       <div className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>
         {getOptions().map((item, index) => (
