@@ -19,7 +19,7 @@ module.exports.custom = {
    */
 
   baseUrl: process.env.BASE_URL,
-  clientUrl: process.env.CLIENT_URL,
+  clientUrl: process.env.CLIENT_URL || (process.env.NODE_ENV === 'production' ? process.env.BASE_URL : 'http://localhost:3000'),
 
   tokenExpiresIn: parseInt(process.env.TOKEN_EXPIRES_IN, 10) || 365,
 
@@ -32,5 +32,5 @@ module.exports.custom = {
   attachmentsPath: path.join(sails.config.appPath, 'private', 'attachments'),
   attachmentsUrl: `${process.env.BASE_URL}/attachments`,
 
-  googleSsoUrl: process.env.GOOGLE_AUTHORIZATION_URI,
+  googleSsoUrl: `${process.env.BASE_URL}/auth/google`,
 };

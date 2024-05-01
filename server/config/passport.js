@@ -14,7 +14,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URI,
+      callbackURL: `${process.env.BASE_URL}/auth/google/callback`,
     },
     (request, accessToken, refreshToken, profile, done) => {
       // eslint-disable-next-line consistent-return
