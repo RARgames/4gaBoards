@@ -1,17 +1,14 @@
 module.exports.up = async (knex) => {
-  await knex.schema.table('user_account', (table) => {
-    table.boolean('is_sso').notNullable().default(false);
+  await knex.schema.alterTable('user_account', (table) => {
     table.setNullable('password');
-  });
-
-  return knex.schema.alterTable('user_account', (table) => {
-    table.boolean('is_sso').notNullable().alter();
+    table.timestamp('last_login', true);
+    table.text('sso_google_email');
   });
 };
 
 module.exports.down = async (knex) => {
-  return knex.schema.table('user_account', (table) => {
-    table.dropColumn('is_sso');
-    table.dropNullable('password');
+  return knex.schema.alterTable('user_account', (table) => {
+    table.dropColumn('last_login');
+    table.dropColumn('sso_google_email');
   });
 };
