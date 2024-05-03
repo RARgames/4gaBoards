@@ -9,7 +9,7 @@ import ActionsPopup from './ActionsPopup';
 import User from '../../User';
 
 import styles from './Item.module.scss';
-
+// TODO get date in correct local region format
 const Item = React.memo(
   ({
     email,
@@ -18,6 +18,8 @@ const Item = React.memo(
     avatarUrl,
     organization,
     phone,
+    ssoGoogleEmail,
+    lastLogin,
     isAdmin,
     emailUpdateForm,
     passwordUpdateForm,
@@ -32,6 +34,7 @@ const Item = React.memo(
     onDelete,
   }) => {
     const [t] = useTranslation();
+    const options = { hour12: false, hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
     const handleIsAdminChange = useCallback(() => {
       onUpdate({
         isAdmin: !isAdmin,
@@ -49,6 +52,8 @@ const Item = React.memo(
         <Table.Cell>
           <Radio toggle checked={isAdmin} onChange={handleIsAdminChange} />
         </Table.Cell>
+        <Table.Cell>{ssoGoogleEmail || '-'}</Table.Cell>
+        <Table.Cell>{lastLogin ? new Date(lastLogin).toLocaleString(undefined, options).replace(/,/g, '').split(' ').reverse().join(' ') : '-'}</Table.Cell>
         <Table.Cell textAlign="right">
           <ActionsPopup
             user={{
@@ -88,6 +93,8 @@ Item.propTypes = {
   avatarUrl: PropTypes.string,
   organization: PropTypes.string,
   phone: PropTypes.string,
+  ssoGoogleEmail: PropTypes.string,
+  lastLogin: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
   /* eslint-disable react/forbid-prop-types */
   emailUpdateForm: PropTypes.object.isRequired,
@@ -109,6 +116,8 @@ Item.defaultProps = {
   avatarUrl: undefined,
   organization: undefined,
   phone: undefined,
+  ssoGoogleEmail: undefined,
+  lastLogin: undefined,
 };
 
 export default Item;

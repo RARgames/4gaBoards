@@ -192,6 +192,8 @@ export default {
       projectSettings: 'Project Settings',
       editTask: 'Edit Task',
       logInWithSSO: 'Login with Google',
+      ssoGoogleEmail: 'Google E-mail',
+      lastLogin: 'Last login',
     },
 
     action: {
