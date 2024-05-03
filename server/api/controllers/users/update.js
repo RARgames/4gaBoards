@@ -59,6 +59,14 @@ module.exports = {
     commentsShown: {
       type: 'boolean',
     },
+    ssoGoogleEmail: {
+      type: 'string',
+      isEmail: true,
+      allowNull: true,
+    },
+    lastLogin: {
+      type: 'ref',
+    },
   },
 
   exits: {
@@ -85,7 +93,21 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'language', 'subscribeToOwnCards', 'descriptionMode', 'descriptionShown', 'tasksShown', 'attachmentsShown', 'commentsShown']),
+      ..._.pick(inputs, [
+        'isAdmin',
+        'name',
+        'phone',
+        'organization',
+        'language',
+        'subscribeToOwnCards',
+        'descriptionMode',
+        'descriptionShown',
+        'tasksShown',
+        'attachmentsShown',
+        'commentsShown',
+        'ssoGoogleEmail',
+        'lastLogin',
+      ]),
       avatar: inputs.avatarUrl,
     };
 

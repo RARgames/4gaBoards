@@ -40,7 +40,7 @@ module.exports = {
   async fn(inputs) {
     const { values } = inputs;
     let hashedPassword;
-    if (!values.isSso && values.password) {
+    if (!values.ssoGoogleEmail && values.password) {
       hashedPassword = bcrypt.hashSync(values.password, 10);
     }
 

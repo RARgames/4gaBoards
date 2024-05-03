@@ -26,13 +26,12 @@ passport.use(
         if (existingUser) {
           return done(null, existingUser);
         }
-
         const values = {
           isAdmin: false,
           email: profile.emails[0].value,
-          isSso: true,
-          name: profile.displayName || profile.emails[0].value,
-          subscribeToOwnCards: false,
+          ssoGoogleEmail: profile.emails[0].value,
+          name: profile.displayName || profile.emails[0].value.split('@')[0],
+          username: profile.displayName || profile.emails[0].value.split('@')[0],
         };
 
         sails.helpers.users
