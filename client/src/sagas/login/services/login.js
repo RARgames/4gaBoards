@@ -43,11 +43,17 @@ export function* authenticateGoogleSsoCallback() {
   }
 }
 
+export function* setGoogleButton() {
+  const { item: googleSsoUrl } = yield call(api.getGoogleAuthUrl);
+  yield put(actions.setGoogleButton(googleSsoUrl));
+}
+
 export function* clearAuthenticateError() {
   yield put(actions.clearAuthenticateError());
 }
 
 export default {
+  setGoogleButton,
   authenticate,
   authenticateGoogleSso,
   authenticateGoogleSsoCallback,

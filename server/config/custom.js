@@ -33,4 +33,5 @@ module.exports.custom = {
   attachmentsUrl: `${process.env.BASE_URL}/attachments`,
 
   googleSsoUrl: `${process.env.BASE_URL}/auth/google`,
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
 };

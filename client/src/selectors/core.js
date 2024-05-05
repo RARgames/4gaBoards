@@ -10,6 +10,8 @@ export const selectIsCoreInitializing = ({ core: { isInitializing } }) => isInit
 
 export const selectIsLogouting = ({ core: { isLogouting } }) => isLogouting;
 
+export const selectGoogleSsoUrl = ({ core: { googleSsoUrl } }) => googleSsoUrl;
+
 const nextPosition = (items, index, excludedId) => {
   const filteredItems = isUndefined(excludedId) ? items : items.filter((item) => item.id !== excludedId);
 
@@ -138,6 +140,7 @@ export default {
   selectAccessToken,
   selectIsCoreInitializing,
   selectIsLogouting,
+  selectGoogleSsoUrl,
   selectNextBoardPosition,
   selectNextLabelPosition,
   selectNextListPosition,

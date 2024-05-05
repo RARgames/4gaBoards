@@ -42,10 +42,9 @@ const createMessage = (error) => {
   }
 };
 
-const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss }) => {
+const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss, googleSsoEnabled }) => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
-
   const [data, handleFieldChange, setData] = useForm(() => ({
     emailOrUsername: '',
     password: '',
@@ -128,9 +127,11 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                       <Input.Password fluid ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
                     </div>
                     <Form.Button primary size="large" icon="right arrow" labelPosition="right" content={t('action.logIn')} floated="right" loading={isSubmitting} disabled={isSubmitting} />
-                    <Button type="button" onClick={onAuthenticateGoogleSso}>
-                      {t('common.logInWithSSO')}
-                    </Button>
+                    {googleSsoEnabled && (
+                      <Button type="button" onClick={onAuthenticateGoogleSso}>
+                        {t('common.logInWithSSO')}
+                      </Button>
+                    )}
                   </Form>
                 </div>
               </div>
@@ -149,6 +150,7 @@ Login.propTypes = {
   onAuthenticate: PropTypes.func.isRequired,
   onAuthenticateGoogleSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
+  googleSsoEnabled: PropTypes.bool.isRequired,
 };
 
 Login.defaultProps = {
