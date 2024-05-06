@@ -18,8 +18,9 @@ We'll work on a **demo** when we finish all tasks from the [#1 issue](https://gi
 - Real-time updates
 - User notifications
 - Internationalization
+- Google SSO - We are working on more features!
 - Github 2-way sync [Coming soon]
-- Google/Microsoft/Github SSO [Coming soon]
+- Github/Microsoft SSO [Coming soon]
 
 ## Deploy
 
@@ -98,7 +99,7 @@ cd server
 
 Default url: http://localhost:1337 Demo user: `demo` Demo password: `demo`
 
-## [Additional information (Nginx Configuration, Logging, Rotating Logs, Fail2ban)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
+## [Additional information (Google SSO, Nginx Configuration, Logging, Rotating Logs, Fail2ban)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
 
 ## Backup and Restore
 

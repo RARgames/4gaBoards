@@ -1,3 +1,11 @@
+## Google SSO
+
+Create a project on [Google Cloud Console](https://console.cloud.google.com), create OAuth 2.0 Client ID + Secret and copy them to `docker-compose.yml` replacing `googleClientId` and `googleClientSecret` in `4gaBoards` `environment` section:
+```
+GOOGLE_CLIENT_ID: googleClientId
+GOOGLE_CLIENT_SECRET: googleClientSecret
+```
+
 ## Web server configuration (Nginx/Apache)
 
 ### Nginx example (/etc/nginx/conf.d/4gaBoards.conf)
