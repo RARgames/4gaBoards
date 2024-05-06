@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
       authenticateForm: { data: defaultData, isSubmitting, error },
     },
   } = state;
-  const googleSsoUrl = selectors.selectGoogleSsoUrl(state);
+  const googleSsoUrl = selectors.selectSsoEnabled(state);
   const googleSsoEnabled = !!googleSsoUrl?.googleSsoEnabled;
 
   return {

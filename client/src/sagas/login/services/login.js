@@ -42,9 +42,9 @@ export function* authenticateGoogleSsoCallback() {
   }
 }
 
-export function* setGoogleLoginButton() {
+export function* fetchSsoEnabled() {
   const { item: googleSsoEnabled } = yield call(api.getGoogleAuthUrl);
-  yield put(actions.setGoogleLoginButton(googleSsoEnabled));
+  yield put(actions.fetchSsoEnabled(googleSsoEnabled));
 }
 
 export function* clearAuthenticateError() {
@@ -52,7 +52,7 @@ export function* clearAuthenticateError() {
 }
 
 export default {
-  setGoogleLoginButton,
+  fetchSsoEnabled,
   authenticate,
   authenticateGoogleSso,
   authenticateGoogleSsoCallback,

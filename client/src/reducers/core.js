@@ -13,7 +13,7 @@ const initialState = {
 // eslint-disable-next-line default-param-last
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case ActionTypes.GOOGLE_SSO:
+    case ActionTypes.FETCH_SSO_ENABLED:
       return {
         ...state,
         googleSsoEnabled: payload.googleSsoEnabled,
