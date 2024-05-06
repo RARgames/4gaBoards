@@ -8,6 +8,7 @@ const ButtonType = {
   Default: 'defaultButton',
   Icon: 'iconButton',
   NoBackground: 'noBackgroundButton',
+  BackgroundFade: 'backgroundFadeButton',
 };
 // TODO change name to Button
 // TODO default should be icon (probably rename icon to without background)

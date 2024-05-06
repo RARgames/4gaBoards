@@ -15,6 +15,7 @@ import { ReactComponent as Eye } from '../assets/icons/Eye.svg';
 import { ReactComponent as EyeSlash } from '../assets/icons/EyeSlash.svg';
 import { ReactComponent as FillDrip } from '../assets/icons/FillDrip.svg';
 import { ReactComponent as Github } from '../assets/icons/Github.svg';
+import { ReactComponent as Google } from '../assets/icons/Google.svg';
 import { ReactComponent as Minus } from '../assets/icons/Minus.svg';
 import { ReactComponent as Outline } from '../assets/icons/Outline.svg';
 import { ReactComponent as Pause } from '../assets/icons/Pause.svg';
@@ -42,6 +43,7 @@ const IconType = {
   EyeSlash,
   FillDrip,
   Github,
+  Google,
   Minus,
   Outline,
   Pause,

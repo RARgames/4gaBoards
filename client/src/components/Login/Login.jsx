@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { Form, Grid, Header, Message, Image, Button } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input } from '../../lib/custom-ui';
+import { Icons, IconType, IconSize } from '../Icons';
+import { ButtonTmp, ButtonType } from '../ButtonTmp';
 
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
@@ -128,9 +130,10 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                     </div>
                     <Form.Button primary size="large" icon="right arrow" labelPosition="right" content={t('action.logIn')} floated="right" loading={isSubmitting} disabled={isSubmitting} />
                     {googleSsoEnabled && (
-                      <Button type="button" onClick={onAuthenticateGoogleSso}>
-                        {t('common.logInWithSSO')}
-                      </Button>
+                      <ButtonTmp type={ButtonType.BackgroundFade} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoLoginButton}>
+                        {t('common.loginWithGoogle')}
+                        <Icons type={IconType.Google} size={IconSize.Size20} className={styles.ssoLoginIcon} />
+                      </ButtonTmp>
                     )}
                   </Form>
                 </div>
