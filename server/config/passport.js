@@ -10,33 +10,15 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
         callbackURL: `${process.env.BASE_URL}/auth/google/callback`,
       },
       (request, accessToken, refreshToken, profile, done) => {
+        const email = profile.emails[0].value;
         // eslint-disable-next-line consistent-return
-        sails.helpers.users.getOneByEmailOrUsername(profile.emails[0].value).exec((err, existingUser) => {
+        sails.helpers.users.getCreateOneForSso(email, profile.displayName).exec((err, user) => {
           if (err) {
             return done(err);
           }
-
-          if (existingUser) {
-            return done(null, existingUser);
+          if (user) {
+            return done(null, user);
           }
-          const values = {
-            isAdmin: false,
-            email: profile.emails[0].value,
-            ssoGoogleEmail: profile.emails[0].value,
-            name: profile.displayName || profile.emails[0].value.split('@')[0],
-            username: profile.displayName || profile.emails[0].value.split('@')[0],
-          };
-
-          sails.helpers.users
-            .createOne(values)
-            .intercept('usernameAlreadyInUse', 'usernameAlreadyInUse')
-            .exec((error, newUser) => {
-              if (error) {
-                return done(error);
-              }
-
-              return done(null, newUser);
-            });
         });
       },
     ),
