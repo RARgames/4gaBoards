@@ -6,7 +6,7 @@ import EntryActionTypes from '../../../constants/EntryActionTypes';
 export default function* loginWatchers() {
   yield all([
     takeEvery(EntryActionTypes.AUTHENTICATE, ({ payload: { data } }) => services.authenticate(data)),
-    takeEvery(EntryActionTypes.GOOGLE_SSO_AUTHENTICATE, () => services.authenticateGoogleSso()),
+    takeEvery(EntryActionTypes.AUTHENTICATE_GOOGLE_SSO, () => services.authenticateGoogleSso()),
     takeEvery(EntryActionTypes.AUTHENTICATE_ERROR_CLEAR, () => services.clearAuthenticateError()),
   ]);
 }

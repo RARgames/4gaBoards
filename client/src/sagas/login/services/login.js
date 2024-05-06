@@ -20,14 +20,13 @@ export function* authenticate(data) {
   yield put(actions.authenticate.success(accessToken));
 }
 
-// eslint-disable-next-line require-yield
 export function* authenticateGoogleSso() {
   let googleSsoUrl;
   try {
     const response = yield call(api.getGoogleAuthUrl);
     googleSsoUrl = response.item.googleSsoUrl;
   } catch (error) {
-    yield put(actions.authenticate.failure(error));
+    yield put(actions.authenticateGoogleSso.failure(error));
     return;
   }
   window.location.replace(googleSsoUrl);
@@ -35,11 +34,11 @@ export function* authenticateGoogleSso() {
 
 export function* authenticateGoogleSsoCallback() {
   const params = new URLSearchParams(window.location.search);
-  const code = params.get('accessToken');
+  const accessToken = params.get('accessToken');
   yield put(replace(Paths.LOGIN));
-  if (code !== null) {
-    yield call(setAccessToken, code);
-    yield put(actions.authenticateGoogleSso.success(code));
+  if (accessToken !== null) {
+    yield call(setAccessToken, accessToken);
+    yield put(actions.authenticateGoogleSso.success(accessToken));
   }
 }
 

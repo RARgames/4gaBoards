@@ -8,7 +8,7 @@ const authenticate = (data) => ({
 });
 
 const authenticateGoogleSso = () => ({
-  type: EntryActionTypes.GOOGLE_SSO_AUTHENTICATE,
+  type: EntryActionTypes.AUTHENTICATE_GOOGLE_SSO,
   payload: {},
 });
 

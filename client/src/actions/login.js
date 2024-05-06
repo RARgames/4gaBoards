@@ -29,19 +29,19 @@ authenticate.failure = (error) => ({
 });
 
 const authenticateGoogleSso = () => ({
-  type: ActionTypes.GOOGLE_SSO_AUTHENTICATE,
+  type: ActionTypes.AUTHENTICATE_GOOGLE_SSO,
   payload: {},
 });
 
 authenticateGoogleSso.success = (accessToken) => ({
-  type: ActionTypes.AUTHENTICATE__SUCCESS,
+  type: ActionTypes.AUTHENTICATE_GOOGLE_SSO__SUCCESS,
   payload: {
     accessToken,
   },
 });
 
 authenticateGoogleSso.failure = (error) => ({
-  type: ActionTypes.AUTHENTICATE__FAILURE,
+  type: ActionTypes.AUTHENTICATE_GOOGLE_SSO__FAILURE,
   payload: {
     error,
   },
