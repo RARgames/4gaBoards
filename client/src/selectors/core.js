@@ -10,7 +10,7 @@ export const selectIsCoreInitializing = ({ core: { isInitializing } }) => isInit
 
 export const selectIsLogouting = ({ core: { isLogouting } }) => isLogouting;
 
-export const selectGoogleSsoUrl = ({ core: { googleSsoUrl } }) => googleSsoUrl;
+export const selectGoogleSsoUrl = ({ core: { googleSsoEnabled } }) => googleSsoEnabled;
 
 const nextPosition = (items, index, excludedId) => {
   const filteredItems = isUndefined(excludedId) ? items : items.filter((item) => item.id !== excludedId);

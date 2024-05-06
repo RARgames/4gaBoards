@@ -7,7 +7,7 @@ const initialState = {
   isInitializing: true,
   isLogouting: false,
   currentModal: null,
-  googleSsoUrl: null,
+  googleSsoEnabled: null,
 };
 
 // eslint-disable-next-line default-param-last
@@ -16,7 +16,7 @@ export default (state = initialState, { type, payload }) => {
     case ActionTypes.GOOGLE_SSO:
       return {
         ...state,
-        googleSsoUrl: payload.googleSsoUrl,
+        googleSsoEnabled: payload.googleSsoEnabled,
       };
     case LOCATION_CHANGE_HANDLE:
     case ActionTypes.MODAL_CLOSE:

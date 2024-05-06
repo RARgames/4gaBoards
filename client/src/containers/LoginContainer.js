@@ -11,12 +11,8 @@ const mapStateToProps = (state) => {
     },
   } = state;
   const googleSsoUrl = selectors.selectGoogleSsoUrl(state);
-  let googleSsoEnabled = false;
-  if (googleSsoUrl) {
-    if (googleSsoUrl.googleSsoUrl.enabled !== 'false') {
-      googleSsoEnabled = true;
-    }
-  }
+  const googleSsoEnabled = !!googleSsoUrl?.googleSsoEnabled;
+
   return {
     defaultData,
     isSubmitting,

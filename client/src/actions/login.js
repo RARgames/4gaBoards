@@ -1,9 +1,9 @@
 import ActionTypes from '../constants/ActionTypes';
 
-const setGoogleButton = (googleSsoUrl) => ({
+const setGoogleLoginButton = (googleSsoEnabled) => ({
   type: ActionTypes.GOOGLE_SSO,
   payload: {
-    googleSsoUrl,
+    googleSsoEnabled,
   },
 });
 
@@ -53,7 +53,7 @@ const clearAuthenticateError = () => ({
 });
 
 export default {
-  setGoogleButton,
+  setGoogleLoginButton,
   authenticate,
   authenticateGoogleSso,
   clearAuthenticateError,

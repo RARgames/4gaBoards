@@ -15,7 +15,7 @@ function* postLoginSaga() {
 export default function* loginSaga() {
   const watcherTasks = yield all(watchers.map((watcher) => fork(watcher)));
 
-  yield fork(services.setGoogleButton);
+  yield fork(services.setGoogleLoginButton);
   yield take(ActionTypes.AUTHENTICATE__SUCCESS);
   yield cancel(watcherTasks);
   yield call(services.goToRoot);

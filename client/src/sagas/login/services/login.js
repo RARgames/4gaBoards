@@ -25,7 +25,7 @@ export function* authenticateGoogleSso() {
   let googleSsoUrl;
   try {
     const response = yield call(api.getGoogleAuthUrl);
-    googleSsoUrl = response.item.googleSsoUrl.url;
+    googleSsoUrl = response.item.googleSsoUrl;
   } catch (error) {
     yield put(actions.authenticate.failure(error));
     return;
@@ -43,9 +43,9 @@ export function* authenticateGoogleSsoCallback() {
   }
 }
 
-export function* setGoogleButton() {
-  const { item: googleSsoUrl } = yield call(api.getGoogleAuthUrl);
-  yield put(actions.setGoogleButton(googleSsoUrl));
+export function* setGoogleLoginButton() {
+  const { item: googleSsoEnabled } = yield call(api.getGoogleAuthUrl);
+  yield put(actions.setGoogleLoginButton(googleSsoEnabled));
 }
 
 export function* clearAuthenticateError() {
@@ -53,7 +53,7 @@ export function* clearAuthenticateError() {
 }
 
 export default {
-  setGoogleButton,
+  setGoogleLoginButton,
   authenticate,
   authenticateGoogleSso,
   authenticateGoogleSsoCallback,
