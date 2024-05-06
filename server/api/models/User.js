@@ -22,7 +22,7 @@ module.exports = {
     },
     password: {
       type: 'string',
-      required: true,
+      allowNull: true,
     },
     isAdmin: {
       type: 'boolean',
@@ -69,6 +69,7 @@ module.exports = {
       isIn: DESCRIPTION_MODES,
       isNotEmptyString: true,
       columnName: 'description_mode',
+      defaultsTo: 'edit',
     },
     descriptionShown: {
       type: 'boolean',
@@ -97,6 +98,16 @@ module.exports = {
     passwordChangedAt: {
       type: 'ref',
       columnName: 'password_changed_at',
+    },
+    ssoGoogleEmail: {
+      type: 'string',
+      isEmail: true,
+      columnName: 'sso_google_email',
+      allowNull: true,
+    },
+    lastLogin: {
+      type: 'ref',
+      columnName: 'last_login',
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗

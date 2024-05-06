@@ -16,6 +16,10 @@
 
     &:hover {
       color: var(--textColor2);
+
+      svg {
+        fill: var(--textColor2);
+      }
     }
   }
 
@@ -36,6 +40,10 @@
 
     &:hover {
       color: var(--textColor2);
+
+      svg {
+        fill: var(--textColor2);
+      }
     }
   }
 
@@ -51,6 +59,20 @@
       svg {
         fill: var(--textColor2);
       }
+    }
+  }
+
+  .backgroundFadeButton {
+    background-color: var(--loginBackgroundTmp);
+    color: var(--textColor0);
+    border: none;
+    border-radius: 3px;
+    padding: 8px;
+    width: auto;
+    height: 20px;
+
+    &:hover {
+      background-color: var(--loginBackgroundDark);
     }
   }
 }

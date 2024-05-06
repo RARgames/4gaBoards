@@ -7,6 +7,11 @@ const authenticate = (data) => ({
   },
 });
 
+const authenticateGoogleSso = () => ({
+  type: EntryActionTypes.AUTHENTICATE_GOOGLE_SSO,
+  payload: {},
+});
+
 const clearAuthenticateError = () => ({
   type: EntryActionTypes.AUTHENTICATE_ERROR_CLEAR,
   payload: {},
@@ -14,5 +19,6 @@ const clearAuthenticateError = () => ({
 
 export default {
   authenticate,
+  authenticateGoogleSso,
   clearAuthenticateError,
 };

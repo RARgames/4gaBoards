@@ -5,19 +5,25 @@ import Config from '../constants/Config';
 const http = {};
 
 // TODO: add all methods
-['POST'].forEach((method) => {
-  http[method.toLowerCase()] = (url, data, headers) => {
-    const formData = Object.keys(data).reduce((result, key) => {
-      result.append(key, data[key]);
-
-      return result;
-    }, new FormData());
-
-    return fetch(`${Config.SERVER_BASE_URL}/api${url}`, {
+['POST', 'GET'].forEach((method) => {
+  http[method.toLowerCase()] = (url, data = {}, headers = {}) => {
+    const isPostMethod = method === 'POST';
+    const options = {
       method,
       headers,
-      body: formData,
-    })
+    };
+
+    if (isPostMethod) {
+      const formData = new FormData();
+
+      Object.keys(data).forEach((key) => {
+        formData.append(key, data[key]);
+      });
+
+      options.body = formData;
+    }
+
+    return fetch(`${Config.SERVER_BASE_URL}/api${url}`, options)
       .then((response) =>
         response.json().then((body) => ({
           body,

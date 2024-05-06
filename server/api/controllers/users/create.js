@@ -70,6 +70,11 @@ module.exports = {
     commentsShown: {
       type: 'boolean',
     },
+    ssoGoogleEmail: {
+      type: 'string',
+      isEmail: true,
+      allowNull: true,
+    },
   },
 
   exits: {
@@ -96,6 +101,7 @@ module.exports = {
       'tasksShown',
       'attachmentsShown',
       'commentsShown',
+      'ssoGoogleEmail',
     ]);
 
     const user = await sails.helpers.users.createOne

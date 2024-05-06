@@ -68,20 +68,18 @@ const UsersModal = React.memo(
 
     return (
       <Modal open closeIcon size="large" centered={false} onClose={onClose}>
-        <Modal.Header>
-          {t('common.users', {
-            context: 'title',
-          })}
-        </Modal.Header>
+        <Modal.Header>{t('common.users', { context: 'title' })}</Modal.Header>
         <Modal.Content scrolling>
           <Table unstackable basic="very">
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell />
-                <Table.HeaderCell width={4}>{t('common.name')}</Table.HeaderCell>
-                <Table.HeaderCell width={4}>{t('common.username')}</Table.HeaderCell>
+                <Table.HeaderCell width={3}>{t('common.name')}</Table.HeaderCell>
+                <Table.HeaderCell width={3}>{t('common.username')}</Table.HeaderCell>
                 <Table.HeaderCell width={4}>{t('common.email')}</Table.HeaderCell>
                 <Table.HeaderCell>{t('common.administrator')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('common.ssoGoogleEmail')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('common.lastLogin')}</Table.HeaderCell>
                 <Table.HeaderCell />
               </Table.Row>
             </Table.Header>
@@ -95,6 +93,8 @@ const UsersModal = React.memo(
                   avatarUrl={item.avatarUrl}
                   organization={item.organization}
                   phone={item.phone}
+                  ssoGoogleEmail={item.ssoGoogleEmail}
+                  lastLogin={item.lastLogin}
                   isAdmin={item.isAdmin}
                   emailUpdateForm={item.emailUpdateForm}
                   passwordUpdateForm={item.passwordUpdateForm}

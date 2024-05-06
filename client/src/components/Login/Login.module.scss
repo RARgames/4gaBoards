@@ -39,4 +39,16 @@
   .wrapper {
     background: var(--backgroundColor0);
   }
+
+  .ssoLoginButton {
+    background-color: var(--loginBackgroundTmp);
+    width: auto;
+    height: 45px;
+    font-weight: bold;
+  }
+
+  .ssoLoginIcon {
+    fill: var(--textColor0);
+    margin-left: 6px;
+  }
 }
