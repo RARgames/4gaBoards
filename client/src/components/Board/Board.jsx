@@ -5,7 +5,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { closePopup } from '../../lib/popup';
 import { Icons, IconType, IconSize } from '../Icons';
-import { ButtonTmp, ButtonType } from '../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import ListContainer from '../../containers/ListContainer';

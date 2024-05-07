@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Progress } from 'semantic-ui-react';
 import { closePopup } from '../../../lib/popup';
+import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import DroppableTypes from '../../../constants/DroppableTypes';
 import Item from './Item';
@@ -101,9 +102,9 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
               {placeholder}
               {canEdit && (
                 <TaskAdd ref={taskAddRef} onCreate={onCreate}>
-                  <button type="button" className={styles.taskButton}>
+                  <ButtonTmp type={ButtonType.Default} title={t('common.addTask')} className={styles.taskButton}>
                     <span className={styles.taskButtonText}>{t('action.addTask')}</span>
-                  </button>
+                  </ButtonTmp>
                 </TaskAdd>
               )}
             </div>

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
 import { Icons, IconType, IconSize } from '../Icons';
-import { ButtonTmp, ButtonType } from '../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';

@@ -6,7 +6,7 @@ import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { withPopup } from '../../../lib/popup';
 import { Input, Popup } from '../../../lib/custom-ui';
 import { Icons, IconType, IconSize } from '../../Icons';
-import { ButtonTmp, ButtonType } from '../../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import { useForm, useSteps } from '../../../hooks';
 import ImportStep from './ImportStep';

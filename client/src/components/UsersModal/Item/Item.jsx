@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Radio, Table } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { Icons, IconType, IconSize } from '../../Icons';
-import { ButtonTmp, ButtonType } from '../../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import ActionsPopup from './ActionsPopup';
 import User from '../../User';

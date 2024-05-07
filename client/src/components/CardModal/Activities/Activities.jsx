@@ -7,7 +7,7 @@ import { ActivityTypes } from '../../../constants/Enums';
 import CommentAdd from './CommentAdd';
 import Item from './Item';
 import { Icons, IconType, IconSize } from '../../Icons';
-import { ButtonTmp, ButtonType } from '../../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import styles from './Activities.module.scss';
 import cStyles from '../CardModal.module.scss';

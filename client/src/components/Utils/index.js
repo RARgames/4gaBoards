@@ -1,4 +1,4 @@
 import Dropdown from './Dropdown';
+import { ButtonTmp, ButtonType } from './Button';
 
-// eslint-disable-next-line import/prefer-default-export
-export { Dropdown };
+export { Dropdown, ButtonTmp, ButtonType };

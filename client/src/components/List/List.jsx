@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Icons, IconType, IconSize } from '../Icons';
-import { ButtonTmp, ButtonType } from '../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import { useResizeObserverSize } from '../../hooks';

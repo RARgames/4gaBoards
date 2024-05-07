@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Label, Loader } from 'semantic-ui-react';
 import { Icons, IconType, IconSize } from '../../Icons';
-import { ButtonTmp, ButtonType } from '../../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import EditPopup from './EditPopup';
 

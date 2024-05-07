@@ -8,7 +8,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import { visit } from 'unist-util-visit';
 import remarkGithub from 'remark-github';
 import { Icons, IconType, IconSize } from '../Icons';
-import { ButtonTmp, ButtonType } from '../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../Utils/Button';
 import { Dropdown } from '../Utils';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
@@ -615,16 +615,13 @@ const CardModal = React.memo(
     const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
 
     const descriptionEditOpenNode = description ? (
-      <>
-        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-        <button type="button" className={classNames(styles.descriptionText, styles.cursorPointer)} onClick={handleDescClick} ref={descriptionEditButtonRef}>
-          <MDEditor.Markdown source={description} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} />
-        </button>
-      </>
+      <ButtonTmp title={t('common.editDescription')} onClick={handleDescClick} className={classNames(styles.descriptionText, styles.cursorPointer)} ref={descriptionEditButtonRef}>
+        <MDEditor.Markdown source={description} remarkPlugins={remarkPlugins} rehypePlugins={rehypePlugins} />
+      </ButtonTmp>
     ) : (
-      <button type="button" className={styles.descriptionButton} onClick={handleDescClick}>
+      <ButtonTmp type={ButtonType.Default} title={t('common.addDescription')} onClick={handleDescClick} className={styles.descriptionButton}>
         <span className={styles.descriptionButtonText}>{t('action.addDescription')}</span>
-      </button>
+      </ButtonTmp>
     );
 
     const descriptionEditNode = isDescOpened ? (

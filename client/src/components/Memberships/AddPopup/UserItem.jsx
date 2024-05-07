@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { ButtonTmp } from '../../Utils/Button';
 
 import User from '../../User';
 
 import styles from './UserItem.module.scss';
 
 const UserItem = React.memo(({ name, avatarUrl, isActive, onSelect }) => (
-  <button type="button" disabled={isActive} className={styles.menuItem} onClick={onSelect}>
+  <ButtonTmp onClick={onSelect} disabled={isActive} className={styles.menuItem}>
     <span className={styles.user}>
       <User name={name} avatarUrl={avatarUrl} />
     </span>
     <div className={classNames(styles.menuItemText, isActive && styles.menuItemTextActive)}>{name}</div>
-  </button>
+  </ButtonTmp>
 ));
 
 UserItem.propTypes = {

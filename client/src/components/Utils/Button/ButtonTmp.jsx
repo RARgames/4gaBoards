@@ -2,35 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import ButtonType from './ButtonType';
 import styles from './ButtonTmp.module.scss';
 
-const ButtonType = {
-  Default: 'defaultButton',
-  Icon: 'iconButton',
-  NoBackground: 'noBackgroundButton',
-  BackgroundFade: 'backgroundFadeButton',
-};
 // TODO change name to Button
 // TODO default should be icon (probably rename icon to without background)
-const ButtonTmp = React.memo(({ children, buttonType, type, className, ...rest }) => {
+const ButtonTmp = React.forwardRef(({ children, buttonType, type, className, ...rest }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type
-    <button type={buttonType} className={classNames(styles[type], className)} {...rest}>
+    <button ref={ref} type={buttonType} className={classNames(type && styles[type], className)} {...rest}>
       {children}
     </button>
   );
 });
 
 ButtonTmp.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   buttonType: PropTypes.string,
-  type: PropTypes.oneOf(Object.values(ButtonType)).isRequired,
+  type: PropTypes.oneOf(Object.values(ButtonType)),
   className: PropTypes.string,
 };
 
 ButtonTmp.defaultProps = {
-  className: undefined,
+  children: undefined,
   buttonType: 'button',
+  type: undefined,
+  className: undefined,
 };
 
-export { ButtonTmp, ButtonType };
+export default React.memo(ButtonTmp);

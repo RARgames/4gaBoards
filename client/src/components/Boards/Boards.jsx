@@ -7,7 +7,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { closePopup } from '../../lib/popup';
 import { Icons, IconType, IconSize } from '../Icons';
-import { ButtonTmp, ButtonType } from '../ButtonTmp';
+import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import Paths from '../../constants/Paths';
 import DroppableTypes from '../../constants/DroppableTypes';
