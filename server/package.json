@@ -48,7 +48,7 @@
     "stream-to-array": "^2.3.0",
     "uuid": "^9.0.1",
     "validator": "^13.7.0",
-    "winston": "^3.11.0",
+    "winston": "^3.13.0",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
