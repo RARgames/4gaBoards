@@ -1,21 +1,8 @@
 :global(#app) {
   .button {
-    background: transparent;
-    color: var(--textColor1);
-    box-shadow: none;
-    line-height: 28px;
-    margin: 0;
-    min-height: auto;
-    opacity: 0;
-    padding: 0;
     position: absolute;
     right: 2px;
     top: 2px;
-    width: 28px;
-
-    &:hover {
-      color: var(--textColor2);
-    }
   }
 
   .date {

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, Label, Loader } from 'semantic-ui-react';
+import { Label, Loader } from 'semantic-ui-react';
 import { Icons, IconType, IconSize } from '../../Icons';
 import { ButtonTmp, ButtonType } from '../../ButtonTmp';
 
@@ -100,9 +100,9 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
           onUpdate={onUpdate}
           onDelete={onDelete}
         >
-          <Button className={classNames(styles.button, styles.target)}>
-            <Icon fitted name="pencil" size="small" />
-          </Button>
+          <ButtonTmp type={ButtonType.Icon} title={t('common.editAttachment')} className={classNames(styles.button, styles.target)}>
+            <Icons type={IconType.Pencil} size={IconSize.Size10} />
+          </ButtonTmp>
         </EditPopup>
       )}
     </div>

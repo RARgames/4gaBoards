@@ -2,8 +2,9 @@ import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Comment, Icon } from 'semantic-ui-react';
+import { Comment } from 'semantic-ui-react';
 import { Markdown } from '../../../lib/custom-ui';
+import { Icons, IconType, IconSize } from '../../Icons';
 
 import CommentEdit from './CommentEdit';
 import User from '../../User';
@@ -37,7 +38,7 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
           {canEdit && (
             <Comment.Actions className={styles.buttons}>
               <Comment.Action title={t('common.editComment')} as="button" disabled={!isPersisted} onClick={handleEditClick} className={styles.button}>
-                <Icon fitted size="small" name="pencil" />
+                <Icons type={IconType.Pencil} size={IconSize.Size10} />
               </Comment.Action>
               <DeletePopup
                 title={t('common.deleteComment', { context: 'title' })}
@@ -46,7 +47,7 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
                 onConfirm={onDelete}
               >
                 <Comment.Action title={t('common.deleteComment')} as="button" disabled={!isPersisted} className={styles.button}>
-                  <Icon fitted size="small" name="trash" />
+                  <Icons type={IconType.Trash} size={IconSize.Size10} />
                 </Comment.Action>
               </DeletePopup>
             </Comment.Actions>

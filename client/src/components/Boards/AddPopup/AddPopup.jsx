@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Icon } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { withPopup } from '../../../lib/popup';
 import { Input, Popup } from '../../../lib/custom-ui';
+import { Icons, IconType, IconSize } from '../../Icons';
+import { ButtonTmp, ButtonType } from '../../ButtonTmp';
 
 import { useForm, useSteps } from '../../../hooks';
 import ImportStep from './ImportStep';
@@ -89,11 +91,13 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
         <Form onSubmit={handleSubmit}>
           <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <div className={styles.controls}>
-            <Button positive content={t('action.createBoard')} className={styles.createButton} />
-            <Button type="button" className={styles.importButton} onClick={handleImportClick}>
-              <Icon name={data.import ? data.import.type : 'arrow down'} className={styles.importButtonIcon} />
+            <ButtonTmp type={ButtonType.NoBackground} title={t('common.import')} onClick={handleImportClick} className={styles.importButton}>
+              <Icons type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={styles.importButtonIcon} />
               {data.import ? data.import.file.name : t('action.import')}
-            </Button>
+            </ButtonTmp>
+            <ButtonTmp buttonType="submit" type={ButtonType.Default} title={t('action.createBoard')} className={styles.createButton}>
+              {t('action.createBoard')}
+            </ButtonTmp>
           </div>
         </Form>
       </Popup.Content>

@@ -9,7 +9,16 @@
   }
 
   .createButton {
-    white-space: nowrap;
+    width: auto;
+    background: var(--timerGreen);
+    color: var(--textColorWhite);
+    font-weight: bold;
+    margin-left: auto;
+
+    &:hover {
+      background: var(--timerGreenHover);
+      color: var(--textColorWhite);
+    }
   }
 
   .field {
@@ -17,26 +26,24 @@
   }
 
   .importButton {
-    background: transparent;
-    box-shadow: none;
-    color: #6b808c;
-    font-weight: normal;
-    margin-left: auto;
-    margin-right: 0;
+    color: var(--textColor3);
+    width: auto;
     overflow: hidden;
-    text-align: left;
     text-decoration: underline;
     text-overflow: ellipsis;
-    transition: none;
     white-space: nowrap;
 
     &:hover {
-      background: rgba(9, 30, 66, 0.08);
-      color: #092d42;
+      background: var(--textColor1);
+      color: var(--textColor5);
+
+      .importButtonIcon {
+        fill: var(--textColor5);
+      }
     }
   }
 
   .importButtonIcon {
-    text-decoration: none;
+    fill: var(--textColor3);
   }
 }
