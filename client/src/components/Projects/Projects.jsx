@@ -44,7 +44,7 @@ const Projects = React.memo(({ items, canAdd, onAdd }) => {
         {canAdd && (
           <Grid.Column mobile={8} computer={4}>
             <ButtonTmp type={ButtonType.Icon} title={t('common.createProject')} onClick={onAdd} className={classNames(styles.card, styles.add)}>
-              <Icon type={IconType.Add} size={IconSize.Size20} className={styles.addGridIcon} />
+              <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
               {t('common.createProject')}
             </ButtonTmp>
           </Grid.Column>

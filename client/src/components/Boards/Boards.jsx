@@ -104,7 +104,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 {canEdit && (
                   <AddPopup onCreate={onCreate}>
                     <ButtonTmp type={ButtonType.Icon} title={t('common.addBoard')} className={classNames(styles.addButton)}>
-                      <Icon type={IconType.Add} size={IconSize.Size13} />
+                      <Icon type={IconType.Plus} size={IconSize.Size13} />
                     </ButtonTmp>
                   </AddPopup>
                 )}

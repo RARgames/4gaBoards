@@ -87,7 +87,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
             onClick={handleToggleCoverClick}
             className={styles.optionButton}
           >
-            <Icon type={IconType.Outline} size={IconSize.Size10} className={styles.optionIcon} />
+            <Icon type={IconType.WindowMaximize} size={IconSize.Size10} className={styles.optionIcon} />
             <span className={styles.optionText}>{isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}</span>
           </ButtonTmp>
         )}

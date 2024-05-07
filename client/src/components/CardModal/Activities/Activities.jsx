@@ -65,7 +65,7 @@ const Activities = React.memo(
           <Icon type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
           {t('common.actions')}
           <ButtonTmp type={ButtonType.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
-            <Icon type={commShown ? IconType.Minus : IconType.Add} size={IconSize.Size10} className={styles.icon} />
+            <Icon type={commShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={styles.icon} />
           </ButtonTmp>
           <ButtonTmp
             type={ButtonType.Icon}
