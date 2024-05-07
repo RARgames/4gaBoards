@@ -15,10 +15,10 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--textColor3);
 
       svg {
-        fill: var(--textColor2);
+        fill: var(--textColor3);
       }
     }
   }
@@ -39,10 +39,10 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--textColor3);
 
       svg {
-        fill: var(--textColor2);
+        fill: var(--textColor3);
       }
     }
   }
@@ -57,7 +57,7 @@
 
     &:hover {
       svg {
-        fill: var(--textColor2);
+        fill: var(--textColor3);
       }
     }
   }

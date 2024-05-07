@@ -1,12 +1,12 @@
 :global(#app) {
   .editbutton {
     svg {
-      fill: var(--textColor2)
+      fill: var(--textColor3)
     }
 
     &:hover {
       svg {
-        fill: var(--textColor3)
+        fill: var(--textColor4)
       }
     }
   }

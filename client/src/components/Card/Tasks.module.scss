@@ -19,10 +19,10 @@
     width: 50px;
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--textColor3);
 
       .countToggleIcon {
-        fill: var(--textColor2)
+        fill: var(--textColor3)
       }
     }
   }
@@ -64,7 +64,7 @@
   }
 
   .taskCompleted {
-    color: var(--textColor2);
+    color: var(--textColor3);
     text-decoration: line-through;
   }
 

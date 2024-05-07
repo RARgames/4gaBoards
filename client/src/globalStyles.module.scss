@@ -25,9 +25,9 @@
   --textColorWhite: #ffffff;
   --textColor0: #ebebec;
   --textColor1: #d3d3d3;
-  --textColor4: #c2c2c2; //TODO rename it to 2 and shift
-  --textColor2: #999999;
-  --textColor3: #6d6d6d;
+  --textColor2: #c2c2c2;
+  --textColor3: #999999;
+  --textColor4: #6d6d6d;
   --textColor5: #363636;
   --backgroundProject: #3b3b3b;
   --textColorGreen: #0bff44;
@@ -140,23 +140,7 @@
     min-height: 10px;
 
     &:hover {
-      color: var(--textColor2);
-    }
-  }
-
-  .iconButtonSolid {
-    //TODO skip in new butttons
-    background: none;
-    box-shadow: none;
-    color: var(--textColor1);
-    margin: 0;
-    padding: 0;
-    min-height: 20px;
-    width: 20px;
-    height: 20px;
-
-    &:hover {
-      color: var(--textColor2);
+      color: var(--textColor3);
     }
   }
 

@@ -17,7 +17,7 @@
   }
 
   .date {
-    color: var(--textColor2);
+    color: var(--textColor3);
     display: inline-block;
     font-size: 12px;
     line-height: 20px;
@@ -52,11 +52,11 @@
   }
 
   .button {
-    color: var(--textColor2);
+    color: var(--textColor3);
     font-size: 1rem;
 
     &:hover {
-      color: var(--textColor3);
+      color: var(--textColor4);
     }
   }
 }

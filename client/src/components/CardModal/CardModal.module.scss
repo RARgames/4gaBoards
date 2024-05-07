@@ -17,11 +17,11 @@
     }
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--textColor3);
 
       .hint {
         visibility: visible;
-        color: var(--textColor2);
+        color: var(--textColor3);
       }
     }
   }
@@ -180,7 +180,7 @@
     width: 100%;
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--textColor3);
     }
   }
 

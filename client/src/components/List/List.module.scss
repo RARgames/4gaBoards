@@ -5,10 +5,10 @@
 
   .addCardButton {
     background: var(--backgroundList);
-    color: var(--textColor2);
+    color: var(--textColor3);
     cursor: pointer;
     display: block;
-    fill: var(--textColor2);
+    fill: var(--textColor3);
     height: 36px;
     padding: 8px;
     text-align: left;
@@ -21,7 +21,7 @@
 
   .addCardButtonIcon {
     vertical-align: -20%;
-    fill: var(--textColor2);
+    fill: var(--textColor3);
   }
 
   .addCardButtonText {
@@ -132,14 +132,14 @@
   }
 
   .headerCardsCount {
-    color: var(--textColor2);
+    color: var(--textColor3);
     font-size: 12px;
     position: relative;
     float: left;
   }
 
   .headerCardsCountCollapsed {
-    color: var(--textColor2);
+    color: var(--textColor3);
     font-size: 12px;
     max-height: 10%;
     writing-mode: vertical-rl;
