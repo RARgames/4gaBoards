@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { closePopup } from '../../lib/popup';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -139,7 +139,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                         <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
                       ) : (
                         <ButtonTmp type={ButtonType.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
-                          <Icons type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
+                          <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
                           <span className={styles.addListButtonText}>{t('action.addList')}</span>
                         </ButtonTmp>
                       )}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { useForceUpdate, usePrevious } from '../../lib/hooks';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 
 import { formatTimer } from '../../utils/timer';
 
@@ -51,7 +51,7 @@ const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }
 
   const contentNode = (
     <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], startedAt && styles.wrapperActive, onClick && styles.wrapperHoverable)}>
-      <Icons type={startedAt ? IconType.Pause : IconType.Play} size={IconSize.Size8} className={styles.timerIcon} />
+      <Icon type={startedAt ? IconType.Pause : IconType.Play} size={IconSize.Size8} className={styles.timerIcon} />
       {formatTimer({ startedAt, total })}
     </span>
   );

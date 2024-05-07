@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Label, Loader } from 'semantic-ui-react';
-import { Icons, IconType, IconSize } from '../../Icons';
+import { Icon, IconType, IconSize } from '../../Utils/Icon';
 import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import EditPopup from './EditPopup';
@@ -87,7 +87,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
             onClick={handleToggleCoverClick}
             className={styles.optionButton}
           >
-            <Icons type={IconType.Outline} size={IconSize.Size10} className={styles.optionIcon} />
+            <Icon type={IconType.Outline} size={IconSize.Size10} className={styles.optionIcon} />
             <span className={styles.optionText}>{isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}</span>
           </ButtonTmp>
         )}
@@ -101,7 +101,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
           onDelete={onDelete}
         >
           <ButtonTmp type={ButtonType.Icon} title={t('common.editAttachment')} className={classNames(styles.button, styles.target)}>
-            <Icons type={IconType.Pencil} size={IconSize.Size10} />
+            <Icon type={IconType.Pencil} size={IconSize.Size10} />
           </ButtonTmp>
         </EditPopup>
       )}

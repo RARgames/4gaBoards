@@ -1,7 +1,7 @@
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Icons, IconType, IconSize } from '../../Icons';
+import { Icon, IconType, IconSize } from '../Icon';
 
 import styles from './Dropdown.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -187,7 +187,7 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
           readOnly={!isSearchable}
           placeholder={getDisplay()}
         />
-        <Icons type={IconType.TriangleDown} size={IconSize.Size10} className={styles.dropdownIcon} />
+        <Icon type={IconType.TriangleDown} size={IconSize.Size10} className={styles.dropdownIcon} />
       </div>
       <div className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>
         {getOptions().map((item, index) => (

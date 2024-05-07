@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Radio, Table } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { Icons, IconType, IconSize } from '../../Icons';
+import { Icon, IconType, IconSize } from '../../Utils/Icon';
 import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import ActionsPopup from './ActionsPopup';
@@ -77,7 +77,7 @@ const Item = React.memo(
             onDelete={onDelete}
           >
             <ButtonTmp type={ButtonType.Icon} title={t('common.editUser')} className={styles.editbutton}>
-              <Icons type={IconType.Pencil} size={IconSize.Size14} />
+              <Icon type={IconType.Pencil} size={IconSize.Size14} />
             </ButtonTmp>
           </ActionsPopup>
         </Table.Cell>

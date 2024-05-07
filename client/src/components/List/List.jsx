@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -128,7 +128,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
           {placeholder}
           {!isAddCardOpened && canEdit && (
             <ButtonTmp type={ButtonType.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
-              <Icons type={IconType.PlusMath} size={IconSize.Size13} className={styles.addCardButtonIcon} />
+              <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addCardButtonIcon} />
               <span className={styles.addCardButtonText}>{t('action.addCard')}</span>
             </ButtonTmp>
           )}
@@ -149,7 +149,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
             onClick={handleToggleCollapseClick}
             className={classNames(styles.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}
           >
-            <Icons type={IconType.TriangleDown} size={IconSize.Size8} />
+            <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
           </ButtonTmp>
           <div className={styles.headerNameCollapsed}>{name}</div>
           <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
@@ -193,7 +193,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
                 onClick={handleToggleCollapseClick}
                 className={classNames(styles.headerCollapseButton, !canEdit && gStyles.cursorDefault)}
               >
-                <Icons type={IconType.TriangleDown} size={IconSize.Size8} className={styles.iconRotateRight} />
+                <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={styles.iconRotateRight} />
               </ButtonTmp>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
@@ -204,7 +204,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               {isPersisted && canEdit && (
                 <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete}>
                   <ButtonTmp type={ButtonType.Icon} title={t('common.editList')} className={styles.headerButton}>
-                    <Icons type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                   </ButtonTmp>
                 </ActionsPopup>
               )}

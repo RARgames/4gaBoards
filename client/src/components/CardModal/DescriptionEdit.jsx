@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'semantic-ui-react';
 import MDEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
 import { useLocalStorage } from '../../hooks';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -207,7 +207,7 @@ const DescriptionEdit = React.forwardRef(
                 name: 'color',
                 groupName: 'color',
                 buttonProps: { 'aria-label': 'Add colored text', title: 'Add colored text' },
-                icon: <Icons type={IconType.FillDrip} size={IconSize.Size13} className={styles.coloredTextButton} />,
+                icon: <Icon type={IconType.FillDrip} size={IconSize.Size13} className={styles.coloredTextButton} />,
               },
             ),
           ]}

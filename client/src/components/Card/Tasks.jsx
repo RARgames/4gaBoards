@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Progress } from 'semantic-ui-react';
 import { useToggle } from '../../lib/hooks';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 
 import styles from './Tasks.module.scss';
 
@@ -50,7 +50,7 @@ const Tasks = React.memo(({ items }) => {
         </span>
         <span className={styles.count} title={isOpened ? t('common.hideTasks') : t('common.showTasks')}>
           {completedItems.length}/{items.length}
-          <Icons type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpened && styles.countToggleIconOpened)} />
+          <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpened && styles.countToggleIconOpened)} />
         </span>
       </div>
       {isOpened && (

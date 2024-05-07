@@ -5,7 +5,7 @@ import { Form } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { withPopup } from '../../../lib/popup';
 import { Input, Popup } from '../../../lib/custom-ui';
-import { Icons, IconType, IconSize } from '../../Icons';
+import { Icon, IconType, IconSize } from '../../Utils/Icon';
 import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import { useForm, useSteps } from '../../../hooks';
@@ -92,7 +92,7 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
           <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <div className={styles.controls}>
             <ButtonTmp type={ButtonType.NoBackground} title={t('common.import')} onClick={handleImportClick} className={styles.importButton}>
-              <Icons type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={styles.importButtonIcon} />
+              <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={styles.importButtonIcon} />
               {data.import ? data.import.file.name : t('action.import')}
             </ButtonTmp>
             <ButtonTmp buttonType="submit" type={ButtonType.Default} title={t('action.createBoard')} className={styles.createButton}>

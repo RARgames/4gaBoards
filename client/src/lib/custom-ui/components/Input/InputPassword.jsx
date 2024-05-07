@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Progress } from 'semantic-ui-react';
 import { useToggle } from '../../../hooks';
-import { Icons, IconType, IconSize } from '../../../../components/Icons';
+import { Icon, IconType, IconSize } from '../../../../components/Utils/Icon';
 
 import styles from './InputPassword.module.css';
 
@@ -28,7 +28,7 @@ const InputPassword = React.forwardRef(({ value, withStrengthBar, minStrengthSco
     ...props,
     ref,
     type: isVisible ? 'text' : 'password',
-    icon: <Icons type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} onClick={handleToggleClick} className={styles.passwordIcon} />,
+    icon: <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} onClick={handleToggleClick} className={styles.passwordIcon} />,
   };
 
   if (!withStrengthBar) {

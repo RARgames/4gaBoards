@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 import User from '../User';
 
 import Paths from '../../constants/Paths';
@@ -34,7 +34,7 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
         {project && (
           <Menu.Menu position="left">
             <Menu.Item as={Link} to={Paths.ROOT} className={classNames(styles.item, styles.itemHoverable)}>
-              <Icons type={IconType.ArrowDown} size={IconSize.Size18} title={t('common.projects')} className={styles.projectsButton} />
+              <Icon type={IconType.ArrowDown} size={IconSize.Size18} title={t('common.projects')} className={styles.projectsButton} />
             </Menu.Item>
             <Menu.Item className={classNames(styles.item, styles.title)}>{project.name}</Menu.Item>
           </Menu.Menu>
@@ -42,17 +42,17 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
         <Menu.Menu position="right">
           {canEditProject && (
             <Menu.Item className={classNames(styles.item, styles.itemHoverable)} onClick={handleProjectSettingsClick}>
-              <Icons type={IconType.Settings} size={IconSize.Size18} title={t('common.projectSettings')} />
+              <Icon type={IconType.Settings} size={IconSize.Size18} title={t('common.projectSettings')} />
             </Menu.Item>
           )}
           {canEditUsers && (
             <Menu.Item className={classNames(styles.item, styles.itemHoverable)} onClick={onUsersClick}>
-              <Icons type={IconType.Users} size={IconSize.Size18} title={t('common.users')} />
+              <Icon type={IconType.Users} size={IconSize.Size18} title={t('common.users')} />
             </Menu.Item>
           )}
           <NotificationsPopup items={notifications} onDelete={onNotificationDelete}>
             <Menu.Item className={classNames(styles.item, styles.itemHoverable)}>
-              <Icons type={IconType.Bell} size={IconSize.Size18} title={t('common.notifications')} />
+              <Icon type={IconType.Bell} size={IconSize.Size18} title={t('common.notifications')} />
               {notifications.length > 0 && <span className={styles.notification}>{notifications.length}</span>}
             </Menu.Item>
           </NotificationsPopup>

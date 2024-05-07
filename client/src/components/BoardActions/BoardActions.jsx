@@ -8,7 +8,7 @@ import Filters from './Filters';
 import Memberships from '../Memberships';
 import BoardMembershipPermissionsSelectStep from '../BoardMembershipPermissionsSelectStep';
 import Connections from './Connections';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 
 import styles from './BoardActions.module.scss';
 
@@ -81,7 +81,7 @@ const BoardActions = React.memo(
           </div>
           <div>
             <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate}>
-              <Icons
+              <Icon
                 type={IconType.Github}
                 size={IconSize.Size14}
                 className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)}

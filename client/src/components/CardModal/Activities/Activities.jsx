@@ -6,7 +6,7 @@ import { Comment, Loader, Visibility } from 'semantic-ui-react';
 import { ActivityTypes } from '../../../constants/Enums';
 import CommentAdd from './CommentAdd';
 import Item from './Item';
-import { Icons, IconType, IconSize } from '../../Icons';
+import { Icon, IconType, IconSize } from '../../Utils/Icon';
 import { ButtonTmp, ButtonType } from '../../Utils/Button';
 
 import styles from './Activities.module.scss';
@@ -62,10 +62,10 @@ const Activities = React.memo(
     return (
       <div className={cStyles.contentModule}>
         <div className={cStyles.moduleHeader}>
-          <Icons type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
+          <Icon type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
           {t('common.actions')}
           <ButtonTmp type={ButtonType.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
-            <Icons type={commShown ? IconType.Minus : IconType.Add} size={IconSize.Size10} className={styles.icon} />
+            <Icon type={commShown ? IconType.Minus : IconType.Add} size={IconSize.Size10} className={styles.icon} />
           </ButtonTmp>
           <ButtonTmp
             type={ButtonType.Icon}

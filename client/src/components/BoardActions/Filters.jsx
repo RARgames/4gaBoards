@@ -6,7 +6,7 @@ import User from '../User';
 import Label from '../Label';
 import BoardMembershipsPopup from '../BoardMembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
-import { ButtonTmp, ButtonType } from '../Utils/Button';
+import { ButtonTmp } from '../Utils/Button';
 
 import styles from './Filters.module.scss';
 

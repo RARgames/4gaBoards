@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { closePopup } from '../../lib/popup';
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import Paths from '../../constants/Paths';
@@ -74,7 +74,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 {canEdit && (
                   <EditPopup defaultData={pick(item, 'name')} onUpdate={(data) => handleUpdate(item.id, data)} onDelete={() => handleDelete(item.id)}>
                     <ButtonTmp type={ButtonType.Icon} title={t('common.renameBoard')} className={classNames(styles.editButton, styles.target)}>
-                      <Icons type={IconType.Pencil} size={IconSize.Size13} />
+                      <Icon type={IconType.Pencil} size={IconSize.Size13} />
                     </ButtonTmp>
                   </EditPopup>
                 )}
@@ -104,7 +104,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 {canEdit && (
                   <AddPopup onCreate={onCreate}>
                     <ButtonTmp type={ButtonType.Icon} title={t('common.addBoard')} className={classNames(styles.addButton)}>
-                      <Icons type={IconType.Add} size={IconSize.Size13} />
+                      <Icon type={IconType.Add} size={IconSize.Size13} />
                     </ButtonTmp>
                   </AddPopup>
                 )}

@@ -6,7 +6,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { ButtonTmp, ButtonType } from '../Utils/Button';
 
-import { Icons, IconType, IconSize } from '../Icons';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { startTimer, stopTimer } from '../../utils/timer';
 import Paths from '../../constants/Paths';
 import Tasks from './Tasks';
@@ -144,17 +144,17 @@ const Card = React.memo(
             <span className={styles.attachments}>
               {description && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Icons type={IconType.BarsStaggered} size={IconSize.Size14} className={styles.detailsIcon} />
+                  <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={styles.detailsIcon} />
                 </span>
               )}
               {attachmentsCount > 0 && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Icons type={IconType.Attach} size={IconSize.Size14} className={styles.detailsIcon} />
+                  <Icon type={IconType.Attach} size={IconSize.Size14} className={styles.detailsIcon} />
                 </span>
               )}
               {commentsCount > 0 && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Icons type={IconType.Comment} size={IconSize.Size14} className={styles.detailsIcon} />
+                  <Icon type={IconType.Comment} size={IconSize.Size14} className={styles.detailsIcon} />
                 </span>
               )}
               {dueDate && (
@@ -225,7 +225,7 @@ const Card = React.memo(
                         onLabelDelete={onLabelDelete}
                       >
                         <ButtonTmp type={ButtonType.Icon} title={t('common.editCard')} className={classNames(styles.actionsButton, styles.target)}>
-                          <Icons type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                          <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                         </ButtonTmp>
                       </ActionsPopup>
                     )}
