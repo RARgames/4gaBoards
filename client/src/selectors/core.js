@@ -12,6 +12,20 @@ export const selectIsLogouting = ({ core: { isLogouting } }) => isLogouting;
 
 export const selectSsoEnabled = ({ core: { googleSsoEnabled } }) => googleSsoEnabled;
 
+export const selectSsoRegistrationEnabled = ({ core: { ssoRegistrationEnabled } }) => ssoRegistrationEnabled;
+
+export const selectRegistrationEnabled = ({ core: { registrationEnabled } }) => registrationEnabled;
+
+export const selectCoreSettings = createSelector(orm, ({ Core }) => {
+  const coreModel = Core.withId(0);
+
+  if (!coreModel) {
+    return coreModel;
+  }
+
+  return coreModel.ref;
+});
+
 const nextPosition = (items, index, excludedId) => {
   const filteredItems = isUndefined(excludedId) ? items : items.filter((item) => item.id !== excludedId);
 
@@ -141,6 +155,9 @@ export default {
   selectIsCoreInitializing,
   selectIsLogouting,
   selectSsoEnabled,
+  selectSsoRegistrationEnabled,
+  selectRegistrationEnabled,
+  selectCoreSettings,
   selectNextBoardPosition,
   selectNextLabelPosition,
   selectNextListPosition,

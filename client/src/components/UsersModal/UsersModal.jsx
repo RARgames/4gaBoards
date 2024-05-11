@@ -1,13 +1,29 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal, Table } from 'semantic-ui-react';
+import { Button, Modal, Table, Radio } from 'semantic-ui-react';
 
 import UserAddPopupContainer from '../../containers/UserAddPopupContainer';
 import Item from './Item';
 
+import styles from './UsersModal.module.scss';
+
 const UsersModal = React.memo(
-  ({ items, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete, onClose }) => {
+  ({
+    items,
+    ssoRegistrationEnabled,
+    registrationEnabled,
+    onCoreSettingsUpdate,
+    onUpdate,
+    onUsernameUpdate,
+    onUsernameUpdateMessageDismiss,
+    onEmailUpdate,
+    onEmailUpdateMessageDismiss,
+    onPasswordUpdate,
+    onPasswordUpdateMessageDismiss,
+    onDelete,
+    onClose,
+  }) => {
     const [t] = useTranslation();
 
     const handleUpdate = useCallback(
@@ -66,6 +82,18 @@ const UsersModal = React.memo(
       [onDelete],
     );
 
+    const handleSsoRegistrationEnabledChange = useCallback(() => {
+      onCoreSettingsUpdate({
+        ssoRegistrationEnabled: !ssoRegistrationEnabled,
+      });
+    }, [onCoreSettingsUpdate, ssoRegistrationEnabled]);
+
+    const handleRegistrationEnabledChange = useCallback(() => {
+      onCoreSettingsUpdate({
+        registrationEnabled: !registrationEnabled,
+      });
+    }, [onCoreSettingsUpdate, registrationEnabled]);
+
     return (
       <Modal open closeIcon size="large" centered={false} onClose={onClose}>
         <Modal.Header>{t('common.users', { context: 'title' })}</Modal.Header>
@@ -112,7 +140,18 @@ const UsersModal = React.memo(
             </Table.Body>
           </Table>
         </Modal.Content>
-        <Modal.Actions>
+        <Modal.Actions className={styles.actions}>
+          <div className={styles.settings}>
+            <span>
+              {t('common.enableSsoRegistration')}
+              <Radio toggle checked={ssoRegistrationEnabled} onChange={handleSsoRegistrationEnabledChange} className={styles.radio} />
+            </span>
+            <span>
+              {t('common.enableRegistration')}
+              <Radio toggle checked={registrationEnabled} onChange={handleRegistrationEnabledChange} className={styles.radio} />
+            </span>
+          </div>
+          {/* only admin should see it */}
           <UserAddPopupContainer>
             <Button positive content={t('action.addUser')} />
           </UserAddPopupContainer>
@@ -124,6 +163,9 @@ const UsersModal = React.memo(
 
 UsersModal.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  registrationEnabled: PropTypes.bool.isRequired,
+  onCoreSettingsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onUsernameUpdate: PropTypes.func.isRequired,
   onUsernameUpdateMessageDismiss: PropTypes.func.isRequired,

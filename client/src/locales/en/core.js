@@ -195,6 +195,8 @@ export default {
       version: 'Version',
       viewer: 'Viewer',
       writeComment: 'Write a comment... [Ctrl+Enter] to submit',
+      enableSsoRegistration: 'Enable SSO User Registartion',
+      enableRegistration: 'Enable User Registration',
     },
 
     action: {

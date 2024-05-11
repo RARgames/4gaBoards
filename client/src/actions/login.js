@@ -1,12 +1,5 @@
 import ActionTypes from '../constants/ActionTypes';
 
-const fetchSsoEnabled = (googleSsoEnabled) => ({
-  type: ActionTypes.FETCH_SSO_ENABLED,
-  payload: {
-    googleSsoEnabled,
-  },
-});
-
 const authenticate = (data) => ({
   type: ActionTypes.AUTHENTICATE,
   payload: {
@@ -53,7 +46,6 @@ const clearAuthenticateError = () => ({
 });
 
 export default {
-  fetchSsoEnabled,
   authenticate,
   authenticateGoogleSso,
   clearAuthenticateError,

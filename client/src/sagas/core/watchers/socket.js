@@ -16,6 +16,10 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleSocketReconnect());
     };
 
+    const handleCoreSettingsUpdate = ({ item }) => {
+      emit(entryActions.handleCoreSettingsUpdate(item));
+    };
+
     const handleUserCreate = ({ item }) => {
       emit(entryActions.handleUserCreate(item));
     };
@@ -175,6 +179,8 @@ const createSocketEventsChannel = () =>
     socket.on('disconnect', handleDisconnect);
     socket.on('reconnect', handleReconnect);
 
+    socket.on('coreSettingsUpdate', handleCoreSettingsUpdate);
+
     socket.on('userCreate', handleUserCreate);
     socket.on('userUpdate', handleUserUpdate);
     socket.on('userDelete', handleUserDelete);
@@ -231,6 +237,8 @@ const createSocketEventsChannel = () =>
     return () => {
       socket.off('disconnect', handleDisconnect);
       socket.off('reconnect', handleReconnect);
+
+      socket.off('coreSettingsUpdate', handleCoreSettingsUpdate);
 
       socket.off('userCreate', handleUserCreate);
       socket.off('userUpdate', handleUserUpdate);

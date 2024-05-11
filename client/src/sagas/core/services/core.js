@@ -46,8 +46,34 @@ export function* logout(invalidateAccessToken = true) {
   yield take();
 }
 
+export function* fetchCoreSettingsPublic() {
+  const { item: googleSsoEnabled, ssoRegistrationEnabled, registrationEnabled } = yield call(api.getCoreSettingsPublic);
+  yield put(actions.fetchCoreSettingsPublic(googleSsoEnabled, ssoRegistrationEnabled, registrationEnabled));
+}
+
+export function* updateCoreSettings(data) {
+  yield put(actions.updateCoreSettings(data));
+
+  let core;
+  try {
+    ({ item: core } = yield call(request, api.updateCoreSettings, data));
+  } catch (error) {
+    yield put(actions.updateCoreSettings.failure(error));
+    return;
+  }
+
+  yield put(actions.updateCoreSettings.success(core));
+}
+
+export function* handleCoreSettingsUpdate(data) {
+  yield put(actions.handleCoreSettingsUpdate(data));
+}
+
 export default {
   initializeCore,
   changeCoreLanguage,
   logout,
+  fetchCoreSettingsPublic,
+  updateCoreSettings,
+  handleCoreSettingsUpdate,
 };

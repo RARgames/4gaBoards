@@ -1,0 +1,15 @@
+:global(#app) {
+  .actions {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .settings {
+    padding-top: 7px;
+  }
+
+  .radio {
+    vertical-align: middle;
+    margin: 0 6px;
+  }
+}

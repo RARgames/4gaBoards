@@ -7,15 +7,19 @@ import UsersModal from '../components/UsersModal';
 
 const mapStateToProps = (state) => {
   const users = selectors.selectUsersExceptCurrent(state);
+  const coreSettings = selectors.selectCoreSettings(state);
 
   return {
     items: users,
+    ssoRegistrationEnabled: coreSettings.ssoRegistrationEnabled,
+    registrationEnabled: coreSettings.registrationEnabled,
   };
 };
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      onCoreSettingsUpdate: entryActions.updateCoreSettings,
       onUpdate: entryActions.updateUser,
       onUsernameUpdate: entryActions.updateUserUsername,
       onUsernameUpdateMessageDismiss: entryActions.clearUserUsernameUpdateError,

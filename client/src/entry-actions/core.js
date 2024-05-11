@@ -10,7 +10,21 @@ const logout = () => ({
   payload: {},
 });
 
+const updateCoreSettings = (data) => ({
+  type: EntryActionTypes.CORE_SETTINGS_UPDATE,
+  payload: { data },
+});
+
+const handleCoreSettingsUpdate = (data) => ({
+  type: EntryActionTypes.CORE_SETTINGS_UPDATE_HANDLE,
+  payload: {
+    data,
+  },
+});
+
 export default {
   initializeCore,
   logout,
+  updateCoreSettings,
+  handleCoreSettingsUpdate,
 };

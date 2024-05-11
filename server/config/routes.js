@@ -11,10 +11,12 @@
 module.exports.routes = {
   'GET /auth/google': 'AuthController.google',
   'GET /auth/google/callback': 'AuthController.googleCallback',
-  'GET /api/google-sso': 'access-tokens/google-sso',
 
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
+
+  'GET /api/core-settings-public': 'core/get-settings-public',
+  'POST /api/core-settings': 'core/set-settings',
 
   'GET /api/users': 'users/index',
   'POST /api/users': 'users/create',

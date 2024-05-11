@@ -24,6 +24,6 @@ module.exports.policies = {
   'projects/create': ['is-authenticated', 'is-admin'],
 
   'access-tokens/create': true,
-  'access-tokens/google-sso': true,
+  'core/get-settings-public': true,
   'auth/*': true,
 };

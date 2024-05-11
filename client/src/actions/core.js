@@ -32,7 +32,45 @@ logout.invalidateAccessToken = () => ({
   payload: {},
 });
 
+const fetchCoreSettingsPublic = (data) => ({
+  type: ActionTypes.FETCH_CORE_SETTINGS_PUBLIC,
+  payload: {
+    data,
+  },
+});
+
+const updateCoreSettings = (data) => ({
+  type: ActionTypes.CORE_SETTINGS_UPDATE,
+  payload: {
+    data,
+  },
+});
+
+updateCoreSettings.success = (data) => ({
+  type: ActionTypes.CORE_SETTINGS_UPDATE__SUCCESS,
+  payload: {
+    data,
+  },
+});
+
+updateCoreSettings.failure = (error) => ({
+  type: ActionTypes.CORE_SETTINGS_UPDATE__FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const handleCoreSettingsUpdate = (data) => ({
+  type: ActionTypes.CORE_SETTINGS_UPDATE_HANDLE,
+  payload: {
+    data,
+  },
+});
+
 export default {
   initializeCore,
   logout,
+  fetchCoreSettingsPublic,
+  updateCoreSettings,
+  handleCoreSettingsUpdate,
 };

@@ -7,16 +7,20 @@ const initialState = {
   isInitializing: true,
   isLogouting: false,
   currentModal: null,
-  googleSsoEnabled: null,
+  googleSsoEnabled: false,
+  ssoRegistrationEnabled: false,
+  registrationEnabled: false,
 };
 
 // eslint-disable-next-line default-param-last
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case ActionTypes.FETCH_SSO_ENABLED:
+    case ActionTypes.FETCH_CORE_SETTINGS_PUBLIC:
       return {
         ...state,
-        googleSsoEnabled: payload.googleSsoEnabled,
+        googleSsoEnabled: payload.data.googleSsoEnabled,
+        ssoRegistrationEnabled: payload.data.ssoRegistrationEnabled,
+        registrationEnabled: payload.data.registrationEnabled,
       };
     case LOCATION_CHANGE_HANDLE:
     case ActionTypes.MODAL_CLOSE:
