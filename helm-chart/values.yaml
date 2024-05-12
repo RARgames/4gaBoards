@@ -49,11 +49,13 @@ autoscaling:
 serviceAccount:
   create: false
 postgresql:
+  enabled: true
   auth:
     postgresPassword: "adminPassword"
     username: "user"
     password: "password"
     database: "4gaBoards"
+  postgresUrl: <URL> #Give only if not using kubernetes hosted postgres
   volumePermissions:
     enabled: true
 env:
