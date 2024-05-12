@@ -20,7 +20,7 @@ service:
   port: 1337
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   annotations: {}
   hosts:
@@ -58,7 +58,7 @@ postgresql:
     enabled: true
 env:
   SECRET_KEY: notsecretkey
-  BASE_URL: http://localhost:8080
+  BASE_URL: http://localhost:30001
 
 pv:
   storageClass: standard
