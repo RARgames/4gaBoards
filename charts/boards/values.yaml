@@ -57,8 +57,13 @@ postgresql:
   volumePermissions:
     enabled: true
 env:
-  SECRET_KEY: notsecretkey
-  BASE_URL: http://localhost:30001
+  required:
+    SECRET_KEY: notsecretkey
+    BASE_URL: http://localhost:8080
+  optional:
+    CLIENT_URL: http://localhost:8080
+    GOOGLE_CLIENT_ID: googleClientId
+    GOOGLE_CLIENT_SECRET: googleClientSecret
 
 pv:
   storageClass: standard
