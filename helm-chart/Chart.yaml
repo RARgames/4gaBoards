@@ -5,6 +5,7 @@ type: application
 version: 1.0.0
 appVersion: "2.14.0"
 dependencies:
-- name: postgresql
+- condition: postgresql.enabled
+  name: postgresql
   version: 15.2.3
   repository: https://charts.bitnami.com/bitnami
