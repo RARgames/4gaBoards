@@ -63,6 +63,9 @@ spec:
               mountPath: /app/public/project-background-images
             - name: attachments
               mountPath: /app/private/attachments
+      {{- if eq .Values.service.type "NodePort" }}
+      nodeName: {{ .Values.nodeName }}
+      {{- end }}
       initContainers:
         - name: db-init
           image: postgres:latest
