@@ -49,9 +49,15 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
           - name: BASE_URL
-            value: {{ .Values.env.BASE_URL }}
+            value: {{ .Values.env.required.BASE_URL }}
           - name: SECRET_KEY
-            value: {{ .Values.env.SECRET_KEY }}
+            value: {{ .Values.env.required.SECRET_KEY }}
+          - name: CLIENT_URL
+            value: {{ .Values.env.optional.CLIENT_URL }}
+          - name: GOOGLE_CLIENT_ID
+            value: {{ .Values.env.optional.GOOGLE_CLIENT_ID }}
+          - name: GOOGLE_CLIENT_SECRET
+            value: {{ .Values.env.optional.GOOGLE_CLIENT_SECRET }}
           - name: DATABASE_URL
             value: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc/{{ .Values.postgresql.auth.database }}"
           - name: NODE_ENV
