@@ -1,0 +1,11 @@
+service:
+  type: NodePort
+  nodePort: 30001
+  port: 1337
+  deploymentPort: 30001
+nodeName: cluster1-m02
+pv:
+  storageClass: openebs-zfspv-default
+env:
+  required:
+    BASE_URL: http://localhost:30001

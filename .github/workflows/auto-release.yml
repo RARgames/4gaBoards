@@ -70,6 +70,9 @@ jobs:
 
     - name: Update .env version
       run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.ghcr_tag }}' >> temp.txt && mv temp.txt client/.env
+      
+    - name: Update helm-chart app version
+      run: awk '/appVersion:/ {$2="\"${{ steps.increment_version.outputs.ghcr_tag }}\""} 1' helm-chart/Chart.yaml > temp.yaml && mv temp.yaml helm-chart/Chart.yaml
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3.0.0

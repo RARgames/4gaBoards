@@ -1,0 +1,80 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/rargames/4gaboards
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: "app-4gaboards"
+fullnameOverride: "app-4gaboards"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 1337
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 200m
+    memory: 200Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+autoscaling:
+  enabled: false
+serviceAccount:
+  create: false
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "adminPassword"
+    username: "user"
+    password: "password"
+    database: "4gaBoards"
+  postgresUrl: <URL> #Give only if not using kubernetes hosted postgres
+  volumePermissions:
+    enabled: true
+env:
+  required:
+    SECRET_KEY: notsecretkey
+    BASE_URL: http://localhost:8080
+  optional:
+    CLIENT_URL: http://localhost:8080
+    GOOGLE_CLIENT_ID: googleClientId
+    GOOGLE_CLIENT_SECRET: googleClientSecret
+
+pv:
+  storageClass: standard
+  useravatars:
+    pvcname: user-avatars
+    size: 5Gi
+  projectbackgroundimages:
+    pvcname: project-background-images
+    size: 5Gi
+  attachments:
+    pvcname: attachments
+    size: 5Gi

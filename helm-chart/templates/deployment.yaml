@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "4ga-boards.fullname" . }}
+  labels:
+    {{- include "4ga-boards.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "4ga-boards.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "4ga-boards.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "4ga-boards.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: BASE_URL
+            value: {{ .Values.env.required.BASE_URL }}
+          - name: SECRET_KEY
+            value: {{ .Values.env.required.SECRET_KEY }}
+          - name: CLIENT_URL
+            value: {{ .Values.env.optional.CLIENT_URL }}
+          - name: GOOGLE_CLIENT_ID
+            value: {{ .Values.env.optional.GOOGLE_CLIENT_ID }}
+          - name: GOOGLE_CLIENT_SECRET
+            value: {{ .Values.env.optional.GOOGLE_CLIENT_SECRET }}
+          - name: DATABASE_URL
+            {{- if .Values.postgresql.enabled }}
+            value: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc/{{ .Values.postgresql.auth.database }}"
+            {{- end }}
+            {{- if not .Values.postgresql.enabled }}
+            value: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Values.postgresql.postgresUrl }}"
+            {{- end }}
+          - name: NODE_ENV
+            value: production
+          volumeMounts:
+            - name: user-avatars
+              mountPath: /app/public/user-avatars
+            - name: project-backgrount-images
+              mountPath: /app/public/project-background-images
+            - name: attachments
+              mountPath: /app/private/attachments
+      {{- if eq .Values.service.type "NodePort" }}
+      nodeName: {{ .Values.nodeName }}
+      {{- end }}
+      initContainers:
+        - name: db-init
+          image: postgres:latest
+          command: ['sh', '-c', 'until pg_isready -h $HOST -p $PORT -d $DATABASE; do echo waiting for database; sleep 1; done;']
+          env:
+            - name: HOST
+              value: "{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc"
+            - name: PORT
+              value: "5432"
+            - name: DATABASE
+              value: "{{ .Values.postgresql.auth.database }}"
+            - name: PGUSER
+              value: "{{ .Values.postgresql.auth.username }}"
+            - name: PGPASSWORD
+              value: "{{ .Values.postgresql.auth.password }}"
+      volumes:
+        - name: user-avatars
+          persistentVolumeClaim:
+            claimName: {{ .Values.pv.useravatars.pvcname }}
+        - name: project-backgrount-images
+          persistentVolumeClaim:
+            claimName: {{ .Values.pv.projectbackgroundimages.pvcname }}
+        - name: attachments
+          persistentVolumeClaim:
+            claimName: {{ .Values.pv.attachments.pvcname }}
+
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
