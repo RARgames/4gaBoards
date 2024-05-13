@@ -10,15 +10,6 @@ module.exports = {
     },
   },
 
-  login(req, res) {
-    res.view('login');
-  },
-
-  logout(req, res) {
-    req.logout();
-    res.redirect('/');
-  },
-
   google(req, res, next) {
     passport.authenticate('google', { scope: ['email'], prompt: 'select_account' })(req, res, next);
   },
