@@ -335,3 +335,9 @@ Restart the fail2ban service. You can check the status of your 4ga Boards jail b
 ```bash
 fail2ban-client status 4gaBoards
 ```
+
+## Helm chart
+
+4ga Boards Helm chart for Kubernetes is available at /helm-chart.
+To install it use: `helm install boards .` or `helm install boards . --values values.yaml --values values.truenas.yaml`
+More docs - coming soon
