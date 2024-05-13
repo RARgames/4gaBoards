@@ -31,6 +31,11 @@ const createMessage = (error) => {
         type: 'error',
         content: 'common.registrationDisabled',
       };
+    case 'ssoRegistrationDisabled':
+      return {
+        type: 'error',
+        content: 'common.ssoRegistrationDisabled',
+      };
     case 'coreNotFound':
       return {
         type: 'error',

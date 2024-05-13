@@ -10,6 +10,7 @@ module.exports = {
   },
 
   exits: {
+    ssoRegistrationDisabled: {},
     registrationDisabled: {},
     coreNotFound: {},
   },
@@ -36,8 +37,11 @@ module.exports = {
     if (!core) {
       throw 'coreNotFound';
     }
-    if (!core.registrationEnabled || !core.ssoRegistrationEnabled) {
+    if (!core.registrationEnabled) {
       throw 'registrationDisabled';
+    }
+    if (!core.ssoRegistrationEnabled) {
+      throw 'ssoRegistrationDisabled';
     }
 
     const newValues = {
