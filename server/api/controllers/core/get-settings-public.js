@@ -20,6 +20,7 @@ module.exports = {
     return {
       item: {
         ssoRegistrationEnabled: core.ssoRegistrationEnabled,
+        localRegistrationEnabled: core.localRegistrationEnabled,
         registrationEnabled: core.registrationEnabled,
         googleSsoUrl: sails.config.custom.googleSsoUrl,
         googleSsoEnabled: !!sails.config.custom.googleClientId,

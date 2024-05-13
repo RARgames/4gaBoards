@@ -11,8 +11,9 @@ import styles from './UsersModal.module.scss';
 const UsersModal = React.memo(
   ({
     items,
-    ssoRegistrationEnabled,
     registrationEnabled,
+    localRegistrationEnabled,
+    ssoRegistrationEnabled,
     onCoreSettingsUpdate,
     onUpdate,
     onUsernameUpdate,
@@ -82,17 +83,23 @@ const UsersModal = React.memo(
       [onDelete],
     );
 
-    const handleSsoRegistrationEnabledChange = useCallback(() => {
-      onCoreSettingsUpdate({
-        ssoRegistrationEnabled: !ssoRegistrationEnabled,
-      });
-    }, [onCoreSettingsUpdate, ssoRegistrationEnabled]);
-
     const handleRegistrationEnabledChange = useCallback(() => {
       onCoreSettingsUpdate({
         registrationEnabled: !registrationEnabled,
       });
     }, [onCoreSettingsUpdate, registrationEnabled]);
+
+    const handleLocalRegistrationEnabledChange = useCallback(() => {
+      onCoreSettingsUpdate({
+        localRegistrationEnabled: !localRegistrationEnabled,
+      });
+    }, [localRegistrationEnabled, onCoreSettingsUpdate]);
+
+    const handleSsoRegistrationEnabledChange = useCallback(() => {
+      onCoreSettingsUpdate({
+        ssoRegistrationEnabled: !ssoRegistrationEnabled,
+      });
+    }, [onCoreSettingsUpdate, ssoRegistrationEnabled]);
 
     return (
       <Modal open closeIcon size="large" centered={false} onClose={onClose}>
@@ -143,12 +150,16 @@ const UsersModal = React.memo(
         <Modal.Actions className={styles.actions}>
           <div className={styles.settings}>
             <span>
-              {t('common.enableSsoRegistration')}
-              <Radio toggle checked={ssoRegistrationEnabled} onChange={handleSsoRegistrationEnabledChange} className={styles.radio} />
-            </span>
-            <span>
               {t('common.enableRegistration')}
               <Radio toggle checked={registrationEnabled} onChange={handleRegistrationEnabledChange} className={styles.radio} />
+            </span>
+            <span>
+              {t('common.enableLocalRegistration')}
+              <Radio toggle checked={registrationEnabled && localRegistrationEnabled} disabled={!registrationEnabled} onChange={handleLocalRegistrationEnabledChange} className={styles.radio} />
+            </span>
+            <span>
+              {t('common.enableSsoRegistration')}
+              <Radio toggle checked={registrationEnabled && ssoRegistrationEnabled} disabled={!registrationEnabled} onChange={handleSsoRegistrationEnabledChange} className={styles.radio} />
             </span>
           </div>
           {/* only admin should see it */}
@@ -163,8 +174,9 @@ const UsersModal = React.memo(
 
 UsersModal.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  ssoRegistrationEnabled: PropTypes.bool.isRequired,
   registrationEnabled: PropTypes.bool.isRequired,
+  localRegistrationEnabled: PropTypes.bool.isRequired,
+  ssoRegistrationEnabled: PropTypes.bool.isRequired,
   onCoreSettingsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onUsernameUpdate: PropTypes.func.isRequired,

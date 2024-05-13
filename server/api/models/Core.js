@@ -16,6 +16,11 @@ module.exports = {
       defaultsTo: true,
       columnName: 'registration_enabled',
     },
+    localRegistrationEnabled: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'local_registration_enabled',
+    },
     ssoRegistrationEnabled: {
       type: 'boolean',
       defaultsTo: true,

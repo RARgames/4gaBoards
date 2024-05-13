@@ -3,6 +3,7 @@ module.exports.up = async (knex) => {
     table.bigInteger('id').primary().defaultTo(knex.raw('next_id()'));
 
     table.boolean('registration_enabled').defaultTo(true);
+    table.boolean('local_registration_enabled').defaultTo(true);
     table.boolean('sso_registration_enabled').defaultTo(true);
 
     table.timestamp('created_at', true);
@@ -13,6 +14,7 @@ module.exports.up = async (knex) => {
     id: 0,
     created_at: new Date(),
     registration_enabled: true,
+    local_registration_enabled: true,
     sso_registration_enabled: true,
   });
 };

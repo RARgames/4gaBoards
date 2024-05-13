@@ -8,8 +8,9 @@ export default class extends BaseModel {
 
   static fields = {
     id: attr(),
-    ssoRegistrationEnabled: attr(),
     registrationEnabled: attr(),
+    localRegistrationEnabled: attr(),
+    ssoRegistrationEnabled: attr(),
   };
 
   static reducer({ type, payload }, Core) {

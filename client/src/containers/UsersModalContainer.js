@@ -11,8 +11,9 @@ const mapStateToProps = (state) => {
 
   return {
     items: users,
-    ssoRegistrationEnabled: coreSettings.ssoRegistrationEnabled,
     registrationEnabled: coreSettings.registrationEnabled,
+    localRegistrationEnabled: coreSettings.localRegistrationEnabled,
+    ssoRegistrationEnabled: coreSettings.ssoRegistrationEnabled,
   };
 };
 

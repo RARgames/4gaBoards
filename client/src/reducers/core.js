@@ -10,6 +10,7 @@ const initialState = {
   googleSsoEnabled: false,
   ssoRegistrationEnabled: false,
   registrationEnabled: false,
+  localRegistrationEnabled: false,
 };
 
 // eslint-disable-next-line default-param-last
@@ -21,6 +22,7 @@ export default (state = initialState, { type, payload }) => {
         googleSsoEnabled: payload.data.googleSsoEnabled,
         ssoRegistrationEnabled: payload.data.ssoRegistrationEnabled,
         registrationEnabled: payload.data.registrationEnabled,
+        localRegistrationEnabled: payload.data.localRegistrationEnabled,
       };
     case LOCATION_CHANGE_HANDLE:
     case ActionTypes.MODAL_CLOSE:

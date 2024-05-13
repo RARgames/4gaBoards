@@ -12,6 +12,9 @@ module.exports = {
     registrationEnabled: {
       type: 'boolean',
     },
+    localRegistrationEnabled: {
+      type: 'boolean',
+    },
     ssoRegistrationEnabled: {
       type: 'boolean',
     },
@@ -36,7 +39,7 @@ module.exports = {
     if (!core) {
       throw Errors.CORE_NOT_FOUND;
     }
-    const values = _.pick(inputs, ['registrationEnabled', 'ssoRegistrationEnabled']);
+    const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled']);
 
     core = await Core.updateOne({ id: 0 }).set({ ...values });
 
