@@ -9,6 +9,11 @@ module.exports = {
     },
   },
 
+  exits: {
+    registrationDisabled: {},
+    coreNotFound: {},
+  },
+
   async fn(inputs) {
     const email = inputs.email.toLowerCase();
     let user = await sails.helpers.users.getOne({ ssoGoogleEmail: email });
@@ -27,13 +32,20 @@ module.exports = {
       return user;
     }
     // Register new user
+    const core = await Core.findOne({ id: 0 });
+    if (!core) {
+      throw 'coreNotFound';
+    }
+    if (!core.registrationEnabled || !core.ssoRegistrationEnabled) {
+      throw 'registrationDisabled';
+    }
 
     const newValues = {
       email,
       ssoGoogleEmail: email,
       name: inputs.displayName || email.split('@')[0],
     };
-    user = await sails.helpers.users.createOne(newValues).intercept('emailAlreadyInUse', 'emailAlreadyInUse');
+    user = await sails.helpers.users.createOne(newValues);
 
     if (user) {
       return user;

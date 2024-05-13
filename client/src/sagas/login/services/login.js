@@ -1,9 +1,10 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import { replace } from '../../../lib/redux-router';
 import actions from '../../../actions';
 import api from '../../../api';
 import { setAccessToken } from '../../../utils/access-token-storage';
 import Paths from '../../../constants/Paths';
+import selectors from '../../../selectors';
 
 export function* authenticate(data) {
   yield put(actions.authenticate(data));
@@ -21,24 +22,25 @@ export function* authenticate(data) {
 }
 
 export function* authenticateGoogleSso() {
-  let googleSsoUrl;
-  try {
-    const response = yield call(api.getCoreSettingsPublic);
-    googleSsoUrl = response.item.googleSsoUrl;
-  } catch (error) {
-    yield put(actions.authenticateGoogleSso.failure(error));
-    return;
-  }
+  const { googleSsoUrl } = yield select(selectors.selectCoreSettings);
   window.location.replace(googleSsoUrl);
 }
 
 export function* authenticateGoogleSsoCallback() {
   const params = new URLSearchParams(window.location.search);
   const accessToken = params.get('accessToken');
+  const err = params.get('error');
   yield put(replace(Paths.LOGIN));
+
+  if (err !== null) {
+    yield put(actions.authenticateGoogleSso.failure({ code: 'E_UNAUTHORIZED', message: err }));
+    return;
+  }
   if (accessToken !== null) {
     yield call(setAccessToken, accessToken);
     yield put(actions.authenticateGoogleSso.success(accessToken));
+  } else {
+    yield put(actions.authenticateGoogleSso.failure({ code: 'E_UNAUTHORIZED', message: 'Unknown error' }));
   }
 }
 

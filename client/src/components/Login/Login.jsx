@@ -26,6 +26,16 @@ const createMessage = (error) => {
         type: 'error',
         content: 'common.invalidUsernameOrPassword',
       };
+    case 'registrationDisabled':
+      return {
+        type: 'error',
+        content: 'common.registrationDisabled',
+      };
+    case 'coreNotFound':
+      return {
+        type: 'error',
+        content: 'common.coreNotFound',
+      };
     case 'Failed to fetch':
       return {
         type: 'warning',

@@ -60,6 +60,7 @@ export default {
       color: 'Color',
       connectedToGithub: 'Connected to Github',
       connectToGithub: 'Connect to Github',
+      coreNotFound: 'Failed to fetch core settings',
       createBoard_title: 'Create Board',
       createLabel_title: 'Create Label',
       createNewOneOrSelectExistingOne: 'Create a new one or select<br />an existing one',
@@ -106,6 +107,8 @@ export default {
       editUsername_title: 'Edit Username',
       email: 'E-mail',
       emailAlreadyInUse: 'E-mail already in use',
+      enableRegistration: 'Enable User Registration',
+      enableSsoRegistration: 'Enable SSO User Registartion',
       enterCardTitle: 'Enter card title... [Ctrl+Enter] to open',
       enterDescription: 'Enter description...',
       enterFilename: 'Enter filename',
@@ -155,6 +158,7 @@ export default {
       projectNotFound_title: 'Project Not Found',
       projects: 'Projects',
       projectSettings: 'Project Settings',
+      registrationDisabled: 'User SSO registration is disabled by the administrator',
       removeManager_title: 'Remove Manager',
       removeMember_title: 'Remove Member',
       renameBoard: 'Rename Board',
@@ -195,8 +199,6 @@ export default {
       version: 'Version',
       viewer: 'Viewer',
       writeComment: 'Write a comment... [Ctrl+Enter] to submit',
-      enableSsoRegistration: 'Enable SSO User Registartion',
-      enableRegistration: 'Enable User Registration',
     },
 
     action: {
