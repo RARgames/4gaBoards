@@ -16,11 +16,10 @@ export default class extends BaseModel {
   static reducer({ type, payload }, Core) {
     switch (type) {
       case ActionTypes.SOCKET_RECONNECT_HANDLE:
+      case ActionTypes.CORE_INITIALIZE:
         if (payload.core) {
-          // Core.upsert(payload.core.data);
-          // TODO not implemented - send core settings on reconnect
+          Core.upsert(payload.core);
         }
-
         break;
       case ActionTypes.FETCH_CORE_SETTINGS_PUBLIC:
       case ActionTypes.CORE_SETTINGS_UPDATE__SUCCESS:
