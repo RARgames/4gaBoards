@@ -193,7 +193,7 @@ Listen 443
     SSLEngine on
     SSLCertificateFile "/etc/letsencrypt/live/demo.4gaboards.com/fullchain.pem"
     SSLCertificateKeyFile "/etc/letsencrypt/live/demo.4gaboards.com/privkey.pem"
-    
+
     RewriteEngine On
         RewriteCond %{HTTP:Upgrade} =websocket [NC]
         RewriteRule /socket.io/(.*) ws://localhost:3000/socket.io/$1 [P,L]
@@ -340,4 +340,59 @@ fail2ban-client status 4gaBoards
 
 4ga Boards Helm chart for Kubernetes is available at /helm-chart.
 To install it use: `helm install boards .` or `helm install boards . --values values.yaml --values values.truenas.yaml`
-More docs - coming soon
+
+### Default e.g. local machine on `minikube`:
+Install:
+```
+minkube start
+sudo helm install boards .
+```
+Uninstall:
+```
+sudo helm uninstall boards
+```
+
+Configure 4ga Boards by setting `auth` in `values.yaml` (explained in docker compose section):
+- database: "4gaBoards"
+- username: "boards-user"
+- password: "notpassword"
+- postgresPassword: "adminPassword"
+
+and `env` in `values.yaml`:
+
+required:
+- SECRET_KEY: notsecretkey
+- BASE_URL: http://localhost:80
+
+optional:
+- CLIENT_URL: http://localhost:80
+- GOOGLE_CLIENT_ID: googleClientId
+- GOOGLE_CLIENT_SECRET: googleClientSecret
+
+On a local machine you can set port forwarding:
+```
+sudo -E kubectl port-forward svc/app-4gaboards 80:80
+```
+
+To set external postgress set `postgresql.enabled` to `false` and `postgresql.postgresUrl` to `ip` in `values.yaml`.
+
+You can install 4ga Boards on a namespace `namespace-boards`:
+```
+sudo helm install boards . -n namespace-boards
+```
+
+### TRUE NAS (Installed from shell console):
+Values in `values.truenas.yaml` overrride values in `values.yaml`.
+
+Configure 4ga Boards by setting `auth` and `env` in `values.yaml` as in default config.
+
+Rememeber to set `BASE_URL` in `values.truenas.yaml` to node address.
+
+Install:
+```
+sudo helm install boards . --values values.yaml --values values.truenas.yaml --kubeconfig /etc/rancher/k3s/k3s.yaml
+```
+Uninstall:
+```
+sudo helm uninstall boards -n boards  --kubeconfig /etc/rancher/k3s/k3s.yaml
+```

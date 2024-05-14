@@ -51,19 +51,19 @@ serviceAccount:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: "adminPassword"
-    username: "user"
-    password: "password"
     database: "4gaBoards"
-  postgresUrl: <URL> #Give only if not using kubernetes hosted postgres
+    username: "boards-user"
+    password: "notpassword"
+    postgresPassword: "adminPassword"
+  postgresUrl: <URL> #Set only if using external postgres and postgresql.enabled: false
   volumePermissions:
     enabled: true
 env:
   required:
     SECRET_KEY: notsecretkey
-    BASE_URL: http://localhost:8080
+    BASE_URL: http://localhost:80
   optional:
-    CLIENT_URL: http://localhost:8080
+    CLIENT_URL: http://localhost:80
     GOOGLE_CLIENT_ID: googleClientId
     GOOGLE_CLIENT_SECRET: googleClientSecret
 
