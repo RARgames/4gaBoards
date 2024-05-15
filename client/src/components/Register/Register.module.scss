@@ -16,6 +16,7 @@
 
   .fullHeightPaddingFix {
     height: calc(100% + 1rem);
+    background: var(--backgroundColor0);
   }
 
   .inputLabel {
