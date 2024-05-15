@@ -8,5 +8,9 @@ export default function* loginWatchers() {
     takeEvery(EntryActionTypes.AUTHENTICATE, ({ payload: { data } }) => services.authenticate(data)),
     takeEvery(EntryActionTypes.AUTHENTICATE_GOOGLE_SSO, () => services.authenticateGoogleSso()),
     takeEvery(EntryActionTypes.AUTHENTICATE_ERROR_CLEAR, () => services.clearAuthenticateError()),
+    takeEvery(EntryActionTypes.REGISTER_OPEN, () => services.registerOpen()),
+    takeEvery(EntryActionTypes.LOGIN_OPEN, () => services.loginOpen()),
+    takeEvery(EntryActionTypes.REGISTER, ({ payload: { data } }) => services.register(data)),
+    takeEvery(EntryActionTypes.REGISTER_ERROR_CLEAR, () => services.clearRegisterError()),
   ]);
 }

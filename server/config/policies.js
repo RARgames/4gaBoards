@@ -26,4 +26,5 @@ module.exports.policies = {
   'access-tokens/create': true,
   'core/get-settings-public': true,
   'auth/*': true,
+  'register/create': true,
 };

@@ -6,6 +6,7 @@ import { ReduxRouter } from '../lib/redux-router';
 
 import Paths from '../constants/Paths';
 import LoginContainer from '../containers/LoginContainer';
+import RegisterContainer from '../containers/RegisterContainer';
 import CoreContainer from '../containers/CoreContainer';
 import NotFound from './NotFound';
 
@@ -21,6 +22,7 @@ function Root({ store, history }) {
       <ReduxRouter history={history}>
         <Routes>
           <Route path={Paths.LOGIN} element={<LoginContainer />} />
+          <Route path={Paths.REGISTER} element={<RegisterContainer />} />
           <Route path={Paths.ROOT} element={<CoreContainer />} />
           <Route path={Paths.PROJECTS} element={<CoreContainer />} />
           <Route path={Paths.BOARDS} element={<CoreContainer />} />

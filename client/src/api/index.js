@@ -3,6 +3,7 @@ import socket from './socket';
 import accessTokens from './access-tokens';
 import users from './users';
 import projects from './projects';
+import register from './register';
 import projectManagers from './project-managers';
 import boards from './boards';
 import boardMemberships from './board-memberships';
@@ -24,6 +25,7 @@ export default {
   ...accessTokens,
   ...users,
   ...projects,
+  ...register,
   ...projectManagers,
   ...boards,
   ...boardMemberships,

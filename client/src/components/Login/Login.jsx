@@ -59,7 +59,7 @@ const createMessage = (error) => {
   }
 };
 
-const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss, googleSsoEnabled }) => {
+const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss, onRegisterOpen, googleSsoEnabled, registrationEnabled }) => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
   const [data, handleFieldChange, setData] = useForm(() => ({
@@ -143,14 +143,29 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                       <div className={styles.inputLabel}>{t('common.password')}</div>
                       <Input.Password fluid ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
                     </div>
-                    <Form.Button primary size="large" icon="right arrow" labelPosition="right" content={t('action.logIn')} floated="right" loading={isSubmitting} disabled={isSubmitting} />
-                    {googleSsoEnabled && (
-                      <ButtonTmp type={ButtonType.BackgroundFade} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoLoginButton}>
-                        {t('common.loginWithGoogle')}
-                        <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoLoginIcon} />
+                    <div className={styles.buttonsContainer}>
+                      {googleSsoEnabled && (
+                        <ButtonTmp type={ButtonType.BackgroundFade} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                          {t('common.loginWithGoogle')}
+                          <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
+                        </ButtonTmp>
+                      )}
+                      <ButtonTmp type={ButtonType.BackgroundFade} buttonType="submit" title={t('action.logIn')} disabled={isSubmitting} className={styles.submitButton}>
+                        {t('action.logIn')}
+                        <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
                       </ButtonTmp>
-                    )}
+                    </div>
                   </Form>
+                  {registrationEnabled && (
+                    <>
+                      <div className={styles.alternateActionText}>{t('common.newToBoards')}</div>
+                      <div className={styles.alternateActionButtonContainer}>
+                        <ButtonTmp type={ButtonType.BackgroundFade} title={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton}>
+                          {t('common.createAccount')}
+                        </ButtonTmp>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </Grid.Column>
@@ -168,7 +183,9 @@ Login.propTypes = {
   onAuthenticate: PropTypes.func.isRequired,
   onAuthenticateGoogleSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
+  onRegisterOpen: PropTypes.func.isRequired,
   googleSsoEnabled: PropTypes.bool.isRequired,
+  registrationEnabled: PropTypes.bool.isRequired,
 };
 
 Login.defaultProps = {

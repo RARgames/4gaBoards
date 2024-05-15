@@ -15,6 +15,8 @@ module.exports.routes = {
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
 
+  'POST /api/register': 'register/create',
+
   'GET /api/core-settings-public': 'core/get-settings-public',
   'POST /api/core-settings': 'core/set-settings',
 

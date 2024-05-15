@@ -33,6 +33,7 @@ export function* handleLocationChange() {
 
   switch (pathsMatch.pattern.path) {
     case Paths.LOGIN:
+    case Paths.REGISTER:
       yield call(goToRoot);
       break;
     default:

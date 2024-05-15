@@ -48,9 +48,42 @@ export function* clearAuthenticateError() {
   yield put(actions.clearAuthenticateError());
 }
 
+export function* registerOpen() {
+  yield put(actions.registerOpen());
+  yield put(replace(Paths.REGISTER));
+}
+
+export function* loginOpen() {
+  yield put(actions.loginOpen());
+  yield put(replace(Paths.LOGIN));
+}
+
+export function* register(data) {
+  yield put(actions.register(data));
+
+  let accessToken;
+  try {
+    ({ item: accessToken } = yield call(api.register, data));
+  } catch (error) {
+    yield put(actions.register.failure(error));
+    return;
+  }
+
+  yield call(setAccessToken, accessToken);
+  yield put(actions.register.success(accessToken));
+}
+
+export function* clearRegisterError() {
+  yield put(actions.clearRegisterError());
+}
+
 export default {
   authenticate,
   authenticateGoogleSso,
   authenticateGoogleSsoCallback,
   clearAuthenticateError,
+  registerOpen,
+  loginOpen,
+  register,
+  clearRegisterError,
 };

@@ -58,6 +58,11 @@
     justify-content: space-between;
   }
 
+  .onlySsoButtonContainer {
+    display: flex;
+    justify-content: center;
+  }
+
   .submitButton {
     color: var(--textColorWhite);
     background-color: var(--loginBackgroundTmp);
@@ -95,5 +100,17 @@
     height: 45px;
     font-weight: bold;
     padding: 0 16px;
+  }
+
+  .checkboxWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .registrationDisabledText {
+    color: var(--textColor0);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
   }
 }

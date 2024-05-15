@@ -345,6 +345,8 @@ To install it use: `helm install boards .` or `helm install boards . --values va
 Install:
 ```
 minkube start
+git clone https://github.com/RARgames/4gaBoards.git
+cd /4gaBoards/helm-chart
 sudo helm install boards .
 ```
 Uninstall:
@@ -390,6 +392,8 @@ Rememeber to set `BASE_URL` in `values.truenas.yaml` to node address.
 
 Install:
 ```
+git clone https://github.com/RARgames/4gaBoards.git
+cd /4gaBoards/helm-chart
 sudo helm install boards . --values values.yaml --values values.truenas.yaml --kubeconfig /etc/rancher/k3s/k3s.yaml
 ```
 Uninstall:

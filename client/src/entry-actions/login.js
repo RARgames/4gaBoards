@@ -17,8 +17,34 @@ const clearAuthenticateError = () => ({
   payload: {},
 });
 
+const registerOpen = () => ({
+  type: EntryActionTypes.REGISTER_OPEN,
+  payload: {},
+});
+
+const loginOpen = () => ({
+  type: EntryActionTypes.LOGIN_OPEN,
+  payload: {},
+});
+
+const register = (data) => ({
+  type: EntryActionTypes.REGISTER,
+  payload: {
+    data,
+  },
+});
+
+const clearRegisterError = () => ({
+  type: EntryActionTypes.REGISTER_ERROR_CLEAR,
+  payload: {},
+});
+
 export default {
   authenticate,
   authenticateGoogleSso,
   clearAuthenticateError,
+  registerOpen,
+  loginOpen,
+  register,
+  clearRegisterError,
 };
