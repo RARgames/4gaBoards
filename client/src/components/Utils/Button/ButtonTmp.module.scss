@@ -69,11 +69,28 @@
     border-radius: 3px;
     padding: 8px;
     width: auto;
-    height: 20px;
+    height: 20px; //TODO change
     cursor: pointer;
 
     &:hover {
       background-color: var(--loginBackgroundDark);
+    }
+  }
+
+  .submitStyleButton {
+    background-color: var(--backgroundGreen);
+    color: var(--textColorWhite);
+    border: none;
+    border-bottom: 1px solid var(--backgroundGreenHover);
+    border-radius: 3px;
+    padding: 8px 9px;
+    width: auto;
+    height: auto;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--backgroundGreenHover);
     }
   }
 }

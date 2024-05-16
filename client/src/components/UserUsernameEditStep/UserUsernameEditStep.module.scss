@@ -9,4 +9,13 @@
     font-weight: bold;
     padding-bottom: 6px;
   }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .right {
+    margin-left: 6px;
+  }
 }

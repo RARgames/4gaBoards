@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input, Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonType } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
@@ -114,23 +115,9 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.editUsername', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.editUsername', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && (
-          <Message
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...{
-              [message.type]: true,
-            }}
-            visible
-            content={t(message.content)}
-            onDismiss={onMessageDismiss}
-          />
-        )}
+        {message && <Message {...{ [message.type]: true }} visible content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newUsername')}</div>
           <Input fluid ref={usernameField} name="username" value={data.username} placeholder={username} className={styles.field} onChange={handleFieldChange} />
@@ -140,7 +127,11 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
               <Input.Password fluid ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
             </>
           )}
-          <Button positive content={t('action.save')} loading={isSubmitting} disabled={isSubmitting} />
+          <div className={styles.buttonContainer}>
+            <ButtonTmp type={ButtonType.SubmitStyle} buttonType="submit" title={t('action.save')} disabled={isSubmitting} className={styles.right}>
+              {t('action.save')}
+            </ButtonTmp>
+          </div>
         </Form>
       </Popup.Content>
     </>
