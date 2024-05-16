@@ -10,6 +10,7 @@ import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
 
 import styles from './UserUsernameEditStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -127,8 +128,8 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
               <Input.Password fluid ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
             </>
           )}
-          <div className={styles.buttonContainer}>
-            <ButtonTmp type={ButtonType.SubmitStyle} buttonType="submit" title={t('action.save')} disabled={isSubmitting} className={styles.right}>
+          <div className={gStyles.controlsContainer}>
+            <ButtonTmp type={ButtonType.SubmitStyle} buttonType="submit" title={t('action.save')} disabled={isSubmitting}>
               {t('action.save')}
             </ButtonTmp>
           </div>

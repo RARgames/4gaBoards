@@ -4,6 +4,7 @@ const ButtonType = {
   NoBackground: 'noBackgroundButton',
   BackgroundFade: 'backgroundFadeButton',
   SubmitStyle: 'submitStyleButton',
+  CancelStyle: 'cancelStyleButton',
 };
 
 export default ButtonType;

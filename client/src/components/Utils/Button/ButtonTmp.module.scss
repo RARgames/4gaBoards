@@ -77,20 +77,38 @@
     }
   }
 
-  .submitStyleButton {
-    background-color: var(--backgroundGreen);
+  .controlButtons {
     color: var(--textColorWhite);
     border: none;
-    border-bottom: 1px solid var(--backgroundGreenHover);
-    border-radius: 3px;
-    padding: 8px 9px;
+    border-radius: 4px;
+    height: 32px;
     width: auto;
-    height: auto;
+    max-width: 120px;
+    padding: 4px 6px 3px 6px;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-weight: bold;
     cursor: pointer;
+  }
+
+  .submitStyleButton {
+    @extend .controlButtons;
+    background-color: var(--backgroundGreen);
+    margin-left: 6px;
 
     &:hover {
       background-color: var(--backgroundGreenHover);
+    }
+  }
+
+  .cancelStyleButton {
+    @extend .controlButtons;
+    background-color: var(--backgroundRed);
+
+    &:hover {
+      background-color: var(--backgroundRedHover);
     }
   }
 }

@@ -10,10 +10,12 @@ export default (close, isOpened = true) => {
     }
   }, [close]);
 
+  // TODO check if needed in a current version
   const handleControlMouseOver = useCallback(() => {
     isClosable.current = false;
   }, []);
 
+  // TODO check if needed in a current version
   const handleControlMouseOut = useCallback(() => {
     isClosable.current = true;
   }, []);

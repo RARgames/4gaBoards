@@ -7,6 +7,7 @@ import styles from './ButtonTmp.module.scss';
 
 // TODO change name to Button
 // TODO default should be icon (probably rename icon to without background)
+// TODO change buttonType to type and type to buttonType
 const ButtonTmp = React.forwardRef(({ children, buttonType, type, className, ...rest }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type

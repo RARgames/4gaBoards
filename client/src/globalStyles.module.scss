@@ -38,19 +38,29 @@
   --timerGreenHover: #16ab39;
   --backgroundGreen: #5aac44;
   --backgroundGreenHover: #519839;
+  --backgroundRed: #cf513d;
+  --backgroundRedHover: #b04632;
 
+  //TODO check if used
   .controls {
     height: 32px;
     margin-top: 5px;
     text-align: right;
   }
 
+  .controlsContainer {
+    height: 32px;
+    text-align: right;
+  }
+
+  //TODO check if used
   .submitButton {
     margin: 0px;
     padding: 4px 6px 3px 6px;
     box-shadow: none;
   }
 
+  //TODO check if used
   .cancelButton {
     margin-right: 7.5px;
     padding: 4px 6px 3px 6px;
