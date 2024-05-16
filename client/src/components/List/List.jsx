@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonType } from '../Utils/Button';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import { useResizeObserverSize } from '../../hooks';
@@ -127,7 +127,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         <div {...droppableProps} ref={innerRef}>
           {placeholder}
           {!isAddCardOpened && canEdit && (
-            <ButtonTmp type={ButtonType.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
+            <ButtonTmp style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
               <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addCardButtonIcon} />
               <span className={styles.addCardButtonText}>{t('action.addCard')}</span>
             </ButtonTmp>
@@ -144,7 +144,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         <div {...droppableProps} ref={innerRef} className={styles.headerCollapsedInner}>
           {placeholder}
           <ButtonTmp
-            type={ButtonType.Icon}
+            style={ButtonStyle.Icon}
             title={t('common.expandList')}
             onClick={handleToggleCollapseClick}
             className={classNames(styles.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}
@@ -188,7 +188,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               className={styles.header}
             >
               <ButtonTmp
-                type={ButtonType.Icon}
+                style={ButtonStyle.Icon}
                 title={t('common.collapseList')}
                 onClick={handleToggleCollapseClick}
                 className={classNames(styles.headerCollapseButton, !canEdit && gStyles.cursorDefault)}
@@ -203,7 +203,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               </NameEdit>
               {isPersisted && canEdit && (
                 <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete}>
-                  <ButtonTmp type={ButtonType.Icon} title={t('common.editList')} className={styles.headerButton}>
+                  <ButtonTmp style={ButtonStyle.Icon} title={t('common.editList')} className={styles.headerButton}>
                     <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                   </ButtonTmp>
                 </ActionsPopup>

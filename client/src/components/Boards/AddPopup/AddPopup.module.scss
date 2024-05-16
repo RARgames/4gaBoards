@@ -9,16 +9,7 @@
   }
 
   .createButton {
-    width: auto;
-    background: var(--timerGreen);
-    color: var(--textColorWhite);
-    font-weight: bold;
     margin-left: auto;
-
-    &:hover {
-      background: var(--timerGreenHover);
-      color: var(--textColorWhite);
-    }
   }
 
   .field {

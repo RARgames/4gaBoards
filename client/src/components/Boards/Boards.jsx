@@ -7,7 +7,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { closePopup } from '../../lib/popup';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonType } from '../Utils/Button';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import Paths from '../../constants/Paths';
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -73,7 +73,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 </Link>
                 {canEdit && (
                   <EditPopup defaultData={pick(item, 'name')} onUpdate={(data) => handleUpdate(item.id, data)} onDelete={() => handleDelete(item.id)}>
-                    <ButtonTmp type={ButtonType.Icon} title={t('common.renameBoard')} className={classNames(styles.editButton, styles.target)}>
+                    <ButtonTmp style={ButtonStyle.Icon} title={t('common.renameBoard')} className={classNames(styles.editButton, styles.target)}>
                       <Icon type={IconType.Pencil} size={IconSize.Size13} />
                     </ButtonTmp>
                   </EditPopup>
@@ -103,7 +103,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 {placeholder}
                 {canEdit && (
                   <AddPopup onCreate={onCreate}>
-                    <ButtonTmp type={ButtonType.Icon} title={t('common.addBoard')} className={classNames(styles.addButton)}>
+                    <ButtonTmp style={ButtonStyle.Icon} title={t('common.addBoard')} className={classNames(styles.addButton)}>
                       <Icon type={IconType.Plus} size={IconSize.Size13} />
                     </ButtonTmp>
                   </AddPopup>

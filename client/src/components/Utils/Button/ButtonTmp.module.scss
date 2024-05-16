@@ -93,7 +93,7 @@
     cursor: pointer;
   }
 
-  .submitStyleButton {
+  .submit {
     @extend .controlButtons;
     background-color: var(--backgroundGreen);
     margin-left: 6px;
@@ -103,7 +103,7 @@
     }
   }
 
-  .cancelStyleButton {
+  .cancel {
     @extend .controlButtons;
     background-color: var(--backgroundRed);
 

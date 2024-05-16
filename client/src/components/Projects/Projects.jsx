@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Container, Grid } from 'semantic-ui-react';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonType } from '../Utils/Button';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
@@ -43,7 +43,7 @@ const Projects = React.memo(({ items, canAdd, onAdd }) => {
         ))}
         {canAdd && (
           <Grid.Column mobile={8} computer={4}>
-            <ButtonTmp type={ButtonType.Icon} title={t('common.createProject')} onClick={onAdd} className={classNames(styles.card, styles.add)}>
+            <ButtonTmp style={ButtonStyle.Icon} title={t('common.createProject')} onClick={onAdd} className={classNames(styles.card, styles.add)}>
               <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
               {t('common.createProject')}
             </ButtonTmp>

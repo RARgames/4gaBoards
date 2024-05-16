@@ -1,4 +1,4 @@
 import ButtonTmp from './ButtonTmp';
-import ButtonType from './ButtonType';
+import ButtonStyle from './ButtonStyle';
 
-export { ButtonTmp, ButtonType };
+export { ButtonTmp, ButtonStyle };

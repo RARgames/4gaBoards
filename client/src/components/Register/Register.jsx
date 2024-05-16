@@ -7,7 +7,7 @@ import { Form, Grid, Header, Message, Image, Checkbox } from 'semantic-ui-react'
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input } from '../../lib/custom-ui';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonType } from '../Utils/Button';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
@@ -180,13 +180,13 @@ const Register = React.memo(
                       {!registrationEnabled && <div className={styles.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
                       <div className={classNames(styles.buttonsContainer, !localRegistrationEnabled && styles.onlySsoButtonContainer)}>
                         {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                          <ButtonTmp type={ButtonType.BackgroundFade} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                          <ButtonTmp style={ButtonStyle.BackgroundFade} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
                             {t('common.registerWithGoogle')}
                             <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
                           </ButtonTmp>
                         )}
                         {registrationEnabled && localRegistrationEnabled && (
-                          <ButtonTmp type={ButtonType.BackgroundFade} buttonType="submit" title={t('common.register')} disabled={isSubmitting} className={styles.submitButton}>
+                          <ButtonTmp style={ButtonStyle.BackgroundFade} type="submit" title={t('common.register')} disabled={isSubmitting} className={styles.submitButton}>
                             {t('common.register')}
                             <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
                           </ButtonTmp>
@@ -195,7 +195,7 @@ const Register = React.memo(
                     </Form>
                     <div className={styles.alternateActionText}>{t('common.alreadyUser')}</div>
                     <div className={styles.alternateActionButtonContainer}>
-                      <ButtonTmp type={ButtonType.BackgroundFade} title={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton}>
+                      <ButtonTmp style={ButtonStyle.BackgroundFade} title={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton}>
                         {t('common.backToLogin')}
                       </ButtonTmp>
                     </div>

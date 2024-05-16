@@ -2,16 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import ButtonType from './ButtonType';
+import ButtonStyle from './ButtonStyle';
 import styles from './ButtonTmp.module.scss';
 
 // TODO change name to Button
 // TODO default should be icon (probably rename icon to without background)
-// TODO change buttonType to type and type to buttonType
-const ButtonTmp = React.forwardRef(({ children, buttonType, type, className, ...rest }, ref) => {
+const ButtonTmp = React.forwardRef(({ children, type, style, className, ...rest }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type
-    <button ref={ref} type={buttonType} className={classNames(type && styles[type], className)} {...rest}>
+    <button ref={ref} type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} className={classNames(style && styles[style], className)} {...rest}>
       {children}
     </button>
   );
@@ -19,15 +18,15 @@ const ButtonTmp = React.forwardRef(({ children, buttonType, type, className, ...
 
 ButtonTmp.propTypes = {
   children: PropTypes.node,
-  buttonType: PropTypes.string,
-  type: PropTypes.oneOf(Object.values(ButtonType)),
+  type: PropTypes.string,
+  style: PropTypes.oneOf(Object.values(ButtonStyle)),
   className: PropTypes.string,
 };
 
 ButtonTmp.defaultProps = {
   children: undefined,
-  buttonType: 'button',
   type: undefined,
+  style: undefined,
   className: undefined,
 };
 

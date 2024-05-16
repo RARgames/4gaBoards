@@ -5,7 +5,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { closePopup } from '../../lib/popup';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonType } from '../Utils/Button';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import ListContainer from '../../containers/ListContainer';
@@ -138,7 +138,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                       {isListAddOpened ? (
                         <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
                       ) : (
-                        <ButtonTmp type={ButtonType.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
+                        <ButtonTmp style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
                           <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
                           <span className={styles.addListButtonText}>{t('action.addList')}</span>
                         </ButtonTmp>

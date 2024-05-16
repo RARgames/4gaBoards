@@ -5,7 +5,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import classNames from 'classnames';
 import { Form, TextArea } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { ButtonTmp, ButtonType } from '../Utils/Button';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useClosableForm, useForm } from '../../hooks';
 
@@ -38,7 +38,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     };
 
     if (!cleanData.name) {
-      nameField.current.select();
+      nameField.current.focus();
       return;
     }
 
@@ -108,10 +108,10 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
         onBlur={handleFieldBlur}
       />
       <div className={gStyles.controls}>
-        <ButtonTmp type={ButtonType.CancelStyle} title={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut}>
+        <ButtonTmp style={ButtonStyle.Cancel} title={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut}>
           {t('action.cancel')}
         </ButtonTmp>
-        <ButtonTmp type={ButtonType.SubmitStyle} title={t('action.addList')} buttonType="submit" onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut}>
+        <ButtonTmp style={ButtonStyle.Submit} title={t('action.addList')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut}>
           {t('action.addList')}
         </ButtonTmp>
       </div>

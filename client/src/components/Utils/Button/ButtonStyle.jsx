@@ -1,10 +1,10 @@
-const ButtonType = {
+const ButtonStyle = {
   Default: 'defaultButton',
   Icon: 'iconButton',
   NoBackground: 'noBackgroundButton',
   BackgroundFade: 'backgroundFadeButton',
-  SubmitStyle: 'submitStyleButton',
-  CancelStyle: 'cancelStyleButton',
+  Submit: 'submit',
+  Cancel: 'cancel',
 };
 
-export default ButtonType;
+export default ButtonStyle;
