@@ -80,7 +80,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
 
   useEffect(() => {
     if (isOpened) {
-      field.current.ref.current.focus();
+      field.current.focus();
     }
   }, [isOpened]);
 

@@ -37,7 +37,7 @@ const CommentAdd = React.memo(({ onCreate }) => {
     };
 
     if (!cleanData.text) {
-      textField.current.ref.current.select();
+      textField.current.focus();
       return;
     }
 
@@ -73,7 +73,7 @@ const CommentAdd = React.memo(({ onCreate }) => {
   );
 
   useDidUpdate(() => {
-    textField.current.ref.current.focus();
+    textField.current.focus();
   }, [focusTextFieldState]);
 
   const handleChange = useCallback(

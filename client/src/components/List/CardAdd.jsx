@@ -90,12 +90,12 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
 
   useEffect(() => {
     if (isOpened) {
-      nameField.current.ref.current.focus();
+      nameField.current.focus();
     }
   }, [isOpened]);
 
   useDidUpdate(() => {
-    nameField.current.ref.current.focus();
+    nameField.current.focus();
   }, [focusNameFieldState]);
 
   const handleChange = useCallback(

@@ -40,7 +40,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
     };
 
     if (!cleanData.text) {
-      textField.current.ref.current.select();
+      textField.current.focus();
       return;
     }
 
@@ -83,7 +83,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
 
   useEffect(() => {
     if (isOpened) {
-      textField.current.ref.current.focus();
+      textField.current.focus();
     }
   }, [isOpened]);
 
