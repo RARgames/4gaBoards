@@ -87,7 +87,7 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
         <Form onSubmit={handleSubmit}>
           <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <div className={styles.controls}>
-            <ButtonTmp style={ButtonStyle.NoBackground} title={t('common.import')} onClick={handleImportClick} className={styles.importButton}>
+            <ButtonTmp style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={styles.importButtonIcon} />
               {data.import ? data.import.file.name : t('action.import')}
             </ButtonTmp>

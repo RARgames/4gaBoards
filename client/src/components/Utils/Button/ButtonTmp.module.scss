@@ -21,6 +21,15 @@
         fill: var(--textColor3);
       }
     }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--textColor4);
+
+      svg {
+        fill: var(--textColor4);
+      }
+    }
   }
 
   .noBackgroundButton {
@@ -45,6 +54,15 @@
         fill: var(--textColor3);
       }
     }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--textColor4);
+
+      svg {
+        fill: var(--textColor4);
+      }
+    }
   }
 
   .iconButton {
@@ -58,6 +76,14 @@
     &:hover {
       svg {
         fill: var(--textColor3);
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      svg {
+        fill: var(--textColor4);
       }
     }
   }
