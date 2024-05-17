@@ -195,9 +195,7 @@ const Register = React.memo(
                     </Form>
                     <div className={styles.alternateActionText}>{t('common.alreadyUser')}</div>
                     <div className={styles.alternateActionButtonContainer}>
-                      <ButtonTmp style={ButtonStyle.BackgroundFade} title={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton}>
-                        {t('common.backToLogin')}
-                      </ButtonTmp>
+                      <ButtonTmp style={ButtonStyle.BackgroundFade} content={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton} />
                     </div>
                   </div>
                 </div>

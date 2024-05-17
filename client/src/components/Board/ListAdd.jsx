@@ -108,12 +108,8 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
         onBlur={handleFieldBlur}
       />
       <div className={gStyles.controls}>
-        <ButtonTmp style={ButtonStyle.Cancel} title={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut}>
-          {t('action.cancel')}
-        </ButtonTmp>
-        <ButtonTmp style={ButtonStyle.Submit} title={t('action.addList')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut}>
-          {t('action.addList')}
-        </ButtonTmp>
+        <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <ButtonTmp style={ButtonStyle.Submit} content={t('action.addList')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );

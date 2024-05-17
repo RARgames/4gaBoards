@@ -7,6 +7,7 @@ import { Button, Form, Input, Menu } from 'semantic-ui-react';
 import { withPopup } from '../../lib/popup';
 import { Popup } from '../../lib/custom-ui';
 import { useForm } from '../../hooks';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import styles from './Connections.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -69,17 +70,13 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
     <>
       <Popup.Header>{t('common.connectToGithub')} [Not fully implemented]</Popup.Header>
       <Popup.Content>
-        <Menu secondary vertical>
-          <Form onSubmit={handleSubmit}>
-            <div>
-              <Input ref={inputRef} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={classNames(isError && styles.fieldError)} />
-            </div>
-            <div className={gStyles.controls}>
-              <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} />
-              <Button positive content={t('action.save')} className={gStyles.submitButton} />
-            </div>
-          </Form>
-        </Menu>
+        <Form onSubmit={handleSubmit}>
+          <Input ref={inputRef} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={classNames(isError && styles.fieldError)} />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />
+          </div>
+        </Form>
       </Popup.Content>
     </>
   );

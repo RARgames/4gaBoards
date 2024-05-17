@@ -160,9 +160,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                     <>
                       <div className={styles.alternateActionText}>{t('common.newToBoards')}</div>
                       <div className={styles.alternateActionButtonContainer}>
-                        <ButtonTmp style={ButtonStyle.BackgroundFade} title={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton}>
-                          {t('common.createAccount')}
-                        </ButtonTmp>
+                        <ButtonTmp style={ButtonStyle.BackgroundFade} content={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton} />
                       </div>
                     </>
                   )}

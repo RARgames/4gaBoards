@@ -7,26 +7,30 @@ import styles from './ButtonTmp.module.scss';
 
 // TODO change name to Button
 // TODO default should be icon (probably rename icon to without background)
-const ButtonTmp = React.forwardRef(({ children, type, style, className, ...rest }, ref) => {
+const ButtonTmp = React.forwardRef(({ children, title, type, style, content, className, ...rest }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type
-    <button ref={ref} type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} className={classNames(style && styles[style], className)} {...rest}>
-      {children}
+    <button ref={ref} title={title || content} type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} className={classNames(style && styles[style], className)} {...rest}>
+      {content !== undefined ? content : children}
     </button>
   );
 });
 
 ButtonTmp.propTypes = {
   children: PropTypes.node,
+  title: PropTypes.string,
   type: PropTypes.string,
   style: PropTypes.oneOf(Object.values(ButtonStyle)),
+  content: PropTypes.string,
   className: PropTypes.string,
 };
 
 ButtonTmp.defaultProps = {
   children: undefined,
+  title: undefined,
   type: undefined,
   style: undefined,
+  content: undefined,
   className: undefined,
 };
 

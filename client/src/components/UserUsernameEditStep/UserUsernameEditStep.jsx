@@ -129,9 +129,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
             </>
           )}
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Submit} title={t('action.save')} disabled={isSubmitting}>
-              {t('action.save')}
-            </ButtonTmp>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} />
           </div>
         </Form>
       </Popup.Content>

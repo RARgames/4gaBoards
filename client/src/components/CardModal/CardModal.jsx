@@ -479,9 +479,7 @@ const CardModal = React.memo(
       <div className={styles.headerItems}>
         <div className={styles.text}>{t('common.notifications')}</div>
         <span className={styles.headerItem}>
-          <ButtonTmp style={ButtonStyle.Default} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={styles.subscribeButton}>
-            {isSubscribed ? t('common.subscribed') : t('action.subscribe')}
-          </ButtonTmp>
+          <ButtonTmp style={ButtonStyle.Default} content={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={styles.subscribeButton} />
         </span>
       </div>
     );

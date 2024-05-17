@@ -82,11 +82,7 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
 
   return (
     <>
-      <Popup.Header>
-        {t('common.createBoard', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header>{t('common.createBoard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
@@ -95,9 +91,7 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={styles.importButtonIcon} />
               {data.import ? data.import.file.name : t('action.import')}
             </ButtonTmp>
-            <ButtonTmp style={ButtonStyle.Submit} title={t('action.createBoard')} className={styles.createButton}>
-              {t('action.createBoard')}
-            </ButtonTmp>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.createBoard')} className={styles.createButton} />
           </div>
         </Form>
       </Popup.Content>
