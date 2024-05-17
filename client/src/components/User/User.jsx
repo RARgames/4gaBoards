@@ -4,7 +4,7 @@ import initials from 'initials';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ButtonTmp } from '../Utils/Button';
+import { Button } from '../Utils/Button';
 
 import styles from './User.module.scss';
 
@@ -42,9 +42,9 @@ const User = React.memo(({ name, avatarUrl, size, isDisabled, onClick }) => {
   );
 
   return onClick ? (
-    <ButtonTmp onClick={onClick} disabled={isDisabled} className={styles.button}>
+    <Button onClick={onClick} disabled={isDisabled} className={styles.button}>
       {contentNode}
-    </ButtonTmp>
+    </Button>
   ) : (
     contentNode
   );

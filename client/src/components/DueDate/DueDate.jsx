@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { ButtonTmp } from '../Utils/Button';
+import { Button } from '../Utils/Button';
 
 import styles from './DueDate.module.scss';
 
@@ -48,9 +48,9 @@ const DueDate = React.memo(({ value, variant, isDisabled, onClick }) => {
   );
 
   return onClick ? (
-    <ButtonTmp title={t('common.editDueDate')} onClick={onClick} disabled={isDisabled} className={styles.button}>
+    <Button title={t('common.editDueDate')} onClick={onClick} disabled={isDisabled} className={styles.button}>
       {contentNode}
-    </ButtonTmp>
+    </Button>
   ) : (
     contentNode
   );

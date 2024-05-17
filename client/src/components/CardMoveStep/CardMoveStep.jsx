@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Dropdown, Form } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 
@@ -107,7 +107,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             </>
           )}
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} />
+            <Button style={ButtonStyle.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} />
           </div>
         </Form>
       </Popup.Content>

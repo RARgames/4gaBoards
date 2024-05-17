@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Form, TextArea } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import { useClosableForm, useForm } from '../../../hooks';
 
@@ -125,8 +125,8 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
         onBlur={handleFieldBlur}
       />
       <div className={gStyles.controls}>
-        <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <ButtonTmp style={ButtonStyle.Submit} content={t('action.addTask')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button style={ButtonStyle.Submit} content={t('action.addTask')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );

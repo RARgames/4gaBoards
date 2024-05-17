@@ -1,4 +1,4 @@
-import ButtonTmp from './ButtonTmp';
+import Button from './Button';
 import ButtonStyle from './ButtonStyle';
 
-export { ButtonTmp, ButtonStyle };
+export { Button, ButtonStyle };

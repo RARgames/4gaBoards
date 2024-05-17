@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
@@ -39,7 +39,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
         <Form onSubmit={handleSubmit}>
           <Editor data={data} onFieldChange={handleFieldChange} />
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.createLabel')} />
+            <Button style={ButtonStyle.Submit} content={t('action.createLabel')} />
           </div>
         </Form>
       </Popup.Content>

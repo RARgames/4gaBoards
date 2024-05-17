@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import { useResizeObserverSize } from '../../hooks';
@@ -127,10 +127,10 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         <div {...droppableProps} ref={innerRef}>
           {placeholder}
           {!isAddCardOpened && canEdit && (
-            <ButtonTmp style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
+            <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
               <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addCardButtonIcon} />
               <span className={styles.addCardButtonText}>{t('action.addCard')}</span>
-            </ButtonTmp>
+            </Button>
           )}
         </div>
       )}
@@ -143,14 +143,14 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef} className={styles.headerCollapsedInner}>
           {placeholder}
-          <ButtonTmp
+          <Button
             style={ButtonStyle.Icon}
             title={t('common.expandList')}
             onClick={handleToggleCollapseClick}
             className={classNames(styles.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}
           >
             <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
-          </ButtonTmp>
+          </Button>
           <div className={styles.headerNameCollapsed}>{name}</div>
           <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
         </div>
@@ -187,14 +187,14 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
               className={styles.header}
             >
-              <ButtonTmp
+              <Button
                 style={ButtonStyle.Icon}
                 title={t('common.collapseList')}
                 onClick={handleToggleCollapseClick}
                 className={classNames(styles.headerCollapseButton, !canEdit && gStyles.cursorDefault)}
               >
                 <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={styles.iconRotateRight} />
-              </ButtonTmp>
+              </Button>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <div className={classNames(styles.headerName, canEdit && gStyles.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement}>
@@ -203,9 +203,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               </NameEdit>
               {isPersisted && canEdit && (
                 <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete}>
-                  <ButtonTmp style={ButtonStyle.Icon} title={t('common.editList')} className={styles.headerButton}>
+                  <Button style={ButtonStyle.Icon} title={t('common.editList')} className={styles.headerButton}>
                     <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                  </ButtonTmp>
+                  </Button>
                 </ActionsPopup>
               )}
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>

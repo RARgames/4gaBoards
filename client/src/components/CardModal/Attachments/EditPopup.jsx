@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import { withPopup } from '../../../lib/popup';
 import { Input, Popup } from '../../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import { useForm, useSteps } from '../../../hooks';
 import DeleteStep from '../../DeleteStep';
@@ -75,8 +75,8 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
           <div className={styles.text}>{t('common.title')}</div>
           <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controlsSpaceBetween}>
-            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} />
           </div>
         </Form>
       </Popup.Content>

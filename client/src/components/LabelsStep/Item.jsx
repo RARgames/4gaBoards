@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import styles from './Item.module.scss';
 import globalStyles from '../../styles.module.scss';
@@ -40,9 +40,9 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
               {name}
             </span>
             {canEdit && (
-              <ButtonTmp style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={styles.editButton}>
+              <Button style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={styles.editButton}>
                 <Icon type={IconType.Pencil} size={IconSize.Size14} />
-              </ButtonTmp>
+              </Button>
             )}
           </div>
         );

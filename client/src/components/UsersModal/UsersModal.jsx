@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Modal, Table, Radio } from 'semantic-ui-react';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import UserAddPopupContainer from '../../containers/UserAddPopupContainer';
 import Item from './Item';
@@ -164,7 +164,7 @@ const UsersModal = React.memo(
             </span>
           </div>
           <UserAddPopupContainer>
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.addUser')} />
+            <Button style={ButtonStyle.Submit} content={t('action.addUser')} />
           </UserAddPopupContainer>
         </Modal.Actions>
       </Modal>

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { startTimer, stopTimer } from '../../utils/timer';
@@ -224,9 +224,9 @@ const Card = React.memo(
                         onLabelMove={onLabelMove}
                         onLabelDelete={onLabelDelete}
                       >
-                        <ButtonTmp style={ButtonStyle.Icon} title={t('common.editCard')} className={classNames(styles.actionsButton, styles.target)}>
+                        <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={classNames(styles.actionsButton, styles.target)}>
                           <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                        </ButtonTmp>
+                        </Button>
                       </ActionsPopup>
                     )}
                   </>

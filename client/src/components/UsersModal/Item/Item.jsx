@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Radio, Table } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import ActionsPopup from './ActionsPopup';
 import User from '../../User';
@@ -76,9 +76,9 @@ const Item = React.memo(
             onPasswordUpdateMessageDismiss={onPasswordUpdateMessageDismiss}
             onDelete={onDelete}
           >
-            <ButtonTmp style={ButtonStyle.Icon} title={t('common.editUser')} className={styles.editbutton}>
+            <Button style={ButtonStyle.Icon} title={t('common.editUser')} className={styles.editbutton}>
               <Icon type={IconType.Pencil} size={IconSize.Size14} />
-            </ButtonTmp>
+            </Button>
           </ActionsPopup>
         </Table.Cell>
       </Table.Row>

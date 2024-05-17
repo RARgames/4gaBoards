@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import MDEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
 import { useLocalStorage } from '../../hooks';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -215,8 +215,8 @@ const DescriptionEdit = React.forwardRef(
           // TODO add full functionality to mention and issue
         />
         <div className={gStyles.controls}>
-          <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-          <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+          <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+          <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
         </div>
       </>
     );

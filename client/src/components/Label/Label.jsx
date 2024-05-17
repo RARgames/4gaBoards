@@ -3,7 +3,7 @@ import camelCase from 'lodash/camelCase';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ButtonTmp } from '../Utils/Button';
+import { Button } from '../Utils/Button';
 
 import LabelColors from '../../constants/LabelColors';
 
@@ -24,9 +24,9 @@ const Label = React.memo(({ name, color, variant, isDisabled, onClick }) => {
   );
 
   return onClick ? (
-    <ButtonTmp onClick={onClick} disabled={isDisabled} className={styles.button}>
+    <Button onClick={onClick} disabled={isDisabled} className={styles.button}>
       {contentNode}
-    </ButtonTmp>
+    </Button>
   ) : (
     contentNode
   );

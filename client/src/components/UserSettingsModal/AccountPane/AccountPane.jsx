@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Divider, Dropdown, Header, Tab } from 'semantic-ui-react';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import locales from '../../../locales';
 import AvatarEditPopup from './AvatarEditPopup';
@@ -102,7 +102,7 @@ const AccountPane = React.memo(
             onUpdate={onUsernameUpdate}
             onMessageDismiss={onUsernameUpdateMessageDismiss}
           >
-            <ButtonTmp style={ButtonStyle.Default} content={t('action.editUsername', { context: 'title' })} className={styles.actionButton} />
+            <Button style={ButtonStyle.Default} content={t('action.editUsername', { context: 'title' })} className={styles.actionButton} />
           </UserUsernameEditPopup>
         </div>
         <div className={styles.action}>
@@ -115,7 +115,7 @@ const AccountPane = React.memo(
             onUpdate={onEmailUpdate}
             onMessageDismiss={onEmailUpdateMessageDismiss}
           >
-            <ButtonTmp style={ButtonStyle.Default} content={t('action.editEmail', { context: 'title' })} className={styles.actionButton} />
+            <Button style={ButtonStyle.Default} content={t('action.editEmail', { context: 'title' })} className={styles.actionButton} />
           </UserEmailEditPopup>
         </div>
         <div className={styles.action}>
@@ -127,7 +127,7 @@ const AccountPane = React.memo(
             onUpdate={onPasswordUpdate}
             onMessageDismiss={onPasswordUpdateMessageDismiss}
           >
-            <ButtonTmp style={ButtonStyle.Default} content={t('action.editPassword', { context: 'title' })} className={styles.actionButton} />
+            <Button style={ButtonStyle.Default} content={t('action.editPassword', { context: 'title' })} className={styles.actionButton} />
           </UserPasswordEditPopup>
         </div>
       </Tab.Pane>

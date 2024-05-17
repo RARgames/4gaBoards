@@ -6,7 +6,7 @@ import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { withPopup } from '../../../lib/popup';
 import { Input, Popup } from '../../../lib/custom-ui';
 import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import { useForm, useSteps } from '../../../hooks';
 import ImportStep from './ImportStep';
@@ -87,11 +87,11 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
         <Form onSubmit={handleSubmit}>
           <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <div className={styles.controls}>
-            <ButtonTmp style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>
+            <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={styles.importButtonIcon} />
               {data.import ? data.import.file.name : t('action.import')}
-            </ButtonTmp>
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.createBoard')} className={styles.createButton} />
+            </Button>
+            <Button style={ButtonStyle.Submit} content={t('action.createBoard')} className={styles.createButton} />
           </div>
         </Form>
       </Popup.Content>

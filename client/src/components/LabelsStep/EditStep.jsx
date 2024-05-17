@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm, useSteps } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
@@ -65,8 +65,8 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
         <Form onSubmit={handleSubmit}>
           <Editor data={data} onFieldChange={handleFieldChange} />
           <div className={gStyles.controlsSpaceBetween}>
-            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} />
           </div>
         </Form>
       </Popup.Content>

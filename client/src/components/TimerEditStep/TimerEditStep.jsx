@@ -6,7 +6,7 @@ import { Form } from 'semantic-ui-react';
 import { useToggle } from '../../lib/hooks';
 import { Input, Popup } from '../../lib/custom-ui';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
@@ -120,24 +120,24 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={styles.text}>{t('common.seconds')}</div>
               <Input.Mask ref={secondsField} name="seconds" value={data.seconds} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
             </div>
-            <ButtonTmp style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={styles.iconButton}>
+            <Button style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={styles.iconButton}>
               <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size10} />
-            </ButtonTmp>
+            </Button>
           </div>
           <div className={gStyles.controlsSpaceBetween}>
-            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            {isEditing && <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />}
+            <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
+            {isEditing && <Button style={ButtonStyle.Submit} content={t('action.save')} />}
             {!isEditing &&
               (defaultValue && defaultValue.startedAt ? (
-                <ButtonTmp style={ButtonStyle.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>
+                <Button style={ButtonStyle.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>
                   <Icon type={IconType.Pause} size={IconSize.Size10} className={styles.startStopIcon} />
                   {t('action.stop')}
-                </ButtonTmp>
+                </Button>
               ) : (
-                <ButtonTmp style={ButtonStyle.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
+                <Button style={ButtonStyle.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
                   <Icon type={IconType.Play} size={IconSize.Size10} className={styles.startStopIcon} />
                   {t('action.stop')}
-                </ButtonTmp>
+                </Button>
               ))}
           </div>
         </Form>

@@ -7,7 +7,7 @@ import { Form, Grid, Header, Message, Image } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input } from '../../lib/custom-ui';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
@@ -145,22 +145,22 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                     </div>
                     <div className={styles.buttonsContainer}>
                       {googleSsoEnabled && (
-                        <ButtonTmp style={ButtonStyle.BackgroundFade} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                        <Button style={ButtonStyle.BackgroundFade} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
                           {t('common.loginWithGoogle')}
                           <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
-                        </ButtonTmp>
+                        </Button>
                       )}
-                      <ButtonTmp style={ButtonStyle.BackgroundFade} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={styles.submitButton}>
+                      <Button style={ButtonStyle.BackgroundFade} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={styles.submitButton}>
                         {t('action.logIn')}
                         <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
-                      </ButtonTmp>
+                      </Button>
                     </div>
                   </Form>
                   {registrationEnabled && (
                     <>
                       <div className={styles.alternateActionText}>{t('common.newToBoards')}</div>
                       <div className={styles.alternateActionButtonContainer}>
-                        <ButtonTmp style={ButtonStyle.BackgroundFade} content={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton} />
+                        <Button style={ButtonStyle.BackgroundFade} content={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton} />
                       </div>
                     </>
                   )}

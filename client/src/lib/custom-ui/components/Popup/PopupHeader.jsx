@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Popup as SemanticUIPopup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { ButtonTmp, ButtonStyle } from '../../../../components/Utils/Button'; // TODO temp - change or move PopupHeader to utils
+import { Button, ButtonStyle } from '../../../../components/Utils/Button'; // TODO temp - change or move PopupHeader to utils
 import { Icon, IconType, IconSize } from '../../../../components/Utils/Icon'; // TODO temp - change or move PopupHeader to utils
 
 import styles from './PopupHeader.module.css';
@@ -12,9 +12,9 @@ const PopupHeader = React.memo(({ children, onBack }) => {
   return (
     <SemanticUIPopup.Header className={styles.wrapper}>
       {onBack && (
-        <ButtonTmp style={ButtonStyle.Icon} title={t('common.back')} onClick={onBack} className={styles.backButton}>
+        <Button style={ButtonStyle.Icon} title={t('common.back')} onClick={onBack} className={styles.backButton}>
           <Icon type={IconType.AngleLeft} size={IconSize.Size14} />
-        </ButtonTmp>
+        </Button>
       )}
       <div className={styles.content}>{children}</div>
     </SemanticUIPopup.Header>

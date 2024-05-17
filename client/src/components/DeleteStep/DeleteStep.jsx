@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import styles from './DeleteStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -12,7 +12,7 @@ const DeleteStep = React.memo(({ title, content, buttonContent, onConfirm, onBac
     <Popup.Content>
       <div className={styles.content}>{content}</div>
       <div className={gStyles.controlsCenter}>
-        <ButtonTmp style={ButtonStyle.Cancel} content={buttonContent} onClick={onConfirm} className={styles.deleteButton} />
+        <Button style={ButtonStyle.Cancel} content={buttonContent} onClick={onConfirm} className={styles.deleteButton} />
       </div>
     </Popup.Content>
   </>

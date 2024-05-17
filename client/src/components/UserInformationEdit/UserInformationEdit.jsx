@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Form, Input } from 'semantic-ui-react';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 
@@ -51,7 +51,7 @@ const UserInformationEdit = React.memo(({ defaultData, onUpdate }) => {
       <div className={styles.text}>{t('common.organization')}</div>
       <Input fluid name="organization" value={data.organization} className={styles.field} onChange={handleFieldChange} />
       <div className={gStyles.controls}>
-        <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} />
+        <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} />
       </div>
     </Form>
   );

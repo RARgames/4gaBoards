@@ -6,7 +6,7 @@ import { Form, Message } from 'semantic-ui-react';
 import { usePrevious } from '../../lib/hooks';
 import { withPopup } from '../../lib/popup';
 import { Input, Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { isPassword, isUsername } from '../../utils/validator';
@@ -136,7 +136,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
           </div>
           <Input fluid ref={usernameField} name="username" value={data.username} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} />
+            <Button style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} />
           </div>
         </Form>
       </Popup.Content>

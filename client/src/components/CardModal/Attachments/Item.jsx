@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Label, Loader } from 'semantic-ui-react';
 import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import EditPopup from './EditPopup';
 
@@ -81,7 +81,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
           })}
         </span>
         {coverUrl && canEdit && (
-          <ButtonTmp
+          <Button
             style={ButtonStyle.NoBackground}
             title={isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}
             onClick={handleToggleCoverClick}
@@ -89,7 +89,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
           >
             <Icon type={IconType.WindowMaximize} size={IconSize.Size10} className={styles.optionIcon} />
             <span className={styles.optionText}>{isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}</span>
-          </ButtonTmp>
+          </Button>
         )}
       </div>
       {canEdit && (
@@ -100,9 +100,9 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
           onUpdate={onUpdate}
           onDelete={onDelete}
         >
-          <ButtonTmp style={ButtonStyle.Icon} title={t('common.editAttachment')} className={classNames(styles.button, styles.target)}>
+          <Button style={ButtonStyle.Icon} title={t('common.editAttachment')} className={classNames(styles.button, styles.target)}>
             <Icon type={IconType.Pencil} size={IconSize.Size10} />
-          </ButtonTmp>
+          </Button>
         </EditPopup>
       )}
     </div>

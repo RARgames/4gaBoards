@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Form, Menu, Radio, Segment } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
 
@@ -65,7 +65,7 @@ const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, b
             </Segment>
           )}
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Submit} content={t(buttonContent)} />
+            <Button style={ButtonStyle.Submit} content={t(buttonContent)} />
           </div>
         </Form>
       </Popup.Content>

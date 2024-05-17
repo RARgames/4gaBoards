@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import ButtonStyle from './ButtonStyle';
-import styles from './ButtonTmp.module.scss';
+import styles from './Button.module.scss';
 
-// TODO change name to Button
 // TODO default should be icon (probably rename icon to without background)
 // TODO by default apply styles.base so even the button without style looks good
-const ButtonTmp = React.forwardRef(({ children, title, type, style, content, className, ...rest }, ref) => {
+const Button = React.forwardRef(({ children, title, type, style, content, className, ...rest }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type
     <button ref={ref} title={title || content} type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} className={classNames(style && styles[style], className)} {...rest}>
@@ -17,7 +16,7 @@ const ButtonTmp = React.forwardRef(({ children, title, type, style, content, cla
   );
 });
 
-ButtonTmp.propTypes = {
+Button.propTypes = {
   children: PropTypes.node,
   title: PropTypes.string,
   type: PropTypes.string,
@@ -26,7 +25,7 @@ ButtonTmp.propTypes = {
   className: PropTypes.string,
 };
 
-ButtonTmp.defaultProps = {
+Button.defaultProps = {
   children: undefined,
   title: undefined,
   type: undefined,
@@ -35,4 +34,4 @@ ButtonTmp.defaultProps = {
   className: undefined,
 };
 
-export default React.memo(ButtonTmp);
+export default React.memo(Button);

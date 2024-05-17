@@ -6,7 +6,7 @@ import User from '../User';
 import Label from '../Label';
 import BoardMembershipsPopup from '../BoardMembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
-import { ButtonTmp } from '../Utils/Button';
+import { Button } from '../Utils/Button';
 
 import styles from './Filters.module.scss';
 
@@ -40,10 +40,10 @@ const Filters = React.memo(
             onUserSelect={onUserAdd}
             onUserDeselect={onUserRemove}
           >
-            <ButtonTmp title={t('common.filterByMembers', { context: 'title' })} className={styles.filterButton}>
+            <Button title={t('common.filterByMembers', { context: 'title' })} className={styles.filterButton}>
               <span className={styles.filterTitle}>{`${t('common.members')}:`}</span>
               {users.length === 0 && <span className={styles.filterLabel}>{t('common.all')}</span>}
-            </ButtonTmp>
+            </Button>
           </BoardMembershipsPopup>
           {users.map((user) => (
             <span key={user.id} className={styles.filterItem}>
@@ -66,10 +66,10 @@ const Filters = React.memo(
             onMove={onLabelMove}
             onDelete={onLabelDelete}
           >
-            <ButtonTmp title={t('common.filterByLabels', { context: 'title' })} className={styles.filterButton}>
+            <Button title={t('common.filterByLabels', { context: 'title' })} className={styles.filterButton}>
               <span className={styles.filterTitle}>{`${t('common.labels')}:`}</span>
               {labels.length === 0 && <span className={styles.filterLabel}>{t('common.all')}</span>}
-            </ButtonTmp>
+            </Button>
           </LabelsPopup>
           {labels.map((label) => (
             <span key={label.id} className={styles.filterItem}>

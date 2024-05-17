@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 import { Form } from 'semantic-ui-react';
 import { Input, Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 
@@ -100,8 +100,8 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
           </div>
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gStyles.controlsSpaceBetween}>
-            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} />
           </div>
         </Form>
       </Popup.Content>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Form, Header, Modal } from 'semantic-ui-react';
 import { Input } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 
@@ -48,7 +48,7 @@ const ProjectAddModal = React.memo(({ defaultData, isSubmitting, onCreate, onClo
         <Form onSubmit={handleSubmit}>
           <Input fluid inverted ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.createProject')} disabled={isSubmitting} />
+            <Button style={ButtonStyle.Submit} content={t('action.createProject')} disabled={isSubmitting} />
           </div>
         </Form>
       </Modal.Content>

@@ -7,7 +7,7 @@ import { Form, Input } from 'semantic-ui-react';
 import { withPopup } from '../../lib/popup';
 import { Popup } from '../../lib/custom-ui';
 import { useForm } from '../../hooks';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import styles from './Connections.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -73,8 +73,8 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
         <Form onSubmit={handleSubmit}>
           <Input ref={inputRef} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={classNames(isError && styles.fieldError)} />
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} />
           </div>
         </Form>
       </Popup.Content>

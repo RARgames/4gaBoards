@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Input, Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useField, useSteps } from '../../hooks';
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -162,7 +162,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
             </Droppable>
           </DragDropContext>
         )}
-        {canEdit && <ButtonTmp style={ButtonStyle.Default} content={t('action.createNewLabel')} onClick={handleAddClick} className={styles.addButton} />}
+        {canEdit && <Button style={ButtonStyle.Default} content={t('action.createNewLabel')} onClick={handleAddClick} className={styles.addButton} />}
       </Popup.Content>
     </>
   );

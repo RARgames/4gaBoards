@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input, Popup } from '../../lib/custom-ui';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { isPassword } from '../../utils/validator';
@@ -101,7 +101,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
             </>
           )}
           <div className={gStyles.controls}>
-            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} />
           </div>
         </Form>
       </Popup.Content>

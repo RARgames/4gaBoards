@@ -7,7 +7,7 @@ import { ActivityTypes } from '../../../constants/Enums';
 import CommentAdd from './CommentAdd';
 import Item from './Item';
 import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import styles from './Activities.module.scss';
 import cStyles from '../CardModal.module.scss';
@@ -64,17 +64,12 @@ const Activities = React.memo(
         <div className={cStyles.moduleHeader}>
           <Icon type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
           {t('common.actions')}
-          <ButtonTmp style={ButtonStyle.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
+          <Button style={ButtonStyle.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
             <Icon type={commShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={styles.icon} />
-          </ButtonTmp>
-          <ButtonTmp
-            style={ButtonStyle.Icon}
-            title={isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')}
-            onClick={handleToggleDetailsClick}
-            className={styles.toggleButton}
-          >
+          </Button>
+          <Button style={ButtonStyle.Icon} title={isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')} onClick={handleToggleDetailsClick} className={styles.toggleButton}>
             {isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')}
-          </ButtonTmp>
+          </Button>
         </div>
         <div className={cStyles.moduleBody}>
           {commShown && (

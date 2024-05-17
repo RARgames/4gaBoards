@@ -3,7 +3,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Popup as SemanticUIPopup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { ButtonTmp, ButtonStyle } from '../../components/Utils/Button'; // TODO temp - change or move PopupHeader to utils
+import { Button, ButtonStyle } from '../../components/Utils/Button'; // TODO temp - change or move PopupHeader to utils
 import { Icon, IconType, IconSize } from '../../components/Utils/Icon'; // TODO temp - change or move PopupHeader to utils
 
 import styles from './Popup.module.css';
@@ -103,9 +103,9 @@ export default (WrappedComponent, defaultProps) => {
         {...defaultProps} // eslint-disable-line react/jsx-props-no-spreading
       >
         <div ref={handleContentRef}>
-          <ButtonTmp style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={styles.closeButton}>
+          <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={styles.closeButton}>
             <Icon type={IconType.Close} size={IconSize.Size14} />
-          </ButtonTmp>
+          </Button>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <WrappedComponent {...props} onClose={handleClose} />
         </div>

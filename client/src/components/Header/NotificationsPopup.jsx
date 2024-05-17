@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { withPopup } from '../../lib/popup';
 import { Popup } from '../../lib/custom-ui';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import Paths from '../../constants/Paths';
 import { ActivityTypes } from '../../constants/Enums';
@@ -93,9 +93,9 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
                 ) : (
                   <div className={styles.itemDeleted}>{t('common.cardOrActionAreDeleted')}</div>
                 )}
-                <ButtonTmp style={ButtonStyle.Icon} onClick={() => handleDelete(item.id)} className={styles.itemButton}>
+                <Button style={ButtonStyle.Icon} onClick={() => handleDelete(item.id)} className={styles.itemButton}>
                   <Icon type={IconType.Trash} size={IconSize.Size14} />
-                </ButtonTmp>
+                </Button>
               </div>
             ))}
           </div>

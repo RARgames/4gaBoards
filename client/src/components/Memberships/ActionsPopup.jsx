@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { withPopup } from '../../lib/popup';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import { useSteps } from '../../hooks';
 import User from '../User';
@@ -93,10 +93,10 @@ const ActionsStep = React.memo(
           <div className={styles.name}>{membership.user.name}</div>
           <div className={styles.email}>{membership.user.email}</div>
         </span>
-        {permissionsSelectStep && canEdit && <ButtonTmp style={ButtonStyle.Default} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} className={styles.button} />}
+        {permissionsSelectStep && canEdit && <Button style={ButtonStyle.Default} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} className={styles.button} />}
         {membership.user.isCurrent
-          ? canLeave && <ButtonTmp style={ButtonStyle.Default} content={t(leaveButtonContent)} onClick={handleDeleteClick} className={styles.button} />
-          : canEdit && <ButtonTmp style={ButtonStyle.Default} content={t(deleteButtonContent)} onClick={handleDeleteClick} className={styles.button} />}
+          ? canLeave && <Button style={ButtonStyle.Default} content={t(leaveButtonContent)} onClick={handleDeleteClick} className={styles.button} />
+          : canEdit && <Button style={ButtonStyle.Default} content={t(deleteButtonContent)} onClick={handleDeleteClick} className={styles.button} />}
       </>
     );
   },

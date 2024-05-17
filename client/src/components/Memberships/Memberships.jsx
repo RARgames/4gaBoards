@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../Utils/Button';
 
 import AddPopup from './AddPopup';
 import ActionsPopup from './ActionsPopup';
@@ -60,9 +60,9 @@ const Memberships = React.memo(
         </span>
         {canEdit && (
           <AddPopup users={allUsers} currentUserIds={items.map((item) => item.user.id)} permissionsSelectStep={permissionsSelectStep} title={addTitle} onCreate={onCreate}>
-            <ButtonTmp style={ButtonStyle.Icon} title={t('action.addUser')} className={styles.addUser}>
+            <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={styles.addUser}>
               <Icon type={IconType.UserAdd} size={IconSize.Size20} />
-            </ButtonTmp>
+            </Button>
           </AddPopup>
         )}
       </>

@@ -6,7 +6,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { Checkbox } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
 import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
@@ -59,9 +59,9 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
                 </span>
                 {isPersisted && canEdit && (
                   <ActionsPopup onNameEdit={handleNameEdit} onDelete={onDelete}>
-                    <ButtonTmp style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target)}>
+                    <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target)}>
                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} />
-                    </ButtonTmp>
+                    </Button>
                   </ActionsPopup>
                 )}
               </div>
