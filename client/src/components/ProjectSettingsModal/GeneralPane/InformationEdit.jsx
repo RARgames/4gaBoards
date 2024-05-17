@@ -3,11 +3,13 @@ import pickBy from 'lodash/pickBy';
 import React, { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Input } from 'semantic-ui-react';
+import { Form, Input } from 'semantic-ui-react';
+import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
 
 import { useForm } from '../../../hooks';
 
 import styles from './InformationEdit.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
   const [t] = useTranslation();
@@ -40,7 +42,9 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
     <Form onSubmit={handleSubmit}>
       <div className={styles.text}>{t('common.title')}</div>
       <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
-      <Button positive disabled={dequal(cleanData, defaultData)} content={t('action.save')} />
+      <div className={gStyles.controls}>
+        <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} />
+      </div>
     </Form>
   );
 });

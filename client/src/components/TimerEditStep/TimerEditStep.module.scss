@@ -1,11 +1,4 @@
 :global(#app) {
-  .deleteButton {
-    bottom: 12px;
-    box-shadow: 0 1px 0 #cbcccc;
-    position: absolute;
-    right: 9px;
-  }
-
   .fieldBox {
     display: inline-block;
     margin: 0 4px 12px;
@@ -17,14 +10,24 @@
   }
 
   .iconButton {
-    background: transparent;
-    box-shadow: none;
     margin: 0 4px 0 1px;
     width: 36px;
 
-    &:hover {
-      background: #e9e9e9;
+    svg {
+      fill: var(--textColor3);
     }
+
+    &:hover {
+      svg {
+        fill: var(--textColor4);
+      }
+    }
+  }
+
+  .startStopIcon {
+    fill: var(--textColorWhite);
+    vertical-align: 0%;
+    margin-right: 4px;
   }
 
   .text {

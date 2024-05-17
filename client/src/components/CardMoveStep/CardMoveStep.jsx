@@ -1,12 +1,14 @@
 import React, { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Dropdown, Form } from 'semantic-ui-react';
+import { Dropdown, Form } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 
 import styles from './CardMoveStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {
   const [t] = useTranslation();
@@ -47,11 +49,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.moveCard', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.moveCard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.project')}</div>
@@ -108,7 +106,9 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               />
             </>
           )}
-          <Button positive content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} />
+          </div>
         </Form>
       </Popup.Content>
     </>

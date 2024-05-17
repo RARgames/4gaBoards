@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
-import { Button, Form, TextArea } from 'semantic-ui-react';
+import { Form, TextArea } from 'semantic-ui-react';
+import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
 
 import { useClosableForm, useField } from '../../../hooks';
 
@@ -32,7 +33,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     const cleanValue = value.trim();
 
     if (!cleanValue) {
-      field.current.ref.current.select();
+      field.current.focus();
       return;
     }
 
@@ -76,7 +77,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   useEffect(() => {
     if (isOpened) {
-      field.current.ref.current.focus();
+      field.current.focus();
     }
   }, [isOpened]);
 
@@ -106,8 +107,8 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
         onFocus={handleFocus}
       />
       <div className={gStyles.controls}>
-        <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button positive content={t('action.save')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );

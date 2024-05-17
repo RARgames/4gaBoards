@@ -40,11 +40,27 @@
   --backgroundGreenHover: #519839;
   --backgroundRed: #cf513d;
   --backgroundRedHover: #b04632;
+  --backgroundSubmitDisabled: #b4d9ab;
+  --backgroundCancelDisabled: #d9abab;
 
   .controls {
     height: 32px;
     margin-top: 5px;
     text-align: right;
+  }
+
+  .controlsSpaceBetween {
+    height: 32px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .controlsCenter {
+    height: 32px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
   }
 
   //TODO check if used

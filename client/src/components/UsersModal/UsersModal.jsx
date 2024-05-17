@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal, Table, Radio } from 'semantic-ui-react';
+import { Modal, Table, Radio } from 'semantic-ui-react';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import UserAddPopupContainer from '../../containers/UserAddPopupContainer';
 import Item from './Item';
@@ -162,9 +163,8 @@ const UsersModal = React.memo(
               <Radio toggle checked={registrationEnabled && ssoRegistrationEnabled} disabled={!registrationEnabled} onChange={handleSsoRegistrationEnabledChange} className={styles.radio} />
             </span>
           </div>
-          {/* only admin should see it */}
           <UserAddPopupContainer>
-            <Button positive content={t('action.addUser')} />
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.addUser')} />
           </UserAddPopupContainer>
         </Modal.Actions>
       </Modal>

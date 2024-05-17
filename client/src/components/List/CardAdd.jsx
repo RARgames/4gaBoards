@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import TextareaAutosize from 'react-textarea-autosize';
-import { Button, Form, TextArea } from 'semantic-ui-react';
+import { Form, TextArea } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useClosableForm, useForm } from '../../hooks';
 
@@ -121,8 +122,8 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
         onBlur={handleFieldBlur}
       />
       <div className={gStyles.controls}>
-        <Button type="button" negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button positive content={t('action.addCard')} className={gStyles.submitButton} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <ButtonTmp style={ButtonStyle.Submit} content={t('action.addCard')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
       </div>
     </Form>
   );

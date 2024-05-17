@@ -3,12 +3,14 @@ import omit from 'lodash/omit';
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Menu, Radio, Segment } from 'semantic-ui-react';
+import { Form, Menu, Radio, Segment } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
 
 import styles from './BoardMembershipPermissionsSelectStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, buttonContent, onSelect, onBack, onClose }) => {
   const [t] = useTranslation();
@@ -44,11 +46,7 @@ const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, b
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t(title, {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Menu secondary vertical className={styles.menu}>
@@ -66,7 +64,9 @@ const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, b
               <Radio toggle name="canComment" checked={data.canComment} label={t('common.canComment')} onChange={handleSettingChange} />
             </Segment>
           )}
-          <Button positive content={t(buttonContent)} />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Submit} content={t(buttonContent)} />
+          </div>
         </Form>
       </Popup.Content>
     </>

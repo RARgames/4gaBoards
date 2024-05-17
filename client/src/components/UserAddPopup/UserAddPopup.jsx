@@ -2,15 +2,17 @@ import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { usePrevious } from '../../lib/hooks';
 import { withPopup } from '../../lib/popup';
 import { Input, Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { isPassword, isUsername } from '../../utils/validator';
 
 import styles from './UserAddPopup.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -119,23 +121,9 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
 
   return (
     <>
-      <Popup.Header>
-        {t('common.addUser', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header>{t('common.addUser', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && (
-          <Message
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...{
-              [message.type]: true,
-            }}
-            visible
-            content={t(message.content)}
-            onDismiss={onMessageDismiss}
-          />
-        )}
+        {message && <Message {...{ [message.type]: true }} visible content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.email')}</div>
           <Input fluid ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
@@ -144,14 +132,12 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
           <div className={styles.text}>{t('common.name')}</div>
           <Input fluid ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={styles.text}>
-            {t('common.username')} (
-            {t('common.optional', {
-              context: 'inline',
-            })}
-            )
+            {t('common.username')} ({t('common.optional', { context: 'inline' })})
           </div>
           <Input fluid ref={usernameField} name="username" value={data.username} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
-          <Button positive content={t('action.addUser')} loading={isSubmitting} disabled={isSubmitting} />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} />
+          </div>
         </Form>
       </Popup.Content>
     </>

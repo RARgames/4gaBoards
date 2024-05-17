@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Button } from 'semantic-ui-react';
 import { Input, Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useField, useSteps } from '../../hooks';
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -118,11 +118,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t(title, {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Input fluid ref={searchField} value={search} placeholder={t('common.searchLabels')} icon="search" onChange={handleSearchChange} />
         {filteredItems.length > 0 && (
@@ -166,7 +162,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
             </Droppable>
           </DragDropContext>
         )}
-        {canEdit && <Button fluid content={t('action.createNewLabel')} className={styles.addButton} onClick={handleAddClick} />}
+        {canEdit && <ButtonTmp style={ButtonStyle.Default} content={t('action.createNewLabel')} onClick={handleAddClick} className={styles.addButton} />}
       </Popup.Content>
     </>
   );

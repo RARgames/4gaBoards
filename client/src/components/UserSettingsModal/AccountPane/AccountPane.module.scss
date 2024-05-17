@@ -24,6 +24,10 @@
     text-align: left;
     text-decoration: underline;
     width: 100%;
+
+    &:hover {
+      color: #6b808c;
+    }
   }
 
   .wrapper {

@@ -1,10 +1,10 @@
 import React, { useCallback, useImperativeHandle, useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'semantic-ui-react';
 import MDEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
 import { useLocalStorage } from '../../hooks';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -215,8 +215,8 @@ const DescriptionEdit = React.forwardRef(
           // TODO add full functionality to mention and issue
         />
         <div className={gStyles.controls}>
-          <Button negative content={t('action.cancel')} className={gStyles.cancelButton} onClick={handleCancel} />
-          <Button positive content={t('action.save')} className={gStyles.submitButton} onClick={handleSubmit} />
+          <ButtonTmp style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+          <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
         </div>
       </>
     );

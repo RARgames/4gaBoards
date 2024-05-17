@@ -2,13 +2,15 @@ import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input, Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 
 import styles from './UserEmailEditStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -114,23 +116,9 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.editEmail', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.editEmail', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && (
-          <Message
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...{
-              [message.type]: true,
-            }}
-            visible
-            content={t(message.content)}
-            onDismiss={onMessageDismiss}
-          />
-        )}
+        {message && <Message {...{ [message.type]: true }} visible content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newEmail')}</div>
           <Input fluid ref={emailField} name="email" value={data.email} placeholder={email} className={styles.field} onChange={handleFieldChange} />
@@ -140,7 +128,9 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
               <Input.Password fluid ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
             </>
           )}
-          <Button positive content={t('action.save')} loading={isSubmitting} disabled={isSubmitting} />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} />
+          </div>
         </Form>
       </Popup.Content>
     </>

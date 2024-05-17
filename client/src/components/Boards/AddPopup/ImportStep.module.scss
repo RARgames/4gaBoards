@@ -9,9 +9,21 @@
     text-align: left;
     transition: none;
 
+    svg {
+      fill: #6b808c;
+    }
+
     &:hover {
       background: rgba(9, 30, 66, 0.08);
       color: #092d42;
+
+      svg {
+        fill: #092d42;
+      }
+    }
+
+    .icon {
+      margin-right: 4px;
     }
   }
 }

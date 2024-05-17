@@ -35,9 +35,7 @@ const ActionsStep = React.memo(({ onNameEdit, onCardAdd, onDelete, onClose }) =>
   if (step && step.type === StepTypes.DELETE) {
     return (
       <DeleteStep
-        title={t('common.deleteList', {
-          context: 'title',
-        })}
+        title={t('common.deleteList', { context: 'title' })}
         content={t('common.areYouSureYouWantToDeleteThisList')}
         buttonContent={t('action.deleteList')}
         onConfirm={onDelete}
@@ -48,27 +46,17 @@ const ActionsStep = React.memo(({ onNameEdit, onCardAdd, onDelete, onClose }) =>
 
   return (
     <>
-      <Popup.Header>
-        {t('common.listActions', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header>{t('common.listActions', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Menu secondary vertical className={styles.menu}>
           <Menu.Item className={styles.menuItem} onClick={handleEditNameClick}>
-            {t('action.editTitle', {
-              context: 'title',
-            })}
+            {t('action.editTitle', { context: 'title' })}
           </Menu.Item>
           <Menu.Item className={styles.menuItem} onClick={handleAddCardClick}>
-            {t('action.addCard', {
-              context: 'title',
-            })}
+            {t('action.addCard', { context: 'title' })}
           </Menu.Item>
           <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-            {t('action.deleteList', {
-              context: 'title',
-            })}
+            {t('action.deleteList', { context: 'title' })}
           </Menu.Item>
         </Menu>
       </Popup.Content>

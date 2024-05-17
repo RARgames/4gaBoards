@@ -3,9 +3,10 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
 import { withPopup } from '../../lib/popup';
 import { Popup } from '../../lib/custom-ui';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import Paths from '../../constants/Paths';
 import { ActivityTypes } from '../../constants/Enums';
@@ -78,11 +79,7 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
 
   return (
     <>
-      <Popup.Header>
-        {t('common.notifications', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header>{t('common.notifications', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {items.length > 0 ? (
           <div className={styles.wrapper}>
@@ -96,7 +93,9 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
                 ) : (
                   <div className={styles.itemDeleted}>{t('common.cardOrActionAreDeleted')}</div>
                 )}
-                <Button type="button" icon="trash alternate outline" className={styles.itemButton} onClick={() => handleDelete(item.id)} />
+                <ButtonTmp style={ButtonStyle.Icon} onClick={() => handleDelete(item.id)} className={styles.itemButton}>
+                  <Icon type={IconType.Trash} size={IconSize.Size14} />
+                </ButtonTmp>
               </div>
             ))}
           </div>

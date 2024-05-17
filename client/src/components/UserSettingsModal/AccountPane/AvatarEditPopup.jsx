@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'semantic-ui-react';
 import { withPopup } from '../../../lib/popup';
 import { FilePicker, Popup } from '../../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
 
 import styles from './AvatarEditPopup.module.scss';
 
@@ -34,18 +34,14 @@ const AvatarEditStep = React.memo(({ defaultValue, onUpdate, onDelete, onClose }
 
   return (
     <>
-      <Popup.Header>
-        {t('common.editAvatar', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header>{t('common.editAvatar', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <div className={styles.action}>
           <FilePicker accept="image/*" onSelect={handleFileSelect}>
-            <Button ref={field} content={t('action.uploadNewAvatar')} className={styles.actionButton} />
+            <ButtonTmp ref={field} style={ButtonStyle.Default} content={t('action.uploadNewAvatar')} className={styles.actionButton} />
           </FilePicker>
         </div>
-        {defaultValue && <Button negative content={t('action.deleteAvatar')} onClick={handleDeleteClick} />}
+        {defaultValue && <ButtonTmp style={ButtonStyle.Cancel} content={t('action.deleteAvatar')} onClick={handleDeleteClick} />}
       </Popup.Content>
     </>
   );

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import AddPopup from './AddPopup';
 import ActionsPopup from './ActionsPopup';
@@ -28,6 +30,8 @@ const Memberships = React.memo(
     onUpdate,
     onDelete,
   }) => {
+    const [t] = useTranslation();
+
     return (
       <>
         <span className={styles.users}>
@@ -56,7 +60,9 @@ const Memberships = React.memo(
         </span>
         {canEdit && (
           <AddPopup users={allUsers} currentUserIds={items.map((item) => item.user.id)} permissionsSelectStep={permissionsSelectStep} title={addTitle} onCreate={onCreate}>
-            <Button icon="add user" className={styles.addUser} />
+            <ButtonTmp style={ButtonStyle.Icon} title={t('action.addUser')} className={styles.addUser}>
+              <Icon type={IconType.UserAdd} size={IconSize.Size20} />
+            </ButtonTmp>
           </AddPopup>
         )}
       </>

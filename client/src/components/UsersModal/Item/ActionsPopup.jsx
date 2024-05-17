@@ -93,9 +93,7 @@ const ActionsStep = React.memo(
         case StepTypes.DELETE:
           return (
             <DeleteStep
-              title={t('common.deleteUser', {
-                context: 'title',
-              })}
+              title={t('common.deleteUser', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisUser')}
               buttonContent={t('action.deleteUser')}
               onConfirm={onDelete}
@@ -108,37 +106,23 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Popup.Header>
-          {t('common.userActions', {
-            context: 'title',
-          })}
-        </Popup.Header>
+        <Popup.Header>{t('common.userActions', { context: 'title' })}</Popup.Header>
         <Popup.Content>
           <Menu secondary vertical className={styles.menu}>
             <Menu.Item className={styles.menuItem} onClick={handleEditInformationClick}>
-              {t('action.editInformation', {
-                context: 'title',
-              })}
+              {t('action.editInformation', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleEditUsernameClick}>
-              {t('action.editUsername', {
-                context: 'title',
-              })}
+              {t('action.editUsername', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleEditEmailClick}>
-              {t('action.editEmail', {
-                context: 'title',
-              })}
+              {t('action.editEmail', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleEditPasswordClick}>
-              {t('action.editPassword', {
-                context: 'title',
-              })}
+              {t('action.editPassword', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-              {t('action.deleteUser', {
-                context: 'title',
-              })}
+              {t('action.deleteUser', { context: 'title' })}
             </Menu.Item>
           </Menu>
         </Popup.Content>

@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Divider, Dropdown, Header, Tab } from 'semantic-ui-react';
+import { Divider, Dropdown, Header, Tab } from 'semantic-ui-react';
+import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
 
 import locales from '../../../locales';
 import AvatarEditPopup from './AvatarEditPopup';
@@ -67,11 +68,7 @@ const AccountPane = React.memo(
           onUpdate={onUpdate}
         />
         <Divider horizontal section>
-          <Header as="h4">
-            {t('common.language', {
-              context: 'title',
-            })}
-          </Header>
+          <Header as="h4"> {t('common.language', { context: 'title' })}</Header>
         </Divider>
         <Dropdown
           fluid
@@ -93,11 +90,7 @@ const AccountPane = React.memo(
           onChange={handleLanguageChange}
         />
         <Divider horizontal section>
-          <Header as="h4">
-            {t('common.authentication', {
-              context: 'title',
-            })}
-          </Header>
+          <Header as="h4"> {t('common.authentication', { context: 'title' })}</Header>
         </Divider>
         <div className={styles.action}>
           <UserUsernameEditPopup
@@ -109,11 +102,7 @@ const AccountPane = React.memo(
             onUpdate={onUsernameUpdate}
             onMessageDismiss={onUsernameUpdateMessageDismiss}
           >
-            <Button className={styles.actionButton}>
-              {t('action.editUsername', {
-                context: 'title',
-              })}
-            </Button>
+            <ButtonTmp style={ButtonStyle.Default} content={t('action.editUsername', { context: 'title' })} className={styles.actionButton} />
           </UserUsernameEditPopup>
         </div>
         <div className={styles.action}>
@@ -126,11 +115,7 @@ const AccountPane = React.memo(
             onUpdate={onEmailUpdate}
             onMessageDismiss={onEmailUpdateMessageDismiss}
           >
-            <Button className={styles.actionButton}>
-              {t('action.editEmail', {
-                context: 'title',
-              })}
-            </Button>
+            <ButtonTmp style={ButtonStyle.Default} content={t('action.editEmail', { context: 'title' })} className={styles.actionButton} />
           </UserEmailEditPopup>
         </div>
         <div className={styles.action}>
@@ -142,11 +127,7 @@ const AccountPane = React.memo(
             onUpdate={onPasswordUpdate}
             onMessageDismiss={onPasswordUpdateMessageDismiss}
           >
-            <Button className={styles.actionButton}>
-              {t('action.editPassword', {
-                context: 'title',
-              })}
-            </Button>
+            <ButtonTmp style={ButtonStyle.Default} content={t('action.editPassword', { context: 'title' })} className={styles.actionButton} />
           </UserPasswordEditPopup>
         </div>
       </Tab.Pane>

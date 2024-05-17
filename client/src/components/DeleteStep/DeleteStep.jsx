@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import styles from './DeleteStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const DeleteStep = React.memo(({ title, content, buttonContent, onConfirm, onBack }) => (
   <>
     <Popup.Header onBack={onBack}>{title}</Popup.Header>
     <Popup.Content>
       <div className={styles.content}>{content}</div>
-      <Button fluid negative content={buttonContent} onClick={onConfirm} />
+      <div className={gStyles.controlsCenter}>
+        <ButtonTmp style={ButtonStyle.Cancel} content={buttonContent} onClick={onConfirm} className={styles.deleteButton} />
+      </div>
     </Popup.Content>
   </>
 ));

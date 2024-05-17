@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import { Form, Header, Modal } from 'semantic-ui-react';
 import { Input } from '../../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../../Utils/Button';
 
 import { useForm } from '../../../hooks';
 
 import styles from './TextFileAddModal.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
   const [t] = useTranslation();
@@ -44,14 +46,14 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
     <Modal open basic centered closeIcon size="tiny" onClose={onClose}>
       <Modal.Content>
         <Header inverted size="huge">
-          {t('common.createTextFile', {
-            context: 'title',
-          })}
+          {t('common.createTextFile', { context: 'title' })}
         </Header>
         <p>{t('common.enterFilename')}</p>
         <Form onSubmit={handleSubmit}>
           <Input fluid inverted ref={nameField} name="name" value={data.name} label=".txt" labelPosition="right" className={styles.field} onChange={handleFieldChange} />
-          <Button inverted color="green" icon="checkmark" content={t('action.createFile')} floated="right" />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.createFile')} />
+          </div>
         </Form>
       </Modal.Content>
     </Modal>

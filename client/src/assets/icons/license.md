@@ -4,6 +4,7 @@ PD -> Public Domain
 
 Some icons might be slightly edited.
 
+AngleLeft
 Add - W
 ArrowDown
 Attach
@@ -26,5 +27,8 @@ Play
 PlusMath
 Settings
 Trash
+Trello
 TriangleDown
+UserAdd
 Users - PD
+WindowMaximize

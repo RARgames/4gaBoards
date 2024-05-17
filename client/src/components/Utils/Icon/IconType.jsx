@@ -1,3 +1,4 @@
+import { ReactComponent as AngleLeft } from '../../../assets/icons/AngleLeft.svg';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/ArrowDown.svg';
 import { ReactComponent as Attach } from '../../../assets/icons/Attach.svg';
 import { ReactComponent as BarsStaggered } from '../../../assets/icons/BarsStaggered.svg';
@@ -19,11 +20,15 @@ import { ReactComponent as Plus } from '../../../assets/icons/Plus.svg';
 import { ReactComponent as PlusMath } from '../../../assets/icons/PlusMath.svg';
 import { ReactComponent as Settings } from '../../../assets/icons/Settings.svg';
 import { ReactComponent as Trash } from '../../../assets/icons/Trash.svg';
+import { ReactComponent as Trello } from '../../../assets/icons/Trello.svg';
 import { ReactComponent as TriangleDown } from '../../../assets/icons/TriangleDown.svg';
+import { ReactComponent as UserAdd } from '../../../assets/icons/UserAdd.svg';
 import { ReactComponent as Users } from '../../../assets/icons/Users.svg';
 import { ReactComponent as WindowMaximize } from '../../../assets/icons/WindowMaximize.svg';
 
 const IconType = {
+  AngleLeft,
+  UserAdd,
   ArrowDown,
   Attach,
   BarsStaggered,
@@ -45,6 +50,7 @@ const IconType = {
   PlusMath,
   Settings,
   Trash,
+  Trello,
   TriangleDown,
   Users,
   WindowMaximize,

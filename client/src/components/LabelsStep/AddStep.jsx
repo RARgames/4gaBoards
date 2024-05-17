@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 
-import styles from './AddStep.module.scss';
+// import styles from './AddStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();
@@ -32,15 +34,13 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.createLabel', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.createLabel', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Editor data={data} onFieldChange={handleFieldChange} />
-          <Button positive content={t('action.createLabel')} className={styles.submitButton} />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.createLabel')} />
+          </div>
         </Form>
       </Popup.Content>
     </>

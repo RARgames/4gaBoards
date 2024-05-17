@@ -2,12 +2,14 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
-import { Button, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { Input, Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 
 import styles from './DueDateEditStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
@@ -87,11 +89,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.editDueDate', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.editDueDate', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <div className={styles.fieldWrapper}>
@@ -101,9 +99,11 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
             </div>
           </div>
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
-          <Button positive content={t('action.save')} />
+          <div className={gStyles.controlsSpaceBetween}>
+            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />
+          </div>
         </Form>
-        <Button negative content={t('action.remove')} className={styles.deleteButton} onClick={handleClearClick} />
       </Popup.Content>
     </>
   );

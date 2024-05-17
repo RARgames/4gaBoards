@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { dequal } from 'dequal';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Input, Menu } from 'semantic-ui-react';
+import { Form, Input } from 'semantic-ui-react';
 import { withPopup } from '../../lib/popup';
 import { Popup } from '../../lib/custom-ui';
 import { useForm } from '../../hooks';

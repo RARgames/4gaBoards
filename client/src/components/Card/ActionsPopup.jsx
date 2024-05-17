@@ -142,9 +142,7 @@ const ActionsStep = React.memo(
         case StepTypes.DELETE:
           return (
             <DeleteStep
-              title={t('common.deleteCard', {
-                context: 'title',
-              })}
+              title={t('common.deleteCard', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisCard')}
               buttonContent={t('action.deleteCard')}
               onConfirm={onDelete}
@@ -157,52 +155,32 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Popup.Header>
-          {t('common.cardActions', {
-            context: 'title',
-          })}
-        </Popup.Header>
+        <Popup.Header>{t('common.cardActions', { context: 'title' })}</Popup.Header>
         <Popup.Content>
           <Menu secondary vertical className={styles.menu}>
             <Menu.Item className={styles.menuItem} onClick={handleEditNameClick}>
-              {t('action.editTitle', {
-                context: 'title',
-              })}
+              {t('action.editTitle', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleUsersClick}>
-              {t('common.members', {
-                context: 'title',
-              })}
+              {t('common.members', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleLabelsClick}>
-              {t('common.labels', {
-                context: 'title',
-              })}
+              {t('common.labels', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleEditDueDateClick}>
-              {t('action.editDueDate', {
-                context: 'title',
-              })}
+              {t('action.editDueDate', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleEditTimerClick}>
-              {t('action.editTimer', {
-                context: 'title',
-              })}
+              {t('action.editTimer', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleMoveClick}>
-              {t('action.moveCard', {
-                context: 'title',
-              })}
+              {t('action.moveCard', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleDuplicateClick}>
-              {t('action.duplicateCard', {
-                context: 'title',
-              })}
+              {t('action.duplicateCard', { context: 'title' })}
             </Menu.Item>
             <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-              {t('action.deleteCard', {
-                context: 'title',
-              })}
+              {t('action.deleteCard', { context: 'title' })}
             </Menu.Item>
           </Menu>
         </Popup.Content>

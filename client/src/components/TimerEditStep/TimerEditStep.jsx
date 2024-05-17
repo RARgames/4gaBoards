@@ -2,14 +2,17 @@ import { dequal } from 'dequal';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { useToggle } from '../../lib/hooks';
 import { Input, Popup } from '../../lib/custom-ui';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
 
 import styles from './TimerEditStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const createData = (timer) => {
   if (!timer) {
@@ -101,11 +104,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.editTimer', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.editTimer', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <div className={styles.fieldWrapper}>
@@ -121,17 +120,27 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={styles.text}>{t('common.seconds')}</div>
               <Input.Mask ref={secondsField} name="seconds" value={data.seconds} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
             </div>
-            <Button type="button" icon={isEditing ? 'close' : 'edit'} className={styles.iconButton} onClick={handleToggleEditingClick} />
+            <ButtonTmp style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={styles.iconButton}>
+              <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size10} />
+            </ButtonTmp>
           </div>
-          {isEditing && <Button positive content={t('action.save')} />}
+          <div className={gStyles.controlsSpaceBetween}>
+            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
+            {isEditing && <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />}
+            {!isEditing &&
+              (defaultValue && defaultValue.startedAt ? (
+                <ButtonTmp style={ButtonStyle.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>
+                  <Icon type={IconType.Pause} size={IconSize.Size10} className={styles.startStopIcon} />
+                  {t('action.stop')}
+                </ButtonTmp>
+              ) : (
+                <ButtonTmp style={ButtonStyle.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
+                  <Icon type={IconType.Play} size={IconSize.Size10} className={styles.startStopIcon} />
+                  {t('action.stop')}
+                </ButtonTmp>
+              ))}
+          </div>
         </Form>
-        {!isEditing &&
-          (defaultValue && defaultValue.startedAt ? (
-            <Button positive content={t('action.stop')} icon="pause" onClick={handleStopClick} />
-          ) : (
-            <Button positive content={t('action.start')} icon="play" onClick={handleStartClick} />
-          ))}
-        <Button negative content={t('action.remove')} className={styles.deleteButton} onClick={handleClearClick} />
       </Popup.Content>
     </>
   );

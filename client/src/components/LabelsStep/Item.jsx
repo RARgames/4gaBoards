@@ -5,12 +5,16 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-import { Button } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import styles from './Item.module.scss';
 import globalStyles from '../../styles.module.scss';
 
 const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
+  const [t] = useTranslation();
+
   const handleToggleClick = useCallback(() => {
     if (isPersisted) {
       if (isActive) {
@@ -27,8 +31,7 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
         const contentNode = (
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...draggableProps} ref={innerRef} className={styles.wrapper}>
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-                                           jsx-a11y/no-static-element-interactions */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <span
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
               className={classNames(styles.name, isActive && styles.nameActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
@@ -36,7 +39,11 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
             >
               {name}
             </span>
-            {canEdit && <Button icon="pencil" size="small" floated="right" disabled={!isPersisted} className={styles.editButton} onClick={onEdit} />}
+            {canEdit && (
+              <ButtonTmp style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={styles.editButton}>
+                <Icon type={IconType.Pencil} size={IconSize.Size14} />
+              </ButtonTmp>
+            )}
           </div>
         );
 

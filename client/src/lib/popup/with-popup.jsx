@@ -1,12 +1,16 @@
 import { ResizeObserver } from '@juggle/resize-observer';
 import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popup as SemanticUIPopup } from 'semantic-ui-react';
+import { Popup as SemanticUIPopup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { ButtonTmp, ButtonStyle } from '../../components/Utils/Button'; // TODO temp - change or move PopupHeader to utils
+import { Icon, IconType, IconSize } from '../../components/Utils/Icon'; // TODO temp - change or move PopupHeader to utils
 
 import styles from './Popup.module.css';
 
 export default (WrappedComponent, defaultProps) => {
   const Popup = React.memo(({ children, onClose, ...props }) => {
+    const [t] = useTranslation();
     const [isOpened, setIsOpened] = useState(false);
 
     const wrapper = useRef(null);
@@ -99,7 +103,9 @@ export default (WrappedComponent, defaultProps) => {
         {...defaultProps} // eslint-disable-line react/jsx-props-no-spreading
       >
         <div ref={handleContentRef}>
-          <Button icon="close" onClick={handleClose} className={styles.closeButton} />
+          <ButtonTmp style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={styles.closeButton}>
+            <Icon type={IconType.Close} size={IconSize.Size14} />
+          </ButtonTmp>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <WrappedComponent {...props} onClose={handleClose} />
         </div>

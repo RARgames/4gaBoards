@@ -2,15 +2,17 @@ import { dequal } from 'dequal';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm, useSteps } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 import DeleteStep from '../DeleteStep';
 
-import styles from './EditStep.module.scss';
+// import styles from './EditStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
@@ -47,9 +49,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   if (step && step.type === StepTypes.DELETE) {
     return (
       <DeleteStep
-        title={t('common.deleteLabel', {
-          context: 'title',
-        })}
+        title={t('common.deleteLabel', { context: 'title' })}
         content={t('common.areYouSureYouWantToDeleteThisLabel')}
         buttonContent={t('action.deleteLabel')}
         onConfirm={onDelete}
@@ -60,17 +60,15 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.editLabel', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.editLabel', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Editor data={data} onFieldChange={handleFieldChange} />
-          <Button positive content={t('action.save')} />
+          <div className={gStyles.controlsSpaceBetween}>
+            <ButtonTmp style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} />
+          </div>
         </Form>
-        <Button content={t('action.delete')} className={styles.deleteButton} onClick={handleDeleteClick} />
       </Popup.Content>
     </>
   );

@@ -2,14 +2,16 @@ import omit from 'lodash/omit';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input, Popup } from '../../lib/custom-ui';
+import { ButtonTmp, ButtonStyle } from '../Utils/Button';
 
 import { useForm } from '../../hooks';
 import { isPassword } from '../../utils/validator';
 
 import styles from './UserPasswordEditStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -86,23 +88,9 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.editPassword', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.editPassword', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && (
-          <Message
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...{
-              [message.type]: true,
-            }}
-            visible
-            content={t(message.content)}
-            onDismiss={onMessageDismiss}
-          />
-        )}
+        {message && <Message {...{ [message.type]: true }} visible content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newPassword')}</div>
           <Input.Password withStrengthBar fluid ref={passwordField} name="password" value={data.password} className={styles.field} onChange={handleFieldChange} />
@@ -112,7 +100,9 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
               <Input.Password fluid ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
             </>
           )}
-          <Button positive content={t('action.save')} loading={isSubmitting} disabled={isSubmitting} />
+          <div className={gStyles.controls}>
+            <ButtonTmp style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} />
+          </div>
         </Form>
       </Popup.Content>
     </>

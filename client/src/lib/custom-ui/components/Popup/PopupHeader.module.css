@@ -8,6 +8,16 @@
   top: 0;
   width: 40px;
   z-index: 2000;
+
+  svg {
+    fill: #6d6d6d;
+  }
+
+  &:hover {
+    svg {
+      fill: #363636;
+    }
+  }
 }
 
 .content {
