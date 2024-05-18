@@ -18,11 +18,7 @@ const UserInformationEditStep = React.memo(({ defaultData, onUpdate, onBack, onC
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t('common.editInformation', {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.editInformation', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <UserInformationEdit defaultData={defaultData} onUpdate={handleUpdate} />
       </Popup.Content>
