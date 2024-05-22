@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Radio, RadioSize } from '../Utils/Radio';
+import { Radio, RadioSize } from '../../Utils/Radio';
 
 import styles from './InstanceSettings.module.scss';
 

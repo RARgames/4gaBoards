@@ -3,15 +3,15 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Menu } from 'semantic-ui-react';
-import { withPopup } from '../../../lib/popup';
-import { Popup } from '../../../lib/custom-ui';
+import { withPopup } from '../../../../lib/popup';
+import { Popup } from '../../../../lib/custom-ui';
 
-import { useSteps } from '../../../hooks';
-import UserInformationEditStep from '../../UserInformationEditStep';
-import UserUsernameEditStep from '../../UserUsernameEditStep';
-import UserEmailEditStep from '../../UserEmailEditStep';
-import UserPasswordEditStep from '../../UserPasswordEditStep';
-import DeleteStep from '../../DeleteStep';
+import { useSteps } from '../../../../hooks';
+import UserInformationEditStep from '../../../UserInformationEditStep';
+import UserUsernameEditStep from '../../../UserUsernameEditStep';
+import UserEmailEditStep from '../../../UserEmailEditStep';
+import UserPasswordEditStep from '../../../UserPasswordEditStep';
+import DeleteStep from '../../../DeleteStep';
 
 import styles from './ActionsPopup.module.scss';
 

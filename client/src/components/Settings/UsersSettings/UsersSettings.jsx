@@ -2,13 +2,13 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils/Button';
 
-import UserAddPopupContainer from '../../containers/UserAddPopupContainer';
+import UserAddPopupContainer from '../../../containers/UserAddPopupContainer';
 import Item from './Item';
 
 import styles from './UsersSettings.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 const UsersSettings = React.memo(
   ({ items, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete }) => {

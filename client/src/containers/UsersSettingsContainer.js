@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import selectors from '../selectors';
 import entryActions from '../entry-actions';
-import UsersSettings from '../components/UsersSettings';
+import UsersSettings from '../components/Settings/UsersSettings';
 
 const mapStateToProps = (state) => {
   const users = selectors.selectUsersExceptCurrent(state);

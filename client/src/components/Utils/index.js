@@ -1,5 +1,6 @@
-import Dropdown from './Dropdown';
 import { Button, ButtonStyle } from './Button';
+import Dropdown from './Dropdown';
 import { Icon, IconType, IconSize } from './Icon';
+import { Radio, RadioSize } from './Radio';
 
-export { Dropdown, Button, ButtonStyle, Icon, IconType, IconSize };
+export { Button, ButtonStyle, Dropdown, Icon, IconType, IconSize, Radio, RadioSize };

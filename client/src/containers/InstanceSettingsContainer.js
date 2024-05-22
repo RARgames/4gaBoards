@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import selectors from '../selectors';
 import entryActions from '../entry-actions';
-import InstanceSettings from '../components/InstanceSettings';
+import InstanceSettings from '../components/Settings/InstanceSettings';
 
 const mapStateToProps = (state) => {
   const coreSettings = selectors.selectCoreSettings(state);
