@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Radio, Table } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { Icon, IconType, IconSize } from '../../Utils/Icon';
 import { Button, ButtonStyle } from '../../Utils/Button';
+import { Radio, RadioSize } from '../../Utils/Radio';
 
 import ActionsPopup from './ActionsPopup';
 import User from '../../User';
@@ -42,19 +42,29 @@ const Item = React.memo(
     }, [isAdmin, onUpdate]);
 
     return (
-      <Table.Row>
-        <Table.Cell>
-          <User name={name} avatarUrl={avatarUrl} />
-        </Table.Cell>
-        <Table.Cell>{name}</Table.Cell>
-        <Table.Cell>{username || '-'}</Table.Cell>
-        <Table.Cell>{email}</Table.Cell>
-        <Table.Cell>
-          <Radio toggle checked={isAdmin} onChange={handleIsAdminChange} />
-        </Table.Cell>
-        <Table.Cell>{ssoGoogleEmail || '-'}</Table.Cell>
-        <Table.Cell>{lastLogin ? new Date(lastLogin).toLocaleString(undefined, options).replace(/,/g, '').split(' ').reverse().join(' ') : '-'}</Table.Cell>
-        <Table.Cell textAlign="right">
+      <tr className={styles.tableBodyRow}>
+        <td className={styles.tableCell}>
+          <User name={name} avatarUrl={avatarUrl} aria-label={t('common.userAvatar')} />
+        </td>
+        <td className={styles.tableCell} title={name}>
+          {name}
+        </td>
+        <td className={styles.tableCell} title={username}>
+          {username || '-'}
+        </td>
+        <td className={styles.tableCell} title={email}>
+          {email}
+        </td>
+        <td className={styles.tableCell}>
+          <Radio size={RadioSize.Size12} checked={isAdmin} title={t('common.toggleAdmin')} onChange={handleIsAdminChange} aria-label={t('common.toggleAdmin')} />
+        </td>
+        <td className={styles.tableCell} title={ssoGoogleEmail}>
+          {ssoGoogleEmail || '-'}
+        </td>
+        <td className={styles.tableCell} title={lastLogin}>
+          {lastLogin ? new Date(lastLogin).toLocaleString(undefined, options).replace(/,/g, '').split(' ').reverse().join(' ') : '-'}
+        </td>
+        <td className={styles.tableCell}>
           <ActionsPopup
             user={{
               email,
@@ -75,13 +85,14 @@ const Item = React.memo(
             onPasswordUpdate={onPasswordUpdate}
             onPasswordUpdateMessageDismiss={onPasswordUpdateMessageDismiss}
             onDelete={onDelete}
+            aria-label={t('common.editUser')}
           >
             <Button style={ButtonStyle.Icon} title={t('common.editUser')} className={styles.editbutton}>
               <Icon type={IconType.Pencil} size={IconSize.Size14} />
             </Button>
           </ActionsPopup>
-        </Table.Cell>
-      </Table.Row>
+        </td>
+      </tr>
     );
   },
 );

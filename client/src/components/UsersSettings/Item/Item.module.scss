@@ -1,0 +1,29 @@
+:global(#app) {
+  .editbutton {
+    svg {
+      fill: var(--textColor1)
+    }
+
+    &:hover {
+      svg {
+        fill: var(--textColor2)
+      }
+    }
+  }
+
+  .tableBodyRow {
+    background: var(--backgroundSidebarItem);
+
+    &:nth-of-type(odd) {
+      background: var(--backgroundSidebarItem2);
+    }
+  }
+
+  .tableCell {
+    padding: 8px;
+    text-align: left;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

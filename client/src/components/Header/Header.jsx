@@ -15,7 +15,7 @@ import logo from '../../assets/images/4gaboardsLogo128w-white.png';
 
 import styles from './Header.module.scss';
 
-const Header = React.memo(({ project, user, notifications, isLogouting, canEditProject, canEditUsers, onProjectSettingsClick, onUsersClick, onNotificationDelete, onUserSettingsClick, onLogout }) => {
+const Header = React.memo(({ project, user, notifications, isLogouting, canEditProject, canEditUsers, path, onProjectSettingsClick, onNotificationDelete, onUserSettingsClick, onLogout }) => {
   const [t] = useTranslation();
   const handleProjectSettingsClick = useCallback(() => {
     if (canEditProject) {
@@ -23,36 +23,52 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
     }
   }, [canEditProject, onProjectSettingsClick]);
 
+  const getPageHeaderTitle = useCallback(() => {
+    switch (path) {
+      case Paths.ROOT:
+        return t('common.dashboard');
+      case Paths.SETTINGS:
+        return t('common.settings');
+      case Paths.SETTINGS_PROFILE:
+        return t('common.settingsProfile');
+      case Paths.SETTINGS_ACCOUNT:
+        return t('common.settingsAccount');
+      case Paths.SETTINGS_AUTHENTICATION:
+        return t('common.settingsAuthentication');
+      case Paths.SETTINGS_ABOUT:
+        return t('common.settingsAbout');
+      case Paths.SETTINGS_USERS:
+        return t('common.settingsUsers');
+      case Paths.SETTINGS_INSTANCE:
+        return t('common.settingsInstance');
+      default:
+        return project ? project.name : null;
+    }
+  }, [path, project, t]);
+
   return (
     <div className={styles.wrapper}>
-      {!project && (
-        <Link to={Paths.ROOT} className={classNames(styles.logo, styles.title)}>
-          <img src={logo} alt="4ga Boards" className={styles.logoIcon} />
-        </Link>
-      )}
+      <Link to={Paths.ROOT} className={styles.logo} title={t('common.dashboard')}>
+        <img src={logo} alt="4ga Boards" className={styles.logoIcon} />
+      </Link>
       <Menu inverted size="large" className={styles.menu}>
-        {project && (
-          <Menu.Menu position="left">
-            <Menu.Item as={Link} to={Paths.ROOT} className={classNames(styles.item, styles.itemHoverable)}>
-              <Icon type={IconType.ArrowDown} size={IconSize.Size18} title={t('common.projects')} className={styles.projectsButton} />
-            </Menu.Item>
-            <Menu.Item className={classNames(styles.item, styles.title)}>{project.name}</Menu.Item>
-          </Menu.Menu>
-        )}
+        <Menu.Menu position="left">
+          <Menu.Item className={classNames(styles.item, styles.title)}>{getPageHeaderTitle()}</Menu.Item>
+        </Menu.Menu>
         <Menu.Menu position="right">
           {canEditProject && (
-            <Menu.Item className={classNames(styles.item, styles.itemHoverable)} onClick={handleProjectSettingsClick}>
-              <Icon type={IconType.Settings} size={IconSize.Size18} title={t('common.projectSettings')} />
+            <Menu.Item className={classNames(styles.item, styles.itemHoverable)} onClick={handleProjectSettingsClick} title={t('common.projectSettings')}>
+              <Icon type={IconType.Settings} size={IconSize.Size18} />
             </Menu.Item>
           )}
           {canEditUsers && (
-            <Menu.Item className={classNames(styles.item, styles.itemHoverable)} onClick={onUsersClick}>
-              <Icon type={IconType.Users} size={IconSize.Size18} title={t('common.users')} />
-            </Menu.Item>
+            <Link to={Paths.SETTINGS_USERS} className={classNames(styles.itemNew, styles.itemHoverable)} title={t('common.users')}>
+              <Icon type={IconType.Users} size={IconSize.Size18} className={styles.icon} />
+            </Link>
           )}
           <NotificationsPopup items={notifications} onDelete={onNotificationDelete}>
-            <Menu.Item className={classNames(styles.item, styles.itemHoverable)}>
-              <Icon type={IconType.Bell} size={IconSize.Size18} title={t('common.notifications')} />
+            <Menu.Item className={classNames(styles.item, styles.itemHoverable)} title={t('common.notifications')}>
+              <Icon type={IconType.Bell} size={IconSize.Size18} />
               {notifications.length > 0 && <span className={styles.notification}>{notifications.length}</span>}
             </Menu.Item>
           </NotificationsPopup>
@@ -76,8 +92,8 @@ Header.propTypes = {
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
   canEditUsers: PropTypes.bool.isRequired,
+  path: PropTypes.string.isRequired,
   onProjectSettingsClick: PropTypes.func.isRequired,
-  onUsersClick: PropTypes.func.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
   onUserSettingsClick: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,

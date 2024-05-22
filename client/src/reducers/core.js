@@ -45,15 +45,6 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         currentModal: payload.type,
       };
-    case ActionTypes.USER_UPDATE_HANDLE:
-      if (state.currentModal === ModalTypes.USERS && payload.isCurrent && !payload.user.isAdmin) {
-        return {
-          ...state,
-          currentModal: null,
-        };
-      }
-
-      return state;
     case ActionTypes.PROJECT_MANAGER_DELETE:
     case ActionTypes.PROJECT_MANAGER_DELETE_HANDLE:
       if (state.currentModal === ModalTypes.PROJECT_SETTINGS && payload.isCurrentUser && payload.isCurrentProject) {

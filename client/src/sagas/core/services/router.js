@@ -12,6 +12,10 @@ export function* goToRoot() {
   yield put(push(Paths.ROOT));
 }
 
+export function* goToSettingsHome() {
+  yield put(push(Paths.SETTINGS_PROFILE));
+}
+
 export function* goToProject(projectId) {
   yield put(push(Paths.PROJECTS.replace(':id', projectId)));
 }
@@ -35,6 +39,9 @@ export function* handleLocationChange() {
     case Paths.LOGIN:
     case Paths.REGISTER:
       yield call(goToRoot);
+      break;
+    case Paths.SETTINGS:
+      yield call(goToSettingsHome);
       break;
     default:
   }
@@ -96,6 +103,7 @@ export function* handleLocationChange() {
 
 export default {
   goToRoot,
+  goToSettingsHome,
   goToProject,
   goToBoard,
   goToCard,

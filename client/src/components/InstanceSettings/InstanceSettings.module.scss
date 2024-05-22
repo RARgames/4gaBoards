@@ -1,0 +1,29 @@
+:global(#app) {
+  .settings {
+    color: var(--textColor0)
+  }
+
+  .radio {
+    margin: 0 6px;
+  }
+
+  .wrapper {
+    height: 100%;
+    width: 100%;
+    margin: 20px 20px 20px 20px;
+  }
+
+  .header {
+    color: var(--textColor0);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .headerText {
+    display: inline;
+  }
+
+  .settingsItem {
+    margin-bottom: 20px;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Loader } from 'semantic-ui-react';
@@ -6,7 +6,6 @@ import { Loader } from 'semantic-ui-react';
 import ModalTypes from '../../constants/ModalTypes';
 import FixedContainer from '../../containers/FixedContainer';
 import StaticContainer from '../../containers/StaticContainer';
-import UsersModalContainer from '../../containers/UsersModalContainer';
 import UserSettingsModalContainer from '../../containers/UserSettingsModalContainer';
 import ProjectAddModalContainer from '../../containers/ProjectAddModalContainer';
 import Background from '../Background';
@@ -15,16 +14,16 @@ import styles from './Core.module.scss';
 
 const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, currentProject, currentBoard, currentCard }) => {
   const [t] = useTranslation();
-  const mainTitle = useRef(document.title);
+  const mainTitle = '4ga Boards';
 
   useEffect(() => {
-    let title = `${mainTitle.current}`;
+    let title = `${mainTitle}`;
     if (currentProject) {
-      title = `${currentProject.name} | ${mainTitle.current}`;
+      title = `${currentProject.name} | ${mainTitle}`;
       if (currentBoard) {
-        title = `${currentBoard.name} · ${currentProject.name} | ${mainTitle.current}`;
+        title = `${currentBoard.name} · ${currentProject.name} | ${mainTitle}`;
         if (currentCard) {
-          title = `${currentCard.name} - ${currentBoard.name} · ${currentProject.name} | ${mainTitle.current}`;
+          title = `${currentCard.name} - ${currentBoard.name} · ${currentProject.name} | ${mainTitle}`;
         }
       }
     }
@@ -42,7 +41,6 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, c
           )}
           <FixedContainer />
           <StaticContainer />
-          {currentModal === ModalTypes.USERS && <UsersModalContainer />}
           {currentModal === ModalTypes.USER_SETTINGS && <UserSettingsModalContainer />}
           {currentModal === ModalTypes.PROJECT_ADD && <ProjectAddModalContainer />}
         </>

@@ -8,7 +8,7 @@ import Paths from '../constants/Paths';
 import LoginContainer from '../containers/LoginContainer';
 import RegisterContainer from '../containers/RegisterContainer';
 import CoreContainer from '../containers/CoreContainer';
-import NotFound from './NotFound';
+import NotFoundContainer from '../containers/NotFoundContainer';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'photoswipe/dist/photoswipe.css';
@@ -27,7 +27,14 @@ function Root({ store, history }) {
           <Route path={Paths.PROJECTS} element={<CoreContainer />} />
           <Route path={Paths.BOARDS} element={<CoreContainer />} />
           <Route path={Paths.CARDS} element={<CoreContainer />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path={Paths.SETTINGS} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_PROFILE} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_ACCOUNT} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_AUTHENTICATION} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_ABOUT} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_INSTANCE} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_USERS} element={<CoreContainer />} />
+          <Route path="*" element={<NotFoundContainer />} />
         </Routes>
       </ReduxRouter>
     </Provider>

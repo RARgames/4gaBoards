@@ -1,4 +1,12 @@
 :global(#app) {
+  .itemNew {
+    padding: 0.9em 1.14em;
+  }
+
+  .icon {
+    vertical-align: middle;
+  }
+
   .item {
     cursor: auto;
     user-select: auto;
@@ -20,23 +28,12 @@
   }
 
   .logo {
-    color: #fff;
-    flex: 0 0 auto;
-    letter-spacing: 3.5px;
-    line-height: 50px;
-    padding: 0 16px;
-    text-transform: uppercase;
-    width: 200px;
-    height: 50px;
-
-    &:before {
-      background: none;
-    }
+    margin: 0 16px;
   }
 
   .logoIcon {
-    margin: 2px 0 0 2px;
-    height: 46px;
+    margin-top: 4px;
+    height: 40px;
   }
 
   .menu {

@@ -3,24 +3,19 @@ import { connect } from 'react-redux';
 
 import selectors from '../selectors';
 import entryActions from '../entry-actions';
-import UsersModal from '../components/UsersModal';
+import UsersSettings from '../components/UsersSettings';
 
 const mapStateToProps = (state) => {
   const users = selectors.selectUsersExceptCurrent(state);
-  const coreSettings = selectors.selectCoreSettings(state);
 
   return {
     items: users,
-    registrationEnabled: coreSettings.registrationEnabled,
-    localRegistrationEnabled: coreSettings.localRegistrationEnabled,
-    ssoRegistrationEnabled: coreSettings.ssoRegistrationEnabled,
   };
 };
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onCoreSettingsUpdate: entryActions.updateCoreSettings,
       onUpdate: entryActions.updateUser,
       onUsernameUpdate: entryActions.updateUserUsername,
       onUsernameUpdateMessageDismiss: entryActions.clearUserUsernameUpdateError,
@@ -29,9 +24,8 @@ const mapDispatchToProps = (dispatch) =>
       onPasswordUpdate: entryActions.updateUserPassword,
       onPasswordUpdateMessageDismiss: entryActions.clearUserPasswordUpdateError,
       onDelete: entryActions.deleteUser,
-      onClose: entryActions.closeModal,
     },
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersModal);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersSettings);

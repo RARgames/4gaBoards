@@ -42,6 +42,12 @@
   --backgroundRedHover: #b04632;
   --backgroundSubmitDisabled: #b4d9ab;
   --backgroundCancelDisabled: #d9abab;
+  --backgroundSidebar: #20303f;
+  --backgroundSidebarItem: #162029;
+  --backgroundSidebarItem2: #242d35;
+  --backgroundSidebarItemActive: #0c5064;
+  --radioBlue: #2196F3;
+  --backgroundRadio: #5b647e;
 
   .controls {
     height: 32px;
@@ -61,6 +67,23 @@
     margin-top: 5px;
     display: flex;
     justify-content: center;
+  }
+
+  //TODO to change to match dark theme
+  .scrollableXY {
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #7b7b7c #252527;
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #7b7b7c;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: #252527;
+    }
   }
 
   //TODO to change to match dark theme

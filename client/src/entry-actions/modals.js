@@ -1,13 +1,6 @@
 import EntryActionTypes from '../constants/EntryActionTypes';
 import ModalTypes from '../constants/ModalTypes';
 
-const openUsersModal = () => ({
-  type: EntryActionTypes.MODAL_OPEN,
-  payload: {
-    type: ModalTypes.USERS,
-  },
-});
-
 const openUserSettingsModal = () => ({
   type: EntryActionTypes.MODAL_OPEN,
   payload: {
@@ -35,7 +28,6 @@ const closeModal = () => ({
 });
 
 export default {
-  openUsersModal,
   openUserSettingsModal,
   openProjectAddModal,
   openProjectSettingsModal,

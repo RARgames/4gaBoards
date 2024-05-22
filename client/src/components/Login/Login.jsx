@@ -74,6 +74,12 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
   const emailOrUsernameField = useRef(null);
   const passwordField = useRef(null);
 
+  const mainTitle = '4ga Boards';
+
+  useEffect(() => {
+    document.title = `${t('common.login')} | ${mainTitle}`;
+  }, [t]);
+
   const handleSubmit = useCallback(() => {
     const cleanData = {
       ...data,

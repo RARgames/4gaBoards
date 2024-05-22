@@ -82,6 +82,12 @@ const Register = React.memo(
     const passwordField = useRef(null);
     const policyCheckbox = useRef(null);
 
+    const mainTitle = '4ga Boards';
+
+    useEffect(() => {
+      document.title = `${t('common.register')} | ${mainTitle}`;
+    }, [t]);
+
     const handlePolicyToggleChange = useCallback(
       (e, { checked }) => {
         setData({ ...data, policy: checked });

@@ -4,6 +4,7 @@ PD -> Public Domain
 
 Some icons might be slightly edited.
 
+AddressCard
 AngleLeft
 Add - W
 ArrowDown
@@ -19,6 +20,8 @@ Eyeslash
 FillDrip
 Github
 Google
+Info
+Key
 Minus - W
 Outline
 Pause
@@ -29,6 +32,7 @@ Settings
 Trash
 Trello
 TriangleDown
+User
 UserAdd
 Users - PD
 WindowMaximize

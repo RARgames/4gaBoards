@@ -1,0 +1,56 @@
+:global(#app) {
+  .wrapper {
+    height: 100%;
+    width: 100%;
+    margin: 20px 20px 20px 20px;
+  }
+
+  .header {
+    color: var(--textColor0);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .headerText {
+    display: inline;
+  }
+
+  .headerButton {
+    float: right;
+    right: 50px;
+    position: relative;
+  }
+
+  .tableWrapper {
+    height: calc(100% - 100px);
+    width: calc(100% - 40px);
+  }
+
+  .content {
+    height: 100%;
+    width: 100%;
+  }
+
+  .table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    color: var(--textColor0);
+  }
+
+  .tableHeader {
+    position: sticky;
+    top: 0;
+    background: var(--backgroundSidebar);
+    color: var(--textColorWhite);
+    font-weight: bold;
+    height: 60px;
+    z-index: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+  }
+
+  .tableHeaderCell {
+    padding: 8px;
+    text-align: left;
+  }
+}
