@@ -10,14 +10,13 @@ const mapStateToProps = (state) => {
       authenticateForm: { data: defaultData, isSubmitting, error },
     },
   } = state;
-  const googleSsoEnabled = selectors.selectSsoEnabled(state);
-  const registrationEnabled = selectors.selectRegistrationEnabled(state);
+  const coreSettings = selectors.selectCoreSettings(state);
 
   return {
     defaultData,
     isSubmitting,
-    googleSsoEnabled,
-    registrationEnabled,
+    googleSsoEnabled: coreSettings ? coreSettings.googleSsoEnabled : false,
+    registrationEnabled: coreSettings ? coreSettings.registrationEnabled : false,
     error,
   };
 };
