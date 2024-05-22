@@ -81,50 +81,48 @@ const UsersSettings = React.memo(
             </UserAddPopupContainer>
           </div>
         </div>
-        <div className={styles.tableWrapper}>
-          <div className={classNames(styles.content, gStyles.scrollableXY)}>
-            <table className={styles.table}>
-              <thead className={styles.tableHeader}>
-                <tr className={styles.tableHeaderRow}>
-                  <th className={styles.tableHeaderCell} aria-label={t('common.avatar')} />
-                  <th className={styles.tableHeaderCell}>{t('common.name')}</th>
-                  <th className={styles.tableHeaderCell}>{t('common.username')}</th>
-                  <th className={styles.tableHeaderCell}>{t('common.email')}</th>
-                  <th className={styles.tableHeaderCell}>{t('common.administrator')}</th>
-                  <th className={styles.tableHeaderCell}>{t('common.ssoGoogleEmail')}</th>
-                  <th className={styles.tableHeaderCell}>{t('common.lastLogin')}</th>
-                  <th className={styles.tableHeaderCell} aria-label={t('common.editUser')} />
-                </tr>
-              </thead>
-              <tbody className={styles.tableBody}>
-                {items.map((item) => (
-                  <Item
-                    key={item.id}
-                    email={item.email}
-                    username={item.username}
-                    name={item.name}
-                    avatarUrl={item.avatarUrl}
-                    organization={item.organization}
-                    phone={item.phone}
-                    ssoGoogleEmail={item.ssoGoogleEmail}
-                    lastLogin={item.lastLogin}
-                    isAdmin={item.isAdmin}
-                    emailUpdateForm={item.emailUpdateForm}
-                    passwordUpdateForm={item.passwordUpdateForm}
-                    usernameUpdateForm={item.usernameUpdateForm}
-                    onUpdate={(data) => handleUpdate(item.id, data)}
-                    onUsernameUpdate={(data) => handleUsernameUpdate(item.id, data)}
-                    onUsernameUpdateMessageDismiss={() => handleUsernameUpdateMessageDismiss(item.id)}
-                    onEmailUpdate={(data) => handleEmailUpdate(item.id, data)}
-                    onEmailUpdateMessageDismiss={() => handleEmailUpdateMessageDismiss(item.id)}
-                    onPasswordUpdate={(data) => handlePasswordUpdate(item.id, data)}
-                    onPasswordUpdateMessageDismiss={() => handlePasswordUpdateMessageDismiss(item.id)}
-                    onDelete={() => handleDelete(item.id)}
-                  />
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <div className={classNames(styles.tableWrapper, gStyles.scrollableXY)}>
+          <table className={styles.table}>
+            <thead className={styles.tableHeader}>
+              <tr className={styles.tableHeaderRow}>
+                <th className={styles.tableHeaderCell} aria-label={t('common.avatar')} />
+                <th className={styles.tableHeaderCell}>{t('common.name')}</th>
+                <th className={styles.tableHeaderCell}>{t('common.username')}</th>
+                <th className={styles.tableHeaderCell}>{t('common.email')}</th>
+                <th className={styles.tableHeaderCell}>{t('common.administrator')}</th>
+                <th className={styles.tableHeaderCell}>{t('common.ssoGoogleEmail')}</th>
+                <th className={styles.tableHeaderCell}>{t('common.lastLogin')}</th>
+                <th className={styles.tableHeaderCell} aria-label={t('common.editUser')} />
+              </tr>
+            </thead>
+            <tbody className={styles.tableBody}>
+              {items.map((item) => (
+                <Item
+                  key={item.id}
+                  email={item.email}
+                  username={item.username}
+                  name={item.name}
+                  avatarUrl={item.avatarUrl}
+                  organization={item.organization}
+                  phone={item.phone}
+                  ssoGoogleEmail={item.ssoGoogleEmail}
+                  lastLogin={item.lastLogin}
+                  isAdmin={item.isAdmin}
+                  emailUpdateForm={item.emailUpdateForm}
+                  passwordUpdateForm={item.passwordUpdateForm}
+                  usernameUpdateForm={item.usernameUpdateForm}
+                  onUpdate={(data) => handleUpdate(item.id, data)}
+                  onUsernameUpdate={(data) => handleUsernameUpdate(item.id, data)}
+                  onUsernameUpdateMessageDismiss={() => handleUsernameUpdateMessageDismiss(item.id)}
+                  onEmailUpdate={(data) => handleEmailUpdate(item.id, data)}
+                  onEmailUpdateMessageDismiss={() => handleEmailUpdateMessageDismiss(item.id)}
+                  onPasswordUpdate={(data) => handlePasswordUpdate(item.id, data)}
+                  onPasswordUpdateMessageDismiss={() => handlePasswordUpdateMessageDismiss(item.id)}
+                  onDelete={() => handleDelete(item.id)}
+                />
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     );
