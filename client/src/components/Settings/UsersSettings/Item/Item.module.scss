@@ -11,19 +11,9 @@
     }
   }
 
-  .tableBodyRow {
-    background: var(--backgroundSidebarItem);
-
-    &:nth-of-type(odd) {
-      background: var(--backgroundSidebarItem2);
+  .row {
+    td {
+      max-width: 200px;
     }
-  }
-
-  .tableCell {
-    padding: 8px;
-    text-align: left;
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }

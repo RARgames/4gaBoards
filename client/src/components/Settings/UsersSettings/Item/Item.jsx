@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon, IconType, IconSize } from '../../../Utils/Icon';
 import { Button, ButtonStyle } from '../../../Utils/Button';
 import { Radio, RadioSize } from '../../../Utils/Radio';
+import Table from '../../../Utils/Table';
 
 import ActionsPopup from './ActionsPopup';
 import User from '../../../User';
@@ -42,29 +43,19 @@ const Item = React.memo(
     }, [isAdmin, onUpdate]);
 
     return (
-      <tr className={styles.tableBodyRow}>
-        <td className={styles.tableCell}>
+      <Table.Row className={styles.row}>
+        <Table.Cell>
           <User name={name} avatarUrl={avatarUrl} aria-label={t('common.userAvatar')} />
-        </td>
-        <td className={styles.tableCell} title={name}>
-          {name}
-        </td>
-        <td className={styles.tableCell} title={username}>
-          {username || '-'}
-        </td>
-        <td className={styles.tableCell} title={email}>
-          {email}
-        </td>
-        <td className={styles.tableCell}>
+        </Table.Cell>
+        <Table.Cell title={name}>{name}</Table.Cell>
+        <Table.Cell title={username}>{username || '-'}</Table.Cell>
+        <Table.Cell title={email}>{email}</Table.Cell>
+        <Table.Cell>
           <Radio size={RadioSize.Size12} checked={isAdmin} title={t('common.toggleAdmin')} onChange={handleIsAdminChange} aria-label={t('common.toggleAdmin')} />
-        </td>
-        <td className={styles.tableCell} title={ssoGoogleEmail}>
-          {ssoGoogleEmail || '-'}
-        </td>
-        <td className={styles.tableCell} title={lastLogin}>
-          {lastLogin ? new Date(lastLogin).toLocaleString(undefined, options).replace(/,/g, '').split(' ').reverse().join(' ') : '-'}
-        </td>
-        <td className={styles.tableCell}>
+        </Table.Cell>
+        <Table.Cell title={ssoGoogleEmail}>{ssoGoogleEmail || '-'}</Table.Cell>
+        <Table.Cell title={lastLogin}>{lastLogin ? new Date(lastLogin).toLocaleString(undefined, options).replace(/,/g, '').split(' ').reverse().join(' ') : '-'}</Table.Cell>
+        <Table.Cell>
           <ActionsPopup
             user={{
               email,
@@ -91,8 +82,8 @@ const Item = React.memo(
               <Icon type={IconType.Pencil} size={IconSize.Size14} />
             </Button>
           </ActionsPopup>
-        </td>
-      </tr>
+        </Table.Cell>
+      </Table.Row>
     );
   },
 );

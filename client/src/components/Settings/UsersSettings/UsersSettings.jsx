@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Button, ButtonStyle } from '../../Utils/Button';
+import Table from '../../Utils/Table';
 
 import UserAddPopupContainer from '../../../containers/UserAddPopupContainer';
 import Item from './Item';
@@ -81,21 +82,21 @@ const UsersSettings = React.memo(
             </UserAddPopupContainer>
           </div>
         </div>
-        <div className={classNames(styles.tableWrapper, gStyles.scrollableXY)}>
-          <table className={styles.table}>
-            <thead className={styles.tableHeader}>
-              <tr className={styles.tableHeaderRow}>
-                <th className={styles.tableHeaderCell} aria-label={t('common.avatar')} />
-                <th className={styles.tableHeaderCell}>{t('common.name')}</th>
-                <th className={styles.tableHeaderCell}>{t('common.username')}</th>
-                <th className={styles.tableHeaderCell}>{t('common.email')}</th>
-                <th className={styles.tableHeaderCell}>{t('common.administrator')}</th>
-                <th className={styles.tableHeaderCell}>{t('common.ssoGoogleEmail')}</th>
-                <th className={styles.tableHeaderCell}>{t('common.lastLogin')}</th>
-                <th className={styles.tableHeaderCell} aria-label={t('common.editUser')} />
-              </tr>
-            </thead>
-            <tbody className={styles.tableBody}>
+        <Table.Wrapper className={classNames(styles.tableWrapper, gStyles.scrollableXY)}>
+          <Table>
+            <Table.Header>
+              <Table.HeaderRow>
+                <Table.HeaderCell aria-label={t('common.avatar')} />
+                <Table.HeaderCell>{t('common.name')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('common.username')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('common.email')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('common.administrator')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('common.ssoGoogleEmail')}</Table.HeaderCell>
+                <Table.HeaderCell>{t('common.lastLogin')}</Table.HeaderCell>
+                <Table.HeaderCell aria-label={t('common.editUser')} />
+              </Table.HeaderRow>
+            </Table.Header>
+            <Table.Body>
               {items.map((item) => (
                 <Item
                   key={item.id}
@@ -121,9 +122,9 @@ const UsersSettings = React.memo(
                   onDelete={() => handleDelete(item.id)}
                 />
               ))}
-            </tbody>
-          </table>
-        </div>
+            </Table.Body>
+          </Table>
+        </Table.Wrapper>
       </div>
     );
   },

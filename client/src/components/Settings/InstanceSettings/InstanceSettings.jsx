@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Radio, RadioSize } from '../../Utils/Radio';
+import Table from '../../Utils/Table';
 
 import styles from './InstanceSettings.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -33,44 +34,44 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
       <div className={styles.header}>
         <h2 className={styles.headerText}>{t('common.settings')}</h2>
       </div>
-      <div className={classNames(styles.tableWrapper, gStyles.scrollableXY)}>
-        <table className={styles.table}>
-          <thead className={styles.tableHeader}>
-            <tr className={styles.tableHeaderRow}>
-              <th className={styles.tableHeaderCell}>{t('common.settingsInstance')}</th>
-              <th className={styles.tableHeaderCell}>{t('common.modifySettings')}</th>
-              <th className={styles.tableHeaderCell}>{t('common.currentValue')}</th>
-              <th className={styles.tableHeaderCell}>{t('common.description')}</th>
-            </tr>
-          </thead>
-          <tbody className={styles.tableBody}>
-            <tr className={styles.tableBodyRow}>
-              <td className={styles.tableCell}>{t('common.enableRegistration')}</td>
-              <td className={styles.tableCell} aria-label={t('common.toggleRegistration')}>
+      <Table.Wrapper className={classNames(styles.tableWrapper, gStyles.scrollableXY)}>
+        <Table>
+          <Table.Header>
+            <Table.HeaderRow>
+              <Table.HeaderCell>{t('common.settingsInstance')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('common.modifySettings')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('common.currentValue')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('common.description')}</Table.HeaderCell>
+            </Table.HeaderRow>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>{t('common.enableRegistration')}</Table.Cell>
+              <Table.Cell aria-label={t('common.toggleRegistration')}>
                 <Radio size={RadioSize.Size12} checked={registrationEnabled} onChange={handleRegistrationEnabledChange} />
-              </td>
-              <td className={styles.tableCell}>{registrationEnabled ? t('common.enabled') : t('common.disabled')}</td>
-              <td className={styles.tableCell}>{t('common.descriptionUserRegistration')}</td>
-            </tr>
-            <tr className={styles.tableBodyRow}>
-              <td className={styles.tableCell}>{t('common.enableLocalRegistration')}</td>
-              <td className={styles.tableCell} aria-label={t('common.toggleRegistration')}>
+              </Table.Cell>
+              <Table.Cell>{registrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
+              <Table.Cell>{t('common.descriptionUserRegistration')}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>{t('common.enableLocalRegistration')}</Table.Cell>
+              <Table.Cell aria-label={t('common.toggleRegistration')}>
                 <Radio size={RadioSize.Size12} checked={registrationEnabled && localRegistrationEnabled} disabled={!registrationEnabled} onChange={handleLocalRegistrationEnabledChange} />
-              </td>
-              <td className={styles.tableCell}>{registrationEnabled && localRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</td>
-              <td className={styles.tableCell}>{t('common.descriptionLocalRegistration')}</td>
-            </tr>
-            <tr className={styles.tableBodyRow}>
-              <td className={styles.tableCell}>{t('common.enableSsoRegistration')}</td>
-              <td className={styles.tableCell} aria-label={t('common.toggleRegistration')}>
+              </Table.Cell>
+              <Table.Cell>{registrationEnabled && localRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
+              <Table.Cell>{t('common.descriptionLocalRegistration')}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
+              <Table.Cell>{t('common.enableSsoRegistration')}</Table.Cell>
+              <Table.Cell aria-label={t('common.toggleRegistration')}>
                 <Radio size={RadioSize.Size12} checked={registrationEnabled && ssoRegistrationEnabled} disabled={!registrationEnabled} onChange={handleSsoRegistrationEnabledChange} />
-              </td>
-              <td className={styles.tableCell}>{registrationEnabled && ssoRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</td>
-              <td className={styles.tableCell}>{t('common.descriptionSsoRegistration')}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              </Table.Cell>
+              <Table.Cell>{registrationEnabled && ssoRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
+              <Table.Cell>{t('common.descriptionSsoRegistration')}</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </Table.Wrapper>
     </div>
   );
 });
