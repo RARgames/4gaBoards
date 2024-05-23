@@ -6,7 +6,7 @@ import { Loader } from 'semantic-ui-react';
 
 import ProjectsContainer from '../../containers/ProjectsContainer';
 import BoardContainer from '../../containers/BoardContainer';
-import SettingsContainer from '../../containers/SettingsContainer';
+import SettingsContainer from '../../containers/Settings/SettingsContainer';
 import Paths from '../../constants/Paths';
 
 import styles from './Static.module.scss';

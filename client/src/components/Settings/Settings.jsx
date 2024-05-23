@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { Button, ButtonStyle } from '../Utils/Button';
 
-import UsersSettingsContainer from '../../containers/UsersSettingsContainer';
-import InstanceSettingsContainer from '../../containers/InstanceSettingsContainer';
+import UsersSettingsContainer from '../../containers/Settings/UsersSettingsContainer';
+import InstanceSettingsContainer from '../../containers/Settings/InstanceSettingsContainer';
 import Paths from '../../constants/Paths';
 
 import styles from './Settings.module.scss';
