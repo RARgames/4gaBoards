@@ -42,29 +42,28 @@
     position: relative;
     flex: 1;
     height: 100%;
-    width: calc(100% - 205px);
+    width: calc(100% - 180px);
   }
 
   .sidebar {
     background-color: var(--backgroundSidebar);
     color: var(--textColor0);
     position: relative;
+    width: 180px;
     height: 100%;
-    width: 205px;
-    padding: 10px 0;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   }
 
   .sidebarTitle {
     color: var(--textColorWhite);
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin: 10px 0 10px 10px;
   }
 
   .sidebarTitleIcon {
-    margin-right: 4px;
-    vertical-align: -15%;
+    margin-right: 6px;
+    vertical-align: -10%;
     fill: var(--textColorWhite);
   }
 

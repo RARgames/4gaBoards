@@ -3,6 +3,7 @@ const IconSize = {
   Size10: 'size10',
   Size13: 'size13',
   Size14: 'size14',
+  Size16: 'size16',
   Size18: 'size18',
   Size20: 'size20',
 };

@@ -52,7 +52,7 @@ const Settings = React.memo(({ path, isAdmin }) => {
     <div className={styles.wrapper}>
       <div className={styles.sidebar}>
         <div className={styles.sidebarTitle}>
-          <Icon type={IconType.Settings} size={IconSize.Size20} className={styles.sidebarTitleIcon} />
+          <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
           {t('common.settings')}
         </div>
         <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_PROFILE && styles.sidebarActive)}>
@@ -98,7 +98,7 @@ const Settings = React.memo(({ path, isAdmin }) => {
         {isAdmin && (
           <div>
             <div className={styles.sidebarTitle}>
-              <Icon type={IconType.Server} size={IconSize.Size20} className={styles.sidebarTitleIcon} />
+              <Icon type={IconType.Server} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
               {t('common.settingsInstance')}
             </div>
             <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_INSTANCE && styles.sidebarActive)}>
