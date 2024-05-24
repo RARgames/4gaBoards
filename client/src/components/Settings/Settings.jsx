@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { Button, ButtonStyle } from '../Utils/Button';
+import { useToggle } from '../../lib/hooks';
 
 import ProfileSettingsContainer from '../../containers/Settings/ProfileSettingsContainer';
 import PreferencesSettingsContainer from '../../containers/Settings/PreferencesSettingsContainer';
@@ -19,6 +20,7 @@ import styles from './Settings.module.scss';
 
 const Settings = React.memo(({ path, isAdmin }) => {
   const [t] = useTranslation();
+  const [sidebarShown, toggleSidebar] = useToggle(true);
   const mainTitle = '4ga Boards';
 
   const getPageTitle = useCallback(() => {
@@ -50,7 +52,15 @@ const Settings = React.memo(({ path, isAdmin }) => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.sidebar}>
+      <Button
+        style={ButtonStyle.Icon}
+        title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')}
+        onClick={toggleSidebar}
+        className={classNames(styles.minimizeButton, !sidebarShown && styles.minimizeButtonHidden)}
+      >
+        <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
+      </Button>
+      <div className={classNames(styles.sidebar, !sidebarShown && styles.sidebarHidden)}>
         <div className={styles.sidebarTitle}>
           <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
           {t('common.settings')}

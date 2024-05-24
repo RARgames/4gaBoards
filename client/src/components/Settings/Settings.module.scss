@@ -42,7 +42,6 @@
     position: relative;
     flex: 1;
     height: 100%;
-    width: calc(100% - 180px);
   }
 
   .sidebar {
@@ -112,5 +111,29 @@
         fill: var(--textColor1);
       }
     }
+  }
+
+  .minimizeButton {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    top: 7px;
+    left: 150px;
+    background-color: var(--backgroundSidebar);
+  }
+
+  .minimizeButtonHidden {
+    top: 7px;
+    left: 6px;
+    background-color: var(--backgroundColor);
+  }
+
+  .sidebarHidden {
+    width: 0px;
+    visibility: hidden;
   }
 }
