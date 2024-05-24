@@ -13,6 +13,7 @@ import { ReactComponent as EyeSlash } from '../../../assets/icons/EyeSlash.svg';
 import { ReactComponent as FillDrip } from '../../../assets/icons/FillDrip.svg';
 import { ReactComponent as Github } from '../../../assets/icons/Github.svg';
 import { ReactComponent as Google } from '../../../assets/icons/Google.svg';
+import { ReactComponent as Hide } from '../../../assets/icons/Hide.svg';
 import { ReactComponent as Info } from '../../../assets/icons/Info.svg';
 import { ReactComponent as Key } from '../../../assets/icons/Key.svg';
 import { ReactComponent as Minus } from '../../../assets/icons/Minus.svg';
@@ -24,6 +25,7 @@ import { ReactComponent as PlusMath } from '../../../assets/icons/PlusMath.svg';
 import { ReactComponent as ProjectSettings } from '../../../assets/icons/ProjectSettings.svg';
 import { ReactComponent as Server } from '../../../assets/icons/Server.svg';
 import { ReactComponent as Settings } from '../../../assets/icons/Settings.svg';
+import { ReactComponent as Show } from '../../../assets/icons/Show.svg';
 import { ReactComponent as Sliders } from '../../../assets/icons/Sliders.svg';
 import { ReactComponent as Trash } from '../../../assets/icons/Trash.svg';
 import { ReactComponent as Trello } from '../../../assets/icons/Trello.svg';
@@ -49,6 +51,7 @@ const IconType = {
   FillDrip,
   Github,
   Google,
+  Hide,
   Info,
   Key,
   Minus,
@@ -60,6 +63,7 @@ const IconType = {
   ProjectSettings,
   Server,
   Settings,
+  Show,
   Sliders,
   Trash,
   Trello,
