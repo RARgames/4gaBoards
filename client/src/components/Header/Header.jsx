@@ -63,11 +63,11 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
               <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
             </Menu.Item>
           )}
-          <Link to={Paths.SETTINGS} className={classNames(styles.itemNew, styles.itemHoverable)} title={t('common.settings')}>
+          <Link to={Paths.SETTINGS} className={classNames(styles.itemNew, styles.itemHoverable, styles.hideOnSmall)} title={t('common.settings')}>
             <Icon type={IconType.Settings} size={IconSize.Size18} className={styles.icon} />
           </Link>
           {isAdmin && (
-            <Link to={Paths.SETTINGS_INSTANCE} className={classNames(styles.itemNew, styles.itemHoverable)} title={t('common.settingsInstance')}>
+            <Link to={Paths.SETTINGS_INSTANCE} className={classNames(styles.itemNew, styles.itemHoverable, styles.hideOnSmall)} title={t('common.settingsInstance')}>
               <Icon type={IconType.Server} size={IconSize.Size18} className={styles.icon} />
             </Link>
           )}
