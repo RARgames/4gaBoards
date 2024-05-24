@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Config from '../../../constants/Config';
-import Link from '../../Utils/Link';
+import ExternalLink from '../../Utils/ExternalLink';
 import { Icon, IconType, IconSize } from '../../Utils/Icon';
 
 import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
@@ -23,19 +23,19 @@ const AboutSettings = React.memo(() => {
         </div>
         <div className={styles.links}>
           <div className={styles.link}>
-            <Link href="https://4gaboards.com">{t('common.website')}</Link>
+            <ExternalLink href="https://4gaboards.com">{t('common.website')}</ExternalLink>
           </div>
           <div className={styles.link}>
-            <Link href="https://github.com/RARgames/4gaBoards">
+            <ExternalLink href="https://github.com/RARgames/4gaBoards">
               <Icon type={IconType.Github} size={IconSize.Size13} className={styles.icon} />
               {t('common.github')}
-            </Link>
+            </ExternalLink>
           </div>
           <div className={styles.link}>
-            <Link href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</Link>
+            <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
           </div>
           <div className={styles.link}>
-            <Link href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</Link>
+            <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink>
           </div>
         </div>
       </div>
