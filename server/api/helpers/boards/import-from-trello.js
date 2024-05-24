@@ -98,6 +98,7 @@ module.exports = {
             position: trelloCard.pos,
             name: trelloCard.name,
             description: trelloCard.desc || null,
+            dueDate: trelloCard.due,
           }).fetch();
 
           await importCardLabels(boardsCard, trelloCard);
@@ -111,11 +112,12 @@ module.exports = {
 
     const importLabels = async () => {
       return Promise.all(
-        getUsedTrelloLabels().map(async (trelloLabel) => {
+        getUsedTrelloLabels().map(async (trelloLabel, index) => {
           const boardsLabel = await Label.create({
             boardId: inputs.board.id,
             name: trelloLabel.name || null,
             color: get4gaBoardsLabelColor(trelloLabel.color),
+            position: sails.config.custom.positionGap * (index + 1),
           }).fetch();
 
           trelloTo4gaBoardsLabels[trelloLabel.id] = boardsLabel;
@@ -130,6 +132,7 @@ module.exports = {
             boardId: inputs.board.id,
             name: trelloList.name,
             position: trelloList.pos,
+            isCollapsed: false,
           }).fetch();
 
           return importCards(boardsList, trelloList);

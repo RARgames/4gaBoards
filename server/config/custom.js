@@ -34,4 +34,6 @@ module.exports.custom = {
 
   googleSsoUrl: `${process.env.BASE_URL}/auth/google`,
   googleClientId: process.env.GOOGLE_CLIENT_ID,
+
+  positionGap: 65535,
 };
