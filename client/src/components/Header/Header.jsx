@@ -15,7 +15,7 @@ import logo from '../../assets/images/4gaboardsLogo128w-white.png';
 
 import styles from './Header.module.scss';
 
-const Header = React.memo(({ project, user, notifications, isLogouting, canEditProject, canEditUsers, path, onProjectSettingsClick, onNotificationDelete, onUserSettingsClick, onLogout }) => {
+const Header = React.memo(({ project, user, notifications, isLogouting, canEditProject, isAdmin, path, onProjectSettingsClick, onNotificationDelete, onLogout }) => {
   const [t] = useTranslation();
   const handleProjectSettingsClick = useCallback(() => {
     if (canEditProject) {
@@ -31,16 +31,18 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
         return t('common.settings');
       case Paths.SETTINGS_PROFILE:
         return t('common.settingsProfile');
+      case Paths.SETTINGS_PREFERENCES:
+        return t('common.settingsPreferences');
       case Paths.SETTINGS_ACCOUNT:
         return t('common.settingsAccount');
       case Paths.SETTINGS_AUTHENTICATION:
         return t('common.settingsAuthentication');
       case Paths.SETTINGS_ABOUT:
         return t('common.settingsAbout');
-      case Paths.SETTINGS_USERS:
-        return t('common.settingsUsers');
       case Paths.SETTINGS_INSTANCE:
         return t('common.settingsInstance');
+      case Paths.SETTINGS_USERS:
+        return t('common.settingsUsers');
       default:
         return project ? project.name : null;
     }
@@ -58,12 +60,15 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
         <Menu.Menu position="right">
           {canEditProject && (
             <Menu.Item className={classNames(styles.item, styles.itemHoverable)} onClick={handleProjectSettingsClick} title={t('common.projectSettings')}>
-              <Icon type={IconType.Settings} size={IconSize.Size18} />
+              <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
             </Menu.Item>
           )}
-          {canEditUsers && (
-            <Link to={Paths.SETTINGS_USERS} className={classNames(styles.itemNew, styles.itemHoverable)} title={t('common.users')}>
-              <Icon type={IconType.Users} size={IconSize.Size18} className={styles.icon} />
+          <Link to={Paths.SETTINGS} className={classNames(styles.itemNew, styles.itemHoverable)} title={t('common.settings')}>
+            <Icon type={IconType.Settings} size={IconSize.Size18} className={styles.icon} />
+          </Link>
+          {isAdmin && (
+            <Link to={Paths.SETTINGS_INSTANCE} className={classNames(styles.itemNew, styles.itemHoverable)} title={t('common.settingsInstance')}>
+              <Icon type={IconType.Server} size={IconSize.Size18} className={styles.icon} />
             </Link>
           )}
           <NotificationsPopup items={notifications} onDelete={onNotificationDelete}>
@@ -72,7 +77,7 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
               {notifications.length > 0 && <span className={styles.notification}>{notifications.length}</span>}
             </Menu.Item>
           </NotificationsPopup>
-          <UserPopup isLogouting={isLogouting} onSettingsClick={onUserSettingsClick} onLogout={onLogout}>
+          <UserPopup isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
             <Menu.Item className={classNames(styles.item, styles.itemHoverable)}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
             </Menu.Item>
@@ -91,11 +96,10 @@ Header.propTypes = {
   /* eslint-enable react/forbid-prop-types */
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
-  canEditUsers: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   onProjectSettingsClick: PropTypes.func.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
-  onUserSettingsClick: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
 

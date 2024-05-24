@@ -82,7 +82,7 @@ const UsersSettings = React.memo(
             </UserAddPopupContainer>
           </div>
         </div>
-        <Table.Wrapper className={classNames(styles.tableWrapper, gStyles.scrollableXY)}>
+        <Table.Wrapper className={classNames(styles.contentWrapper, gStyles.scrollableXY)}>
           <Table>
             <Table.Header>
               <Table.HeaderRow>

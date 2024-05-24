@@ -8,6 +8,7 @@ import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input } from '../../lib/custom-ui';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { Button, ButtonStyle } from '../Utils/Button';
+import Link from '../Utils/Link';
 
 import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
@@ -170,14 +171,8 @@ const Register = React.memo(
                           </div>
                           <div className={classNames(styles.inputWrapper, styles.checkboxWrapper)}>
                             <div className={styles.inputLabel}>
-                              {t('common.accept')}{' '}
-                              <a target="_blank" rel="noreferrer noopener" href="https://4gaboards.com/terms-of-service">
-                                {t('common.termsOfService')}
-                              </a>{' '}
-                              {t('common.and')}{' '}
-                              <a target="_blank" rel="noreferrer noopener" href="https://4gaboards.com/privacy-policy">
-                                {t('common.privacyPolicy')}
-                              </a>
+                              {t('common.accept')} <Link href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</Link> {t('common.and')}{' '}
+                              <Link href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</Link>
                             </div>
                             <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} className={styles.input} onChange={handlePolicyToggleChange} />
                           </div>

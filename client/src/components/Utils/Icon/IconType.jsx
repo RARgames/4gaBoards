@@ -21,7 +21,10 @@ import { ReactComponent as Pencil } from '../../../assets/icons/Pencil.svg';
 import { ReactComponent as Play } from '../../../assets/icons/Play.svg';
 import { ReactComponent as Plus } from '../../../assets/icons/Plus.svg';
 import { ReactComponent as PlusMath } from '../../../assets/icons/PlusMath.svg';
+import { ReactComponent as ProjectSettings } from '../../../assets/icons/ProjectSettings.svg';
+import { ReactComponent as Server } from '../../../assets/icons/Server.svg';
 import { ReactComponent as Settings } from '../../../assets/icons/Settings.svg';
+import { ReactComponent as Sliders } from '../../../assets/icons/Sliders.svg';
 import { ReactComponent as Trash } from '../../../assets/icons/Trash.svg';
 import { ReactComponent as Trello } from '../../../assets/icons/Trello.svg';
 import { ReactComponent as TriangleDown } from '../../../assets/icons/TriangleDown.svg';
@@ -54,7 +57,10 @@ const IconType = {
   Play,
   Plus,
   PlusMath,
+  ProjectSettings,
+  Server,
   Settings,
+  Sliders,
   Trash,
   Trello,
   TriangleDown,

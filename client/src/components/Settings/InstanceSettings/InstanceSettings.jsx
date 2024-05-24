@@ -34,7 +34,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
       <div className={styles.header}>
         <h2 className={styles.headerText}>{t('common.settings')}</h2>
       </div>
-      <Table.Wrapper className={classNames(styles.tableWrapper, gStyles.scrollableXY)}>
+      <Table.Wrapper className={classNames(styles.contentWrapper, gStyles.scrollableXY)}>
         <Table>
           <Table.Header>
             <Table.HeaderRow>
@@ -47,7 +47,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
           <Table.Body>
             <Table.Row>
               <Table.Cell>{t('common.enableRegistration')}</Table.Cell>
-              <Table.Cell aria-label={t('common.toggleRegistration')}>
+              <Table.Cell aria-label={t('common.toggleSettings')}>
                 <Radio size={RadioSize.Size12} checked={registrationEnabled} onChange={handleRegistrationEnabledChange} />
               </Table.Cell>
               <Table.Cell>{registrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
@@ -55,7 +55,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
             </Table.Row>
             <Table.Row>
               <Table.Cell>{t('common.enableLocalRegistration')}</Table.Cell>
-              <Table.Cell aria-label={t('common.toggleRegistration')}>
+              <Table.Cell aria-label={t('common.toggleSettings')}>
                 <Radio size={RadioSize.Size12} checked={registrationEnabled && localRegistrationEnabled} disabled={!registrationEnabled} onChange={handleLocalRegistrationEnabledChange} />
               </Table.Cell>
               <Table.Cell>{registrationEnabled && localRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
@@ -63,7 +63,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
             </Table.Row>
             <Table.Row>
               <Table.Cell>{t('common.enableSsoRegistration')}</Table.Cell>
-              <Table.Cell aria-label={t('common.toggleRegistration')}>
+              <Table.Cell aria-label={t('common.toggleSettings')}>
                 <Radio size={RadioSize.Size12} checked={registrationEnabled && ssoRegistrationEnabled} disabled={!registrationEnabled} onChange={handleSsoRegistrationEnabledChange} />
               </Table.Cell>
               <Table.Cell>{registrationEnabled && ssoRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>

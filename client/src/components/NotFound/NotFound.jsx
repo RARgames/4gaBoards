@@ -2,14 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Loader } from 'semantic-ui-react';
-
-import ModalTypes from '../../constants/ModalTypes';
 import FixedContainer from '../../containers/FixedContainer';
-import UserSettingsModalContainer from '../../containers/UserSettingsModalContainer';
 
 import styles from './NotFound.module.scss';
 
-const NotFound = React.memo(({ isInitializing, isSocketDisconnected, currentModal }) => {
+const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   const [t] = useTranslation();
   const mainTitle = '4ga Boards';
 
@@ -25,7 +22,6 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected, currentModa
         <>
           <FixedContainer />
           <h1 className={styles.text}>{t('common.pageNotFound', { context: 'title' })}</h1>
-          {currentModal === ModalTypes.USER_SETTINGS && <UserSettingsModalContainer />}
         </>
       )}
       {isSocketDisconnected && (
@@ -47,11 +43,6 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected, currentModa
 NotFound.propTypes = {
   isInitializing: PropTypes.bool.isRequired,
   isSocketDisconnected: PropTypes.bool.isRequired,
-  currentModal: PropTypes.oneOf(Object.values(ModalTypes)),
-};
-
-NotFound.defaultProps = {
-  currentModal: undefined,
 };
 
 export default NotFound;

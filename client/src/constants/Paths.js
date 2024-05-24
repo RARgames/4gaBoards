@@ -9,6 +9,7 @@ const BOARDS = `${Config.BASE_PATH}/boards/:id`;
 const CARDS = `${Config.BASE_PATH}/cards/:id`;
 const SETTINGS = `${Config.BASE_PATH}/settings`;
 const SETTINGS_PROFILE = `${Config.BASE_PATH}/settings/profile`;
+const SETTINGS_PREFERENCES = `${Config.BASE_PATH}/settings/preferences`;
 const SETTINGS_ACCOUNT = `${Config.BASE_PATH}/settings/account`;
 const SETTINGS_AUTHENTICATION = `${Config.BASE_PATH}/settings/authentication`;
 const SETTINGS_ABOUT = `${Config.BASE_PATH}/settings/about`;
@@ -25,6 +26,7 @@ export default {
   CARDS,
   SETTINGS,
   SETTINGS_PROFILE,
+  SETTINGS_PREFERENCES,
   SETTINGS_ACCOUNT,
   SETTINGS_AUTHENTICATION,
   SETTINGS_ABOUT,

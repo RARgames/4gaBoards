@@ -372,7 +372,7 @@ const CardModal = React.memo(
             defaultItem={selectedList}
             isSearchable
             onChange={onMove}
-            submitOnBlur
+            selectFirstOnSearch
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div className={classNames(canEdit && gStyles.cursorPointer)} onClick={handleDropdownClick}>

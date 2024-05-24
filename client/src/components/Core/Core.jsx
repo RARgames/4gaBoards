@@ -6,7 +6,6 @@ import { Loader } from 'semantic-ui-react';
 import ModalTypes from '../../constants/ModalTypes';
 import FixedContainer from '../../containers/FixedContainer';
 import StaticContainer from '../../containers/StaticContainer';
-import UserSettingsModalContainer from '../../containers/UserSettingsModalContainer';
 import ProjectAddModalContainer from '../../containers/ProjectAddModalContainer';
 import Background from '../Background';
 
@@ -41,7 +40,6 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, c
           )}
           <FixedContainer />
           <StaticContainer />
-          {currentModal === ModalTypes.USER_SETTINGS && <UserSettingsModalContainer />}
           {currentModal === ModalTypes.PROJECT_ADD && <ProjectAddModalContainer />}
         </>
       )}

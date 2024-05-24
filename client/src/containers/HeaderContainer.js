@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     project: currentProject,
     user: currentUser,
     canEditProject: isCurrentUserManager,
-    canEditUsers: currentUser.isAdmin,
+    isAdmin: currentUser.isAdmin,
     path,
   };
 };
@@ -29,7 +29,6 @@ const mapDispatchToProps = (dispatch) =>
     {
       onProjectSettingsClick: entryActions.openProjectSettingsModal,
       onNotificationDelete: entryActions.deleteNotification,
-      onUserSettingsClick: entryActions.openUserSettingsModal,
       onLogout: entryActions.logout,
     },
     dispatch,

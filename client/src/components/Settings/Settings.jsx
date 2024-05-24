@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { Button, ButtonStyle } from '../Utils/Button';
 
+import ProfileSettingsContainer from '../../containers/Settings/ProfileSettingsContainer';
+import PreferencesSettingsContainer from '../../containers/Settings/PreferencesSettingsContainer';
+import AccountSettingsContainer from '../../containers/Settings/AccountSettingsContainer';
+import AuthenticationSettingsContainer from '../../containers/Settings/AuthenticationSettingsContainer';
+import AboutSettingsContainer from '../../containers/Settings/AboutSettingsContainer';
 import UsersSettingsContainer from '../../containers/Settings/UsersSettingsContainer';
 import InstanceSettingsContainer from '../../containers/Settings/InstanceSettingsContainer';
 import Paths from '../../constants/Paths';
@@ -22,16 +27,18 @@ const Settings = React.memo(({ path, isAdmin }) => {
         return `${t('common.settings')} | ${mainTitle}`;
       case Paths.SETTINGS_PROFILE:
         return `${t('common.settingsProfile')} | ${mainTitle}`;
+      case Paths.SETTINGS_PREFERENCES:
+        return `${t('common.settingsPreferences')} | ${mainTitle}`;
       case Paths.SETTINGS_ACCOUNT:
         return `${t('common.settingsAccount')} | ${mainTitle}`;
       case Paths.SETTINGS_AUTHENTICATION:
         return `${t('common.settingsAuthentication')} | ${mainTitle}`;
       case Paths.SETTINGS_ABOUT:
         return `${t('common.settingsAbout')} | ${mainTitle}`;
-      case Paths.SETTINGS_USERS:
-        return `${t('common.settingsUsers')} | ${mainTitle}`;
       case Paths.SETTINGS_INSTANCE:
         return `${t('common.settingsInstance')} | ${mainTitle}`;
+      case Paths.SETTINGS_USERS:
+        return `${t('common.settingsUsers')} | ${mainTitle}`;
       default:
         return mainTitle;
     }
@@ -53,6 +60,14 @@ const Settings = React.memo(({ path, isAdmin }) => {
             <Button style={ButtonStyle.NoBackground} title={t('common.profile')} className={styles.sidebarButton}>
               <Icon type={IconType.User} size={IconSize.Size14} className={styles.icon} />
               {t('common.profile')}
+            </Button>
+          </Link>
+        </div>
+        <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_PREFERENCES && styles.sidebarActive)}>
+          <Link to={Paths.SETTINGS_PREFERENCES}>
+            <Button style={ButtonStyle.NoBackground} title={t('common.preferences')} className={styles.sidebarButton}>
+              <Icon type={IconType.Sliders} size={IconSize.Size14} className={styles.icon} />
+              {t('common.preferences')}
             </Button>
           </Link>
         </div>
@@ -83,16 +98,8 @@ const Settings = React.memo(({ path, isAdmin }) => {
         {isAdmin && (
           <div>
             <div className={styles.sidebarTitle}>
-              <Icon type={IconType.Settings} size={IconSize.Size20} className={styles.sidebarTitleIcon} />
+              <Icon type={IconType.Server} size={IconSize.Size20} className={styles.sidebarTitleIcon} />
               {t('common.settingsInstance')}
-            </div>
-            <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_USERS && styles.sidebarActive)}>
-              <Link to={Paths.SETTINGS_USERS}>
-                <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={styles.sidebarButton}>
-                  <Icon type={IconType.Users} size={IconSize.Size14} className={styles.icon} />
-                  {t('common.users')}
-                </Button>
-              </Link>
             </div>
             <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_INSTANCE && styles.sidebarActive)}>
               <Link to={Paths.SETTINGS_INSTANCE}>
@@ -102,14 +109,27 @@ const Settings = React.memo(({ path, isAdmin }) => {
                 </Button>
               </Link>
             </div>
+            <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_USERS && styles.sidebarActive)}>
+              <Link to={Paths.SETTINGS_USERS}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={styles.sidebarButton}>
+                  <Icon type={IconType.Users} size={IconSize.Size14} className={styles.icon} />
+                  {t('common.users')}
+                </Button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
       <div className={styles.content}>
-        {path === Paths.SETTINGS_USERS && isAdmin && <UsersSettingsContainer />}
-        {path === Paths.SETTINGS_USERS && !isAdmin && <h1 className={styles.text}>{t('common.cannotEditUsersSettings')}</h1>}
+        {path === Paths.SETTINGS_PROFILE && <ProfileSettingsContainer />}
+        {path === Paths.SETTINGS_PREFERENCES && <PreferencesSettingsContainer />}
+        {path === Paths.SETTINGS_ACCOUNT && <AccountSettingsContainer />}
+        {path === Paths.SETTINGS_AUTHENTICATION && <AuthenticationSettingsContainer />}
+        {path === Paths.SETTINGS_ABOUT && <AboutSettingsContainer />}
         {path === Paths.SETTINGS_INSTANCE && isAdmin && <InstanceSettingsContainer />}
         {path === Paths.SETTINGS_INSTANCE && !isAdmin && <h1 className={styles.text}>{t('common.cannotEditInstanceSettings')}</h1>}
+        {path === Paths.SETTINGS_USERS && isAdmin && <UsersSettingsContainer />}
+        {path === Paths.SETTINGS_USERS && !isAdmin && <h1 className={styles.text}>{t('common.cannotEditUsersSettings')}</h1>}
       </div>
     </div>
   );

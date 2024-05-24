@@ -1,0 +1,67 @@
+:global(#app) {
+  .wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    color: var(--textColor0);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .headerText {
+    display: inline;
+  }
+
+  .contentWrapper {
+    flex-grow: 1;
+  }
+
+  .version {
+    color: var(--textColor0);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+  }
+
+  @media (max-width: 700px) {
+    .logo {
+      width: 100%;
+    }
+  }
+
+  .links {
+    color: var(--textColor0);
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .link {
+    margin-bottom: 5px;
+
+    svg {
+      fill: var(--textColorLink);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--textColorLinkHover);
+      }
+    }
+  }
+
+  .icon {
+    margin-right: 5px;
+    vertical-align: -5%;
+  }
+}

@@ -1,0 +1,9 @@
+:global(#app) {
+  .link {
+    color: var(--textColorLink);
+
+    &:hover {
+      color: var(--textColorLinkHover);
+    }
+  }
+}

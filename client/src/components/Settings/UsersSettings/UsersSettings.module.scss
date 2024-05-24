@@ -3,11 +3,12 @@
     height: 100%;
     width: 100%;
     padding: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
   }
 
   .header {
     color: var(--textColor0);
-    height: 30px;
     margin-bottom: 20px;
     text-align: center;
   }
@@ -21,7 +22,7 @@
     position: relative;
   }
 
-  .tableWrapper {
-    max-height: calc(100% - 50px);
+  .contentWrapper {
+    flex-grow: 1;
   }
 }

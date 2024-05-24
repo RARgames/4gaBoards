@@ -14,7 +14,18 @@ import styles from './Static.module.scss';
 function Static({ projectId, cardId, board, path }) {
   const [t] = useTranslation();
 
-  if ([Paths.SETTINGS, Paths.SETTINGS_PROFILE, Paths.SETTINGS_ACCOUNT, Paths.SETTINGS_AUTHENTICATION, Paths.SETTINGS_ABOUT, Paths.SETTINGS_USERS, Paths.SETTINGS_INSTANCE].includes(path)) {
+  if (
+    [
+      Paths.SETTINGS,
+      Paths.SETTINGS_PROFILE,
+      Paths.SETTINGS_PREFERENCES,
+      Paths.SETTINGS_ACCOUNT,
+      Paths.SETTINGS_AUTHENTICATION,
+      Paths.SETTINGS_ABOUT,
+      Paths.SETTINGS_INSTANCE,
+      Paths.SETTINGS_USERS,
+    ].includes(path)
+  ) {
     return (
       <div className={styles.wrapper}>
         <SettingsContainer />

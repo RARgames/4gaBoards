@@ -29,6 +29,7 @@ function Root({ store, history }) {
           <Route path={Paths.CARDS} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_PROFILE} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_PREFERENCES} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_ACCOUNT} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_AUTHENTICATION} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_ABOUT} element={<CoreContainer />} />

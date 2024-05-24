@@ -8,4 +8,20 @@
     margin: 0;
     padding-left: 14px;
   }
+
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    color: #212121;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+
+  .icon {
+    margin-right: 4px;
+    fill: #212121;
+  }
 }

@@ -1,12 +1,12 @@
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Icon, IconType, IconSize } from '../Icon';
+import { Icon, IconType, IconSize, FlagType } from '../Icon';
 
 import styles from './Dropdown.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
-const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder, isSearchable, onChange, onBlur, onClose, onCancel, submitOnBlur }, ref) => {
+const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder, isSearchable, onChange, onBlur, onClose, onCancel, submitOnBlur, stayOpenOnBlur, selectFirstOnSearch }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
@@ -20,6 +20,8 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
 
   const close = useCallback(() => {
     setIsOpened(false);
+    setSearchValue('');
+    dropdown.current.blur();
     onClose();
   }, [onClose]);
 
@@ -45,6 +47,15 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
     return options.filter((item) => item.name.toLowerCase().startsWith(searchValue.toLowerCase()));
   }, [options, searchValue]);
 
+  useEffect(() => {
+    if (selectFirstOnSearch && searchValue) {
+      const firstItem = getOptions()[0];
+      if (firstItem) {
+        setSelectedItem(firstItem);
+      }
+    }
+  }, [searchValue, selectFirstOnSearch, getOptions]);
+
   const getCurrItemIndex = useCallback(() => {
     const currIndex = getOptions()
       .map((item) => item.id)
@@ -57,11 +68,13 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
   }, [getOptions, selectedItem]);
 
   const scrollItemIntoView = useCallback((itemRef) => {
-    itemRef.scrollIntoView({
-      behavior: 'auto',
-      block: 'center',
-      inline: 'center',
-    });
+    if (itemRef) {
+      itemRef.scrollIntoView({
+        behavior: 'auto',
+        block: 'center',
+        inline: 'center',
+      });
+    }
   }, []);
 
   const selectItemByIndex = useCallback(
@@ -90,11 +103,14 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
   }, [close, onCancel]);
 
   const handleFocus = useCallback(() => {
+    if (!isOpened) {
+      open();
+    }
     const defaultItemIndex = getOptions()
       .map((item) => item.id)
       .indexOf(defaultItem.id);
     selectItemByIndex(defaultItemIndex >= 0 ? defaultItemIndex : 0);
-  }, [defaultItem.id, getOptions, selectItemByIndex]);
+  }, [defaultItem.id, getOptions, isOpened, open, selectItemByIndex]);
 
   const handleBlur = useCallback(() => {
     if (onBlur) {
@@ -103,15 +119,17 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
     if (submitOnBlur) {
       handleSubmit(getCurrItem());
     }
-    close();
-  }, [close, getCurrItem, handleSubmit, onBlur, submitOnBlur]);
+    if (!stayOpenOnBlur) {
+      close();
+    }
+  }, [close, stayOpenOnBlur, getCurrItem, handleSubmit, onBlur, submitOnBlur]);
 
   const getDisplay = useCallback(() => {
-    if (selectedItem) {
+    if (isOpened && selectedItem) {
       return selectedItem.name;
     }
     return placeholder;
-  }, [placeholder, selectedItem]);
+  }, [isOpened, placeholder, selectedItem]);
 
   const handleItemClick = useCallback(
     (item) => {
@@ -169,7 +187,7 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
     [getCurrItem, getCurrItemIndex, getOptions, handleCancel, handleSubmit, selectItemByIndex],
   );
 
-  if (!isOpened) {
+  if (!isOpened && children) {
     return children;
   }
 
@@ -189,29 +207,33 @@ const Dropdown = React.forwardRef(({ children, options, defaultItem, placeholder
         />
         <Icon type={IconType.TriangleDown} size={IconSize.Size10} className={styles.dropdownIcon} />
       </div>
-      <div className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>
-        {getOptions().map((item, index) => (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <div
-            // eslint-disable-next-line no-return-assign
-            ref={(el) => (itemsRef.current[index] = el)}
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            className={classNames(styles.dropdownItem, defaultItem.id === item.id && styles.dropdownItemDefault, isSelected(item) && styles.dropdownItemSelected)}
-            onClick={() => handleItemClick(item)}
-            onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
-          >
-            {item.name}
-          </div>
-        ))}
-      </div>
+      {isOpened && (
+        <div className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>
+          {getOptions().map((item, index) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+            <div
+              // eslint-disable-next-line no-return-assign
+              ref={(el) => (itemsRef.current[index] = el)}
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              className={classNames(styles.dropdownItem, defaultItem.id === item.id && styles.dropdownItemDefault, isSelected(item) && styles.dropdownItemSelected)}
+              onClick={() => handleItemClick(item)}
+              onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
+            >
+              {item.flag && <Icon type={FlagType[item.flag]} size={IconSize.Size14} className={styles.icon} />}
+              {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={styles.icon} />}
+              {item.name}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 });
 
 Dropdown.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node,
   // eslint-disable-next-line react/forbid-prop-types
   options: PropTypes.array.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
@@ -223,15 +245,20 @@ Dropdown.propTypes = {
   onClose: PropTypes.func,
   onCancel: PropTypes.func,
   submitOnBlur: PropTypes.bool,
+  stayOpenOnBlur: PropTypes.bool,
+  selectFirstOnSearch: PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
+  children: null,
   isSearchable: false,
   onChange: () => {},
   onBlur: undefined,
   onClose: () => {},
   onCancel: undefined,
   submitOnBlur: false,
+  stayOpenOnBlur: false,
+  selectFirstOnSearch: false,
 };
 
 export default React.memo(Dropdown);
