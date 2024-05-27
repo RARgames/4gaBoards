@@ -6,16 +6,17 @@ import UserUsernameEditPopup from '../../UserUsernameEditPopup';
 import UserEmailEditPopup from '../../UserEmailEditPopup';
 
 import styles from './AccountSettings.module.scss';
+import sShared from '../SettingsShared.module.scss';
 
 const AccountSettings = React.memo(({ email, username, usernameUpdateForm, emailUpdateForm, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss }) => {
   const [t] = useTranslation();
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <h2 className={styles.headerText}>{t('common.account')}</h2>
+    <div className={sShared.wrapper}>
+      <div className={sShared.header}>
+        <h2 className={sShared.headerText}>{t('common.account')}</h2>
       </div>
-      <div className={styles.contentWrapper}>
+      <div className={sShared.contentWrapper}>
         <div className={styles.action}>
           <UserUsernameEditPopup
             usePasswordConfirmation

@@ -8,6 +8,7 @@ import Table from '../../Utils/Table';
 import locales from '../../../locales';
 
 import styles from './PreferencesSettings.module.scss';
+import sShared from '../SettingsShared.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
 const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdate, onLanguageUpdate }) => {
@@ -42,11 +43,11 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdat
   );
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <h2 className={styles.headerText}>{t('common.preferences')}</h2>
+    <div className={sShared.wrapper}>
+      <div className={sShared.header}>
+        <h2 className={sShared.headerText}>{t('common.preferences')}</h2>
       </div>
-      <Table.Wrapper className={classNames(styles.contentWrapper, gStyles.scrollableXY)}>
+      <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
         <Table>
           <Table.Header>
             <Table.HeaderRow>

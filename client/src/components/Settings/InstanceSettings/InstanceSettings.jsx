@@ -5,7 +5,8 @@ import classNames from 'classnames';
 import { Radio, RadioSize } from '../../Utils/Radio';
 import Table from '../../Utils/Table';
 
-import styles from './InstanceSettings.module.scss';
+// import styles from './InstanceSettings.module.scss';
+import sShared from '../SettingsShared.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
 const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, onCoreSettingsUpdate }) => {
@@ -30,11 +31,11 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
   }, [onCoreSettingsUpdate, ssoRegistrationEnabled]);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <h2 className={styles.headerText}>{t('common.settings')}</h2>
+    <div className={sShared.wrapper}>
+      <div className={sShared.header}>
+        <h2 className={sShared.headerText}>{t('common.settings')}</h2>
       </div>
-      <Table.Wrapper className={classNames(styles.contentWrapper, gStyles.scrollableXY)}>
+      <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
         <Table>
           <Table.Header>
             <Table.HeaderRow>

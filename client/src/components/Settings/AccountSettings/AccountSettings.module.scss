@@ -1,25 +1,3 @@
-:global(#app) {
-  .wrapper {
-    height: 100%;
-    width: 100%;
-    padding: 20px 20px 20px 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .header {
-    color: var(--textColor0);
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .headerText {
-    display: inline;
-  }
-
-  .contentWrapper {
-    flex-grow: 1;
-  }
-
-  // .action{}
-}
+// :global(#app) {
+//   // .action{}
+// }

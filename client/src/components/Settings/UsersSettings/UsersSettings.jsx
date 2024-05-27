@@ -9,6 +9,7 @@ import UserAddPopupContainer from '../../../containers/UserAddPopupContainer';
 import Item from './Item';
 
 import styles from './UsersSettings.module.scss';
+import sShared from '../SettingsShared.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
 const UsersSettings = React.memo(
@@ -73,16 +74,16 @@ const UsersSettings = React.memo(
 
     // TODO scroll is too long - overlaping header
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <h2 className={styles.headerText}>{t('common.users')}</h2>
+      <div className={sShared.wrapper}>
+        <div className={sShared.header}>
+          <h2 className={sShared.headerText}>{t('common.users')}</h2>
           <div className={styles.headerButton}>
             <UserAddPopupContainer>
               <Button style={ButtonStyle.Submit} content={t('action.addUser')} />
             </UserAddPopupContainer>
           </div>
         </div>
-        <Table.Wrapper className={classNames(styles.contentWrapper, gStyles.scrollableXY)}>
+        <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
           <Table>
             <Table.Header>
               <Table.HeaderRow>

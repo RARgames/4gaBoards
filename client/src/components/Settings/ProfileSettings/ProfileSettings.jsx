@@ -7,6 +7,7 @@ import UserInformationEdit from '../../UserInformationEdit';
 import { Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
 
 import styles from './ProfileSettings.module.scss';
+import sShared from '../SettingsShared.module.scss';
 
 const ProfileSettings = React.memo(({ name, avatarUrl, phone, organization, isAvatarUpdating, onUpdate, onAvatarUpdate }) => {
   const [t] = useTranslation();
@@ -18,11 +19,11 @@ const ProfileSettings = React.memo(({ name, avatarUrl, phone, organization, isAv
   }, [onUpdate]);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <h2 className={styles.headerText}>{t('common.profile')}</h2>
+    <div className={sShared.wrapper}>
+      <div className={sShared.header}>
+        <h2 className={sShared.headerText}>{t('common.profile')}</h2>
       </div>
-      <div className={styles.contentWrapper}>
+      <div className={sShared.contentWrapper}>
         <div className={styles.avatarEdit}>
           <div className={styles.avatarText}>{t('common.avatarText')}</div>
           <div className={styles.avatarImage}>
