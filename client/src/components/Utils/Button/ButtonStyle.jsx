@@ -5,6 +5,7 @@ const ButtonStyle = {
   BackgroundFade: 'backgroundFadeButton',
   Submit: 'submit',
   Cancel: 'cancel',
+  Popup: 'popup',
 };
 
 export default ButtonStyle;

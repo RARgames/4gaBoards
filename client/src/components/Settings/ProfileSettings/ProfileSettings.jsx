@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import AvatarEditPopup from './AvatarEditPopup';
 import User from '../../User';
 import UserInformationEdit from '../../UserInformationEdit';
+import { Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
 
 import styles from './ProfileSettings.module.scss';
 
@@ -23,9 +24,18 @@ const ProfileSettings = React.memo(({ name, avatarUrl, phone, organization, isAv
       </div>
       <div className={styles.contentWrapper}>
         <div className={styles.avatarEdit}>
-          <AvatarEditPopup defaultValue={avatarUrl} onUpdate={onAvatarUpdate} onDelete={handleAvatarDelete}>
-            <User name={name} avatarUrl={avatarUrl} size="massive" isDisabled={isAvatarUpdating} />
-          </AvatarEditPopup>
+          <div className={styles.avatarText}>{t('common.avatarText')}</div>
+          <div className={styles.avatarImage}>
+            <div className={styles.avatarImage2}>
+              <AvatarEditPopup defaultValue={avatarUrl} onUpdate={onAvatarUpdate} onDelete={handleAvatarDelete} offset={-25} position="bottom">
+                <User name={name} avatarUrl={avatarUrl} size="profile" isDisabled={isAvatarUpdating} onClick={() => {}} />
+                <Button style={ButtonStyle.NoBackground} title={t('action.edit')} className={styles.editButton}>
+                  <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconEditButton} />
+                  {t('action.edit')}
+                </Button>
+              </AvatarEditPopup>
+            </div>
+          </div>
         </div>
         <UserInformationEdit defaultData={{ name, phone, organization }} onUpdate={onUpdate} />
       </div>

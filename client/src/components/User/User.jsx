@@ -15,6 +15,7 @@ const SIZES = {
   LARGE: 'large',
   MASSIVE: 'massive',
   CARD: 'card',
+  PROFILE: 'profile',
 };
 
 const COLORS = ['emerald', 'peter-river', 'wisteria', 'carrot', 'alizarin', 'turquoise', 'midnight-blue'];

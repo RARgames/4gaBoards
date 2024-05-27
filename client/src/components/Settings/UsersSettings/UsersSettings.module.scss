@@ -17,12 +17,12 @@
     display: inline;
   }
 
+  .contentWrapper {
+    flex-grow: 1;
+  }
+
   .headerButton {
     float: right;
     position: relative;
-  }
-
-  .contentWrapper {
-    flex-grow: 1;
   }
 }

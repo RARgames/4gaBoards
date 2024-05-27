@@ -59,6 +59,7 @@
     "@babel/core": "^7.24.4",
     "@babel/eslint-parser": "^7.24.1",
     "@babel/runtime": "^7.24.4",
+    "@floating-ui/react": "^0.26.16",
     "@juggle/resize-observer": "^3.4.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.13",
     "@react-hook/resize-observer": "^1.2.6",

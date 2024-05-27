@@ -23,5 +23,34 @@
 
   .avatarEdit {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avatarText {
+    color: var(--textColor1);
+    margin-bottom: 4px;
+  }
+
+  .avatarImage {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .editButton {
+    position: relative;
+    transform: translateY(-45px);
+    padding: 5px 6px 3px 6px;
+    background: var(--backgroundColor1);
+    border-radius: 3px;
+    border: 1px solid var(--textColor4);
+    width: auto;
+    height: auto;
+  }
+
+  .iconEditButton {
+    margin-right: 4px;
+    vertical-align: 0%;
   }
 }
