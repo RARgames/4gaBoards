@@ -1,7 +1,7 @@
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import initials from 'initials';
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '../Utils/Button';
@@ -30,13 +30,22 @@ const getColor = (name) => {
 };
 
 const User = React.memo(({ name, avatarUrl, size, isDisabled, onClick }) => {
+  const avatarBackground = useCallback(() => {
+    if (!avatarUrl) {
+      return null;
+    }
+    if (size === 'profile') {
+      const newUrl = avatarUrl.replace('square-100', 'original');
+      return { background: `url("${newUrl}") center / cover` };
+    }
+    return { background: `url("${avatarUrl}") center / contain` };
+  }, [avatarUrl, size]);
+
   const contentNode = (
     <span
       title={name}
       className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable, !avatarUrl && styles[`background${upperFirst(camelCase(getColor(name)))}`])}
-      style={{
-        background: avatarUrl && `url("${avatarUrl}") center / cover`,
-      }}
+      style={avatarBackground(avatarUrl, size)}
     >
       {!avatarUrl && <span className={styles.initials}>{initials(name)}</span>}
     </span>
