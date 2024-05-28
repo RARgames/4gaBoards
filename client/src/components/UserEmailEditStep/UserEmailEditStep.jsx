@@ -2,12 +2,10 @@ import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Input, Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 
 import styles from './UserEmailEditStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -40,7 +38,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
-  const [data, handleFieldChange, setData] = useForm({
+  const [data, handleFieldChange, setData] = useForm2({
     email: '',
     currentPassword: '',
     ...defaultData,
@@ -118,14 +116,14 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
     <>
       <Popup.Header onBack={onBack}>{t('common.editEmail', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && <Message {...{ [message.type]: true }} visible content={t(message.content)} onDismiss={onMessageDismiss} />}
+        {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newEmail')}</div>
-          <Input fluid ref={emailField} name="email" value={data.email} placeholder={email} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={emailField} name="email" value={data.email} placeholder={email} className={styles.field} onChange={handleFieldChange} />
           {usePasswordConfirmation && (
             <>
               <div className={styles.text}>{t('common.currentPassword')}</div>
-              <Input.Password fluid ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
+              <Input.Password ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
             </>
           )}
           <div className={gStyles.controls}>
