@@ -4,14 +4,18 @@ import { connect } from 'react-redux';
 import entryActions from '../entry-actions';
 import ProjectAddModal from '../components/ProjectAddModal';
 
-const mapStateToProps = ({
-  ui: {
-    projectCreateForm: { data: defaultData, isSubmitting },
-  },
-}) => ({
-  defaultData,
-  isSubmitting,
-});
+const mapStateToProps = (state) => {
+  const {
+    ui: {
+      projectCreateForm: { data: defaultData, isSubmitting },
+    },
+  } = state;
+
+  return {
+    defaultData,
+    isSubmitting,
+  };
+};
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(

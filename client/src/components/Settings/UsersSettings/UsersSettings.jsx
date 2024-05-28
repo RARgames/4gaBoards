@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Button, ButtonStyle } from '../../Utils/Button';
 import Table from '../../Utils/Table';
 
-import UserAddPopupContainer from '../../../containers/UserAddPopupContainer';
+import UserAddPopup from '../../UserAddPopup';
 import Item from './Item';
 
 import styles from './UsersSettings.module.scss';
@@ -13,7 +13,22 @@ import sShared from '../SettingsShared.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
 const UsersSettings = React.memo(
-  ({ items, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete }) => {
+  ({
+    userCreateDefaultData,
+    userCreateIsSubmitting,
+    userCreateError,
+    items,
+    onUserCreate,
+    onUserCreateMessageDismiss,
+    onUpdate,
+    onUsernameUpdate,
+    onUsernameUpdateMessageDismiss,
+    onEmailUpdate,
+    onEmailUpdateMessageDismiss,
+    onPasswordUpdate,
+    onPasswordUpdateMessageDismiss,
+    onDelete,
+  }) => {
     const [t] = useTranslation();
 
     const handleUpdate = useCallback(
@@ -78,9 +93,16 @@ const UsersSettings = React.memo(
         <div className={sShared.header}>
           <h2 className={sShared.headerText}>{t('common.users')}</h2>
           <div className={styles.headerButton}>
-            <UserAddPopupContainer>
+            <UserAddPopup
+              defaultData={userCreateDefaultData}
+              isSubmitting={userCreateIsSubmitting}
+              error={userCreateError}
+              onCreate={onUserCreate}
+              onMessageDismiss={onUserCreateMessageDismiss}
+              position="left-start"
+            >
               <Button style={ButtonStyle.Submit} content={t('action.addUser')} />
-            </UserAddPopupContainer>
+            </UserAddPopup>
           </div>
         </div>
         <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
@@ -132,7 +154,12 @@ const UsersSettings = React.memo(
 );
 
 UsersSettings.propTypes = {
+  userCreateDefaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  userCreateIsSubmitting: PropTypes.bool.isRequired,
+  userCreateError: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  onUserCreate: PropTypes.func.isRequired,
+  onUserCreateMessageDismiss: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onUsernameUpdate: PropTypes.func.isRequired,
   onUsernameUpdateMessageDismiss: PropTypes.func.isRequired,
@@ -141,6 +168,10 @@ UsersSettings.propTypes = {
   onPasswordUpdate: PropTypes.func.isRequired,
   onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+};
+
+UsersSettings.defaultProps = {
+  userCreateError: undefined,
 };
 
 export default UsersSettings;

@@ -2,16 +2,13 @@ import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form, Message } from 'semantic-ui-react';
 import { usePrevious } from '../../lib/hooks';
-import { withPopup } from '../../lib/popup';
-import { Input, Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 import { isPassword, isUsername } from '../../utils/validator';
 
-import styles from './UserAddPopup.module.scss';
+import styles from './UserAddStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
@@ -37,12 +34,12 @@ const createMessage = (error) => {
       };
   }
 };
-
+// TODO onclose check in others
 const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, onMessageDismiss, onClose }) => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
-  const [data, handleFieldChange] = useForm(() => ({
+  const [data, handleFieldChange] = useForm2(() => ({
     email: '',
     password: '',
     name: '',
@@ -123,18 +120,18 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     <>
       <Popup.Header>{t('common.addUser', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && <Message {...{ [message.type]: true }} visible content={t(message.content)} onDismiss={onMessageDismiss} />}
+        {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.email')}</div>
-          <Input fluid ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={styles.text}>{t('common.password')}</div>
-          <Input.Password withStrengthBar fluid ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input.Password withStrengthBar ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.fieldPassword} onChange={handleFieldChange} />
           <div className={styles.text}>{t('common.name')}</div>
-          <Input fluid ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={styles.text}>
             {t('common.username')} ({t('common.optional', { context: 'inline' })})
           </div>
-          <Input fluid ref={usernameField} name="username" value={data.username} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={usernameField} name="username" value={data.username} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} />
           </div>
@@ -157,4 +154,4 @@ UserAddStep.defaultProps = {
   error: undefined,
 };
 
-export default withPopup(UserAddStep);
+export default UserAddStep;

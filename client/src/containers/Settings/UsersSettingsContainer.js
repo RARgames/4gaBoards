@@ -8,7 +8,16 @@ import UsersSettings from '../../components/Settings/UsersSettings';
 const mapStateToProps = (state) => {
   const users = selectors.selectUsersExceptCurrent(state);
 
+  const {
+    ui: {
+      userCreateForm: { data: defaultData, isSubmitting, error },
+    },
+  } = state;
+
   return {
+    userCreateDefaultData: defaultData,
+    userCreateIsSubmitting: isSubmitting,
+    userCreateError: error,
     items: users,
   };
 };
@@ -16,6 +25,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      onUserCreate: entryActions.createUser,
+      onUserCreateMessageDismiss: entryActions.clearUserCreateError,
       onUpdate: entryActions.updateUser,
       onUsernameUpdate: entryActions.updateUserUsername,
       onUsernameUpdateMessageDismiss: entryActions.clearUserUsernameUpdateError,
