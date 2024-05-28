@@ -24,6 +24,7 @@ const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdat
             error={passwordUpdateForm.error}
             onUpdate={onPasswordUpdate}
             onMessageDismiss={onPasswordUpdateMessageDismiss}
+            position="bottom-start"
           >
             <Button style={ButtonStyle.Default} content={t('action.editPassword', { context: 'title' })} />
           </UserPasswordEditPopup>
