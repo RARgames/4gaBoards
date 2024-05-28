@@ -3,16 +3,15 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { withPopup } from '../../lib/popup';
-import { Popup } from '../../lib/custom-ui';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { Button, ButtonStyle } from '../Utils/Button';
+import classNames from 'classnames';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import Paths from '../../constants/Paths';
 import { ActivityTypes } from '../../constants/Enums';
 import User from '../User';
 
 import styles from './NotificationsPopup.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
   const [t] = useTranslation();
@@ -82,7 +81,7 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
       <Popup.Header>{t('common.notifications', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {items.length > 0 ? (
-          <div className={styles.wrapper}>
+          <div className={classNames(styles.wrapper, gStyles.scrollableYList)}>
             {items.map((item) => (
               <div key={item.id} className={styles.item}>
                 {item.card && item.activity ? (
@@ -113,6 +112,4 @@ NotificationsStep.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default withPopup(NotificationsStep, {
-  position: 'bottom right',
-});
+export default withPopup(NotificationsStep);

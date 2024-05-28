@@ -49,18 +49,17 @@
   }
 
   .notification {
-    background: #eb5a46;
+    position: absolute;
+    background: var(--notificationRed);
     border-radius: 8px;
-    color: #fff;
+    color: var(--textColorWhite);
     display: inline-block;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     height: 16px;
     line-height: 16px;
-    position: absolute;
-    right: 8px;
     text-align: center;
-    top: 8px;
+    transform: translate(-8px, -6px);
     width: 16px;
   }
 

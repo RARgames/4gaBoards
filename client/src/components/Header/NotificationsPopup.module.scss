@@ -3,7 +3,7 @@
     padding: 12px;
 
     &:hover {
-      background: #f0f0f0;
+      background: var(--backgroundPopupHover);
     }
   }
 
@@ -41,21 +41,6 @@
 
   .wrapper {
     margin: 0 -12px;
-    max-height: 60vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
-
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-    }
+    max-height: 80vh;
   }
 }

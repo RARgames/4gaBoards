@@ -6,6 +6,7 @@ const ButtonStyle = {
   Submit: 'submit',
   Cancel: 'cancel',
   Popup: 'popup',
+  Header: 'header',
 };
 
 export default ButtonStyle;

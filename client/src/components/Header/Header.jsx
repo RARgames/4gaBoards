@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import User from '../User';
 
 import Paths from '../../constants/Paths';
@@ -71,11 +71,11 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
               <Icon type={IconType.Server} size={IconSize.Size18} className={styles.icon} />
             </Link>
           )}
-          <NotificationsPopup items={notifications} onDelete={onNotificationDelete}>
-            <Menu.Item className={classNames(styles.item, styles.itemHoverable)} title={t('common.notifications')}>
+          <NotificationsPopup items={notifications} onDelete={onNotificationDelete} showCloseButton position="bottom">
+            <Button style={ButtonStyle.Header} title={t('common.notifications')}>
               <Icon type={IconType.Bell} size={IconSize.Size18} />
               {notifications.length > 0 && <span className={styles.notification}>{notifications.length}</span>}
-            </Menu.Item>
+            </Button>
           </NotificationsPopup>
           <UserPopup isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
             <Menu.Item className={classNames(styles.item, styles.itemHoverable)}>
