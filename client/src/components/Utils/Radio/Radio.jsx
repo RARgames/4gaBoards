@@ -4,10 +4,10 @@ import classNames from 'classnames';
 
 import styles from './Radio.module.scss';
 
-const Radio = React.forwardRef(({ checked, onChange, size, className, ...rest }, ref) => {
+const Radio = React.forwardRef(({ checked, onChange, size, className, ...props }, ref) => {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control, react/jsx-props-no-spreading
-    <label ref={ref} className={classNames(styles.switch, size && styles[size], className)} {...rest}>
+    <label ref={ref} className={classNames(styles.switch, size && styles[size], className)} {...props}>
       <input type="checkbox" className={styles.input} checked={checked} onChange={onChange} />
       <span className={styles.switchRound} />
     </label>

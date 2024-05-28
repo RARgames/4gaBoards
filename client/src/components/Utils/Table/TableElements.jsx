@@ -6,9 +6,9 @@ import classNames from 'classnames';
 import styles from './Table.module.scss';
 
 const Wrapper = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <div ref={ref} className={classNames(styles.wrapper, className)} {...rest}>
+      <div ref={ref} className={classNames(styles.wrapper, className)} {...props}>
         {children}
       </div>
     );
@@ -16,9 +16,9 @@ const Wrapper = React.memo(
 );
 
 const Header = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <thead ref={ref} className={classNames(styles.header, className)} {...rest}>
+      <thead ref={ref} className={classNames(styles.header, className)} {...props}>
         {children}
       </thead>
     );
@@ -26,9 +26,9 @@ const Header = React.memo(
 );
 
 const HeaderRow = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <tr ref={ref} className={classNames(styles.headerRow, className)} {...rest}>
+      <tr ref={ref} className={classNames(styles.headerRow, className)} {...props}>
         {children}
       </tr>
     );
@@ -36,9 +36,9 @@ const HeaderRow = React.memo(
 );
 
 const HeaderCell = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <th ref={ref} className={classNames(styles.headerCell, className)} {...rest}>
+      <th ref={ref} className={classNames(styles.headerCell, className)} {...props}>
         {children}
       </th>
     );
@@ -46,9 +46,9 @@ const HeaderCell = React.memo(
 );
 
 const Body = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <tbody ref={ref} className={classNames(styles.body, className)} {...rest}>
+      <tbody ref={ref} className={classNames(styles.body, className)} {...props}>
         {children}
       </tbody>
     );
@@ -56,9 +56,9 @@ const Body = React.memo(
 );
 
 const Row = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <tr ref={ref} className={classNames(styles.bodyRow, className)} {...rest}>
+      <tr ref={ref} className={classNames(styles.bodyRow, className)} {...props}>
         {children}
       </tr>
     );
@@ -66,9 +66,9 @@ const Row = React.memo(
 );
 
 const Cell = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <td ref={ref} className={classNames(styles.bodyCell, className)} {...rest}>
+      <td ref={ref} className={classNames(styles.bodyCell, className)} {...props}>
         {children}
       </td>
     );

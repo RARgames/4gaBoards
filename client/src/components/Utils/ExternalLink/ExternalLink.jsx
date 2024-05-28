@@ -4,10 +4,10 @@ import classNames from 'classnames';
 
 import styles from './ExternalLink.module.scss';
 
-const ExternalLink = React.forwardRef(({ children, target, rel, className, ...rest }, ref) => {
+const ExternalLink = React.forwardRef(({ children, target, rel, className, ...props }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type
-    <a ref={ref} target={target} rel={rel} className={classNames(styles.link, className)} {...rest}>
+    <a ref={ref} target={target} rel={rel} className={classNames(styles.link, className)} {...props}>
       {children}
     </a>
   );

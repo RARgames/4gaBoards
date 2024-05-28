@@ -7,11 +7,11 @@ import { Icon, IconType, IconSize } from '../Icon';
 
 import styles from './PopupHeader.module.scss';
 
-const PopupHeader = React.memo(({ children, className, onBack, ...rest }) => {
+const PopupHeader = React.memo(({ children, className, onBack, ...props }) => {
   const [t] = useTranslation();
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <div className={classNames(styles.wrapper, className)} {...rest}>
+    <div className={classNames(styles.wrapper, className)} {...props}>
       {onBack && (
         <Button style={ButtonStyle.Icon} title={t('common.back')} onClick={onBack} className={styles.backButton}>
           <Icon type={IconType.AngleLeft} size={IconSize.Size14} />

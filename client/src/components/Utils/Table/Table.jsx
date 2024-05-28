@@ -6,9 +6,9 @@ import classNames from 'classnames';
 import styles from './Table.module.scss';
 
 const Table = React.memo(
-  React.forwardRef(({ children, className, ...rest }, ref) => {
+  React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <table ref={ref} className={classNames(styles.table, className)} {...rest}>
+      <table ref={ref} className={classNames(styles.table, className)} {...props}>
         {children}
       </table>
     );

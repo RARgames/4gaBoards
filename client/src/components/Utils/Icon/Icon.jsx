@@ -7,10 +7,10 @@ import IconSize from './IconSize';
 
 import styles from './Icon.module.scss';
 
-const Icon = React.memo(({ type, size, className, ...rest }) => {
+const Icon = React.memo(({ type, size, className, ...props }) => {
   const IconComponent = type;
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return type ? <IconComponent className={classNames(styles.defaultIcon, styles[size], className)} {...rest} /> : null;
+  return type ? <IconComponent className={classNames(styles.defaultIcon, styles[size], className)} {...props} /> : null;
 });
 
 Icon.propTypes = {

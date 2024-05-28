@@ -4,10 +4,10 @@ import classNames from 'classnames';
 
 import styles from './PopupContent.module.scss';
 
-const PopupContent = React.memo(({ children, className, ...rest }) => {
+const PopupContent = React.memo(({ children, className, ...props }) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <div className={classNames(styles.wrapper, className)} {...rest}>
+    <div className={classNames(styles.wrapper, className)} {...props}>
       {children}
     </div>
   );
