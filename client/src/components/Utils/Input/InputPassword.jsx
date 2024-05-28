@@ -41,7 +41,7 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
       <>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <input {...inputProps} className={classNames(styles.base, style && styles[style], className)} />
-        <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabindex="-1">
+        <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
           <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
         </Button>
       </>
@@ -53,7 +53,7 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
     <>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...inputProps} className={classNames(styles.base, style && styles[style], className)} />
-      <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabindex="-1">
+      <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>
       <ProgressBar value={value ? strengthScore + 1 : 0} total={5} color={STRENGTH_SCORE_COLORS[strengthScore]} size={ProgressBarSize.Tiny} />
