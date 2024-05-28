@@ -7,6 +7,7 @@ const ButtonStyle = {
   Cancel: 'cancel',
   Popup: 'popup',
   Header: 'header',
+  HeaderLogo: 'headerLogo',
 };
 
 export default ButtonStyle;

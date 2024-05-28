@@ -1,5 +1,13 @@
 :global(#app) {
+  .wrapper {
+    background: var(--backgroundHeader);
+    display: flex;
+    flex: 0 0 auto;
+    height: 50px;
+  }
+
   .logo {
+    display: inline-block;
     margin: 0 16px;
   }
 
@@ -8,15 +16,27 @@
     height: 40px;
   }
 
-  .menu {
-    background: none;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    flex: 1 1 auto;
-    height: 50px;
-    margin: 0;
-    width: 100%;
+  .title {
+    color: var(--textColor0);
+    font-size: 20px;
+    font-weight: bold;
+    padding: 14px 10px 14px 10px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: auto;
+  }
+
+  .menuRight {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 600px) {
+    .hideOnSmall {
+      display: none;
+    }
   }
 
   .notification {
@@ -32,29 +52,5 @@
     text-align: center;
     transform: translate(-8px, -6px);
     width: 16px;
-  }
-
-  .title {
-    color: var(--textColor0);
-    font-size: 20px;
-    font-weight: bold;
-    padding: 14px 10px 14px 10px;
-    text-wrap: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 40vw;
-  }
-
-  @media (max-width: 600px) {
-    .hideOnSmall {
-      display: none;
-    }
-  }
-
-  .wrapper {
-    background: rgba(0, 0, 0, 0.24);
-    display: flex;
-    flex: 0 0 auto;
   }
 }

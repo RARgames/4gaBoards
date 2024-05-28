@@ -196,4 +196,13 @@
       background: var(--headerButtonHover);
     }
   }
+
+  .headerLogo {
+    background: none;
+    padding: 0;
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
 }
