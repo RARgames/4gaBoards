@@ -131,7 +131,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
           <div className={styles.text}>
             {t('common.username')} ({t('common.optional', { context: 'inline' })})
           </div>
-          <Input ref={usernameField} name="username" value={data.username} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={usernameField} name="username" value={data.username || ''} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} />
           </div>
