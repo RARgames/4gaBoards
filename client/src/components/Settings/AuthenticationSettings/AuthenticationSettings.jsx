@@ -16,18 +16,20 @@ const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdat
         <h2 className={sShared.headerText}>{t('common.authentication')}</h2>
       </div>
       <div className={sShared.contentWrapper}>
-        <div className={styles.action}>
-          <UserPasswordEditPopup
-            usePasswordConfirmation
-            defaultData={passwordUpdateForm.data}
-            isSubmitting={passwordUpdateForm.isSubmitting}
-            error={passwordUpdateForm.error}
-            onUpdate={onPasswordUpdate}
-            onMessageDismiss={onPasswordUpdateMessageDismiss}
-            position="bottom-start"
-          >
-            <Button style={ButtonStyle.Default} content={t('action.editPassword', { context: 'title' })} />
-          </UserPasswordEditPopup>
+        <div className={styles.actionsWrapper}>
+          <div className={styles.action}>
+            <UserPasswordEditPopup
+              usePasswordConfirmation
+              defaultData={passwordUpdateForm.data}
+              isSubmitting={passwordUpdateForm.isSubmitting}
+              error={passwordUpdateForm.error}
+              onUpdate={onPasswordUpdate}
+              onMessageDismiss={onPasswordUpdateMessageDismiss}
+              position="bottom-start"
+            >
+              <Button style={ButtonStyle.Default} content={t('action.editPassword', { context: 'title' })} className={styles.button} />
+            </UserPasswordEditPopup>
+          </div>
         </div>
       </div>
     </div>

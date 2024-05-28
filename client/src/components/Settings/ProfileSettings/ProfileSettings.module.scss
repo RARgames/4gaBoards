@@ -32,13 +32,15 @@
     vertical-align: 0%;
   }
 
-  .userEditWrapper {
+  .actionsWrapper {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     justify-content: center;
     align-items: center;
   }
 
-  .userEdit {
+  .action {
     width: 100%;
     max-width: 750px;
   }

@@ -38,8 +38,8 @@ const ProfileSettings = React.memo(({ name, avatarUrl, phone, organization, isAv
             </div>
           </div>
         </div>
-        <div className={styles.userEditWrapper}>
-          <div className={styles.userEdit}>
+        <div className={styles.actionsWrapper}>
+          <div className={styles.action}>
             <UserInformationEdit defaultData={{ name, phone, organization }} onUpdate={onUpdate} />
           </div>
         </div>

@@ -1,3 +1,18 @@
-// :global(#app) {
-//   // .action {}
-// }
+:global(#app) {
+  .actionsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .action {
+    width: 100%;
+    max-width: 750px;
+  }
+
+  .button {
+    border: 1px solid var(--backgroundPopupSeparator);
+  }
+}
