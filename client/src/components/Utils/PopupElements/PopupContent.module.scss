@@ -1,3 +1,5 @@
-/* :global(#app) {
-  .wrapper {}
-} */
+:global(#app) {
+  .wrapper {
+    padding: 0 12px 12px 12px;
+  }
+}

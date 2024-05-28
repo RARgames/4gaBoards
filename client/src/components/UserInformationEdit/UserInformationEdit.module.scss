@@ -1,12 +1,13 @@
 :global(#app) {
   .field {
     margin-bottom: 8px;
+    min-width: 250px;
   }
 
   .text {
-    color: #444444;
+    color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
-    padding-bottom: 6px;
+    margin-bottom: 6px;
   }
 }

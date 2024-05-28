@@ -1,0 +1,23 @@
+:global(#app) {
+  .base {
+    background: var(--backgroundColorTmpDarkerField2);
+    color: var(--textColor1);
+    padding: 9.5px 8px;
+    border: 1px solid var(--backgroundPopupSeparator);
+    border-radius: 3px;
+
+    &:focus {
+      border: 1px solid var(--borderOutline2);
+      outline: none;
+    }
+
+    &::selection {
+      color: var(--textColorWhite);
+      background: var(--selectionBackground);
+    }
+  }
+
+  .default {
+    width: 100%;
+  }
+}

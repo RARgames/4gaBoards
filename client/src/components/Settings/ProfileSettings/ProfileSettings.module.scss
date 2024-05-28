@@ -31,4 +31,15 @@
     margin-right: 4px;
     vertical-align: 0%;
   }
+
+  .userEditWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .userEdit {
+    width: 100%;
+    max-width: 750px;
+  }
 }

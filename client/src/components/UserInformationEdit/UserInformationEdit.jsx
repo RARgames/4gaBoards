@@ -3,10 +3,9 @@ import pickBy from 'lodash/pickBy';
 import React, { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form, Input } from 'semantic-ui-react';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Input, InputStyle, Form } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 
 import styles from './UserInformationEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -14,7 +13,7 @@ import gStyles from '../../globalStyles.module.scss';
 const UserInformationEdit = React.memo(({ defaultData, onUpdate }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange] = useForm(() => ({
+  const [data, handleFieldChange] = useForm2(() => ({
     name: '',
     phone: '',
     organization: '',
@@ -45,11 +44,11 @@ const UserInformationEdit = React.memo(({ defaultData, onUpdate }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <div className={styles.text}>{t('common.name')}</div>
-      <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+      <Input style={InputStyle.Default} ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
       <div className={styles.text}>{t('common.phone')}</div>
-      <Input fluid name="phone" value={data.phone} className={styles.field} onChange={handleFieldChange} />
+      <Input style={InputStyle.Default} name="phone" value={data.phone} className={styles.field} onChange={handleFieldChange} />
       <div className={styles.text}>{t('common.organization')}</div>
-      <Input fluid name="organization" value={data.organization} className={styles.field} onChange={handleFieldChange} />
+      <Input style={InputStyle.Default} name="organization" value={data.organization} className={styles.field} onChange={handleFieldChange} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} />
       </div>

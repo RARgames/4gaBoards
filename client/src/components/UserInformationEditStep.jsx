@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Popup } from '../lib/custom-ui';
+import { Popup } from './Utils';
 
 import UserInformationEdit from './UserInformationEdit';
 

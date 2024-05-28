@@ -2,9 +2,7 @@ import pick from 'lodash/pick';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Menu } from 'semantic-ui-react';
-import { withPopup } from '../../../../lib/popup';
-import { Popup } from '../../../../lib/custom-ui';
+import { Popup, withPopup, Button, ButtonStyle } from '../../../Utils';
 
 import { useSteps } from '../../../../hooks';
 import UserInformationEditStep from '../../../UserInformationEditStep';
@@ -13,7 +11,7 @@ import UserEmailEditStep from '../../../UserEmailEditStep';
 import UserPasswordEditStep from '../../../UserPasswordEditStep';
 import DeleteStep from '../../../DeleteStep';
 
-import styles from './ActionsPopup.module.scss';
+// import styles from './ActionsPopup.module.scss';
 
 const StepTypes = {
   EDIT_INFORMATION: 'EDIT_INFORMATION',
@@ -106,26 +104,12 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Popup.Header>{t('common.userActions', { context: 'title' })}</Popup.Header>
-        <Popup.Content>
-          <Menu secondary vertical className={styles.menu}>
-            <Menu.Item className={styles.menuItem} onClick={handleEditInformationClick}>
-              {t('action.editInformation', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleEditUsernameClick}>
-              {t('action.editUsername', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleEditEmailClick}>
-              {t('action.editEmail', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleEditPasswordClick}>
-              {t('action.editPassword', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-              {t('action.deleteUser', { context: 'title' })}
-            </Menu.Item>
-          </Menu>
-        </Popup.Content>
+        <Button style={ButtonStyle.Popup} content={t('action.editInformation', { context: 'title' })} onClick={handleEditInformationClick} />
+        <Button style={ButtonStyle.Popup} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
+        <Button style={ButtonStyle.Popup} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
+        <Button style={ButtonStyle.Popup} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
+        <Popup.Separator />
+        <Button style={ButtonStyle.Popup} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />
       </>
     );
   },

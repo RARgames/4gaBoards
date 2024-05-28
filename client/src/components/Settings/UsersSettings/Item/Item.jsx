@@ -77,6 +77,7 @@ const Item = React.memo(
             onPasswordUpdateMessageDismiss={onPasswordUpdateMessageDismiss}
             onDelete={onDelete}
             aria-label={t('common.editUser')}
+            position="left-start"
           >
             <Button style={ButtonStyle.Icon} title={t('common.editUser')} className={styles.editbutton}>
               <Icon type={IconType.Pencil} size={IconSize.Size14} />

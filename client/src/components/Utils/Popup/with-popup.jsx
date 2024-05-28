@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
-import styles from './Popup.module.css';
+import styles from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
   const Popup = React.memo(({ children, className, showCloseButton, offset, position, onClose, ...props }) => {
