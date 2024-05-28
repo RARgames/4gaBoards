@@ -1,6 +1,7 @@
 :global(#app) {
   .content {
-    color: #212121;
+    color: var(--textColor1);
+    text-align: center;
     padding-bottom: 6px;
     padding-left: 2px;
   }

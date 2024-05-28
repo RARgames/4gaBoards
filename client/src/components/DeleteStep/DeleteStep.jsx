@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Popup } from '../Utils';
 
 import styles from './DeleteStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
