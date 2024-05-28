@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
@@ -55,20 +54,26 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
       </Link>
       <Menu inverted size="large" className={styles.menu}>
         <Menu.Menu position="left">
-          <Menu.Item className={classNames(styles.item, styles.title)}>{getPageHeaderTitle()}</Menu.Item>
+          <div className={styles.title} title={getPageHeaderTitle()}>
+            {getPageHeaderTitle()}
+          </div>
         </Menu.Menu>
         <Menu.Menu position="right">
           {canEditProject && (
-            <Menu.Item className={classNames(styles.item, styles.itemHoverable)} onClick={handleProjectSettingsClick} title={t('common.projectSettings')}>
+            <Button style={ButtonStyle.Header} onClick={handleProjectSettingsClick} title={t('common.projectSettings')}>
               <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
-            </Menu.Item>
+            </Button>
           )}
-          <Link to={Paths.SETTINGS} className={classNames(styles.itemNew, styles.itemHoverable, styles.hideOnSmall)} title={t('common.settings')}>
-            <Icon type={IconType.Settings} size={IconSize.Size18} className={styles.icon} />
+          <Link to={Paths.SETTINGS} className={styles.hideOnSmall}>
+            <Button style={ButtonStyle.Header} title={t('common.settings')}>
+              <Icon type={IconType.Settings} size={IconSize.Size18} />
+            </Button>
           </Link>
           {isAdmin && (
-            <Link to={Paths.SETTINGS_INSTANCE} className={classNames(styles.itemNew, styles.itemHoverable, styles.hideOnSmall)} title={t('common.settingsInstance')}>
-              <Icon type={IconType.Server} size={IconSize.Size18} className={styles.icon} />
+            <Link to={Paths.SETTINGS_INSTANCE} className={styles.hideOnSmall}>
+              <Button style={ButtonStyle.Header} title={t('common.settingsInstance')}>
+                <Icon type={IconType.Server} size={IconSize.Size18} />
+              </Button>
             </Link>
           )}
           <NotificationsPopup items={notifications} onDelete={onNotificationDelete} showCloseButton position="bottom">
@@ -78,9 +83,9 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
             </Button>
           </NotificationsPopup>
           <UserPopup isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
-            <Menu.Item className={classNames(styles.item, styles.itemHoverable)}>
+            <Button style={ButtonStyle.Header} title={t('common.settingsInstance')}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
-            </Menu.Item>
+            </Button>
           </UserPopup>
         </Menu.Menu>
       </Menu>

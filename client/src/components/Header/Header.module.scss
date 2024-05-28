@@ -1,32 +1,4 @@
 :global(#app) {
-  .itemNew {
-    padding: 0.9em 1.14em;
-  }
-
-  .icon {
-    vertical-align: middle;
-  }
-
-  .item {
-    cursor: auto;
-    user-select: auto;
-
-    &:before {
-      background: none;
-    }
-
-    &:active,
-    &:hover {
-      background: transparent;
-      color: rgba(255, 255, 255, 0.9);
-    }
-  }
-
-  .itemHoverable:hover {
-    cursor: pointer;
-    background: rgba(0, 0, 0, 0.32);
-  }
-
   .logo {
     margin: 0 16px;
   }
@@ -37,11 +9,10 @@
   }
 
   .menu {
-    background: transparent;
+    background: none;
     border: none;
     border-radius: 0;
     box-shadow: none;
-    color: #fff;
     flex: 1 1 auto;
     height: 50px;
     margin: 0;
@@ -64,11 +35,18 @@
   }
 
   .title {
+    color: var(--textColor0);
     font-size: 20px;
     font-weight: bold;
+    padding: 14px 10px 14px 10px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 40vw;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: 600px) {
     .hideOnSmall {
       display: none;
     }
@@ -78,9 +56,5 @@
     background: rgba(0, 0, 0, 0.24);
     display: flex;
     flex: 0 0 auto;
-  }
-
-  .projectsButton {
-    transform: rotate(90deg);
   }
 }
