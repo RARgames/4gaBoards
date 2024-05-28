@@ -237,14 +237,18 @@ module.exports = {
 
     if (!_.isUndefined(isSubscribed)) {
       const prevIsSubscribed = await sails.helpers.users.isCardSubscriber(inputs.user.id, card.id);
+      const existingSubscription = await CardSubscription.findOne({
+        cardId: card.id,
+        userId: inputs.user.id,
+      });
 
       if (isSubscribed !== prevIsSubscribed) {
-        if (isSubscribed) {
+        if (isSubscribed && !existingSubscription) {
           await CardSubscription.create({
             cardId: card.id,
             userId: inputs.user.id,
           }).tolerate('E_UNIQUE');
-        } else {
+        } else if (!isSubscribed && existingSubscription) {
           await CardSubscription.destroyOne({
             cardId: card.id,
             userId: inputs.user.id,
