@@ -232,6 +232,7 @@ export default {
       toggleAttachments: 'Toggle Attachments',
       toggleComments: 'Toggle Comments',
       toggleDescription: 'Toggle Description',
+      togglePasswordVisibility: 'Toggle password visibility',
       toggleSettings: 'Toggle Settings',
       toggleTasks: 'Toggle Tasks',
       unsavedChanges: 'Local changes',

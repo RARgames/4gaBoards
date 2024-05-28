@@ -1,15 +1,21 @@
 import zxcvbn from 'zxcvbn';
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Progress } from 'semantic-ui-react';
+import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { useToggle } from '../../../lib/hooks';
 import { Icon, IconType, IconSize } from '../Icon';
+import { Button, ButtonStyle } from '../Button';
+import { ProgressBar, ProgressBarSize } from '../ProgressBar';
+import InputStyle from './InputStyle';
 
-import styles from './InputPassword.module.scss';
+import styles from './Input.module.scss';
+import sPassword from './InputPassword.module.scss';
 
 const STRENGTH_SCORE_COLORS = ['red', 'orange', 'yellow', 'olive', 'green'];
 
-const InputPassword = React.forwardRef(({ value, withStrengthBar, minStrengthScore, className, ...props }, ref) => {
+const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStrengthScore, className, ...props }, ref) => {
+  const [t] = useTranslation();
   const [isVisible, toggleVisible] = useToggle();
 
   const strengthScore = useMemo(() => {
@@ -28,30 +34,35 @@ const InputPassword = React.forwardRef(({ value, withStrengthBar, minStrengthSco
     ...props,
     ref,
     type: isVisible ? 'text' : 'password',
-    icon: <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} onClick={handleToggleClick} className={styles.passwordIcon} />,
   };
 
   if (!withStrengthBar) {
     return (
-      <Input
-        {...inputProps} // eslint-disable-line react/jsx-props-no-spreading
-        className={className}
-      />
+      <>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <input {...inputProps} className={classNames(styles.base, style && styles[style], className)} />
+        <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon}>
+          <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
+        </Button>
+      </>
     );
   }
 
+  // TODO show visual error on input field if error={!!value && strengthScore < minStrengthScore}
   return (
-    <div className={className}>
-      <Input
-        {...inputProps} // eslint-disable-line react/jsx-props-no-spreading
-        error={!!value && strengthScore < minStrengthScore}
-      />
-      <Progress value={value ? strengthScore + 1 : 0} total={5} color={STRENGTH_SCORE_COLORS[strengthScore]} size="tiny" className={styles.strengthBar} />
-    </div>
+    <>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <input {...inputProps} className={classNames(styles.base, style && styles[style], className)} />
+      <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon}>
+        <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
+      </Button>
+      <ProgressBar value={value ? strengthScore + 1 : 0} total={5} color={STRENGTH_SCORE_COLORS[strengthScore]} size={ProgressBarSize.Tiny} />
+    </>
   );
 });
 
 InputPassword.propTypes = {
+  style: PropTypes.oneOf(Object.values(InputStyle)),
   value: PropTypes.string.isRequired,
   withStrengthBar: PropTypes.bool,
   minStrengthScore: PropTypes.number,
@@ -59,6 +70,7 @@ InputPassword.propTypes = {
 };
 
 InputPassword.defaultProps = {
+  style: undefined,
   withStrengthBar: false,
   minStrengthScore: 2,
   className: undefined,

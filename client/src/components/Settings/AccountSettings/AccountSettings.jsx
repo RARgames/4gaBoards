@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils';
 import UserUsernameEditPopup from '../../UserUsernameEditPopup';
 import UserEmailEditPopup from '../../UserEmailEditPopup';
 
@@ -26,6 +26,7 @@ const AccountSettings = React.memo(({ email, username, usernameUpdateForm, email
             error={usernameUpdateForm.error}
             onUpdate={onUsernameUpdate}
             onMessageDismiss={onUsernameUpdateMessageDismiss}
+            position="bottom-start"
           >
             <Button style={ButtonStyle.Default} content={t('action.editUsername', { context: 'title' })} />
           </UserUsernameEditPopup>

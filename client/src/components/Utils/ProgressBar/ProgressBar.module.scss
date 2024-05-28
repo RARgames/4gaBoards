@@ -1,0 +1,20 @@
+:global(#app) {
+  .progressContainer {
+    width: calc(100% - 2px);
+    margin: 2px 1px;
+    background: var(--textColorWhite);
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0.5;
+  }
+
+  .progressBar {
+    transition: width 0.3s;
+  }
+
+  /* Size classes */
+
+  .tiny {
+    height: 5px;
+  }
+}

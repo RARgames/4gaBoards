@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form, Message } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Input, Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 import { isUsername } from '../../utils/validator';
 
 import styles from './UserUsernameEditStep.module.scss';
@@ -40,7 +38,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
-  const [data, handleFieldChange, setData] = useForm({
+  const [data, handleFieldChange, setData] = useForm2({
     username: '',
     currentPassword: '',
     ...defaultData,
@@ -118,14 +116,14 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
     <>
       <Popup.Header onBack={onBack}>{t('common.editUsername', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && <Message {...{ [message.type]: true }} visible content={t(message.content)} onDismiss={onMessageDismiss} />}
+        {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newUsername')}</div>
-          <Input fluid ref={usernameField} name="username" value={data.username} placeholder={username} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={usernameField} name="username" value={data.username} placeholder={username} className={styles.field} onChange={handleFieldChange} />
           {usePasswordConfirmation && (
             <>
               <div className={styles.text}>{t('common.currentPassword')}</div>
-              <Input.Password fluid ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
+              <Input.Password ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.fieldPassword} onChange={handleFieldChange} />
             </>
           )}
           <div className={gStyles.controls}>

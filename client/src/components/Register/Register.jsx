@@ -167,7 +167,16 @@ const Register = React.memo(
                           </div>
                           <div className={styles.inputWrapper}>
                             <div className={styles.inputLabel}>{t('common.password')}</div>
-                            <Input.Password fluid ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
+                            <Input.Password
+                              fluid
+                              ref={passwordField}
+                              name="password"
+                              value={data.password}
+                              readOnly={isSubmitting}
+                              className={styles.input}
+                              onChange={handleFieldChange}
+                              withStrengthBar
+                            />
                           </div>
                           <div className={classNames(styles.inputWrapper, styles.checkboxWrapper)}>
                             <div className={styles.inputLabel}>
