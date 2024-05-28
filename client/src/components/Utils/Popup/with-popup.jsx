@@ -17,9 +17,9 @@ export default (WrappedComponent, defaultProps) => {
       open: isOpened,
       onOpenChange: setIsOpened,
       whileElementsMounted: autoUpdate,
-      placement: position,
+      placement: defaultProps?.position ?? position,
       middleware: [
-        posOffset(offset),
+        posOffset(defaultProps?.offset ?? offset),
         flip({
           fallbackAxisSideDirection: 'start',
         }),
@@ -50,8 +50,8 @@ export default (WrappedComponent, defaultProps) => {
         {isOpened && (
           <FloatingFocusManager context={context} modal={false}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <div className={classNames(styles.wrapper, className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} {...defaultProps}>
-              {showCloseButton && (
+            <div className={classNames(styles.wrapper, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+              {(defaultProps?.showCloseButton || showCloseButton) && (
                 <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={styles.closeButton}>
                   <Icon type={IconType.Close} size={IconSize.Size14} />
                 </Button>

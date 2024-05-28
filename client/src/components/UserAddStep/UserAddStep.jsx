@@ -34,7 +34,7 @@ const createMessage = (error) => {
       };
   }
 };
-// TODO onclose check in others
+
 const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, onMessageDismiss, onClose }) => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
