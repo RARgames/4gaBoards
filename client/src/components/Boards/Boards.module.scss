@@ -7,7 +7,7 @@
 
   .editButton {
     opacity: 0;
-    width: 30px;
+    width: 20px;
     height: 36px;
   }
 
@@ -15,7 +15,7 @@
     color: var(--textColor2);
     cursor: pointer;
     display: block;
-    padding: 10px 0px 6px 8px;
+    padding: 10px 4px 6px 0px;
     text-overflow: ellipsis;
     max-width: 250px;
     overflow: hidden;
@@ -23,6 +23,7 @@
 
   .tab {
     border-radius: 3px 3px 0 0;
+    padding: 0 8px;
     transition: all 0.1s ease;
     display: flex;
     justify-content: space-between;
