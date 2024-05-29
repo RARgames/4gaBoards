@@ -59,14 +59,7 @@ const Memberships = React.memo(
           ))}
         </span>
         {canEdit && (
-          <AddPopup
-            users={allUsers}
-            currentUserIds={items.map((item) => item.user.id)}
-            permissionsSelectStep={permissionsSelectStep}
-            title={addTitle}
-            onCreate={onCreate}
-            wrapperClassName={styles.wrapperAddPopup}
-          >
+          <AddPopup users={allUsers} currentUserIds={items.map((item) => item.user.id)} permissionsSelectStep={permissionsSelectStep} title={addTitle} onCreate={onCreate}>
             <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={styles.addUser}>
               <Icon type={IconType.UserAdd} size={IconSize.Size20} />
             </Button>

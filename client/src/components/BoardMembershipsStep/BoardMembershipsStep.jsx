@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Menu } from 'semantic-ui-react';
-import { Input, Popup } from '../../lib/custom-ui';
+import classNames from 'classnames';
+import { Popup, Input } from '../Utils';
 
-import { useField } from '../../hooks';
+import { useField2 } from '../../hooks';
 import Item from './Item';
 
 import styles from './BoardMembershipsStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const BoardMembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
   const [t] = useTranslation();
-  const [search, handleSearchChange] = useField('');
+  const [search, handleSearchChange] = useField2('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
   const filteredItems = useMemo(
@@ -43,15 +44,11 @@ const BoardMembershipsStep = React.memo(({ items, currentUserIds, title, onUserS
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
-        {t(title, {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input fluid ref={searchField} value={search} placeholder={t('common.searchMembers')} icon="search" onChange={handleSearchChange} />
+        <Input ref={searchField} value={search} placeholder={t('common.searchMembers')} onChange={handleSearchChange} className={styles.field} />
         {filteredItems.length > 0 && (
-          <Menu secondary vertical className={styles.menu}>
+          <div className={classNames(styles.menu, gStyles.scrollableYList)}>
             {filteredItems.map((item) => (
               <Item
                 key={item.id}
@@ -62,7 +59,7 @@ const BoardMembershipsStep = React.memo(({ items, currentUserIds, title, onUserS
                 onUserDeselect={() => handleUserDeselect(item.user.id)}
               />
             ))}
-          </Menu>
+          </div>
         )}
       </Popup.Content>
     </>

@@ -34,11 +34,10 @@ const Filters = React.memo(
           <BoardMembershipsPopup
             items={allBoardMemberships}
             currentUserIds={users.map((user) => user.id)}
-            title={t('common.filterByMembers', {
-              context: 'title',
-            })}
+            title={t('common.filterByMembers', { context: 'title' })}
             onUserSelect={onUserAdd}
             onUserDeselect={onUserRemove}
+            offset={16}
           >
             <Button title={t('common.filterByMembers', { context: 'title' })} className={styles.filterButton}>
               <span className={styles.filterTitle}>{`${t('common.members')}:`}</span>

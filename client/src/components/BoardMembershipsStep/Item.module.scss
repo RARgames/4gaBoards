@@ -1,28 +1,31 @@
 :global(#app) {
   .menuItem {
+    background: none;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
     display: block;
-    margin: 0;
     overflow: hidden;
     padding: 4px;
-  }
-
-  .menuItemActive {
-    background: transparent;
+    text-align: left;
+    width: 100%;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.05);
+      background: var(--backgroundPopupHover);
     }
   }
 
   .menuItemText {
     display: inline-block;
+    color: var(--textColor1);
     line-height: 32px;
+    position: relative;
     width: calc(100% - 40px);
   }
 
   .menuItemTextActive:before {
     bottom: 2px;
-    color: #798d99;
+    color: var(--textColor2);
     content: "Г";
     font-size: 18px;
     font-weight: normal;

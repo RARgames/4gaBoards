@@ -1,12 +1,10 @@
 :global(#app) {
   .menuItem {
-    background: transparent;
+    background: none;
     border: none;
-    border-radius: 0.28571429rem;
+    border-radius: 0.3rem;
     cursor: pointer;
     display: block;
-    margin: 0;
-    outline: 0;
     overflow: hidden;
     padding: 4px;
     text-align: left;

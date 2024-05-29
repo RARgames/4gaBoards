@@ -389,7 +389,7 @@ const CardModal = React.memo(
         <div className={styles.text}>
           {t('common.members', { context: 'title' })}
           {canEdit && (
-            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove}>
+            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} position="right">
               <Button style={ButtonStyle.Icon} title={t('common.addMember')}>
                 <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
               </Button>

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Menu } from 'semantic-ui-react';
+import { Button } from '../Utils';
 
 import User from '../User';
 
@@ -17,12 +17,12 @@ const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDese
   }, [isActive, onUserSelect, onUserDeselect]);
 
   return (
-    <Menu.Item active={isActive} disabled={!isPersisted} className={classNames(styles.menuItem, isActive && styles.menuItemActive)} onClick={handleToggleClick}>
+    <Button onClick={handleToggleClick} disabled={!isPersisted} className={styles.menuItem}>
       <span className={styles.user}>
         <User name={user.name} avatarUrl={user.avatarUrl} />
       </span>
       <div className={classNames(styles.menuItemText, isActive && styles.menuItemTextActive)}>{user.name}</div>
-    </Menu.Item>
+    </Button>
   );
 });
 

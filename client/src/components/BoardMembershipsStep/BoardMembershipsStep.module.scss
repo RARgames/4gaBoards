@@ -2,21 +2,10 @@
   .menu {
     margin: 8px auto 0;
     max-height: 60vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
     width: 100%;
+  }
 
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-    }
+  .field {
+    width: 100%;
   }
 }
