@@ -58,7 +58,7 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
                   <span className={classNames(styles.task, isCompleted && styles.taskCompleted)}>{name}</span>
                 </span>
                 {isPersisted && canEdit && (
-                  <ActionsPopup onNameEdit={handleNameEdit} onDelete={onDelete}>
+                  <ActionsPopup onNameEdit={handleNameEdit} onDelete={onDelete} hideCloseButton position="left-start" offset={25}>
                     <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target)}>
                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} />
                     </Button>

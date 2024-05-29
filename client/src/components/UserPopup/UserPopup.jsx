@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Button, ButtonStyle, Icon, IconType, IconSize, withPopup } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 import Paths from '../../constants/Paths';
 
 import styles from './UserPopup.module.scss';
@@ -58,6 +58,7 @@ const UserStep = React.memo(({ isAdmin, isLogouting, onLogout, onClose }) => {
           </Button>
         </Link>
       )}
+      <Popup.Separator />
       <Button style={ButtonStyle.Popup} content={t('action.logOut', { context: 'title' })} onClick={onLogout} disabled={isLogouting} />
     </>
   );

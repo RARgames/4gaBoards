@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Menu } from 'semantic-ui-react';
-import { withPopup } from '../../../lib/popup';
-import { Popup } from '../../../lib/custom-ui';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../../Utils';
 
 import { useSteps } from '../../../hooks';
 import DeleteStep from '../../DeleteStep';
@@ -41,21 +39,15 @@ const ActionsStep = React.memo(({ onNameEdit, onDelete, onClose }) => {
 
   return (
     <>
-      <Popup.Header>
-        {t('common.taskActions', {
-          context: 'title',
-        })}
-      </Popup.Header>
-      <Popup.Content>
-        <Menu secondary vertical className={styles.menu}>
-          <Menu.Item className={styles.menuItem} onClick={handleEditNameClick}>
-            {t('action.editDescription', { context: 'title' })}
-          </Menu.Item>
-          <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-            {t('action.deleteTask', { context: 'title' })}
-          </Menu.Item>
-        </Menu>
-      </Popup.Content>
+      <Button style={ButtonStyle.Popup} title={t('action.editDescription', { context: 'title' })} onClick={handleEditNameClick}>
+        <Icon type={IconType.Pencil} size={IconSize.Size13} className={styles.icon} />
+        {t('action.editDescription', { context: 'title' })}
+      </Button>
+      <Popup.Separator />
+      <Button style={ButtonStyle.Popup} title={t('action.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
+        <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
+        {t('action.deleteTask', { context: 'title' })}
+      </Button>
     </>
   );
 });

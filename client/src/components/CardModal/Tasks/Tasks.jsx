@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Progress } from 'semantic-ui-react';
 import { closePopup } from '../../../lib/popup';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils';
 
 import DroppableTypes from '../../../constants/DroppableTypes';
 import Item from './Item';
