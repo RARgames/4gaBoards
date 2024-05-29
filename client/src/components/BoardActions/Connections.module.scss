@@ -1,4 +1,9 @@
 :global(#app) {
+  .field {
+    margin-bottom: 4px;
+    width: 100%;
+  }
+
   .fieldError {
     border: 1px solid red;
   }

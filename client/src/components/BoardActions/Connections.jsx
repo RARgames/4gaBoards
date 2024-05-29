@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { dequal } from 'dequal';
 import { useTranslation } from 'react-i18next';
-import { Form, Input } from 'semantic-ui-react';
-import { withPopup } from '../../lib/popup';
-import { Popup } from '../../lib/custom-ui';
-import { useForm } from '../../hooks';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { useForm2 } from '../../hooks';
+import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../Utils';
 
 import styles from './Connections.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -18,7 +15,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
   const inputRef = useRef(null);
   const [isError, setIsError] = useState(false);
 
-  const [data, handleFieldChange] = useForm(() => ({
+  const [data, handleFieldChange] = useForm2(() => ({
     isGithubConnected: false,
     githubRepo: '',
     ...defaultData,
@@ -71,8 +68,15 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
       <Popup.Header>{t('common.connectToGithub')} [Not fully implemented]</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Input ref={inputRef} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={classNames(isError && styles.fieldError)} />
-          <div className={gStyles.controls}>
+          <Input
+            ref={inputRef}
+            value={data.githubRepo}
+            name="githubRepo"
+            onKeyDown={handleFieldKeyDown}
+            onChange={handleFieldChange}
+            className={classNames(styles.field, isError && styles.fieldError)}
+          />
+          <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} />
           </div>

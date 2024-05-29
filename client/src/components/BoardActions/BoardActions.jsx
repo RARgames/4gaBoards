@@ -80,7 +80,7 @@ const BoardActions = React.memo(
             />
           </div>
           <div>
-            <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate}>
+            <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} position="bottom">
               <Icon
                 type={IconType.Github}
                 size={IconSize.Size14}
