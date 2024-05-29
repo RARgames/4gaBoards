@@ -13,12 +13,13 @@
     width: 100%;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.05);
+      background: var(--backgroundPopupHover);
     }
   }
 
   .menuItemText {
     display: inline-block;
+    color: var(--textColor1);
     line-height: 32px;
     position: relative;
     width: calc(100% - 40px);
@@ -26,7 +27,7 @@
 
   .menuItemTextActive:before {
     bottom: 2px;
-    color: #798d99;
+    color: var(--textColor2);
     content: "Г";
     font-size: 18px;
     font-weight: normal;

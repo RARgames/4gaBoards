@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { withPopup } from '../../../lib/popup';
-import { Input, Popup } from '../../../lib/custom-ui';
+import classNames from 'classnames';
+import { Popup, Input, withPopup } from '../../Utils';
 
-import { useField, useSteps } from '../../../hooks';
+import { useField2, useSteps } from '../../../hooks';
 import UserItem from './UserItem';
 
 import styles from './AddPopup.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 const StepTypes = {
   SELECT_PERMISSIONS: 'SELECT_PERMISSIONS',
@@ -16,7 +17,7 @@ const StepTypes = {
 const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, title, onCreate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
-  const [search, handleSearchChange] = useField('');
+  const [search, handleSearchChange] = useField2('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
   const filteredUsers = useMemo(
@@ -80,15 +81,11 @@ const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, titl
 
   return (
     <>
-      <Popup.Header>
-        {t(title, {
-          context: 'title',
-        })}
-      </Popup.Header>
+      <Popup.Header>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input fluid ref={searchField} value={search} placeholder={t('common.searchUsers')} icon="search" onChange={handleSearchChange} />
+        <Input ref={searchField} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} className={styles.field} />
         {filteredUsers.length > 0 && (
-          <div className={styles.users}>
+          <div className={classNames(styles.users, gStyles.scrollableYList)}>
             {filteredUsers.map((user) => (
               <UserItem key={user.id} name={user.name} avatarUrl={user.avatarUrl} isActive={currentUserIds.includes(user.id)} onSelect={() => handleUserSelect(user.id)} />
             ))}

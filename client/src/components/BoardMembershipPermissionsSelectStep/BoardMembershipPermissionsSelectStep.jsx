@@ -3,9 +3,8 @@ import omit from 'lodash/omit';
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form, Menu, Radio, Segment } from 'semantic-ui-react';
-import { Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import classNames from 'classnames';
+import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
 
@@ -29,10 +28,11 @@ const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, b
     }));
   }, []);
 
-  const handleSettingChange = useCallback((_, { name: fieldName, checked: value }) => {
+  const handleSettingChange = useCallback((event) => {
+    const { name, checked } = event.target;
     setData((prevData) => ({
       ...prevData,
-      [fieldName]: value,
+      [name]: checked,
     }));
   }, []);
 
@@ -49,20 +49,19 @@ const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, b
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Menu secondary vertical className={styles.menu}>
-            <Menu.Item active={data.role === BoardMembershipRoles.EDITOR} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)}>
-              <div className={styles.menuItemTitle}>{t('common.editor')}</div>
-              <div className={styles.menuItemDescription}>{t('common.canEditContentOfBoard')}</div>
-            </Menu.Item>
-            <Menu.Item active={data.role === BoardMembershipRoles.VIEWER} onClick={() => handleSelectRoleClick(BoardMembershipRoles.VIEWER)}>
-              <div className={styles.menuItemTitle}>{t('common.viewer')}</div>
-              <div className={styles.menuItemDescription}>{t('common.canOnlyViewBoard')}</div>
-            </Menu.Item>
-          </Menu>
+          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={classNames(data.role === BoardMembershipRoles.EDITOR && styles.selected)}>
+            <div className={styles.menuItemTitle}>{t('common.editor')}</div>
+            <div className={styles.menuItemDescription}>{t('common.canEditContentOfBoard')}</div>
+          </Button>
+          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.VIEWER)} className={classNames(data.role === BoardMembershipRoles.VIEWER && styles.selected)}>
+            <div className={styles.menuItemTitle}>{t('common.viewer')}</div>
+            <div className={styles.menuItemDescription}>{t('common.canOnlyViewBoard')}</div>
+          </Button>
           {data.role === BoardMembershipRoles.VIEWER && (
-            <Segment basic className={styles.settings}>
-              <Radio toggle name="canComment" checked={data.canComment} label={t('common.canComment')} onChange={handleSettingChange} />
-            </Segment>
+            <div className={styles.commentSettings}>
+              <Radio size={RadioSize.Size12} name="canComment" checked={data.canComment} onChange={handleSettingChange} className={styles.commentSettingsRadio} />
+              <div className={styles.commentSettingsText}>{t('common.canComment')}</div>
+            </div>
           )}
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t(buttonContent)} />

@@ -9,7 +9,7 @@ import { Icon, IconType, IconSize } from '../Icon';
 import styles from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Popup = React.memo(({ children, className, showCloseButton, offset, position, closeButtonClassName, onClose, ...props }) => {
+  const Popup = React.memo(({ children, className, showCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
     const [t] = useTranslation();
     const [isOpened, setIsOpened] = useState(false);
 
@@ -38,7 +38,7 @@ export default (WrappedComponent, defaultProps) => {
     return (
       <>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps()}>
+        <div ref={refs.setReference} {...getReferenceProps()} className={wrapperClassName}>
           {children}
         </div>
         {isOpened && (
@@ -66,6 +66,7 @@ export default (WrappedComponent, defaultProps) => {
     offset: PropTypes.number,
     position: PropTypes.string,
     closeButtonClassName: PropTypes.string,
+    wrapperClassName: PropTypes.string,
     onClose: PropTypes.func,
   };
 
@@ -75,6 +76,7 @@ export default (WrappedComponent, defaultProps) => {
     offset: 10,
     position: 'bottom-start',
     closeButtonClassName: undefined,
+    wrapperClassName: undefined,
     onClose: undefined,
   };
 

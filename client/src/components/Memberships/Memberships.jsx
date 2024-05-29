@@ -52,6 +52,8 @@ const Memberships = React.memo(
                 canLeave={items.length > 1 || canLeaveIfLast}
                 onUpdate={(data) => onUpdate(item.id, data)}
                 onDelete={() => onDelete(item.id)}
+                position="bottom"
+                showCloseButton
               >
                 <User name={item.user.name} avatarUrl={item.user.avatarUrl} size="large" isDisabled={!item.isPersisted} />
               </ActionsPopup>
@@ -59,7 +61,15 @@ const Memberships = React.memo(
           ))}
         </span>
         {canEdit && (
-          <AddPopup users={allUsers} currentUserIds={items.map((item) => item.user.id)} permissionsSelectStep={permissionsSelectStep} title={addTitle} onCreate={onCreate}>
+          <AddPopup
+            users={allUsers}
+            currentUserIds={items.map((item) => item.user.id)}
+            permissionsSelectStep={permissionsSelectStep}
+            title={addTitle}
+            onCreate={onCreate}
+            wrapperClassName={styles.wrapperAddPopup}
+            showCloseButton
+          >
             <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={styles.addUser}>
               <Icon type={IconType.UserAdd} size={IconSize.Size20} />
             </Button>

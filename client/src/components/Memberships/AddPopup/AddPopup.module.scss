@@ -1,6 +1,9 @@
 :global(#app) {
+  .field {
+    width: 100%;
+  }
+
   .users {
-    margin-top: 8px;
     max-height: 60vh;
     overflow-x: hidden;
     overflow-y: auto;

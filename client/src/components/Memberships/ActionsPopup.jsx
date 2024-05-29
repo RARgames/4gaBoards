@@ -2,8 +2,7 @@ import pick from 'lodash/pick';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { withPopup } from '../../lib/popup';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, withPopup } from '../Utils';
 
 import { useSteps } from '../../hooks';
 import User from '../User';
@@ -85,19 +84,23 @@ const ActionsStep = React.memo(
     }
 
     return (
-      <>
+      <div className={styles.wrapper}>
         <span className={styles.user}>
           <User name={membership.user.name} avatarUrl={membership.user.avatarUrl} size="large" />
         </span>
         <span className={styles.content}>
-          <div className={styles.name}>{membership.user.name}</div>
-          <div className={styles.email}>{membership.user.email}</div>
+          <div className={styles.name} title={membership.user.name}>
+            {membership.user.name}
+          </div>
+          <div className={styles.email} title={membership.user.email}>
+            {membership.user.email}
+          </div>
         </span>
-        {permissionsSelectStep && canEdit && <Button style={ButtonStyle.Default} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} className={styles.button} />}
+        {permissionsSelectStep && canEdit && <Button style={ButtonStyle.Popup} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} />}
         {membership.user.isCurrent
-          ? canLeave && <Button style={ButtonStyle.Default} content={t(leaveButtonContent)} onClick={handleDeleteClick} className={styles.button} />
-          : canEdit && <Button style={ButtonStyle.Default} content={t(deleteButtonContent)} onClick={handleDeleteClick} className={styles.button} />}
-      </>
+          ? canLeave && <Button style={ButtonStyle.Popup} content={t(leaveButtonContent)} onClick={handleDeleteClick} />
+          : canEdit && <Button style={ButtonStyle.Popup} content={t(deleteButtonContent)} onClick={handleDeleteClick} />}
+      </div>
     );
   },
 );
