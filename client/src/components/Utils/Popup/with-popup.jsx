@@ -18,13 +18,7 @@ export default (WrappedComponent, defaultProps) => {
       onOpenChange: setIsOpened,
       whileElementsMounted: autoUpdate,
       placement: defaultProps?.position ?? position,
-      middleware: [
-        posOffset(defaultProps?.offset ?? offset),
-        flip({
-          fallbackAxisSideDirection: 'start',
-        }),
-        shift({ padding: 20 }),
-      ],
+      middleware: [posOffset(defaultProps?.offset ?? offset), flip(), shift({ padding: 20 })],
     });
 
     const click = useClick(context);

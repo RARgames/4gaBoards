@@ -7,18 +7,15 @@
 
   .editButton {
     opacity: 0;
-    position: absolute;
-    right: 2px;
-    top: 2px;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 36px;
   }
 
   .link {
     color: var(--textColor2);
     cursor: pointer;
     display: block;
-    padding: 10px 34px 6px 14px;
+    padding: 10px 0px 6px 8px;
     text-overflow: ellipsis;
     max-width: 250px;
     overflow: hidden;
@@ -26,12 +23,12 @@
 
   .tab {
     border-radius: 3px 3px 0 0;
-    min-width: 75px;
-    position: relative;
     transition: all 0.1s ease;
+    display: flex;
+    justify-content: space-between;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.24);
+      background: var(--headerButtonHover);
 
       .target {
         opacity: 1;
@@ -40,11 +37,7 @@
   }
 
   .tabActive {
-    background: rgba(0, 0, 0, 0.24);
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.32);
-    }
+    background: var(--backgroundTabActive);
 
     .link {
       color: var(--textColor0);
@@ -91,7 +84,7 @@
   }
 
   .wrapper {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+    border-bottom: 1px solid var(--backgroundTabActive);
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
