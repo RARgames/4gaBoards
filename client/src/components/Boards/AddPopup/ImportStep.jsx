@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { FilePicker, Popup } from '../../../lib/custom-ui';
-import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { FilePicker } from '../../../lib/custom-ui';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup } from '../../Utils';
 
 import styles from './ImportStep.module.scss';
 
@@ -27,7 +26,7 @@ const ImportStep = React.memo(({ onSelect, onBack }) => {
       <Popup.Header onBack={onBack}>{t('common.importBoard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <FilePicker onSelect={(file) => handleFileSelect('trello', file)} accept=".json">
-          <Button style={ButtonStyle.NoBackground} title={t('common.fromTrello')} className={styles.button}>
+          <Button style={ButtonStyle.Popup} title={t('common.fromTrello')}>
             <Icon type={IconType.Trello} size={IconSize.Size14} className={styles.icon} />
             {t('common.fromTrello')}
           </Button>

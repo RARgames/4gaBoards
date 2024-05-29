@@ -1,40 +1,14 @@
 :global(#app) {
-  .controls {
-    display: flex;
-    max-width: 280px;
-
-    @media only screen and (max-width: 767px) {
-      max-width: 226px;
-    }
-  }
-
-  .createButton {
-    margin-left: auto;
-  }
-
   .field {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    width: 100%;
   }
 
   .importButton {
-    color: var(--textColor4);
     width: auto;
     overflow: hidden;
     text-decoration: underline;
     text-overflow: ellipsis;
     white-space: nowrap;
-
-    &:hover {
-      background: var(--textColor1);
-      color: var(--textColor5);
-
-      .importButtonIcon {
-        fill: var(--textColor5);
-      }
-    }
-  }
-
-  .importButtonIcon {
-    fill: var(--textColor4);
   }
 }

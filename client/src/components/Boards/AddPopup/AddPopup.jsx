@@ -1,17 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
-import { withPopup } from '../../../lib/popup';
-import { Input, Popup } from '../../../lib/custom-ui';
-import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup } from '../../Utils';
 
-import { useForm, useSteps } from '../../../hooks';
+import { useForm2, useSteps } from '../../../hooks';
 import ImportStep from './ImportStep';
 
 import styles from './AddPopup.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 const StepTypes = {
   IMPORT: 'IMPORT',
@@ -20,7 +17,7 @@ const StepTypes = {
 const AddStep = React.memo(({ onCreate, onClose }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange, setData] = useForm({
+  const [data, handleFieldChange, setData] = useForm2({
     name: '',
     import: null,
     isGithubConnected: false,
@@ -85,13 +82,13 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
       <Popup.Header>{t('common.createBoard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
-          <div className={styles.controls}>
+          <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+          <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>
-              <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={styles.importButtonIcon} />
+              <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}
             </Button>
-            <Button style={ButtonStyle.Submit} content={t('action.createBoard')} className={styles.createButton} />
+            <Button style={ButtonStyle.Submit} content={t('action.createBoard')} />
           </div>
         </Form>
       </Popup.Content>
