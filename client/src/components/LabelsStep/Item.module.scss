@@ -5,19 +5,19 @@
     padding: 8px 10px;
 
     svg {
-      fill: var(--textColor3);
+      fill: var(--textColor1);
     }
 
     &:hover {
       svg {
-        fill: var(--textColor4);
+        fill: var(--textColor2);
       }
     }
   }
 
   .name {
     border-radius: 3px;
-    color: #fff;
+    color: var(--textColorWhite);
     cursor: pointer;
     flex: 1 1 auto;
     font-weight: bold;
@@ -25,7 +25,7 @@
     padding: 8px 32px 8px 10px;
     position: relative;
     text-overflow: ellipsis;
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 0 var(--textShadow);
 
     &:hover {
       opacity: 0.9;

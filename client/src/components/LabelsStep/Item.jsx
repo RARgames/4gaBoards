@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import styles from './Item.module.scss';
 import globalStyles from '../../styles.module.scss';

@@ -1,21 +1,18 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'semantic-ui-react';
-import { Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Popup, Form } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 
-// import styles from './AddStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange] = useForm(() => ({
+  const [data, handleFieldChange] = useForm2(() => ({
     name: '',
     color: LabelColors[0],
     ...defaultData,

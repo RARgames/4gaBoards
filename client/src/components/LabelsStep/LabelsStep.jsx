@@ -3,16 +3,17 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Input, Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import classNames from 'classnames';
+import { Button, ButtonStyle, Popup, Input } from '../Utils';
 
-import { useField, useSteps } from '../../hooks';
+import { useField2, useSteps } from '../../hooks';
 import DroppableTypes from '../../constants/DroppableTypes';
 import AddStep from './AddStep';
 import EditStep from './EditStep';
 import Item from './Item';
 
 import styles from './LabelsStep.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
   ADD: 'ADD',
@@ -22,7 +23,7 @@ const StepTypes = {
 const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, onDeselect, onCreate, onUpdate, onMove, onDelete, onBack }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
-  const [search, handleSearchChange] = useField('');
+  const [search, handleSearchChange] = useField2('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
   const filteredItems = useMemo(() => items.filter((label) => (label.name && label.name.toLowerCase().includes(cleanSearch)) || label.color.includes(cleanSearch)), [items, cleanSearch]);
@@ -120,7 +121,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
     <>
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input fluid ref={searchField} value={search} placeholder={t('common.searchLabels')} icon="search" onChange={handleSearchChange} />
+        <Input ref={searchField} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} className={styles.field} />
         {filteredItems.length > 0 && (
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="labels" type={DroppableTypes.LABEL}>
@@ -128,7 +129,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
                 <div
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   ref={innerRef}
-                  className={styles.items}
+                  className={classNames(styles.items, gStyles.scrollableYList)}
                 >
                   {filteredItems.map((item, index) => (
                     <Item
@@ -162,7 +163,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
             </Droppable>
           </DragDropContext>
         )}
-        {canEdit && <Button style={ButtonStyle.Default} content={t('action.createNewLabel')} onClick={handleAddClick} className={styles.addButton} />}
+        {canEdit && <Button style={ButtonStyle.Popup} content={t('action.createNewLabel')} onClick={handleAddClick} />}
       </Popup.Content>
     </>
   );

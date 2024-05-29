@@ -1,11 +1,9 @@
 :global(#app) {
   .colorButton {
-    float: left;
-    height: 40px;
+    height: 30px;
     margin: 4px;
-    padding: 0;
     position: relative;
-    width: 49.6px;
+    width: 43px;
 
     &:hover {
       opacity: 0.9;
@@ -14,14 +12,14 @@
 
   .colorButtonActive:before {
     bottom: 3px;
-    color: #ffffff;
+    color: var(--textColorWhite);
     content: "Г";
     font-size: 18px;
     line-height: 36px;
     position: absolute;
     right: 6px;
     text-align: center;
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 0 var(--textShadow);
     top: 0;
     transform: rotate(-135deg);
     width: 36px;
@@ -29,7 +27,7 @@
 
   .colorButtons {
     margin: -4px;
-    padding-bottom: 16px;
+    padding-bottom: 6px;
 
     &:after {
       content: "";
@@ -40,10 +38,11 @@
 
   .field {
     margin-bottom: 8px;
+    width: 100%;
   }
 
   .text {
-    color: #444444;
+    color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
     padding-bottom: 6px;

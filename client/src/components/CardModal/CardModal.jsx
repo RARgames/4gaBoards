@@ -389,7 +389,7 @@ const CardModal = React.memo(
         <div className={styles.text}>
           {t('common.members', { context: 'title' })}
           {canEdit && (
-            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} position="right">
+            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} position="right" offset={0}>
               <Button style={ButtonStyle.Icon} title={t('common.addMember')}>
                 <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
               </Button>
@@ -418,6 +418,8 @@ const CardModal = React.memo(
               onUpdate={onLabelUpdate}
               onMove={onLabelMove}
               onDelete={onLabelDelete}
+              position="right"
+              offset={0}
             >
               <Button style={ButtonStyle.Icon} title={t('common.addLabel')}>
                 <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />

@@ -2,16 +2,13 @@ import { dequal } from 'dequal';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'semantic-ui-react';
-import { Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Popup, Form } from '../Utils';
 
-import { useForm, useSteps } from '../../hooks';
+import { useForm2, useSteps } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 import DeleteStep from '../DeleteStep';
 
-// import styles from './EditStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
@@ -21,7 +18,7 @@ const StepTypes = {
 const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange] = useForm(() => ({
+  const [data, handleFieldChange] = useForm2(() => ({
     color: LabelColors[0],
     ...defaultData,
     name: defaultData.name || '',

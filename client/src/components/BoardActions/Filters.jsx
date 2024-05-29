@@ -54,9 +54,7 @@ const Filters = React.memo(
           <LabelsPopup
             items={allLabels}
             currentIds={labels.map((label) => label.id)}
-            title={t('common.filterByLabels', {
-              context: 'title',
-            })}
+            title={t('common.filterByLabels', { context: 'title' })}
             canEdit={canEdit}
             onSelect={onLabelAdd}
             onDeselect={onLabelRemove}
@@ -64,6 +62,7 @@ const Filters = React.memo(
             onUpdate={onLabelUpdate}
             onMove={onLabelMove}
             onDelete={onLabelDelete}
+            offset={16}
           >
             <Button title={t('common.filterByLabels', { context: 'title' })} className={styles.filterButton}>
               <span className={styles.filterTitle}>{`${t('common.labels')}:`}</span>
