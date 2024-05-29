@@ -9,7 +9,7 @@ import { Icon, IconType, IconSize } from '../Icon';
 import styles from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Popup = React.memo(({ children, className, showCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
+  const Popup = React.memo(({ children, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
     const [t] = useTranslation();
     const [isOpened, setIsOpened] = useState(false);
 
@@ -45,7 +45,7 @@ export default (WrappedComponent, defaultProps) => {
           <FloatingFocusManager context={context} modal={false}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <div className={classNames(styles.wrapper, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
-              {(defaultProps?.showCloseButton || showCloseButton) && (
+              {!(defaultProps?.hideCloseButton || hideCloseButton) && (
                 <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(styles.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                   <Icon type={IconType.Close} size={IconSize.Size14} />
                 </Button>
@@ -62,7 +62,7 @@ export default (WrappedComponent, defaultProps) => {
   Popup.propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
-    showCloseButton: PropTypes.bool,
+    hideCloseButton: PropTypes.bool,
     offset: PropTypes.number,
     position: PropTypes.string,
     closeButtonClassName: PropTypes.string,
@@ -72,9 +72,9 @@ export default (WrappedComponent, defaultProps) => {
 
   Popup.defaultProps = {
     className: undefined,
-    showCloseButton: false,
+    hideCloseButton: false,
     offset: 10,
-    position: 'bottom-start',
+    position: 'bottom',
     closeButtonClassName: undefined,
     wrapperClassName: undefined,
     onClose: undefined,

@@ -72,7 +72,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                   {item.name}
                 </Link>
                 {canEdit && (
-                  <EditPopup defaultData={pick(item, 'name')} onUpdate={(data) => handleUpdate(item.id, data)} onDelete={() => handleDelete(item.id)} showCloseButton position="bottom">
+                  <EditPopup defaultData={pick(item, 'name')} onUpdate={(data) => handleUpdate(item.id, data)} onDelete={() => handleDelete(item.id)}>
                     <Button style={ButtonStyle.Icon} title={t('common.renameBoard')} className={classNames(styles.editButton, styles.target)}>
                       <Icon type={IconType.Pencil} size={IconSize.Size13} />
                     </Button>
@@ -102,7 +102,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
                 {itemsNode}
                 {placeholder}
                 {canEdit && (
-                  <AddPopup onCreate={onCreate} showCloseButton position="bottom">
+                  <AddPopup onCreate={onCreate}>
                     <Button style={ButtonStyle.Icon} title={t('common.addBoard')} className={classNames(styles.addButton)}>
                       <Icon type={IconType.Plus} size={IconSize.Size13} />
                     </Button>

@@ -78,6 +78,7 @@ const Item = React.memo(
             onDelete={onDelete}
             aria-label={t('common.editUser')}
             position="left-start"
+            hideCloseButton
           >
             <Button style={ButtonStyle.Icon} title={t('common.editUser')} className={styles.editbutton}>
               <Icon type={IconType.Pencil} size={IconSize.Size14} />

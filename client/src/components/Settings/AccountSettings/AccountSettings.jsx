@@ -27,7 +27,6 @@ const AccountSettings = React.memo(({ email, username, usernameUpdateForm, email
               error={usernameUpdateForm.error}
               onUpdate={onUsernameUpdate}
               onMessageDismiss={onUsernameUpdateMessageDismiss}
-              position="bottom-start"
             >
               <Button style={ButtonStyle.Default} content={t('action.editUsername', { context: 'title' })} className={styles.button} />
             </UserUsernameEditPopup>
@@ -41,7 +40,6 @@ const AccountSettings = React.memo(({ email, username, usernameUpdateForm, email
               error={emailUpdateForm.error}
               onUpdate={onEmailUpdate}
               onMessageDismiss={onEmailUpdateMessageDismiss}
-              position="bottom-start"
             >
               <Button style={ButtonStyle.Default} content={t('action.editEmail', { context: 'title' })} className={styles.button} />
             </UserEmailEditPopup>
