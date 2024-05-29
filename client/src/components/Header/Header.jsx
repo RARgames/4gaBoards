@@ -80,7 +80,7 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
             {notifications.length > 0 && <span className={styles.notification}>{notifications.length}</span>}
           </Button>
         </NotificationsPopup>
-        <UserPopup isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout} showCloseButton offset={10} position="bottom" closeButtonClassName={styles.userPopup}>
+        <UserPopup isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout} showCloseButton offset={10} position="bottom">
           <Button style={ButtonStyle.Header} title={t('common.settingsInstance')}>
             <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
           </Button>
