@@ -38,7 +38,7 @@ export default (WrappedComponent, defaultProps) => {
     return (
       <>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps()} className={classNames(styles.popupWrapper, wrapperClassName)}>
+        <div ref={refs.setReference} {...getReferenceProps()} className={wrapperClassName}>
           {children}
         </div>
         {isOpened && (

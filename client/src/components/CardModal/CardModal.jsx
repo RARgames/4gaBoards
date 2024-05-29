@@ -389,11 +389,13 @@ const CardModal = React.memo(
         <div className={styles.text}>
           {t('common.members', { context: 'title' })}
           {canEdit && (
-            <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} position="right" offset={0}>
-              <Button style={ButtonStyle.Icon} title={t('common.addMember')}>
-                <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
-              </Button>
-            </BoardMembershipsPopup>
+            <div className={styles.popupWrapper}>
+              <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} position="right" offset={0}>
+                <Button style={ButtonStyle.Icon} title={t('common.addMember')}>
+                  <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
+                </Button>
+              </BoardMembershipsPopup>
+            </div>
           )}
         </div>
         {users.map((user) => (
@@ -409,22 +411,24 @@ const CardModal = React.memo(
         <div className={styles.text}>
           {t('common.labels', { context: 'title' })}
           {canEdit && (
-            <LabelsPopup
-              items={allLabels}
-              currentIds={labelIds}
-              onSelect={onLabelAdd}
-              onDeselect={onLabelRemove}
-              onCreate={onLabelCreate}
-              onUpdate={onLabelUpdate}
-              onMove={onLabelMove}
-              onDelete={onLabelDelete}
-              position="right"
-              offset={0}
-            >
-              <Button style={ButtonStyle.Icon} title={t('common.addLabel')}>
-                <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
-              </Button>
-            </LabelsPopup>
+            <div className={styles.popupWrapper}>
+              <LabelsPopup
+                items={allLabels}
+                currentIds={labelIds}
+                onSelect={onLabelAdd}
+                onDeselect={onLabelRemove}
+                onCreate={onLabelCreate}
+                onUpdate={onLabelUpdate}
+                onMove={onLabelMove}
+                onDelete={onLabelDelete}
+                position="right"
+                offset={0}
+              >
+                <Button style={ButtonStyle.Icon} title={t('common.addLabel')}>
+                  <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
+                </Button>
+              </LabelsPopup>
+            </div>
           )}
         </div>
         {labels.map((label) => (
@@ -440,11 +444,13 @@ const CardModal = React.memo(
         <div className={styles.text}>
           {t('common.dueDate', { context: 'title' })}
           {canEdit && (
-            <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-              <Button style={ButtonStyle.Icon} title={dueDate ? t('common.editDueDate') : t('common.addDueDate')}>
-                <Icon type={dueDate ? IconType.Pencil : IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
-              </Button>
-            </DueDateEditPopup>
+            <div className={styles.popupWrapper}>
+              <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
+                <Button style={ButtonStyle.Icon} title={dueDate ? t('common.editDueDate') : t('common.addDueDate')}>
+                  <Icon type={dueDate ? IconType.Pencil : IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
+                </Button>
+              </DueDateEditPopup>
+            </div>
           )}
         </div>
         <span className={styles.headerItem}>
@@ -464,11 +470,13 @@ const CardModal = React.memo(
         <div className={styles.text}>
           {t('common.timer', { context: 'title' })}
           {canEdit && (
-            <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
-              <Button style={ButtonStyle.Icon} title={t('common.editTimer')}>
-                <Icon type={IconType.Pencil} size={IconSize.Size10} className={styles.iconAddButton2} />
-              </Button>
-            </TimerEditPopup>
+            <div className={styles.popupWrapper}>
+              <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
+                <Button style={ButtonStyle.Icon} title={t('common.editTimer')}>
+                  <Icon type={IconType.Pencil} size={IconSize.Size10} className={styles.iconAddButton2} />
+                </Button>
+              </TimerEditPopup>
+            </div>
           )}
         </div>
         <span className={styles.headerItem}>
