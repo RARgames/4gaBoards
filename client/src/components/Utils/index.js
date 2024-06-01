@@ -1,6 +1,7 @@
 import { Button, ButtonStyle } from './Button';
 import Dropdown from './Dropdown';
 import ExternalLink from './ExternalLink';
+import FilePicker from './FilePicker';
 import { Form, FormStyle } from './Form';
 import { Icon, IconType, IconSize } from './Icon';
 import { Input, InputStyle } from './Input';
@@ -16,6 +17,7 @@ export {
   ButtonStyle,
   Dropdown,
   ExternalLink,
+  FilePicker,
   Form,
   FormStyle,
   Icon,

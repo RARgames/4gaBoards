@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './FilePicker.module.css';
+import styles from './FilePicker.module.scss';
 
 const FilePicker = React.memo(({ children, accept, onSelect }) => {
   const field = useRef(null);

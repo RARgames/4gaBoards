@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Popup, withPopup, Button, ButtonStyle } from '../../Utils';
-import { FilePicker } from '../../../lib/custom-ui';
+import { Popup, withPopup, Button, ButtonStyle, FilePicker } from '../../Utils';
 
 // import styles from './AvatarEditPopup.module.scss';
 

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Button, Image } from 'semantic-ui-react';
-import { FilePicker } from '../../lib/custom-ui';
+import { FilePicker } from '../Utils';
 
 import ProjectBackgroundGradients from '../../constants/ProjectBackgroundGradients';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
