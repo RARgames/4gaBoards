@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import { closePopup } from '../../lib/popup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import Paths from '../../constants/Paths';
@@ -23,10 +22,6 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
     tabsWrapper.current.scrollBy({
       left: deltaY,
     });
-  }, []);
-
-  const handleDragStart = useCallback(() => {
-    closePopup();
   }, []);
 
   const handleDragEnd = useCallback(
@@ -93,7 +88,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
   return (
     <div className={styles.wrapper} onWheel={handleWheel}>
       <div ref={tabsWrapper} className={styles.tabsWrapper}>
-        <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+        <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="horizontal">
             {({ innerRef, droppableProps, placeholder }) => (
               // eslint-disable-next-line react/jsx-props-no-spreading

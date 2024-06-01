@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
-import { closePopup } from '../../lib/popup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -30,10 +29,6 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
 
   const handleAddListClose = useCallback(() => {
     setIsListAddOpened(false);
-  }, []);
-
-  const handleDragStart = useCallback(() => {
-    closePopup();
   }, []);
 
   const handleDragEnd = useCallback(
@@ -119,7 +114,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div ref={wrapper} className={classNames(styles.wrapper)} onMouseDown={handleMouseDown}>
         <div className={classNames(isCardModalOpened && styles.listsModalOpen)}>
-          <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+          <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
               {({ innerRef, droppableProps, placeholder }) => (
                 <div

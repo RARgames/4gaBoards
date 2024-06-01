@@ -5,7 +5,7 @@ import { Form, FormStyle } from './Form';
 import { Icon, IconType, IconSize } from './Icon';
 import { Input, InputStyle } from './Input';
 import { Message, MessageStyle } from './Message';
-import { withPopup, closePopup } from './Popup';
+import withPopup from './Popup';
 import Popup from './PopupElements';
 import { ProgressBar, ProgressBarSize } from './ProgressBar';
 import { Radio, RadioSize } from './Radio';
@@ -27,7 +27,6 @@ export {
   MessageStyle,
   Popup,
   withPopup,
-  closePopup,
   ProgressBar,
   ProgressBarSize,
   Radio,

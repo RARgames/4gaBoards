@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
-import { closePopup } from '../../../lib/popup';
 
 import { useModal } from '../../../hooks';
 import TextFileAddModal from './TextFileAddModal';
@@ -73,7 +72,6 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
         return;
       }
 
-      closePopup();
       event.preventDefault();
 
       item.getAsString((content) => {

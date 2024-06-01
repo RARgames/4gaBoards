@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Progress } from 'semantic-ui-react';
-import { closePopup } from '../../../lib/popup';
 import { Button, ButtonStyle } from '../../Utils';
 
 import DroppableTypes from '../../../constants/DroppableTypes';
@@ -29,10 +28,6 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
     }),
     [open],
   );
-
-  const handleDragStart = useCallback(() => {
-    closePopup();
-  }, []);
 
   const handleDragEnd = useCallback(
     ({ draggableId, source, destination }) => {
@@ -81,7 +76,7 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
   return (
     <>
       {items.length > 0 && <Progress autoSuccess value={completedItems.length} total={items.length} color={getTaskbarColor()} size="tiny" className={styles.progress} />}
-      <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="tasks" type={DroppableTypes.TASK}>
           {({ innerRef, droppableProps, placeholder }) => (
             // eslint-disable-next-line react/jsx-props-no-spreading
