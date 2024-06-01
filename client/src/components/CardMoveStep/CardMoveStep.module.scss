@@ -1,10 +1,11 @@
 :global(#app) {
   .field {
     margin-bottom: 8px;
+    width: 100%;
   }
 
   .text {
-    color: #444444;
+    color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
     padding-bottom: 6px;

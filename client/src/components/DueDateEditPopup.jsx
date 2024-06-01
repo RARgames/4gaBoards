@@ -1,4 +1,4 @@
-import { withPopup } from '../lib/popup';
+import { withPopup } from './Utils';
 
 import DueDateEditStep from './DueDateEditStep';
 

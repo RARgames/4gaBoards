@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useFloating, shift, flip, offset as posOffset, useClick, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager } from '@floating-ui/react';
+import { useFloating, shift, flip, offset as posOffset, useClick, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import classNames from 'classnames';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
@@ -42,18 +42,20 @@ export default (WrappedComponent, defaultProps) => {
           {children}
         </div>
         {isOpened && (
-          <FloatingFocusManager context={context} modal={false}>
-            {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <div className={classNames(styles.wrapper, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
-              {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(styles.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
-                  <Icon type={IconType.Close} size={IconSize.Size14} />
-                </Button>
-              )}
+          <FloatingPortal>
+            <FloatingFocusManager context={context} modal={false}>
               {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-              <WrappedComponent {...props} onClose={handleClose} />
-            </div>
-          </FloatingFocusManager>
+              <div className={classNames(styles.wrapper, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+                {!(defaultProps?.hideCloseButton || hideCloseButton) && (
+                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(styles.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                    <Icon type={IconType.Close} size={IconSize.Size14} />
+                  </Button>
+                )}
+                {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+                <WrappedComponent {...props} onClose={handleClose} />
+              </div>
+            </FloatingFocusManager>
+          </FloatingPortal>
         )}
       </>
     );

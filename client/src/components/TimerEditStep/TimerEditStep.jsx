@@ -2,13 +2,10 @@ import { dequal } from 'dequal';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'semantic-ui-react';
 import { useToggle } from '../../lib/hooks';
-import { Input, Popup } from '../../lib/custom-ui';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Input, Popup, Form } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
 
 import styles from './TimerEditStep.module.scss';
@@ -34,7 +31,7 @@ const createData = (timer) => {
 
 const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
-  const [data, handleFieldChange, setData] = useForm(() => createData(defaultValue));
+  const [data, handleFieldChange, setData] = useForm2(() => createData(defaultValue));
   const [isEditing, toggleEditing] = useToggle();
 
   const hoursField = useRef(null);
@@ -110,18 +107,18 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
           <div className={styles.fieldWrapper}>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.hours')}</div>
-              <Input.Mask ref={hoursField} name="hours" value={data.hours} mask="9999" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
+              <Input.Mask ref={hoursField} name="hours" value={data.hours} mask="9999" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} className={styles.inputField} />
             </div>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.minutes')}</div>
-              <Input.Mask ref={minutesField} name="minutes" value={data.minutes} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
+              <Input.Mask ref={minutesField} name="minutes" value={data.minutes} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} className={styles.inputField} />
             </div>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.seconds')}</div>
-              <Input.Mask ref={secondsField} name="seconds" value={data.seconds} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} />
+              <Input.Mask ref={secondsField} name="seconds" value={data.seconds} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} className={styles.inputField} />
             </div>
             <Button style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={styles.iconButton}>
-              <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size10} />
+              <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size13} />
             </Button>
           </div>
           <div className={gStyles.controlsSpaceBetween}>

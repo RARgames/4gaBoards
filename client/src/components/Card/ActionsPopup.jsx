@@ -2,9 +2,7 @@ import pick from 'lodash/pick';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Menu } from 'semantic-ui-react';
-import { withPopup } from '../../lib/popup';
-import { Popup } from '../../lib/custom-ui';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import { useSteps } from '../../hooks';
 import BoardMembershipsStep from '../BoardMembershipsStep';
@@ -55,8 +53,7 @@ const ActionsStep = React.memo(
 
     const handleEditNameClick = useCallback(() => {
       onNameEdit();
-      onClose();
-    }, [onNameEdit, onClose]);
+    }, [onNameEdit]);
 
     const handleUsersClick = useCallback(() => {
       openStep(StepTypes.USERS);
@@ -81,7 +78,7 @@ const ActionsStep = React.memo(
     const handleDuplicateClick = useCallback(() => {
       onDuplicate();
       onClose();
-    }, [onDuplicate, onClose]);
+    }, [onClose, onDuplicate]);
 
     const handleDeleteClick = useCallback(() => {
       openStep(StepTypes.DELETE);
@@ -155,35 +152,18 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Popup.Header>{t('common.cardActions', { context: 'title' })}</Popup.Header>
-        <Popup.Content>
-          <Menu secondary vertical className={styles.menu}>
-            <Menu.Item className={styles.menuItem} onClick={handleEditNameClick}>
-              {t('action.editTitle', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleUsersClick}>
-              {t('common.members', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleLabelsClick}>
-              {t('common.labels', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleEditDueDateClick}>
-              {t('action.editDueDate', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleEditTimerClick}>
-              {t('action.editTimer', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleMoveClick}>
-              {t('action.moveCard', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleDuplicateClick}>
-              {t('action.duplicateCard', { context: 'title' })}
-            </Menu.Item>
-            <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-              {t('action.deleteCard', { context: 'title' })}
-            </Menu.Item>
-          </Menu>
-        </Popup.Content>
+        <Button style={ButtonStyle.Popup} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
+        <Button style={ButtonStyle.Popup} content={t('common.members', { context: 'title' })} onClick={handleUsersClick} />
+        <Button style={ButtonStyle.Popup} content={t('common.labels', { context: 'title' })} onClick={handleLabelsClick} />
+        <Button style={ButtonStyle.Popup} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />
+        <Button style={ButtonStyle.Popup} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />
+        <Button style={ButtonStyle.Popup} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />
+        <Button style={ButtonStyle.Popup} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />
+        <Popup.Separator />
+        <Button style={ButtonStyle.Popup} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
+          <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
+          {t('action.deleteCard', { context: 'title' })}
+        </Button>
       </>
     );
   },

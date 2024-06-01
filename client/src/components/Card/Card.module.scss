@@ -1,14 +1,17 @@
 :global(#app) {
-  .actionsButton {
+  .popupWrapper {
     box-sizing: content-box;
     display: inline-block;
     min-height: auto;
-    opacity: 0;
     padding: 4px;
     position: absolute;
-    right: 2px;
+    right: 5px;
     top: 2px;
     width: 10px;
+  }
+
+  .editCardButton {
+    opacity: 0;
   }
 
   .attachment {

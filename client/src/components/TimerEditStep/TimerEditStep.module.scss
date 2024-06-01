@@ -12,16 +12,6 @@
   .iconButton {
     margin: 0 4px 0 1px;
     width: 36px;
-
-    svg {
-      fill: var(--textColor3);
-    }
-
-    &:hover {
-      svg {
-        fill: var(--textColor4);
-      }
-    }
   }
 
   .startStopIcon {
@@ -31,10 +21,14 @@
   }
 
   .text {
-    color: #444444;
+    color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
     padding-bottom: 4px;
     padding-left: 2px;
+  }
+
+  .inputField {
+    width: 100%;
   }
 }

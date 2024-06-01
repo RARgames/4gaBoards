@@ -1,4 +1,4 @@
-import { withPopup } from '../lib/popup';
+import { withPopup } from './Utils';
 
 import TimerEditStep from './TimerEditStep';
 

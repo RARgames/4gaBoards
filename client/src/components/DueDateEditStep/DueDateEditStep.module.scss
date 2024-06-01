@@ -1,16 +1,16 @@
 :global(#app) {
   .fieldBox {
     display: inline-block;
-    margin: 0 4px 12px;
-    width: calc(50% - 8px);
+    margin-bottom: 6px;
+    width: 100%;
   }
 
-  .fieldWrapper {
-    margin: 0 -4px;
+  .field {
+    width: 100%;
   }
 
   .text {
-    color: #444444;
+    color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
     padding-bottom: 4px;

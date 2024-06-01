@@ -1,11 +1,9 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Dropdown, Form } from 'semantic-ui-react';
-import { Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Popup, Form, Dropdown } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 
 import styles from './CardMoveStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -13,7 +11,10 @@ import gStyles from '../../globalStyles.module.scss';
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {
   const [t] = useTranslation();
 
-  const [path, handleFieldChange] = useForm(() => ({
+  const dropdownBoard = useRef(null);
+  const dropdownList = useRef(null);
+
+  const [path, handleFieldChange] = useForm2(() => ({
     projectId: null,
     boardId: null,
     listId: null,
@@ -26,15 +27,22 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
 
   const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === path.listId)) || null, [selectedBoard, path.listId]);
 
-  const handleBoardIdChange = useCallback(
-    (event, data) => {
-      if (selectedProject.boards.find((board) => board.id === data.value).isFetching === null) {
-        onBoardFetch(data.value);
+  const handleFieldChangeOverride = useCallback(
+    (event) => {
+      const data = event.target;
+
+      if (data.name === 'projectId') {
+        dropdownBoard?.current?.clearSavedDefaultItem();
+      } else if (data.name === 'boardId') {
+        if (selectedProject.boards.find((board) => board.id === data.value).isFetching === null) {
+          onBoardFetch(data.value);
+        }
+        dropdownList?.current?.clearSavedDefaultItem();
       }
 
-      handleFieldChange(event, data);
+      handleFieldChange(event);
     },
-    [onBoardFetch, handleFieldChange, selectedProject],
+    [handleFieldChange, onBoardFetch, selectedProject],
   );
 
   const handleSubmit = useCallback(() => {
@@ -54,55 +62,62 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.project')}</div>
           <Dropdown
-            fluid
-            selection
             name="projectId"
             options={projectsToLists.map((project) => ({
-              text: project.name,
-              value: project.id,
+              id: project.id,
+              name: project.name,
             }))}
-            value={selectedProject && selectedProject.id}
             placeholder={projectsToLists.length === 0 ? t('common.noProjects') : t('common.selectProject')}
+            defaultItem={selectedProject}
+            onChange={handleFieldChangeOverride}
+            isSearchable
+            selectFirstOnSearch
+            keepState
+            returnOnChangeEvent
             disabled={projectsToLists.length === 0}
             className={styles.field}
-            onChange={handleFieldChange}
           />
           {selectedProject && (
             <>
               <div className={styles.text}>{t('common.board')}</div>
               <Dropdown
-                fluid
-                selection
+                ref={dropdownBoard}
                 name="boardId"
                 options={selectedProject.boards.map((board) => ({
-                  text: board.name,
-                  value: board.id,
+                  id: board.id,
+                  name: board.name,
                 }))}
-                value={selectedBoard && selectedBoard.id}
                 placeholder={selectedProject.boards.length === 0 ? t('common.noBoards') : t('common.selectBoard')}
+                defaultItem={selectedBoard}
+                onChange={handleFieldChangeOverride}
+                isSearchable
+                selectFirstOnSearch
+                keepState
+                returnOnChangeEvent
                 disabled={selectedProject.boards.length === 0}
                 className={styles.field}
-                onChange={handleBoardIdChange}
               />
             </>
           )}
-          {selectedBoard && (
+          {selectedBoard && selectedBoard.isFetching === false && (
             <>
               <div className={styles.text}>{t('common.list')}</div>
               <Dropdown
-                fluid
-                selection
+                ref={dropdownList}
                 name="listId"
                 options={selectedBoard.lists.map((list) => ({
-                  text: list.name,
-                  value: list.id,
+                  id: list.id,
+                  name: list.name,
                 }))}
-                value={selectedList && selectedList.id}
-                placeholder={selectedBoard.isFetching === false && selectedBoard.lists.length === 0 ? t('common.noLists') : t('common.selectList')}
-                loading={selectedBoard.isFetching !== false}
-                disabled={selectedBoard.isFetching !== false || selectedBoard.lists.length === 0}
+                placeholder={selectedBoard.lists.length === 0 ? t('common.noLists') : t('common.selectList')}
+                defaultItem={selectedList}
+                onChange={handleFieldChangeOverride}
+                isSearchable
+                selectFirstOnSearch
+                keepState
+                returnOnChangeEvent
+                disabled={selectedBoard.lists.length === 0}
                 className={styles.field}
-                onChange={handleFieldChange}
               />
             </>
           )}

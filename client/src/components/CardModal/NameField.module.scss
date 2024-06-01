@@ -10,7 +10,7 @@
     line-height: 20px;
     overflow: hidden;
     resize: none;
-    width: calc(100% - 60px);
+    width: 100%;
 
     &:focus {
       background: var(--backgroundColorTmpDarkerField);

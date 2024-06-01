@@ -3,7 +3,6 @@
     position: relative;
     text-align: left;
     width: calc(100% - 50px);
-    z-index: 1;
   }
 
   .dropdownSearchInput {
@@ -17,6 +16,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    &:disabled {
+      background: var(--backgroundColorTmpDarkerField);
+      color: var(--textColor3);
+    }
   }
 
   .dropdownIcon {
@@ -33,6 +37,7 @@
     max-height: calc(100vh/3);
     background: var(--backgroundColorTmpDarkerField);
     color: var(--textColor1);
+    z-index: 1;
   }
 
   .dropdownMenuWithChildren {

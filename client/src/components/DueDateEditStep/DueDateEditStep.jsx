@@ -2,11 +2,9 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
-import { Form } from 'semantic-ui-react';
-import { Input, Popup } from '../../lib/custom-ui';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Input, Popup, Form } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 
 import styles from './DueDateEditStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -14,7 +12,7 @@ import gStyles from '../../globalStyles.module.scss';
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange, setData] = useForm(() => {
+  const [data, handleFieldChange, setData] = useForm2(() => {
     const date = defaultValue || new Date().setHours(12, 0, 0, 0);
 
     return {
@@ -92,11 +90,9 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
       <Popup.Header onBack={onBack}>{t('common.editDueDate', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <div className={styles.fieldWrapper}>
-            <div className={styles.fieldBox}>
-              <div className={styles.text}>{t('common.date')}</div>
-              <Input ref={dateField} name="date" value={data.date} onChange={handleFieldChange} />
-            </div>
+          <div className={styles.fieldBox}>
+            <div className={styles.text}>{t('common.date')}</div>
+            <Input ref={dateField} name="date" value={data.date} onChange={handleFieldChange} className={styles.field} />
           </div>
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gStyles.controlsSpaceBetween}>

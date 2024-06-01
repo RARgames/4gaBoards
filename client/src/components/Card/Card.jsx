@@ -195,39 +195,43 @@ const Card = React.memo(
                       {contentNode}
                     </Link>
                     {canEdit && (
-                      <ActionsPopup
-                        card={{
-                          dueDate,
-                          timer,
-                          boardId,
-                          listId,
-                          projectId,
-                        }}
-                        projectsToLists={allProjectsToLists}
-                        boardMemberships={allBoardMemberships}
-                        currentUserIds={users.map((user) => user.id)}
-                        labels={allLabels}
-                        currentLabelIds={labels.map((label) => label.id)}
-                        onNameEdit={handleNameEdit}
-                        onUpdate={onUpdate}
-                        onMove={onMove}
-                        onTransfer={onTransfer}
-                        onDuplicate={onDuplicate}
-                        onDelete={onDelete}
-                        onUserAdd={onUserAdd}
-                        onUserRemove={onUserRemove}
-                        onBoardFetch={onBoardFetch}
-                        onLabelAdd={onLabelAdd}
-                        onLabelRemove={onLabelRemove}
-                        onLabelCreate={onLabelCreate}
-                        onLabelUpdate={onLabelUpdate}
-                        onLabelMove={onLabelMove}
-                        onLabelDelete={onLabelDelete}
-                      >
-                        <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={classNames(styles.actionsButton, styles.target)}>
-                          <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                        </Button>
-                      </ActionsPopup>
+                      <div className={styles.popupWrapper}>
+                        <ActionsPopup
+                          card={{
+                            dueDate,
+                            timer,
+                            boardId,
+                            listId,
+                            projectId,
+                          }}
+                          projectsToLists={allProjectsToLists}
+                          boardMemberships={allBoardMemberships}
+                          currentUserIds={users.map((user) => user.id)}
+                          labels={allLabels}
+                          currentLabelIds={labels.map((label) => label.id)}
+                          onNameEdit={handleNameEdit}
+                          onUpdate={onUpdate}
+                          onMove={onMove}
+                          onTransfer={onTransfer}
+                          onDuplicate={onDuplicate}
+                          onDelete={onDelete}
+                          onUserAdd={onUserAdd}
+                          onUserRemove={onUserRemove}
+                          onBoardFetch={onBoardFetch}
+                          onLabelAdd={onLabelAdd}
+                          onLabelRemove={onLabelRemove}
+                          onLabelCreate={onLabelCreate}
+                          onLabelUpdate={onLabelUpdate}
+                          onLabelMove={onLabelMove}
+                          onLabelDelete={onLabelDelete}
+                          position="left-start"
+                          offset={0}
+                        >
+                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={classNames(styles.editCardButton, styles.target)}>
+                            <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                          </Button>
+                        </ActionsPopup>
+                      </div>
                     )}
                   </>
                 ) : (

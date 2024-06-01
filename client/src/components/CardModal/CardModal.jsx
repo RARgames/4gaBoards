@@ -310,57 +310,70 @@ const CardModal = React.memo(
 
     const headerNode = (
       <div className={styles.header}>
-        <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
-          {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-          <div className={classNames(styles.headerTitle, canEdit && gStyles.cursorPointer)} onClick={handleNameEdit}>
-            {name}
+        <div className={styles.headerFirstLine}>
+          <div className={styles.headerTitleWrapper}>
+            <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
+              {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+              <div className={classNames(styles.headerTitle, canEdit && gStyles.cursorPointer)} onClick={handleNameEdit}>
+                {name}
+              </div>
+            </NameField>
           </div>
-        </NameField>
-        <Button style={ButtonStyle.Icon} title={t('common.closeCard')} onClick={handleClose} className={styles.headerButton}>
-          <Icon type={IconType.Close} size={IconSize.Size14} />
-        </Button>
-        {canEdit && (
-          <ActionsPopup
-            card={{
-              dueDate,
-              timer,
-              boardId,
-              listId,
-              projectId,
-            }}
-            projectsToLists={allProjectsToLists}
-            boardMemberships={allBoardMemberships}
-            currentUserIds={users.map((user) => user.id)}
-            labels={allLabels}
-            currentLabelIds={labels.map((label) => label.id)}
-            onNameEdit={handleNameEdit}
-            onUpdate={onUpdate}
-            onMove={onMove}
-            onTransfer={onTransfer}
-            onDuplicate={onDuplicate}
-            onDelete={onDelete}
-            onUserAdd={onUserAdd}
-            onUserRemove={onUserRemove}
-            onBoardFetch={onBoardFetch}
-            onLabelAdd={onLabelAdd}
-            onLabelRemove={onLabelRemove}
-            onLabelCreate={onLabelCreate}
-            onLabelUpdate={onLabelUpdate}
-            onLabelMove={onLabelMove}
-            onLabelDelete={onLabelDelete}
-          >
-            <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={styles.headerButton}>
-              <Icon type={IconType.EllipsisVertical} size={IconSize.Size14} />
-            </Button>
-          </ActionsPopup>
-        )}
-        {canEdit && (
-          <DeletePopup title={t('common.deleteCard', { context: 'title' })} content={t('common.areYouSureYouWantToDeleteThisCard')} buttonContent={t('action.deleteCard')} onConfirm={onDelete}>
-            <Button style={ButtonStyle.Icon} title={t('common.deleteCard', { context: 'title' })} className={styles.headerButton}>
-              <Icon type={IconType.Trash} size={IconSize.Size14} />
-            </Button>
-          </DeletePopup>
-        )}
+          {canEdit && (
+            <DeletePopup
+              title={t('common.deleteCard', { context: 'title' })}
+              content={t('common.areYouSureYouWantToDeleteThisCard')}
+              buttonContent={t('action.deleteCard')}
+              onConfirm={onDelete}
+              position="left-start"
+              offset={0}
+            >
+              <Button style={ButtonStyle.Icon} title={t('common.deleteCard', { context: 'title' })}>
+                <Icon type={IconType.Trash} size={IconSize.Size14} />
+              </Button>
+            </DeletePopup>
+          )}
+          {canEdit && (
+            <ActionsPopup
+              card={{
+                dueDate,
+                timer,
+                boardId,
+                listId,
+                projectId,
+              }}
+              projectsToLists={allProjectsToLists}
+              boardMemberships={allBoardMemberships}
+              currentUserIds={users.map((user) => user.id)}
+              labels={allLabels}
+              currentLabelIds={labels.map((label) => label.id)}
+              onNameEdit={handleNameEdit}
+              onUpdate={onUpdate}
+              onMove={onMove}
+              onTransfer={onTransfer}
+              onDuplicate={onDuplicate}
+              onDelete={onDelete}
+              onUserAdd={onUserAdd}
+              onUserRemove={onUserRemove}
+              onBoardFetch={onBoardFetch}
+              onLabelAdd={onLabelAdd}
+              onLabelRemove={onLabelRemove}
+              onLabelCreate={onLabelCreate}
+              onLabelUpdate={onLabelUpdate}
+              onLabelMove={onLabelMove}
+              onLabelDelete={onLabelDelete}
+              position="left-start"
+              offset={0}
+            >
+              <Button style={ButtonStyle.Icon} title={t('common.editCard')}>
+                <Icon type={IconType.EllipsisVertical} size={IconSize.Size14} />
+              </Button>
+            </ActionsPopup>
+          )}
+          <Button style={ButtonStyle.Icon} title={t('common.closeCard')} onClick={handleClose}>
+            <Icon type={IconType.Close} size={IconSize.Size14} />
+          </Button>
+        </div>
         <div className={styles.headerListFieldWrapper}>
           <Dropdown
             ref={dropdown}
@@ -390,7 +403,7 @@ const CardModal = React.memo(
           {t('common.members', { context: 'title' })}
           {canEdit && (
             <div className={styles.popupWrapper}>
-              <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} position="right" offset={0}>
+              <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
                 <Button style={ButtonStyle.Icon} title={t('common.addMember')}>
                   <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
                 </Button>
@@ -421,7 +434,6 @@ const CardModal = React.memo(
                 onUpdate={onLabelUpdate}
                 onMove={onLabelMove}
                 onDelete={onLabelDelete}
-                position="right"
                 offset={0}
               >
                 <Button style={ButtonStyle.Icon} title={t('common.addLabel')}>
@@ -445,7 +457,7 @@ const CardModal = React.memo(
           {t('common.dueDate', { context: 'title' })}
           {canEdit && (
             <div className={styles.popupWrapper}>
-              <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
+              <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} offset={0}>
                 <Button style={ButtonStyle.Icon} title={dueDate ? t('common.editDueDate') : t('common.addDueDate')}>
                   <Icon type={dueDate ? IconType.Pencil : IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
                 </Button>
@@ -471,7 +483,7 @@ const CardModal = React.memo(
           {t('common.timer', { context: 'title' })}
           {canEdit && (
             <div className={styles.popupWrapper}>
-              <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate}>
+              <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate} offset={0}>
                 <Button style={ButtonStyle.Icon} title={t('common.editTimer')}>
                   <Icon type={IconType.Pencil} size={IconSize.Size10} className={styles.iconAddButton2} />
                 </Button>

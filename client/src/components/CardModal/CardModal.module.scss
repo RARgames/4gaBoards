@@ -1,27 +1,12 @@
 :global(#app) {
   .addAttachmentButton {
-    //TODO: recheck - most of this style not needed
-    background: var(--backgroundColorTmpDarkerField2);
-    color: var(--textColor1);
-    // margin-top: 4px;
-    overflow: hidden;
-    padding: 8px;
-    text-align: left;
-    text-overflow: ellipsis;
-    transition: background 85ms ease;
-    white-space: nowrap;
-    font-weight: normal;
-
     .hint {
       visibility: hidden;
     }
 
     &:hover {
-      color: var(--textColor3);
-
       .hint {
         visibility: visible;
-        color: var(--textColor3);
       }
     }
   }
@@ -88,18 +73,23 @@
     margin-bottom: 6px;
   }
 
+  .headerFirstLine {
+    display: flex;
+  }
+
+  .headerTitleWrapper {
+    flex: 1;
+  }
+
   .headerTitle {
     color: var(--textColorWhite);
     font-size: 18px;
     font-weight: 700;
     line-height: 20px;
-    width: calc(100% - 60px);
+    width: 100%;
     display: inline-block;
     padding: 3px;
-  }
-
-  .headerButton {
-    float: right;
+    margin-bottom: 1px;
   }
 
   .headerListFieldWrapper {
@@ -116,10 +106,6 @@
   }
 
   .headerListFieldIcon {
-    //TODO remove
-    display: inline-block;
-    overflow: hidden;
-    //TODO remove end
     vertical-align: 25%;
     margin-left: 4px;
   }
