@@ -59,7 +59,7 @@
 
   .header {
     outline: none;
-    padding: 4px 8px;
+    padding: 4px 4px 4px 8px;
     position: relative;
     float: left;
   }
@@ -73,12 +73,15 @@
     height: inherit;
   }
 
-  .headerButton {
+  .popupWrapper {
+    display: inline-block;
     position: relative;
-    float: right;
-    right: -3px;
     width: 10px;
     height: 20px;
+  }
+
+  .editListButton {
+    width: 10px;
   }
 
   .headerName {
@@ -86,7 +89,7 @@
     font-weight: bold;
     line-height: 20px;
     max-height: 40px;
-    width: 236px;
+    width: 240px;
     text-indent: 8px;
     position: relative;
     float: left;

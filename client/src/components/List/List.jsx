@@ -201,11 +201,13 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
                 </div>
               </NameEdit>
               {isPersisted && canEdit && (
-                <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete}>
-                  <Button style={ButtonStyle.Icon} title={t('common.editList')} className={styles.headerButton}>
-                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                  </Button>
-                </ActionsPopup>
+                <div className={styles.popupWrapper}>
+                  <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete} position="left-start" offset={0} hideCloseButton>
+                    <Button style={ButtonStyle.Icon} title={t('common.editList')} className={styles.editListButton}>
+                      <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                    </Button>
+                  </ActionsPopup>
+                </div>
               )}
               <div className={styles.headerCardsCount}>{cardsCountText()}</div>
             </div>

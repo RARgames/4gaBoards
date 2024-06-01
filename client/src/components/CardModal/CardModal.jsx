@@ -362,6 +362,7 @@ const CardModal = React.memo(
               onLabelDelete={onLabelDelete}
               position="left-start"
               offset={0}
+              hideCloseButton
             >
               <Button style={ButtonStyle.Icon} title={t('common.editCard')}>
                 <Icon type={IconType.EllipsisVertical} size={IconSize.Size14} />

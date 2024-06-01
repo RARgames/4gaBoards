@@ -1,9 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Menu } from 'semantic-ui-react';
-import { withPopup } from '../../lib/popup';
-import { Popup } from '../../lib/custom-ui';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
@@ -14,19 +12,18 @@ const StepTypes = {
   DELETE: 'DELETE',
 };
 
+// eslint-disable-next-line no-unused-vars
 const ActionsStep = React.memo(({ onNameEdit, onCardAdd, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
   const handleEditNameClick = useCallback(() => {
     onNameEdit();
-    onClose();
-  }, [onNameEdit, onClose]);
+  }, [onNameEdit]);
 
   const handleAddCardClick = useCallback(() => {
     onCardAdd();
-    onClose();
-  }, [onCardAdd, onClose]);
+  }, [onCardAdd]);
 
   const handleDeleteClick = useCallback(() => {
     openStep(StepTypes.DELETE);
@@ -46,20 +43,13 @@ const ActionsStep = React.memo(({ onNameEdit, onCardAdd, onDelete, onClose }) =>
 
   return (
     <>
-      <Popup.Header>{t('common.listActions', { context: 'title' })}</Popup.Header>
-      <Popup.Content>
-        <Menu secondary vertical className={styles.menu}>
-          <Menu.Item className={styles.menuItem} onClick={handleEditNameClick}>
-            {t('action.editTitle', { context: 'title' })}
-          </Menu.Item>
-          <Menu.Item className={styles.menuItem} onClick={handleAddCardClick}>
-            {t('action.addCard', { context: 'title' })}
-          </Menu.Item>
-          <Menu.Item className={styles.menuItem} onClick={handleDeleteClick}>
-            {t('action.deleteList', { context: 'title' })}
-          </Menu.Item>
-        </Menu>
-      </Popup.Content>
+      <Button style={ButtonStyle.Popup} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
+      <Button style={ButtonStyle.Popup} content={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick} />
+      <Popup.Separator />
+      <Button style={ButtonStyle.Popup} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
+        <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
+        {t('action.deleteList', { context: 'title' })}
+      </Button>
     </>
   );
 });
