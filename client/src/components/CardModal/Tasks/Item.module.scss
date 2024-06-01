@@ -1,10 +1,13 @@
 :global(#app) {
-  .button {
-    opacity: 0;
-    line-height: 28px;
+  .popupWrapper {
     position: absolute;
     right: 2px;
     top: 2px;
+  }
+
+  .button {
+    opacity: 0;
+    line-height: 28px;
   }
 
   .checkboxWrapper {

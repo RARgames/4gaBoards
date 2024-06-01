@@ -19,7 +19,7 @@ const ActionsStep = React.memo(({ onNameEdit, onDelete, onClose }) => {
   const handleEditNameClick = useCallback(() => {
     onNameEdit();
     onClose();
-  }, [onNameEdit, onClose]);
+  }, [onClose, onNameEdit]);
 
   const handleDeleteClick = useCallback(() => {
     openStep(StepTypes.DELETE);
