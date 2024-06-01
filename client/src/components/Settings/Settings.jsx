@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import { useToggle } from '../../lib/hooks';
 
 import ProfileSettingsContainer from '../../containers/Settings/ProfileSettingsContainer';

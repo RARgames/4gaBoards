@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Input, Progress } from 'semantic-ui-react';
 import { useToggle } from '../../../hooks';
-import { Icon, IconType, IconSize } from '../../../../components/Utils/Icon';
+import { Icon, IconType, IconSize } from '../../../../components/Utils';
 
 import styles from './InputPassword.module.css';
 

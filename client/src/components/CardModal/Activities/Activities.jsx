@@ -6,8 +6,7 @@ import { Comment, Loader, Visibility } from 'semantic-ui-react';
 import { ActivityTypes } from '../../../constants/Enums';
 import CommentAdd from './CommentAdd';
 import Item from './Item';
-import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 
 import styles from './Activities.module.scss';
 import cStyles from '../CardModal.module.scss';

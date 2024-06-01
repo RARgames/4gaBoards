@@ -6,9 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Grid, Header, Message, Image, Checkbox } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Input } from '../../lib/custom-ui';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { Button, ButtonStyle } from '../Utils/Button';
-import ExternalLink from '../Utils/ExternalLink';
+import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink } from '../Utils';
 
 import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';

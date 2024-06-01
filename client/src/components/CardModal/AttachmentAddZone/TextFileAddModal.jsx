@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Form, Header, Modal } from 'semantic-ui-react';
 import { Input } from '../../../lib/custom-ui';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils';
 
 import { useForm } from '../../../hooks';
 

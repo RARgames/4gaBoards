@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { closePopup } from '../../lib/popup';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import ListContainer from '../../containers/ListContainer';

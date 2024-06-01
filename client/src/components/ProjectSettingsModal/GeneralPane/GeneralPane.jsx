@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Divider, Header, Tab } from 'semantic-ui-react';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils';
 
 import InformationEdit from './InformationEdit';
 import DeletePopup from '../../DeletePopup';

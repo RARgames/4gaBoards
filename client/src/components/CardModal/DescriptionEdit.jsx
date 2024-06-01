@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import MDEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
 import { useLocalStorage } from '../../hooks';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import styles from './DescriptionEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';

@@ -2,8 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Radio, RadioSize } from '../../Utils/Radio';
-import Table from '../../Utils/Table';
+import { Radio, RadioSize, Table } from '../../Utils';
 
 // import styles from './InstanceSettings.module.scss';
 import sShared from '../SettingsShared.module.scss';

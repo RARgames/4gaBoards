@@ -4,7 +4,7 @@ import initials from 'initials';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button } from '../Utils/Button';
+import { Button } from '../Utils';
 
 import styles from './User.module.scss';
 

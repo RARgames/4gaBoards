@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle } from '../../Utils';
 import UserPasswordEditPopup from '../../UserPasswordEditPopup';
 
 import styles from './AuthenticationSettings.module.scss';

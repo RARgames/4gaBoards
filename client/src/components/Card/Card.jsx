@@ -4,9 +4,8 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import { Icon, IconType, IconSize } from '../Utils/Icon';
 import { startTimer, stopTimer } from '../../utils/timer';
 import Paths from '../../constants/Paths';
 import Tasks from './Tasks';

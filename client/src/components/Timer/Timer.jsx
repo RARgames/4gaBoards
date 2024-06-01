@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { useForceUpdate, usePrevious } from '../../lib/hooks';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { Icon, IconType, IconSize } from '../Utils';
 
 import { formatTimer } from '../../utils/timer';
 

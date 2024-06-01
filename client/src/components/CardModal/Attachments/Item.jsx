@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Label, Loader } from 'semantic-ui-react';
-import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 
 import EditPopup from './EditPopup';
 

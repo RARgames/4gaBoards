@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Config from '../../../constants/Config';
-import ExternalLink from '../../Utils/ExternalLink';
-import { Icon, IconType, IconSize } from '../../Utils/Icon';
+import { Icon, IconType, IconSize, ExternalLink } from '../../Utils';
 
 import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
 

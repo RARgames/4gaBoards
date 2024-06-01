@@ -2,8 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, ButtonStyle } from '../../Utils/Button';
-import Table from '../../Utils/Table';
+import { Button, ButtonStyle, Table } from '../../Utils';
 
 import UserAddPopup from '../../UserAddPopup';
 import Item from './Item';

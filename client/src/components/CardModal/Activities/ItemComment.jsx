@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Comment } from 'semantic-ui-react';
 import { Markdown } from '../../../lib/custom-ui';
-import { Icon, IconType, IconSize } from '../../Utils/Icon';
+import { Icon, IconType, IconSize } from '../../Utils';
 
 import CommentEdit from './CommentEdit';
 import User from '../../User';

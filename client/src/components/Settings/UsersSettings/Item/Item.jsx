@@ -1,10 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Icon, IconType, IconSize } from '../../../Utils/Icon';
-import { Button, ButtonStyle } from '../../../Utils/Button';
-import { Radio, RadioSize } from '../../../Utils/Radio';
-import Table from '../../../Utils/Table';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Radio, RadioSize, Table } from '../../../Utils';
 
 import ActionsPopup from './ActionsPopup';
 import User from '../../../User';

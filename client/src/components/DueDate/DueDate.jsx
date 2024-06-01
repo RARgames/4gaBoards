@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../Utils/Button';
+import { Button } from '../Utils';
 
 import styles from './DueDate.module.scss';
 

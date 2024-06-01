@@ -8,7 +8,7 @@ import Filters from './Filters';
 import Memberships from '../Memberships';
 import BoardMembershipPermissionsSelectStep from '../BoardMembershipPermissionsSelectStep';
 import Connections from './Connections';
-import { Icon, IconType, IconSize } from '../Utils/Icon';
+import { Icon, IconType, IconSize } from '../Utils';
 
 import styles from './BoardActions.module.scss';
 

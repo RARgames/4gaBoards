@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { Checkbox } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { Icon, IconType, IconSize } from '../../Utils/Icon';
-import { Button, ButtonStyle } from '../../Utils/Button';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 
 import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
