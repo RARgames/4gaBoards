@@ -1,13 +1,17 @@
 :global(#app) {
-  .button {
+  .popupWrapper {
     position: absolute;
     right: 2px;
     top: 2px;
   }
 
+  .target {
+    opacity: 0;
+  }
+
   .date {
     display: block;
-    color: #6b808c;
+    color: var(--attachmentDate);
     line-height: 20px;
     margin-bottom: 6px;
   }
@@ -20,7 +24,7 @@
   }
 
   .extension {
-    color: #5e6c84;
+    color: var(--attachmentExtension);
     display: block;
     font-size: 18px;
     font-weight: 700;
@@ -44,12 +48,11 @@
   }
 
   .optionButton {
-    color: #6b808c;
-    cursor: pointer;
+    color: var(--attachmentButton);
     padding: 0;
 
     &:hover {
-      color: #6b808cce;
+      color: var(--attachmentButtonHover);
     }
   }
 
@@ -65,7 +68,7 @@
 
   .thumbnail {
     border-radius: 3px;
-    background: rgba(9, 30, 66, 0.04);
+    background: var(--attachmentThumbnail);
     border-radius: 3px;
     height: 80px;
     left: 0;
@@ -82,7 +85,6 @@
   }
 
   .wrapper {
-    cursor: pointer;
     margin-bottom: 8px;
     min-height: 80px;
     position: relative;

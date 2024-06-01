@@ -2,12 +2,9 @@ import { dequal } from 'dequal';
 import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'semantic-ui-react';
-import { withPopup } from '../../../lib/popup';
-import { Input, Popup } from '../../../lib/custom-ui';
-import { Button, ButtonStyle } from '../../Utils';
+import { Button, ButtonStyle, Form, Input, Popup, withPopup } from '../../Utils';
 
-import { useForm, useSteps } from '../../../hooks';
+import { useForm2, useSteps } from '../../../hooks';
 import DeleteStep from '../../DeleteStep';
 
 import styles from './EditPopup.module.scss';
@@ -20,7 +17,7 @@ const StepTypes = {
 const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange] = useForm(() => ({
+  const [data, handleFieldChange] = useForm2(() => ({
     name: '',
     ...defaultData,
   }));
@@ -73,7 +70,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.title')}</div>
-          <Input fluid ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} />

@@ -18,7 +18,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
     } else {
       window.open(url, '_blank');
     }
-  }, [url, onClick]);
+  }, [onClick, url]);
 
   const handleToggleCoverClick = useCallback(
     (event) => {
@@ -45,40 +45,18 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
   const extension = filename.slice((Math.max(0, filename.lastIndexOf('.')) || Infinity) + 1);
 
   return (
-    /* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-                                  jsx-a11y/no-static-element-interactions */
-    <div ref={ref} className={styles.wrapper} onClick={handleClick}>
-      <div
-        className={styles.thumbnail}
-        style={{
-          background: coverUrl && `url("${coverUrl}") center / cover`,
-        }}
-      >
+    <div ref={ref} className={styles.wrapper}>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+      <div className={styles.thumbnail} style={{ background: coverUrl && `url("${coverUrl}") center / cover` }} onClick={handleClick}>
         {coverUrl ? (
-          isCover && (
-            <Label
-              corner="left"
-              variant="cardModal"
-              icon={{
-                name: 'star',
-                color: 'grey',
-                inverted: true,
-              }}
-              className={styles.thumbnailLabel}
-            />
-          )
+          isCover && <Label corner="left" variant="cardModal" icon={{ name: 'star', color: 'grey', inverted: true }} className={styles.thumbnailLabel} />
         ) : (
           <span className={styles.extension}>{extension || '-'}</span>
         )}
       </div>
       <div className={styles.details}>
         <span className={styles.name}>{name}</span>
-        <span className={styles.date}>
-          {t('format:dateTime', {
-            postProcess: 'formatDate',
-            value: createdAt,
-          })}
-        </span>
+        <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
         {coverUrl && canEdit && (
           <Button
             style={ButtonStyle.NoBackground}
@@ -92,17 +70,13 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
         )}
       </div>
       {canEdit && (
-        <EditPopup
-          defaultData={{
-            name,
-          }}
-          onUpdate={onUpdate}
-          onDelete={onDelete}
-        >
-          <Button style={ButtonStyle.Icon} title={t('common.editAttachment')} className={classNames(styles.button, styles.target)}>
-            <Icon type={IconType.Pencil} size={IconSize.Size10} />
-          </Button>
-        </EditPopup>
+        <div className={styles.popupWrapper}>
+          <EditPopup defaultData={{ name }} onUpdate={onUpdate} onDelete={onDelete} position="left-start" offset={0}>
+            <Button style={ButtonStyle.Icon} title={t('common.editAttachment')} className={styles.target}>
+              <Icon type={IconType.Pencil} size={IconSize.Size10} />
+            </Button>
+          </EditPopup>
+        </div>
       )}
     </div>
   );
