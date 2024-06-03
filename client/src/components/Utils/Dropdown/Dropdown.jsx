@@ -1,6 +1,8 @@
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
 
 import styles from './Dropdown.module.scss';
@@ -28,6 +30,7 @@ const Dropdown = React.forwardRef(
     },
     ref,
   ) => {
+    const [t] = useTranslation();
     const [isOpened, setIsOpened] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [savedDefaultItem, setSavedDefaultItem] = useState(defaultItem);
@@ -248,7 +251,9 @@ const Dropdown = React.forwardRef(
             placeholder={getDisplay()}
             {...props} // eslint-disable-line react/jsx-props-no-spreading
           />
-          <Icon type={IconType.TriangleDown} size={IconSize.Size10} className={styles.dropdownIcon} />
+          <Button style={ButtonStyle.Icon} title={t('common.openDropdown')} onClick={open} className={styles.dropdownButton}>
+            <Icon type={IconType.TriangleDown} size={IconSize.Size10} />
+          </Button>
         </div>
         {isOpened && (
           <div className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>

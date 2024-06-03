@@ -180,6 +180,7 @@ export default {
       noUnreadNotifications: 'No unread notifications',
       of: 'of',
       openBoard_title: 'Open Board',
+      openDropdown: 'Open dropdown',
       optional_inline: 'optional',
       organization: 'Organization',
       phone: 'Phone',
