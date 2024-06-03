@@ -16,6 +16,7 @@ const DEFAULT_DATA = {
   name: '',
 };
 
+// eslint-disable-next-line no-unused-vars
 const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }) => {
   const [t] = useTranslation();
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);

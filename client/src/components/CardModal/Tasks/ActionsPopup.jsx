@@ -12,14 +12,14 @@ const StepTypes = {
   DELETE: 'DELETE',
 };
 
+// eslint-disable-next-line no-unused-vars
 const ActionsStep = React.memo(({ onNameEdit, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
   const handleEditNameClick = useCallback(() => {
     onNameEdit();
-    onClose();
-  }, [onClose, onNameEdit]);
+  }, [onNameEdit]);
 
   const handleDeleteClick = useCallback(() => {
     openStep(StepTypes.DELETE);

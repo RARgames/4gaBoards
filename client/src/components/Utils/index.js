@@ -5,6 +5,7 @@ import FilePicker from './FilePicker';
 import { Form, FormStyle } from './Form';
 import { Icon, IconType, IconSize } from './Icon';
 import { Input, InputStyle } from './Input';
+import { MDEditor, MDPreview } from './Markdown';
 import { Message, MessageStyle } from './Message';
 import withPopup from './Popup';
 import Popup from './PopupElements';
@@ -25,6 +26,8 @@ export {
   IconSize,
   Input,
   InputStyle,
+  MDEditor,
+  MDPreview,
   Message,
   MessageStyle,
   Popup,

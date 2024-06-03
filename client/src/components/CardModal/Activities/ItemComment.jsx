@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Comment } from 'semantic-ui-react';
-import { Markdown } from '../../../lib/custom-ui';
-import { Icon, IconType, IconSize } from '../../Utils';
+import { MDPreview, Icon, IconType, IconSize } from '../../Utils';
 
 import CommentEdit from './CommentEdit';
 import User from '../../User';
@@ -40,23 +39,25 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
               <Comment.Action title={t('common.editComment')} as="button" disabled={!isPersisted} onClick={handleEditClick} className={styles.button}>
                 <Icon type={IconType.Pencil} size={IconSize.Size10} />
               </Comment.Action>
-              <DeletePopup
-                title={t('common.deleteComment', { context: 'title' })}
-                content={t('common.areYouSureYouWantToDeleteThisComment')}
-                buttonContent={t('action.deleteComment')}
-                onConfirm={onDelete}
-              >
-                <Comment.Action title={t('common.deleteComment')} as="button" disabled={!isPersisted} className={styles.button}>
-                  <Icon type={IconType.Trash} size={IconSize.Size10} />
-                </Comment.Action>
-              </DeletePopup>
+              <div className={styles.popupWrapper}>
+                <DeletePopup
+                  title={t('common.deleteComment', { context: 'title' })}
+                  content={t('common.areYouSureYouWantToDeleteThisComment')}
+                  buttonContent={t('action.deleteComment')}
+                  onConfirm={onDelete}
+                  position="left-start"
+                  offset={0}
+                >
+                  <Comment.Action title={t('common.deleteComment')} as="button" disabled={!isPersisted} className={styles.button}>
+                    <Icon type={IconType.Trash} size={IconSize.Size10} />
+                  </Comment.Action>
+                </DeletePopup>
+              </div>
             </Comment.Actions>
           )}
         </div>
         <CommentEdit ref={commentEdit} defaultData={data} onUpdate={onUpdate}>
-          <div className={styles.text}>
-            <Markdown linkTarget="_blank">{data.text}</Markdown>
-          </div>
+          <MDPreview source={data.text} className={styles.preview} />
         </CommentEdit>
       </div>
     </Comment>

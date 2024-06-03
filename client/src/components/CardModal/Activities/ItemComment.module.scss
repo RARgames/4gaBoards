@@ -23,17 +23,11 @@
     line-height: 20px;
   }
 
-  .text {
+  .preview {
     background: var(--backgroundColorTmpDarkerField);
-    color: var(--textColor1);
     border-radius: 3px;
-    // box-shadow: 0 1px 2px -1px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
-    box-sizing: border-box;
-    display: inline-block;
-    margin: 1px 2px 4px 1px;
     width: 100%;
     overflow: hidden;
-    padding: 8px 10px;
   }
 
   .title {
@@ -58,5 +52,9 @@
     &:hover {
       color: var(--textColor4);
     }
+  }
+
+  .popupWrapper {
+    display: inline-block;
   }
 }
