@@ -81,7 +81,7 @@ module.exports = {
       inputs.request,
     );
 
-    if (values.creatorUser.subscribeToOwnCards) {
+    if (values.creatorUser.subscribeToOwnCards && !inputs.values.duplicate) {
       await CardSubscription.create({
         cardId: card.id,
         userId: card.creatorUserId,
