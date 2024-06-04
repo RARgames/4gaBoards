@@ -239,6 +239,7 @@ export default {
       unsavedChanges: 'Local changes',
       userActions_title: 'User Actions',
       userAddedThisCardToList: '<0>{{user}}</0><1> added this card to {{list}}</1>',
+      userDuplicatedThisCard: '<0>{{user}}</0><1> duplicated this card',
       userAvatar: 'User Avatar',
       userLeftNewCommentToCard: '{{user}} left a new comment «{{comment}}» to <2>{{card}}</2>',
       userMovedCardFromListToList: '{{user}} moved <2>{{card}}</2> from {{fromList}} to {{toList}}',

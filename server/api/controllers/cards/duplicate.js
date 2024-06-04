@@ -1,3 +1,15 @@
+const Errors = {
+  NOT_ENOUGH_RIGHTS: {
+    notEnoughRights: 'Not enough rights',
+  },
+  CARD_NOT_FOUND: {
+    cardNotFound: 'Card not found',
+  },
+  LIST_NOT_FOUND: {
+    listNotFound: 'List not found',
+  },
+};
+
 module.exports = {
   inputs: {
     id: {
@@ -12,6 +24,9 @@ module.exports = {
       responseType: 'forbidden',
     },
     cardNotFound: {
+      responseType: 'notFound',
+    },
+    listNotFound: {
       responseType: 'notFound',
     },
   },
@@ -42,6 +57,7 @@ module.exports = {
           ...values,
           list,
           creatorUser: currentUser,
+          duplicate: true,
         },
         request: this.req,
       })
@@ -56,6 +72,7 @@ module.exports = {
     const tasks = await Task.find({ cardId: card.id });
     const attachments = await Attachment.find({ cardId: card.id });
     const actions = await Action.find({ cardId: card.id });
+    const actionsUsers = await User.find({ id: _.map(actions, 'userId') });
     const coverAttachment = attachments.find((attachment) => attachment.id === card.coverAttachmentId);
     const coverAttachmentDirname = coverAttachment != null ? coverAttachment.dirname : undefined;
 
@@ -91,8 +108,28 @@ module.exports = {
           request: this.req,
         });
       }),
-      ...attachments.map((attachment) => Attachment.create({ ..._.omit(attachment, ['id']), cardId: copiedCard.id, createdAt: attachment.createdAt })),
-      ...actions.map((action) => Action.create({ ..._.omit(action, ['id']), cardId: copiedCard.id, createdAt: action.createdAt })),
+      ...attachments.map((attachment) => {
+        return sails.helpers.attachments.createOne.with({
+          values: {
+            ..._.omit(attachment, ['id']),
+            cardId: copiedCard.id,
+            createdAt: attachment.createdAt,
+            card: copiedCard,
+            creatorUser: currentUser,
+          },
+          request: this.req,
+        });
+      }),
+      ...actions.map((action) => {
+        return sails.helpers.actions.createOne.with({
+          values: {
+            ..._.omit(action, ['id']),
+            card: copiedCard,
+            user: actionsUsers.find((user) => user.id === action.userId),
+          },
+          request: this.req,
+        });
+      }),
     ];
 
     await Promise.all(copiedItemsPromises);
