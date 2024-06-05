@@ -67,7 +67,15 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdat
             <Table.Row>
               <Table.Cell> {t('common.language', { context: 'title' })}</Table.Cell>
               <Table.Cell className={styles.languageCell} aria-label={t('common.toggleSettings')}>
-                <Dropdown options={languages} placeholder={selectedLanguage.name} defaultItem={selectedLanguage} isSearchable selectFirstOnSearch onChange={handleLanguageChange} />
+                <Dropdown
+                  options={languages}
+                  placeholder={selectedLanguage.name}
+                  defaultItem={selectedLanguage}
+                  isSearchable
+                  selectFirstOnSearch
+                  onChange={handleLanguageChange}
+                  className={styles.languageDropdown}
+                />
               </Table.Cell>
               <Table.Cell>{selectedLanguage.name}</Table.Cell>
               <Table.Cell>{t('common.descriptionSLanguage')}</Table.Cell>
