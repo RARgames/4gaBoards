@@ -40,7 +40,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "rimraf": "^5.0.5",
-    "sails": "^1.5.10",
+    "sails": "^1.5.11",
     "sails-hook-orm": "^4.0.2",
     "sails-hook-sockets": "^3.0.0",
     "sails-postgresql": "^5.0.1",
