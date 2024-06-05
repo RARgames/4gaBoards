@@ -53,26 +53,33 @@ module.exports = {
       inputs.request,
     );
 
-    const cardSubscription = await CardSubscription.create({
+    const existingSubscription = await CardSubscription.findOne({
       cardId: cardMembership.cardId,
       userId: cardMembership.userId,
-      isPermanent: false,
-    })
-      .tolerate('E_UNIQUE')
-      .fetch();
+    });
 
-    if (cardSubscription) {
-      sails.sockets.broadcast(
-        `user:${cardMembership.userId}`,
-        'cardUpdate',
-        {
-          item: {
-            id: cardMembership.cardId,
-            isSubscribed: true,
+    if (!existingSubscription) {
+      const cardSubscription = await CardSubscription.create({
+        cardId: cardMembership.cardId,
+        userId: cardMembership.userId,
+        isPermanent: false,
+      })
+        .tolerate('E_UNIQUE')
+        .fetch();
+
+      if (cardSubscription) {
+        sails.sockets.broadcast(
+          `user:${cardMembership.userId}`,
+          'cardUpdate',
+          {
+            item: {
+              id: cardMembership.cardId,
+              isSubscribed: true,
+            },
           },
-        },
-        inputs.request,
-      );
+          inputs.request,
+        );
+      }
     }
 
     return cardMembership;
