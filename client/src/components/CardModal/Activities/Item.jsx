@@ -16,6 +16,18 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
   // TODO fully rewrite contentNodes
   let contentNode;
   switch (type) {
+    case ActivityTypes.DUPLICATE_CARD:
+      contentNode = (
+        <Trans
+          i18nKey="common.userDuplicatedThisCard"
+          values={{
+            user: user.name,
+            list: data.list.name,
+          }}
+        />
+      );
+
+      break;
     case ActivityTypes.CREATE_CARD:
       contentNode = (
         <Trans

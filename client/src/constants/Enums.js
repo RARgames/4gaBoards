@@ -9,6 +9,7 @@ export const BoardMembershipRoles = {
 };
 
 export const ActivityTypes = {
+  DUPLICATE_CARD: 'duplicateCard',
   CREATE_CARD: 'createCard',
   MOVE_CARD: 'moveCard',
   COMMENT_CARD: 'commentCard',

@@ -28,6 +28,9 @@ module.exports = {
     request: {
       type: 'ref',
     },
+    duplicate: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -78,7 +81,7 @@ module.exports = {
       inputs.request,
     );
 
-    if (values.creatorUser.subscribeToOwnCards) {
+    if (values.creatorUser.subscribeToOwnCards && !inputs.values.duplicate) {
       await CardSubscription.create({
         cardId: card.id,
         userId: card.creatorUserId,
@@ -95,7 +98,7 @@ module.exports = {
     await sails.helpers.actions.createOne.with({
       values: {
         card,
-        type: Action.Types.CREATE_CARD,
+        type: inputs.values.duplicate ? Action.Types.DUPLICATE_CARD : Action.Types.CREATE_CARD,
         data: {
           list: _.pick(values.list, ['id', 'name']),
         },
