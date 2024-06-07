@@ -35,6 +35,7 @@ export default (WrappedComponent, defaultProps) => {
       }
     }, [onClose]);
 
+    // TODO possibly wrap this around 1st child instead of <div ref={refs.setReference} {...getReferenceProps()} className={wrapperClassName}>
     return (
       <>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}

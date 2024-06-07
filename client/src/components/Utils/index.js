@@ -1,4 +1,5 @@
 import { Button, ButtonStyle } from './Button';
+import Checkbox from './Checkbox';
 import Dropdown from './Dropdown';
 import ExternalLink from './ExternalLink';
 import FilePicker from './FilePicker';
@@ -16,6 +17,7 @@ import Table from './Table';
 export {
   Button,
   ButtonStyle,
+  Checkbox,
   Dropdown,
   ExternalLink,
   FilePicker,

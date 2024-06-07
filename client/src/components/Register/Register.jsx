@@ -3,12 +3,10 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Form, Grid, Header, Message, Image, Checkbox } from 'semantic-ui-react';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Input } from '../../lib/custom-ui';
-import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, Form, Message, MessageStyle, Checkbox } from '../Utils';
 
-import { useForm } from '../../hooks';
+import { useForm2 } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
 import styles from './Register.module.scss';
@@ -67,7 +65,7 @@ const Register = React.memo(
   }) => {
     const [t] = useTranslation();
     const wasSubmitting = usePrevious(isSubmitting);
-    const [data, handleFieldChange, setData] = useForm(() => ({
+    const [data, handleFieldChange, setData] = useForm2(() => ({
       email: '',
       password: '',
       policy: false,
@@ -88,8 +86,8 @@ const Register = React.memo(
     }, [t]);
 
     const handlePolicyToggleChange = useCallback(
-      (e, { checked }) => {
-        setData({ ...data, policy: checked });
+      (e) => {
+        setData({ ...data, policy: e.target.checked });
       },
       [data, setData],
     );
@@ -113,11 +111,8 @@ const Register = React.memo(
     }, [onRegister, data]);
 
     useEffect(() => {
-      if (emailField.current) {
-        // TODO this does not focus on page refresh
-        emailField.current.focus();
-      }
-    }, []);
+      emailField.current?.focus();
+    }, [registrationEnabled, localRegistrationEnabled]); // necessary deps, because form loads after page load
 
     useEffect(() => {
       if (wasSubmitting && !isSubmitting && error) {
@@ -135,82 +130,54 @@ const Register = React.memo(
     }, [focusPasswordFieldState]);
 
     return (
-      <div className={classNames(styles.wrapper, styles.fullHeight)}>
-        <Grid verticalAlign="middle" className={styles.fullHeightPaddingFix}>
-          <Grid.Column>
-            <Grid verticalAlign="middle" className={styles.fullHeightPaddingFix}>
-              <Grid.Column>
-                <div className={styles.loginWrapper}>
-                  <Image centered src={logo} size="large" alt="4ga Boards" />
-                  <Header as="h1" textAlign="center" content={t('common.createYourAccount')} className={styles.formTitle} />
-                  <div>
-                    {message && (
-                      <Message
-                        className={styles.message}
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                        {...{
-                          [message.type]: true,
-                        }}
-                        visible
-                        content={t(message.content)}
-                        onDismiss={onMessageDismiss}
-                      />
-                    )}
-                    <Form size="large" onSubmit={handleSubmit}>
-                      {registrationEnabled && localRegistrationEnabled && (
-                        <>
-                          <div className={styles.inputWrapper}>
-                            <div className={styles.inputLabel}>{t('common.email')}</div>
-                            <Input fluid ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
-                          </div>
-                          <div className={styles.inputWrapper}>
-                            <div className={styles.inputLabel}>{t('common.password')}</div>
-                            <Input.Password
-                              fluid
-                              ref={passwordField}
-                              name="password"
-                              value={data.password}
-                              readOnly={isSubmitting}
-                              className={styles.input}
-                              onChange={handleFieldChange}
-                              withStrengthBar
-                            />
-                          </div>
-                          <div className={classNames(styles.inputWrapper, styles.checkboxWrapper)}>
-                            <div className={styles.inputLabel}>
-                              {t('common.accept')} <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink> {t('common.and')}{' '}
-                              <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
-                            </div>
-                            <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} className={styles.input} onChange={handlePolicyToggleChange} />
-                          </div>
-                        </>
-                      )}
-                      {!registrationEnabled && <div className={styles.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
-                      <div className={classNames(styles.buttonsContainer, !localRegistrationEnabled && styles.onlySsoButtonContainer)}>
-                        {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                          <Button style={ButtonStyle.BackgroundFade} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
-                            {t('common.registerWithGoogle')}
-                            <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
-                          </Button>
-                        )}
-                        {registrationEnabled && localRegistrationEnabled && (
-                          <Button style={ButtonStyle.BackgroundFade} type="submit" title={t('common.register')} disabled={isSubmitting} className={styles.submitButton}>
-                            {t('common.register')}
-                            <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
-                          </Button>
-                        )}
-                      </div>
-                    </Form>
-                    <div className={styles.alternateActionText}>{t('common.alreadyUser')}</div>
-                    <div className={styles.alternateActionButtonContainer}>
-                      <Button style={ButtonStyle.BackgroundFade} content={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton} />
-                    </div>
+      <div className={styles.wrapper}>
+        <div className={styles.loginWrapper}>
+          <img src={logo} className={styles.logo} alt="4ga Boards" />
+          <h1 className={styles.formTitle}>{t('common.createYourAccount')}</h1>
+          <div>
+            {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={styles.message} />}
+            <Form onSubmit={handleSubmit}>
+              {registrationEnabled && localRegistrationEnabled && (
+                <>
+                  <div className={styles.inputWrapper}>
+                    <div className={styles.inputLabel}>{t('common.email')}</div>
+                    <Input ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
                   </div>
-                </div>
-              </Grid.Column>
-            </Grid>
-          </Grid.Column>
-        </Grid>
+                  <div className={styles.inputWrapper}>
+                    <div className={styles.inputLabel}>{t('common.password')}</div>
+                    <Input.Password ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} withStrengthBar />
+                  </div>
+                  <div className={classNames(styles.inputWrapper, styles.checkboxWrapper)}>
+                    <div className={classNames(styles.inputLabel, styles.checkboxLabel)}>
+                      {t('common.accept')} <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink> {t('common.and')}{' '}
+                      <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
+                    </div>
+                    <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} />
+                  </div>
+                </>
+              )}
+              {!registrationEnabled && <div className={styles.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
+              <div className={classNames(styles.buttonsContainer, !localRegistrationEnabled && styles.onlySsoButtonContainer)}>
+                {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
+                  <Button style={ButtonStyle.BackgroundFade} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                    {t('common.registerWithGoogle')}
+                    <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
+                  </Button>
+                )}
+                {registrationEnabled && localRegistrationEnabled && (
+                  <Button style={ButtonStyle.BackgroundFade} type="submit" title={t('common.register')} disabled={isSubmitting} className={styles.submitButton}>
+                    {t('common.register')}
+                    <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
+                  </Button>
+                )}
+              </div>
+            </Form>
+            <div className={styles.alternateActionText}>{t('common.alreadyUser')}</div>
+            <div className={styles.alternateActionButtonContainer}>
+              <Button style={ButtonStyle.BackgroundFade} content={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   },

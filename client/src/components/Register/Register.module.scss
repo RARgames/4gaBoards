@@ -4,18 +4,29 @@
     font-weight: normal;
     margin-bottom: 32px;
     color: var(--textColor0);
+    text-align: center;
   }
 
   .message {
-    background-color: var(--backgroundColor0);
+    margin-bottom: 8px;
   }
 
-  .fullHeight {
-    height: 100%;
+  .logo {
+    width: 100%;
+    margin-top: 20px;
   }
 
-  .fullHeightPaddingFix {
-    height: calc(100% + 1rem);
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+    background: var(--backgroundColor0);
+  }
+
+  .loginWrapper {
+    margin: auto;
+    max-width: 440px;
+    padding: 20px;
     background: var(--backgroundColor0);
   }
 
@@ -25,20 +36,15 @@
     line-height: 20px;
     margin-bottom: 4px;
     color: var(--textColor3);
+    width: 100%;
   }
 
   .inputWrapper {
     margin-bottom: 16px;
   }
 
-  .loginWrapper {
-    margin: 0 auto;
-    max-width: 440px;
-    padding: 0 20px;
-  }
-
-  .wrapper {
-    background: var(--backgroundColor0);
+  .input {
+    width: 100%;
   }
 
   .ssoButton {
@@ -57,6 +63,7 @@
   .buttonsContainer {
     display: flex;
     justify-content: space-between;
+    gap: 4px;
   }
 
   .onlySsoButtonContainer {
@@ -105,7 +112,11 @@
 
   .checkboxWrapper {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+  }
+
+  .checkboxLabel {
+    flex: 1;
   }
 
   .registrationDisabledText {

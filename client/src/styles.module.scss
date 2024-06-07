@@ -1,6 +1,11 @@
 :global {
+  * {
+    //TODO set here scrollbar globally
+    scrollbar-width: thin;
+  }
+
   #app {
-    background: #22252a;
+    background: var(--backgroundColor0);
 
     // TODO quick fix - change react md editor style, move to separate file
     // TODO move color classes
