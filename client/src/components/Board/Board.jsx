@@ -67,7 +67,6 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
       if (event.target !== wrapper.current && !event.target.dataset.dragScroller) {
         return;
       }
-      event.preventDefault();
 
       prevPosition.current = event.screenX;
     },
