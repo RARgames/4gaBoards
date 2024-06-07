@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Loader } from 'semantic-ui-react';
 
-import ModalTypes from '../../constants/ModalTypes';
 import FixedContainer from '../../containers/FixedContainer';
 import StaticContainer from '../../containers/StaticContainer';
-import ProjectAddModalContainer from '../../containers/ProjectAddModalContainer';
 import Background from '../Background';
 
 import styles from './Core.module.scss';
 
-const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, currentProject, currentBoard, currentCard }) => {
+const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard }) => {
   const [t] = useTranslation();
   const mainTitle = '4ga Boards';
 
@@ -40,7 +38,6 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, c
           )}
           <FixedContainer />
           <StaticContainer />
-          {currentModal === ModalTypes.PROJECT_ADD && <ProjectAddModalContainer />}
         </>
       )}
       {isSocketDisconnected && (
@@ -62,14 +59,12 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentModal, c
 Core.propTypes = {
   isInitializing: PropTypes.bool.isRequired,
   isSocketDisconnected: PropTypes.bool.isRequired,
-  currentModal: PropTypes.oneOf(Object.values(ModalTypes)),
   currentProject: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   currentBoard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   currentCard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 Core.defaultProps = {
-  currentModal: undefined,
   currentProject: undefined,
   currentBoard: undefined,
   currentCard: undefined,

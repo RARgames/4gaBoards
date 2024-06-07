@@ -8,17 +8,24 @@ import Projects from '../components/Projects';
 const mapStateToProps = (state) => {
   const { isAdmin } = selectors.selectCurrentUser(state);
   const projects = selectors.selectProjectsForCurrentUser(state);
+  const {
+    ui: {
+      projectCreateForm: { data: defaultData, isSubmitting },
+    },
+  } = state;
 
   return {
     items: projects,
     canAdd: isAdmin,
+    defaultData,
+    isSubmitting,
   };
 };
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onAdd: entryActions.openProjectAddModal,
+      onCreate: entryActions.createProject,
     },
     dispatch,
   );

@@ -1,6 +1,6 @@
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +12,17 @@ import { ProjectBackgroundTypes } from '../../constants/Enums';
 
 import styles from './Projects.module.scss';
 import globalStyles from '../../styles.module.scss';
+import ProjectAddPopup from '../ProjectAddPopup';
 
-const Projects = React.memo(({ items, canAdd, onAdd }) => {
+const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
+  const projectAdd = useRef(null);
+
+  const handleProjectAdd = useCallback(() => {
+    if (canAdd) {
+      projectAdd.current?.open();
+    }
+  }, [canAdd]);
 
   return (
     <Container className={styles.cardsWrapper}>
@@ -41,10 +49,12 @@ const Projects = React.memo(({ items, canAdd, onAdd }) => {
         ))}
         {canAdd && (
           <Grid.Column mobile={8} computer={4}>
-            <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={onAdd} className={classNames(styles.card, styles.add)}>
-              <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
-              {t('common.createProject')}
-            </Button>
+            <ProjectAddPopup ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
+              <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={handleProjectAdd} className={classNames(styles.card, styles.add)}>
+                <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
+                {t('common.createProject')}
+              </Button>
+            </ProjectAddPopup>
           </Grid.Column>
         )}
       </Grid>
@@ -55,7 +65,9 @@ const Projects = React.memo(({ items, canAdd, onAdd }) => {
 Projects.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canAdd: PropTypes.bool.isRequired,
-  onAdd: PropTypes.func.isRequired,
+  defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  isSubmitting: PropTypes.bool.isRequired,
+  onCreate: PropTypes.func.isRequired,
 };
 
 export default Projects;

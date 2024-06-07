@@ -1,7 +1,5 @@
-const PROJECT_ADD = 'PROJECT_ADD';
 const PROJECT_SETTINGS = 'PROJECT_SETTINGS';
 
 export default {
-  PROJECT_ADD,
   PROJECT_SETTINGS,
 };
