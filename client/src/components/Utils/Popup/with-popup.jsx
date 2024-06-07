@@ -44,7 +44,7 @@ export default (WrappedComponent, defaultProps) => {
         </div>
         {isOpened && (
           <FloatingPortal>
-            <FloatingFocusManager context={context} modal={false}>
+            <FloatingFocusManager context={context} modal={false} returnFocus={false}>
               {/* eslint-disable-next-line react/jsx-props-no-spreading */}
               <div className={classNames(styles.wrapper, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
                 {!(defaultProps?.hideCloseButton || hideCloseButton) && (
