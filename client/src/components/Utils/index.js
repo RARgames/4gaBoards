@@ -14,6 +14,7 @@ import Popup from './PopupElements';
 import { ProgressBar, ProgressBarSize } from './ProgressBar';
 import { Radio, RadioSize } from './Radio';
 import Table from './Table';
+import TextArea from './TextArea';
 
 export {
   Button,
@@ -41,4 +42,5 @@ export {
   Radio,
   RadioSize,
   Table,
+  TextArea,
 };
