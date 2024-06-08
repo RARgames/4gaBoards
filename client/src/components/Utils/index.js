@@ -8,6 +8,7 @@ import { Icon, IconType, IconSize } from './Icon';
 import { Input, InputStyle } from './Input';
 import { MDEditor, MDPreview } from './Markdown';
 import { Message, MessageStyle } from './Message';
+import withModal from './Modal';
 import withPopup from './Popup';
 import Popup from './PopupElements';
 import { ProgressBar, ProgressBarSize } from './ProgressBar';
@@ -33,6 +34,7 @@ export {
   Message,
   MessageStyle,
   Popup,
+  withModal,
   withPopup,
   ProgressBar,
   ProgressBarSize,

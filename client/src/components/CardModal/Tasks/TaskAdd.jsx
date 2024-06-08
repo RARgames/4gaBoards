@@ -93,7 +93,7 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
   }, [isOpened]);
 
   useDidUpdate(() => {
-    nameField.current.focus();
+    nameField.current?.focus();
   }, [focusNameFieldState]);
 
   const handleChange = useCallback(

@@ -13,6 +13,7 @@ export default (WrappedComponent, defaultProps) => {
     const [t] = useTranslation();
     const [isOpened, setIsOpened] = useState(false);
 
+    // TODO check if floating styles used
     const { refs, floatingStyles, context } = useFloating({
       open: isOpened,
       onOpenChange: setIsOpened,

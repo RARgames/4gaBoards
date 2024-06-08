@@ -1,0 +1,27 @@
+:global(#app) {
+  .closeButton {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+  }
+
+  .wrapper {
+    position: relative;
+    background: var(--backgroundPopup);
+    color: var(--textColor1);
+    width: fit-content;
+    max-width: calc(100vw - 20px);
+    max-height: calc(100vh - 70px);
+    border-radius: 3px;
+    box-shadow: -1px -1px 3px var(--backgroundPopupShadow), 1px 1px 3px var(--backgroundPopupShadow);
+    padding: 15px;
+  }
+
+  .modalOverlay {
+    background: var(--modalOverlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+  }
+}

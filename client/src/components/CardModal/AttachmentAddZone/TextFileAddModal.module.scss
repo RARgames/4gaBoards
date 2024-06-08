@@ -1,5 +1,33 @@
 :global(#app) {
+  .title {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .text {
+    margin-bottom: 6px;
+  }
+
+  .form {
+    position: relative;
+  }
+
   .field {
-    margin-bottom: 20px;
+    width: 100%;
+    padding-right: 40px;
+  }
+
+  .inputLabel {
+    position: absolute;
+    background: var(--backgroundColor2);
+    padding: 6px 6px 10px 6px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    right: 1px;
+    top: 1px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--textColor2);
   }
 }

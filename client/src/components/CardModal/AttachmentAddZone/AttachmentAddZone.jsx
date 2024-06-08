@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,7 @@ import styles from './AttachmentAddZone.module.scss';
 const AttachmentAddZone = React.memo(({ children, onCreate }) => {
   const [t] = useTranslation();
   const [modal, openModal, handleModalClose] = useModal();
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
   const submit = useCallback(
     (file) => {
@@ -74,11 +75,10 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
 
       event.preventDefault();
 
-      item.getAsString((content) => {
-        openModal({
-          content,
-        });
+      openModal({
+        content: event.clipboardData.getData('Text'),
       });
+      setIsModalOpened(true);
     };
 
     window.addEventListener('paste', handlePaste);
@@ -97,7 +97,7 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <input {...getInputProps()} />
       </div>
-      {modal && <TextFileAddModal content={modal.content} onCreate={handleFileCreate} onClose={handleModalClose} />}
+      {modal && <TextFileAddModal content={modal.content} onCreate={handleFileCreate} onClose={handleModalClose} isModalOpened={isModalOpened} setIsModalOpened={setIsModalOpened} />}
     </>
   );
 });
