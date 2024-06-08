@@ -2,6 +2,7 @@ import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
 
@@ -17,6 +18,7 @@ const Dropdown = React.forwardRef(
       placeholder,
       isSearchable,
       className,
+      dropdownMenuClassName,
       onChange,
       onBlur,
       onClose,
@@ -168,6 +170,10 @@ const Dropdown = React.forwardRef(
 
     const getDisplay = useCallback(() => {
       if (isOpened && selectedItem) {
+        if (selectedItem.id === savedDefaultItem?.id) {
+          // Needed for language change returning item in old language
+          return savedDefaultItem.name;
+        }
         return selectedItem.name;
       }
       if (savedDefaultItem) {
@@ -178,6 +184,7 @@ const Dropdown = React.forwardRef(
 
     const handleItemClick = useCallback(
       (item) => {
+        setSelectedItem(item);
         handleSubmit(item);
       },
       [handleSubmit],
@@ -232,12 +239,34 @@ const Dropdown = React.forwardRef(
       [getCurrItem, getCurrItemIndex, getOptions, handleCancel, handleSubmit, selectItemByIndex],
     );
 
+    const { refs, floatingStyles, context } = useFloating({
+      open: isOpened,
+      whileElementsMounted: autoUpdate,
+      placement: 'bottom',
+      middleware: [
+        offset(0),
+        flip(),
+        shift({ padding: 20 }),
+        size({
+          apply({ rects, elements }) {
+            Object.assign(elements.floating.style, {
+              width: `${rects.reference.width}px`,
+            });
+          },
+        }),
+      ],
+    });
+
+    const role = useRole(context, { role: 'dialog' });
+    const { getReferenceProps, getFloatingProps } = useInteractions([role]);
+
     if (!isOpened && children) {
       return children;
     }
 
     return (
-      <div className={classNames(styles.dropdownContainer, className)}>
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <div ref={refs.setReference} {...getReferenceProps()} className={classNames(styles.dropdownContainer, className)}>
         <div className={styles.dropdownInputWrapper}>
           <input
             onChange={handleSearch}
@@ -256,24 +285,33 @@ const Dropdown = React.forwardRef(
           </Button>
         </div>
         {isOpened && (
-          <div className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren)}>
-            {getOptions().map((item, index) => (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+          <FloatingPortal>
+            <FloatingFocusManager context={context} initialFocus={-1} returnFocus={false}>
               <div
-                ref={(el) => (itemsRef.current[index] = el)} // eslint-disable-line no-return-assign
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                className={classNames(styles.dropdownItem, savedDefaultItem && savedDefaultItem.id === item.id && styles.dropdownItemDefault, isSelected(item) && styles.dropdownItemSelected)}
-                onClick={() => handleItemClick(item)}
-                onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
+                {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
+                ref={refs.setFloating}
+                style={floatingStyles}
+                className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren, dropdownMenuClassName)}
               >
-                {item.flag && <Icon type={FlagType[item.flag]} size={IconSize.Size14} className={styles.icon} />}
-                {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={styles.icon} />}
-                {item.name}
+                {getOptions().map((item, index) => (
+                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+                  <div
+                    ref={(el) => (itemsRef.current[index] = el)} // eslint-disable-line no-return-assign
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    className={classNames(styles.dropdownItem, savedDefaultItem && savedDefaultItem.id === item.id && styles.dropdownItemDefault, isSelected(item) && styles.dropdownItemSelected)}
+                    onClick={() => handleItemClick(item)}
+                    onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
+                  >
+                    {item.flag && <Icon type={FlagType[item.flag]} size={IconSize.Size14} className={styles.icon} />}
+                    {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={styles.icon} />}
+                    {item.name}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </FloatingFocusManager>
+          </FloatingPortal>
         )}
       </div>
     );
@@ -287,6 +325,7 @@ Dropdown.propTypes = {
   placeholder: PropTypes.string.isRequired,
   isSearchable: PropTypes.bool,
   className: PropTypes.string,
+  dropdownMenuClassName: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onClose: PropTypes.func,
@@ -312,6 +351,7 @@ Dropdown.defaultProps = {
   keepState: false,
   returnOnChangeEvent: false,
   className: undefined,
+  dropdownMenuClassName: undefined,
 };
 
 export default React.memo(Dropdown);

@@ -76,6 +76,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             returnOnChangeEvent
             disabled={projectsToLists.length === 0}
             className={styles.field}
+            dropdownMenuClassName={styles.dropdownMenu}
           />
           {selectedProject && (
             <>
@@ -96,6 +97,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 returnOnChangeEvent
                 disabled={selectedProject.boards.length === 0}
                 className={styles.field}
+                dropdownMenuClassName={styles.dropdownMenu}
               />
             </>
           )}
@@ -118,6 +120,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 returnOnChangeEvent
                 disabled={selectedBoard.lists.length === 0}
                 className={styles.field}
+                dropdownMenuClassName={styles.dropdownMenu}
               />
             </>
           )}

@@ -12,7 +12,7 @@
     color: var(--textColor1);
     outline: none;
     border-radius: 3px;
-    border: 1px solid var(--borderOutline);
+    border: 1px solid var(--backgroundPopupSeparator);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -20,6 +20,15 @@
     &:disabled {
       background: var(--backgroundColorTmpDarkerField);
       color: var(--textColor3);
+    }
+
+    &:focus {
+      border: 1px solid var(--borderOutline2);
+    }
+
+    &::selection {
+      color: var(--textColorWhite);
+      background: var(--selectionBackground);
     }
   }
 
@@ -33,11 +42,9 @@
 
   .dropdownMenu {
     position: absolute;
-    width: 100%;
     max-height: calc(100vh/3);
     background: var(--backgroundColorTmpDarkerField);
     color: var(--textColor1);
-    z-index: 1;
   }
 
   .dropdownMenuWithChildren {
