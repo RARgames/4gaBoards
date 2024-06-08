@@ -1,26 +1,7 @@
 :global(#app) {
-  .field {
-    background: var(--backgroundColorTmpDarkerField2);
-    color: var(--textColor1);
-    box-sizing: border-box;
-    border: none;
-    margin-bottom: 4px;
-    outline: none;
-    overflow: hidden;
-    padding: 8px 6px;
-    resize: none;
-    width: 100%;
-    word-wrap: break-word;
-    min-height: 33px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-
-    &:focus {
-      border: 1px solid var(--borderOutline2);
-    }
-
-    &::selection {
-      color: var(--textColorWhite);
-      background: var(--selectionBackground);
-    }
+  .wrapper {
+    background: var(--backgroundColorTmpHeader);
+    border-radius: 3px;
+    padding: 4px;
   }
 }

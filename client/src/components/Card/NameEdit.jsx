@@ -1,12 +1,8 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import TextareaAutosize from 'react-textarea-autosize';
-import classNames from 'classnames';
-import { Form, TextArea } from 'semantic-ui-react';
-import { Button, ButtonStyle } from '../Utils';
-
-import { useClosableForm, useField } from '../../hooks';
+import { Button, ButtonStyle, Form, TextArea } from '../Utils';
+import { useClosableForm, useField2 } from '../../hooks';
 
 import styles from './NameEdit.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -14,7 +10,7 @@ import gStyles from '../../globalStyles.module.scss';
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const [value, handleFieldChange, setValue, handleFocus] = useField2(defaultValue);
 
   const field = useRef(null);
 
@@ -87,9 +83,9 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   }, [isOpened]);
 
   const handleChange = useCallback(
-    (_, { value: nextValue }) => {
-      handleFieldChange(_, { value: nextValue });
-      handleValueChange(nextValue, defaultValue);
+    (event) => {
+      handleFieldChange(event);
+      handleValueChange(event.target.value, defaultValue);
     },
     [defaultValue, handleFieldChange, handleValueChange],
   );
@@ -99,19 +95,8 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <TextArea
-        ref={field}
-        as={TextareaAutosize}
-        value={value}
-        maxRows={3}
-        spellCheck
-        className={classNames(styles.field, gStyles.scrollableY)}
-        onKeyDown={handleFieldKeyDown}
-        onChange={handleChange}
-        onBlur={handleFieldBlur}
-        onFocus={handleFocus}
-      />
+    <Form onSubmit={handleSubmit} className={styles.wrapper}>
+      <TextArea ref={field} value={value} maxRows={3} onKeyDown={handleFieldKeyDown} onChange={handleChange} onBlur={handleFieldBlur} onFocus={handleFocus} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
         <Button style={ButtonStyle.Submit} content={t('action.save')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
