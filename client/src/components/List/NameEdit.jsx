@@ -1,18 +1,15 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import TextareaAutosize from 'react-textarea-autosize';
-import classNames from 'classnames';
-import { TextArea } from 'semantic-ui-react';
+import { TextArea } from '../Utils';
 
-import { useField, useResizeObserverSize } from '../../hooks';
+import { useField2, useResizeObserverSize } from '../../hooks';
 import { ResizeObserverSizeTypes } from '../../constants/Enums';
 
 import styles from './NameEdit.module.scss';
-import gStyles from '../../globalStyles.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, onHeightChange }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const [value, handleFieldChange, setValue, handleFocus] = useField2(defaultValue);
 
   const field = useRef(null);
   const [nameEditElement, setNameEditElement] = useState();
@@ -90,18 +87,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
 
   return (
     <div className={styles.wrapper} ref={setNameEditElement}>
-      <TextArea
-        ref={field}
-        as={TextareaAutosize}
-        value={value}
-        spellCheck
-        maxRows={2}
-        className={classNames(styles.field, gStyles.scrollableY)}
-        onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
-        onBlur={handleFieldBlur}
-        onFocus={handleFocus}
-      />
+      <TextArea ref={field} value={value} maxRows={2} className={styles.field} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleFieldBlur} onFocus={handleFocus} />
     </div>
   );
 });
