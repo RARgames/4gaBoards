@@ -251,7 +251,8 @@ export default {
       viewer: 'Viewer',
       weakPassword: 'Please use stronger password',
       website: '4gaBoards.com',
-      writeComment: 'Write a comment... [Ctrl+Enter] to submit',
+      writeComment: 'Write a comment...',
+      writeCommentHint: '[Ctrl+Enter] to submit',
     },
 
     action: {

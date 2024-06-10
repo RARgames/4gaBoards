@@ -18,6 +18,7 @@ const CommentAdd = React.memo(({ onCreate }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [data, handleFieldChange, setData] = useForm2(DEFAULT_DATA);
   const [focusTextFieldState, focusTextField] = useToggle();
+  const [placeholder, setPlaceholder] = useState(t('common.writeComment'));
 
   const textField = useRef(null);
 
@@ -57,7 +58,13 @@ const CommentAdd = React.memo(({ onCreate }) => {
 
   const handleFieldFocus = useCallback(() => {
     setIsOpened(true);
-  }, []);
+    setPlaceholder(`${t('common.writeComment')} ${t('common.writeCommentHint')}`);
+  }, [t]);
+
+  const handleFieldBlurOverride = useCallback(() => {
+    setPlaceholder(t('common.writeComment'));
+    handleFieldBlur();
+  }, [handleFieldBlur, t]);
 
   const handleFieldKeyDown = useCallback(
     (event) => {
@@ -88,12 +95,12 @@ const CommentAdd = React.memo(({ onCreate }) => {
         ref={textField}
         name="text"
         value={data.text}
-        placeholder={t('common.writeComment')}
+        placeholder={placeholder}
         className={styles.field}
         onFocus={handleFieldFocus}
         onKeyDown={handleFieldKeyDown}
         onChange={handleChange}
-        onBlur={handleFieldBlur}
+        onBlur={handleFieldBlurOverride}
       />
       {isOpened && (
         <div className={gStyles.controls}>

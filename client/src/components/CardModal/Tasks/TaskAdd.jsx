@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import TextareaAutosize from 'react-textarea-autosize';
-import { Form, TextArea } from 'semantic-ui-react';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
-import { Button, ButtonStyle } from '../../Utils';
+import { Button, ButtonStyle, Form, TextArea } from '../../Utils';
 
-import { useClosableForm, useForm } from '../../../hooks';
+import { useClosableForm, useForm2 } from '../../../hooks';
 
 import styles from './TaskAdd.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -18,7 +16,7 @@ const DEFAULT_DATA = {
 const Add = React.forwardRef(({ children, onCreate }, ref) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
+  const [data, handleFieldChange, setData] = useForm2(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
 
   const nameField = useRef(null);
@@ -97,9 +95,9 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
   }, [focusNameFieldState]);
 
   const handleChange = useCallback(
-    (_, { name: fieldName, value }) => {
-      handleFieldChange(_, { name: fieldName, value });
-      handleValueChange(value, DEFAULT_DATA.name);
+    (event) => {
+      handleFieldChange(event);
+      handleValueChange(event.target.value, DEFAULT_DATA.name);
     },
     [handleFieldChange, handleValueChange],
   );
@@ -114,11 +112,9 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
     <Form className={styles.wrapper} onSubmit={handleSubmit}>
       <TextArea
         ref={nameField}
-        as={TextareaAutosize}
         name="name"
         value={data.name}
         placeholder={t('common.enterTaskDescription')}
-        spellCheck
         className={styles.field}
         onKeyDown={handleFieldKeyDown}
         onChange={handleChange}
