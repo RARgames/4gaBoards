@@ -12,8 +12,6 @@ import InputStyle from './InputStyle';
 import styles from './Input.module.scss';
 import sPassword from './InputPassword.module.scss';
 
-const STRENGTH_SCORE_COLORS = ['red', 'orange', 'yellow', 'olive', 'green'];
-
 const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStrengthScore, className, ...props }, ref) => {
   const [t] = useTranslation();
   const [isVisible, toggleVisible] = useToggle();
@@ -56,7 +54,7 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
       <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>
-      <ProgressBar value={value ? strengthScore + 1 : 0} total={5} color={STRENGTH_SCORE_COLORS[strengthScore]} size={ProgressBarSize.Tiny} />
+      <ProgressBar value={value ? strengthScore + 1 : 0} total={5} size={ProgressBarSize.Tiny} className={sPassword.progressBar} />
     </>
   );
 });

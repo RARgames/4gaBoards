@@ -5,11 +5,30 @@
     background: var(--textColorWhite);
     border-radius: 3px;
     overflow: hidden;
-    opacity: 0.5;
   }
 
   .progressBar {
     transition: width 0.3s;
+  }
+
+  .red {
+    background: #db2828;
+  }
+
+  .orange {
+    background: #f2711c;
+  }
+
+  .yellow {
+    background: #fbbd08;
+  }
+
+  .olive {
+    background: #b5cc18;
+  }
+
+  .green {
+    background: #21ba45;
   }
 
   /* Size classes */

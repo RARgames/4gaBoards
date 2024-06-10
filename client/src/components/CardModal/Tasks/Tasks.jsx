@@ -2,8 +2,7 @@ import React, { useCallback, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Progress } from 'semantic-ui-react';
-import { Button, ButtonStyle } from '../../Utils';
+import { Button, ButtonStyle, ProgressBar, ProgressBarSize } from '../../Utils';
 
 import DroppableTypes from '../../../constants/DroppableTypes';
 import Item from './Item';
@@ -56,26 +55,9 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
 
   const completedItems = items.filter((item) => item.isCompleted);
 
-  const getTaskbarColor = () => {
-    const percentage = (completedItems.length / items.length) * 100;
-    if (percentage < 25) {
-      return 'red';
-    }
-    if (percentage < 50) {
-      return 'orange';
-    }
-    if (percentage < 75) {
-      return 'yellow';
-    }
-    if (percentage < 90) {
-      return 'olive';
-    }
-    return 'green';
-  };
-
   return (
     <>
-      {items.length > 0 && <Progress autoSuccess value={completedItems.length} total={items.length} color={getTaskbarColor()} size="tiny" className={styles.progress} />}
+      {items.length > 0 && <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={styles.progress} />}
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="tasks" type={DroppableTypes.TASK}>
           {({ innerRef, droppableProps, placeholder }) => (

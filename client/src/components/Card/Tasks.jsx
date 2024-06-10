@@ -2,9 +2,8 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Progress } from 'semantic-ui-react';
 import { useToggle } from '../../lib/hooks';
-import { Icon, IconType, IconSize } from '../Utils';
+import { Icon, IconType, IconSize, ProgressBar, ProgressBarSize } from '../Utils';
 
 import styles from './Tasks.module.scss';
 
@@ -23,30 +22,12 @@ const Tasks = React.memo(({ items }) => {
 
   const completedItems = items.filter((item) => item.isCompleted);
 
-  const getTaskbarColor = () => {
-    const percentage = (completedItems.length / items.length) * 100;
-    if (percentage < 25) {
-      return 'red';
-    }
-    if (percentage < 50) {
-      return 'orange';
-    }
-    if (percentage < 75) {
-      return 'yellow';
-    }
-    if (percentage < 90) {
-      return 'olive';
-    }
-    return 'green';
-  };
-
   return (
     <>
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,
-                                   jsx-a11y/no-static-element-interactions */}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div className={styles.button} onClick={handleToggleClick}>
         <span className={styles.progressWrapper}>
-          <Progress autoSuccess value={completedItems.length} total={items.length} color={getTaskbarColor()} size="tiny" className={styles.progress} />
+          <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={styles.progress} />
         </span>
         <span className={styles.count} title={isOpened ? t('common.hideTasks') : t('common.showTasks')}>
           {completedItems.length}/{items.length}

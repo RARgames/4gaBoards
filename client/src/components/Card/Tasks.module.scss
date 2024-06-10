@@ -38,13 +38,12 @@
 
   .progress {
     margin: 0;
-    background-color: var(--backgroundList);
+    background: var(--backgroundList);
   }
 
   .progressWrapper {
     display: inline-block;
     padding: 3px 0;
-    vertical-align: top;
     width: calc(100% - 50px);
   }
 
