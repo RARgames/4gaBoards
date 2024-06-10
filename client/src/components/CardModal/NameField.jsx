@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
-import TextareaAutosize from 'react-textarea-autosize';
-import { TextArea } from 'semantic-ui-react';
+import { TextArea } from '../Utils';
 
-import { useField } from '../../hooks';
+import { useField2 } from '../../hooks';
 
 import styles from './NameField.module.scss';
 
 const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const [value, handleFieldChange, setValue, handleFocus] = useField2(defaultValue);
   const field = useRef(null);
 
   const open = useCallback(() => {
@@ -71,19 +70,7 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
     return children;
   }
 
-  return (
-    <TextArea
-      ref={field}
-      as={TextareaAutosize}
-      spellCheck
-      value={value}
-      className={styles.field}
-      onKeyDown={handleKeyDown}
-      onChange={handleFieldChange}
-      onBlur={handleFieldBlur}
-      onFocus={handleFocus}
-    />
-  );
+  return <TextArea ref={field} value={value} className={styles.field} maxRows={3} onKeyDown={handleKeyDown} onChange={handleFieldChange} onBlur={handleFieldBlur} onFocus={handleFocus} />;
 });
 
 NameField.propTypes = {

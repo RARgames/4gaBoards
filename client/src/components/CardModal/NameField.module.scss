@@ -1,27 +1,8 @@
 :global(#app) {
   .field {
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    box-shadow: none;
-    color: var(--textColorWhite);
+    padding: 2px;
     font-size: 18px;
     font-weight: 700;
     line-height: 20px;
-    overflow: hidden;
-    resize: none;
-    width: 100%;
-
-    &:focus {
-      background: var(--backgroundColorTmpDarkerField);
-      border-color: var(--borderOutline);
-      box-shadow: 0 0 2px 0 var(--borderOutline);
-      outline: 0;
-    }
-
-    &::selection {
-      color: var(--textColorWhite);
-      background: var(--selectionBackground);
-    }
   }
 }
