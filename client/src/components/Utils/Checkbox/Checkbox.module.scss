@@ -27,5 +27,11 @@
       background: var(--backgroundColor2);
       cursor: pointer;
     }
+
+    &:disabled {
+      background: var(--backgroundDisabled);
+      border: 1px solid var(--backgroundPopupSeparator);
+      cursor: not-allowed;
+    }
   }
 }

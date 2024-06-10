@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-import { Checkbox } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox } from '../../Utils';
 
 import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
@@ -46,26 +45,20 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
       {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
         const contentNode = (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={styles.wrapper}>
-            <span className={styles.checkboxWrapper}>
-              <Checkbox checked={isCompleted} disabled={!isPersisted || !canEdit} className={styles.checkbox} onChange={handleToggleChange} />
-            </span>
+          <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(styles.wrapper, canEdit && styles.contentHoverable)}>
+            <Checkbox checked={isCompleted} disabled={!isPersisted || !canEdit} className={styles.checkbox} onChange={handleToggleChange} />
             <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div className={classNames(canEdit && styles.contentHoverable)}>
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <span className={classNames(styles.text, canEdit && styles.textEditable)} onClick={handleClick}>
-                  <span className={classNames(styles.task, isCompleted && styles.taskCompleted)}>{name}</span>
-                </span>
-                {isPersisted && canEdit && (
-                  <div className={styles.popupWrapper}>
-                    <ActionsPopup onNameEdit={handleNameEdit} onDelete={onDelete} hideCloseButton position="left-start" offset={0}>
-                      <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target)}>
-                        <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} />
-                      </Button>
-                    </ActionsPopup>
-                  </div>
-                )}
-              </div>
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+              <span className={classNames(styles.task, isCompleted && styles.taskCompleted, canEdit && styles.taskEditable)} onClick={handleClick}>
+                {name}
+              </span>
+              {isPersisted && canEdit && (
+                <ActionsPopup onNameEdit={handleNameEdit} onDelete={onDelete} hideCloseButton position="left-start" offset={0}>
+                  <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target)}>
+                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={styles.icon} />
+                  </Button>
+                </ActionsPopup>
+              )}
             </TaskEdit>
           </div>
         );
