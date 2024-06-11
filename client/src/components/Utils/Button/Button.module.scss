@@ -32,6 +32,12 @@
     }
   }
 
+  .defaultBorder {
+    @extend .defaultButton;
+    border: 1px solid var(--backgroundPopupSeparator);
+    text-wrap: wrap;
+  }
+
   .noBackgroundButton {
     background: none;
     color: var(--textColor1);

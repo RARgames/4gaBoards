@@ -7,10 +7,10 @@ import BoardActionsContainer from '../../containers/BoardActionsContainer';
 
 import styles from './Fixed.module.scss';
 
-function Fixed({ projectId, board }) {
+function Fixed({ path, projectId, board }) {
   return (
     <div className={styles.wrapper}>
-      <HeaderContainer />
+      <HeaderContainer path={path} />
       {projectId && <ProjectContainer />}
       {board && !board.isFetching && <BoardActionsContainer />}
     </div>
@@ -18,6 +18,7 @@ function Fixed({ projectId, board }) {
 }
 
 Fixed.propTypes = {
+  path: PropTypes.string.isRequired,
   projectId: PropTypes.string,
   board: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };

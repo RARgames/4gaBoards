@@ -1,5 +1,6 @@
 const ButtonStyle = {
   Default: 'defaultButton',
+  DefaultBorder: 'defaultBorder',
   Icon: 'iconButton',
   NoBackground: 'noBackgroundButton',
   BackgroundFade: 'backgroundFadeButton',

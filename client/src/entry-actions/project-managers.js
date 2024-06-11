@@ -7,6 +7,14 @@ const createManagerInCurrentProject = (data) => ({
   },
 });
 
+const createManagerInProject = (id, data) => ({
+  type: EntryActionTypes.MANAGER_IN_PROJECT_CREATE,
+  payload: {
+    id,
+    data,
+  },
+});
+
 const handleProjectManagerCreate = (projectManager) => ({
   type: EntryActionTypes.PROJECT_MANAGER_CREATE_HANDLE,
   payload: {
@@ -30,6 +38,7 @@ const handleProjectManagerDelete = (projectManager) => ({
 
 export default {
   createManagerInCurrentProject,
+  createManagerInProject,
   handleProjectManagerCreate,
   deleteProjectManager,
   handleProjectManagerDelete,

@@ -13,7 +13,7 @@ import logo from '../../assets/images/4gaboardsLogo128w-white.png';
 
 import styles from './Header.module.scss';
 
-const Header = React.memo(({ project, user, notifications, isLogouting, canEditProject, isAdmin, path, onProjectSettingsClick, onNotificationDelete, onLogout }) => {
+const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, onProjectSettingsClick, onNotificationDelete, onLogout }) => {
   const [t] = useTranslation();
   const handleProjectSettingsClick = useCallback(() => {
     if (canEditProject) {
@@ -41,6 +41,8 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
         return t('common.settingsInstance');
       case Paths.SETTINGS_USERS:
         return t('common.settingsUsers');
+      case Paths.SETTINGS_PROJECT:
+        return t('common.settingsProject');
       default:
         return project ? project.name : null;
     }
@@ -49,7 +51,7 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
   return (
     <div className={styles.wrapper}>
       <Link to={Paths.ROOT} className={styles.logo}>
-        <Button style={ButtonStyle.HeaderLogo} onClick={handleProjectSettingsClick} title={t('common.dashboard')}>
+        <Button style={ButtonStyle.HeaderLogo} title={t('common.dashboard')}>
           <img src={logo} alt="4ga Boards" className={styles.logoIcon} />
         </Button>
       </Link>
@@ -91,6 +93,7 @@ const Header = React.memo(({ project, user, notifications, isLogouting, canEditP
 });
 
 Header.propTypes = {
+  path: PropTypes.string.isRequired,
   /* eslint-disable react/forbid-prop-types */
   project: PropTypes.object,
   user: PropTypes.object.isRequired,
@@ -99,7 +102,6 @@ Header.propTypes = {
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  path: PropTypes.string.isRequired,
   onProjectSettingsClick: PropTypes.func.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,

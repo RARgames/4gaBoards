@@ -1,0 +1,88 @@
+:global(#app) {
+  .actions {
+    margin-top: 6px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .action {
+    flex: 1;
+    min-width: fit-content;
+  }
+
+  .gradientButton {
+    float: left;
+    height: 40px;
+    margin: 4px;
+    padding: 0;
+    position: relative;
+    width: 49.6px;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .gradientButtonActive:before {
+    bottom: 3px;
+    color: #ffffff;
+    content: "Г";
+    font-size: 18px;
+    line-height: 36px;
+    position: absolute;
+    right: 6px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    top: 0;
+    transform: rotate(-135deg);
+    width: 36px;
+  }
+
+  .gradientButtons {
+    margin: 0 0 4px -4px;
+
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+
+  .imageButton {
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+  }
+
+  .imageContainer {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .image {
+    cursor: pointer;
+    display: block;
+    max-width: 100%;
+    height: auto;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .imageSelected {
+    position: absolute;
+    top: -7px;
+    left: -29px;
+    height: 30px;
+    width: 75px;
+    transform: rotate(315deg);
+    background: var(--overlay);
+    padding: 10px;
+  }
+
+  .imageIcon {
+    transform: rotate(-315deg);
+  }
+}

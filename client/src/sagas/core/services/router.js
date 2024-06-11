@@ -20,6 +20,10 @@ export function* goToProject(projectId) {
   yield put(push(Paths.PROJECTS.replace(':id', projectId)));
 }
 
+export function* goToProjectSettings(projectId) {
+  yield put(push(Paths.SETTINGS_PROJECT.replace(':id', projectId)));
+}
+
 export function* goToBoard(boardId) {
   yield put(push(Paths.BOARDS.replace(':id', boardId)));
 }
@@ -105,6 +109,7 @@ export default {
   goToRoot,
   goToSettingsHome,
   goToProject,
+  goToProjectSettings,
   goToBoard,
   goToCard,
   handleLocationChange,

@@ -13,13 +13,17 @@ import AuthenticationSettingsContainer from '../../containers/Settings/Authentic
 import AboutSettingsContainer from '../../containers/Settings/AboutSettingsContainer';
 import UsersSettingsContainer from '../../containers/Settings/UsersSettingsContainer';
 import InstanceSettingsContainer from '../../containers/Settings/InstanceSettingsContainer';
+import ProjectSettingsContainer from '../../containers/Settings/ProjectSettingsContainer';
 import Paths from '../../constants/Paths';
 
 import styles from './Settings.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
-const Settings = React.memo(({ path, isAdmin }) => {
+const Settings = React.memo(({ path, realPath, isAdmin, managedProjects }) => {
   const [t] = useTranslation();
   const [sidebarShown, toggleSidebar] = useToggle(true);
+  const projectId = realPath.split('/')[2];
+  const canManageCurrentProject = realPath && projectId && managedProjects.some((project) => project.id === projectId);
   const mainTitle = '4ga Boards';
 
   const getPageTitle = useCallback(() => {
@@ -40,6 +44,8 @@ const Settings = React.memo(({ path, isAdmin }) => {
         return `${t('common.settingsInstance')} | ${mainTitle}`;
       case Paths.SETTINGS_USERS:
         return `${t('common.settingsUsers')} | ${mainTitle}`;
+      case Paths.SETTINGS_PROJECT:
+        return `${t('common.settingsProject')} | ${mainTitle}`;
       default:
         return mainTitle;
     }
@@ -59,7 +65,7 @@ const Settings = React.memo(({ path, isAdmin }) => {
       >
         <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
       </Button>
-      <div className={classNames(styles.sidebar, !sidebarShown && styles.sidebarHidden)}>
+      <div className={classNames(styles.sidebar, gStyles.scrollableYList, !sidebarShown && styles.sidebarHidden)}>
         <div className={styles.sidebarTitle}>
           <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
           {t('common.settings')}
@@ -128,6 +134,19 @@ const Settings = React.memo(({ path, isAdmin }) => {
             </div>
           </div>
         )}
+        <div>
+          <div className={styles.sidebarTitle}>
+            <Icon type={IconType.ProjectSettings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
+            {t('common.projectSettings')}
+          </div>
+          {managedProjects.map((project) => (
+            <div key={project.id} className={classNames(styles.sidebarItem, realPath === Paths.SETTINGS_PROJECT.replace(':id', project.id) && styles.sidebarActive)}>
+              <Link to={Paths.SETTINGS_PROJECT.replace(':id', project.id)}>
+                <Button style={ButtonStyle.NoBackground} content={project.name} className={styles.sidebarButton} />
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
       <div className={styles.content}>
         {path === Paths.SETTINGS_PROFILE && <ProfileSettingsContainer />}
@@ -139,6 +158,8 @@ const Settings = React.memo(({ path, isAdmin }) => {
         {path === Paths.SETTINGS_INSTANCE && !isAdmin && <h1 className={styles.text}>{t('common.cannotEditInstanceSettings')}</h1>}
         {path === Paths.SETTINGS_USERS && isAdmin && <UsersSettingsContainer />}
         {path === Paths.SETTINGS_USERS && !isAdmin && <h1 className={styles.text}>{t('common.cannotEditUsersSettings')}</h1>}
+        {path === Paths.SETTINGS_PROJECT && canManageCurrentProject && <ProjectSettingsContainer />}
+        {path === Paths.SETTINGS_PROJECT && !canManageCurrentProject && <h1 className={styles.text}>{t('common.projectNotFound', { context: 'title' })}</h1>}
       </div>
     </div>
   );
@@ -146,7 +167,9 @@ const Settings = React.memo(({ path, isAdmin }) => {
 
 Settings.propTypes = {
   path: PropTypes.string.isRequired,
+  realPath: PropTypes.string.isRequired,
   isAdmin: PropTypes.bool.isRequired,
+  managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default Settings;

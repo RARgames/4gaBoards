@@ -4,12 +4,14 @@ import selectors from '../../selectors';
 import Settings from '../../components/Settings';
 
 const mapStateToProps = (state) => {
-  const path = selectors.selectPathname(state);
+  const realPath = selectors.selectPathname(state);
   const currentUser = selectors.selectCurrentUser(state);
+  const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
 
   return {
-    path,
+    realPath,
     isAdmin: currentUser.isAdmin,
+    managedProjects,
   };
 };
 

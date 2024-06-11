@@ -1,0 +1,12 @@
+:global(#app) {
+  .field {
+    width: 100%;
+  }
+
+  .text {
+    color: var(--textColor1);
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 6px;
+  }
+}

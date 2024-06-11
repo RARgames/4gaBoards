@@ -9,7 +9,7 @@ import Background from '../Background';
 
 import styles from './Core.module.scss';
 
-const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard }) => {
+const Core = React.memo(({ path, isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard }) => {
   const [t] = useTranslation();
   const mainTitle = '4ga Boards';
 
@@ -36,8 +36,8 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
           {currentProject && currentProject.background && (
             <Background type={currentProject.background.type} name={currentProject.background.name} imageUrl={currentProject.backgroundImage && currentProject.backgroundImage.url} />
           )}
-          <FixedContainer />
-          <StaticContainer />
+          <FixedContainer path={path} />
+          <StaticContainer path={path} />
         </>
       )}
       {isSocketDisconnected && (
@@ -57,6 +57,7 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
 });
 
 Core.propTypes = {
+  path: PropTypes.string.isRequired,
   isInitializing: PropTypes.bool.isRequired,
   isSocketDisconnected: PropTypes.bool.isRequired,
   currentProject: PropTypes.object, // eslint-disable-line react/forbid-prop-types

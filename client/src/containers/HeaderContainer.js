@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
   const currentProject = selectors.selectCurrentProject(state);
   const notifications = selectors.selectNotificationsForCurrentUser(state);
   const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
-  const path = selectors.selectPathname(state);
 
   return {
     notifications,
@@ -20,7 +19,6 @@ const mapStateToProps = (state) => {
     user: currentUser,
     canEditProject: isCurrentUserManager,
     isAdmin: currentUser.isAdmin,
-    path,
   };
 };
 

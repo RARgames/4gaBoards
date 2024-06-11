@@ -14,6 +14,14 @@ const handleProjectCreate = (project) => ({
   },
 });
 
+const updateProject = (id, data) => ({
+  type: EntryActionTypes.PROJECT_UPDATE,
+  payload: {
+    id,
+    data,
+  },
+});
+
 const updateCurrentProject = (data) => ({
   type: EntryActionTypes.CURRENT_PROJECT_UPDATE,
   payload: {
@@ -28,10 +36,25 @@ const handleProjectUpdate = (project) => ({
   },
 });
 
+const updateProjectBackgroundImage = (id, data) => ({
+  type: EntryActionTypes.PROJECT_BACKGROUND_IMAGE_UPDATE,
+  payload: {
+    id,
+    data,
+  },
+});
+
 const updateCurrentProjectBackgroundImage = (data) => ({
   type: EntryActionTypes.CURRENT_PROJECT_BACKGROUND_IMAGE_UPDATE,
   payload: {
     data,
+  },
+});
+
+const deleteProject = (id) => ({
+  type: EntryActionTypes.PROJECT_DELETE,
+  payload: {
+    id,
   },
 });
 
@@ -50,9 +73,12 @@ const handleProjectDelete = (project) => ({
 export default {
   createProject,
   handleProjectCreate,
+  updateProject,
   updateCurrentProject,
   handleProjectUpdate,
+  updateProjectBackgroundImage,
   updateCurrentProjectBackgroundImage,
+  deleteProject,
   deleteCurrentProject,
   handleProjectDelete,
 };

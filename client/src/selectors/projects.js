@@ -5,6 +5,30 @@ import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
 import { isLocalId } from '../utils/local-id';
 
+export const selectProject = createSelector(
+  orm,
+  (_, id) => id,
+  (state) => selectCurrentUserId(state),
+  ({ Project }, id, userId) => {
+    if (!id) {
+      return id;
+    }
+
+    const projectModel = Project.withId(id);
+
+    if (!projectModel) {
+      return projectModel;
+    }
+
+    const boardsModels = projectModel.getOrderedBoardsModelArrayAvailableForUser(userId);
+
+    return {
+      ...projectModel.ref,
+      firstBoardId: boardsModels[0] && boardsModels[0].id,
+    };
+  },
+);
+
 export const selectCurrentProject = createSelector(
   orm,
   (state) => selectPath(state).projectId,
@@ -20,6 +44,35 @@ export const selectCurrentProject = createSelector(
     }
 
     return projectModel.ref;
+  },
+);
+
+export const selectManagersForProject = createSelector(
+  orm,
+  (_, id) => id,
+  (state) => selectCurrentUserId(state),
+  ({ Project }, id, currentUserId) => {
+    if (!id) {
+      return id;
+    }
+
+    const projectModel = Project.withId(id);
+
+    if (!projectModel) {
+      return projectModel;
+    }
+
+    return projectModel
+      .getOrderedManagersQuerySet()
+      .toModelArray()
+      .map((projectManagerModel) => ({
+        ...projectManagerModel.ref,
+        isPersisted: !isLocalId(projectManagerModel.id),
+        user: {
+          ...projectManagerModel.user.ref,
+          isCurrent: projectManagerModel.user.id === currentUserId,
+        },
+      }));
   },
 );
 
@@ -94,7 +147,9 @@ export const selectIsCurrentUserManagerForCurrentProject = createSelector(
 );
 
 export default {
+  selectProject,
   selectCurrentProject,
+  selectManagersForProject,
   selectManagersForCurrentProject,
   selectBoardsForCurrentProject,
   selectIsCurrentUserManagerForCurrentProject,

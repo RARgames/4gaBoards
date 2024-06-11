@@ -11,7 +11,7 @@ import Paths from '../../constants/Paths';
 
 import styles from './Static.module.scss';
 
-function Static({ projectId, cardId, board, path }) {
+function Static({ path, projectId, cardId, board }) {
   const [t] = useTranslation();
 
   if (
@@ -24,11 +24,12 @@ function Static({ projectId, cardId, board, path }) {
       Paths.SETTINGS_ABOUT,
       Paths.SETTINGS_INSTANCE,
       Paths.SETTINGS_USERS,
+      Paths.SETTINGS_PROJECT,
     ].includes(path)
   ) {
     return (
       <div className={styles.wrapper}>
-        <SettingsContainer />
+        <SettingsContainer path={path} />
       </div>
     );
   }
@@ -100,10 +101,10 @@ function Static({ projectId, cardId, board, path }) {
 }
 
 Static.propTypes = {
+  path: PropTypes.string.isRequired,
   projectId: PropTypes.string,
   cardId: PropTypes.string,
   board: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  path: PropTypes.string.isRequired,
 };
 
 Static.defaultProps = {

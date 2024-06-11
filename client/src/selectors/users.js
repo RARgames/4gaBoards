@@ -68,6 +68,31 @@ export const selectProjectsForCurrentUser = createSelector(
   },
 );
 
+export const selectManagedProjectsForCurrentUser = createSelector(
+  orm,
+  (state) => selectCurrentUserId(state),
+  ({ User }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const userModel = User.withId(id);
+
+    if (!userModel) {
+      return userModel;
+    }
+
+    return userModel
+      .getOrderedAvailableProjectsModelArray()
+      .filter((projectModel) => projectModel.hasManagerForUser(id))
+      .map((projectModel) => {
+        return {
+          ...projectModel.ref,
+        };
+      });
+  },
+);
+
 export const selectProjectsToListsForCurrentUser = createSelector(
   orm,
   (state) => selectCurrentUserId(state),
@@ -126,6 +151,7 @@ export default {
   selectUsersExceptCurrent,
   selectCurrentUser,
   selectProjectsForCurrentUser,
+  selectManagedProjectsForCurrentUser,
   selectProjectsToListsForCurrentUser,
   selectNotificationsForCurrentUser,
 };

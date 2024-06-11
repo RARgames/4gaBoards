@@ -1,0 +1,42 @@
+:global(#app) {
+  .actionsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .action {
+    width: 100%;
+    max-width: 750px;
+  }
+
+  .button {
+    border: 1px solid var(--backgroundPopupSeparator);
+  }
+
+  .projectName {
+    margin: 10px auto;
+    max-width: 750px;
+  }
+
+  .dangerZone {
+    color: var(--textColorError);
+    font-weight: bold;
+    text-align: center;
+    padding-top: 8px;
+    border-top: 1px solid var(--backgroundPopupSeparator);
+  }
+
+  .text {
+    color: var(--textColor1);
+    padding-bottom: 6px;
+  }
+
+  .headerButton {
+    float: right;
+    top: 0;
+    position: relative;
+  }
+}

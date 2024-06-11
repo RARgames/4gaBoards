@@ -24,6 +24,15 @@ export function* handleLocationChange() {
     case Paths.PROJECTS:
     case Paths.BOARDS:
     case Paths.CARDS:
+    case Paths.SETTINGS:
+    case Paths.SETTINGS_PROFILE:
+    case Paths.SETTINGS_PREFERENCES:
+    case Paths.SETTINGS_ACCOUNT:
+    case Paths.SETTINGS_AUTHENTICATION:
+    case Paths.SETTINGS_ABOUT:
+    case Paths.SETTINGS_INSTANCE:
+    case Paths.SETTINGS_USERS:
+    case Paths.SETTINGS_PROJECT:
       yield call(goToLogin);
 
       break;
