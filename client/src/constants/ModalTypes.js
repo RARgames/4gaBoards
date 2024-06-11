@@ -1,5 +1,1 @@
-const PROJECT_SETTINGS = 'PROJECT_SETTINGS';
-
-export default {
-  PROJECT_SETTINGS,
-};
+export default {};

@@ -7,7 +7,7 @@ import Paths from '../../constants/Paths';
 
 import styles from './UserPopup.module.scss';
 
-const UserStep = React.memo(({ isAdmin, isLogouting, onLogout, onClose }) => {
+const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, onLogout, onClose }) => {
   const [t] = useTranslation();
 
   return (
@@ -58,6 +58,14 @@ const UserStep = React.memo(({ isAdmin, isLogouting, onLogout, onClose }) => {
           </Button>
         </Link>
       )}
+      {canEditProject && projectId && (
+        <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)} onClick={onClose}>
+          <Button style={ButtonStyle.Popup} title={t('common.projectSettings')}>
+            <Icon type={IconType.ProjectSettings} size={IconSize.Size14} className={styles.icon} />
+            {t('common.projectSettings')}
+          </Button>
+        </Link>
+      )}
       <Popup.Separator />
       <Button style={ButtonStyle.Popup} content={t('action.logOut', { context: 'title' })} onClick={onLogout} disabled={isLogouting} />
     </>
@@ -65,10 +73,16 @@ const UserStep = React.memo(({ isAdmin, isLogouting, onLogout, onClose }) => {
 });
 
 UserStep.propTypes = {
+  canEditProject: PropTypes.bool.isRequired,
+  projectId: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
   isLogouting: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+UserStep.defaultProps = {
+  projectId: undefined,
 };
 
 export default withPopup(UserStep);

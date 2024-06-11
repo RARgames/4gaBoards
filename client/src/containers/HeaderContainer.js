@@ -25,7 +25,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onProjectSettingsClick: entryActions.openProjectSettingsModal,
       onNotificationDelete: entryActions.deleteNotification,
       onLogout: entryActions.logout,
     },

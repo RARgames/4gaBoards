@@ -13,13 +13,8 @@ import logo from '../../assets/images/4gaboardsLogo128w-white.png';
 
 import styles from './Header.module.scss';
 
-const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, onProjectSettingsClick, onNotificationDelete, onLogout }) => {
+const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, onNotificationDelete, onLogout }) => {
   const [t] = useTranslation();
-  const handleProjectSettingsClick = useCallback(() => {
-    if (canEditProject) {
-      onProjectSettingsClick();
-    }
-  }, [canEditProject, onProjectSettingsClick]);
 
   const getPageHeaderTitle = useCallback(() => {
     switch (path) {
@@ -60,9 +55,11 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
       </div>
       <div className={styles.menuRight}>
         {canEditProject && (
-          <Button style={ButtonStyle.Header} onClick={handleProjectSettingsClick} title={t('common.projectSettings')}>
-            <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
-          </Button>
+          <Link to={Paths.SETTINGS_PROJECT.replace(':id', project.id)} className={styles.hideOnSmall}>
+            <Button style={ButtonStyle.Header} title={t('common.projectSettings')}>
+              <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
+            </Button>
+          </Link>
         )}
         <Link to={Paths.SETTINGS} className={styles.hideOnSmall}>
           <Button style={ButtonStyle.Header} title={t('common.settings')}>
@@ -82,7 +79,7 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
             {notifications.length > 0 && <span className={styles.notification}>{notifications.length}</span>}
           </Button>
         </NotificationsPopup>
-        <UserPopup isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
+        <UserPopup canEditProject={canEditProject} projectId={project?.id} isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
           <Button style={ButtonStyle.Header} title={t('common.settingsInstance')}>
             <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
           </Button>
@@ -102,7 +99,6 @@ Header.propTypes = {
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  onProjectSettingsClick: PropTypes.func.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
