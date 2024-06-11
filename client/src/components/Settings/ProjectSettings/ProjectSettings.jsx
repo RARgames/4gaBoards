@@ -32,6 +32,7 @@ const ProjectSettings = React.memo(
     return (
       <div className={classNames(sShared.wrapper, gStyles.scrollableYList)}>
         <div className={sShared.header}>
+          <div className={styles.headerButtonOffset} />
           <h2 className={sShared.headerText}>{t('common.projectSettings')}</h2>
           <div className={styles.headerButton}>
             <Link to={project.firstBoardId ? Paths.BOARDS.replace(':id', project.firstBoardId) : Paths.PROJECTS.replace(':id', projectId)}>

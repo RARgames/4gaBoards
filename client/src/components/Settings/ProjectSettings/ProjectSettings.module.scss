@@ -12,11 +12,8 @@
     max-width: 750px;
   }
 
-  .button {
-    border: 1px solid var(--backgroundPopupSeparator);
-  }
-
   .projectName {
+    color: var(--textColor1);
     margin: 10px auto;
     max-width: 750px;
   }
@@ -31,12 +28,25 @@
 
   .text {
     color: var(--textColor1);
-    padding-bottom: 6px;
+    margin-bottom: 6px;
   }
 
   .headerButton {
-    float: right;
-    top: 0;
     position: relative;
+    float: right;
+  }
+
+  .headerButtonOffset {
+    position: relative;
+    float: left;
+    width: 112px;
+    height: 32px;
+  }
+
+  @media (max-width: 700px) {
+    .headerButtonOffset {
+      width: 0;
+      height: 0;
+    }
   }
 }

@@ -90,6 +90,7 @@ const UsersSettings = React.memo(
     return (
       <div className={sShared.wrapper}>
         <div className={sShared.header}>
+          <div className={styles.headerButtonOffset} />
           <h2 className={sShared.headerText}>{t('common.users')}</h2>
           <div className={styles.headerButton}>
             <UserAddPopup
