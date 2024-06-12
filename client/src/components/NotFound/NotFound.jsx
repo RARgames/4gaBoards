@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
-import { Loader } from 'semantic-ui-react';
+import { Loader, LoaderSize } from '../Utils';
 import FixedContainer from '../../containers/FixedContainer';
 
 import styles from './NotFound.module.scss';
@@ -17,7 +17,7 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   return (
     <>
       {isInitializing ? (
-        <Loader active size="massive" />
+        <Loader size={LoaderSize.Massive} />
       ) : (
         <>
           <FixedContainer />

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation, Trans } from 'react-i18next';
-import { Loader } from 'semantic-ui-react';
+import { Loader, LoaderSize } from '../Utils';
 
 import ProjectsContainer from '../../containers/ProjectsContainer';
 import BoardContainer from '../../containers/BoardContainer';
@@ -88,7 +88,7 @@ function Static({ path, projectId, cardId, board }) {
   if (board.isFetching) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperLoader, styles.wrapperProject)}>
-        <Loader active size="big" />
+        <Loader size={LoaderSize.Massive} />
       </div>
     );
   }

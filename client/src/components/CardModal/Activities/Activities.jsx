@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Comment, Loader, Visibility } from 'semantic-ui-react';
+import { Comment, Visibility } from 'semantic-ui-react';
 
 import { ActivityTypes } from '../../../constants/Enums';
 import CommentAdd from './CommentAdd';
 import Item from './Item';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 
 import styles from './Activities.module.scss';
 import cStyles from '../CardModal.module.scss';
@@ -94,7 +94,7 @@ const Activities = React.memo(
               </Comment.Group>
             </>
           )}
-          {isFetching || isDetailsFetching ? <Loader active inverted inline="centered" size="small" className={styles.loader} /> : !isAllFetched && <Visibility fireOnMount onOnScreen={onFetch} />}
+          {isFetching || isDetailsFetching ? <Loader size={LoaderSize.Normal} /> : !isAllFetched && <Visibility fireOnMount onOnScreen={onFetch} />}
         </div>
       </div>
     );

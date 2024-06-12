@@ -78,10 +78,22 @@
     text-decoration: none;
     top: 50%;
     width: 112px;
+    overflow: hidden;
   }
 
-  .thumbnailLabel {
-    border-color: rgba(29, 46, 63, 0.8);
+  .imageSelected {
+    position: absolute;
+    top: -7px;
+    left: -29px;
+    height: 30px;
+    width: 75px;
+    transform: rotate(315deg);
+    background: var(--overlay);
+    padding: 10px;
+  }
+
+  .imageIcon {
+    transform: rotate(-315deg);
   }
 
   .wrapper {

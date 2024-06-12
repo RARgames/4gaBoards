@@ -6,6 +6,7 @@ import FilePicker from './FilePicker';
 import { Form, FormStyle } from './Form';
 import { Icon, IconType, IconSize } from './Icon';
 import { Input, InputStyle } from './Input';
+import { Loader, LoaderSize } from './Loader';
 import { MDEditor, MDPreview } from './Markdown';
 import { Message, MessageStyle } from './Message';
 import withModal from './Modal';
@@ -30,6 +31,8 @@ export {
   IconSize,
   Input,
   InputStyle,
+  Loader,
+  LoaderSize,
   MDEditor,
   MDPreview,
   Message,

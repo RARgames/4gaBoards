@@ -2,9 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Label, Loader } from 'semantic-ui-react';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
-
+import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import EditPopup from './EditPopup';
 
 import styles from './Item.module.scss';
@@ -36,7 +34,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
   if (!isPersisted) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperSubmitting)}>
-        <Loader inverted />
+        <Loader size={LoaderSize.Normal} />
       </div>
     );
   }
@@ -49,7 +47,11 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div className={styles.thumbnail} style={{ background: coverUrl && `url("${coverUrl}") center / cover` }} onClick={handleClick}>
         {coverUrl ? (
-          isCover && <Label corner="left" variant="cardModal" icon={{ name: 'star', color: 'grey', inverted: true }} className={styles.thumbnailLabel} />
+          isCover && (
+            <div className={styles.imageSelected}>
+              <Icon type={IconType.Star} size={IconSize.Size14} className={styles.imageIcon} />
+            </div>
+          )
         ) : (
           <span className={styles.extension}>{extension || '-'}</span>
         )}
