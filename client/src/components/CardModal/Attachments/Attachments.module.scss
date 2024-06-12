@@ -22,14 +22,8 @@
   }
 
   .toggleButton {
-    background: transparent;
-    box-shadow: none;
     color: var(--textColor3);
-    font-weight: normal;
-    margin-top: 8px;
-    padding: 6px 11px;
-    text-align: left;
-    transition: none;
+    padding: 6px 4px;
 
     &:hover {
       color: var(--textColor4);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Gallery, Item as GalleryItem } from 'react-photoswipe-gallery';
-import { Button } from 'semantic-ui-react';
+import { Button, ButtonStyle } from '../../Utils';
 import { useToggle } from '../../../lib/hooks';
 
 import Item from './Item';
@@ -127,14 +127,8 @@ const Attachments = React.memo(({ items, canEdit, onUpdate, onDelete, onCoverUpd
       </Gallery>
       {items.length > INITIALLY_VISIBLE && (
         <Button
-          fluid
-          content={
-            isAllVisible
-              ? t('action.showFewerAttachments')
-              : t('action.showAllAttachments', {
-                  hidden: items.length - INITIALLY_VISIBLE,
-                })
-          }
+          style={ButtonStyle.NoBackground}
+          content={isAllVisible ? t('action.showFewerAttachments') : t('action.showAllAttachments', { hidden: items.length - INITIALLY_VISIBLE })}
           className={styles.toggleButton}
           onClick={handleToggleAllVisibleClick}
         />
