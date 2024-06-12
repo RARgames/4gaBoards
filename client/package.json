@@ -152,7 +152,7 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "babel-preset-airbnb": "^5.0.0",
