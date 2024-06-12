@@ -1,16 +1,11 @@
 :global(#app) {
   .add {
     color: var(--textColor0);
-    background: var(--backgroundProject);
-    box-shadow: rgba(0, 0, 0, 0.1) 0 3px 6px, rgba(0, 0, 0, 0.1) 0 6px 12px;
-    cursor: pointer;
     text-align: center;
     width: 100%;
+    height: 100%;
 
     &:hover {
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.1);
-      transform: translate(0, -1px);
-
       svg {
         fill: var(--textColor0);
       }
@@ -24,26 +19,51 @@
     width: 36px;
   }
 
-  .card {
-    border-radius: 4px;
-    height: 150px;
-    overflow: hidden;
+  .projectsWrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 120px;
+    gap: 20px;
+    margin: 20px;
+  }
+
+  .projectWrapper {
+    position: relative;
+    background-color: var(--backgroundProject);
+    border-radius: 5px;
+    font-size: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     transition: all 200ms ease;
+
+    &:hover {
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.1);
+      transform: translate(0, -2px);
+    }
   }
 
-  .cardsWrapper {
-    flex: 1 1 auto;
-    max-height: 100%;
+  .project {
+    color: var(--textColor0);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
   }
 
-  .gridFix {
-    flex: 1 0 auto;
-    margin: 0;
+  .projectTitle {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .notification {
-    background: #eb5a46;
-    color: #fff;
+    background: var(--notificationRed);
+    color: var(--textColorWhite);
     float: right;
     font-size: 12px;
     line-height: 20px;
@@ -53,36 +73,5 @@
     outline: none;
     text-align: left;
     transition: background 0.3s ease;
-  }
-
-  .open {
-    background: var(--backgroundProject);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.1);
-    color: var(--textColor0);
-    position: relative;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-      box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-    &:hover {
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.1);
-      transform: translate(0, -2px);
-    }
-  }
-
-  .openTitle {
-    bottom: 0;
-    font-size: 24px;
-    hyphens: auto;
-    left: 0;
-    line-height: 1.1;
-    padding: 24px 20px;
-    position: absolute;
-    word-break: break-word;
-  }
-
-  .wrapper {
-    display: flex;
-    flex: 1 1 auto;
-    height: 100%;
   }
 }

@@ -1,12 +1,11 @@
 :global(#app) {
   .field {
-    margin-bottom: 2px;
     width: 100%;
   }
 
   .card {
-    border-radius: 4px;
-    height: 150px;
+    border-radius: 5px;
+    height: 120px;
     transition: all 200ms ease;
     color: var(--textColor0);
     background: var(--backgroundProject);
@@ -20,12 +19,10 @@
   .closeButton {
     position: absolute;
     right: 6px;
-    top: 12px;
+    top: 8px;
   }
 
   .titleWrapper {
-    height: 40px;
-    margin-bottom: 8px;
     position: relative;
     text-align: center;
   }
@@ -37,11 +34,11 @@
     font-weight: normal;
     line-height: 20px;
     margin: 0 12px;
-    padding: 12px 28px 8px;
+    padding: 8px 28px 4px;
     text-wrap: nowrap;
   }
 
   .formWrapper {
-    padding: 12px;
+    padding: 4px 12px 12px 12px;
   }
 }

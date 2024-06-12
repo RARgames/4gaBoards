@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Container, Grid } from 'semantic-ui-react';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
@@ -25,40 +24,37 @@ const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreat
   }, [canAdd]);
 
   return (
-    <Container className={styles.cardsWrapper}>
-      <Grid className={styles.gridFix}>
-        {items.map((item) => (
-          <Grid.Column key={item.id} mobile={8} computer={4}>
-            <Link to={item.firstBoardId ? Paths.BOARDS.replace(':id', item.firstBoardId) : Paths.PROJECTS.replace(':id', item.id)}>
-              <div
-                className={classNames(
-                  styles.card,
-                  styles.open,
-                  item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`],
-                )}
-                style={{
-                  background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
-                }}
-              >
-                {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
-                <div className={styles.cardOverlay} />
-                <div className={styles.openTitle}>{item.name}</div>
+    <div className={styles.projectsWrapper}>
+      {items.map((item) => (
+        <div
+          key={item.id}
+          className={classNames(
+            styles.projectWrapper,
+            item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`],
+          )}
+          style={{
+            background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
+          }}
+        >
+          {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
+          <Link to={item.firstBoardId ? Paths.BOARDS.replace(':id', item.firstBoardId) : Paths.PROJECTS.replace(':id', item.id)}>
+            <div className={styles.project}>
+              <div title={item.name} className={styles.projectTitle}>
+                {item.name}
               </div>
-            </Link>
-          </Grid.Column>
-        ))}
-        {canAdd && (
-          <Grid.Column mobile={8} computer={4}>
-            <ProjectAddPopup ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
-              <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={handleProjectAdd} className={classNames(styles.card, styles.add)}>
-                <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
-                {t('common.createProject')}
-              </Button>
-            </ProjectAddPopup>
-          </Grid.Column>
-        )}
-      </Grid>
-    </Container>
+            </div>
+          </Link>
+        </div>
+      ))}
+      {canAdd && (
+        <ProjectAddPopup ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
+          <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={handleProjectAdd} className={classNames(styles.projectWrapper, styles.add)}>
+            <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
+            {t('common.createProject')}
+          </Button>
+        </ProjectAddPopup>
+      )}
+    </div>
   );
 });
 
