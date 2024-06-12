@@ -1,4 +1,8 @@
 :global(#app) {
+  .comments {
+    margin-top: 16px;
+  }
+
   .toggleButton {
     color: var(--textColor1);
     float: right;

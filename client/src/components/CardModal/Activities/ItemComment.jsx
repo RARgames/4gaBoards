@@ -1,10 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Comment } from 'semantic-ui-react';
-import { MDPreview, Icon, IconType, IconSize } from '../../Utils';
-
+import { MDPreview, Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
 import CommentEdit from './CommentEdit';
 import User from '../../User';
 import DeletePopup from '../../DeletePopup';
@@ -21,46 +18,39 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
   }, []);
 
   return (
-    <Comment>
-      <div className={classNames(styles.content)}>
-        <div className={styles.title}>
-          <span className={styles.user}>
-            <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
-          </span>
-          <span className={styles.author}>{user.name}</span>
-          <span className={styles.date}>
-            {t('format:dateTime', {
-              postProcess: 'formatDate',
-              value: createdAt,
-            })}
-          </span>
-          {canEdit && (
-            <Comment.Actions className={styles.buttons}>
-              <Comment.Action title={t('common.editComment')} as="button" disabled={!isPersisted} onClick={handleEditClick} className={styles.button}>
-                <Icon type={IconType.Pencil} size={IconSize.Size10} />
-              </Comment.Action>
-              <div className={styles.popupWrapper}>
-                <DeletePopup
-                  title={t('common.deleteComment', { context: 'title' })}
-                  content={t('common.areYouSureYouWantToDeleteThisComment')}
-                  buttonContent={t('action.deleteComment')}
-                  onConfirm={onDelete}
-                  position="left-start"
-                  offset={0}
-                >
-                  <Comment.Action title={t('common.deleteComment')} as="button" disabled={!isPersisted} className={styles.button}>
-                    <Icon type={IconType.Trash} size={IconSize.Size10} />
-                  </Comment.Action>
-                </DeletePopup>
-              </div>
-            </Comment.Actions>
-          )}
-        </div>
-        <CommentEdit ref={commentEdit} defaultData={data} onUpdate={onUpdate}>
-          <MDPreview source={data.text} className={styles.preview} />
-        </CommentEdit>
+    <div className={styles.content}>
+      <div className={styles.title}>
+        <span className={styles.user}>
+          <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
+        </span>
+        <span className={styles.author}>{user.name}</span>
+        <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
+        {canEdit && (
+          <div className={styles.buttons}>
+            <Button style={ButtonStyle.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={styles.button}>
+              <Icon type={IconType.Pencil} size={IconSize.Size10} className={styles.buttonIcon} />
+            </Button>
+            <div className={styles.popupWrapper}>
+              <DeletePopup
+                title={t('common.deleteComment', { context: 'title' })}
+                content={t('common.areYouSureYouWantToDeleteThisComment')}
+                buttonContent={t('action.deleteComment')}
+                onConfirm={onDelete}
+                position="left-start"
+                offset={0}
+              >
+                <Button style={ButtonStyle.Icon} title={t('common.deleteComment')} disabled={!isPersisted} className={styles.button}>
+                  <Icon type={IconType.Trash} size={IconSize.Size10} className={styles.buttonIcon} />
+                </Button>
+              </DeletePopup>
+            </div>
+          </div>
+        )}
       </div>
-    </Comment>
+      <CommentEdit ref={commentEdit} defaultData={data} onUpdate={onUpdate}>
+        <MDPreview source={data.text} className={styles.preview} />
+      </CommentEdit>
+    </div>
   );
 });
 

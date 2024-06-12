@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation, Trans } from 'react-i18next';
-import { Comment } from 'semantic-ui-react';
-
 import { ActivityTypes } from '../../../constants/Enums';
 import ItemComment from './ItemComment';
 import User from '../../User';
@@ -72,16 +69,14 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
   }
 
   return (
-    <Comment>
-      <div className={classNames(styles.content)}>
-        <span className={styles.user}>
-          <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
-        </span>
-        <span className={styles.author}>{user.name}</span>
-        <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>
-        <div className={styles.contentText}>{contentNode}</div>
-      </div>
-    </Comment>
+    <div className={styles.content}>
+      <span className={styles.user}>
+        <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
+      </span>
+      <span className={styles.author}>{user.name}</span>
+      <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>
+      <div className={styles.contentText}>{contentNode}</div>
+    </div>
   );
 });
 

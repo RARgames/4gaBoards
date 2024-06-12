@@ -11,7 +11,7 @@
   .content {
     border-bottom: 1px solid #092d4221;
     display: inline-block;
-    padding-bottom: 4px;
+    margin-bottom: 16px;
     vertical-align: top;
     width: 100%;
   }
@@ -46,12 +46,19 @@
   }
 
   .button {
-    color: var(--textColor3);
-    font-size: 1rem;
+    svg {
+      fill: var(--textColor3);
+    }
 
     &:hover {
-      color: var(--textColor4);
+      svg {
+        fill: var(--textColor4);
+      }
     }
+  }
+
+  .buttonIcon {
+    vertical-align: top;
   }
 
   .popupWrapper {

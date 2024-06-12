@@ -1,8 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Comment, Visibility } from 'semantic-ui-react';
-
 import { ActivityTypes } from '../../../constants/Enums';
 import CommentAdd from './CommentAdd';
 import Item from './Item';
@@ -29,6 +27,7 @@ const Activities = React.memo(
     commShown,
   }) => {
     const [t] = useTranslation();
+    const visibilityRef = useRef(null);
 
     const handleToggleDetailsClick = useCallback(() => {
       if (!commShown) {
@@ -55,6 +54,34 @@ const Activities = React.memo(
       [onCommentDelete],
     );
 
+    const handleVisibilityChange = useCallback(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            onFetch();
+          }
+        });
+      },
+      [onFetch],
+    );
+
+    useEffect(() => {
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(handleVisibilityChange, options);
+      if (visibilityRef.current) {
+        observer.observe(visibilityRef.current);
+      }
+
+      return () => {
+        observer.disconnect();
+      };
+    }, [handleVisibilityChange, onFetch]);
+
     // TODO fix activities not in order - by date
     // TODO add number of comments
 
@@ -74,7 +101,7 @@ const Activities = React.memo(
           {commShown && (
             <>
               {canEdit && <CommentAdd onCreate={onCommentCreate} />}
-              <Comment.Group>
+              <div className={styles.comments}>
                 {items.map((item) =>
                   item.type === ActivityTypes.COMMENT_CARD ? (
                     <Item.Comment
@@ -91,10 +118,10 @@ const Activities = React.memo(
                     <Item key={item.id} type={item.type} data={item.data} createdAt={item.createdAt} user={item.user} />
                   ),
                 )}
-              </Comment.Group>
+              </div>
             </>
           )}
-          {isFetching || isDetailsFetching ? <Loader size={LoaderSize.Normal} /> : !isAllFetched && <Visibility fireOnMount onOnScreen={onFetch} />}
+          {isFetching || isDetailsFetching ? <Loader size={LoaderSize.Normal} /> : !isAllFetched && <div ref={visibilityRef} />}
         </div>
       </div>
     );
