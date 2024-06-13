@@ -122,7 +122,7 @@ html {
   box-sizing: border-box;
 }
 
-/* iPad Input Shadows - mobile firefox too!*/
+/* Remove input shadows in Firefox Mobile and on iPad */
 input[type="text"],
 input[type="email"],
 input[type="search"],
@@ -147,11 +147,11 @@ body {
   padding: 0px;
   overflow-x: hidden;
   min-width: 320px;
-  background: #ffffff;
+  background: #22252a;
   font-family: "Museo Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.4285em;
-  color: rgba(0, 0, 0, 0.87);
+  color: #ffffff;
 }
 
 /* Headings */
@@ -160,7 +160,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Museo Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-family: inherit;
   line-height: 1.28571429em;
   margin: calc(2rem - 0.14285714em) 0em 1rem;
   font-weight: bold;
@@ -245,15 +245,6 @@ a:hover {
   background: #0664d4;
 }
 
-/* Font fix */
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: "Museo Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  resize: none !important;
-}
 
 /* Modified version of normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
