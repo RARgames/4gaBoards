@@ -20,8 +20,8 @@ export default (close, isOpened = true) => {
     isClosable.current = true;
   }, []);
 
-  const handleValueChange = useCallback((value, initValue) => {
-    isModified.current = value.trim() !== initValue.trim();
+  const handleValueChange = useCallback((event, initValue) => {
+    isModified.current = event.target.value.trim() !== initValue.trim();
   }, []);
 
   const handleClearModified = useCallback(() => {

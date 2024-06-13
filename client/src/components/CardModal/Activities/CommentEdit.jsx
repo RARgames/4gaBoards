@@ -88,7 +88,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
   const handleChange = useCallback(
     (event) => {
       handleFieldChange(event);
-      handleValueChange(event.target.value, defaultData.text);
+      handleValueChange(event, defaultData.text);
     },
     [defaultData, handleFieldChange, handleValueChange],
   );

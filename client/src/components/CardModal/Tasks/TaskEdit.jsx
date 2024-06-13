@@ -80,7 +80,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   const handleChange = useCallback(
     (event) => {
       handleFieldChange(event);
-      handleValueChange(event.target.value, defaultValue);
+      handleValueChange(event, defaultValue);
     },
     [defaultValue, handleFieldChange, handleValueChange],
   );

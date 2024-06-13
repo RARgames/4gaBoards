@@ -99,7 +99,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
   const handleChange = useCallback(
     (event) => {
       handleFieldChange(event);
-      handleValueChange(event.target.value, DEFAULT_DATA.name);
+      handleValueChange(event, DEFAULT_DATA.name);
     },
     [handleFieldChange, handleValueChange],
   );

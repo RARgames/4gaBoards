@@ -84,7 +84,7 @@ const CommentAdd = React.memo(({ onCreate }) => {
   const handleChange = useCallback(
     (event) => {
       handleFieldChange(event);
-      handleValueChange(event.target.value, DEFAULT_DATA.text);
+      handleValueChange(event, DEFAULT_DATA.text);
     },
     [handleFieldChange, handleValueChange],
   );
