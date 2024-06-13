@@ -230,19 +230,9 @@ a:hover {
 }
 
 /* Selection */
-::-webkit-selection {
-  color: #ffffff;
-  background: #0664d4;
-}
-
-::-moz-selection {
-  color: #ffffff;
-  background: #0664d4;
-}
-
 ::selection {
-  color: #ffffff;
-  background: #0664d4;
+  color: var(--textColorWhite);
+  background: var(--selectionBackground);
 }
 
 

@@ -11,11 +11,6 @@
       outline: none;
     }
 
-    &::selection {
-      color: var(--textColorWhite);
-      background: var(--selectionBackground);
-    }
-
     &:disabled {
       background: var(--backgroundColorTmpDarkerField);
       color: var(--textColor4);
