@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 import { Button, ButtonStyle, Input, Popup, Form } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 
 import styles from './DueDateEditStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -12,7 +12,7 @@ import gStyles from '../../globalStyles.module.scss';
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange, setData] = useForm2(() => {
+  const [data, handleFieldChange, setData] = useForm(() => {
     const date = defaultValue || new Date().setHours(12, 0, 0, 0);
 
     return {

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea } from '../Utils';
 
-import { useClosableForm, useForm2 } from '../../hooks';
+import { useClosableForm, useForm } from '../../hooks';
 
 import styles from './ListAdd.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -16,7 +16,7 @@ const DEFAULT_DATA = {
 
 const ListAdd = React.memo(({ onCreate, onClose }) => {
   const [t] = useTranslation();
-  const [data, handleFieldChange, setData] = useForm2(DEFAULT_DATA);
+  const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
 
   const nameField = useRef(null);

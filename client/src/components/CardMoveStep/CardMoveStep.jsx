@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Form, Dropdown } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 
 import styles from './CardMoveStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -14,7 +14,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
   const dropdownBoard = useRef(null);
   const dropdownList = useRef(null);
 
-  const [path, handleFieldChange] = useForm2(() => ({
+  const [path, handleFieldChange] = useForm(() => ({
     projectId: null,
     boardId: null,
     listId: null,

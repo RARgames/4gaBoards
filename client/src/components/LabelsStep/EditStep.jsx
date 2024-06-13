@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
 
-import { useForm2, useSteps } from '../../hooks';
+import { useForm, useSteps } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 import DeleteStep from '../DeleteStep';
@@ -18,7 +18,7 @@ const StepTypes = {
 const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange] = useForm2(() => ({
+  const [data, handleFieldChange] = useForm(() => ({
     color: LabelColors[0],
     ...defaultData,
     name: defaultData.name || '',

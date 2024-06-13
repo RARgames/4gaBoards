@@ -6,7 +6,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { Button, ButtonStyle, Popup, Input } from '../Utils';
 
-import { useField2, useSteps } from '../../hooks';
+import { useField, useSteps } from '../../hooks';
 import DroppableTypes from '../../constants/DroppableTypes';
 import AddStep from './AddStep';
 import EditStep from './EditStep';
@@ -23,7 +23,7 @@ const StepTypes = {
 const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, onDeselect, onCreate, onUpdate, onMove, onDelete, onBack }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
-  const [search, handleSearchChange] = useField2('');
+  const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
   const filteredItems = useMemo(() => items.filter((label) => (label.name && label.name.toLowerCase().includes(cleanSearch)) || label.color.includes(cleanSearch)), [items, cleanSearch]);

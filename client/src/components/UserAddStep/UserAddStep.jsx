@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { usePrevious } from '../../lib/hooks';
 import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 import { isPassword, isUsername } from '../../utils/validator';
 
 import styles from './UserAddStep.module.scss';
@@ -39,7 +39,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
-  const [data, handleFieldChange] = useForm2(() => ({
+  const [data, handleFieldChange] = useForm(() => ({
     email: '',
     password: '',
     name: '',

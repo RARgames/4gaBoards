@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup } from '../../Utils';
 
-import { useForm2, useSteps } from '../../../hooks';
+import { useForm, useSteps } from '../../../hooks';
 import ImportStep from './ImportStep';
 
 import styles from './AddPopup.module.scss';
@@ -17,7 +17,7 @@ const StepTypes = {
 const AddStep = React.memo(({ onCreate, onClose }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange, setData] = useForm2({
+  const [data, handleFieldChange, setData] = useForm({
     name: '',
     import: null,
     isGithubConnected: false,

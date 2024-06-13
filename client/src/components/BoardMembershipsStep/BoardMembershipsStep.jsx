@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Popup, Input } from '../Utils';
 
-import { useField2 } from '../../hooks';
+import { useField } from '../../hooks';
 import Item from './Item';
 
 import styles from './BoardMembershipsStep.module.scss';
@@ -12,7 +12,7 @@ import gStyles from '../../globalStyles.module.scss';
 
 const BoardMembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
   const [t] = useTranslation();
-  const [search, handleSearchChange] = useField2('');
+  const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
   const filteredItems = useMemo(

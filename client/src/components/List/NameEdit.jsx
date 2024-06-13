@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import PropTypes from 'prop-types';
 import { TextArea } from '../Utils';
 
-import { useField2, useResizeObserverSize } from '../../hooks';
+import { useField, useResizeObserverSize } from '../../hooks';
 import { ResizeObserverSizeTypes } from '../../constants/Enums';
 
 import styles from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, onHeightChange }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField2(defaultValue);
+  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
   const field = useRef(null);
   const [nameEditElement, setNameEditElement] = useState();

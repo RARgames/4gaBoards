@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Popup, Input, withPopup } from '../../Utils';
 
-import { useField2, useSteps } from '../../../hooks';
+import { useField, useSteps } from '../../../hooks';
 import UserItem from './UserItem';
 
 import styles from './AddPopup.module.scss';
@@ -17,7 +17,7 @@ const StepTypes = {
 const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, title, onCreate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
-  const [search, handleSearchChange] = useField2('');
+  const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
 
   const filteredUsers = useMemo(

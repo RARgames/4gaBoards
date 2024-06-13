@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 
@@ -12,7 +12,7 @@ import gStyles from '../../globalStyles.module.scss';
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange] = useForm2(() => ({
+  const [data, handleFieldChange] = useForm(() => ({
     name: '',
     color: LabelColors[0],
     ...defaultData,

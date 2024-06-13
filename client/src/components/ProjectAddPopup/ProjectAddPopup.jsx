@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState, useImperativeHandle } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 
 import styles from './ProjectAddPopup.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -12,7 +12,7 @@ const ProjectAddPopup = React.forwardRef(({ children, defaultData, isSubmitting,
   const [isOpened, setIsOpened] = useState(false);
   const nameField = useRef(null);
 
-  const [data, handleFieldChange, setData] = useForm2(null);
+  const [data, handleFieldChange, setData] = useForm(null);
 
   const open = useCallback(() => {
     setIsOpened(true);

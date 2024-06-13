@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { dequal } from 'dequal';
 import { useTranslation } from 'react-i18next';
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../Utils';
 
 import styles from './Connections.module.scss';
@@ -15,7 +15,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
   const inputRef = useRef(null);
   const [isError, setIsError] = useState(false);
 
-  const [data, handleFieldChange] = useForm2(() => ({
+  const [data, handleFieldChange] = useForm(() => ({
     isGithubConnected: false,
     githubRepo: '',
     ...defaultData,

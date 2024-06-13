@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Form, TextArea } from '../../Utils';
-import { useClosableForm, useField2 } from '../../../hooks';
+import { useClosableForm, useField } from '../../../hooks';
 
 import styles from './TaskEdit.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -10,7 +10,7 @@ import gStyles from '../../../globalStyles.module.scss';
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField2(null);
+  const [value, handleFieldChange, setValue, handleFocus] = useField(null);
   const field = useRef(null);
 
   const open = useCallback(() => {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Form, TextArea } from '../../Utils';
 
-import { useClosableForm, useForm2 } from '../../../hooks';
+import { useClosableForm, useForm } from '../../../hooks';
 
 import styles from './CommentEdit.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -12,7 +12,7 @@ import gStyles from '../../../globalStyles.module.scss';
 const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [data, handleFieldChange, setData, handleFocus] = useForm2(null);
+  const [data, handleFieldChange, setData, handleFocus] = useForm(null);
 
   const textField = useRef(null);
 

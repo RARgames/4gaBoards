@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Form, Input } from '../../Utils';
 
-import { useForm2 } from '../../../hooks';
+import { useForm } from '../../../hooks';
 
 import styles from './InformationEdit.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -13,7 +13,7 @@ import gStyles from '../../../globalStyles.module.scss';
 const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange, setData] = useForm2(() => ({
+  const [data, handleFieldChange, setData] = useForm(() => ({
     name: '',
     ...pickBy(defaultData),
   }));

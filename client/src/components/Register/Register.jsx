@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, Form, Message, MessageStyle, Checkbox } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
 import styles from './Register.module.scss';
@@ -65,7 +65,7 @@ const Register = React.memo(
   }) => {
     const [t] = useTranslation();
     const wasSubmitting = usePrevious(isSubmitting);
-    const [data, handleFieldChange, setData] = useForm2(() => ({
+    const [data, handleFieldChange, setData] = useForm(() => ({
       email: '',
       password: '',
       policy: false,

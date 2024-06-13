@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 
 import styles from './UserEmailEditStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -38,7 +38,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
-  const [data, handleFieldChange, setData] = useForm2({
+  const [data, handleFieldChange, setData] = useForm({
     email: '',
     currentPassword: '',
     ...defaultData,

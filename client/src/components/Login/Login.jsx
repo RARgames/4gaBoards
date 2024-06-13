@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Input, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
@@ -58,7 +58,7 @@ const createMessage = (error) => {
 const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss, onRegisterOpen, googleSsoEnabled, registrationEnabled }) => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
-  const [data, handleFieldChange, setData] = useForm2(() => ({
+  const [data, handleFieldChange, setData] = useForm(() => ({
     emailOrUsername: '',
     password: '',
     ...defaultData,

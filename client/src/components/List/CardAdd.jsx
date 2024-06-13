@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea } from '../Utils';
 
-import { useClosableForm, useForm2 } from '../../hooks';
+import { useClosableForm, useForm } from '../../hooks';
 
 import styles from './CardAdd.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -17,7 +17,7 @@ const DEFAULT_DATA = {
 // eslint-disable-next-line no-unused-vars
 const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }) => {
   const [t] = useTranslation();
-  const [data, handleFieldChange, setData] = useForm2(DEFAULT_DATA);
+  const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
   const nameField = useRef(null);
 

@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useState, useRef, useImperativeHandle } 
 import PropTypes from 'prop-types';
 import { TextArea } from '../Utils';
 
-import { useField2 } from '../../hooks';
+import { useField } from '../../hooks';
 
 import styles from './NameField.module.scss';
 
 const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField2(defaultValue);
+  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
   const field = useRef(null);
 
   const open = useCallback(() => {

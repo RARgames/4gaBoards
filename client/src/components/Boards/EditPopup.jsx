@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../Utils';
 
-import { useForm2, useSteps } from '../../hooks';
+import { useForm, useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 
 import styles from './EditPopup.module.scss';
@@ -17,7 +17,7 @@ const StepTypes = {
 const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
 
-  const [data, handleFieldChange] = useForm2(() => ({
+  const [data, handleFieldChange] = useForm(() => ({
     name: '',
     ...defaultData,
   }));

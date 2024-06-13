@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Input, Popup, Form } from '../Utils';
 
-import { useForm2 } from '../../hooks';
+import { useForm } from '../../hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
 
 import styles from './TimerEditStep.module.scss';
@@ -31,7 +31,7 @@ const createData = (timer) => {
 
 const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
-  const [data, handleFieldChange, setData] = useForm2(() => createData(defaultValue));
+  const [data, handleFieldChange, setData] = useForm(() => createData(defaultValue));
   const [isEditing, toggleEditing] = useToggle();
 
   const hoursField = useRef(null);
