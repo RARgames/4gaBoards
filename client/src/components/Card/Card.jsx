@@ -62,13 +62,11 @@ const Card = React.memo(
     const cardRef = useRef(null);
 
     const scrollCardIntoView = useCallback(() => {
-      if (cardRef.current) {
-        cardRef.current.scrollIntoView({
-          behavior: 'auto',
-          block: 'nearest',
-          inline: 'nearest',
-        });
-      }
+      cardRef.current?.scrollIntoView({
+        behavior: 'auto',
+        block: 'nearest',
+        inline: 'nearest',
+      });
     }, []);
 
     const handleClick = useCallback(() => {

@@ -58,10 +58,8 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
   );
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [defaultData]);
+    inputRef.current?.focus();
+  }, []);
 
   return (
     <>
