@@ -11,6 +11,7 @@ import Connections from './Connections';
 import { Icon, IconType, IconSize } from '../Utils';
 
 import styles from './BoardActions.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const BoardActions = React.memo(
   ({
@@ -46,48 +47,50 @@ const BoardActions = React.memo(
     );
 
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.actions}>
-          <div className={classNames(styles.cardsCount, styles.action)}>
-            {cardCount} {[cardCount !== 1 ? t('common.cards') : t('common.card')]}
-          </div>
-          <div className={styles.action}>
-            <Memberships
-              items={memberships}
-              allUsers={allUsers}
-              permissionsSelectStep={BoardMembershipPermissionsSelectStep}
-              canEdit={canEditMemberships}
-              onCreate={onMembershipCreate}
-              onUpdate={onMembershipUpdate}
-              onDelete={onMembershipDelete}
-            />
-          </div>
-          <div className={styles.action}>
-            <Filters
-              users={filterUsers}
-              labels={filterLabels}
-              allBoardMemberships={memberships}
-              allLabels={labels}
-              canEdit={canEdit}
-              onUserAdd={onUserToFilterAdd}
-              onUserRemove={onUserFromFilterRemove}
-              onLabelAdd={onLabelToFilterAdd}
-              onLabelRemove={onLabelFromFilterRemove}
-              onLabelCreate={onLabelCreate}
-              onLabelUpdate={onLabelUpdate}
-              onLabelMove={onLabelMove}
-              onLabelDelete={onLabelDelete}
-            />
-          </div>
-          <div>
-            <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate}>
-              <Icon
-                type={IconType.Github}
-                size={IconSize.Size14}
-                className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
-                title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+      <div className={styles.wrapperContainer}>
+        <div className={classNames(styles.wrapper, gStyles.scrollableX)}>
+          <div className={styles.actions}>
+            <div className={classNames(styles.cardsCount, styles.action)}>
+              {cardCount} {[cardCount !== 1 ? t('common.cards') : t('common.card')]}
+            </div>
+            <div className={styles.action}>
+              <Memberships
+                items={memberships}
+                allUsers={allUsers}
+                permissionsSelectStep={BoardMembershipPermissionsSelectStep}
+                canEdit={canEditMemberships}
+                onCreate={onMembershipCreate}
+                onUpdate={onMembershipUpdate}
+                onDelete={onMembershipDelete}
               />
-            </Connections>
+            </div>
+            <div className={styles.action}>
+              <Filters
+                users={filterUsers}
+                labels={filterLabels}
+                allBoardMemberships={memberships}
+                allLabels={labels}
+                canEdit={canEdit}
+                onUserAdd={onUserToFilterAdd}
+                onUserRemove={onUserFromFilterRemove}
+                onLabelAdd={onLabelToFilterAdd}
+                onLabelRemove={onLabelFromFilterRemove}
+                onLabelCreate={onLabelCreate}
+                onLabelUpdate={onLabelUpdate}
+                onLabelMove={onLabelMove}
+                onLabelDelete={onLabelDelete}
+              />
+            </div>
+            <div className={styles.connectionsWrapper}>
+              <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
+                <Icon
+                  type={IconType.Github}
+                  size={IconSize.Size14}
+                  className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+                  title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+                />
+              </Connections>
+            </div>
           </div>
         </div>
       </div>

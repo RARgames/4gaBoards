@@ -30,7 +30,7 @@ const ProjectSettings = React.memo(
     }, [onUpdate, projectId]);
 
     return (
-      <div className={classNames(sShared.wrapper, gStyles.scrollableYList)}>
+      <div className={classNames(sShared.wrapper, gStyles.scrollableY)}>
         <div className={sShared.header}>
           <div className={styles.headerButtonOffset} />
           <h2 className={sShared.headerText}>{t('common.projectSettings')}</h2>

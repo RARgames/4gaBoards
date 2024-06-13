@@ -73,6 +73,11 @@
   --modalOverlay: rgba(0, 0, 0, 0.8);
   --overlay: rgba(0, 0, 0, 0.6);
   --backgroundDisabled: #201f1f;
+  --scrollbarThumb: #757a82;
+  --scrollbarThumbHover: #62676f;
+  --scrollbarThumbActive: #32373e;
+  --scrollbarTrack: #1c2532;
+  --textColorCounter: #798d99;
 
   .controls {
     height: 32px;
@@ -94,93 +99,18 @@
     justify-content: center;
   }
 
-  //TODO to change to match dark theme
   .scrollableXY {
     overflow: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #7b7b7c #252527;
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #7b7b7c;
-    }
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background-color: #252527;
-    }
   }
 
-  //TODO to change to match dark theme
   .scrollableY {
     overflow-x: hidden;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #646464 #a6a6a6;
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #646464;
-    }
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background-color: #a6a6a6;
-    }
   }
 
-  //TODO to change to match dark theme
   .scrollableX {
     overflow-x: auto;
     overflow-y: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: #646464 #a6a6a6;
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #646464;
-    }
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background-color: #a6a6a6;
-    }
-  }
-
-  .scrollableYList {
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #7b7b7c #252527;
-    // TODO other variant
-    // scrollbar-color: #7b7b7c var(--backgroundColorTmpDarkerField);
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #7b7b7c;
-    }
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background-color: #252527;
-    }
-  }
-
-  .scrollableXList {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: #7b7b7c #252527;
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: #7b7b7c;
-    }
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      background-color: #252527;
-    }
   }
 
   //filter: brightness(85%); //TODO do everywhere hover by filter

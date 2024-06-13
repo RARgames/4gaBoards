@@ -85,7 +85,7 @@ const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, titl
       <Popup.Content>
         <Input ref={searchField} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} className={styles.field} />
         {filteredUsers.length > 0 && (
-          <div className={classNames(styles.users, gStyles.scrollableYList)}>
+          <div className={classNames(styles.users, gStyles.scrollableY)}>
             {filteredUsers.map((user) => (
               <UserItem key={user.id} name={user.name} avatarUrl={user.avatarUrl} isActive={currentUserIds.includes(user.id)} onSelect={() => handleUserSelect(user.id)} />
             ))}

@@ -291,7 +291,7 @@ const Dropdown = React.forwardRef(
                 {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
                 ref={refs.setFloating}
                 style={floatingStyles}
-                className={classNames(styles.dropdownMenu, gStyles.scrollableYList, getOptions().length > 0 && styles.dropdownMenuWithChildren, dropdownMenuClassName)}
+                className={classNames(styles.dropdownMenu, gStyles.scrollableY, getOptions().length > 0 && styles.dropdownMenuWithChildren, dropdownMenuClassName)}
               >
                 {getOptions().map((item, index) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions

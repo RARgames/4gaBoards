@@ -129,7 +129,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
                 <div
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   ref={innerRef}
-                  className={classNames(styles.items, gStyles.scrollableYList)}
+                  className={classNames(styles.items, gStyles.scrollableY)}
                 >
                   {filteredItems.map((item, index) => (
                     <Item

@@ -9,7 +9,7 @@ import gStyles from '../../../globalStyles.module.scss';
 const TextArea = React.forwardRef(({ disableSpellcheck, className, ...props }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <TextareaAutosize ref={ref} spellCheck={!disableSpellcheck} className={classNames(styles.base, gStyles.scrollableYList, className)} {...props} />
+    <TextareaAutosize ref={ref} spellCheck={!disableSpellcheck} className={classNames(styles.base, gStyles.scrollableY, className)} {...props} />
   );
 });
 

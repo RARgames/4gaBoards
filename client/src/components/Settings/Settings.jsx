@@ -65,7 +65,7 @@ const Settings = React.memo(({ path, realPath, isAdmin, managedProjects }) => {
       >
         <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
       </Button>
-      <div className={classNames(styles.sidebar, gStyles.scrollableYList, !sidebarShown && styles.sidebarHidden)}>
+      <div className={classNames(styles.sidebar, gStyles.scrollableY, !sidebarShown && styles.sidebarHidden)}>
         <div className={styles.sidebarTitle}>
           <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
           {t('common.settings')}

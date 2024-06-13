@@ -220,12 +220,12 @@ p:last-child {
 
 /* Links */
 a {
-  color: #4183c4;
+  color: var(--textColorLink);
   text-decoration: none;
 }
 
 a:hover {
-  color: #1e70bf;
+  color: var(--textColorLinkHover);
   text-decoration: none;
 }
 
@@ -233,6 +233,40 @@ a:hover {
 ::selection {
   color: var(--textColorWhite);
   background: var(--selectionBackground);
+}
+
+/* Scrollbars */
+* {
+
+  /* Firefox, but not Chromium */
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbarThumb) var(--scrollbarTrack);
+  }
+
+  /* Chromium */
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbarTrack);
+    cursor: default;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbarThumb);
+    cursor: default;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbarThumbHover);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background: var(--scrollbarThumbActive);
+  }
 }
 
 

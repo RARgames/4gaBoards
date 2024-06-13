@@ -63,24 +63,9 @@
     display: flex;
     flex: 0 0 auto;
     height: 56px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
 
     &:hover {
       height: 38px;
-    }
-
-    &::-webkit-scrollbar {
-      height: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
     }
   }
 

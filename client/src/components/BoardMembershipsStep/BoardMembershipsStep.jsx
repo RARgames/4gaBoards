@@ -48,7 +48,7 @@ const BoardMembershipsStep = React.memo(({ items, currentUserIds, title, onUserS
       <Popup.Content>
         <Input ref={searchField} value={search} placeholder={t('common.searchMembers')} onChange={handleSearchChange} className={styles.field} />
         {filteredItems.length > 0 && (
-          <div className={classNames(styles.menu, gStyles.scrollableYList)}>
+          <div className={classNames(styles.menu, gStyles.scrollableY)}>
             {filteredItems.map((item) => (
               <Item
                 key={item.id}

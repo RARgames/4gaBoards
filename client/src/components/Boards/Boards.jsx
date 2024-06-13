@@ -13,6 +13,7 @@ import AddPopup from './AddPopup';
 import EditPopup from './EditPopup';
 
 import styles from './Boards.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMove, onDelete }) => {
   const [t] = useTranslation();
@@ -87,7 +88,7 @@ const Boards = React.memo(({ items, currentId, canEdit, onCreate, onUpdate, onMo
 
   return (
     <div className={styles.wrapper} onWheel={handleWheel}>
-      <div ref={tabsWrapper} className={styles.tabsWrapper}>
+      <div ref={tabsWrapper} className={classNames(styles.tabsWrapper, gStyles.scrollableX)}>
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="horizontal">
             {({ innerRef, droppableProps, placeholder }) => (

@@ -81,7 +81,7 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
       <Popup.Header>{t('common.notifications', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {items.length > 0 ? (
-          <div className={classNames(styles.wrapper, gStyles.scrollableYList)}>
+          <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
             {items.map((item) => (
               <div key={item.id} className={styles.item}>
                 {item.card && item.activity ? (
