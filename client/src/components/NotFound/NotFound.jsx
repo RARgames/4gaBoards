@@ -6,7 +6,7 @@ import FixedContainer from '../../containers/FixedContainer';
 
 import styles from './NotFound.module.scss';
 
-const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
+const NotFound = React.memo(({ path, isInitializing, isSocketDisconnected }) => {
   const [t] = useTranslation();
   const mainTitle = '4ga Boards';
 
@@ -20,7 +20,7 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
         <Loader size={LoaderSize.Massive} />
       ) : (
         <>
-          <FixedContainer />
+          <FixedContainer path={path} />
           <h1 className={styles.text}>{t('common.pageNotFound', { context: 'title' })}</h1>
         </>
       )}
@@ -41,6 +41,7 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
 });
 
 NotFound.propTypes = {
+  path: PropTypes.string.isRequired,
   isInitializing: PropTypes.bool.isRequired,
   isSocketDisconnected: PropTypes.bool.isRequired,
 };
