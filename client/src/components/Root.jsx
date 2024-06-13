@@ -12,7 +12,7 @@ import NotFoundContainer from '../containers/NotFoundContainer';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'photoswipe/dist/photoswipe.css';
-import '../lib/custom-ui/styles.css';
+import '../assets/styles.css';
 
 import '../styles.module.scss';
 

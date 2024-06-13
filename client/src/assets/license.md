@@ -1,3 +1,4 @@
+ICONS:
 Some icons might be slightly edited.
 
 Author: Wilkobyl
@@ -14,7 +15,7 @@ All icons not listed above from /icons:
   Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. Edited icons do not contain this notice.
 
 All icons from /flags:
-  The MIT License - Copyright (c) 2020 @catamphetamine <purecatamphetamine@gmail.com>
+  MIT License - Copyright (c) 2020 @catamphetamine <purecatamphetamine@gmail.com>
 
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the
@@ -34,3 +35,13 @@ All icons from /flags:
   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+Fonts:
+  Semantic UI - 2.4.0 - https://github.com/Semantic-Org/Semantic-UI - http://www.semantic-ui.com/
+  MIT license http://opensource.org/licenses/MIT
+
+Style.css:
+  Fonts and some defaults - Semantic UI - 2.4.0
+  Custom styles - RARgames
+  Modified version of normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css
