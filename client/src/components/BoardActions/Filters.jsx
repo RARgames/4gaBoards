@@ -38,6 +38,7 @@ const Filters = React.memo(
             onUserSelect={onUserAdd}
             onUserDeselect={onUserRemove}
             offset={16}
+            wrapperClassName={styles.popupWrapper}
           >
             <Button title={t('common.filterByMembers', { context: 'title' })} className={styles.filterButton}>
               <span className={styles.filterTitle}>{`${t('common.members')}:`}</span>
@@ -63,6 +64,7 @@ const Filters = React.memo(
             onMove={onLabelMove}
             onDelete={onLabelDelete}
             offset={16}
+            wrapperClassName={styles.popupWrapper}
           >
             <Button title={t('common.filterByLabels', { context: 'title' })} className={styles.filterButton}>
               <span className={styles.filterTitle}>{`${t('common.labels')}:`}</span>
