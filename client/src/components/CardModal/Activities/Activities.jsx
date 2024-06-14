@@ -80,7 +80,7 @@ const Activities = React.memo(
       return () => {
         observer.disconnect();
       };
-    }, [handleVisibilityChange, onFetch]);
+    }, [handleVisibilityChange, onFetch, items]);
 
     // TODO fix activities not in order - by date
     // TODO add number of comments
