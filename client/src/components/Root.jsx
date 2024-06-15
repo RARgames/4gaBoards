@@ -36,7 +36,7 @@ function Root({ store, history }) {
           <Route path={Paths.SETTINGS_INSTANCE} element={<CoreContainer path={Paths.SETTINGS_INSTANCE} />} />
           <Route path={Paths.SETTINGS_USERS} element={<CoreContainer path={Paths.SETTINGS_USERS} />} />
           <Route path={Paths.SETTINGS_PROJECT} element={<CoreContainer path={Paths.SETTINGS_PROJECT} />} />
-          <Route path="*" element={<NotFoundContainer path={Paths.SETTINGS_PROJECT} />} />
+          <Route path="*" element={<NotFoundContainer path="*" />} />
         </Routes>
       </ReduxRouter>
     </Provider>
