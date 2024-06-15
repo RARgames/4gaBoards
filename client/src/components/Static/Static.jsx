@@ -28,7 +28,7 @@ function Static({ path, projectId, cardId, board }) {
     ].includes(path)
   ) {
     return (
-      <div className={styles.wrapper}>
+      <div className={classNames(styles.wrapper, styles.wrapperFlex)}>
         <SettingsContainer path={path} />
       </div>
     );

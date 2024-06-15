@@ -10,6 +10,7 @@ import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
 
 import styles from './Projects.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 import globalStyles from '../../styles.module.scss';
 import ProjectAddPopup from '../ProjectAddPopup';
 
@@ -24,7 +25,7 @@ const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreat
   }, [canAdd]);
 
   return (
-    <div className={styles.projectsWrapper}>
+    <div className={classNames(styles.projectsWrapper, gStyles.scrollableY)}>
       {items.map((item) => (
         <div
           key={item.id}

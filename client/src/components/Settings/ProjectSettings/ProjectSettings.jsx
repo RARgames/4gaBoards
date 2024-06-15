@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import InformationEdit from './InformationEdit';
 import BackgroundPane from './BackgroundPane';
@@ -30,7 +29,7 @@ const ProjectSettings = React.memo(
     }, [onUpdate, projectId]);
 
     return (
-      <div className={classNames(sShared.wrapper, gStyles.scrollableY)}>
+      <div className={sShared.wrapper}>
         <div className={sShared.header}>
           <div className={styles.headerButtonOffset} />
           <h2 className={sShared.headerText}>{t('common.projectSettings')}</h2>

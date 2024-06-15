@@ -20,11 +20,17 @@
   }
 
   .projectsWrapper {
+    height: 100%;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-auto-rows: 120px;
     gap: 20px;
-    margin: 20px;
+    padding: 20px;
+
+    @media (max-width: 240px) {
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    }
   }
 
   .projectWrapper {

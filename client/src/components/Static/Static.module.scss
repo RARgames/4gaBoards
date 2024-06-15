@@ -22,24 +22,19 @@
   }
 
   .wrapper {
-    height: 100%;
-    margin-top: 50px;
+    height: calc(100vh - 50px);
     background: var(--backgroundColor);
   }
 
   .wrapperBoard {
-    margin-top: 174px;
+    height: calc(100vh - 174px);
   }
 
   .wrapperFlex {
     display: flex;
   }
 
-  .wrapperLoader {
-    position: relative;
-  }
-
   .wrapperProject {
-    margin-top: 98px;
+    height: calc(100vh - 98px);
   }
 }

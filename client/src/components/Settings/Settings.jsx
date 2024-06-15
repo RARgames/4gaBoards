@@ -57,18 +57,16 @@ const Settings = React.memo(({ path, realPath, isAdmin, managedProjects }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Button
-        style={ButtonStyle.Icon}
-        title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')}
-        onClick={toggleSidebar}
-        className={classNames(styles.minimizeButton, !sidebarShown && styles.minimizeButtonHidden)}
-      >
-        <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
+      <Button style={ButtonStyle.Icon} title={t('common.showSidebar')} onClick={toggleSidebar} className={classNames(styles.showSidebarButton, sidebarShown && styles.showSidebarButtonHidden)}>
+        <Icon type={IconType.Show} size={IconSize.Size18} />
       </Button>
       <div className={classNames(styles.sidebar, gStyles.scrollableY, !sidebarShown && styles.sidebarHidden)}>
         <div className={styles.sidebarTitle}>
           <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
           {t('common.settings')}
+          <Button style={ButtonStyle.Icon} title={t('common.hideSidebar')} onClick={toggleSidebar} className={styles.hideSidebarButton}>
+            <Icon type={IconType.Hide} size={IconSize.Size18} />
+          </Button>
         </div>
         <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_PROFILE && styles.sidebarActive)}>
           <Link to={Paths.SETTINGS_PROFILE}>

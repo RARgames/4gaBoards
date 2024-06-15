@@ -263,12 +263,6 @@
       display: none !important;
     }
   }
-
-  #root {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
 }
 
 :global(#app) {

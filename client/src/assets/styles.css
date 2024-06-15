@@ -134,8 +134,11 @@ input[type="password"] {
 
 /* Page defaults */
 html,
-body {
+body,
+#root {
   height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 html {
@@ -146,7 +149,6 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
-  min-width: 320px;
   background: #22252a;
   font-family: "Museo Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 14px;

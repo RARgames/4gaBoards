@@ -1,30 +1,4 @@
 :global(#app) {
-  .message {
-    background: #eb5a46;
-    border-radius: 4px;
-    bottom: 20px;
-    box-shadow: #b04632 0 1px 0;
-    padding: 12px 18px;
-    position: fixed;
-    right: 20px;
-    width: 390px;
-    z-index: 10001;
-  }
-
-  .messageContent {
-    color: #fff;
-    font-size: 16px;
-    line-height: 1.4;
-  }
-
-  .messageHeader {
-    color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
-
   .text {
     text-align: center;
     color: var(--textColor0);
@@ -115,23 +89,33 @@
     }
   }
 
-  .minimizeButton {
+  .showSidebarButton {
     position: absolute;
     width: 25px;
     height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 11;
-    top: 7px;
-    left: 145px;
-    background-color: var(--backgroundSidebar);
-  }
-
-  .minimizeButtonHidden {
+    z-index: 1;
     top: 7px;
     left: 6px;
     background-color: var(--backgroundColor);
+  }
+
+  .showSidebarButtonHidden {
+    visibility: hidden;
+  }
+
+  .hideSidebarButton {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 7px;
+    left: 145px;
+    background-color: var(--backgroundSidebar);
   }
 
   .sidebarHidden {
