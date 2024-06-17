@@ -80,23 +80,21 @@
   --textColorCounter: #798d99;
 
   .controls {
-    height: 32px;
+    display: flex;
+    justify-content: right;
     margin-top: 5px;
-    text-align: right;
   }
 
   .controlsSpaceBetween {
-    height: 32px;
-    margin-top: 5px;
     display: flex;
     justify-content: space-between;
+    margin-top: 5px;
   }
 
   .controlsCenter {
-    height: 32px;
-    margin-top: 5px;
     display: flex;
     justify-content: center;
+    margin-top: 5px;
   }
 
   .scrollableXY {
