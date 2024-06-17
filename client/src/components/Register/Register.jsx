@@ -10,6 +10,7 @@ import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
 import styles from './Register.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -130,7 +131,7 @@ const Register = React.memo(
     }, [focusPasswordFieldState]);
 
     return (
-      <div className={styles.wrapper}>
+      <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
         <div className={styles.loginWrapper}>
           <img src={logo} className={styles.logo} alt="4ga Boards" />
           <h1 className={styles.formTitle}>{t('common.createYourAccount')}</h1>

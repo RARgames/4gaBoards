@@ -2,6 +2,7 @@ import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Input, Form, Message, MessageStyle } from '../Utils';
 
@@ -10,6 +11,7 @@ import { isUsername } from '../../utils/validator';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
 import styles from './Login.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -115,7 +117,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
   }, [focusPasswordFieldState]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
       <div className={styles.loginWrapper}>
         <img src={logo} className={styles.logo} alt="4ga Boards" />
         <h1 className={styles.formTitle}>{t('common.logInToBoards')}</h1>
