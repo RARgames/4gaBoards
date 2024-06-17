@@ -208,15 +208,12 @@ export default class extends BaseModel {
 
         break;
       }
-      case ActionTypes.ACTIVITIES_FETCH: {
-        const cardModel = Card.withId(payload.cardId);
-        cardModel.deleteActivities(); // TODO hacky way to refresh activities before fetching new ones
-        cardModel.update({
+      case ActionTypes.ACTIVITIES_FETCH:
+        Card.withId(payload.cardId).update({
           isActivitiesFetching: true,
         });
 
         break;
-      }
       case ActionTypes.ACTIVITIES_FETCH__SUCCESS:
         Card.withId(payload.cardId).update({
           isActivitiesFetching: false,
@@ -269,9 +266,7 @@ export default class extends BaseModel {
   }
 
   getFilteredOrderedInCardActivitiesQuerySet() {
-    const filter = {
-      isInCard: true,
-    };
+    const filter = {};
 
     if (!this.isActivitiesDetailsVisible) {
       filter.type = ActivityTypes.COMMENT_CARD;
