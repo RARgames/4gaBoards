@@ -45,6 +45,7 @@
     border-radius: 2px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     position: relative;
+    border: 2px solid transparent;
 
     &:hover {
       background: var(--backgroundCardSelected);
@@ -80,7 +81,7 @@
   }
 
   .details {
-    padding: 6px 8px 0;
+    padding: 4px 8px 0 4px;
   }
 
   .labels {
