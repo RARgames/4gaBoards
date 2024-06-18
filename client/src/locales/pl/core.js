@@ -132,7 +132,7 @@ export default {
       enableLocalRegistration: 'Lokalna rejestracja użytkowników',
       enableRegistration: 'Rejestracja użytkowników',
       enableSsoRegistration: 'Rejestracja przez SSO',
-      enterCardTitle: 'Podaj tytuł karty...  [Ctrl+Enter] żeby otworzyć',
+      enterCardTitle: 'Podaj tytuł karty... [Ctrl+Enter] - otwórz',
       enterDescription: 'Podaj opis...',
       enterFilename: 'Podaj nazwę pliku',
       enterListTitle: 'Podaj tytuł listy...',
@@ -240,7 +240,7 @@ export default {
       weakPassword: 'Użyj silniejszego hasła',
       website: '4gaBoards.com',
       writeComment: 'Napisz komentarz...',
-      writeCommentHint: '[Ctrl+Enter] żeby wysłać',
+      writeCommentHint: '[Ctrl+Enter] - wyślij',
     },
 
     action: {

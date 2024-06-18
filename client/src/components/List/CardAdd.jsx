@@ -106,17 +106,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
 
   return (
     <Form className={classNames(styles.wrapper, !isOpened && styles.wrapperClosed)} onSubmit={handleSubmit}>
-      <TextArea
-        ref={nameField}
-        name="name"
-        value={data.name}
-        placeholder={t('common.enterCardTitle')}
-        maxRows={3}
-        className={styles.field}
-        onKeyDown={handleFieldKeyDown}
-        onChange={handleChange}
-        onBlur={handleFieldBlur}
-      />
+      <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterCardTitle')} maxRows={3} onKeyDown={handleFieldKeyDown} onChange={handleChange} onBlur={handleFieldBlur} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
         <Button style={ButtonStyle.Submit} content={t('action.addCard')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />

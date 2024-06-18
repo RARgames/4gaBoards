@@ -126,7 +126,7 @@ export default {
       enableLocalRegistration: 'Local User Registration',
       enableRegistration: 'User Registration',
       enableSsoRegistration: 'SSO User Registration',
-      enterCardTitle: 'Enter card title... [Ctrl+Enter] to open',
+      enterCardTitle: 'Enter card title... [Ctrl+Enter] - open',
       enterDescription: 'Enter description...',
       enterFilename: 'Enter filename',
       enterListTitle: 'Enter list title...',
@@ -234,7 +234,7 @@ export default {
       weakPassword: 'Please use stronger password',
       website: '4gaBoards.com',
       writeComment: 'Write a comment...',
-      writeCommentHint: '[Ctrl+Enter] to submit',
+      writeCommentHint: '[Ctrl+Enter] - submit',
     },
 
     action: {
