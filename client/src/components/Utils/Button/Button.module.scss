@@ -188,6 +188,11 @@
         fill: var(--textColor4);
       }
     }
+
+    &:focus {
+      outline: none;
+      box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
+    }
   }
 
   .header {
