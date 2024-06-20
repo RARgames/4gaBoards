@@ -189,10 +189,11 @@
       }
     }
 
-    &:focus {
-      outline: none;
-      box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
-    }
+    //TODO temp disabled - until the popup button focus is handled correctly
+    // &:focus {
+    //   outline: none;
+    //   box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
+    // }
   }
 
   .header {
