@@ -58,7 +58,7 @@
   "dependencies": {
     "@babel/core": "^7.24.4",
     "@babel/eslint-parser": "^7.24.1",
-    "@babel/runtime": "^7.24.4",
+    "@babel/runtime": "^7.24.7",
     "@floating-ui/react": "^0.26.16",
     "@juggle/resize-observer": "^3.4.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.13",
