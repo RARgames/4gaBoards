@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup } from '../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup, Dropdown } from '../../Utils';
+import Config from '../../../constants/Config';
 
 import { useForm, useSteps } from '../../../hooks';
 import ImportStep from './ImportStep';
@@ -16,6 +17,10 @@ const StepTypes = {
 
 const AddStep = React.memo(({ onCreate, onClose }) => {
   const [t] = useTranslation();
+  const [template, setTemplate] = useState({
+    id: 'empty',
+    name: t('common.empty'),
+  });
 
   const [data, handleFieldChange, setData] = useForm({
     name: '',
@@ -28,6 +33,31 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
   const [focusNameFieldState, focusNameField] = useToggle();
 
   const nameField = useRef(null);
+
+  // TODO move to the templates file
+  const templates = useMemo(
+    () => [
+      {
+        id: 'empty',
+        name: t('common.empty'),
+      },
+      {
+        id: 'kanban',
+        name: t('common.kanban'),
+        lists: Array.from({ length: 5 }, (_, i) => ({
+          position: (i + 1) * Config.POSITION_GAP,
+          name: t(`common.${['ideas', 'todo', 'inProgress', 'toTest', 'done'][i]}`),
+          isCollapsed: false,
+        })),
+      },
+    ],
+    [t],
+  );
+  const selectedTemplate = useMemo(() => templates.find((temp) => temp.id === template.id), [templates, template]);
+
+  const handleTemplateChange = useCallback((value) => {
+    setTemplate(value);
+  }, []);
 
   const handleImportSelect = useCallback(
     (nextImport) => {
@@ -48,6 +78,7 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
     const cleanData = {
       ...data,
       name: data.name.trim(),
+      lists: template.lists,
     };
 
     if (!cleanData.name) {
@@ -57,7 +88,7 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
 
     onCreate(cleanData);
     onClose();
-  }, [onClose, data, onCreate]);
+  }, [data, template.lists, onCreate, onClose]);
 
   const handleImportClick = useCallback(() => {
     openStep(StepTypes.IMPORT);
@@ -83,6 +114,21 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+          {!data.import && (
+            <div>
+              <div className={styles.text}>{t('common.template')}</div>
+              <Dropdown
+                options={templates}
+                placeholder={selectedTemplate.name}
+                defaultItem={selectedTemplate}
+                isSearchable
+                selectFirstOnSearch
+                onChange={handleTemplateChange}
+                className={styles.dropdown}
+                dropdownMenuClassName={styles.dropdownMenu}
+              />
+            </div>
+          )}
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />

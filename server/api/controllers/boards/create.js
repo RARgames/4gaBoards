@@ -43,6 +43,9 @@ module.exports = {
       type: 'string',
       isNotEmptyString: true,
     },
+    lists: {
+      type: 'json',
+    },
   },
 
   exits: {
@@ -112,6 +115,19 @@ module.exports = {
       requestId: inputs.requestId,
       request: this.req,
     });
+
+    if (inputs.lists && !inputs.importType) {
+      inputs.lists.map(async (list) => {
+        const valuesList = _.pick(list, ['position', 'name', 'isCollapsed']);
+        await sails.helpers.lists.createOne.with({
+          values: {
+            ...valuesList,
+            board,
+          },
+          request: this.req,
+        });
+      });
+    }
 
     return {
       item: board,

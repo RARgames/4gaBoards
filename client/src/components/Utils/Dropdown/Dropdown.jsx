@@ -122,7 +122,7 @@ const Dropdown = React.forwardRef(
           if (returnOnChangeEvent) {
             onChange({ target: { name: dropdown.current.name, value: item.id } });
           } else {
-            onChange(item.id);
+            onChange(item);
           }
           setSavedDefaultItem(null);
           if (keepState) {

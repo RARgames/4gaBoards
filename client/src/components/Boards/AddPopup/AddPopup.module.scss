@@ -11,4 +11,19 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .dropdownMenu {
+    z-index: 2001;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .text {
+    color: var(--textColor1);
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 6px;
+  }
 }

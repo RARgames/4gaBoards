@@ -35,7 +35,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdat
 
   const handleLanguageChange = useCallback(
     (value) => {
-      onLanguageUpdate(value === 'auto' ? null : value); // FIXME: hack
+      onLanguageUpdate(value.id === 'auto' ? null : value.id); // FIXME: hack
     },
     [onLanguageUpdate],
   );
