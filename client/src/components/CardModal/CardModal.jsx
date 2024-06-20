@@ -307,7 +307,7 @@ const CardModal = React.memo(
           <div className={styles.headerTitleWrapper}>
             <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
               {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <div className={classNames(styles.headerTitle, canEdit && gStyles.cursorPointer)} onClick={handleNameEdit}>
+              <div className={classNames(styles.headerTitle, canEdit && gStyles.cursorPointer)} onClick={handleNameEdit} title={name}>
                 {name}
               </div>
             </NameField>

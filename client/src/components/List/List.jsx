@@ -150,7 +150,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
           >
             <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
           </Button>
-          <div className={styles.headerNameCollapsed}>{name}</div>
+          <div className={styles.headerNameCollapsed} title={name}>
+            {name}
+          </div>
           <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
         </div>
       )}
@@ -196,7 +198,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               </Button>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <div className={classNames(styles.headerName, canEdit && gStyles.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement}>
+                <div className={classNames(styles.headerName, canEdit && gStyles.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={name}>
                   {name}
                 </div>
               </NameEdit>

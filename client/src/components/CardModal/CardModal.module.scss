@@ -91,6 +91,10 @@
     padding: 3px;
     margin-bottom: 1px;
     word-break: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
 
   .headerListFieldWrapper {
