@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import Config from '../../../constants/Config';
 import { Icon, IconType, IconSize, ExternalLink } from '../../Utils';
@@ -10,6 +10,21 @@ import sShared from '../SettingsShared.module.scss';
 
 const AboutSettings = React.memo(() => {
   const [t] = useTranslation();
+  const [latestVersion, setLatestVersion] = useState(t('common.fetching'));
+
+  const fetchLatestVersion = useCallback(async () => {
+    try {
+      const response = await fetch('https://raw.githubusercontent.com/RARgames/4gaBoards/main/package.json');
+      const data = await response.json();
+      setLatestVersion(data.version);
+    } catch (error) {
+      setLatestVersion(t('common.unableToFetch'));
+    }
+  }, [t]);
+
+  useEffect(() => {
+    fetchLatestVersion();
+  }, [fetchLatestVersion]);
 
   return (
     <div className={sShared.wrapper}>
@@ -20,6 +35,9 @@ const AboutSettings = React.memo(() => {
         <img src={logo} className={styles.logo} alt="4ga Boards" />
         <div className={styles.version}>
           {t('common.version')} {Config.VERSION}
+        </div>
+        <div className={styles.version}>
+          {t('common.latestVersion')} {latestVersion}
         </div>
         <div className={styles.links}>
           <div className={styles.link}>
