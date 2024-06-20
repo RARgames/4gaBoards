@@ -208,6 +208,7 @@ export default {
       settingsUsers: 'Settings: Users',
       showSidebar: 'Show Sidebar',
       showTasks: 'Show Tasks',
+      simple: 'Simple',
       ssoGoogleEmail: 'Google E-mail',
       startTimer: 'Start Timer',
       stopTimer: 'Stop Timer',

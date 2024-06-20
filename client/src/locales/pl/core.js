@@ -212,6 +212,7 @@ export default {
       settingsUsers: 'Ustawienia: Użytkownicy',
       showSidebar: 'Pokaż panel boczny',
       showTasks: 'Pokaż zadania',
+      simple: 'Prosty',
       ssoGoogleEmail: 'E-mail Google',
       startTimer: 'Włącz stoper',
       stopTimer: 'Wyłącz stoper',

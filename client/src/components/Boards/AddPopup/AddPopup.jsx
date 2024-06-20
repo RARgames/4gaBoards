@@ -42,6 +42,15 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
         name: t('common.empty'),
       },
       {
+        id: 'simple',
+        name: t('common.simple'),
+        lists: Array.from({ length: 4 }, (_, i) => ({
+          position: (i + 1) * Config.POSITION_GAP,
+          name: t(`common.${['ideas', 'todo', 'inProgress', 'done'][i]}`),
+          isCollapsed: false,
+        })),
+      },
+      {
         id: 'kanban',
         name: t('common.kanban'),
         lists: Array.from({ length: 5 }, (_, i) => ({
