@@ -49,7 +49,7 @@ const Item = React.memo(({ id, index, name, isCompleted, isPersisted, canEdit, o
             <Checkbox checked={isCompleted} disabled={!isPersisted || !canEdit} className={styles.checkbox} onChange={handleToggleChange} />
             <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <span className={classNames(styles.task, isCompleted && styles.taskCompleted, canEdit && styles.taskEditable)} onClick={handleClick}>
+              <span className={classNames(styles.task, isCompleted && styles.taskCompleted, canEdit && styles.taskEditable)} onClick={handleClick} title={name}>
                 {name}
               </span>
               {isPersisted && canEdit && (

@@ -37,7 +37,7 @@ const Tasks = React.memo(({ items }) => {
       {isOpened && (
         <ul className={styles.tasks}>
           {items.map((item) => (
-            <li key={item.id} className={classNames(styles.task, item.isCompleted && styles.taskCompleted)}>
+            <li key={item.id} title={item.name} className={classNames(styles.task, item.isCompleted && styles.taskCompleted)}>
               {item.name}
             </li>
           ))}

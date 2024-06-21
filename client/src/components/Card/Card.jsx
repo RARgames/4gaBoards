@@ -120,7 +120,9 @@ const Card = React.memo(
       <>
         <div className={styles.cardTitle}>
           <div className={styles.details}>
-            <div className={styles.name}>{name}</div>
+            <div title={name} className={styles.name}>
+              {name}
+            </div>
           </div>
           {notificationsTotal > 0 && <span className={styles.notification}>{notificationsTotal}</span>}
           {notificationsTotal > 9 && <span className={classNames(styles.notification, styles.notificationFull)}>9+</span>}

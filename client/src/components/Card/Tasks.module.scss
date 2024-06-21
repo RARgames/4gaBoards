@@ -51,8 +51,13 @@
     display: block;
     font-size: 12px;
     line-height: 14px;
-    padding-bottom: 6px;
-    padding-left: 14px;
+    margin-bottom: 4px;
+    padding-left: 16px;
+    word-break: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
     &:before {
       content: "–";

@@ -17,10 +17,13 @@
 
   .task {
     color: var(--textColor1);
-    overflow: hidden;
-    overflow-wrap: break-word;
     width: 100%;
     margin-left: 4px;
+    word-break: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .taskCompleted {
