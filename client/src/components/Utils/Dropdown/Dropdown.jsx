@@ -117,6 +117,7 @@ const Dropdown = React.forwardRef(
       (item) => {
         if (item) {
           if (savedDefaultItem && savedDefaultItem.id === item.id) {
+            close();
             return;
           }
           if (returnOnChangeEvent) {
@@ -156,17 +157,23 @@ const Dropdown = React.forwardRef(
       }
     }, [defaultItem, getOptions, isOpened, open, savedDefaultItem, selectItemByIndex]);
 
-    const handleBlur = useCallback(() => {
-      if (onBlur) {
-        onBlur();
-      }
-      if (submitOnBlur) {
-        handleSubmit(getCurrItem());
-      }
-      if (!stayOpenOnBlur) {
-        close();
-      }
-    }, [close, stayOpenOnBlur, getCurrItem, handleSubmit, onBlur, submitOnBlur]);
+    const handleBlur = useCallback(
+      (event) => {
+        if (event.relatedTarget && event.relatedTarget.closest(`.${styles.dropdownMenu}`)) {
+          return;
+        }
+        if (onBlur) {
+          onBlur();
+        }
+        if (submitOnBlur) {
+          handleSubmit(getCurrItem());
+        }
+        if (!stayOpenOnBlur) {
+          close();
+        }
+      },
+      [close, getCurrItem, handleSubmit, onBlur, stayOpenOnBlur, submitOnBlur],
+    );
 
     const getDisplay = useCallback(() => {
       if (isOpened && selectedItem) {
