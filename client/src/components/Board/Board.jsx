@@ -18,9 +18,7 @@ const parseDndDestination = (dndId) => dndId.split(':');
 const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove }) => {
   const [t] = useTranslation();
   const [isListAddOpened, setIsListAddOpened] = useState(false);
-
   const wrapper = useRef(null);
-  const mainWrapper = useRef(null);
   const prevPosition = useRef(null);
 
   const handleAddListClick = useCallback(() => {
@@ -80,9 +78,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
       }
       event.preventDefault();
 
-      mainWrapper.current.scrollBy({
-        left: prevPosition.current - event.screenX,
-      });
+      wrapper.current.scrollBy({ left: prevPosition.current - event.screenX });
       prevPosition.current = event.screenX;
     },
     [prevPosition],
@@ -94,7 +90,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
 
   useEffect(() => {
     if (isListAddOpened) {
-      mainWrapper.current.scrollLeft = mainWrapper.current.scrollWidth;
+      wrapper.current.scrollLeft = wrapper.current.scrollWidth;
     }
   }, [listIds, isListAddOpened]);
 
@@ -109,40 +105,38 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [handleWindowMouseUp, handleWindowMouseMove]);
 
   return (
-    <div ref={mainWrapper} className={classNames(styles.mainWrapper, gStyles.scrollableX)}>
+    <div className={styles.mainWrapper}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div ref={wrapper} className={classNames(styles.wrapper)} onMouseDown={handleMouseDown}>
-        <div className={classNames(isCardModalOpened && styles.listsModalOpen)}>
-          <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
-              {({ innerRef, droppableProps, placeholder }) => (
-                <div
-                  {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-                  data-drag-scroller
-                  ref={innerRef}
-                  className={classNames(styles.lists, gStyles.cursorGrab)}
-                >
-                  {listIds.map((listId, index) => (
-                    <ListContainer key={listId} id={listId} index={index} />
-                  ))}
-                  {placeholder}
-                  {canEdit && (
-                    <div data-drag-scroller className={styles.list}>
-                      {isListAddOpened ? (
-                        <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
-                      ) : (
-                        <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
-                          <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
-                          <span className={styles.addListButtonText}>{t('action.addList')}</span>
-                        </Button>
-                      )}
-                    </div>
-                  )}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </div>
+      <div ref={wrapper} className={classNames(styles.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
+            {({ innerRef, droppableProps, placeholder }) => (
+              <div
+                {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
+                data-drag-scroller
+                ref={innerRef}
+                className={classNames(styles.lists, gStyles.cursorGrab)}
+              >
+                {listIds.map((listId, index) => (
+                  <ListContainer key={listId} id={listId} index={index} />
+                ))}
+                {placeholder}
+                {canEdit && (
+                  <div data-drag-scroller className={styles.list}>
+                    {isListAddOpened ? (
+                      <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
+                    ) : (
+                      <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
+                        <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
+                        <span className={styles.addListButtonText}>{t('action.addList')}</span>
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
       {isCardModalOpened && <CardModalContainer />}
     </div>

@@ -38,10 +38,7 @@
     display: inline-flex;
     height: 100%;
     min-width: 100%;
-  }
-
-  .listsModalOpen {
-    width: calc(100vw - 672px);
+    padding: 0 2px 0 20px;
   }
 
   .panel {
@@ -55,10 +52,11 @@
   }
 
   .wrapper {
-    margin: 0 2px 0 20px;
+    flex: 1;
   }
 
   .mainWrapper {
     display: flex;
+    width: 100%;
   }
 }

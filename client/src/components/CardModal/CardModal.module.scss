@@ -31,14 +31,11 @@
 
   .wrapper {
     width: 650px;
-    position: fixed;
-    right: 0;
-    display: inline-flex;
   }
 
-  @media (max-width: 926px) {
+  @media (max-width: 800px) {
     .wrapper {
-      width: 95%;
+      width: 100%;
     }
   }
 
