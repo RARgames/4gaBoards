@@ -61,6 +61,7 @@ const ActionsStep = React.memo(
               onMessageDismiss={onUsernameUpdateMessageDismiss}
               onBack={handleBack}
               onClose={onClose}
+              ssoGoogleEmail={user.ssoGoogleEmail}
             />
           );
         case StepTypes.EDIT_EMAIL:

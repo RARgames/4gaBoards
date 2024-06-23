@@ -6,13 +6,13 @@ import entryActions from '../../entry-actions';
 import AccountSettings from '../../components/Settings/AccountSettings';
 
 const mapStateToProps = (state) => {
-  const { email, username, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
-
+  const { email, username, emailUpdateForm, usernameUpdateForm, ssoGoogleEmail } = selectors.selectCurrentUser(state);
   return {
     email,
     username,
     emailUpdateForm,
     usernameUpdateForm,
+    ssoGoogleEmail,
   };
 };
 

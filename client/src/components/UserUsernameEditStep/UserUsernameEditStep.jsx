@@ -34,7 +34,7 @@ const createMessage = (error) => {
   }
 };
 
-const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, error, usePasswordConfirmation, onUpdate, onMessageDismiss, onBack, onClose }) => {
+const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, error, usePasswordConfirmation, onUpdate, onMessageDismiss, onBack, onClose, ssoGoogleEmail }) => {
   const [t] = useTranslation();
   const wasSubmitting = usePrevious(isSubmitting);
 
@@ -66,7 +66,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
       return;
     }
 
-    if (usePasswordConfirmation) {
+    if (usePasswordConfirmation && !ssoGoogleEmail) {
       if (!cleanData.currentPassword) {
         currentPasswordField.current.focus();
         return;
@@ -76,7 +76,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
     }
 
     onUpdate(cleanData);
-  }, [username, usePasswordConfirmation, onUpdate, onClose, data]);
+  }, [data, username, usePasswordConfirmation, ssoGoogleEmail, onUpdate, onClose]);
 
   useEffect(() => {
     usernameField.current.focus({
@@ -109,7 +109,9 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
   }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
 
   useDidUpdate(() => {
-    currentPasswordField.current.focus();
+    if (!ssoGoogleEmail) {
+      currentPasswordField.current.focus();
+    }
   }, [focusCurrentPasswordFieldState]);
 
   return (
@@ -120,7 +122,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newUsername')}</div>
           <Input ref={usernameField} name="username" value={data.username} placeholder={username} className={styles.field} onChange={handleFieldChange} />
-          {usePasswordConfirmation && (
+          {usePasswordConfirmation && !ssoGoogleEmail && (
             <>
               <div className={styles.text}>{t('common.currentPassword')}</div>
               <Input.Password ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.fieldPassword} onChange={handleFieldChange} />
@@ -145,6 +147,8 @@ UserUsernameEditStep.propTypes = {
   onMessageDismiss: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  ssoGoogleEmail: PropTypes.string,
 };
 
 UserUsernameEditStep.defaultProps = {
