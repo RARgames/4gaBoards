@@ -8,7 +8,7 @@ import DeletePopup from '../../DeletePopup';
 
 import styles from './ItemComment.module.scss';
 
-const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, onUpdate, onDelete }) => {
+const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onCurrentUserUpdate }) => {
   const [t] = useTranslation();
 
   const commentEdit = useRef(null);
@@ -47,8 +47,17 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, o
           </div>
         )}
       </div>
-      <CommentEdit ref={commentEdit} defaultData={data} onUpdate={onUpdate}>
-        <MDPreview source={data.text} className={styles.preview} />
+      <CommentEdit
+        ref={commentEdit}
+        defaultData={data}
+        placeholder={t('common.enterComment')}
+        commentMode={commentMode}
+        isGithubConnected={isGithubConnected}
+        githubRepo={githubRepo}
+        onUpdate={onUpdate}
+        onCurrentUserUpdate={onCurrentUserUpdate}
+      >
+        <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} className={styles.preview} />
       </CommentEdit>
     </div>
   );
@@ -60,8 +69,12 @@ ItemComment.propTypes = {
   isPersisted: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
+  commentMode: PropTypes.string.isRequired,
+  isGithubConnected: PropTypes.bool.isRequired,
+  githubRepo: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onCurrentUserUpdate: PropTypes.func.isRequired,
 };
 
 export default ItemComment;

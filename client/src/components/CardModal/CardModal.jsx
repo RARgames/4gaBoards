@@ -61,6 +61,8 @@ const CardModal = React.memo(
     canEdit,
     canEditCommentActivities,
     canEditAllCommentActivities,
+    commentMode,
+    onCurrentUserUpdate,
     onUserUpdate,
     onUpdate,
     onMove,
@@ -623,6 +625,9 @@ const CardModal = React.memo(
         isDetailsFetching={isActivitiesDetailsFetching}
         canEdit={canEditCommentActivities}
         canEditAllComments={canEditAllCommentActivities}
+        commentMode={commentMode}
+        isGithubConnected={isGithubConnected}
+        githubRepo={githubRepo}
         onFetch={onActivitiesFetch}
         onDetailsToggle={onActivitiesDetailsToggle}
         onCommentCreate={onCommentActivityCreate}
@@ -630,6 +635,7 @@ const CardModal = React.memo(
         onCommentDelete={onCommentActivityDelete}
         toggleCommShown={handleToggleCommShown}
         commShown={commShown}
+        onCurrentUserUpdate={onCurrentUserUpdate}
       />
     );
 
@@ -702,6 +708,8 @@ CardModal.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   canEditCommentActivities: PropTypes.bool.isRequired,
   canEditAllCommentActivities: PropTypes.bool.isRequired,
+  commentMode: PropTypes.string.isRequired,
+  onCurrentUserUpdate: PropTypes.func.isRequired,
   onUserUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,

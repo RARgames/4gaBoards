@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import MarkdownEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
 import remarkGithub from 'remark-github';
+import classNames from 'classnames';
 import { Icon, IconType, IconSize } from '../Icon';
 
 import styles from './MD.module.scss';
@@ -61,6 +62,7 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, .
           },
         ),
       ]}
+      className={classNames(styles.editor, className)}
       // TODO add mention
       // TODO add full functionality to mention and issue
     />

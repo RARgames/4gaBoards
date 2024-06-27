@@ -44,6 +44,7 @@ export default class extends BaseModel {
     language: attr(),
     subscribeToOwnCards: attr(),
     descriptionMode: attr(),
+    commentMode: attr(),
     descriptionShown: attr(),
     tasksShown: attr(),
     attachmentsShown: attr(),

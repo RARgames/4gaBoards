@@ -47,6 +47,11 @@ module.exports = {
       isIn: User.DESCRIPTION_MODES,
       isNotEmptyString: true,
     },
+    commentMode: {
+      type: 'string',
+      isIn: User.DESCRIPTION_MODES,
+      isNotEmptyString: true,
+    },
     descriptionShown: {
       type: 'boolean',
     },
@@ -101,6 +106,7 @@ module.exports = {
         'language',
         'subscribeToOwnCards',
         'descriptionMode',
+        'commentMode',
         'descriptionShown',
         'tasksShown',
         'attachmentsShown',

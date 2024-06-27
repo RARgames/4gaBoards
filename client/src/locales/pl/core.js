@@ -134,6 +134,7 @@ export default {
       enableSsoRegistration: 'Rejestracja przez SSO',
       enterCardTitle: 'Podaj tytuł karty... [Ctrl+Enter] - otwórz',
       enterDescription: 'Podaj opis...',
+      enterComment: 'Podaj komentarz...',
       enterFilename: 'Podaj nazwę pliku',
       enterListTitle: 'Podaj tytuł listy...',
       enterProjectTitle: 'Podaj tytuł projektu',

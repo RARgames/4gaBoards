@@ -130,6 +130,7 @@ export default {
       enableSsoRegistration: 'SSO User Registration',
       enterCardTitle: 'Enter card title... [Ctrl+Enter] - open',
       enterDescription: 'Enter description...',
+      enterComment: 'Enter comment...',
       enterFilename: 'Enter filename',
       enterListTitle: 'Enter list title...',
       enterProjectTitle: 'Enter project title',

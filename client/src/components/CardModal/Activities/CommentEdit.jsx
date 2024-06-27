@@ -1,20 +1,20 @@
 import { dequal } from 'dequal';
-import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, TextArea } from '../../Utils';
+import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
 
-import { useClosableForm, useForm } from '../../../hooks';
+import { useForm } from '../../../hooks';
 
 import styles from './CommentEdit.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
-const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) => {
+const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onCurrentUserUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [data, handleFieldChange, setData, handleFocus] = useForm(null);
-
-  const textField = useRef(null);
+  const [wasOpen, setWasOpen] = useState(false);
+  const [data, handleFieldChange, setData] = useForm(null);
+  const textareaRef = useRef(null);
 
   const open = useCallback(() => {
     setIsOpened(true);
@@ -28,8 +28,6 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
     setIsOpened(false);
     setData(null);
   }, [setData]);
-
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpened);
 
   const submit = useCallback(() => {
     const cleanData = {
@@ -46,18 +44,16 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
       onUpdate(cleanData);
     }
 
-    handleClearModified();
     close();
-  }, [data, defaultData, handleClearModified, close, onUpdate]);
+  }, [data, defaultData, close, onUpdate]);
 
   const handleSubmit = useCallback(() => {
     submit();
   }, [submit]);
 
   const handleCancel = useCallback(() => {
-    handleClearModified();
     close();
-  }, [close, handleClearModified]);
+  }, [close]);
 
   useImperativeHandle(
     ref,
@@ -79,19 +75,43 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
     [handleCancel, submit],
   );
 
+  const handleChange = useCallback(
+    (value) => {
+      const event = { target: { name: 'text', value } }; // TODO get name from mdEditorRef.current (causing first input delay)
+      handleFieldChange(event);
+    },
+    [handleFieldChange],
+  );
+
+  const handleBlur = useCallback(
+    (event) => {
+      if (event.relatedTarget && event.relatedTarget.closest(`.${styles.editor}`)) {
+        return;
+      }
+
+      if (event.target.value.trim() === defaultData.text.trim()) {
+        handleCancel();
+      }
+    },
+    [defaultData.text, handleCancel],
+  );
+
+  const handlePreviewUpdate = useCallback(
+    (preview) => {
+      // TODO hacky way to update UI faster
+      const timeout = setTimeout(() => {
+        onCurrentUserUpdate({ commentMode: preview });
+      }, 0);
+      return () => clearTimeout(timeout);
+    },
+    [onCurrentUserUpdate],
+  );
+
   useEffect(() => {
-    if (isOpened) {
-      textField.current.focus();
+    if (!isOpened) {
+      setWasOpen(false);
     }
   }, [isOpened]);
-
-  const handleChange = useCallback(
-    (event) => {
-      handleFieldChange(event);
-      handleValueChange(event, defaultData.text);
-    },
-    [defaultData, handleFieldChange, handleValueChange],
-  );
 
   if (!isOpened) {
     return children;
@@ -99,10 +119,38 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
 
   return (
     <Form onSubmit={handleSubmit}>
-      <TextArea ref={textField} name="text" value={data.text} className={styles.field} onKeyDown={handleFieldKeyDown} onChange={handleChange} onBlur={handleFieldBlur} onFocus={handleFocus} />
+      <MDEditor
+        name="text"
+        value={data.text}
+        ref={(node) => {
+          if (node) {
+            if (node.preview !== commentMode) {
+              handlePreviewUpdate(node.preview);
+            }
+            if (node.textarea && !wasOpen) {
+              setWasOpen(true);
+              textareaRef.current = node.textarea;
+              textareaRef.current.focus();
+              const { length } = textareaRef.current.value;
+              textareaRef.current.setSelectionRange(length, length);
+            }
+          }
+        }}
+        onChange={handleChange}
+        onKeyDown={handleFieldKeyDown}
+        onBlur={handleBlur}
+        preview={commentMode}
+        textareaProps={{
+          placeholder,
+          spellCheck: 'true',
+        }}
+        isGithubConnected={isGithubConnected}
+        githubRepo={githubRepo}
+        className={styles.editor}
+      />
       <div className={gStyles.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button style={ButtonStyle.Submit} content={t('action.save')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button style={ButtonStyle.Submit} content={t('action.save')} />
       </div>
     </Form>
   );
@@ -111,7 +159,12 @@ const CommentEdit = React.forwardRef(({ children, defaultData, onUpdate }, ref) 
 CommentEdit.propTypes = {
   children: PropTypes.element.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  placeholder: PropTypes.string.isRequired,
+  commentMode: PropTypes.string.isRequired,
+  isGithubConnected: PropTypes.bool.isRequired,
+  githubRepo: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onCurrentUserUpdate: PropTypes.func.isRequired,
 };
 
 export default React.memo(CommentEdit);

@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
   const activities = selectors.selectActivitiesForCurrentCard(state);
   const user = selectors.selectCurrentUser(state);
   const userId = user.id;
-  const { descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown } = user;
+  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown } = user;
 
   const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
 
@@ -72,12 +72,14 @@ const mapStateToProps = (state) => {
     canEdit: isCurrentUserEditor,
     canEditCommentActivities: isCurrentUserEditorOrCanComment,
     canEditAllCommentActivities: isCurrentUserManager,
+    commentMode,
   };
 };
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      onCurrentUserUpdate: entryActions.updateCurrentUser,
       onUserUpdate: entryActions.updateUser,
       onUpdate: entryActions.updateCurrentCard,
       onMove: entryActions.moveCurrentCard,

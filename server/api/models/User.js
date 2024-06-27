@@ -71,6 +71,13 @@ module.exports = {
       columnName: 'description_mode',
       defaultsTo: 'edit',
     },
+    commentMode: {
+      type: 'string',
+      isIn: DESCRIPTION_MODES,
+      isNotEmptyString: true,
+      columnName: 'comment_mode',
+      defaultsTo: 'edit',
+    },
     descriptionShown: {
       type: 'boolean',
       defaultsTo: true,

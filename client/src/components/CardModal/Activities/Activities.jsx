@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { ActivityTypes } from '../../../constants/Enums';
-import CommentAdd from './CommentAdd';
+import CommentEdit from './CommentEdit';
 import Item from './Item';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 
@@ -18,6 +18,9 @@ const Activities = React.memo(
     isDetailsFetching,
     canEdit,
     canEditAllComments,
+    commentMode,
+    isGithubConnected,
+    githubRepo,
     onFetch,
     onDetailsToggle,
     onCommentCreate,
@@ -25,9 +28,15 @@ const Activities = React.memo(
     onCommentDelete,
     toggleCommShown,
     commShown,
+    onCurrentUserUpdate,
   }) => {
     const [t] = useTranslation();
     const visibilityRef = useRef(null);
+    const commentAddRef = useRef(null);
+
+    const openAddComment = useCallback(() => {
+      commentAddRef.current?.open();
+    }, []);
 
     const handleToggleDetailsClick = useCallback(() => {
       if (!commShown) {
@@ -100,7 +109,20 @@ const Activities = React.memo(
         <div className={cStyles.moduleBody}>
           {commShown && (
             <>
-              {canEdit && <CommentAdd onCreate={onCommentCreate} />}
+              {canEdit && (
+                <CommentEdit
+                  ref={commentAddRef}
+                  defaultData={{ text: '' }}
+                  placeholder={`${t('common.enterComment')} ${t('common.writeCommentHint')}`}
+                  commentMode={commentMode}
+                  isGithubConnected={isGithubConnected}
+                  githubRepo={githubRepo}
+                  onUpdate={onCommentCreate}
+                  onCurrentUserUpdate={onCurrentUserUpdate}
+                >
+                  <Button style={ButtonStyle.Default} content={t('common.addComment')} onClick={openAddComment} />
+                </CommentEdit>
+              )}
               <div className={styles.comments}>
                 {items.map((item) =>
                   item.type === ActivityTypes.COMMENT_CARD ? (
@@ -111,8 +133,12 @@ const Activities = React.memo(
                       isPersisted={item.isPersisted}
                       user={item.user}
                       canEdit={(item.user.isCurrent && canEdit) || canEditAllComments}
+                      commentMode={commentMode}
+                      isGithubConnected={isGithubConnected}
+                      githubRepo={githubRepo}
                       onUpdate={(data) => handleCommentUpdate(item.id, data)}
                       onDelete={() => handleCommentDelete(item.id)}
+                      onCurrentUserUpdate={onCurrentUserUpdate}
                     />
                   ) : (
                     <Item key={item.id} type={item.type} data={item.data} createdAt={item.createdAt} user={item.user} />
@@ -136,6 +162,9 @@ Activities.propTypes = {
   isDetailsFetching: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   canEditAllComments: PropTypes.bool.isRequired,
+  commentMode: PropTypes.string.isRequired,
+  isGithubConnected: PropTypes.bool.isRequired,
+  githubRepo: PropTypes.string.isRequired,
   onFetch: PropTypes.func.isRequired,
   onDetailsToggle: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,
@@ -143,6 +172,7 @@ Activities.propTypes = {
   onCommentDelete: PropTypes.func.isRequired,
   toggleCommShown: PropTypes.func.isRequired,
   commShown: PropTypes.bool.isRequired,
+  onCurrentUserUpdate: PropTypes.func.isRequired,
 };
 
 export default Activities;
