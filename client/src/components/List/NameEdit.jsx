@@ -8,7 +8,7 @@ import { ResizeObserverSizeTypes } from '../../constants/Enums';
 import styles from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, onHeightChange }, ref) => {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
   const field = useRef(null);
@@ -16,13 +16,13 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
   const [nameEditHeight] = useResizeObserverSize(nameEditElement, ResizeObserverSizeTypes.CLIENT_HEIGHT);
 
   const open = useCallback(() => {
-    setIsOpened(true);
+    setIsOpen(true);
     setValue(defaultValue);
     onHeightChange(nameEditHeight);
   }, [defaultValue, nameEditHeight, onHeightChange, setValue]);
 
   const close = useCallback(() => {
-    setIsOpened(false);
+    setIsOpen(false);
     setValue(null);
     onClose();
   }, [onClose, setValue]);
@@ -76,12 +76,12 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
   }, [submit]);
 
   useEffect(() => {
-    if (isOpened) {
+    if (isOpen) {
       field.current.focus();
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
-  if (!isOpened) {
+  if (!isOpen) {
     return children;
   }
 

@@ -15,22 +15,22 @@ const DEFAULT_DATA = {
 
 const Add = React.forwardRef(({ children, onCreate }, ref) => {
   const [t] = useTranslation();
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
 
   const nameField = useRef(null);
 
   const open = useCallback(() => {
-    setIsOpened(true);
+    setIsOpen(true);
   }, []);
 
   const close = useCallback(() => {
     setData(DEFAULT_DATA);
-    setIsOpened(false);
+    setIsOpen(false);
   }, [setData]);
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpened);
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpen);
 
   const submit = useCallback(() => {
     const cleanData = {
@@ -85,10 +85,10 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
   );
 
   useEffect(() => {
-    if (isOpened) {
+    if (isOpen) {
       nameField.current.focus();
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
   useDidUpdate(() => {
     nameField.current?.focus();
@@ -102,7 +102,7 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
     [handleFieldChange, handleValueChange],
   );
 
-  if (!isOpened) {
+  if (!isOpen) {
     return React.cloneElement(children, {
       onClick: handleChildrenClick,
     });

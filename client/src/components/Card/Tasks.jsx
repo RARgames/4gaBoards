@@ -9,15 +9,15 @@ import styles from './Tasks.module.scss';
 
 const Tasks = React.memo(({ items }) => {
   const [t] = useTranslation();
-  const [isOpened, toggleOpened] = useToggle();
+  const [isOpen, toggleOpen] = useToggle();
 
   const handleToggleClick = useCallback(
     (event) => {
       event.preventDefault();
 
-      toggleOpened();
+      toggleOpen();
     },
-    [toggleOpened],
+    [toggleOpen],
   );
 
   const completedItems = items.filter((item) => item.isCompleted);
@@ -29,12 +29,12 @@ const Tasks = React.memo(({ items }) => {
         <span className={styles.progressWrapper}>
           <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={styles.progress} />
         </span>
-        <span className={styles.count} title={isOpened ? t('common.hideTasks') : t('common.showTasks')}>
+        <span className={styles.count} title={isOpen ? t('common.hideTasks') : t('common.showTasks')}>
           {completedItems.length}/{items.length}
-          <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpened && styles.countToggleIconOpened)} />
+          <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpen && styles.countToggleIconOpened)} />
         </span>
       </div>
-      {isOpened && (
+      {isOpen && (
         <ul className={styles.tasks}>
           {items.map((item) => (
             <li key={item.id} title={item.name} className={classNames(styles.task, item.isCompleted && styles.taskCompleted)}>

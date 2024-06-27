@@ -15,7 +15,7 @@ const DEFAULT_DATA = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }) => {
+const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) => {
   const [t] = useTranslation();
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
@@ -87,10 +87,10 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
   );
 
   useEffect(() => {
-    if (isOpened) {
+    if (isOpen) {
       nameField.current.focus();
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
   useDidUpdate(() => {
     nameField.current.focus();
@@ -105,7 +105,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
   );
 
   return (
-    <Form className={classNames(styles.wrapper, !isOpened && styles.wrapperClosed)} onSubmit={handleSubmit}>
+    <Form className={classNames(styles.wrapper, !isOpen && styles.wrapperClosed)} onSubmit={handleSubmit}>
       <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterCardTitle')} maxRows={3} onKeyDown={handleFieldKeyDown} onChange={handleChange} onBlur={handleFieldBlur} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
@@ -116,7 +116,7 @@ const CardAdd = React.memo(({ isOpened, onCreate, onClose, labelIds, memberIds }
 });
 
 CardAdd.propTypes = {
-  isOpened: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types

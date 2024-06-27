@@ -11,13 +11,13 @@ import gStyles from '../../../globalStyles.module.scss';
 
 const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onCurrentUserUpdate }, ref) => {
   const [t] = useTranslation();
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [wasOpen, setWasOpen] = useState(false);
   const [data, handleFieldChange, setData] = useForm(null);
   const textareaRef = useRef(null);
 
   const open = useCallback(() => {
-    setIsOpened(true);
+    setIsOpen(true);
     setData({
       text: '',
       ...defaultData,
@@ -25,7 +25,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
   }, [defaultData, setData]);
 
   const close = useCallback(() => {
-    setIsOpened(false);
+    setIsOpen(false);
     setData(null);
   }, [setData]);
 
@@ -108,12 +108,12 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
   );
 
   useEffect(() => {
-    if (!isOpened) {
+    if (!isOpen) {
       setWasOpen(false);
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
-  if (!isOpened) {
+  if (!isOpen) {
     return children;
   }
 

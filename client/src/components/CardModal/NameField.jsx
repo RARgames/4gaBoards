@@ -7,17 +7,17 @@ import { useField } from '../../hooks';
 import styles from './NameField.module.scss';
 
 const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
   const field = useRef(null);
 
   const open = useCallback(() => {
-    setIsOpened(true);
+    setIsOpen(true);
     setValue(defaultValue);
   }, [defaultValue, setValue]);
 
   const close = useCallback(() => {
-    setIsOpened(false);
+    setIsOpen(false);
     setValue(null);
   }, [setValue]);
 
@@ -61,12 +61,12 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
   }, [submit]);
 
   useEffect(() => {
-    if (isOpened) {
+    if (isOpen) {
       field.current.focus();
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
-  if (!isOpened) {
+  if (!isOpen) {
     return children;
   }
 

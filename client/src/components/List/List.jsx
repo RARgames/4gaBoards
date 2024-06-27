@@ -18,7 +18,7 @@ import gStyles from '../../globalStyles.module.scss';
 
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
   const [t] = useTranslation();
-  const [isAddCardOpened, setIsAddCardOpened] = useState(false);
+  const [isAddCardOpen, setIsAddCardOpen] = useState(false);
   const [nameEditHeight, setNameEditHeight] = useState(0);
   const [headerNameElement, setHeaderNameElement] = useState();
   const [headerNameHeight] = useResizeObserverSize(headerNameElement, ResizeObserverSizeTypes.CLIENT_HEIGHT);
@@ -61,11 +61,11 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
   );
 
   const handleAddCardClick = useCallback(() => {
-    setIsAddCardOpened(true);
+    setIsAddCardOpen(true);
   }, []);
 
   const handleAddCardClose = useCallback(() => {
-    setIsAddCardOpened(false);
+    setIsAddCardOpen(false);
   }, []);
 
   const handleNameEdit = useCallback(() => {
@@ -77,7 +77,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
   }, []);
 
   const handleCardAdd = useCallback(() => {
-    setIsAddCardOpened(true);
+    setIsAddCardOpen(true);
   }, []);
 
   const handleNameEditHeightChange = useCallback((height) => {
@@ -85,18 +85,18 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
   }, []);
 
   useEffect(() => {
-    if (isAddCardOpened && listWrapper.current) {
+    if (isAddCardOpen && listWrapper.current) {
       listWrapper.current.scrollTop = listWrapper.current.scrollHeight;
     }
-  }, [filteredCardIds, isAddCardOpened]);
+  }, [filteredCardIds, isAddCardOpen]);
 
   useEffect(() => {
     if (listWrapper.current) {
-      const wrapperOffset = isAddCardOpened || !canEdit ? styleVars.cardsInnerWrapperFullOffset : styleVars.cardsInnerWrapperOffset;
+      const wrapperOffset = isAddCardOpen || !canEdit ? styleVars.cardsInnerWrapperFullOffset : styleVars.cardsInnerWrapperOffset;
       const headerOffset = nameEditHeight || headerNameHeight;
       listWrapper.current.style.maxHeight = `calc(100vh - ${wrapperOffset}px - (${headerOffset}px - ${styleVars.headerNameDefaultHeight}px)`;
     }
-  }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpened, styleVars, isCollapsed]);
+  }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpen, styleVars, isCollapsed]);
 
   const cardsCountText = () => {
     return [isFiltered ? `${filteredCardIds.length} ${t('common.of')} ${cardIds.length} ` : `${cardIds.length} `] + [cardIds.length !== 1 ? t('common.cards') : t('common.card')];
@@ -112,7 +112,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               <CardContainer key={cardId} id={cardId} index={cardIndex} />
             ))}
             {placeholder}
-            {canEdit && <CardAdd isOpened={isAddCardOpened} onCreate={onCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
+            {canEdit && <CardAdd isOpen={isAddCardOpen} onCreate={onCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
           </div>
         </div>
       )}
@@ -125,7 +125,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef}>
           {placeholder}
-          {!isAddCardOpened && canEdit && (
+          {!isAddCardOpen && canEdit && (
             <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
               <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addCardButtonIcon} />
               <span className={styles.addCardButtonText}>{t('action.addCard')}</span>

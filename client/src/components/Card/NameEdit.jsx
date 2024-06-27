@@ -9,22 +9,22 @@ import gStyles from '../../globalStyles.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
   const field = useRef(null);
 
   const open = useCallback(() => {
-    setIsOpened(true);
+    setIsOpen(true);
     setValue(defaultValue);
   }, [defaultValue, setValue]);
 
   const close = useCallback(() => {
-    setIsOpened(false);
+    setIsOpen(false);
     setValue(null);
   }, [setValue]);
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpened);
+  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpen);
 
   const submit = useCallback(() => {
     const cleanValue = value.trim();
@@ -77,10 +77,10 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   );
 
   useEffect(() => {
-    if (isOpened) {
+    if (isOpen) {
       field.current.focus();
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
   const handleChange = useCallback(
     (event) => {
@@ -90,7 +90,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     [defaultValue, handleFieldChange, handleValueChange],
   );
 
-  if (!isOpened) {
+  if (!isOpen) {
     return children;
   }
 
