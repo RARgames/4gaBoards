@@ -79,9 +79,7 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
               {placeholder}
               {canEdit && (
                 <TaskAdd ref={taskAddRef} onCreate={onCreate}>
-                  <Button style={ButtonStyle.Default} title={t('common.addTask')} className={styles.taskButton}>
-                    <span className={styles.taskButtonText}>{t('action.addTask')}</span>
-                  </Button>
+                  <Button style={ButtonStyle.Default} content={t('common.addTask')} className={styles.taskButton} />
                 </TaskAdd>
               )}
             </div>
