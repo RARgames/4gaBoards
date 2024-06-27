@@ -63,7 +63,6 @@ const CardModal = React.memo(
     canEditAllCommentActivities,
     commentMode,
     onCurrentUserUpdate,
-    onUserUpdate,
     onUpdate,
     onMove,
     onTransfer,
@@ -117,37 +116,37 @@ const CardModal = React.memo(
       toggleDescShown();
       // TODO hacky way to update UI faster
       const timeout = setTimeout(() => {
-        onUserUpdate(userId, { descriptionShown: !descShown });
+        onCurrentUserUpdate({ descriptionShown: !descShown });
       }, 0);
       return () => clearTimeout(timeout);
-    }, [descShown, onUserUpdate, toggleDescShown, userId]);
+    }, [descShown, onCurrentUserUpdate, toggleDescShown]);
 
     const handleToggleTasksShown = useCallback(() => {
       toggleTasksShown();
       // TODO hacky way to update UI faster
       const timeout = setTimeout(() => {
-        onUserUpdate(userId, { tasksShown: !taskShown });
+        onCurrentUserUpdate({ tasksShown: !taskShown });
       }, 0);
       return () => clearTimeout(timeout);
-    }, [onUserUpdate, taskShown, toggleTasksShown, userId]);
+    }, [taskShown, onCurrentUserUpdate, toggleTasksShown]);
 
     const handleToggleAttacShown = useCallback(() => {
       toggleAttacShown();
       // TODO hacky way to update UI faster
       const timeout = setTimeout(() => {
-        onUserUpdate(userId, { attachmentsShown: !attacShown });
+        onCurrentUserUpdate({ attachmentsShown: !attacShown });
       }, 0);
       return () => clearTimeout(timeout);
-    }, [attacShown, onUserUpdate, toggleAttacShown, userId]);
+    }, [attacShown, onCurrentUserUpdate, toggleAttacShown]);
 
     const handleToggleCommShown = useCallback(() => {
       toggleCommShown();
       // TODO hacky way to update UI faster
       const timeout = setTimeout(() => {
-        onUserUpdate(userId, { commentsShown: !commShown });
+        onCurrentUserUpdate({ commentsShown: !commShown });
       }, 0);
       return () => clearTimeout(timeout);
-    }, [commShown, onUserUpdate, toggleCommShown, userId]);
+    }, [commShown, onCurrentUserUpdate, toggleCommShown]);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -523,7 +522,7 @@ const CardModal = React.memo(
         descriptionHeight={descriptionHeight}
         descriptionMode={descriptionMode}
         userId={userId}
-        onUserUpdate={onUserUpdate}
+        onCurrentUserUpdate={onCurrentUserUpdate}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
       />
@@ -710,7 +709,6 @@ CardModal.propTypes = {
   canEditAllCommentActivities: PropTypes.bool.isRequired,
   commentMode: PropTypes.string.isRequired,
   onCurrentUserUpdate: PropTypes.func.isRequired,
-  onUserUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,

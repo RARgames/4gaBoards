@@ -80,7 +80,6 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onCurrentUserUpdate: entryActions.updateCurrentUser,
-      onUserUpdate: entryActions.updateUser,
       onUpdate: entryActions.updateCurrentCard,
       onMove: entryActions.moveCurrentCard,
       onTransfer: entryActions.transferCurrentCard,

@@ -7,7 +7,7 @@ import { useLocalStorage } from '../../hooks';
 import gStyles from '../../globalStyles.module.scss';
 
 const DescriptionEdit = React.forwardRef(
-  ({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onUserUpdate, userId, onLocalDescChange, onClose }, ref) => {
+  ({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
     const [t] = useTranslation();
     const [value, setValue] = useState(undefined);
     const textareaRef = useRef(null);
@@ -115,11 +115,11 @@ const DescriptionEdit = React.forwardRef(
       (preview) => {
         // TODO hacky way to update UI faster
         const timeout = setTimeout(() => {
-          onUserUpdate(userId, { descriptionMode: preview });
+          onCurrentUserUpdate({ descriptionMode: preview });
         }, 0);
         return () => clearTimeout(timeout);
       },
-      [onUserUpdate, userId],
+      [onCurrentUserUpdate],
     );
 
     return (
@@ -165,8 +165,7 @@ DescriptionEdit.propTypes = {
   descriptionMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
-  onUserUpdate: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired,
+  onCurrentUserUpdate: PropTypes.func.isRequired,
   onLocalDescChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
