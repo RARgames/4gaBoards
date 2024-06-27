@@ -4,23 +4,23 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
 import { useForm } from '../../hooks';
 
-import styles from './ProjectAddPopup.module.scss';
+import styles from './ProjectAdd.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const ProjectAddPopup = React.forwardRef(({ children, defaultData, isSubmitting, onCreate }, ref) => {
+const ProjectAdd = React.forwardRef(({ children, defaultData, isSubmitting, onCreate }, ref) => {
   const [t] = useTranslation();
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const nameField = useRef(null);
 
   const [data, handleFieldChange, setData] = useForm(null);
 
   const open = useCallback(() => {
-    setIsOpened(true);
+    setIsOpen(true);
     setData(defaultData);
   }, [defaultData, setData]);
 
   const close = useCallback(() => {
-    setIsOpened(false);
+    setIsOpen(false);
     setData(null);
   }, [setData]);
 
@@ -64,12 +64,12 @@ const ProjectAddPopup = React.forwardRef(({ children, defaultData, isSubmitting,
   );
 
   useEffect(() => {
-    if (isOpened) {
+    if (isOpen) {
       nameField.current?.focus();
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
-  if (!isOpened) {
+  if (!isOpen) {
     return children;
   }
 
@@ -91,11 +91,11 @@ const ProjectAddPopup = React.forwardRef(({ children, defaultData, isSubmitting,
   );
 });
 
-ProjectAddPopup.propTypes = {
+ProjectAdd.propTypes = {
   children: PropTypes.node.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
 };
 
-export default React.memo(ProjectAddPopup);
+export default React.memo(ProjectAdd);

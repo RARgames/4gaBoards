@@ -12,7 +12,7 @@ import { ProjectBackgroundTypes } from '../../constants/Enums';
 import styles from './Projects.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import globalStyles from '../../styles.module.scss';
-import ProjectAddPopup from '../ProjectAddPopup';
+import ProjectAdd from '../ProjectAdd';
 
 const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
@@ -48,12 +48,12 @@ const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreat
         </div>
       ))}
       {canAdd && (
-        <ProjectAddPopup ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
+        <ProjectAdd ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
           <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={handleProjectAdd} className={classNames(styles.projectWrapper, styles.add)}>
             <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
             {t('common.createProject')}
           </Button>
-        </ProjectAddPopup>
+        </ProjectAdd>
       )}
     </div>
   );
