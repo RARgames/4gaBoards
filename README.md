@@ -4,7 +4,7 @@
 
 Kanban boards inspired by discontinued Gitkraken Glo Boards.
 
-![](https://raw.githubusercontent.com/plankanban/planka/master/demo.gif)
+![4gaBoards_gif](https://github.com/RARgames/4gaBoards/assets/40911978/915d021b-ce48-46e3-89a7-a10744092ab4)
 
 We'll work on a **demo** when we finish all tasks from the [#1 issue](https://github.com/RARgames/4gaBoards/issues/1).
 
