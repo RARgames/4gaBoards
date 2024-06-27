@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-export default (close, isOpened = true) => {
+export default (close, isOpen = true) => {
   const isClosable = useRef(null);
   const isModified = useRef(null);
 
@@ -29,12 +29,12 @@ export default (close, isOpened = true) => {
   }, []);
 
   useEffect(() => {
-    if (isOpened) {
+    if (isOpen) {
       isClosable.current = true;
     } else {
       isClosable.current = null;
     }
-  }, [isOpened]);
+  }, [isOpen]);
 
   return [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified];
 };

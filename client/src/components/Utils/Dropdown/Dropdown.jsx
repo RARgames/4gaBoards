@@ -33,7 +33,7 @@ const Dropdown = React.forwardRef(
     ref,
   ) => {
     const [t] = useTranslation();
-    const [isOpened, setIsOpened] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [savedDefaultItem, setSavedDefaultItem] = useState(defaultItem);
     const [searchValue, setSearchValue] = useState('');
@@ -41,12 +41,12 @@ const Dropdown = React.forwardRef(
     const itemsRef = useRef([]);
 
     const open = useCallback(() => {
-      setIsOpened(true);
+      setIsOpen(true);
       setSearchValue('');
     }, []);
 
     const close = useCallback(() => {
-      setIsOpened(false);
+      setIsOpen(false);
       setSearchValue('');
       dropdown.current.blur();
       onClose();
@@ -63,10 +63,10 @@ const Dropdown = React.forwardRef(
     );
 
     useEffect(() => {
-      if (isOpened) {
+      if (isOpen) {
         dropdown.current.focus();
       }
-    }, [isOpened]);
+    }, [isOpen]);
 
     const getOptions = useCallback(() => {
       if (!searchValue) {
@@ -143,7 +143,7 @@ const Dropdown = React.forwardRef(
     }, [close, onCancel]);
 
     const handleFocus = useCallback(() => {
-      if (!isOpened) {
+      if (!isOpen) {
         open();
       }
       if (!savedDefaultItem) {
@@ -155,7 +155,7 @@ const Dropdown = React.forwardRef(
           .indexOf(savedDefaultItem.id);
         selectItemByIndex(index >= 0 ? index : 0);
       }
-    }, [defaultItem, getOptions, isOpened, open, savedDefaultItem, selectItemByIndex]);
+    }, [defaultItem, getOptions, isOpen, open, savedDefaultItem, selectItemByIndex]);
 
     const handleBlur = useCallback(
       (event) => {
@@ -176,7 +176,7 @@ const Dropdown = React.forwardRef(
     );
 
     const getDisplay = useCallback(() => {
-      if (isOpened && selectedItem) {
+      if (isOpen && selectedItem) {
         if (selectedItem.id === savedDefaultItem?.id) {
           // Needed for language change returning item in old language
           return savedDefaultItem.name;
@@ -187,7 +187,7 @@ const Dropdown = React.forwardRef(
         return savedDefaultItem.name;
       }
       return placeholder;
-    }, [isOpened, placeholder, savedDefaultItem, selectedItem]);
+    }, [isOpen, placeholder, savedDefaultItem, selectedItem]);
 
     const handleItemClick = useCallback(
       (item) => {
@@ -247,7 +247,7 @@ const Dropdown = React.forwardRef(
     );
 
     const { refs, floatingStyles, context } = useFloating({
-      open: isOpened,
+      open: isOpen,
       whileElementsMounted: autoUpdate,
       placement: 'bottom',
       middleware: [
@@ -267,7 +267,7 @@ const Dropdown = React.forwardRef(
     const role = useRole(context, { role: 'dialog' });
     const { getReferenceProps, getFloatingProps } = useInteractions([role]);
 
-    if (!isOpened && children) {
+    if (!isOpen && children) {
       return children;
     }
 
@@ -291,7 +291,7 @@ const Dropdown = React.forwardRef(
             <Icon type={IconType.TriangleDown} size={IconSize.Size10} />
           </Button>
         </div>
-        {isOpened && (
+        {isOpen && (
           <FloatingPortal>
             <FloatingFocusManager context={context} initialFocus={-1} returnFocus={false}>
               <div

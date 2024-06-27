@@ -9,13 +9,13 @@ import { Icon, IconType, IconSize } from '../Icon';
 import styles from './Modal.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Modal = React.memo(({ children, className, hideCloseButton, closeButtonClassName, wrapperClassName, isModalOpened, setIsModalOpened, onClose, ...props }) => {
+  const Modal = React.memo(({ children, className, hideCloseButton, closeButtonClassName, wrapperClassName, isModalOpen, setIsModalOpen, onClose, ...props }) => {
     const [t] = useTranslation();
-    const [isOpened, setIsOpened] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const { refs, context } = useFloating({
-      open: isOpened || isModalOpened,
-      onOpenChange: setIsOpened && setIsModalOpened,
+      open: isOpen || isModalOpen,
+      onOpenChange: setIsOpen && setIsModalOpen,
     });
 
     const click = useClick(context);
@@ -25,13 +25,13 @@ export default (WrappedComponent, defaultProps) => {
     const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
 
     const handleClose = useCallback(() => {
-      setIsOpened(false);
-      setIsModalOpened(false);
+      setIsOpen(false);
+      setIsModalOpen(false);
 
       if (onClose) {
         onClose();
       }
-    }, [onClose, setIsModalOpened]);
+    }, [onClose, setIsModalOpen]);
 
     const modalContent = (
       <FloatingPortal>
@@ -59,12 +59,12 @@ export default (WrappedComponent, defaultProps) => {
           <div ref={refs.setReference} {...getReferenceProps()} className={wrapperClassName}>
             {children}
           </div>
-          {(isOpened || isModalOpened) && modalContent}
+          {(isOpen || isModalOpen) && modalContent}
         </>
       );
     }
 
-    return isOpened || isModalOpened ? modalContent : null;
+    return isOpen || isModalOpen ? modalContent : null;
   });
 
   Modal.propTypes = {
@@ -73,8 +73,8 @@ export default (WrappedComponent, defaultProps) => {
     hideCloseButton: PropTypes.bool,
     closeButtonClassName: PropTypes.string,
     wrapperClassName: PropTypes.string,
-    isModalOpened: PropTypes.bool,
-    setIsModalOpened: PropTypes.func,
+    isModalOpen: PropTypes.bool,
+    setIsModalOpen: PropTypes.func,
     onClose: PropTypes.func,
   };
 
@@ -84,8 +84,8 @@ export default (WrappedComponent, defaultProps) => {
     hideCloseButton: false,
     closeButtonClassName: undefined,
     wrapperClassName: undefined,
-    isModalOpened: false,
-    setIsModalOpened: () => {},
+    isModalOpen: false,
+    setIsModalOpen: () => {},
     onClose: undefined,
   };
 

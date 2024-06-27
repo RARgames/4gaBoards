@@ -11,12 +11,12 @@ import styles from './Popup.module.scss';
 export default (WrappedComponent, defaultProps) => {
   const Popup = React.memo(({ children, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
     const [t] = useTranslation();
-    const [isOpened, setIsOpened] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     // TODO check if floating styles used
     const { refs, floatingStyles, context } = useFloating({
-      open: isOpened,
-      onOpenChange: setIsOpened,
+      open: isOpen,
+      onOpenChange: setIsOpen,
       whileElementsMounted: autoUpdate,
       placement: defaultProps?.position ?? position,
       middleware: [posOffset(defaultProps?.offset ?? offset), flip(), shift({ padding: 20 })],
@@ -29,7 +29,7 @@ export default (WrappedComponent, defaultProps) => {
     const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
 
     const handleClose = useCallback(() => {
-      setIsOpened(false);
+      setIsOpen(false);
 
       if (onClose) {
         onClose();
@@ -42,7 +42,7 @@ export default (WrappedComponent, defaultProps) => {
         <div ref={refs.setReference} {...getReferenceProps()} className={wrapperClassName}>
           {children}
         </div>
-        {isOpened && (
+        {isOpen && (
           <FloatingPortal>
             <FloatingFocusManager context={context} modal={false} returnFocus={false}>
               {/* eslint-disable-next-line react/jsx-props-no-spreading */}
