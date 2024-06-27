@@ -57,8 +57,8 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, .
           {
             name: 'color',
             groupName: 'color',
-            buttonProps: { 'aria-label': 'Add colored text', title: 'Add colored text' },
-            icon: <Icon type={IconType.FillDrip} size={IconSize.Size13} className={styles.coloredTextButton} />,
+            buttonProps: { 'aria-label': 'Add colored text', title: 'Add colored text', className: styles.coloredTextButton },
+            icon: <Icon type={IconType.FillDrip} size={IconSize.Size13} />,
           },
         ),
       ]}

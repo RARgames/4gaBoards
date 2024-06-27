@@ -1,5 +1,20 @@
 :global(#app) {
   .coloredTextButton {
-    vertical-align: -5%;
+    svg {
+      vertical-align: -5%;
+      fill: var(--mdEditorIcon);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--mdEditorIconHover);
+      }
+    }
+
+    &:disabled {
+      svg {
+        fill: var(--mdEditorIconDisabled);
+      }
+    }
   }
 }
