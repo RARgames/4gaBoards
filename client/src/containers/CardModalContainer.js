@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
   const user = selectors.selectCurrentUser(state);
   const userId = user.id;
   const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown } = user;
+  const commentsCount = selectors.selectCommentsCountByCardId(state, id);
 
   const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
 
@@ -73,6 +74,7 @@ const mapStateToProps = (state) => {
     canEditCommentActivities: isCurrentUserEditorOrCanComment,
     canEditAllCommentActivities: isCurrentUserManager,
     commentMode,
+    commentsCount,
   };
 };
 

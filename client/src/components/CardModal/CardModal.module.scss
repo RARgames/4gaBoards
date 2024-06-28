@@ -203,4 +203,10 @@
   .popupWrapper {
     display: inline-block;
   }
+
+  .headerCount {
+    display: inline-block;
+    color: var(--textColor3);
+    margin-left: 4px;
+  }
 }

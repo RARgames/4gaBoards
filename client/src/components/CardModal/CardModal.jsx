@@ -62,6 +62,7 @@ const CardModal = React.memo(
     canEditCommentActivities,
     canEditAllCommentActivities,
     commentMode,
+    commentsCount,
     onCurrentUserUpdate,
     onUpdate,
     onMove,
@@ -556,11 +557,18 @@ const CardModal = React.memo(
       </div>
     );
 
+    const completedTasks = tasks.filter((task) => task.isCompleted);
+
     const tasksNode = (tasks.length > 0 || canEdit) && (
       <div className={styles.contentModule}>
         <div className={styles.moduleHeader}>
           <Icon type={IconType.Check} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.tasks')}
+          {tasks.length > 0 && (
+            <div className={styles.headerCount}>
+              ({completedTasks.length}/{tasks.length})
+            </div>
+          )}
           {canEdit && (
             <Button style={ButtonStyle.Icon} title={t('common.addTask')} onClick={handleTaskAddOpen}>
               <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton} />
@@ -581,6 +589,7 @@ const CardModal = React.memo(
         <div className={styles.moduleHeader}>
           <Icon type={IconType.Attach} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.attachments')}
+          {attachments.length > 0 && <div className={styles.headerCount}>({attachments.length})</div>}
           {canEdit && (
             <AttachmentAdd onCreate={onAttachmentCreate}>
               <Button style={ButtonStyle.Icon} title={t('common.addAttachmentButton')}>
@@ -627,6 +636,7 @@ const CardModal = React.memo(
         commentMode={commentMode}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
+        commentsCount={commentsCount}
         onFetch={onActivitiesFetch}
         onDetailsToggle={onActivitiesDetailsToggle}
         onCommentCreate={onCommentActivityCreate}
@@ -708,6 +718,7 @@ CardModal.propTypes = {
   canEditCommentActivities: PropTypes.bool.isRequired,
   canEditAllCommentActivities: PropTypes.bool.isRequired,
   commentMode: PropTypes.string.isRequired,
+  commentsCount: PropTypes.number.isRequired,
   onCurrentUserUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
