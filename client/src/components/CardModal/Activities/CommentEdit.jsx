@@ -29,6 +29,14 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
     setData(null);
   }, [setData]);
 
+  const focus = useCallback(() => {
+    if (!textareaRef.current) return;
+
+    textareaRef.current.focus();
+    const { length } = textareaRef.current.value;
+    textareaRef.current.setSelectionRange(length, length);
+  }, []);
+
   const submit = useCallback(() => {
     const cleanData = {
       ...data,
@@ -130,9 +138,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
             if (node.textarea && !wasOpen) {
               setWasOpen(true);
               textareaRef.current = node.textarea;
-              textareaRef.current.focus();
-              const { length } = textareaRef.current.value;
-              textareaRef.current.setSelectionRange(length, length);
+              focus();
             }
           }
         }}

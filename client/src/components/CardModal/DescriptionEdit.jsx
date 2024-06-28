@@ -11,6 +11,7 @@ const DescriptionEdit = React.forwardRef(
     const [t] = useTranslation();
     const [value, setValue] = useState(undefined);
     const textareaRef = useRef(null);
+    const [wasOpen, setWasOpen] = useState(false);
     const [setLocalValue, getLocalValue] = useLocalStorage(`desc-${cardId}`);
 
     const setLocalDescription = useCallback(
@@ -20,26 +21,17 @@ const DescriptionEdit = React.forwardRef(
       [setLocalValue],
     );
 
-    // eslint-disable-next-line consistent-return
     const focus = useCallback(() => {
-      if (textareaRef.current) {
-        textareaRef.current.focus();
-      } else {
-        const timeout = setTimeout(() => {
-          textareaRef.current?.focus();
-        }, 0);
-        return () => clearTimeout(timeout);
-      }
+      if (!textareaRef.current) return;
+
+      textareaRef.current.focus();
+      const { length } = textareaRef.current.value;
+      textareaRef.current.setSelectionRange(length, length);
     }, []);
 
     const open = useCallback(() => {
       setValue(getLocalValue() || defaultValue || '');
-      const timeout = setTimeout(() => {
-        focus();
-      }, 0);
-
-      return () => clearTimeout(timeout);
-    }, [defaultValue, focus, getLocalValue]);
+    }, [defaultValue, getLocalValue]);
 
     const close = useCallback(
       (removeLocalDesc = false) => {
@@ -131,8 +123,10 @@ const DescriptionEdit = React.forwardRef(
               if (node.preview !== descriptionMode) {
                 handlePreviewUpdate(node.preview);
               }
-              if (node.textarea) {
+              if (node.textarea && !wasOpen) {
+                setWasOpen(true);
                 textareaRef.current = node.textarea;
+                focus();
               }
             }
           }}
