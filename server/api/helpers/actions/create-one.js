@@ -35,6 +35,16 @@ module.exports = {
       userId: values.user.id,
     }).fetch();
 
+    if (values.type === 'commentCard' && !values.duplicate) {
+      await sails.helpers.cards.updateOne.with({
+        record: values.card,
+        values: {
+          commentCount: values.card.commentCount + 1,
+        },
+        request: this.req,
+      });
+    }
+
     sails.sockets.broadcast(
       `board:${values.card.boardId}`,
       'actionCreate',

@@ -124,6 +124,7 @@ module.exports = {
         return sails.helpers.actions.createOne.with({
           values: {
             ..._.omit(action, ['id']),
+            duplicate: true,
             card: copiedCard,
             user: actionsUsers.find((user) => user.id === action.userId),
           },

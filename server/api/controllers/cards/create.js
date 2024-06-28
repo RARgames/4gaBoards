@@ -97,6 +97,7 @@ module.exports = {
           ...values,
           list,
           creatorUser: currentUser,
+          commentCount: 0,
         },
         request: this.req,
       })

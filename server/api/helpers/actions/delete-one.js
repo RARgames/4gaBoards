@@ -16,6 +16,20 @@ module.exports = {
   async fn(inputs) {
     const action = await Action.archiveOne(inputs.record.id);
 
+    if (action.type === 'commentCard') {
+      const cards = await sails.helpers.cards.getMany({ id: action.cardId });
+      if (cards.length > 0) {
+        const card = cards[0];
+        await sails.helpers.cards.updateOne.with({
+          record: card,
+          values: {
+            commentCount: card.commentCount - 1,
+          },
+          request: this.req,
+        });
+      }
+    }
+
     if (action) {
       sails.sockets.broadcast(
         `board:${inputs.board.id}`,

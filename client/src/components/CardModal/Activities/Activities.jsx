@@ -21,7 +21,7 @@ const Activities = React.memo(
     commentMode,
     isGithubConnected,
     githubRepo,
-    commentsCount,
+    commentCount,
     onFetch,
     onDetailsToggle,
     onCommentCreate,
@@ -100,7 +100,7 @@ const Activities = React.memo(
         <div className={cStyles.moduleHeader}>
           <Icon type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
           {t('common.actions')}
-          {commentsCount > 0 && <div className={cStyles.headerCount}>({commentsCount})</div>}
+          {commentCount > 0 && <div className={cStyles.headerCount}>({commentCount})</div>}
           {canEdit && (
             <Button style={ButtonStyle.Icon} title={t('common.addComment')} onClick={openAddComment}>
               <Icon type={IconType.Plus} size={IconSize.Size10} className={cStyles.iconAddButton} />
@@ -172,7 +172,7 @@ Activities.propTypes = {
   commentMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
-  commentsCount: PropTypes.number.isRequired,
+  commentCount: PropTypes.number.isRequired,
   onFetch: PropTypes.func.isRequired,
   onDetailsToggle: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,

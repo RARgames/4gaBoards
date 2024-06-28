@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   const allLabels = selectors.selectLabelsForCurrentBoard(state);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-  const { name, description, dueDate, timer, isSubscribed, isActivitiesFetching, isAllActivitiesFetched, isActivitiesDetailsVisible, isActivitiesDetailsFetching, boardId, listId, id } =
+  const { name, description, dueDate, timer, isSubscribed, isActivitiesFetching, isAllActivitiesFetched, isActivitiesDetailsVisible, isActivitiesDetailsFetching, boardId, listId, id, commentCount } =
     selectors.selectCurrentCard(state);
 
   const users = selectors.selectUsersForCurrentCard(state);
@@ -28,7 +28,6 @@ const mapStateToProps = (state) => {
   const user = selectors.selectCurrentUser(state);
   const userId = user.id;
   const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown } = user;
-  const commentsCount = selectors.selectCommentsCountByCardId(state, id);
 
   const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
 
@@ -70,11 +69,11 @@ const mapStateToProps = (state) => {
     allProjectsToLists,
     allBoardMemberships,
     allLabels,
+    commentCount,
     canEdit: isCurrentUserEditor,
     canEditCommentActivities: isCurrentUserEditorOrCanComment,
     canEditAllCommentActivities: isCurrentUserManager,
     commentMode,
-    commentsCount,
   };
 };
 

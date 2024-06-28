@@ -15,11 +15,11 @@ export default class extends BaseModel {
     description: attr(),
     dueDate: attr(),
     timer: attr(),
+    commentCount: attr({
+      getDefault: () => 0,
+    }),
     isSubscribed: attr({
       getDefault: () => false,
-    }),
-    commentsCount: attr({
-      getDefault: () => 0,
     }),
     isActivitiesFetching: attr({
       getDefault: () => false,

@@ -31,6 +31,11 @@ module.exports = {
     timer: {
       type: 'json',
     },
+    commentCount: {
+      type: 'number',
+      required: true,
+      columnName: 'comment_count',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

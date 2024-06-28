@@ -13,7 +13,6 @@ const makeMapStateToProps = () => {
   const selectTasksByCardId = selectors.makeSelectTasksByCardId();
   const selectNotificationsTotalByCardId = selectors.makeSelectNotificationsTotalByCardId();
   const selectAttachmentsCountByCardId = selectors.makeSelectAttachmentsCountByCardId();
-  const selectCommentsCountByCardId = selectors.makeSelectCommentsCountByCardId();
 
   return (state, { id, index }) => {
     const currentCardId = selectors.selectPath(state).cardId;
@@ -25,14 +24,13 @@ const makeMapStateToProps = () => {
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-    const { name, dueDate, timer, coverUrl, description, boardId, listId, isPersisted } = selectCardById(state, id);
+    const { name, dueDate, timer, coverUrl, description, boardId, listId, isPersisted, commentCount } = selectCardById(state, id);
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
     const tasks = selectTasksByCardId(state, id);
     const notificationsTotal = selectNotificationsTotalByCardId(state, id);
     const attachmentsCount = selectAttachmentsCountByCardId(state, id);
-    const commentsCount = selectCommentsCountByCardId(state, id);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
@@ -54,7 +52,7 @@ const makeMapStateToProps = () => {
       tasks,
       description,
       attachmentsCount,
-      commentsCount,
+      commentCount,
       allProjectsToLists,
       allBoardMemberships,
       allLabels,

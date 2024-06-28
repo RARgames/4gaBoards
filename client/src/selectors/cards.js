@@ -147,23 +147,6 @@ export const makeSelectAttachmentsCountByCardId = () =>
 
 export const selectAttachmentsCountByCardId = makeSelectAttachmentsCountByCardId();
 
-export const makeSelectCommentsCountByCardId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    ({ Card }, id) => {
-      const cardModel = Card.withId(id);
-
-      if (!cardModel) {
-        return cardModel;
-      }
-
-      return cardModel.commentsCount;
-    },
-  );
-
-export const selectCommentsCountByCardId = makeSelectCommentsCountByCardId();
-
 export const selectCurrentCard = createSelector(
   orm,
   (state) => selectPath(state).cardId,
@@ -335,8 +318,6 @@ export default {
   selectNotificationsTotalByCardId,
   makeSelectAttachmentsCountByCardId,
   selectAttachmentsCountByCardId,
-  makeSelectCommentsCountByCardId,
-  selectCommentsCountByCardId,
   selectCurrentCard,
   selectUsersForCurrentCard,
   selectLabelsForCurrentCard,
