@@ -107,7 +107,7 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
 });
 
 AttachmentAddZone.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   onCreate: PropTypes.func.isRequired,
 };
 

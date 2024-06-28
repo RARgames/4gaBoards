@@ -93,7 +93,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
 });
 
 NameEdit.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   defaultValue: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

@@ -21,7 +21,7 @@ const AttachmentAdd = React.memo(({ children, onCreate }) => {
 });
 
 AttachmentAdd.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   onCreate: PropTypes.func.isRequired,
 };
 

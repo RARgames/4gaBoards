@@ -129,7 +129,7 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
 });
 
 Add.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   onCreate: PropTypes.func.isRequired,
 };
 

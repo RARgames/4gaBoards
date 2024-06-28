@@ -74,7 +74,7 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
 });
 
 NameField.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   defaultValue: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

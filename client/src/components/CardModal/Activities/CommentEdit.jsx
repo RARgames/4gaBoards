@@ -157,7 +157,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 });
 
 CommentEdit.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   placeholder: PropTypes.string.isRequired,
   commentMode: PropTypes.string.isRequired,
