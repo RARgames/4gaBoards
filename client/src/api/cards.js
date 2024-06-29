@@ -64,7 +64,7 @@ const deleteCard = (id, headers) =>
   }));
 
 const duplicateCard = (id, headers) =>
-  socket.post(`/cards/${id}`, undefined, headers).then((body) => ({
+  socket.post(`/cards/${id}/duplicate`, undefined, headers).then((body) => ({
     ...body,
     item: transformCard(body.item),
     included: {
