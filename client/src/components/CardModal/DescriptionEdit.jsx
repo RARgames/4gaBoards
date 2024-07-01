@@ -5,6 +5,7 @@ import { MDEditor, Button, ButtonStyle } from '../Utils';
 import { useLocalStorage } from '../../hooks';
 
 import gStyles from '../../globalStyles.module.scss';
+import styles from './DescriptionEdit.module.scss';
 
 const DescriptionEdit = React.forwardRef(
   ({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
@@ -65,16 +66,21 @@ const DescriptionEdit = React.forwardRef(
       close(true);
     }, [close]);
 
-    const handleBlur = useCallback(() => {
-      const cleanValue = value.trim() || null;
-      if (cleanValue !== getLocalValue()) {
-        if (cleanValue !== defaultValue) {
+    const handleBlur = useCallback(
+      (event) => {
+        if (event.relatedTarget && event.relatedTarget.closest(`.${styles.editor}`)) {
+          return;
+        }
+
+        const cleanValue = value.trim() || null;
+        if (cleanValue !== getLocalValue() && cleanValue !== defaultValue) {
           setLocalDescription(cleanValue);
         } else {
-          setLocalDescription(null);
+          close(true);
         }
-      }
-    }, [value, getLocalValue, defaultValue, setLocalDescription]);
+      },
+      [value, getLocalValue, defaultValue, setLocalDescription, close],
+    );
 
     const handleChange = useCallback(
       (newValue) => {
@@ -141,6 +147,7 @@ const DescriptionEdit = React.forwardRef(
           }}
           isGithubConnected={isGithubConnected}
           githubRepo={githubRepo}
+          className={styles.editor}
         />
         <div className={gStyles.controls}>
           <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
