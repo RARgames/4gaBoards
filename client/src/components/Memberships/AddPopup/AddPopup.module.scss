@@ -4,6 +4,6 @@
   }
 
   .users {
-    max-height: 60vh;
+    max-height: calc(50vh - 120px);
   }
 }
