@@ -34,27 +34,15 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
     type: isVisible ? 'text' : 'password',
   };
 
-  if (!withStrengthBar) {
-    return (
-      <>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <input {...inputProps} className={classNames(styles.base, style && styles[style], className)} />
-        <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
-          <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
-        </Button>
-      </>
-    );
-  }
-
   // TODO show visual error on input field if error={!!value && strengthScore < minStrengthScore}
   return (
     <>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <input {...inputProps} className={classNames(styles.base, style && styles[style], className)} />
+      <input {...inputProps} className={classNames(styles.input, style && styles[style], className)} />
       <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>
-      <ProgressBar value={value ? strengthScore + 1 : 0} total={5} size={ProgressBarSize.Tiny} className={sPassword.progressBar} />
+      {withStrengthBar && <ProgressBar value={value ? strengthScore + 1 : 0} total={5} size={ProgressBarSize.Tiny} className={sPassword.progressBar} />}
     </>
   );
 });

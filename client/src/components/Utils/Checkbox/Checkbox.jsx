@@ -7,7 +7,7 @@ import styles from './Checkbox.module.scss';
 const Checkbox = React.forwardRef(({ className, ...props }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <input type="checkbox" ref={ref} className={classNames(styles.base, className)} {...props} />
+    <input type="checkbox" ref={ref} className={classNames(styles.checkbox, className)} {...props} />
   );
 });
 

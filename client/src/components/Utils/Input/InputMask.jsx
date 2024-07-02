@@ -8,7 +8,7 @@ import styles from './Input.module.scss';
 
 const InputMask = React.forwardRef(({ style, className, mask, maskChar, ...props }, ref) => {
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <MaskedInput ref={ref} className={classNames(styles.base, style && styles[style], className)} mask={mask} maskChar={maskChar} {...props} />;
+  return <MaskedInput ref={ref} className={classNames(styles.input, style && styles[style], className)} mask={mask} maskChar={maskChar} {...props} />;
 });
 
 InputMask.propTypes = {

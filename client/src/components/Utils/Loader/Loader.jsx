@@ -9,7 +9,7 @@ const Loader = React.forwardRef(({ size, wrapperClassName, className, ...props }
   return (
     <div className={classNames(styles.loaderWrapper, wrapperClassName)}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <div ref={ref} className={classNames(styles.base, styles[size], className)} {...props} />
+      <div ref={ref} className={classNames(styles.loader, styles[size], className)} {...props} />
     </div>
   );
 });

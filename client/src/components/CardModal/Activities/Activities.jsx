@@ -93,7 +93,6 @@ const Activities = React.memo(
     }, [handleVisibilityChange, onFetch, items]);
 
     // TODO fix activities not in order - by date
-    // TODO add number of comments
 
     return (
       <div className={cStyles.contentModule}>

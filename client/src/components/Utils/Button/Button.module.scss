@@ -1,4 +1,6 @@
 :global(#app) {
+  .button {}
+
   .defaultButton {
     background: var(--backgroundColorTmpDarkerField2);
     color: var(--textColor1);

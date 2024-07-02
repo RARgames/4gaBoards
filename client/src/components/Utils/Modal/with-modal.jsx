@@ -38,7 +38,7 @@ export default (WrappedComponent, defaultProps) => {
         <FloatingOverlay lockScroll className={styles.modalOverlay}>
           <FloatingFocusManager context={context} returnFocus={false}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <div className={classNames(styles.base, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
+            <div className={classNames(styles.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
               {!(defaultProps?.hideCloseButton || hideCloseButton) && (
                 <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(styles.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                   <Icon type={IconType.Close} size={IconSize.Size14} />

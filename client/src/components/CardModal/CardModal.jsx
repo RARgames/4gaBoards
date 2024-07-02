@@ -299,10 +299,6 @@ const CardModal = React.memo(
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
 
-    // TODO remove after testing
-    // eslint-disable-next-line no-param-reassign
-    // canEdit = false;
-
     const headerNode = (
       <div className={styles.header}>
         <div className={styles.headerFirstLine}>

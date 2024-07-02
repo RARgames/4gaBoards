@@ -8,7 +8,7 @@ import styles from './Input.module.scss';
 const Input = React.memo(
   React.forwardRef(({ style, className, ...props }, ref) => {
     // eslint-disable-next-line react/jsx-props-no-spreading
-    return <input ref={ref} className={classNames(styles.base, style && styles[style], className)} {...props} />;
+    return <input ref={ref} className={classNames(styles.input, style && styles[style], className)} {...props} />;
   }),
 );
 

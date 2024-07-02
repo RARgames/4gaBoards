@@ -9,8 +9,13 @@ import styles from './Button.module.scss';
 // TODO by default apply styles.base so even the button without style looks good
 const Button = React.forwardRef(({ children, title, type, style, content, className, ...props }, ref) => {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type
-    <button ref={ref} title={title || content} type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} className={classNames(style && styles[style], className)} {...props}>
+    <button
+      ref={ref}
+      title={title || content}
+      type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} // eslint-disable-line react/button-has-type
+      className={classNames(styles.button, style && styles[style], className)}
+      {...props} // eslint-disable-line react/jsx-props-no-spreading
+    >
       {content !== undefined ? content : children}
     </button>
   );

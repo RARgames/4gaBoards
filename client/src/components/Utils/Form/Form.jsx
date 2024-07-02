@@ -15,7 +15,7 @@ const Form = React.forwardRef(({ onSubmit, children, style, className, ...props 
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <form ref={ref} onSubmit={handleSubmit} className={classNames(styles.base, style && styles[style], className)} {...props}>
+    <form ref={ref} onSubmit={handleSubmit} className={classNames(styles.form, style && styles[style], className)} {...props}>
       {children}
     </form>
   );
