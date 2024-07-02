@@ -47,16 +47,7 @@
     margin-bottom: 16px;
   }
 
-  .ssoButton {
-    background-color: var(--loginBackgroundTmp);
-    width: auto;
-    height: 45px;
-    font-weight: bold;
-    padding: 0 16px;
-  }
-
   .ssoIcon {
-    fill: var(--textColor0);
     margin-left: 6px;
   }
 
@@ -67,20 +58,13 @@
   }
 
   .submitButton {
-    color: var(--textColorWhite);
-    background-color: var(--loginBackgroundTmp);
-    width: auto;
-    height: 45px;
-    font-weight: bold;
-    padding: 0 16px;
     margin-left: auto;
   }
 
   .submitButtonIcon {
-    fill: var(--textColorWhite);
     transform: rotate(270deg);
     vertical-align: text-bottom;
-    margin: 0 0 0 6px;
+    margin-left: 6px;
   }
 
   .alternateActionText {
@@ -95,13 +79,5 @@
   .alternateActionButtonContainer {
     display: flex;
     justify-content: center;
-  }
-
-  .alternateActionButton {
-    background-color: var(--loginBackgroundTmp);
-    width: auto;
-    height: 45px;
-    font-weight: bold;
-    padding: 0 16px;
   }
 }

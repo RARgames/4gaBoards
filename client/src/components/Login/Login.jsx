@@ -134,12 +134,12 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
             </div>
             <div className={styles.buttonsContainer}>
               {googleSsoEnabled && (
-                <Button style={ButtonStyle.BackgroundFade} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                <Button style={ButtonStyle.Login} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
                   {t('common.loginWithGoogle')}
                   <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
                 </Button>
               )}
-              <Button style={ButtonStyle.BackgroundFade} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={styles.submitButton}>
+              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={styles.submitButton}>
                 {t('action.logIn')}
                 <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
               </Button>
@@ -149,7 +149,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
             <>
               <div className={styles.alternateActionText}>{t('common.newToBoards')}</div>
               <div className={styles.alternateActionButtonContainer}>
-                <Button style={ButtonStyle.BackgroundFade} content={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton} />
+                <Button style={ButtonStyle.Login} content={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton} />
               </div>
             </>
           )}

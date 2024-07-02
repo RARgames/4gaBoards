@@ -3,7 +3,7 @@ const ButtonStyle = {
   DefaultBorder: 'defaultBorder',
   Icon: 'iconButton',
   NoBackground: 'noBackgroundButton',
-  BackgroundFade: 'backgroundFadeButton',
+  Login: 'login',
   Submit: 'submit',
   Cancel: 'cancel',
   Popup: 'popup',

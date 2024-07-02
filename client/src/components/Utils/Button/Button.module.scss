@@ -1,5 +1,9 @@
 :global(#app) {
-  .button {}
+  .button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
 
   .defaultButton {
     background: var(--backgroundColorTmpDarkerField2);
@@ -96,18 +100,21 @@
     }
   }
 
-  .backgroundFadeButton {
-    background-color: var(--loginBackgroundTmp);
+  .login {
+    background: var(--loginBackgroundTmp);
     color: var(--textColor0);
-    border: none;
     border-radius: 3px;
-    padding: 8px;
+    padding: 8px 12px;
     width: auto;
-    height: 20px; //TODO change
-    cursor: pointer;
+    height: 45px;
+    font-weight: bold;
+
+    svg {
+      fill: var(--textColor0);
+    }
 
     &:hover {
-      background-color: var(--loginBackgroundDark);
+      background: var(--loginBackgroundDark);
     }
   }
 

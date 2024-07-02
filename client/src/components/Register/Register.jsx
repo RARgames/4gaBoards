@@ -157,16 +157,16 @@ const Register = React.memo(
                   </div>
                 </>
               )}
-              {!registrationEnabled && <div className={styles.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
+              {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={styles.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
               <div className={classNames(styles.buttonsContainer, !localRegistrationEnabled && styles.onlySsoButtonContainer)}>
                 {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                  <Button style={ButtonStyle.BackgroundFade} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                  <Button style={ButtonStyle.Login} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
                     {t('common.registerWithGoogle')}
                     <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
                   </Button>
                 )}
                 {registrationEnabled && localRegistrationEnabled && (
-                  <Button style={ButtonStyle.BackgroundFade} type="submit" title={t('common.register')} disabled={isSubmitting} className={styles.submitButton}>
+                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={styles.submitButton}>
                     {t('common.register')}
                     <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
                   </Button>
@@ -175,7 +175,7 @@ const Register = React.memo(
             </Form>
             <div className={styles.alternateActionText}>{t('common.alreadyUser')}</div>
             <div className={styles.alternateActionButtonContainer}>
-              <Button style={ButtonStyle.BackgroundFade} content={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton} />
+              <Button style={ButtonStyle.Login} content={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton} />
             </div>
           </div>
         </div>
