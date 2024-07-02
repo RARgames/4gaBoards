@@ -6,7 +6,6 @@ import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
-import { isPassword } from '../../utils/validator';
 
 import styles from './UserPasswordEditStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -21,6 +20,11 @@ const createMessage = (error) => {
       return {
         type: 'error',
         content: 'common.invalidCurrentPassword',
+      };
+    case 'Weak password':
+      return {
+        type: 'error',
+        content: 'common.weakPassword',
       };
     default:
       return {
@@ -47,7 +51,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
   const currentPasswordField = useRef(null);
 
   const handleSubmit = useCallback(() => {
-    if (!data.password || !isPassword(data.password)) {
+    if (!data.password) {
       passwordField.current.select();
       return;
     }

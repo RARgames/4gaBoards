@@ -48,8 +48,7 @@ module.exports = {
   async fn(inputs) {
     const values = _.pick(inputs, ['email', 'password', 'name', 'policy']);
 
-    if (zxcvbn(values.password).score < 2) {
-      // TODO move to config
+    if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {
       throw Errors.WEAK_PASSWORD;
     }
     if (!values.policy) {

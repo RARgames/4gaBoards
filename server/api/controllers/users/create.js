@@ -7,9 +7,10 @@ const Errors = {
   USERNAME_ALREADY_IN_USE: {
     usernameAlreadyInUse: 'Username already in use',
   },
+  WEAK_PASSWORD: {
+    weakPassword: 'Weak password',
+  },
 };
-
-const passwordValidator = (value) => zxcvbn(value).score >= 2; // TODO: move to config
 
 module.exports = {
   inputs: {
@@ -20,7 +21,6 @@ module.exports = {
     },
     password: {
       type: 'string',
-      custom: passwordValidator,
       required: true,
     },
     name: {
@@ -89,6 +89,9 @@ module.exports = {
     usernameAlreadyInUse: {
       responseType: 'conflict',
     },
+    weakPassword: {
+      responseType: 'conflict',
+    },
   },
 
   async fn(inputs) {
@@ -109,6 +112,10 @@ module.exports = {
       'commentsShown',
       'ssoGoogleEmail',
     ]);
+
+    if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {
+      throw Errors.WEAK_PASSWORD;
+    }
 
     const user = await sails.helpers.users.createOne
       .with({

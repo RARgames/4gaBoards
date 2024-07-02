@@ -6,7 +6,7 @@ import { usePrevious } from '../../lib/hooks';
 import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
-import { isPassword, isUsername } from '../../utils/validator';
+import { isUsername } from '../../utils/validator';
 
 import styles from './UserAddStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -26,6 +26,11 @@ const createMessage = (error) => {
       return {
         type: 'error',
         content: 'common.usernameAlreadyInUse',
+      };
+    case 'Weak password':
+      return {
+        type: 'error',
+        content: 'common.weakPassword',
       };
     default:
       return {
@@ -73,7 +78,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
       return;
     }
 
-    if (!cleanData.password || !isPassword(cleanData.password)) {
+    if (!cleanData.password) {
       passwordField.current.focus();
       return;
     }

@@ -36,4 +36,5 @@ module.exports.custom = {
   googleClientId: process.env.GOOGLE_CLIENT_ID,
 
   positionGap: 65535,
+  requiredPasswordStrength: 2,
 };

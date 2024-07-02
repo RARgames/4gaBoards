@@ -10,9 +10,10 @@ const Errors = {
   INVALID_CURRENT_PASSWORD: {
     invalidCurrentPassword: 'Invalid current password',
   },
+  WEAK_PASSWORD: {
+    weakPassword: 'Weak password',
+  },
 };
-
-const passwordValidator = (value) => zxcvbn(value).score >= 2; // TODO: move to config
 
 module.exports = {
   inputs: {
@@ -23,7 +24,6 @@ module.exports = {
     },
     password: {
       type: 'string',
-      custom: passwordValidator,
       required: true,
     },
     currentPassword: {
@@ -39,10 +39,17 @@ module.exports = {
     invalidCurrentPassword: {
       responseType: 'forbidden',
     },
+    weakPassword: {
+      responseType: 'conflict',
+    },
   },
 
   async fn(inputs) {
     const { currentUser } = this.req;
+
+    if (zxcvbn(inputs.password).score < sails.config.custom.requiredPasswordStrength) {
+      throw Errors.WEAK_PASSWORD;
+    }
 
     if (inputs.id === currentUser.id) {
       if (!inputs.currentPassword) {
