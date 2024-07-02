@@ -5,7 +5,7 @@
     cursor: pointer;
   }
 
-  .defaultButton {
+  .default {
     background: var(--backgroundColorTmpDarkerField2);
     color: var(--textColor1);
     overflow: hidden;
@@ -13,12 +13,10 @@
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border: none;
     border-radius: 3px;
     line-height: 20px;
     width: 100%;
     height: 100%;
-    cursor: pointer;
 
     &:hover {
       color: var(--textColor3);
@@ -39,25 +37,22 @@
   }
 
   .defaultBorder {
-    @extend .defaultButton;
+    @extend .default;
     border: 1px solid var(--backgroundPopupSeparator);
     text-wrap: wrap;
   }
 
-  .noBackgroundButton {
-    background: none;
+  .noBackground {
     color: var(--textColor1);
     overflow: hidden;
     padding: 8px;
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border: none;
     border-radius: 3px;
     line-height: 20px;
     width: 100%;
     height: 100%;
-    cursor: pointer;
 
     &:hover {
       color: var(--textColor3);
@@ -78,12 +73,9 @@
   }
 
   .iconButton {
-    background: none;
-    border: none;
     padding: 0;
     width: 20px;
     height: 20px;
-    cursor: pointer;
 
     &:hover {
       svg {
@@ -101,7 +93,7 @@
   }
 
   .login {
-    background: var(--loginBackgroundTmp);
+    background: var(--loginBackground);
     color: var(--textColor0);
     border-radius: 3px;
     padding: 8px 12px;
@@ -120,7 +112,6 @@
 
   .controlButtons {
     color: var(--textColorWhite);
-    border: none;
     border-radius: 3px;
     height: 32px;
     width: auto;
@@ -131,7 +122,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     font-weight: bold;
-    cursor: pointer;
 
     &:disabled {
       cursor: not-allowed;
@@ -140,28 +130,28 @@
 
   .submit {
     @extend .controlButtons;
-    background-color: var(--backgroundGreen);
+    background: var(--backgroundGreen);
     margin-left: 6px;
 
     &:hover {
-      background-color: var(--backgroundGreenHover);
+      background: var(--backgroundGreenHover);
     }
 
     &:disabled {
-      background-color: var(--backgroundSubmitDisabled);
+      background: var(--backgroundSubmitDisabled);
     }
   }
 
   .cancel {
     @extend .controlButtons;
-    background-color: var(--backgroundRed);
+    background: var(--backgroundRed);
 
     &:hover {
-      background-color: var(--backgroundRedHover);
+      background: var(--backgroundRedHover);
     }
 
     &:disabled {
-      background-color: var(--backgroundCancelDisabled);
+      background: var(--backgroundCancelDisabled);
     }
   }
 
@@ -173,12 +163,10 @@
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border: none;
     border-radius: 3px;
     line-height: 20px;
     width: 100%;
     height: 100%;
-    cursor: pointer;
 
     &:hover {
       background: var(--backgroundPopupHover);
@@ -206,12 +194,9 @@
   }
 
   .header {
-    background: none;
     padding: 0;
-    border: none;
     width: 50px;
     height: 50px;
-    cursor: pointer;
 
     &:hover {
       background: var(--headerButtonHover);
@@ -219,11 +204,8 @@
   }
 
   .headerLogo {
-    background: none;
     padding: 0;
-    border: none;
     width: 100%;
     height: 100%;
-    cursor: pointer;
   }
 }
