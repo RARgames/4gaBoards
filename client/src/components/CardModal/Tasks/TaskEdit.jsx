@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Form, TextArea } from '../../Utils';
-import { useClosableForm, useField } from '../../../hooks';
+import { useField } from '../../../hooks';
 
 import styles from './TaskEdit.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -23,8 +23,6 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     setValue(null);
   }, [setValue]);
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpen);
-
   const submit = useCallback(() => {
     const cleanValue = value.trim();
 
@@ -37,18 +35,16 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
       onUpdate(cleanValue);
     }
 
-    handleClearModified();
     close();
-  }, [value, defaultValue, handleClearModified, close, onUpdate]);
+  }, [value, defaultValue, close, onUpdate]);
 
   const handleSubmit = useCallback(() => {
     submit();
   }, [submit]);
 
   const handleCancel = useCallback(() => {
-    handleClearModified();
     close();
-  }, [close, handleClearModified]);
+  }, [close]);
 
   useImperativeHandle(
     ref,
@@ -71,19 +67,20 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     [handleCancel, submit],
   );
 
+  const handleBlur = useCallback(
+    (e) => {
+      if (e.target.value.trim() === defaultValue.trim()) {
+        close();
+      }
+    },
+    [close, defaultValue],
+  );
+
   useEffect(() => {
     if (isOpen) {
       field.current.focus();
     }
   }, [isOpen]);
-
-  const handleChange = useCallback(
-    (event) => {
-      handleFieldChange(event);
-      handleValueChange(event, defaultValue);
-    },
-    [defaultValue, handleFieldChange, handleValueChange],
-  );
 
   if (!isOpen) {
     return children;
@@ -91,10 +88,10 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   return (
     <Form onSubmit={handleSubmit} className={styles.wrapper}>
-      <TextArea ref={field} value={value} className={styles.field} onKeyDown={handleFieldKeyDown} onChange={handleChange} onBlur={handleFieldBlur} onFocus={handleFocus} />
+      <TextArea ref={field} value={value} className={styles.field} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} onFocus={handleFocus} />
       <div className={gStyles.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button style={ButtonStyle.Submit} content={t('action.save')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button style={ButtonStyle.Submit} content={t('action.save')} />
       </div>
     </Form>
   );

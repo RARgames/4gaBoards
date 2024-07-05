@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea } from '../Utils';
-
-import { useClosableForm, useForm } from '../../hooks';
+import { useForm } from '../../hooks';
 
 import styles from './CardAdd.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -26,8 +25,6 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
     onClose();
   }, [onClose, setData]);
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close);
-
   const submit = useCallback(
     (autoOpen) => {
       const cleanData = {
@@ -46,7 +43,6 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
 
       onCreate(cleanData, autoOpen);
       setData(DEFAULT_DATA);
-      handleClearModified();
 
       if (autoOpen) {
         onClose();
@@ -54,7 +50,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
         focusNameField();
       }
     },
-    [data, onCreate, setData, handleClearModified, onClose, focusNameField],
+    [data, onCreate, setData, onClose, focusNameField],
   );
 
   const handleSubmit = useCallback(() => {
@@ -62,10 +58,8 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
   }, [submit]);
 
   const handleCancel = useCallback(() => {
-    setData(DEFAULT_DATA);
-    handleClearModified();
-    onClose();
-  }, [handleClearModified, onClose, setData]);
+    close();
+  }, [close]);
 
   const handleFieldKeyDown = useCallback(
     (event) => {
@@ -86,6 +80,15 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
     [submit, handleCancel],
   );
 
+  const handleBlur = useCallback(
+    (e) => {
+      if (e.target.value.trim() === DEFAULT_DATA.name.trim()) {
+        close();
+      }
+    },
+    [close],
+  );
+
   useEffect(() => {
     if (isOpen) {
       nameField.current.focus();
@@ -96,20 +99,12 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
     nameField.current.focus();
   }, [focusNameFieldState]);
 
-  const handleChange = useCallback(
-    (event) => {
-      handleFieldChange(event);
-      handleValueChange(event, DEFAULT_DATA.name);
-    },
-    [handleFieldChange, handleValueChange],
-  );
-
   return (
     <Form className={classNames(styles.wrapper, !isOpen && styles.wrapperClosed)} onSubmit={handleSubmit}>
-      <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterCardTitle')} maxRows={3} onKeyDown={handleFieldKeyDown} onChange={handleChange} onBlur={handleFieldBlur} />
+      <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterCardTitle')} maxRows={3} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} />
       <div className={gStyles.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button style={ButtonStyle.Submit} content={t('action.addCard')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button style={ButtonStyle.Submit} content={t('action.addCard')} />
       </div>
     </Form>
   );

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea } from '../Utils';
-
-import { useClosableForm, useForm } from '../../hooks';
+import { useForm } from '../../hooks';
 
 import styles from './ListAdd.module.scss';
 import gStyles from '../../globalStyles.module.scss';
@@ -26,8 +25,6 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     onClose();
   }, [onClose, setData]);
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close);
-
   const submit = useCallback(() => {
     const cleanData = {
       ...data,
@@ -41,19 +38,16 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
 
     onCreate(cleanData);
     setData(DEFAULT_DATA);
-    handleClearModified();
     focusNameField();
-  }, [data, onCreate, setData, handleClearModified, focusNameField]);
+  }, [data, focusNameField, onCreate, setData]);
 
   const handleSubmit = useCallback(() => {
     submit();
   }, [submit]);
 
   const handleCancel = useCallback(() => {
-    setData(DEFAULT_DATA);
-    handleClearModified();
-    onClose();
-  }, [handleClearModified, onClose, setData]);
+    close();
+  }, [close]);
 
   const handleFieldKeyDown = useCallback(
     (event) => {
@@ -73,6 +67,15 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     [handleCancel, submit],
   );
 
+  const handleBlur = useCallback(
+    (e) => {
+      if (e.target.value.trim() === DEFAULT_DATA.name.trim()) {
+        close();
+      }
+    },
+    [close],
+  );
+
   useEffect(() => {
     nameField.current.focus();
   }, []);
@@ -81,20 +84,12 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     nameField.current.focus();
   }, [focusNameFieldState]);
 
-  const handleChange = useCallback(
-    (event) => {
-      handleFieldChange(event);
-      handleValueChange(event, DEFAULT_DATA.name);
-    },
-    [handleFieldChange, handleValueChange],
-  );
-
   return (
     <Form className={styles.wrapper} onSubmit={handleSubmit}>
-      <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterListTitle')} maxRows={2} onKeyDown={handleFieldKeyDown} onChange={handleChange} onBlur={handleFieldBlur} />
+      <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterListTitle')} maxRows={2} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} />
       <div className={gStyles.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button style={ButtonStyle.Submit} content={t('action.addList')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button style={ButtonStyle.Submit} content={t('action.addList')} />
       </div>
     </Form>
   );

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea } from '../../Utils';
-
-import { useClosableForm, useForm } from '../../../hooks';
+import { useForm } from '../../../hooks';
 
 import styles from './TaskAdd.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
@@ -30,8 +29,6 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
     setIsOpen(false);
   }, [setData]);
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut, handleValueChange, handleClearModified] = useClosableForm(close, isOpen);
-
   const submit = useCallback(() => {
     const cleanData = {
       ...data,
@@ -45,19 +42,16 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
 
     onCreate(cleanData);
     setData(DEFAULT_DATA);
-    handleClearModified();
     focusNameField();
-  }, [data, onCreate, setData, handleClearModified, focusNameField]);
+  }, [data, onCreate, setData, focusNameField]);
 
   const handleSubmit = useCallback(() => {
     submit();
   }, [submit]);
 
   const handleCancel = useCallback(() => {
-    setData(DEFAULT_DATA);
-    handleClearModified();
     close();
-  }, [close, handleClearModified, setData]);
+  }, [close]);
 
   useImperativeHandle(
     ref,
@@ -84,6 +78,15 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
     [handleCancel, submit],
   );
 
+  const handleBlur = useCallback(
+    (e) => {
+      if (e.target.value.trim() === DEFAULT_DATA.name.trim()) {
+        close();
+      }
+    },
+    [close],
+  );
+
   useEffect(() => {
     if (isOpen) {
       nameField.current.focus();
@@ -93,14 +96,6 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
   useDidUpdate(() => {
     nameField.current?.focus();
   }, [focusNameFieldState]);
-
-  const handleChange = useCallback(
-    (event) => {
-      handleFieldChange(event);
-      handleValueChange(event, DEFAULT_DATA.name);
-    },
-    [handleFieldChange, handleValueChange],
-  );
 
   if (!isOpen) {
     return React.cloneElement(children, {
@@ -117,12 +112,12 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
         placeholder={t('common.enterTaskDescription')}
         className={styles.field}
         onKeyDown={handleFieldKeyDown}
-        onChange={handleChange}
-        onBlur={handleFieldBlur}
+        onChange={handleFieldChange}
+        onBlur={handleBlur}
       />
       <div className={gStyles.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
-        <Button style={ButtonStyle.Submit} content={t('action.addTask')} onMouseOver={handleControlMouseOver} onMouseOut={handleControlMouseOut} />
+        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button style={ButtonStyle.Submit} content={t('action.addTask')} />
       </div>
     </Form>
   );
