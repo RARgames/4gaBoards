@@ -21,6 +21,10 @@ const updateUserUsername = (id, data, headers) => socket.patch(`/users/${id}/use
 
 const updateUserAvatar = (id, data, headers) => http.post(`/users/${id}/avatar`, data, headers);
 
+const enableUserGoogleSso = (id, data, headers) => socket.patch(`/users/${id}/google-sso`, data, headers);
+
+const disableUserGoogleSso = (id, data, headers) => socket.delete(`/users/${id}/google-sso`, data, headers);
+
 const deleteUser = (id, headers) => socket.delete(`/users/${id}`, undefined, headers);
 
 export default {
@@ -33,5 +37,7 @@ export default {
   updateUserPassword,
   updateUserUsername,
   updateUserAvatar,
+  enableUserGoogleSso,
+  disableUserGoogleSso,
   deleteUser,
 };

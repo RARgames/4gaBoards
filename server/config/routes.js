@@ -11,6 +11,7 @@
 module.exports.routes = {
   'GET /auth/google': 'AuthController.google',
   'GET /auth/google/callback': 'AuthController.googleCallback',
+  'GET /auth/google/:id': 'AuthController.googleConnect',
 
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
@@ -29,6 +30,7 @@ module.exports.routes = {
   'PATCH /api/users/:id/username': 'users/update-username',
   'POST /api/users/:id/avatar': 'users/update-avatar',
   'DELETE /api/users/:id': 'users/delete',
+  'DELETE /api/users/:id/google-sso': 'users/delete-google-sso',
 
   'GET /api/projects': 'projects/index',
   'POST /api/projects': 'projects/create',

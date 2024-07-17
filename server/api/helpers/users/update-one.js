@@ -49,6 +49,7 @@ module.exports = {
 
   exits: {
     emailAlreadyInUse: {},
+    ssoEmailAlreadyInUse: {},
     usernameAlreadyInUse: {},
   },
 
@@ -86,6 +87,12 @@ module.exports = {
           message: 'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_email_unique"',
         },
         'emailAlreadyInUse',
+      )
+      .intercept(
+        {
+          message: 'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_sso_email_unique"',
+        },
+        'ssoEmailAlreadyInUse',
       )
       .intercept(
         {

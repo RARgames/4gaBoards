@@ -144,6 +144,47 @@ export function* clearCurrentUserPasswordUpdateError() {
   yield call(clearUserPasswordUpdateError, id);
 }
 
+export function* enableUserGoogleSso(id) {
+  yield put(actions.enableUserGoogleSso(id));
+
+  let user;
+  const { googleSsoUrl } = yield select(selectors.selectCoreSettings);
+  window.location.replace(`${googleSsoUrl}/${id}`);
+  try {
+    yield call(api.enableUserGoogleSso);
+  } catch (error) {
+    yield put(actions.enableUserGoogleSso.failure(id, error));
+    return;
+  }
+
+  yield put(actions.enableUserGoogleSso.success(user));
+}
+
+export function* enableCurrentUserGoogleSso(data) {
+  const id = yield select(selectors.selectCurrentUserId);
+  yield call(enableUserGoogleSso, id, data);
+}
+
+export function* disableUserGoogleSso(id, data) {
+  yield put(actions.disableUserGoogleSso(id, data));
+
+  let user;
+  try {
+    ({ item: user } = yield call(request, api.disableUserGoogleSso, id, data));
+  } catch (error) {
+    yield put(actions.disableUserGoogleSso.failure(id, error));
+    return;
+  }
+
+  yield put(actions.disableUserGoogleSso.success(user));
+}
+
+export function* disableCurrentUserGoogleSso(data) {
+  const id = yield select(selectors.selectCurrentUserId);
+
+  yield call(disableUserGoogleSso, id, data);
+}
+
 export function* updateUserUsername(id, data) {
   yield put(actions.updateUserUsername(id, data));
 
@@ -305,6 +346,8 @@ export default {
   clearCurrentUserEmailUpdateError,
   updateUserPassword,
   updateCurrentUserPassword,
+  enableCurrentUserGoogleSso,
+  disableCurrentUserGoogleSso,
   clearUserPasswordUpdateError,
   clearCurrentUserPasswordUpdateError,
   updateUserUsername,

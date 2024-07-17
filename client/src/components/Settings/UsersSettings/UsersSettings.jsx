@@ -26,6 +26,8 @@ const UsersSettings = React.memo(
     onEmailUpdateMessageDismiss,
     onPasswordUpdate,
     onPasswordUpdateMessageDismiss,
+    onEnableGoogleSso,
+    onDisableGoogleSso,
     onDelete,
   }) => {
     const [t] = useTranslation();
@@ -77,6 +79,20 @@ const UsersSettings = React.memo(
         onPasswordUpdateMessageDismiss(id);
       },
       [onPasswordUpdateMessageDismiss],
+    );
+
+    const handleEnableGoogleSso = useCallback(
+      (id) => {
+        onEnableGoogleSso(id);
+      },
+      [onEnableGoogleSso],
+    );
+
+    const handleDisableGoogleSso = useCallback(
+      (id) => {
+        onDisableGoogleSso(id);
+      },
+      [onDisableGoogleSso],
     );
 
     const handleDelete = useCallback(
@@ -142,6 +158,8 @@ const UsersSettings = React.memo(
                   onEmailUpdateMessageDismiss={() => handleEmailUpdateMessageDismiss(item.id)}
                   onPasswordUpdate={(data) => handlePasswordUpdate(item.id, data)}
                   onPasswordUpdateMessageDismiss={() => handlePasswordUpdateMessageDismiss(item.id)}
+                  onEnableGoogleSso={() => handleEnableGoogleSso(item.id)}
+                  onDisableGoogleSso={() => handleDisableGoogleSso(item.id)}
                   onDelete={() => handleDelete(item.id)}
                 />
               ))}
@@ -167,6 +185,8 @@ UsersSettings.propTypes = {
   onEmailUpdateMessageDismiss: PropTypes.func.isRequired,
   onPasswordUpdate: PropTypes.func.isRequired,
   onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
+  onEnableGoogleSso: PropTypes.func.isRequired,
+  onDisableGoogleSso: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

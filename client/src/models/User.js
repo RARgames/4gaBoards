@@ -283,6 +283,13 @@ export default class extends BaseModel {
         User.withId(payload.user.id).deleteWithRelated(payload.user);
 
         break;
+      case ActionTypes.USER_GOOGLE_SSO_DISABLE__SUCCESS:
+        User.withId(payload.user.id).update({
+          ...payload.user,
+          ssoGoogleEmail: null,
+        });
+
+        break;
       case ActionTypes.PROJECT_CREATE_HANDLE:
       case ActionTypes.PROJECT_MANAGER_CREATE_HANDLE:
       case ActionTypes.BOARD_FETCH__SUCCESS:

@@ -178,6 +178,53 @@ updateUserAvatar.failure = (id, error) => ({
   },
 });
 
+const enableUserGoogleSso = (id, data) => ({
+  type: ActionTypes.USER_GOOGLE_SSO_ENABLE,
+  payload: {
+    id,
+    data,
+  },
+});
+
+enableUserGoogleSso.success = (user, accessToken) => ({
+  type: ActionTypes.USER_GOOGLE_SSO_ENABLE__SUCCESS,
+  payload: {
+    user,
+    accessToken,
+  },
+});
+
+enableUserGoogleSso.failure = (id, error) => ({
+  type: ActionTypes.USER_GOOGLE_SSO_ENABLE__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
+const disableUserGoogleSso = (id, data) => ({
+  type: ActionTypes.USER_GOOGLE_SSO_DISABLE,
+  payload: {
+    id,
+    data,
+  },
+});
+
+disableUserGoogleSso.success = (user) => ({
+  type: ActionTypes.USER_GOOGLE_SSO_DISABLE__SUCCESS,
+  payload: {
+    user,
+  },
+});
+
+disableUserGoogleSso.failure = (id, error) => ({
+  type: ActionTypes.USER_GOOGLE_SSO_DISABLE__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
 const deleteUser = (id) => ({
   type: ActionTypes.USER_DELETE,
   payload: {
@@ -299,6 +346,8 @@ export default {
   updateUserUsername,
   clearUserUsernameUpdateError,
   updateUserAvatar,
+  enableUserGoogleSso,
+  disableUserGoogleSso,
   deleteUser,
   handleUserDelete,
   addUserToCard,

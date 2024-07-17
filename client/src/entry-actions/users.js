@@ -102,6 +102,20 @@ const clearCurrentUserPasswordUpdateError = () => ({
   payload: {},
 });
 
+const enableCurrentUserGoogleSso = (id) => ({
+  type: EntryActionTypes.CURRENT_USER_GOOGLE_SSO_ENABLE,
+  payload: {
+    id,
+  },
+});
+
+const disableCurrentUserGoogleSso = (id) => ({
+  type: EntryActionTypes.CURRENT_USER_GOOGLE_SSO_DISABLE,
+  payload: {
+    id,
+  },
+});
+
 const updateUserUsername = (id, data) => ({
   type: EntryActionTypes.USER_USERNAME_UPDATE,
   payload: {
@@ -224,6 +238,8 @@ export default {
   updateCurrentUserPassword,
   clearUserPasswordUpdateError,
   clearCurrentUserPasswordUpdateError,
+  enableCurrentUserGoogleSso,
+  disableCurrentUserGoogleSso,
   updateUserUsername,
   updateCurrentUserUsername,
   clearUserUsernameUpdateError,

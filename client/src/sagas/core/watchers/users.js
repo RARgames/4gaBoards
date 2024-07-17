@@ -24,6 +24,8 @@ export default function* usersWatchers() {
     takeEvery(EntryActionTypes.CURRENT_USER_USERNAME_UPDATE, ({ payload: { data } }) => services.updateCurrentUserUsername(data)),
     takeEvery(EntryActionTypes.USER_USERNAME_UPDATE_ERROR_CLEAR, ({ payload: { id } }) => services.clearUserUsernameUpdateError(id)),
     takeEvery(EntryActionTypes.CURRENT_USER_USERNAME_UPDATE_ERROR_CLEAR, () => services.clearCurrentUserUsernameUpdateError()),
+    takeEvery(EntryActionTypes.CURRENT_USER_GOOGLE_SSO_ENABLE, ({ payload: { data } }) => services.enableCurrentUserGoogleSso(data)),
+    takeEvery(EntryActionTypes.CURRENT_USER_GOOGLE_SSO_DISABLE, ({ payload: { data } }) => services.disableCurrentUserGoogleSso(data)),
     takeEvery(EntryActionTypes.CURRENT_USER_AVATAR_UPDATE, ({ payload: { data } }) => services.updateCurrentUserAvatar(data)),
     takeEvery(EntryActionTypes.USER_DELETE, ({ payload: { id } }) => services.deleteUser(id)),
     takeEvery(EntryActionTypes.USER_DELETE_HANDLE, ({ payload: { user } }) => services.handleUserDelete(user)),
