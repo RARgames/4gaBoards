@@ -22,6 +22,7 @@ import { ReactComponent as Pencil } from '../../../assets/icons/Pencil.svg';
 import { ReactComponent as Play } from '../../../assets/icons/Play.svg';
 import { ReactComponent as Plus } from '../../../assets/icons/Plus.svg';
 import { ReactComponent as PlusMath } from '../../../assets/icons/PlusMath.svg';
+import { ReactComponent as Projects } from '../../../assets/icons/Projects.svg';
 import { ReactComponent as ProjectSettings } from '../../../assets/icons/ProjectSettings.svg';
 import { ReactComponent as Server } from '../../../assets/icons/Server.svg';
 import { ReactComponent as Settings } from '../../../assets/icons/Settings.svg';
@@ -61,6 +62,7 @@ const IconType = {
   Play,
   Plus,
   PlusMath,
+  Projects,
   ProjectSettings,
   Server,
   Settings,

@@ -8,8 +8,26 @@ import i18n from '../../../i18n';
 import { removeAccessToken } from '../../../utils/access-token-storage';
 
 export function* initializeCore() {
-  const { user, board, users, projects, projectManagers, boards, boardMemberships, labels, lists, cards, core, cardMemberships, cardLabels, tasks, attachments, activities, notifications } =
-    yield call(requests.fetchCore); // TODO: handle error
+  const {
+    user,
+    board,
+    users,
+    projects,
+    projectManagers,
+    boards,
+    boardMemberships,
+    labels,
+    lists,
+    cards,
+    core,
+    cardMemberships,
+    cardLabels,
+    tasks,
+    attachments,
+    activities,
+    notifications,
+    userProjects,
+  } = yield call(requests.fetchCore); // TODO: handle error
 
   yield call(i18n.changeLanguage, user.language);
   yield call(i18n.loadCoreLocale);
@@ -33,6 +51,7 @@ export function* initializeCore() {
       attachments,
       activities,
       notifications,
+      userProjects,
     ),
   );
 }

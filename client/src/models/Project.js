@@ -12,6 +12,7 @@ export default class extends BaseModel {
     name: attr(),
     background: attr(),
     backgroundImage: attr(),
+    isCollapsed: attr(),
     isBackgroundImageUpdating: attr({
       getDefault: () => false,
     }),
@@ -39,12 +40,28 @@ export default class extends BaseModel {
           Project.upsert(project);
         });
 
+        payload.userProjects.forEach((userProject) => {
+          Project.withId(userProject.projectId)?.update({
+            // TODO ? - hacky way to fix #311 - remove later
+            isCollapsed: userProject.isCollapsed,
+          });
+        });
+
         break;
       case ActionTypes.CORE_INITIALIZE:
       case ActionTypes.BOARD_FETCH__SUCCESS:
         payload.projects.forEach((project) => {
           Project.upsert(project);
         });
+
+        if (payload.userProjects) {
+          payload.userProjects.forEach((userProject) => {
+            Project.withId(userProject.projectId)?.update({
+              // TODO ? - hacky way to fix #311 - remove later
+              isCollapsed: userProject.isCollapsed,
+            });
+          });
+        }
 
         break;
       case ActionTypes.PROJECT_CREATE__SUCCESS:
@@ -123,6 +140,29 @@ export default class extends BaseModel {
 
               boardModel.deleteRelated(payload.currentUserId);
             }
+          });
+        }
+
+        break;
+      }
+
+      case ActionTypes.USER_PROJECT_UPDATE: {
+        const projectModel = Project.withId(payload.id);
+        if (projectModel) {
+          projectModel.update({
+            isCollapsed: payload.data.isCollapsed,
+          });
+        }
+
+        break;
+      }
+
+      case ActionTypes.USER_PROJECT_UPDATE__SUCCESS:
+      case ActionTypes.USER_PROJECT_UPDATE_HANDLE: {
+        const projectModel = Project.withId(payload.userProject.projectId);
+        if (projectModel) {
+          projectModel.update({
+            isCollapsed: payload.userProject.isCollapsed,
           });
         }
 

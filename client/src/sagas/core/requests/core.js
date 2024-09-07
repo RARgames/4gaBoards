@@ -65,6 +65,7 @@ export function* fetchCore() {
   }
 
   const core = yield call(request, api.getCoreSettingsPublic);
+  const userProjects = yield call(request, api.getUserProjects);
 
   return {
     user,
@@ -84,6 +85,7 @@ export function* fetchCore() {
     boardMemberships: mergeRecords(boardMemberships1, boardMemberships2),
     cards: mergeRecords(cards1, cards2),
     core,
+    userProjects: userProjects.items,
   };
 }
 

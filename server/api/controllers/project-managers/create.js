@@ -67,6 +67,16 @@ module.exports = {
       })
       .intercept('userAlreadyProjectManager', () => Errors.USER_ALREADY_PROJECT_MANAGER);
 
+    await sails.helpers.userProjects.createOne
+      .with({
+        values: {
+          projectId: project.id,
+          userId: user.id,
+        },
+        request: this.req,
+      })
+      .tolerate('E_UNIQUE');
+
     return {
       item: projectManager,
     };

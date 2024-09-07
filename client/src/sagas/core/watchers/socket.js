@@ -44,6 +44,10 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleProjectDelete(item));
     };
 
+    const handleUserProjectUpdate = ({ item }) => {
+      emit(entryActions.handleUserProjectUpdate(item));
+    };
+
     const handleProjectManagerCreate = ({ item }) => {
       emit(entryActions.handleProjectManagerCreate(item));
     };
@@ -189,6 +193,8 @@ const createSocketEventsChannel = () =>
     socket.on('projectUpdate', handleProjectUpdate);
     socket.on('projectDelete', handleProjectDelete);
 
+    socket.on('userProjectUpdate', handleUserProjectUpdate);
+
     socket.on('projectManagerCreate', handleProjectManagerCreate);
     socket.on('projectManagerDelete', handleProjectManagerDelete);
 
@@ -247,6 +253,8 @@ const createSocketEventsChannel = () =>
       socket.off('projectCreate', handleProjectCreate);
       socket.off('projectUpdate', handleProjectUpdate);
       socket.off('projectDelete', handleProjectDelete);
+
+      socket.off('userProjectUpdate', handleUserProjectUpdate);
 
       socket.off('projectManagerCreate', handleProjectManagerCreate);
       socket.off('projectManagerDelete', handleProjectManagerDelete);

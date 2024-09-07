@@ -45,6 +45,22 @@ module.exports = {
       throw Errors.BOARD_MEMBERSHIP_NOT_FOUND;
     }
 
+    // Delete userProject if the user is not a member of any board in the project and is not a project manager
+    const boardMemberships = await sails.helpers.boardMemberships.getMany({ userId: boardMembership.userId });
+    const boardIds = boardMemberships.map((bm) => bm.boardId);
+    const projects = await sails.helpers.boards.getMany({ id: boardIds });
+    const projectIds = projects.map((p) => p.projectId);
+    const isProjectManager = await sails.helpers.users.isProjectManager(boardMembership.userId, project.id);
+    if (!projectIds.includes(project.id) && !isProjectManager) {
+      const userProject = await sails.helpers.userProjects.getOne({ userId: boardMembership.userId, projectId: project.id });
+      if (userProject) {
+        await sails.helpers.userProjects.deleteOne.with({
+          record: userProject,
+          request: this.req,
+        });
+      }
+    }
+
     return {
       item: boardMembership,
     };

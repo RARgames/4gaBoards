@@ -20,6 +20,9 @@ module.exports.routes = {
   'GET /api/core-settings-public': 'core/get-settings-public',
   'POST /api/core-settings': 'core/set-settings',
 
+  'GET /api/user-projects': 'user-projects/index',
+  'PATCH /api/user-projects/:projectId': 'user-projects/update',
+
   'GET /api/users': 'users/index',
   'POST /api/users': 'users/create',
   'GET /api/users/:id': 'users/show',

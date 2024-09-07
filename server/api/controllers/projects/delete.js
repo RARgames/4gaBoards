@@ -43,6 +43,15 @@ module.exports = {
       throw Errors.PROJECT_NOT_FOUND;
     }
 
+    // Delete all userProjects associated with project
+    const userProjects = await sails.helpers.userProjects.getMany({ projectId: project.id });
+    userProjects.forEach(async (userProject) => {
+      await sails.helpers.userProjects.deleteOne.with({
+        record: userProject,
+        request: this.req,
+      });
+    });
+
     return {
       item: project,
     };

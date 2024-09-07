@@ -13,8 +13,26 @@ export function* handleSocketReconnect() {
   const { boardId } = yield select(selectors.selectPath);
 
   yield put(actions.handleSocketReconnect.fetchCore(currentUserId, boardId));
-  const { user, board, users, projects, projectManagers, boards, boardMemberships, labels, lists, cards, core, cardMemberships, cardLabels, tasks, attachments, activities, notifications } =
-    yield call(requests.fetchCore); // TODO: handle error
+  const {
+    user,
+    board,
+    users,
+    projects,
+    projectManagers,
+    boards,
+    boardMemberships,
+    labels,
+    lists,
+    cards,
+    core,
+    cardMemberships,
+    cardLabels,
+    tasks,
+    attachments,
+    activities,
+    notifications,
+    userProjects,
+  } = yield call(requests.fetchCore); // TODO: handle error
   yield put(
     actions.handleSocketReconnect(
       user,
@@ -34,6 +52,7 @@ export function* handleSocketReconnect() {
       attachments,
       activities,
       notifications,
+      userProjects,
     ),
   );
 }

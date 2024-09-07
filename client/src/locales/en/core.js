@@ -248,6 +248,8 @@ export default {
       website: '4gaBoards.com',
       writeComment: 'Write a comment...',
       writeCommentHint: '[Ctrl+Enter] - submit',
+      showBoards: 'Show boards',
+      hideBoards: 'Hide boards',
     },
 
     action: {

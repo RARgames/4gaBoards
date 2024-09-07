@@ -16,6 +16,7 @@ import attachments from './attachments';
 import activities from './activities';
 import commentActivities from './comment-activities';
 import notifications from './notifications';
+import userProjects from './user-projects';
 
 export default {
   ...router,
@@ -36,4 +37,5 @@ export default {
   ...activities,
   ...commentActivities,
   ...notifications,
+  ...userProjects,
 };
