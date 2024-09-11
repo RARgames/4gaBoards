@@ -5,6 +5,7 @@ import EntryActionTypes from '../../../constants/EntryActionTypes';
 
 export default function* boardsWatchers() {
   yield all([
+    takeEvery(EntryActionTypes.BOARD_CREATE, ({ payload: { projectId, data } }) => services.createBoard(projectId, data)),
     takeEvery(EntryActionTypes.BOARD_IN_CURRENT_PROJECT_CREATE, ({ payload: { data } }) => services.createBoardInCurrentProject(data)),
     takeEvery(EntryActionTypes.BOARD_CREATE_HANDLE, ({ payload: { board, requestId } }) => services.handleBoardCreate(board, requestId)),
     takeEvery(EntryActionTypes.BOARD_FETCH, ({ payload: { id } }) => services.fetchBoard(id)),

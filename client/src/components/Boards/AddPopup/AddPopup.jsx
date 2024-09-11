@@ -15,8 +15,17 @@ const StepTypes = {
   IMPORT: 'IMPORT',
 };
 
-const AddStep = React.memo(({ onCreate, onClose }) => {
+const AddStep = React.memo(({ projects, projectId, onCreate, onClose }) => {
   const [t] = useTranslation();
+
+  const [selectedProject, setSelectedProject] = useState(() => {
+    if (projectId) {
+      const project = projects.find((p) => p.id === projectId);
+      return project ? { id: project.id, name: project.name } : null;
+    }
+    return null;
+  });
+
   const [template, setTemplate] = useState({
     id: 'empty',
     name: t('common.empty'),
@@ -33,6 +42,10 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
   const [focusNameFieldState, focusNameField] = useToggle();
 
   const nameField = useRef(null);
+
+  const handleProjectChange = useCallback((value) => {
+    setSelectedProject(value);
+  }, []);
 
   // TODO move to the templates file
   const templates = useMemo(
@@ -95,9 +108,14 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
       return;
     }
 
-    onCreate(cleanData);
+    if (!selectedProject) {
+      // TODO add dropdown error
+      return;
+    }
+
+    onCreate(selectedProject.id, cleanData);
     onClose();
-  }, [data, template.lists, onCreate, onClose]);
+  }, [data, template.lists, selectedProject, onCreate, onClose]);
 
   const handleImportClick = useCallback(() => {
     openStep(StepTypes.IMPORT);
@@ -123,6 +141,19 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+          <div>
+            <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
+            <Dropdown
+              options={projects}
+              placeholder={selectedProject ? selectedProject.name : t('common.selectProject')}
+              defaultItem={selectedProject}
+              isSearchable
+              selectFirstOnSearch
+              onChange={handleProjectChange}
+              className={styles.dropdown}
+              dropdownMenuClassName={styles.dropdownMenu}
+            />
+          </div>
           {!data.import && (
             <div>
               <div className={styles.text}>{t('common.template')}</div>
@@ -152,8 +183,14 @@ const AddStep = React.memo(({ onCreate, onClose }) => {
 });
 
 AddStep.propTypes = {
+  projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  projectId: PropTypes.string,
   onCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+AddStep.defaultProps = {
+  projectId: undefined,
 };
 
 export default withPopup(AddStep);

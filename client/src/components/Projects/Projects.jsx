@@ -25,36 +25,38 @@ const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreat
   }, [canAdd]);
 
   return (
-    <div className={classNames(styles.projectsWrapper, gStyles.scrollableY)}>
-      {items.map((item) => (
-        <div
-          key={item.id}
-          className={classNames(
-            styles.projectWrapper,
-            item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`],
-          )}
-          style={{
-            background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
-          }}
-        >
-          {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
-          <Link to={item.firstBoardId ? Paths.BOARDS.replace(':id', item.firstBoardId) : Paths.PROJECTS.replace(':id', item.id)}>
-            <div className={styles.project}>
-              <div title={item.name} className={styles.projectTitle}>
-                {item.name}
+    <div className={styles.wrapper}>
+      <div className={classNames(styles.projectsWrapper, gStyles.scrollableY)}>
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className={classNames(
+              styles.projectWrapper,
+              item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`],
+            )}
+            style={{
+              background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
+            }}
+          >
+            {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
+            <Link to={item.firstBoardId ? Paths.BOARDS.replace(':id', item.firstBoardId) : Paths.PROJECTS.replace(':id', item.id)}>
+              <div className={styles.project}>
+                <div title={item.name} className={styles.projectTitle}>
+                  {item.name}
+                </div>
               </div>
-            </div>
-          </Link>
-        </div>
-      ))}
-      {canAdd && (
-        <ProjectAdd ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
-          <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={handleProjectAdd} className={classNames(styles.projectWrapper, styles.add)}>
-            <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
-            {t('common.createProject')}
-          </Button>
-        </ProjectAdd>
-      )}
+            </Link>
+          </div>
+        ))}
+        {canAdd && (
+          <ProjectAdd ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
+            <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={handleProjectAdd} className={classNames(styles.projectWrapper, styles.add)}>
+              <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
+              {t('common.createProject')}
+            </Button>
+          </ProjectAdd>
+        )}
+      </div>
     </div>
   );
 });

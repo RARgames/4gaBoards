@@ -1,5 +1,13 @@
 import EntryActionTypes from '../constants/EntryActionTypes';
 
+const createBoard = (projectId, data) => ({
+  type: EntryActionTypes.BOARD_CREATE,
+  payload: {
+    projectId,
+    data,
+  },
+});
+
 const createBoardInCurrentProject = (data) => ({
   type: EntryActionTypes.BOARD_IN_CURRENT_PROJECT_CREATE,
   payload: {
@@ -60,6 +68,7 @@ const handleBoardDelete = (board) => ({
 });
 
 export default {
+  createBoard,
   createBoardInCurrentProject,
   handleBoardCreate,
   fetchBoard,
