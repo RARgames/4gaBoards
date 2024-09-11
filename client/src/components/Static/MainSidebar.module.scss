@@ -1,0 +1,226 @@
+:global(#app) {
+  .wrapper {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: calc(100% - 50px);
+  }
+
+  .content {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    width: calc(100% - 180px);
+  }
+
+  .sidebar {
+    background-color: var(--backgroundSidebar);
+    color: var(--textColor0);
+    position: relative;
+    width: 180px;
+    height: 100%;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .scrollable {
+    flex-grow: 1;
+  }
+
+  .sidebarFooter {
+    // height: 96px;
+    //TODO check - not needed?
+  }
+
+  .sidebarTitle {
+    color: var(--textColorWhite);
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 0 10px 6px;
+  }
+
+  .sidebarTitleIcon {
+    margin-right: 6px;
+    vertical-align: -10%;
+    fill: var(--textColorWhite);
+  }
+
+  .sidebarItem {
+    padding: 0 10px;
+    background: var(--backgroundSidebarItem);
+  }
+
+  .sidebarItemProject {
+    background: var(--backgroundSidebarItem3);
+    padding-left: 2px;
+    border-top: 1px solid var(--backgroundPopupSeparator);
+  }
+
+  .sidebarItemBoard {
+    padding: 0 10px 0 0;
+    background: var(--backgroundSidebarItem);
+    display: flex;
+  }
+
+  .sidebarItemProjectActive {
+    background: var(--backgroundSidebarItemActive);
+    border-left: 2px solid var(--borderOutline2);
+    padding-left: 2px;
+
+    button {
+      font-weight: bold;
+    }
+
+    svg {
+      fill: var(--borderOutline2)
+    }
+
+    &:hover {
+      button {
+        color: var(--textColor0);
+      }
+
+      svg {
+        fill: var(--borderOutline2) !important;
+      }
+    }
+  }
+
+  .sidebarItemProjectCollapsed {
+    // border-bottom: 1px solid var(--backgroundPopupSeparator);
+    //TODO temp fix this
+    border-bottom: 1px solid red;
+  }
+
+  .linkButton {
+    max-width: calc(100% - 20px);
+    display: inline-block;
+  }
+
+  .sidebarActive {
+    background: var(--backgroundSidebarItemActive);
+    border-left: 2px solid var(--borderOutline2);
+    padding-left: 8px;
+
+    button {
+      font-weight: bold;
+    }
+
+    //TODO this class not working corectly rn
+    // svg {
+    //   fill: var(--borderOutline2)
+    // }
+
+    &:hover {
+      button {
+        color: var(--textColor0);
+      }
+
+      // svg {
+      //   fill: var(--borderOutline2) !important;
+      // }
+    }
+  }
+
+  .icon {
+    margin-right: 4px;
+    fill: var(--textColor0);
+  }
+
+  .sidebarButton {
+    color: var(--textColor0);
+
+    svg {
+      fill: var(--textColor0);
+    }
+
+    &:hover {
+      color: var(--textColor1);
+
+      svg {
+        fill: var(--textColor1);
+      }
+    }
+  }
+
+  .sidebarButtonPadding {
+    padding: 8px 8px 8px 0px;
+  }
+
+  .showSidebarButton {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    top: 7px;
+    left: 6px;
+    background-color: var(--backgroundColor);
+
+    top: -24px;
+    left: 6px;
+    background-color: var(--backgroundHeader);
+  }
+
+  .showSidebarButtonHidden {
+    visibility: hidden;
+  }
+
+  .hideSidebarButton {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 7px;
+    left: 180px;
+    background-color: var(--backgroundSidebar);
+
+    top: -24px;
+    left: 6px;
+    background-color: var(--backgroundHeader);
+  }
+
+  .sidebarHidden {
+    width: 0px;
+    visibility: hidden;
+  }
+
+  .githubIcon {
+    vertical-align: middle;
+    margin: 11px 0;
+  }
+
+  .githubGreen {
+    fill: var(--textColorGreen);
+  }
+
+  .githubGrey {
+    fill: var(--textColor0);
+  }
+
+  .board {
+    flex-grow: 1;
+  }
+
+  .collapseIcon {
+    vertical-align: middle;
+  }
+
+  .collapseIconCollapsed {
+    transform: rotate(270deg);
+  }
+
+  .footerButton {
+    padding: 8px 14px;
+  }
+
+  .footerButtonIcon {
+    margin-right: 4px;
+  }
+}

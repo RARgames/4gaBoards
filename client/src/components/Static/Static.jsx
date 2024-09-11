@@ -7,13 +7,14 @@ import { Loader, LoaderSize } from '../Utils';
 import ProjectsContainer from '../../containers/ProjectsContainer';
 import BoardContainer from '../../containers/BoardContainer';
 import SettingsContainer from '../../containers/Settings/SettingsContainer';
+import MainSidebarContainer from '../../containers/MainSidebarContainer';
 import Paths from '../../constants/Paths';
 
 import styles from './Static.module.scss';
 
 function Static({ path, projectId, cardId, board }) {
   const [t] = useTranslation();
-
+  // TODO fully implement MainSidebar
   if (
     [
       Paths.SETTINGS,
@@ -37,7 +38,9 @@ function Static({ path, projectId, cardId, board }) {
   if (projectId === undefined) {
     return (
       <div className={styles.wrapper}>
-        <ProjectsContainer />
+        <MainSidebarContainer path={path}>
+          <ProjectsContainer />
+        </MainSidebarContainer>
       </div>
     );
   }
@@ -75,12 +78,14 @@ function Static({ path, projectId, cardId, board }) {
   if (board === undefined) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperFlex, styles.wrapperProject)}>
-        <div className={styles.message}>
-          <h1 className={styles.messageTitle}>{t('common.openBoard', { context: 'title' })}</h1>
-          <div className={styles.messageContent}>
-            <Trans i18nKey="common.createNewOneOrSelectExistingOne" />
+        <MainSidebarContainer path={path}>
+          <div className={styles.message}>
+            <h1 className={styles.messageTitle}>{t('common.openBoard', { context: 'title' })}</h1>
+            <div className={styles.messageContent}>
+              <Trans i18nKey="common.createNewOneOrSelectExistingOne" />
+            </div>
           </div>
-        </div>
+        </MainSidebarContainer>
       </div>
     );
   }
@@ -95,7 +100,9 @@ function Static({ path, projectId, cardId, board }) {
 
   return (
     <div className={classNames(styles.wrapper, styles.wrapperFlex, styles.wrapperBoard)}>
-      <BoardContainer />
+      <MainSidebarContainer path={path}>
+        <BoardContainer />
+      </MainSidebarContainer>
     </div>
   );
 }
