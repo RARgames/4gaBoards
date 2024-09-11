@@ -4,14 +4,17 @@ import classNames from 'classnames';
 import pick from 'lodash/pick';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
 import Connections from '../BoardActions/Connections';
 import ProjectAddPopup from '../ProjectAddPopup';
 import BoardAddPopup from '../Boards/AddPopup';
+import DroppableTypes from '../../constants/DroppableTypes';
 
 import styles from './MainSidebar.module.scss';
+import bStyles from '../Utils/Button/Button.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import Filter from '../Filter';
 
@@ -21,6 +24,7 @@ const MainSidebar = React.memo(
     path,
     projects,
     filteredProjects,
+    managedProjects,
     currProjectId,
     currBoardId,
     canAdd,
@@ -28,8 +32,10 @@ const MainSidebar = React.memo(
     isSubmitting,
     onProjectCreate,
     onBoardCreate,
-    onChangeFilterQuery,
     onBoardUpdate,
+    onBoardMove,
+    onBoardDelete,
+    onChangeFilterQuery,
     onUserProjectUpdate,
   }) => {
     const [t] = useTranslation();
@@ -48,6 +54,99 @@ const MainSidebar = React.memo(
       },
       [onUserProjectUpdate],
     );
+
+    const handleDragEnd = useCallback(
+      ({ draggableId, source, destination }) => {
+        if (!destination || source.index === destination.index) {
+          return;
+        }
+
+        onBoardMove(draggableId, destination.index);
+      },
+      [onBoardMove],
+    );
+
+    // const handleUpdate = useCallback(
+    //   (id, data) => {
+    //     onBoardUpdate(id, data);
+    //   },
+    //   [onBoardUpdate],
+    // );
+
+    // const handleDelete = useCallback(
+    //   (id) => {
+    //     onBoardDelete(id);
+    //   },
+    //   [onBoardDelete],
+    // );
+
+    const projectsNode = filteredProjects.map((project) => (
+      <div key={project.id} className={styles.sidebarItemProjectWrapper}>
+        <div
+          className={classNames(styles.sidebarItemProject, !currBoardId && currProjectId === project.id && styles.sidebarItemProjectActive, project.isCollapsed && styles.sidebarItemProjectCollapsed)}
+        >
+          <Button
+            style={ButtonStyle.Icon}
+            title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')}
+            className={styles.sidebarButton}
+            onClick={() => handleToggleProjectCollapse(project)}
+          >
+            <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.collapseIcon, project.isCollapsed && styles.collapseIconCollapsed)} />
+          </Button>
+          <Link to={Paths.PROJECTS.replace(':id', project.id)} className={styles.linkButton}>
+            <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)} />
+          </Link>
+        </div>
+        {project.isCollapsed === false && (
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="vertical">
+              {({ innerRef, droppableProps, placeholder }) => (
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                <div {...droppableProps} ref={innerRef}>
+                  {project.boards.map((board, index) => (
+                    <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !managedProjects.some((p) => p.id === project.id)}>
+                      {/* eslint-disable-next-line no-shadow */}
+                      {({ innerRef, draggableProps, dragHandleProps }) => (
+                        // eslint-disable-next-line react/jsx-props-no-spreading
+                        <div {...draggableProps} ref={innerRef}>
+                          {board.isPersisted && (
+                            // eslint-disable-next-line react/jsx-props-no-spreading
+                            <div key={board.id} className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarActive)} {...dragHandleProps}>
+                              <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(styles.board, styles.linkButton, bStyles.button, bStyles.noBackground, styles.sidebarButton)}>
+                                {board.name}
+                              </Link>
+                              {board.isGithubConnected && (
+                                <Connections
+                                  defaultData={pick(board, ['isGithubConnected', 'githubRepo'])}
+                                  onUpdate={(data) => {
+                                    handleConnectionsUpdate(board.id, data);
+                                  }}
+                                  offset={30}
+                                  position="right-start"
+                                  wrapperClassName={styles.connections}
+                                >
+                                  <Icon
+                                    type={IconType.Github}
+                                    size={IconSize.Size14}
+                                    className={classNames(styles.githubIcon, board.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+                                    title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+                                  />
+                                </Connections>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        )}
+      </div>
+    ));
 
     return (
       <div className={styles.wrapper}>
@@ -78,55 +177,7 @@ const MainSidebar = React.memo(
               <div className={styles.sidebarTitle}>
                 <Icon type={IconType.Projects} size={IconSize.Size16} className={styles.sidebarTitleIcon} /> {t('common.projects', { context: 'title' })}
               </div>
-              {filteredProjects.map((project) => (
-                <div key={project.id} className={styles.sidebarItemProjectWrapper}>
-                  <div
-                    className={classNames(
-                      styles.sidebarItemProject,
-                      !currBoardId && currProjectId === project.id && styles.sidebarItemProjectActive,
-                      project.isCollapsed && styles.sidebarItemProjectCollapsed,
-                    )}
-                  >
-                    <Button
-                      style={ButtonStyle.Icon}
-                      title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')}
-                      className={styles.sidebarButton}
-                      onClick={() => handleToggleProjectCollapse(project)}
-                    >
-                      <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.collapseIcon, project.isCollapsed && styles.collapseIconCollapsed)} />
-                    </Button>
-                    <Link to={Paths.PROJECTS.replace(':id', project.id)} className={styles.linkButton}>
-                      <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)} />
-                    </Link>
-                  </div>
-                  {project.isCollapsed === false &&
-                    project.boards.map((board) => (
-                      <div key={board.id} className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarActive)}>
-                        <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(styles.board, styles.linkButton)}>
-                          <Button style={ButtonStyle.NoBackground} content={board.name} className={styles.sidebarButton} />
-                        </Link>
-                        {board.isGithubConnected && (
-                          <Connections
-                            defaultData={pick(board, ['isGithubConnected', 'githubRepo'])}
-                            onUpdate={(data) => {
-                              handleConnectionsUpdate(board.id, data);
-                            }}
-                            offset={30}
-                            position="right-start"
-                            wrapperClassName={styles.connections}
-                          >
-                            <Icon
-                              type={IconType.Github}
-                              size={IconSize.Size14}
-                              className={classNames(styles.githubIcon, board.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
-                              title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
-                            />
-                          </Connections>
-                        )}
-                      </div>
-                    ))}
-                </div>
-              ))}
+              {projectsNode}
             </div>
           </div>
           <div className={styles.sidebarFooter}>
@@ -159,6 +210,7 @@ MainSidebar.propTypes = {
   path: PropTypes.string.isRequired,
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   currProjectId: PropTypes.string,
   currBoardId: PropTypes.string,
   canAdd: PropTypes.bool.isRequired,
@@ -166,8 +218,10 @@ MainSidebar.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
-  onChangeFilterQuery: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
+  onBoardMove: PropTypes.func.isRequired,
+  onBoardDelete: PropTypes.func.isRequired,
+  onChangeFilterQuery: PropTypes.func.isRequired,
   onUserProjectUpdate: PropTypes.func.isRequired,
 };
 

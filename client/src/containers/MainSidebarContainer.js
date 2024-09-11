@@ -8,6 +8,7 @@ import MainSidebar from '../components/Static/MainSidebar';
 const mapStateToProps = (state) => {
   const { isAdmin } = selectors.selectCurrentUser(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
+  const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
   const currProject = selectors.selectCurrentProject(state);
   const currBoard = selectors.selectCurrentBoard(state);
   const {
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
   return {
     projects,
     filteredProjects,
+    managedProjects,
     currProjectId: currProject?.id,
     currBoardId: currBoard?.id,
     canAdd: isAdmin,
@@ -32,8 +34,10 @@ const mapDispatchToProps = (dispatch) =>
     {
       onProjectCreate: entryActions.createProject,
       onBoardCreate: entryActions.createBoard,
-      onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onBoardUpdate: entryActions.updateBoard,
+      onBoardMove: entryActions.moveBoard,
+      onBoardDelete: entryActions.deleteBoard,
+      onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onUserProjectUpdate: entryActions.updateUserProject,
     },
     dispatch,

@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import { isLocalId } from '../utils/local-id';
 
 export const selectCurrentUserId = ({ auth: { userId } }) => userId;
 
@@ -57,7 +58,10 @@ export const selectProjectsForCurrentUser = createSelector(
         boardModel.cards.toModelArray().forEach((cardModel) => {
           notificationsTotal += cardModel.getUnreadNotificationsQuerySet().count();
         });
-        return boardModel.ref;
+        return {
+          ...boardModel.ref,
+          isPersisted: !isLocalId(boardModel.id),
+        };
       });
 
       return {

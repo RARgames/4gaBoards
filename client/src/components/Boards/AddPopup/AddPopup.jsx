@@ -174,7 +174,7 @@ const AddStep = React.memo(({ projects, projectId, onCreate, onClose }) => {
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}
             </Button>
-            <Button style={ButtonStyle.Submit} content={t('action.createBoard')} />
+            <Button style={ButtonStyle.Submit} content={t('action.createBoard')} className={styles.submitButton} />
           </div>
         </Form>
       </Popup.Content>
