@@ -67,6 +67,7 @@ export default class extends BaseModel {
     usernameUpdateForm: attr({
       getDefault: () => DEFAULT_USERNAME_UPDATE_FORM,
     }),
+    filter: attr(),
   };
 
   static reducer({ type, payload }, User) {
@@ -292,6 +293,18 @@ export default class extends BaseModel {
         payload.users.forEach((user) => {
           User.upsert(user);
         });
+
+        break;
+      case ActionTypes.USER_FILTER_QUERY_UPDATE:
+        if (payload.data.query === '') {
+          User.withId(payload.id).update({
+            filter: undefined,
+          });
+        } else {
+          User.withId(payload.id).update({
+            filter: { query: payload.data.query, target: payload.data.target },
+          });
+        }
 
         break;
       default:

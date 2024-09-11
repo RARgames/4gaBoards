@@ -49,22 +49,40 @@ export const selectProjectsForCurrentUser = createSelector(
       return userModel;
     }
 
-    return userModel.getOrderedAvailableProjectsModelArray().map((projectModel) => {
+    const projects = userModel.getOrderedAvailableProjectsModelArray().map((projectModel) => {
       const boardsModels = projectModel.getOrderedBoardsModelArrayAvailableForUser(userModel.id);
 
       let notificationsTotal = 0;
-      boardsModels.forEach((boardModel) => {
+      const boardsRefs = boardsModels.map((boardModel) => {
         boardModel.cards.toModelArray().forEach((cardModel) => {
           notificationsTotal += cardModel.getUnreadNotificationsQuerySet().count();
         });
+        return boardModel.ref;
       });
 
       return {
         ...projectModel.ref,
         notificationsTotal,
         firstBoardId: boardsModels[0] && boardsModels[0].id,
+        boards: boardsRefs,
       };
     });
+
+    let filteredProjects = projects;
+    if (userModel.filter) {
+      if (userModel.filter.target === 'project') {
+        filteredProjects = projects.filter((project) => project.name.includes(userModel.filter.query));
+      } else if (userModel.filter.target === 'board') {
+        filteredProjects = projects
+          .map((project) => ({
+            ...project,
+            boards: project.boards.filter((board) => board.name.includes(userModel.filter.query)),
+          }))
+          .filter((project) => project.boards.length > 0);
+      }
+    }
+
+    return { projects, filteredProjects };
   },
 );
 
@@ -145,6 +163,24 @@ export const selectNotificationsForCurrentUser = createSelector(
   },
 );
 
+export const selectFilterForCurrentUser = createSelector(
+  orm,
+  (state) => selectCurrentUserId(state),
+  ({ User }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const userModel = User.withId(id);
+
+    if (!userModel) {
+      return userModel;
+    }
+
+    return userModel.filter;
+  },
+);
+
 export default {
   selectCurrentUserId,
   selectUsers,
@@ -154,4 +190,5 @@ export default {
   selectManagedProjectsForCurrentUser,
   selectProjectsToListsForCurrentUser,
   selectNotificationsForCurrentUser,
+  selectFilterForCurrentUser,
 };

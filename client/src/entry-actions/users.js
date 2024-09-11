@@ -208,6 +208,13 @@ const removeUserFromFilterInCurrentBoard = (id) => ({
   },
 });
 
+const updateCurrentUserFilterQuery = (data) => ({
+  type: EntryActionTypes.CURRENT_USER_FILTER_QUERY_UPDATE,
+  payload: {
+    data,
+  },
+});
+
 export default {
   createUser,
   handleUserCreate,
@@ -239,4 +246,5 @@ export default {
   handleUserFromCardRemove,
   addUserToFilterInCurrentBoard,
   removeUserFromFilterInCurrentBoard,
+  updateCurrentUserFilterQuery,
 };

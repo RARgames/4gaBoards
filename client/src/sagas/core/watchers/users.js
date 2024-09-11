@@ -35,5 +35,6 @@ export default function* usersWatchers() {
     takeEvery(EntryActionTypes.USER_FROM_CARD_REMOVE_HANDLE, ({ payload: { cardMembership } }) => services.handleUserFromCardRemove(cardMembership)),
     takeEvery(EntryActionTypes.USER_TO_FILTER_IN_CURRENT_BOARD_ADD, ({ payload: { id } }) => services.addUserToFilterInCurrentBoard(id)),
     takeEvery(EntryActionTypes.USER_FROM_FILTER_IN_CURRENT_BOARD_REMOVE, ({ payload: { id } }) => services.removeUserFromFilterInCurrentBoard(id)),
+    takeEvery(EntryActionTypes.CURRENT_USER_FILTER_QUERY_UPDATE, ({ payload: { data } }) => services.updateCurrentUserFilterQuery(data)),
   ]);
 }

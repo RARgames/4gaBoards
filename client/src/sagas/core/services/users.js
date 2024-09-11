@@ -290,6 +290,11 @@ export function* removeUserFromFilterInCurrentBoard(id) {
   yield call(removeUserFromBoardFilter, id, boardId);
 }
 
+export function* updateCurrentUserFilterQuery(data) {
+  const id = yield select(selectors.selectCurrentUserId);
+  yield put(actions.updateUserFilterQuery(id, data, true));
+}
+
 export default {
   createUser,
   handleUserCreate,
@@ -325,4 +330,5 @@ export default {
   addUserToFilterInCurrentBoard,
   removeUserFromBoardFilter,
   removeUserFromFilterInCurrentBoard,
+  updateCurrentUserFilterQuery,
 };

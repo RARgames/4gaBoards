@@ -1,0 +1,61 @@
+:global(#app) {
+  .form {
+    padding: 4px;
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  .inputButton {
+    width: 24px;
+    margin-left: -32px;
+    display: inline-flex;
+    align-items: center;
+
+    color: var(--textColor3);
+
+    svg {
+      fill: var(--textColor3)
+    }
+
+    &:hover {
+      color: var(--textColor4);
+
+      svg {
+        fill: var(--textColor4)
+      }
+    }
+  }
+
+  .inputButtonText {
+    margin-right: 2px;
+  }
+
+  .controls {
+    display: flex;
+  }
+
+  .counterText {
+    color: var(--textColorCounter);
+    font-size: 12px;
+    padding: 0 4px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .clearButton {
+    margin-right: 1px;
+
+    svg {
+      fill: var(--textColorCounter);
+      vertical-align: middle;
+    }
+
+    &:hover {
+      svg {
+        fill: var(--textColorCounterHover);
+      }
+    }
+  }
+}
