@@ -87,7 +87,7 @@ const Dropdown = React.forwardRef(
     const getCurrItemIndex = useCallback(() => {
       const currIndex = getOptions()
         .map((item) => item.id)
-        .indexOf(selectedItem.id);
+        .indexOf(selectedItem?.id);
       return currIndex >= 0 ? currIndex : 0;
     }, [getOptions, selectedItem]);
 
@@ -165,14 +165,14 @@ const Dropdown = React.forwardRef(
         if (onBlur) {
           onBlur();
         }
-        if (submitOnBlur) {
+        if (submitOnBlur && selectedItem) {
           handleSubmit(getCurrItem());
         }
         if (!stayOpenOnBlur) {
           close();
         }
       },
-      [close, getCurrItem, handleSubmit, onBlur, stayOpenOnBlur, submitOnBlur],
+      [close, getCurrItem, handleSubmit, onBlur, selectedItem, stayOpenOnBlur, submitOnBlur],
     );
 
     const getDisplay = useCallback(() => {
