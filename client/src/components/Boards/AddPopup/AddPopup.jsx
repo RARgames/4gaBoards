@@ -145,7 +145,7 @@ const AddStep = React.memo(({ projects, projectId, onCreate, onClose }) => {
             <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
             <Dropdown
               options={projects}
-              placeholder={selectedProject ? selectedProject.name : t('common.selectProject')}
+              placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
               defaultItem={selectedProject}
               isSearchable
               selectFirstOnSearch
