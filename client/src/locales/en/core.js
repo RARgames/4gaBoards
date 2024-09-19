@@ -68,6 +68,7 @@ export default {
       collapseList: 'Collapse List',
       color: 'Color',
       connectedToGithub: 'Connected to Github',
+      connections: 'Edit Github Connection',
       connectToGithub: 'Connect to Github',
       createBoard_title: 'Create Board',
       createBoard: 'Create Board',
@@ -197,6 +198,7 @@ export default {
       removeManager_title: 'Remove Manager',
       removeMember_title: 'Remove Member',
       renameBoard: 'Rename Board',
+      reorderBoards: 'Reorder boards within the project',
       searchLabels: 'Search labels...',
       searchMembers: 'Search members...',
       searchUsers: 'Search users...',
@@ -257,7 +259,6 @@ export default {
       website: '4gaBoards.com',
       writeComment: 'Write a comment...',
       writeCommentHint: '[Ctrl+Enter] - submit',
-      reorderBoards: 'Reorder boards within the project',
     },
 
     action: {

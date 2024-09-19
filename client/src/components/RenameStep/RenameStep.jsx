@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Form, Input, InputStyle } from '../Utils';
 import { useForm } from '../../hooks';
 
-import styles from './RenameStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }) => {

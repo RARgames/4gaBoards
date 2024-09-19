@@ -42,13 +42,6 @@ const MainSidebar = React.memo(
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
 
-    const handleConnectionsUpdate = useCallback(
-      (id, data) => {
-        onBoardUpdate(id, data);
-      },
-      [onBoardUpdate],
-    );
-
     const handleToggleProjectCollapse = useCallback(
       (project) => {
         onUserProjectUpdate(project.id, { isCollapsed: !project.isCollapsed });
@@ -131,7 +124,7 @@ const MainSidebar = React.memo(
                                     <Connections
                                       defaultData={pick(board, ['isGithubConnected', 'githubRepo'])}
                                       onUpdate={(data) => {
-                                        handleConnectionsUpdate(board.id, data);
+                                        handleBoardUpdate(board.id, data);
                                       }}
                                       offset={36}
                                       position="right-start"
@@ -155,7 +148,8 @@ const MainSidebar = React.memo(
                                   ))}
                                 {canManage && (
                                   <BoardActionsPopup
-                                    defaultData={pick(board, 'name')}
+                                    defaultDataRename={pick(board, 'name')}
+                                    defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
                                     onUpdate={(data) => handleBoardUpdate(board.id, data)}
                                     onDelete={() => handleBoardDelete(board.id)}
                                     position="right-start"

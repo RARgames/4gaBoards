@@ -10,7 +10,7 @@ import styles from './Connections.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 // TODO replace with actual Github integration
-const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
+const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
   const inputRef = useRef(null);
   const [isError, setIsError] = useState(false);
@@ -63,7 +63,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
 
   return (
     <>
-      <Popup.Header>{t('common.connectToGithub')} [Not fully implemented]</Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.connectToGithub')} [Not fully implemented]</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Input
@@ -87,7 +87,14 @@ const Connections = React.memo(({ defaultData, onUpdate, onClose }) => {
 Connections.propTypes = {
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
 };
 
+Connections.defaultProps = {
+  onBack: undefined,
+};
+
 export default withPopup(Connections);
+export { Connections as ConnectionsStep };
+// TODO temp fix for github step
