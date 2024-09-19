@@ -17,6 +17,7 @@ import { ReactComponent as Hide } from '../../../assets/icons/Hide.svg';
 import { ReactComponent as Info } from '../../../assets/icons/Info.svg';
 import { ReactComponent as Key } from '../../../assets/icons/Key.svg';
 import { ReactComponent as Minus } from '../../../assets/icons/Minus.svg';
+import { ReactComponent as MoveUpDown } from '../../../assets/icons/MoveUpDown.svg';
 import { ReactComponent as Pause } from '../../../assets/icons/Pause.svg';
 import { ReactComponent as Pencil } from '../../../assets/icons/Pencil.svg';
 import { ReactComponent as Play } from '../../../assets/icons/Play.svg';
@@ -58,6 +59,7 @@ const IconType = {
   Info,
   Key,
   Minus,
+  MoveUpDown,
   Pause,
   Pencil,
   Play,

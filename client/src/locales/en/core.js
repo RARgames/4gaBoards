@@ -257,6 +257,7 @@ export default {
       website: '4gaBoards.com',
       writeComment: 'Write a comment...',
       writeCommentHint: '[Ctrl+Enter] - submit',
+      reorderBoards: 'Reorder boards within the project',
     },
 
     action: {

@@ -59,7 +59,7 @@
   }
 
   .sidebarItemBoard {
-    padding: 0 10px 0 0;
+    padding: 8px 2px;
     background: var(--backgroundSidebarItem);
     display: flex;
   }
@@ -102,7 +102,6 @@
   .sidebarActive {
     background: var(--backgroundSidebarItemActive);
     border-left: 2px solid var(--borderOutline2);
-    padding-left: 8px;
 
     button {
       font-weight: bold;
@@ -183,11 +182,6 @@
     visibility: hidden;
   }
 
-  .githubIcon {
-    vertical-align: middle;
-    margin: 11px 0;
-  }
-
   .githubGreen {
     fill: var(--textColorGreen);
   }
@@ -196,8 +190,17 @@
     fill: var(--textColor0);
   }
 
+  .githubCannotManage {
+    margin-right: 20px;
+  }
+
   .board {
     flex-grow: 1;
+    padding: 0;
+  }
+
+  .boardCannotManage {
+    margin-left: 13px;
   }
 
   .collapseIcon {
@@ -214,5 +217,25 @@
 
   .footerButtonIcon {
     margin-right: 4px;
+  }
+
+  .editBoardButton {
+    opacity: 0;
+  }
+
+  .boardDraggable {
+    &:hover {
+      .editBoardButton {
+        opacity: 1;
+      }
+
+      .reorderBoardsIcon {
+        opacity: 1;
+      }
+    }
+  }
+
+  .reorderBoardsIcon {
+    opacity: 0;
   }
 }

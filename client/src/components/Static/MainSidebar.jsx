@@ -17,6 +17,7 @@ import styles from './MainSidebar.module.scss';
 import bStyles from '../Utils/Button/Button.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import Filter from '../Filter';
+import BoardActionsPopup from './BoardActionsPopup';
 
 const MainSidebar = React.memo(
   ({
@@ -66,19 +67,19 @@ const MainSidebar = React.memo(
       [onBoardMove],
     );
 
-    // const handleUpdate = useCallback(
-    //   (id, data) => {
-    //     onBoardUpdate(id, data);
-    //   },
-    //   [onBoardUpdate],
-    // );
+    const handleBoardUpdate = useCallback(
+      (id, data) => {
+        onBoardUpdate(id, data);
+      },
+      [onBoardUpdate],
+    );
 
-    // const handleDelete = useCallback(
-    //   (id) => {
-    //     onBoardDelete(id);
-    //   },
-    //   [onBoardDelete],
-    // );
+    const handleBoardDelete = useCallback(
+      (id) => {
+        onBoardDelete(id);
+      },
+      [onBoardDelete],
+    );
 
     const projectsNode = filteredProjects.map((project) => (
       <div key={project.id} className={styles.sidebarItemProjectWrapper}>
@@ -103,42 +104,76 @@ const MainSidebar = React.memo(
               {({ innerRef, droppableProps, placeholder }) => (
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 <div {...droppableProps} ref={innerRef}>
-                  {project.boards.map((board, index) => (
-                    <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !managedProjects.some((p) => p.id === project.id)}>
-                      {/* eslint-disable-next-line no-shadow */}
-                      {({ innerRef, draggableProps, dragHandleProps }) => (
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                        <div {...draggableProps} ref={innerRef}>
-                          {board.isPersisted && (
-                            // eslint-disable-next-line react/jsx-props-no-spreading
-                            <div key={board.id} className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarActive)} {...dragHandleProps}>
-                              <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(styles.board, styles.linkButton, bStyles.button, bStyles.noBackground, styles.sidebarButton)}>
-                                {board.name}
-                              </Link>
-                              {board.isGithubConnected && (
-                                <Connections
-                                  defaultData={pick(board, ['isGithubConnected', 'githubRepo'])}
-                                  onUpdate={(data) => {
-                                    handleConnectionsUpdate(board.id, data);
-                                  }}
-                                  offset={30}
-                                  position="right-start"
-                                  wrapperClassName={styles.connections}
+                  {project.boards.map((board, index) => {
+                    const canManage = managedProjects.some((p) => p.id === project.id);
+                    return (
+                      <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !canManage}>
+                        {/* eslint-disable-next-line no-shadow */}
+                        {({ innerRef, draggableProps, dragHandleProps }) => (
+                          // eslint-disable-next-line react/jsx-props-no-spreading
+                          <div {...draggableProps} ref={innerRef} className={styles.boardDraggable}>
+                            {board.isPersisted && (
+                              <div key={board.id} className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarActive)}>
+                                {canManage && (
+                                  // eslint-disable-next-line react/jsx-props-no-spreading
+                                  <div {...dragHandleProps}>
+                                    <Icon type={IconType.MoveUpDown} size={IconSize.Size13} className={styles.reorderBoardsIcon} title={t('common.reorderBoards')} />
+                                  </div>
+                                )}
+                                <Link
+                                  to={Paths.BOARDS.replace(':id', board.id)}
+                                  className={classNames(styles.board, styles.linkButton, bStyles.button, bStyles.noBackground, styles.sidebarButton, !canManage && styles.boardCannotManage)}
                                 >
-                                  <Icon
-                                    type={IconType.Github}
-                                    size={IconSize.Size14}
-                                    className={classNames(styles.githubIcon, board.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
-                                    title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
-                                  />
-                                </Connections>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
+                                  {board.name}
+                                </Link>
+                                {board.isGithubConnected &&
+                                  (canManage ? (
+                                    <Connections
+                                      defaultData={pick(board, ['isGithubConnected', 'githubRepo'])}
+                                      onUpdate={(data) => {
+                                        handleConnectionsUpdate(board.id, data);
+                                      }}
+                                      offset={36}
+                                      position="right-start"
+                                    >
+                                      <Icon
+                                        type={IconType.Github}
+                                        size={IconSize.Size13}
+                                        className={classNames(styles.githubIcon, board.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+                                        title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+                                      />
+                                    </Connections>
+                                  ) : (
+                                    <div>
+                                      <Icon
+                                        type={IconType.Github}
+                                        size={IconSize.Size13}
+                                        className={classNames(styles.githubIcon, board.isGithubConnected ? styles.githubGreen : styles.githubGrey, styles.githubCannotManage)}
+                                        title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+                                      />
+                                    </div>
+                                  ))}
+                                {canManage && (
+                                  <BoardActionsPopup
+                                    defaultData={pick(board, 'name')}
+                                    onUpdate={(data) => handleBoardUpdate(board.id, data)}
+                                    onDelete={() => handleBoardDelete(board.id)}
+                                    position="right-start"
+                                    offset={16}
+                                    hideCloseButton
+                                  >
+                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={classNames(styles.editBoardButton, styles.target)}>
+                                      <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                                    </Button>
+                                  </BoardActionsPopup>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </Draggable>
+                    );
+                  })}
                   {placeholder}
                 </div>
               )}

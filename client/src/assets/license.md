@@ -13,6 +13,7 @@ Author: RARgames
 
 Public Domain:
   Users
+  MoveUpDown
 
 All icons not listed above from /icons:
   Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. Edited icons do not contain this notice.
