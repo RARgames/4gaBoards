@@ -7,9 +7,7 @@ import ProjectSettings from '../../components/Settings/ProjectSettings';
 
 const mapStateToProps = (state) => {
   const users = selectors.selectUsers(state);
-
-  const path = selectors.selectPathname(state);
-  const projectId = path.split('/')[2];
+  const { projectId } = selectors.selectPath(state);
   const { name, background, backgroundImage, isBackgroundImageUpdating } = selectors.selectProject(state, projectId);
   const project = selectors.selectProject(state, projectId);
   const managers = selectors.selectManagersForProject(state, projectId);

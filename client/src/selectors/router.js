@@ -21,6 +21,7 @@ export const selectPath = createReduxOrmSelector(
   ({ Project, Board, Card }, pathsMatch, currentUserId) => {
     if (pathsMatch) {
       switch (pathsMatch.pattern.path) {
+        case Paths.SETTINGS_PROJECT:
         case Paths.PROJECTS: {
           const projectModel = Project.withId(pathsMatch.params.id);
 
