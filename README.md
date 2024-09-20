@@ -22,6 +22,10 @@ We'll work on a **demo** when we finish all tasks from the [#1 issue](https://gi
 - Github 2-way sync [Coming soon]
 - Github/Microsoft SSO [Coming soon]
 
+## Getting started docs
+
+ [English](https://docs.4gaboards.com/en/home) | [Polski](https://docs.4gaboards.com/pl/home)
+
 ## Deploy
 
 There are 2 types of installation:
