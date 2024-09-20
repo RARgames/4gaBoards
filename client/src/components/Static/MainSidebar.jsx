@@ -9,15 +9,15 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
 import Connections from '../BoardActions/Connections';
+import BoardActionsPopup from '../BoardActions/BoardActionsPopup';
 import ProjectAddPopup from '../ProjectAddPopup';
-import BoardAddPopup from '../Boards/AddPopup';
+import BoardAddPopup from '../BoardAddPopup';
 import DroppableTypes from '../../constants/DroppableTypes';
 
 import styles from './MainSidebar.module.scss';
 import bStyles from '../Utils/Button/Button.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import Filter from '../Filter';
-import BoardActionsPopup from './BoardActionsPopup';
 
 const MainSidebar = React.memo(
   ({
@@ -116,6 +116,7 @@ const MainSidebar = React.memo(
                                 <Link
                                   to={Paths.BOARDS.replace(':id', board.id)}
                                   className={classNames(styles.board, styles.linkButton, bStyles.button, bStyles.noBackground, styles.sidebarButton, !canManage && styles.boardCannotManage)}
+                                  title={board.name}
                                 >
                                   {board.name}
                                 </Link>

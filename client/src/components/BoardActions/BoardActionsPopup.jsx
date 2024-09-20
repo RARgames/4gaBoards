@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from 
 import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 import RenameStep from '../RenameStep';
-import { ConnectionsStep } from '../BoardActions/Connections';
+import { ConnectionsStep } from './Connections';
 
 import styles from './BoardActionsPopup.module.scss';
 

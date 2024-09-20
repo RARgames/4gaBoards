@@ -77,7 +77,7 @@ function Static({ path, projectId, cardId, board }) {
 
   if (board === undefined) {
     return (
-      <div className={classNames(styles.wrapper, styles.wrapperFlex, styles.wrapperProject)}>
+      <div className={classNames(styles.wrapper, styles.wrapperFlex)}>
         <MainSidebarContainer path={path}>
           <div className={styles.message}>
             <h1 className={styles.messageTitle}>{t('common.openBoard', { context: 'title' })}</h1>
@@ -92,7 +92,7 @@ function Static({ path, projectId, cardId, board }) {
 
   if (board.isFetching) {
     return (
-      <div className={classNames(styles.wrapper, styles.wrapperLoader, styles.wrapperProject)}>
+      <div className={classNames(styles.wrapper, styles.wrapperBoard)}>
         <Loader size={LoaderSize.Massive} />
       </div>
     );

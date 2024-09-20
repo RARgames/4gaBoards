@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useDidUpdate, useToggle } from '../../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup, Dropdown } from '../../Utils';
-import Config from '../../../constants/Config';
+import { useDidUpdate, useToggle } from '../../lib/hooks';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup, Dropdown } from '../Utils';
+import Config from '../../constants/Config';
 
-import { useForm, useSteps } from '../../../hooks';
+import { useForm, useSteps } from '../../hooks';
 import ImportStep from './ImportStep';
 
-import styles from './AddPopup.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import styles from './BoardAddPopup.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
   IMPORT: 'IMPORT',

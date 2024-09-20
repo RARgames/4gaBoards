@@ -26,15 +26,12 @@
     background: var(--backgroundColor);
   }
 
-  .wrapperBoard {
-    height: calc(100vh - 174px);
-  }
-
   .wrapperFlex {
     display: flex;
   }
 
-  .wrapperProject {
-    height: calc(100vh - 98px);
+  .wrapperBoard {
+    height: calc(100vh - 126px);
+    //TODO Configure MainSidebar to fit
   }
 }
