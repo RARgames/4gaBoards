@@ -17,7 +17,6 @@ import Filter from '../Filter';
 import ProjectActionsPopup from './ProjectActionsPopup';
 
 import styles from './MainSidebar.module.scss';
-import bStyles from '../Utils/Button/Button.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 const MainSidebar = React.memo(
@@ -66,22 +65,16 @@ const MainSidebar = React.memo(
       const canManage = managedProjects.some((p) => p.id === project.id);
       return (
         <div key={project.id}>
-          <div
-            className={classNames(
-              styles.sidebarItemProject,
-              !currBoardId && currProjectId === project.id && styles.sidebarItemProjectActive,
-              project.isCollapsed && styles.sidebarItemProjectCollapsed,
-            )}
-          >
+          <div className={classNames(styles.sidebarItemProject, !currBoardId && currProjectId === project.id && styles.sidebarItemActive)}>
             <Button
               style={ButtonStyle.Icon}
               title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')}
-              className={classNames(styles.sidebarButton, styles.toggleBoardsButton)}
+              className={styles.sidebarButton}
               onClick={() => handleToggleProjectCollapse(project)}
             >
               <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.collapseIcon, project.isCollapsed && styles.collapseIconCollapsed)} />
             </Button>
-            <Link to={Paths.PROJECTS.replace(':id', project.id)} className={classNames(styles.linkButton, styles.project)}>
+            <Link to={Paths.PROJECTS.replace(':id', project.id)} className={styles.sidebarItemInner}>
               <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)} />
             </Link>
             {canManage && (
@@ -95,7 +88,7 @@ const MainSidebar = React.memo(
                 offset={16}
                 hideCloseButton
               >
-                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={classNames(styles.sidebarButton, styles.projectActionsButton)}>
+                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={classNames(styles.sidebarButton, styles.hoverButton)}>
                   <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                 </Button>
               </ProjectActionsPopup>
@@ -114,19 +107,17 @@ const MainSidebar = React.memo(
                           // eslint-disable-next-line react/jsx-props-no-spreading
                           <div {...draggableProps} ref={innerRef} className={styles.boardDraggable}>
                             {board.isPersisted && (
-                              <div key={board.id} className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarActive)}>
+                              <div key={board.id} className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarItemActive)}>
                                 {canManage && (
                                   // eslint-disable-next-line react/jsx-props-no-spreading
                                   <div {...dragHandleProps}>
-                                    <Icon type={IconType.MoveUpDown} size={IconSize.Size13} className={styles.reorderBoardsIcon} title={t('common.reorderBoards')} />
+                                    <Button style={ButtonStyle.Icon} title={t('common.reorderBoards')} className={classNames(styles.reorderBoardsButton, styles.hoverButton)}>
+                                      <Icon type={IconType.MoveUpDown} size={IconSize.Size13} />
+                                    </Button>
                                   </div>
                                 )}
-                                <Link
-                                  to={Paths.BOARDS.replace(':id', board.id)}
-                                  className={classNames(styles.board, styles.linkButton, bStyles.button, bStyles.noBackground, styles.sidebarButton, !canManage && styles.boardCannotManage)}
-                                  title={board.name}
-                                >
-                                  {board.name}
+                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(styles.sidebarItemInner, !canManage && styles.boardCannotManage)}>
+                                  <Button style={ButtonStyle.NoBackground} content={board.name} className={classNames(styles.boardButton, styles.sidebarButton)} />
                                 </Link>
                                 {board.isGithubConnected &&
                                   (canManage ? (
@@ -158,7 +149,7 @@ const MainSidebar = React.memo(
                                     offset={16}
                                     hideCloseButton
                                   >
-                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={styles.boardActionsButton}>
+                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={styles.hoverButton}>
                                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                                     </Button>
                                   </BoardActionsPopup>

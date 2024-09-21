@@ -34,10 +34,6 @@
     flex-grow: 1;
   }
 
-  .sidebarFooter {
-    // height: 96px; //TODO check - not needed?
-  }
-
   .toggleSidebarButton {
     position: absolute;
     width: 16px;
@@ -68,20 +64,44 @@
     background: var(--backgroundSidebarItem);
   }
 
-  //TODO finsihed checking and normalizing styles here
-  .sidebarItemProject {
-    background: var(--backgroundSidebarItem3);
-    border-top: 1px solid var(--backgroundPopupSeparator);
-    display: flex;
+  .hoverButton {
+    opacity: 0;
+  }
 
+  .boardDraggable {
     &:hover {
-      .projectActionsButton {
+      .hoverButton {
         opacity: 1;
       }
     }
   }
 
-  .sidebarItemProjectActive {
+  .sidebarItemProject {
+    background: var(--backgroundSidebarItem3);
+    border-top: 1px solid var(--backgroundPopupSeparator);
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      .hoverButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .sidebarItemBoard {
+    background: var(--backgroundSidebarItem);
+    padding: 8px 0;
+    display: flex;
+  }
+
+  .sidebarItemInner {
+    flex: 1 1 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .sidebarItemActive {
     background: var(--backgroundSidebarItemActive);
     border-left: 2px solid var(--borderOutline2);
 
@@ -89,39 +109,19 @@
       font-weight: bold;
     }
 
-    svg {
-      fill: var(--borderOutline2)
-    }
-
     &:hover {
       button {
         color: var(--textColor0);
       }
+    }
 
-      svg {
-        fill: var(--borderOutline2) !important;
+    button {
+      &:hover {
+        svg {
+          fill: var(--borderOutline2) !important;
+        }
       }
     }
-  }
-
-  .sidebarItemProjectCollapsed {
-    // border-bottom: 1px solid var(--backgroundPopupSeparator);
-    //TODO temp fix this
-    border-bottom: 1px solid red;
-  }
-
-  //TODO here working on still
-
-
-  .sidebarItemBoard {
-    padding: 8px 0;
-    background: var(--backgroundSidebarItem);
-    display: flex;
-  }
-
-  .linkButton {
-    max-width: calc(100% - 20px);
-    display: inline-block;
   }
 
   .sidebarActive {
@@ -132,25 +132,15 @@
       font-weight: bold;
     }
 
-    //TODO this class not working corectly rn
-    // svg {
-    //   fill: var(--borderOutline2)
-    // }
-
     &:hover {
       button {
         color: var(--textColor0);
       }
 
-      // svg {
-      //   fill: var(--borderOutline2) !important;
-      // }
+      svg {
+        fill: var(--textColor0) !important;
+      }
     }
-  }
-
-  .icon {
-    margin-right: 4px;
-    fill: var(--textColor0);
   }
 
   .sidebarButton {
@@ -169,6 +159,11 @@
     }
   }
 
+  .icon {
+    margin-right: 4px;
+    fill: var(--textColor0);
+  }
+
   .sidebarButtonPadding {
     padding: 8px 8px 8px 0px;
   }
@@ -185,8 +180,7 @@
     margin-right: 20px;
   }
 
-  .board {
-    flex-grow: 1;
+  .boardButton {
     padding: 0;
   }
 
@@ -210,38 +204,7 @@
     margin-right: 4px;
   }
 
-  .boardActionsButton {
-    opacity: 0;
-  }
-
-  .boardDraggable {
-    &:hover {
-      .boardActionsButton {
-        opacity: 1;
-      }
-
-      .reorderBoardsIcon {
-        opacity: 1;
-      }
-    }
-  }
-
-  .reorderBoardsIcon {
-    opacity: 0;
-  }
-
-  .projectActionsButton {
-    height: 36px;
-    // height: 100%;
-    opacity: 0;
-  }
-
-  .project {
-    max-width: calc(100% - 40px);
-    flex-grow: 1;
-  }
-
-  .toggleBoardsButton {
-    height: 36px;
+  .reorderBoardsButton {
+    width: 13px;
   }
 }
