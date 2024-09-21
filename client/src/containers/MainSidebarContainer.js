@@ -9,8 +9,7 @@ const mapStateToProps = (state) => {
   const { isAdmin } = selectors.selectCurrentUser(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
-  const currProject = selectors.selectCurrentProject(state);
-  const currBoard = selectors.selectCurrentBoard(state);
+  const { projectId, boardId } = selectors.selectPath(state);
   const {
     ui: {
       projectCreateForm: { data: defaultData, isSubmitting },
@@ -21,9 +20,9 @@ const mapStateToProps = (state) => {
     projects,
     filteredProjects,
     managedProjects,
-    currProjectId: currProject?.id,
-    currBoardId: currBoard?.id,
-    canAdd: isAdmin,
+    currProjectId: projectId,
+    currBoardId: boardId,
+    isAdmin,
     defaultData,
     isSubmitting,
   };

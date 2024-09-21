@@ -29,7 +29,7 @@ const MainSidebar = React.memo(
     managedProjects,
     currProjectId,
     currBoardId,
-    canAdd,
+    isAdmin,
     defaultData,
     isSubmitting,
     onProjectCreate,
@@ -181,8 +181,8 @@ const MainSidebar = React.memo(
 
     return (
       <div className={styles.wrapper}>
-        <Button style={ButtonStyle.Icon} title={t('common.showSidebar')} onClick={toggleSidebar} className={classNames(styles.toggleSidebarButton, sidebarShown && styles.showSidebarButtonHidden)}>
-          <Icon type={IconType.Show} size={IconSize.Size18} />
+        <Button style={ButtonStyle.Icon} title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')} onClick={toggleSidebar} className={styles.toggleSidebarButton}>
+          <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
         </Button>
         <div className={classNames(styles.sidebar, !sidebarShown && styles.sidebarHidden)}>
           <div className={styles.sidebarHeader}>
@@ -192,9 +192,6 @@ const MainSidebar = React.memo(
             <div className={styles.sidebarTitle}>
               <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
               {t('common.settings')}
-              <Button style={ButtonStyle.Icon} title={t('common.hideSidebar')} onClick={toggleSidebar} className={styles.toggleSidebarButton}>
-                <Icon type={IconType.Hide} size={IconSize.Size18} />
-              </Button>
             </div>
             <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_PROFILE && styles.sidebarActive)}>
               <Link to={Paths.SETTINGS_PROFILE}>
@@ -204,6 +201,62 @@ const MainSidebar = React.memo(
                 </Button>
               </Link>
             </div>
+            <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_PREFERENCES && styles.sidebarActive)}>
+              <Link to={Paths.SETTINGS_PREFERENCES}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.preferences')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
+                  <Icon type={IconType.Sliders} size={IconSize.Size14} className={styles.icon} />
+                  {t('common.preferences')}
+                </Button>
+              </Link>
+            </div>
+            <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_ACCOUNT && styles.sidebarActive)}>
+              <Link to={Paths.SETTINGS_ACCOUNT}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.account')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
+                  <Icon type={IconType.AddressCard} size={IconSize.Size14} className={styles.icon} />
+                  {t('common.account')}
+                </Button>
+              </Link>
+            </div>
+            <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_AUTHENTICATION && styles.sidebarActive)}>
+              <Link to={Paths.SETTINGS_AUTHENTICATION}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.authentication')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
+                  <Icon type={IconType.Key} size={IconSize.Size14} className={styles.icon} />
+                  {t('common.authentication')}
+                </Button>
+              </Link>
+            </div>
+            <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_ABOUT && styles.sidebarActive)}>
+              <Link to={Paths.SETTINGS_ABOUT}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.aboutShort')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
+                  <Icon type={IconType.Info} size={IconSize.Size14} className={styles.icon} />
+                  {t('common.aboutShort')}
+                </Button>
+              </Link>
+            </div>
+            {isAdmin && (
+              <div>
+                <div className={styles.sidebarTitle}>
+                  <Icon type={IconType.Server} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
+                  {t('common.settingsInstance')}
+                </div>
+                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_INSTANCE && styles.sidebarActive)}>
+                  <Link to={Paths.SETTINGS_INSTANCE}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
+                      <Icon type={IconType.Settings} size={IconSize.Size14} className={styles.icon} />
+                      {t('common.settings')}
+                    </Button>
+                  </Link>
+                </div>
+                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_USERS && styles.sidebarActive)}>
+                  <Link to={Paths.SETTINGS_USERS}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
+                      <Icon type={IconType.Users} size={IconSize.Size14} className={styles.icon} />
+                      {t('common.users')}
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            )}
             <div>
               <div className={styles.sidebarTitle}>
                 <Icon type={IconType.Projects} size={IconSize.Size16} className={styles.sidebarTitleIcon} /> {t('common.projects', { context: 'title' })}
@@ -212,7 +265,7 @@ const MainSidebar = React.memo(
             </div>
           </div>
           <div className={styles.sidebarFooter}>
-            {canAdd && (
+            {isAdmin && (
               <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={6} position="right-end">
                 <Button style={ButtonStyle.NoBackground} title={t('common.createProject')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
@@ -244,7 +297,7 @@ MainSidebar.propTypes = {
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   currProjectId: PropTypes.string,
   currBoardId: PropTypes.string,
-  canAdd: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   onProjectCreate: PropTypes.func.isRequired,

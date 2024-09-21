@@ -14,7 +14,6 @@ import styles from './Static.module.scss';
 
 function Static({ path, projectId, cardId, board }) {
   const [t] = useTranslation();
-  // TODO fully implement MainSidebar
   if (
     [
       Paths.SETTINGS,
@@ -30,7 +29,9 @@ function Static({ path, projectId, cardId, board }) {
   ) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperFlex)}>
-        <SettingsContainer path={path} />
+        <MainSidebarContainer path={path}>
+          <SettingsContainer path={path} />
+        </MainSidebarContainer>
       </div>
     );
   }
@@ -48,9 +49,11 @@ function Static({ path, projectId, cardId, board }) {
   if (cardId === null) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperFlex)}>
-        <div className={styles.message}>
-          <h1>{t('common.cardNotFound', { context: 'title' })}</h1>
-        </div>
+        <MainSidebarContainer path={path}>
+          <div className={styles.message}>
+            <h1>{t('common.cardNotFound', { context: 'title' })}</h1>
+          </div>
+        </MainSidebarContainer>
       </div>
     );
   }
@@ -58,9 +61,11 @@ function Static({ path, projectId, cardId, board }) {
   if (board === null) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperFlex)}>
-        <div className={styles.message}>
-          <h1>{t('common.boardNotFound', { context: 'title' })}</h1>
-        </div>
+        <MainSidebarContainer path={path}>
+          <div className={styles.message}>
+            <h1>{t('common.boardNotFound', { context: 'title' })}</h1>
+          </div>
+        </MainSidebarContainer>
       </div>
     );
   }
@@ -68,9 +73,11 @@ function Static({ path, projectId, cardId, board }) {
   if (projectId === null) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperFlex)}>
-        <div className={styles.message}>
-          <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
-        </div>
+        <MainSidebarContainer path={path}>
+          <div className={styles.message}>
+            <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+          </div>
+        </MainSidebarContainer>
       </div>
     );
   }
@@ -93,7 +100,9 @@ function Static({ path, projectId, cardId, board }) {
   if (board.isFetching) {
     return (
       <div className={classNames(styles.wrapper, styles.wrapperBoard)}>
-        <Loader size={LoaderSize.Massive} />
+        <MainSidebarContainer path={path}>
+          <Loader size={LoaderSize.Massive} />
+        </MainSidebarContainer>
       </div>
     );
   }
