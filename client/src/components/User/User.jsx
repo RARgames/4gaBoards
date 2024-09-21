@@ -29,7 +29,7 @@ const getColor = (name) => {
   return COLORS[sum % COLORS.length];
 };
 
-const User = React.memo(({ name, avatarUrl, size, isDisabled, onClick }) => {
+const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, onClick }) => {
   const avatarBackground = useCallback(() => {
     if (!avatarUrl) {
       return null;
@@ -43,7 +43,7 @@ const User = React.memo(({ name, avatarUrl, size, isDisabled, onClick }) => {
 
   const contentNode = (
     <span
-      title={name}
+      title={skipTitle ? undefined : name}
       className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable, !avatarUrl && styles[`background${upperFirst(camelCase(getColor(name)))}`])}
       style={avatarBackground(avatarUrl, size)}
     >
@@ -64,6 +64,7 @@ User.propTypes = {
   name: PropTypes.string.isRequired,
   avatarUrl: PropTypes.string,
   size: PropTypes.oneOf(Object.values(SIZES)),
+  skipTitle: PropTypes.bool,
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
@@ -71,6 +72,7 @@ User.propTypes = {
 User.defaultProps = {
   avatarUrl: undefined,
   size: SIZES.MEDIUM,
+  skipTitle: false,
   isDisabled: false,
   onClick: undefined,
 };

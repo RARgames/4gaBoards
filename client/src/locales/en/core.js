@@ -191,6 +191,7 @@ export default {
       phone: 'Phone',
       preferences: 'Preferences',
       profile: 'Profile',
+      profileAndSettings: 'Profile and Settings',
       project: 'Project',
       projectNotFound_title: 'Project Not Found',
       projects_title: 'Projects',

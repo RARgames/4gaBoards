@@ -80,8 +80,8 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
           </Button>
         </NotificationsPopup>
         <UserPopup canEditProject={canEditProject} projectId={project?.id} isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
-          <Button style={ButtonStyle.Header} title={t('common.settingsInstance')}>
-            <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
+          <Button style={ButtonStyle.Header} title={t('common.profileAndSettings')}>
+            <User name={user.name} avatarUrl={user.avatarUrl} size="card" skipTitle />
           </Button>
         </UserPopup>
       </div>
