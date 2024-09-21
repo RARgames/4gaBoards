@@ -1,10 +1,15 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import selectors from '../../selectors';
 
 import AboutSettings from '../../components/Settings/AboutSettings';
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  const { language } = selectors.selectCurrentUser(state);
+
+  return {
+    language,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);

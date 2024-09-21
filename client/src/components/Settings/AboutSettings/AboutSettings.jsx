@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Config from '../../../constants/Config';
 import { Icon, IconType, IconSize, ExternalLink } from '../../Utils';
@@ -8,7 +9,7 @@ import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
 import styles from './AboutSettings.module.scss';
 import sShared from '../SettingsShared.module.scss';
 
-const AboutSettings = React.memo(() => {
+const AboutSettings = React.memo(({ language }) => {
   const [t] = useTranslation();
   const [latestVersion, setLatestVersion] = useState(t('common.fetching'));
 
@@ -41,6 +42,9 @@ const AboutSettings = React.memo(() => {
         </div>
         <div className={styles.links}>
           <div className={styles.link}>
+            <ExternalLink href={language === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
+          </div>
+          <div className={styles.link}>
             <ExternalLink href="https://4gaboards.com">{t('common.website')}</ExternalLink>
           </div>
           <div className={styles.link}>
@@ -61,6 +65,12 @@ const AboutSettings = React.memo(() => {
   );
 });
 
-AboutSettings.propTypes = {};
+AboutSettings.propTypes = {
+  language: PropTypes.string,
+};
+
+AboutSettings.defaultProps = {
+  language: undefined,
+};
 
 export default AboutSettings;
