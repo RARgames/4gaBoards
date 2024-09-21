@@ -201,4 +201,3 @@ AddStep.defaultProps = {
 
 export default withPopup(AddStep);
 export { AddStep as BoardAddStep };
-// TODO temp fix for BoardAddStep - at least add in index.js

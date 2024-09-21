@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, withPopup } from '../Uti
 import Paths from '../../constants/Paths';
 import { useSteps } from '../../hooks';
 import RenameStep from '../RenameStep';
-import { BoardAddStep } from '../BoardAddPopup/BoardAddPopup';
+import { BoardAddStep } from '../BoardAddPopup';
 
 import styles from './ProjectActionsPopup.module.scss';
 

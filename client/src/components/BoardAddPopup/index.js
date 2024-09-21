@@ -1,3 +1,4 @@
-import BoardAddPopup from './BoardAddPopup';
+import BoardAddPopup, { BoardAddStep } from './BoardAddPopup';
 
 export default BoardAddPopup;
+export { BoardAddStep };

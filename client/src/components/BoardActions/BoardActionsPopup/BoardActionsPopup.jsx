@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../../Utils';
 
-import { useSteps } from '../../hooks';
-import DeleteStep from '../DeleteStep';
-import RenameStep from '../RenameStep';
-import { ConnectionsStep } from './Connections';
+import { useSteps } from '../../../hooks';
+import DeleteStep from '../../DeleteStep';
+import RenameStep from '../../RenameStep';
+import { ConnectionsStep } from '../Connections';
 
 import styles from './BoardActionsPopup.module.scss';
 

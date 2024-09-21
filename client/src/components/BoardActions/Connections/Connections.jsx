@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { dequal } from 'dequal';
 import { useTranslation } from 'react-i18next';
-import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../Utils';
+import { useForm } from '../../../hooks';
+import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../../Utils';
 
 import styles from './Connections.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import gStyles from '../../../globalStyles.module.scss';
 
 // TODO replace with actual Github integration
 const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
@@ -97,4 +97,3 @@ Connections.defaultProps = {
 
 export default withPopup(Connections);
 export { Connections as ConnectionsStep };
-// TODO temp fix for github step
