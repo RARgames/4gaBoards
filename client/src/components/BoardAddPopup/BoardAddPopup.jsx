@@ -15,7 +15,7 @@ const StepTypes = {
   IMPORT: 'IMPORT',
 };
 
-const AddStep = React.memo(({ projects, projectId, onCreate, onClose }) => {
+const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
 
   const [selectedProject, setSelectedProject] = useState(() => {
@@ -137,23 +137,25 @@ const AddStep = React.memo(({ projects, projectId, onCreate, onClose }) => {
 
   return (
     <>
-      <Popup.Header>{t('common.createBoard', { context: 'title' })}</Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.createBoard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
-          <div>
-            <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
-            <Dropdown
-              options={projects}
-              placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
-              defaultItem={selectedProject}
-              isSearchable
-              selectFirstOnSearch
-              onChange={handleProjectChange}
-              className={styles.dropdown}
-              dropdownMenuClassName={styles.dropdownMenu}
-            />
-          </div>
+          {!skipProjectDropdown && (
+            <div>
+              <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
+              <Dropdown
+                options={projects}
+                placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
+                defaultItem={selectedProject}
+                isSearchable
+                selectFirstOnSearch
+                onChange={handleProjectChange}
+                className={styles.dropdown}
+                dropdownMenuClassName={styles.dropdownMenu}
+              />
+            </div>
+          )}
           {!data.import && (
             <div>
               <div className={styles.text}>{t('common.template')}</div>
@@ -185,12 +187,18 @@ const AddStep = React.memo(({ projects, projectId, onCreate, onClose }) => {
 AddStep.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   projectId: PropTypes.string,
+  skipProjectDropdown: PropTypes.bool,
   onCreate: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
 };
 
 AddStep.defaultProps = {
   projectId: undefined,
+  skipProjectDropdown: false,
+  onBack: undefined,
 };
 
 export default withPopup(AddStep);
+export { AddStep as BoardAddStep };
+// TODO temp fix for BoardAddStep - at least add in index.js

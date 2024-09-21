@@ -13,11 +13,12 @@ import BoardActionsPopup from '../BoardActions/BoardActionsPopup';
 import ProjectAddPopup from '../ProjectAddPopup';
 import BoardAddPopup from '../BoardAddPopup';
 import DroppableTypes from '../../constants/DroppableTypes';
+import Filter from '../Filter';
+import ProjectActionsPopup from './ProjectActionsPopup';
 
 import styles from './MainSidebar.module.scss';
 import bStyles from '../Utils/Button/Button.module.scss';
 import gStyles from '../../globalStyles.module.scss';
-import Filter from '../Filter';
 
 const MainSidebar = React.memo(
   ({
@@ -32,6 +33,7 @@ const MainSidebar = React.memo(
     defaultData,
     isSubmitting,
     onProjectCreate,
+    onProjectUpdate,
     onBoardCreate,
     onBoardUpdate,
     onBoardMove,
@@ -60,46 +62,52 @@ const MainSidebar = React.memo(
       [onBoardMove],
     );
 
-    const handleBoardUpdate = useCallback(
-      (id, data) => {
-        onBoardUpdate(id, data);
-      },
-      [onBoardUpdate],
-    );
-
-    const handleBoardDelete = useCallback(
-      (id) => {
-        onBoardDelete(id);
-      },
-      [onBoardDelete],
-    );
-
-    const projectsNode = filteredProjects.map((project) => (
-      <div key={project.id} className={styles.sidebarItemProjectWrapper}>
-        <div
-          className={classNames(styles.sidebarItemProject, !currBoardId && currProjectId === project.id && styles.sidebarItemProjectActive, project.isCollapsed && styles.sidebarItemProjectCollapsed)}
-        >
-          <Button
-            style={ButtonStyle.Icon}
-            title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')}
-            className={styles.sidebarButton}
-            onClick={() => handleToggleProjectCollapse(project)}
+    const projectsNode = filteredProjects.map((project) => {
+      const canManage = managedProjects.some((p) => p.id === project.id);
+      return (
+        <div key={project.id}>
+          <div
+            className={classNames(
+              styles.sidebarItemProject,
+              !currBoardId && currProjectId === project.id && styles.sidebarItemProjectActive,
+              project.isCollapsed && styles.sidebarItemProjectCollapsed,
+            )}
           >
-            <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.collapseIcon, project.isCollapsed && styles.collapseIconCollapsed)} />
-          </Button>
-          <Link to={Paths.PROJECTS.replace(':id', project.id)} className={styles.linkButton}>
-            <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)} />
-          </Link>
-        </div>
-        {project.isCollapsed === false && (
-          <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="vertical">
-              {({ innerRef, droppableProps, placeholder }) => (
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                <div {...droppableProps} ref={innerRef}>
-                  {project.boards.map((board, index) => {
-                    const canManage = managedProjects.some((p) => p.id === project.id);
-                    return (
+            <Button
+              style={ButtonStyle.Icon}
+              title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')}
+              className={classNames(styles.sidebarButton, styles.toggleBoardsButton)}
+              onClick={() => handleToggleProjectCollapse(project)}
+            >
+              <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.collapseIcon, project.isCollapsed && styles.collapseIconCollapsed)} />
+            </Button>
+            <Link to={Paths.PROJECTS.replace(':id', project.id)} className={classNames(styles.linkButton, styles.project)}>
+              <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)} />
+            </Link>
+            {canManage && (
+              <ProjectActionsPopup
+                projectId={project.id}
+                managedProjects={managedProjects}
+                defaultDataRename={pick(project, 'name')}
+                onUpdate={(data) => onProjectUpdate(project.id, data)}
+                onBoardCreate={onBoardCreate}
+                position="right-start"
+                offset={16}
+                hideCloseButton
+              >
+                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={classNames(styles.sidebarButton, styles.projectActionsButton)}>
+                  <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                </Button>
+              </ProjectActionsPopup>
+            )}
+          </div>
+          {project.isCollapsed === false && (
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="vertical">
+                {({ innerRef, droppableProps, placeholder }) => (
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  <div {...droppableProps} ref={innerRef}>
+                    {project.boards.map((board, index) => (
                       <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !canManage}>
                         {/* eslint-disable-next-line no-shadow */}
                         {({ innerRef, draggableProps, dragHandleProps }) => (
@@ -122,14 +130,7 @@ const MainSidebar = React.memo(
                                 </Link>
                                 {board.isGithubConnected &&
                                   (canManage ? (
-                                    <Connections
-                                      defaultData={pick(board, ['isGithubConnected', 'githubRepo'])}
-                                      onUpdate={(data) => {
-                                        handleBoardUpdate(board.id, data);
-                                      }}
-                                      offset={36}
-                                      position="right-start"
-                                    >
+                                    <Connections defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={36} position="right-start">
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
@@ -151,13 +152,13 @@ const MainSidebar = React.memo(
                                   <BoardActionsPopup
                                     defaultDataRename={pick(board, 'name')}
                                     defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
-                                    onUpdate={(data) => handleBoardUpdate(board.id, data)}
-                                    onDelete={() => handleBoardDelete(board.id)}
+                                    onUpdate={(data) => onBoardUpdate(board.id, data)}
+                                    onDelete={() => onBoardDelete(board.id)}
                                     position="right-start"
                                     offset={16}
                                     hideCloseButton
                                   >
-                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={classNames(styles.editBoardButton, styles.target)}>
+                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={styles.boardActionsButton}>
                                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                                     </Button>
                                   </BoardActionsPopup>
@@ -167,31 +168,31 @@ const MainSidebar = React.memo(
                           </div>
                         )}
                       </Draggable>
-                    );
-                  })}
-                  {placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        )}
-      </div>
-    ));
+                    ))}
+                    {placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
+        </div>
+      );
+    });
 
     return (
       <div className={styles.wrapper}>
-        <Button style={ButtonStyle.Icon} title={t('common.showSidebar')} onClick={toggleSidebar} className={classNames(styles.showSidebarButton, sidebarShown && styles.showSidebarButtonHidden)}>
+        <Button style={ButtonStyle.Icon} title={t('common.showSidebar')} onClick={toggleSidebar} className={classNames(styles.toggleSidebarButton, sidebarShown && styles.showSidebarButtonHidden)}>
           <Icon type={IconType.Show} size={IconSize.Size18} />
         </Button>
         <div className={classNames(styles.sidebar, !sidebarShown && styles.sidebarHidden)}>
-          <div className={styles.sidebarFilter}>
+          <div className={styles.sidebarHeader}>
             <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} onChangeFilterQuery={onChangeFilterQuery} />
           </div>
           <div className={classNames(styles.scrollable, gStyles.scrollableY)}>
             <div className={styles.sidebarTitle}>
               <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
               {t('common.settings')}
-              <Button style={ButtonStyle.Icon} title={t('common.hideSidebar')} onClick={toggleSidebar} className={styles.hideSidebarButton}>
+              <Button style={ButtonStyle.Icon} title={t('common.hideSidebar')} onClick={toggleSidebar} className={styles.toggleSidebarButton}>
                 <Icon type={IconType.Hide} size={IconSize.Size18} />
               </Button>
             </div>
@@ -247,6 +248,7 @@ MainSidebar.propTypes = {
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
+  onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
   onBoardMove: PropTypes.func.isRequired,

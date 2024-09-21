@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
@@ -19,18 +19,6 @@ const StepTypes = {
 const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
-
-  const handleRenameClick = useCallback(() => {
-    openStep(StepTypes.RENAME);
-  }, [openStep]);
-
-  const handleConnectionsClick = useCallback(() => {
-    openStep(StepTypes.GITHUB);
-  }, [openStep]);
-
-  const handleDeleteClick = useCallback(() => {
-    openStep(StepTypes.DELETE);
-  }, [openStep]);
 
   if (step) {
     switch (step.type) {
@@ -54,10 +42,16 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
 
   return (
     <>
-      <Button style={ButtonStyle.Popup} content={t('common.renameBoard', { context: 'title' })} onClick={handleRenameClick} />
-      <Button style={ButtonStyle.Popup} content={t('common.connections', { context: 'title' })} onClick={handleConnectionsClick} />
+      <Button style={ButtonStyle.Popup} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+        <Icon type={IconType.Pencil} size={IconSize.Size13} className={styles.icon} />
+        {t('common.renameBoard', { context: 'title' })}
+      </Button>
+      <Button style={ButtonStyle.Popup} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
+        <Icon type={IconType.Github} size={IconSize.Size13} className={styles.icon} />
+        {t('common.connections', { context: 'title' })}
+      </Button>
       <Popup.Separator />
-      <Button style={ButtonStyle.Popup} title={t('common.deleteBoard', { context: 'title' })} onClick={handleDeleteClick}>
+      <Button style={ButtonStyle.Popup} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
         <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
         {t('common.deleteBoard', { context: 'title' })}
       </Button>

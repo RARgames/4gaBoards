@@ -33,6 +33,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onProjectCreate: entryActions.createProject,
+      onProjectUpdate: entryActions.updateProject,
       onBoardCreate: entryActions.createBoard,
       onBoardUpdate: entryActions.updateBoard,
       onBoardMove: entryActions.moveBoard,

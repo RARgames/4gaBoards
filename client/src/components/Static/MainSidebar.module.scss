@@ -25,13 +25,33 @@
     flex-direction: column;
   }
 
+  .sidebarHidden {
+    width: 0px;
+    visibility: hidden;
+  }
+
   .scrollable {
     flex-grow: 1;
   }
 
   .sidebarFooter {
-    // height: 96px;
-    //TODO check - not needed?
+    // height: 96px; //TODO check - not needed?
+  }
+
+  .toggleSidebarButton {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -24px;
+    left: 6px;
+    background-color: var(--backgroundHeader);
+  }
+
+  .showSidebarButtonHidden {
+    visibility: hidden;
   }
 
   .sidebarTitle {
@@ -52,22 +72,22 @@
     background: var(--backgroundSidebarItem);
   }
 
+  //TODO finsihed checking and normalizing styles here
   .sidebarItemProject {
     background: var(--backgroundSidebarItem3);
-    padding-left: 2px;
     border-top: 1px solid var(--backgroundPopupSeparator);
-  }
-
-  .sidebarItemBoard {
-    padding: 8px 2px;
-    background: var(--backgroundSidebarItem);
     display: flex;
+
+    &:hover {
+      .projectActionsButton {
+        opacity: 1;
+      }
+    }
   }
 
   .sidebarItemProjectActive {
     background: var(--backgroundSidebarItemActive);
     border-left: 2px solid var(--borderOutline2);
-    padding-left: 2px;
 
     button {
       font-weight: bold;
@@ -92,6 +112,15 @@
     // border-bottom: 1px solid var(--backgroundPopupSeparator);
     //TODO temp fix this
     border-bottom: 1px solid red;
+  }
+
+  //TODO here working on still
+
+
+  .sidebarItemBoard {
+    padding: 8px 0;
+    background: var(--backgroundSidebarItem);
+    display: flex;
   }
 
   .linkButton {
@@ -148,40 +177,6 @@
     padding: 8px 8px 8px 0px;
   }
 
-  .showSidebarButton {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-    top: -24px;
-    left: 6px;
-    background-color: var(--backgroundHeader);
-  }
-
-  .showSidebarButtonHidden {
-    visibility: hidden;
-  }
-
-  .hideSidebarButton {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: -24px;
-    left: 6px;
-    background-color: var(--backgroundHeader);
-  }
-
-  .sidebarHidden {
-    width: 0px;
-    visibility: hidden;
-  }
-
   .githubGreen {
     fill: var(--textColorGreen);
   }
@@ -219,13 +214,13 @@
     margin-right: 4px;
   }
 
-  .editBoardButton {
+  .boardActionsButton {
     opacity: 0;
   }
 
   .boardDraggable {
     &:hover {
-      .editBoardButton {
+      .boardActionsButton {
         opacity: 1;
       }
 
@@ -237,5 +232,20 @@
 
   .reorderBoardsIcon {
     opacity: 0;
+  }
+
+  .projectActionsButton {
+    height: 36px;
+    // height: 100%;
+    opacity: 0;
+  }
+
+  .project {
+    max-width: calc(100% - 40px);
+    // flex-grow: 1;
+  }
+
+  .toggleBoardsButton {
+    height: 36px;
   }
 }
