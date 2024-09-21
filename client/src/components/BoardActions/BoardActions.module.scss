@@ -9,6 +9,11 @@
     margin-right: 20px;
   }
 
+  .actionRight {
+    margin-left: auto;
+    padding-right: 20px;
+  }
+
   .actions {
     align-items: center;
     display: flex;
@@ -27,10 +32,6 @@
     &:hover {
       height: 76px;
     }
-  }
-
-  .connectionsWrapper {
-    padding-right: 20px;
   }
 
   .githubGreen {

@@ -1,20 +1,22 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import pick from 'lodash/pick';
+import { Link } from 'react-router-dom';
 import Filters from './Filters';
 import Memberships from '../Memberships';
 import BoardMembershipPermissionsSelectStep from '../BoardMembershipPermissionsSelectStep';
 import Connections from './Connections';
-import { Icon, IconType, IconSize } from '../Utils';
+import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
+import Paths from '../../constants/Paths';
 
 import styles from './BoardActions.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
 const BoardActions = React.memo(
   ({
+    projectId,
     cardCount,
     memberships,
     labels,
@@ -22,7 +24,7 @@ const BoardActions = React.memo(
     filterLabels,
     allUsers,
     canEdit,
-    canEditMemberships,
+    isCurrentUserManager,
     boardData,
     onMembershipCreate,
     onMembershipUpdate,
@@ -58,7 +60,7 @@ const BoardActions = React.memo(
                 items={memberships}
                 allUsers={allUsers}
                 permissionsSelectStep={BoardMembershipPermissionsSelectStep}
-                canEdit={canEditMemberships}
+                canEdit={isCurrentUserManager}
                 onCreate={onMembershipCreate}
                 onUpdate={onMembershipUpdate}
                 onDelete={onMembershipDelete}
@@ -81,7 +83,7 @@ const BoardActions = React.memo(
                 onLabelDelete={onLabelDelete}
               />
             </div>
-            <div className={styles.connectionsWrapper}>
+            <div className={styles.action}>
               <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
                 <Icon
                   type={IconType.Github}
@@ -91,6 +93,15 @@ const BoardActions = React.memo(
                 />
               </Connections>
             </div>
+            {isCurrentUserManager && (
+              <div className={styles.actionRight}>
+                <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
+                  <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
+                    <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -99,6 +110,7 @@ const BoardActions = React.memo(
 );
 
 BoardActions.propTypes = {
+  projectId: PropTypes.string.isRequired,
   /* eslint-disable react/forbid-prop-types */
   cardCount: PropTypes.number.isRequired,
   memberships: PropTypes.array.isRequired,
@@ -108,7 +120,7 @@ BoardActions.propTypes = {
   allUsers: PropTypes.array.isRequired,
   /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,
-  canEditMemberships: PropTypes.bool.isRequired,
+  isCurrentUserManager: PropTypes.bool.isRequired,
   boardData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onMembershipCreate: PropTypes.func.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,

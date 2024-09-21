@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation, Trans } from 'react-i18next';
 import { Loader, LoaderSize } from '../Utils';
 

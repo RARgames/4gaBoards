@@ -54,13 +54,6 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
         {getPageHeaderTitle()}
       </div>
       <div className={styles.menuRight}>
-        {canEditProject && (
-          <Link to={Paths.SETTINGS_PROJECT.replace(':id', project.id)} className={styles.hideOnSmall}>
-            <Button style={ButtonStyle.Header} title={t('common.projectSettings')}>
-              <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
-            </Button>
-          </Link>
-        )}
         <Link to={Paths.SETTINGS} className={styles.hideOnSmall}>
           <Button style={ButtonStyle.Header} title={t('common.settings')}>
             <Icon type={IconType.Settings} size={IconSize.Size18} />
