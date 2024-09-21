@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Loader, LoaderSize } from '../Utils';
-import FixedContainer from '../../containers/FixedContainer';
+import HeaderContainer from '../../containers/HeaderContainer';
 
 import styles from './NotFound.module.scss';
 
@@ -20,7 +20,7 @@ const NotFound = React.memo(({ path, isInitializing, isSocketDisconnected }) => 
         <Loader size={LoaderSize.Massive} />
       ) : (
         <>
-          <FixedContainer path={path} />
+          <HeaderContainer path={path} />
           <h1 className={styles.text}>{t('common.pageNotFound', { context: 'title' })}</h1>
         </>
       )}

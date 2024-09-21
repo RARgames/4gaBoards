@@ -1,4 +1,30 @@
 :global(#app) {
+  .boardContainer {
+    height: 100%;
+  }
+
+  .mainWrapper {
+    display: flex;
+    height: calc(100% - 76px);
+    width: 100%;
+  }
+
+  .wrapper {
+    flex: 1;
+  }
+
+  .lists {
+    display: inline-flex;
+    height: 100%;
+    min-width: 100%;
+    padding: 0 2px 0 20px;
+  }
+
+  .list {
+    margin-right: 20px;
+    width: 272px;
+  }
+
   .addListButton {
     background: rgba(0, 0, 0, 0.24);
     border: none;
@@ -27,36 +53,5 @@
     font-size: 14px;
     line-height: 20px;
     vertical-align: top;
-  }
-
-  .list {
-    margin-right: 20px;
-    width: 272px;
-  }
-
-  .lists {
-    display: inline-flex;
-    height: 100%;
-    min-width: 100%;
-    padding: 0 2px 0 20px;
-  }
-
-  .panel {
-    align-items: center;
-    display: flex;
-    margin-bottom: 20px;
-  }
-
-  .panelItem {
-    margin-right: 20px;
-  }
-
-  .wrapper {
-    flex: 1;
-  }
-
-  .mainWrapper {
-    display: flex;
-    width: 100%;
   }
 }

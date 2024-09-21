@@ -23,16 +23,8 @@
   }
 
   .wrapper {
+    display: flex;
     height: calc(100vh - 50px);
     background: var(--backgroundColor);
-  }
-
-  .wrapperFlex {
-    display: flex;
-  }
-
-  .wrapperBoard {
-    height: calc(100vh - 126px);
-    //TODO Configure MainSidebar to fit
   }
 }

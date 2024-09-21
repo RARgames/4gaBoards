@@ -8,6 +8,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import DroppableTypes from '../../constants/DroppableTypes';
 import ListContainer from '../../containers/ListContainer';
 import CardModalContainer from '../../containers/CardModalContainer';
+import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import ListAdd from './ListAdd';
 
 import styles from './Board.module.scss';
@@ -105,40 +106,43 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [handleWindowMouseUp, handleWindowMouseMove]);
 
   return (
-    <div className={styles.mainWrapper}>
-      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div ref={wrapper} className={classNames(styles.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
-            {({ innerRef, droppableProps, placeholder }) => (
-              <div
-                {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-                data-drag-scroller
-                ref={innerRef}
-                className={classNames(styles.lists, gStyles.cursorGrab)}
-              >
-                {listIds.map((listId, index) => (
-                  <ListContainer key={listId} id={listId} index={index} />
-                ))}
-                {placeholder}
-                {canEdit && (
-                  <div data-drag-scroller className={styles.list}>
-                    {isListAddOpened ? (
-                      <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
-                    ) : (
-                      <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
-                        <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
-                        <span className={styles.addListButtonText}>{t('action.addList')}</span>
-                      </Button>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+    <div className={styles.boardContainer}>
+      <BoardActionsContainer />
+      <div className={styles.mainWrapper}>
+        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+        <div ref={wrapper} className={classNames(styles.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
+              {({ innerRef, droppableProps, placeholder }) => (
+                <div
+                  {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
+                  data-drag-scroller
+                  ref={innerRef}
+                  className={classNames(styles.lists, gStyles.cursorGrab)}
+                >
+                  {listIds.map((listId, index) => (
+                    <ListContainer key={listId} id={listId} index={index} />
+                  ))}
+                  {placeholder}
+                  {canEdit && (
+                    <div data-drag-scroller className={styles.list}>
+                      {isListAddOpened ? (
+                        <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
+                      ) : (
+                        <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
+                          <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
+                          <span className={styles.addListButtonText}>{t('action.addList')}</span>
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+        {isCardModalOpened && <CardModalContainer />}
       </div>
-      {isCardModalOpened && <CardModalContainer />}
     </div>
   );
 });

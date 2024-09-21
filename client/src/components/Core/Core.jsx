@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Loader, LoaderSize } from '../Utils';
 
-import FixedContainer from '../../containers/FixedContainer';
+import HeaderContainer from '../../containers/HeaderContainer';
 import StaticContainer from '../../containers/StaticContainer';
 import Background from '../Background';
 
@@ -36,7 +36,7 @@ const Core = React.memo(({ path, isInitializing, isSocketDisconnected, currentPr
           {currentProject && currentProject.background && (
             <Background type={currentProject.background.type} name={currentProject.background.name} imageUrl={currentProject.backgroundImage && currentProject.backgroundImage.url} />
           )}
-          <FixedContainer path={path} />
+          <HeaderContainer path={path} />
           <StaticContainer path={path} />
         </>
       )}
