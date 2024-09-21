@@ -220,7 +220,7 @@ const MainSidebar = React.memo(
                 </Button>
               </ProjectAddPopup>
             )}
-            {canAdd && (
+            {managedProjects.length > 0 && (
               <BoardAddPopup projects={managedProjects} projectId={currProjectId} onCreate={onBoardCreate} offset={6} position="right-end">
                 <Button style={ButtonStyle.NoBackground} title={t('common.createBoard')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
