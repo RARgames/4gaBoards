@@ -1,4 +1,12 @@
 :global(#app) {
+  .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(15vw);
+    color: var(--textColor0);
+  }
+
   .cardsCount {
     color: var(--textColorCounter);
     font-size: 12px;

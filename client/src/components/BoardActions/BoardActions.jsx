@@ -52,6 +52,9 @@ const BoardActions = React.memo(
       <div className={styles.wrapperContainer}>
         <div className={classNames(styles.wrapper, gStyles.scrollableX)}>
           <div className={styles.actions}>
+            <div title={boardData.name} className={classNames(styles.title, styles.action)}>
+              {boardData.name}
+            </div>
             <div className={classNames(styles.cardsCount, styles.action)}>
               {cardCount} {[cardCount !== 1 ? t('common.cards') : t('common.card')]}
             </div>
