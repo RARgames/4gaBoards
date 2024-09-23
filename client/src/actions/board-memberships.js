@@ -39,6 +39,7 @@ const handleBoardMembershipCreate = (
   tasks,
   attachments,
   deletedNotifications,
+  userProject,
 ) => ({
   type: ActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE,
   payload: {
@@ -57,6 +58,7 @@ const handleBoardMembershipCreate = (
     tasks,
     attachments,
     deletedNotifications,
+    userProject,
   },
 });
 

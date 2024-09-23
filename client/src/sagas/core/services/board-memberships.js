@@ -58,6 +58,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
   let tasks;
   let attachments;
   let deletedNotifications;
+  let userProject;
 
   if (isCurrentUser) {
     let board2;
@@ -92,6 +93,9 @@ export function* handleBoardMembershipCreate(boardMembership) {
         deletedNotifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
       }
     }
+
+    userProject = yield call(request, api.getUserProject, board2.projectId);
+    userProject = userProject.item;
   } else {
     try {
       ({ item: user } = yield call(request, api.getUser, boardMembership.userId));
@@ -117,6 +121,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
       tasks,
       attachments,
       deletedNotifications,
+      userProject,
     ),
   );
 }

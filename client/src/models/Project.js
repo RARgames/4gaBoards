@@ -123,7 +123,12 @@ export default class extends BaseModel {
             projectModel.deleteWithRelated();
           }
 
-          Project.upsert(payload.project);
+          const { project } = payload;
+          if (payload.userProject) {
+            project.isCollapsed = payload.userProject.isCollapsed;
+          }
+
+          Project.upsert(project);
         }
 
         break;
