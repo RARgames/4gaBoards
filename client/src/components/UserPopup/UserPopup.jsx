@@ -21,46 +21,46 @@ const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, 
 
   return (
     <>
-      <Button style={ButtonStyle.Popup} title={t('common.profile')} onClick={() => handleClick(Paths.SETTINGS_PROFILE)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.profile')} onClick={() => handleClick(Paths.SETTINGS_PROFILE)}>
         <Icon type={IconType.User} size={IconSize.Size14} className={styles.icon} />
         {t('common.profile')}
       </Button>
-      <Button style={ButtonStyle.Popup} title={t('common.preferences')} onClick={() => handleClick(Paths.SETTINGS_PREFERENCES)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.preferences')} onClick={() => handleClick(Paths.SETTINGS_PREFERENCES)}>
         <Icon type={IconType.Sliders} size={IconSize.Size14} className={styles.icon} />
         {t('common.preferences')}
       </Button>
-      <Button style={ButtonStyle.Popup} title={t('common.account')} onClick={() => handleClick(Paths.SETTINGS_ACCOUNT)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.account')} onClick={() => handleClick(Paths.SETTINGS_ACCOUNT)}>
         <Icon type={IconType.AddressCard} size={IconSize.Size14} className={styles.icon} />
         {t('common.account')}
       </Button>
-      <Button style={ButtonStyle.Popup} title={t('common.authentication')} onClick={() => handleClick(Paths.SETTINGS_AUTHENTICATION)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.authentication')} onClick={() => handleClick(Paths.SETTINGS_AUTHENTICATION)}>
         <Icon type={IconType.Key} size={IconSize.Size14} className={styles.icon} />
         {t('common.authentication')}
       </Button>
-      <Button style={ButtonStyle.Popup} title={t('common.aboutShort')} onClick={() => handleClick(Paths.SETTINGS_ABOUT)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.aboutShort')} onClick={() => handleClick(Paths.SETTINGS_ABOUT)}>
         <Icon type={IconType.Info} size={IconSize.Size14} className={styles.icon} />
         {t('common.aboutShort')}
       </Button>
       {isAdmin && (
-        <Button style={ButtonStyle.Popup} title={t('common.settingsInstance')} onClick={() => handleClick(Paths.SETTINGS_INSTANCE)}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.settingsInstance')} onClick={() => handleClick(Paths.SETTINGS_INSTANCE)}>
           <Icon type={IconType.Server} size={IconSize.Size14} className={styles.icon} />
           {t('common.settingsInstance')}
         </Button>
       )}
       {isAdmin && (
-        <Button style={ButtonStyle.Popup} title={t('common.users')} onClick={() => handleClick(Paths.SETTINGS_USERS)}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.users')} onClick={() => handleClick(Paths.SETTINGS_USERS)}>
           <Icon type={IconType.Users} size={IconSize.Size14} className={styles.icon} />
           {t('common.users')}
         </Button>
       )}
       {canEditProject && projectId && (
-        <Button style={ButtonStyle.Popup} title={t('common.projectSettings')} onClick={() => handleClick(Paths.SETTINGS_PROJECT)}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings')} onClick={() => handleClick(Paths.SETTINGS_PROJECT)}>
           <Icon type={IconType.ProjectSettings} size={IconSize.Size14} className={styles.icon} />
           {t('common.projectSettings')}
         </Button>
       )}
       <Popup.Separator />
-      <Button style={ButtonStyle.Popup} content={t('action.logOut', { context: 'title' })} onClick={onLogout} disabled={isLogouting} />
+      <Button style={ButtonStyle.PopupContext} content={t('action.logOut', { context: 'title' })} onClick={onLogout} disabled={isLogouting} />
     </>
   );
 });

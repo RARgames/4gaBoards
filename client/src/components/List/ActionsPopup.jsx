@@ -43,10 +43,10 @@ const ActionsStep = React.memo(({ onNameEdit, onCardAdd, onDelete, onClose }) =>
 
   return (
     <>
-      <Button style={ButtonStyle.Popup} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
-      <Button style={ButtonStyle.Popup} content={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick} />
+      <Button style={ButtonStyle.PopupContext} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
+      <Button style={ButtonStyle.PopupContext} content={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick} />
       <Popup.Separator />
-      <Button style={ButtonStyle.Popup} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
+      <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
         <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
         {t('action.deleteList', { context: 'title' })}
       </Button>

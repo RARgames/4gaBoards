@@ -7,6 +7,7 @@ const ButtonStyle = {
   Submit: 'submit',
   Cancel: 'cancel',
   Popup: 'popup',
+  PopupContext: 'popupContext',
   Header: 'header',
   HeaderLogo: 'headerLogo',
 };

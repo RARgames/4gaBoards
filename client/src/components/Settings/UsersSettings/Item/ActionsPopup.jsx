@@ -104,12 +104,12 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.Popup} content={t('action.editInformation', { context: 'title' })} onClick={handleEditInformationClick} />
-        <Button style={ButtonStyle.Popup} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
-        <Button style={ButtonStyle.Popup} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
-        <Button style={ButtonStyle.Popup} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editInformation', { context: 'title' })} onClick={handleEditInformationClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
         <Popup.Separator />
-        <Button style={ButtonStyle.Popup} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />
       </>
     );
   },

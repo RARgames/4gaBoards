@@ -160,7 +160,7 @@
     background: var(--backgroundPopup);
     color: var(--textColor1);
     overflow: hidden;
-    padding: 8px 16px 8px 8px;
+    padding: 8px 16px;
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -192,6 +192,11 @@
     //   outline: none;
     //   box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
     // }
+  }
+
+  .popupContext {
+    @extend .popup;
+    padding: 8px 16px 8px 8px;
   }
 
   .header {

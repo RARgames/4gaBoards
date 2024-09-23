@@ -38,17 +38,17 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
 
   return (
     <>
-      <Button style={ButtonStyle.Popup} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
         <Icon type={IconType.Pencil} size={IconSize.Size13} className={styles.icon} />
         {t('common.renameProject', { context: 'title' })}
       </Button>
       <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-        <Button style={ButtonStyle.Popup} title={t('common.projectSettings', { context: 'title' })}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })}>
           <Icon type={IconType.ProjectSettings} size={IconSize.Size13} className={styles.icon} />
           {t('common.projectSettings', { context: 'title' })}
         </Button>
       </Link>
-      <Button style={ButtonStyle.Popup} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
         <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.icon} />
         {t('common.addBoard', { context: 'title' })}
       </Button>

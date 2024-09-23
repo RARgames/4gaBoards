@@ -152,15 +152,15 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.Popup} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
-        <Button style={ButtonStyle.Popup} content={t('common.members', { context: 'title' })} onClick={handleUsersClick} />
-        <Button style={ButtonStyle.Popup} content={t('common.labels', { context: 'title' })} onClick={handleLabelsClick} />
-        <Button style={ButtonStyle.Popup} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />
-        <Button style={ButtonStyle.Popup} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />
-        <Button style={ButtonStyle.Popup} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />
-        <Button style={ButtonStyle.Popup} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.members', { context: 'title' })} onClick={handleUsersClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.labels', { context: 'title' })} onClick={handleLabelsClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />
         <Popup.Separator />
-        <Button style={ButtonStyle.Popup} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
+        <Button style={ButtonStyle.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
           {t('action.deleteCard', { context: 'title' })}
         </Button>

@@ -42,16 +42,16 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
 
   return (
     <>
-      <Button style={ButtonStyle.Popup} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
         <Icon type={IconType.Pencil} size={IconSize.Size13} className={styles.icon} />
         {t('common.renameBoard', { context: 'title' })}
       </Button>
-      <Button style={ButtonStyle.Popup} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
         <Icon type={IconType.Github} size={IconSize.Size13} className={styles.icon} />
         {t('common.connections', { context: 'title' })}
       </Button>
       <Popup.Separator />
-      <Button style={ButtonStyle.Popup} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
+      <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
         <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
         {t('common.deleteBoard', { context: 'title' })}
       </Button>
