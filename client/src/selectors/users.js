@@ -74,13 +74,14 @@ export const selectProjectsForCurrentUser = createSelector(
 
     let filteredProjects = projects;
     if (userModel.filter) {
+      const query = userModel.filter.query.toLowerCase();
       if (userModel.filter.target === 'project') {
-        filteredProjects = projects.filter((project) => project.name.includes(userModel.filter.query));
+        filteredProjects = projects.filter((project) => project.name.toLowerCase().includes(query));
       } else if (userModel.filter.target === 'board') {
         filteredProjects = projects
           .map((project) => ({
             ...project,
-            boards: project.boards.filter((board) => board.name.includes(userModel.filter.query)),
+            boards: project.boards.filter((board) => board.name.toLowerCase().includes(query)),
           }))
           .filter((project) => project.boards.length > 0);
       }
