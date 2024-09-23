@@ -7,7 +7,7 @@ import Projects from '../components/Projects';
 
 const mapStateToProps = (state) => {
   const { isAdmin } = selectors.selectCurrentUser(state);
-  const { filteredProjects } = selectors.selectProjectsForCurrentUser(state);
+  const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const {
     ui: {
       projectCreateForm: { data: defaultData, isSubmitting },
@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
   } = state;
 
   return {
-    items: filteredProjects,
+    projects,
+    filteredProjects,
     canAdd: isAdmin,
     defaultData,
     isSubmitting,

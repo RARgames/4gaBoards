@@ -70,7 +70,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeF
     [handleCancel, handleSubmit, handleToggleClick],
   );
 
-  const cardsCountText = () => {
+  const getCounterText = () => {
     if (value !== '') {
       if (isTargetBoard) {
         const boardsCount = filteredProjects.reduce((sum, project) => sum + (project.boards ? project.boards.length : 0), 0);
@@ -91,7 +91,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeF
         </Button>
       </Form>
       <div className={styles.controls}>
-        {value !== '' && <div className={styles.counterText}> {cardsCountText()} </div>}
+        {value !== '' && <div className={styles.counterText}> {getCounterText()} </div>}
         {value !== '' && (
           <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={styles.clearButton}>
             <Icon type={IconType.Close} size={IconSize.Size10} />

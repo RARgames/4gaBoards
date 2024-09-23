@@ -14,7 +14,7 @@ import gStyles from '../../globalStyles.module.scss';
 import globalStyles from '../../styles.module.scss';
 import ProjectAdd from '../ProjectAdd';
 
-const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreate }) => {
+const Projects = React.memo(({ projects, filteredProjects, canAdd, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
   const projectAdd = useRef(null);
 
@@ -24,10 +24,29 @@ const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreat
     }
   }, [canAdd]);
 
+  const getProjectsText = () => {
+    if (filteredProjects.length === projects.length) {
+      return `${t('common.showing')} ${filteredProjects.length} ${t('common.projects', { context: 'title' })}`;
+    }
+    return (
+      [`${t('common.showing')} ${filteredProjects.length} ${t('common.of')} ${projects.length} `] +
+      [projects.length !== 1 ? t('common.projects', { context: 'title' }) : t('common.project', { context: 'title' })]
+    );
+  };
+
+  const getBoardsText = () => {
+    const boardsCount = filteredProjects.reduce((sum, project) => sum + (project.boards ? project.boards.length : 0), 0);
+    const boardsText = boardsCount !== 1 ? `${boardsCount} ${t('common.boards__title')}` : `${boardsCount} ${t('common.board__title')}`;
+    return `[${boardsText}]`;
+  };
+
   return (
-    <div className={styles.wrapper}>
-      <div className={classNames(styles.projectsWrapper, gStyles.scrollableY)}>
-        {items.map((item) => (
+    <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
+      <div className={styles.header}>
+        <span>{getProjectsText()}</span> <span className={styles.headerDetails}>{getBoardsText()}</span>
+      </div>
+      <div className={classNames(styles.projectsWrapper)}>
+        {filteredProjects.map((item) => (
           <div
             key={item.id}
             className={classNames(
@@ -62,7 +81,8 @@ const Projects = React.memo(({ items, canAdd, defaultData, isSubmitting, onCreat
 });
 
 Projects.propTypes = {
-  items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canAdd: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,

@@ -2,10 +2,24 @@
   .wrapper {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    font-weight: bold;
+    color: var(--textColor1);
+    margin: 10px 0 0 0;
+    text-align: center;
+  }
+
+  .headerDetails {
+    font-weight: normal;
+    color: var(--textColor3);
   }
 
   .projectsWrapper {
-    height: 100%;
+    flex: 1 1 auto;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

@@ -50,8 +50,10 @@ export default {
       back: 'Back',
       background: 'Background',
       board: 'board',
+      board__title: 'Board',
       boardNotFound_title: 'Board Not Found',
       boards: 'boards',
+      boards__title: 'Boards',
       canComment: 'Can comment',
       canEditContentOfBoard: 'Can edit the content of the board',
       cannotEditInstanceSettings: 'You are not authorized to edit instance settings!',
@@ -263,6 +265,7 @@ export default {
       website: 'Website',
       writeComment: 'Write a comment...',
       writeCommentHint: '[Ctrl+Enter] - submit',
+      showing: 'Showing',
     },
 
     action: {
