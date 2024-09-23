@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect } from 'react';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Popup, Form, Input, InputStyle } from '../Utils';
+import { Button, ButtonStyle, Popup, Form, TextArea } from '../Utils';
 import { useForm } from '../../hooks';
 
 import gStyles from '../../globalStyles.module.scss';
@@ -34,6 +34,24 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
     onClose();
   }, [data, defaultData, onClose, onUpdate]);
 
+  const handleFieldKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case 'Enter': {
+          event.preventDefault();
+          handleSubmit();
+          break;
+        }
+        case 'Escape': {
+          onClose();
+          break;
+        }
+        default:
+      }
+    },
+    [handleSubmit, onClose],
+  );
+
   useEffect(() => {
     field.current.focus();
   }, []);
@@ -43,7 +61,7 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
       <Popup.Header onBack={onBack}>{title}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Input ref={field} style={InputStyle.Default} name="name" value={data.name} onChange={handleFieldChange} />
+          <TextArea ref={field} name="name" value={data.name} onChange={handleFieldChange} onKeyDown={handleFieldKeyDown} maxRows={3} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={onClose} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} />
