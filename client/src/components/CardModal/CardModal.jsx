@@ -645,31 +645,33 @@ const CardModal = React.memo(
     );
 
     const contentNode = (
-      <div className={classNames(styles.mainContainer, gStyles.scrollableY)}>
+      <div className={styles.flexContainer}>
         {headerNode}
-        <div className={styles.moduleContainer}>
-          {membersNode}
-          {labelsNode}
-          {dueDateNode}
-          {timerNode}
-          {subscribeNode}
-          <hr className={styles.hr} />
-        </div>
-        <div className={styles.moduleContainer}>
-          {descriptionNode}
-          <hr className={styles.hr} />
-        </div>
-        <div className={styles.moduleContainer}>
-          {tasksNode}
-          <hr className={styles.hr} />
-        </div>
-        <div className={styles.moduleContainer}>
-          {attachmentsNode}
-          <hr className={styles.hr} />
-        </div>
-        <div className={styles.moduleContainer}>
-          {activitiesNode}
-          <hr className={styles.hr} />
+        <div className={classNames(styles.mainContainer, gStyles.scrollableY)}>
+          <div className={styles.moduleContainer}>
+            {membersNode}
+            {labelsNode}
+            {dueDateNode}
+            {timerNode}
+            {subscribeNode}
+            <hr className={styles.hr} />
+          </div>
+          <div className={styles.moduleContainer}>
+            {descriptionNode}
+            <hr className={styles.hr} />
+          </div>
+          <div className={styles.moduleContainer}>
+            {tasksNode}
+            <hr className={styles.hr} />
+          </div>
+          <div className={styles.moduleContainer}>
+            {attachmentsNode}
+            <hr className={styles.hr} />
+          </div>
+          <div className={styles.moduleContainer}>
+            {activitiesNode}
+            <hr className={styles.hr} />
+          </div>
         </div>
       </div>
     );
