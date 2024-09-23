@@ -7,7 +7,7 @@ import { useToggle } from '../../lib/hooks';
 
 import styles from './Filter.module.scss';
 
-const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeFilterQuery }) => {
+const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeFilterQuery, onFilterQueryClear }) => {
   const [t] = useTranslation();
   const field = useRef(null);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
@@ -33,7 +33,8 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeF
   const handleCancel = useCallback(() => {
     setValue(defaultValue);
     submit('');
-  }, [setValue, defaultValue, submit]);
+    onFilterQueryClear();
+  }, [setValue, defaultValue, submit, onFilterQueryClear]);
 
   const handleChange = useCallback(
     (event) => {
@@ -107,6 +108,7 @@ Filter.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onChangeFilterQuery: PropTypes.func.isRequired,
+  onFilterQueryClear: PropTypes.func.isRequired,
 };
 
 export default Filter;

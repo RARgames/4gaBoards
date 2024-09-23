@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import pick from 'lodash/pick';
@@ -42,6 +42,8 @@ const MainSidebar = React.memo(
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
+    const projectRefs = useRef({});
+    const boardRefs = useRef({});
 
     const handleToggleProjectCollapse = useCallback(
       (project) => {
@@ -61,11 +63,43 @@ const MainSidebar = React.memo(
       [onBoardMove],
     );
 
+    const scrollItemIntoView = useCallback((itemRef) => {
+      if (itemRef) {
+        const rect = itemRef.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+
+        if (!isVisible) {
+          itemRef.scrollIntoView({ behavior: 'auto', block: 'start' });
+        }
+      }
+    }, []);
+
+    const handleFilterQueryClear = useCallback(() => {
+      const timeout = setTimeout(() => {
+        if (currBoardId) {
+          scrollItemIntoView(boardRefs.current[currBoardId]);
+        } else if (currProjectId) {
+          scrollItemIntoView(projectRefs.current[currProjectId]);
+        }
+      }, 0);
+      return () => clearTimeout(timeout);
+    }, [currBoardId, currProjectId, scrollItemIntoView]);
+
+    useEffect(() => {
+      if (currBoardId) {
+        scrollItemIntoView(boardRefs.current[currBoardId]);
+      } else if (currProjectId) {
+        scrollItemIntoView(projectRefs.current[currProjectId]);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currProjectId, currBoardId]);
+
     const projectsNode = filteredProjects.map((project) => {
       const canManage = managedProjects.some((p) => p.id === project.id);
       return (
         <div key={project.id}>
-          <div className={classNames(styles.sidebarItemProject, !currBoardId && currProjectId === project.id && styles.sidebarItemActive)}>
+          {/* eslint-disable-next-line no-return-assign */}
+          <div className={classNames(styles.sidebarItemProject, !currBoardId && currProjectId === project.id && styles.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
             <Button
               style={ButtonStyle.Icon}
               title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')}
@@ -107,7 +141,13 @@ const MainSidebar = React.memo(
                           // eslint-disable-next-line react/jsx-props-no-spreading
                           <div {...draggableProps} ref={innerRef} className={styles.boardDraggable}>
                             {board.isPersisted && (
-                              <div key={board.id} className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarItemActive)}>
+                              // eslint-disable-next-line no-return-assign
+                              <div
+                                key={board.id}
+                                className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarItemActive)}
+                                // eslint-disable-next-line no-return-assign
+                                ref={(el) => (boardRefs.current[board.id] = el)}
+                              >
                                 {canManage && (
                                   // eslint-disable-next-line react/jsx-props-no-spreading
                                   <div {...dragHandleProps}>
@@ -177,7 +217,7 @@ const MainSidebar = React.memo(
         </Button>
         <div className={classNames(styles.sidebar, !sidebarShown && styles.sidebarHidden)}>
           <div className={styles.sidebarHeader}>
-            <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} onChangeFilterQuery={onChangeFilterQuery} />
+            <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
           </div>
           <div className={classNames(styles.scrollable, gStyles.scrollableY)}>
             <div className={styles.sidebarTitle}>
