@@ -85,7 +85,7 @@ const MainSidebar = React.memo(
                 onUpdate={(data) => onProjectUpdate(project.id, data)}
                 onBoardCreate={onBoardCreate}
                 position="right-start"
-                offset={16}
+                offset={10}
                 hideCloseButton
               >
                 <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={classNames(styles.sidebarButton, styles.hoverButton)}>
@@ -121,7 +121,7 @@ const MainSidebar = React.memo(
                                 </Link>
                                 {board.isGithubConnected &&
                                   (canManage ? (
-                                    <Connections defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={36} position="right-start">
+                                    <Connections defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
@@ -146,7 +146,7 @@ const MainSidebar = React.memo(
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
                                     onDelete={() => onBoardDelete(board.id)}
                                     position="right-start"
-                                    offset={16}
+                                    offset={10}
                                     hideCloseButton
                                   >
                                     <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={styles.hoverButton}>
@@ -257,7 +257,7 @@ const MainSidebar = React.memo(
           </div>
           <div className={styles.sidebarFooter}>
             {isAdmin && (
-              <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={6} position="right-end">
+              <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right-end">
                 <Button style={ButtonStyle.NoBackground} title={t('common.createProject')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
                   {t('common.createProject')}
@@ -265,7 +265,7 @@ const MainSidebar = React.memo(
               </ProjectAddPopup>
             )}
             {managedProjects.length > 0 && (
-              <BoardAddPopup projects={managedProjects} projectId={currProjectId} onCreate={onBoardCreate} offset={6} position="right-end">
+              <BoardAddPopup projects={managedProjects} projectId={currProjectId} onCreate={onBoardCreate} offset={2} position="right-end">
                 <Button style={ButtonStyle.NoBackground} title={t('common.createBoard')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
                   {t('common.createBoard')}
