@@ -1,6 +1,7 @@
 import { ReactComponent as AddressCard } from '../../../assets/icons/AddressCard.svg';
 import { ReactComponent as AngleLeft } from '../../../assets/icons/AngleLeft.svg';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/ArrowDown.svg';
+import { ReactComponent as ArrowLeftBig } from '../../../assets/icons/ArrowLeftBig.svg';
 import { ReactComponent as Attach } from '../../../assets/icons/Attach.svg';
 import { ReactComponent as BarsStaggered } from '../../../assets/icons/BarsStaggered.svg';
 import { ReactComponent as Bell } from '../../../assets/icons/Bell.svg';
@@ -43,6 +44,7 @@ const IconType = {
   AddressCard,
   AngleLeft,
   ArrowDown,
+  ArrowLeftBig,
   Attach,
   BarsStaggered,
   Bell,

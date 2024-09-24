@@ -8,11 +8,11 @@ import { Link } from 'react-router-dom';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
+import ProjectAdd from './ProjectAdd';
 
 import styles from './Projects.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import globalStyles from '../../styles.module.scss';
-import ProjectAdd from '../ProjectAdd';
 
 const Projects = React.memo(({ projects, filteredProjects, canAdd, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
@@ -26,7 +26,7 @@ const Projects = React.memo(({ projects, filteredProjects, canAdd, defaultData, 
 
   const getProjectsText = () => {
     if (filteredProjects.length === projects.length) {
-      return `${t('common.showing')} ${filteredProjects.length} ${t('common.projects', { context: 'title' })}`;
+      return `${t('common.showing')} ${filteredProjects.length} ${[projects.length !== 1 ? t('common.projects', { context: 'title' }) : t('common.project', { context: 'title' })]}`;
     }
     return (
       [`${t('common.showing')} ${filteredProjects.length} ${t('common.of')} ${projects.length} `] +
@@ -58,7 +58,7 @@ const Projects = React.memo(({ projects, filteredProjects, canAdd, defaultData, 
             }}
           >
             {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
-            <Link to={item.firstBoardId ? Paths.BOARDS.replace(':id', item.firstBoardId) : Paths.PROJECTS.replace(':id', item.id)}>
+            <Link to={Paths.PROJECTS.replace(':id', item.id)}>
               <div className={styles.project}>
                 <div title={item.name} className={styles.projectTitle}>
                   {item.name}

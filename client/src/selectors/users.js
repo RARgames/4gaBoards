@@ -55,11 +55,14 @@ export const selectProjectsForCurrentUser = createSelector(
 
       let notificationsTotal = 0;
       const boardsRefs = boardsModels.map((boardModel) => {
+        let notificationsBoardTotal = 0;
         boardModel.cards.toModelArray().forEach((cardModel) => {
           notificationsTotal += cardModel.getUnreadNotificationsQuerySet().count();
+          notificationsBoardTotal += cardModel.getUnreadNotificationsQuerySet().count();
         });
         return {
           ...boardModel.ref,
+          notificationsTotal: notificationsBoardTotal,
           isPersisted: !isLocalId(boardModel.id),
         };
       });

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Loader, LoaderSize } from '../Utils';
 
 import ProjectsContainer from '../../containers/ProjectsContainer';
+import BoardsContainer from '../../containers/BoardsContainer';
 import BoardContainer from '../../containers/BoardContainer';
 import SettingsContainer from '../../containers/Settings/SettingsContainer';
 import MainSidebarContainer from '../../containers/MainSidebarContainer';
@@ -85,12 +86,7 @@ function Static({ path, projectId, cardId, board }) {
     return (
       <div className={styles.wrapper}>
         <MainSidebarContainer path={path}>
-          <div className={styles.message}>
-            <h1 className={styles.messageTitle}>{t('common.openBoard', { context: 'title' })}</h1>
-            <div className={styles.messageContent}>
-              <Trans i18nKey="common.createNewOneOrSelectExistingOne" />
-            </div>
-          </div>
+          <BoardsContainer />
         </MainSidebarContainer>
       </div>
     );
