@@ -14,10 +14,8 @@ import Paths from '../../constants/Paths';
 
 import styles from './Settings.module.scss';
 
-const Settings = React.memo(({ path, realPath, isAdmin, managedProjects }) => {
+const Settings = React.memo(({ path, isAdmin, isManager }) => {
   const [t] = useTranslation();
-  const projectId = realPath.split('/')[2];
-  const canManageCurrentProject = realPath && projectId && managedProjects.some((project) => project.id === projectId);
   const mainTitle = '4ga Boards';
 
   const getPageTitle = useCallback(() => {
@@ -71,7 +69,7 @@ const Settings = React.memo(({ path, realPath, isAdmin, managedProjects }) => {
       }
       return <UsersSettingsContainer />;
     case Paths.SETTINGS_PROJECT:
-      if (!canManageCurrentProject) {
+      if (!isManager) {
         return <h1 className={styles.text}>{t('common.projectNotFound', { context: 'title' })}</h1>;
       }
       return <ProjectSettingsContainer />;
@@ -82,9 +80,8 @@ const Settings = React.memo(({ path, realPath, isAdmin, managedProjects }) => {
 
 Settings.propTypes = {
   path: PropTypes.string.isRequired,
-  realPath: PropTypes.string.isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isManager: PropTypes.bool.isRequired,
 };
 
 export default Settings;
