@@ -14,7 +14,7 @@ import sShared from '../SettingsShared.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
 const ProjectSettings = React.memo(
-  ({ projectId, project, name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete }) => {
+  ({ projectId, name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete }) => {
     const [t] = useTranslation();
 
     const handleBackgroundUpdate = useCallback(
@@ -108,7 +108,6 @@ const ProjectSettings = React.memo(
 
 ProjectSettings.propTypes = {
   projectId: PropTypes.string.isRequired,
-  project: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   name: PropTypes.string.isRequired,
   /* eslint-disable react/forbid-prop-types */
   background: PropTypes.object,

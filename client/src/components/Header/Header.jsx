@@ -60,9 +60,9 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
           </Button>
         </Link>
         {isAdmin && (
-          <Link to={Paths.SETTINGS_INSTANCE} className={styles.hideOnSmall}>
-            <Button style={ButtonStyle.Header} title={t('common.settingsInstance')}>
-              <Icon type={IconType.Server} size={IconSize.Size18} />
+          <Link to={Paths.SETTINGS_USERS} className={styles.hideOnSmall}>
+            <Button style={ButtonStyle.Header} title={t('common.settingsUsers')}>
+              <Icon type={IconType.Users} size={IconSize.Size18} />
             </Button>
           </Link>
         )}

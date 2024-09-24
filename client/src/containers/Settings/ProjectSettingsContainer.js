@@ -9,12 +9,10 @@ const mapStateToProps = (state) => {
   const users = selectors.selectUsers(state);
   const { projectId } = selectors.selectPath(state);
   const { name, background, backgroundImage, isBackgroundImageUpdating } = selectors.selectProject(state, projectId);
-  const project = selectors.selectProject(state, projectId);
   const managers = selectors.selectManagersForProject(state, projectId);
 
   return {
     projectId,
-    project,
     name,
     background,
     backgroundImage,

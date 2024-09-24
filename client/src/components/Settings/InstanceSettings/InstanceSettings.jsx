@@ -38,7 +38,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
         <Table>
           <Table.Header>
             <Table.HeaderRow>
-              <Table.HeaderCell>{t('common.settingsInstance')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('common.instanceSettings')}</Table.HeaderCell>
               <Table.HeaderCell>{t('common.modifySettings')}</Table.HeaderCell>
               <Table.HeaderCell>{t('common.currentValue')}</Table.HeaderCell>
               <Table.HeaderCell>{t('common.description')}</Table.HeaderCell>

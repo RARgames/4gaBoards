@@ -42,9 +42,9 @@ const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, 
         {t('common.aboutShort')}
       </Button>
       {isAdmin && (
-        <Button style={ButtonStyle.PopupContext} title={t('common.settingsInstance')} onClick={() => handleClick(Paths.SETTINGS_INSTANCE)}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.instanceSettings')} onClick={() => handleClick(Paths.SETTINGS_INSTANCE)}>
           <Icon type={IconType.Server} size={IconSize.Size14} className={styles.icon} />
-          {t('common.settingsInstance')}
+          {t('common.instanceSettings')}
         </Button>
       )}
       {isAdmin && (

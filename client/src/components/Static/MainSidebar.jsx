@@ -270,21 +270,21 @@ const MainSidebar = React.memo(
               <div>
                 <div className={styles.sidebarTitle}>
                   <Icon type={IconType.Server} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
-                  {t('common.settingsInstance')}
-                </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_INSTANCE && styles.sidebarActive)}>
-                  <Link to={Paths.SETTINGS_INSTANCE}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.Settings} size={IconSize.Size14} className={styles.icon} />
-                      {t('common.settings')}
-                    </Button>
-                  </Link>
+                  {t('common.instanceSettings')}
                 </div>
                 <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_USERS && styles.sidebarActive)}>
                   <Link to={Paths.SETTINGS_USERS}>
                     <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
                       <Icon type={IconType.Users} size={IconSize.Size14} className={styles.icon} />
                       {t('common.users')}
+                    </Button>
+                  </Link>
+                </div>
+                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_INSTANCE && styles.sidebarActive)}>
+                  <Link to={Paths.SETTINGS_INSTANCE}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
+                      <Icon type={IconType.Settings} size={IconSize.Size14} className={styles.icon} />
+                      {t('common.settings')}
                     </Button>
                   </Link>
                 </div>
