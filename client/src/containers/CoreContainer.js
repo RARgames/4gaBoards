@@ -4,6 +4,7 @@ import selectors from '../selectors';
 import Core from '../components/Core';
 
 const mapStateToProps = (state) => {
+  const path = selectors.selectPathConstant(state);
   const isCoreInitializing = selectors.selectIsCoreInitializing(state);
   const isSocketDisconnected = selectors.selectIsSocketDisconnected(state);
   const currentModal = selectors.selectCurrentModal(state);
@@ -12,6 +13,7 @@ const mapStateToProps = (state) => {
   const currentCard = selectors.selectCurrentCard(state);
 
   return {
+    path,
     isSocketDisconnected,
     currentModal,
     currentProject,

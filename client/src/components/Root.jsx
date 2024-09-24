@@ -23,19 +23,19 @@ function Root({ store, history }) {
         <Routes>
           <Route path={Paths.LOGIN} element={<LoginContainer />} />
           <Route path={Paths.REGISTER} element={<RegisterContainer />} />
-          <Route path={Paths.ROOT} element={<CoreContainer path={Paths.ROOT} />} />
-          <Route path={Paths.PROJECTS} element={<CoreContainer path={Paths.PROJECTS} />} />
-          <Route path={Paths.BOARDS} element={<CoreContainer path={Paths.BOARDS} />} />
-          <Route path={Paths.CARDS} element={<CoreContainer path={Paths.CARDS} />} />
-          <Route path={Paths.SETTINGS} element={<CoreContainer path={Paths.SETTINGS} />} />
-          <Route path={Paths.SETTINGS_PROFILE} element={<CoreContainer path={Paths.SETTINGS_PROFILE} />} />
-          <Route path={Paths.SETTINGS_PREFERENCES} element={<CoreContainer path={Paths.SETTINGS_PREFERENCES} />} />
-          <Route path={Paths.SETTINGS_ACCOUNT} element={<CoreContainer path={Paths.SETTINGS_ACCOUNT} />} />
-          <Route path={Paths.SETTINGS_AUTHENTICATION} element={<CoreContainer path={Paths.SETTINGS_AUTHENTICATION} />} />
-          <Route path={Paths.SETTINGS_ABOUT} element={<CoreContainer path={Paths.SETTINGS_ABOUT} />} />
-          <Route path={Paths.SETTINGS_INSTANCE} element={<CoreContainer path={Paths.SETTINGS_INSTANCE} />} />
-          <Route path={Paths.SETTINGS_USERS} element={<CoreContainer path={Paths.SETTINGS_USERS} />} />
-          <Route path={Paths.SETTINGS_PROJECT} element={<CoreContainer path={Paths.SETTINGS_PROJECT} />} />
+          <Route path={Paths.ROOT} element={<CoreContainer />} />
+          <Route path={Paths.PROJECTS} element={<CoreContainer />} />
+          <Route path={Paths.BOARDS} element={<CoreContainer />} />
+          <Route path={Paths.CARDS} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_PROFILE} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_PREFERENCES} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_ACCOUNT} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_AUTHENTICATION} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_ABOUT} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_INSTANCE} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_USERS} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_PROJECT} element={<CoreContainer />} />
           <Route path="*" element={<NotFoundContainer path="*" />} />
         </Routes>
       </ReduxRouter>
