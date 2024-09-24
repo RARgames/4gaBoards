@@ -50,6 +50,7 @@ export default {
       back: 'Back',
       background: 'Background',
       backToProject: 'Back to Project',
+      backToProjects: 'Back to Projects',
       board__title: 'Board',
       board: 'board',
       boardNotFound_title: 'Board Not Found',
