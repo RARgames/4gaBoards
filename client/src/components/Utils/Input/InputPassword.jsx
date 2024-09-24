@@ -38,7 +38,7 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
   return (
     <>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <input {...inputProps} className={classNames(styles.input, style && styles[style], className)} />
+      <input {...inputProps} className={classNames(styles.input, sPassword.inputPassword, style && styles[style], className)} />
       <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>
