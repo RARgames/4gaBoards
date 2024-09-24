@@ -40,8 +40,11 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeF
     (event) => {
       handleFieldChange(event);
       submit(event.target.value);
+      if (event.target.value === '') {
+        onFilterQueryClear();
+      }
     },
-    [handleFieldChange, submit],
+    [handleFieldChange, onFilterQueryClear, submit],
   );
 
   const handleToggleClick = useCallback(() => {
