@@ -31,6 +31,8 @@ const MainSidebar = React.memo(
     isAdmin,
     defaultData,
     isSubmitting,
+    filterQuery,
+    filterTarget,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -44,6 +46,7 @@ const MainSidebar = React.memo(
     const [sidebarShown, toggleSidebar] = useToggle(true);
     const projectRefs = useRef({});
     const boardRefs = useRef({});
+    const isFilteringBoards = filterTarget === 'board' && !!filterQuery;
 
     const handleToggleProjectCollapse = useCallback(
       (project) => {
@@ -127,7 +130,7 @@ const MainSidebar = React.memo(
               </ProjectActionsPopup>
             )}
           </div>
-          {!project.isCollapsed && (
+          {(!project.isCollapsed || isFilteringBoards) && (
             <DragDropContext onDragEnd={handleDragEnd}>
               <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="vertical">
                 {({ innerRef, droppableProps, placeholder }) => (
@@ -330,6 +333,8 @@ MainSidebar.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
+  filterQuery: PropTypes.string.isRequired,
+  filterTarget: PropTypes.string.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,

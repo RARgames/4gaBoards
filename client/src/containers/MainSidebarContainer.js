@@ -10,6 +10,9 @@ const mapStateToProps = (state) => {
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
   const { projectId, boardId } = selectors.selectPath(state);
+  const filter = selectors.selectFilterForCurrentUser(state);
+  const filterQuery = filter?.query;
+  const filterTarget = filter?.target;
   const {
     ui: {
       projectCreateForm: { data: defaultData, isSubmitting },
@@ -25,6 +28,8 @@ const mapStateToProps = (state) => {
     isAdmin,
     defaultData,
     isSubmitting,
+    filterQuery,
+    filterTarget,
   };
 };
 
