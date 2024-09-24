@@ -130,7 +130,7 @@ const MainSidebar = React.memo(
               </ProjectActionsPopup>
             )}
           </div>
-          {(!project.isCollapsed || isFilteringBoards) && (
+          {(!project.isCollapsed || isFilteringBoards || currProjectId === project.id) && (
             <DragDropContext onDragEnd={handleDragEnd}>
               <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="vertical">
                 {({ innerRef, droppableProps, placeholder }) => (
