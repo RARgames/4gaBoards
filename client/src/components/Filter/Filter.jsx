@@ -1,17 +1,19 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
 import { useField } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
+import Paths from '../../constants/Paths';
 
 import styles from './Filter.module.scss';
 
-const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeFilterQuery, onFilterQueryClear }) => {
+const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onChangeFilterQuery, onFilterQueryClear }) => {
   const [t] = useTranslation();
   const field = useRef(null);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
   const [isTargetBoard, toggleFilterTarget] = useToggle();
+  const prevPathRef = useRef();
 
   const submit = useCallback(
     (val, overrideTarget = false) => {
@@ -74,6 +76,25 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, onChangeF
     [handleCancel, handleSubmit, handleToggleClick],
   );
 
+  useEffect(() => {
+    if (prevPathRef.current !== path) {
+      if (path === Paths.ROOT) {
+        if (isTargetBoard) {
+          toggleFilterTarget();
+        }
+        handleCancel();
+        field.current.focus();
+      } else if (path === Paths.PROJECTS) {
+        if (!isTargetBoard) {
+          toggleFilterTarget();
+        }
+        handleCancel();
+        field.current.focus();
+      }
+    }
+    prevPathRef.current = path;
+  }, [handleCancel, isTargetBoard, onFilterQueryClear, path, toggleFilterTarget]);
+
   const getCounterText = () => {
     if (value !== '') {
       if (isTargetBoard) {
@@ -110,6 +131,7 @@ Filter.propTypes = {
   defaultValue: PropTypes.string.isRequired, // eslint-disable-line react/forbid-prop-types
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  path: PropTypes.string.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
   onFilterQueryClear: PropTypes.func.isRequired,
 };

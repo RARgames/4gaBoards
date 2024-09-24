@@ -91,8 +91,7 @@ const MainSidebar = React.memo(
       } else if (currProjectId) {
         scrollItemIntoView(projectRefs.current[currProjectId]);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currProjectId, currBoardId]);
+    }, [currProjectId, currBoardId, scrollItemIntoView]);
 
     const projectsNode = filteredProjects.map((project) => {
       const canManage = managedProjects.some((p) => p.id === project.id);
@@ -217,7 +216,7 @@ const MainSidebar = React.memo(
         </Button>
         <div className={classNames(styles.sidebar, !sidebarShown && styles.sidebarHidden)}>
           <div className={styles.sidebarHeader}>
-            <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
+            <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
           </div>
           <div className={classNames(styles.scrollable, gStyles.scrollableY)}>
             <div className={styles.sidebarTitle}>
