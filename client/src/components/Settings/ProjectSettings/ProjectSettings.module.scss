@@ -17,6 +17,7 @@
     margin: 10px auto;
     max-width: 750px;
     word-wrap: break-word;
+    text-align: center;
   }
 
   .dangerZone {
@@ -35,12 +36,15 @@
   .headerButton {
     position: relative;
     float: right;
+    height: 32px;
+    display: flex;
+    align-items: center;
   }
 
   .headerButtonOffset {
     position: relative;
     float: left;
-    width: 112px;
+    width: 20px;
     height: 32px;
   }
 

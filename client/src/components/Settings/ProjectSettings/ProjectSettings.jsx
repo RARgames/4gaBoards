@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import InformationEdit from './InformationEdit';
 import BackgroundPane from './BackgroundPane';
 import DeletePopup from '../../DeletePopup';
-import { Button, ButtonStyle } from '../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 import Memberships from '../../Memberships';
 import Paths from '../../../constants/Paths';
 
@@ -34,12 +34,14 @@ const ProjectSettings = React.memo(
           <div className={styles.headerButtonOffset} />
           <h2 className={sShared.headerText}>{t('common.projectSettings')}</h2>
           <div className={styles.headerButton}>
-            <Link to={project.firstBoardId ? Paths.BOARDS.replace(':id', project.firstBoardId) : Paths.PROJECTS.replace(':id', projectId)}>
-              <Button style={ButtonStyle.Submit} type="button" content={t('action.backToProject')} />
+            <Link to={Paths.PROJECTS.replace(':id', projectId)}>
+              <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
+                <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
+              </Button>
             </Link>
           </div>
-          <div className={styles.projectName}>{name}</div>
         </div>
+        <div className={styles.projectName}>{name}</div>
         <div className={sShared.contentWrapper}>
           <div className={styles.actionsWrapper}>
             <div className={styles.action}>

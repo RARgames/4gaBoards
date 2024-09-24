@@ -333,8 +333,8 @@ MainSidebar.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
-  filterQuery: PropTypes.string.isRequired,
-  filterTarget: PropTypes.string.isRequired,
+  filterQuery: PropTypes.string,
+  filterTarget: PropTypes.string,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -348,6 +348,8 @@ MainSidebar.propTypes = {
 MainSidebar.defaultProps = {
   currProjectId: undefined,
   currBoardId: undefined,
+  filterQuery: undefined,
+  filterTarget: undefined,
 };
 
 export default MainSidebar;
