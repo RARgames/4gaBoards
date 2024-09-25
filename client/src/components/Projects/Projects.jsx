@@ -14,7 +14,7 @@ import styles from './Projects.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import globalStyles from '../../styles.module.scss';
 
-const Projects = React.memo(({ projects, filteredProjects, canAdd, defaultData, isSubmitting, onCreate }) => {
+const Projects = React.memo(({ projects, filteredProjects, canAdd, isFiltered, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
   const projectAdd = useRef(null);
 
@@ -25,7 +25,7 @@ const Projects = React.memo(({ projects, filteredProjects, canAdd, defaultData, 
   }, [canAdd]);
 
   const getProjectsText = () => {
-    if (filteredProjects.length === projects.length) {
+    if (!isFiltered) {
       return `${t('common.showing')} ${t('common.projects', { count: projects.length, context: 'title' })}`;
     }
     return `${t('common.showing')} ${filteredProjects.length} ${t('common.ofProjects', { count: projects.length, context: 'title' })} `;
@@ -80,6 +80,7 @@ Projects.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canAdd: PropTypes.bool.isRequired,
+  isFiltered: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,

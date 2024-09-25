@@ -9,12 +9,14 @@ const mapStateToProps = (state) => {
   const { projectId } = selectors.selectPath(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
+  const isFiltered = selectors.selectIsFilteredForCurrentUser(state);
 
   return {
     projectId,
     projects,
     filteredProjects,
     managedProjects,
+    isFiltered,
   };
 };
 

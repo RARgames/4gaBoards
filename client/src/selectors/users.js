@@ -189,6 +189,24 @@ export const selectFilterForCurrentUser = createSelector(
   },
 );
 
+export const selectIsFilteredForCurrentUser = createSelector(
+  orm,
+  (state) => selectCurrentUserId(state),
+  ({ User }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const userModel = User.withId(id);
+
+    if (!userModel) {
+      return userModel;
+    }
+
+    return !!userModel.filter;
+  },
+);
+
 export default {
   selectCurrentUserId,
   selectUsers,
@@ -199,4 +217,5 @@ export default {
   selectProjectsToListsForCurrentUser,
   selectNotificationsForCurrentUser,
   selectFilterForCurrentUser,
+  selectIsFilteredForCurrentUser,
 };

@@ -10,7 +10,7 @@ import BoardAddPopup from '../BoardAddPopup';
 import styles from './Boards.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, onCreate }) => {
+const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, onCreate }) => {
   const [t] = useTranslation();
   const currentFilteredProject = filteredProjects.find((project) => project.id === projectId);
   const currentProject = projects.find((project) => project.id === projectId);
@@ -19,7 +19,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
   const getBoardsText = () => {
     const boardsCount = currentFilteredProject?.boards.length || 0;
     const totalBoardsCount = currentProject?.boards.length || 0;
-    if (boardsCount === totalBoardsCount) {
+    if (!isFiltered) {
       return `${t('common.showing')} ${t('common.boards', { count: boardsCount, context: 'title' })}`;
     }
     return `${t('common.showing')} ${boardsCount} ${t('common.ofBoards', { count: totalBoardsCount, context: 'title' })}`;
@@ -85,6 +85,7 @@ Boards.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isFiltered: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
 };
 
