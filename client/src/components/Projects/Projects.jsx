@@ -26,18 +26,14 @@ const Projects = React.memo(({ projects, filteredProjects, canAdd, defaultData, 
 
   const getProjectsText = () => {
     if (filteredProjects.length === projects.length) {
-      return `${t('common.showing')} ${filteredProjects.length} ${[projects.length !== 1 ? t('common.projects', { context: 'title' }) : t('common.project', { context: 'title' })]}`;
+      return `${t('common.showing')} ${t('common.projects', { count: projects.length, context: 'title' })}`;
     }
-    return (
-      [`${t('common.showing')} ${filteredProjects.length} ${t('common.of')} ${projects.length} `] +
-      [projects.length !== 1 ? t('common.projects', { context: 'title' }) : t('common.project', { context: 'title' })]
-    );
+    return `${t('common.showing')} ${filteredProjects.length} ${t('common.ofProjects', { count: projects.length, context: 'title' })} `;
   };
 
   const getBoardsText = () => {
     const boardsCount = filteredProjects.reduce((sum, project) => sum + (project.boards ? project.boards.length : 0), 0);
-    const boardsText = boardsCount !== 1 ? `${boardsCount} ${t('common.boards__title')}` : `${boardsCount} ${t('common.board__title')}`;
-    return `[${boardsText}]`;
+    return `[${t('common.boards', { count: boardsCount, context: 'title' })}]`;
   };
 
   return (

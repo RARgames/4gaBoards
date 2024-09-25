@@ -20,9 +20,9 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
     const boardsCount = currentFilteredProject?.boards.length || 0;
     const totalBoardsCount = currentProject?.boards.length || 0;
     if (boardsCount === totalBoardsCount) {
-      return `${t('common.showing')} ${boardsCount} ${[boardsCount !== 1 ? t('common.boards__title') : t('common.board__title')]}`;
+      return `${t('common.showing')} ${t('common.boards', { count: boardsCount, context: 'title' })}`;
     }
-    return [`${t('common.showing')} ${boardsCount} ${t('common.of')} ${totalBoardsCount} ${[boardsCount !== 1 ? t('common.boards__title') : t('common.board__title')]}`];
+    return `${t('common.showing')} ${boardsCount} ${t('common.ofBoards', { count: totalBoardsCount, context: 'title' })}`;
   };
 
   return (

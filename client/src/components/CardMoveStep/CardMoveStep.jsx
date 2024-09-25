@@ -60,7 +60,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
       <Popup.Header onBack={onBack}>{t('common.moveCard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <div className={styles.text}>{t('common.project')}</div>
+          <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
           <Dropdown
             name="projectId"
             options={projectsToLists.map((project) => ({
@@ -80,7 +80,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
           />
           {selectedProject && (
             <>
-              <div className={styles.text}>{t('common.board')}</div>
+              <div className={styles.text}>{t('common.board', { context: 'title' })}</div>
               <Dropdown
                 ref={dropdownBoard}
                 name="boardId"

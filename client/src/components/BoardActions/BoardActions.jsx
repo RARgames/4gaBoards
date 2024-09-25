@@ -18,6 +18,8 @@ const BoardActions = React.memo(
   ({
     projectId,
     cardCount,
+    isFiltered,
+    filteredCardCount,
     memberships,
     labels,
     filterUsers,
@@ -55,7 +57,7 @@ const BoardActions = React.memo(
             {boardData.name}
           </div>
           <div className={classNames(styles.cardsCount, styles.action)}>
-            {cardCount} {[cardCount !== 1 ? t('common.cards') : t('common.card')]}
+            {isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}
           </div>
           <div className={styles.action}>
             <Memberships
@@ -121,6 +123,8 @@ BoardActions.propTypes = {
   projectId: PropTypes.string.isRequired,
   /* eslint-disable react/forbid-prop-types */
   cardCount: PropTypes.number.isRequired,
+  isFiltered: PropTypes.bool.isRequired,
+  filteredCardCount: PropTypes.number.isRequired,
   memberships: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
   filterUsers: PropTypes.array.isRequired,

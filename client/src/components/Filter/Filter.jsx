@@ -99,10 +99,9 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
     if (value !== '') {
       if (isTargetBoard) {
         const boardsCount = filteredProjects.reduce((sum, project) => sum + (project.boards ? project.boards.length : 0), 0);
-        const boardsText = boardsCount !== 1 ? `${boardsCount} ${t('common.boards')}` : `${boardsCount} ${t('common.board')}`;
-        return `${[`${boardsText} (${filteredProjects.length}/${projects.length} `] + [projects.length !== 1 ? t('common.projects') : t('common.project')]})`;
+        return `${t('common.boards', { count: boardsCount })} (${filteredProjects.length}/${t('common.projects', { count: projects.length })})`;
       }
-      return [`${filteredProjects.length} ${t('common.of')} ${projects.length} `] + [projects.length !== 1 ? t('common.projects') : t('common.project')];
+      return `${filteredProjects.length} ${t('common.ofProjects', { count: projects.length })}`;
     }
     return '';
   };
