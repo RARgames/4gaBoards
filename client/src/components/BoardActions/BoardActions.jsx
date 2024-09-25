@@ -26,7 +26,7 @@ const BoardActions = React.memo(
     filterLabels,
     allUsers,
     canEdit,
-    isCurrentUserManager,
+    isProjectManager,
     boardData,
     onMembershipCreate,
     onMembershipUpdate,
@@ -64,7 +64,7 @@ const BoardActions = React.memo(
               items={memberships}
               allUsers={allUsers}
               permissionsSelectStep={BoardMembershipPermissionsSelectStep}
-              canEdit={isCurrentUserManager}
+              canEdit={isProjectManager}
               onCreate={onMembershipCreate}
               onUpdate={onMembershipUpdate}
               onDelete={onMembershipDelete}
@@ -97,7 +97,7 @@ const BoardActions = React.memo(
               />
             </Connections>
           </div>
-          {isCurrentUserManager && (
+          {isProjectManager && (
             <div className={classNames(styles.action, styles.actionRightFirst)}>
               <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
                 <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
@@ -106,7 +106,7 @@ const BoardActions = React.memo(
               </Link>
             </div>
           )}
-          <div className={classNames(styles.action, styles.actionRightLast, !isCurrentUserManager && styles.actionRightFirst)}>
+          <div className={classNames(styles.action, styles.actionRightLast, !isProjectManager && styles.actionRightFirst)}>
             <Link to={Paths.PROJECTS.replace(':id', projectId)}>
               <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
                 <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
@@ -132,7 +132,7 @@ BoardActions.propTypes = {
   allUsers: PropTypes.array.isRequired,
   /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,
-  isCurrentUserManager: PropTypes.bool.isRequired,
+  isProjectManager: PropTypes.bool.isRequired,
   boardData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onMembershipCreate: PropTypes.func.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,

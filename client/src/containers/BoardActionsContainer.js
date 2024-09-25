@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   const filteredListCardsCount = listIds.map((list) => selectors.selectFilteredCardIdsByListId(state, list).length);
   const filteredCardCount = filteredListCardsCount.reduce((sum, count) => sum + count, 0);
   const allUsers = selectors.selectUsers(state);
-  const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
+  const isProjectManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
   const memberships = selectors.selectMembershipsForCurrentBoard(state);
   const labels = selectors.selectLabelsForCurrentBoard(state);
   const filterUsers = selectors.selectFilterUsersForCurrentBoard(state);
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
     filterLabels,
     allUsers,
     canEdit: isCurrentUserEditor,
-    isCurrentUserManager,
+    isProjectManager,
     boardData,
   };
 };
