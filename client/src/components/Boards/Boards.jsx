@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,8 @@ import gStyles from '../../globalStyles.module.scss';
 
 const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, onCreate }) => {
   const [t] = useTranslation();
+  const headerButtonGroupRef = useRef(null);
+  const headerButtonGroupOffsetRef = useRef(null);
   const currentFilteredProject = filteredProjects.find((project) => project.id === projectId);
   const currentProject = projects.find((project) => project.id === projectId);
   const isProjectManager = managedProjects.some((p) => p.id === projectId);
@@ -25,17 +27,20 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
     return `${t('common.showing')} ${boardsCount} ${t('common.ofBoards', { count: totalBoardsCount, context: 'title' })}`;
   };
 
+  useEffect(() => {
+    if (headerButtonGroupRef.current) {
+      headerButtonGroupOffsetRef.current.style.width = `${headerButtonGroupRef.current.offsetWidth}px`;
+    }
+  }, []);
+
   return (
     <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
       <div className={styles.header}>
-        <div className={styles.headerButtonGroup}>
-          <div className={styles.headerButtonOffset} />
-          {isProjectManager && <div className={styles.headerButtonOffset} />}
-        </div>
+        <div ref={headerButtonGroupOffsetRef} />
         <div className={classNames(styles.headerText)}>
           <span>{getBoardsText()}</span> <span className={styles.headerDetails}>[{t('common.selectedProject')}]</span>
         </div>
-        <div className={styles.headerButtonGroup}>
+        <div ref={headerButtonGroupRef} className={styles.headerButtonGroup}>
           <div className={styles.headerButton}>
             <Link to={Paths.ROOT}>
               <Button style={ButtonStyle.Icon} title={t('common.backToProjects')}>
@@ -50,6 +55,16 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
                   <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
                 </Button>
               </Link>
+            </div>
+          )}
+          {isProjectManager && (
+            <div className={styles.headerButton}>
+              <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown onCreate={onCreate} offset={16} position="bottom">
+                <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={styles.addButton}>
+                  <Icon type={IconType.Plus} size={IconSize.Size16} className={styles.addButtonIcon} />
+                  {t('common.addBoard')}
+                </Button>
+              </BoardAddPopup>
             </div>
           )}
         </div>
@@ -67,14 +82,6 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
             </Link>
           </div>
         ))}
-        {isProjectManager && (
-          <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown onCreate={onCreate} offset={2} position="bottom">
-            <Button style={ButtonStyle.Icon} title={t('common.createBoard')} className={classNames(styles.boardWrapper, styles.add)}>
-              <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
-              {t('common.createBoard')}
-            </Button>
-          </BoardAddPopup>
-        )}
       </div>
     </div>
   );
