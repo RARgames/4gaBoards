@@ -1,6 +1,6 @@
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -8,21 +8,16 @@ import { Link } from 'react-router-dom';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
-import ProjectAdd from './ProjectAdd';
+import ProjectAddPopup from '../ProjectAddPopup';
 
 import styles from './Projects.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import globalStyles from '../../styles.module.scss';
 
-const Projects = React.memo(({ projects, filteredProjects, canAdd, isFiltered, defaultData, isSubmitting, onCreate }) => {
+const Projects = React.memo(({ projects, filteredProjects, isAdmin, isFiltered, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
-  const projectAdd = useRef(null);
-
-  const handleProjectAdd = useCallback(() => {
-    if (canAdd) {
-      projectAdd.current?.open();
-    }
-  }, [canAdd]);
+  const headerButtonGroupRef = useRef(null);
+  const headerButtonGroupOffsetRef = useRef(null);
 
   const getProjectsText = () => {
     if (!isFiltered) {
@@ -36,12 +31,33 @@ const Projects = React.memo(({ projects, filteredProjects, canAdd, isFiltered, d
     return `[${t('common.boards', { count: boardsCount, context: 'title' })}]`;
   };
 
+  useEffect(() => {
+    if (headerButtonGroupRef.current) {
+      headerButtonGroupOffsetRef.current.style.width = `${headerButtonGroupRef.current.offsetWidth}px`;
+    }
+  }, []);
+
   return (
-    <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
+    <div className={styles.wrapper}>
       <div className={styles.header}>
-        <span>{getProjectsText()}</span> <span className={styles.headerDetails}>{getBoardsText()}</span>
+        <div ref={headerButtonGroupOffsetRef} />
+        <div className={classNames(styles.headerText)}>
+          <span>{getProjectsText()}</span> <span className={styles.headerDetails}>{getBoardsText()}</span>
+        </div>
+        <div ref={headerButtonGroupRef} className={styles.headerButtonGroup}>
+          {isAdmin && (
+            <div className={styles.headerButton}>
+              <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate} offset={16} position="bottom">
+                <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.addButton}>
+                  <Icon type={IconType.Plus} size={IconSize.Size16} className={styles.addButtonIcon} />
+                  {t('common.addProject')}
+                </Button>
+              </ProjectAddPopup>
+            </div>
+          )}
+        </div>
       </div>
-      <div className={classNames(styles.projectsWrapper)}>
+      <div className={classNames(styles.projectsWrapper, gStyles.scrollableY)}>
         {filteredProjects.map((item) => (
           <div
             key={item.id}
@@ -63,14 +79,6 @@ const Projects = React.memo(({ projects, filteredProjects, canAdd, isFiltered, d
             </Link>
           </div>
         ))}
-        {canAdd && (
-          <ProjectAdd ref={projectAdd} defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate}>
-            <Button style={ButtonStyle.Icon} title={t('common.createProject')} onClick={handleProjectAdd} className={classNames(styles.projectWrapper, styles.add)}>
-              <Icon type={IconType.Plus} size={IconSize.Size20} className={styles.addGridIcon} />
-              {t('common.createProject')}
-            </Button>
-          </ProjectAdd>
-        )}
       </div>
     </div>
   );
@@ -79,7 +87,7 @@ const Projects = React.memo(({ projects, filteredProjects, canAdd, isFiltered, d
 Projects.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  canAdd: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   isFiltered: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,

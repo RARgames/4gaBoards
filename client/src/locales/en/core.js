@@ -24,6 +24,7 @@ export default {
       addManager_title: 'Add Manager',
       addMember_title: 'Add Member',
       addMember: 'Add Member',
+      addProject: 'Add Project',
       addTask: 'Add Task',
       addUser_title: 'Add User',
       administrator: 'Administrator',

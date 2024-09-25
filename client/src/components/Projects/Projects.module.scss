@@ -9,13 +9,39 @@
   .header {
     font-weight: bold;
     color: var(--textColor1);
-    margin: 10px 0 0 0;
+    padding: 10px 20px;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
   }
 
   .headerDetails {
     font-weight: normal;
     color: var(--textColor3);
+  }
+
+
+  .headerButtonGroup {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .headerButton {
+    height: 20px;
+  }
+
+  .addButton {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .addButtonIcon {
+    margin-right: 4px;
   }
 
   .projectsWrapper {
@@ -25,7 +51,7 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-auto-rows: 120px;
     gap: 20px;
-    padding: 20px;
+    padding: 10px 20px 20px 20px;
 
     @media (max-width: 240px) {
       grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));

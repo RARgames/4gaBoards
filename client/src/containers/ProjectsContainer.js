@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
   return {
     projects,
     filteredProjects,
-    canAdd: isAdmin,
+    isAdmin,
     isFiltered,
     defaultData,
     isSubmitting,
