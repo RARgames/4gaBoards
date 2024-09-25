@@ -15,7 +15,7 @@ export const selectPathname = ({
 export const selectPathsMatch = createReselectSelector(selectPathname, (pathname) => matchPaths(pathname, Object.values(Paths)));
 
 export const selectPathConstant = createReselectSelector(selectPathname, (pathname) => {
-  return matchPaths(pathname, Object.values(Paths)).pattern.path;
+  return matchPaths(pathname, Object.values(Paths))?.pattern.path;
 });
 
 export const selectPath = createReduxOrmSelector(

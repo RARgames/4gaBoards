@@ -83,7 +83,7 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
 });
 
 Header.propTypes = {
-  path: PropTypes.string.isRequired,
+  path: PropTypes.string,
   /* eslint-disable react/forbid-prop-types */
   project: PropTypes.object,
   user: PropTypes.object.isRequired,
@@ -97,6 +97,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
+  path: undefined,
   project: undefined,
 };
 

@@ -6,6 +6,7 @@ import entryActions from '../entry-actions';
 import MainSidebar from '../components/Static/MainSidebar';
 
 const mapStateToProps = (state) => {
+  const path = selectors.selectPathConstant(state);
   const { isAdmin, sidebarCompact } = selectors.selectCurrentUser(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => {
   } = state;
 
   return {
+    path,
     projects,
     filteredProjects,
     managedProjects,

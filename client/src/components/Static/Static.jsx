@@ -29,8 +29,8 @@ function Static({ path, projectId, cardId, board }) {
   ) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer path={path}>
-          <SettingsContainer path={path} />
+        <MainSidebarContainer>
+          <SettingsContainer />
         </MainSidebarContainer>
       </div>
     );
@@ -39,7 +39,7 @@ function Static({ path, projectId, cardId, board }) {
   if (projectId === undefined) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer path={path}>
+        <MainSidebarContainer>
           <ProjectsContainer />
         </MainSidebarContainer>
       </div>
@@ -49,7 +49,7 @@ function Static({ path, projectId, cardId, board }) {
   if (cardId === null) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer path={path}>
+        <MainSidebarContainer>
           <div className={styles.message}>
             <h1>{t('common.cardNotFound', { context: 'title' })}</h1>
           </div>
@@ -61,7 +61,7 @@ function Static({ path, projectId, cardId, board }) {
   if (board === null) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer path={path}>
+        <MainSidebarContainer>
           <div className={styles.message}>
             <h1>{t('common.boardNotFound', { context: 'title' })}</h1>
           </div>
@@ -73,7 +73,7 @@ function Static({ path, projectId, cardId, board }) {
   if (projectId === null) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer path={path}>
+        <MainSidebarContainer>
           <div className={styles.message}>
             <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
           </div>
@@ -85,7 +85,7 @@ function Static({ path, projectId, cardId, board }) {
   if (board === undefined) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer path={path}>
+        <MainSidebarContainer>
           <BoardsContainer />
         </MainSidebarContainer>
       </div>
@@ -95,7 +95,7 @@ function Static({ path, projectId, cardId, board }) {
   if (board.isFetching) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer path={path}>
+        <MainSidebarContainer>
           <Loader size={LoaderSize.Massive} />
         </MainSidebarContainer>
       </div>
@@ -104,7 +104,7 @@ function Static({ path, projectId, cardId, board }) {
 
   return (
     <div className={styles.wrapper}>
-      <MainSidebarContainer path={path}>
+      <MainSidebarContainer>
         <BoardContainer />
       </MainSidebarContainer>
     </div>

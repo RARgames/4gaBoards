@@ -6,7 +6,7 @@ import HeaderContainer from '../../containers/HeaderContainer';
 
 import styles from './NotFound.module.scss';
 
-const NotFound = React.memo(({ path, isInitializing, isSocketDisconnected }) => {
+const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   const [t] = useTranslation();
   const mainTitle = '4ga Boards';
 
@@ -20,7 +20,7 @@ const NotFound = React.memo(({ path, isInitializing, isSocketDisconnected }) => 
         <Loader size={LoaderSize.Massive} />
       ) : (
         <>
-          <HeaderContainer path={path} />
+          <HeaderContainer />
           <h1 className={styles.text}>{t('common.pageNotFound', { context: 'title' })}</h1>
         </>
       )}
@@ -41,7 +41,6 @@ const NotFound = React.memo(({ path, isInitializing, isSocketDisconnected }) => 
 });
 
 NotFound.propTypes = {
-  path: PropTypes.string.isRequired,
   isInitializing: PropTypes.bool.isRequired,
   isSocketDisconnected: PropTypes.bool.isRequired,
 };
