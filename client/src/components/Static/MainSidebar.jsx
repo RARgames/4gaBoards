@@ -301,17 +301,17 @@ const MainSidebar = React.memo(
           <div className={styles.sidebarFooter}>
             {isAdmin && (
               <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right-end">
-                <Button style={ButtonStyle.NoBackground} title={t('common.createProject')} className={styles.footerButton}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
-                  {t('common.createProject')}
+                  {t('common.addProject')}
                 </Button>
               </ProjectAddPopup>
             )}
             {managedProjects.length > 0 && (
               <BoardAddPopup projects={managedProjects} projectId={currProjectId} onCreate={onBoardCreate} offset={2} position="right-end">
-                <Button style={ButtonStyle.NoBackground} title={t('common.createBoard')} className={styles.footerButton}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
-                  {t('common.createBoard')}
+                  {t('common.addBoard')}
                 </Button>
               </BoardAddPopup>
             )}

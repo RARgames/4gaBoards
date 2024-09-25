@@ -45,12 +45,12 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
 
   return (
     <>
-      <Popup.Header className={styles.header}>{t('common.createProject', { context: 'title' })}</Popup.Header>
+      <Popup.Header className={styles.header}>{t('common.addProject')}</Popup.Header>
       <Popup.Content className={styles.content}>
         <Form onSubmit={handleSubmit} className={styles.formWrapper} onKeyDown={handleKeyDown}>
           <Input ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.createProject')} disabled={isSubmitting} />
+            <Button style={ButtonStyle.Submit} content={t('common.addProject')} disabled={isSubmitting} />
           </div>
         </Form>
       </Popup.Content>

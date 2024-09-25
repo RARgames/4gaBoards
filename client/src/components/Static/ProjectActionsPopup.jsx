@@ -24,14 +24,7 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
       case StepTypes.RENAME:
         return <RenameStep title={t('common.renameProject', { context: 'title' })} defaultData={defaultDataRename} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
       case StepTypes.ADD:
-        return (
-          <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} offset={6} position="right-end">
-            <Button style={ButtonStyle.NoBackground} title={t('common.createBoard')} className={styles.footerButton}>
-              <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
-              {t('common.createBoard')}
-            </Button>
-          </BoardAddStep>
-        );
+        return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
       default:
     }
   }

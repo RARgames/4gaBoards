@@ -137,7 +137,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate
 
   return (
     <>
-      <Popup.Header onBack={onBack}>{t('common.createBoard', { context: 'title' })}</Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.addBoard')}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
@@ -176,7 +176,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}
             </Button>
-            <Button style={ButtonStyle.Submit} content={t('action.createBoard')} className={styles.submitButton} />
+            <Button style={ButtonStyle.Submit} content={t('common.addBoard')} className={styles.submitButton} />
           </div>
         </Form>
       </Popup.Content>
