@@ -106,7 +106,7 @@ const BoardActions = React.memo(
               </Link>
             </div>
           )}
-          <div className={classNames(styles.action, styles.actionRightLast)}>
+          <div className={classNames(styles.action, styles.actionRightLast, !isCurrentUserManager && styles.actionRightFirst)}>
             <Link to={Paths.PROJECTS.replace(':id', projectId)}>
               <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
                 <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
