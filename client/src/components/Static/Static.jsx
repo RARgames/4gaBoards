@@ -29,7 +29,7 @@ function Static({ path, projectId, cardId, board }) {
   ) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer>
+        <MainSidebarContainer settingsOnly>
           <SettingsContainer />
         </MainSidebarContainer>
       </div>
