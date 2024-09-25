@@ -97,15 +97,8 @@ const BoardActions = React.memo(
               />
             </Connections>
           </div>
-          <div className={classNames(styles.action, styles.actionRightFirst, !isCurrentUserManager && styles.actionRightLast)}>
-            <Link to={Paths.PROJECTS.replace(':id', projectId)}>
-              <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
-                <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
-              </Button>
-            </Link>
-          </div>
           {isCurrentUserManager && (
-            <div className={classNames(styles.action, styles.actionRightLast)}>
+            <div className={classNames(styles.action, styles.actionRightFirst)}>
               <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
                 <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
                   <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
@@ -113,6 +106,13 @@ const BoardActions = React.memo(
               </Link>
             </div>
           )}
+          <div className={classNames(styles.action, styles.actionRightLast)}>
+            <Link to={Paths.PROJECTS.replace(':id', projectId)}>
+              <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
+                <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     );

@@ -41,22 +41,6 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
           <span>{getBoardsText()}</span> <span className={styles.headerDetails}>[{t('common.selectedProject')}]</span>
         </div>
         <div ref={headerButtonGroupRef} className={styles.headerButtonGroup}>
-          <div className={styles.headerButton}>
-            <Link to={Paths.ROOT}>
-              <Button style={ButtonStyle.Icon} title={t('common.backToProjects')}>
-                <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
-              </Button>
-            </Link>
-          </div>
-          {isProjectManager && (
-            <div className={styles.headerButton}>
-              <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-                <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
-                  <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
-                </Button>
-              </Link>
-            </div>
-          )}
           {isProjectManager && (
             <div className={styles.headerButton}>
               <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown onCreate={onCreate} offset={16} position="bottom">
@@ -67,6 +51,22 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
               </BoardAddPopup>
             </div>
           )}
+          {isProjectManager && (
+            <div className={styles.headerButton}>
+              <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
+                <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
+                  <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
+                </Button>
+              </Link>
+            </div>
+          )}
+          <div className={styles.headerButton}>
+            <Link to={Paths.ROOT}>
+              <Button style={ButtonStyle.Icon} title={t('common.backToProjects')}>
+                <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
       <div className={classNames(styles.boardsWrapper, gStyles.scrollableY)}>
