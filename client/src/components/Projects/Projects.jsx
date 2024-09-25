@@ -35,7 +35,7 @@ const Projects = React.memo(({ projects, filteredProjects, isAdmin, isFiltered, 
     if (headerButtonGroupRef.current) {
       headerButtonGroupOffsetRef.current.style.width = `${headerButtonGroupRef.current.offsetWidth}px`;
     }
-  }, []);
+  }, [isAdmin]);
 
   return (
     <div className={styles.wrapper}>

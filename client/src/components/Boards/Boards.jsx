@@ -31,7 +31,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
     if (headerButtonGroupRef.current) {
       headerButtonGroupOffsetRef.current.style.width = `${headerButtonGroupRef.current.offsetWidth}px`;
     }
-  }, []);
+  }, [projectId]);
 
   return (
     <div className={classNames(styles.wrapper)}>
