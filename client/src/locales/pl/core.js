@@ -54,6 +54,7 @@ export default {
       avatarText: 'Zdjęcie profilowe',
       back: 'Powrót',
       background: 'Tło',
+      backToDashboard: 'Powrót do panelu',
       board_title: 'Tablica',
       board: 'tablica',
       boardNotFound_title: 'Tablica nie znaleziona',

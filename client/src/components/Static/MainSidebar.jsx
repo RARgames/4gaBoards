@@ -317,6 +317,14 @@ const MainSidebar = React.memo(
                 </Button>
               </BoardAddPopup>
             )}
+            {settingsOnly && (
+              <Link to={Paths.ROOT}>
+                <Button style={ButtonStyle.NoBackground} title={t('common.backToDashboard')} className={styles.footerButton}>
+                  <Icon type={IconType.ArrowLeftBig} size={IconSize.Size13} className={styles.footerButtonIcon} />
+                  {t('common.dashboard')}
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
         <div className={classNames(styles.content, sidebarCompact && styles.contentCompact)}>{children}</div>

@@ -62,7 +62,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
           )}
           <div className={styles.headerButton}>
             <Link to={Paths.ROOT}>
-              <Button style={ButtonStyle.Icon} title={t('common.backToProjects')}>
+              <Button style={ButtonStyle.Icon} title={t('common.backToDashboard')}>
                 <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
               </Button>
             </Link>
