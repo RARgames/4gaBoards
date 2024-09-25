@@ -29,7 +29,7 @@ function Static({ path, projectId, cardId, board }) {
   ) {
     return (
       <div className={styles.wrapper}>
-        <MainSidebarContainer settingsOnly>
+        <MainSidebarContainer settingsOnly={path !== Paths.SETTINGS_PROJECT}>
           <SettingsContainer />
         </MainSidebarContainer>
       </div>
