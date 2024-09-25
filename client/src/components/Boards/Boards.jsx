@@ -34,7 +34,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
   }, []);
 
   return (
-    <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
+    <div className={classNames(styles.wrapper)}>
       <div className={styles.header}>
         <div ref={headerButtonGroupOffsetRef} />
         <div className={classNames(styles.headerText)}>
@@ -69,7 +69,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
           )}
         </div>
       </div>
-      <div className={classNames(styles.boardsWrapper)}>
+      <div className={classNames(styles.boardsWrapper, gStyles.scrollableY)}>
         {currentFilteredProject?.boards.map((item) => (
           <div key={item.id} className={classNames(styles.boardWrapper)}>
             {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
