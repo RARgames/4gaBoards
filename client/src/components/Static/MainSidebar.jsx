@@ -99,7 +99,7 @@ const MainSidebar = React.memo(
     }, [currProjectId, currBoardId, scrollItemIntoView]);
 
     const projectsNode = filteredProjects.map((project) => {
-      const canManage = managedProjects.some((p) => p.id === project.id);
+      const isProjectManager = managedProjects.some((p) => p.id === project.id);
       return (
         <div key={project.id}>
           {/* eslint-disable-next-line no-return-assign */}
@@ -115,7 +115,7 @@ const MainSidebar = React.memo(
             <Link to={Paths.PROJECTS.replace(':id', project.id)} className={styles.sidebarItemInner}>
               <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)} />
             </Link>
-            {canManage && (
+            {isProjectManager && (
               <ProjectActionsPopup
                 projectId={project.id}
                 managedProjects={managedProjects}
@@ -139,7 +139,7 @@ const MainSidebar = React.memo(
                   // eslint-disable-next-line react/jsx-props-no-spreading
                   <div {...droppableProps} ref={innerRef}>
                     {project.boards.map((board, index) => (
-                      <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !canManage}>
+                      <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !isProjectManager}>
                         {/* eslint-disable-next-line no-shadow */}
                         {({ innerRef, draggableProps, dragHandleProps }) => (
                           // eslint-disable-next-line react/jsx-props-no-spreading
@@ -152,7 +152,7 @@ const MainSidebar = React.memo(
                                 // eslint-disable-next-line no-return-assign
                                 ref={(el) => (boardRefs.current[board.id] = el)}
                               >
-                                {canManage && (
+                                {isProjectManager && (
                                   // eslint-disable-next-line react/jsx-props-no-spreading
                                   <div {...dragHandleProps}>
                                     <Button style={ButtonStyle.Icon} title={t('common.reorderBoards')} className={classNames(styles.reorderBoardsButton, styles.hoverButton)}>
@@ -160,11 +160,11 @@ const MainSidebar = React.memo(
                                     </Button>
                                   </div>
                                 )}
-                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(styles.sidebarItemInner, !canManage && styles.boardCannotManage)}>
+                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(styles.sidebarItemInner, !isProjectManager && styles.boardCannotManage)}>
                                   <Button style={ButtonStyle.NoBackground} content={board.name} className={classNames(styles.boardButton, styles.sidebarButton)} />
                                 </Link>
                                 {board.isGithubConnected &&
-                                  (canManage ? (
+                                  (isProjectManager ? (
                                     <Connections defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
                                       <Icon
                                         type={IconType.Github}
@@ -183,7 +183,7 @@ const MainSidebar = React.memo(
                                       />
                                     </div>
                                   ))}
-                                {canManage && (
+                                {isProjectManager && (
                                   <BoardActionsPopup
                                     defaultDataRename={pick(board, 'name')}
                                     defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
