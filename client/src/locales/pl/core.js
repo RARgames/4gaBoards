@@ -113,6 +113,7 @@ export default {
       deleteTask_title: 'Usuń zadanie',
       deleteUser_title: 'Usuń użytkownika',
       description: 'Opis',
+      descriptionCompactSidebar: 'Zmniejsza panel boczny do minimalnej szerokości.',
       descriptionLocalRegistration: 'Włącz lub wyłącz lokalną rejestrację użytkowników. Ta metoda rejestracji umożliwia użytkownikom utworzenie konta przy użyciu nazwy użytkownika i hasła.',
       descriptionSLanguage: 'Wybierz język, którego chcesz używać w 4ga Boards.',
       descriptionSsoRegistration: 'Włącz lub wyłącz rejestrację użytkownika przez SSO. Ten sposób rejestracji pozwala użytkownikom na utworzenie konta przy pomocy konta zewnętrznego (np. Konto Google).', // eslint-disable-line prettier/prettier
@@ -260,6 +261,7 @@ export default {
       showing: 'Wyświetla',
       showSidebar: 'Pokaż panel boczny',
       showTasks: 'Pokaż zadania',
+      sidebarCompact: 'Kompaktowy panel boczny',
       simple: 'Prosty',
       ssoGoogleEmail: 'E-mail Google',
       startTimer: 'Włącz stoper',

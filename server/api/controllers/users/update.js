@@ -64,6 +64,9 @@ module.exports = {
     commentsShown: {
       type: 'boolean',
     },
+    sidebarCompact: {
+      type: 'boolean',
+    },
     ssoGoogleEmail: {
       type: 'string',
       isEmail: true,
@@ -111,6 +114,7 @@ module.exports = {
         'tasksShown',
         'attachmentsShown',
         'commentsShown',
+        'sidebarCompact',
         'ssoGoogleEmail',
         'lastLogin',
       ]),

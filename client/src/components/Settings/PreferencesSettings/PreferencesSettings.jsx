@@ -9,7 +9,7 @@ import styles from './PreferencesSettings.module.scss';
 import sShared from '../SettingsShared.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
-const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdate, onLanguageUpdate }) => {
+const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, onUpdate, onLanguageUpdate }) => {
   const [t] = useTranslation();
   const languages = useMemo(
     () => [
@@ -32,6 +32,12 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdat
       subscribeToOwnCards: !subscribeToOwnCards,
     });
   }, [subscribeToOwnCards, onUpdate]);
+
+  const handleCompactSidebarChange = useCallback(() => {
+    onUpdate({
+      sidebarCompact: !sidebarCompact,
+    });
+  }, [sidebarCompact, onUpdate]);
 
   const handleLanguageChange = useCallback(
     (value) => {
@@ -65,6 +71,14 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdat
               <Table.Cell>{t('common.descriptionSubscribeToMyOwnCards')}</Table.Cell>
             </Table.Row>
             <Table.Row>
+              <Table.Cell>{t('common.sidebarCompact')}</Table.Cell>
+              <Table.Cell aria-label={t('common.toggleSettings')}>
+                <Radio size={RadioSize.Size12} checked={sidebarCompact} onChange={handleCompactSidebarChange} />
+              </Table.Cell>
+              <Table.Cell>{sidebarCompact ? t('common.enabled') : t('common.disabled')}</Table.Cell>
+              <Table.Cell>{t('common.descriptionCompactSidebar')}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
               <Table.Cell> {t('common.language', { context: 'title' })}</Table.Cell>
               <Table.Cell className={styles.languageCell} aria-label={t('common.toggleSettings')}>
                 <Dropdown
@@ -89,6 +103,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, language, onUpdat
 
 PreferencesSettings.propTypes = {
   subscribeToOwnCards: PropTypes.bool.isRequired,
+  sidebarCompact: PropTypes.bool.isRequired,
   language: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   onLanguageUpdate: PropTypes.func.isRequired,

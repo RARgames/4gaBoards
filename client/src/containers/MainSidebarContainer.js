@@ -6,7 +6,7 @@ import entryActions from '../entry-actions';
 import MainSidebar from '../components/Static/MainSidebar';
 
 const mapStateToProps = (state) => {
-  const { isAdmin } = selectors.selectCurrentUser(state);
+  const { isAdmin, sidebarCompact } = selectors.selectCurrentUser(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
   const { projectId, boardId } = selectors.selectPath(state);
@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     isSubmitting,
     filterQuery,
     filterTarget,
+    sidebarCompact,
   };
 };
 

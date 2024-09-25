@@ -98,6 +98,11 @@ module.exports = {
       defaultsTo: true,
       columnName: 'comments_shown',
     },
+    sidebarCompact: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'sidebar_compact',
+    },
     deletedAt: {
       type: 'ref',
       columnName: 'deleted_at',

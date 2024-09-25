@@ -49,6 +49,7 @@ export default class extends BaseModel {
     tasksShown: attr(),
     attachmentsShown: attr(),
     commentsShown: attr(),
+    sidebarCompact: attr(),
     deletedAt: attr(),
     ssoGoogleEmail: attr(),
     lastLogin: attr(),

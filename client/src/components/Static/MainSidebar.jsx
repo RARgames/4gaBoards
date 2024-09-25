@@ -33,6 +33,7 @@ const MainSidebar = React.memo(
     isSubmitting,
     filterQuery,
     filterTarget,
+    sidebarCompact,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -217,7 +218,7 @@ const MainSidebar = React.memo(
         <Button style={ButtonStyle.Icon} title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')} onClick={toggleSidebar} className={styles.toggleSidebarButton}>
           <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
         </Button>
-        <div className={classNames(styles.sidebar, !sidebarShown && styles.sidebarHidden)}>
+        <div className={classNames(styles.sidebar, sidebarCompact && styles.sidebarCompact, !sidebarShown && styles.sidebarHidden)}>
           <div className={styles.sidebarHeader}>
             <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
           </div>
@@ -316,7 +317,7 @@ const MainSidebar = React.memo(
             )}
           </div>
         </div>
-        <div className={styles.content}>{children}</div>
+        <div className={classNames(styles.content, sidebarCompact && styles.contentCompact)}>{children}</div>
       </div>
     );
   },
@@ -335,6 +336,7 @@ MainSidebar.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   filterQuery: PropTypes.string,
   filterTarget: PropTypes.string,
+  sidebarCompact: PropTypes.bool.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,

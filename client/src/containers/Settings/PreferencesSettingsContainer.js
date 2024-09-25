@@ -6,11 +6,12 @@ import entryActions from '../../entry-actions';
 import PreferencesSettings from '../../components/Settings/PreferencesSettings';
 
 const mapStateToProps = (state) => {
-  const { language, subscribeToOwnCards } = selectors.selectCurrentUser(state);
+  const { language, subscribeToOwnCards, sidebarCompact } = selectors.selectCurrentUser(state);
 
   return {
     language,
     subscribeToOwnCards,
+    sidebarCompact,
   };
 };
 
