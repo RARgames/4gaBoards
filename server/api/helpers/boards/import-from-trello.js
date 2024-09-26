@@ -99,11 +99,15 @@ module.exports = {
             name: trelloCard.name,
             description: trelloCard.desc || null,
             dueDate: trelloCard.due,
+            commentCount: 0,
           }).fetch();
 
           await importCardLabels(boardsCard, trelloCard);
           await importTasks(boardsCard, trelloCard);
           await importComments(boardsCard, trelloCard);
+
+          const commentCount = await Action.count({ cardId: boardsCard.id, type: 'commentCard' });
+          await Card.update({ id: boardsCard.id }).set({ commentCount });
 
           return boardsCard;
         }),
