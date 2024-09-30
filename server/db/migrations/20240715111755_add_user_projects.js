@@ -42,7 +42,9 @@ module.exports.up = async (knex) => {
     created_at: knex.fn.now(0),
   }));
 
-  await knex('user_project').insert(insertData);
+  if (insertData && insertData.length) {
+    await knex('user_project').insert(insertData);
+  }
 };
 
 module.exports.down = (knex) => knex.schema.dropTable('user_project');
