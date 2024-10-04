@@ -17,7 +17,7 @@
     "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
     "postinstall": "(cd server && npm i && cd ../client && npm i)",
     "lint": "npm run server:lint && npm run client:lint",
-    "prepare": "husky install",
+    "prepare": "husky",
     "server:console": "npm run console --prefix server",
     "server:db:init": "npm run db:init --prefix server",
     "server:db:migrate": "npm run db:migrate --prefix server",
@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "concurrently": "^9.0.1",
-    "husky": "^8.0.3",
+    "husky": "^9.1.6",
     "lint-staged": "^15.2.10"
   },
   "devDependencies": {
