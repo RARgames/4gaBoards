@@ -158,7 +158,7 @@ Demo user: `demo` Demo password: `demo`
 
 ## Tech stack
 
-- React, Redux, Redux-Saga, Redux-ORM, Semantic UI React, react-beautiful-dnd
+- React, Redux, Redux-Saga, Redux-ORM, react-beautiful-dnd
 - Sails.js, Knex.js
 - PostgreSQL
 
