@@ -47,7 +47,8 @@ const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, onClick
       className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable, !avatarUrl && styles[`background${upperFirst(camelCase(getColor(name)))}`])}
       style={avatarBackground(avatarUrl, size)}
     >
-      {!avatarUrl && <span className={styles.initials}>{initials(name)}</span>}
+      {/* TODO hacky way to fix #340 - Profile picture display bug for only one word with just capital letters name e.g. "ASDSAFFFSASF" */}
+      {!avatarUrl && <span className={styles.initials}>{initials(`${name} `)}</span>}
     </span>
   );
 
