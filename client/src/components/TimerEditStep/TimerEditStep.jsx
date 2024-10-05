@@ -133,7 +133,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               ) : (
                 <Button style={ButtonStyle.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
                   <Icon type={IconType.Play} size={IconSize.Size10} className={styles.startStopIcon} />
-                  {t('action.stop')}
+                  {t('action.start')}
                 </Button>
               ))}
           </div>
