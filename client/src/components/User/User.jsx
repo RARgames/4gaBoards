@@ -1,6 +1,5 @@
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
-import initials from 'initials';
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -29,6 +28,15 @@ const getColor = (name) => {
   return COLORS[sum % COLORS.length];
 };
 
+const getInitials = (name) => {
+  const words = name.split(' ').filter(Boolean);
+  if (words.length === 1) {
+    return words[0].slice(0, 1).toUpperCase() + words[0].slice(1, 2);
+  }
+  const ini = words.map((word) => word[0].toUpperCase()).join('');
+  return ini.length > 2 ? ini[0] + ini[ini.length - 1] : ini;
+};
+
 const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, onClick }) => {
   const avatarBackground = useCallback(() => {
     if (!avatarUrl) {
@@ -47,8 +55,7 @@ const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, onClick
       className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable, !avatarUrl && styles[`background${upperFirst(camelCase(getColor(name)))}`])}
       style={avatarBackground(avatarUrl, size)}
     >
-      {/* TODO hacky way to fix #340 - Profile picture display bug for only one word with just capital letters name e.g. "ASDSAFFFSASF" */}
-      {!avatarUrl && <span className={styles.initials}>{initials(`${name} `)}</span>}
+      {!avatarUrl && <span className={styles.initials}>{getInitials(name)}</span>}
     </span>
   );
 
