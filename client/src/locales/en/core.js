@@ -129,6 +129,7 @@ export default {
       editLabel_title: 'Edit Label',
       editLabel: 'Edit Label',
       editList: 'Edit List',
+      editMembers: 'Edit Members',
       editor: 'Editor',
       editPassword_title: 'Edit Password',
       editPermissions_title: 'Edit Permissions',

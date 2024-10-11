@@ -70,11 +70,29 @@ module.exports = {
     const cardLabels = await CardLabel.find({ cardId: card.id });
     const memberUsers = await CardMembership.find({ cardId: card.id });
     const tasks = await Task.find({ cardId: card.id });
+    const taskIds = sails.helpers.utils.mapRecords(tasks);
+    const taskMemberships = await sails.helpers.cards.getTaskMemberships(taskIds);
     const attachments = await Attachment.find({ cardId: card.id });
     const actions = await Action.find({ cardId: card.id });
     const actionsUsers = await User.find({ id: _.map(actions, 'userId') });
     const coverAttachment = attachments.find((attachment) => attachment.id === card.coverAttachmentId);
     const coverAttachmentDirname = coverAttachment != null ? coverAttachment.dirname : undefined;
+
+    const newTaskIdMapping = {};
+
+    await Promise.all(
+      tasks.map(async (task) => {
+        const newTask = await sails.helpers.tasks.createOne.with({
+          values: {
+            ..._.omit(task, ['id', 'cardId']), // Omit the id and cardId to ensure a new task is created for the copied card
+            card: copiedCard,
+          },
+          request: this.req,
+        });
+        newTaskIdMapping[task.id] = newTask.id;
+        return newTask;
+      }),
+    );
 
     const copiedItemsPromises = [
       ...cardLabels.map((cardLabel) => {
@@ -99,11 +117,12 @@ module.exports = {
           })
           .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER); // Handle the specific error if the user is already a member of the card
       }),
-      ...tasks.map((task) => {
-        return sails.helpers.tasks.createOne.with({
+      ...taskMemberships.map((taskMembership) => {
+        return sails.helpers.taskMemberships.createOne.with({
           values: {
-            ..._.omit(task, ['id', 'cardId']), // Omit the id and cardId to ensure a new task is created for the copied card
             card: copiedCard,
+            taskId: newTaskIdMapping[taskMembership.taskId],
+            userId: taskMembership.userId,
           },
           request: this.req,
         });
@@ -138,6 +157,8 @@ module.exports = {
     const createdLabels = await sails.helpers.cards.getCardLabels(card.id);
     const createdMemberships = await sails.helpers.cards.getCardMemberships(card.id);
     const createdTasks = await sails.helpers.cards.getTasks(copiedCard.id);
+    const createdTaskIds = sails.helpers.utils.mapRecords(createdTasks);
+    const createdTaskMemberships = await sails.helpers.cards.getTaskMemberships(createdTaskIds);
     const createdActions = await sails.helpers.cards.getActions(copiedCard.id);
     const createdAttachments = await sails.helpers.cards.getAttachments(copiedCard.id);
     const createdCoverAttachment = createdAttachments.find((attachment) => attachment.dirname === coverAttachmentDirname);
@@ -150,6 +171,7 @@ module.exports = {
         cardLabels: createdLabels,
         cardMemberships: createdMemberships,
         tasks: createdTasks,
+        taskMemberships: createdTaskMemberships,
         attachments: createdAttachments,
         actions: createdActions,
         coverAttachmentId: createdCoverAttachmentId,

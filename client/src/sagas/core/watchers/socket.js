@@ -136,17 +136,25 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleLabelFromCardRemove(item));
     };
 
-    const handleTaskCreate = ({ item }) => {
+    const handleUserToTaskAdd = ({ item }) => {
+      emit(entryActions.handleUserToTaskAdd(item));
+    };
+
+    const handleUserFromTaskRemove = ({ item }) => {
+      emit(entryActions.handleUserFromTaskRemove(item));
+    };
+
+    const handleTaskCreate = api.makeHandleTaskCreate(({ item }) => {
       emit(entryActions.handleTaskCreate(item));
-    };
+    });
 
-    const handleTaskUpdate = ({ item }) => {
+    const handleTaskUpdate = api.makeHandleTaskUpdate(({ item }) => {
       emit(entryActions.handleTaskUpdate(item));
-    };
+    });
 
-    const handleTaskDelete = ({ item }) => {
+    const handleTaskDelete = api.makeHandleTaskDelete(({ item }) => {
       emit(entryActions.handleTaskDelete(item));
-    };
+    });
 
     const handleAttachmentCreate = api.makeHandleAttachmentCreate(({ item, requestId }) => {
       emit(entryActions.handleAttachmentCreate(item, requestId));
@@ -225,6 +233,9 @@ const createSocketEventsChannel = () =>
     socket.on('cardLabelCreate', handleLabelToCardAdd);
     socket.on('cardLabelDelete', handleLabelFromCardRemove);
 
+    socket.on('taskMembershipCreate', handleUserToTaskAdd);
+    socket.on('taskMembershipDelete', handleUserFromTaskRemove);
+
     socket.on('taskCreate', handleTaskCreate);
     socket.on('taskUpdate', handleTaskUpdate);
     socket.on('taskDelete', handleTaskDelete);
@@ -285,6 +296,9 @@ const createSocketEventsChannel = () =>
 
       socket.off('cardLabelCreate', handleLabelToCardAdd);
       socket.off('cardLabelDelete', handleLabelFromCardRemove);
+
+      socket.off('taskMembershipCreate', handleUserToTaskAdd);
+      socket.off('taskMembershipDelete', handleUserFromTaskRemove);
 
       socket.off('taskCreate', handleTaskCreate);
       socket.off('taskUpdate', handleTaskUpdate);

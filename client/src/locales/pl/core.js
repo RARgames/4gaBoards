@@ -137,6 +137,7 @@ export default {
       editLabel_title: 'Edytuj etykietę',
       editLabel: 'Edytuj etykietę',
       editList: 'Edytuj listę',
+      editMembers: 'Edytuj członków',
       editor: 'Edytor',
       editPassword_title: 'Edytuj hasło',
       editPermissions_title: 'Edytuj uprawnienia',

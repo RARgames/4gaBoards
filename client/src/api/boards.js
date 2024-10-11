@@ -2,6 +2,7 @@ import socket from './socket';
 import http from './http';
 import { transformCard } from './cards';
 import { transformAttachment } from './attachments';
+import { transformTask } from './tasks';
 
 /* Actions */
 
@@ -16,6 +17,7 @@ const getBoard = (id, subscribe, headers) =>
       ...body.included,
       cards: body.included.cards.map(transformCard),
       attachments: body.included.attachments.map(transformAttachment),
+      tasks: body.included.tasks.map(transformTask),
     },
   }));
 

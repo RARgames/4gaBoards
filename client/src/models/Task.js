@@ -1,4 +1,4 @@
-import { attr, fk } from 'redux-orm';
+import { attr, fk, many } from 'redux-orm';
 
 import BaseModel from './BaseModel';
 import ActionTypes from '../constants/ActionTypes';
@@ -13,11 +13,13 @@ export default class extends BaseModel {
     isCompleted: attr({
       getDefault: () => false,
     }),
+    dueDate: attr(),
     cardId: fk({
       to: 'Card',
       as: 'card',
       relatedName: 'tasks',
     }),
+    users: many('User', 'tasks'),
   };
 
   static reducer({ type, payload }, Task) {
@@ -32,9 +34,19 @@ export default class extends BaseModel {
           });
         }
 
+        if (payload.taskMemberships) {
+          payload.taskMemberships.forEach(({ taskId, userId }) => {
+            Task.withId(taskId).users.add(userId);
+          });
+        }
+
         break;
       case ActionTypes.SOCKET_RECONNECT_HANDLE:
-        Task.all().delete();
+        Task.all()
+          .toModelArray()
+          .forEach((taskModel) => {
+            taskModel.deleteWithClearable();
+          });
 
         if (payload.tasks) {
           payload.tasks.forEach((task) => {
@@ -42,12 +54,50 @@ export default class extends BaseModel {
           });
         }
 
+        if (payload.taskMemberships) {
+          payload.taskMemberships.forEach(({ taskId, userId }) => {
+            Task.withId(taskId).users.add(userId);
+          });
+        }
+
         break;
       case ActionTypes.BOARD_FETCH__SUCCESS:
       case ActionTypes.CARD_DUPLICATE__SUCCESS:
-        payload.tasks.forEach((task) => {
-          Task.upsert(task);
-        });
+        if (payload.tasks) {
+          payload.tasks.forEach((task) => {
+            Task.upsert(task);
+          });
+        }
+
+        if (payload.taskMemberships) {
+          payload.taskMemberships.forEach(({ taskId, userId }) => {
+            Task.withId(taskId).users.add(userId);
+          });
+        }
+
+        break;
+      case ActionTypes.USER_TO_TASK_ADD: {
+        const taskModel = Task.withId(payload.taskId);
+        taskModel.users.add(payload.id);
+
+        break;
+      }
+      case ActionTypes.USER_TO_TASK_ADD__SUCCESS:
+      case ActionTypes.USER_TO_TASK_ADD_HANDLE:
+        try {
+          Task.withId(payload.taskMembership.taskId).users.add(payload.taskMembership.userId);
+        } catch {} // eslint-disable-line no-empty
+
+        break;
+      case ActionTypes.USER_FROM_TASK_REMOVE:
+        Task.withId(payload.taskId).users.remove(payload.id);
+
+        break;
+      case ActionTypes.USER_FROM_TASK_REMOVE__SUCCESS:
+      case ActionTypes.USER_FROM_TASK_REMOVE_HANDLE:
+        try {
+          Task.withId(payload.taskMembership.taskId).users.remove(payload.taskMembership.userId);
+        } catch {} // eslint-disable-line no-empty
 
         break;
       case ActionTypes.TASK_CREATE:
@@ -67,7 +117,7 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.TASK_DELETE:
-        Task.withId(payload.id).delete();
+        Task.withId(payload.id).deleteWithClearable();
 
         break;
       case ActionTypes.TASK_DELETE__SUCCESS:
@@ -75,12 +125,21 @@ export default class extends BaseModel {
         const taskModel = Task.withId(payload.task.id);
 
         if (taskModel) {
-          taskModel.delete();
+          taskModel.deleteWithClearable();
         }
 
         break;
       }
       default:
     }
+  }
+
+  deleteClearable() {
+    this.users.clear();
+  }
+
+  deleteWithClearable() {
+    this.deleteClearable();
+    this.delete();
   }
 }

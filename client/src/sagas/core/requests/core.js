@@ -25,6 +25,7 @@ export function* fetchCore() {
   let cardMemberships;
   let cardLabels;
   let tasks;
+  let taskMemberships;
   let attachments;
 
   try {
@@ -40,6 +41,7 @@ export function* fetchCore() {
       cardMemberships,
       cardLabels,
       tasks,
+      taskMemberships,
       attachments,
     } = yield call(fetchBoardByCurrentPath));
   } catch {} // eslint-disable-line no-empty
@@ -77,6 +79,7 @@ export function* fetchCore() {
     cardMemberships,
     cardLabels,
     tasks,
+    taskMemberships,
     attachments,
     activities,
     notifications,

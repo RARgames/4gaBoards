@@ -38,7 +38,7 @@ const fetchBoard = (id) => ({
   },
 });
 
-fetchBoard.success = (board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments) => ({
+fetchBoard.success = (board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments) => ({
   type: ActionTypes.BOARD_FETCH__SUCCESS,
   payload: {
     board,
@@ -51,6 +51,7 @@ fetchBoard.success = (board, users, projects, boardMemberships, labels, lists, c
     cardMemberships,
     cardLabels,
     tasks,
+    taskMemberships,
     attachments,
   },
 });

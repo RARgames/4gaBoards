@@ -26,19 +26,26 @@ module.exports = {
         inputs.request,
       );
 
-      const cardSubscription = await CardSubscription.destroyOne({
-        cardId: cardMembership.cardId,
-        userId: cardMembership.userId,
-        isPermanent: false,
-      });
+      const tasks = await Task.find({ cardId: cardMembership.cardId });
+      const taskIds = sails.helpers.utils.mapRecords(tasks);
+      const taskMemberships = await sails.helpers.cards.getTaskMemberships(taskIds);
+      const keepCardSubscription = taskMemberships.some((membership) => membership.userId === cardMembership.userId);
 
-      if (cardSubscription) {
-        sails.sockets.broadcast(`user:${cardMembership.userId}`, 'cardUpdate', {
-          item: {
-            id: cardMembership.cardId,
-            isSubscribed: false,
-          },
+      if (!keepCardSubscription) {
+        const cardSubscription = await CardSubscription.destroyOne({
+          cardId: cardMembership.cardId,
+          userId: cardMembership.userId,
+          isPermanent: false,
         });
+
+        if (cardSubscription) {
+          sails.sockets.broadcast(`user:${cardMembership.userId}`, 'cardUpdate', {
+            item: {
+              id: cardMembership.cardId,
+              isSubscribed: false,
+            },
+          });
+        }
       }
     }
 

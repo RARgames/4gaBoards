@@ -96,11 +96,12 @@ const duplicateCard = (card) => ({
   },
 });
 
-duplicateCard.success = (card, tasks, attachments, cardMemberships, cardLabels, coverAttachmentId) => ({
+duplicateCard.success = (card, tasks, taskMemberships, attachments, cardMemberships, cardLabels, coverAttachmentId) => ({
   type: ActionTypes.CARD_DUPLICATE__SUCCESS,
   payload: {
     card,
     tasks,
+    taskMemberships,
     attachments,
     cardMemberships,
     cardLabels,

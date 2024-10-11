@@ -13,6 +13,7 @@ import lists from './lists';
 import cards from './cards';
 import cardMemberships from './card-memberships';
 import cardLabels from './card-labels';
+import taskMemberships from './task-memberships';
 import tasks from './tasks';
 import attachments from './attachments';
 import activities from './activities';
@@ -36,6 +37,7 @@ export default {
   ...cards,
   ...cardMemberships,
   ...cardLabels,
+  ...taskMemberships,
   ...tasks,
   ...attachments,
   ...activities,

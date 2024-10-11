@@ -270,6 +270,70 @@ const handleUserFromCardRemove = (cardMembership) => ({
   },
 });
 
+const addUserToTask = (id, taskId, cardId, isCurrent) => ({
+  type: ActionTypes.USER_TO_TASK_ADD,
+  payload: {
+    id,
+    taskId,
+    cardId,
+    isCurrent,
+  },
+});
+
+addUserToTask.success = (taskMembership) => ({
+  type: ActionTypes.USER_TO_TASK_ADD__SUCCESS,
+  payload: {
+    taskMembership,
+  },
+});
+
+addUserToTask.failure = (id, taskId, error) => ({
+  type: ActionTypes.USER_TO_TASK_ADD__FAILURE,
+  payload: {
+    id,
+    taskId,
+    error,
+  },
+});
+
+const handleUserToTaskAdd = (taskMembership) => ({
+  type: ActionTypes.USER_TO_TASK_ADD_HANDLE,
+  payload: {
+    taskMembership,
+  },
+});
+
+const removeUserFromTask = (id, taskId) => ({
+  type: ActionTypes.USER_FROM_TASK_REMOVE,
+  payload: {
+    id,
+    taskId,
+  },
+});
+
+removeUserFromTask.success = (taskMembership) => ({
+  type: ActionTypes.USER_FROM_TASK_REMOVE__SUCCESS,
+  payload: {
+    taskMembership,
+  },
+});
+
+removeUserFromTask.failure = (id, taskId, error) => ({
+  type: ActionTypes.USER_FROM_TASK_REMOVE__FAILURE,
+  payload: {
+    id,
+    taskId,
+    error,
+  },
+});
+
+const handleUserFromTaskRemove = (taskMembership) => ({
+  type: ActionTypes.USER_FROM_TASK_REMOVE_HANDLE,
+  payload: {
+    taskMembership,
+  },
+});
+
 const addUserToBoardFilter = (id, boardId) => ({
   type: ActionTypes.USER_TO_BOARD_FILTER_ADD,
   payload: {
@@ -314,6 +378,10 @@ export default {
   handleUserToCardAdd,
   removeUserFromCard,
   handleUserFromCardRemove,
+  addUserToTask,
+  handleUserToTaskAdd,
+  removeUserFromTask,
+  handleUserFromTaskRemove,
   addUserToBoardFilter,
   removeUserFromBoardFilter,
   updateUserFilterQuery,

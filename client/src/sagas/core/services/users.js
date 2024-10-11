@@ -270,6 +270,46 @@ export function* handleUserFromCardRemove(cardMembership) {
   yield put(actions.handleUserFromCardRemove(cardMembership));
 }
 
+export function* addUserToTask(id, taskId, cardId) {
+  const currentUserId = yield select(selectors.selectCurrentUserId);
+  yield put(actions.addUserToTask(id, taskId, cardId, id === currentUserId));
+
+  let taskMembership;
+  try {
+    ({ item: taskMembership } = yield call(request, api.createTaskMembership, taskId, {
+      userId: id,
+      cardId,
+    }));
+  } catch (error) {
+    yield put(actions.addUserToTask.failure(id, taskId, error));
+    return;
+  }
+
+  yield put(actions.addUserToTask.success(taskMembership));
+}
+
+export function* handleUserToTaskAdd(taskMembership) {
+  yield put(actions.handleUserToTaskAdd(taskMembership));
+}
+
+export function* removeUserFromTask(id, taskId) {
+  yield put(actions.removeUserFromTask(id, taskId));
+
+  let taskMembership;
+  try {
+    ({ item: taskMembership } = yield call(request, api.deleteTaskMembership, taskId, id));
+  } catch (error) {
+    yield put(actions.removeUserFromTask.failure(id, taskId, error));
+    return;
+  }
+
+  yield put(actions.removeUserFromTask.success(taskMembership));
+}
+
+export function* handleUserFromTaskRemove(taskMembership) {
+  yield put(actions.handleUserFromTaskRemove(taskMembership));
+}
+
 export function* addUserToBoardFilter(id, boardId) {
   yield put(actions.addUserToBoardFilter(id, boardId));
 }
@@ -326,6 +366,10 @@ export default {
   removeUserFromCard,
   removeUserFromCurrentCard,
   handleUserFromCardRemove,
+  addUserToTask,
+  handleUserToTaskAdd,
+  removeUserFromTask,
+  handleUserFromTaskRemove,
   addUserToBoardFilter,
   addUserToFilterInCurrentBoard,
   removeUserFromBoardFilter,

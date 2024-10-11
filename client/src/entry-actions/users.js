@@ -194,6 +194,37 @@ const handleUserFromCardRemove = (cardMembership) => ({
   },
 });
 
+const addUserToTask = (id, taskId, cardId) => ({
+  type: EntryActionTypes.USER_TO_TASK_ADD,
+  payload: {
+    id,
+    taskId,
+    cardId,
+  },
+});
+
+const handleUserToTaskAdd = (taskMembership) => ({
+  type: EntryActionTypes.USER_TO_TASK_ADD_HANDLE,
+  payload: {
+    taskMembership,
+  },
+});
+
+const removeUserFromTask = (id, taskId) => ({
+  type: EntryActionTypes.USER_FROM_TASK_REMOVE,
+  payload: {
+    id,
+    taskId,
+  },
+});
+
+const handleUserFromTaskRemove = (taskMembership) => ({
+  type: EntryActionTypes.USER_FROM_TASK_REMOVE_HANDLE,
+  payload: {
+    taskMembership,
+  },
+});
+
 const addUserToFilterInCurrentBoard = (id) => ({
   type: EntryActionTypes.USER_TO_FILTER_IN_CURRENT_BOARD_ADD,
   payload: {
@@ -244,6 +275,10 @@ export default {
   removeUserFromCard,
   removeUserFromCurrentCard,
   handleUserFromCardRemove,
+  addUserToTask,
+  handleUserToTaskAdd,
+  removeUserFromTask,
+  handleUserFromTaskRemove,
   addUserToFilterInCurrentBoard,
   removeUserFromFilterInCurrentBoard,
   updateCurrentUserFilterQuery,

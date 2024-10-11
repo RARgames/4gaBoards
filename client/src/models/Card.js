@@ -103,6 +103,14 @@ export default class extends BaseModel {
         }
 
         break;
+      case ActionTypes.USER_TO_TASK_ADD: {
+        if (payload.isCurrent) {
+          const cardModel = Card.withId(payload.cardId);
+          cardModel.isSubscribed = true;
+        }
+
+        break;
+      }
       case ActionTypes.USER_TO_CARD_ADD: {
         const cardModel = Card.withId(payload.cardId);
         cardModel.users.add(payload.id);

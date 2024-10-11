@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
@@ -7,31 +5,22 @@ const Errors = {
   TASK_NOT_FOUND: {
     taskNotFound: 'Task not found',
   },
+  USER_NOT_TASK_MEMBER: {
+    userNotTaskMember: 'User not task member',
+  },
 };
-
-const dueDateValidator = (value) => moment(value, moment.ISO_8601, true).isValid();
 
 module.exports = {
   inputs: {
-    id: {
+    taskId: {
       type: 'string',
       regex: /^[0-9]+$/,
       required: true,
     },
-    position: {
-      type: 'number',
-    },
-    name: {
+    userId: {
       type: 'string',
-      isNotEmptyString: true,
-    },
-    isCompleted: {
-      type: 'boolean',
-    },
-    dueDate: {
-      type: 'string',
-      custom: dueDateValidator,
-      allowNull: true,
+      regex: /^[0-9]+$/,
+      required: true,
     },
   },
 
@@ -42,15 +31,15 @@ module.exports = {
     taskNotFound: {
       responseType: 'notFound',
     },
+    userNotTaskMember: {
+      responseType: 'notFound',
+    },
   },
 
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const path = await sails.helpers.tasks.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.TASK_NOT_FOUND);
-
-    let { task } = path;
-    const { board } = path;
+    const { board } = await sails.helpers.tasks.getProjectPath(inputs.taskId).intercept('pathNotFound', () => Errors.TASK_NOT_FOUND);
 
     const boardMembership = await BoardMembership.findOne({
       boardId: board.id,
@@ -65,21 +54,27 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'isCompleted', 'dueDate']);
+    let taskMembership = await TaskMembership.findOne({
+      taskId: inputs.taskId,
+      userId: inputs.userId,
+    });
 
-    task = await sails.helpers.tasks.updateOne.with({
-      values,
+    if (!taskMembership) {
+      throw Errors.USER_NOT_TASK_MEMBER;
+    }
+
+    taskMembership = await sails.helpers.taskMemberships.deleteOne.with({
       board,
-      record: task,
+      record: taskMembership,
       request: this.req,
     });
 
-    if (!task) {
-      throw Errors.TASK_NOT_FOUND;
+    if (!taskMembership) {
+      throw Errors.USER_NOT_TASK_MEMBER;
     }
 
     return {
-      item: task,
+      item: taskMembership,
     };
   },
 };

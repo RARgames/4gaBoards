@@ -1,5 +1,3 @@
-const moment = require('moment');
-
 const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
@@ -7,31 +5,30 @@ const Errors = {
   CARD_NOT_FOUND: {
     cardNotFound: 'Card not found',
   },
+  USER_NOT_FOUND: {
+    userNotFound: 'User not found',
+  },
+  USER_ALREADY_TASK_MEMBER: {
+    userAlreadyTaskMember: 'User already task member',
+  },
 };
-
-const dueDateValidator = (value) => moment(value, moment.ISO_8601, true).isValid();
 
 module.exports = {
   inputs: {
+    taskId: {
+      type: 'string',
+      regex: /^[0-9]+$/,
+      required: true,
+    },
     cardId: {
       type: 'string',
       regex: /^[0-9]+$/,
       required: true,
     },
-    position: {
-      type: 'number',
-      required: true,
-    },
-    name: {
+    userId: {
       type: 'string',
+      regex: /^[0-9]+$/,
       required: true,
-    },
-    isCompleted: {
-      type: 'boolean',
-    },
-    dueDate: {
-      type: 'string',
-      custom: dueDateValidator,
     },
   },
 
@@ -41,6 +38,12 @@ module.exports = {
     },
     cardNotFound: {
       responseType: 'notFound',
+    },
+    userNotFound: {
+      responseType: 'notFound',
+    },
+    userAlreadyTaskMember: {
+      responseType: 'conflict',
     },
   },
 
@@ -62,18 +65,25 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'isCompleted', 'dueDate']);
+    const isBoardMember = await sails.helpers.users.isBoardMember(inputs.userId, card.boardId);
 
-    const task = await sails.helpers.tasks.createOne.with({
-      values: {
-        ...values,
-        card,
-      },
-      request: this.req,
-    });
+    if (!isBoardMember) {
+      throw Errors.USER_NOT_FOUND;
+    }
+
+    const taskMembership = await sails.helpers.taskMemberships.createOne
+      .with({
+        values: {
+          card,
+          taskId: inputs.taskId,
+          userId: inputs.userId,
+        },
+        request: this.req,
+      })
+      .intercept('userAlreadyTaskMember', () => Errors.USER_ALREADY_TASK_MEMBER);
 
     return {
-      item: task,
+      item: taskMembership,
     };
   },
 };

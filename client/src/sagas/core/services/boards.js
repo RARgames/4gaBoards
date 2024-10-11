@@ -66,6 +66,7 @@ export function* handleBoardCreate(board, requestId) {
   }
 }
 
+// TODO check - not getting any calls rn?
 export function* fetchBoard(id) {
   yield put(actions.fetchBoard(id));
 
@@ -79,19 +80,20 @@ export function* fetchBoard(id) {
   let cardMemberships;
   let cardLabels;
   let tasks;
+  let taskMemberships;
   let attachments;
 
   try {
     ({
       item: board,
-      included: { users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments },
+      included: { users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments },
     } = yield call(request, api.getBoard, id, true));
   } catch (error) {
     yield put(actions.fetchBoard.failure(id, error));
     return;
   }
 
-  yield put(actions.fetchBoard.success(board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments));
+  yield put(actions.fetchBoard.success(board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments));
 }
 
 export function* updateBoard(id, data) {

@@ -37,6 +37,7 @@ const handleProjectManagerCreate = (
   cardMemberships,
   cardLabels,
   tasks,
+  taskMembership,
   attachments,
   deletedNotifications,
 ) => ({
@@ -55,6 +56,7 @@ const handleProjectManagerCreate = (
     cardMemberships,
     cardLabels,
     tasks,
+    taskMembership,
     attachments,
     deletedNotifications,
   },

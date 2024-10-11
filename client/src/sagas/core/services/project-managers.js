@@ -55,6 +55,7 @@ export function* handleProjectManagerCreate(projectManager) {
   let cardMemberships;
   let cardLabels;
   let tasks;
+  let taskMemberships;
   let attachments;
   let deletedNotifications;
 
@@ -78,7 +79,7 @@ export function* handleProjectManagerCreate(projectManager) {
     } catch {} // eslint-disable-line no-empty
 
     if (body && body.project && body.project.id === projectManager.projectId) {
-      ({ project, board, users: users2, boardMemberships: boardMemberships2, labels, lists, cards, cardMemberships, cardLabels, tasks, attachments } = body);
+      ({ project, board, users: users2, boardMemberships: boardMemberships2, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments } = body);
 
       if (body.card) {
         deletedNotifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
@@ -107,6 +108,7 @@ export function* handleProjectManagerCreate(projectManager) {
       cardMemberships,
       cardLabels,
       tasks,
+      taskMemberships,
       attachments,
       deletedNotifications,
     ),

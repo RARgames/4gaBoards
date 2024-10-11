@@ -56,6 +56,8 @@ module.exports = {
     const cardMemberships = await sails.helpers.cards.getCardMemberships(cardIds);
     const cardLabels = await sails.helpers.cards.getCardLabels(cardIds);
     const tasks = await sails.helpers.cards.getTasks(cardIds);
+    const taskIds = sails.helpers.utils.mapRecords(tasks);
+    const taskMemberships = await sails.helpers.cards.getTaskMemberships(taskIds);
     const attachments = await sails.helpers.cards.getAttachments(cardIds);
 
     const isSubscribedByCardId = cardSubscriptions.reduce(
@@ -85,6 +87,7 @@ module.exports = {
         cardMemberships,
         cardLabels,
         tasks,
+        taskMemberships,
         attachments,
         projects: [project],
       },

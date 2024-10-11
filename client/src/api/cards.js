@@ -1,5 +1,6 @@
 import socket from './socket';
 import { transformAttachment } from './attachments';
+import { transformTask } from './tasks';
 
 /* Transformers */
 
@@ -48,6 +49,7 @@ const getCard = (id, headers) =>
     included: {
       ...body.included,
       attachments: body.included.attachments.map(transformAttachment),
+      tasks: body.included.tasks.map(transformTask),
     },
   }));
 
@@ -70,6 +72,7 @@ const duplicateCard = (id, headers) =>
     included: {
       ...body.included,
       attachments: body.included.attachments.map(transformAttachment),
+      tasks: body.included.tasks.map(transformTask),
     },
   }));
 
