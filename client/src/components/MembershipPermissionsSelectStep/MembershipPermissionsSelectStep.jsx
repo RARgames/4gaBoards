@@ -8,10 +8,10 @@ import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
 
-import styles from './BoardMembershipPermissionsSelectStep.module.scss';
+import styles from './MembershipPermissionsSelectStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, buttonContent, onSelect, onBack, onClose }) => {
+const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, buttonContent, onSelect, onBack, onClose }) => {
   const [t] = useTranslation();
 
   const [data, setData] = useState(() => ({
@@ -72,7 +72,7 @@ const BoardMembershipPermissionsSelectStep = React.memo(({ defaultData, title, b
   );
 });
 
-BoardMembershipPermissionsSelectStep.propTypes = {
+MembershipPermissionsSelectStep.propTypes = {
   defaultData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   title: PropTypes.string,
   buttonContent: PropTypes.string,
@@ -81,10 +81,10 @@ BoardMembershipPermissionsSelectStep.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-BoardMembershipPermissionsSelectStep.defaultProps = {
+MembershipPermissionsSelectStep.defaultProps = {
   defaultData: undefined,
   title: 'common.selectPermissions',
   buttonContent: 'action.selectPermissions',
 };
 
-export default BoardMembershipPermissionsSelectStep;
+export default MembershipPermissionsSelectStep;

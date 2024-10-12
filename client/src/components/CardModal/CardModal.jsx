@@ -15,7 +15,7 @@ import User from '../User';
 import Label from '../Label';
 import DueDate from '../DueDate';
 import Timer from '../Timer';
-import BoardMembershipsPopup from '../BoardMembershipsPopup';
+import MembershipsPopup from '../MembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
 import DueDateEditPopup from '../DueDateEditPopup';
 import TimerEditPopup from '../TimerEditPopup';
@@ -395,11 +395,11 @@ const CardModal = React.memo(
           {t('common.members', { context: 'title' })}
           {canEdit && (
             <div className={styles.popupWrapper}>
-              <BoardMembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
+              <MembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
                 <Button style={ButtonStyle.Icon} title={t('common.addMember')}>
                   <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconAddButton2} />
                 </Button>
-              </BoardMembershipsPopup>
+              </MembershipsPopup>
             </div>
           )}
         </div>

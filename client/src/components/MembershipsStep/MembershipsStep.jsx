@@ -7,10 +7,10 @@ import { Popup, Input } from '../Utils';
 import { useField } from '../../hooks';
 import Item from './Item';
 
-import styles from './BoardMembershipsStep.module.scss';
+import styles from './MembershipsStep.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const BoardMembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
+const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
   const [t] = useTranslation();
   const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
@@ -66,7 +66,7 @@ const BoardMembershipsStep = React.memo(({ items, currentUserIds, title, onUserS
   );
 });
 
-BoardMembershipsStep.propTypes = {
+MembershipsStep.propTypes = {
   /* eslint-disable react/forbid-prop-types */
   items: PropTypes.array.isRequired,
   currentUserIds: PropTypes.array.isRequired,
@@ -77,9 +77,9 @@ BoardMembershipsStep.propTypes = {
   onBack: PropTypes.func,
 };
 
-BoardMembershipsStep.defaultProps = {
+MembershipsStep.defaultProps = {
   title: 'common.members',
   onBack: undefined,
 };
 
-export default BoardMembershipsStep;
+export default MembershipsStep;

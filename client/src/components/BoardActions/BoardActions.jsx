@@ -6,7 +6,7 @@ import pick from 'lodash/pick';
 import { Link } from 'react-router-dom';
 import Filters from './Filters';
 import Memberships from '../Memberships';
-import BoardMembershipPermissionsSelectStep from '../BoardMembershipPermissionsSelectStep';
+import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';
 import Connections from './Connections';
 import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
 import Paths from '../../constants/Paths';
@@ -63,7 +63,7 @@ const BoardActions = React.memo(
             <Memberships
               items={memberships}
               allUsers={allUsers}
-              permissionsSelectStep={BoardMembershipPermissionsSelectStep}
+              permissionsSelectStep={MembershipPermissionsSelectStep}
               canEdit={isProjectManager}
               onCreate={onMembershipCreate}
               onUpdate={onMembershipUpdate}

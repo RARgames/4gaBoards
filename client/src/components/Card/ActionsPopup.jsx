@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import { useSteps } from '../../hooks';
-import BoardMembershipsStep from '../BoardMembershipsStep';
+import MembershipsStep from '../MembershipsStep';
 import LabelsStep from '../LabelsStep';
 import DueDateEditStep from '../DueDateEditStep';
 import TimerEditStep from '../TimerEditStep';
@@ -105,7 +105,7 @@ const ActionsStep = React.memo(
     if (step) {
       switch (step.type) {
         case StepTypes.USERS:
-          return <BoardMembershipsStep items={boardMemberships} currentUserIds={currentUserIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
+          return <MembershipsStep items={boardMemberships} currentUserIds={currentUserIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
         case StepTypes.LABELS:
           return (
             <LabelsStep
@@ -153,8 +153,8 @@ const ActionsStep = React.memo(
     return (
       <>
         <Button style={ButtonStyle.PopupContext} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('common.members', { context: 'title' })} onClick={handleUsersClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('common.labels', { context: 'title' })} onClick={handleLabelsClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />

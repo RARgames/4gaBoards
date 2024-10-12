@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import User from '../User';
 import Label from '../Label';
-import BoardMembershipsPopup from '../BoardMembershipsPopup';
+import MembershipsPopup from '../MembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
 import { Button } from '../Utils';
 
@@ -31,7 +31,7 @@ const Filters = React.memo(
     return (
       <>
         <span className={styles.filter}>
-          <BoardMembershipsPopup
+          <MembershipsPopup
             items={allBoardMemberships}
             currentUserIds={users.map((user) => user.id)}
             title={t('common.filterByMembers', { context: 'title' })}
@@ -44,7 +44,7 @@ const Filters = React.memo(
               <span className={styles.filterTitle}>{`${t('common.members')}:`}</span>
               {users.length === 0 && <span className={styles.filterLabel}>{t('common.all')}</span>}
             </Button>
-          </BoardMembershipsPopup>
+          </MembershipsPopup>
           {users.map((user) => (
             <span key={user.id} className={styles.filterItem}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" onClick={() => handleRemoveUserClick(user.id)} />
