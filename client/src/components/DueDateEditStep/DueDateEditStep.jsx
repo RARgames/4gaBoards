@@ -87,7 +87,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
 
   return (
     <>
-      <Popup.Header onBack={onBack}>{t('common.editDueDate', { context: 'title' })}</Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.dueDate', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <div className={styles.fieldBox}>

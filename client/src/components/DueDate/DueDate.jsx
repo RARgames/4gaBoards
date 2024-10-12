@@ -39,11 +39,11 @@ const DueDate = React.memo(({ value, variant, isDisabled, onClick }) => {
   }, [value]);
 
   const contentNode = value && (
-    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], onClick && styles.wrapperHoverable, styles[`due${dueStyle}`])}>
-      {t(`format:date`, {
-        value,
-        postProcess: 'formatDate',
-      })}
+    <span
+      className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], onClick && styles.wrapperHoverable, styles[`due${dueStyle}`])}
+      title={t(`format:date`, { value, postProcess: 'formatDate' })}
+    >
+      {t(`format:date`, { value, postProcess: 'formatDate' })}
     </span>
   );
 

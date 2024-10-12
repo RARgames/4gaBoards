@@ -82,6 +82,8 @@ const CardModal = React.memo(
     onTaskUpdate,
     onTaskMove,
     onTaskDelete,
+    onUserToTaskAdd,
+    onUserFromTaskRemove,
     onAttachmentCreate,
     onAttachmentUpdate,
     onAttachmentDelete,
@@ -575,7 +577,21 @@ const CardModal = React.memo(
           </Button>
         </div>
         <div className={styles.moduleBody}>
-          {taskShown && <Tasks ref={tasksRef} items={tasks} canEdit={canEdit} onCreate={onTaskCreate} onUpdate={onTaskUpdate} onMove={onTaskMove} onDelete={onTaskDelete} />}
+          {taskShown && (
+            <Tasks
+              ref={tasksRef}
+              cardId={id}
+              items={tasks}
+              canEdit={canEdit}
+              allBoardMemberships={allBoardMemberships}
+              onCreate={onTaskCreate}
+              onUpdate={onTaskUpdate}
+              onMove={onTaskMove}
+              onDelete={onTaskDelete}
+              onUserAdd={onUserToTaskAdd}
+              onUserRemove={onUserFromTaskRemove}
+            />
+          )}
         </div>
       </div>
     );
@@ -736,6 +752,8 @@ CardModal.propTypes = {
   onTaskUpdate: PropTypes.func.isRequired,
   onTaskMove: PropTypes.func.isRequired,
   onTaskDelete: PropTypes.func.isRequired,
+  onUserToTaskAdd: PropTypes.func.isRequired,
+  onUserFromTaskRemove: PropTypes.func.isRequired,
   onAttachmentCreate: PropTypes.func.isRequired,
   onAttachmentUpdate: PropTypes.func.isRequired,
   onAttachmentDelete: PropTypes.func.isRequired,

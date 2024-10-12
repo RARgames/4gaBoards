@@ -28,6 +28,7 @@ export default {
       addManager_title: 'Dodaj moderatora',
       addMember_title: 'Dodaj członka',
       addMember: 'Dodaj członka',
+      addMembers: 'Dodaj członków',
       addProject: 'Dodaj projekt',
       addTask: 'Dodaj zadanie',
       addUser_title: 'Dodaj użytkownika',

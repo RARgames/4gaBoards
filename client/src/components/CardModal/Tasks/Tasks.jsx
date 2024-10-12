@@ -10,7 +10,7 @@ import TaskAdd from './TaskAdd';
 
 import styles from './Tasks.module.scss';
 
-const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, onDelete }, ref) => {
+const Tasks = React.forwardRef(({ cardId, items, canEdit, allBoardMemberships, onCreate, onUpdate, onMove, onDelete, onUserAdd, onUserRemove }, ref) => {
   const [t] = useTranslation();
   const taskAddRef = useRef(null);
 
@@ -53,6 +53,20 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
     [onDelete],
   );
 
+  const handleUserAdd = useCallback(
+    (taskId, userId) => {
+      onUserAdd(userId, taskId, cardId);
+    },
+    [cardId, onUserAdd],
+  );
+
+  const handleUserRemove = useCallback(
+    (taskId, userId) => {
+      onUserRemove(userId, taskId);
+    },
+    [onUserRemove],
+  );
+
   const completedItems = items.filter((item) => item.isCompleted);
 
   return (
@@ -69,11 +83,16 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
                   id={item.id}
                   index={index}
                   name={item.name}
+                  dueDate={item.dueDate}
+                  allBoardMemberships={allBoardMemberships}
+                  users={item.users}
                   isCompleted={item.isCompleted}
                   isPersisted={item.isPersisted}
                   canEdit={canEdit}
                   onUpdate={(data) => handleUpdate(item.id, data)}
                   onDelete={() => handleDelete(item.id)}
+                  onUserAdd={(userId) => handleUserAdd(item.id, userId)}
+                  onUserRemove={(userId) => handleUserRemove(item.id, userId)}
                 />
               ))}
               {placeholder}
@@ -91,12 +110,16 @@ const Tasks = React.forwardRef(({ items, canEdit, onCreate, onUpdate, onMove, on
 });
 
 Tasks.propTypes = {
+  cardId: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onUserAdd: PropTypes.func.isRequired,
+  onUserRemove: PropTypes.func.isRequired,
 };
 
 export default Tasks;

@@ -18,6 +18,7 @@
   .task {
     color: var(--textColor1);
     width: 100%;
+    min-width: 60px;
     margin-left: 4px;
     word-break: break-word;
     overflow: hidden;
@@ -41,6 +42,7 @@
     width: 100%;
     display: flex;
     justify-content: left;
+    align-items: center;
   }
 
   .checkbox {
@@ -49,5 +51,32 @@
     &:hover {
       background: var(--backgroundColorTmpBackgroundHover);
     }
+  }
+
+  .members {
+    display: flex;
+    margin-right: 4px;
+    margin-left: 4px;
+    align-items: center;
+  }
+
+  .member {
+    display: inline-block;
+    margin: 0 -4px 0 0;
+  }
+
+  .moreMembers {
+    background: rgba(0, 0, 0, 0.24);
+    border-radius: 50%;
+    text-align: center;
+    padding-right: 2px;
+    font-size: 12px;
+    line-height: 25px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .dueDate {
+    margin-left: 4px;
   }
 }

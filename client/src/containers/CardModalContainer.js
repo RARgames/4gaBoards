@@ -22,7 +22,10 @@ const mapStateToProps = (state) => {
 
   const users = selectors.selectUsersForCurrentCard(state);
   const labels = selectors.selectLabelsForCurrentCard(state);
-  const tasks = selectors.selectTasksForCurrentCard(state);
+  const tasks = selectors.selectTasksForCurrentCard(state).map((task) => ({
+    ...task,
+    users: selectors.selectUsersForTaskById(state, task.id),
+  }));
   const attachments = selectors.selectAttachmentsForCurrentCard(state);
   const activities = selectors.selectActivitiesForCurrentCard(state);
   const user = selectors.selectCurrentUser(state);
@@ -99,6 +102,8 @@ const mapDispatchToProps = (dispatch) =>
       onTaskUpdate: entryActions.updateTask,
       onTaskMove: entryActions.moveTask,
       onTaskDelete: entryActions.deleteTask,
+      onUserToTaskAdd: entryActions.addUserToTask,
+      onUserFromTaskRemove: entryActions.removeUserFromTask,
       onAttachmentCreate: entryActions.createAttachmentInCurrentCard,
       onAttachmentUpdate: entryActions.updateAttachment,
       onAttachmentDelete: entryActions.deleteAttachment,
