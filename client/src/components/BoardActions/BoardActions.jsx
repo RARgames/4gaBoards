@@ -51,68 +51,66 @@ const BoardActions = React.memo(
     );
 
     return (
-      <div className={styles.wrapper}>
-        <div className={classNames(styles.actions, gStyles.scrollableX)}>
-          <div title={boardData.name} className={classNames(styles.title, styles.action)}>
-            {boardData.name}
-          </div>
-          <div className={classNames(styles.cardsCount, styles.action)}>
-            {isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}
-          </div>
-          <div className={styles.action}>
-            <Memberships
-              items={memberships}
-              allUsers={allUsers}
-              permissionsSelectStep={MembershipPermissionsSelectStep}
-              canEdit={isProjectManager}
-              onCreate={onMembershipCreate}
-              onUpdate={onMembershipUpdate}
-              onDelete={onMembershipDelete}
+      <div className={classNames(styles.wrapper, gStyles.scrollableX)}>
+        <div title={boardData.name} className={classNames(styles.title, styles.action)}>
+          {boardData.name}
+        </div>
+        <div className={classNames(styles.cardsCount, styles.action)}>
+          {isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}
+        </div>
+        <div className={styles.action}>
+          <Memberships
+            items={memberships}
+            allUsers={allUsers}
+            permissionsSelectStep={MembershipPermissionsSelectStep}
+            canEdit={isProjectManager}
+            onCreate={onMembershipCreate}
+            onUpdate={onMembershipUpdate}
+            onDelete={onMembershipDelete}
+          />
+        </div>
+        <div className={styles.action}>
+          <Filters
+            users={filterUsers}
+            labels={filterLabels}
+            allBoardMemberships={memberships}
+            allLabels={labels}
+            canEdit={canEdit}
+            onUserAdd={onUserToFilterAdd}
+            onUserRemove={onUserFromFilterRemove}
+            onLabelAdd={onLabelToFilterAdd}
+            onLabelRemove={onLabelFromFilterRemove}
+            onLabelCreate={onLabelCreate}
+            onLabelUpdate={onLabelUpdate}
+            onLabelMove={onLabelMove}
+            onLabelDelete={onLabelDelete}
+          />
+        </div>
+        <div className={styles.action}>
+          <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
+            <Icon
+              type={IconType.Github}
+              size={IconSize.Size14}
+              className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+              title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
             />
-          </div>
-          <div className={styles.action}>
-            <Filters
-              users={filterUsers}
-              labels={filterLabels}
-              allBoardMemberships={memberships}
-              allLabels={labels}
-              canEdit={canEdit}
-              onUserAdd={onUserToFilterAdd}
-              onUserRemove={onUserFromFilterRemove}
-              onLabelAdd={onLabelToFilterAdd}
-              onLabelRemove={onLabelFromFilterRemove}
-              onLabelCreate={onLabelCreate}
-              onLabelUpdate={onLabelUpdate}
-              onLabelMove={onLabelMove}
-              onLabelDelete={onLabelDelete}
-            />
-          </div>
-          <div className={styles.action}>
-            <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
-              <Icon
-                type={IconType.Github}
-                size={IconSize.Size14}
-                className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
-                title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
-              />
-            </Connections>
-          </div>
-          {isProjectManager && (
-            <div className={classNames(styles.action, styles.actionRightFirst)}>
-              <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-                <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
-                  <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
-                </Button>
-              </Link>
-            </div>
-          )}
-          <div className={classNames(styles.action, styles.actionRightLast, !isProjectManager && styles.actionRightFirst)}>
-            <Link to={Paths.PROJECTS.replace(':id', projectId)}>
-              <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
-                <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
+          </Connections>
+        </div>
+        {isProjectManager && (
+          <div className={classNames(styles.action, styles.actionRightFirst)}>
+            <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
+              <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
+                <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
               </Button>
             </Link>
           </div>
+        )}
+        <div className={classNames(styles.action, styles.actionRightLast, !isProjectManager && styles.actionRightFirst)}>
+          <Link to={Paths.PROJECTS.replace(':id', projectId)}>
+            <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
+              <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
+            </Button>
+          </Link>
         </div>
       </div>
     );

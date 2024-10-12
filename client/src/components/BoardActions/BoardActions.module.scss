@@ -25,16 +25,12 @@
     margin-right: 0;
   }
 
-  .actions {
-    align-items: center;
-    display: flex;
-    padding: 16px 20px;
-  }
-
   .wrapper {
     height: 68px;
     width: 100%;
-    overflow: hidden;
+    align-items: center;
+    display: flex;
+    padding: 16px 20px;
   }
 
   .githubGreen {
