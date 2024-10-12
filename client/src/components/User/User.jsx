@@ -29,7 +29,7 @@ const getColor = (name) => {
 };
 
 const getInitials = (name) => {
-  const words = name.split(' ').filter(Boolean);
+  const words = name.split(/[\s.]+/).filter(Boolean);
   if (words.length === 1) {
     return words[0].slice(0, 1).toUpperCase() + words[0].slice(1, 2);
   }
