@@ -32,6 +32,10 @@
     text-decoration: line-through;
   }
 
+  .itemCompleted {
+    filter: brightness(60%);
+  }
+
   .taskEditable {
     cursor: pointer;
   }

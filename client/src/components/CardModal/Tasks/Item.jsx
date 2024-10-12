@@ -55,7 +55,7 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
   );
 
   const membersNode = (
-    <div className={classNames(styles.members, gStyles.cursorPointer)}>
+    <div className={classNames(styles.members, gStyles.cursorPointer, isCompleted && styles.itemCompleted)}>
       {users.slice(0, 3).map((user) => (
         <span key={user.id} className={styles.member}>
           <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
@@ -97,7 +97,7 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
                 ))}
               {dueDate &&
                 (isPersisted && canEdit ? (
-                  <div className={classNames(styles.dueDate, gStyles.cursorPointer)}>
+                  <div className={classNames(styles.dueDate, gStyles.cursorPointer, isCompleted && styles.itemCompleted)}>
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
                       <DueDate value={dueDate} />
                     </DueDateEditPopup>
