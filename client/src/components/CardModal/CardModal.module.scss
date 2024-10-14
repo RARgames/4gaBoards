@@ -31,6 +31,8 @@
 
   .wrapper {
     width: 650px;
+    z-index: 1;
+    box-shadow: -10px 0 10px -12px var(--overlay);
   }
 
   @media (max-width: 800px) {
