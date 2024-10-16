@@ -18,7 +18,7 @@ module.exports = {
     let payload;
     try {
       payload = jwt.verify(inputs.token, sails.config.session.secret);
-    } catch (error) {
+    } catch {
       throw 'invalidToken';
     }
 

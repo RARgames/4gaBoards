@@ -68,7 +68,7 @@ const hasJsxRuntime = (() => {
   try {
     require.resolve('react/jsx-runtime');
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 })();
@@ -671,15 +671,8 @@ module.exports = function (webpackEnv) {
           cacheLocation: path.resolve(paths.appNodeModules, '.cache/.eslintcache'),
           // ESLint class options
           cwd: paths.appPath,
-          resolvePluginsRelativeTo: __dirname,
-          baseConfig: {
-            extends: [require.resolve('eslint-config-react-app/base')],
-            rules: {
-              ...(!hasJsxRuntime && {
-                'react/react-in-jsx-scope': 'error',
-              }),
-            },
-          },
+          configType: 'flat',
+          lintDirtyModulesOnly: true,
         }),
       new UrlReplaceWebpackPlugin(),
     ].filter(Boolean),

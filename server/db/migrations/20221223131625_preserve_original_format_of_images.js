@@ -51,7 +51,7 @@ const processAttachmentImage = async (attachment, attachmentsPath) => {
   let metadata;
   try {
     metadata = await image.metadata();
-  } catch (error) {
+  } catch {
     return null;
   }
 
@@ -64,7 +64,7 @@ const processAttachmentImage = async (attachment, attachmentsPath) => {
         kernel: sharp.kernel.nearest,
       })
       .toFile(path.join(thumbnailsPath, `cover-256.${thumbnailsExtension}`));
-  } catch (error) {
+  } catch {
     return null;
   }
 

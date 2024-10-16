@@ -38,7 +38,7 @@ export function* handleProjectCreate({ id }) {
       item: project,
       included: { users, projectManagers, boards, boardMemberships },
     } = yield call(request, api.getProject, id));
-  } catch (error) {
+  } catch {
     return;
   }
 

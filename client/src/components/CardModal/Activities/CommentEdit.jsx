@@ -44,7 +44,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
     };
 
     if (!cleanData.text) {
-      textField.current.focus();
+      focus();
       return;
     }
 
@@ -53,7 +53,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
     }
 
     close();
-  }, [data, defaultData, close, onUpdate]);
+  }, [data, defaultData, close, focus, onUpdate]);
 
   const handleSubmit = useCallback(() => {
     submit();

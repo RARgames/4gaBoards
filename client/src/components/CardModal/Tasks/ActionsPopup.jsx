@@ -16,7 +16,6 @@ const StepTypes = {
   EDIT_MEMBERS: 'EDIT_MEMBERS',
 };
 
-// eslint-disable-next-line no-unused-vars
 const ActionsStep = React.memo(({ dueDate, allBoardMemberships, users, onUpdate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();

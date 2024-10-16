@@ -9,24 +9,10 @@
     "db:rollback": "knex migrate:rollback --cwd db",
     "db:migration_make": "knex migrate:make new_migration --cwd db",
     "db:seed": "knex seed:run --cwd db",
-    "lint": "eslint . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
+    "lint": "eslint . --max-warnings=0 && echo '✔  Files lint completed successfully!'",
     "start": "nodemon",
     "start:prod": "node app.js --prod",
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
-  },
-  "eslintConfig": {
-    "extends": [
-      "airbnb-base",
-      "../package.json"
-    ],
-    "rules": {
-      "no-throw-literal": "off",
-      "no-undef": "off"
-    },
-    "globals": {
-      "_": true,
-      "sails": true
-    }
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -54,9 +40,7 @@
   },
   "devDependencies": {
     "chai": "^5.1.1",
-    "eslint": "^8.28.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint": "^9.12.0",
     "mocha": "^10.7.3",
     "nodemon": "^3.1.7"
   },

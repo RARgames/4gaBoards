@@ -33,8 +33,7 @@ module.exports = {
     let metadata;
     try {
       metadata = await image.metadata();
-    } catch (error) {} // eslint-disable-line no-empty
-
+    } catch {} // eslint-disable-line no-empty
     const fileData = {
       dirname,
       filename,
@@ -68,7 +67,7 @@ module.exports = {
           height,
           thumbnailsExtension,
         };
-      } catch (error1) {
+      } catch {
         try {
           rimraf.sync(thumbnailsPath);
         } catch (error2) {

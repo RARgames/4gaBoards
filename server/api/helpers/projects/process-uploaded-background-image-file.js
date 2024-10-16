@@ -24,7 +24,7 @@ module.exports = {
     let metadata;
     try {
       metadata = await image.metadata();
-    } catch (error) {
+    } catch {
       throw 'fileIsNotImage';
     }
 
@@ -54,7 +54,7 @@ module.exports = {
             : undefined,
         )
         .toFile(path.join(rootPath, `cover-336.${extension}`));
-    } catch (error1) {
+    } catch {
       try {
         rimraf.sync(rootPath);
       } catch (error2) {

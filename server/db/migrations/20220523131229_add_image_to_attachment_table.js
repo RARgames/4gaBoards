@@ -22,7 +22,7 @@ module.exports.up = async (knex) => {
       let metadata;
       try {
         metadata = await image.metadata(); // eslint-disable-line no-await-in-loop
-      } catch (error) {
+      } catch {
         continue; // eslint-disable-line no-continue
       }
 

@@ -6,7 +6,7 @@ import styles from './ExternalLink.module.scss';
 
 const ExternalLink = React.forwardRef(({ children, target, rel, className, ...props }, ref) => {
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading, react/button-has-type
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <a ref={ref} target={target} rel={rel} className={classNames(styles.link, className)} {...props}>
       {children}
     </a>

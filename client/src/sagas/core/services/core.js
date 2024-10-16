@@ -77,7 +77,7 @@ export function* logout(invalidateAccessToken = true) {
 
     try {
       yield call(request, api.deleteCurrentAccessToken);
-    } catch (error) {} // eslint-disable-line no-empty
+    } catch {} // eslint-disable-line no-empty
   }
 
   yield put(actions.logout());

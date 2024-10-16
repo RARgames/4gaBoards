@@ -18,7 +18,7 @@ const AboutSettings = React.memo(({ language }) => {
       const response = await fetch('https://raw.githubusercontent.com/RARgames/4gaBoards/main/package.json');
       const data = await response.json();
       setLatestVersion(data.version);
-    } catch (error) {
+    } catch {
       setLatestVersion(t('common.unableToFetch'));
     }
   }, [t]);

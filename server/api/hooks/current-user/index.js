@@ -13,7 +13,7 @@ module.exports = function defineCurrentUserHook(sails) {
     let payload;
     try {
       payload = sails.helpers.utils.verifyToken(accessToken);
-    } catch (error) {
+    } catch {
       return null;
     }
 

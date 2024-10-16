@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { applyMiddleware, legacy_createStore as createStore, compose as reduxCompose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { createRouterMiddleware } from './lib/redux-router';

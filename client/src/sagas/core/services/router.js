@@ -83,7 +83,7 @@ export function* handleLocationChange() {
             item: board,
             included: { users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments },
           } = yield call(request, api.getBoard, currentBoard.id, true));
-        } catch (error) {} // eslint-disable-line no-empty
+        } catch {} // eslint-disable-line no-empty
       }
 
       if (pathsMatch.pattern.path === Paths.CARDS) {
@@ -94,7 +94,7 @@ export function* handleLocationChange() {
             ({ items: deletedNotifications } = yield call(request, api.updateNotifications, notificationIds, {
               isRead: true,
             }));
-          } catch (error) {} // eslint-disable-line no-empty
+          } catch {} // eslint-disable-line no-empty
         }
       }
 

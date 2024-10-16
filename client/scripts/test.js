@@ -22,7 +22,7 @@ function isInGitRepository() {
   try {
     execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
@@ -31,7 +31,7 @@ function isInMercurialRepository() {
   try {
     execSync('hg --cwd . root', { stdio: 'ignore' });
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

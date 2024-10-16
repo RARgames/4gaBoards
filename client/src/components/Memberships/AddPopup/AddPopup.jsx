@@ -100,7 +100,7 @@ AddStep.propTypes = {
   /* eslint-disable react/forbid-prop-types */
   users: PropTypes.array.isRequired,
   currentUserIds: PropTypes.array.isRequired,
-  /* eslint-disable react/forbid-prop-types */
+  /* eslint-enable react/forbid-prop-types */
   permissionsSelectStep: PropTypes.elementType,
   title: PropTypes.string,
   onCreate: PropTypes.func.isRequired,

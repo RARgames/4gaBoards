@@ -127,7 +127,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
 });
 
 Filter.propTypes = {
-  defaultValue: PropTypes.string.isRequired, // eslint-disable-line react/forbid-prop-types
+  defaultValue: PropTypes.string.isRequired,
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   path: PropTypes.string.isRequired,

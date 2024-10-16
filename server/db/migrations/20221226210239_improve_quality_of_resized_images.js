@@ -13,7 +13,7 @@ const processUserAvatar = async (user, userAvatarsPath) => {
   let metadata;
   try {
     metadata = await image.metadata();
-  } catch (error) {
+  } catch {
     return;
   }
 
@@ -31,7 +31,7 @@ const processUserAvatar = async (user, userAvatarsPath) => {
           : undefined,
       )
       .toFile(path.join(rootPath, `square-100.${user.avatar.extension}`));
-  } catch (error) {} // eslint-disable-line no-empty
+  } catch {} // eslint-disable-line no-empty
 };
 
 const processProjectBackgroundImage = async (project, projectBackgroundImagesPath) => {
@@ -44,7 +44,7 @@ const processProjectBackgroundImage = async (project, projectBackgroundImagesPat
   let metadata;
   try {
     metadata = await image.metadata();
-  } catch (error) {
+  } catch {
     return;
   }
 
@@ -62,7 +62,7 @@ const processProjectBackgroundImage = async (project, projectBackgroundImagesPat
           : undefined,
       )
       .toFile(path.join(rootPath, `cover-336.${project.background_image.extension}`));
-  } catch (error) {} // eslint-disable-line no-empty
+  } catch {} // eslint-disable-line no-empty
 };
 
 const processAttachmentImage = async (attachment, attachmentsPath) => {
@@ -76,7 +76,7 @@ const processAttachmentImage = async (attachment, attachmentsPath) => {
   let metadata;
   try {
     metadata = await image.metadata();
-  } catch (error) {
+  } catch {
     return;
   }
 
@@ -95,7 +95,7 @@ const processAttachmentImage = async (attachment, attachmentsPath) => {
           : undefined,
       )
       .toFile(path.join(thumbnailsPath, `cover-256.${attachment.image.thumbnailsExtension}`));
-  } catch (error) {} // eslint-disable-line no-empty
+  } catch {} // eslint-disable-line no-empty
 };
 
 module.exports.up = async (knex) => {

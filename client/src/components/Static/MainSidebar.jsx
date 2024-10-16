@@ -145,7 +145,6 @@ const MainSidebar = React.memo(
                           // eslint-disable-next-line react/jsx-props-no-spreading
                           <div {...draggableProps} ref={innerRef} className={styles.boardDraggable}>
                             {board.isPersisted && (
-                              // eslint-disable-next-line no-return-assign
                               <div
                                 key={board.id}
                                 className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarItemActive)}
