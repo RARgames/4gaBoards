@@ -1,14 +1,5 @@
-const globals = require('globals');
-
 module.exports = [
   {
-    languageOptions: {
-      // TODO removed due to long import/no-cycle times
-      // globals: {
-      //   ...globals.node,
-      // },
-    },
-
     rules: {
       // enforce return after a callback
       'callback-return': 'off',

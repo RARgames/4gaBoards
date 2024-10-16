@@ -1,22 +1,5 @@
-const globals = require('globals');
-
 module.exports = [
   {
-    languageOptions: {
-      ecmaVersion: 6,
-      sourceType: 'module',
-      parserOptions: {
-        ecmaFeatures: {
-          generators: false,
-          objectLiteralDuplicateProperties: false,
-        },
-      },
-      // TODO removed due to long import/no-cycle times
-      // globals: {
-      //   ...globals.es6,
-      // },
-    },
-
     rules: {
       // enforces no braces where they can be omitted
       // https://eslint.org/docs/rules/arrow-body-style

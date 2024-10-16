@@ -27,9 +27,10 @@ module.exports = [
         },
         ecmaFeatures: {
           jsx: true,
-          // TODO add version 2018
-          ecmaVersion: 2018,
+          ecmaVersion: 'latest',
           sourceType: 'module',
+          generators: false,
+          objectLiteralDuplicateProperties: false,
         },
         requireConfigFile: false,
       },

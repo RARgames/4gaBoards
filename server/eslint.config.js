@@ -14,11 +14,6 @@ module.exports = [
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: {
-        // TODO removed due to long import/no-cycle times
-        // _: true,
-        // sails: true,
-      },
     },
     rules: {
       'no-throw-literal': 'off', // TODO fix issues and remove

@@ -1,16 +1,5 @@
-const globals = require('globals');
-
 module.exports = [
   {
-    languageOptions: {
-      ecmaVersion: 6,
-      sourceType: 'module',
-      // TODO removed due to long import/no-cycle times
-      // globals: {
-      //   ...globals.es6,
-      // },
-    },
-
     settings: {
       'import/resolver': {
         node: {
