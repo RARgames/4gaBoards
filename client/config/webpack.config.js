@@ -672,7 +672,8 @@ module.exports = function (webpackEnv) {
           // ESLint class options
           cwd: paths.appPath,
           configType: 'flat',
-          lintDirtyModulesOnly: true,
+          // lintDirtyModulesOnly: true,
+          // TODO require further checks
         }),
       new UrlReplaceWebpackPlugin(),
     ].filter(Boolean),

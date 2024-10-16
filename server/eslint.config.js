@@ -1,11 +1,9 @@
-const baseConfig = require('../eslint.config-base');
-const airbnbConfig = require('../eslint-config-airbnb/index');
-const mainConfig = require('../eslint.config');
+const prettierPlugin = require('eslint-plugin-prettier');
+const prettierConfig = require('eslint-config-prettier');
+const combinedAirbnbConfig = require('../eslint-config-airbnb/combined');
 
 module.exports = [
-  ...baseConfig,
-  ...airbnbConfig,
-  ...mainConfig,
+  ...combinedAirbnbConfig,
   {
     ignores: ['node_modules', 'public', 'private', 'views/**/*.ejs'],
   },
@@ -15,7 +13,13 @@ module.exports = [
       ecmaVersion: 'latest',
       sourceType: 'module',
     },
+    plugins: {
+      prettier: prettierPlugin,
+    },
     rules: {
+      ...prettierPlugin.configs.recommended.rules,
+      ...prettierConfig.rules,
+      'prettier/prettier': 'error',
       'no-throw-literal': 'off', // TODO fix issues and remove
       'no-undef': 'off',
     },

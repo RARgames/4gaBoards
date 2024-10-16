@@ -2,24 +2,24 @@ const reactHooks = require('eslint-plugin-react-hooks');
 const reactPlugin = require('eslint-plugin-react');
 const jsxPlugin = require('eslint-plugin-jsx-a11y');
 const babelEslintParser = require('@babel/eslint-parser');
-const baseConfig = require('../eslint.config-base');
-const airbnbConfig = require('../eslint-config-airbnb/index');
+const prettierPlugin = require('eslint-plugin-prettier');
+const prettierConfig = require('eslint-config-prettier');
+const combinedAirbnbConfig = require('../eslint-config-airbnb/combined');
 const clientAirbnbConfig = require('../eslint-config-airbnb/client');
-const mainConfig = require('../eslint.config');
 
 module.exports = [
-  ...baseConfig,
   reactPlugin.configs.flat.recommended,
   jsxPlugin.flatConfigs.recommended,
-  ...airbnbConfig,
+  ...combinedAirbnbConfig,
   ...clientAirbnbConfig,
-  ...mainConfig,
   {
     ignores: ['node_modules', 'public', 'build'],
   },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       parser: babelEslintParser,
       parserOptions: {
         babelOptions: {
@@ -27,8 +27,6 @@ module.exports = [
         },
         ecmaFeatures: {
           jsx: true,
-          ecmaVersion: 'latest',
-          sourceType: 'module',
           generators: false,
           objectLiteralDuplicateProperties: false,
         },
@@ -66,18 +64,17 @@ module.exports = [
     plugins: {
       'react-hooks': reactHooks,
       react: reactPlugin,
+      prettier: prettierPlugin,
+      // 'jsx-a11y': jsxPlugin,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
+      // ...reactHooks.configs.recommended.rules,
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
+      ...prettierPlugin.configs.recommended.rules,
+      ...prettierConfig.rules,
+      'prettier/prettier': 'error',
       'no-unused-vars': 'warn',
-      'import/no-extraneous-dependencies': [
-        'error',
-        {
-          devDependencies: ['src/setupTests.js', '**/*.test.js', '**/eslint.config.js'],
-        },
-      ],
       // Validate JSX has key prop when in array or iterator
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md
       'react/jsx-key': [
@@ -87,16 +84,6 @@ module.exports = [
           warnOnDuplicates: true,
         },
       ],
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
-      },
     },
   },
 ];
