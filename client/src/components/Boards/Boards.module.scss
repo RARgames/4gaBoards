@@ -66,12 +66,18 @@
     background-color: var(--backgroundProject);
     border-radius: 5px;
     font-size: 20px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow:
+      0 3px 6px rgba(0, 0, 0, 0.1),
+      0 6px 12px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+      box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     transition: all 200ms ease;
 
     &:hover {
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1), 0 32px 64px rgba(0, 0, 0, 0.1);
+      box-shadow:
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        0 32px 64px rgba(0, 0, 0, 0.1);
       transform: translate(0, -2px);
     }
   }
@@ -92,7 +98,7 @@
     line-clamp: 4;
     overflow: hidden;
     text-overflow: ellipsis;
-    word-break: break-all;
+    word-break: break-word;
   }
 
   .notification {
