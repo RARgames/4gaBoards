@@ -66,14 +66,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
       <Popup.Header onBack={onBack}>{t('common.connectToGithub')} [Not fully implemented]</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Input
-            ref={inputRef}
-            value={data.githubRepo}
-            name="githubRepo"
-            onKeyDown={handleFieldKeyDown}
-            onChange={handleFieldChange}
-            className={classNames(styles.field, isError && styles.fieldError)}
-          />
+          <Input ref={inputRef} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={classNames(styles.field, isError && styles.fieldError)} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} />

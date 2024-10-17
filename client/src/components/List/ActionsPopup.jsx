@@ -31,13 +31,7 @@ const ActionsStep = React.memo(({ onNameEdit, onCardAdd, onDelete, onClose }) =>
 
   if (step && step.type === StepTypes.DELETE) {
     return (
-      <DeleteStep
-        title={t('common.deleteList', { context: 'title' })}
-        content={t('common.areYouSureYouWantToDeleteThisList')}
-        buttonContent={t('action.deleteList')}
-        onConfirm={onDelete}
-        onBack={handleBack}
-      />
+      <DeleteStep title={t('common.deleteList', { context: 'title' })} content={t('common.areYouSureYouWantToDeleteThisList')} buttonContent={t('action.deleteList')} onConfirm={onDelete} onBack={handleBack} />
     );
   }
 

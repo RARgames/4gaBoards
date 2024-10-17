@@ -61,10 +61,7 @@ const Projects = React.memo(({ projects, filteredProjects, isAdmin, isFiltered, 
         {filteredProjects.map((item) => (
           <div
             key={item.id}
-            className={classNames(
-              styles.projectWrapper,
-              item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`],
-            )}
+            className={classNames(styles.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`])}
             style={{
               background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
             }}

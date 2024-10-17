@@ -51,19 +51,7 @@ const createMessage = (error) => {
 };
 
 const Register = React.memo(
-  ({
-    defaultData,
-    isSubmitting,
-    error,
-    onRegister,
-    onAuthenticateGoogleSso,
-    onMessageDismiss,
-    onLoginOpen,
-    googleSsoEnabled,
-    registrationEnabled,
-    localRegistrationEnabled,
-    ssoRegistrationEnabled,
-  }) => {
+  ({ defaultData, isSubmitting, error, onRegister, onAuthenticateGoogleSso, onMessageDismiss, onLoginOpen, googleSsoEnabled, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled }) => {
     const [t] = useTranslation();
     const wasSubmitting = usePrevious(isSubmitting);
     const [data, handleFieldChange, setData] = useForm(() => ({

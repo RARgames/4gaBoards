@@ -104,12 +104,7 @@ const MainSidebar = React.memo(
         <div key={project.id}>
           {/* eslint-disable-next-line no-return-assign */}
           <div className={classNames(styles.sidebarItemProject, !currBoardId && currProjectId === project.id && styles.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
-            <Button
-              style={ButtonStyle.Icon}
-              title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')}
-              className={styles.sidebarButton}
-              onClick={() => handleToggleProjectCollapse(project)}
-            >
+            <Button style={ButtonStyle.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={styles.sidebarButton} onClick={() => handleToggleProjectCollapse(project)}>
               <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.collapseIcon, project.isCollapsed && styles.collapseIconCollapsed)} />
             </Button>
             <Link to={Paths.PROJECTS.replace(':id', project.id)} className={styles.sidebarItemInner}>

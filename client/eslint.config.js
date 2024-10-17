@@ -4,12 +4,12 @@ const jsxPlugin = require('eslint-plugin-jsx-a11y');
 const babelEslintParser = require('@babel/eslint-parser');
 const prettierPlugin = require('eslint-plugin-prettier');
 const prettierConfig = require('eslint-config-prettier');
-const combinedAirbnbConfig = require('../eslint-config-airbnb/combined');
-const clientAirbnbConfig = require('../eslint-config-airbnb/client');
+const baseConfig = require('../eslint-configs/base');
+const clientConfig = require('../eslint-configs/client');
 
 module.exports = [
-  ...combinedAirbnbConfig,
-  ...clientAirbnbConfig,
+  ...baseConfig,
+  ...clientConfig,
   {
     ignores: ['node_modules', 'public', 'build'],
   },

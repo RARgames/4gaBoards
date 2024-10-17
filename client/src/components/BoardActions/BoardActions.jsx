@@ -55,9 +55,7 @@ const BoardActions = React.memo(
         <div title={boardData.name} className={classNames(styles.title, styles.action)}>
           {boardData.name}
         </div>
-        <div className={classNames(styles.cardsCount, styles.action)}>
-          {isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}
-        </div>
+        <div className={classNames(styles.cardsCount, styles.action)}>{isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}</div>
         <div className={styles.action}>
           <Memberships
             items={memberships}

@@ -1,9 +1,9 @@
 const prettierPlugin = require('eslint-plugin-prettier');
 const prettierConfig = require('eslint-config-prettier');
-const combinedAirbnbConfig = require('../eslint-config-airbnb/combined');
+const baseConfig = require('../eslint-configs/base');
 
 module.exports = [
-  ...combinedAirbnbConfig,
+  ...baseConfig,
   {
     ignores: ['node_modules', 'public', 'private', 'views/**/*.ejs'],
   },

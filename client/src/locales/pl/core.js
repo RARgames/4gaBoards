@@ -115,9 +115,9 @@ export default {
       descriptionCompactSidebar: 'Zmniejsza panel boczny do minimalnej szerokości.',
       descriptionLocalRegistration: 'Włącz lub wyłącz lokalną rejestrację użytkowników. Ta metoda rejestracji umożliwia użytkownikom utworzenie konta przy użyciu nazwy użytkownika i hasła.',
       descriptionSLanguage: 'Wybierz język, którego chcesz używać w 4ga Boards.',
-      descriptionSsoRegistration: 'Włącz lub wyłącz rejestrację użytkownika przez SSO. Ten sposób rejestracji pozwala użytkownikom na utworzenie konta przy pomocy konta zewnętrznego (np. Konto Google).', // eslint-disable-line prettier/prettier
+      descriptionSsoRegistration: 'Włącz lub wyłącz rejestrację użytkownika przez SSO. Ten sposób rejestracji pozwala użytkownikom na utworzenie konta przy pomocy konta zewnętrznego (np. Konto Google).',
       descriptionSubscribeToMyOwnCards: 'Automatycznie subskrybuj karty po utworzeniu.',
-      descriptionUserRegistration: 'Włącz lub wyłącz wszystkie metody rejestracji użytkowników. Jeśli wyłączysz wszystkie metody rejestracji, tylko administratorzy będą mogli tworzyć nowych użytkowników.', // eslint-disable-line prettier/prettier
+      descriptionUserRegistration: 'Włącz lub wyłącz wszystkie metody rejestracji użytkowników. Jeśli wyłączysz wszystkie metody rejestracji, tylko administratorzy będą mogli tworzyć nowych użytkowników.',
       detectAutomatically: 'Wykryj automatycznie',
       disabled: 'Wyłączono',
       docs: 'Dokumentacja',

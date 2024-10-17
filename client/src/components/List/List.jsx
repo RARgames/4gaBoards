@@ -142,12 +142,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef} className={styles.headerCollapsedInner}>
           {placeholder}
-          <Button
-            style={ButtonStyle.Icon}
-            title={t('common.expandList')}
-            onClick={handleToggleCollapseClick}
-            className={classNames(styles.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}
-          >
+          <Button style={ButtonStyle.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={classNames(styles.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}>
             <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
           </Button>
           <div className={styles.headerNameCollapsed} title={name}>
@@ -188,12 +183,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
               className={styles.header}
             >
-              <Button
-                style={ButtonStyle.Icon}
-                title={t('common.collapseList')}
-                onClick={handleToggleCollapseClick}
-                className={classNames(styles.headerCollapseButton, !canEdit && gStyles.cursorDefault)}
-              >
+              <Button style={ButtonStyle.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={classNames(styles.headerCollapseButton, !canEdit && gStyles.cursorDefault)}>
                 <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={styles.iconRotateRight} />
               </Button>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>

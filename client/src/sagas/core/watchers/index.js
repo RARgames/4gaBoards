@@ -17,23 +17,4 @@ import commentActivities from './comment-activities';
 import notifications from './notifications';
 import userProjects from './user-projects';
 
-export default [
-  router,
-  socket,
-  core,
-  modals,
-  users,
-  projects,
-  projectManagers,
-  boards,
-  boardMemberships,
-  labels,
-  lists,
-  cards,
-  tasks,
-  attachments,
-  activities,
-  commentActivities,
-  notifications,
-  userProjects,
-];
+export default [router, socket, core, modals, users, projects, projectManagers, boards, boardMemberships, labels, lists, cards, tasks, attachments, activities, commentActivities, notifications, userProjects];

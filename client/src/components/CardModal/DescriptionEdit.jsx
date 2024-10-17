@@ -7,156 +7,154 @@ import { useLocalStorage } from '../../hooks';
 import gStyles from '../../globalStyles.module.scss';
 import styles from './DescriptionEdit.module.scss';
 
-const DescriptionEdit = React.forwardRef(
-  ({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
-    const [t] = useTranslation();
-    const [value, setValue] = useState(undefined);
-    const textareaRef = useRef(null);
-    const [wasOpen, setWasOpen] = useState(false);
-    const [setLocalValue, getLocalValue] = useLocalStorage(`desc-${cardId}`);
+const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
+  const [t] = useTranslation();
+  const [value, setValue] = useState(undefined);
+  const textareaRef = useRef(null);
+  const [wasOpen, setWasOpen] = useState(false);
+  const [setLocalValue, getLocalValue] = useLocalStorage(`desc-${cardId}`);
 
-    const setLocalDescription = useCallback(
-      (desc) => {
-        setLocalValue(desc);
-      },
-      [setLocalValue],
-    );
+  const setLocalDescription = useCallback(
+    (desc) => {
+      setLocalValue(desc);
+    },
+    [setLocalValue],
+  );
 
-    const focus = useCallback(() => {
-      if (!textareaRef.current) return;
+  const focus = useCallback(() => {
+    if (!textareaRef.current) return;
 
-      textareaRef.current.focus();
-      const { length } = textareaRef.current.value;
-      textareaRef.current.setSelectionRange(length, length);
-    }, []);
+    textareaRef.current.focus();
+    const { length } = textareaRef.current.value;
+    textareaRef.current.setSelectionRange(length, length);
+  }, []);
 
-    const open = useCallback(() => {
-      setValue(getLocalValue() || defaultValue || '');
-    }, [defaultValue, getLocalValue]);
+  const open = useCallback(() => {
+    setValue(getLocalValue() || defaultValue || '');
+  }, [defaultValue, getLocalValue]);
 
-    const close = useCallback(
-      (removeLocalDesc = false) => {
-        if (removeLocalDesc) {
-          setLocalDescription(null);
-          onClose();
-        }
-      },
-      [onClose, setLocalDescription],
-    );
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        focus,
-      }),
-      [focus],
-    );
-
-    const handleSubmit = useCallback(() => {
-      const cleanValue = value.trim() || null;
-      if (cleanValue !== defaultValue) {
-        onUpdate(cleanValue);
+  const close = useCallback(
+    (removeLocalDesc = false) => {
+      if (removeLocalDesc) {
+        setLocalDescription(null);
+        onClose();
       }
-      setValue(null);
-      close(true);
-    }, [defaultValue, onUpdate, value, close]);
+    },
+    [onClose, setLocalDescription],
+  );
 
-    const handleCancel = useCallback(() => {
-      setValue(null);
-      close(true);
-    }, [close]);
+  useImperativeHandle(
+    ref,
+    () => ({
+      focus,
+    }),
+    [focus],
+  );
 
-    const handleBlur = useCallback(
-      (event) => {
-        if (event.relatedTarget && event.relatedTarget.closest(`.${styles.editor}`)) {
-          return;
-        }
+  const handleSubmit = useCallback(() => {
+    const cleanValue = value.trim() || null;
+    if (cleanValue !== defaultValue) {
+      onUpdate(cleanValue);
+    }
+    setValue(null);
+    close(true);
+  }, [defaultValue, onUpdate, value, close]);
 
-        const cleanValue = value.trim() || null;
-        if (cleanValue !== getLocalValue() && cleanValue !== defaultValue) {
-          setLocalDescription(cleanValue);
-        } else {
-          close(true);
-        }
-      },
-      [value, getLocalValue, defaultValue, setLocalDescription, close],
-    );
+  const handleCancel = useCallback(() => {
+    setValue(null);
+    close(true);
+  }, [close]);
 
-    const handleChange = useCallback(
-      (newValue) => {
-        setValue(newValue);
-        const cleanValue = newValue.trim() || null;
-        onLocalDescChange(cleanValue !== getLocalValue() && cleanValue !== defaultValue);
-      },
-      [defaultValue, getLocalValue, onLocalDescChange],
-    );
+  const handleBlur = useCallback(
+    (event) => {
+      if (event.relatedTarget && event.relatedTarget.closest(`.${styles.editor}`)) {
+        return;
+      }
 
-    const handleEditorKeyDown = useCallback(
-      (event) => {
-        if (event.key === 'Escape') {
-          handleCancel();
-        } else if (event.ctrlKey && event.key === 'Enter') {
-          handleSubmit();
-        }
-      },
-      [handleCancel, handleSubmit],
-    );
+      const cleanValue = value.trim() || null;
+      if (cleanValue !== getLocalValue() && cleanValue !== defaultValue) {
+        setLocalDescription(cleanValue);
+      } else {
+        close(true);
+      }
+    },
+    [value, getLocalValue, defaultValue, setLocalDescription, close],
+  );
 
-    useEffect(() => {
-      open();
-      return () => {
-        close(false);
-      };
-    }, [close, open]);
+  const handleChange = useCallback(
+    (newValue) => {
+      setValue(newValue);
+      const cleanValue = newValue.trim() || null;
+      onLocalDescChange(cleanValue !== getLocalValue() && cleanValue !== defaultValue);
+    },
+    [defaultValue, getLocalValue, onLocalDescChange],
+  );
 
-    const handlePreviewUpdate = useCallback(
-      (preview) => {
-        // TODO hacky way to update UI faster
-        const timeout = setTimeout(() => {
-          onCurrentUserUpdate({ descriptionMode: preview });
-        }, 0);
-        return () => clearTimeout(timeout);
-      },
-      [onCurrentUserUpdate],
-    );
+  const handleEditorKeyDown = useCallback(
+    (event) => {
+      if (event.key === 'Escape') {
+        handleCancel();
+      } else if (event.ctrlKey && event.key === 'Enter') {
+        handleSubmit();
+      }
+    },
+    [handleCancel, handleSubmit],
+  );
 
-    return (
-      <>
-        <MDEditor
-          value={value}
-          ref={(node) => {
-            if (node) {
-              if (node.preview !== descriptionMode) {
-                handlePreviewUpdate(node.preview);
-              }
-              if (node.textarea && !wasOpen) {
-                setWasOpen(true);
-                textareaRef.current = node.textarea;
-                focus();
-              }
+  useEffect(() => {
+    open();
+    return () => {
+      close(false);
+    };
+  }, [close, open]);
+
+  const handlePreviewUpdate = useCallback(
+    (preview) => {
+      // TODO hacky way to update UI faster
+      const timeout = setTimeout(() => {
+        onCurrentUserUpdate({ descriptionMode: preview });
+      }, 0);
+      return () => clearTimeout(timeout);
+    },
+    [onCurrentUserUpdate],
+  );
+
+  return (
+    <>
+      <MDEditor
+        value={value}
+        ref={(node) => {
+          if (node) {
+            if (node.preview !== descriptionMode) {
+              handlePreviewUpdate(node.preview);
             }
-          }}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          height={Math.min(Math.max(descriptionHeight + 0.31 * descriptionHeight, 200), 650)}
-          onKeyDown={handleEditorKeyDown}
-          preview={descriptionMode}
-          textareaProps={{
-            placeholder: t('common.enterDescription'),
-            spellCheck: 'true',
-          }}
-          isGithubConnected={isGithubConnected}
-          githubRepo={githubRepo}
-          className={styles.editor}
-        />
-        <div className={gStyles.controls}>
-          <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-          <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
-        </div>
-      </>
-    );
-  },
-);
+            if (node.textarea && !wasOpen) {
+              setWasOpen(true);
+              textareaRef.current = node.textarea;
+              focus();
+            }
+          }
+        }}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        height={Math.min(Math.max(descriptionHeight + 0.31 * descriptionHeight, 200), 650)}
+        onKeyDown={handleEditorKeyDown}
+        preview={descriptionMode}
+        textareaProps={{
+          placeholder: t('common.enterDescription'),
+          spellCheck: 'true',
+        }}
+        isGithubConnected={isGithubConnected}
+        githubRepo={githubRepo}
+        className={styles.editor}
+      />
+      <div className={gStyles.controls}>
+        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+      </div>
+    </>
+  );
+});
 
 DescriptionEdit.propTypes = {
   defaultValue: PropTypes.string,

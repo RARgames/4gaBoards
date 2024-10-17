@@ -104,9 +104,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
         const currentItem = items.find((item) => item.id === step.params.id);
 
         if (currentItem) {
-          return (
-            <EditStep defaultData={pick(currentItem, ['name', 'color'])} onUpdate={(data) => handleUpdate(currentItem.id, data)} onDelete={() => handleDelete(currentItem.id)} onBack={handleBack} />
-          );
+          return <EditStep defaultData={pick(currentItem, ['name', 'color'])} onUpdate={(data) => handleUpdate(currentItem.id, data)} onDelete={() => handleDelete(currentItem.id)} onBack={handleBack} />;
         }
 
         openStep(null);
