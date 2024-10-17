@@ -26,12 +26,12 @@ module.exports = [
       //region @eslint/js js.configs.recommended
       'constructor-super': 'error',
       'for-direction': 'error',
-      'getter-return': 'error',
+      'getter-return': ['error', { allowImplicit: true }], //Modified
       'no-async-promise-executor': 'error',
       'no-case-declarations': 'error',
       'no-class-assign': 'error',
       'no-compare-neg-zero': 'error',
-      'no-cond-assign': 'error',
+      'no-cond-assign': ['error', 'always'], //Modified
       'no-const-assign': 'error',
       'no-constant-binary-expression': 'error',
       'no-constant-condition': 'error',
@@ -64,7 +64,7 @@ module.exports = [
       'no-prototype-builtins': 'error',
       'no-redeclare': 'error',
       'no-regex-spaces': 'error',
-      'no-self-assign': 'error',
+      'no-self-assign': ['error', { props: true }], //Modified
       'no-setter-return': 'error',
       'no-shadow-restricted-names': 'error',
       'no-sparse-arrays': 'error',
@@ -74,28 +74,28 @@ module.exports = [
       'no-unreachable': 'error',
       'no-unsafe-finally': 'error',
       'no-unsafe-negation': 'error',
-      'no-unsafe-optional-chaining': 'error',
+      'no-unsafe-optional-chaining': ['error', { disallowArithmeticOperators: true }], //Modified
       'no-unused-labels': 'error',
       'no-unused-private-class-members': 'error',
-      'no-unused-vars': 'error',
+      'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }], //Modified
       'no-useless-backreference': 'error',
       'no-useless-catch': 'error',
       'no-useless-escape': 'error',
       'no-with': 'error',
       'require-yield': 'error',
       'use-isnan': 'error',
-      'valid-typeof': 'error',
+      'valid-typeof': ['error', { requireStringLiterals: true }], //Modified
       //endregion
 
       //region eslint-plugin-import importPlugin.flatConfigs.recommended
-      'import/no-unresolved': 'error',
+      'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }], //Modified
       'import/named': 'error',
       'import/namespace': 'error',
       'import/default': 'error',
       'import/export': 'error',
-      'import/no-named-as-default': 'warn',
-      'import/no-named-as-default-member': 'warn',
-      'import/no-duplicates': 'warn',
+      'import/no-named-as-default': 'error', //Modified
+      'import/no-named-as-default-member': 'error', //Modified
+      'import/no-duplicates': 'error', //Modified
       //endregion
 
       //region best-practices
@@ -175,10 +175,6 @@ module.exports = [
       // https://eslint.org/docs/rules/no-caller
       'no-caller': 'error',
 
-      // disallow lexical declarations in case/default clauses
-      // https://eslint.org/docs/rules/no-case-declarations
-      'no-case-declarations': 'error',
-
       // Disallow returning value in constructor
       // https://eslint.org/docs/rules/no-constructor-return
       'no-constructor-return': 'error',
@@ -200,10 +196,6 @@ module.exports = [
         },
       ],
 
-      // disallow empty destructuring patterns
-      // https://eslint.org/docs/rules/no-empty-pattern
-      'no-empty-pattern': 'error',
-
       // disallow comparisons to null without a type-checking operator
       // https://eslint.org/docs/rules/no-eq-null
       'no-eq-null': 'off',
@@ -224,21 +216,9 @@ module.exports = [
       // https://eslint.org/docs/rules/no-extra-label
       'no-extra-label': 'error',
 
-      // disallow fallthrough of case statements
-      // https://eslint.org/docs/rules/no-fallthrough
-      'no-fallthrough': 'error',
-
       // disallow the use of leading or trailing decimal points in numeric literals
       // https://eslint.org/docs/rules/no-floating-decimal
       'no-floating-decimal': 'error',
-
-      // disallow reassignments of native objects or read-only globals
-      // https://eslint.org/docs/rules/no-global-assign
-      'no-global-assign': ['error', { exceptions: [] }],
-
-      // deprecated in favor of no-global-assign
-      // https://eslint.org/docs/rules/no-native-reassign
-      'no-native-reassign': 'off',
 
       // disallow implicit type conversions
       // https://eslint.org/docs/rules/no-implicit-coercion
@@ -317,14 +297,6 @@ module.exports = [
       // https://eslint.org/docs/rules/no-new-wrappers
       'no-new-wrappers': 'error',
 
-      // Disallow \8 and \9 escape sequences in string literals
-      // https://eslint.org/docs/rules/no-nonoctal-decimal-escape
-      'no-nonoctal-decimal-escape': 'error',
-
-      // disallow use of (old style) octal literals
-      // https://eslint.org/docs/rules/no-octal
-      'no-octal': 'error',
-
       // disallow use of octal escape sequences in string literals, such as
       // var foo = 'Copyright \251';
       // https://eslint.org/docs/rules/no-octal-escape
@@ -356,10 +328,6 @@ module.exports = [
       // disallow usage of __proto__ property
       // https://eslint.org/docs/rules/no-proto
       'no-proto': 'error',
-
-      // disallow declaring the same variable more than once
-      // https://eslint.org/docs/rules/no-redeclare
-      'no-redeclare': 'error',
 
       // disallow certain object properties
       // https://eslint.org/docs/rules/no-restricted-properties
@@ -427,15 +395,6 @@ module.exports = [
       // https://eslint.org/docs/rules/no-script-url
       'no-script-url': 'error',
 
-      // disallow self assignment
-      // https://eslint.org/docs/rules/no-self-assign
-      'no-self-assign': [
-        'error',
-        {
-          props: true,
-        },
-      ],
-
       // disallow comparisons where both sides are exactly the same
       // https://eslint.org/docs/rules/no-self-compare
       'no-self-compare': 'error',
@@ -463,25 +422,13 @@ module.exports = [
         },
       ],
 
-      // disallow unused labels
-      // https://eslint.org/docs/rules/no-unused-labels
-      'no-unused-labels': 'error',
-
       // disallow unnecessary .call() and .apply()
       // https://eslint.org/docs/rules/no-useless-call
       'no-useless-call': 'off',
 
-      // Disallow unnecessary catch clauses
-      // https://eslint.org/docs/rules/no-useless-catch
-      'no-useless-catch': 'error',
-
       // disallow useless string concatenation
       // https://eslint.org/docs/rules/no-useless-concat
       'no-useless-concat': 'error',
-
-      // disallow unnecessary string escaping
-      // https://eslint.org/docs/rules/no-useless-escape
-      'no-useless-escape': 'error',
 
       // disallow redundant return; keywords
       // https://eslint.org/docs/rules/no-useless-return
@@ -494,10 +441,6 @@ module.exports = [
       // disallow usage of configurable warning terms in comments: e.g. todo
       // https://eslint.org/docs/rules/no-warning-comments
       'no-warning-comments': ['off', { terms: ['todo', 'fixme', 'xxx'], location: 'start' }],
-
-      // disallow use of the with statement
-      // https://eslint.org/docs/rules/no-with
-      'no-with': 'error',
 
       // require using Error objects as Promise rejection reasons
       // https://eslint.org/docs/rules/prefer-promise-reject-errors
@@ -541,66 +484,12 @@ module.exports = [
       //endregion
 
       //region errors
-      // Enforce “for” loop update clause moving the counter in the right direction
-      // https://eslint.org/docs/rules/for-direction
-      'for-direction': 'error',
-
-      // Enforces that a return statement is present in property getters
-      // https://eslint.org/docs/rules/getter-return
-      'getter-return': ['error', { allowImplicit: true }],
-
-      // disallow using an async function as a Promise executor
-      // https://eslint.org/docs/rules/no-async-promise-executor
-      'no-async-promise-executor': 'error',
-
       // Disallow await inside of loops
       // https://eslint.org/docs/rules/no-await-in-loop
       'no-await-in-loop': 'error',
 
-      // Disallow comparisons to negative zero
-      // https://eslint.org/docs/rules/no-compare-neg-zero
-      'no-compare-neg-zero': 'error',
-
-      // disallow assignment in conditional expressions
-      'no-cond-assign': ['error', 'always'],
-
       // disallow use of console
       'no-console': 'warn',
-
-      // disallow use of constant expressions in conditions
-      'no-constant-condition': 'warn',
-
-      // disallow control characters in regular expressions
-      'no-control-regex': 'error',
-
-      // disallow use of debugger
-      'no-debugger': 'error',
-
-      // disallow duplicate arguments in functions
-      'no-dupe-args': 'error',
-
-      // Disallow duplicate conditions in if-else-if chains
-      // https://eslint.org/docs/rules/no-dupe-else-if
-      'no-dupe-else-if': 'error',
-
-      // disallow duplicate keys when creating object literals
-      'no-dupe-keys': 'error',
-
-      // disallow a duplicate case label.
-      'no-duplicate-case': 'error',
-
-      // disallow empty statements
-      'no-empty': 'error',
-
-      // disallow the use of empty character classes in regular expressions
-      'no-empty-character-class': 'error',
-
-      // disallow assigning to the exception in a catch block
-      'no-ex-assign': 'error',
-
-      // disallow double-negation boolean casts in a boolean context
-      // https://eslint.org/docs/rules/no-extra-boolean-cast
-      'no-extra-boolean-cast': 'error',
 
       // disallow unnecessary parentheses
       // https://eslint.org/docs/rules/no-extra-parens
@@ -619,60 +508,16 @@ module.exports = [
       // disallow unnecessary semicolons
       'no-extra-semi': 'error',
 
-      // disallow overwriting functions written as function declarations
-      'no-func-assign': 'error',
-
-      // https://eslint.org/docs/rules/no-import-assign
-      'no-import-assign': 'error',
-
       // disallow function or variable declarations in nested blocks
       'no-inner-declarations': 'error',
-
-      // disallow invalid regular expression strings in the RegExp constructor
-      'no-invalid-regexp': 'error',
-
-      // disallow irregular whitespace outside of strings and comments
-      'no-irregular-whitespace': 'error',
-
-      // Disallow Number Literals That Lose Precision
-      // https://eslint.org/docs/rules/no-loss-of-precision
-      'no-loss-of-precision': 'error',
-
-      // Disallow characters which are made with multiple code points in character class syntax
-      // https://eslint.org/docs/rules/no-misleading-character-class
-      'no-misleading-character-class': 'error',
-
-      // disallow the use of object properties of the global object (Math and JSON) as functions
-      'no-obj-calls': 'error',
 
       // Disallow returning values from Promise executor functions
       // https://eslint.org/docs/rules/no-promise-executor-return
       'no-promise-executor-return': 'error',
 
-      // disallow use of Object.prototypes builtins directly
-      // https://eslint.org/docs/rules/no-prototype-builtins
-      'no-prototype-builtins': 'error',
-
-      // disallow multiple spaces in a regular expression literal
-      'no-regex-spaces': 'error',
-
-      // Disallow returning values from setters
-      // https://eslint.org/docs/rules/no-setter-return
-      'no-setter-return': 'error',
-
-      // disallow sparse arrays
-      'no-sparse-arrays': 'error',
-
       // Disallow template literal placeholder syntax in regular strings
       // https://eslint.org/docs/rules/no-template-curly-in-string
       'no-template-curly-in-string': 'error',
-
-      // Avoid code that looks like two expressions but is actually one
-      // https://eslint.org/docs/rules/no-unexpected-multiline
-      'no-unexpected-multiline': 'error',
-
-      // disallow unreachable statements after a return, throw, continue, or break statement
-      'no-unreachable': 'error',
 
       // Disallow loops with a body that allows only one iteration
       // https://eslint.org/docs/rules/no-unreachable-loop
@@ -683,46 +528,14 @@ module.exports = [
         },
       ],
 
-      // disallow return/throw/break/continue inside finally blocks
-      // https://eslint.org/docs/rules/no-unsafe-finally
-      'no-unsafe-finally': 'error',
-
-      // disallow negating the left operand of relational operators
-      // https://eslint.org/docs/rules/no-unsafe-negation
-      'no-unsafe-negation': 'error',
-
-      // disallow use of optional chaining in contexts where the undefined value is not allowed
-      // https://eslint.org/docs/rules/no-unsafe-optional-chaining
-      'no-unsafe-optional-chaining': ['error', { disallowArithmeticOperators: true }],
-
-      // Disallow Unused Private Class Members
-      // https://eslint.org/docs/rules/no-unused-private-class-members
-      // TODO: enable once eslint 7 is dropped (which is semver-major)
-      'no-unused-private-class-members': 'off',
-
-      // Disallow useless backreferences in regular expressions
-      // https://eslint.org/docs/rules/no-useless-backreference
-      'no-useless-backreference': 'error',
-
-      // disallow negation of the left operand of an in expression
-      // deprecated in favor of no-unsafe-negation
-      'no-negated-in-lhs': 'off',
-
       // Disallow assignments that can lead to race conditions due to usage of await or yield
       // https://eslint.org/docs/rules/require-atomic-updates
       // note: not enabled because it is very buggy
       'require-atomic-updates': 'off',
 
-      // disallow comparisons with the value NaN
-      'use-isnan': 'error',
-
       // ensure JSDoc comments are valid
       // https://eslint.org/docs/rules/valid-jsdoc
       'valid-jsdoc': 'off',
-
-      // ensure that the results of typeof are compared against a valid string
-      // https://eslint.org/docs/rules/valid-typeof
-      'valid-typeof': ['error', { requireStringLiterals: true }],
       //endregion
 
       //region es6
@@ -745,16 +558,9 @@ module.exports = [
       // https://eslint.org/docs/rules/arrow-spacing
       'arrow-spacing': ['error', { before: true, after: true }],
 
-      // verify super() callings in constructors
-      'constructor-super': 'error',
-
       // enforce the spacing around the * in generator functions
       // https://eslint.org/docs/rules/generator-star-spacing
       'generator-star-spacing': ['error', { before: false, after: true }],
-
-      // disallow modifying variables of class declarations
-      // https://eslint.org/docs/rules/no-class-assign
-      'no-class-assign': 'error',
 
       // disallow arrow functions where they could be confused with comparisons
       // https://eslint.org/docs/rules/no-confusing-arrow
@@ -764,13 +570,6 @@ module.exports = [
           allowParens: true,
         },
       ],
-
-      // disallow modifying variables that are declared using const
-      'no-const-assign': 'error',
-
-      // disallow duplicate class members
-      // https://eslint.org/docs/rules/no-dupe-class-members
-      'no-dupe-class-members': 'error',
 
       // disallow importing from the same path more than once
       // https://eslint.org/docs/rules/no-duplicate-imports
@@ -802,10 +601,6 @@ module.exports = [
           patterns: [],
         },
       ],
-
-      // disallow to use this/super before super() calling in constructors.
-      // https://eslint.org/docs/rules/no-this-before-super
-      'no-this-before-super': 'error',
 
       // disallow useless computed property keys
       // https://eslint.org/docs/rules/no-useless-computed-key
@@ -897,10 +692,6 @@ module.exports = [
       // https://eslint.org/docs/rules/prefer-template
       'prefer-template': 'error',
 
-      // disallow generator functions that do not have yield
-      // https://eslint.org/docs/rules/require-yield
-      'require-yield': 'error',
-
       // enforce spacing between object rest-spread
       // https://eslint.org/docs/rules/rest-spread-spacing
       'rest-spread-spacing': ['error', 'never'],
@@ -931,36 +722,7 @@ module.exports = [
       //endregion
 
       //region imports
-      // Static analysis:
-
-      // ensure imports point to files/modules that can be resolved
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-unresolved.md
-      'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
-
-      // ensure named imports coupled with named exports
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/named.md#when-not-to-use-it
-      'import/named': 'error',
-
-      // ensure default import coupled with default export
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/default.md#when-not-to-use-it
-      'import/default': 'off',
-
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/namespace.md
-      'import/namespace': 'off',
-
       // Helpful warnings:
-
-      // disallow invalid exports, e.g. multiple defaults
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/export.md
-      'import/export': 'error',
-
-      // do not allow a default import name to match a named export
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-named-as-default.md
-      'import/no-named-as-default': 'error',
-
-      // warn on accessing default export property names that are also named exports
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-named-as-default-member.md
-      'import/no-named-as-default-member': 'error',
 
       // disallow use of jsdoc-marked-deprecated imports
       // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-deprecated.md
@@ -990,15 +752,6 @@ module.exports = [
       // disallow non-import statements appearing before import statements
       // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md
       'import/first': 'error',
-
-      // disallow non-import statements appearing before import statements
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/imports-first.md
-      // deprecated: use `import/first`
-      'import/imports-first': 'off',
-
-      // disallow duplicate imports
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-duplicates.md
-      'import/no-duplicates': 'error',
 
       // disallow namespace imports
       // TODO: enable?
@@ -1822,9 +1575,6 @@ module.exports = [
       // disallow the catch clause parameter name being the same as a variable in the outer scope
       'no-catch-shadow': 'off',
 
-      // disallow deletion of variables
-      'no-delete-var': 'error',
-
       // disallow labels that share a name with a variable
       // https://eslint.org/docs/rules/no-label-var
       'no-label-var': 'error',
@@ -1845,12 +1595,6 @@ module.exports = [
       // disallow declaration of variables already declared in the outer scope
       'no-shadow': 'error',
 
-      // disallow shadowing of names such as arguments
-      'no-shadow-restricted-names': 'error',
-
-      // disallow use of undeclared variables unless mentioned in a /*global */ block
-      'no-undef': 'error',
-
       // disallow use of undefined when initializing variables
       'no-undef-init': 'error',
 
@@ -1858,9 +1602,6 @@ module.exports = [
       // https://eslint.org/docs/rules/no-undefined
       // TODO: enable?
       'no-undefined': 'off',
-
-      // disallow declaration of variables that are not used in the code
-      'no-unused-vars': ['error', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
 
       // disallow use of variables before they are defined
       'no-use-before-define': ['error', { functions: true, classes: true, variables: true }],

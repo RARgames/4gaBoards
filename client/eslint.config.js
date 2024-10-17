@@ -8,8 +8,6 @@ const combinedAirbnbConfig = require('../eslint-config-airbnb/combined');
 const clientAirbnbConfig = require('../eslint-config-airbnb/client');
 
 module.exports = [
-  reactPlugin.configs.flat.recommended,
-  jsxPlugin.flatConfigs.recommended,
   ...combinedAirbnbConfig,
   ...clientAirbnbConfig,
   {
@@ -65,17 +63,25 @@ module.exports = [
       'react-hooks': reactHooks,
       react: reactPlugin,
       prettier: prettierPlugin,
-      // 'jsx-a11y': jsxPlugin,
+      'jsx-a11y': jsxPlugin,
     },
     rules: {
-      // ...reactHooks.configs.recommended.rules,
+      // region react reactPlugin.configs.flat.recommended
+      // endregion
+      // region jsx-a11y jsxPlugin.flatConfigs.recommended
+      'jsx-a11y/anchor-ambiguous-text': 'off',
+      // endregion
+      // region react-hooks reactHooks.configs.recommended.rules,
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'error',
+      // endregion
+      // region prettier
       ...prettierPlugin.configs.recommended.rules,
       ...prettierConfig.rules,
       'prettier/prettier': 'error',
+      // endregion
+      // region custom
       'no-unused-vars': 'warn',
-      // Validate JSX has key prop when in array or iterator
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md
       'react/jsx-key': [
         'error',
@@ -84,6 +90,7 @@ module.exports = [
           warnOnDuplicates: true,
         },
       ],
+      // endregion
     },
   },
 ];

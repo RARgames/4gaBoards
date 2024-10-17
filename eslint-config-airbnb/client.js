@@ -456,11 +456,6 @@ module.exports = [
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-brace-presence.md
       'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
 
-      // One JSX Element Per Line
-      // https://github.com/yannickcr/eslint-plugin-react/blob/843d71a432baf0f01f598d7cf1eea75ad6896e4b/docs/rules/jsx-one-expression-per-line.md
-      // 'react/jsx-one-expression-per-line': ['error', { allow: 'single-child' }],
-      // TODO check latter -seems random conflict with prettier
-
       // Enforce consistent usage of destructuring assignment of props, state, and context
       // https://github.com/yannickcr/eslint-plugin-react/blob/843d71a432baf0f01f598d7cf1eea75ad6896e4b/docs/rules/destructuring-assignment.md
       'react/destructuring-assignment': ['error', 'always'],
@@ -502,17 +497,6 @@ module.exports = [
       // Enforce shorthand or standard form for React fragments
       // https://github.com/yannickcr/eslint-plugin-react/blob/bc976b837abeab1dffd90ac6168b746a83fc83cc/docs/rules/jsx-fragments.md
       'react/jsx-fragments': ['error', 'syntax'],
-
-      // Enforce linebreaks in curly braces in JSX attributes and expressions.
-      // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-newline.md
-      // 'react/jsx-curly-newline': [
-      //   'error',
-      //   {
-      //     multiline: 'consistent',
-      //     singleline: 'consistent',
-      //   },
-      // ],
-      // TODO check latter -seems random conflict with prettier
 
       // Enforce state initialization style
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/state-in-constructor.md
@@ -602,12 +586,6 @@ module.exports = [
       // Prevent declaring unused methods of component class
       // https://github.com/yannickcr/eslint-plugin-react/blob/21e01b61af7a38fc86d94f27eb66cda8054582ed/docs/rules no-unused-class-component-methods.md
       'react/no-unused-class-component-methods': 'error',
-
-      // TODO radnom react jsx airbnb
-      // ensure emoji are accessible
-      // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/accessible-emoji.md
-      // disabled; rule is deprecated
-      'jsx-a11y/accessible-emoji': 'off',
 
       // Enforce that all elements that require alternative text have meaningful information
       // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md
@@ -828,24 +806,6 @@ module.exports = [
       // Enforce tabIndex value is not greater than zero.
       // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/tabindex-no-positive.md
       'jsx-a11y/tabindex-no-positive': 'error',
-
-      // ----------------------------------------------------
-      // Rules that no longer exist in eslint-plugin-jsx-a11y
-      // ----------------------------------------------------
-
-      // require that JSX labels use "htmlFor"
-      // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-for.md
-      // deprecated: replaced by `label-has-associated-control` rule
-      'jsx-a11y/label-has-for': [
-        'off',
-        {
-          components: [],
-          required: {
-            every: ['nesting', 'id'],
-          },
-          allowChildren: false,
-        },
-      ],
     },
   },
 ];

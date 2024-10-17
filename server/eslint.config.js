@@ -17,11 +17,15 @@ module.exports = [
       prettier: prettierPlugin,
     },
     rules: {
+      // region prettier
       ...prettierPlugin.configs.recommended.rules,
       ...prettierConfig.rules,
       'prettier/prettier': 'error',
+      // endregion
+      // region custom
       'no-throw-literal': 'off', // TODO fix issues and remove
       'no-undef': 'off',
+      // endregion
     },
   },
 ];
