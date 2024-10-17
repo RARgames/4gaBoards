@@ -625,11 +625,13 @@ const CardModal = React.memo(
                 onGalleryOpen={handleGalleryOpen}
                 onGalleryClose={handleGalleryClose}
               />
-              <AttachmentAdd onCreate={onAttachmentCreate}>
-                <Button style={ButtonStyle.Default} title={t('common.addAttachmentButton')} className={styles.addAttachmentButton}>
-                  {t('common.addAttachment')} <span className={styles.hint}>{t('common.addAttachmentExtra')}</span>
-                </Button>
-              </AttachmentAdd>
+              {canEdit && (
+                <AttachmentAdd onCreate={onAttachmentCreate}>
+                  <Button style={ButtonStyle.Default} title={t('common.addAttachmentButton')} className={styles.addAttachmentButton}>
+                    {t('common.addAttachment')} <span className={styles.hint}>{t('common.addAttachmentExtra')}</span>
+                  </Button>
+                </AttachmentAdd>
+              )}
             </>
           )}
         </div>
