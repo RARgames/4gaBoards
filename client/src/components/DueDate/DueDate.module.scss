@@ -17,33 +17,36 @@
     vertical-align: top;
   }
 
-  .wrapperHoverable:hover {
-    filter: brightness(85%); //TODO do everywhere hover by filter
-  }
-
   /* Colors */
 
   .dueNormal {
-    color: var(--textColor3);
+    color: var(--dueDateNormal);
   }
 
   .dueClose {
-    color: var(--textColorYellow);
+    color: var(--dueDateClose);
   }
 
   .dueOver {
-    color: var(--textColorRed);
+    color: var(--dueDateOver);
   }
 
   /* Variants */
 
   .wrapperCard {
     font-size: 12px;
+    font-weight: bold;
     line-height: 14px;
   }
 
   .wrapperCardModal {
     font-size: 14px;
+    font-weight: bold;
     line-height: 28px;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(85%);
+    }
   }
 }

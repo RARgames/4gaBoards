@@ -98,6 +98,10 @@
   --alizarin: #e74c3c;
   --turquoise: #1abc9c;
   --midnightBlue: #2c3e50;
+  //Colors (right now for DueDate)
+  --dueDateNormal: #999999;
+  --dueDateClose: #fdd41e;
+  --dueDateOver: #ff3030;
 
   .controls {
     display: flex;
