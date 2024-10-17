@@ -43,7 +43,7 @@
   .card {
     background: var(--backgroundColorTmpHeader);
     border-radius: 2px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: var(--cardShadow) 0px 1px 4px;
     position: relative;
     border: 2px solid transparent;
 
@@ -67,7 +67,7 @@
     display: block;
 
     &:after {
-      content: "";
+      content: '';
       display: table;
       clear: both;
     }

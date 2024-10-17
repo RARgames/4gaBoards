@@ -12,23 +12,23 @@
   }
 
   .red {
-    background: #db2828;
+    background: var(--red);
   }
 
   .orange {
-    background: #f2711c;
+    background: var(--orange);
   }
 
   .yellow {
-    background: #fbbd08;
+    background: var(--yellow);
   }
 
   .olive {
-    background: #b5cc18;
+    background: var(--olive);
   }
 
   .green {
-    background: #21ba45;
+    background: var(--green);
   }
 
   /* Size classes */

@@ -15,7 +15,7 @@
   .wrapper {
     border: none;
     border-radius: 50%;
-    color: #fff;
+    color: var(--textColorWhite);
     display: inline-block;
     line-height: 1;
     outline: none;
@@ -89,30 +89,30 @@
   /* Backgrounds */
 
   .backgroundEmerald {
-    background: #2ecc71;
+    background: var(--emerald);
   }
 
   .backgroundPeterRiver {
-    background: #3498db;
+    background: var(--peterRiver);
   }
 
   .backgroundWisteria {
-    background: #8e44ad;
+    background: var(--wisteria);
   }
 
   .backgroundCarrot {
-    background: #e67e22;
+    background: var(--carrot);
   }
 
   .backgroundAlizarin {
-    background: #e74c3c;
+    background: var(--alizarin);
   }
 
   .backgroundTurquoise {
-    background: #1abc9c;
+    background: var(--turquoise);
   }
 
   .backgroundMidnightBlue {
-    background: #2c3e50;
+    background: var(--midnightBlue);
   }
 }

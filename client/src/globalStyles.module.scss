@@ -50,9 +50,9 @@
   --backgroundSidebarItem2: #242d35;
   --backgroundSidebarItem3: #1c2935;
   --backgroundSidebarItemActive: #0c5064;
-  --radioBlue: #2196F3;
+  --radioBlue: #2196f3;
   --backgroundRadio: #5b647e;
-  --textColorLink: #2196F3;
+  --textColorLink: #2196f3;
   --textColorLinkHover: #1e88e5;
   --backgroundPopup: #2a3d50;
   --backgroundPopupHover: #233444;
@@ -83,6 +83,21 @@
   --mdEditorIconHover: #58a6ff;
   --mdEditorIconDisabled: #30363d;
   --textColorCounterHover: #72848f;
+  --cardShadow: rgba(0, 0, 0, 0.16);
+  //Colors (right now only ProgressBar)
+  --red: #db2828;
+  --orange: #f2711c;
+  --yellow: #fbbd08;
+  --olive: #b5cc18;
+  --green: #21ba45;
+  //Colors (right now only UserAvatar)
+  --emerald: #2ecc71;
+  --peterRiver: #3498db;
+  --wisteria: #8e44ad;
+  --carrot: #e67e22;
+  --alizarin: #e74c3c;
+  --turquoise: #1abc9c;
+  --midnightBlue: #2c3e50;
 
   .controls {
     display: flex;

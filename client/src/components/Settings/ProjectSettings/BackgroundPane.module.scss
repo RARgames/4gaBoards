@@ -26,8 +26,8 @@
 
   .gradientButtonActive:before {
     bottom: 3px;
-    color: #ffffff;
-    content: "Г";
+    color: var(--textColorWhite);
+    content: 'Г';
     font-size: 18px;
     line-height: 36px;
     position: absolute;
@@ -43,7 +43,7 @@
     margin: 0 0 4px -4px;
 
     &:after {
-      content: "";
+      content: '';
       display: table;
       clear: both;
     }
