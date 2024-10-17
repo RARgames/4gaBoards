@@ -159,7 +159,7 @@ const Dropdown = React.forwardRef(
 
     const handleBlur = useCallback(
       (event) => {
-        if (event.relatedTarget && event.relatedTarget.closest(`.${styles.dropdownMenu}`)) {
+        if (event.relatedTarget && (event.relatedTarget.closest(`.${styles.dropdownMenu}`) || event.relatedTarget.closest(`.${styles.dropdownContainer}`))) {
           return;
         }
         if (onBlur) {
@@ -246,6 +246,14 @@ const Dropdown = React.forwardRef(
       [getCurrItem, getCurrItemIndex, getOptions, handleCancel, handleSubmit, selectItemByIndex],
     );
 
+    const handleDropdownToggleClick = useCallback(() => {
+      if (isOpen) {
+        handleSubmit(selectedItem);
+      } else {
+        open();
+      }
+    }, [handleSubmit, isOpen, open, selectedItem]);
+
     const { refs, floatingStyles, context } = useFloating({
       open: isOpen,
       whileElementsMounted: autoUpdate,
@@ -287,7 +295,7 @@ const Dropdown = React.forwardRef(
             placeholder={getDisplay()}
             {...props} // eslint-disable-line react/jsx-props-no-spreading
           />
-          <Button style={ButtonStyle.Icon} title={t('common.openDropdown')} onClick={open} className={styles.dropdownButton}>
+          <Button style={ButtonStyle.Icon} title={isOpen ? t('common.closeDropdown') : t('common.openDropdown')} onClick={handleDropdownToggleClick} className={styles.dropdownButton}>
             <Icon type={IconType.TriangleDown} size={IconSize.Size10} />
           </Button>
         </div>

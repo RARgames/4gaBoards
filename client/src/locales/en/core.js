@@ -81,6 +81,7 @@ export default {
       clearFilter: 'Clear filter',
       close: 'Close',
       closeCard: 'Close Card',
+      closeDropdown: 'Close dropdown',
       collapseList: 'Collapse List',
       color: 'Color',
       connectedToGithub: 'Connected to Github',
