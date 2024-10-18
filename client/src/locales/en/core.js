@@ -115,7 +115,7 @@ export default {
       disabled: 'Disabled',
       docs: 'Documentation',
       done: 'Done',
-      dropFileToUpload: 'Drop file to upload',
+      dropFileToUpload: 'Drop files to upload',
       dueDate_title: 'Due Date',
       editAttachment_title: 'Edit Attachment',
       editAttachment: 'Edit Attachment',

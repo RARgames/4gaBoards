@@ -123,7 +123,7 @@ export default {
       disabled: 'Wyłączono',
       docs: 'Dokumentacja',
       done: 'Zrobione',
-      dropFileToUpload: 'Upuść plik aby wgrać',
+      dropFileToUpload: 'Upuść pliki aby wgrać',
       dueDate_title: 'Termin',
       editAttachment_title: 'Edytuj załącznik',
       editAttachment: 'Edytuj załącznik',
