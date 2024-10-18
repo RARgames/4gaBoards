@@ -22,6 +22,19 @@
     line-height: 20px;
   }
 
+  .edited {
+    color: var(--textColor3);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    margin-left: 3px;
+    font-style: italic;
+
+    &:before {
+      content: '- ';
+    }
+  }
+
   .preview {
     background: var(--backgroundColorTmpDarkerField);
     border-radius: 3px;

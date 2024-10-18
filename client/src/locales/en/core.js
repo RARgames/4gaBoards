@@ -126,6 +126,7 @@ export default {
       editDescription: 'Edit Description',
       editDueDate_title: 'Edit Due Date',
       editDueDate: 'Edit Due Date',
+      edited: 'Edited',
       editEmail_title: 'Edit E-mail',
       editInformation_title: 'Edit Information',
       editLabel_title: 'Edit Label',

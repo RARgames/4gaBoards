@@ -5,6 +5,9 @@ import socket from './socket';
 export const transformActivity = (activity) => ({
   ...activity,
   createdAt: new Date(activity.createdAt),
+  ...(activity.updatedAt && {
+    updatedAt: new Date(activity.updatedAt),
+  }),
 });
 
 /* Actions */

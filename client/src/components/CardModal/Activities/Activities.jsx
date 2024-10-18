@@ -136,6 +136,7 @@ const Activities = React.memo(
                       key={item.id}
                       data={item.data}
                       createdAt={item.createdAt}
+                      updatedAt={item.updatedAt}
                       isPersisted={item.isPersisted}
                       user={item.user}
                       canEdit={(item.user.isCurrent && canEdit) || canEditAllComments}

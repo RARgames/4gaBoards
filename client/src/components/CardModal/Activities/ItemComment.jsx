@@ -8,7 +8,7 @@ import DeletePopup from '../../DeletePopup';
 
 import styles from './ItemComment.module.scss';
 
-const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onCurrentUserUpdate }) => {
+const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onCurrentUserUpdate }) => {
   const [t] = useTranslation();
 
   const commentEdit = useRef(null);
@@ -25,6 +25,11 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, c
         </span>
         <span className={styles.author}>{user.name}</span>
         <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
+        {updatedAt !== null && (
+          <span className={styles.edited} title={`${t('common.edited')} ${t('format:dateTime', { postProcess: 'formatDate', value: updatedAt })}`}>
+            {t('common.edited')}
+          </span>
+        )}
         {canEdit && (
           <div className={styles.buttons}>
             <Button style={ButtonStyle.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={styles.button}>
@@ -66,6 +71,7 @@ const ItemComment = React.memo(({ data, createdAt, isPersisted, user, canEdit, c
 ItemComment.propTypes = {
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   createdAt: PropTypes.instanceOf(Date).isRequired,
+  updatedAt: PropTypes.instanceOf(Date),
   isPersisted: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
@@ -75,6 +81,10 @@ ItemComment.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCurrentUserUpdate: PropTypes.func.isRequired,
+};
+
+ItemComment.defaultProps = {
+  updatedAt: null,
 };
 
 export default ItemComment;
