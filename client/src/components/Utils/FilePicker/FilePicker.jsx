@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './FilePicker.module.scss';
 
-const FilePicker = React.memo(({ children, accept, onSelect }) => {
+const FilePicker = React.memo(({ children, accept, multiple, onSelect }) => {
   const field = useRef(null);
 
   const handleTriggerClick = useCallback(() => {
@@ -13,7 +13,7 @@ const FilePicker = React.memo(({ children, accept, onSelect }) => {
   const handleFieldChange = useCallback(
     ({ target }) => {
       if (target.files.length > 0) {
-        Array.from(target.files).forEach((file) => {
+        [...target.files].forEach((file) => {
           onSelect(file);
         });
 
@@ -30,7 +30,7 @@ const FilePicker = React.memo(({ children, accept, onSelect }) => {
   return (
     <>
       {tigger}
-      <input ref={field} type="file" accept={accept} className={styles.field} onChange={handleFieldChange} multiple />
+      <input ref={field} type="file" accept={accept} className={styles.field} onChange={handleFieldChange} multiple={multiple} />
     </>
   );
 });
@@ -38,11 +38,13 @@ const FilePicker = React.memo(({ children, accept, onSelect }) => {
 FilePicker.propTypes = {
   children: PropTypes.element.isRequired,
   accept: PropTypes.string,
+  multiple: PropTypes.bool,
   onSelect: PropTypes.func.isRequired,
 };
 
 FilePicker.defaultProps = {
   accept: undefined,
+  multiple: false,
 };
 
 export default FilePicker;

@@ -51,34 +51,37 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
         return;
       }
 
-      const file = event.clipboardData.files[0];
+      const { files, items } = event.clipboardData; // BUG Firefox does not provide multiple files: https://bugzilla.mozilla.org/show_bug.cgi?id=864052
 
-      if (file) {
-        submit(file);
+      if (files.length > 0) {
+        [...files].forEach((file) => {
+          submit(file);
+        });
         return;
       }
 
-      const item = event.clipboardData.items[0];
-
-      if (!item) {
+      if (items.length === 0) {
         return;
       }
 
-      if (item.kind === 'file') {
-        submit(item.getAsFile());
-        return;
+      const item = items[0];
+
+      if (item.kind === 'string') {
+        if (['input', 'textarea'].includes(event.target.tagName.toLowerCase()) && event.target === document.activeElement) {
+          // Allows input to be pasted into input fields
+          return;
+        }
+
+        openModal({ content: event.clipboardData.getData('Text') });
+        setIsModalOpen(true);
       }
 
-      if (['input', 'textarea'].includes(event.target.tagName.toLowerCase()) && event.target === document.activeElement) {
-        return;
-      }
-
-      event.preventDefault();
-
-      openModal({
-        content: event.clipboardData.getData('Text'),
+      // Not used actively - fallback for browsers that do not support clipboardData.files
+      [...items].forEach((it) => {
+        if (it.kind === 'file') {
+          submit(it.getAsFile());
+        }
       });
-      setIsModalOpen(true);
     };
 
     window.addEventListener('paste', handlePaste);

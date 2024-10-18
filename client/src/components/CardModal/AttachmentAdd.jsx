@@ -12,9 +12,8 @@ const AttachmentAdd = React.memo(({ children, onCreate }) => {
     [onCreate],
   );
 
-  // eslint-disable-next-line prettier/prettier
   return (
-    <FilePicker onSelect={handleFileSelect}>
+    <FilePicker onSelect={handleFileSelect} multiple>
       {children}
     </FilePicker>
   );
