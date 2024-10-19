@@ -18,7 +18,7 @@ export default {
       addAttachment: 'Ajouter une pièce jointe',
       addAttachmentButton: 'Ajouter une pièce jointe',
       addAttachmentExtra: '(Déposez ici, Ctrl+V ou cliquez pour télécharger)',
-      addBoard: 'Ajouter un',
+      addBoard: 'Ajouter un tableau',
       addCard: 'Ajouter une carte',
       addComment: 'Ajouter un commentaire',
       addDescription: 'Ajouter une description',
