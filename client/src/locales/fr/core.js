@@ -291,7 +291,7 @@ export default {
       toggleTasks: 'Basculer les tâches',
       toTest: 'À tester',
       unableToFetch: 'Impossible d'obtenir des informations',
-      unsavedChanges: 'Local changes',
+      unsavedChanges: 'Modifications locales',
       userActions_title: "Actions de l'utilisateur",
       userAddedThisCardToList: '<0> {{user}} </0> <1> a ajouté cette carte à {{list}} </1>',
       userAvatar: "Avatar de l'utilisateur",
