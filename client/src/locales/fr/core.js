@@ -119,7 +119,7 @@ export default {
       descriptionSLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionSsoRegistration:
         "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.",
-      descriptionSubscribeToMyOwnCards: 'Abonnez-vous automatiquement aux cartes que je crée.',
+      descriptionSubscribeToMyOwnCards: 'Être abonné à mes propres cartes',
       descriptionUserRegistration:
         "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.",
       detectAutomatically: 'Détecter automatiquement',
