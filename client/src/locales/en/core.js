@@ -13,7 +13,7 @@ export default {
       actions: 'Comments',
       addAttachment: 'Add attachment',
       addAttachmentButton: 'Add Attachment',
-      addAttachmentExtra: '(Drop here, Crtl+V or click to upload)',
+      addAttachmentExtra: '(Drop here, Ctrl+V or click to upload)',
       addBoard: 'Add Board',
       addCard: 'Add Card',
       addComment: 'Add comment',

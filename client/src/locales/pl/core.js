@@ -17,7 +17,7 @@ export default {
       actions: 'Komentarze',
       addAttachment: 'Dodaj załącznik',
       addAttachmentButton: 'Dodaj załącznik',
-      addAttachmentExtra: '(Przeciągnij tutaj, Crtl+V lub kliknij żeby wybrać plik)',
+      addAttachmentExtra: '(Przeciągnij tutaj, Ctrl+V lub kliknij żeby wybrać plik)',
       addBoard: 'Dodaj tablicę',
       addCard: 'Dodaj kartę',
       addComment: 'Dodaj komentarz',
