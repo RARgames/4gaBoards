@@ -273,7 +273,7 @@ export default {
       startTimer: 'Démarrer le minuteur',
       stopTimer: 'Arrêter le minuteur',
       subscribed: 'Abonné',
-      subscribeToMyOwnCardsByDefault: 'Être abonné à mes propres cartes par défaut',
+      subscribeToMyOwnCards: 'Être abonné à mes propres cartes par défaut',
       taskActions_title: 'Actions de tâche',
       tasks: 'Tâches',
       template: 'Modèle',
