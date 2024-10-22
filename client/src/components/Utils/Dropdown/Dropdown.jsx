@@ -17,12 +17,14 @@ const Dropdown = React.forwardRef(
       defaultItem,
       placeholder,
       isSearchable,
+      isError,
       className,
       dropdownMenuClassName,
       onChange,
       onBlur,
       onClose,
       onCancel,
+      onErrorClear,
       submitOnBlur,
       stayOpenOnBlur,
       selectFirstOnSearch,
@@ -43,7 +45,8 @@ const Dropdown = React.forwardRef(
     const open = useCallback(() => {
       setIsOpen(true);
       setSearchValue('');
-    }, []);
+      onErrorClear();
+    }, [onErrorClear]);
 
     const close = useCallback(() => {
       setIsOpen(false);
@@ -252,7 +255,7 @@ const Dropdown = React.forwardRef(
       } else {
         open();
       }
-    }, [handleSubmit, isOpen, open, selectedItem]);
+    }, [open, handleSubmit, isOpen, selectedItem]);
 
     const { refs, floatingStyles, context } = useFloating({
       open: isOpen,
@@ -287,7 +290,7 @@ const Dropdown = React.forwardRef(
             onChange={handleSearch}
             value={searchValue}
             ref={dropdown}
-            className={styles.dropdownSearchInput}
+            className={classNames(styles.dropdownSearchInput, isError && styles.dropdownSearchInputError)}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -295,7 +298,12 @@ const Dropdown = React.forwardRef(
             placeholder={getDisplay()}
             {...props} // eslint-disable-line react/jsx-props-no-spreading
           />
-          <Button style={ButtonStyle.Icon} title={isOpen ? t('common.closeDropdown') : t('common.openDropdown')} onClick={handleDropdownToggleClick} className={styles.dropdownButton}>
+          <Button
+            style={ButtonStyle.Icon}
+            title={isOpen ? t('common.closeDropdown') : t('common.openDropdown')}
+            onClick={handleDropdownToggleClick}
+            className={classNames(styles.dropdownButton, isError && styles.dropdownButtonError)}
+          >
             <Icon type={IconType.TriangleDown} size={IconSize.Size10} />
           </Button>
         </div>
@@ -339,12 +347,14 @@ Dropdown.propTypes = {
   defaultItem: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   placeholder: PropTypes.string.isRequired,
   isSearchable: PropTypes.bool,
+  isError: PropTypes.bool,
   className: PropTypes.string,
   dropdownMenuClassName: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onClose: PropTypes.func,
   onCancel: PropTypes.func,
+  onErrorClear: PropTypes.func,
   submitOnBlur: PropTypes.bool,
   stayOpenOnBlur: PropTypes.bool,
   selectFirstOnSearch: PropTypes.bool,
@@ -356,10 +366,12 @@ Dropdown.defaultProps = {
   children: null,
   defaultItem: null,
   isSearchable: false,
+  isError: false,
   onChange: () => {},
   onBlur: undefined,
   onClose: () => {},
   onCancel: undefined,
+  onErrorClear: () => {},
   submitOnBlur: false,
   stayOpenOnBlur: false,
   selectFirstOnSearch: false,

@@ -17,6 +17,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 
+    &::placeholder {
+      color: var(--textColor3);
+      opacity: 1;
+    }
+
     &:disabled {
       background: var(--backgroundColorTmpDarkerField);
       color: var(--textColor3);
@@ -24,6 +29,14 @@
 
     &:focus {
       border: 1px solid var(--borderOutline2);
+    }
+  }
+
+  .dropdownSearchInputError {
+    border: 1px solid var(--errorRed);
+
+    &::placeholder {
+      color: var(--errorRed);
     }
   }
 
@@ -35,9 +48,21 @@
     top: 1px;
   }
 
+  .dropdownButtonError {
+    svg {
+      fill: var(--errorRed);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--errorRedHover);
+      }
+    }
+  }
+
   .dropdownMenu {
     position: absolute;
-    max-height: calc(100vh/3);
+    max-height: calc(100vh / 3);
     background: var(--backgroundColorTmpDarkerField);
     color: var(--textColor1);
   }

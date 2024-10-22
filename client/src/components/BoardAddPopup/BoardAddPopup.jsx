@@ -18,6 +18,8 @@ const StepTypes = {
 const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
 
+  const [isError, setIsError] = useState(false);
+
   const [selectedProject, setSelectedProject] = useState(() => {
     if (projectId) {
       const project = projects.find((p) => p.id === projectId);
@@ -109,7 +111,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate
     }
 
     if (!selectedProject) {
-      // TODO add dropdown error
+      setIsError(true);
       return;
     }
 
@@ -149,8 +151,10 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate
                 placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
                 defaultItem={selectedProject}
                 isSearchable
+                isError={isError}
                 selectFirstOnSearch
                 onChange={handleProjectChange}
+                onErrorClear={() => setIsError(false)}
                 className={styles.dropdown}
                 dropdownMenuClassName={styles.dropdownMenu}
               />
