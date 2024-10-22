@@ -72,10 +72,12 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
       }
 
       const cleanValue = value.trim() || null;
-      if (cleanValue !== getLocalValue() && cleanValue !== defaultValue) {
+      if (cleanValue === defaultValue) {
+        close(true);
+      } else if (cleanValue !== getLocalValue()) {
         setLocalDescription(cleanValue);
       } else {
-        close(true);
+        close();
       }
     },
     [value, getLocalValue, defaultValue, setLocalDescription, close],
