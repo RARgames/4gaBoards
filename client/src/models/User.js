@@ -356,7 +356,7 @@ export default class extends BaseModel {
         projectModels.push(projectModel);
       });
 
-    return projectModels;
+    return projectModels.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
   }
 
   deleteRelated() {
