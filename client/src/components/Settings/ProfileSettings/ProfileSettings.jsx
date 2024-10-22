@@ -31,7 +31,7 @@ const ProfileSettings = React.memo(({ name, avatarUrl, phone, organization, isAv
               <AvatarEditPopup defaultValue={avatarUrl} onUpdate={onAvatarUpdate} onDelete={handleAvatarDelete} offset={-25} hideCloseButton>
                 <User name={name} avatarUrl={avatarUrl} size="profile" isDisabled={isAvatarUpdating} onClick={() => {}} />
                 <Button style={ButtonStyle.NoBackground} title={t('action.edit')} className={styles.editButton}>
-                  <Icon type={IconType.Plus} size={IconSize.Size10} className={styles.iconEditButton} />
+                  <Icon type={IconType.Pencil} size={IconSize.Size10} className={styles.iconEditButton} />
                   {t('action.edit')}
                 </Button>
               </AvatarEditPopup>
