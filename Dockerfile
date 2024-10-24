@@ -1,4 +1,4 @@
-FROM node:20-alpine as server-dependencies
+FROM node:20-alpine AS server-dependencies
 
 WORKDIR /app
 
