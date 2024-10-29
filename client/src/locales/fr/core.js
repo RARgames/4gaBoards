@@ -113,7 +113,7 @@ export default {
       deleteTask_title: 'Supprimer la tâche',
       deleteUser_title: "Supprimer l'utilisateur",
       demoMode: 'Mode démo',
-      demoModeExplanation: 'Mode démo - certaines fonctionnalités affectant les autres utilisateurs sont désactivées!',
+      demoModeExplanation: "Mode démo - certaines fonctionnalités affectant les autres utilisateurs sont désactivées! Chaque nouvel utilisateur reçoit des privilèges d'administrateur.",
       description: 'Description',
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier

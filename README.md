@@ -6,21 +6,52 @@ Kanban boards inspired by discontinued Gitkraken Glo Boards.
 
 ![4gaBoards_gif](https://github.com/user-attachments/assets/1f6f1e41-a60d-4529-8cff-964b0d63962f)
 
-We'll work on a **demo** when we finish all tasks from the [#1 issue](https://github.com/RARgames/4gaBoards/issues/1).
+Check out [4ga Boards demo!](https://demo.4gaboards.com)
+
+Demo mode - changed features:
+
+- Disabled changing instance settings
+- Disabled changing other users data
+- Every new user receives admin privileges
+- Data is cleared every day at 1:55 CET
+
+**Recommended: Create a new account to test 4ga Boards** - You can use fake email (we don't require confirmations).
+
+_or use: Demo user: `demo` Demo password: `demo`, but please note that many users might be using it at the same time causing disturbed experience e.g. changing user preferences._
+
+Our main priority is to finish all tasks from the [#1 issue](https://github.com/RARgames/4gaBoards/issues/1) - However all tasks are described in separate issues.
 
 ## Features
 
-- Create projects, boards, lists, cards, labels and tasks
-- Add card members, track time, set a due date, add attachments, write comments
-- Markdown support in a card description and comment
-- Filter by members and labels
-- Customize project background
-- Real-time updates
-- User notifications
-- Internationalization
-- Google SSO - We are working on more features!
+- Full dark mode
+- Intuitive UI/UX
+- Advanced Markdown Editor _(card description and comments)_
+- App design - no need to reload page
+- Multitasking capabilities _(while editing a card, you can still scroll, filter and review other cards. You can exit the card at any time, the description changes will be saved locally for you.)_
+- Projects/Boards sidebar _(easier navigation for many complex projects and boards)_
+- SSO Login/Register _(Google SSO + Github/Microsoft [Coming soon])_
+- App uses full screen _(no wasted screen space)_
+- Simplistic design _(No useless buttons/options, everything included by default)_
+- Automation of common actions with shortucts
+- Internationalization _(EN, PL, FR - 100%, other languages - partial support)_
 - Github 2-way sync [Coming soon]
-- Github/Microsoft SSO [Coming soon]
+- Collapsable lists _(saves screen space for complex projects)_
+
+### Boards Structure
+
+- Projects -> Boards -> Lists -> Cards -> Tasks
+- Project: Title, Boards
+- Board: Title, Lists, Board Members(Editor, Commenter, Viewer), Card Filters
+- List: Title, Cards
+- Card: Description, Members, Labels, Due Date, Timer, Notifications, Tasks, Attachments, Comments
+- Task: Title, Members, Due Date
+
+### Basic Features
+
+- Real-time updates
+- Filter by members and labels
+- Customizable project backgrounds
+- User notifications
 
 ## Getting started docs
 
@@ -163,6 +194,9 @@ Demo user: `demo` Demo password: `demo`
 
 ## License
 
-4ga Boards are [MIT licensed](https://github.com/RARgames/4gaBoards/blob/main/LICENSE).
+[MIT license](https://github.com/RARgames/4gaBoards/blob/main/LICENSE)
 
-Project was separated from [Planka](https://github.com/plankanban/planka) by [meltyshev](https://github.com/meltyshev) to preserve the MIT license, change project vision, and add some new features.
+## Main maintainers
+
+[![RARgames](https://github.com/RARgames.png?size=100)](https://github.com/RARgames)
+[![wilkobyl](https://github.com/wilkobyl.png?size=100)](https://github.com/wilkobyl)

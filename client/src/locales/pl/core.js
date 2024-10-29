@@ -113,7 +113,7 @@ export default {
       deleteTask_title: 'Usuń zadanie',
       deleteUser_title: 'Usuń użytkownika',
       demoMode: 'Tryb demo',
-      demoModeExplanation: 'Tryb demo - niektóre funkcje wpływające na innych użytkowników są niedostępne!',
+      demoModeExplanation: 'Tryb demo - niektóre funkcje wpływające na innych użytkowników są niedostępne! Każdy nowy użytkownik otrzymuje prawa administratora.',
       description: 'Opis',
       descriptionCompactSidebar: 'Zmniejsza panel boczny do minimalnej szerokości.',
       descriptionLocalRegistration: 'Włącz lub wyłącz lokalną rejestrację użytkowników. Ta metoda rejestracji umożliwia użytkownikom utworzenie konta przy użyciu nazwy użytkownika i hasła.',
