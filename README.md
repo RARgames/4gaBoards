@@ -6,7 +6,6 @@ Kanban boards inspired by discontinued Gitkraken Glo Boards.
 
 ![4gaBoards_gif](https://github.com/user-attachments/assets/1f6f1e41-a60d-4529-8cff-964b0d63962f)
 
-
 We'll work on a **demo** when we finish all tasks from the [#1 issue](https://github.com/RARgames/4gaBoards/issues/1).
 
 ## Features
@@ -25,14 +24,14 @@ We'll work on a **demo** when we finish all tasks from the [#1 issue](https://gi
 
 ## Getting started docs
 
- [English](https://docs.4gaboards.com/en/home) | [Polski](https://docs.4gaboards.com/pl/home)
+[English](https://docs.4gaboards.com/en/home) | [Polski](https://docs.4gaboards.com/pl/home)
 
 ## Deploy
 
 There are 2 types of installation:
+
 1. [Dockerized](#1-docker-compose)
 2. [Without Docker](#2-without-docker)
-
 
 ### 1. Docker Compose
 
@@ -167,4 +166,3 @@ Demo user: `demo` Demo password: `demo`
 4ga Boards are [MIT licensed](https://github.com/RARgames/4gaBoards/blob/main/LICENSE).
 
 Project was separated from [Planka](https://github.com/plankanban/planka) by [meltyshev](https://github.com/meltyshev) to preserve the MIT license, change project vision, and add some new features.
-
