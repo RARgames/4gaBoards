@@ -19,6 +19,7 @@ const Item = React.memo(
     ssoGoogleEmail,
     lastLogin,
     isAdmin,
+    demoMode,
     emailUpdateForm,
     passwordUpdateForm,
     usernameUpdateForm,
@@ -48,7 +49,7 @@ const Item = React.memo(
         <Table.Cell title={username}>{username || '-'}</Table.Cell>
         <Table.Cell title={email}>{email}</Table.Cell>
         <Table.Cell>
-          <Radio size={RadioSize.Size12} checked={isAdmin} title={t('common.toggleAdmin')} onChange={handleIsAdminChange} aria-label={t('common.toggleAdmin')} />
+          <Radio size={RadioSize.Size12} checked={isAdmin} title={t('common.toggleAdmin')} disabled={demoMode} onChange={handleIsAdminChange} aria-label={t('common.toggleAdmin')} />
         </Table.Cell>
         <Table.Cell title={ssoGoogleEmail}>{ssoGoogleEmail || '-'}</Table.Cell>
         <Table.Cell title={lastLogin}>{lastLogin ? new Date(lastLogin).toLocaleString(undefined, options).replace(/,/g, '').split(' ').reverse().join(' ') : '-'}</Table.Cell>
@@ -97,6 +98,7 @@ Item.propTypes = {
   ssoGoogleEmail: PropTypes.string,
   lastLogin: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
+  demoMode: PropTypes.bool.isRequired,
   /* eslint-disable react/forbid-prop-types */
   emailUpdateForm: PropTypes.object.isRequired,
   passwordUpdateForm: PropTypes.object.isRequired,

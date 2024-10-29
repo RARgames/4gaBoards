@@ -14,8 +14,22 @@
     text-align: center;
   }
 
+  .headerFlex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .headerText {
     display: inline;
     word-wrap: break-word;
+    flex: 1 1 auto;
+    margin: 0;
+  }
+
+  .demoMode {
+    color: var(--errorRed);
+    font-size: 14px;
+    margin: 10px 0 0 0;
   }
 }

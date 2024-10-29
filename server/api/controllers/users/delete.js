@@ -2,6 +2,9 @@ const Errors = {
   USER_NOT_FOUND: {
     userNotFound: 'User not found',
   },
+  INSUFFICIENT_PERMISSIONS: {
+    insufficientPermissions: 'Insufficient permissions',
+  },
 };
 
 module.exports = {
@@ -17,6 +20,9 @@ module.exports = {
     userNotFound: {
       responseType: 'notFound',
     },
+    insufficientPermissions: {
+      responseType: 'forbidden',
+    },
   },
 
   async fn(inputs) {
@@ -24,6 +30,10 @@ module.exports = {
 
     if (!user) {
       throw Errors.USER_NOT_FOUND;
+    }
+
+    if (sails.config.custom.demoMode) {
+      throw Errors.INSUFFICIENT_PERMISSIONS;
     }
 
     user = await sails.helpers.users.deleteOne.with({

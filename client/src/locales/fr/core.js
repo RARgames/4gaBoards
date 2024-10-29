@@ -112,16 +112,15 @@ export default {
       deleteProject_title: 'Supprimer le projet',
       deleteTask_title: 'Supprimer la tâche',
       deleteUser_title: "Supprimer l'utilisateur",
+      demoMode: 'Mode démo',
+      demoModeExplanation: 'Mode démo - certaines fonctionnalités affectant les autres utilisateurs sont désactivées!',
       description: 'Description',
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
-      descriptionLocalRegistration:
-        "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.",
+      descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
       descriptionSLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
-      descriptionSsoRegistration:
-        "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.",
+      descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
       descriptionSubscribeToMyOwnCards: 'Être abonné à mes propres cartes',
-      descriptionUserRegistration:
-        "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.",
+      descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.", // eslint-disable-line prettier/prettier
       detectAutomatically: 'Détecter automatiquement',
       disabled: 'Désactivé',
       docs: 'Documentation',
@@ -185,6 +184,7 @@ export default {
       importBoard_title: 'Importer le tableau',
       inProgress: 'En cours',
       instanceSettings: "Paramètres de l'instance",
+      insufficientPermissions: 'Permissions insuffisantes',
       invalidCurrentPassword: 'Mot de passe actuel invalide',
       kanban: 'Kanban',
       labels: 'Étiquettes',

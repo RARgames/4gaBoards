@@ -277,12 +277,20 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.USER_DELETE:
-        User.withId(payload.id).deleteWithRelated();
+        User.withId(payload.id).update({
+          deletedAt: new Date(),
+        });
 
         break;
       case ActionTypes.USER_DELETE__SUCCESS:
       case ActionTypes.USER_DELETE_HANDLE:
         User.withId(payload.user.id).deleteWithRelated(payload.user);
+
+        break;
+      case ActionTypes.USER_DELETE__FAILURE:
+        User.withId(payload.id).update({
+          deletedAt: null,
+        });
 
         break;
       case ActionTypes.PROJECT_CREATE_HANDLE:

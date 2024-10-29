@@ -4,6 +4,12 @@
     display: inline-block;
     width: 30px;
     height: 17px;
+    cursor: pointer;
+  }
+
+  .radioDisabled {
+    cursor: not-allowed;
+    opacity: 0.25;
   }
 
   .input {
@@ -11,38 +17,37 @@
     width: 0;
     height: 0;
 
-    &:checked+.switchRound {
+    &:checked + .switchRound {
       background-color: var(--radioBlue);
     }
   }
 
   .switchRound {
     position: absolute;
-    cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background: var(--backgroundRadio);
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
     border-radius: 17px;
   }
 
   .switchRound:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 13px;
     width: 13px;
     left: 2px;
     bottom: 2px;
     background-color: var(--textColor0);
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
     border-radius: 50%;
   }
 
-  .input:checked+.switchRound:before {
+  .input:checked + .switchRound:before {
     -webkit-transform: translateX(13px);
     transform: translateX(13px);
   }
@@ -50,11 +55,10 @@
   // Sizes
 
   .size10 {
-    transform: scale(1.0);
+    transform: scale(1);
   }
 
   .size12 {
     transform: scale(1.2);
   }
-
 }

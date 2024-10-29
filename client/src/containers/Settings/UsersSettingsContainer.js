@@ -7,6 +7,7 @@ import UsersSettings from '../../components/Settings/UsersSettings';
 
 const mapStateToProps = (state) => {
   const users = selectors.selectUsersExceptCurrent(state);
+  const coreSettings = selectors.selectCoreSettings(state);
 
   const {
     ui: {
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
     userCreateIsSubmitting: isSubmitting,
     userCreateError: error,
     items: users,
+    demoMode: coreSettings.demoMode,
   };
 };
 

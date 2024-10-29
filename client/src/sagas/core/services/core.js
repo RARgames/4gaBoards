@@ -85,8 +85,8 @@ export function* logout(invalidateAccessToken = true) {
 }
 
 export function* fetchCoreSettingsPublic() {
-  const { item: googleSsoEnabled, ssoRegistrationEnabled, registrationEnabled, localRegistrationEnabled } = yield call(api.getCoreSettingsPublic);
-  yield put(actions.fetchCoreSettingsPublic(googleSsoEnabled, ssoRegistrationEnabled, registrationEnabled, localRegistrationEnabled));
+  const { item: googleSsoEnabled, ssoRegistrationEnabled, registrationEnabled, localRegistrationEnabled, demoMode } = yield call(api.getCoreSettingsPublic);
+  yield put(actions.fetchCoreSettingsPublic(googleSsoEnabled, ssoRegistrationEnabled, registrationEnabled, localRegistrationEnabled, demoMode));
 }
 
 export function* updateCoreSettings(data) {

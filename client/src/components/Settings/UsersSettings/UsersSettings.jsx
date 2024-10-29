@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -17,6 +17,7 @@ const UsersSettings = React.memo(
     userCreateIsSubmitting,
     userCreateError,
     items,
+    demoMode,
     onUserCreate,
     onUserCreateMessageDismiss,
     onUpdate,
@@ -29,6 +30,8 @@ const UsersSettings = React.memo(
     onDelete,
   }) => {
     const [t] = useTranslation();
+    const offsetRef = useRef(null);
+    const headerButtonRef = useRef(null);
 
     const handleUpdate = useCallback(
       (id, data) => {
@@ -86,24 +89,33 @@ const UsersSettings = React.memo(
       [onDelete],
     );
 
+    useEffect(() => {
+      if (headerButtonRef.current && offsetRef.current) {
+        offsetRef.current.style.maxWidth = `${headerButtonRef.current.offsetWidth}px`;
+      }
+    }, []);
+
     // TODO scroll is too long - overlaping header
     return (
       <div className={sShared.wrapper}>
         <div className={sShared.header}>
-          <div className={styles.headerButtonOffset} />
-          <h2 className={sShared.headerText}>{t('common.users')}</h2>
-          <div className={styles.headerButton}>
-            <UserAddPopup
-              defaultData={userCreateDefaultData}
-              isSubmitting={userCreateIsSubmitting}
-              error={userCreateError}
-              onCreate={onUserCreate}
-              onMessageDismiss={onUserCreateMessageDismiss}
-              position="left-start"
-            >
-              <Button style={ButtonStyle.Submit} content={t('action.addUser')} />
-            </UserAddPopup>
+          <div className={sShared.headerFlex}>
+            <div ref={offsetRef} className={styles.headerButtonOffset} />
+            <h2 className={sShared.headerText}>{t('common.users')}</h2>
+            <div ref={headerButtonRef} className={styles.headerButton}>
+              <UserAddPopup
+                defaultData={userCreateDefaultData}
+                isSubmitting={userCreateIsSubmitting}
+                error={userCreateError}
+                onCreate={onUserCreate}
+                onMessageDismiss={onUserCreateMessageDismiss}
+                position="left-start"
+              >
+                <Button style={ButtonStyle.Submit} content={t('action.addUser')} />
+              </UserAddPopup>
+            </div>
           </div>
+          {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
         </div>
         <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
           <Table>
@@ -132,6 +144,7 @@ const UsersSettings = React.memo(
                   ssoGoogleEmail={item.ssoGoogleEmail}
                   lastLogin={item.lastLogin}
                   isAdmin={item.isAdmin}
+                  demoMode={demoMode}
                   emailUpdateForm={item.emailUpdateForm}
                   passwordUpdateForm={item.passwordUpdateForm}
                   usernameUpdateForm={item.usernameUpdateForm}
@@ -158,6 +171,7 @@ UsersSettings.propTypes = {
   userCreateIsSubmitting: PropTypes.bool.isRequired,
   userCreateError: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  demoMode: PropTypes.bool.isRequired,
   onUserCreate: PropTypes.func.isRequired,
   onUserCreateMessageDismiss: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,

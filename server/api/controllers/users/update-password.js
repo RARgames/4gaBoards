@@ -13,6 +13,9 @@ const Errors = {
   WEAK_PASSWORD: {
     weakPassword: 'Weak password',
   },
+  INSUFFICIENT_PERMISSIONS: {
+    insufficientPermissions: 'Insufficient permissions',
+  },
 };
 
 module.exports = {
@@ -42,6 +45,9 @@ module.exports = {
     weakPassword: {
       responseType: 'conflict',
     },
+    insufficientPermissions: {
+      responseType: 'forbidden',
+    },
   },
 
   async fn(inputs) {
@@ -63,6 +69,12 @@ module.exports = {
 
     if (!user) {
       throw Errors.USER_NOT_FOUND;
+    }
+
+    if (sails.config.custom.demoMode) {
+      if (user.id !== currentUser.id) {
+        throw Errors.INSUFFICIENT_PERMISSIONS;
+      }
     }
 
     if (inputs.id === currentUser.id && !bcrypt.compareSync(inputs.currentPassword, user.password)) {

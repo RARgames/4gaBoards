@@ -8,7 +8,7 @@ import { Radio, RadioSize, Table } from '../../Utils';
 import sShared from '../SettingsShared.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
-const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, onCoreSettingsUpdate }) => {
+const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, demoMode, onCoreSettingsUpdate }) => {
   const [t] = useTranslation();
 
   const handleRegistrationEnabledChange = useCallback(() => {
@@ -32,7 +32,10 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
   return (
     <div className={sShared.wrapper}>
       <div className={sShared.header}>
-        <h2 className={sShared.headerText}>{t('common.settings')}</h2>
+        <div className={sShared.headerFlex}>
+          <h2 className={sShared.headerText}>{t('common.settings')}</h2>
+        </div>
+        {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
       </div>
       <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
         <Table>
@@ -48,7 +51,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
             <Table.Row>
               <Table.Cell>{t('common.enableRegistration')}</Table.Cell>
               <Table.Cell aria-label={t('common.toggleSettings')}>
-                <Radio size={RadioSize.Size12} checked={registrationEnabled} onChange={handleRegistrationEnabledChange} />
+                <Radio size={RadioSize.Size12} checked={registrationEnabled} disabled={demoMode} onChange={handleRegistrationEnabledChange} />
               </Table.Cell>
               <Table.Cell>{registrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
               <Table.Cell>{t('common.descriptionUserRegistration')}</Table.Cell>
@@ -56,7 +59,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
             <Table.Row>
               <Table.Cell>{t('common.enableLocalRegistration')}</Table.Cell>
               <Table.Cell aria-label={t('common.toggleSettings')}>
-                <Radio size={RadioSize.Size12} checked={registrationEnabled && localRegistrationEnabled} disabled={!registrationEnabled} onChange={handleLocalRegistrationEnabledChange} />
+                <Radio size={RadioSize.Size12} checked={registrationEnabled && localRegistrationEnabled} disabled={!registrationEnabled || demoMode} onChange={handleLocalRegistrationEnabledChange} />
               </Table.Cell>
               <Table.Cell>{registrationEnabled && localRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
               <Table.Cell>{t('common.descriptionLocalRegistration')}</Table.Cell>
@@ -64,7 +67,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
             <Table.Row>
               <Table.Cell>{t('common.enableSsoRegistration')}</Table.Cell>
               <Table.Cell aria-label={t('common.toggleSettings')}>
-                <Radio size={RadioSize.Size12} checked={registrationEnabled && ssoRegistrationEnabled} disabled={!registrationEnabled} onChange={handleSsoRegistrationEnabledChange} />
+                <Radio size={RadioSize.Size12} checked={registrationEnabled && ssoRegistrationEnabled} disabled={!registrationEnabled || demoMode} onChange={handleSsoRegistrationEnabledChange} />
               </Table.Cell>
               <Table.Cell>{registrationEnabled && ssoRegistrationEnabled ? t('common.enabled') : t('common.disabled')}</Table.Cell>
               <Table.Cell>{t('common.descriptionSsoRegistration')}</Table.Cell>
@@ -80,6 +83,7 @@ InstanceSettings.propTypes = {
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  demoMode: PropTypes.bool.isRequired,
   onCoreSettingsUpdate: PropTypes.func.isRequired,
 };
 

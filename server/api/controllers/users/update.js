@@ -121,6 +121,15 @@ module.exports = {
       avatar: inputs.avatarUrl,
     };
 
+    if (sails.config.custom.demoMode) {
+      delete values.isAdmin;
+      if (user.id !== currentUser.id) {
+        delete values.name;
+        delete values.phone;
+        delete values.organization;
+      }
+    }
+
     user = await sails.helpers.users.updateOne.with({
       values,
       record: user,

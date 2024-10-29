@@ -1,20 +1,18 @@
 :global(#app) {
   .headerButton {
-    float: right;
     position: relative;
+    flex: 0 1 auto;
   }
 
   .headerButtonOffset {
     position: relative;
-    float: left;
-    width: 70px;
     height: 32px;
+    flex: 1 1 auto;
   }
 
   @media (max-width: 500px) {
     .headerButtonOffset {
-      width: 0;
-      height: 0;
+      display: none;
     }
   }
 }

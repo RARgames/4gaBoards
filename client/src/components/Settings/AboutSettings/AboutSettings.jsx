@@ -9,7 +9,7 @@ import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
 import styles from './AboutSettings.module.scss';
 import sShared from '../SettingsShared.module.scss';
 
-const AboutSettings = React.memo(({ language }) => {
+const AboutSettings = React.memo(({ language, demoMode }) => {
   const [t] = useTranslation();
   const [latestVersion, setLatestVersion] = useState(t('common.fetching'));
 
@@ -40,6 +40,7 @@ const AboutSettings = React.memo(({ language }) => {
         <div className={styles.version}>
           {t('common.latestVersion')} {latestVersion}
         </div>
+        {demoMode && <div className={styles.demoMode}>{t('common.demoMode')}</div>}
         <div className={styles.links}>
           <div className={styles.link}>
             <ExternalLink href={language === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
@@ -67,6 +68,7 @@ const AboutSettings = React.memo(({ language }) => {
 
 AboutSettings.propTypes = {
   language: PropTypes.string,
+  demoMode: PropTypes.bool.isRequired,
 };
 
 AboutSettings.defaultProps = {

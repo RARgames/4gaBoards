@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
     registrationEnabled: coreSettings.registrationEnabled,
     localRegistrationEnabled: coreSettings.localRegistrationEnabled,
     ssoRegistrationEnabled: coreSettings.ssoRegistrationEnabled,
+    demoMode: coreSettings.demoMode,
   };
 };
 

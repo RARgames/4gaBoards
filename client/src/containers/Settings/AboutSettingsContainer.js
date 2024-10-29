@@ -6,9 +6,11 @@ import AboutSettings from '../../components/Settings/AboutSettings';
 
 const mapStateToProps = (state) => {
   const { language } = selectors.selectCurrentUser(state);
+  const coreSettings = selectors.selectCoreSettings(state);
 
   return {
     language,
+    demoMode: coreSettings.demoMode,
   };
 };
 

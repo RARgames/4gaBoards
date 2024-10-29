@@ -26,6 +26,11 @@ const createMessage = (error) => {
         type: 'error',
         content: 'common.invalidCurrentPassword',
       };
+    case 'Insufficient permissions':
+      return {
+        type: 'error',
+        content: 'common.insufficientPermissions',
+      };
     default:
       return {
         type: 'warning',

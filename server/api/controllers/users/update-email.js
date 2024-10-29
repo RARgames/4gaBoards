@@ -10,6 +10,9 @@ const Errors = {
   EMAIL_ALREADY_IN_USE: {
     emailAlreadyInUse: 'Email already in use',
   },
+  INSUFFICIENT_PERMISSIONS: {
+    insufficientPermissions: 'Insufficient permissions',
+  },
 };
 
 module.exports = {
@@ -40,6 +43,9 @@ module.exports = {
     emailAlreadyInUse: {
       responseType: 'conflict',
     },
+    insufficientPermissions: {
+      responseType: 'forbidden',
+    },
   },
 
   async fn(inputs) {
@@ -57,6 +63,12 @@ module.exports = {
 
     if (!user) {
       throw Errors.USER_NOT_FOUND;
+    }
+
+    if (sails.config.custom.demoMode) {
+      if (user.id !== currentUser.id) {
+        throw Errors.INSUFFICIENT_PERMISSIONS;
+      }
     }
 
     if (inputs.id === currentUser.id && !bcrypt.compareSync(inputs.currentPassword, user.password)) {

@@ -31,6 +31,10 @@ module.exports = {
 
   async fn(inputs) {
     const { currentUser } = this.req;
+    if (sails.config.custom.demoMode) {
+      throw Errors.INSUFFICIENT_PERMISSIONS;
+    }
+
     if (!currentUser.isAdmin) {
       throw Errors.INSUFFICIENT_PERMISSIONS;
     }

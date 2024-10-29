@@ -52,6 +52,7 @@ module.exports = {
       ...values,
       email: values.email.toLowerCase(),
       password: hashedPassword,
+      isAdmin: sails.config.custom.demoMode,
     })
       .intercept(
         {
