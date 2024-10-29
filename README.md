@@ -8,16 +8,16 @@ Kanban boards inspired by discontinued Gitkraken Glo Boards.
 
 Check out [4ga Boards demo!](https://demo.4gaboards.com)
 
+**Recommended: Create a new account to test 4ga Boards** - You can use fake email (we don't require confirmations).
+
+_or use: Demo user: `demo` Demo password: `demo`, but please note that many users might be using it at the same time causing disturbed experience e.g. changing user preferences._
+
 Demo mode - changed features:
 
 - Disabled changing instance settings
 - Disabled changing other users data
 - Every new user receives admin privileges
 - Data is cleared every day at 1:55 CET
-
-**Recommended: Create a new account to test 4ga Boards** - You can use fake email (we don't require confirmations).
-
-_or use: Demo user: `demo` Demo password: `demo`, but please note that many users might be using it at the same time causing disturbed experience e.g. changing user preferences._
 
 Our main priority is to finish all tasks from the [#1 issue](https://github.com/RARgames/4gaBoards/issues/1) - However all tasks are described in separate issues.
 
