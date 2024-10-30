@@ -295,7 +295,7 @@ export default {
       userActions_title: 'Edytuj użytkownika',
       userAddedThisCardToList: '<0>{{user}}</0><1> dodał tę kartę w {{list}}</1>',
       userAvatar: 'Avatar',
-      userDuplicatedThisCard: '<0>{{user}}</0><1> zduplikował kartę',
+      userDuplicatedThisCard: '{{user}} zduplikował kartę',
       userLeftNewCommentToCard: '{{user}} zamieścił nowy komentarz «{{comment}}» w <2>{{card}}</2>',
       userMovedCardFromListToList: '{{user}} przeniósł <2>{{card}}</2> z {{fromList}} do {{toList}}',
       userMovedThisCardFromListToList: '<0>{{user}}</0><1> przeniósł tę kartę z {{fromList}} do {{toList}}</1>',

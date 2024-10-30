@@ -282,7 +282,7 @@ export default {
       userActions_title: 'User Actions',
       userAddedThisCardToList: '<0>{{user}}</0><1> added this card to {{list}}</1>',
       userAvatar: 'User Avatar',
-      userDuplicatedThisCard: '<0>{{user}}</0><1> duplicated this card',
+      userDuplicatedThisCard: '{{user}} duplicated this card',
       userLeftNewCommentToCard: '{{user}} left a new comment «{{comment}}» to <2>{{card}}</2>',
       userMovedCardFromListToList: '{{user}} moved <2>{{card}}</2> from {{fromList}} to {{toList}}',
       userMovedThisCardFromListToList: '<0>{{user}}</0><1> moved this card from {{fromList}} to {{toList}}</1>',

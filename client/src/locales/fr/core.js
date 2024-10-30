@@ -295,7 +295,7 @@ export default {
       userActions_title: "Actions de l'utilisateur",
       userAddedThisCardToList: '<0> {{user}} </0> <1> a ajouté cette carte à {{list}} </1>',
       userAvatar: "Avatar de l'utilisateur",
-      userDuplicatedThisCard: '<0>{{user}}</0><1> a dupliqué cette carte',
+      userDuplicatedThisCard: '{{user}} a dupliqué cette carte',
       userLeftNewCommentToCard: '{{user}} a laissé un nouveau commentaire {{comment}} à <2> {{card}} </2>',
       userMovedCardFromListToList: '{{user}} a déplacé <2> {{card}} </2> de {{fromList}} vers {{toList}}',
       userMovedThisCardFromListToList: '<0> {{user}} </0> <1> a déplacé cette carte de {{fromList}} vers {{toList}} </1>',
