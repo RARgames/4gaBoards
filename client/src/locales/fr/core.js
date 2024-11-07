@@ -168,6 +168,8 @@ export default {
       enterProjectTitle: 'Saisir le titre du projet',
       enterTaskDescription: 'Saisir la description de la tâche...',
       expandList: 'Développer la liste',
+      exportBoard_title: 'Exporter le tableau',
+      exportBoardExplanation: "Votre téléchargement démarrera automatiquement lorsque l'exportation sera prête.",
       fetching: 'Récupération...',
       filterBoards: 'Filtrer les tableaux',
       filterByLabels_title: 'Filtrer par libellés',

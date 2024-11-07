@@ -45,6 +45,7 @@ const mapDispatchToProps = (dispatch) =>
       onBoardUpdate: entryActions.updateBoard,
       onBoardMove: entryActions.moveBoard,
       onBoardDelete: entryActions.deleteBoard,
+      onBoardExport: entryActions.exportBoard,
       onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onUserProjectUpdate: entryActions.updateUserProject,
     },

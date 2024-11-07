@@ -41,6 +41,7 @@ const MainSidebar = React.memo(
     onBoardUpdate,
     onBoardMove,
     onBoardDelete,
+    onBoardExport,
     onChangeFilterQuery,
     onUserProjectUpdate,
   }) => {
@@ -182,6 +183,7 @@ const MainSidebar = React.memo(
                                     defaultDataRename={pick(board, 'name')}
                                     defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
+                                    onExport={() => onBoardExport(board.id)}
                                     onDelete={() => onBoardDelete(board.id)}
                                     position="right-start"
                                     offset={10}
@@ -348,6 +350,7 @@ MainSidebar.propTypes = {
   onBoardUpdate: PropTypes.func.isRequired,
   onBoardMove: PropTypes.func.isRequired,
   onBoardDelete: PropTypes.func.isRequired,
+  onBoardExport: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
   onUserProjectUpdate: PropTypes.func.isRequired,
 };

@@ -48,6 +48,7 @@ module.exports.routes = {
   'GET /api/boards/:id': 'boards/show',
   'PATCH /api/boards/:id': 'boards/update',
   'DELETE /api/boards/:id': 'boards/delete',
+  'GET /api/boards/:id/export': 'boards/export',
 
   'POST /api/boards/:boardId/memberships': 'board-memberships/create',
   'PATCH /api/board-memberships/:id': 'board-memberships/update',
@@ -98,6 +99,11 @@ module.exports.routes = {
 
   'GET /attachments/:id/download/thumbnails/cover-256.:extension': {
     action: 'attachments/download-thumbnail',
+    skipAssets: false,
+  },
+
+  'GET /exports/:id/:filename': {
+    action: 'boards/download',
     skipAssets: false,
   },
 

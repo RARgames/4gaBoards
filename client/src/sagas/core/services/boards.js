@@ -153,6 +153,20 @@ export function* handleBoardDelete(board) {
   yield put(actions.handleBoardDelete(board));
 }
 
+export function* exportBoard(id) {
+  yield put(actions.exportBoard(id));
+
+  let downloadUrl;
+  try {
+    ({ item: downloadUrl } = yield call(request, api.exportBoard, id));
+  } catch (error) {
+    yield put(actions.exportBoard.failure(id, error));
+    return;
+  }
+
+  yield put(actions.exportBoard.success(downloadUrl));
+}
+
 export default {
   createBoard,
   createBoardInCurrentProject,
@@ -163,4 +177,5 @@ export default {
   moveBoard,
   deleteBoard,
   handleBoardDelete,
+  exportBoard,
 };

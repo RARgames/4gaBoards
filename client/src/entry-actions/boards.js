@@ -67,6 +67,13 @@ const handleBoardDelete = (board) => ({
   },
 });
 
+const exportBoard = (id) => ({
+  type: EntryActionTypes.BOARD_EXPORT,
+  payload: {
+    id,
+  },
+});
+
 export default {
   createBoard,
   createBoardInCurrentProject,
@@ -77,4 +84,5 @@ export default {
   moveBoard,
   deleteBoard,
   handleBoardDelete,
+  exportBoard,
 };

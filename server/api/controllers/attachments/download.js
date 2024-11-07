@@ -47,7 +47,7 @@ module.exports = {
     if (!attachment.image && path.extname(attachment.filename) !== '.pdf') {
       this.res.set('Content-Disposition', 'attachment');
     }
-    this.res.set('Cache-Control', 'private, max-age=900'); // TODO: move to config
+    this.res.set('Cache-Control', `private, max-age=${sails.config.custom.cacheMaxAge}`);
 
     return exits.success(fs.createReadStream(filePath));
   },

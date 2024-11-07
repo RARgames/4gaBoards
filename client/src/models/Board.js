@@ -169,6 +169,12 @@ export default class extends BaseModel {
         Board.withId(payload.boardId).filterLabels.remove(payload.id);
 
         break;
+
+      case ActionTypes.BOARD_EXPORT__SUCCESS:
+        if (payload.downloadUrl) {
+          window.open(payload.downloadUrl, '_blank');
+        }
+        break;
       default:
     }
   }

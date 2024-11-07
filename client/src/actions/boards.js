@@ -123,6 +123,28 @@ const handleBoardDelete = (board) => ({
   },
 });
 
+const exportBoard = (id) => ({
+  type: ActionTypes.BOARD_EXPORT,
+  payload: {
+    id,
+  },
+});
+
+exportBoard.success = (downloadUrl) => ({
+  type: ActionTypes.BOARD_EXPORT__SUCCESS,
+  payload: {
+    downloadUrl,
+  },
+});
+
+exportBoard.failure = (id, error) => ({
+  type: ActionTypes.BOARD_EXPORT__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
 export default {
   createBoard,
   handleBoardCreate,
@@ -131,4 +153,5 @@ export default {
   handleBoardUpdate,
   deleteBoard,
   handleBoardDelete,
+  exportBoard,
 };

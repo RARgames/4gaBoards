@@ -168,6 +168,8 @@ export default {
       enterProjectTitle: 'Podaj tytuł projektu',
       enterTaskDescription: 'Podaj opis zadania...',
       expandList: 'Pokaż listę',
+      exportBoard_title: 'Eksportuj tablicę',
+      exportBoardExplanation: 'Pobieranie rozpocznie się automatycznie, gdy eksport będzie gotowy.',
       fetching: 'Pobieranie...',
       filterBoards: 'Filtruj tablice...',
       filterByLabels_title: 'Filtruj wg etykiet',

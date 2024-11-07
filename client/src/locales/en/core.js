@@ -160,6 +160,8 @@ export default {
       enterProjectTitle: 'Enter project title',
       enterTaskDescription: 'Enter task description...',
       expandList: 'Expand List',
+      exportBoard_title: 'Export Board',
+      exportBoardExplanation: 'Your download will start automatically, when the export is ready.',
       fetching: 'Fetching...',
       filterBoards: 'Filter boards...',
       filterByLabels_title: 'Filter By Labels',

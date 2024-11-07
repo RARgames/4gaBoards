@@ -25,10 +25,13 @@ const updateBoard = (id, data, headers) => socket.patch(`/boards/${id}`, data, h
 
 const deleteBoard = (id, headers) => socket.delete(`/boards/${id}`, undefined, headers);
 
+const exportBoard = (id, headers) => socket.get(`/boards/${id}/export`, undefined, headers);
+
 export default {
   createBoard,
   createBoardWithImport,
   getBoard,
   updateBoard,
   deleteBoard,
+  exportBoard,
 };

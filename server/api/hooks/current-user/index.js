@@ -87,6 +87,24 @@ module.exports = function defineCurrentUserHook(sails) {
             return next();
           },
         },
+        '/exports/*': {
+          async fn(req, res, next) {
+            const { accessToken } = req.cookies;
+
+            if (accessToken) {
+              const currentUser = await getUser(accessToken);
+
+              if (currentUser) {
+                Object.assign(req, {
+                  accessToken,
+                  currentUser,
+                });
+              }
+            }
+
+            return next();
+          },
+        },
       },
     },
   };
