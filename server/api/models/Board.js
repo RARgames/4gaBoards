@@ -6,6 +6,7 @@
  */
 
 const ImportTypes = {
+  BOARDS: '4gaBoards',
   TRELLO: 'trello',
 };
 
@@ -33,6 +34,11 @@ module.exports = {
     githubRepo: {
       type: 'string',
       columnName: 'github_repo',
+    },
+    isImportedBoard: {
+      type: 'boolean',
+      required: true,
+      columnName: 'is_imported_board',
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗

@@ -22,6 +22,7 @@
     "server:db:init": "npm run db:init --prefix server",
     "server:db:migrate": "npm run db:migrate --prefix server",
     "server:db:rollback": "npm run db:rollback --prefix server",
+    "server:db:migration_make": "npm run db:migration_make --prefix server",
     "server:db:seed": "npm run db:seed --prefix server",
     "server:lint": "npm run lint --prefix server",
     "server:start": "npm start --prefix server",

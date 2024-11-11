@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup, Dropdown } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup, Dropdown, Checkbox } from '../Utils';
 import Config from '../../constants/Config';
 
 import { useForm, useSteps } from '../../hooks';
@@ -15,10 +15,12 @@ const StepTypes = {
   IMPORT: 'IMPORT',
 };
 
-const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate, onBack, onClose }) => {
+const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
 
   const [isError, setIsError] = useState(false);
+  const [importNonExistingUsers, toggleImportNonExistingUsers] = useToggle(false);
+  const [importProjectManagers, toggleImportProjectManagers] = useToggle(false);
 
   const [selectedProject, setSelectedProject] = useState(() => {
     if (projectId) {
@@ -103,6 +105,8 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate
       ...data,
       name: data.name.trim(),
       lists: template.lists,
+      importNonExistingUsers,
+      importProjectManagers,
     };
 
     if (!cleanData.name) {
@@ -117,7 +121,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate
 
     onCreate(selectedProject.id, cleanData);
     onClose();
-  }, [data, template.lists, selectedProject, onCreate, onClose]);
+  }, [data, template.lists, importNonExistingUsers, importProjectManagers, selectedProject, onCreate, onClose]);
 
   const handleImportClick = useCallback(() => {
     openStep(StepTypes.IMPORT);
@@ -175,12 +179,30 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, onCreate
               />
             </div>
           )}
+          {data.import && data.import.type === '4gaBoards' && (
+            <>
+              <div>
+                <div className={styles.checkboxWrapper}>
+                  <Checkbox checked={importProjectManagers} className={styles.checkbox} onChange={toggleImportProjectManagers} />
+                </div>
+                <div className={styles.checkboxText}>{t('common.importProjectManagers')}</div>
+              </div>
+              <div>
+                <div className={styles.checkboxWrapper}>
+                  <Checkbox checked={importNonExistingUsers} disabled={!isAdmin} className={styles.checkbox} onChange={toggleImportNonExistingUsers} />
+                </div>
+                <div className={styles.checkboxText}>
+                  {t('common.importNonExistingUsers')} {!isAdmin && t('common.requiresAdminRights')}
+                </div>
+              </div>
+            </>
+          )}
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}
             </Button>
-            <Button style={ButtonStyle.Submit} content={t('common.addBoard')} className={styles.submitButton} />
+            <Button style={ButtonStyle.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={styles.submitButton} />
           </div>
         </Form>
       </Popup.Content>
@@ -192,6 +214,7 @@ AddStep.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   projectId: PropTypes.string,
   skipProjectDropdown: PropTypes.bool,
+  isAdmin: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,

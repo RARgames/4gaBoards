@@ -36,6 +36,7 @@ export default class extends BaseModel {
 
         if (payload.taskMemberships) {
           payload.taskMemberships.forEach(({ taskId, userId }) => {
+            Task.withId(taskId).users.clear();
             Task.withId(taskId).users.add(userId);
           });
         }

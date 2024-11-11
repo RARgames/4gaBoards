@@ -7,6 +7,9 @@ const Errors = {
   BOARD_NOT_FOUND: {
     boardNotFound: 'Board not found',
   },
+  EXPORT_ERROR: {
+    exportError: 'Export error',
+  },
 };
 
 module.exports = {
@@ -21,6 +24,9 @@ module.exports = {
   exits: {
     boardNotFound: {
       responseType: 'notFound',
+    },
+    exportError: {
+      responseType: 'unprocessableEntity',
     },
   },
 
@@ -45,9 +51,7 @@ module.exports = {
     const cards = await sails.helpers.boards.getCards(board.id);
     const cardIds = sails.helpers.utils.mapRecords(cards);
     const cardMemberships = await sails.helpers.cards.getCardMemberships(cardIds);
-    const actionsDetails = await sails.helpers.cards.getActions(cardIds, undefined, true);
-    const comments = await sails.helpers.cards.getActions(cardIds);
-    const actions = [...actionsDetails, ...comments];
+    const actions = await Action.find({ cardId: cardIds });
     const attachments = await sails.helpers.cards.getAttachments(cardIds);
     const cardLabels = await sails.helpers.cards.getCardLabels(cardIds);
     const cardSubscriptions = await sails.helpers.cardSubscriptions.getMany({
@@ -113,54 +117,59 @@ module.exports = {
 
     const exportDir = path.join(__dirname, '../../../private/exports', currentUser.id);
     const date = new Date().toISOString().replace(/[:]/g, '-').split('.')[0]; // Format: YYYY-MM-DDTHH-MM-SS
-    const filename = `4gaBoards_${inputs.id}_${date}.tar`;
+    const filename = `4gaBoards_${inputs.id}_${date}.tar.gz`;
     const tarPath = path.join(exportDir, filename);
     const tempDir = path.join(exportDir, `temp_${inputs.id}_${date}`);
-    fs.mkdirSync(exportDir, { recursive: true });
-    fs.mkdirSync(tempDir, { recursive: true });
+    try {
+      fs.mkdirSync(exportDir, { recursive: true });
+      fs.mkdirSync(tempDir, { recursive: true });
 
-    Object.entries(csvFiles).forEach(([key, value]) => {
-      const filePath = path.join(tempDir, `${key}.csv`);
-      fs.writeFileSync(filePath, value, 'utf8');
-    });
+      Object.entries(csvFiles).forEach(([key, value]) => {
+        const filePath = path.join(tempDir, `${key}.csv`);
+        fs.writeFileSync(filePath, value, 'utf8');
+      });
 
-    await Promise.all(
-      attachments.map(async (attachment) => {
-        const attachmentDir = path.join(tempDir, 'attachments', attachment.dirname);
-        fs.mkdirSync(attachmentDir, { recursive: true });
-        const attachmentPath = path.join(sails.config.custom.attachmentsPath, attachment.dirname, attachment.filename);
-        fs.copyFileSync(attachmentPath, path.join(attachmentDir, attachment.filename));
-      }),
-    );
+      await Promise.all(
+        attachments.map(async (attachment) => {
+          const attachmentDir = path.join(tempDir, 'attachments', attachment.dirname);
+          fs.mkdirSync(attachmentDir, { recursive: true });
+          const attachmentPath = path.join(sails.config.custom.attachmentsPath, attachment.dirname, attachment.filename);
+          fs.copyFileSync(attachmentPath, path.join(attachmentDir, attachment.filename));
+        }),
+      );
 
-    await Promise.all(
-      users.map(async (user) => {
-        if (user.avatar === null) return;
-        const avatarDir = path.join(tempDir, 'user-avatars', user.avatar.dirname);
-        fs.mkdirSync(avatarDir, { recursive: true });
-        const avatarFilename = `original.${user.avatar.extension}`;
-        const avatarPath = path.join(sails.config.custom.fullUserAvatarsPath, user.avatar.dirname, avatarFilename);
-        fs.copyFileSync(avatarPath, path.join(avatarDir, avatarFilename));
-      }),
-    );
+      await Promise.all(
+        users.map(async (user) => {
+          if (user.avatar === null) return;
+          const avatarDir = path.join(tempDir, 'user-avatars', user.avatar.dirname);
+          fs.mkdirSync(avatarDir, { recursive: true });
+          const avatarFilename = `original.${user.avatar.extension}`;
+          const avatarPath = path.join(sails.config.custom.fullUserAvatarsPath, user.avatar.dirname, avatarFilename);
+          fs.copyFileSync(avatarPath, path.join(avatarDir, avatarFilename));
+        }),
+      );
 
-    if (project.backgroundImage !== null) {
-      const projectBackgroundDir = path.join(tempDir, 'project-background-images', project.backgroundImage.dirname);
-      fs.mkdirSync(projectBackgroundDir, { recursive: true });
-      const projectBackgroundFilename = `original.${project.backgroundImage.extension}`;
-      const projectBackgroundPath = path.join(sails.config.custom.fullProjectBackgroundImagesPath, project.backgroundImage.dirname, projectBackgroundFilename);
-      fs.copyFileSync(projectBackgroundPath, path.join(projectBackgroundDir, projectBackgroundFilename));
+      if (project.backgroundImage !== null) {
+        const projectBackgroundDir = path.join(tempDir, 'project-background-images', project.backgroundImage.dirname);
+        fs.mkdirSync(projectBackgroundDir, { recursive: true });
+        const projectBackgroundFilename = `original.${project.backgroundImage.extension}`;
+        const projectBackgroundPath = path.join(sails.config.custom.fullProjectBackgroundImagesPath, project.backgroundImage.dirname, projectBackgroundFilename);
+        fs.copyFileSync(projectBackgroundPath, path.join(projectBackgroundDir, projectBackgroundFilename));
+      }
+
+      await tar.c(
+        {
+          gzip: true,
+          file: tarPath,
+          cwd: tempDir,
+        },
+        fs.readdirSync(tempDir),
+      );
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    } catch (error) {
+      console.error(error); // eslint-disable-line no-console
+      throw Errors.EXPORT_ERROR;
     }
-
-    await tar.c(
-      {
-        gzip: false,
-        file: tarPath,
-        cwd: tempDir,
-      },
-      fs.readdirSync(tempDir),
-    );
-    fs.rmSync(tempDir, { recursive: true, force: true });
 
     return { item: `${sails.config.custom.exportsUrl}/${board.id}/${filename}` };
   },

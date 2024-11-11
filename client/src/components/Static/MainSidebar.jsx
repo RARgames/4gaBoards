@@ -116,6 +116,7 @@ const MainSidebar = React.memo(
                 projectId={project.id}
                 managedProjects={managedProjects}
                 defaultDataRename={pick(project, 'name')}
+                isAdmin={isAdmin}
                 onUpdate={(data) => onProjectUpdate(project.id, data)}
                 onBoardCreate={onBoardCreate}
                 position="right-start"
@@ -306,7 +307,7 @@ const MainSidebar = React.memo(
               </ProjectAddPopup>
             )}
             {managedProjects.length > 0 && !settingsOnly && (
-              <BoardAddPopup projects={managedProjects} projectId={currProjectId} onCreate={onBoardCreate} offset={2} position="right-end">
+              <BoardAddPopup projects={managedProjects} projectId={currProjectId} isAdmin={isAdmin} onCreate={onBoardCreate} offset={2} position="right-end">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
                   {t('common.addBoard')}

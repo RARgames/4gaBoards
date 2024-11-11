@@ -30,4 +30,25 @@
   .submitButton {
     width: auto;
   }
+
+  .checkboxWrapper {
+    margin: 6px 0 4px 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .checkbox {
+    background: var(--backgroundColorTmpBackground);
+
+    &:hover {
+      background: var(--backgroundColorTmpBackgroundHover);
+    }
+  }
+
+  .checkboxText {
+    padding-left: 4px;
+    display: inline-block;
+    width: calc(100% - 20px);
+    vertical-align: middle;
+  }
 }

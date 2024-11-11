@@ -86,6 +86,17 @@ module.exports = {
       projectId: values.project.id,
     }).fetch();
 
+    if (inputs.import && inputs.import.type === Board.ImportTypes.BOARDS) {
+      await sails.helpers.boards.importFromBoards(
+        inputs.user,
+        board,
+        inputs.import.board.importTempDir,
+        inputs.import.importFilePath,
+        inputs.import.importNonExistingUsers,
+        inputs.import.importProjectManagers,
+        inputs.request,
+      );
+    }
     if (inputs.import && inputs.import.type === Board.ImportTypes.TRELLO) {
       await sails.helpers.boards.importFromTrello(inputs.user, board, inputs.import.board);
     }
@@ -94,7 +105,9 @@ module.exports = {
       boardId: board.id,
       userId: inputs.user.id,
       role: BoardMembership.Roles.EDITOR,
-    }).fetch();
+    })
+      .tolerate('E_UNIQUE')
+      .fetch();
 
     projectManagerUserIds.forEach((userId) => {
       sails.sockets.broadcast(

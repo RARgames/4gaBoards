@@ -266,7 +266,7 @@ export default class extends BaseModel {
   }
 
   getOrderedAttachmentsQuerySet() {
-    return this.attachments.orderBy('id', false);
+    return this.attachments.orderBy('createdAt', true);
   }
 
   getAttachmentsCount() {
@@ -280,7 +280,7 @@ export default class extends BaseModel {
       filter.type = ActivityTypes.COMMENT_CARD;
     }
 
-    return this.activities.filter(filter).orderBy('id', false);
+    return this.activities.filter(filter).orderBy('createdAt', false);
   }
 
   getUnreadNotificationsQuerySet() {

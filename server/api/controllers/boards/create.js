@@ -46,6 +46,12 @@ module.exports = {
     lists: {
       type: 'json',
     },
+    importNonExistingUsers: {
+      type: 'boolean',
+    },
+    importProjectManagers: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -97,6 +103,15 @@ module.exports = {
 
       const file = _.last(files);
 
+      if (inputs.importType === Board.ImportTypes.BOARDS) {
+        boardImport = {
+          type: inputs.importType,
+          board: await sails.helpers.boards.processUploadedBoardsImportFile(file),
+          importFilePath: file.fd,
+          importNonExistingUsers: currentUser.isAdmin ? inputs.importNonExistingUsers : false,
+          importProjectManagers: inputs.importProjectManagers,
+        };
+      }
       if (inputs.importType === Board.ImportTypes.TRELLO) {
         boardImport = {
           type: inputs.importType,
@@ -109,6 +124,7 @@ module.exports = {
       values: {
         ...values,
         project,
+        isImportedBoard: !!inputs.importType,
       },
       import: boardImport,
       user: currentUser,

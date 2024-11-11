@@ -15,7 +15,7 @@ const StepTypes = {
   ADD: 'ADD',
 };
 
-const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultDataRename, onUpdate, onBoardCreate, onClose }) => {
+const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultDataRename, isAdmin, onUpdate, onBoardCreate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -24,7 +24,7 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
       case StepTypes.RENAME:
         return <RenameStep title={t('common.renameProject', { context: 'title' })} defaultData={defaultDataRename} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
       case StepTypes.ADD:
-        return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
+        return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
       default:
     }
   }
@@ -53,6 +53,7 @@ ProjectActionsStep.propTypes = {
   projectId: PropTypes.string.isRequired,
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  isAdmin: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

@@ -10,7 +10,7 @@ import BoardAddPopup from '../BoardAddPopup';
 import styles from './Boards.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 
-const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, onCreate }) => {
+const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, onCreate }) => {
   const [t] = useTranslation();
   const headerButtonGroupRef = useRef(null);
   const headerButtonGroupOffsetRef = useRef(null);
@@ -43,7 +43,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
         <div ref={headerButtonGroupRef} className={styles.headerButtonGroup}>
           {isProjectManager && (
             <div className={styles.headerButton}>
-              <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown onCreate={onCreate} offset={16} position="bottom">
+              <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onCreate} offset={16} position="bottom">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={styles.addButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size16} className={styles.addButtonIcon} />
                   {t('common.addBoard')}
@@ -93,6 +93,7 @@ Boards.propTypes = {
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFiltered: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
 };
 
