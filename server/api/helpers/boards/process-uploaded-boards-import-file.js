@@ -27,6 +27,8 @@ module.exports = {
       });
     } catch (error) {
       console.error(error); // eslint-disable-line no-console
+      fs.rmSync(importTempDir, { recursive: true, force: true });
+      fs.rmSync(inputs.file.fd, { force: true });
       throw 'invalidFile';
     }
 
