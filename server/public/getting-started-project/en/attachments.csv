@@ -1,0 +1,3 @@
+id,createdAt,updatedAt,dirname,filename,image,name,cardId,creatorUserId
+1377810057193850418,"""2024-11-12T19:22:38.000Z""",,32f9dcda-dcb6-482b-8023-e120a23c14c7,4gaboards256w-white.png,"{""width"":256,""height"":100,""thumbnailsExtension"":""png""}",4gaboards256w-white.png,1377809471828395568,1217459187106186241
+1377811096693376563,"""2024-11-12T19:24:41.000Z""",,851a257b-679b-4671-9004-40b746f846ac,SampleText.txt,,SampleText.txt,1377809471828395568,1217459187106186241
