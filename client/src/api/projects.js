@@ -15,6 +15,8 @@ const updateProjectBackgroundImage = (id, data, headers) => http.post(`/projects
 
 const deleteProject = (id, headers) => socket.delete(`/projects/${id}`, undefined, headers);
 
+const importGettingStartedProject = (data, headers) => socket.get('/projects/import-getting-started', data, headers);
+
 export default {
   getProjects,
   createProject,
@@ -22,4 +24,5 @@ export default {
   updateProject,
   updateProjectBackgroundImage,
   deleteProject,
+  importGettingStartedProject,
 };

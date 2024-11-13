@@ -68,6 +68,7 @@ export default class extends BaseModel {
       case ActionTypes.PROJECT_CREATE_HANDLE:
       case ActionTypes.PROJECT_UPDATE__SUCCESS:
       case ActionTypes.PROJECT_UPDATE_HANDLE:
+      case ActionTypes.PROJECT_IMPORT_GETTING_STARTED__SUCCESS:
         Project.upsert(payload.project);
 
         break;

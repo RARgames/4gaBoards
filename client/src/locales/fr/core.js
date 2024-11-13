@@ -185,6 +185,7 @@ export default {
       hours: 'Les heures',
       ideas: 'Idées',
       importBoard_title: 'Importer le tableau',
+      importGettingStartedProject: "Projet de démarrage d'importation",
       importNonExistingUsers: 'Créer des comptes pour des utilisateurs non existants',
       importProjectManagers: 'Ajouter des chefs de projet',
       inProgress: 'En cours',

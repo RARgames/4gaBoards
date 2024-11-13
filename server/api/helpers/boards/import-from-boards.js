@@ -1,4 +1,3 @@
-const fastcsv = require('fast-csv');
 const fs = require('fs');
 const path = require('path');
 
@@ -34,6 +33,9 @@ module.exports = {
     importProjectManagers: {
       type: 'boolean',
     },
+    importGettingStartedProject: {
+      type: 'boolean',
+    },
     request: {
       type: 'ref',
     },
@@ -44,36 +46,37 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const loadCSV = (filename) =>
-      new Promise((resolve, reject) => {
-        try {
-          const results = [];
-          fs.createReadStream(path.join(inputs.importTempDir, `${filename}.csv`))
-            .pipe(fastcsv.parse({ headers: true }))
-            .on('data', (row) => results.push(row))
-            .on('end', () => resolve(results))
-            .on('error', reject);
-        } catch (error) {
-          console.error(error); // eslint-disable-line no-console
-          throw 'invalidFile';
-        }
-      });
+    const { projectManagers, boardMemberships, lists, cards, cardMemberships, actions, attachments, cardLabels, cardSubscriptions, labels, tasks, taskMemberships, users } = await sails.helpers.utils.loadCsvs(
+      inputs.importTempDir,
+      ['projectManagers', 'boardMemberships', 'lists', 'cards', 'cardMemberships', 'actions', 'attachments', 'cardLabels', 'cardSubscriptions', 'labels', 'tasks', 'taskMemberships', 'users'],
+    );
 
-    const [projectManagers, boardMemberships, lists, cards, cardMemberships, actions, attachments, cardLabels, cardSubscriptions, labels, tasks, taskMemberships, users] = await Promise.all([
-      loadCSV('projectManagers'),
-      loadCSV('boardMemberships'),
-      loadCSV('lists'),
-      loadCSV('cards'),
-      loadCSV('cardMemberships'),
-      loadCSV('actions'),
-      loadCSV('attachments'),
-      loadCSV('cardLabels'),
-      loadCSV('cardSubscriptions'),
-      loadCSV('labels'),
-      loadCSV('tasks'),
-      loadCSV('taskMemberships'),
-      loadCSV('users'),
-    ]);
+    if (inputs.importGettingStartedProject) {
+      boardMemberships.forEach((boardMembership) => {
+        boardMembership.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+      cards.forEach((card) => {
+        card.creatorUserId = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+      cardMemberships.forEach((cardMembership) => {
+        cardMembership.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+      actions.forEach((action) => {
+        action.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+      attachments.forEach((attachment) => {
+        attachment.creatorUserId = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+      cardSubscriptions.forEach((cardSubscription) => {
+        cardSubscription.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+      taskMemberships.forEach((taskMembership) => {
+        taskMembership.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+      users.forEach((user) => {
+        user.id = inputs.user.id; // eslint-disable-line no-param-reassign
+      });
+    }
 
     const importedLists = {};
     const importedLabels = {};
@@ -207,7 +210,7 @@ module.exports = {
             fd: dirPath,
             filename: attachment.filename,
           };
-          const fileData = await sails.helpers.attachments.processUploadedFile(metadata);
+          const fileData = await sails.helpers.attachments.processUploadedFile(metadata, inputs.importGettingStartedProject);
 
           const newAttachment = await Attachment.create({
             createdAt: parseJSON(attachment.createdAt),
@@ -404,7 +407,9 @@ module.exports = {
       console.error(error); // eslint-disable-line no-console
     }
 
-    fs.rmSync(inputs.importTempDir, { recursive: true, force: true });
-    fs.rmSync(inputs.importFilePath, { force: true });
+    if (!inputs.importGettingStartedProject) {
+      fs.rmSync(inputs.importTempDir, { recursive: true, force: true });
+      fs.rmSync(inputs.importFilePath, { force: true });
+    }
   },
 };

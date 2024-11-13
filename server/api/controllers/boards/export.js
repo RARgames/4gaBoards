@@ -74,9 +74,9 @@ module.exports = {
     }));
 
     const data = {
-      project,
+      projects: project,
       projectManagers,
-      board,
+      boards: board,
       boardMemberships,
       lists,
       cards,

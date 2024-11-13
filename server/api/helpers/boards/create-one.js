@@ -94,6 +94,7 @@ module.exports = {
         inputs.import.importFilePath,
         inputs.import.importNonExistingUsers,
         inputs.import.importProjectManagers,
+        inputs.import.importGettingStartedProject,
         inputs.request,
       );
     }

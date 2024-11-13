@@ -177,6 +177,7 @@ export default {
       hours: 'Hours',
       ideas: 'Open',
       importBoard_title: 'Import Board',
+      importGettingStartedProject: 'Import Getting Started Project',
       importNonExistingUsers: 'Create accounts for non-existing users',
       importProjectManagers: 'Add project managers',
       inProgress: 'In Progress',

@@ -114,6 +114,30 @@ const handleProjectDelete = (project) => ({
   },
 });
 
+const importGettingStartedProject = (data) => ({
+  type: ActionTypes.PROJECT_IMPORT_GETTING_STARTED,
+  payload: {
+    data,
+  },
+});
+
+importGettingStartedProject.success = (project, projectManagers, boards, boardMemberships) => ({
+  type: ActionTypes.PROJECT_IMPORT_GETTING_STARTED__SUCCESS,
+  payload: {
+    project,
+    projectManagers,
+    boards,
+    boardMemberships,
+  },
+});
+
+importGettingStartedProject.failure = (error) => ({
+  type: ActionTypes.PROJECT_IMPORT_GETTING_STARTED__FAILURE,
+  payload: {
+    error,
+  },
+});
+
 export default {
   createProject,
   handleProjectCreate,
@@ -122,4 +146,5 @@ export default {
   updateProjectBackgroundImage,
   deleteProject,
   handleProjectDelete,
+  importGettingStartedProject,
 };

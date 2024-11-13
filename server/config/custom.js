@@ -33,8 +33,11 @@ module.exports.custom = {
 
   attachmentsPath: path.join(sails.config.appPath, 'private', 'attachments'),
   attachmentsUrl: `${process.env.BASE_URL}/attachments`,
+
   exportsPath: path.join(sails.config.appPath, 'private', 'exports'),
   exportsUrl: `${process.env.BASE_URL}/exports`,
+
+  gettingStartedProjectsPath: path.join(sails.config.appPath, 'public', 'getting-started-project'),
 
   googleSsoUrl: `${process.env.BASE_URL}/auth/google`,
   googleClientId: process.env.GOOGLE_CLIENT_ID,

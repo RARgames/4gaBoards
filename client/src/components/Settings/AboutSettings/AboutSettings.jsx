@@ -2,16 +2,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import Config from '../../../constants/Config';
-import { Icon, IconType, IconSize, ExternalLink } from '../../Utils';
+import { Icon, IconType, IconSize, ExternalLink, Button, ButtonStyle } from '../../Utils';
 
 import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
 
 import styles from './AboutSettings.module.scss';
 import sShared from '../SettingsShared.module.scss';
 
-const AboutSettings = React.memo(({ language, demoMode }) => {
+const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) => {
   const [t] = useTranslation();
+  const { i18n } = useTranslation();
   const [latestVersion, setLatestVersion] = useState(t('common.fetching'));
+  const [importGettingStartedButtonDisabled, setImportGettingStartedButtonDisabled] = useState(false);
 
   const fetchLatestVersion = useCallback(async () => {
     try {
@@ -22,6 +24,11 @@ const AboutSettings = React.memo(({ language, demoMode }) => {
       setLatestVersion(t('common.unableToFetch'));
     }
   }, [t]);
+
+  const handleGettingStartedProjectImportClick = useCallback(() => {
+    setImportGettingStartedButtonDisabled(true);
+    onGettingStartedProjectImport({ language: i18n.language });
+  }, [i18n.language, onGettingStartedProjectImport]);
 
   useEffect(() => {
     fetchLatestVersion();
@@ -43,7 +50,7 @@ const AboutSettings = React.memo(({ language, demoMode }) => {
         {demoMode && <div className={styles.demoMode}>{t('common.demoMode')}</div>}
         <div className={styles.links}>
           <div className={styles.link}>
-            <ExternalLink href={language === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
+            <ExternalLink href={i18n && i18n.language === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
           </div>
           <div className={styles.link}>
             <ExternalLink href="https://4gaboards.com">{t('common.website')}</ExternalLink>
@@ -60,6 +67,13 @@ const AboutSettings = React.memo(({ language, demoMode }) => {
           <div className={styles.link}>
             <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink>
           </div>
+          <Button
+            style={ButtonStyle.DefaultBorder}
+            content={t('common.importGettingStartedProject')}
+            onClick={handleGettingStartedProjectImportClick}
+            disabled={importGettingStartedButtonDisabled}
+            className={styles.button}
+          />
         </div>
       </div>
     </div>
@@ -67,12 +81,8 @@ const AboutSettings = React.memo(({ language, demoMode }) => {
 });
 
 AboutSettings.propTypes = {
-  language: PropTypes.string,
   demoMode: PropTypes.bool.isRequired,
-};
-
-AboutSettings.defaultProps = {
-  language: undefined,
+  onGettingStartedProjectImport: PropTypes.func.isRequired,
 };
 
 export default AboutSettings;

@@ -45,6 +45,7 @@ export default class extends BaseModel {
       case ActionTypes.PROJECT_CREATE_HANDLE:
       case ActionTypes.BOARD_CREATE__SUCCESS:
       case ActionTypes.BOARD_FETCH__SUCCESS:
+      case ActionTypes.PROJECT_IMPORT_GETTING_STARTED__SUCCESS:
         payload.boardMemberships.forEach((boardMembership) => {
           BoardMembership.upsert(boardMembership);
         });

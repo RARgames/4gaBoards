@@ -1,6 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import { goToProject, goToRoot } from './router';
+import { goToBoard, goToProject, goToRoot } from './router';
 import request from '../request';
 import selectors from '../../../selectors';
 import actions from '../../../actions';
@@ -125,6 +125,30 @@ export function* handleProjectDelete(project) {
   yield put(actions.handleProjectDelete(project));
 }
 
+export function* importGettingStartedProject(data) {
+  yield put(actions.importGettingStartedProject(data));
+
+  let project;
+  let projectManagers;
+  let boards;
+  let boardMemberships;
+
+  try {
+    ({
+      item: project,
+      included: { projectManagers, boards, boardMemberships },
+    } = yield call(request, api.importGettingStartedProject, data));
+  } catch (error) {
+    yield put(actions.importGettingStartedProject.failure(error));
+    return;
+  }
+
+  yield put(actions.importGettingStartedProject.success(project, projectManagers, boards, boardMemberships));
+  if (boards.length > 0) {
+    yield call(goToBoard, boards[0].id);
+  }
+}
+
 export default {
   createProject,
   handleProjectCreate,
@@ -136,4 +160,5 @@ export default {
   deleteProject,
   deleteCurrentProject,
   handleProjectDelete,
+  importGettingStartedProject,
 };

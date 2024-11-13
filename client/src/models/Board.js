@@ -98,6 +98,7 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.PROJECT_CREATE_HANDLE:
+      case ActionTypes.PROJECT_IMPORT_GETTING_STARTED__SUCCESS:
         payload.boards.forEach((board) => {
           Board.upsert(board);
         });

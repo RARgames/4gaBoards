@@ -70,6 +70,13 @@ const handleProjectDelete = (project) => ({
   },
 });
 
+const importGettingStartedProject = (data) => ({
+  type: EntryActionTypes.PROJECT_IMPORT_GETTING_STARTED,
+  payload: {
+    data,
+  },
+});
+
 export default {
   createProject,
   handleProjectCreate,
@@ -81,4 +88,5 @@ export default {
   deleteProject,
   deleteCurrentProject,
   handleProjectDelete,
+  importGettingStartedProject,
 };

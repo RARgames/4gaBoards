@@ -12,6 +12,10 @@ module.exports = {
       type: 'json',
       required: true,
     },
+    copyFile: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
   },
 
   async fn(inputs) {
@@ -24,7 +28,11 @@ module.exports = {
     const filePath = path.join(rootPath, filename);
 
     fs.mkdirSync(rootPath);
-    await moveFile(inputs.file.fd, filePath);
+    if (inputs.copyFile) {
+      fs.copyFileSync(inputs.file.fd, filePath);
+    } else {
+      await moveFile(inputs.file.fd, filePath);
+    }
 
     const image = sharp(filePath, {
       animated: true,

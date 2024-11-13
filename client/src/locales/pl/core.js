@@ -185,6 +185,7 @@ export default {
       hours: 'Godziny',
       ideas: 'Pomysły',
       importBoard_title: 'Importuj tablicę',
+      importGettingStartedProject: 'Zaimportuj projekt instruktażowy',
       importNonExistingUsers: 'Stwórz konta dla nieistniejących użytkowników',
       importProjectManagers: 'Dodaj moderatorów projektu',
       inProgress: 'W trakcie',
