@@ -1,11 +1,19 @@
-import { all, call, cancel, fork, take, spawn } from 'redux-saga/effects';
+import { all, call, cancel, fork, take, spawn, select } from 'redux-saga/effects';
+import i18n from 'i18next';
 import watchers from './watchers';
 import services from './services';
 import coreServices from '../core/services';
 import ActionTypes from '../../constants/ActionTypes';
+import selectors from '../../selectors';
 
 function* postLoginSaga() {
   yield take(ActionTypes.CORE_INITIALIZE);
+
+  const user = yield select(selectors.selectCurrentUser);
+  if (!user.lastLogin) {
+    yield call(coreServices.importGettingStartedProject, { language: i18n.resolvedLanguage });
+  }
+
   const data = {
     lastLogin: new Date().toUTCString(),
   };

@@ -125,7 +125,7 @@ export function* handleProjectDelete(project) {
   yield put(actions.handleProjectDelete(project));
 }
 
-export function* importGettingStartedProject(data) {
+export function* importGettingStartedProject(data, userRequested = false) {
   yield put(actions.importGettingStartedProject(data));
 
   let project;
@@ -144,7 +144,7 @@ export function* importGettingStartedProject(data) {
   }
 
   yield put(actions.importGettingStartedProject.success(project, projectManagers, boards, boardMemberships));
-  if (boards.length > 0) {
+  if (userRequested && boards.length > 0) {
     yield call(goToBoard, boards[0].id);
   }
 }

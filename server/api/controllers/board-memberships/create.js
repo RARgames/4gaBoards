@@ -58,7 +58,7 @@ module.exports = {
     const user = await sails.helpers.users.getOne(inputs.userId);
 
     if (!user) {
-      throw Error.USER_NOT_FOUND;
+      throw Errors.USER_NOT_FOUND;
     }
 
     const values = _.pick(inputs, ['role', 'canComment']);

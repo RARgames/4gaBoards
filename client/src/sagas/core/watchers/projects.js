@@ -15,6 +15,6 @@ export default function* projectsWatchers() {
     takeEvery(EntryActionTypes.PROJECT_DELETE, ({ payload: { id } }) => services.deleteProject(id)),
     takeEvery(EntryActionTypes.CURRENT_PROJECT_DELETE, () => services.deleteCurrentProject()),
     takeEvery(EntryActionTypes.PROJECT_DELETE_HANDLE, ({ payload: { project } }) => services.handleProjectDelete(project)),
-    takeEvery(EntryActionTypes.PROJECT_IMPORT_GETTING_STARTED, ({ payload: { data } }) => services.importGettingStartedProject(data)),
+    takeEvery(EntryActionTypes.PROJECT_IMPORT_GETTING_STARTED, ({ payload: { data, userRequested } }) => services.importGettingStartedProject(data, userRequested)),
   ]);
 }

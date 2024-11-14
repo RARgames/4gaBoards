@@ -70,10 +70,11 @@ const handleProjectDelete = (project) => ({
   },
 });
 
-const importGettingStartedProject = (data) => ({
+const importGettingStartedProject = (data, userRequested) => ({
   type: EntryActionTypes.PROJECT_IMPORT_GETTING_STARTED,
   payload: {
     data,
+    userRequested,
   },
 });
 

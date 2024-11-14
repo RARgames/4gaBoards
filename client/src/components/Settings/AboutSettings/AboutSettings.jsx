@@ -27,8 +27,8 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
 
   const handleGettingStartedProjectImportClick = useCallback(() => {
     setImportGettingStartedButtonDisabled(true);
-    onGettingStartedProjectImport({ language: i18n.language });
-  }, [i18n.language, onGettingStartedProjectImport]);
+    onGettingStartedProjectImport({ language: i18n.resolvedLanguage }, true);
+  }, [i18n.resolvedLanguage, onGettingStartedProjectImport]);
 
   useEffect(() => {
     fetchLatestVersion();
@@ -50,7 +50,7 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
         {demoMode && <div className={styles.demoMode}>{t('common.demoMode')}</div>}
         <div className={styles.links}>
           <div className={styles.link}>
-            <ExternalLink href={i18n && i18n.language === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
+            <ExternalLink href={i18n && i18n.resolvedLanguage === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
           </div>
           <div className={styles.link}>
             <ExternalLink href="https://4gaboards.com">{t('common.website')}</ExternalLink>
