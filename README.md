@@ -1,25 +1,23 @@
-# 4ga Boards
-
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/RARgames/4gaBoards?color=orange&style=flat-square)![GitHub](https://img.shields.io/github/license/rargames/4gaBoards?style=flat-square)![GitHub contributors](https://img.shields.io/github/contributors/rargames/4gaboards?style=flat-square)
-
-Kanban boards inspired by discontinued Gitkraken Glo Boards.
+<div align="center">
+  <a href="https://4gaboards.com">
+    <img src="https://github.com/user-attachments/assets/443e9bd8-df6f-4cf3-a8e7-9a79592cb618" alt="4ga Boards">
+  </a>
+  </br>
+  </br>
+  <div>
+    <img src="https://img.shields.io/github/v/release/RARgames/4gaBoards?color=orange&style=flat-square)" alt="GitHub release (latest by date)">
+    <img src="https://img.shields.io/github/license/rargames/4gaBoards?style=flat-square" alt="GitHub">
+    <img src="https://img.shields.io/github/contributors/rargames/4gaboards?style=flat-square" alt="GitHub contributors">
+  </div>
+  </br>
+  The realtime kanban boards for groups inspired by discontinued GitKraken Glo Boards.
+  </br>
+  </br>
+</div>
 
 ![4gaBoards_gif](https://github.com/user-attachments/assets/1f6f1e41-a60d-4529-8cff-964b0d63962f)
 
-Check out [4ga Boards demo!](https://demo.4gaboards.com)
-
-**Recommended: Create a new account to test 4ga Boards** - You can use fake email (we don't require confirmations).
-
-_or use: Demo user: `demo` Demo password: `demo`, but please note that many users might be using it at the same time causing disturbed experience e.g. changing user preferences._
-
-Demo mode - changed features:
-
-- Disabled changing instance settings
-- Disabled changing other users data
-- Every new user receives admin privileges
-- Data is cleared every day at 1:55 CET
-
-Our main priority is to finish all tasks from the [#1 issue](https://github.com/RARgames/4gaBoards/issues/1) - However all tasks are described in separate issues.
+# 4ga Boards
 
 ## Features
 
@@ -53,9 +51,30 @@ Our main priority is to finish all tasks from the [#1 issue](https://github.com/
 - Customizable project backgrounds
 - User notifications
 
-## Getting started docs
+## Demo
+
+Check out 4ga Boards using our [demo](https://demo.4gaboards.com).
+
+**Recommended: Create a new account** - You can use fake email (no email confirmations).
+
+_or use: Demo user: `demo` Demo password: `demo` (please note that many users might be using it at the same time causing disturbed experience e.g. changing user preferences)._
+
+### Demo mode - changed features:
+
+- Disabled changing instance settings
+- Disabled changing other users data
+- Every new user receives admin privileges
+- Data is cleared every day at 1:55 CET
+
+## Documentation
 
 [English](https://docs.4gaboards.com/en/home) | [Polski](https://docs.4gaboards.com/pl/home)
+
+## Roadmap
+
+Our main priority is to finish all tasks from the [#1](https://github.com/RARgames/4gaBoards/issues/1) issue.
+
+All tasks from [#1](https://github.com/RARgames/4gaBoards/issues/1) issue are described in separate issues.
 
 ## Deploy
 
@@ -200,4 +219,3 @@ Demo user: `demo` Demo password: `demo`
 
 [![RARgames](https://github.com/RARgames.png?size=100)](https://github.com/RARgames)
 [![wilkobyl](https://github.com/wilkobyl.png?size=100)](https://github.com/wilkobyl)
-
