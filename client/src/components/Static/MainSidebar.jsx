@@ -298,7 +298,7 @@ const MainSidebar = React.memo(
             {!settingsOnly && <div>{projectsNode}</div>}
           </div>
           <div className={styles.sidebarFooter}>
-            {isAdmin && !settingsOnly && (
+            {!settingsOnly && (
               <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right-end">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />

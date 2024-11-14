@@ -14,7 +14,7 @@ import styles from './Projects.module.scss';
 import gStyles from '../../globalStyles.module.scss';
 import globalStyles from '../../styles.module.scss';
 
-const Projects = React.memo(({ projects, filteredProjects, isAdmin, isFiltered, defaultData, isSubmitting, onCreate }) => {
+const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
   const headerButtonGroupRef = useRef(null);
   const headerButtonGroupOffsetRef = useRef(null);
@@ -35,7 +35,7 @@ const Projects = React.memo(({ projects, filteredProjects, isAdmin, isFiltered, 
     if (headerButtonGroupRef.current) {
       headerButtonGroupOffsetRef.current.style.width = `${headerButtonGroupRef.current.offsetWidth}px`;
     }
-  }, [isAdmin]);
+  }, []);
 
   return (
     <div className={styles.wrapper}>
@@ -45,16 +45,14 @@ const Projects = React.memo(({ projects, filteredProjects, isAdmin, isFiltered, 
           <span>{getProjectsText()}</span> <span className={styles.headerDetails}>{getBoardsText()}</span>
         </div>
         <div ref={headerButtonGroupRef} className={styles.headerButtonGroup}>
-          {isAdmin && (
-            <div className={styles.headerButton}>
-              <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate} offset={16} position="bottom">
-                <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.addButton}>
-                  <Icon type={IconType.Plus} size={IconSize.Size16} className={styles.addButtonIcon} />
-                  {t('common.addProject')}
-                </Button>
-              </ProjectAddPopup>
-            </div>
-          )}
+          <div className={styles.headerButton}>
+            <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate} offset={16} position="bottom">
+              <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.addButton}>
+                <Icon type={IconType.Plus} size={IconSize.Size16} className={styles.addButtonIcon} />
+                {t('common.addProject')}
+              </Button>
+            </ProjectAddPopup>
+          </div>
         </div>
       </div>
       <div className={classNames(styles.projectsWrapper, gStyles.scrollableY)}>
@@ -84,7 +82,6 @@ const Projects = React.memo(({ projects, filteredProjects, isAdmin, isFiltered, 
 Projects.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  isAdmin: PropTypes.bool.isRequired,
   isFiltered: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,

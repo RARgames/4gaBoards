@@ -6,7 +6,6 @@ import entryActions from '../entry-actions';
 import Projects from '../components/Projects';
 
 const mapStateToProps = (state) => {
-  const { isAdmin } = selectors.selectCurrentUser(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const isFiltered = selectors.selectIsFilteredForCurrentUser(state);
   const {
@@ -18,7 +17,6 @@ const mapStateToProps = (state) => {
   return {
     projects,
     filteredProjects,
-    isAdmin,
     isFiltered,
     defaultData,
     isSubmitting,
