@@ -1,4 +1,11 @@
 id,createdAt,updatedAt,position,name,description,dueDate,timer,commentCount,boardId,listId,creatorUserId,coverAttachmentId
+1379251760467543714,"""2024-11-14T19:07:02.000Z""","""2024-11-14T19:07:15.000Z""",32767.5,Different language of Getting Started?,"The Getting Started project is available in:
+- English - <!--red-->EN<!--red-end-->
+- Polish - <!--red-->PL<!--red-end-->
+
+To access the Getting Started in different languages:
+- Change your display language in 4ga Boards - Go to Settings -> Preferences -> Language
+- Re-import Getting Started project - Go to Settings -> About -> Import Getting Started Project",,,0,1378405442631239232,1378405541977523778,1217459187106186241,
 1378444502884157082,"""2024-11-13T16:23:09.000Z""","""2024-11-13T16:26:30.000Z""",32767.5,Edytor tekstu: Opis karty i komentarze,Zarówno opis karty jak i komentarze umożliwiają wykorzystywanie składni Markdown.,,,1,1378405442631239232,1378405862061639241,1217459187106186241,
 1378410686341711445,"""2024-11-13T15:15:58.000Z""","""2024-11-13T15:16:11.000Z""",65535,Strona 4ga Boards,https://4gaboards.com,,,0,1378405442631239232,1378405572897932867,1217459187106186241,
 1378411239780124253,"""2024-11-13T15:17:04.000Z""","""2024-11-13T15:39:35.000Z""",65535,Filtrowanie tablic/projektów,"Użyj pola <!--lime-->Filtruj...<!--lime-end--> w panelu bocznym aby wyszukać konkretne projekty/tablice. 

@@ -1,6 +1,12 @@
 id,createdAt,updatedAt,position,name,description,dueDate,timer,commentCount,boardId,listId,creatorUserId,coverAttachmentId
+1379250421788313248,"""2024-11-14T19:04:22.000Z""","""2024-11-14T19:05:13.000Z""",32767.5,Different language of Getting Started?,"The Getting Started project is available in:
+- English - <!--red-->EN<!--red-end-->
+- Polish - <!--red-->PL<!--red-end-->
+
+To access the Getting Started in different languages:
+- Change your display language in 4ga Boards - Go to Settings -> Preferences -> Language
+- Re-import Getting Started project - Go to Settings -> About -> Import Getting Started Project",,,0,1377637506647852516,1377805600359974383,1217459187106186241,
 1378446465801651869,"""2024-11-13T16:27:03.000Z""","""2024-11-13T16:28:03.000Z""",32767.5,Text editor: Description and Comments,Both the card description and comments allow the use of Markdown syntax.,,,1,1377637506647852516,1377808128837420565,1217459187106186241,
-1377807428959077897,"""2024-11-12T19:17:24.000Z""",,65535,You will see this card only after you expand the list,,,,0,1377637506647852516,1377807382964340232,1217459187106186241,
 1377811664283371060,"""2024-11-12T19:25:49.000Z""","""2024-11-12T19:25:53.000Z""",65535,Description: Local changes,"The <!--yellow-->Local changes<!--yellow-end--> text indicates that the description is still in the edit mode and the changes are not yet registered on the server.
 
 To save them press `Ctrl` + `Enter` or click the <!--lime-->Save<!--lime-end--> button.",,,0,1377637506647852516,1377808128837420565,1217459187106186241,
@@ -11,7 +17,7 @@ Card view menu icons on the top-right corner:
 - Delete card by clicking the <!--orange-->Trash<!--orange-end--> icon (it will open popup to confirm deleting).
 - Open card context menu by clicking the <!--orange-->Ellipsis<!--orange-end--> icon (three dots).
 - Close card view by clicking the <!--orange-->X<!--orange-end--> icon.",,,0,1377637506647852516,1377808094720951828,1217459187106186241,
-1377805666965521904,"""2024-11-12T19:13:54.000Z""","""2024-11-12T19:27:07.000Z""",65535,Getting Started,"## Welcome to 4ga Boards!
+1377805666965521904,"""2024-11-12T19:13:54.000Z""","""2024-11-14T19:04:34.000Z""",65535,Getting Started,"## Welcome to 4ga Boards!
 
 This board is an introduction of how to use 4ga Boards, including some of the basic and unique features. It includes some tips & tricks to help get most of 4ga Boards.
 
@@ -29,6 +35,7 @@ You can also go to the project settings directly by clicking the <!--orange-->Bo
 
 More about settings and permissions:
 https://docs.4gaboards.com/en/admin-settings",,,0,1377637506647852516,1377807494004344331,1217459187106186241,
+1377807428959077897,"""2024-11-12T19:17:24.000Z""",,65535,You will see this card only after you expand the list,,,,0,1377637506647852516,1377807382964340232,1217459187106186241,
 1377637945514657257,"""2024-11-12T13:40:40.000Z""","""2024-11-12T13:41:59.000Z""",131070,Documentation,https://docs.4gaboards.com,,,0,1377637506647852516,1377637875528500710,1217459187106186241,
 1377805769021326834,"""2024-11-12T19:14:06.000Z""","""2024-11-12T20:02:44.000Z""",131070,Useful key combinations,"## Useful key combinations
 
