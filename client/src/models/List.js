@@ -97,6 +97,10 @@ export default class extends BaseModel {
 
   getFilteredOrderedCardsModelArray() {
     let cardModels = this.getOrderedCardsQuerySet().toModelArray();
+    cardModels.forEach((cardModel) => {
+      // eslint-disable-next-line no-param-reassign
+      cardModel.tasksUsers = cardModel.tasks.toModelArray().flatMap((task) => task.users.toRefArray()); // TODO include tasksUsers in the model
+    });
 
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
@@ -104,7 +108,8 @@ export default class extends BaseModel {
     if (filterUserIds.length > 0) {
       cardModels = cardModels.filter((cardModel) => {
         const users = cardModel.users.toRefArray();
-        return users.some((user) => filterUserIds.includes(user.id));
+        const taskUsers = cardModel.tasksUsers;
+        return users.some((user) => filterUserIds.includes(user.id)) || taskUsers.some((user) => filterUserIds.includes(user.id));
       });
     }
 
