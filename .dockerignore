@@ -21,6 +21,7 @@ server/public/*
 server/public/user-avatars/*
 !server/public/project-background-images
 server/public/project-background-images/*
+!server/public/getting-started-project
 
 server/private/*
 !server/private/attachments
