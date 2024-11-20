@@ -71,7 +71,13 @@ export const makeSelectTasksByCardId = () =>
         return cardModel;
       }
 
-      return cardModel.getOrderedTasksQuerySet().toRefArray();
+      return cardModel
+        .getOrderedTasksQuerySet()
+        .toRefArray()
+        .map((task) => ({
+          ...task,
+          isPersisted: !isLocalId(task.id),
+        }));
     },
   );
 

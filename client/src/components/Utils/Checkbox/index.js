@@ -1,3 +1,4 @@
 import Checkbox from './Checkbox';
+import CheckboxSize from './CheckboxSize';
 
-export default Checkbox;
+export { Checkbox, CheckboxSize };

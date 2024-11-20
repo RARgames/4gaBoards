@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch) =>
       onListCreate: entryActions.createListInCurrentBoard,
       onListMove: entryActions.moveList,
       onCardMove: entryActions.moveCard,
+      onTaskMove: entryActions.moveTask,
     },
     dispatch,
   );

@@ -15,6 +15,7 @@ const SIZES = {
   MASSIVE: 'massive',
   CARD: 'card',
   PROFILE: 'profile',
+  CARD_TASKS: 'cardTasks',
 };
 
 const COLORS = ['emerald', 'peter-river', 'wisteria', 'carrot', 'alizarin', 'turquoise', 'midnight-blue'];

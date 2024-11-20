@@ -21,14 +21,17 @@
 
   .dueNormal {
     color: var(--dueDateNormal);
+    fill: var(--dueDateNormal);
   }
 
   .dueClose {
     color: var(--dueDateClose);
+    fill: var(--dueDateClose);
   }
 
   .dueOver {
     color: var(--dueDateOver);
+    fill: var(--dueDateOver);
   }
 
   /* Variants */
@@ -48,5 +51,12 @@
     &:hover {
       filter: brightness(85%);
     }
+  }
+
+  .wrapperTasksCard {
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    vertical-align: 0%;
   }
 }

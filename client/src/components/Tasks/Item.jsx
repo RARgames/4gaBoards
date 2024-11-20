@@ -4,19 +4,24 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox } from '../../Utils';
-import DueDateEditPopup from '../../DueDateEditPopup';
-import DueDate from '../../DueDate';
-import User from '../../User';
-import MembershipsPopup from '../../MembershipsPopup';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize } from '../Utils';
+import DueDateEditPopup from '../DueDateEditPopup';
+import DueDate from '../DueDate';
+import User from '../User';
+import MembershipsPopup from '../MembershipsPopup';
 
 import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
 
 import styles from './Item.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import gStyles from '../../globalStyles.module.scss';
 
-const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users, isCompleted, isPersisted, canEdit, onUpdate, onDelete, onUserAdd, onUserRemove }) => {
+const VARIANTS = {
+  CARD: 'card',
+  CARDMODAL: 'cardModal',
+};
+
+const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, users, isCompleted, isPersisted, canEdit, onUpdate, onDelete, onUserAdd, onUserRemove }) => {
   const [t] = useTranslation();
   const nameEdit = useRef(null);
 
@@ -36,9 +41,12 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
   );
 
   const handleToggleChange = useCallback(() => {
-    onUpdate({
-      isCompleted: !isCompleted,
-    });
+    setTimeout(() => {
+      onUpdate({
+        isCompleted: !isCompleted,
+      });
+    }, 0);
+    // TODO this timeout fixes slow task checkbox updates, but not in development
   }, [isCompleted, onUpdate]);
 
   const handleNameEdit = useCallback(() => {
@@ -54,22 +62,25 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
     [onUpdate],
   );
 
+  const visibleMembersCount = variant === VARIANTS.CARD ? 1 : 3;
+  const dueDateVariant = variant === VARIANTS.CARD ? 'tasksCard' : 'cardModal';
+
   const membersNode = (
     <div className={classNames(styles.members, gStyles.cursorPointer, isCompleted && styles.itemCompleted)}>
-      {users.slice(0, 3).map((user) => (
+      {users.slice(0, visibleMembersCount).map((user) => (
         <span key={user.id} className={styles.member}>
-          <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
+          <User name={user.name} avatarUrl={user.avatarUrl} size={variant === VARIANTS.CARD ? 'cardTasks' : 'card'} />
         </span>
       ))}
-      {users.length > 3 && (
+      {users.length > visibleMembersCount && (
         <span
-          className={styles.moreMembers}
+          className={classNames(styles.moreMembers, variant === VARIANTS.CARD && styles.moreMembersCard)}
           title={users
             .slice(3)
             .map((user) => user.name)
             .join(',\n')}
         >
-          +{users.length - 3}
+          +{users.length - visibleMembersCount}
         </span>
       )}
     </div>
@@ -81,7 +92,13 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
         const contentNode = (
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(styles.wrapper, gStyles.scrollableX, canEdit && styles.contentHoverable)}>
-            <Checkbox checked={isCompleted} disabled={!isPersisted || !canEdit} className={styles.checkbox} onChange={handleToggleChange} />
+            <Checkbox
+              checked={isCompleted}
+              size={variant === VARIANTS.CARD ? CheckboxSize.Size14 : CheckboxSize.Size20}
+              disabled={!isPersisted || !canEdit}
+              className={styles.checkbox}
+              onChange={handleToggleChange}
+            />
             <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <span className={classNames(styles.task, isCompleted && styles.taskCompleted, canEdit && styles.taskEditable)} onClick={handleClick} title={name}>
@@ -89,28 +106,27 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
               </span>
               {users &&
                 (isPersisted && canEdit ? (
-                  <MembershipsPopup items={allBoardMemberships} currentUserIds={users.map((user) => user.id)} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} position="left-start">
+                  <MembershipsPopup items={boardMemberships} currentUserIds={users.map((user) => user.id)} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} position="left-start">
                     {membersNode}
                   </MembershipsPopup>
                 ) : (
                   membersNode
                 ))}
-              {dueDate &&
-                (isPersisted && canEdit ? (
-                  <div className={classNames(styles.dueDate, gStyles.cursorPointer, isCompleted && styles.itemCompleted)}>
+              {dueDate && (
+                <div className={classNames(styles.dueDate, gStyles.cursorPointer, isCompleted && styles.itemCompleted, variant === VARIANTS.CARD && styles.dueDateCard)}>
+                  {isPersisted && canEdit ? (
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-                      <DueDate value={dueDate} />
+                      <DueDate variant={dueDateVariant} value={dueDate} />
                     </DueDateEditPopup>
-                  </div>
-                ) : (
-                  <div className={classNames(styles.dueDate, gStyles.cursorPointer)}>
-                    <DueDate value={dueDate} />
-                  </div>
-                ))}
+                  ) : (
+                    <DueDate variant={dueDateVariant} value={dueDate} />
+                  )}
+                </div>
+              )}
               {isPersisted && canEdit && (
                 <ActionsPopup
                   dueDate={dueDate}
-                  allBoardMemberships={allBoardMemberships}
+                  boardMemberships={boardMemberships}
                   users={users}
                   onUpdate={handleDueDateUpdate}
                   onNameEdit={handleNameEdit}
@@ -121,7 +137,7 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
                   position="left-start"
                   offset={0}
                 >
-                  <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target)}>
+                  <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target, variant === VARIANTS.CARD && styles.buttonCard)}>
                     <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={styles.icon} />
                   </Button>
                 </ActionsPopup>
@@ -137,11 +153,12 @@ const Item = React.memo(({ id, index, name, dueDate, allBoardMemberships, users,
 });
 
 Item.propTypes = {
+  variant: PropTypes.oneOf(Object.values(VARIANTS)).isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
-  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isCompleted: PropTypes.bool.isRequired,
   isPersisted: PropTypes.bool.isRequired,

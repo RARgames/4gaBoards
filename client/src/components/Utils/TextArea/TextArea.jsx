@@ -6,21 +6,23 @@ import TextareaAutosize from 'react-textarea-autosize';
 import styles from './TextArea.module.scss';
 import gStyles from '../../../globalStyles.module.scss';
 
-const TextArea = React.forwardRef(({ disableSpellcheck, className, ...props }, ref) => {
+const TextArea = React.forwardRef(({ disableSpellcheck, className, isError, ...props }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <TextareaAutosize ref={ref} spellCheck={!disableSpellcheck} className={classNames(styles.textarea, gStyles.scrollableY, className)} {...props} />
+    <TextareaAutosize ref={ref} spellCheck={!disableSpellcheck} className={classNames(styles.textarea, gStyles.scrollableY, className, isError && styles.textareaError)} {...props} />
   );
 });
 
 TextArea.propTypes = {
   disableSpellcheck: PropTypes.bool,
   className: PropTypes.string,
+  isError: PropTypes.bool,
 };
 
 TextArea.defaultProps = {
   disableSpellcheck: false,
   className: undefined,
+  isError: false,
 };
 
 export default React.memo(TextArea);

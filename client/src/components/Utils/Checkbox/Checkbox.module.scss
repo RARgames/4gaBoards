@@ -1,21 +1,16 @@
 :global(#app) {
   .checkbox {
     appearance: none;
-    height: 20px;
-    width: 20px;
-    min-width: 20px;
-    min-height: 20px;
     background: var(--backgroundColo0);
     border-radius: 3px;
     border: 1px solid var(--textColor3);
     display: flex;
     align-content: center;
     justify-content: center;
-    font-size: 16px;
     padding: 1px;
 
     &:before {
-      content: "Г";
+      content: 'Г';
       color: var(--textColor2);
       transform: rotate(-135deg);
       visibility: hidden;
@@ -35,5 +30,21 @@
       border: 1px solid var(--backgroundPopupSeparator);
       cursor: not-allowed;
     }
+  }
+
+  .size14 {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+    font-size: 11.2px;
+  }
+
+  .size20 {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 16px;
   }
 }

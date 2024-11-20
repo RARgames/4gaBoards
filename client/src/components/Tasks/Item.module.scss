@@ -3,12 +3,16 @@
     opacity: 0;
   }
 
+  .buttonCard {
+    width: 14px;
+  }
+
   .icon {
     vertical-align: middle;
   }
 
   .contentHoverable:hover {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundColorTmpBackgroundTasks);
 
     .target {
       opacity: 1;
@@ -70,6 +74,7 @@
   }
 
   .moreMembers {
+    color: var(--textColorWhite);
     background: rgba(0, 0, 0, 0.24);
     border-radius: 50%;
     text-align: center;
@@ -78,9 +83,21 @@
     line-height: 25px;
     width: 26px;
     height: 26px;
+    margin: 0 -4px 0 0;
+  }
+
+  .moreMembersCard {
+    font-size: 10px;
+    line-height: 21px;
+    width: 20px;
+    height: 20px;
   }
 
   .dueDate {
+    margin-left: 6px;
+  }
+
+  .dueDateCard {
     margin-left: 4px;
   }
 }

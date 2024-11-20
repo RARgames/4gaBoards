@@ -5,6 +5,7 @@ import EntryActionTypes from '../../../constants/EntryActionTypes';
 
 export default function* tasksWatchers() {
   yield all([
+    takeEvery(EntryActionTypes.TASK_CREATE, ({ payload: { cardId, data } }) => services.createTask(cardId, data)),
     takeEvery(EntryActionTypes.TASK_IN_CURRENT_CARD_CREATE, ({ payload: { data } }) => services.createTaskInCurrentCard(data)),
     takeEvery(EntryActionTypes.TASK_CREATE_HANDLE, ({ payload: { task } }) => services.handleTaskCreate(task)),
     takeEvery(EntryActionTypes.TASK_UPDATE, ({ payload: { id, data } }) => services.updateTask(id, data)),

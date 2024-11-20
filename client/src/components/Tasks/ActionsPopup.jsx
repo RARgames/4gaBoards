@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
-import { useSteps } from '../../../hooks';
-import DeleteStep from '../../DeleteStep';
-import DueDateEditStep from '../../DueDateEditStep';
-import MembershipsStep from '../../MembershipsStep';
+import { useSteps } from '../../hooks';
+import DeleteStep from '../DeleteStep';
+import DueDateEditStep from '../DueDateEditStep';
+import MembershipsStep from '../MembershipsStep';
 
 import styles from './ActionsPopup.module.scss';
 
@@ -16,7 +16,7 @@ const StepTypes = {
   EDIT_MEMBERS: 'EDIT_MEMBERS',
 };
 
-const ActionsStep = React.memo(({ dueDate, allBoardMemberships, users, onUpdate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
+const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
   const userIds = users.map((user) => user.id);
@@ -60,7 +60,7 @@ const ActionsStep = React.memo(({ dueDate, allBoardMemberships, users, onUpdate,
       return <DueDateEditStep defaultValue={dueDate} onUpdate={handleDueDateUpdate} onBack={handleBack} onClose={onClose} />;
     }
     if (step.type === StepTypes.EDIT_MEMBERS) {
-      return <MembershipsStep items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
+      return <MembershipsStep items={boardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
     }
   }
 
@@ -89,7 +89,7 @@ const ActionsStep = React.memo(({ dueDate, allBoardMemberships, users, onUpdate,
 
 ActionsStep.propTypes = {
   dueDate: PropTypes.instanceOf(Date),
-  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onNameEdit: PropTypes.func.isRequired,

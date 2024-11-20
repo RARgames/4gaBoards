@@ -1,21 +1,22 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, TextArea } from '../../Utils';
-import { useField } from '../../../hooks';
+import { TextArea } from '../Utils';
+import { useField } from '../../hooks';
 
 import styles from './TaskEdit.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(null);
   const field = useRef(null);
+  const [isError, setIsError] = useState(false);
 
   const open = useCallback(() => {
     setIsOpen(true);
     setValue(defaultValue);
+    setIsError(false);
   }, [defaultValue, setValue]);
 
   const close = useCallback(() => {
@@ -27,6 +28,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     const cleanValue = value.trim();
 
     if (!cleanValue) {
+      setIsError(true);
       field.current.focus();
       return;
     }
@@ -37,14 +39,6 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
     close();
   }, [value, defaultValue, close, onUpdate]);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
-
-  const handleCancel = useCallback(() => {
-    close();
-  }, [close]);
 
   useImperativeHandle(
     ref,
@@ -57,24 +51,20 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   const handleFieldKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       if (event.key === 'Enter') {
         event.preventDefault();
         submit();
       } else if (event.key === 'Escape') {
-        handleCancel();
-      }
-    },
-    [handleCancel, submit],
-  );
-
-  const handleBlur = useCallback(
-    (e) => {
-      if (e.target.value.trim() === defaultValue.trim()) {
         close();
       }
     },
-    [close, defaultValue],
+    [close, submit],
   );
+
+  const handleBlur = useCallback(() => {
+    submit();
+  }, [submit]);
 
   useEffect(() => {
     if (isOpen) {
@@ -87,13 +77,17 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   }
 
   return (
-    <Form onSubmit={handleSubmit} className={styles.wrapper}>
-      <TextArea ref={field} value={value} className={styles.field} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} onFocus={handleFocus} />
-      <div className={gStyles.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button style={ButtonStyle.Submit} content={t('action.save')} />
-      </div>
-    </Form>
+    <TextArea
+      ref={field}
+      value={value}
+      placeholder={t('common.enterTaskDescription')}
+      className={styles.field}
+      isError={isError}
+      onKeyDown={handleFieldKeyDown}
+      onChange={handleFieldChange}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+    />
   );
 });
 

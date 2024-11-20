@@ -1,0 +1,68 @@
+:global(#app) {
+  .wrapper {
+    padding: 0 0 8px 0;
+  }
+
+  .progressWrapper {
+    display: flex;
+    line-height: 0;
+    align-items: center;
+  }
+
+  .progressWrapperOpen {
+    margin-bottom: 8px;
+  }
+
+  .progressCard {
+    margin: 0;
+    background: var(--backgroundList);
+  }
+
+  .progress {
+    margin: 2px 1px 8px 1px;
+    background: var(--backgroundColorTmpDarkerField2);
+  }
+
+  .toggleTasksButton {
+    width: auto;
+    height: auto;
+    color: var(--textColor1);
+    font-size: 12px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+
+    &:hover {
+      color: var(--textColor3);
+
+      .countToggleIcon {
+        fill: var(--textColor3);
+      }
+    }
+  }
+
+  .countToggleIcon {
+    margin-left: 1px;
+  }
+
+  .countToggleIconOpened {
+    transform: rotate(-90deg);
+  }
+
+  .taskButton {
+    margin-top: 4px;
+  }
+
+  .taskButtonCard {
+    background: var(--backgroundColorTmpDarkerField);
+
+    &:hover {
+      color: var(--textColor2);
+    }
+  }
+
+  .taskButtonCardActive {
+    background: var(--backgroundColorTmpHeader);
+  }
+}

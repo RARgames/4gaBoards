@@ -35,17 +35,26 @@ export default (WrappedComponent, defaultProps) => {
       }
     }, [onClose]);
 
+    const handleOpen = useCallback((e) => {
+      e.stopPropagation();
+      setIsOpen(true);
+    }, []);
+
+    const handleWithinPopupClick = useCallback((e) => {
+      e.stopPropagation();
+    }, []);
+
     return (
       <>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps()} className={classNames(styles.wrapper, wrapperClassName, defaultProps?.wrapperClassName)}>
+        <div ref={refs.setReference} {...getReferenceProps({ onClick: handleOpen })} className={classNames(styles.wrapper, wrapperClassName, defaultProps?.wrapperClassName)}>
           {children}
         </div>
         {isOpen && (
           <FloatingPortal>
             <FloatingFocusManager context={context} modal={false} returnFocus={false}>
-              {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-              <div className={classNames(styles.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()}>
+              {/* eslint-disable-next-line react/jsx-props-no-spreading, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+              <div className={classNames(styles.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} onClick={handleWithinPopupClick}>
                 {!(defaultProps?.hideCloseButton || hideCloseButton) && (
                   <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(styles.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                     <Icon type={IconType.Close} size={IconSize.Size14} />

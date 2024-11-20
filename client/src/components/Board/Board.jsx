@@ -16,7 +16,7 @@ import gStyles from '../../globalStyles.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
 
-const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove }) => {
+const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove, onTaskMove }) => {
   const [t] = useTranslation();
   const [isListAddOpened, setIsListAddOpened] = useState(false);
   const wrapper = useRef(null);
@@ -51,10 +51,15 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
 
           break;
         }
+        case DroppableTypes.TASK: {
+          onTaskMove(draggableId, destination.index);
+
+          break;
+        }
         default:
       }
     },
-    [onListMove, onCardMove],
+    [onListMove, onCardMove, onTaskMove],
   );
 
   const handleMouseDown = useCallback(
@@ -154,6 +159,7 @@ Board.propTypes = {
   onListCreate: PropTypes.func.isRequired,
   onListMove: PropTypes.func.isRequired,
   onCardMove: PropTypes.func.isRequired,
+  onTaskMove: PropTypes.func.isRequired,
 };
 
 export default Board;

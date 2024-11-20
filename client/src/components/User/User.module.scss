@@ -20,7 +20,7 @@
     line-height: 1;
     outline: none;
     text-align: center;
-    vertical-align: top;
+    vertical-align: middle;
   }
 
   .wrapperHoverable:hover {
@@ -84,6 +84,15 @@
     height: 200px;
     padding: 48px 0 10px;
     width: 200px;
+  }
+
+  .wrapperCardTasks {
+    font-size: 10px;
+    font-weight: 400;
+    height: 18px;
+    line-height: 14px;
+    padding: 2px 0;
+    width: 18px;
   }
 
   /* Backgrounds */

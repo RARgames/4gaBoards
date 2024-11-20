@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../Utils';
+import { Button, Icon, IconType, IconSize } from '../Utils';
 
 import styles from './DueDate.module.scss';
 
 const VARIANTS = {
   CARD: 'card',
   CARDMODAL: 'cardModal',
+  TASKS_CARD: 'tasksCard',
 };
 
 const getDueStyle = (value) => {
@@ -41,7 +42,8 @@ const DueDate = React.memo(({ value, variant, isDisabled, onClick }) => {
 
   const contentNode = value && (
     <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], styles[`due${dueStyle}`])} title={t(`format:date`, { value, postProcess: 'formatDate' })}>
-      {t(`format:date`, { value, postProcess: 'formatDate' })}
+      {variant !== VARIANTS.TASKS_CARD && t(`format:date`, { value, postProcess: 'formatDate' })}
+      {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={IconSize.Size13} className={styles[`due${dueStyle}`]} />}
     </span>
   );
 

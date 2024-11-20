@@ -17,4 +17,16 @@
       border: 1px solid var(--borderOutline2);
     }
   }
+
+  .textareaError {
+    border: 1px solid var(--errorRed);
+
+    &:focus {
+      border: 1px solid var(--errorRed);
+    }
+
+    &::placeholder {
+      color: var(--errorRed);
+    }
+  }
 }

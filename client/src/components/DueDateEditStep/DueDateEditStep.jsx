@@ -97,7 +97,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

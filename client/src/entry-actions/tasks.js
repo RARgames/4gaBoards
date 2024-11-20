@@ -1,5 +1,13 @@
 import EntryActionTypes from '../constants/EntryActionTypes';
 
+const createTask = (cardId, data) => ({
+  type: EntryActionTypes.TASK_CREATE,
+  payload: {
+    cardId,
+    data,
+  },
+});
+
 const createTaskInCurrentCard = (data) => ({
   type: EntryActionTypes.TASK_IN_CURRENT_CARD_CREATE,
   payload: {
@@ -52,6 +60,7 @@ const handleTaskDelete = (task) => ({
 });
 
 export default {
+  createTask,
   createTaskInCurrentCard,
   handleTaskCreate,
   updateTask,

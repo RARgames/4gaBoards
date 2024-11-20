@@ -28,7 +28,10 @@ const makeMapStateToProps = () => {
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
-    const tasks = selectTasksByCardId(state, id);
+    const tasks = selectTasksByCardId(state, id).map((task) => ({
+      ...task,
+      users: selectors.selectUsersForTaskById(state, task.id),
+    }));
     const notificationsTotal = selectNotificationsTotalByCardId(state, id);
     const attachmentsCount = selectAttachmentsCountByCardId(state, id);
 
@@ -78,6 +81,12 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onLabelUpdate: (labelId, data) => entryActions.updateLabel(labelId, data),
       onLabelMove: (labelId, index) => entryActions.moveLabel(labelId, index),
       onLabelDelete: (labelId) => entryActions.deleteLabel(labelId),
+      onTaskUpdate: (taskId, data) => entryActions.updateTask(taskId, data),
+      onTaskDelete: (taskId) => entryActions.deleteTask(taskId),
+      onUserToTaskAdd: (userId, taskId, cardId) => entryActions.addUserToTask(userId, taskId, cardId),
+      onUserFromTaskRemove: (userId, taskId) => entryActions.removeUserFromTask(userId, taskId),
+      onTaskCreate: (data) => entryActions.createTask(id, data),
+      onTaskMove: (taskId, index) => entryActions.moveTask(taskId, index),
     },
     dispatch,
   );

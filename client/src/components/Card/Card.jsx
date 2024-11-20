@@ -1,14 +1,14 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import { startTimer, stopTimer } from '../../utils/timer';
 import Paths from '../../constants/Paths';
-import Tasks from './Tasks';
+import Tasks from '../Tasks';
 import NameEdit from './NameEdit';
 import ActionsPopup from './ActionsPopup';
 import User from '../User';
@@ -56,10 +56,18 @@ const Card = React.memo(
     onLabelUpdate,
     onLabelMove,
     onLabelDelete,
+    onTaskUpdate,
+    onTaskDelete,
+    onUserToTaskAdd,
+    onUserFromTaskRemove,
+    onTaskCreate,
+    onTaskMove,
   }) => {
     const [t] = useTranslation();
     const nameEdit = useRef(null);
     const cardRef = useRef(null);
+    const [isDragOverTask, setIsDragOverTask] = useState(false);
+    const navigate = useNavigate();
 
     const scrollCardIntoView = useCallback(() => {
       cardRef.current?.scrollIntoView({
@@ -69,11 +77,27 @@ const Card = React.memo(
       });
     }, []);
 
-    const handleClick = useCallback(() => {
-      if (document.activeElement) {
-        document.activeElement.blur();
-      }
-    }, []);
+    const handleClick = useCallback(
+      (event) => {
+        // Prevent card click if user is trying to edit card details such as tasks
+        let { target } = event;
+        while (target) {
+          if (target.dataset.preventCardSwitch) {
+            return;
+          }
+          if (target.classList.contains(styles.card)) {
+            break;
+          }
+          target = target.parentElement;
+        }
+
+        navigate(Paths.CARDS.replace(':id', id));
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
+      },
+      [id, navigate],
+    );
 
     // TODO should be possible without 200ms timeout, but it's not due to other issues - somewhere else
     // eslint-disable-next-line consistent-return
@@ -112,14 +136,22 @@ const Card = React.memo(
       }
       return {
         ...style,
-        transitionDuration: `0.1s`,
+        transitionDuration: `0.05s`,
       };
     };
+
+    const handleTasksMouseEnter = useCallback(() => {
+      setIsDragOverTask(true);
+    }, []);
+
+    const handleTasksMouseOut = useCallback(() => {
+      setIsDragOverTask(false);
+    }, []);
 
     const contentNode = (
       <>
         <div className={styles.cardTitle}>
-          <div className={styles.details}>
+          <div className={styles.detailsTitle}>
             <div title={name} className={styles.name}>
               {name}
             </div>
@@ -138,7 +170,24 @@ const Card = React.memo(
               ))}
             </span>
           )}
-          {tasks.length > 0 && <Tasks items={tasks} />}
+          {tasks.length > 0 && (
+            <Tasks
+              variant="card"
+              isCardActive={isOpen}
+              cardId={id}
+              items={tasks}
+              canEdit={canEdit}
+              boardMemberships={allBoardMemberships}
+              onCreate={onTaskCreate}
+              onUpdate={onTaskUpdate}
+              onMove={onTaskMove}
+              onDelete={onTaskDelete}
+              onUserAdd={onUserToTaskAdd}
+              onUserRemove={onUserFromTaskRemove}
+              onMouseEnterTasks={handleTasksMouseEnter}
+              onMouseLeaveTasks={handleTasksMouseOut}
+            />
+          )}
           {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
             <span className={styles.attachments}>
               {description && (
@@ -162,7 +211,7 @@ const Card = React.memo(
                 </span>
               )}
               {timer && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+                <span className={classNames(styles.attachment, styles.attachmentLeft)} data-prevent-card-switch>
                   <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
                 </span>
               )}
@@ -182,7 +231,7 @@ const Card = React.memo(
     );
 
     return (
-      <Draggable draggableId={`card:${id}`} index={index} isDragDisabled={!isPersisted || !canEdit}>
+      <Draggable draggableId={`card:${id}`} index={index} isDragDisabled={isDragOverTask || !isPersisted || !canEdit}>
         {(provided, snapshot) => (
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={styles.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
@@ -190,9 +239,15 @@ const Card = React.memo(
               <div ref={cardRef} className={classNames(styles.card, isOpen && styles.cardOpen)}>
                 {isPersisted ? (
                   <>
-                    <Link to={Paths.CARDS.replace(':id', id)} className={styles.content} onClick={handleClick}>
+                    {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+                    <div
+                      className={styles.content}
+                      onClick={(e) => {
+                        handleClick(e);
+                      }}
+                    >
                       {contentNode}
-                    </Link>
+                    </div>
                     {canEdit && (
                       <div className={styles.popupWrapper}>
                         <ActionsPopup
@@ -285,6 +340,12 @@ Card.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
+  onTaskUpdate: PropTypes.func.isRequired,
+  onTaskDelete: PropTypes.func.isRequired,
+  onUserToTaskAdd: PropTypes.func.isRequired,
+  onUserFromTaskRemove: PropTypes.func.isRequired,
+  onTaskCreate: PropTypes.func.isRequired,
+  onTaskMove: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {

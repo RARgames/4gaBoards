@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, MDPreview } fr
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
 import DescriptionEdit from './DescriptionEdit';
-import Tasks from './Tasks';
+import Tasks from '../Tasks';
 import Attachments from './Attachments';
 import AttachmentAddZone from './AttachmentAddZone';
 import AttachmentAdd from './AttachmentAdd';
@@ -225,7 +225,7 @@ const CardModal = React.memo(
         handleToggleTasksShown();
       }
       const timeout = setTimeout(() => {
-        tasksRef.current?.open();
+        tasksRef.current?.openTaskAdd();
       }, 0);
       return () => clearTimeout(timeout);
     }, [handleToggleTasksShown, taskShown]);
@@ -580,10 +580,11 @@ const CardModal = React.memo(
           {taskShown && (
             <Tasks
               ref={tasksRef}
+              variant="cardModal"
               cardId={id}
               items={tasks}
               canEdit={canEdit}
-              allBoardMemberships={allBoardMemberships}
+              boardMemberships={allBoardMemberships}
               onCreate={onTaskCreate}
               onUpdate={onTaskUpdate}
               onMove={onTaskMove}
