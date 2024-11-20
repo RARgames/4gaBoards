@@ -36,6 +36,7 @@ const makeMapStateToProps = () => {
     const attachmentsCount = selectAttachmentsCountByCardId(state, id);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+    const url = selectors.selectUrlForCurrentCard(state);
 
     return {
       id,
@@ -60,6 +61,7 @@ const makeMapStateToProps = () => {
       allBoardMemberships,
       allLabels,
       canEdit: isCurrentUserEditor,
+      url,
     };
   };
 };

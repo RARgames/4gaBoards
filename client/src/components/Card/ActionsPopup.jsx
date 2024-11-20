@@ -31,6 +31,7 @@ const ActionsStep = React.memo(
     currentUserIds,
     labels,
     currentLabelIds,
+    url,
     onNameEdit,
     onUpdate,
     onMove,
@@ -92,6 +93,11 @@ const ActionsStep = React.memo(
       },
       [onUpdate],
     );
+
+    const handleCopyLink = useCallback(() => {
+      // eslint-disable-next-line no-undef
+      navigator.clipboard.writeText(url);
+    }, [url]);
 
     const handleTimerUpdate = useCallback(
       (timer) => {
@@ -159,6 +165,7 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink} />
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
@@ -177,6 +184,7 @@ ActionsStep.propTypes = {
   currentUserIds: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
   currentLabelIds: PropTypes.array.isRequired,
+  url: PropTypes.string.isRequired,
   /* eslint-enable react/forbid-prop-types */
   onNameEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,

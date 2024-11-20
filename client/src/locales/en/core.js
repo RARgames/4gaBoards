@@ -191,6 +191,7 @@ export default {
       latestVersion: 'Latest version:',
       leaveBoard_title: 'Leave Board',
       leaveProject_title: 'Leave Project',
+      linkCard: 'Copy Link',
       list: 'List',
       listActions_title: 'List Actions',
       managers: 'Managers',

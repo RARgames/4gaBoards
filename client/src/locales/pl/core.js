@@ -199,6 +199,7 @@ export default {
       latestVersion: 'Najnowsza wersja:',
       leaveBoard_title: 'Opuść tablicę',
       leaveProject_title: 'Opuść projekt',
+      linkCard: 'Kopiuj link',
       list: 'Lista',
       listActions_title: 'Edytuj listę',
       managers: 'Moderatorzy',

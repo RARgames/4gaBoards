@@ -4,6 +4,7 @@ import orm from '../orm';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
 import { isLocalId } from '../utils/local-id';
+import Paths from '../constants/Paths';
 
 export const makeSelectCardById = () =>
   createSelector(
@@ -306,6 +307,23 @@ export const selectNotificationIdsForCurrentCard = createSelector(
   },
 );
 
+export const selectUrlForCurrentCard = createSelector(
+  orm,
+  (state) => selectPath(state).cardId,
+  // eslint-disable-next-line no-unused-vars
+  ({ Card }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const { origin } = window.location;
+    const cardPath = Paths.CARDS.replace(':id', id);
+    const url = `${origin}${cardPath}`;
+
+    return url;
+  },
+);
+
 export default {
   makeSelectCardById,
   selectCardById,
@@ -330,4 +348,5 @@ export default {
   selectAttachmentsForCurrentCard,
   selectActivitiesForCurrentCard,
   selectNotificationIdsForCurrentCard,
+  selectUrlForCurrentCard,
 };

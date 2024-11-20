@@ -199,6 +199,7 @@ export default {
       latestVersion: 'Dernière version',
       leaveBoard_title: 'Quitter le tableau',
       leaveProject_title: 'Quitter le projet',
+      linkCard: 'Copier le lien',
       list: 'Lister',
       listActions_title: 'Liste des actions',
       managers: 'Gestionnaires',

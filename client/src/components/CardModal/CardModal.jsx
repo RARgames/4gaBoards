@@ -63,6 +63,7 @@ const CardModal = React.memo(
     canEditAllCommentActivities,
     commentMode,
     commentCount,
+    url,
     onCurrentUserUpdate,
     onUpdate,
     onMove,
@@ -340,6 +341,7 @@ const CardModal = React.memo(
               currentUserIds={users.map((user) => user.id)}
               labels={allLabels}
               currentLabelIds={labels.map((label) => label.id)}
+              url={url}
               onNameEdit={handleNameEdit}
               onUpdate={onUpdate}
               onMove={onMove}
@@ -736,6 +738,7 @@ CardModal.propTypes = {
   canEditAllCommentActivities: PropTypes.bool.isRequired,
   commentMode: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
   onCurrentUserUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,

@@ -41,6 +41,7 @@ const Card = React.memo(
     allProjectsToLists,
     allBoardMemberships,
     allLabels,
+    url,
     canEdit,
     onUpdate,
     onMove,
@@ -263,6 +264,7 @@ const Card = React.memo(
                           currentUserIds={users.map((user) => user.id)}
                           labels={allLabels}
                           currentLabelIds={labels.map((label) => label.id)}
+                          url={url}
                           onNameEdit={handleNameEdit}
                           onUpdate={onUpdate}
                           onMove={onMove}
@@ -324,6 +326,7 @@ Card.propTypes = {
   allProjectsToLists: PropTypes.array.isRequired,
   allBoardMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,
+  url: PropTypes.string.isRequired,
   /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
