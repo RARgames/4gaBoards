@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
     isCurrentUserEditor = currentUserMembership.role === BoardMembershipRoles.EDITOR;
     isCurrentUserEditorOrCanComment = isCurrentUserEditor || currentUserMembership.canComment;
   }
-  const url = selectors.selectUrlForCurrentCard(state);
+  const url = selectors.selectUrlForCard(state, id);
 
   return {
     name,

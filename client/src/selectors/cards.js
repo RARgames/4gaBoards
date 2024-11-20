@@ -307,9 +307,9 @@ export const selectNotificationIdsForCurrentCard = createSelector(
   },
 );
 
-export const selectUrlForCurrentCard = createSelector(
+export const selectUrlForCard = createSelector(
   orm,
-  (state) => selectPath(state).cardId,
+  (_, id) => id,
   // eslint-disable-next-line no-unused-vars
   ({ Card }, id) => {
     if (!id) {
@@ -348,5 +348,5 @@ export default {
   selectAttachmentsForCurrentCard,
   selectActivitiesForCurrentCard,
   selectNotificationIdsForCurrentCard,
-  selectUrlForCurrentCard,
+  selectUrlForCard,
 };
