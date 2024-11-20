@@ -97,7 +97,8 @@ const ActionsStep = React.memo(
     const handleCopyLink = useCallback(() => {
       // eslint-disable-next-line no-undef
       navigator.clipboard.writeText(url);
-    }, [url]);
+      onClose();
+    }, [onClose, url]);
 
     const handleTimerUpdate = useCallback(
       (timer) => {
