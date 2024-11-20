@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
     isCurrentUserEditor = currentUserMembership.role === BoardMembershipRoles.EDITOR;
     isCurrentUserEditorOrCanComment = isCurrentUserEditor || currentUserMembership.canComment;
   }
+  const url = selectors.selectUrlForCurrentCard(state);
 
   return {
     name,
@@ -77,6 +78,7 @@ const mapStateToProps = (state) => {
     canEditCommentActivities: isCurrentUserEditorOrCanComment,
     canEditAllCommentActivities: isCurrentUserManager,
     commentMode,
+    url,
   };
 };
 
