@@ -11,7 +11,7 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
   const [t] = useTranslation();
   const field = useRef(null);
 
-  const [data, handleFieldChange] = useForm(() => ({
+  const [data, handleFieldChange, , handleFocus] = useForm(() => ({
     name: '',
     ...defaultData,
   }));
@@ -61,7 +61,7 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
       <Popup.Header onBack={onBack}>{title}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <TextArea ref={field} name="name" value={data.name} onChange={handleFieldChange} onKeyDown={handleFieldKeyDown} maxRows={3} />
+          <TextArea ref={field} name="name" value={data.name} onChange={handleFieldChange} onKeyDown={handleFieldKeyDown} maxRows={3} onFocus={handleFocus} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={onClose} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
