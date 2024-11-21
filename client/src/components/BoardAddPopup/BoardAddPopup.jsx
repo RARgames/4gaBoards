@@ -202,7 +202,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}
             </Button>
-            <Button style={ButtonStyle.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={styles.submitButton} />
+            <Button style={ButtonStyle.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={styles.submitButton} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

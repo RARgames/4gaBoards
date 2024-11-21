@@ -123,7 +123,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
           </div>
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            {isEditing && <Button style={ButtonStyle.Submit} content={t('action.save')} />}
+            {isEditing && <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />}
             {!isEditing &&
               (defaultValue && defaultValue.startedAt ? (
                 <Button style={ButtonStyle.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>

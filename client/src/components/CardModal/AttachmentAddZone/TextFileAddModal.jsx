@@ -47,7 +47,7 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
         <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
         <div className={styles.inputLabel}>.txt</div>
         <div className={gStyles.controls}>
-          <Button style={ButtonStyle.Submit} content={t('action.createFile')} />
+          <Button style={ButtonStyle.Submit} content={t('action.createFile')} onClick={handleSubmit} />
         </div>
       </Form>
     </>

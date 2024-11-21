@@ -156,7 +156,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
       />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button style={ButtonStyle.Submit} content={t('action.save')} />
+        <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
       </div>
     </Form>
   );

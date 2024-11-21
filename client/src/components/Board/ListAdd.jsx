@@ -89,7 +89,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
       <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterListTitle')} maxRows={2} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button style={ButtonStyle.Submit} content={t('action.addList')} />
+        <Button style={ButtonStyle.Submit} content={t('action.addList')} onClick={handleSubmit} />
       </div>
     </Form>
   );

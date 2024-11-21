@@ -125,7 +125,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             </>
           )}
           <div className={gStyles.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} />
+            <Button style={ButtonStyle.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

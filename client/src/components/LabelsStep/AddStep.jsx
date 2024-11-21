@@ -36,7 +36,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
         <Form onSubmit={handleSubmit}>
           <Editor data={data} onFieldChange={handleFieldChange} />
           <div className={gStyles.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.createLabel')} />
+            <Button style={ButtonStyle.Submit} content={t('action.createLabel')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

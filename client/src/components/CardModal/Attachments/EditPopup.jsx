@@ -73,7 +73,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
           <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

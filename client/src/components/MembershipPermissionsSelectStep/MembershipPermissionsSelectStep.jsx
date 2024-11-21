@@ -64,7 +64,7 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
             </div>
           )}
           <div className={gStyles.controls}>
-            <Button style={ButtonStyle.Submit} content={t(buttonContent)} />
+            <Button style={ButtonStyle.Submit} content={t(buttonContent)} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

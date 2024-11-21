@@ -49,7 +49,7 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
       <div className={styles.text}>{t('common.title')}</div>
       <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
       <div className={gStyles.controls}>
-        <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} />
+        <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
       </div>
     </Form>
   );

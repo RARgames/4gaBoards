@@ -69,7 +69,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
           <Input ref={inputRef} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={classNames(styles.field, isError && styles.fieldError)} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

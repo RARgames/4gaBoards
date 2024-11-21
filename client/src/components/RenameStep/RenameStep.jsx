@@ -64,7 +64,7 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
           <TextArea ref={field} name="name" value={data.name} onChange={handleFieldChange} onKeyDown={handleFieldKeyDown} maxRows={3} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={onClose} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

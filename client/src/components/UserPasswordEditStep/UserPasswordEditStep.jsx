@@ -108,7 +108,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
             </>
           )}
           <div className={gStyles.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} />
+            <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>
