@@ -175,27 +175,35 @@ It's already available in 4ga Boards. Just add a project, then click Import whil
 
 Clone the repository into a directory of your choice, install dependencies, copy .env:
 
-```
+```bash
 git clone https://github.com/RARgames/4gaBoards.git .
 npm i
 cp server/.env.sample server/.env
 ```
 
+_Optional: Build client, copy build to the `server` directory to suppress startup warnings_
+
+```bash
+npm run client:build
+cp -r client/build server/public
+cp client/build/index.html server/views/index.ejs
+```
+
 Either use a local database or start the provided development database:
 
-```
+```bash
 docker compose -f docker-compose-dev.yml up
 ```
 
 Edit `DATABASE_URL` in `server/.env` if needed, then initialize the database:
 
-```
+```bash
 npm run server:db:init
 ```
 
 Start the development server:
 
-```
+```bash
 npm start
 ```
 
