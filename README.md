@@ -192,7 +192,7 @@ cp client/build/index.html server/views/index.ejs
 Either use a local database or start the provided development database:
 
 ```bash
-docker compose -f docker-compose-dev.yml up
+docker compose -f docker-compose-dev.yml up -d
 ```
 
 Edit `DATABASE_URL` in `server/.env` if needed, then initialize the database:
