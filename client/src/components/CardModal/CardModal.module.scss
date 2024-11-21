@@ -216,4 +216,11 @@
     color: var(--textColor3);
     margin-left: 4px;
   }
+
+  .taskDueDateSummaryWrapper {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 4px;
+    cursor: pointer;
+  }
 }

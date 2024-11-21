@@ -558,12 +558,18 @@ const CardModal = React.memo(
     );
 
     const completedTasks = tasks.filter((task) => task.isCompleted);
+    const closestNotCompletedTaslDueDate = tasks.filter((task) => !task.isCompleted && task.dueDate).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0];
 
     const tasksNode = (tasks.length > 0 || canEdit) && (
       <div className={styles.contentModule}>
         <div className={styles.moduleHeader}>
           <Icon type={IconType.Check} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.tasks')}
+          {tasks.length > 0 && closestNotCompletedTaslDueDate && (
+            <div className={styles.taskDueDateSummaryWrapper}>
+              <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} />
+            </div>
+          )}
           {tasks.length > 0 && (
             <div className={styles.headerCount}>
               ({completedTasks.length}/{tasks.length})
