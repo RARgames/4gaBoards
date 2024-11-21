@@ -35,8 +35,13 @@ export default class extends BaseModel {
         }
 
         if (payload.taskMemberships) {
+          Task.all()
+            .toModelArray()
+            .forEach((taskModel) => {
+              taskModel.deleteClearable();
+            });
+
           payload.taskMemberships.forEach(({ taskId, userId }) => {
-            Task.withId(taskId).users.clear();
             Task.withId(taskId).users.add(userId);
           });
         }
