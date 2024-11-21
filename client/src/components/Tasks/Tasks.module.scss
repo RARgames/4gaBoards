@@ -23,6 +23,16 @@
     background: var(--backgroundColorTmpDarkerField2);
   }
 
+  .progressItems {
+    display: flex;
+    align-items: center;
+  }
+
+  .dueDateSummary {
+    margin-left: 4px;
+    line-height: 11px;
+  }
+
   .toggleTasksButton {
     width: auto;
     height: auto;

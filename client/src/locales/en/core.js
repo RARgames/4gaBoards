@@ -119,6 +119,7 @@ export default {
       done: 'Done',
       dropFileToUpload: 'Drop files to upload',
       dueDate_title: 'Due Date',
+      dueDateSummary: 'The closest due date for unfinished task:',
       editAttachment_title: 'Edit Attachment',
       editAttachment: 'Edit Attachment',
       editAvatar_title: 'Edit Avatar',

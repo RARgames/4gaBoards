@@ -127,6 +127,7 @@ export default {
       done: 'Zrobione',
       dropFileToUpload: 'Upuść pliki aby wgrać',
       dueDate_title: 'Termin',
+      dueDateSummary: 'Najbliższy termin nieukończonego zadania:',
       editAttachment_title: 'Edytuj załącznik',
       editAttachment: 'Edytuj załącznik',
       editAvatar_title: 'Edytuj awatar',

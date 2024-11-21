@@ -127,6 +127,7 @@ export default {
       done: 'Terminé',
       dropFileToUpload: 'Déposer le fichier à télécharger',
       dueDate_title: "Date d'échéance",
+      dueDateSummary: 'La date d’échéance la plus proche pour une tâche inachevée:',
       editAttachment_title: 'Modifier la pièce jointe',
       editAttachment: 'Modifier la pièce jointe',
       editAvatar_title: 'Modifier Avatar',

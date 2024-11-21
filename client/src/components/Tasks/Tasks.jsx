@@ -5,6 +5,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import { useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, ProgressBar, ProgressBarSize, Icon, IconType, IconSize } from '../Utils';
+import DueDate from '../DueDate';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import Item from './Item';
@@ -84,6 +85,7 @@ const Tasks = React.forwardRef(
     );
 
     const completedItems = items.filter((item) => item.isCompleted);
+    const closestNotCompletedTaslDueDate = items.filter((item) => !item.isCompleted && item.dueDate).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0];
 
     const tasksNode = (
       <Droppable droppableId="tasks" type={DroppableTypes.TASK}>
@@ -130,10 +132,15 @@ const Tasks = React.forwardRef(
           <div className={classNames(styles.progressWrapper, isOpen && styles.progressWrapperOpen)}>
             <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={classNames(variant === VARIANTS.CARD ? styles.progressCard : styles.progress)} />
             {variant === VARIANTS.CARD && (
-              <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={styles.toggleTasksButton}>
-                {completedItems.length}/{items.length}
-                <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpen && styles.countToggleIconOpened)} />
-              </Button>
+              <div className={styles.progressItems}>
+                {closestNotCompletedTaslDueDate && (
+                  <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={styles.dueDateSummary} />
+                )}
+                <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={styles.toggleTasksButton}>
+                  {completedItems.length}/{items.length}
+                  <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpen && styles.countToggleIconOpened)} />
+                </Button>
+              </div>
             )}
           </div>
         )}

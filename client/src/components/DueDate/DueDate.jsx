@@ -30,7 +30,7 @@ const getDueStyle = (value) => {
 };
 
 // TODO remove old onClick and Button variant
-const DueDate = React.memo(({ value, variant, isDisabled, onClick }) => {
+const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize, className, onClick }) => {
   const [t] = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
 
@@ -40,10 +40,15 @@ const DueDate = React.memo(({ value, variant, isDisabled, onClick }) => {
     }
   }, [value]);
 
+  const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
+
   const contentNode = value && (
-    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], styles[`due${dueStyle}`])} title={t(`format:date`, { value, postProcess: 'formatDate' })}>
+    <span
+      className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], styles[`due${dueStyle}`], className)}
+      title={`${titlePrefixString}${t(`format:date`, { value, postProcess: 'formatDate' })}`}
+    >
       {variant !== VARIANTS.TASKS_CARD && t(`format:date`, { value, postProcess: 'formatDate' })}
-      {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={IconSize.Size13} className={styles[`due${dueStyle}`]} />}
+      {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={styles[`due${dueStyle}`]} />}
     </span>
   );
 
@@ -60,6 +65,9 @@ DueDate.propTypes = {
   value: PropTypes.instanceOf(Date),
   variant: PropTypes.oneOf(Object.values(VARIANTS)),
   isDisabled: PropTypes.bool,
+  titlePrefix: PropTypes.string,
+  iconSize: PropTypes.oneOf(Object.values(IconSize)),
+  className: PropTypes.string,
   onClick: PropTypes.func,
 };
 
@@ -67,6 +75,9 @@ DueDate.defaultProps = {
   value: undefined,
   variant: VARIANTS.CARDMODAL,
   isDisabled: false,
+  titlePrefix: undefined,
+  iconSize: IconSize.Size13,
+  className: undefined,
   onClick: undefined,
 };
 
