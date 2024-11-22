@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Input, Form, withModal } from '../../Utils';
 import { useForm } from '../../../hooks';
 
-import styles from './TextFileAddModal.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './TextFileAddModal.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
   const [t] = useTranslation();

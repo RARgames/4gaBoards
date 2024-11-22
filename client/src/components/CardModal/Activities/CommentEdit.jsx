@@ -6,8 +6,8 @@ import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
 
 import { useForm } from '../../../hooks';
 
-import styles from './CommentEdit.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './CommentEdit.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onCurrentUserUpdate }, ref) => {
   const [t] = useTranslation();

@@ -11,8 +11,8 @@ import Connections from './Connections';
 import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
 import Paths from '../../constants/Paths';
 
-import styles from './BoardActions.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './BoardActions.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const BoardActions = React.memo(
   ({

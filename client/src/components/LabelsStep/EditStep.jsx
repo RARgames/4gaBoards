@@ -9,7 +9,7 @@ import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 import DeleteStep from '../DeleteStep';
 
-import gStyles from '../../globalStyles.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',

@@ -7,8 +7,8 @@ import { Button, ButtonStyle, Form, Input, Popup, withPopup } from '../../Utils'
 import { useForm, useSteps } from '../../../hooks';
 import DeleteStep from '../../DeleteStep';
 
-import styles from './EditPopup.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './EditPopup.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',

@@ -8,8 +8,8 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import styles from './Item.module.scss';
-import globalStyles from '../../styles.module.scss';
+import * as styles from './Item.module.scss';
+import * as globalStyles from '../../styles.module.scss';
 
 const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
   const [t] = useTranslation();

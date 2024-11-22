@@ -7,8 +7,8 @@ import { Popup, Input, withPopup } from '../../Utils';
 import { useField, useSteps } from '../../../hooks';
 import UserItem from './UserItem';
 
-import styles from './AddPopup.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './AddPopup.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const StepTypes = {
   SELECT_PERMISSIONS: 'SELECT_PERMISSIONS',

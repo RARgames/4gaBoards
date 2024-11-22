@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import styles from './Radio.module.scss';
+import * as styles from './Radio.module.scss';
 
 const Radio = React.forwardRef(({ checked, disabled, size, className, onChange, ...props }, ref) => {
   return (

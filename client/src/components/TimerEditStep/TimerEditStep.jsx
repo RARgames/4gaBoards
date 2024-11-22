@@ -8,8 +8,8 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Input, Popup, Form } fro
 import { useForm } from '../../hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
 
-import styles from './TimerEditStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './TimerEditStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const createData = (timer) => {
   if (!timer) {

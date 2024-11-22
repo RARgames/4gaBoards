@@ -7,8 +7,8 @@ import { Popup, Input } from '../Utils';
 import { useField } from '../../hooks';
 import Item from './Item';
 
-import styles from './MembershipsStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './MembershipsStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
   const [t] = useTranslation();

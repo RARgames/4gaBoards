@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useModal } from '../../../hooks';
 import TextFileAddModal from './TextFileAddModal';
 
-import styles from './AttachmentAddZone.module.scss';
+import * as styles from './AttachmentAddZone.module.scss';
 
 const AttachmentAddZone = React.memo(({ children, onCreate }) => {
   const [t] = useTranslation();

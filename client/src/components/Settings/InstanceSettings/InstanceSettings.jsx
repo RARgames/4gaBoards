@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Radio, RadioSize, Table } from '../../Utils';
 
-// import styles from './InstanceSettings.module.scss';
-import sShared from '../SettingsShared.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+// import * as styles from './InstanceSettings.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, demoMode, onCoreSettingsUpdate }) => {
   const [t] = useTranslation();
@@ -37,7 +37,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
         </div>
         {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
       </div>
-      <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
+      <Table.Wrapper className={classNames(gStyles.scrollableXY)}>
         <Table>
           <Table.Header>
             <Table.HeaderRow>

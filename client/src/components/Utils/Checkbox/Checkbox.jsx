@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import CheckboxSize from './CheckboxSize';
 
-import styles from './Checkbox.module.scss';
+import * as styles from './Checkbox.module.scss';
 
 const Checkbox = React.forwardRef(({ size, className, ...props }, ref) => {
   return (

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Popup, withPopup, Button, ButtonStyle, FilePicker } from '../../Utils';
 
-// import styles from './AvatarEditPopup.module.scss';
+// import * as styles from './AvatarEditPopup.module.scss';
 
 const AvatarEditStep = React.memo(({ defaultValue, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();

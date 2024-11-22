@@ -9,8 +9,8 @@ import { Button, ButtonStyle } from '../Button';
 import { ProgressBar, ProgressBarSize } from '../ProgressBar';
 import InputStyle from './InputStyle';
 
-import styles from './Input.module.scss';
-import sPassword from './InputPassword.module.scss';
+import * as styles from './Input.module.scss';
+import * as sPassword from './InputPassword.module.scss';
 
 const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStrengthScore, className, ...props }, ref) => {
   const [t] = useTranslation();

@@ -6,8 +6,8 @@ import classNames from 'classnames';
 
 import { ProjectBackgroundTypes } from '../../constants/Enums';
 
-import styles from './Background.module.scss';
-import globalStyles from '../../styles.module.scss';
+import * as styles from './Background.module.scss';
+import * as globalStyles from '../../styles.module.scss';
 
 function Background({ type, name, imageUrl }) {
   return (

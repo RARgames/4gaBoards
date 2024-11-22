@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import EditPopup from './EditPopup';
 
-import styles from './Item.module.scss';
+import * as styles from './Item.module.scss';
 
 const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPersisted, canEdit, onCoverSelect, onCoverDeselect, onClick, onUpdate, onDelete }, ref) => {
   const [t] = useTranslation();

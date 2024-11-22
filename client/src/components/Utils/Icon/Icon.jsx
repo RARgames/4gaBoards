@@ -5,7 +5,7 @@ import IconType from './IconType';
 import FlagType from './FlagType';
 import IconSize from './IconSize';
 
-import styles from './Icon.module.scss';
+import * as styles from './Icon.module.scss';
 
 const Icon = React.memo(({ type, size, className, ...props }) => {
   const IconComponent = type;

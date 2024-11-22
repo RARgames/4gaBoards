@@ -5,7 +5,7 @@ import { Button } from '../../Utils';
 
 import User from '../../User';
 
-import styles from './UserItem.module.scss';
+import * as styles from './UserItem.module.scss';
 
 const UserItem = React.memo(({ name, avatarUrl, isActive, onSelect }) => (
   <Button onClick={onSelect} disabled={isActive} className={styles.menuItem}>

@@ -5,7 +5,7 @@ import { TextArea } from '../Utils';
 import { useField, useResizeObserverSize } from '../../hooks';
 import { ResizeObserverSizeTypes } from '../../constants/Enums';
 
-import styles from './NameEdit.module.scss';
+import * as styles from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, onHeightChange }, ref) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -12,7 +12,7 @@ import TimerEditStep from '../TimerEditStep';
 import CardMoveStep from '../CardMoveStep';
 import DeleteStep from '../DeleteStep';
 
-import styles from './ActionsPopup.module.scss';
+import * as styles from './ActionsPopup.module.scss';
 
 const StepTypes = {
   USERS: 'USERS',

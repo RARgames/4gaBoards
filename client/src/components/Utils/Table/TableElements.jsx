@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import styles from './Table.module.scss';
+import * as styles from './Table.module.scss';
 
 const Wrapper = React.memo(
   React.forwardRef(({ children, className, ...props }, ref) => {
@@ -47,8 +47,9 @@ const HeaderCell = React.memo(
 
 const Body = React.memo(
   React.forwardRef(({ children, className, ...props }, ref) => {
+    // TODO temp removed styles.body
     return (
-      <tbody ref={ref} className={classNames(styles.body, className)} {...props}>
+      <tbody ref={ref} className={classNames(className)} {...props}>
         {children}
       </tbody>
     );

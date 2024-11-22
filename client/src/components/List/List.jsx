@@ -13,8 +13,8 @@ import NameEdit from './NameEdit';
 import CardAdd from './CardAdd';
 import ActionsPopup from './ActionsPopup';
 
-import styles from './List.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './List.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
   const [t] = useTranslation();

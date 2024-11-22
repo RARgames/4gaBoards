@@ -8,7 +8,7 @@ import { useToggle } from '../../../lib/hooks';
 
 import Item from './Item';
 
-import styles from './Attachments.module.scss';
+import * as styles from './Attachments.module.scss';
 
 const INITIALLY_VISIBLE = 4;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import styles from './Table.module.scss';
+import * as styles from './Table.module.scss';
 
 const Table = React.memo(
   React.forwardRef(({ children, className, ...props }, ref) => {

@@ -9,8 +9,8 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, For
 import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
-import styles from './Register.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './Register.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -148,7 +148,7 @@ const Register = React.memo(
               {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={styles.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
               <div className={classNames(styles.buttonsContainer, !localRegistrationEnabled && styles.onlySsoButtonContainer)}>
                 {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                  <Button style={ButtonStyle.Login} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                  <Button style={ButtonStyle.Login} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso}>
                     {t('common.registerWithGoogle')}
                     <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
                   </Button>
@@ -163,7 +163,7 @@ const Register = React.memo(
             </Form>
             <div className={styles.alternateActionText}>{t('common.alreadyUser')}</div>
             <div className={styles.alternateActionButtonContainer}>
-              <Button style={ButtonStyle.Login} content={t('common.backToLogin')} onClick={onLoginOpen} className={styles.alternateActionButton} />
+              <Button style={ButtonStyle.Login} content={t('common.backToLogin')} onClick={onLoginOpen} />
             </div>
           </div>
         </div>

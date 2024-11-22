@@ -11,7 +11,7 @@ import UserEmailEditStep from '../../../UserEmailEditStep';
 import UserPasswordEditStep from '../../../UserPasswordEditStep';
 import DeleteStep from '../../../DeleteStep';
 
-// import styles from './ActionsPopup.module.scss';
+// import * as styles from './ActionsPopup.module.scss';
 
 const StepTypes = {
   EDIT_INFORMATION: 'EDIT_INFORMATION',

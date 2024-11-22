@@ -12,7 +12,7 @@ import InstanceSettingsContainer from '../../containers/Settings/InstanceSetting
 import ProjectSettingsContainer from '../../containers/Settings/ProjectSettingsContainer';
 import Paths from '../../constants/Paths';
 
-import styles from './Settings.module.scss';
+import * as styles from './Settings.module.scss';
 
 const Settings = React.memo(({ path, isAdmin, isManager }) => {
   const [t] = useTranslation();

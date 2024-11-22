@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 import Paths from '../../constants/Paths';
 
-import styles from './UserPopup.module.scss';
+import * as styles from './UserPopup.module.scss';
 
 const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, onLogout, onClose }) => {
   const [t] = useTranslation();

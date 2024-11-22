@@ -4,7 +4,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { Loader, LoaderSize } from '../Utils';
 import HeaderContainer from '../../containers/HeaderContainer';
 
-import styles from './NotFound.module.scss';
+import * as styles from './NotFound.module.scss';
 
 const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   const [t] = useTranslation();

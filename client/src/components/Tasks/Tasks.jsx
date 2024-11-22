@@ -11,7 +11,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Item from './Item';
 import TaskAdd from './TaskAdd';
 
-import styles from './Tasks.module.scss';
+import * as styles from './Tasks.module.scss';
 
 const VARIANTS = {
   CARD: 'card',

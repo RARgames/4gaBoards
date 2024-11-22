@@ -6,8 +6,8 @@ import CommentEdit from './CommentEdit';
 import Item from './Item';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 
-import styles from './Activities.module.scss';
-import cStyles from '../CardModal.module.scss';
+import * as styles from './Activities.module.scss';
+import * as cStyles from '../CardModal.module.scss';
 
 const Activities = React.memo(
   ({
@@ -95,7 +95,7 @@ const Activities = React.memo(
     // TODO fix activities not in order - by date
 
     return (
-      <div className={cStyles.contentModule}>
+      <div>
         <div className={cStyles.moduleHeader}>
           <Icon type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
           {t('common.actions')}
@@ -112,7 +112,7 @@ const Activities = React.memo(
             {isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')}
           </Button>
         </div>
-        <div className={cStyles.moduleBody}>
+        <div>
           {commShown && (
             <>
               {canEdit && (

@@ -8,7 +8,7 @@ import { useSteps } from '../../hooks';
 import RenameStep from '../RenameStep';
 import { BoardAddStep } from '../BoardAddPopup';
 
-import styles from './ProjectActionsPopup.module.scss';
+import * as styles from './ProjectActionsPopup.module.scss';
 
 const StepTypes = {
   RENAME: 'RENAME',

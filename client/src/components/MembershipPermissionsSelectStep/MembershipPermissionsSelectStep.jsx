@@ -8,8 +8,8 @@ import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
 
-import styles from './MembershipPermissionsSelectStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './MembershipPermissionsSelectStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, buttonContent, onSelect, onBack, onClose }) => {
   const [t] = useTranslation();

@@ -8,7 +8,7 @@ import { useSteps } from '../../hooks';
 import User from '../User';
 import DeleteStep from '../DeleteStep';
 
-import styles from './ActionsPopup.module.scss';
+import * as styles from './ActionsPopup.module.scss';
 
 const StepTypes = {
   EDIT_PERMISSIONS: 'EDIT_PERMISSIONS',

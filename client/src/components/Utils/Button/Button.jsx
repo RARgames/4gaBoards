@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import ButtonStyle from './ButtonStyle';
-import styles from './Button.module.scss';
+import * as styles from './Button.module.scss';
 
 const Button = React.forwardRef(({ children, title, type, style, content, className, ...props }, ref) => {
   return (

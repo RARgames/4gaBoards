@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
-import styles from './Popup.module.scss';
+import * as styles from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
   const Popup = React.memo(({ children, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
@@ -46,8 +46,9 @@ export default (WrappedComponent, defaultProps) => {
 
     return (
       <>
+        {/* TODO temp removed: styles.wrapper */}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps({ onClick: handleOpen })} className={classNames(styles.wrapper, wrapperClassName, defaultProps?.wrapperClassName)}>
+        <div ref={refs.setReference} {...getReferenceProps({ onClick: handleOpen })} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)}>
           {children}
         </div>
         {isOpen && (

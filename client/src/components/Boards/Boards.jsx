@@ -7,8 +7,8 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';
 import BoardAddPopup from '../BoardAddPopup';
 
-import styles from './Boards.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './Boards.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, onCreate }) => {
   const [t] = useTranslation();

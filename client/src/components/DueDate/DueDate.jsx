@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon, IconType, IconSize } from '../Utils';
 
-import styles from './DueDate.module.scss';
+import * as styles from './DueDate.module.scss';
 
 const VARIANTS = {
   CARD: 'card',

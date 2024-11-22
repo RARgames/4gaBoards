@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import { Dropdown, Radio, RadioSize, Table } from '../../Utils';
 import locales from '../../../locales';
 
-import styles from './PreferencesSettings.module.scss';
-import sShared from '../SettingsShared.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './PreferencesSettings.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, onUpdate, onLanguageUpdate }) => {
   const [t] = useTranslation();
@@ -51,7 +51,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       <div className={sShared.header}>
         <h2 className={sShared.headerText}>{t('common.preferences')}</h2>
       </div>
-      <Table.Wrapper className={classNames(sShared.contentWrapper, gStyles.scrollableXY)}>
+      <Table.Wrapper className={classNames(gStyles.scrollableXY)}>
         <Table>
           <Table.Header>
             <Table.HeaderRow>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, FilePicker } from '../Utils';
 
-import styles from './ImportStep.module.scss';
+import * as styles from './ImportStep.module.scss';
 
 const ImportStep = React.memo(({ onSelect, onBack }) => {
   const [t] = useTranslation();

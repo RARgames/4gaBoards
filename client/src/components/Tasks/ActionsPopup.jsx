@@ -8,7 +8,7 @@ import DeleteStep from '../DeleteStep';
 import DueDateEditStep from '../DueDateEditStep';
 import MembershipsStep from '../MembershipsStep';
 
-import styles from './ActionsPopup.module.scss';
+import * as styles from './ActionsPopup.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',

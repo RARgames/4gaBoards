@@ -9,9 +9,9 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 import Memberships from '../../Memberships';
 import Paths from '../../../constants/Paths';
 
-import styles from './ProjectSettings.module.scss';
-import sShared from '../SettingsShared.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './ProjectSettings.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const ProjectSettings = React.memo(
   ({ projectId, name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete }) => {
@@ -42,7 +42,7 @@ const ProjectSettings = React.memo(
           </div>
         </div>
         <div className={styles.projectName}>{name}</div>
-        <div className={sShared.contentWrapper}>
+        <div>
           <div className={styles.actionsWrapper}>
             <div className={styles.action}>
               <InformationEdit

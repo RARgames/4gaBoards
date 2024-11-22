@@ -5,7 +5,7 @@ import { ActivityTypes } from '../../../constants/Enums';
 import ItemComment from './ItemComment';
 import User from '../../User';
 
-import styles from './Item.module.scss';
+import * as styles from './Item.module.scss';
 
 const Item = React.memo(({ type, data, createdAt, user }) => {
   const [t] = useTranslation();

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Form, TextArea } from '../Utils';
 import { useField } from '../../hooks';
 
-import styles from './NameEdit.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './NameEdit.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();

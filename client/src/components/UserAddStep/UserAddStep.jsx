@@ -8,8 +8,8 @@ import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
 
-import styles from './UserAddStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './UserAddStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {

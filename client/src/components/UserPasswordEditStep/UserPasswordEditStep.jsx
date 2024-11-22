@@ -7,8 +7,8 @@ import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '
 
 import { useForm } from '../../hooks';
 
-import styles from './UserPasswordEditStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './UserPasswordEditStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {

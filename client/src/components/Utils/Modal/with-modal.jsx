@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
-import styles from './Modal.module.scss';
+import * as styles from './Modal.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
   const Modal = React.memo(({ children, className, hideCloseButton, closeButtonClassName, wrapperClassName, isModalOpen, setIsModalOpen, onClose, ...props }) => {

@@ -4,9 +4,9 @@ import MarkdownEditor, { commands, selectWord, executeCommand } from '@uiw/react
 import remarkGithub from 'remark-github';
 import classNames from 'classnames';
 import { Icon, IconType, IconSize } from '../Icon';
-
-import styles from './MD.module.scss';
 import MDSettings from './MDSettings';
+
+import * as styles from './MD.module.scss';
 
 const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, ...props }, ref) => {
   const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
@@ -62,7 +62,8 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, .
           },
         ),
       ]}
-      className={classNames(styles.editor, className)}
+      // TODO temp removed styles.editor
+      className={classNames(className)}
       // TODO add mention
       // TODO add full functionality to mention and issue
     />

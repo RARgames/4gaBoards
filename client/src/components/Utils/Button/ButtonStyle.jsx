@@ -1,5 +1,5 @@
 const ButtonStyle = {
-  Default: 'default',
+  Default: '_default',
   DefaultBorder: 'defaultBorder',
   Icon: 'iconButton',
   NoBackground: 'noBackground',

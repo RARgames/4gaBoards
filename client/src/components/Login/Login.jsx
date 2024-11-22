@@ -10,8 +10,8 @@ import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
-import styles from './Login.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './Login.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
   if (!error) {
@@ -134,7 +134,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
             </div>
             <div className={styles.buttonsContainer}>
               {googleSsoEnabled && (
-                <Button style={ButtonStyle.Login} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso} className={styles.ssoButton}>
+                <Button style={ButtonStyle.Login} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso}>
                   {t('common.loginWithGoogle')}
                   <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
                 </Button>
@@ -149,7 +149,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
             <>
               <div className={styles.alternateActionText}>{t('common.newToBoards')}</div>
               <div className={styles.alternateActionButtonContainer}>
-                <Button style={ButtonStyle.Login} content={t('common.createAccount')} onClick={onRegisterOpen} className={styles.alternateActionButton} />
+                <Button style={ButtonStyle.Login} content={t('common.createAccount')} onClick={onRegisterOpen} />
               </div>
             </>
           )}

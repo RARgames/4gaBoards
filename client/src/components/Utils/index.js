@@ -3,7 +3,7 @@ import { Checkbox, CheckboxSize } from './Checkbox';
 import Dropdown from './Dropdown';
 import ExternalLink from './ExternalLink';
 import FilePicker from './FilePicker';
-import { Form, FormStyle } from './Form';
+import Form from './Form';
 import { Icon, IconType, IconSize } from './Icon';
 import { Input, InputStyle } from './Input';
 import { Loader, LoaderSize } from './Loader';
@@ -26,7 +26,6 @@ export {
   ExternalLink,
   FilePicker,
   Form,
-  FormStyle,
   Icon,
   IconType,
   IconSize,

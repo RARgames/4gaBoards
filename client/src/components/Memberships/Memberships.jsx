@@ -7,7 +7,7 @@ import AddPopup from './AddPopup';
 import ActionsPopup from './ActionsPopup';
 import User from '../User';
 
-import styles from './Memberships.module.scss';
+import * as styles from './Memberships.module.scss';
 
 const Memberships = React.memo(
   ({

@@ -10,7 +10,7 @@ import SettingsContainer from '../../containers/Settings/SettingsContainer';
 import MainSidebarContainer from '../../containers/MainSidebarContainer';
 import Paths from '../../constants/Paths';
 
-import styles from './Static.module.scss';
+import * as styles from './Static.module.scss';
 
 function Static({ path, projectId, cardId, board }) {
   const [t] = useTranslation();

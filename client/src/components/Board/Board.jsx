@@ -11,8 +11,8 @@ import CardModalContainer from '../../containers/CardModalContainer';
 import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import ListAdd from './ListAdd';
 
-import styles from './Board.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './Board.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
 

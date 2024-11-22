@@ -10,9 +10,9 @@ import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
 import ProjectAddPopup from '../ProjectAddPopup';
 
-import styles from './Projects.module.scss';
-import gStyles from '../../globalStyles.module.scss';
-import globalStyles from '../../styles.module.scss';
+import * as styles from './Projects.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
+import * as globalStyles from '../../styles.module.scss';
 
 const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();

@@ -6,8 +6,8 @@ import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, us
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
 
-import styles from './Dropdown.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './Dropdown.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const Dropdown = React.forwardRef(
   (
@@ -285,7 +285,7 @@ const Dropdown = React.forwardRef(
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
       <div ref={refs.setReference} {...getReferenceProps()} className={classNames(styles.dropdownContainer, className)}>
-        <div className={styles.dropdownInputWrapper}>
+        <div>
           <input
             onChange={handleSearch}
             value={searchValue}

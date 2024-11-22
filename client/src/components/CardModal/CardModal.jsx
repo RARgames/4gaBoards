@@ -24,8 +24,8 @@ import ActionsPopup from '../Card/ActionsPopup';
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 
-import styles from './CardModal.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './CardModal.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const CardModal = React.memo(
   ({
@@ -532,7 +532,7 @@ const CardModal = React.memo(
     );
 
     const descriptionNode = (description || canEdit) && (
-      <div className={styles.contentModule}>
+      <div>
         <div className={styles.moduleHeader}>
           <Icon type={IconType.BarsStaggered} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.description')}
@@ -546,7 +546,7 @@ const CardModal = React.memo(
             <Icon type={descShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
           </Button>
         </div>
-        <div className={styles.moduleBody}>
+        <div>
           {descShown && canEdit && descriptionEditNode}
           {descShown && !canEdit && (
             <div className={styles.descriptionText}>
@@ -561,7 +561,7 @@ const CardModal = React.memo(
     const closestNotCompletedTaslDueDate = tasks.filter((task) => !task.isCompleted && task.dueDate).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0];
 
     const tasksNode = (tasks.length > 0 || canEdit) && (
-      <div className={styles.contentModule}>
+      <div>
         <div className={styles.moduleHeader}>
           <Icon type={IconType.Check} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.tasks')}
@@ -584,7 +584,7 @@ const CardModal = React.memo(
             <Icon type={taskShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
           </Button>
         </div>
-        <div className={styles.moduleBody}>
+        <div>
           {taskShown && (
             <Tasks
               ref={tasksRef}
@@ -606,7 +606,7 @@ const CardModal = React.memo(
     );
 
     const attachmentsNode = (
-      <div className={styles.contentModule}>
+      <div>
         <div className={styles.moduleHeader}>
           <Icon type={IconType.Attach} size={IconSize.Size20} className={styles.moduleIcon} />
           {t('common.attachments')}
@@ -622,7 +622,7 @@ const CardModal = React.memo(
             <Icon type={attacShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
           </Button>
         </div>
-        <div className={styles.moduleBody}>
+        <div>
           {attacShown && (
             <>
               <Attachments

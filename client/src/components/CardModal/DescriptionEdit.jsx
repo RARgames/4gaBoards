@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { MDEditor, Button, ButtonStyle } from '../Utils';
 import { useLocalStorage } from '../../hooks';
 
-import gStyles from '../../globalStyles.module.scss';
-import styles from './DescriptionEdit.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
+import * as styles from './DescriptionEdit.module.scss';
 
 const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();

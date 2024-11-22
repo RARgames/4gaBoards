@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
-import styles from './PopupHeader.module.scss';
+import * as styles from './PopupHeader.module.scss';
 
 const PopupHeader = React.memo(({ children, className, onBack, ...props }) => {
   const [t] = useTranslation();

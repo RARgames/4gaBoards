@@ -9,7 +9,7 @@ import RenameStep from '../../RenameStep';
 import ExportStep from '../../ExportStep';
 import { ConnectionsStep } from '../Connections';
 
-import styles from './BoardActionsPopup.module.scss';
+import * as styles from './BoardActionsPopup.module.scss';
 
 const StepTypes = {
   RENAME: 'RENAME',

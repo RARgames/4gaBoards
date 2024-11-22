@@ -7,7 +7,7 @@ import { useForm } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
 import Editor from './Editor';
 
-import gStyles from '../../globalStyles.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();

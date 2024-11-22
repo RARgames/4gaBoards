@@ -16,8 +16,8 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Filter from '../Filter';
 import ProjectActionsPopup from './ProjectActionsPopup';
 
-import styles from './MainSidebar.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './MainSidebar.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const MainSidebar = React.memo(
   ({
@@ -165,7 +165,7 @@ const MainSidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={classNames(styles.githubIcon, board.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+                                        className={classNames(board.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
                                         title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
                                       />
                                     </Connections>
@@ -174,7 +174,7 @@ const MainSidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={classNames(styles.githubIcon, board.isGithubConnected ? styles.githubGreen : styles.githubGrey, styles.githubCannotManage)}
+                                        className={classNames(board.isGithubConnected ? styles.githubGreen : styles.githubGrey, styles.githubCannotManage)}
                                         title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
                                       />
                                     </div>
@@ -217,7 +217,7 @@ const MainSidebar = React.memo(
           <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
         </Button>
         <div className={classNames(styles.sidebar, sidebarCompact && styles.sidebarCompact, !sidebarShown && styles.sidebarHidden)}>
-          <div className={styles.sidebarHeader}>
+          <div>
             {!settingsOnly && (
               <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
             )}
@@ -297,7 +297,7 @@ const MainSidebar = React.memo(
             )}
             {!settingsOnly && <div>{projectsNode}</div>}
           </div>
-          <div className={styles.sidebarFooter}>
+          <div>
             {!settingsOnly && (
               <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right-end">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.footerButton}>

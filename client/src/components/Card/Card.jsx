@@ -16,7 +16,7 @@ import Label from '../Label';
 import DueDate from '../DueDate';
 import Timer from '../Timer';
 
-import styles from './Card.module.scss';
+import * as styles from './Card.module.scss';
 
 const Card = React.memo(
   ({
@@ -151,7 +151,7 @@ const Card = React.memo(
 
     const contentNode = (
       <>
-        <div className={styles.cardTitle}>
+        <div>
           <div className={styles.detailsTitle}>
             <div title={name} className={styles.name}>
               {name}

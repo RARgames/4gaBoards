@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Radio, RadioSize, Table 
 import ActionsPopup from './ActionsPopup';
 import User from '../../../User';
 
-import styles from './Item.module.scss';
+import * as styles from './Item.module.scss';
 // TODO get date in correct local region format
 const Item = React.memo(
   ({

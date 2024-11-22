@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '../Utils';
 
-import styles from './User.module.scss';
+import * as styles from './User.module.scss';
 
 const SIZES = {
   TINY: 'tiny',

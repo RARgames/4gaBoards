@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import FormStyle from './FormStyle';
-import styles from './Form.module.scss';
+// import * as styles from './Form.module.scss';
 
-const Form = React.forwardRef(({ onSubmit, children, style, className, ...props }, ref) => {
+const Form = React.forwardRef(({ onSubmit, children, className, ...props }, ref) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (onSubmit) {
@@ -14,8 +13,9 @@ const Form = React.forwardRef(({ onSubmit, children, style, className, ...props 
   };
 
   return (
+    // TODO temp removed: styles.form
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <form ref={ref} onSubmit={handleSubmit} className={classNames(styles.form, style && styles[style], className)} {...props}>
+    <form ref={ref} onSubmit={handleSubmit} className={classNames(className)} {...props}>
       {children}
     </form>
   );
@@ -24,14 +24,12 @@ const Form = React.forwardRef(({ onSubmit, children, style, className, ...props 
 Form.propTypes = {
   onSubmit: PropTypes.func,
   children: PropTypes.node,
-  style: PropTypes.oneOf(Object.values(FormStyle)),
   className: PropTypes.string,
 };
 
 Form.defaultProps = {
   onSubmit: undefined,
   children: undefined,
-  style: undefined,
   className: undefined,
 };
 

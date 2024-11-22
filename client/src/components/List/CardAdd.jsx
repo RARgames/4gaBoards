@@ -6,8 +6,8 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea } from '../Utils';
 import { useForm } from '../../hooks';
 
-import styles from './CardAdd.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './CardAdd.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const DEFAULT_DATA = {
   name: '',

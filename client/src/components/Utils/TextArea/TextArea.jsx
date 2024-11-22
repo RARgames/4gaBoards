@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import styles from './TextArea.module.scss';
-import gStyles from '../../../globalStyles.module.scss';
+import * as styles from './TextArea.module.scss';
+import * as gStyles from '../../../globalStyles.module.scss';
 
 const TextArea = React.forwardRef(({ disableSpellcheck, className, isError, ...props }, ref) => {
   return (

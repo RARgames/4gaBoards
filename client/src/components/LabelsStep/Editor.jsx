@@ -8,8 +8,8 @@ import { Button, ButtonStyle, Input } from '../Utils';
 
 import LabelColors from '../../constants/LabelColors';
 
-import styles from './Editor.module.scss';
-import globalStyles from '../../styles.module.scss';
+import * as styles from './Editor.module.scss';
+import * as globalStyles from '../../styles.module.scss';
 
 const Editor = React.memo(({ data, onFieldChange }) => {
   const [t] = useTranslation();

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../Utils';
 
-import styles from './ProjectAddPopup.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './ProjectAddPopup.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClose }) => {
   const [t] = useTranslation();
@@ -45,9 +45,9 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
 
   return (
     <>
-      <Popup.Header className={styles.header}>{t('common.addProject')}</Popup.Header>
-      <Popup.Content className={styles.content}>
-        <Form onSubmit={handleSubmit} className={styles.formWrapper} onKeyDown={handleKeyDown}>
+      <Popup.Header>{t('common.addProject')}</Popup.Header>
+      <Popup.Content>
+        <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
           <Input ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.addProject')} disabled={isSubmitting} onClick={handleSubmit} />

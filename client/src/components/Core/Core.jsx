@@ -7,7 +7,7 @@ import HeaderContainer from '../../containers/HeaderContainer';
 import StaticContainer from '../../containers/StaticContainer';
 import Background from '../Background';
 
-import styles from './Core.module.scss';
+import * as styles from './Core.module.scss';
 
 const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard }) => {
   const [t] = useTranslation();

@@ -9,8 +9,8 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, FilePicker } from '../..
 import ProjectBackgroundGradients from '../../../constants/ProjectBackgroundGradients';
 import { ProjectBackgroundTypes } from '../../../constants/Enums';
 
-import styles from './BackgroundPane.module.scss';
-import globalStyles from '../../../styles.module.scss';
+import * as styles from './BackgroundPane.module.scss';
+import * as globalStyles from '../../../styles.module.scss';
 
 const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpdate, onImageUpdate, onImageDelete }) => {
   const [t] = useTranslation();

@@ -8,7 +8,7 @@ import MembershipsPopup from '../MembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
 import { Button } from '../Utils';
 
-import styles from './Filters.module.scss';
+import * as styles from './Filters.module.scss';
 
 const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, canEdit, onUserAdd, onUserRemove, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelMove, onLabelDelete }) => {
   const [t] = useTranslation();

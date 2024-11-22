@@ -11,7 +11,7 @@ import UserPopup from '../UserPopup';
 
 import logo from '../../assets/images/4gaboardsLogo128w-white.png';
 
-import styles from './Header.module.scss';
+import * as styles from './Header.module.scss';
 
 const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, onNotificationDelete, onLogout }) => {
   const [t] = useTranslation();

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import LoaderSize from './LoaderSize';
 
-import styles from './Loader.module.scss';
+import * as styles from './Loader.module.scss';
 
 const Loader = React.forwardRef(({ size, wrapperClassName, className, ...props }, ref) => {
   return (

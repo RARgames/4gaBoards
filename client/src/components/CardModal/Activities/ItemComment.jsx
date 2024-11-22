@@ -6,7 +6,7 @@ import CommentEdit from './CommentEdit';
 import User from '../../User';
 import DeletePopup from '../../DeletePopup';
 
-import styles from './ItemComment.module.scss';
+import * as styles from './ItemComment.module.scss';
 
 const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onCurrentUserUpdate }) => {
   const [t] = useTranslation();

@@ -1,5 +1,5 @@
 const InputStyle = {
-  Default: 'default',
+  Default: '_default',
 };
 
 export default InputStyle;

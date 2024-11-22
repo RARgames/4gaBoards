@@ -7,8 +7,8 @@ import { Button } from '../Utils';
 
 import LabelColors from '../../constants/LabelColors';
 
-import styles from './Label.module.scss';
-import globalStyles from '../../styles.module.scss';
+import * as styles from './Label.module.scss';
+import * as globalStyles from '../../styles.module.scss';
 
 const VARIANTS = {
   CARD: 'card',

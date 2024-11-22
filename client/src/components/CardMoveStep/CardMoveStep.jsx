@@ -5,8 +5,8 @@ import { Button, ButtonStyle, Popup, Form, Dropdown } from '../Utils';
 
 import { useForm } from '../../hooks';
 
-import styles from './CardMoveStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './CardMoveStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {
   const [t] = useTranslation();

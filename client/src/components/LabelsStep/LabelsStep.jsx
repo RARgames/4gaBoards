@@ -12,8 +12,8 @@ import AddStep from './AddStep';
 import EditStep from './EditStep';
 import Item from './Item';
 
-import styles from './LabelsStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './LabelsStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
   ADD: 'ADD',

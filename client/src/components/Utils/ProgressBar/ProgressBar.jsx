@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ProgressBarSize from './ProgressBarSize';
 
-import styles from './ProgressBar.module.scss';
+import * as styles from './ProgressBar.module.scss';
 
 const ProgressBar = React.forwardRef(({ value, total, color, size, className, ...props }, ref) => {
   const percentage = (value / total) * 100;

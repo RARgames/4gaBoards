@@ -13,8 +13,8 @@ import MembershipsPopup from '../MembershipsPopup';
 import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
 
-import styles from './Item.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './Item.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const VARIANTS = {
   CARD: 'card',

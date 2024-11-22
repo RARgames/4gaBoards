@@ -7,8 +7,8 @@ import { Button, ButtonStyle, Input, InputStyle, Form } from '../Utils';
 
 import { useForm } from '../../hooks';
 
-import styles from './UserInformationEdit.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './UserInformationEdit.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const UserInformationEdit = React.memo(({ defaultData, onUpdate }) => {
   const [t] = useTranslation();

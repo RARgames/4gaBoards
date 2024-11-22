@@ -6,8 +6,8 @@ import { Button, ButtonStyle, Input, Popup, Form } from '../Utils';
 
 import { useForm } from '../../hooks';
 
-import styles from './DueDateEditStep.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './DueDateEditStep.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import InputStyle from './InputStyle';
-import styles from './Input.module.scss';
+import * as styles from './Input.module.scss';
 
 const Input = React.memo(
   React.forwardRef(({ style, className, ...props }, ref) => {

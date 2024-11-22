@@ -10,8 +10,8 @@ import Paths from '../../constants/Paths';
 import { ActivityTypes } from '../../constants/Enums';
 import User from '../User';
 
-import styles from './NotificationsPopup.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './NotificationsPopup.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
   const [t] = useTranslation();

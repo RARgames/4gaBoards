@@ -6,7 +6,7 @@ import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
 import MessageStyle from './MessageStyle';
-import styles from './Message.module.scss';
+import * as styles from './Message.module.scss';
 
 const Message = React.forwardRef(({ title, style, content, className, onDismiss, ...props }, ref) => {
   const [t] = useTranslation();

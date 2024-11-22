@@ -6,7 +6,7 @@ import { useField } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import Paths from '../../constants/Paths';
 
-import styles from './Filter.module.scss';
+import * as styles from './Filter.module.scss';
 
 const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onChangeFilterQuery, onFilterQueryClear }) => {
   const [t] = useTranslation();
@@ -107,11 +107,11 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       <Form onSubmit={handleSubmit} className={styles.form} onKeyDown={handleKeyDown}>
         <Input ref={field} value={value} className={styles.field} onChange={handleChange} placeholder={isTargetBoard ? t('common.filterBoards') : t('common.filterProjects')} onFocus={handleFocus} />
         <Button style={ButtonStyle.Icon} title={t('common.toggleFilter')} onClick={handleToggleClick} className={styles.inputButton} tabIndex="-1">
-          <div className={styles.inputButtonText}>{isTargetBoard ? 'B' : 'P'}</div> <Icon type={IconType.Switch} size={IconSize.Size13} className={styles.inputButtonIcon} />
+          <div className={styles.inputButtonText}>{isTargetBoard ? 'B' : 'P'}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
         </Button>
       </Form>
       <div className={styles.controls}>

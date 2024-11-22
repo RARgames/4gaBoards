@@ -5,7 +5,7 @@ import { Button } from '../Utils';
 
 import User from '../User';
 
-import styles from './Item.module.scss';
+import * as styles from './Item.module.scss';
 
 const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDeselect }) => {
   const handleToggleClick = useCallback(() => {

@@ -6,8 +6,8 @@ import { Icon, IconType, IconSize, ExternalLink, Button, ButtonStyle } from '../
 
 import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
 
-import styles from './AboutSettings.module.scss';
-import sShared from '../SettingsShared.module.scss';
+import * as styles from './AboutSettings.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
 
 const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) => {
   const [t] = useTranslation();
@@ -39,7 +39,7 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
       <div className={sShared.header}>
         <h2 className={sShared.headerText}>{t('common.about')}</h2>
       </div>
-      <div className={sShared.contentWrapper}>
+      <div>
         <img src={logo} className={styles.logo} alt="4ga Boards" />
         <div className={styles.version}>
           {t('common.version')} {Config.VERSION}

@@ -8,7 +8,7 @@ import { Icon, IconType, IconSize } from '../Utils';
 
 import { formatTimer } from '../../utils/timer';
 
-import styles from './Timer.module.scss';
+import * as styles from './Timer.module.scss';
 
 const VARIANTS = {
   CARD: 'card',

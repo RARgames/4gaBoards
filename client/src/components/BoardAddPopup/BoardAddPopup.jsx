@@ -8,8 +8,8 @@ import Config from '../../constants/Config';
 import { useForm, useSteps } from '../../hooks';
 import ImportStep from './ImportStep';
 
-import styles from './BoardAddPopup.module.scss';
-import gStyles from '../../globalStyles.module.scss';
+import * as styles from './BoardAddPopup.module.scss';
+import * as gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
   IMPORT: 'IMPORT',

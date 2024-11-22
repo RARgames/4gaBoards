@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from 
 import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 
-import styles from './ActionsPopup.module.scss';
+import * as styles from './ActionsPopup.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',

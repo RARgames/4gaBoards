@@ -4,7 +4,7 @@ import { TextArea } from '../Utils';
 
 import { useField } from '../../hooks';
 
-import styles from './NameField.module.scss';
+import * as styles from './NameField.module.scss';
 
 const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [isOpen, setIsOpen] = useState(false);

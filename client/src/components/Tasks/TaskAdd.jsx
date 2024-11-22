@@ -5,7 +5,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { TextArea } from '../Utils';
 import { useForm } from '../../hooks';
 
-import styles from './TaskAdd.module.scss';
+import * as styles from './TaskAdd.module.scss';
 
 const DEFAULT_DATA = {
   name: '',
