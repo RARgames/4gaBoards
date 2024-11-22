@@ -11,142 +11,142 @@ jobs:
       contents: write
       packages: write
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4.1.1
+      - name: Checkout repo
+        uses: actions/checkout@v4.1.1
 
-    - name: Fetch tags
-      run: git fetch --tags
+      - name: Fetch tags
+        run: git fetch --tags
 
-    - name: Get latest commit message
-      id: latest_commit
-      run: echo "message=$(git log -1 --pretty=%s)" >> $GITHUB_OUTPUT
+      - name: Get latest commit message
+        id: latest_commit
+        run: echo "message=$(git log -1 --pretty=%s)" >> $GITHUB_OUTPUT
 
-    - name: Get latest tag
-      id: latest-tag
-      run: echo "tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_OUTPUT
+      - name: Get latest tag
+        id: latest-tag
+        run: echo "tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_OUTPUT
 
-    - name: Get short SHA for beta
-      id: slug
-      run: echo "sha7=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
+      - name: Get short SHA for beta
+        id: slug
+        run: echo "sha7=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
 
-    - name: Increment version
-      id: increment_version
-      run: |
-        latest_tag=${{ steps.latest-tag.outputs.tag }}
-        major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
-        minor=$(echo $latest_tag | cut -d. -f2)
-        patch=$(echo $latest_tag | cut -d. -f3)
-        beta_tag=""
+      - name: Increment version
+        id: increment_version
+        run: |
+          latest_tag=${{ steps.latest-tag.outputs.tag }}
+          major=$(echo $latest_tag | cut -d. -f1 | sed 's/v//')
+          minor=$(echo $latest_tag | cut -d. -f2)
+          patch=$(echo $latest_tag | cut -d. -f3)
+          beta_tag=""
 
-        if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
-          major=$((major + 1))
-          minor=0
-          patch=0
-          beta=false
-        elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
-          minor=$((minor + 1))
-          patch=0
-          beta=false
-        elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
-          patch=$((patch + 1))
-          beta=false
-        else
-          beta=true
-          beta_tag="-${{ steps.slug.outputs.sha7 }}"
-        fi
+          if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
+            major=$((major + 1))
+            minor=0
+            patch=0
+            beta=false
+          elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
+            minor=$((minor + 1))
+            patch=0
+            beta=false
+          elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
+            patch=$((patch + 1))
+            beta=false
+          else
+            beta=true
+            beta_tag="-${{ steps.slug.outputs.sha7 }}"
+          fi
 
-        new_tag="v$major.$minor.$patch"
-        ghcr_tag="$major.$minor.$patch$beta_tag"
+          new_tag="v$major.$minor.$patch"
+          ghcr_tag="$major.$minor.$patch$beta_tag"
 
-        echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
-        echo "ghcr_tag=$ghcr_tag" >> $GITHUB_OUTPUT
-        echo "beta=$beta" >> $GITHUB_OUTPUT
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+          echo "ghcr_tag=$ghcr_tag" >> $GITHUB_OUTPUT
+          echo "beta=$beta" >> $GITHUB_OUTPUT
 
-    - name: Update package.json version
-      run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
+      - name: Update package.json version
+        run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
 
-    - name: Update package-lock.json version
-      run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
+      - name: Update package-lock.json version
+        run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
 
-    - name: Update .env version
-      run: grep -v '^REACT_APP_VERSION=' client/.env > temp.txt && echo 'REACT_APP_VERSION=${{ steps.increment_version.outputs.ghcr_tag }}' >> temp.txt && mv temp.txt client/.env
-      
-    - name: Update helm-chart app version
-      run: awk '/appVersion:/ {$2="\"${{ steps.increment_version.outputs.ghcr_tag }}\""} 1' helm-chart/Chart.yaml > temp.yaml && mv temp.yaml helm-chart/Chart.yaml
+      - name: Update .env version
+        run: sed "s/REACT_APP_VERSION=.*/REACT_APP_VERSION=${{ steps.increment_version.outputs.ghcr_tag }}/" client/.env > temp.env && mv temp.env client/.env
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3.0.0
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3.0.0
-    
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3.0.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    
-    - name: Build and push
-      if: steps.increment_version.outputs.beta == 'false'
-      uses: docker/build-push-action@v5.1.0
-      with:
-        context: .
-        platforms: linux/amd64,linux/arm64
-        push: true
-        tags: |
-          ghcr.io/rargames/4gaboards:latest
-          ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}
-          ghcr.io/rargames/4gaboards:beta-latest
-        labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
-    
-    - name: Build and push beta
-      if: steps.increment_version.outputs.beta == 'true'
-      uses: docker/build-push-action@v5.1.0
-      with:
-        context: .
-        platforms: linux/amd64,linux/arm64
-        push: true
-        tags: |
-          ghcr.io/rargames/4gaboards:beta-latest
-          ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}
-        labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
+      - name: Update helm-chart app version
+        run: awk '/appVersion:/ {$2="\"${{ steps.increment_version.outputs.ghcr_tag }}\""} 1' helm-chart/Chart.yaml > temp.yaml && mv temp.yaml helm-chart/Chart.yaml
 
-    - name: Push
-      if: steps.increment_version.outputs.beta == 'false'
-      run: |
-        git add .
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "Release ${{ steps.increment_version.outputs.ghcr_tag }}"
-        git push
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.0.0
 
-    - name: Push-tag
-      if: steps.increment_version.outputs.beta == 'false'
-      run: |
-        git tag ${{ steps.increment_version.outputs.new_tag }}
-        git push --tags
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.0.0
 
-    - name: Changelog
-      if: steps.increment_version.outputs.beta == 'false'
-      uses: jaywcjlove/changelog-generator@v2.1.0
-      id: changelog
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        filter-author: (RARgames|dependabot\[bot\]|Renovate Bot)
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Release
-      if: steps.increment_version.outputs.beta == 'false'
-      id: create_release
-      uses: softprops/action-gh-release@v2.0.4
-      with:
-        token: "${{ secrets.GITHUB_TOKEN }}"
-        tag_name: "${{ steps.increment_version.outputs.new_tag }}"
-        name: "4ga Boards ${{ steps.increment_version.outputs.ghcr_tag }}"
-        body: |
-          Changes since last release:
-          ${{ steps.changelog.outputs.changelog }}
+      - name: Build and push
+        if: steps.increment_version.outputs.beta == 'false'
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/rargames/4gaboards:latest
+            ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}
+            ghcr.io/rargames/4gaboards:beta-latest
+          labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
 
-          Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}`
-        draft: false
-        prerelease: false
+      - name: Build and push beta
+        if: steps.increment_version.outputs.beta == 'true'
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/rargames/4gaboards:beta-latest
+            ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}
+          labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
+
+      - name: Push
+        if: steps.increment_version.outputs.beta == 'false'
+        run: |
+          git add .
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Release ${{ steps.increment_version.outputs.ghcr_tag }}"
+          git push
+
+      - name: Push-tag
+        if: steps.increment_version.outputs.beta == 'false'
+        run: |
+          git tag ${{ steps.increment_version.outputs.new_tag }}
+          git push --tags
+
+      - name: Changelog
+        if: steps.increment_version.outputs.beta == 'false'
+        uses: jaywcjlove/changelog-generator@v2.1.0
+        id: changelog
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filter-author: (RARgames|dependabot\[bot\]|Renovate Bot)
+
+      - name: Release
+        if: steps.increment_version.outputs.beta == 'false'
+        id: create_release
+        uses: softprops/action-gh-release@v2.0.4
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+          tag_name: '${{ steps.increment_version.outputs.new_tag }}'
+          name: '4ga Boards ${{ steps.increment_version.outputs.ghcr_tag }}'
+          body: |
+            Changes since last release:
+            ${{ steps.changelog.outputs.changelog }}
+
+            Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}`
+          draft: false
+          prerelease: false
