@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import MaskedInput from './MaskedInput';
+import MaskedInputComponent from 'react-input-mask';
 
 import InputStyle from './InputStyle';
 
 import * as s from './Input.module.scss';
+
+class MaskedInput extends MaskedInputComponent {
+  focus(options) {
+    this.getInputDOMNode().focus(options);
+  }
+
+  select() {
+    this.getInputDOMNode().select();
+  }
+}
 
 const InputMask = React.forwardRef(({ style, className, mask, maskChar, isError, ...props }, ref) => {
   const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
