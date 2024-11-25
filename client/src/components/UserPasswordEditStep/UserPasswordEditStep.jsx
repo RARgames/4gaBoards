@@ -119,9 +119,9 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
           <Input.Password
             withStrengthBar
             ref={passwordField}
+            style={InputStyle.Default}
             name="password"
             value={data.password}
-            className={styles.fieldPassword}
             onKeyDown={handleNewPasswordKeyDown}
             onChange={handleFieldChange}
             isError={isNewPasswordError}

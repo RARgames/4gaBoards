@@ -15,6 +15,7 @@ import * as sPassword from './InputPassword.module.scss';
 const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStrengthScore, className, isError, ...props }, ref) => {
   const [t] = useTranslation();
   const [isVisible, toggleVisible] = useToggle();
+  const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
 
   const strengthScore = useMemo(() => {
     if (!withStrengthBar) {
@@ -34,21 +35,20 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
     type: isVisible ? 'text' : 'password',
   };
 
-  // TODO show visual error on input field if error={!!value && strengthScore < minStrengthScore}
   return (
-    <>
+    <div className={sPassword.inputWrapper}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <input {...inputProps} className={classNames(s.input, sPassword.inputPassword, style && s[style], className, isError && s.inputError)} />
+      <input {...inputProps} className={classNames(s.input, sPassword.inputPassword, styles, className, isError && s.inputError)} />
       <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>
       {withStrengthBar && <ProgressBar value={value ? strengthScore + 1 : 0} total={5} size={ProgressBarSize.Tiny} className={sPassword.progressBar} />}
-    </>
+    </div>
   );
 });
 
 InputPassword.propTypes = {
-  style: PropTypes.oneOf(Object.values(InputStyle)),
+  style: PropTypes.oneOfType([PropTypes.oneOf(Object.values(InputStyle)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(InputStyle)))]),
   value: PropTypes.string.isRequired,
   withStrengthBar: PropTypes.bool,
   minStrengthScore: PropTypes.number,
