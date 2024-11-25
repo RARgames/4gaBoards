@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, Checkbox } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
 import Config from '../../constants/Config';
 
 import { useForm, useSteps } from '../../hooks';
@@ -157,6 +157,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
             <div>
               <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
               <Dropdown
+                style={DropdownStyle.Default}
                 options={projects}
                 placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
                 defaultItem={selectedProject}
@@ -165,7 +166,6 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 selectFirstOnSearch
                 onChange={handleProjectChange}
                 onErrorClear={() => setIsDropdownError(false)}
-                className={styles.dropdown}
                 dropdownMenuClassName={styles.dropdownMenu}
               />
             </div>
@@ -174,34 +174,30 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
             <div>
               <div className={styles.text}>{t('common.template')}</div>
               <Dropdown
+                style={DropdownStyle.DefaultLast}
                 options={templates}
                 placeholder={selectedTemplate.name}
                 defaultItem={selectedTemplate}
                 isSearchable
                 selectFirstOnSearch
                 onChange={handleTemplateChange}
-                className={styles.dropdown}
                 dropdownMenuClassName={styles.dropdownMenu}
               />
             </div>
           )}
           {data.import && data.import.type === '4gaBoards' && (
-            <>
-              <div>
-                <div className={styles.checkboxWrapper}>
-                  <Checkbox checked={importProjectManagers} className={styles.checkbox} onChange={toggleImportProjectManagers} />
-                </div>
-                <div className={styles.checkboxText}>{t('common.importProjectManagers')}</div>
+            <div className={styles.checkboxesWrapper}>
+              <div className={styles.checkboxWrapper}>
+                <Checkbox checked={importProjectManagers} className={styles.checkbox} onChange={toggleImportProjectManagers} />
               </div>
-              <div>
-                <div className={styles.checkboxWrapper}>
-                  <Checkbox checked={importNonExistingUsers} disabled={!isAdmin} className={styles.checkbox} onChange={toggleImportNonExistingUsers} />
-                </div>
-                <div className={styles.checkboxText}>
-                  {t('common.importNonExistingUsers')} {!isAdmin && t('common.requiresAdminRights')}
-                </div>
+              <div className={styles.checkboxText}>{t('common.importProjectManagers')}</div>
+              <div className={styles.checkboxWrapper}>
+                <Checkbox checked={importNonExistingUsers} disabled={!isAdmin} className={styles.checkbox} onChange={toggleImportNonExistingUsers} />
               </div>
-            </>
+              <div className={styles.checkboxText}>
+                {t('common.importNonExistingUsers')} {!isAdmin && t('common.requiresAdminRights')}
+              </div>
+            </div>
           )}
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>

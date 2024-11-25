@@ -165,12 +165,12 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
           <Input.Password
             withStrengthBar
             ref={passwordField}
+            style={InputStyle.Default}
             name="password"
             value={data.password}
             readOnly={isSubmitting}
             onKeyDown={handlePasswordKeyDown}
             onChange={handleFieldChange}
-            className={styles.fieldPassword}
             isError={isPasswordError}
           />
           <div className={styles.text}>{t('common.name')}</div>

@@ -16,11 +16,6 @@
     z-index: 2001;
   }
 
-  .dropdown {
-    width: 100%;
-    margin-bottom: 6px;
-  }
-
   .text {
     color: var(--textColor1);
     font-size: 12px;
@@ -30,6 +25,11 @@
 
   .submitButton {
     width: auto;
+  }
+
+  .checkboxesWrapper {
+    width: 100%;
+    margin-bottom: 6px;
   }
 
   .checkboxWrapper {
