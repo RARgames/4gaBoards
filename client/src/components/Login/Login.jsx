@@ -1,10 +1,10 @@
 import isEmail from 'validator/lib/isEmail';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Input, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
@@ -59,6 +59,8 @@ const createMessage = (error) => {
 
 const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss, onRegisterOpen, googleSsoEnabled, registrationEnabled }) => {
   const [t] = useTranslation();
+  const [isUsernameError, setIsUsernameError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
   const wasSubmitting = usePrevious(isSubmitting);
   const [data, handleFieldChange, setData] = useForm(() => ({
     emailOrUsername: '',
@@ -86,11 +88,13 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
 
     if (!isEmail(cleanData.emailOrUsername) && !isUsername(cleanData.emailOrUsername)) {
       emailOrUsernameField.current.focus();
+      setIsUsernameError(true);
       return;
     }
 
     if (!cleanData.password) {
       passwordField.current.focus();
+      setIsPasswordError(true);
       return;
     }
 
@@ -106,11 +110,21 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
       switch (error.message) {
         case 'Invalid username or password':
           focusPasswordField();
+          setIsUsernameError(true);
+          setIsPasswordError(true);
           break;
         default:
       }
     }
   }, [isSubmitting, wasSubmitting, error, setData, focusPasswordField]);
+
+  const handleUsernameKeyDown = useCallback(() => {
+    setIsUsernameError(false);
+  }, []);
+
+  const handlePasswordKeyDown = useCallback(() => {
+    setIsPasswordError(false);
+  }, []);
 
   useDidUpdate(() => {
     passwordField.current.focus();
@@ -124,14 +138,28 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
         <div>
           {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={styles.message} />}
           <Form onSubmit={handleSubmit}>
-            <div className={styles.inputWrapper}>
-              <div className={styles.inputLabel}>{t('common.emailOrUsername')}</div>
-              <Input ref={emailOrUsernameField} name="emailOrUsername" value={data.emailOrUsername} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
-            </div>
-            <div className={styles.inputWrapper}>
-              <div className={styles.inputLabel}>{t('common.password')}</div>
-              <Input.Password ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
-            </div>
+            <div className={styles.inputLabel}>{t('common.emailOrUsername')}</div>
+            <Input
+              ref={emailOrUsernameField}
+              style={InputStyle.LoginRegister}
+              name="emailOrUsername"
+              value={data.emailOrUsername}
+              readOnly={isSubmitting}
+              onKeyDown={handleUsernameKeyDown}
+              onChange={handleFieldChange}
+              isError={isUsernameError}
+            />
+            <div className={styles.inputLabel}>{t('common.password')}</div>
+            <Input.Password
+              ref={passwordField}
+              style={InputStyle.LoginRegister}
+              name="password"
+              value={data.password}
+              readOnly={isSubmitting}
+              onKeyDown={handlePasswordKeyDown}
+              onChange={handleFieldChange}
+              isError={isPasswordError}
+            />
             <div className={styles.buttonsContainer}>
               {googleSsoEnabled && (
                 <Button style={ButtonStyle.Login} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso}>

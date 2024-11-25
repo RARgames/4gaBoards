@@ -32,6 +32,10 @@
     }
   }
 
+  .checkboxError {
+    border: 1px solid var(--errorRed);
+  }
+
   .size14 {
     width: 14px;
     height: 14px;

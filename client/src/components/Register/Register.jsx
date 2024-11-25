@@ -1,10 +1,10 @@
 import isEmail from 'validator/lib/isEmail';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, Form, Message, MessageStyle, Checkbox } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox } from '../Utils';
 
 import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
@@ -53,6 +53,9 @@ const createMessage = (error) => {
 const Register = React.memo(
   ({ defaultData, isSubmitting, error, onRegister, onAuthenticateGoogleSso, onMessageDismiss, onLoginOpen, googleSsoEnabled, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled }) => {
     const [t] = useTranslation();
+    const [isEmailError, setIsEmailError] = useState(false);
+    const [isPasswordError, setIsPasswordError] = useState(false);
+    const [isCheckboxError, setIsCheckboxError] = useState(false);
     const wasSubmitting = usePrevious(isSubmitting);
     const [data, handleFieldChange, setData] = useForm(() => ({
       email: '',
@@ -76,6 +79,7 @@ const Register = React.memo(
 
     const handlePolicyToggleChange = useCallback(
       (e) => {
+        setIsCheckboxError(false);
         setData({ ...data, policy: e.target.checked });
       },
       [data, setData],
@@ -89,10 +93,12 @@ const Register = React.memo(
       };
       if (!isEmail(cleanData.email)) {
         emailField.current.focus();
+        setIsEmailError(true);
         return;
       }
       if (!cleanData.password) {
         passwordField.current.focus();
+        setIsPasswordError(true);
         return;
       }
 
@@ -108,11 +114,27 @@ const Register = React.memo(
         switch (error.message) {
           case 'Weak password':
             focusPasswordField();
+            setIsPasswordError(true);
+            break;
+          case 'Email already in use':
+            emailField.current.focus();
+            setIsEmailError(true);
+            break;
+          case 'Policy not accepted':
+            setIsCheckboxError(true);
             break;
           default:
         }
       }
     }, [isSubmitting, wasSubmitting, error, setData, focusPasswordField]);
+
+    const handleEmailKeyDown = useCallback(() => {
+      setIsEmailError(false);
+    }, []);
+
+    const handlePasswordKeyDown = useCallback(() => {
+      setIsPasswordError(false);
+    }, []);
 
     useDidUpdate(() => {
       passwordField.current.focus();
@@ -128,20 +150,35 @@ const Register = React.memo(
             <Form onSubmit={handleSubmit}>
               {registrationEnabled && localRegistrationEnabled && (
                 <>
-                  <div className={styles.inputWrapper}>
-                    <div className={styles.inputLabel}>{t('common.email')}</div>
-                    <Input ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} />
-                  </div>
-                  <div className={styles.inputWrapper}>
-                    <div className={styles.inputLabel}>{t('common.password')}</div>
-                    <Input.Password ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.input} onChange={handleFieldChange} withStrengthBar />
-                  </div>
-                  <div className={classNames(styles.inputWrapper, styles.checkboxWrapper)}>
+                  <div className={styles.inputLabel}>{t('common.email')}</div>
+                  <Input
+                    ref={emailField}
+                    style={InputStyle.LoginRegister}
+                    name="email"
+                    value={data.email}
+                    readOnly={isSubmitting}
+                    onKeyDown={handleEmailKeyDown}
+                    onChange={handleFieldChange}
+                    isError={isEmailError}
+                  />
+                  <div className={styles.inputLabel}>{t('common.password')}</div>
+                  <Input.Password
+                    withStrengthBar
+                    ref={passwordField}
+                    style={InputStyle.LoginRegister}
+                    name="password"
+                    value={data.password}
+                    readOnly={isSubmitting}
+                    onKeyDown={handlePasswordKeyDown}
+                    onChange={handleFieldChange}
+                    isError={isPasswordError}
+                  />
+                  <div className={styles.checkboxWrapper}>
                     <div className={classNames(styles.inputLabel, styles.checkboxLabel)}>
                       {t('common.accept')} <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink> {t('common.and')}{' '}
                       <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
                     </div>
-                    <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} />
+                    <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} isError={isCheckboxError} />
                   </div>
                 </>
               )}

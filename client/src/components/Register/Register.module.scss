@@ -39,14 +39,6 @@
     width: 100%;
   }
 
-  .inputWrapper {
-    margin-bottom: 16px;
-  }
-
-  .input {
-    width: 100%;
-  }
-
   .ssoIcon {
     margin-left: 6px;
   }
@@ -89,6 +81,7 @@
   .checkboxWrapper {
     display: flex;
     align-items: center;
+    margin-bottom: 16px;
   }
 
   .checkboxLabel {

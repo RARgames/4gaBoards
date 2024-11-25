@@ -41,6 +41,11 @@
     margin-bottom: 6px;
   }
 
+  .loginRegister {
+    @extend .fullWidth;
+    margin-bottom: 16px;
+  }
+
   .default {
     @extend .fullWidth;
     @extend .marginBottom4;
