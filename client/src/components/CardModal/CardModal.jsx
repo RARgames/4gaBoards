@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, MDPreview } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview } from '../Utils';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import NameField from './NameField';
 import DescriptionEdit from './DescriptionEdit';
@@ -373,6 +373,7 @@ const CardModal = React.memo(
         <div className={styles.headerListFieldWrapper}>
           <Dropdown
             ref={dropdown}
+            style={DropdownStyle.FullWidth}
             options={selectedBoard.lists.map((list) => ({
               name: list.name,
               id: list.id,

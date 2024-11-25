@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Dropdown, Radio, RadioSize, Table } from '../../Utils';
+import { Dropdown, DropdownStyle, Radio, RadioSize, Table } from '../../Utils';
 import locales from '../../../locales';
 
 import * as styles from './PreferencesSettings.module.scss';
@@ -82,6 +82,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
               <Table.Cell> {t('common.language', { context: 'title' })}</Table.Cell>
               <Table.Cell className={styles.languageCell} aria-label={t('common.toggleSettings')}>
                 <Dropdown
+                  style={DropdownStyle.FullWidth}
                   options={languages}
                   placeholder={selectedLanguage.name}
                   defaultItem={selectedLanguage}
