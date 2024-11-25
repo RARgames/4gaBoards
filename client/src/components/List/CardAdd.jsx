@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Form, TextArea } from '../Utils';
+import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
 import { useForm } from '../../hooks';
 
 import * as styles from './CardAdd.module.scss';
@@ -19,9 +19,11 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
   const nameField = useRef(null);
+  const [isError, setIsError] = useState(false);
 
   const close = useCallback(() => {
     setData(DEFAULT_DATA);
+    setIsError(false);
     onClose();
   }, [onClose, setData]);
 
@@ -38,6 +40,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
       if (!cleanData.name) {
         setData(DEFAULT_DATA);
         focusNameField();
+        setIsError(true);
         return;
       }
 
@@ -63,6 +66,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
 
   const handleFieldKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       switch (event.key) {
         case 'Enter': {
           event.preventDefault();
@@ -101,7 +105,18 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
 
   return (
     <Form className={classNames(styles.wrapper, !isOpen && styles.wrapperClosed)} onSubmit={handleSubmit}>
-      <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterCardTitle')} maxRows={3} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} />
+      <TextArea
+        ref={nameField}
+        style={TextAreaStyle.DefaultLast}
+        name="name"
+        value={data.name}
+        placeholder={t('common.enterCardTitle')}
+        maxRows={3}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleFieldChange}
+        onBlur={handleBlur}
+        isError={isError}
+      />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
         <Button style={ButtonStyle.Submit} content={t('action.addCard')} onClick={handleSubmit} />

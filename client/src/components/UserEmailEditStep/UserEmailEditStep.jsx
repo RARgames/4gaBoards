@@ -1,9 +1,9 @@
 import isEmail from 'validator/lib/isEmail';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
 
@@ -41,6 +41,8 @@ const createMessage = (error) => {
 
 const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error, usePasswordConfirmation, onUpdate, onMessageDismiss, onBack, onClose }) => {
   const [t] = useTranslation();
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
   const wasSubmitting = usePrevious(isSubmitting);
 
   const [data, handleFieldChange, setData] = useForm({
@@ -62,7 +64,8 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
     };
 
     if (!isEmail(cleanData.email)) {
-      emailField.current.select();
+      emailField.current.focus();
+      setIsEmailError(true);
       return;
     }
 
@@ -74,6 +77,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
     if (usePasswordConfirmation) {
       if (!cleanData.currentPassword) {
         currentPasswordField.current.focus();
+        setIsPasswordError(true);
         return;
       }
     } else {
@@ -94,7 +98,8 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
       if (error) {
         switch (error.message) {
           case 'Email already in use':
-            emailField.current.select();
+            emailField.current.focus();
+            setIsEmailError(true);
 
             break;
           case 'Invalid current password':
@@ -103,6 +108,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
               currentPassword: '',
             }));
             focusCurrentPasswordField();
+            setIsPasswordError(true);
 
             break;
           default:
@@ -112,6 +118,14 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
       }
     }
   }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
+
+  const handleEmailKeyDown = useCallback(() => {
+    setIsEmailError(false);
+  }, []);
+
+  const handlePasswordKeyDown = useCallback(() => {
+    setIsPasswordError(false);
+  }, []);
 
   useDidUpdate(() => {
     currentPasswordField.current.focus();
@@ -124,11 +138,28 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newEmail')}</div>
-          <Input ref={emailField} name="email" value={data.email} placeholder={email} className={styles.field} onChange={handleFieldChange} />
+          <Input
+            ref={emailField}
+            style={usePasswordConfirmation ? InputStyle.Default : InputStyle.DefaultLast}
+            name="email"
+            value={data.email}
+            placeholder={email}
+            onKeyDown={handleEmailKeyDown}
+            onChange={handleFieldChange}
+            isError={isEmailError}
+          />
           {usePasswordConfirmation && (
             <>
               <div className={styles.text}>{t('common.currentPassword')}</div>
-              <Input.Password ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
+              <Input.Password
+                ref={currentPasswordField}
+                style={InputStyle.DefaultLast}
+                name="currentPassword"
+                value={data.currentPassword}
+                onKeyDown={handlePasswordKeyDown}
+                onChange={handleFieldChange}
+                isError={isPasswordError}
+              />
             </>
           )}
           <div className={gStyles.controls}>

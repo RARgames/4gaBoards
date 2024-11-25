@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Input, Form, withModal } from '../../Utils';
+import { Button, ButtonStyle, Input, InputStyle, Form, withModal } from '../../Utils';
 import { useForm } from '../../../hooks';
 
 import * as styles from './TextFileAddModal.module.scss';
@@ -9,6 +9,7 @@ import * as gStyles from '../../../globalStyles.module.scss';
 
 const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
   const [t] = useTranslation();
+  const [isError, setIsError] = useState(false);
 
   const [data, handleFieldChange] = useForm(() => ({
     name: '',
@@ -23,7 +24,8 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
     };
 
     if (!cleanData.name) {
-      nameField.current.select();
+      nameField.current.focus();
+      setIsError(true);
       return;
     }
 
@@ -35,6 +37,10 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
     onClose();
   }, [content, onCreate, onClose, data]);
 
+  const handleFieldKeyDown = useCallback(() => {
+    setIsError(false);
+  }, []);
+
   useEffect(() => {
     nameField.current.focus();
   }, []);
@@ -42,9 +48,19 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
   return (
     <>
       <div className={styles.title}>{t('common.createTextFile', { context: 'title' })}</div>
-      <div className={styles.text}>{t('common.enterFilename')}</div>
+      <div className={styles.text}>{t('common.filename')}</div>
       <Form onSubmit={handleSubmit} className={styles.form}>
-        <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+        <Input
+          ref={nameField}
+          style={InputStyle.DefaultLast}
+          placeholder={t('common.enterFilename')}
+          name="name"
+          value={data.name}
+          className={styles.field}
+          onKeyDown={handleFieldKeyDown}
+          onChange={handleFieldChange}
+          isError={isError}
+        />
         <div className={styles.inputLabel}>.txt</div>
         <div className={gStyles.controls}>
           <Button style={ButtonStyle.Submit} content={t('action.createFile')} onClick={handleSubmit} />

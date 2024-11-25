@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Popup, Form, Dropdown } from '../Utils';
+import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
 
@@ -63,6 +63,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
           <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
           <Dropdown
             name="projectId"
+            style={selectedProject ? DropdownStyle.Default : DropdownStyle.DefaultLast}
             options={projectsToLists.map((project) => ({
               id: project.id,
               name: project.name,
@@ -75,7 +76,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             keepState
             returnOnChangeEvent
             disabled={projectsToLists.length === 0}
-            className={styles.field}
             dropdownMenuClassName={styles.dropdownMenu}
           />
           {selectedProject && (
@@ -83,6 +83,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               <div className={styles.text}>{t('common.board', { context: 'title' })}</div>
               <Dropdown
                 ref={dropdownBoard}
+                style={selectedBoard ? DropdownStyle.Default : DropdownStyle.DefaultLast}
                 name="boardId"
                 options={selectedProject.boards.map((board) => ({
                   id: board.id,
@@ -96,7 +97,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 disabled={selectedProject.boards.length === 0}
-                className={styles.field}
                 dropdownMenuClassName={styles.dropdownMenu}
               />
             </>
@@ -106,6 +106,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               <div className={styles.text}>{t('common.list')}</div>
               <Dropdown
                 ref={dropdownList}
+                style={DropdownStyle.DefaultLast}
                 name="listId"
                 options={selectedBoard.lists.map((list) => ({
                   id: list.id,
@@ -119,7 +120,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 disabled={selectedBoard.lists.length === 0}
-                className={styles.field}
                 dropdownMenuClassName={styles.dropdownMenu}
               />
             </>

@@ -104,10 +104,10 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
       value={data.name}
       placeholder={t('common.enterTaskDescription')}
       className={styles.field}
-      isError={isError}
       onKeyDown={handleFieldKeyDown}
       onChange={handleFieldChange}
       onBlur={handleBlur}
+      isError={isError}
     />
   );
 });

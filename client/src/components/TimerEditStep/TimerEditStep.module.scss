@@ -1,7 +1,7 @@
 :global(#app) {
   .fieldBox {
     display: inline-block;
-    margin: 0 4px 12px;
+    margin: 0 4px 0 4px;
     width: calc(33.3333% - 22px);
   }
 
@@ -24,11 +24,6 @@
     color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
-    padding-bottom: 4px;
-    padding-left: 2px;
-  }
-
-  .inputField {
-    width: 100%;
+    margin-bottom: 4px;
   }
 }

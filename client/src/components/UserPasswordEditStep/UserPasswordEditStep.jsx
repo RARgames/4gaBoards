@@ -1,9 +1,9 @@
 import omit from 'lodash/omit';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
 
@@ -41,6 +41,8 @@ const createMessage = (error) => {
 
 const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, usePasswordConfirmation, onUpdate, onMessageDismiss, onBack, onClose }) => {
   const [t] = useTranslation();
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isNewPasswordError, setIsNewPasswordError] = useState(false);
   const wasSubmitting = usePrevious(isSubmitting);
 
   const [data, handleFieldChange, setData] = useForm({
@@ -57,12 +59,14 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
 
   const handleSubmit = useCallback(() => {
     if (!data.password) {
-      passwordField.current.select();
+      passwordField.current.focus();
+      setIsNewPasswordError(true);
       return;
     }
 
     if (usePasswordConfirmation && !data.currentPassword) {
       currentPasswordField.current.focus();
+      setIsPasswordError(true);
       return;
     }
 
@@ -85,9 +89,21 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
           currentPassword: '',
         }));
         focusCurrentPasswordField();
+        setIsPasswordError(true);
+      } else if (error.message === 'Weak password') {
+        passwordField.current.focus();
+        setIsNewPasswordError(true);
       }
     }
   }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
+
+  const handlePasswordKeyDown = useCallback(() => {
+    setIsPasswordError(false);
+  }, []);
+
+  const handleNewPasswordKeyDown = useCallback(() => {
+    setIsNewPasswordError(false);
+  }, []);
 
   useDidUpdate(() => {
     currentPasswordField.current.focus();
@@ -100,11 +116,28 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newPassword')}</div>
-          <Input.Password withStrengthBar ref={passwordField} name="password" value={data.password} className={styles.field} onChange={handleFieldChange} />
+          <Input.Password
+            withStrengthBar
+            ref={passwordField}
+            name="password"
+            value={data.password}
+            className={styles.fieldPassword}
+            onKeyDown={handleNewPasswordKeyDown}
+            onChange={handleFieldChange}
+            isError={isNewPasswordError}
+          />
           {usePasswordConfirmation && (
             <>
               <div className={styles.text}>{t('common.currentPassword')}</div>
-              <Input.Password ref={currentPasswordField} name="currentPassword" value={data.currentPassword} className={styles.field} onChange={handleFieldChange} />
+              <Input.Password
+                ref={currentPasswordField}
+                style={InputStyle.DefaultLast}
+                name="currentPassword"
+                value={data.currentPassword}
+                onKeyDown={handlePasswordKeyDown}
+                onChange={handleFieldChange}
+                isError={isPasswordError}
+              />
             </>
           )}
           <div className={gStyles.controls}>

@@ -44,23 +44,44 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
     onClose();
   }, [defaultData, onSelect, onClose, data]);
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case 'Enter': {
+          handleSubmit();
+          break;
+        }
+        case 'Escape': {
+          onClose();
+          break;
+        }
+        default:
+      }
+    },
+    [handleSubmit, onClose],
+  );
+
   return (
     <>
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
           <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={classNames(data.role === BoardMembershipRoles.EDITOR && styles.selected)}>
             <div className={styles.menuItemTitle}>{t('common.editor')}</div>
             <div className={styles.menuItemDescription}>{t('common.canEditContentOfBoard')}</div>
           </Button>
-          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.VIEWER)} className={classNames(data.role === BoardMembershipRoles.VIEWER && styles.selected)}>
+          <Button
+            style={ButtonStyle.Popup}
+            onClick={() => handleSelectRoleClick(BoardMembershipRoles.VIEWER)}
+            className={classNames(data.role === BoardMembershipRoles.VIEWER && styles.selected, data.role !== BoardMembershipRoles.VIEWER && styles.last)}
+          >
             <div className={styles.menuItemTitle}>{t('common.viewer')}</div>
             <div className={styles.menuItemDescription}>{t('common.canOnlyViewBoard')}</div>
           </Button>
           {data.role === BoardMembershipRoles.VIEWER && (
             <div className={styles.commentSettings}>
               <Radio size={RadioSize.Size12} name="canComment" checked={data.canComment} onChange={handleSettingChange} className={styles.commentSettingsRadio} />
-              <div className={styles.commentSettingsText}>{t('common.canComment')}</div>
+              <div className={classNames(styles.commentSettingsText, styles.last)}>{t('common.canComment')}</div>
             </div>
           )}
           <div className={gStyles.controls}>

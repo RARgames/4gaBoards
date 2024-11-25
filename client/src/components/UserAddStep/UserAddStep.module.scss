@@ -1,9 +1,4 @@
 :global(#app) {
-  .field {
-    margin-bottom: 8px;
-    width: 100%;
-  }
-
   .fieldPassword {
     width: 100%;
   }
@@ -12,6 +7,6 @@
     color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
-    padding-bottom: 6px;
+    margin-bottom: 4px;
   }
 }

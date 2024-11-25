@@ -29,4 +29,26 @@
       color: var(--errorRed);
     }
   }
+
+  .fullWidth {
+    width: 100%;
+  }
+
+  .marginBottom4 {
+    margin-bottom: 4px;
+  }
+
+  .marginBottom6 {
+    margin-bottom: 6px;
+  }
+
+  .default {
+    @extend .fullWidth;
+    @extend .marginBottom4;
+  }
+
+  .defaultLast {
+    @extend .fullWidth;
+    @extend .marginBottom6;
+  }
 }

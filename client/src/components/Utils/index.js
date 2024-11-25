@@ -1,6 +1,6 @@
 import { Button, ButtonStyle } from './Button';
 import { Checkbox, CheckboxSize } from './Checkbox';
-import Dropdown from './Dropdown';
+import { Dropdown, DropdownStyle } from './Dropdown';
 import ExternalLink from './ExternalLink';
 import FilePicker from './FilePicker';
 import Form from './Form';
@@ -15,7 +15,7 @@ import Popup from './PopupElements';
 import { ProgressBar, ProgressBarSize } from './ProgressBar';
 import { Radio, RadioSize } from './Radio';
 import Table from './Table';
-import TextArea from './TextArea';
+import { TextArea, TextAreaStyle } from './TextArea';
 
 export {
   Button,
@@ -23,6 +23,7 @@ export {
   Checkbox,
   CheckboxSize,
   Dropdown,
+  DropdownStyle,
   ExternalLink,
   FilePicker,
   Form,
@@ -46,4 +47,5 @@ export {
   RadioSize,
   Table,
   TextArea,
+  TextAreaStyle,
 };

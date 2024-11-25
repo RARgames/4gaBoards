@@ -1,9 +1,9 @@
 import { dequal } from 'dequal';
 import pickBy from 'lodash/pickBy';
-import React, { useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, Input } from '../../Utils';
+import { Button, ButtonStyle, Form, Input, InputStyle } from '../../Utils';
 
 import { useForm } from '../../../hooks';
 
@@ -12,6 +12,7 @@ import * as gStyles from '../../../globalStyles.module.scss';
 
 const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
   const [t] = useTranslation();
+  const [isError, setIsError] = useState(false);
 
   const [data, handleFieldChange, setData] = useForm(() => ({
     name: '',
@@ -30,12 +31,17 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
 
   const handleSubmit = useCallback(() => {
     if (!cleanData.name) {
-      nameField.current.select();
+      nameField.current.focus();
+      setIsError(true);
       return;
     }
 
     onUpdate(cleanData);
   }, [onUpdate, cleanData]);
+
+  const handleFieldKeyDown = useCallback(() => {
+    setIsError(false);
+  }, []);
 
   useEffect(() => {
     setData({
@@ -47,7 +53,7 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <div className={styles.text}>{t('common.title')}</div>
-      <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+      <Input ref={nameField} style={InputStyle.DefaultLast} name="name" value={data.name} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isError} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
       </div>

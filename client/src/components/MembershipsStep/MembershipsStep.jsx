@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Popup, Input } from '../Utils';
+import { Popup, Input, InputStyle } from '../Utils';
 
 import { useField } from '../../hooks';
 import Item from './Item';
@@ -46,7 +46,7 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect
     <>
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input ref={searchField} value={search} placeholder={t('common.searchMembers')} onChange={handleSearchChange} className={styles.field} />
+        <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchMembers')} onChange={handleSearchChange} />
         {filteredItems.length > 0 && (
           <div className={classNames(styles.menu, gStyles.scrollableY)}>
             {filteredItems.map((item) => (

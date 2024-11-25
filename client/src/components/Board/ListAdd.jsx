@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Form, TextArea } from '../Utils';
+import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
 import { useForm } from '../../hooks';
 
 import * as styles from './ListAdd.module.scss';
@@ -17,11 +17,13 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
   const [t] = useTranslation();
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
+  const [isError, setIsError] = useState(false);
 
   const nameField = useRef(null);
 
   const close = useCallback(() => {
     setData(DEFAULT_DATA);
+    setIsError(false);
     onClose();
   }, [onClose, setData]);
 
@@ -33,6 +35,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
 
     if (!cleanData.name) {
       nameField.current.focus();
+      setIsError(true);
       return;
     }
 
@@ -51,6 +54,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
 
   const handleFieldKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       switch (event.key) {
         case 'Enter': {
           event.preventDefault();
@@ -86,7 +90,18 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
 
   return (
     <Form className={styles.wrapper} onSubmit={handleSubmit}>
-      <TextArea ref={nameField} name="name" value={data.name} placeholder={t('common.enterListTitle')} maxRows={2} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} />
+      <TextArea
+        ref={nameField}
+        style={TextAreaStyle.DefaultLast}
+        name="name"
+        value={data.name}
+        placeholder={t('common.enterListTitle')}
+        maxRows={2}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleFieldChange}
+        onBlur={handleBlur}
+        isError={isError}
+      />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
         <Button style={ButtonStyle.Submit} content={t('action.addList')} onClick={handleSubmit} />

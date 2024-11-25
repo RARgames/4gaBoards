@@ -9,10 +9,10 @@ import { Button, ButtonStyle } from '../Button';
 import { ProgressBar, ProgressBarSize } from '../ProgressBar';
 import InputStyle from './InputStyle';
 
-import * as styles from './Input.module.scss';
+import * as s from './Input.module.scss';
 import * as sPassword from './InputPassword.module.scss';
 
-const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStrengthScore, className, ...props }, ref) => {
+const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStrengthScore, className, isError, ...props }, ref) => {
   const [t] = useTranslation();
   const [isVisible, toggleVisible] = useToggle();
 
@@ -38,7 +38,7 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
   return (
     <>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <input {...inputProps} className={classNames(styles.input, sPassword.inputPassword, style && styles[style], className)} />
+      <input {...inputProps} className={classNames(s.input, sPassword.inputPassword, style && s[style], className, isError && s.inputError)} />
       <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>
@@ -53,6 +53,7 @@ InputPassword.propTypes = {
   withStrengthBar: PropTypes.bool,
   minStrengthScore: PropTypes.number,
   className: PropTypes.string,
+  isError: PropTypes.bool,
 };
 
 InputPassword.defaultProps = {
@@ -60,6 +61,7 @@ InputPassword.defaultProps = {
   withStrengthBar: false,
   minStrengthScore: 2,
   className: undefined,
+  isError: false,
 };
 
 export default React.memo(InputPassword);

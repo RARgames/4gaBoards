@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
-import { Button, ButtonStyle, Input, Popup, Form } from '../Utils';
+import { Button, ButtonStyle, Input, InputStyle, Popup, Form } from '../Utils';
 
 import { useForm } from '../../hooks';
 
@@ -11,6 +11,7 @@ import * as gStyles from '../../globalStyles.module.scss';
 
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
+  const [isError, setIsError] = useState(false);
 
   const [data, handleFieldChange, setData] = useForm(() => {
     const date = defaultValue || new Date().setHours(12, 0, 0, 0);
@@ -44,6 +45,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
 
   const handleDatePickerChange = useCallback(
     (date) => {
+      setIsError(false);
       setData((prevData) => ({
         ...prevData,
         date: t('format:date', {
@@ -57,7 +59,8 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
 
   const handleSubmit = useCallback(() => {
     if (!nullableDate) {
-      dateField.current.select();
+      dateField.current.focus();
+      setIsError(true);
       return;
     }
 
@@ -81,19 +84,31 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
     onClose();
   }, [defaultValue, onUpdate, onClose]);
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      setIsError(false);
+      switch (event.key) {
+        case 'Enter': {
+          handleSubmit();
+          break;
+        }
+        default:
+      }
+    },
+    [handleSubmit],
+  );
+
   useEffect(() => {
-    dateField.current.select();
+    dateField.current.focus();
   }, []);
 
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.dueDate', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
-          <div className={styles.fieldBox}>
-            <div className={styles.text}>{t('common.date')}</div>
-            <Input ref={dateField} name="date" value={data.date} onChange={handleFieldChange} className={styles.field} />
-          </div>
+        <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+          <div className={styles.text}>{t('common.date')}</div>
+          <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />

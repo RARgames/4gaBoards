@@ -1,16 +1,16 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '../Utils';
 
-import * as styles from './ProjectAddPopup.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClose }) => {
   const [t] = useTranslation();
   const nameField = useRef(null);
   const [data, handleFieldChange] = useForm(defaultData);
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = useCallback(() => {
     const cleanData = {
@@ -19,7 +19,8 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
     };
 
     if (!cleanData.name) {
-      nameField.current.select();
+      nameField.current.focus();
+      setIsError(true);
       return;
     }
 
@@ -29,6 +30,7 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
 
   const handleKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       switch (event.key) {
         case 'Enter':
           handleSubmit();
@@ -48,7 +50,7 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
       <Popup.Header>{t('common.addProject')}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-          <Input ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={nameField} style={InputStyle.DefaultLast} name="name" value={data.name} readOnly={isSubmitting} onChange={handleFieldChange} isError={isError} />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.addProject')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>

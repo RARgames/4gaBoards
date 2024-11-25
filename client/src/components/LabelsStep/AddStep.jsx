@@ -29,11 +29,29 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
     }
   }, [data, onCreate, onBack]);
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case 'Enter': {
+          handleSubmit();
+          break;
+        }
+        case 'Escape': {
+          event.stopPropagation();
+          onBack();
+          break;
+        }
+        default:
+      }
+    },
+    [handleSubmit, onBack],
+  );
+
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.createLabel', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
           <Editor data={data} onFieldChange={handleFieldChange} />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.createLabel')} onClick={handleSubmit} />

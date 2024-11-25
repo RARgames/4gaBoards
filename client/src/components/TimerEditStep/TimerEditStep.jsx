@@ -1,9 +1,9 @@
 import { dequal } from 'dequal';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Input, Popup, Form } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
 
 import { useForm } from '../../hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
@@ -34,6 +34,10 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
   const [data, handleFieldChange, setData] = useForm(() => createData(defaultValue));
   const [isEditing, toggleEditing] = useToggle();
 
+  const [isHoursError, setIsHoursError] = useState(false);
+  const [isMinutesError, setIsMinutesError] = useState(false);
+  const [isSecondsError, setIsSecondsError] = useState(false);
+
   const hoursField = useRef(null);
   const minutesField = useRef(null);
   const secondsField = useRef(null);
@@ -56,6 +60,9 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
   }, [defaultValue, onUpdate, onClose]);
 
   const handleToggleEditingClick = useCallback(() => {
+    setIsHoursError(false);
+    setIsMinutesError(false);
+    setIsSecondsError(false);
     setData(createData(defaultValue));
     toggleEditing();
   }, [defaultValue, setData, toggleEditing]);
@@ -68,17 +75,20 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
     };
 
     if (Number.isNaN(parts.hours)) {
-      hoursField.current.select();
+      hoursField.current.focus();
+      setIsHoursError(true);
       return;
     }
 
     if (Number.isNaN(parts.minutes) || parts.minutes > 60) {
-      minutesField.current.select();
+      minutesField.current.focus();
+      setIsMinutesError(true);
       return;
     }
 
     if (Number.isNaN(parts.seconds) || parts.seconds > 60) {
-      secondsField.current.select();
+      secondsField.current.focus();
+      setIsSecondsError(true);
       return;
     }
 
@@ -93,9 +103,21 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
     onClose();
   }, [defaultValue, onUpdate, onClose, data]);
 
+  const handleHoursKeyDown = useCallback(() => {
+    setIsHoursError(false);
+  }, []);
+
+  const handleMinutesKeyDown = useCallback(() => {
+    setIsMinutesError(false);
+  }, []);
+
+  const handleSecondsKeyDown = useCallback(() => {
+    setIsSecondsError(false);
+  }, []);
+
   useEffect(() => {
     if (isEditing) {
-      hoursField.current.select();
+      hoursField.current.focus();
     }
   }, [isEditing]);
 
@@ -107,15 +129,48 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
           <div className={styles.fieldWrapper}>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.hours')}</div>
-              <Input.Mask ref={hoursField} name="hours" value={data.hours} mask="9999" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} className={styles.inputField} />
+              <Input.Mask
+                ref={hoursField}
+                style={InputStyle.DefaultLast}
+                name="hours"
+                value={data.hours}
+                mask="9999"
+                maskChar={null}
+                disabled={!isEditing}
+                onKeyDown={handleHoursKeyDown}
+                onChange={handleFieldChange}
+                isError={isHoursError}
+              />
             </div>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.minutes')}</div>
-              <Input.Mask ref={minutesField} name="minutes" value={data.minutes} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} className={styles.inputField} />
+              <Input.Mask
+                ref={minutesField}
+                style={InputStyle.DefaultLast}
+                name="minutes"
+                value={data.minutes}
+                mask="99"
+                maskChar={null}
+                disabled={!isEditing}
+                onKeyDown={handleMinutesKeyDown}
+                onChange={handleFieldChange}
+                isError={isMinutesError}
+              />
             </div>
             <div className={styles.fieldBox}>
               <div className={styles.text}>{t('common.seconds')}</div>
-              <Input.Mask ref={secondsField} name="seconds" value={data.seconds} mask="99" maskChar={null} disabled={!isEditing} onChange={handleFieldChange} className={styles.inputField} />
+              <Input.Mask
+                ref={secondsField}
+                style={InputStyle.DefaultLast}
+                name="seconds"
+                value={data.seconds}
+                mask="99"
+                maskChar={null}
+                disabled={!isEditing}
+                onKeyDown={handleSecondsKeyDown}
+                onChange={handleFieldChange}
+                isError={isSecondsError}
+              />
             </div>
             <Button style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={styles.iconButton}>
               <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size13} />

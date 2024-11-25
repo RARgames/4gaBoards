@@ -1,4 +1,4 @@
-const InputStyle = {
+const TextAreaStyle = {
   FullWidth: 'fullWidth',
   MarginBottom4: 'marginBottom4',
   MarginBottom6: 'marginBottom6',
@@ -6,4 +6,4 @@ const InputStyle = {
   DefaultLast: 'defaultLast',
 };
 
-export default InputStyle;
+export default TextAreaStyle;

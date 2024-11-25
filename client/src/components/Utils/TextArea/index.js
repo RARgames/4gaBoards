@@ -1,3 +1,4 @@
 import TextArea from './TextArea';
+import TextAreaStyle from './TextAreaStyle';
 
-export default TextArea;
+export { TextArea, TextAreaStyle };

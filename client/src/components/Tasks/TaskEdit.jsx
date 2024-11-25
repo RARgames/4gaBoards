@@ -24,21 +24,28 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     setValue(null);
   }, [setValue]);
 
-  const submit = useCallback(() => {
-    const cleanValue = value.trim();
+  const submit = useCallback(
+    (blurOnEmpty = false) => {
+      const cleanValue = value.trim();
 
-    if (!cleanValue) {
-      setIsError(true);
-      field.current.focus();
-      return;
-    }
+      if (!cleanValue) {
+        if (blurOnEmpty && isError) {
+          close();
+          return;
+        }
+        setIsError(true);
+        field.current.focus();
+        return;
+      }
 
-    if (cleanValue !== defaultValue) {
-      onUpdate(cleanValue);
-    }
+      if (cleanValue !== defaultValue) {
+        onUpdate(cleanValue);
+      }
 
-    close();
-  }, [value, defaultValue, close, onUpdate]);
+      close();
+    },
+    [value, defaultValue, close, isError, onUpdate],
+  );
 
   useImperativeHandle(
     ref,
@@ -63,7 +70,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   );
 
   const handleBlur = useCallback(() => {
-    submit();
+    submit(true);
   }, [submit]);
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, Form, withPopup, Dropdown, Checkbox } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, Checkbox } from '../Utils';
 import Config from '../../constants/Config';
 
 import { useForm, useSteps } from '../../hooks';
@@ -18,7 +18,8 @@ const StepTypes = {
 const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
 
-  const [isError, setIsError] = useState(false);
+  const [isDropdownError, setIsDropdownError] = useState(false);
+  const [isInputError, setIsInputError] = useState(false);
   const [importNonExistingUsers, toggleImportNonExistingUsers] = useToggle(false);
   const [importProjectManagers, toggleImportProjectManagers] = useToggle(false);
 
@@ -111,11 +112,12 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
 
     if (!cleanData.name) {
       nameField.current.select();
+      setIsInputError(true);
       return;
     }
 
     if (!selectedProject) {
-      setIsError(true);
+      setIsDropdownError(true);
       return;
     }
 
@@ -126,6 +128,10 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
   const handleImportClick = useCallback(() => {
     openStep(StepTypes.IMPORT);
   }, [openStep]);
+
+  const handleFieldKeyDown = useCallback(() => {
+    setIsInputError(false);
+  }, []);
 
   useEffect(() => {
     nameField.current.focus({
@@ -146,7 +152,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
       <Popup.Header onBack={onBack}>{t('common.addBoard')}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isInputError} />
           {!skipProjectDropdown && (
             <div>
               <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
@@ -155,10 +161,10 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
                 defaultItem={selectedProject}
                 isSearchable
-                isError={isError}
+                isError={isDropdownError}
                 selectFirstOnSearch
                 onChange={handleProjectChange}
-                onErrorClear={() => setIsError(false)}
+                onErrorClear={() => setIsDropdownError(false)}
                 className={styles.dropdown}
                 dropdownMenuClassName={styles.dropdownMenu}
               />

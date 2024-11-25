@@ -11,6 +11,10 @@
     background: var(--backgroundPopupHover);
   }
 
+  .last {
+    margin-bottom: 6px;
+  }
+
   .commentSettings {
     display: flex;
     flex-direction: row;

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Input } from '../Utils';
+import { Button, ButtonStyle, Input, InputStyle } from '../Utils';
 
 import LabelColors from '../../constants/LabelColors';
 
@@ -17,13 +17,13 @@ const Editor = React.memo(({ data, onFieldChange }) => {
   const nameField = useRef(null);
 
   useEffect(() => {
-    nameField.current.select();
+    nameField.current.focus();
   }, []);
 
   return (
     <>
       <div className={styles.text}>{t('common.title')}</div>
-      <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={onFieldChange} />
+      <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} onChange={onFieldChange} />
       <div className={styles.text}>{t('common.color')}</div>
       <div className={styles.colorButtons}>
         {LabelColors.map((color) => (

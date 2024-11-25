@@ -6,13 +6,15 @@ import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, us
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
 
-import * as styles from './Dropdown.module.scss';
+import * as s from './Dropdown.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
+import DropdownStyle from './DropdownStyle';
 
 const Dropdown = React.forwardRef(
   (
     {
       children,
+      style,
       options,
       defaultItem,
       placeholder,
@@ -41,6 +43,7 @@ const Dropdown = React.forwardRef(
     const [searchValue, setSearchValue] = useState('');
     const dropdown = useRef(null);
     const itemsRef = useRef([]);
+    const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
 
     const open = useCallback(() => {
       setIsOpen(true);
@@ -162,7 +165,7 @@ const Dropdown = React.forwardRef(
 
     const handleBlur = useCallback(
       (event) => {
-        if (event.relatedTarget && (event.relatedTarget.closest(`.${styles.dropdownMenu}`) || event.relatedTarget.closest(`.${styles.dropdownContainer}`))) {
+        if (event.relatedTarget && (event.relatedTarget.closest(`.${s.dropdownMenu}`) || event.relatedTarget.closest(`.${s.dropdownContainer}`))) {
           return;
         }
         if (onBlur) {
@@ -284,13 +287,13 @@ const Dropdown = React.forwardRef(
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <div ref={refs.setReference} {...getReferenceProps()} className={classNames(styles.dropdownContainer, className)}>
+      <div ref={refs.setReference} {...getReferenceProps()} className={classNames(s.dropdownContainer, styles, className)}>
         <div>
           <input
             onChange={handleSearch}
             value={searchValue}
             ref={dropdown}
-            className={classNames(styles.dropdownSearchInput, isError && styles.dropdownSearchInputError)}
+            className={classNames(s.dropdownSearchInput, isError && s.dropdownSearchInputError)}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -302,7 +305,7 @@ const Dropdown = React.forwardRef(
             style={ButtonStyle.Icon}
             title={isOpen ? t('common.closeDropdown') : t('common.openDropdown')}
             onClick={handleDropdownToggleClick}
-            className={classNames(styles.dropdownButton, isError && styles.dropdownButtonError)}
+            className={classNames(s.dropdownButton, isError && s.dropdownButtonError)}
           >
             <Icon type={IconType.TriangleDown} size={IconSize.Size10} />
           </Button>
@@ -314,7 +317,7 @@ const Dropdown = React.forwardRef(
                 {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
                 ref={refs.setFloating}
                 style={floatingStyles}
-                className={classNames(styles.dropdownMenu, gStyles.scrollableY, getOptions().length > 0 && styles.dropdownMenuWithChildren, dropdownMenuClassName)}
+                className={classNames(s.dropdownMenu, gStyles.scrollableY, getOptions().length > 0 && s.dropdownMenuWithChildren, dropdownMenuClassName)}
               >
                 {getOptions().map((item, index) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -323,12 +326,12 @@ const Dropdown = React.forwardRef(
                     key={item.id}
                     id={item.id}
                     name={item.name}
-                    className={classNames(styles.dropdownItem, savedDefaultItem && savedDefaultItem.id === item.id && styles.dropdownItemDefault, isSelected(item) && styles.dropdownItemSelected)}
+                    className={classNames(s.dropdownItem, savedDefaultItem && savedDefaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
                     onClick={() => handleItemClick(item)}
                     onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
                   >
-                    {item.flag && <Icon type={FlagType[item.flag]} size={IconSize.Size14} className={styles.icon} />}
-                    {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={styles.icon} />}
+                    {item.flag && <Icon type={FlagType[item.flag]} size={IconSize.Size14} className={s.icon} />}
+                    {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={s.icon} />}
                     {item.name}
                   </div>
                 ))}
@@ -343,6 +346,7 @@ const Dropdown = React.forwardRef(
 
 Dropdown.propTypes = {
   children: PropTypes.node,
+  style: PropTypes.oneOfType([PropTypes.oneOf(Object.values(DropdownStyle)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(DropdownStyle)))]),
   options: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultItem: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   placeholder: PropTypes.string.isRequired,
@@ -364,6 +368,7 @@ Dropdown.propTypes = {
 
 Dropdown.defaultProps = {
   children: null,
+  style: undefined,
   defaultItem: null,
   isSearchable: false,
   isError: false,

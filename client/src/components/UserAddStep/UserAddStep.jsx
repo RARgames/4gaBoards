@@ -1,9 +1,9 @@
 import isEmail from 'validator/lib/isEmail';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { usePrevious } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Input, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
@@ -42,6 +42,10 @@ const createMessage = (error) => {
 
 const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, onMessageDismiss, onClose }) => {
   const [t] = useTranslation();
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [isNameError, setIsNameError] = useState(false);
+  const [isUsernameError, setIsUsernameError] = useState(false);
   const wasSubmitting = usePrevious(isSubmitting);
 
   const [data, handleFieldChange] = useForm(() => ({
@@ -74,22 +78,26 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     };
 
     if (!isEmail(cleanData.email)) {
-      emailField.current.select();
+      emailField.current.focus();
+      setIsEmailError(true);
       return;
     }
 
     if (!cleanData.password) {
       passwordField.current.focus();
+      setIsPasswordError(true);
       return;
     }
 
     if (!cleanData.name) {
-      nameField.current.select();
+      nameField.current.focus();
+      setIsNameError(true);
       return;
     }
 
     if (cleanData.username && !isUsername(cleanData.username)) {
-      usernameField.current.select();
+      usernameField.current.focus();
+      setIsUsernameError(true);
       return;
     }
 
@@ -107,11 +115,18 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
       if (error) {
         switch (error.message) {
           case 'Email already in use':
-            emailField.current.select();
+            emailField.current.focus();
+            setIsEmailError(true);
 
             break;
           case 'Username already in use':
-            usernameField.current.select();
+            usernameField.current.focus();
+            setIsUsernameError(true);
+
+            break;
+          case 'Weak password':
+            passwordField.current.focus();
+            setIsPasswordError(true);
 
             break;
           default:
@@ -122,6 +137,22 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     }
   }, [isSubmitting, wasSubmitting, error, onClose]);
 
+  const handleEmailKeyDown = useCallback(() => {
+    setIsEmailError(false);
+  }, []);
+
+  const handlePasswordKeyDown = useCallback(() => {
+    setIsPasswordError(false);
+  }, []);
+
+  const handleNameKeyDown = useCallback(() => {
+    setIsNameError(false);
+  }, []);
+
+  const handleUsernameKeyDown = useCallback(() => {
+    setIsUsernameError(false);
+  }, []);
+
   return (
     <>
       <Popup.Header>{t('common.addUser', { context: 'title' })}</Popup.Header>
@@ -129,15 +160,34 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.email')}</div>
-          <Input ref={emailField} name="email" value={data.email} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={emailField} name="email" style={InputStyle.Default} value={data.email} readOnly={isSubmitting} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
           <div className={styles.text}>{t('common.password')}</div>
-          <Input.Password withStrengthBar ref={passwordField} name="password" value={data.password} readOnly={isSubmitting} className={styles.fieldPassword} onChange={handleFieldChange} />
+          <Input.Password
+            withStrengthBar
+            ref={passwordField}
+            name="password"
+            value={data.password}
+            readOnly={isSubmitting}
+            onKeyDown={handlePasswordKeyDown}
+            onChange={handleFieldChange}
+            className={styles.fieldPassword}
+            isError={isPasswordError}
+          />
           <div className={styles.text}>{t('common.name')}</div>
-          <Input ref={nameField} name="name" value={data.name} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={nameField} name="name" style={InputStyle.Default} value={data.name} readOnly={isSubmitting} onKeyDown={handleNameKeyDown} onChange={handleFieldChange} isError={isNameError} />
           <div className={styles.text}>
             {t('common.username')} ({t('common.optional', { context: 'inline' })})
           </div>
-          <Input ref={usernameField} name="username" value={data.username || ''} readOnly={isSubmitting} className={styles.field} onChange={handleFieldChange} />
+          <Input
+            ref={usernameField}
+            style={InputStyle.DefaultLast}
+            name="username"
+            value={data.username || ''}
+            readOnly={isSubmitting}
+            onKeyDown={handleUsernameKeyDown}
+            onChange={handleFieldChange}
+            isError={isUsernameError}
+          />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>

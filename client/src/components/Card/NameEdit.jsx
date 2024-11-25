@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, TextArea } from '../Utils';
+import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
 import { useField } from '../../hooks';
 
 import * as styles from './NameEdit.module.scss';
@@ -11,6 +11,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const [isError, setIsError] = useState(false);
 
   const field = useRef(null);
 
@@ -29,6 +30,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
     if (!cleanValue) {
       field.current.focus();
+      setIsError(true);
       return;
     }
 
@@ -58,6 +60,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   const handleFieldKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       switch (event.key) {
         case 'Enter':
           event.preventDefault();
@@ -93,7 +96,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   return (
     <Form onSubmit={handleSubmit} className={styles.wrapper}>
-      <TextArea ref={field} value={value} maxRows={2} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} onFocus={handleFocus} />
+      <TextArea ref={field} style={TextAreaStyle.DefaultLast} value={value} maxRows={2} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} onFocus={handleFocus} isError={isError} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
         <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />

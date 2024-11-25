@@ -1,12 +1,10 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { dequal } from 'dequal';
 import { useTranslation } from 'react-i18next';
 import { useForm } from '../../../hooks';
-import { Button, ButtonStyle, Popup, Input, Form, withPopup } from '../../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '../../Utils';
 
-import * as styles from './Connections.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
 // TODO replace with actual Github integration
@@ -28,7 +26,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
     };
     cleanData.isGithubConnected = !!cleanData.githubRepo;
     if (!/^$|^\w+\/\w+$/.test(cleanData.githubRepo)) {
-      inputRef.current.select();
+      inputRef.current.focus();
       setIsError(true);
       return;
     }
@@ -66,7 +64,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
       <Popup.Header onBack={onBack}>{t('common.connectToGithub')} [Not fully implemented]</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Input ref={inputRef} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={classNames(styles.field, isError && styles.fieldError)} />
+          <Input ref={inputRef} style={InputStyle.DefaultLast} value={data.githubRepo} name="githubRepo" onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isError} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />

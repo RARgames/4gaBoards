@@ -1,8 +1,8 @@
 import { dequal } from 'dequal';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, Input, Popup, withPopup } from '../../Utils';
+import { Button, ButtonStyle, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
 
 import { useForm, useSteps } from '../../../hooks';
 import DeleteStep from '../../DeleteStep';
@@ -16,6 +16,7 @@ const StepTypes = {
 
 const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
+  const [isError, setIsError] = useState(false);
 
   const [data, handleFieldChange] = useForm(() => ({
     name: '',
@@ -33,7 +34,8 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
     };
 
     if (!cleanData.name) {
-      nameField.current.select();
+      nameField.current.focus();
+      setIsError(true);
       return;
     }
 
@@ -48,8 +50,12 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
     openStep(StepTypes.DELETE);
   }, [openStep]);
 
+  const handleFieldKeyDown = useCallback(() => {
+    setIsError(false);
+  }, []);
+
   useEffect(() => {
-    nameField.current.select();
+    nameField.current.focus();
   }, []);
 
   if (step && step.type === StepTypes.DELETE) {
@@ -70,7 +76,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onClose }) => {
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.title')}</div>
-          <Input ref={nameField} name="name" value={data.name} className={styles.field} onChange={handleFieldChange} />
+          <Input ref={nameField} style={InputStyle.DefaultLast} name="name" value={data.name} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isError} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />

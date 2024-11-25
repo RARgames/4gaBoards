@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Popup, Input, withPopup } from '../../Utils';
+import { Popup, Input, InputStyle, withPopup } from '../../Utils';
 
 import { useField, useSteps } from '../../../hooks';
 import UserItem from './UserItem';
@@ -83,7 +83,7 @@ const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, titl
     <>
       <Popup.Header>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input ref={searchField} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} className={styles.field} />
+        <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} />
         {filteredUsers.length > 0 && (
           <div className={classNames(styles.users, gStyles.scrollableY)}>
             {filteredUsers.map((user) => (

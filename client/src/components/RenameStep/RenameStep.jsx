@@ -1,8 +1,8 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Popup, Form, TextArea } from '../Utils';
+import { Button, ButtonStyle, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
 import { useForm } from '../../hooks';
 
 import * as gStyles from '../../globalStyles.module.scss';
@@ -10,6 +10,7 @@ import * as gStyles from '../../globalStyles.module.scss';
 const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
   const field = useRef(null);
+  const [isError, setIsError] = useState(false);
 
   const [data, handleFieldChange, , handleFocus] = useForm(() => ({
     name: '',
@@ -23,7 +24,8 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
     };
 
     if (!cleanData.name) {
-      field.current.select();
+      field.current.focus();
+      setIsError(true);
       return;
     }
 
@@ -36,6 +38,7 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
 
   const handleFieldKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       switch (event.key) {
         case 'Enter': {
           event.preventDefault();
@@ -61,7 +64,7 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
       <Popup.Header onBack={onBack}>{title}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <TextArea ref={field} name="name" value={data.name} onChange={handleFieldChange} onKeyDown={handleFieldKeyDown} maxRows={3} onFocus={handleFocus} />
+          <TextArea ref={field} style={TextAreaStyle.DefaultLast} name="name" value={data.name} onChange={handleFieldChange} onKeyDown={handleFieldKeyDown} maxRows={3} onFocus={handleFocus} isError={isError} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={onClose} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />

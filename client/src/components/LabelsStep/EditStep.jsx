@@ -43,6 +43,24 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
     openStep(StepTypes.DELETE);
   }, [openStep]);
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      switch (event.key) {
+        case 'Enter': {
+          handleSubmit();
+          break;
+        }
+        case 'Escape': {
+          event.stopPropagation();
+          onBack();
+          break;
+        }
+        default:
+      }
+    },
+    [handleSubmit, onBack],
+  );
+
   if (step && step.type === StepTypes.DELETE) {
     return (
       <DeleteStep
@@ -59,7 +77,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
     <>
       <Popup.Header onBack={onBack}>{t('common.editLabel', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
           <Editor data={data} onFieldChange={handleFieldChange} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />

@@ -1,19 +1,8 @@
 :global(#app) {
-  .fieldBox {
-    display: inline-block;
-    margin-bottom: 6px;
-    width: 100%;
-  }
-
-  .field {
-    width: 100%;
-  }
-
   .text {
     color: var(--textColor1);
     font-size: 12px;
     font-weight: bold;
-    padding-bottom: 4px;
-    padding-left: 2px;
+    margin-bottom: 4px;
   }
 }

@@ -17,7 +17,37 @@
     }
   }
 
-  .default {
+  .inputError {
+    border: 1px solid var(--errorRed);
+
+    &:focus {
+      border: 1px solid var(--errorRed);
+    }
+
+    &::placeholder {
+      color: var(--errorRed);
+    }
+  }
+
+  .fullWidth {
     width: 100%;
+  }
+
+  .marginBottom4 {
+    margin-bottom: 4px;
+  }
+
+  .marginBottom6 {
+    margin-bottom: 6px;
+  }
+
+  .default {
+    @extend .fullWidth;
+    @extend .marginBottom4;
+  }
+
+  .defaultLast {
+    @extend .fullWidth;
+    @extend .marginBottom6;
   }
 }

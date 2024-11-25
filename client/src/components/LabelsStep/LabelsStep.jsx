@@ -161,7 +161,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
             </Droppable>
           </DragDropContext>
         )}
-        {canEdit && <Button style={ButtonStyle.Popup} content={t('action.createNewLabel')} onClick={handleAddClick} />}
+        {canEdit && <Button style={ButtonStyle.NoBackground} content={t('action.createNewLabel')} onClick={handleAddClick} />}
       </Popup.Content>
     </>
   );
