@@ -121,11 +121,17 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
 
   const handleEmailKeyDown = useCallback(() => {
     setIsEmailError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   const handlePasswordKeyDown = useCallback(() => {
     setIsPasswordError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
+
+  useEffect(() => {
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   useDidUpdate(() => {
     currentPasswordField.current.focus();

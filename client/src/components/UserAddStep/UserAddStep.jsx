@@ -74,7 +74,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
       ...data,
       email: data.email.trim(),
       name: data.name.trim(),
-      username: data.username.trim() || null,
+      username: data.username ? data.username.trim() : null,
     };
 
     if (!isEmail(cleanData.email)) {
@@ -139,19 +139,27 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
 
   const handleEmailKeyDown = useCallback(() => {
     setIsEmailError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   const handlePasswordKeyDown = useCallback(() => {
     setIsPasswordError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   const handleNameKeyDown = useCallback(() => {
     setIsNameError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   const handleUsernameKeyDown = useCallback(() => {
     setIsUsernameError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
+
+  useEffect(() => {
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   return (
     <>

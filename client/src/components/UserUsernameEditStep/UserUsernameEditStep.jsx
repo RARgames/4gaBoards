@@ -121,15 +121,21 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
 
   const handleUsernameKeyDown = useCallback(() => {
     setIsUsernameError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   const handlePasswordKeyDown = useCallback(() => {
     setIsPasswordError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   useDidUpdate(() => {
     currentPasswordField.current.focus();
   }, [focusCurrentPasswordFieldState]);
+
+  useEffect(() => {
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   return (
     <>

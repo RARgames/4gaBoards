@@ -99,11 +99,17 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
 
   const handlePasswordKeyDown = useCallback(() => {
     setIsPasswordError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   const handleNewPasswordKeyDown = useCallback(() => {
     setIsNewPasswordError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
+
+  useEffect(() => {
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   useDidUpdate(() => {
     currentPasswordField.current.focus();

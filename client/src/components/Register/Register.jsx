@@ -80,9 +80,10 @@ const Register = React.memo(
     const handlePolicyToggleChange = useCallback(
       (e) => {
         setIsCheckboxError(false);
+        onMessageDismiss();
         setData({ ...data, policy: e.target.checked });
       },
-      [data, setData],
+      [data, onMessageDismiss, setData],
     );
 
     const handleSubmit = useCallback(() => {
@@ -130,15 +131,21 @@ const Register = React.memo(
 
     const handleEmailKeyDown = useCallback(() => {
       setIsEmailError(false);
-    }, []);
+      onMessageDismiss();
+    }, [onMessageDismiss]);
 
     const handlePasswordKeyDown = useCallback(() => {
       setIsPasswordError(false);
-    }, []);
+      onMessageDismiss();
+    }, [onMessageDismiss]);
 
     useDidUpdate(() => {
       passwordField.current.focus();
     }, [focusPasswordFieldState]);
+
+    useEffect(() => {
+      onMessageDismiss();
+    }, [onMessageDismiss]);
 
     return (
       <div className={classNames(styles.wrapper, gStyles.scrollableY)}>

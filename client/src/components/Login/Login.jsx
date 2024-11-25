@@ -120,15 +120,21 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
 
   const handleUsernameKeyDown = useCallback(() => {
     setIsUsernameError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   const handlePasswordKeyDown = useCallback(() => {
     setIsPasswordError(false);
-  }, []);
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   useDidUpdate(() => {
     passwordField.current.focus();
   }, [focusPasswordFieldState]);
+
+  useEffect(() => {
+    onMessageDismiss();
+  }, [onMessageDismiss]);
 
   return (
     <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
