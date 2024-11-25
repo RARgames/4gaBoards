@@ -115,23 +115,12 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
-          <div className={styles.text}>{t('common.newPassword')}</div>
-          <Input.Password
-            withStrengthBar
-            ref={passwordField}
-            style={InputStyle.Default}
-            name="password"
-            value={data.password}
-            onKeyDown={handleNewPasswordKeyDown}
-            onChange={handleFieldChange}
-            isError={isNewPasswordError}
-          />
           {usePasswordConfirmation && (
             <>
               <div className={styles.text}>{t('common.currentPassword')}</div>
               <Input.Password
                 ref={currentPasswordField}
-                style={InputStyle.DefaultLast}
+                style={InputStyle.Default}
                 name="currentPassword"
                 value={data.currentPassword}
                 onKeyDown={handlePasswordKeyDown}
@@ -140,6 +129,17 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
               />
             </>
           )}
+          <div className={styles.text}>{t('common.newPassword')}</div>
+          <Input.Password
+            withStrengthBar
+            ref={passwordField}
+            style={InputStyle.DefaultLast}
+            name="password"
+            value={data.password}
+            onKeyDown={handleNewPasswordKeyDown}
+            onChange={handleFieldChange}
+            isError={isNewPasswordError}
+          />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
