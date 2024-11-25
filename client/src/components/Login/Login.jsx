@@ -85,7 +85,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
     };
 
     if (!isEmail(cleanData.emailOrUsername) && !isUsername(cleanData.emailOrUsername)) {
-      emailOrUsernameField.current.select();
+      emailOrUsernameField.current.focus();
       return;
     }
 

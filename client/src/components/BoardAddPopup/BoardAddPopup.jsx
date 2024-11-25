@@ -111,7 +111,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
     };
 
     if (!cleanData.name) {
-      nameField.current.select();
+      nameField.current.focus();
       setIsInputError(true);
       return;
     }

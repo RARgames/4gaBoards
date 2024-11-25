@@ -88,7 +88,7 @@ const Register = React.memo(
         name: data.email.split('@')[0],
       };
       if (!isEmail(cleanData.email)) {
-        emailField.current.select();
+        emailField.current.focus();
         return;
       }
       if (!cleanData.password) {
