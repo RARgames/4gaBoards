@@ -5,6 +5,11 @@
     line-height: 20px;
     padding: 4px 8px;
     width: 236px;
+
+    &::placeholder {
+      font-size: 14px;
+      font-weight: normal;
+    }
   }
 
   .wrapper {

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { TextArea } from '../Utils';
 
 import { useField } from '../../hooks';
@@ -7,6 +8,7 @@ import { useField } from '../../hooks';
 import * as styles from './NameField.module.scss';
 
 const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
+  const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
   const field = useRef(null);
@@ -70,7 +72,19 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
     return children;
   }
 
-  return <TextArea ref={field} value={value} className={styles.field} maxRows={3} onKeyDown={handleKeyDown} onChange={handleFieldChange} onBlur={handleFieldBlur} onFocus={handleFocus} />;
+  return (
+    <TextArea
+      ref={field}
+      value={value}
+      placeholder={t('common.enterCardName')}
+      className={styles.field}
+      maxRows={3}
+      onKeyDown={handleKeyDown}
+      onChange={handleFieldChange}
+      onBlur={handleFieldBlur}
+      onFocus={handleFocus}
+    />
+  );
 });
 
 NameField.propTypes = {

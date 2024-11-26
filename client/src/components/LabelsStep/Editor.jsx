@@ -22,8 +22,7 @@ const Editor = React.memo(({ data, onFieldChange }) => {
 
   return (
     <>
-      <div className={styles.text}>{t('common.title')}</div>
-      <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} onChange={onFieldChange} />
+      <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} placeholder={t('common.enterLabelName')} onChange={onFieldChange} />
       <div className={styles.text}>{t('common.color')}</div>
       <div className={styles.colorButtons}>
         {LabelColors.map((color) => (

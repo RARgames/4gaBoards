@@ -6,7 +6,6 @@ import { Button, ButtonStyle, Input, InputStyle, Popup, Form } from '../Utils';
 
 import { useForm } from '../../hooks';
 
-import * as styles from './DueDateEditStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
@@ -107,8 +106,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
       <Popup.Header onBack={onBack}>{t('common.dueDate', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-          <div className={styles.text}>{t('common.date')}</div>
-          <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} onChange={handleFieldChange} isError={isError} />
+          <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />

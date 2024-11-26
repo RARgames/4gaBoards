@@ -96,7 +96,18 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   return (
     <Form onSubmit={handleSubmit} className={styles.wrapper}>
-      <TextArea ref={field} style={TextAreaStyle.DefaultLast} value={value} maxRows={2} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleBlur} onFocus={handleFocus} isError={isError} />
+      <TextArea
+        ref={field}
+        style={TextAreaStyle.DefaultLast}
+        value={value}
+        placeholder={t('common.enterCardName')}
+        maxRows={2}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleFieldChange}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        isError={isError}
+      />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
         <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />

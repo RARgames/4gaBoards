@@ -7,7 +7,7 @@ import { useForm } from '../../hooks';
 
 import * as gStyles from '../../globalStyles.module.scss';
 
-const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }) => {
+const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
   const field = useRef(null);
   const [isError, setIsError] = useState(false);
@@ -64,7 +64,18 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
       <Popup.Header onBack={onBack}>{title}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <TextArea ref={field} style={TextAreaStyle.DefaultLast} name="name" value={data.name} onChange={handleFieldChange} onKeyDown={handleFieldKeyDown} maxRows={3} onFocus={handleFocus} isError={isError} />
+          <TextArea
+            ref={field}
+            style={TextAreaStyle.DefaultLast}
+            name="name"
+            placeholder={placeholder}
+            value={data.name}
+            onChange={handleFieldChange}
+            onKeyDown={handleFieldKeyDown}
+            maxRows={3}
+            onFocus={handleFocus}
+            isError={isError}
+          />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={onClose} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
@@ -78,6 +89,7 @@ const RenameStep = React.memo(({ title, defaultData, onUpdate, onBack, onClose }
 RenameStep.propTypes = {
   title: PropTypes.string.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  placeholder: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,

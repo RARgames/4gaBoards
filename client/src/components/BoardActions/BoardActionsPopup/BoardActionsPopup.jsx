@@ -30,7 +30,9 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
   if (step) {
     switch (step.type) {
       case StepTypes.RENAME:
-        return <RenameStep title={t('common.renameBoard', { context: 'title' })} defaultData={defaultDataRename} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
+        return (
+          <RenameStep title={t('common.renameBoard', { context: 'title' })} defaultData={defaultDataRename} placeholder={t('common.enterBoardName')} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />
+        );
       case StepTypes.GITHUB:
         return <ConnectionsStep defaultData={defaultDataGithub} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
       case StepTypes.EXPORT:

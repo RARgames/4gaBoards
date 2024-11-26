@@ -152,7 +152,17 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
       <Popup.Header onBack={onBack}>{t('common.addBoard')}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isInputError} />
+          <div className={styles.text}>{t('common.name')}</div>
+          <Input
+            ref={nameField}
+            style={InputStyle.Default}
+            name="name"
+            value={data.name}
+            placeholder={t('common.enterBoardName')}
+            onKeyDown={handleFieldKeyDown}
+            onChange={handleFieldChange}
+            isError={isInputError}
+          />
           {!skipProjectDropdown && (
             <div>
               <div className={styles.text}>{t('common.project', { context: 'title' })}</div>

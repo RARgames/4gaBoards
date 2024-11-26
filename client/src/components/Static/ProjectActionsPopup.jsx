@@ -22,7 +22,16 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
   if (step) {
     switch (step.type) {
       case StepTypes.RENAME:
-        return <RenameStep title={t('common.renameProject', { context: 'title' })} defaultData={defaultDataRename} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
+        return (
+          <RenameStep
+            title={t('common.renameProject', { context: 'title' })}
+            defaultData={defaultDataRename}
+            placeholder={t('common.enterProjectName')}
+            onUpdate={onUpdate}
+            onBack={handleBack}
+            onClose={onClose}
+          />
+        );
       case StepTypes.ADD:
         return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
       default:

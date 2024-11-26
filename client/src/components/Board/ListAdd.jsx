@@ -95,7 +95,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
         style={TextAreaStyle.DefaultLast}
         name="name"
         value={data.name}
-        placeholder={t('common.enterListTitle')}
+        placeholder={t('common.enterListName')}
         maxRows={2}
         onKeyDown={handleFieldKeyDown}
         onChange={handleFieldChange}

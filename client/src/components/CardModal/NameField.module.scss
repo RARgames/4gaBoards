@@ -4,5 +4,10 @@
     font-size: 18px;
     font-weight: 700;
     line-height: 20px;
+
+    &::placeholder {
+      font-size: 14px;
+      font-weight: normal;
+    }
   }
 }

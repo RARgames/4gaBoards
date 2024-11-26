@@ -1,8 +1,12 @@
 :global(#app) {
-  .popupWrapper {
+  .buttons {
     position: absolute;
-    right: 2px;
     top: 2px;
+    right: 2px;
+    display: flex;
+    justify-content: flex-end;
+    top: 0;
+    padding: 8px 0 6px 6px;
   }
 
   .target {

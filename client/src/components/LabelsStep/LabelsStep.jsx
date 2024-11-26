@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
-import { Button, ButtonStyle, Popup, Input } from '../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle } from '../Utils';
 
 import { useField, useSteps } from '../../hooks';
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -119,7 +119,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
     <>
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input ref={searchField} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} className={styles.field} />
+        <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} />
         {filteredItems.length > 0 && (
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="labels" type={DroppableTypes.LABEL}>

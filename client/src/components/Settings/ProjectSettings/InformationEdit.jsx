@@ -52,8 +52,17 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <div className={styles.text}>{t('common.title')}</div>
-      <Input ref={nameField} style={InputStyle.DefaultLast} name="name" value={data.name} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isError} />
+      <div className={styles.text}>{t('common.name')}</div>
+      <Input
+        ref={nameField}
+        style={InputStyle.DefaultLast}
+        name="name"
+        placeholder={t('common.enterProjectName')}
+        value={data.name}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleFieldChange}
+        isError={isError}
+      />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
       </div>

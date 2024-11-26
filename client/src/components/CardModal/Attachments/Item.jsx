@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import EditPopup from './EditPopup';
+import DeletePopup from '../../DeletePopup';
 
 import * as styles from './Item.module.scss';
 
@@ -72,12 +73,24 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
         )}
       </div>
       {canEdit && (
-        <div className={styles.popupWrapper}>
-          <EditPopup defaultData={{ name }} onUpdate={onUpdate} onDelete={onDelete} position="left-start" offset={0}>
-            <Button style={ButtonStyle.Icon} title={t('common.editAttachment')} className={styles.target}>
+        <div className={styles.buttons}>
+          <EditPopup defaultData={{ name }} onUpdate={onUpdate} position="left-start" offset={0}>
+            <Button style={ButtonStyle.Icon} title={t('common.editAttachmentName')} className={styles.target}>
               <Icon type={IconType.Pencil} size={IconSize.Size10} />
             </Button>
           </EditPopup>
+          <DeletePopup
+            title={t('common.deleteAttachment', { context: 'title' })}
+            content={t('common.areYouSureYouWantToDeleteThisAttachment')}
+            buttonContent={t('action.deleteAttachment')}
+            onConfirm={onDelete}
+            position="left-start"
+            offset={0}
+          >
+            <Button style={ButtonStyle.Icon} title={t('common.deleteAttachment', { context: 'title' })} disabled={!isPersisted} className={styles.target}>
+              <Icon type={IconType.Trash} size={IconSize.Size10} />
+            </Button>
+          </DeletePopup>
         </div>
       )}
     </div>

@@ -159,7 +159,7 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.PopupContext} content={t('action.editTitle', { context: 'title' })} onClick={handleEditNameClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('action.editName', { context: 'title' })} onClick={handleEditNameClick} />
         <Button style={ButtonStyle.PopupContext} content={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick} />
         <Button style={ButtonStyle.PopupContext} content={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />

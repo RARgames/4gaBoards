@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { TextArea } from '../Utils';
 
 import { useField, useResizeObserverSize } from '../../hooks';
@@ -8,6 +9,7 @@ import { ResizeObserverSizeTypes } from '../../constants/Enums';
 import * as styles from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, onHeightChange }, ref) => {
+  const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
@@ -87,7 +89,17 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
 
   return (
     <div className={styles.wrapper} ref={setNameEditElement}>
-      <TextArea ref={field} value={value} maxRows={2} className={styles.field} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} onBlur={handleFieldBlur} onFocus={handleFocus} />
+      <TextArea
+        ref={field}
+        value={value}
+        placeholder={t('common.enterListName')}
+        maxRows={2}
+        className={styles.field}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleFieldChange}
+        onBlur={handleFieldBlur}
+        onFocus={handleFocus}
+      />
     </div>
   );
 });
