@@ -159,7 +159,8 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
 
   useEffect(() => {
     onMessageDismiss();
-  }, [onMessageDismiss]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

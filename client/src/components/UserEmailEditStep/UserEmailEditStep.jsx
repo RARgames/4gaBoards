@@ -131,7 +131,8 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
 
   useEffect(() => {
     onMessageDismiss();
-  }, [onMessageDismiss]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useDidUpdate(() => {
     currentPasswordField.current.focus();

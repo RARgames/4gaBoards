@@ -107,13 +107,14 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
     onMessageDismiss();
   }, [onMessageDismiss]);
 
-  useEffect(() => {
-    onMessageDismiss();
-  }, [onMessageDismiss]);
-
   useDidUpdate(() => {
     currentPasswordField.current.focus();
   }, [focusCurrentPasswordFieldState]);
+
+  useEffect(() => {
+    onMessageDismiss();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

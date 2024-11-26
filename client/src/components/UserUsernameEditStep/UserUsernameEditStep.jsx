@@ -135,7 +135,8 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
 
   useEffect(() => {
     onMessageDismiss();
-  }, [onMessageDismiss]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

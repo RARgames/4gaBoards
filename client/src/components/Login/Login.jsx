@@ -134,7 +134,8 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
 
   useEffect(() => {
     onMessageDismiss();
-  }, [onMessageDismiss]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
