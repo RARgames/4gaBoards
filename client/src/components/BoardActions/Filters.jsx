@@ -8,7 +8,7 @@ import MembershipsPopup from '../MembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
 import { Button } from '../Utils';
 
-import * as styles from './Filters.module.scss';
+import * as s from './Filters.module.scss';
 
 const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, canEdit, onUserAdd, onUserRemove, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelMove, onLabelDelete }) => {
   const [t] = useTranslation();
@@ -29,7 +29,7 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, can
 
   return (
     <>
-      <span className={styles.filter}>
+      <span className={s.filter}>
         <MembershipsPopup
           items={allBoardMemberships}
           currentUserIds={users.map((user) => user.id)}
@@ -37,20 +37,20 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, can
           onUserSelect={onUserAdd}
           onUserDeselect={onUserRemove}
           offset={16}
-          wrapperClassName={styles.popupWrapper}
+          wrapperClassName={s.popupWrapper}
         >
-          <Button title={t('common.filterByMembers', { context: 'title' })} className={styles.filterButton}>
-            <span className={styles.filterTitle}>{`${t('common.members')}:`}</span>
-            {users.length === 0 && <span className={styles.filterLabel}>{t('common.all')}</span>}
+          <Button title={t('common.filterByMembers', { context: 'title' })} className={s.filterButton}>
+            <span className={s.filterTitle}>{`${t('common.members')}:`}</span>
+            {users.length === 0 && <span className={s.filterLabel}>{t('common.all')}</span>}
           </Button>
         </MembershipsPopup>
         {users.map((user) => (
-          <span key={user.id} className={styles.filterItem}>
+          <span key={user.id} className={s.filterItem}>
             <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" onClick={() => handleRemoveUserClick(user.id)} />
           </span>
         ))}
       </span>
-      <span className={styles.filter}>
+      <span className={s.filter}>
         <LabelsPopup
           items={allLabels}
           currentIds={labels.map((label) => label.id)}
@@ -63,15 +63,15 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, can
           onMove={onLabelMove}
           onDelete={onLabelDelete}
           offset={16}
-          wrapperClassName={styles.popupWrapper}
+          wrapperClassName={s.popupWrapper}
         >
-          <Button title={t('common.filterByLabels', { context: 'title' })} className={styles.filterButton}>
-            <span className={styles.filterTitle}>{`${t('common.labels')}:`}</span>
-            {labels.length === 0 && <span className={styles.filterLabel}>{t('common.all')}</span>}
+          <Button title={t('common.filterByLabels', { context: 'title' })} className={s.filterButton}>
+            <span className={s.filterTitle}>{`${t('common.labels')}:`}</span>
+            {labels.length === 0 && <span className={s.filterLabel}>{t('common.all')}</span>}
           </Button>
         </LabelsPopup>
         {labels.map((label) => (
-          <span key={label.id} className={styles.filterItem}>
+          <span key={label.id} className={s.filterItem}>
             <Label name={label.name} color={label.color} variant="labels" onClick={() => handleRemoveLabelClick(label.id)} />
           </span>
         ))}

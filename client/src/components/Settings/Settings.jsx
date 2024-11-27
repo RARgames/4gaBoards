@@ -12,7 +12,7 @@ import InstanceSettingsContainer from '../../containers/Settings/InstanceSetting
 import ProjectSettingsContainer from '../../containers/Settings/ProjectSettingsContainer';
 import Paths from '../../constants/Paths';
 
-import * as styles from './Settings.module.scss';
+import * as s from './Settings.module.scss';
 
 const Settings = React.memo(({ path, isAdmin, isManager }) => {
   const [t] = useTranslation();
@@ -60,17 +60,17 @@ const Settings = React.memo(({ path, isAdmin, isManager }) => {
       return <AboutSettingsContainer />;
     case Paths.SETTINGS_INSTANCE:
       if (!isAdmin) {
-        return <h1 className={styles.text}>{t('common.cannotEditInstanceSettings')}</h1>;
+        return <h1 className={s.text}>{t('common.cannotEditInstanceSettings')}</h1>;
       }
       return <InstanceSettingsContainer />;
     case Paths.SETTINGS_USERS:
       if (!isAdmin) {
-        return <h1 className={styles.text}>{t('common.cannotEditUsersSettings')}</h1>;
+        return <h1 className={s.text}>{t('common.cannotEditUsersSettings')}</h1>;
       }
       return <UsersSettingsContainer />;
     case Paths.SETTINGS_PROJECT:
       if (!isManager) {
-        return <h1 className={styles.text}>{t('common.projectNotFound', { context: 'title' })}</h1>;
+        return <h1 className={s.text}>{t('common.projectNotFound', { context: 'title' })}</h1>;
       }
       return <ProjectSettingsContainer />;
     default:

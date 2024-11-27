@@ -7,7 +7,7 @@ import HeaderContainer from '../../containers/HeaderContainer';
 import StaticContainer from '../../containers/StaticContainer';
 import Background from '../Background';
 
-import * as styles from './Core.module.scss';
+import * as s from './Core.module.scss';
 
 const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard }) => {
   const [t] = useTranslation();
@@ -41,9 +41,9 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
         </>
       )}
       {isSocketDisconnected && (
-        <div className={styles.message}>
-          <div className={styles.messageHeader}>{t('common.noConnectionToServer')}</div>
-          <div className={styles.messageContent}>
+        <div className={s.message}>
+          <div className={s.messageHeader}>{t('common.noConnectionToServer')}</div>
+          <div className={s.messageContent}>
             <Trans i18nKey="common.allChangesWillBeAutomaticallySavedAfterConnectionRestored">
               All changes will be automatically saved
               <br />

@@ -11,7 +11,7 @@ import CardModalContainer from '../../containers/CardModalContainer';
 import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import ListAdd from './ListAdd';
 
-import * as styles from './Board.module.scss';
+import * as s from './Board.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
@@ -111,11 +111,11 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [handleWindowMouseUp, handleWindowMouseMove]);
 
   return (
-    <div className={styles.boardContainer}>
+    <div className={s.boardContainer}>
       <BoardActionsContainer />
-      <div className={styles.mainWrapper}>
+      <div className={s.mainWrapper}>
         {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-        <div ref={wrapper} className={classNames(styles.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
+        <div ref={wrapper} className={classNames(s.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
               {({ innerRef, droppableProps, placeholder }) => (
@@ -123,20 +123,20 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   data-drag-scroller
                   ref={innerRef}
-                  className={classNames(styles.lists, gStyles.cursorGrab)}
+                  className={classNames(s.lists, gStyles.cursorGrab)}
                 >
                   {listIds.map((listId, index) => (
                     <ListContainer key={listId} id={listId} index={index} />
                   ))}
                   {placeholder}
                   {canEdit && (
-                    <div data-drag-scroller className={styles.list}>
+                    <div data-drag-scroller className={s.list}>
                       {isListAddOpened ? (
                         <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
                       ) : (
-                        <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={styles.addListButton}>
-                          <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addListButtonIcon} />
-                          <span className={styles.addListButtonText}>{t('action.addList')}</span>
+                        <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
+                          <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
+                          <span className={s.addListButtonText}>{t('action.addList')}</span>
                         </Button>
                       )}
                     </div>

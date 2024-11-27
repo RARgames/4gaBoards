@@ -16,7 +16,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Filter from '../Filter';
 import ProjectActionsPopup from './ProjectActionsPopup';
 
-import * as styles from './MainSidebar.module.scss';
+import * as s from './MainSidebar.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const MainSidebar = React.memo(
@@ -104,12 +104,12 @@ const MainSidebar = React.memo(
       return (
         <div key={project.id}>
           {/* eslint-disable-next-line no-return-assign */}
-          <div className={classNames(styles.sidebarItemProject, !currBoardId && currProjectId === project.id && styles.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
-            <Button style={ButtonStyle.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={styles.sidebarButton} onClick={() => handleToggleProjectCollapse(project)}>
-              <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.collapseIcon, project.isCollapsed && styles.collapseIconCollapsed)} />
+          <div className={classNames(s.sidebarItemProject, !currBoardId && currProjectId === project.id && s.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
+            <Button style={ButtonStyle.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={s.sidebarButton} onClick={() => handleToggleProjectCollapse(project)}>
+              <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(s.collapseIcon, project.isCollapsed && s.collapseIconCollapsed)} />
             </Button>
-            <Link to={Paths.PROJECTS.replace(':id', project.id)} className={styles.sidebarItemInner}>
-              <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)} />
+            <Link to={Paths.PROJECTS.replace(':id', project.id)} className={s.sidebarItemInner}>
+              <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(s.sidebarButton, s.sidebarButtonPadding)} />
             </Link>
             {isProjectManager && (
               <ProjectActionsPopup
@@ -123,7 +123,7 @@ const MainSidebar = React.memo(
                 offset={10}
                 hideCloseButton
               >
-                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={classNames(styles.sidebarButton, styles.hoverButton)}>
+                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={classNames(s.sidebarButton, s.hoverButton)}>
                   <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                 </Button>
               </ProjectActionsPopup>
@@ -140,24 +140,24 @@ const MainSidebar = React.memo(
                         {/* eslint-disable-next-line no-shadow */}
                         {({ innerRef, draggableProps, dragHandleProps }) => (
                           // eslint-disable-next-line react/jsx-props-no-spreading
-                          <div {...draggableProps} ref={innerRef} className={styles.boardDraggable}>
+                          <div {...draggableProps} ref={innerRef} className={s.boardDraggable}>
                             {board.isPersisted && (
                               <div
                                 key={board.id}
-                                className={classNames(styles.sidebarItemBoard, currBoardId === board.id && styles.sidebarItemActive)}
+                                className={classNames(s.sidebarItemBoard, currBoardId === board.id && s.sidebarItemActive)}
                                 // eslint-disable-next-line no-return-assign
                                 ref={(el) => (boardRefs.current[board.id] = el)}
                               >
                                 {isProjectManager && (
                                   // eslint-disable-next-line react/jsx-props-no-spreading
                                   <div {...dragHandleProps}>
-                                    <Button style={ButtonStyle.Icon} title={t('common.reorderBoards')} className={classNames(styles.reorderBoardsButton, styles.hoverButton)}>
+                                    <Button style={ButtonStyle.Icon} title={t('common.reorderBoards')} className={classNames(s.reorderBoardsButton, s.hoverButton)}>
                                       <Icon type={IconType.MoveUpDown} size={IconSize.Size13} />
                                     </Button>
                                   </div>
                                 )}
-                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(styles.sidebarItemInner, !isProjectManager && styles.boardCannotManage)}>
-                                  <Button style={ButtonStyle.NoBackground} content={board.name} className={classNames(styles.boardButton, styles.sidebarButton)} />
+                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(s.sidebarItemInner, !isProjectManager && s.boardCannotManage)}>
+                                  <Button style={ButtonStyle.NoBackground} content={board.name} className={classNames(s.boardButton, s.sidebarButton)} />
                                 </Link>
                                 {board.isGithubConnected &&
                                   (isProjectManager ? (
@@ -165,7 +165,7 @@ const MainSidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={classNames(board.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+                                        className={classNames(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
                                         title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
                                       />
                                     </Connections>
@@ -174,7 +174,7 @@ const MainSidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={classNames(board.isGithubConnected ? styles.githubGreen : styles.githubGrey, styles.githubCannotManage)}
+                                        className={classNames(board.isGithubConnected ? s.githubGreen : s.githubGrey, s.githubCannotManage)}
                                         title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
                                       />
                                     </div>
@@ -190,7 +190,7 @@ const MainSidebar = React.memo(
                                     offset={10}
                                     hideCloseButton
                                   >
-                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={styles.hoverButton}>
+                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={s.hoverButton}>
                                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                                     </Button>
                                   </BoardActionsPopup>
@@ -212,59 +212,59 @@ const MainSidebar = React.memo(
     });
 
     return (
-      <div className={styles.wrapper}>
-        <Button style={ButtonStyle.Icon} title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')} onClick={toggleSidebar} className={styles.toggleSidebarButton}>
+      <div className={s.wrapper}>
+        <Button style={ButtonStyle.Icon} title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')} onClick={toggleSidebar} className={s.toggleSidebarButton}>
           <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
         </Button>
-        <div className={classNames(styles.sidebar, sidebarCompact && styles.sidebarCompact, !sidebarShown && styles.sidebarHidden)}>
+        <div className={classNames(s.sidebar, sidebarCompact && s.sidebarCompact, !sidebarShown && s.sidebarHidden)}>
           <div>
             {!settingsOnly && (
               <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
             )}
           </div>
-          <div className={classNames(styles.scrollable, gStyles.scrollableY)}>
+          <div className={classNames(s.scrollable, gStyles.scrollableY)}>
             {settingsOnly && (
               <div>
-                <div className={styles.sidebarTitle}>
-                  <Icon type={IconType.Settings} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
+                <div className={s.sidebarTitle}>
+                  <Icon type={IconType.Settings} size={IconSize.Size16} className={s.sidebarTitleIcon} />
                   {t('common.settings')}
                 </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_PROFILE && styles.sidebarActive)}>
+                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_PROFILE && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_PROFILE}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.profile')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.User} size={IconSize.Size14} className={styles.icon} />
+                    <Button style={ButtonStyle.NoBackground} title={t('common.profile')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.User} size={IconSize.Size14} className={s.icon} />
                       {t('common.profile')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_PREFERENCES && styles.sidebarActive)}>
+                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_PREFERENCES && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_PREFERENCES}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.preferences')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.Sliders} size={IconSize.Size14} className={styles.icon} />
+                    <Button style={ButtonStyle.NoBackground} title={t('common.preferences')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.Sliders} size={IconSize.Size14} className={s.icon} />
                       {t('common.preferences')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_ACCOUNT && styles.sidebarActive)}>
+                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_ACCOUNT && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_ACCOUNT}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.account')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.AddressCard} size={IconSize.Size14} className={styles.icon} />
+                    <Button style={ButtonStyle.NoBackground} title={t('common.account')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.AddressCard} size={IconSize.Size14} className={s.icon} />
                       {t('common.account')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_AUTHENTICATION && styles.sidebarActive)}>
+                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_AUTHENTICATION && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_AUTHENTICATION}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.authentication')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.Key} size={IconSize.Size14} className={styles.icon} />
+                    <Button style={ButtonStyle.NoBackground} title={t('common.authentication')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.Key} size={IconSize.Size14} className={s.icon} />
                       {t('common.authentication')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_ABOUT && styles.sidebarActive)}>
+                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_ABOUT && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_ABOUT}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.aboutShort')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.Info} size={IconSize.Size14} className={styles.icon} />
+                    <Button style={ButtonStyle.NoBackground} title={t('common.aboutShort')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.Info} size={IconSize.Size14} className={s.icon} />
                       {t('common.aboutShort')}
                     </Button>
                   </Link>
@@ -273,22 +273,22 @@ const MainSidebar = React.memo(
             )}
             {isAdmin && settingsOnly && (
               <div>
-                <div className={styles.sidebarTitle}>
-                  <Icon type={IconType.Server} size={IconSize.Size16} className={styles.sidebarTitleIcon} />
+                <div className={s.sidebarTitle}>
+                  <Icon type={IconType.Server} size={IconSize.Size16} className={s.sidebarTitleIcon} />
                   {t('common.instanceSettings')}
                 </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_USERS && styles.sidebarActive)}>
+                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_USERS && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_USERS}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.Users} size={IconSize.Size14} className={styles.icon} />
+                    <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.Users} size={IconSize.Size14} className={s.icon} />
                       {t('common.users')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(styles.sidebarItem, path === Paths.SETTINGS_INSTANCE && styles.sidebarActive)}>
+                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_INSTANCE && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_INSTANCE}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={classNames(styles.sidebarButton, styles.sidebarButtonPadding)}>
-                      <Icon type={IconType.Settings} size={IconSize.Size14} className={styles.icon} />
+                    <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.Settings} size={IconSize.Size14} className={s.icon} />
                       {t('common.settings')}
                     </Button>
                   </Link>
@@ -300,31 +300,31 @@ const MainSidebar = React.memo(
           <div>
             {!settingsOnly && (
               <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right-end">
-                <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.footerButton}>
-                  <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
+                <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={s.footerButton}>
+                  <Icon type={IconType.Plus} size={IconSize.Size13} className={s.footerButtonIcon} />
                   {t('common.addProject')}
                 </Button>
               </ProjectAddPopup>
             )}
             {managedProjects.length > 0 && !settingsOnly && (
               <BoardAddPopup projects={managedProjects} projectId={currProjectId} isAdmin={isAdmin} onCreate={onBoardCreate} offset={2} position="right-end">
-                <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={styles.footerButton}>
-                  <Icon type={IconType.Plus} size={IconSize.Size13} className={styles.footerButtonIcon} />
+                <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.footerButton}>
+                  <Icon type={IconType.Plus} size={IconSize.Size13} className={s.footerButtonIcon} />
                   {t('common.addBoard')}
                 </Button>
               </BoardAddPopup>
             )}
             {settingsOnly && (
               <Link to={Paths.ROOT}>
-                <Button style={ButtonStyle.NoBackground} title={t('common.backToDashboard')} className={styles.footerButton}>
-                  <Icon type={IconType.ArrowLeftBig} size={IconSize.Size13} className={styles.footerButtonIcon} />
+                <Button style={ButtonStyle.NoBackground} title={t('common.backToDashboard')} className={s.footerButton}>
+                  <Icon type={IconType.ArrowLeftBig} size={IconSize.Size13} className={s.footerButtonIcon} />
                   {t('common.dashboard')}
                 </Button>
               </Link>
             )}
           </div>
         </div>
-        <div className={classNames(styles.content, sidebarCompact && styles.contentCompact)}>{children}</div>
+        <div className={classNames(s.content, sidebarCompact && s.contentCompact)}>{children}</div>
       </div>
     );
   },

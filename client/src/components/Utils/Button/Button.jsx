@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import ButtonStyle from './ButtonStyle';
-import * as styles from './Button.module.scss';
+import * as s from './Button.module.scss';
 
 const Button = React.forwardRef(({ children, title, type, style, content, className, ...props }, ref) => {
   return (
@@ -11,7 +11,7 @@ const Button = React.forwardRef(({ children, title, type, style, content, classN
       ref={ref}
       title={title || content}
       type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} // eslint-disable-line react/button-has-type
-      className={classNames(styles.button, style && styles[style], className)}
+      className={classNames(s.button, style && s[style], className)}
       {...props} // eslint-disable-line react/jsx-props-no-spreading
     >
       {content !== undefined ? content : children}

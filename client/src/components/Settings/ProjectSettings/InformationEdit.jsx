@@ -7,7 +7,7 @@ import { Button, ButtonStyle, Form, Input, InputStyle } from '../../Utils';
 
 import { useForm } from '../../../hooks';
 
-import * as styles from './InformationEdit.module.scss';
+import * as s from './InformationEdit.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
 const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
@@ -52,7 +52,7 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <div className={styles.text}>{t('common.name')}</div>
+      <div className={s.text}>{t('common.name')}</div>
       <Input ref={nameField} style={InputStyle.Default} name="name" placeholder={t('common.enterProjectName')} value={data.name} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isError} />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />

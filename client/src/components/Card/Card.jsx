@@ -16,7 +16,7 @@ import Label from '../Label';
 import DueDate from '../DueDate';
 import Timer from '../Timer';
 
-import * as styles from './Card.module.scss';
+import * as s from './Card.module.scss';
 
 const Card = React.memo(
   ({
@@ -86,7 +86,7 @@ const Card = React.memo(
           if (target.dataset.preventCardSwitch) {
             return;
           }
-          if (target.classList.contains(styles.card)) {
+          if (target.classList.contains(s.card)) {
             break;
           }
           target = target.parentElement;
@@ -152,20 +152,20 @@ const Card = React.memo(
     const contentNode = (
       <>
         <div>
-          <div className={styles.detailsTitle}>
-            <div title={name} className={styles.name}>
+          <div className={s.detailsTitle}>
+            <div title={name} className={s.name}>
               {name}
             </div>
           </div>
-          {notificationsTotal > 0 && <span className={styles.notification}>{notificationsTotal}</span>}
-          {notificationsTotal > 9 && <span className={classNames(styles.notification, styles.notificationFull)}>9+</span>}
+          {notificationsTotal > 0 && <span className={s.notification}>{notificationsTotal}</span>}
+          {notificationsTotal > 9 && <span className={classNames(s.notification, s.notificationFull)}>9+</span>}
         </div>
-        {coverUrl && <img src={coverUrl} alt="" className={styles.cover} />}
-        <div className={styles.details}>
+        {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
+        <div className={s.details}>
           {labels.length > 0 && (
-            <span className={styles.labels}>
+            <span className={s.labels}>
               {labels.map((label) => (
-                <span key={label.id} className={classNames(styles.attachment, styles.attachmentLeft)}>
+                <span key={label.id} className={classNames(s.attachment, s.attachmentLeft)}>
                   <Label name={label.name} color={label.color} variant="card" />
                 </span>
               ))}
@@ -190,38 +190,38 @@ const Card = React.memo(
             />
           )}
           {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
-            <span className={styles.attachments}>
+            <span className={s.attachments}>
               {description && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={styles.detailsIcon} />
+                <span className={classNames(s.attachment, s.attachmentLeft)}>
+                  <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={s.detailsIcon} />
                 </span>
               )}
               {attachmentsCount > 0 && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Icon type={IconType.Attach} size={IconSize.Size14} className={styles.detailsIcon} />
+                <span className={classNames(s.attachment, s.attachmentLeft)}>
+                  <Icon type={IconType.Attach} size={IconSize.Size14} className={s.detailsIcon} />
                 </span>
               )}
               {commentCount > 0 && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <Icon type={IconType.Comment} size={IconSize.Size14} className={styles.detailsIcon} />
+                <span className={classNames(s.attachment, s.attachmentLeft)}>
+                  <Icon type={IconType.Comment} size={IconSize.Size14} className={s.detailsIcon} />
                 </span>
               )}
               {dueDate && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)}>
+                <span className={classNames(s.attachment, s.attachmentLeft)}>
                   <DueDate value={dueDate} variant="card" />
                 </span>
               )}
               {timer && (
-                <span className={classNames(styles.attachment, styles.attachmentLeft)} data-prevent-card-switch>
+                <span className={classNames(s.attachment, s.attachmentLeft)} data-prevent-card-switch>
                   <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
                 </span>
               )}
             </span>
           )}
           {users.length > 0 && (
-            <span className={classNames(styles.attachments, styles.attachmentsRight, styles.users)}>
+            <span className={classNames(s.attachments, s.attachmentsRight, s.users)}>
               {users.map((user) => (
-                <span key={user.id} className={classNames(styles.attachment, styles.attachmentRight, styles.user)}>
+                <span key={user.id} className={classNames(s.attachment, s.attachmentRight, s.user)}>
                   <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
                 </span>
               ))}
@@ -235,14 +235,14 @@ const Card = React.memo(
       <Draggable draggableId={`card:${id}`} index={index} isDragDisabled={isDragOverTask || !isPersisted || !canEdit}>
         {(provided, snapshot) => (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={styles.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
+          <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={s.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
             <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div ref={cardRef} className={classNames(styles.card, isOpen && styles.cardOpen)}>
+              <div ref={cardRef} className={classNames(s.card, isOpen && s.cardOpen)}>
                 {isPersisted ? (
                   <>
                     {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                     <div
-                      className={styles.content}
+                      className={s.content}
                       onClick={(e) => {
                         handleClick(e);
                       }}
@@ -250,7 +250,7 @@ const Card = React.memo(
                       {contentNode}
                     </div>
                     {canEdit && (
-                      <div className={styles.popupWrapper}>
+                      <div className={s.popupWrapper}>
                         <ActionsPopup
                           card={{
                             dueDate,
@@ -284,7 +284,7 @@ const Card = React.memo(
                           offset={0}
                           hideCloseButton
                         >
-                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={classNames(styles.editCardButton, styles.target)}>
+                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={classNames(s.editCardButton, s.target)}>
                             <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                           </Button>
                         </ActionsPopup>
@@ -292,7 +292,7 @@ const Card = React.memo(
                     )}
                   </>
                 ) : (
-                  <span className={styles.content}>{contentNode}</span>
+                  <span className={s.content}>{contentNode}</span>
                 )}
               </div>
             </NameEdit>

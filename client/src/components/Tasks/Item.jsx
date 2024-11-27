@@ -13,7 +13,7 @@ import MembershipsPopup from '../MembershipsPopup';
 import TaskEdit from './TaskEdit';
 import ActionsPopup from './ActionsPopup';
 
-import * as styles from './Item.module.scss';
+import * as s from './Item.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const VARIANTS = {
@@ -66,15 +66,15 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
   const dueDateVariant = variant === VARIANTS.CARD ? 'tasksCard' : 'cardModal';
 
   const membersNode = (
-    <div className={classNames(styles.members, gStyles.cursorPointer, isCompleted && styles.itemCompleted)}>
+    <div className={classNames(s.members, gStyles.cursorPointer, isCompleted && s.itemCompleted)}>
       {users.slice(0, visibleMembersCount).map((user) => (
-        <span key={user.id} className={styles.member}>
+        <span key={user.id} className={s.member}>
           <User name={user.name} avatarUrl={user.avatarUrl} size={variant === VARIANTS.CARD ? 'cardTasks' : 'card'} />
         </span>
       ))}
       {users.length > visibleMembersCount && (
         <span
-          className={classNames(styles.moreMembers, variant === VARIANTS.CARD && styles.moreMembersCard)}
+          className={classNames(s.moreMembers, variant === VARIANTS.CARD && s.moreMembersCard)}
           title={users
             .slice(3)
             .map((user) => user.name)
@@ -91,17 +91,17 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
       {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
         const contentNode = (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(styles.wrapper, gStyles.scrollableX, canEdit && styles.contentHoverable)}>
+          <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(s.wrapper, gStyles.scrollableX, canEdit && s.contentHoverable)}>
             <Checkbox
               checked={isCompleted}
               size={variant === VARIANTS.CARD ? CheckboxSize.Size14 : CheckboxSize.Size20}
               disabled={!isPersisted || !canEdit}
-              className={styles.checkbox}
+              className={s.checkbox}
               onChange={handleToggleChange}
             />
             <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <span className={classNames(styles.task, isCompleted && styles.taskCompleted, canEdit && styles.taskEditable)} onClick={handleClick} title={name}>
+              <span className={classNames(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
                 {name}
               </span>
               {users &&
@@ -113,7 +113,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
                   membersNode
                 ))}
               {dueDate && (
-                <div className={classNames(styles.dueDate, gStyles.cursorPointer, isCompleted && styles.itemCompleted, variant === VARIANTS.CARD && styles.dueDateCard)}>
+                <div className={classNames(s.dueDate, gStyles.cursorPointer, isCompleted && s.itemCompleted, variant === VARIANTS.CARD && s.dueDateCard)}>
                   {isPersisted && canEdit ? (
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
                       <DueDate variant={dueDateVariant} value={dueDate} />
@@ -137,8 +137,8 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
                   position="left-start"
                   offset={0}
                 >
-                  <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(styles.button, styles.target, variant === VARIANTS.CARD && styles.buttonCard)}>
-                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={styles.icon} />
+                  <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(s.button, s.target, variant === VARIANTS.CARD && s.buttonCard)}>
+                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={s.icon} />
                   </Button>
                 </ActionsPopup>
               )}

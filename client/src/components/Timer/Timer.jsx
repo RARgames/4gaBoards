@@ -8,7 +8,7 @@ import { Icon, IconType, IconSize } from '../Utils';
 
 import { formatTimer } from '../../utils/timer';
 
-import * as styles from './Timer.module.scss';
+import * as s from './Timer.module.scss';
 
 const VARIANTS = {
   CARD: 'card',
@@ -50,8 +50,8 @@ const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }
   );
 
   const contentNode = (
-    <span className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], startedAt && styles.wrapperActive, onClick && styles.wrapperHoverable)}>
-      <Icon type={startedAt ? IconType.Pause : IconType.Play} size={IconSize.Size8} className={styles.timerIcon} />
+    <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], startedAt && s.wrapperActive, onClick && s.wrapperHoverable)}>
+      <Icon type={startedAt ? IconType.Pause : IconType.Play} size={IconSize.Size8} className={s.timerIcon} />
       {formatTimer({ startedAt, total })}
     </span>
   );
@@ -59,7 +59,7 @@ const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }
   const ElementType = as;
 
   return onClick ? (
-    <ElementType type="button" disabled={isDisabled} className={styles.button} onClick={onClick} title={startedAt ? t('common.stopTimer') : t('common.startTimer')}>
+    <ElementType type="button" disabled={isDisabled} className={s.button} onClick={onClick} title={startedAt ? t('common.stopTimer') : t('common.startTimer')}>
       {contentNode}
     </ElementType>
   ) : (

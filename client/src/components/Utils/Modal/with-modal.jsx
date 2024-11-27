@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
-import * as styles from './Modal.module.scss';
+import * as s from './Modal.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
   const Modal = React.memo(({ children, className, hideCloseButton, closeButtonClassName, wrapperClassName, isModalOpen, setIsModalOpen, onClose, ...props }) => {
@@ -35,12 +35,12 @@ export default (WrappedComponent, defaultProps) => {
 
     const modalContent = (
       <FloatingPortal>
-        <FloatingOverlay lockScroll className={styles.modalOverlay}>
+        <FloatingOverlay lockScroll className={s.modalOverlay}>
           <FloatingFocusManager context={context} returnFocus={false}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <div className={classNames(styles.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
+            <div className={classNames(s.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
               {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(styles.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                   <Icon type={IconType.Close} size={IconSize.Size14} />
                 </Button>
               )}

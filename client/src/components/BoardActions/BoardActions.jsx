@@ -11,7 +11,7 @@ import Connections from './Connections';
 import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
 import Paths from '../../constants/Paths';
 
-import * as styles from './BoardActions.module.scss';
+import * as s from './BoardActions.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const BoardActions = React.memo(
@@ -51,12 +51,12 @@ const BoardActions = React.memo(
     );
 
     return (
-      <div className={classNames(styles.wrapper, gStyles.scrollableX)}>
-        <div title={boardData.name} className={classNames(styles.title, styles.action)}>
+      <div className={classNames(s.wrapper, gStyles.scrollableX)}>
+        <div title={boardData.name} className={classNames(s.title, s.action)}>
           {boardData.name}
         </div>
-        <div className={classNames(styles.cardsCount, styles.action)}>{isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}</div>
-        <div className={styles.action}>
+        <div className={classNames(s.cardsCount, s.action)}>{isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}</div>
+        <div className={s.action}>
           <Memberships
             items={memberships}
             allUsers={allUsers}
@@ -67,7 +67,7 @@ const BoardActions = React.memo(
             onDelete={onMembershipDelete}
           />
         </div>
-        <div className={styles.action}>
+        <div className={s.action}>
           <Filters
             users={filterUsers}
             labels={filterLabels}
@@ -84,18 +84,18 @@ const BoardActions = React.memo(
             onLabelDelete={onLabelDelete}
           />
         </div>
-        <div className={styles.action}>
+        <div className={s.action}>
           <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
             <Icon
               type={IconType.Github}
               size={IconSize.Size14}
-              className={classNames(boardData.isGithubConnected ? styles.githubGreen : styles.githubGrey)}
+              className={classNames(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
               title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
             />
           </Connections>
         </div>
         {isProjectManager && (
-          <div className={classNames(styles.action, styles.actionRightFirst)}>
+          <div className={classNames(s.action, s.actionRightFirst)}>
             <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
               <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
                 <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
@@ -103,7 +103,7 @@ const BoardActions = React.memo(
             </Link>
           </div>
         )}
-        <div className={classNames(styles.action, styles.actionRightLast, !isProjectManager && styles.actionRightFirst)}>
+        <div className={classNames(s.action, s.actionRightLast, !isProjectManager && s.actionRightFirst)}>
           <Link to={Paths.PROJECTS.replace(':id', projectId)}>
             <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
               <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />

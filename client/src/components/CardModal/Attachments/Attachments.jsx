@@ -8,7 +8,7 @@ import { useToggle } from '../../../lib/hooks';
 
 import Item from './Item';
 
-import * as styles from './Attachments.module.scss';
+import * as s from './Attachments.module.scss';
 
 const INITIALLY_VISIBLE = 4;
 
@@ -66,9 +66,9 @@ const Attachments = React.memo(({ items, canEdit, onUpdate, onDelete, onCoverUpd
       props = {
         content: isPdf ? (
           // eslint-disable-next-line jsx-a11y/alt-text
-          <object data={item.url} type="application/pdf" className={classNames(styles.content, styles.contentPdf)} />
+          <object data={item.url} type="application/pdf" className={classNames(s.content, s.contentPdf)} />
         ) : (
-          <span className={classNames(styles.content, styles.contentError)}>{t('common.thereIsNoPreviewAvailableForThisAttachment')}</span>
+          <span className={classNames(s.content, s.contentError)}>{t('common.thereIsNoPreviewAvailableForThisAttachment')}</span>
         ),
       };
     }
@@ -129,7 +129,7 @@ const Attachments = React.memo(({ items, canEdit, onUpdate, onDelete, onCoverUpd
         <Button
           style={ButtonStyle.NoBackground}
           content={isAllVisible ? t('action.showFewerAttachments') : t('action.showAllAttachments', { hidden: items.length - INITIALLY_VISIBLE })}
-          className={styles.toggleButton}
+          className={s.toggleButton}
           onClick={handleToggleAllVisibleClick}
         />
       )}

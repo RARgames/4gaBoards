@@ -5,14 +5,14 @@ import { Button } from '../../Utils';
 
 import User from '../../User';
 
-import * as styles from './UserItem.module.scss';
+import * as s from './UserItem.module.scss';
 
 const UserItem = React.memo(({ name, avatarUrl, isActive, onSelect }) => (
-  <Button onClick={onSelect} disabled={isActive} className={styles.menuItem}>
-    <span className={styles.user}>
+  <Button onClick={onSelect} disabled={isActive} className={s.menuItem}>
+    <span className={s.user}>
       <User name={name} avatarUrl={avatarUrl} />
     </span>
-    <div className={classNames(styles.menuItemText, isActive && styles.menuItemTextActive)}>{name}</div>
+    <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)}>{name}</div>
   </Button>
 ));
 

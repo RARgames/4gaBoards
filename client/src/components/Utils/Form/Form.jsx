@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-// import * as styles from './Form.module.scss';
-
 const Form = React.forwardRef(({ onSubmit, children, className, ...props }, ref) => {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,7 +11,7 @@ const Form = React.forwardRef(({ onSubmit, children, className, ...props }, ref)
   };
 
   return (
-    // TODO temp removed: styles.form
+    // TODO temp removed: s.form
     // eslint-disable-next-line react/jsx-props-no-spreading
     <form ref={ref} onSubmit={handleSubmit} className={classNames(className)} {...props}>
       {children}

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon, IconType, IconSize } from '../Utils';
 
-import * as styles from './DueDate.module.scss';
+import * as s from './DueDate.module.scss';
 
 const VARIANTS = {
   CARD: 'card',
@@ -43,17 +43,14 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
 
   const contentNode = value && (
-    <span
-      className={classNames(styles.wrapper, styles[`wrapper${upperFirst(variant)}`], styles[`due${dueStyle}`], className)}
-      title={`${titlePrefixString}${t(`format:date`, { value, postProcess: 'formatDate' })}`}
-    >
+    <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], className)} title={`${titlePrefixString}${t(`format:date`, { value, postProcess: 'formatDate' })}`}>
       {variant !== VARIANTS.TASKS_CARD && t(`format:date`, { value, postProcess: 'formatDate' })}
-      {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={styles[`due${dueStyle}`]} />}
+      {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} />}
     </span>
   );
 
   return onClick ? (
-    <Button title={t('common.editDueDate')} onClick={onClick} disabled={isDisabled} className={styles.button}>
+    <Button title={t('common.editDueDate')} onClick={onClick} disabled={isDisabled} className={s.button}>
       {contentNode}
     </Button>
   ) : (

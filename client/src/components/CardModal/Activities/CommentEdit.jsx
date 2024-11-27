@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
 
 import { useForm } from '../../../hooks';
 
-import * as styles from './CommentEdit.module.scss';
+import * as s from './CommentEdit.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
 const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onCurrentUserUpdate }, ref) => {
@@ -93,7 +93,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 
   const handleBlur = useCallback(
     (event) => {
-      if (event.relatedTarget && event.relatedTarget.closest(`.${styles.editor}`)) {
+      if (event.relatedTarget && event.relatedTarget.closest(`.${s.editor}`)) {
         return;
       }
 
@@ -152,7 +152,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
         }}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
-        className={styles.editor}
+        className={s.editor}
       />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />

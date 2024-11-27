@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Input, InputStyle, Form, withModal } from '../../Utils';
 import { useForm } from '../../../hooks';
 
-import * as styles from './TextFileAddModal.module.scss';
+import * as s from './TextFileAddModal.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
 const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
@@ -47,20 +47,20 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
 
   return (
     <>
-      <div className={styles.title}>{t('common.createTextFile', { context: 'title' })}</div>
-      <Form onSubmit={handleSubmit} className={styles.form}>
+      <div className={s.title}>{t('common.createTextFile', { context: 'title' })}</div>
+      <Form onSubmit={handleSubmit} className={s.form}>
         <Input
           ref={nameField}
           style={InputStyle.Default}
           placeholder={t('common.enterFileName')}
           name="name"
           value={data.name}
-          className={styles.field}
+          className={s.field}
           onKeyDown={handleFieldKeyDown}
           onChange={handleFieldChange}
           isError={isError}
         />
-        <div className={styles.inputLabel}>.txt</div>
+        <div className={s.inputLabel}>.txt</div>
         <div className={gStyles.controls}>
           <Button style={ButtonStyle.Submit} content={t('action.createFile')} onClick={handleSubmit} />
         </div>

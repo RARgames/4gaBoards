@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, FilePicker } from '../Utils';
 
-import * as styles from './ImportStep.module.scss';
+import * as s from './ImportStep.module.scss';
 
 const ImportStep = React.memo(({ onSelect, onBack }) => {
   const [t] = useTranslation();
@@ -26,13 +26,13 @@ const ImportStep = React.memo(({ onSelect, onBack }) => {
       <Popup.Content>
         <FilePicker onSelect={(file) => handleFileSelect('4gaBoards', file)} accept=".tgz">
           <Button style={ButtonStyle.Popup} title={t('common.from4gaBoards')}>
-            <Icon type={IconType.Board} size={IconSize.Size14} className={styles.icon} />
+            <Icon type={IconType.Board} size={IconSize.Size14} className={s.icon} />
             {t('common.from4gaBoards')}
           </Button>
         </FilePicker>
         <FilePicker onSelect={(file) => handleFileSelect('trello', file)} accept=".json">
           <Button style={ButtonStyle.Popup} title={t('common.fromTrello')}>
-            <Icon type={IconType.Trello} size={IconSize.Size14} className={styles.icon} />
+            <Icon type={IconType.Trello} size={IconSize.Size14} className={s.icon} />
             {t('common.fromTrello')}
           </Button>
         </FilePicker>

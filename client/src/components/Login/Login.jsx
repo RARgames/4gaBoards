@@ -10,7 +10,7 @@ import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
-import * as styles from './Login.module.scss';
+import * as s from './Login.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
@@ -138,14 +138,14 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
   }, []);
 
   return (
-    <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
-      <div className={styles.loginWrapper}>
-        <img src={logo} className={styles.logo} alt="4ga Boards" />
-        <h1 className={styles.formTitle}>{t('common.logInToBoards')}</h1>
+    <div className={classNames(s.wrapper, gStyles.scrollableY)}>
+      <div className={s.loginWrapper}>
+        <img src={logo} className={s.logo} alt="4ga Boards" />
+        <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
         <div>
-          {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={styles.message} />}
+          {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
           <Form onSubmit={handleSubmit}>
-            <div className={styles.inputLabel}>{t('common.emailOrUsername')}</div>
+            <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
             <Input
               ref={emailOrUsernameField}
               style={InputStyle.LoginRegister}
@@ -156,7 +156,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
               onChange={handleFieldChange}
               isError={isUsernameError}
             />
-            <div className={styles.inputLabel}>{t('common.password')}</div>
+            <div className={s.inputLabel}>{t('common.password')}</div>
             <Input.Password
               ref={passwordField}
               style={InputStyle.LoginRegister}
@@ -167,23 +167,23 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
               onChange={handleFieldChange}
               isError={isPasswordError}
             />
-            <div className={styles.buttonsContainer}>
+            <div className={s.buttonsContainer}>
               {googleSsoEnabled && (
                 <Button style={ButtonStyle.Login} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso}>
                   {t('common.loginWithGoogle')}
-                  <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
+                  <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
                 </Button>
               )}
-              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={styles.submitButton}>
+              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={s.submitButton}>
                 {t('action.logIn')}
-                <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
+                <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
               </Button>
             </div>
           </Form>
           {registrationEnabled && (
             <>
-              <div className={styles.alternateActionText}>{t('common.newToBoards')}</div>
-              <div className={styles.alternateActionButtonContainer}>
+              <div className={s.alternateActionText}>{t('common.newToBoards')}</div>
+              <div className={s.alternateActionButtonContainer}>
                 <Button style={ButtonStyle.Login} content={t('common.createAccount')} onClick={onRegisterOpen} />
               </div>
             </>

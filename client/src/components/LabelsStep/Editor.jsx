@@ -8,7 +8,7 @@ import { Button, ButtonStyle, Input, InputStyle } from '../Utils';
 
 import LabelColors from '../../constants/LabelColors';
 
-import * as styles from './Editor.module.scss';
+import * as s from './Editor.module.scss';
 import * as globalStyles from '../../styles.module.scss';
 
 const Editor = React.memo(({ data, onFieldChange }) => {
@@ -23,15 +23,15 @@ const Editor = React.memo(({ data, onFieldChange }) => {
   return (
     <>
       <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} placeholder={t('common.enterLabelName')} onChange={onFieldChange} />
-      <div className={styles.text}>{t('common.color')}</div>
-      <div className={styles.colorButtons}>
+      <div className={s.text}>{t('common.color')}</div>
+      <div className={s.colorButtons}>
         {LabelColors.map((color) => (
           <Button
             style={ButtonStyle.Default}
             key={color}
             name="color"
             value={color}
-            className={classNames(styles.colorButton, color === data.color && styles.colorButtonActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
+            className={classNames(s.colorButton, color === data.color && s.colorButtonActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
             onClick={onFieldChange}
           />
         ))}

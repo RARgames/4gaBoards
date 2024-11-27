@@ -7,7 +7,7 @@ import { Popup, Input, InputStyle, withPopup } from '../../Utils';
 import { useField, useSteps } from '../../../hooks';
 import UserItem from './UserItem';
 
-import * as styles from './AddPopup.module.scss';
+import * as s from './AddPopup.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
 const StepTypes = {
@@ -85,7 +85,7 @@ const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, titl
       <Popup.Content>
         <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} />
         {filteredUsers.length > 0 && (
-          <div className={classNames(styles.users, gStyles.scrollableY)}>
+          <div className={classNames(s.users, gStyles.scrollableY)}>
             {filteredUsers.map((user) => (
               <UserItem key={user.id} name={user.name} avatarUrl={user.avatarUrl} isActive={currentUserIds.includes(user.id)} onSelect={() => handleUserSelect(user.id)} />
             ))}

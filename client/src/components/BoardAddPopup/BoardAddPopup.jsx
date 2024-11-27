@@ -8,7 +8,7 @@ import Config from '../../constants/Config';
 import { useForm, useSteps } from '../../hooks';
 import ImportStep from './ImportStep';
 
-import * as styles from './BoardAddPopup.module.scss';
+import * as s from './BoardAddPopup.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const StepTypes = {
@@ -152,7 +152,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
       <Popup.Header onBack={onBack}>{t('common.addBoard')}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <div className={styles.text}>{t('common.name')}</div>
+          <div className={s.text}>{t('common.name')}</div>
           <Input
             ref={nameField}
             style={InputStyle.Default}
@@ -165,7 +165,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
           />
           {!skipProjectDropdown && (
             <div>
-              <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
+              <div className={s.text}>{t('common.project', { context: 'title' })}</div>
               <Dropdown
                 style={DropdownStyle.Default}
                 options={projects}
@@ -176,13 +176,13 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 selectFirstOnSearch
                 onChange={handleProjectChange}
                 onErrorClear={() => setIsDropdownError(false)}
-                dropdownMenuClassName={styles.dropdownMenu}
+                dropdownMenuClassName={s.dropdownMenu}
               />
             </div>
           )}
           {!data.import && (
             <div>
-              <div className={styles.text}>{t('common.template')}</div>
+              <div className={s.text}>{t('common.template')}</div>
               <Dropdown
                 style={DropdownStyle.Default}
                 options={templates}
@@ -191,30 +191,30 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 isSearchable
                 selectFirstOnSearch
                 onChange={handleTemplateChange}
-                dropdownMenuClassName={styles.dropdownMenu}
+                dropdownMenuClassName={s.dropdownMenu}
               />
             </div>
           )}
           {data.import && data.import.type === '4gaBoards' && (
-            <div className={styles.checkboxesWrapper}>
-              <div className={styles.checkboxWrapper}>
-                <Checkbox checked={importProjectManagers} className={styles.checkbox} onChange={toggleImportProjectManagers} />
+            <div className={s.checkboxesWrapper}>
+              <div className={s.checkboxWrapper}>
+                <Checkbox checked={importProjectManagers} className={s.checkbox} onChange={toggleImportProjectManagers} />
               </div>
-              <div className={styles.checkboxText}>{t('common.importProjectManagers')}</div>
-              <div className={styles.checkboxWrapper}>
-                <Checkbox checked={importNonExistingUsers} disabled={!isAdmin} className={styles.checkbox} onChange={toggleImportNonExistingUsers} />
+              <div className={s.checkboxText}>{t('common.importProjectManagers')}</div>
+              <div className={s.checkboxWrapper}>
+                <Checkbox checked={importNonExistingUsers} disabled={!isAdmin} className={s.checkbox} onChange={toggleImportNonExistingUsers} />
               </div>
-              <div className={styles.checkboxText}>
+              <div className={s.checkboxText}>
                 {t('common.importNonExistingUsers')} {!isAdmin && t('common.requiresAdminRights')}
               </div>
             </div>
           )}
           <div className={gStyles.controlsSpaceBetween}>
-            <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={styles.importButton}>
+            <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={s.importButton}>
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}
             </Button>
-            <Button style={ButtonStyle.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={styles.submitButton} onClick={handleSubmit} />
+            <Button style={ButtonStyle.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={s.submitButton} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

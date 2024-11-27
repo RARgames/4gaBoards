@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } fro
 import EditPopup from './EditPopup';
 import DeletePopup from '../../DeletePopup';
 
-import * as styles from './Item.module.scss';
+import * as s from './Item.module.scss';
 
 const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPersisted, canEdit, onCoverSelect, onCoverDeselect, onClick, onUpdate, onDelete }, ref) => {
   const [t] = useTranslation();
@@ -34,7 +34,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
 
   if (!isPersisted) {
     return (
-      <div className={classNames(styles.wrapper, styles.wrapperSubmitting)}>
+      <div className={classNames(s.wrapper, s.wrapperSubmitting)}>
         <Loader size={LoaderSize.Normal} />
       </div>
     );
@@ -44,38 +44,38 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
   const extension = filename.slice((Math.max(0, filename.lastIndexOf('.')) || Infinity) + 1);
 
   return (
-    <div ref={ref} className={styles.wrapper}>
+    <div ref={ref} className={s.wrapper}>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-      <div className={styles.thumbnail} style={{ background: coverUrl && `url("${coverUrl}") center / cover` }} onClick={handleClick}>
+      <div className={s.thumbnail} style={{ background: coverUrl && `url("${coverUrl}") center / cover` }} onClick={handleClick}>
         {coverUrl ? (
           isCover && (
-            <div className={styles.imageSelected}>
-              <Icon type={IconType.Star} size={IconSize.Size14} className={styles.imageIcon} />
+            <div className={s.imageSelected}>
+              <Icon type={IconType.Star} size={IconSize.Size14} className={s.imageIcon} />
             </div>
           )
         ) : (
-          <span className={styles.extension}>{extension || '-'}</span>
+          <span className={s.extension}>{extension || '-'}</span>
         )}
       </div>
-      <div className={styles.details}>
-        <span className={styles.name}>{name}</span>
-        <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
+      <div className={s.details}>
+        <span className={s.name}>{name}</span>
+        <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
         {coverUrl && canEdit && (
           <Button
             style={ButtonStyle.NoBackground}
             title={isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}
             onClick={handleToggleCoverClick}
-            className={styles.optionButton}
+            className={s.optionButton}
           >
-            <Icon type={IconType.WindowMaximize} size={IconSize.Size10} className={styles.optionIcon} />
-            <span className={styles.optionText}>{isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}</span>
+            <Icon type={IconType.WindowMaximize} size={IconSize.Size10} className={s.optionIcon} />
+            <span className={s.optionText}>{isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}</span>
           </Button>
         )}
       </div>
       {canEdit && (
-        <div className={styles.buttons}>
+        <div className={s.buttons}>
           <EditPopup defaultData={{ name }} onUpdate={onUpdate} position="left-start" offset={0}>
-            <Button style={ButtonStyle.Icon} title={t('common.editAttachmentName')} className={styles.target}>
+            <Button style={ButtonStyle.Icon} title={t('common.editAttachmentName')} className={s.target}>
               <Icon type={IconType.Pencil} size={IconSize.Size10} />
             </Button>
           </EditPopup>
@@ -87,7 +87,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
             position="left-start"
             offset={0}
           >
-            <Button style={ButtonStyle.Icon} title={t('common.deleteAttachment', { context: 'title' })} disabled={!isPersisted} className={styles.target}>
+            <Button style={ButtonStyle.Icon} title={t('common.deleteAttachment', { context: 'title' })} disabled={!isPersisted} className={s.target}>
               <Icon type={IconType.Trash} size={IconSize.Size10} />
             </Button>
           </DeletePopup>

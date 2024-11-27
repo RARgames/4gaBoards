@@ -6,7 +6,7 @@ import CommentEdit from './CommentEdit';
 import Item from './Item';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 
-import * as styles from './Activities.module.scss';
+import * as s from './Activities.module.scss';
 import * as cStyles from '../CardModal.module.scss';
 
 const Activities = React.memo(
@@ -106,9 +106,9 @@ const Activities = React.memo(
             </Button>
           )}
           <Button style={ButtonStyle.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
-            <Icon type={commShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={styles.icon} />
+            <Icon type={commShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={s.icon} />
           </Button>
-          <Button style={ButtonStyle.Icon} title={isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')} onClick={handleToggleDetailsClick} className={styles.toggleButton}>
+          <Button style={ButtonStyle.Icon} title={isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')} onClick={handleToggleDetailsClick} className={s.toggleButton}>
             {isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')}
           </Button>
         </div>
@@ -129,7 +129,7 @@ const Activities = React.memo(
                   <Button style={ButtonStyle.Default} content={t('common.addComment')} onClick={openAddComment} />
                 </CommentEdit>
               )}
-              <div className={styles.comments}>
+              <div className={s.comments}>
                 {items.map((item) =>
                   item.type === ActivityTypes.COMMENT_CARD ? (
                     <Item.Comment

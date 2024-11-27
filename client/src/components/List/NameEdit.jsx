@@ -6,7 +6,7 @@ import { TextArea } from '../Utils';
 import { useField, useResizeObserverSize } from '../../hooks';
 import { ResizeObserverSizeTypes } from '../../constants/Enums';
 
-import * as styles from './NameEdit.module.scss';
+import * as s from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, onHeightChange }, ref) => {
   const [t] = useTranslation();
@@ -88,13 +88,13 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
   }
 
   return (
-    <div className={styles.wrapper} ref={setNameEditElement}>
+    <div className={s.wrapper} ref={setNameEditElement}>
       <TextArea
         ref={field}
         value={value}
         placeholder={t('common.enterListName')}
         maxRows={2}
-        className={styles.field}
+        className={s.field}
         onKeyDown={handleFieldKeyDown}
         onChange={handleFieldChange}
         onBlur={handleFieldBlur}

@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, FilePicker } from '../..
 import ProjectBackgroundGradients from '../../../constants/ProjectBackgroundGradients';
 import { ProjectBackgroundTypes } from '../../../constants/Enums';
 
-import * as styles from './BackgroundPane.module.scss';
+import * as s from './BackgroundPane.module.scss';
 import * as globalStyles from '../../../styles.module.scss';
 
 const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpdate, onImageUpdate, onImageDelete }) => {
@@ -64,7 +64,7 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
 
   return (
     <>
-      <div className={styles.gradientButtons}>
+      <div className={s.gradientButtons}>
         {ProjectBackgroundGradients.map((gradient) => (
           <Button
             style={ButtonStyle.NoBackground}
@@ -72,8 +72,8 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
             name="gradient"
             value={gradient}
             className={classNames(
-              styles.gradientButton,
-              item && item.type === ProjectBackgroundTypes.GRADIENT && gradient === item.name && styles.gradientButtonActive,
+              s.gradientButton,
+              item && item.type === ProjectBackgroundTypes.GRADIENT && gradient === item.name && s.gradientButtonActive,
               globalStyles[`background${upperFirst(camelCase(gradient))}`],
             )}
             onClick={handleGradientClick}
@@ -81,30 +81,30 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
         ))}
       </div>
       {imageCoverUrl && (
-        <Button ref={field} title={t('common.background')} onClick={handleImageClick} className={styles.imageButton}>
-          <div className={styles.imageContainer}>
-            <img src={imageCoverUrl} alt={t('common.background')} className={styles.image} />
+        <Button ref={field} title={t('common.background')} onClick={handleImageClick} className={s.imageButton}>
+          <div className={s.imageContainer}>
+            <img src={imageCoverUrl} alt={t('common.background')} className={s.image} />
             {item && item.type === 'image' && (
-              <div className={styles.imageSelected}>
-                <Icon type={IconType.Star} size={IconSize.Size14} className={styles.imageIcon} />
+              <div className={s.imageSelected}>
+                <Icon type={IconType.Star} size={IconSize.Size14} className={s.imageIcon} />
               </div>
             )}
           </div>
         </Button>
       )}
-      <div className={styles.actions}>
-        <div className={styles.action}>
+      <div className={s.actions}>
+        <div className={s.action}>
           <FilePicker accept="image/*" onSelect={handleFileSelect}>
             <Button style={ButtonStyle.DefaultBorder} ref={field} content={t('action.uploadNewImage', { context: 'title' })} disabled={isImageUpdating} />
           </FilePicker>
         </div>
         {imageCoverUrl && (
-          <div className={styles.action}>
+          <div className={s.action}>
             <Button style={ButtonStyle.DefaultBorder} content={t('action.deleteImage', { context: 'title' })} disabled={isImageUpdating} onClick={handleDeleteImageClick} />
           </div>
         )}
         {item && (
-          <div className={styles.action}>
+          <div className={s.action}>
             <Button style={ButtonStyle.DefaultBorder} content={t('action.removeBackground', { context: 'title' })} disabled={isImageUpdating} onClick={handleRemoveClick} />
           </div>
         )}

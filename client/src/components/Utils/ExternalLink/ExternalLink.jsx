@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import * as styles from './ExternalLink.module.scss';
+import * as s from './ExternalLink.module.scss';
 
 const ExternalLink = React.forwardRef(({ children, target, rel, className, ...props }, ref) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <a ref={ref} target={target} rel={rel} className={classNames(styles.link, className)} {...props}>
+    <a ref={ref} target={target} rel={rel} className={classNames(s.link, className)} {...props}>
       {children}
     </a>
   );

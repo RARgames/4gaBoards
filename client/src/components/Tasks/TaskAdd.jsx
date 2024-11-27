@@ -5,7 +5,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { TextArea } from '../Utils';
 import { useForm } from '../../hooks';
 
-import * as styles from './TaskAdd.module.scss';
+import * as s from './TaskAdd.module.scss';
 
 const DEFAULT_DATA = {
   name: '',
@@ -103,7 +103,7 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
       name="name"
       value={data.name}
       placeholder={t('common.enterTaskDescription')}
-      className={styles.field}
+      className={s.field}
       onKeyDown={handleFieldKeyDown}
       onChange={handleFieldChange}
       onBlur={handleBlur}

@@ -6,7 +6,7 @@ import { Icon, IconType, IconSize, ExternalLink, Button, ButtonStyle } from '../
 
 import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
 
-import * as styles from './AboutSettings.module.scss';
+import * as s from './AboutSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 
 const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) => {
@@ -40,31 +40,31 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
         <h2 className={sShared.headerText}>{t('common.about')}</h2>
       </div>
       <div>
-        <img src={logo} className={styles.logo} alt="4ga Boards" />
-        <div className={styles.version}>
+        <img src={logo} className={s.logo} alt="4ga Boards" />
+        <div className={s.version}>
           {t('common.version')} {Config.VERSION}
         </div>
-        <div className={styles.version}>
+        <div className={s.version}>
           {t('common.latestVersion')} {latestVersion}
         </div>
-        {demoMode && <div className={styles.demoMode}>{t('common.demoMode')}</div>}
-        <div className={styles.links}>
-          <div className={styles.link}>
+        {demoMode && <div className={s.demoMode}>{t('common.demoMode')}</div>}
+        <div className={s.links}>
+          <div className={s.link}>
             <ExternalLink href={i18n && i18n.resolvedLanguage === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
           </div>
-          <div className={styles.link}>
+          <div className={s.link}>
             <ExternalLink href="https://4gaboards.com">{t('common.website')}</ExternalLink>
           </div>
-          <div className={styles.link}>
+          <div className={s.link}>
             <ExternalLink href="https://github.com/RARgames/4gaBoards">
-              <Icon type={IconType.Github} size={IconSize.Size13} className={styles.icon} />
+              <Icon type={IconType.Github} size={IconSize.Size13} className={s.icon} />
               {t('common.github')}
             </ExternalLink>
           </div>
-          <div className={styles.link}>
+          <div className={s.link}>
             <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
           </div>
-          <div className={styles.link}>
+          <div className={s.link}>
             <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink>
           </div>
           <Button
@@ -72,7 +72,7 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
             content={t('common.importGettingStartedProject')}
             onClick={handleGettingStartedProjectImportClick}
             disabled={importGettingStartedButtonDisabled}
-            className={styles.button}
+            className={s.button}
           />
         </div>
       </div>

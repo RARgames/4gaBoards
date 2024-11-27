@@ -5,12 +5,12 @@ import IconType from './IconType';
 import FlagType from './FlagType';
 import IconSize from './IconSize';
 
-import * as styles from './Icon.module.scss';
+import * as s from './Icon.module.scss';
 
 const Icon = React.memo(({ type, size, className, ...props }) => {
   const IconComponent = type;
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return type ? <IconComponent className={classNames(styles.icon, styles[size], className)} {...props} /> : null;
+  return type ? <IconComponent className={classNames(s.icon, s[size], className)} {...props} /> : null;
 });
 
 Icon.propTypes = {

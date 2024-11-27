@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import LoaderSize from './LoaderSize';
 
-import * as styles from './Loader.module.scss';
+import * as s from './Loader.module.scss';
 
 const Loader = React.forwardRef(({ size, wrapperClassName, className, ...props }, ref) => {
   return (
-    <div className={classNames(styles.loaderWrapper, wrapperClassName)}>
+    <div className={classNames(s.loaderWrapper, wrapperClassName)}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <div ref={ref} className={classNames(styles.loader, styles[size], className)} {...props} />
+      <div ref={ref} className={classNames(s.loader, s[size], className)} {...props} />
     </div>
   );
 });

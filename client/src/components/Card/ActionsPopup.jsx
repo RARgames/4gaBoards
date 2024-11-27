@@ -12,7 +12,7 @@ import TimerEditStep from '../TimerEditStep';
 import CardMoveStep from '../CardMoveStep';
 import DeleteStep from '../DeleteStep';
 
-import * as styles from './ActionsPopup.module.scss';
+import * as s from './ActionsPopup.module.scss';
 
 const StepTypes = {
   USERS: 'USERS',
@@ -169,7 +169,7 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} content={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink} />
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
-          <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
+          <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
           {t('action.deleteCard', { context: 'title' })}
         </Button>
       </>

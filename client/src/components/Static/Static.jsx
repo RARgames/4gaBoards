@@ -10,7 +10,7 @@ import SettingsContainer from '../../containers/Settings/SettingsContainer';
 import MainSidebarContainer from '../../containers/MainSidebarContainer';
 import Paths from '../../constants/Paths';
 
-import * as styles from './Static.module.scss';
+import * as s from './Static.module.scss';
 
 function Static({ path, projectId, cardId, board }) {
   const [t] = useTranslation();
@@ -28,7 +28,7 @@ function Static({ path, projectId, cardId, board }) {
     ].includes(path)
   ) {
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         <MainSidebarContainer settingsOnly={path !== Paths.SETTINGS_PROJECT}>
           <SettingsContainer />
         </MainSidebarContainer>
@@ -38,7 +38,7 @@ function Static({ path, projectId, cardId, board }) {
 
   if (projectId === undefined) {
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         <MainSidebarContainer>
           <ProjectsContainer />
         </MainSidebarContainer>
@@ -48,9 +48,9 @@ function Static({ path, projectId, cardId, board }) {
 
   if (cardId === null) {
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         <MainSidebarContainer>
-          <div className={styles.message}>
+          <div className={s.message}>
             <h1>{t('common.cardNotFound', { context: 'title' })}</h1>
           </div>
         </MainSidebarContainer>
@@ -60,9 +60,9 @@ function Static({ path, projectId, cardId, board }) {
 
   if (board === null) {
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         <MainSidebarContainer>
-          <div className={styles.message}>
+          <div className={s.message}>
             <h1>{t('common.boardNotFound', { context: 'title' })}</h1>
           </div>
         </MainSidebarContainer>
@@ -72,9 +72,9 @@ function Static({ path, projectId, cardId, board }) {
 
   if (projectId === null) {
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         <MainSidebarContainer>
-          <div className={styles.message}>
+          <div className={s.message}>
             <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
           </div>
         </MainSidebarContainer>
@@ -84,7 +84,7 @@ function Static({ path, projectId, cardId, board }) {
 
   if (board === undefined) {
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         <MainSidebarContainer>
           <BoardsContainer />
         </MainSidebarContainer>
@@ -94,7 +94,7 @@ function Static({ path, projectId, cardId, board }) {
 
   if (board.isFetching) {
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         <MainSidebarContainer>
           <Loader size={LoaderSize.Massive} />
         </MainSidebarContainer>
@@ -103,7 +103,7 @@ function Static({ path, projectId, cardId, board }) {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={s.wrapper}>
       <MainSidebarContainer>
         <BoardContainer />
       </MainSidebarContainer>

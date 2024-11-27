@@ -11,7 +11,7 @@ import UserPopup from '../UserPopup';
 
 import logo from '../../assets/images/4gaboardsLogo128w-white.png';
 
-import * as styles from './Header.module.scss';
+import * as s from './Header.module.scss';
 
 const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, onNotificationDelete, onLogout }) => {
   const [t] = useTranslation();
@@ -44,23 +44,23 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
   }, [path, project, t]);
 
   return (
-    <div className={styles.wrapper}>
-      <Link to={Paths.ROOT} className={styles.logo}>
+    <div className={s.wrapper}>
+      <Link to={Paths.ROOT} className={s.logo}>
         <Button style={ButtonStyle.HeaderLogo} title={t('common.dashboard')}>
-          <img src={logo} alt="4ga Boards" className={styles.logoIcon} />
+          <img src={logo} alt="4ga Boards" className={s.logoIcon} />
         </Button>
       </Link>
-      <div className={styles.title} title={getPageHeaderTitle()}>
+      <div className={s.title} title={getPageHeaderTitle()}>
         {getPageHeaderTitle()}
       </div>
-      <div className={styles.menuRight}>
-        <Link to={Paths.SETTINGS} className={styles.hideOnSmall}>
+      <div className={s.menuRight}>
+        <Link to={Paths.SETTINGS} className={s.hideOnSmall}>
           <Button style={ButtonStyle.Header} title={t('common.settings')}>
             <Icon type={IconType.Settings} size={IconSize.Size18} />
           </Button>
         </Link>
         {isAdmin && (
-          <Link to={Paths.SETTINGS_USERS} className={styles.hideOnSmall}>
+          <Link to={Paths.SETTINGS_USERS} className={s.hideOnSmall}>
             <Button style={ButtonStyle.Header} title={t('common.settingsUsers')}>
               <Icon type={IconType.Users} size={IconSize.Size18} />
             </Button>
@@ -69,7 +69,7 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
         <NotificationsPopup items={notifications} onDelete={onNotificationDelete}>
           <Button style={ButtonStyle.Header} title={t('common.notifications')}>
             <Icon type={IconType.Bell} size={IconSize.Size18} />
-            {notifications.length > 0 && <span className={styles.notification}>{notifications.length}</span>}
+            {notifications.length > 0 && <span className={s.notification}>{notifications.length}</span>}
           </Button>
         </NotificationsPopup>
         <UserPopup canEditProject={canEditProject} projectId={project?.id} isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>

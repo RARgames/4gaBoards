@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { TextArea } from '../Utils';
 import { useField } from '../../hooks';
 
-import * as styles from './TaskEdit.module.scss';
+import * as s from './TaskEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();
@@ -88,7 +88,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
       ref={field}
       value={value}
       placeholder={t('common.enterTaskDescription')}
-      className={styles.field}
+      className={s.field}
       isError={isError}
       onKeyDown={handleFieldKeyDown}
       onChange={handleFieldChange}

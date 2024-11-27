@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, Inp
 import { useForm } from '../../hooks';
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 
-import * as styles from './Register.module.scss';
+import * as s from './Register.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
@@ -149,16 +149,16 @@ const Register = React.memo(
     }, []);
 
     return (
-      <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
-        <div className={styles.loginWrapper}>
-          <img src={logo} className={styles.logo} alt="4ga Boards" />
-          <h1 className={styles.formTitle}>{t('common.createYourAccount')}</h1>
+      <div className={classNames(s.wrapper, gStyles.scrollableY)}>
+        <div className={s.loginWrapper}>
+          <img src={logo} className={s.logo} alt="4ga Boards" />
+          <h1 className={s.formTitle}>{t('common.createYourAccount')}</h1>
           <div>
-            {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={styles.message} />}
+            {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
             <Form onSubmit={handleSubmit}>
               {registrationEnabled && localRegistrationEnabled && (
                 <>
-                  <div className={styles.inputLabel}>{t('common.email')}</div>
+                  <div className={s.inputLabel}>{t('common.email')}</div>
                   <Input
                     ref={emailField}
                     style={InputStyle.LoginRegister}
@@ -169,7 +169,7 @@ const Register = React.memo(
                     onChange={handleFieldChange}
                     isError={isEmailError}
                   />
-                  <div className={styles.inputLabel}>{t('common.password')}</div>
+                  <div className={s.inputLabel}>{t('common.password')}</div>
                   <Input.Password
                     withStrengthBar
                     ref={passwordField}
@@ -181,8 +181,8 @@ const Register = React.memo(
                     onChange={handleFieldChange}
                     isError={isPasswordError}
                   />
-                  <div className={styles.checkboxWrapper}>
-                    <div className={classNames(styles.inputLabel, styles.checkboxLabel)}>
+                  <div className={s.checkboxWrapper}>
+                    <div className={classNames(s.inputLabel, s.checkboxLabel)}>
                       {t('common.accept')} <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink> {t('common.and')}{' '}
                       <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
                     </div>
@@ -190,24 +190,24 @@ const Register = React.memo(
                   </div>
                 </>
               )}
-              {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={styles.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
-              <div className={classNames(styles.buttonsContainer, !localRegistrationEnabled && styles.onlySsoButtonContainer)}>
+              {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={s.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
+              <div className={classNames(s.buttonsContainer, !localRegistrationEnabled && s.onlySsoButtonContainer)}>
                 {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
                   <Button style={ButtonStyle.Login} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso}>
                     {t('common.registerWithGoogle')}
-                    <Icon type={IconType.Google} size={IconSize.Size20} className={styles.ssoIcon} />
+                    <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
                   </Button>
                 )}
                 {registrationEnabled && localRegistrationEnabled && (
-                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={styles.submitButton}>
+                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={s.submitButton}>
                     {t('common.register')}
-                    <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={styles.submitButtonIcon} />
+                    <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
                   </Button>
                 )}
               </div>
             </Form>
-            <div className={styles.alternateActionText}>{t('common.alreadyUser')}</div>
-            <div className={styles.alternateActionButtonContainer}>
+            <div className={s.alternateActionText}>{t('common.alreadyUser')}</div>
+            <div className={s.alternateActionButtonContainer}>
               <Button style={ButtonStyle.Login} content={t('common.backToLogin')} onClick={onLoginOpen} />
             </div>
           </div>

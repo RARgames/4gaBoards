@@ -8,7 +8,7 @@ import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
 
-import * as styles from './MembershipPermissionsSelectStep.module.scss';
+import * as s from './MembershipPermissionsSelectStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, buttonContent, onSelect, onBack, onClose }) => {
@@ -66,22 +66,22 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={classNames(data.role === BoardMembershipRoles.EDITOR && styles.selected)}>
-            <div className={styles.menuItemTitle}>{t('common.editor')}</div>
-            <div className={styles.menuItemDescription}>{t('common.canEditContentOfBoard')}</div>
+          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={classNames(data.role === BoardMembershipRoles.EDITOR && s.selected)}>
+            <div className={s.menuItemTitle}>{t('common.editor')}</div>
+            <div className={s.menuItemDescription}>{t('common.canEditContentOfBoard')}</div>
           </Button>
           <Button
             style={ButtonStyle.Popup}
             onClick={() => handleSelectRoleClick(BoardMembershipRoles.VIEWER)}
-            className={classNames(data.role === BoardMembershipRoles.VIEWER && styles.selected, data.role !== BoardMembershipRoles.VIEWER && styles.last)}
+            className={classNames(data.role === BoardMembershipRoles.VIEWER && s.selected, data.role !== BoardMembershipRoles.VIEWER && s.last)}
           >
-            <div className={styles.menuItemTitle}>{t('common.viewer')}</div>
-            <div className={styles.menuItemDescription}>{t('common.canOnlyViewBoard')}</div>
+            <div className={s.menuItemTitle}>{t('common.viewer')}</div>
+            <div className={s.menuItemDescription}>{t('common.canOnlyViewBoard')}</div>
           </Button>
           {data.role === BoardMembershipRoles.VIEWER && (
-            <div className={styles.commentSettings}>
-              <Radio size={RadioSize.Size12} name="canComment" checked={data.canComment} onChange={handleSettingChange} className={styles.commentSettingsRadio} />
-              <div className={classNames(styles.commentSettingsText, styles.last)}>{t('common.canComment')}</div>
+            <div className={s.commentSettings}>
+              <Radio size={RadioSize.Size12} name="canComment" checked={data.canComment} onChange={handleSettingChange} className={s.commentSettingsRadio} />
+              <div className={classNames(s.commentSettingsText, s.last)}>{t('common.canComment')}</div>
             </div>
           )}
           <div className={gStyles.controls}>

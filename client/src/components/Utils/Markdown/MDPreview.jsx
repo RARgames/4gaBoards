@@ -5,13 +5,11 @@ import MDEditor from '@uiw/react-md-editor';
 import remarkGithub from 'remark-github';
 import MDSettings from './MDSettings';
 
-// import * as styles from './MD.module.scss';
-
 const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, className, ...props }, ref) => {
   const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
 
   return (
-    // TODO temp removed styles.preview
+    // TODO temp removed s.preview
     // eslint-disable-next-line react/jsx-props-no-spreading
     <MDEditor.Markdown ref={ref} source={source} remarkPlugins={remarkPlugins} rehypePlugins={MDSettings.rehypePlugins} className={classNames(className)} {...props} />
   );

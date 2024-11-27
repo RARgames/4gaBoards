@@ -11,7 +11,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Item from './Item';
 import TaskAdd from './TaskAdd';
 
-import * as styles from './Tasks.module.scss';
+import * as s from './Tasks.module.scss';
 
 const VARIANTS = {
   CARD: 'card',
@@ -117,7 +117,7 @@ const Tasks = React.forwardRef(
                 <Button
                   style={ButtonStyle.Default}
                   content={t('common.addTask')}
-                  className={classNames(styles.taskButton, variant === VARIANTS.CARD && styles.taskButtonCard, isCardActive && variant === VARIANTS.CARD && styles.taskButtonCardActive)}
+                  className={classNames(s.taskButton, variant === VARIANTS.CARD && s.taskButtonCard, isCardActive && variant === VARIANTS.CARD && s.taskButtonCardActive)}
                 />
               </TaskAdd>
             )}
@@ -127,18 +127,18 @@ const Tasks = React.forwardRef(
     );
 
     return (
-      <div className={styles.wrapper}>
+      <div className={s.wrapper}>
         {items.length > 0 && (
-          <div className={classNames(styles.progressWrapper, isOpen && styles.progressWrapperOpen)}>
-            <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={classNames(variant === VARIANTS.CARD ? styles.progressCard : styles.progress)} />
+          <div className={classNames(s.progressWrapper, isOpen && s.progressWrapperOpen)}>
+            <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={classNames(variant === VARIANTS.CARD ? s.progressCard : s.progress)} />
             {variant === VARIANTS.CARD && (
-              <div className={styles.progressItems}>
+              <div className={s.progressItems}>
                 {closestNotCompletedTaslDueDate && (
-                  <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={styles.dueDateSummary} />
+                  <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} />
                 )}
-                <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={styles.toggleTasksButton}>
+                <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton}>
                   {completedItems.length}/{items.length}
-                  <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(styles.countToggleIcon, isOpen && styles.countToggleIconOpened)} />
+                  <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
                 </Button>
               </div>
             )}

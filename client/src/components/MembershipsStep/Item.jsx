@@ -5,7 +5,7 @@ import { Button } from '../Utils';
 
 import User from '../User';
 
-import * as styles from './Item.module.scss';
+import * as s from './Item.module.scss';
 
 const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDeselect }) => {
   const handleToggleClick = useCallback(() => {
@@ -17,11 +17,11 @@ const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDese
   }, [isActive, onUserSelect, onUserDeselect]);
 
   return (
-    <Button onClick={handleToggleClick} disabled={!isPersisted} className={styles.menuItem}>
-      <span className={styles.user}>
+    <Button onClick={handleToggleClick} disabled={!isPersisted} className={s.menuItem}>
+      <span className={s.user}>
         <User name={user.name} avatarUrl={user.avatarUrl} />
       </span>
-      <div className={classNames(styles.menuItemText, isActive && styles.menuItemTextActive)}>{user.name}</div>
+      <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)}>{user.name}</div>
     </Button>
   );
 });

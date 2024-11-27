@@ -5,7 +5,7 @@ import { ActivityTypes } from '../../../constants/Enums';
 import ItemComment from './ItemComment';
 import User from '../../User';
 
-import * as styles from './Item.module.scss';
+import * as s from './Item.module.scss';
 
 const Item = React.memo(({ type, data, createdAt, user }) => {
   const [t] = useTranslation();
@@ -34,8 +34,8 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
             list: data.list.name,
           }}
         >
-          {/* <span className={styles.author}>{user.name}</span> */}
-          <span className={styles.text}>
+          {/* <span className={s.author}>{user.name}</span> */}
+          <span className={s.text}>
             {' added this card to '}
             {data.list.name}
           </span>
@@ -53,8 +53,8 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
             toList: data.toList.name,
           }}
         >
-          {/* <span className={styles.author}>{user.name}</span> */}
-          <span className={styles.text}>
+          {/* <span className={s.author}>{user.name}</span> */}
+          <span className={s.text}>
             {' moved this card from '}
             {data.fromList.name}
             {' to '}
@@ -69,13 +69,13 @@ const Item = React.memo(({ type, data, createdAt, user }) => {
   }
 
   return (
-    <div className={styles.content}>
-      <span className={styles.user}>
+    <div className={s.content}>
+      <span className={s.user}>
         <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
       </span>
-      <span className={styles.author}>{user.name}</span>
-      <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>
-      <div className={styles.contentText}>{contentNode}</div>
+      <span className={s.author}>{user.name}</span>
+      <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>
+      <div className={s.contentText}>{contentNode}</div>
     </div>
   );
 });

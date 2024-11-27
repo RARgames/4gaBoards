@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { MDEditor, Button, ButtonStyle } from '../Utils';
 import { useLocalStorage } from '../../hooks';
 
+import * as s from './DescriptionEdit.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
-import * as styles from './DescriptionEdit.module.scss';
 
 const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();
@@ -67,7 +67,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
 
   const handleBlur = useCallback(
     (event) => {
-      if (event.relatedTarget && event.relatedTarget.closest(`.${styles.editor}`)) {
+      if (event.relatedTarget && event.relatedTarget.closest(`.${s.editor}`)) {
         return;
       }
 
@@ -148,7 +148,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
         }}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
-        className={styles.editor}
+        className={s.editor}
       />
       <div className={gStyles.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />

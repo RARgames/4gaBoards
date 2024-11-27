@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 import Memberships from '../../Memberships';
 import Paths from '../../../constants/Paths';
 
-import * as styles from './ProjectSettings.module.scss';
+import * as s from './ProjectSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
@@ -31,9 +31,9 @@ const ProjectSettings = React.memo(
     return (
       <div className={sShared.wrapper}>
         <div className={sShared.header}>
-          <div className={styles.headerButtonOffset} />
+          <div className={s.headerButtonOffset} />
           <h2 className={sShared.headerText}>{t('common.projectSettings')}</h2>
-          <div className={styles.headerButton}>
+          <div className={s.headerButton}>
             <Link to={Paths.PROJECTS.replace(':id', projectId)}>
               <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
                 <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
@@ -41,17 +41,17 @@ const ProjectSettings = React.memo(
             </Link>
           </div>
         </div>
-        <div className={styles.projectName}>{name}</div>
+        <div className={s.projectName}>{name}</div>
         <div>
-          <div className={styles.actionsWrapper}>
-            <div className={styles.action}>
+          <div className={s.actionsWrapper}>
+            <div className={s.action}>
               <InformationEdit
                 defaultData={{ name }}
                 onUpdate={(data) => {
                   onUpdate(projectId, data);
                 }}
               />
-              <div className={styles.text}>{t('common.managers')}</div>
+              <div className={s.text}>{t('common.managers')}</div>
               <Memberships
                 items={managers}
                 allUsers={allUsers}
@@ -71,8 +71,8 @@ const ProjectSettings = React.memo(
                 onDelete={onManagerDelete}
               />
             </div>
-            <div className={styles.action}>
-              <div className={styles.text}>{t('common.background')}</div>
+            <div className={s.action}>
+              <div className={s.text}>{t('common.background')}</div>
               <BackgroundPane
                 item={background}
                 imageCoverUrl={backgroundImage && backgroundImage.coverUrl}
@@ -84,8 +84,8 @@ const ProjectSettings = React.memo(
                 onImageDelete={handleBackgroundImageDelete}
               />
             </div>
-            <div className={styles.action}>
-              <h4 className={styles.dangerZone}>{t('common.dangerZone', { context: 'title' })}</h4>
+            <div className={s.action}>
+              <h4 className={s.dangerZone}>{t('common.dangerZone', { context: 'title' })}</h4>
               <DeletePopup
                 title={t('common.deleteProject', { context: 'title' })}
                 content={t('common.areYouSureYouWantToDeleteThisProject')}

@@ -8,7 +8,7 @@ import { useSteps } from '../../hooks';
 import User from '../User';
 import DeleteStep from '../DeleteStep';
 
-import * as styles from './ActionsPopup.module.scss';
+import * as s from './ActionsPopup.module.scss';
 
 const StepTypes = {
   EDIT_PERMISSIONS: 'EDIT_PERMISSIONS',
@@ -84,15 +84,15 @@ const ActionsStep = React.memo(
     }
 
     return (
-      <div className={styles.wrapper}>
-        <span className={styles.user}>
+      <div className={s.wrapper}>
+        <span className={s.user}>
           <User name={membership.user.name} avatarUrl={membership.user.avatarUrl} size="large" />
         </span>
-        <span className={styles.content}>
-          <div className={styles.name} title={membership.user.name}>
+        <span className={s.content}>
+          <div className={s.name} title={membership.user.name}>
             {membership.user.name}
           </div>
-          <div className={styles.email} title={membership.user.email}>
+          <div className={s.email} title={membership.user.email}>
             {membership.user.email}
           </div>
         </span>

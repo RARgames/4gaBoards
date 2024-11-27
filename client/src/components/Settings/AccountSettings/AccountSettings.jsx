@@ -5,7 +5,7 @@ import { Button, ButtonStyle } from '../../Utils';
 import UserUsernameEditPopup from '../../UserUsernameEditPopup';
 import UserEmailEditPopup from '../../UserEmailEditPopup';
 
-import * as styles from './AccountSettings.module.scss';
+import * as s from './AccountSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 
 const AccountSettings = React.memo(({ email, username, usernameUpdateForm, emailUpdateForm, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss }) => {
@@ -17,8 +17,8 @@ const AccountSettings = React.memo(({ email, username, usernameUpdateForm, email
         <h2 className={sShared.headerText}>{t('common.account')}</h2>
       </div>
       <div>
-        <div className={styles.actionsWrapper}>
-          <div className={styles.action}>
+        <div className={s.actionsWrapper}>
+          <div className={s.action}>
             <UserUsernameEditPopup
               usePasswordConfirmation
               defaultData={usernameUpdateForm.data}
@@ -31,7 +31,7 @@ const AccountSettings = React.memo(({ email, username, usernameUpdateForm, email
               <Button style={ButtonStyle.DefaultBorder} content={t('action.editUsername', { context: 'title' })} />
             </UserUsernameEditPopup>
           </div>
-          <div className={styles.action}>
+          <div className={s.action}>
             <UserEmailEditPopup
               usePasswordConfirmation
               defaultData={emailUpdateForm.data}

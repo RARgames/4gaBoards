@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle } from '../../Utils';
 import UserPasswordEditPopup from '../../UserPasswordEditPopup';
 
-import * as styles from './AuthenticationSettings.module.scss';
+import * as s from './AuthenticationSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 
 const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdate, onPasswordUpdateMessageDismiss }) => {
@@ -16,8 +16,8 @@ const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdat
         <h2 className={sShared.headerText}>{t('common.authentication')}</h2>
       </div>
       <div>
-        <div className={styles.actionsWrapper}>
-          <div className={styles.action}>
+        <div className={s.actionsWrapper}>
+          <div className={s.action}>
             <UserPasswordEditPopup
               usePasswordConfirmation
               defaultData={passwordUpdateForm.data}

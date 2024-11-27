@@ -7,7 +7,7 @@ import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageSt
 
 import { useForm } from '../../hooks';
 
-import * as styles from './UserEmailEditStep.module.scss';
+import * as s from './UserEmailEditStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
@@ -144,11 +144,11 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
-          <div className={styles.text}>{t('common.newEmail')}</div>
+          <div className={s.text}>{t('common.newEmail')}</div>
           <Input ref={emailField} style={InputStyle.Default} name="email" value={data.email} placeholder={email} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
           {usePasswordConfirmation && (
             <>
-              <div className={styles.text}>{t('common.currentPassword')}</div>
+              <div className={s.text}>{t('common.currentPassword')}</div>
               <Input.Password
                 ref={currentPasswordField}
                 style={InputStyle.Default}

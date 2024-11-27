@@ -7,7 +7,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';
 import BoardAddPopup from '../BoardAddPopup';
 
-import * as styles from './Boards.module.scss';
+import * as s from './Boards.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, onCreate }) => {
@@ -34,25 +34,25 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
   }, [projectId]);
 
   return (
-    <div className={classNames(styles.wrapper)}>
-      <div className={styles.header}>
+    <div className={classNames(s.wrapper)}>
+      <div className={s.header}>
         <div ref={headerButtonGroupOffsetRef} />
-        <div className={classNames(styles.headerText)}>
-          <span>{getBoardsText()}</span> <span className={styles.headerDetails}>[{t('common.selectedProject')}]</span>
+        <div className={classNames(s.headerText)}>
+          <span>{getBoardsText()}</span> <span className={s.headerDetails}>[{t('common.selectedProject')}]</span>
         </div>
-        <div ref={headerButtonGroupRef} className={styles.headerButtonGroup}>
+        <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
           {isProjectManager && (
-            <div className={styles.headerButton}>
+            <div className={s.headerButton}>
               <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onCreate} offset={16} position="bottom">
-                <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={styles.addButton}>
-                  <Icon type={IconType.Plus} size={IconSize.Size16} className={styles.addButtonIcon} />
+                <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.addButton}>
+                  <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
                   {t('common.addBoard')}
                 </Button>
               </BoardAddPopup>
             </div>
           )}
           {isProjectManager && (
-            <div className={styles.headerButton}>
+            <div className={s.headerButton}>
               <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
                 <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
                   <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
@@ -60,7 +60,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
               </Link>
             </div>
           )}
-          <div className={styles.headerButton}>
+          <div className={s.headerButton}>
             <Link to={Paths.ROOT}>
               <Button style={ButtonStyle.Icon} title={t('common.backToDashboard')}>
                 <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
@@ -69,13 +69,13 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
           </div>
         </div>
       </div>
-      <div className={classNames(styles.boardsWrapper, gStyles.scrollableY)}>
+      <div className={classNames(s.boardsWrapper, gStyles.scrollableY)}>
         {currentFilteredProject?.boards.map((item) => (
-          <div key={item.id} className={classNames(styles.boardWrapper)}>
-            {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
+          <div key={item.id} className={classNames(s.boardWrapper)}>
+            {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
             <Link to={Paths.BOARDS.replace(':id', item.id)}>
-              <div className={styles.board}>
-                <div title={item.name} className={styles.boardTitle}>
+              <div className={s.board}>
+                <div title={item.name} className={s.boardTitle}>
                   {item.name}
                 </div>
               </div>

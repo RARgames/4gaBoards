@@ -8,7 +8,7 @@ import DeleteStep from '../DeleteStep';
 import DueDateEditStep from '../DueDateEditStep';
 import MembershipsStep from '../MembershipsStep';
 
-import * as styles from './ActionsPopup.module.scss';
+import * as s from './ActionsPopup.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
@@ -67,20 +67,20 @@ const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, on
   return (
     <>
       <Button style={ButtonStyle.PopupContext} title={t('action.editDescription', { context: 'title' })} onClick={handleEditNameClick}>
-        <Icon type={IconType.Pencil} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
         {t('action.editDescription', { context: 'title' })}
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })} onClick={handleDueDateEditClick}>
-        <Icon type={IconType.Calendar} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Calendar} size={IconSize.Size13} className={s.icon} />
         {t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })}
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t(users.length > 0 ? 'common.editMembers' : 'common.addMembers', { context: 'title' })} onClick={handleMembersEditClick}>
-        <Icon type={IconType.Users} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Users} size={IconSize.Size13} className={s.icon} />
         {t(users.length > 0 ? 'common.editMembers' : 'common.addMembers', { context: 'title' })}
       </Button>
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('action.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
-        <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
         {t('action.deleteTask', { context: 'title' })}
       </Button>
     </>

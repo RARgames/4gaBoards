@@ -5,7 +5,7 @@ import { TextArea } from '../Utils';
 
 import { useField } from '../../hooks';
 
-import * as styles from './NameField.module.scss';
+import * as s from './NameField.module.scss';
 
 const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();
@@ -77,7 +77,7 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
       ref={field}
       value={value}
       placeholder={t('common.enterCardName')}
-      className={styles.field}
+      className={s.field}
       maxRows={3}
       onKeyDown={handleKeyDown}
       onChange={handleFieldChange}

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Icon, IconType, IconSize } from '../Icon';
 import MDSettings from './MDSettings';
 
-import * as styles from './MD.module.scss';
+import * as s from './MD.module.scss';
 
 const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, ...props }, ref) => {
   const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
@@ -57,12 +57,12 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, .
           {
             name: 'color',
             groupName: 'color',
-            buttonProps: { 'aria-label': 'Add colored text', title: 'Add colored text', className: styles.coloredTextButton },
+            buttonProps: { 'aria-label': 'Add colored text', title: 'Add colored text', className: s.coloredTextButton },
             icon: <Icon type={IconType.FillDrip} size={IconSize.Size13} />,
           },
         ),
       ]}
-      // TODO temp removed styles.editor
+      // TODO temp removed s.editor
       className={classNames(className)}
       // TODO add mention
       // TODO add full functionality to mention and issue

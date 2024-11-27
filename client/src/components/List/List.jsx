@@ -13,7 +13,7 @@ import NameEdit from './NameEdit';
 import CardAdd from './CardAdd';
 import ActionsPopup from './ActionsPopup';
 
-import * as styles from './List.module.scss';
+import * as s from './List.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
@@ -107,7 +107,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
       {({ innerRef, droppableProps, placeholder }) => (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef}>
-          <div className={styles.cards}>
+          <div className={s.cards}>
             {filteredCardIds.map((cardId, cardIndex) => (
               <CardContainer key={cardId} id={cardId} index={cardIndex} />
             ))}
@@ -126,9 +126,9 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         <div {...droppableProps} ref={innerRef}>
           {placeholder}
           {!isAddCardOpen && canEdit && (
-            <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={styles.addCardButton} disabled={!isPersisted}>
-              <Icon type={IconType.PlusMath} size={IconSize.Size13} className={styles.addCardButtonIcon} />
-              <span className={styles.addCardButtonText}>{t('action.addCard')}</span>
+            <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
+              <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
+              <span className={s.addCardButtonText}>{t('action.addCard')}</span>
             </Button>
           )}
         </div>
@@ -140,15 +140,15 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
     <Droppable droppableId={`listCollapsed:${id}:${cardIds.length}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
       {({ innerRef, droppableProps, placeholder }) => (
         // eslint-disable-next-line react/jsx-props-no-spreading
-        <div {...droppableProps} ref={innerRef} className={styles.headerCollapsedInner}>
+        <div {...droppableProps} ref={innerRef} className={s.headerCollapsedInner}>
           {placeholder}
-          <Button style={ButtonStyle.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={classNames(styles.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}>
+          <Button style={ButtonStyle.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={classNames(s.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}>
             <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
           </Button>
-          <div className={styles.headerNameCollapsed} title={name}>
+          <div className={s.headerNameCollapsed} title={name}>
             {name}
           </div>
-          <div className={styles.headerCardsCountCollapsed}>{cardsCountText()}</div>
+          <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
         </div>
       )}
     </Droppable>
@@ -159,11 +159,11 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
       <Draggable draggableId={`list:${id}`} index={index} isDragDisabled={!isPersisted || !canEdit}>
         {({ innerRef, draggableProps, dragHandleProps }) => (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} data-drag-scroller ref={innerRef} className={styles.innerWrapperCollapsed}>
-            <div className={styles.outerWrapper}>
+          <div {...draggableProps} data-drag-scroller ref={innerRef} className={s.innerWrapperCollapsed}>
+            <div className={s.outerWrapper}>
               <div
                 {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
-                className={styles.headerCollapsed}
+                className={s.headerCollapsed}
               >
                 {collapsedListNode}
               </div>
@@ -177,35 +177,35 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
     <Draggable draggableId={`list:${id}`} index={index} isDragDisabled={!isPersisted || !canEdit}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
         // eslint-disable-next-line react/jsx-props-no-spreading
-        <div {...draggableProps} data-drag-scroller ref={innerRef} className={styles.innerWrapper}>
-          <div className={styles.outerWrapper}>
+        <div {...draggableProps} data-drag-scroller ref={innerRef} className={s.innerWrapper}>
+          <div className={s.outerWrapper}>
             <div
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
-              className={styles.header}
+              className={s.header}
             >
-              <Button style={ButtonStyle.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={classNames(styles.headerCollapseButton, !canEdit && gStyles.cursorDefault)}>
-                <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={styles.iconRotateRight} />
+              <Button style={ButtonStyle.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={classNames(s.headerCollapseButton, !canEdit && gStyles.cursorDefault)}>
+                <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={s.iconRotateRight} />
               </Button>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <div className={classNames(styles.headerName, canEdit && gStyles.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={name}>
+                <div className={classNames(s.headerName, canEdit && gStyles.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={name}>
                   {name}
                 </div>
               </NameEdit>
               {isPersisted && canEdit && (
-                <div className={styles.popupWrapper}>
+                <div className={s.popupWrapper}>
                   <ActionsPopup onNameEdit={handleNameEdit} onCardAdd={handleCardAdd} onDelete={onDelete} position="left-start" offset={0} hideCloseButton>
-                    <Button style={ButtonStyle.Icon} title={t('common.editList')} className={styles.editListButton}>
+                    <Button style={ButtonStyle.Icon} title={t('common.editList')} className={s.editListButton}>
                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                     </Button>
                   </ActionsPopup>
                 </div>
               )}
-              <div className={styles.headerCardsCount}>{cardsCountText()}</div>
+              <div className={s.headerCardsCount}>{cardsCountText()}</div>
             </div>
             {/* eslint-disable-next-line prettier/prettier */}
-            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(styles.cardsInnerWrapper, gStyles.scrollableY, listOuterWrapperScrollable && styles.cardsInnerWrapperScrollable)}>
-              <div className={classNames(styles.cardsOuterWrapper, listOuterWrapperScrollable && styles.cardsOuterWrapperScrollable)}>{cardsNode}</div>
+            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(s.cardsInnerWrapper, gStyles.scrollableY, listOuterWrapperScrollable && s.cardsInnerWrapperScrollable)}>
+              <div className={classNames(s.cardsOuterWrapper, listOuterWrapperScrollable && s.cardsOuterWrapperScrollable)}>{cardsNode}</div>
             </div>
             {addCardNode}
           </div>

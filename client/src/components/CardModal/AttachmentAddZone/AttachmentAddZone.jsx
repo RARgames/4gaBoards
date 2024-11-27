@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useModal } from '../../../hooks';
 import TextFileAddModal from './TextFileAddModal';
 
-import * as styles from './AttachmentAddZone.module.scss';
+import * as s from './AttachmentAddZone.module.scss';
 
 const AttachmentAddZone = React.memo(({ children, onCreate }) => {
   const [t] = useTranslation();
@@ -94,10 +94,10 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
   return (
     <>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <div {...getRootProps()} className={styles.wrapper}>
+      <div {...getRootProps()} className={s.wrapper}>
         {isDragActive && (
-          <div className={styles.dropzone}>
-            <div className={styles.dropzoneText}>{t('common.dropFileToUpload')}</div>
+          <div className={s.dropzone}>
+            <div className={s.dropzoneText}>{t('common.dropFileToUpload')}</div>
           </div>
         )}
         {children}

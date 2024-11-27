@@ -4,7 +4,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { Loader, LoaderSize } from '../Utils';
 import HeaderContainer from '../../containers/HeaderContainer';
 
-import * as styles from './NotFound.module.scss';
+import * as s from './NotFound.module.scss';
 
 const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   const [t] = useTranslation();
@@ -21,13 +21,13 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
       ) : (
         <>
           <HeaderContainer />
-          <h1 className={styles.text}>{t('common.pageNotFound', { context: 'title' })}</h1>
+          <h1 className={s.text}>{t('common.pageNotFound', { context: 'title' })}</h1>
         </>
       )}
       {isSocketDisconnected && (
-        <div className={styles.message}>
-          <div className={styles.messageHeader}>{t('common.noConnectionToServer')}</div>
-          <div className={styles.messageContent}>
+        <div className={s.message}>
+          <div className={s.messageHeader}>{t('common.noConnectionToServer')}</div>
+          <div className={s.messageContent}>
             <Trans i18nKey="common.allChangesWillBeAutomaticallySavedAfterConnectionRestored">
               All changes will be automatically saved
               <br />

@@ -7,7 +7,7 @@ import { Button, ButtonStyle, Table } from '../../Utils';
 import UserAddPopup from '../../UserAddPopup';
 import Item from './Item';
 
-import * as styles from './UsersSettings.module.scss';
+import * as s from './UsersSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
@@ -100,9 +100,9 @@ const UsersSettings = React.memo(
       <div className={sShared.wrapper}>
         <div className={sShared.header}>
           <div className={sShared.headerFlex}>
-            <div ref={offsetRef} className={styles.headerButtonOffset} />
+            <div ref={offsetRef} className={s.headerButtonOffset} />
             <h2 className={sShared.headerText}>{t('common.users')}</h2>
-            <div ref={headerButtonRef} className={styles.headerButton}>
+            <div ref={headerButtonRef} className={s.headerButton}>
               <UserAddPopup
                 defaultData={userCreateDefaultData}
                 isSubmitting={userCreateIsSubmitting}

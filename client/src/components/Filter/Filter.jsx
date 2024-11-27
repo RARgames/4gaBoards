@@ -6,7 +6,7 @@ import { useField } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import Paths from '../../constants/Paths';
 
-import * as styles from './Filter.module.scss';
+import * as s from './Filter.module.scss';
 
 const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onChangeFilterQuery, onFilterQueryClear }) => {
   const [t] = useTranslation();
@@ -108,16 +108,16 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
 
   return (
     <div>
-      <Form onSubmit={handleSubmit} className={styles.form} onKeyDown={handleKeyDown}>
-        <Input ref={field} value={value} className={styles.field} onChange={handleChange} placeholder={isTargetBoard ? t('common.filterBoards') : t('common.filterProjects')} onFocus={handleFocus} />
-        <Button style={ButtonStyle.Icon} title={t('common.toggleFilter')} onClick={handleToggleClick} className={styles.inputButton} tabIndex="-1">
-          <div className={styles.inputButtonText}>{isTargetBoard ? 'B' : 'P'}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
+      <Form onSubmit={handleSubmit} className={s.form} onKeyDown={handleKeyDown}>
+        <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={isTargetBoard ? t('common.filterBoards') : t('common.filterProjects')} onFocus={handleFocus} />
+        <Button style={ButtonStyle.Icon} title={t('common.toggleFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
+          <div className={s.inputButtonText}>{isTargetBoard ? 'B' : 'P'}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
         </Button>
       </Form>
-      <div className={styles.controls}>
-        {value !== '' && <div className={styles.counterText}> {getCounterText()} </div>}
+      <div className={s.controls}>
+        {value !== '' && <div className={s.counterText}> {getCounterText()} </div>}
         {value !== '' && (
-          <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={styles.clearButton}>
+          <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
             <Icon type={IconType.Close} size={IconSize.Size10} />
           </Button>
         )}

@@ -8,7 +8,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Popup
 import { useForm } from '../../hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
 
-import * as styles from './TimerEditStep.module.scss';
+import * as s from './TimerEditStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const createData = (timer) => {
@@ -126,9 +126,9 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
       <Popup.Header onBack={onBack}>{t('common.editTimer', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <div className={styles.fieldWrapper}>
-            <div className={styles.fieldBox}>
-              <div className={styles.text}>{t('common.hours')}</div>
+          <div className={s.fieldWrapper}>
+            <div className={s.fieldBox}>
+              <div className={s.text}>{t('common.hours')}</div>
               <Input.Mask
                 ref={hoursField}
                 style={InputStyle.Default}
@@ -142,8 +142,8 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
                 isError={isHoursError}
               />
             </div>
-            <div className={styles.fieldBox}>
-              <div className={styles.text}>{t('common.minutes')}</div>
+            <div className={s.fieldBox}>
+              <div className={s.text}>{t('common.minutes')}</div>
               <Input.Mask
                 ref={minutesField}
                 style={InputStyle.Default}
@@ -157,8 +157,8 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
                 isError={isMinutesError}
               />
             </div>
-            <div className={styles.fieldBox}>
-              <div className={styles.text}>{t('common.seconds')}</div>
+            <div className={s.fieldBox}>
+              <div className={s.text}>{t('common.seconds')}</div>
               <Input.Mask
                 ref={secondsField}
                 style={InputStyle.Default}
@@ -172,7 +172,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
                 isError={isSecondsError}
               />
             </div>
-            <Button style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={styles.iconButton}>
+            <Button style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={s.iconButton}>
               <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size13} />
             </Button>
           </div>
@@ -182,12 +182,12 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
             {!isEditing &&
               (defaultValue && defaultValue.startedAt ? (
                 <Button style={ButtonStyle.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>
-                  <Icon type={IconType.Pause} size={IconSize.Size10} className={styles.startStopIcon} />
+                  <Icon type={IconType.Pause} size={IconSize.Size10} className={s.startStopIcon} />
                   {t('action.stop')}
                 </Button>
               ) : (
                 <Button style={ButtonStyle.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
-                  <Icon type={IconType.Play} size={IconSize.Size10} className={styles.startStopIcon} />
+                  <Icon type={IconType.Play} size={IconSize.Size10} className={s.startStopIcon} />
                   {t('action.start')}
                 </Button>
               ))}

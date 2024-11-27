@@ -6,15 +6,15 @@ import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
 import MessageStyle from './MessageStyle';
-import * as styles from './Message.module.scss';
+import * as s from './Message.module.scss';
 
 const Message = React.forwardRef(({ title, style, content, className, onDismiss, ...props }, ref) => {
   const [t] = useTranslation();
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <div ref={ref} title={content} className={classNames(styles.message, style && styles[style], className)} {...props}>
+    <div ref={ref} title={content} className={classNames(s.message, style && s[style], className)} {...props}>
       {content}
-      <Button style={ButtonStyle.Icon} title={title || t('common.close')} onClick={onDismiss} className={styles.closeButton}>
+      <Button style={ButtonStyle.Icon} title={title || t('common.close')} onClick={onDismiss} className={s.closeButton}>
         <Icon type={IconType.Close} size={IconSize.Size14} />
       </Button>
     </div>

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
-import * as styles from './Popup.module.scss';
+import * as s from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
   const Popup = React.memo(({ children, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
@@ -46,7 +46,7 @@ export default (WrappedComponent, defaultProps) => {
 
     return (
       <>
-        {/* TODO temp removed: styles.wrapper */}
+        {/* TODO temp removed: s.wrapper */}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <div ref={refs.setReference} {...getReferenceProps({ onClick: handleOpen })} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)}>
           {children}
@@ -55,9 +55,9 @@ export default (WrappedComponent, defaultProps) => {
           <FloatingPortal>
             <FloatingFocusManager context={context} modal={false} returnFocus={false}>
               {/* eslint-disable-next-line react/jsx-props-no-spreading, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <div className={classNames(styles.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} onClick={handleWithinPopupClick}>
+              <div className={classNames(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} onClick={handleWithinPopupClick}>
                 {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(styles.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                     <Icon type={IconType.Close} size={IconSize.Size14} />
                   </Button>
                 )}

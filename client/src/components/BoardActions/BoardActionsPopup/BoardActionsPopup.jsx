@@ -9,7 +9,7 @@ import RenameStep from '../../RenameStep';
 import ExportStep from '../../ExportStep';
 import { ConnectionsStep } from '../Connections';
 
-import * as styles from './BoardActionsPopup.module.scss';
+import * as s from './BoardActionsPopup.module.scss';
 
 const StepTypes = {
   RENAME: 'RENAME',
@@ -54,20 +54,20 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
   return (
     <>
       <Button style={ButtonStyle.PopupContext} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
-        <Icon type={IconType.Pencil} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
         {t('common.renameBoard', { context: 'title' })}
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
-        <Icon type={IconType.Github} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Github} size={IconSize.Size13} className={s.icon} />
         {t('common.connections', { context: 'title' })}
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={handleExportClick}>
-        <Icon type={IconType.Board} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Board} size={IconSize.Size13} className={s.icon} />
         {t('common.exportBoard', { context: 'title' })}
       </Button>
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
-        <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
         {t('common.deleteBoard', { context: 'title' })}
       </Button>
     </>

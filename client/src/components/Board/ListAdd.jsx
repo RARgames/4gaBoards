@@ -5,7 +5,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
 import { useForm } from '../../hooks';
 
-import * as styles from './ListAdd.module.scss';
+import * as s from './ListAdd.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const DEFAULT_DATA = {
@@ -89,7 +89,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
   }, [focusNameFieldState]);
 
   return (
-    <Form className={styles.wrapper} onSubmit={handleSubmit}>
+    <Form className={s.wrapper} onSubmit={handleSubmit}>
       <TextArea
         ref={nameField}
         style={TextAreaStyle.Default}

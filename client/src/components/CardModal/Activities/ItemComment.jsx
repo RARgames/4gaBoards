@@ -6,7 +6,7 @@ import CommentEdit from './CommentEdit';
 import User from '../../User';
 import DeletePopup from '../../DeletePopup';
 
-import * as styles from './ItemComment.module.scss';
+import * as s from './ItemComment.module.scss';
 
 const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onCurrentUserUpdate }) => {
   const [t] = useTranslation();
@@ -18,24 +18,24 @@ const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user,
   }, []);
 
   return (
-    <div className={styles.content}>
-      <div className={styles.title}>
-        <span className={styles.user}>
+    <div className={s.content}>
+      <div className={s.title}>
+        <span className={s.user}>
           <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
         </span>
-        <span className={styles.author}>{user.name}</span>
-        <span className={styles.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
+        <span className={s.author}>{user.name}</span>
+        <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
         {updatedAt !== null && (
-          <span className={styles.edited} title={`${t('common.edited')} ${t('format:dateTime', { postProcess: 'formatDate', value: updatedAt })}`}>
+          <span className={s.edited} title={`${t('common.edited')} ${t('format:dateTime', { postProcess: 'formatDate', value: updatedAt })}`}>
             {t('common.edited')}
           </span>
         )}
         {canEdit && (
-          <div className={styles.buttons}>
-            <Button style={ButtonStyle.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={styles.button}>
-              <Icon type={IconType.Pencil} size={IconSize.Size10} className={styles.buttonIcon} />
+          <div className={s.buttons}>
+            <Button style={ButtonStyle.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={s.button}>
+              <Icon type={IconType.Pencil} size={IconSize.Size10} className={s.buttonIcon} />
             </Button>
-            <div className={styles.popupWrapper}>
+            <div className={s.popupWrapper}>
               <DeletePopup
                 title={t('common.deleteComment', { context: 'title' })}
                 content={t('common.areYouSureYouWantToDeleteThisComment')}
@@ -44,8 +44,8 @@ const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user,
                 position="left-start"
                 offset={0}
               >
-                <Button style={ButtonStyle.Icon} title={t('common.deleteComment')} disabled={!isPersisted} className={styles.button}>
-                  <Icon type={IconType.Trash} size={IconSize.Size10} className={styles.buttonIcon} />
+                <Button style={ButtonStyle.Icon} title={t('common.deleteComment')} disabled={!isPersisted} className={s.button}>
+                  <Icon type={IconType.Trash} size={IconSize.Size10} className={s.buttonIcon} />
                 </Button>
               </DeletePopup>
             </div>
@@ -62,7 +62,7 @@ const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user,
         onUpdate={onUpdate}
         onCurrentUserUpdate={onCurrentUserUpdate}
       >
-        <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} className={styles.preview} />
+        <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} className={s.preview} />
       </CommentEdit>
     </div>
   );

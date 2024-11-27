@@ -8,7 +8,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as styles from './Item.module.scss';
+import * as s from './Item.module.scss';
 import * as globalStyles from '../../styles.module.scss';
 
 const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
@@ -29,17 +29,17 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
       {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
         const contentNode = (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} ref={innerRef} className={styles.wrapper}>
+          <div {...draggableProps} ref={innerRef} className={s.wrapper}>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <span
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
-              className={classNames(styles.name, isActive && styles.nameActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
+              className={classNames(s.name, isActive && s.nameActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
               onClick={handleToggleClick}
             >
               {name}
             </span>
             {canEdit && (
-              <Button style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={styles.editButton}>
+              <Button style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={s.editButton}>
                 <Icon type={IconType.Pencil} size={IconSize.Size14} />
               </Button>
             )}

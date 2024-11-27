@@ -10,7 +10,7 @@ import Paths from '../../constants/Paths';
 import { ProjectBackgroundTypes } from '../../constants/Enums';
 import ProjectAddPopup from '../ProjectAddPopup';
 
-import * as styles from './Projects.module.scss';
+import * as s from './Projects.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 import * as globalStyles from '../../styles.module.scss';
 
@@ -38,36 +38,36 @@ const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultDa
   }, []);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
+    <div className={s.wrapper}>
+      <div className={s.header}>
         <div ref={headerButtonGroupOffsetRef} />
-        <div className={classNames(styles.headerText)}>
-          <span>{getProjectsText()}</span> <span className={styles.headerDetails}>{getBoardsText()}</span>
+        <div className={classNames(s.headerText)}>
+          <span>{getProjectsText()}</span> <span className={s.headerDetails}>{getBoardsText()}</span>
         </div>
-        <div ref={headerButtonGroupRef} className={styles.headerButtonGroup}>
-          <div className={styles.headerButton}>
+        <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
+          <div className={s.headerButton}>
             <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate} offset={16} position="bottom">
-              <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={styles.addButton}>
-                <Icon type={IconType.Plus} size={IconSize.Size16} className={styles.addButtonIcon} />
+              <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={s.addButton}>
+                <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
                 {t('common.addProject')}
               </Button>
             </ProjectAddPopup>
           </div>
         </div>
       </div>
-      <div className={classNames(styles.projectsWrapper, gStyles.scrollableY)}>
+      <div className={classNames(s.projectsWrapper, gStyles.scrollableY)}>
         {filteredProjects.map((item) => (
           <div
             key={item.id}
-            className={classNames(styles.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`])}
+            className={classNames(s.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`])}
             style={{
               background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
             }}
           >
-            {item.notificationsTotal > 0 && <span className={styles.notification}>{item.notificationsTotal}</span>}
+            {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
             <Link to={Paths.PROJECTS.replace(':id', item.id)}>
-              <div className={styles.project}>
-                <div title={item.name} className={styles.projectTitle}>
+              <div className={s.project}>
+                <div title={item.name} className={s.projectTitle}>
                   {item.name}
                 </div>
               </div>

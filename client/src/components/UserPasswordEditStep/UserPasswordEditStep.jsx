@@ -7,7 +7,7 @@ import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageSt
 
 import { useForm } from '../../hooks';
 
-import * as styles from './UserPasswordEditStep.module.scss';
+import * as s from './UserPasswordEditStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
@@ -124,7 +124,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
         <Form onSubmit={handleSubmit}>
           {usePasswordConfirmation && (
             <>
-              <div className={styles.text}>{t('common.currentPassword')}</div>
+              <div className={s.text}>{t('common.currentPassword')}</div>
               <Input.Password
                 ref={currentPasswordField}
                 style={InputStyle.Default}
@@ -136,7 +136,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
               />
             </>
           )}
-          <div className={styles.text}>{t('common.newPassword')}</div>
+          <div className={s.text}>{t('common.newPassword')}</div>
           <Input.Password
             withStrengthBar
             ref={passwordField}

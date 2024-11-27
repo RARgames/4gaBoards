@@ -5,7 +5,7 @@ import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Ut
 
 import { useForm } from '../../hooks';
 
-import * as styles from './CardMoveStep.module.scss';
+import * as s from './CardMoveStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {
@@ -60,7 +60,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
       <Popup.Header onBack={onBack}>{t('common.moveCard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit}>
-          <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
+          <div className={s.text}>{t('common.project', { context: 'title' })}</div>
           <Dropdown
             name="projectId"
             style={DropdownStyle.Default}
@@ -76,11 +76,11 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             keepState
             returnOnChangeEvent
             disabled={projectsToLists.length === 0}
-            dropdownMenuClassName={styles.dropdownMenu}
+            dropdownMenuClassName={s.dropdownMenu}
           />
           {selectedProject && (
             <>
-              <div className={styles.text}>{t('common.board', { context: 'title' })}</div>
+              <div className={s.text}>{t('common.board', { context: 'title' })}</div>
               <Dropdown
                 ref={dropdownBoard}
                 style={DropdownStyle.Default}
@@ -97,13 +97,13 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 disabled={selectedProject.boards.length === 0}
-                dropdownMenuClassName={styles.dropdownMenu}
+                dropdownMenuClassName={s.dropdownMenu}
               />
             </>
           )}
           {selectedBoard && selectedBoard.isFetching === false && (
             <>
-              <div className={styles.text}>{t('common.list')}</div>
+              <div className={s.text}>{t('common.list')}</div>
               <Dropdown
                 ref={dropdownList}
                 style={DropdownStyle.Default}
@@ -120,7 +120,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 disabled={selectedBoard.lists.length === 0}
-                dropdownMenuClassName={styles.dropdownMenu}
+                dropdownMenuClassName={s.dropdownMenu}
               />
             </>
           )}

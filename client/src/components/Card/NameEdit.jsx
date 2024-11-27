@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
 import { useField } from '../../hooks';
 
-import * as styles from './NameEdit.module.scss';
+import * as s from './NameEdit.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
@@ -95,7 +95,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   }
 
   return (
-    <Form onSubmit={handleSubmit} className={styles.wrapper}>
+    <Form onSubmit={handleSubmit} className={s.wrapper}>
       <TextArea
         ref={field}
         style={TextAreaStyle.Default}

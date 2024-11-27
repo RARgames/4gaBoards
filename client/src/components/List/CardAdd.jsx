@@ -6,7 +6,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
 import { useForm } from '../../hooks';
 
-import * as styles from './CardAdd.module.scss';
+import * as s from './CardAdd.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const DEFAULT_DATA = {
@@ -104,7 +104,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
   }, [focusNameFieldState]);
 
   return (
-    <Form className={classNames(styles.wrapper, !isOpen && styles.wrapperClosed)} onSubmit={handleSubmit}>
+    <Form className={classNames(s.wrapper, !isOpen && s.wrapperClosed)} onSubmit={handleSubmit}>
       <TextArea
         ref={nameField}
         style={TextAreaStyle.Default}

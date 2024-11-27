@@ -10,7 +10,7 @@ import Paths from '../../constants/Paths';
 import { ActivityTypes } from '../../constants/Enums';
 import User from '../User';
 
-import * as styles from './NotificationsPopup.module.scss';
+import * as s from './NotificationsPopup.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
@@ -81,18 +81,18 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
       <Popup.Header>{t('common.notifications', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {items.length > 0 ? (
-          <div className={classNames(styles.wrapper, gStyles.scrollableY)}>
+          <div className={classNames(s.wrapper, gStyles.scrollableY)}>
             {items.map((item) => (
-              <div key={item.id} className={styles.item}>
+              <div key={item.id} className={s.item}>
                 {item.card && item.activity ? (
                   <>
                     <User name={item.activity.user.name} avatarUrl={item.activity.user.avatarUrl} size="large" />
-                    <span className={styles.itemContent}>{renderItemContent(item)}</span>
+                    <span className={s.itemContent}>{renderItemContent(item)}</span>
                   </>
                 ) : (
-                  <div className={styles.itemDeleted}>{t('common.cardOrActionAreDeleted')}</div>
+                  <div className={s.itemDeleted}>{t('common.cardOrActionAreDeleted')}</div>
                 )}
-                <Button style={ButtonStyle.Icon} onClick={() => handleDelete(item.id)} className={styles.itemButton}>
+                <Button style={ButtonStyle.Icon} onClick={() => handleDelete(item.id)} className={s.itemButton}>
                   <Icon type={IconType.Trash} size={IconSize.Size14} />
                 </Button>
               </div>

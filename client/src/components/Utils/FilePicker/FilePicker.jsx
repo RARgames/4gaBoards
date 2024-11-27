@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import * as styles from './FilePicker.module.scss';
+import * as s from './FilePicker.module.scss';
 
 const FilePicker = React.memo(({ children, accept, multiple, onSelect }) => {
   const field = useRef(null);
@@ -30,7 +30,7 @@ const FilePicker = React.memo(({ children, accept, multiple, onSelect }) => {
   return (
     <>
       {tigger}
-      <input ref={field} type="file" accept={accept} className={styles.field} onChange={handleFieldChange} multiple={multiple} />
+      <input ref={field} type="file" accept={accept} className={s.field} onChange={handleFieldChange} multiple={multiple} />
     </>
   );
 });

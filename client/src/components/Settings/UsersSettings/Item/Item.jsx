@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Radio, RadioSize, Table 
 import ActionsPopup from './ActionsPopup';
 import User from '../../../User';
 
-import * as styles from './Item.module.scss';
+import * as s from './Item.module.scss';
 // TODO get date in correct local region format
 const Item = React.memo(
   ({
@@ -41,7 +41,7 @@ const Item = React.memo(
     }, [isAdmin, onUpdate]);
 
     return (
-      <Table.Row className={styles.row}>
+      <Table.Row className={s.row}>
         <Table.Cell>
           <User name={name} avatarUrl={avatarUrl} aria-label={t('common.userAvatar')} />
         </Table.Cell>
@@ -78,7 +78,7 @@ const Item = React.memo(
             position="left-start"
             hideCloseButton
           >
-            <Button style={ButtonStyle.Icon} title={t('common.editUser')} className={styles.editbutton}>
+            <Button style={ButtonStyle.Icon} title={t('common.editUser')} className={s.editbutton}>
               <Icon type={IconType.Pencil} size={IconSize.Size14} />
             </Button>
           </ActionsPopup>

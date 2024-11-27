@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '../Utils';
 
-import * as styles from './User.module.scss';
+import * as s from './User.module.scss';
 
 const SIZES = {
   TINY: 'tiny',
@@ -53,15 +53,15 @@ const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, onClick
   const contentNode = (
     <span
       title={skipTitle ? undefined : name}
-      className={classNames(styles.wrapper, styles[`wrapper${upperFirst(size)}`], onClick && styles.wrapperHoverable, !avatarUrl && styles[`background${upperFirst(camelCase(getColor(name)))}`])}
+      className={classNames(s.wrapper, s[`wrapper${upperFirst(size)}`], onClick && s.wrapperHoverable, !avatarUrl && s[`background${upperFirst(camelCase(getColor(name)))}`])}
       style={avatarBackground(avatarUrl, size)}
     >
-      {!avatarUrl && <span className={styles.initials}>{getInitials(name)}</span>}
+      {!avatarUrl && <span className={s.initials}>{getInitials(name)}</span>}
     </span>
   );
 
   return onClick ? (
-    <Button onClick={onClick} disabled={isDisabled} className={styles.button}>
+    <Button onClick={onClick} disabled={isDisabled} className={s.button}>
       {contentNode}
     </Button>
   ) : (

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Dropdown, DropdownStyle, Radio, RadioSize, Table } from '../../Utils';
 import locales from '../../../locales';
 
-import * as styles from './PreferencesSettings.module.scss';
+import * as s from './PreferencesSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 
@@ -80,7 +80,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
             </Table.Row>
             <Table.Row>
               <Table.Cell> {t('common.language', { context: 'title' })}</Table.Cell>
-              <Table.Cell className={styles.languageCell} aria-label={t('common.toggleSettings')}>
+              <Table.Cell className={s.languageCell} aria-label={t('common.toggleSettings')}>
                 <Dropdown
                   style={DropdownStyle.FullWidth}
                   options={languages}
@@ -89,7 +89,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
                   isSearchable
                   selectFirstOnSearch
                   onChange={handleLanguageChange}
-                  className={styles.languageDropdown}
+                  className={s.languageDropdown}
                 />
               </Table.Cell>
               <Table.Cell>{selectedLanguage.name}</Table.Cell>

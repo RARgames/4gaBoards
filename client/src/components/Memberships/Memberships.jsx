@@ -7,7 +7,7 @@ import AddPopup from './AddPopup';
 import ActionsPopup from './ActionsPopup';
 import User from '../User';
 
-import * as styles from './Memberships.module.scss';
+import * as s from './Memberships.module.scss';
 
 const Memberships = React.memo(
   ({
@@ -33,9 +33,9 @@ const Memberships = React.memo(
 
     return (
       <>
-        <span className={styles.users}>
+        <span className={s.users}>
           {items.map((item) => (
-            <span key={item.id} className={styles.user}>
+            <span key={item.id} className={s.user}>
               <ActionsPopup
                 membership={item}
                 permissionsSelectStep={permissionsSelectStep}
@@ -58,9 +58,9 @@ const Memberships = React.memo(
           ))}
         </span>
         {canEdit && (
-          <div className={styles.addPopupWrapper}>
+          <div className={s.addPopupWrapper}>
             <AddPopup users={allUsers} currentUserIds={items.map((item) => item.user.id)} permissionsSelectStep={permissionsSelectStep} title={addTitle} onCreate={onCreate}>
-              <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={styles.addUser}>
+              <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={s.addUser}>
                 <Icon type={IconType.UserAdd} size={IconSize.Size20} />
               </Button>
             </AddPopup>

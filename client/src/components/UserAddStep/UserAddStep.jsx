@@ -8,7 +8,7 @@ import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageSt
 import { useForm } from '../../hooks';
 import { isUsername } from '../../utils/validator';
 
-import * as styles from './UserAddStep.module.scss';
+import * as s from './UserAddStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
 
 const createMessage = (error) => {
@@ -168,9 +168,9 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
-          <div className={styles.text}>{t('common.email')}</div>
+          <div className={s.text}>{t('common.email')}</div>
           <Input ref={emailField} name="email" style={InputStyle.Default} value={data.email} readOnly={isSubmitting} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
-          <div className={styles.text}>{t('common.password')}</div>
+          <div className={s.text}>{t('common.password')}</div>
           <Input.Password
             withStrengthBar
             ref={passwordField}
@@ -182,9 +182,9 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
             onChange={handleFieldChange}
             isError={isPasswordError}
           />
-          <div className={styles.text}>{t('common.name')}</div>
+          <div className={s.text}>{t('common.name')}</div>
           <Input ref={nameField} name="name" style={InputStyle.Default} value={data.name} readOnly={isSubmitting} onKeyDown={handleNameKeyDown} onChange={handleFieldChange} isError={isNameError} />
-          <div className={styles.text}>
+          <div className={s.text}>
             {t('common.username')} ({t('common.optional', { context: 'inline' })})
           </div>
           <Input

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Radio, RadioSize, Table } from '../../Utils';
 
-// import * as styles from './InstanceSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
 

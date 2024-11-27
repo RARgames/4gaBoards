@@ -6,7 +6,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from 
 import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 
-import * as styles from './ActionsPopup.module.scss';
+import * as s from './ActionsPopup.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
@@ -41,7 +41,7 @@ const ActionsStep = React.memo(({ onNameEdit, onCardAdd, onDelete, onClose }) =>
       <Button style={ButtonStyle.PopupContext} content={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick} />
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
-        <Icon type={IconType.Trash} size={IconSize.Size13} className={styles.icon} />
+        <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
         {t('action.deleteList', { context: 'title' })}
       </Button>
     </>
