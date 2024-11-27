@@ -19,18 +19,13 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
     }
   }, [onClick, url]);
 
-  const handleToggleCoverClick = useCallback(
-    (event) => {
-      event.stopPropagation();
-
-      if (isCover) {
-        onCoverDeselect();
-      } else {
-        onCoverSelect();
-      }
-    },
-    [isCover, onCoverSelect, onCoverDeselect],
-  );
+  const handleToggleCoverClick = useCallback(() => {
+    if (isCover) {
+      onCoverDeselect();
+    } else {
+      onCoverSelect();
+    }
+  }, [isCover, onCoverSelect, onCoverDeselect]);
 
   if (!isPersisted) {
     return (

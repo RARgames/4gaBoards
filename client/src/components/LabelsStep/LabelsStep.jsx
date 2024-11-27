@@ -91,15 +91,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
   if (step) {
     switch (step.type) {
       case StepTypes.ADD:
-        return (
-          <AddStep
-            defaultData={{
-              name: search,
-            }}
-            onCreate={onCreate}
-            onBack={handleBack}
-          />
-        );
+        return <AddStep defaultData={{ name: search }} onCreate={onCreate} onBack={handleBack} />;
       case StepTypes.EDIT: {
         const currentItem = items.find((item) => item.id === step.params.id);
 
