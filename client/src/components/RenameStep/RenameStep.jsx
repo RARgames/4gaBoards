@@ -66,7 +66,7 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
         <Form onSubmit={handleSubmit}>
           <TextArea
             ref={field}
-            style={TextAreaStyle.DefaultLast}
+            style={TextAreaStyle.Default}
             name="name"
             placeholder={placeholder}
             value={data.name}

@@ -92,7 +92,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     <Form className={styles.wrapper} onSubmit={handleSubmit}>
       <TextArea
         ref={nameField}
-        style={TextAreaStyle.DefaultLast}
+        style={TextAreaStyle.Default}
         name="name"
         value={data.name}
         placeholder={t('common.enterListName')}

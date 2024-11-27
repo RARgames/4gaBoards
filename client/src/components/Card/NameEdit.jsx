@@ -98,7 +98,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     <Form onSubmit={handleSubmit} className={styles.wrapper}>
       <TextArea
         ref={field}
-        style={TextAreaStyle.DefaultLast}
+        style={TextAreaStyle.Default}
         value={value}
         placeholder={t('common.enterCardName')}
         maxRows={2}

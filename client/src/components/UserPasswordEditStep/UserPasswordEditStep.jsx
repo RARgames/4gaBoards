@@ -140,7 +140,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
           <Input.Password
             withStrengthBar
             ref={passwordField}
-            style={InputStyle.DefaultLast}
+            style={InputStyle.Default}
             name="password"
             value={data.password}
             onKeyDown={handleNewPasswordKeyDown}

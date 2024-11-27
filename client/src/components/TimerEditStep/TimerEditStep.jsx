@@ -131,7 +131,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={styles.text}>{t('common.hours')}</div>
               <Input.Mask
                 ref={hoursField}
-                style={InputStyle.DefaultLast}
+                style={InputStyle.Default}
                 name="hours"
                 value={data.hours}
                 mask="9999"
@@ -146,7 +146,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={styles.text}>{t('common.minutes')}</div>
               <Input.Mask
                 ref={minutesField}
-                style={InputStyle.DefaultLast}
+                style={InputStyle.Default}
                 name="minutes"
                 value={data.minutes}
                 mask="99"
@@ -161,7 +161,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={styles.text}>{t('common.seconds')}</div>
               <Input.Mask
                 ref={secondsField}
-                style={InputStyle.DefaultLast}
+                style={InputStyle.Default}
                 name="seconds"
                 value={data.seconds}
                 mask="99"

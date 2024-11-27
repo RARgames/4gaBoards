@@ -184,7 +184,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
             <div>
               <div className={styles.text}>{t('common.template')}</div>
               <Dropdown
-                style={DropdownStyle.DefaultLast}
+                style={DropdownStyle.Default}
                 options={templates}
                 placeholder={selectedTemplate.name}
                 defaultItem={selectedTemplate}

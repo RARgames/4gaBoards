@@ -107,7 +107,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
     <Form className={classNames(styles.wrapper, !isOpen && styles.wrapperClosed)} onSubmit={handleSubmit}>
       <TextArea
         ref={nameField}
-        style={TextAreaStyle.DefaultLast}
+        style={TextAreaStyle.Default}
         name="name"
         value={data.name}
         placeholder={t('common.enterCardNameWithHint')}

@@ -147,7 +147,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
           <div className={styles.text}>{t('common.newUsername')}</div>
           <Input
             ref={usernameField}
-            style={usePasswordConfirmation ? InputStyle.Default : InputStyle.DefaultLast}
+            style={InputStyle.Default}
             name="username"
             value={data.username}
             placeholder={username}
@@ -160,7 +160,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
               <div className={styles.text}>{t('common.currentPassword')}</div>
               <Input.Password
                 ref={currentPasswordField}
-                style={InputStyle.DefaultLast}
+                style={InputStyle.Default}
                 name="currentPassword"
                 value={data.currentPassword}
                 onKeyDown={handlePasswordKeyDown}

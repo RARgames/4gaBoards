@@ -145,22 +145,13 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form onSubmit={handleSubmit}>
           <div className={styles.text}>{t('common.newEmail')}</div>
-          <Input
-            ref={emailField}
-            style={usePasswordConfirmation ? InputStyle.Default : InputStyle.DefaultLast}
-            name="email"
-            value={data.email}
-            placeholder={email}
-            onKeyDown={handleEmailKeyDown}
-            onChange={handleFieldChange}
-            isError={isEmailError}
-          />
+          <Input ref={emailField} style={InputStyle.Default} name="email" value={data.email} placeholder={email} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
           {usePasswordConfirmation && (
             <>
               <div className={styles.text}>{t('common.currentPassword')}</div>
               <Input.Password
                 ref={currentPasswordField}
-                style={InputStyle.DefaultLast}
+                style={InputStyle.Default}
                 name="currentPassword"
                 value={data.currentPassword}
                 onKeyDown={handlePasswordKeyDown}

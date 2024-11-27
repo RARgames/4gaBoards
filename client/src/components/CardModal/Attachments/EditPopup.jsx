@@ -53,7 +53,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
         <Form onSubmit={handleSubmit}>
           <Input
             ref={nameField}
-            style={InputStyle.DefaultLast}
+            style={InputStyle.Default}
             name="name"
             value={data.name}
             placeholder={t('common.enterAttachmentName')}

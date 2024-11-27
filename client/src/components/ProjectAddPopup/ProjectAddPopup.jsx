@@ -50,7 +50,7 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
       <Popup.Header>{t('common.addProject')}</Popup.Header>
       <Popup.Content>
         <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-          <Input ref={nameField} style={InputStyle.DefaultLast} name="name" placeholder={t('common.enterProjectName')} value={data.name} readOnly={isSubmitting} onChange={handleFieldChange} isError={isError} />
+          <Input ref={nameField} style={InputStyle.Default} name="name" placeholder={t('common.enterProjectName')} value={data.name} readOnly={isSubmitting} onChange={handleFieldChange} isError={isError} />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.addProject')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>

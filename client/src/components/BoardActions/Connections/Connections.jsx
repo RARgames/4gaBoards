@@ -66,7 +66,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
         <Form onSubmit={handleSubmit}>
           <Input
             ref={inputRef}
-            style={InputStyle.DefaultLast}
+            style={InputStyle.Default}
             value={data.githubRepo}
             name="githubRepo"
             placeholder={t('common.enterGithubRepository')}

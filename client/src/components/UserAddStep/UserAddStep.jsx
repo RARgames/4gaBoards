@@ -189,7 +189,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
           </div>
           <Input
             ref={usernameField}
-            style={InputStyle.DefaultLast}
+            style={InputStyle.Default}
             name="username"
             value={data.username || ''}
             readOnly={isSubmitting}

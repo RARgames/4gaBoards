@@ -63,7 +63,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
           <div className={styles.text}>{t('common.project', { context: 'title' })}</div>
           <Dropdown
             name="projectId"
-            style={selectedProject ? DropdownStyle.Default : DropdownStyle.DefaultLast}
+            style={DropdownStyle.Default}
             options={projectsToLists.map((project) => ({
               id: project.id,
               name: project.name,
@@ -83,7 +83,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               <div className={styles.text}>{t('common.board', { context: 'title' })}</div>
               <Dropdown
                 ref={dropdownBoard}
-                style={selectedBoard ? DropdownStyle.Default : DropdownStyle.DefaultLast}
+                style={DropdownStyle.Default}
                 name="boardId"
                 options={selectedProject.boards.map((board) => ({
                   id: board.id,
@@ -106,7 +106,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               <div className={styles.text}>{t('common.list')}</div>
               <Dropdown
                 ref={dropdownList}
-                style={DropdownStyle.DefaultLast}
+                style={DropdownStyle.Default}
                 name="listId"
                 options={selectedBoard.lists.map((list) => ({
                   id: list.id,

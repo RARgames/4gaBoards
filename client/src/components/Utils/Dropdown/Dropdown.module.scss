@@ -6,7 +6,7 @@
 
   .dropdownSearchInput {
     width: 100%;
-    padding: 3px;
+    padding: 3px 20px 3px 3px;
     background: var(--backgroundColorTmpDarkerField);
     color: var(--textColor1);
     outline: none;
@@ -100,21 +100,8 @@
     width: 100%;
   }
 
-  .marginBottom4 {
-    margin-bottom: 4px;
-  }
-
-  .marginBottom6 {
-    margin-bottom: 6px;
-  }
-
   .default {
     @extend .fullWidth;
-    @extend .marginBottom4;
-  }
-
-  .defaultLast {
-    @extend .fullWidth;
-    @extend .marginBottom6;
+    margin-bottom: 6px;
   }
 }
