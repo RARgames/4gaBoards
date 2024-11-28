@@ -69,7 +69,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
       setIsError(false);
       switch (event.key) {
         case 'Enter': {
-          event.preventDefault();
+          event.preventDefault(); // Prevent adding new line in TextArea
           const autoOpen = event.ctrlKey;
           submit(autoOpen);
           break;

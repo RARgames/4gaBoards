@@ -57,7 +57,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
       setIsError(false);
       switch (event.key) {
         case 'Enter': {
-          event.preventDefault();
+          event.preventDefault(); // Prevent adding new line in TextArea
           submit();
           break;
         }

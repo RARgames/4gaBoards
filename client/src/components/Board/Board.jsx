@@ -72,7 +72,13 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
         return;
       }
 
+      event.preventDefault(); // Prevent text selecton when dragging board
       prevPosition.current = event.screenX;
+
+      const selection = window.getSelection();
+      if (selection && selection.removeAllRanges) {
+        selection.removeAllRanges();
+      }
     },
     [wrapper],
   );
@@ -82,7 +88,6 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
       if (!prevPosition.current) {
         return;
       }
-      event.preventDefault();
 
       wrapper.current.scrollBy({ left: prevPosition.current - event.screenX });
       prevPosition.current = event.screenX;

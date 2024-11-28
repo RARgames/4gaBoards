@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 const Form = React.forwardRef(({ onSubmit, children, className, ...props }, ref) => {
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent reloading page after form submit (when submit button has no onClick handler)
     if (onSubmit) {
       onSubmit(event);
     }

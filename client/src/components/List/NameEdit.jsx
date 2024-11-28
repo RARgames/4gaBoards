@@ -58,14 +58,11 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onClose, 
     (event) => {
       switch (event.key) {
         case 'Enter':
-          event.preventDefault();
-
+          event.preventDefault(); // Prevent adding new line in TextArea
           submit();
-
           break;
         case 'Escape':
           close();
-
           break;
         default:
       }

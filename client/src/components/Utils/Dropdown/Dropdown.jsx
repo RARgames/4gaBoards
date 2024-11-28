@@ -218,31 +218,28 @@ const Dropdown = React.forwardRef(
       (event) => {
         switch (event.key) {
           case 'ArrowUp': {
-            event.preventDefault();
             const currIndex = getCurrItemIndex();
             const prevIndex = Math.max(0, currIndex - 1);
             selectItemByIndex(prevIndex);
             break;
           }
           case 'ArrowDown': {
-            event.preventDefault();
             const currIndex = getCurrItemIndex();
             const nextIndex = Math.min(getOptions(0).length - 1, currIndex + 1);
             selectItemByIndex(nextIndex);
             break;
           }
           case 'Enter': {
-            event.preventDefault();
             handleSubmit(getCurrItem());
             break;
           }
           case 'Tab': {
-            event.preventDefault();
+            event.preventDefault(); // Prevent switching focus
             handleSubmit(getCurrItem());
             break;
           }
           case 'Escape': {
-            event.preventDefault();
+            event.stopPropagation(); // TODO change how popup handles key input, Prevent closing whole popup
             handleCancel();
             break;
           }

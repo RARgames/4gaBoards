@@ -68,7 +68,7 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
     (event) => {
       setIsError(false);
       if (event.key === 'Enter') {
-        event.preventDefault();
+        event.preventDefault(); // Prevent adding new line in TextArea
         submit();
       } else if (event.key === 'Escape') {
         close();

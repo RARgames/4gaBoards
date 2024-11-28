@@ -41,7 +41,7 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
       setIsError(false);
       switch (event.key) {
         case 'Enter': {
-          event.preventDefault();
+          event.preventDefault(); // Prevent adding new line in TextArea
           handleSubmit();
           break;
         }

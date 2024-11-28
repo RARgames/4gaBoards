@@ -46,7 +46,7 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
     (event) => {
       switch (event.key) {
         case 'Enter':
-          event.preventDefault();
+          event.preventDefault(); // Prevent adding new line in TextArea
           submit();
           break;
         case 'Escape':

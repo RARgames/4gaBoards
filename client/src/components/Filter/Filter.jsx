@@ -59,15 +59,13 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
     (event) => {
       switch (event.key) {
         case 'Enter':
-          event.preventDefault();
           handleSubmit();
           break;
         case 'Escape':
-          event.preventDefault();
           handleCancel();
           break;
         case 'Tab':
-          event.preventDefault();
+          event.preventDefault(); // Prevent switching focus
           handleToggleClick();
           break;
         default:
