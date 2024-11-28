@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import pick from 'lodash/pick';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Filters from './Filters';
 import Memberships from '../Memberships';
 import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';

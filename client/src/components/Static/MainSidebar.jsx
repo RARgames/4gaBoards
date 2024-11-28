@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import pick from 'lodash/pick';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import Paths from '../../constants/Paths';

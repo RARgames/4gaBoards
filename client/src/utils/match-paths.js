@@ -1,4 +1,4 @@
-import { matchPath } from 'react-router-dom';
+import { matchPath } from 'react-router';
 
 export default (pathname, paths) => {
   for (let i = 0; i < paths.length; i += 1) {

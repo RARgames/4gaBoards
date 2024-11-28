@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import InformationEdit from './InformationEdit';
 import BackgroundPane from './BackgroundPane';
 import DeletePopup from '../../DeletePopup';
