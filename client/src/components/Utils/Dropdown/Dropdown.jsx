@@ -239,7 +239,7 @@ const Dropdown = React.forwardRef(
             break;
           }
           case 'Escape': {
-            event.stopPropagation(); // TODO change how popup handles key input, Prevent closing whole popup
+            event.stopPropagation(); // TODO Prevent closing whole popup - change how popup handles key input
             handleCancel();
             break;
           }

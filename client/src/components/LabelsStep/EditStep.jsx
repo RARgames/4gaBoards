@@ -51,7 +51,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
           break;
         }
         case 'Escape': {
-          event.stopPropagation();
+          event.stopPropagation(); // TODO Prevent closing whole popup - change how popup handles key input
           onBack();
           break;
         }

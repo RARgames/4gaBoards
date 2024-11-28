@@ -35,13 +35,12 @@ export default (WrappedComponent, defaultProps) => {
       }
     }, [onClose]);
 
-    const handleOpen = useCallback((e) => {
-      e.stopPropagation();
+    const handleOpen = useCallback(() => {
       setIsOpen(true);
     }, []);
 
     const handleWithinPopupClick = useCallback((e) => {
-      e.stopPropagation();
+      e.stopPropagation(); // TODO Prevent e.g. switching card - change how popup handles key input
     }, []);
 
     return (

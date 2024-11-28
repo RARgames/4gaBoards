@@ -26,7 +26,7 @@ const Tasks = React.forwardRef(
 
     const handleToggleClick = useCallback(
       (event) => {
-        event.stopPropagation();
+        event.stopPropagation(); // TODO Prevent card switch - change how Card handles click events
         toggleOpen();
       },
       [toggleOpen],
