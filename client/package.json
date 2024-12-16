@@ -91,7 +91,7 @@
     "remark-gfm": "^3.0.1",
     "remark-github": "^12.0.0",
     "reselect": "^4.1.7",
-    "resolve": "^1.20.0",
+    "resolve": "^1.22.9",
     "resolve-url-loader": "^5.0.0",
     "sails.io.js": "^1.2.1",
     "sass": "^1.81.0",
