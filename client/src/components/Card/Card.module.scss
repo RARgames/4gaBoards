@@ -116,17 +116,15 @@
     color: var(--textColorWhite);
     font-size: 10px;
     line-height: 12px;
-    padding: 0 3px 0 2px;
+    padding: 0 2px 0 2px;
     border-radius: 3px;
-    max-height: 13px;
-    max-width: 13px;
     position: absolute;
-    top: -1px;
-    right: -1px;
+    top: -3px;
+    right: -3px;
   }
 
   .notificationFull {
-    padding: 0 3px 0 1px;
+    padding: 0 3px 0 2px;
   }
 
   .wrapper {

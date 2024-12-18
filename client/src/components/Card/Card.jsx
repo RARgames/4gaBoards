@@ -157,7 +157,7 @@ const Card = React.memo(
               {name}
             </div>
           </div>
-          {notificationsTotal > 0 && <span className={s.notification}>{notificationsTotal}</span>}
+          {notificationsTotal > 0 && notificationsTotal <= 9 && <span className={s.notification}>{notificationsTotal}</span>}
           {notificationsTotal > 9 && <span className={classNames(s.notification, s.notificationFull)}>9+</span>}
         </div>
         {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
