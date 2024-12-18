@@ -60,6 +60,36 @@ const handleTaskUpdate = (task) => ({
   },
 });
 
+const duplicateTask = (task) => ({
+  type: ActionTypes.TASK_DUPLICATE,
+  payload: {
+    task,
+  },
+});
+
+duplicateTask.success = (task, taskMemberships) => ({
+  type: ActionTypes.TASK_DUPLICATE__SUCCESS,
+  payload: {
+    task,
+    taskMemberships,
+  },
+});
+
+duplicateTask.failure = (id, error) => ({
+  type: ActionTypes.TASK_DUPLICATE__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
+const handleTaskDuplicate = (task) => ({
+  type: ActionTypes.TASK_DUPLICATE_HANDLE,
+  payload: {
+    task,
+  },
+});
+
 const deleteTask = (id) => ({
   type: ActionTypes.TASK_DELETE,
   payload: {
@@ -94,6 +124,8 @@ export default {
   handleTaskCreate,
   updateTask,
   handleTaskUpdate,
+  duplicateTask,
+  handleTaskDuplicate,
   deleteTask,
   handleTaskDelete,
 };

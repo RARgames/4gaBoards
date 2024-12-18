@@ -84,6 +84,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onLabelMove: (labelId, index) => entryActions.moveLabel(labelId, index),
       onLabelDelete: (labelId) => entryActions.deleteLabel(labelId),
       onTaskUpdate: (taskId, data) => entryActions.updateTask(taskId, data),
+      onTaskDuplicate: (taskId) => entryActions.duplicateTask(taskId),
       onTaskDelete: (taskId) => entryActions.deleteTask(taskId),
       onUserToTaskAdd: (userId, taskId, cardId) => entryActions.addUserToTask(userId, taskId, cardId),
       onUserFromTaskRemove: (userId, taskId) => entryActions.removeUserFromTask(userId, taskId),

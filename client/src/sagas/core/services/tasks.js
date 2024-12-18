@@ -61,6 +61,28 @@ export function* handleTaskUpdate(task) {
   yield put(actions.handleTaskUpdate(task));
 }
 
+export function* duplicateTask(id) {
+  yield put(actions.duplicateTask(id));
+
+  let task;
+  let taskMemberships;
+  try {
+    ({
+      item: task,
+      included: { taskMemberships },
+    } = yield call(request, api.duplicateTask, id));
+  } catch (error) {
+    yield put(actions.duplicateTask.failure(id, error));
+    return;
+  }
+
+  yield put(actions.duplicateTask.success(task, taskMemberships));
+}
+
+export function* handleTaskDuplicate(task) {
+  yield put(actions.handleTaskDuplicate(task));
+}
+
 export function* moveTask(id, index) {
   const { cardId } = yield select(selectors.selectTaskById, id);
   const position = yield select(selectors.selectNextTaskPosition, cardId, index, id);
@@ -94,6 +116,8 @@ export default {
   handleTaskCreate,
   updateTask,
   handleTaskUpdate,
+  duplicateTask,
+  handleTaskDuplicate,
   moveTask,
   deleteTask,
   handleTaskDelete,

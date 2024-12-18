@@ -10,6 +10,7 @@ import { ReactComponent as Calendar } from '../../../assets/icons/Calendar.svg';
 import { ReactComponent as Check } from '../../../assets/icons/Check.svg';
 import { ReactComponent as Close } from '../../../assets/icons/Close.svg';
 import { ReactComponent as Comment } from '../../../assets/icons/Comment.svg';
+import { ReactComponent as Duplicate } from '../../../assets/icons/Duplicate.svg';
 import { ReactComponent as EllipsisVertical } from '../../../assets/icons/EllipsisVertical.svg';
 import { ReactComponent as Eye } from '../../../assets/icons/Eye.svg';
 import { ReactComponent as EyeSlash } from '../../../assets/icons/EyeSlash.svg';
@@ -55,6 +56,7 @@ const IconType = {
   Check,
   Close,
   Comment,
+  Duplicate,
   EllipsisVertical,
   Eye,
   EyeSlash,

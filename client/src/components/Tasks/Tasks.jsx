@@ -19,7 +19,7 @@ const VARIANTS = {
 };
 
 const Tasks = React.forwardRef(
-  ({ variant, isCardActive, cardId, items, canEdit, boardMemberships, onCreate, onUpdate, onMove, onDelete, onUserAdd, onUserRemove, onMouseEnterTasks, onMouseLeaveTasks }, ref) => {
+  ({ variant, isCardActive, cardId, items, canEdit, boardMemberships, onCreate, onUpdate, onDuplicate, onMove, onDelete, onUserAdd, onUserRemove, onMouseEnterTasks, onMouseLeaveTasks }, ref) => {
     const [t] = useTranslation();
     const taskAddRef = useRef(null);
     const [isOpen, toggleOpen] = useToggle();
@@ -106,6 +106,7 @@ const Tasks = React.forwardRef(
                 isPersisted={item.isPersisted}
                 canEdit={canEdit}
                 onUpdate={(data) => handleUpdate(item.id, data)}
+                onDuplicate={() => onDuplicate(item.id)}
                 onDelete={() => handleDelete(item.id)}
                 onUserAdd={(userId) => handleUserAdd(item.id, userId)}
                 onUserRemove={(userId) => handleUserRemove(item.id, userId)}
@@ -160,6 +161,7 @@ Tasks.propTypes = {
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onDuplicate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,

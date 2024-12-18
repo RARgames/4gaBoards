@@ -152,6 +152,10 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleTaskUpdate(item));
     });
 
+    const handleTaskDuplicate = api.makeHandleTaskDuplicate(({ item }) => {
+      emit(entryActions.handleTaskDuplicate(item));
+    });
+
     const handleTaskDelete = api.makeHandleTaskDelete(({ item }) => {
       emit(entryActions.handleTaskDelete(item));
     });
@@ -238,6 +242,7 @@ const createSocketEventsChannel = () =>
 
     socket.on('taskCreate', handleTaskCreate);
     socket.on('taskUpdate', handleTaskUpdate);
+    socket.on('taskDuplicate', handleTaskDuplicate);
     socket.on('taskDelete', handleTaskDelete);
 
     socket.on('attachmentCreate', handleAttachmentCreate);
@@ -302,6 +307,7 @@ const createSocketEventsChannel = () =>
 
       socket.off('taskCreate', handleTaskCreate);
       socket.off('taskUpdate', handleTaskUpdate);
+      socket.off('taskDuplicate', handleTaskDuplicate);
       socket.off('taskDelete', handleTaskDelete);
 
       socket.off('attachmentCreate', handleAttachmentCreate);

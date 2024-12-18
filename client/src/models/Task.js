@@ -82,6 +82,21 @@ export default class extends BaseModel {
         }
 
         break;
+      case ActionTypes.TASK_DUPLICATE:
+      case ActionTypes.TASK_DUPLICATE_HANDLE:
+        Task.upsert(payload.task);
+
+        break;
+      case ActionTypes.TASK_DUPLICATE__SUCCESS:
+        Task.upsert(payload.task);
+
+        if (payload.taskMemberships) {
+          payload.taskMemberships.forEach(({ taskId, userId }) => {
+            Task.withId(taskId).users.add(userId);
+          });
+        }
+
+        break;
       case ActionTypes.USER_TO_TASK_ADD: {
         const taskModel = Task.withId(payload.taskId);
         taskModel.users.add(payload.id);

@@ -102,6 +102,7 @@ const mapDispatchToProps = (dispatch) =>
       onLabelDelete: entryActions.deleteLabel,
       onTaskCreate: entryActions.createTaskInCurrentCard,
       onTaskUpdate: entryActions.updateTask,
+      onTaskDuplicate: entryActions.duplicateTask,
       onTaskMove: entryActions.moveTask,
       onTaskDelete: entryActions.deleteTask,
       onUserToTaskAdd: entryActions.addUserToTask,

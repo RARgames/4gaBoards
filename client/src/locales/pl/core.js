@@ -128,6 +128,7 @@ export default {
       dropFileToUpload: 'Upuść pliki aby wgrać',
       dueDate_title: 'Termin',
       dueDateSummary: 'Najbliższy termin nieukończonego zadania:',
+      duplicateTask: 'Duplikuj zadanie',
       editAttachment_title: 'Edytuj załącznik',
       editAttachment: 'Edytuj załącznik',
       editAttachmentName: 'Edytuj nazwę załącznika',

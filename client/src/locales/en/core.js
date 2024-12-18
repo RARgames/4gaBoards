@@ -120,6 +120,7 @@ export default {
       dropFileToUpload: 'Drop files to upload',
       dueDate_title: 'Due Date',
       dueDateSummary: 'The closest due date for unfinished task:',
+      duplicateTask: 'Duplicate Task',
       editAttachment_title: 'Edit Attachment',
       editAttachment: 'Edit Attachment',
       editAttachmentName: 'Edit Attachment Name',

@@ -69,6 +69,7 @@ module.exports = {
 
     const cardLabels = await CardLabel.find({ cardId: card.id });
     const memberUsers = await CardMembership.find({ cardId: card.id });
+    // TODO use task duplicate helper
     const tasks = await Task.find({ cardId: card.id });
     const taskIds = sails.helpers.utils.mapRecords(tasks);
     const taskMemberships = await sails.helpers.cards.getTaskMemberships(taskIds);

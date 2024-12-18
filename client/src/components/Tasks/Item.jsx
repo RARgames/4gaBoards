@@ -21,7 +21,7 @@ const VARIANTS = {
   CARDMODAL: 'cardModal',
 };
 
-const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, users, isCompleted, isPersisted, canEdit, onUpdate, onDelete, onUserAdd, onUserRemove }) => {
+const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, users, isCompleted, isPersisted, canEdit, onUpdate, onDuplicate, onDelete, onUserAdd, onUserRemove }) => {
   const [t] = useTranslation();
   const nameEdit = useRef(null);
 
@@ -129,6 +129,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
                   boardMemberships={boardMemberships}
                   users={users}
                   onUpdate={handleDueDateUpdate}
+                  onDuplicate={onDuplicate}
                   onNameEdit={handleNameEdit}
                   onDelete={onDelete}
                   onUserAdd={onUserAdd}
@@ -164,6 +165,7 @@ Item.propTypes = {
   isPersisted: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onDuplicate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,

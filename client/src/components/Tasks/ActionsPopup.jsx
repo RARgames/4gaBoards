@@ -16,7 +16,7 @@ const StepTypes = {
   EDIT_MEMBERS: 'EDIT_MEMBERS',
 };
 
-const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
+const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, onDuplicate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
   const userIds = users.map((user) => user.id);
@@ -31,6 +31,11 @@ const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, on
     },
     [onUpdate],
   );
+
+  const handleDuplicateClick = useCallback(() => {
+    onDuplicate();
+    onClose();
+  }, [onClose, onDuplicate]);
 
   const handleDeleteClick = useCallback(() => {
     openStep(StepTypes.DELETE);
@@ -78,6 +83,10 @@ const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, on
         <Icon type={IconType.Users} size={IconSize.Size13} className={s.icon} />
         {t(users.length > 0 ? 'common.editMembers' : 'common.addMembers', { context: 'title' })}
       </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.duplicateTask', { context: 'title' })} onClick={handleDuplicateClick}>
+        <Icon type={IconType.Duplicate} size={IconSize.Size13} className={s.icon} />
+        {t('common.duplicateTask', { context: 'title' })}
+      </Button>
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('action.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
         <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -92,6 +101,7 @@ ActionsStep.propTypes = {
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
+  onDuplicate: PropTypes.func.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,

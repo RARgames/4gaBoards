@@ -37,6 +37,20 @@ const handleTaskUpdate = (task) => ({
   },
 });
 
+const duplicateTask = (id) => ({
+  type: EntryActionTypes.TASK_DUPLICATE,
+  payload: {
+    id,
+  },
+});
+
+const handleTaskDuplicate = (task) => ({
+  type: EntryActionTypes.TASK_DUPLICATE_HANDLE,
+  payload: {
+    task,
+  },
+});
+
 const moveTask = (id, index) => ({
   type: EntryActionTypes.TASK_MOVE,
   payload: {
@@ -65,6 +79,8 @@ export default {
   handleTaskCreate,
   updateTask,
   handleTaskUpdate,
+  duplicateTask,
+  handleTaskDuplicate,
   moveTask,
   deleteTask,
   handleTaskDelete,
