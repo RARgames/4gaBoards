@@ -71,6 +71,8 @@
 
   .headerCollapsedInner {
     height: inherit;
+    display: flex;
+    flex-direction: column;
   }
 
   .popupWrapper {
@@ -109,10 +111,11 @@
     outline: none;
     overflow: hidden;
     writing-mode: vertical-rl;
-    padding: 0px 5px 10px 5px;
+    padding: 0px 5px 5px 5px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-height: 85%;
+    max-height: calc(100% - 90px);
+    line-height: 18px;
   }
 
   .headerCollapseButton {
@@ -144,9 +147,12 @@
   .headerCardsCountCollapsed {
     color: var(--textColor3);
     font-size: 12px;
-    max-height: 10%;
     writing-mode: vertical-rl;
-    padding: 0px 5px 10px 5px;
+    padding: 5px 5px 10px 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 18px;
   }
 
   .innerWrapper {
