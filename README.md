@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/github/contributors/rargames/4gaboards?style=flat-square" alt="GitHub contributors">
   </div>
   </br>
-  The realtime kanban boards for groups inspired by discontinued GitKraken Glo Boards.
+  Straightforward boards system for realtime project management
   </br>
   </br>
 </div>
@@ -55,7 +55,7 @@
 
 Check out 4ga Boards using our [demo](https://demo.4gaboards.com).
 
-**Recommended: Create a new account** - You can use fake email (no email confirmations).
+**Recommended: Create a new account** - You can use non-existing email (no email confirmations).
 
 _or use: Demo user: `demo` Demo password: `demo` (please note that many users might be using it at the same time causing disturbed experience e.g. changing user preferences)._
 
@@ -69,6 +69,10 @@ _or use: Demo user: `demo` Demo password: `demo` (please note that many users mi
 ## Documentation
 
 [English](https://docs.4gaboards.com/en/home) | [Polski](https://docs.4gaboards.com/pl/home)
+
+## Website
+
+[4ga Boards Website](https://4gaboards.com)
 
 ## Roadmap
 
