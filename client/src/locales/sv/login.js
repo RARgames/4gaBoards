@@ -1,7 +1,7 @@
 export default {
   translation: {
     common: {
-      emailOrUsername: 'E-mail eller användarnamn',
+      emailOrUsername: 'Email eller användarnamn',
       invalidUsernameOrPassword: 'Ogiltig användarnamn eller lösenord',
       logInToBoards: 'Logga in',
       noInternetConnection: 'Ingen internetanslutning',

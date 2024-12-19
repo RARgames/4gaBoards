@@ -1,7 +1,7 @@
 export default {
   translation: {
     common: {
-      emailOrUsername: 'E-mail alebo používateľské meno',
+      emailOrUsername: 'Email alebo používateľské meno',
       invalidUsernameOrPassword: 'Nesprávne užívateľské meno alebo heslo',
       logInToBoards: 'Prihlásiť',
       noInternetConnection: 'Bez pripojenia k internetu',

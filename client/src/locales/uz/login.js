@@ -1,7 +1,7 @@
 export default {
   translation: {
     common: {
-      emailOrUsername: 'E-mail yoki foydalanuvchi nomi',
+      emailOrUsername: 'Email yoki foydalanuvchi nomi',
       invalidUsernameOrPassword: "Noto'g'ri foydalanuvchi nomi yoki parol",
       logInToBoards: 'ga Kirish',
       noInternetConnection: "Internet bog'lanishi yo'q",

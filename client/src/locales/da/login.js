@@ -1,7 +1,7 @@
 export default {
   translation: {
     common: {
-      emailOrUsername: 'E-mail eller brugernavn',
+      emailOrUsername: 'Email eller brugernavn',
       invalidUsernameOrPassword: 'Ugyldig brugernavn eller løsen',
       logInToBoards: 'Log på',
       noInternetConnection: 'Ingen forbindelse til internettet',

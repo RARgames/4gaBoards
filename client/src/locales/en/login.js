@@ -8,7 +8,7 @@ export default {
       coreNotFound: 'Failed to fetch core settings',
       createAccount: 'Create an account',
       createYourAccount: 'Create your account',
-      emailOrUsername: 'E-mail or username',
+      emailOrUsername: 'Email or username',
       invalidUsernameOrPassword: 'Invalid username or password',
       localRegistrationDisabled: 'User local registration is disabled by the administrator',
       login: 'Login',

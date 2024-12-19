@@ -8,7 +8,7 @@ export default {
       coreNotFound: 'Nie znaleziono rdzenia',
       createAccount: 'Utwórz konto',
       createYourAccount: 'Utwórz konto',
-      emailOrUsername: 'E-mail lub nazwa użytkownika',
+      emailOrUsername: 'Email lub nazwa użytkownika',
       invalidUsernameOrPassword: 'Błędna nazwa użytkownika lub hasło',
       localRegistrationDisabled: 'User local registration is disabled by the administrator',
       login: 'Logowanie',

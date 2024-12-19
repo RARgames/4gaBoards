@@ -1,7 +1,7 @@
 export default {
   translation: {
     common: {
-      emailOrUsername: 'E-mail или имя пользователя',
+      emailOrUsername: 'Email или имя пользователя',
       invalidUsernameOrPassword: 'Неверное имя пользователя или пароль',
       logInToBoards: 'Вход',
       noInternetConnection: 'Нет соединения',
