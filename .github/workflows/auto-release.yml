@@ -150,3 +150,11 @@ jobs:
             Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}`
           draft: false
           prerelease: false
+
+      - name: Trigger 4ga Boards homepage update
+        if: steps.increment_version.outputs.beta == 'false'
+        uses: peter-evans/repository-dispatch@v3.0.0
+        with:
+          token: ${{ secrets.HOMEPAGE_4GA_BOARDS_DEPLOY_TOKEN }}
+          repository: RARgames/4gaBoardsHomepage
+          event-type: trigger-deploy
