@@ -384,6 +384,7 @@ const CardModal = React.memo(
             isSearchable
             onChange={(list) => onMove(list.id)}
             selectFirstOnSearch
+            dropdownMenuClassName={s.dropdownMenu}
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div className={classNames(canEdit && gStyles.cursorPointer)} onClick={handleDropdownClick}>
