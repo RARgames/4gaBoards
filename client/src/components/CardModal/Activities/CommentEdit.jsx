@@ -126,7 +126,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <MDEditor
         name="text"
         value={data.text}

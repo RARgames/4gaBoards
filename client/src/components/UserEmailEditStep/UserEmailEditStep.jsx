@@ -143,7 +143,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
       <Popup.Header onBack={onBack}>{t('common.editEmail', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <div className={s.text}>{t('common.newEmail')}</div>
           <Input ref={emailField} style={InputStyle.Default} name="email" value={data.email} placeholder={email} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
           {usePasswordConfirmation && (

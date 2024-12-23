@@ -155,7 +155,7 @@ const Register = React.memo(
           <h1 className={s.formTitle}>{t('common.createYourAccount')}</h1>
           <div>
             {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
-            <Form onSubmit={handleSubmit}>
+            <Form>
               {registrationEnabled && localRegistrationEnabled && (
                 <>
                   <div className={s.inputLabel}>{t('common.email')}</div>
@@ -199,7 +199,7 @@ const Register = React.memo(
                   </Button>
                 )}
                 {registrationEnabled && localRegistrationEnabled && (
-                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={s.submitButton}>
+                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={s.submitButton} onClick={handleSubmit}>
                     {t('common.register')}
                     <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
                   </Button>

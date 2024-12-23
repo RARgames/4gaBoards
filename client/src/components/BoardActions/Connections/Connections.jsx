@@ -63,7 +63,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
     <>
       <Popup.Header onBack={onBack}>{t('common.connectToGithub')} [Not fully implemented]</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Input
             ref={inputRef}
             style={InputStyle.Default}

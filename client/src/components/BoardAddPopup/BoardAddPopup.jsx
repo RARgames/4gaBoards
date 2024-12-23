@@ -43,6 +43,9 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
     githubRepo: '',
   });
 
+  const formRef = useRef(null);
+  const [focusFromState, focusForm] = useToggle();
+
   const [step, openStep, handleBack] = useSteps();
   const [focusNameFieldState, focusNameField] = useToggle();
 
@@ -143,6 +146,23 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
     nameField.current.focus();
   }, [focusNameFieldState]);
 
+  const handleFormKeyDown = useCallback(
+    (e) => {
+      switch (e.key) {
+        case 'Enter': {
+          handleSubmit();
+          break;
+        }
+        default:
+      }
+    },
+    [handleSubmit],
+  );
+
+  useDidUpdate(() => {
+    formRef.current.focus();
+  }, [focusFromState]);
+
   if (step && step.type === StepTypes.IMPORT) {
     return <ImportStep onSelect={handleImportSelect} onBack={handleImportBack} />;
   }
@@ -151,7 +171,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
     <>
       <Popup.Header onBack={onBack}>{t('common.addBoard')}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form ref={formRef} tabIndex="0" onKeyDown={handleFormKeyDown}>
           <div className={s.text}>{t('common.name')}</div>
           <Input
             ref={nameField}
@@ -174,6 +194,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 isSearchable
                 isError={isDropdownError}
                 selectFirstOnSearch
+                onBlur={focusForm}
                 onChange={handleProjectChange}
                 onErrorClear={() => setIsDropdownError(false)}
                 dropdownMenuClassName={s.dropdownMenu}
@@ -190,6 +211,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 defaultItem={selectedTemplate}
                 isSearchable
                 selectFirstOnSearch
+                onBlur={focusForm}
                 onChange={handleTemplateChange}
                 dropdownMenuClassName={s.dropdownMenu}
               />

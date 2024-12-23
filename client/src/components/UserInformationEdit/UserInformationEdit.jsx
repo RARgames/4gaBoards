@@ -48,7 +48,7 @@ const UserInformationEdit = React.memo(({ defaultData, onUpdate }) => {
   }, []);
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <div className={s.text}>{t('common.name')}</div>
       <Input style={InputStyle.Default} ref={nameField} name="name" value={data.name} className={s.field} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isError} />
       <div className={s.text}>{t('common.phone')}</div>

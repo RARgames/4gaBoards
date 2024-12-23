@@ -143,7 +143,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
       <Popup.Header onBack={onBack}>{t('common.editUsername', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <div className={s.text}>{t('common.newUsername')}</div>
           <Input
             ref={usernameField}

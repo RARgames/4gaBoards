@@ -1,6 +1,6 @@
 import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +11,23 @@ import LabelColors from '../../constants/LabelColors';
 import * as s from './Editor.module.scss';
 import * as globalStyles from '../../styles.module.scss';
 
-const Editor = React.memo(({ data, onFieldChange }) => {
+const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
   const [t] = useTranslation();
 
   const nameField = useRef(null);
+
+  const focus = useCallback(() => {
+    if (!nameField.current) return;
+    nameField.current.focus();
+  }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      focus,
+    }),
+    [focus],
+  );
 
   useEffect(() => {
     nameField.current.focus();
@@ -22,7 +35,7 @@ const Editor = React.memo(({ data, onFieldChange }) => {
 
   return (
     <>
-      <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} placeholder={t('common.enterLabelName')} onChange={onFieldChange} />
+      <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} placeholder={t('common.enterLabelName')} isError={isError} onChange={onFieldChange} />
       <div className={s.text}>{t('common.color')}</div>
       <div className={s.colorButtons}>
         {LabelColors.map((color) => (
@@ -42,6 +55,7 @@ const Editor = React.memo(({ data, onFieldChange }) => {
 
 Editor.propTypes = {
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  isError: PropTypes.bool.isRequired,
   onFieldChange: PropTypes.func.isRequired,
 };
 

@@ -95,7 +95,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   }
 
   return (
-    <Form onSubmit={handleSubmit} className={s.wrapper}>
+    <Form className={s.wrapper}>
       <TextArea
         ref={field}
         style={TextAreaStyle.Default}

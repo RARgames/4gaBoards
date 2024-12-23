@@ -121,7 +121,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
       <Popup.Header onBack={onBack}>{t('common.editPassword', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
-        <Form onSubmit={handleSubmit}>
+        <Form>
           {usePasswordConfirmation && (
             <>
               <div className={s.text}>{t('common.currentPassword')}</div>

@@ -104,7 +104,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
   }, [focusNameFieldState]);
 
   return (
-    <Form className={classNames(s.wrapper, !isOpen && s.wrapperClosed)} onSubmit={handleSubmit}>
+    <Form className={classNames(s.wrapper, !isOpen && s.wrapperClosed)}>
       <TextArea
         ref={nameField}
         style={TextAreaStyle.Default}

@@ -144,7 +144,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
         <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
         <div>
           {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
             <Input
               ref={emailOrUsernameField}
@@ -174,7 +174,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
                   <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
                 </Button>
               )}
-              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={s.submitButton}>
+              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={s.submitButton} onClick={handleSubmit}>
                 {t('action.logIn')}
                 <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
               </Button>

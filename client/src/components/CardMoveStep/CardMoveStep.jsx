@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
 
 import { useForm } from '../../hooks';
+import { useToggle, useDidUpdate } from '../../lib/hooks';
 
 import * as s from './CardMoveStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
@@ -20,6 +21,9 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
     listId: null,
     ...defaultPath,
   }));
+
+  const formRef = useRef(null);
+  const [focusFormState, focusForm] = useToggle();
 
   const selectedProject = useMemo(() => projectsToLists.find((project) => project.id === path.projectId) || null, [projectsToLists, path.projectId]);
 
@@ -55,11 +59,28 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
     onClose();
   }, [defaultPath, onMove, onTransfer, onClose, selectedBoard, selectedList]);
 
+  const handleKeyDown = useCallback(
+    (e) => {
+      switch (e.key) {
+        case 'Enter': {
+          handleSubmit();
+          break;
+        }
+        default:
+      }
+    },
+    [handleSubmit],
+  );
+
+  useDidUpdate(() => {
+    formRef.current.focus();
+  }, [focusFormState]);
+
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.moveCard', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form ref={formRef} tabIndex="0" onKeyDown={handleKeyDown}>
           <div className={s.text}>{t('common.project', { context: 'title' })}</div>
           <Dropdown
             name="projectId"
@@ -75,6 +96,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             selectFirstOnSearch
             keepState
             returnOnChangeEvent
+            onBlur={focusForm}
             disabled={projectsToLists.length === 0}
             dropdownMenuClassName={s.dropdownMenu}
           />
@@ -96,6 +118,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 selectFirstOnSearch
                 keepState
                 returnOnChangeEvent
+                onBlur={focusForm}
                 disabled={selectedProject.boards.length === 0}
                 dropdownMenuClassName={s.dropdownMenu}
               />
@@ -119,6 +142,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 selectFirstOnSearch
                 keepState
                 returnOnChangeEvent
+                onBlur={focusForm}
                 disabled={selectedBoard.lists.length === 0}
                 dropdownMenuClassName={s.dropdownMenu}
               />

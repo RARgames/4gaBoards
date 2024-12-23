@@ -125,7 +125,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
     <>
       <Popup.Header onBack={onBack}>{t('common.editTimer', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <div className={s.fieldWrapper}>
             <div className={s.fieldBox}>
               <div className={s.text}>{t('common.hours')}</div>

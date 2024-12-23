@@ -48,7 +48,7 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
   return (
     <>
       <div className={s.title}>{t('common.createTextFile', { context: 'title' })}</div>
-      <Form onSubmit={handleSubmit} className={s.form}>
+      <Form className={s.form}>
         <Input
           ref={nameField}
           style={InputStyle.Default}

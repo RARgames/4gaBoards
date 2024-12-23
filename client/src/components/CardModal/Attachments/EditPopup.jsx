@@ -50,7 +50,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
     <>
       <Popup.Header>{t('common.editAttachmentName')}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Input
             ref={nameField}
             style={InputStyle.Default}

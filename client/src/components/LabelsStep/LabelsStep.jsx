@@ -34,6 +34,16 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
     openStep(StepTypes.ADD);
   }, [openStep]);
 
+  const handleBackWithClear = useCallback(() => {
+    handleBack();
+    handleSearchChange({ target: { value: '' } });
+
+    const timeout = setTimeout(() => {
+      searchField.current?.focus();
+    }, 0);
+    return () => clearTimeout(timeout);
+  }, [handleBack, handleSearchChange]);
+
   const handleEdit = useCallback(
     (id) => {
       openStep(StepTypes.EDIT, {
@@ -91,7 +101,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
   if (step) {
     switch (step.type) {
       case StepTypes.ADD:
-        return <AddStep defaultData={{ name: search }} onCreate={onCreate} onBack={handleBack} />;
+        return <AddStep defaultData={{ name: search }} onCreate={onCreate} onBack={handleBackWithClear} />;
       case StepTypes.EDIT: {
         const currentItem = items.find((item) => item.id === step.params.id);
 

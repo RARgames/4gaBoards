@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
@@ -11,6 +11,8 @@ import * as gStyles from '../../globalStyles.module.scss';
 
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();
+  const [isError, setIsError] = useState(false);
+  const editorRef = useRef(null);
 
   const [data, handleFieldChange] = useForm(() => ({
     name: '',
@@ -23,14 +25,20 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
       ...data,
       name: data.name.trim(),
     };
-    if (cleanData.name) {
-      onCreate(cleanData);
-      onBack();
+
+    if (!cleanData.name) {
+      setIsError(true);
+      editorRef.current.focus();
+      return;
     }
+
+    onCreate(cleanData);
+    onBack();
   }, [data, onCreate, onBack]);
 
   const handleKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       switch (event.key) {
         case 'Enter': {
           handleSubmit();
@@ -51,8 +59,8 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
     <>
       <Popup.Header onBack={onBack}>{t('common.createLabel', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-          <Editor data={data} onFieldChange={handleFieldChange} />
+        <Form onKeyDown={handleKeyDown}>
+          <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={gStyles.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.createLabel')} onClick={handleSubmit} />
           </div>

@@ -106,7 +106,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
 
   return (
     <div>
-      <Form onSubmit={handleSubmit} className={s.form} onKeyDown={handleKeyDown}>
+      <Form className={s.form} onKeyDown={handleKeyDown}>
         <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={isTargetBoard ? t('common.filterBoards') : t('common.filterProjects')} onFocus={handleFocus} />
         <Button style={ButtonStyle.Icon} title={t('common.toggleFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
           <div className={s.inputButtonText}>{isTargetBoard ? 'B' : 'P'}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />

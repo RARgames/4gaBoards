@@ -167,7 +167,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
       <Popup.Header>{t('common.addUser', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <div className={s.text}>{t('common.email')}</div>
           <Input ref={emailField} name="email" style={InputStyle.Default} value={data.email} readOnly={isSubmitting} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
           <div className={s.text}>{t('common.password')}</div>

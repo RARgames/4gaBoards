@@ -89,7 +89,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
   }, [focusNameFieldState]);
 
   return (
-    <Form className={s.wrapper} onSubmit={handleSubmit}>
+    <Form className={s.wrapper}>
       <TextArea
         ref={nameField}
         style={TextAreaStyle.Default}

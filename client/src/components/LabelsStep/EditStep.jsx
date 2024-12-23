@@ -1,5 +1,5 @@
 import { dequal } from 'dequal';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
@@ -17,6 +17,8 @@ const StepTypes = {
 
 const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   const [t] = useTranslation();
+  const [isError, setIsError] = useState(false);
+  const editorRef = useRef(null);
 
   const [data, handleFieldChange] = useForm(() => ({
     color: LabelColors[0],
@@ -32,6 +34,12 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
       name: data.name.trim() || null,
     };
 
+    if (!cleanData.name) {
+      setIsError(true);
+      editorRef.current.focus();
+      return;
+    }
+
     if (!dequal(cleanData, defaultData)) {
       onUpdate(cleanData);
     }
@@ -45,6 +53,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
 
   const handleKeyDown = useCallback(
     (event) => {
+      setIsError(false);
       switch (event.key) {
         case 'Enter': {
           handleSubmit();
@@ -77,8 +86,8 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
     <>
       <Popup.Header onBack={onBack}>{t('common.editLabel', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Form onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-          <Editor data={data} onFieldChange={handleFieldChange} />
+        <Form onKeyDown={handleKeyDown}>
+          <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={gStyles.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
