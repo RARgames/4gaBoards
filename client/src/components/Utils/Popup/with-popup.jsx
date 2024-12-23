@@ -35,9 +35,9 @@ export default (WrappedComponent, defaultProps) => {
       }
     }, [onClose]);
 
-    const handleOpen = useCallback(() => {
-      setIsOpen(true);
-    }, []);
+    const toggleOpen = useCallback(() => {
+      setIsOpen(!isOpen);
+    }, [isOpen]);
 
     const handleWithinPopupClick = useCallback((e) => {
       e.stopPropagation(); // TODO Prevent e.g. switching card - change how popup handles key input
@@ -47,7 +47,7 @@ export default (WrappedComponent, defaultProps) => {
       <>
         {/* TODO temp removed: s.wrapper */}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps({ onClick: handleOpen })} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)}>
+        <div ref={refs.setReference} {...getReferenceProps({ onClick: toggleOpen })} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)}>
           {children}
         </div>
         {isOpen && (
