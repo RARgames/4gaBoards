@@ -12,6 +12,10 @@
   .iconButton {
     margin: 0 4px 0 1px;
     width: 36px;
+
+    svg {
+      vertical-align: 0%;
+    }
   }
 
   .startStopIcon {
