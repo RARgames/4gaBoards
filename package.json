@@ -45,7 +45,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
-    "concurrently": "^9.1.0",
+    "concurrently": "^9.1.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10"
   },
