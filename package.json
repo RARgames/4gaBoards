@@ -47,7 +47,7 @@
   "dependencies": {
     "concurrently": "^9.1.2",
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.10"
+    "lint-staged": "^15.3.0"
   },
   "devDependencies": {
     "confusing-browser-globals": "^1.0.11",
