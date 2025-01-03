@@ -12,6 +12,7 @@ import * as gStyles from '../../globalStyles.module.scss';
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {
   const [t] = useTranslation();
 
+  const dropdownProject = useRef(null);
   const dropdownBoard = useRef(null);
   const dropdownList = useRef(null);
 
@@ -72,6 +73,21 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
     [handleSubmit],
   );
 
+  const closeOtherDropdowns = useCallback((skipCloseRef) => {
+    if (skipCloseRef === dropdownProject) {
+      dropdownBoard.current?.close();
+      dropdownList.current?.close();
+    }
+    if (skipCloseRef === dropdownBoard) {
+      dropdownProject.current?.close();
+      dropdownList.current?.close();
+    }
+    if (skipCloseRef === dropdownList) {
+      dropdownProject.current?.close();
+      dropdownBoard.current?.close();
+    }
+  }, []);
+
   useDidUpdate(() => {
     formRef.current.focus();
   }, [focusFormState]);
@@ -83,8 +99,9 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
         <Form ref={formRef} tabIndex="0" onKeyDown={handleKeyDown}>
           <div className={s.text}>{t('common.project', { context: 'title' })}</div>
           <Dropdown
-            name="projectId"
+            ref={dropdownProject}
             style={DropdownStyle.Default}
+            name="projectId"
             options={projectsToLists.map((project) => ({
               id: project.id,
               name: project.name,
@@ -97,6 +114,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             keepState
             returnOnChangeEvent
             onBlur={focusForm}
+            onOpen={() => closeOtherDropdowns(dropdownProject)}
             disabled={projectsToLists.length === 0}
             dropdownMenuClassName={s.dropdownMenu}
           />
@@ -119,6 +137,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 onBlur={focusForm}
+                onOpen={() => closeOtherDropdowns(dropdownBoard)}
                 disabled={selectedProject.boards.length === 0}
                 dropdownMenuClassName={s.dropdownMenu}
               />
@@ -143,6 +162,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 onBlur={focusForm}
+                onOpen={() => closeOtherDropdowns(dropdownList)}
                 disabled={selectedBoard.lists.length === 0}
                 dropdownMenuClassName={s.dropdownMenu}
               />

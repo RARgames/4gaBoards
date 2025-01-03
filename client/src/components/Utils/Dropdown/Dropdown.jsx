@@ -24,6 +24,7 @@ const Dropdown = React.forwardRef(
       dropdownMenuClassName,
       onChange,
       onBlur,
+      onOpen,
       onClose,
       onCancel,
       onErrorClear,
@@ -49,7 +50,8 @@ const Dropdown = React.forwardRef(
       setIsOpen(true);
       setSearchValue('');
       onErrorClear();
-    }, [onErrorClear]);
+      onOpen();
+    }, [onErrorClear, onOpen]);
 
     const close = useCallback(() => {
       setIsOpen(false);
@@ -353,6 +355,7 @@ Dropdown.propTypes = {
   dropdownMenuClassName: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  onOpen: PropTypes.func,
   onClose: PropTypes.func,
   onCancel: PropTypes.func,
   onErrorClear: PropTypes.func,
@@ -371,6 +374,7 @@ Dropdown.defaultProps = {
   isError: false,
   onChange: () => {},
   onBlur: undefined,
+  onOpen: () => {},
   onClose: () => {},
   onCancel: undefined,
   onErrorClear: () => {},

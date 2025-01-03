@@ -22,6 +22,8 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
   const [isInputError, setIsInputError] = useState(false);
   const [importNonExistingUsers, toggleImportNonExistingUsers] = useToggle(false);
   const [importProjectManagers, toggleImportProjectManagers] = useToggle(false);
+  const projectDropdownRef = useRef(null);
+  const templateDropdownRef = useRef(null);
 
   const [selectedProject, setSelectedProject] = useState(() => {
     if (projectId) {
@@ -159,6 +161,15 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
     [handleSubmit],
   );
 
+  const closeOtherDropdowns = useCallback((skipCloseRef) => {
+    if (skipCloseRef !== projectDropdownRef) {
+      projectDropdownRef.current?.close();
+    }
+    if (skipCloseRef !== templateDropdownRef) {
+      templateDropdownRef.current?.close();
+    }
+  }, []);
+
   useDidUpdate(() => {
     formRef.current.focus();
   }, [focusFromState]);
@@ -187,6 +198,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
             <div>
               <div className={s.text}>{t('common.project', { context: 'title' })}</div>
               <Dropdown
+                ref={projectDropdownRef}
                 style={DropdownStyle.Default}
                 options={projects}
                 placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
@@ -195,6 +207,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 isError={isDropdownError}
                 selectFirstOnSearch
                 onBlur={focusForm}
+                onOpen={() => closeOtherDropdowns(projectDropdownRef)}
                 onChange={handleProjectChange}
                 onErrorClear={() => setIsDropdownError(false)}
                 dropdownMenuClassName={s.dropdownMenu}
@@ -205,6 +218,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
             <div>
               <div className={s.text}>{t('common.template')}</div>
               <Dropdown
+                ref={templateDropdownRef}
                 style={DropdownStyle.Default}
                 options={templates}
                 placeholder={selectedTemplate.name}
@@ -212,6 +226,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
                 isSearchable
                 selectFirstOnSearch
                 onBlur={focusForm}
+                onOpen={() => closeOtherDropdowns(templateDropdownRef)}
                 onChange={handleTemplateChange}
                 dropdownMenuClassName={s.dropdownMenu}
               />
