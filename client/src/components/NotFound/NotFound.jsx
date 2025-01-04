@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
-import { Loader, LoaderSize } from '../Utils';
+import PropTypes from 'prop-types';
+
 import HeaderContainer from '../../containers/HeaderContainer';
+import { Loader, LoaderSize } from '../Utils';
 
 import * as s from './NotFound.module.scss';
 

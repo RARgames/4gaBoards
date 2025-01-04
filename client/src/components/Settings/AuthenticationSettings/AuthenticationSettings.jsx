@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle } from '../../Utils';
-import UserPasswordEditPopup from '../../UserPasswordEditPopup';
+import PropTypes from 'prop-types';
 
-import * as s from './AuthenticationSettings.module.scss';
+import UserPasswordEditPopup from '../../UserPasswordEditPopup';
+import { Button, ButtonStyle } from '../../Utils';
+
 import * as sShared from '../SettingsShared.module.scss';
+import * as s from './AuthenticationSettings.module.scss';
 
 const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdate, onPasswordUpdateMessageDismiss }) => {
   const [t] = useTranslation();

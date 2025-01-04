@@ -1,8 +1,8 @@
-import { createSelector } from 'redux-orm';
 import isUndefined from 'lodash/isUndefined';
+import { createSelector } from 'redux-orm';
 
-import orm from '../orm';
 import Config from '../constants/Config';
+import orm from '../orm';
 
 export const selectAccessToken = ({ auth: { accessToken } }) => accessToken;
 

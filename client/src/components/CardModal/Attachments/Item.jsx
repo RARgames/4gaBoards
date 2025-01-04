@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
+import DeletePopup from '../../DeletePopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import EditPopup from './EditPopup';
-import DeletePopup from '../../DeletePopup';
 
 import * as s from './Item.module.scss';
 

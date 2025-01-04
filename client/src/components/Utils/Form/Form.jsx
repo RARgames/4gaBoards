@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 const Form = React.forwardRef(({ onSubmit, children, className, ...props }, ref) => {
   const handleSubmit = (event) => {

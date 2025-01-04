@@ -1,15 +1,15 @@
-import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { usePrevious } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
+import PropTypes from 'prop-types';
+import isEmail from 'validator/lib/isEmail';
 
 import { useForm } from '../../hooks';
+import { usePrevious } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import * as s from './UserAddStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './UserAddStep.module.scss';
 
 const createMessage = (error) => {
   if (!error) {

@@ -1,7 +1,7 @@
-import router from './router';
 import login from './login';
+import router from './router';
 
 export default {
-  ...router,
   ...login,
+  ...router,
 };

@@ -1,10 +1,11 @@
 import React, { useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
+import DeletePopup from '../../DeletePopup';
+import User from '../../User';
 import { MDPreview, Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
 import CommentEdit from './CommentEdit';
-import User from '../../User';
-import DeletePopup from '../../DeletePopup';
 
 import * as s from './ItemComment.module.scss';
 

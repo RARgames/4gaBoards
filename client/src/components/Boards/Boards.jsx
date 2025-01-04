@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import Paths from '../../constants/Paths';
 import BoardAddPopup from '../BoardAddPopup';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as s from './Boards.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './Boards.module.scss';
 
 const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, onCreate }) => {
   const [t] = useTranslation();

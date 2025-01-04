@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
-import { useResizeObserverSize } from '../../hooks';
 import { ResizeObserverSizeTypes } from '../../constants/Enums';
 import CardContainer from '../../containers/CardContainer';
-import NameEdit from './NameEdit';
-import CardAdd from './CardAdd';
+import { useResizeObserverSize } from '../../hooks';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ActionsPopup from './ActionsPopup';
+import CardAdd from './CardAdd';
+import NameEdit from './NameEdit';
 
-import * as s from './List.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './List.module.scss';
 
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
   const [t] = useTranslation();

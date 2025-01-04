@@ -1,11 +1,12 @@
 import React, { useCallback, useImperativeHandle, useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { MDEditor, Button, ButtonStyle } from '../Utils';
-import { useLocalStorage } from '../../hooks';
+import PropTypes from 'prop-types';
 
-import * as s from './DescriptionEdit.module.scss';
+import { useLocalStorage } from '../../hooks';
+import { MDEditor, Button, ButtonStyle } from '../Utils';
+
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './DescriptionEdit.module.scss';
 
 const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();

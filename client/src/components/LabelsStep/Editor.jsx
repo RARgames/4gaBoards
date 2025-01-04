@@ -1,15 +1,15 @@
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import React, { useEffect, useRef, useCallback, useImperativeHandle } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Input, InputStyle } from '../Utils';
+import classNames from 'classnames';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
 
 import LabelColors from '../../constants/LabelColors';
+import { Button, ButtonStyle, Input, InputStyle } from '../Utils';
 
-import * as s from './Editor.module.scss';
 import * as globalStyles from '../../styles.module.scss';
+import * as s from './Editor.module.scss';
 
 const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
   const [t] = useTranslation();

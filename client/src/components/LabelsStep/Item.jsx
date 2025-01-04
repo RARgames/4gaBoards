@@ -1,15 +1,16 @@
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import React, { useCallback } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
+import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
+
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as s from './Item.module.scss';
 import * as globalStyles from '../../styles.module.scss';
+import * as s from './Item.module.scss';
 
 const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
   const [t] = useTranslation();

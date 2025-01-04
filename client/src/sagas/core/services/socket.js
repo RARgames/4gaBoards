@@ -1,8 +1,8 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import requests from '../requests';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
+import selectors from '../../../selectors';
+import requests from '../requests';
 
 export function* handleSocketDisconnect() {
   yield put(actions.handleSocketDisconnect());

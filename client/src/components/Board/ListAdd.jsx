@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
+import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
-import { useForm } from '../../hooks';
 
-import * as s from './ListAdd.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './ListAdd.module.scss';
 
 const DEFAULT_DATA = {
   name: '',

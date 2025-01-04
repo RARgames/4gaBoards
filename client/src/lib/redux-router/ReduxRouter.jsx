@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Router } from 'react-router';
+import PropTypes from 'prop-types';
 
 import { handleLocationChange } from './actions';
 

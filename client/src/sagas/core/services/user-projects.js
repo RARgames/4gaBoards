@@ -1,8 +1,8 @@
 import { put, call } from 'redux-saga/effects';
 
-import request from '../request';
 import actions from '../../../actions';
 import api from '../../../api';
+import request from '../request';
 
 export function* updateUserProject(id, data) {
   yield put(actions.updateUserProject(id, data));

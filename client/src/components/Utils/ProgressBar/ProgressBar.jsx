@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import ProgressBarSize from './ProgressBarSize';
 
 import * as s from './ProgressBar.module.scss';

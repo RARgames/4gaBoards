@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
-import ListContainer from '../../containers/ListContainer';
-import CardModalContainer from '../../containers/CardModalContainer';
 import BoardActionsContainer from '../../containers/BoardActionsContainer';
+import CardModalContainer from '../../containers/CardModalContainer';
+import ListContainer from '../../containers/ListContainer';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ListAdd from './ListAdd';
 
-import * as s from './Board.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './Board.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
 

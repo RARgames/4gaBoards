@@ -1,8 +1,9 @@
-import upperFirst from 'lodash/upperFirst';
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
+
 import { Button, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './DueDate.module.scss';

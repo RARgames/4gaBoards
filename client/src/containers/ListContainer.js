@@ -1,10 +1,10 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import selectors from '../selectors';
-import entryActions from '../entry-actions';
-import { BoardMembershipRoles } from '../constants/Enums';
 import List from '../components/List';
+import { BoardMembershipRoles } from '../constants/Enums';
+import entryActions from '../entry-actions';
+import selectors from '../selectors';
 
 const makeMapStateToProps = () => {
   const selectListById = selectors.makeSelectListById();

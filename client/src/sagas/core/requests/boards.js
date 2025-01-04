@@ -1,9 +1,9 @@
 import { call, select } from 'redux-saga/effects';
 
-import request from '../request';
-import selectors from '../../../selectors';
 import api from '../../../api';
 import Paths from '../../../constants/Paths';
+import selectors from '../../../selectors';
+import request from '../request';
 
 export function* fetchBoardByCurrentPath() {
   const pathsMatch = yield select(selectors.selectPathsMatch);

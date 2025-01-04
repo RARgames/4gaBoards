@@ -1,11 +1,11 @@
 import { call, put, take } from 'redux-saga/effects';
 
-import request from '../request';
-import requests from '../requests';
 import actions from '../../../actions';
 import api from '../../../api';
 import i18n from '../../../i18n';
 import { removeAccessToken } from '../../../utils/access-token-storage';
+import request from '../request';
+import requests from '../requests';
 
 export function* initializeCore() {
   const {

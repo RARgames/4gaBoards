@@ -1,9 +1,9 @@
 import { call } from 'redux-saga/effects';
 
-import { fetchBoardByCurrentPath } from './boards';
-import request from '../request';
 import api from '../../../api';
 import mergeRecords from '../../../utils/merge-records';
+import request from '../request';
+import { fetchBoardByCurrentPath } from './boards';
 
 export function* fetchCore() {
   const { item: user } = yield call(request, api.getCurrentUser, true);

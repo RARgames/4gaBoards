@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import selectors from '../selectors';
 import NotFound from '../components/NotFound';
+import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const isCoreInitializing = selectors.selectIsCoreInitializing(state);

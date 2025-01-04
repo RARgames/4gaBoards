@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useFloating, useClick, useInteractions, useDismiss, useRole, FloatingFocusManager, FloatingOverlay, FloatingPortal } from '@floating-ui/react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 

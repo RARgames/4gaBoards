@@ -1,7 +1,8 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { dequal } from 'dequal';
 import { useTranslation } from 'react-i18next';
+import { dequal } from 'dequal';
+import PropTypes from 'prop-types';
+
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '../../Utils';
 

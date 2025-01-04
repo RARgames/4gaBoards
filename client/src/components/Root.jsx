@@ -1,19 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router';
-import { ReduxRouter } from '../lib/redux-router';
+import PropTypes from 'prop-types';
 
 import Paths from '../constants/Paths';
-import LoginContainer from '../containers/LoginContainer';
-import RegisterContainer from '../containers/RegisterContainer';
 import CoreContainer from '../containers/CoreContainer';
+import LoginContainer from '../containers/LoginContainer';
 import NotFoundContainer from '../containers/NotFoundContainer';
+import RegisterContainer from '../containers/RegisterContainer';
+import { ReduxRouter } from '../lib/redux-router';
 
 import 'react-datepicker/dist/react-datepicker.css';
+
 import 'photoswipe/dist/photoswipe.css';
 import '../assets/styles.css';
-
 import '../styles.module.scss';
 
 function Root({ store, history }) {

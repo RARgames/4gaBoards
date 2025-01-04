@@ -1,10 +1,11 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
+import PropTypes from 'prop-types';
+
+import Paths from '../../constants/Paths';
 import { useField } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import Paths from '../../constants/Paths';
+import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Filter.module.scss';
 

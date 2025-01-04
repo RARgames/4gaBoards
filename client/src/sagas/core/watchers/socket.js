@@ -1,10 +1,10 @@
 import { eventChannel } from 'redux-saga';
 import { all, call, cancelled, put, take, takeEvery } from 'redux-saga/effects';
 
-import services from '../services';
-import entryActions from '../../../entry-actions';
 import api, { socket } from '../../../api';
 import EntryActionTypes from '../../../constants/EntryActionTypes';
+import entryActions from '../../../entry-actions';
+import services from '../services';
 
 const createSocketEventsChannel = () =>
   eventChannel((emit) => {

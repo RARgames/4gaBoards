@@ -1,20 +1,20 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { useNavigate } from 'react-router';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { useNavigate } from 'react-router';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
-import { startTimer, stopTimer } from '../../utils/timer';
 import Paths from '../../constants/Paths';
-import Tasks from '../Tasks';
-import NameEdit from './NameEdit';
-import ActionsPopup from './ActionsPopup';
-import User from '../User';
-import Label from '../Label';
+import { startTimer, stopTimer } from '../../utils/timer';
 import DueDate from '../DueDate';
+import Label from '../Label';
+import Tasks from '../Tasks';
 import Timer from '../Timer';
+import User from '../User';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import ActionsPopup from './ActionsPopup';
+import NameEdit from './NameEdit';
 
 import * as s from './Card.module.scss';
 

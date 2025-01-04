@@ -1,15 +1,15 @@
-import { dequal } from 'dequal';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
+import { dequal } from 'dequal';
+import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
+import { useToggle } from '../../lib/hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
 
-import * as s from './TimerEditStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './TimerEditStep.module.scss';
 
 const createData = (timer) => {
   if (!timer) {

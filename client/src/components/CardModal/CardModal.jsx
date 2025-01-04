@@ -1,31 +1,32 @@
 import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview } from '../Utils';
-import { createTimer, startTimer, stopTimer } from '../../utils/timer';
-import NameField from './NameField';
-import DescriptionEdit from './DescriptionEdit';
-import Tasks from '../Tasks';
-import Attachments from './Attachments';
-import AttachmentAddZone from './AttachmentAddZone';
-import AttachmentAdd from './AttachmentAdd';
-import Activities from './Activities';
-import User from '../User';
-import Label from '../Label';
-import DueDate from '../DueDate';
-import Timer from '../Timer';
-import MembershipsPopup from '../MembershipsPopup';
-import LabelsPopup from '../LabelsPopup';
-import DueDateEditPopup from '../DueDateEditPopup';
-import TimerEditPopup from '../TimerEditPopup';
-import DeletePopup from '../DeletePopup';
-import ActionsPopup from '../Card/ActionsPopup';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
+import { createTimer, startTimer, stopTimer } from '../../utils/timer';
+import ActionsPopup from '../Card/ActionsPopup';
+import DeletePopup from '../DeletePopup';
+import DueDate from '../DueDate';
+import DueDateEditPopup from '../DueDateEditPopup';
+import Label from '../Label';
+import LabelsPopup from '../LabelsPopup';
+import MembershipsPopup from '../MembershipsPopup';
+import Tasks from '../Tasks';
+import Timer from '../Timer';
+import TimerEditPopup from '../TimerEditPopup';
+import User from '../User';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview } from '../Utils';
+import Activities from './Activities';
+import AttachmentAdd from './AttachmentAdd';
+import AttachmentAddZone from './AttachmentAddZone';
+import Attachments from './Attachments';
+import DescriptionEdit from './DescriptionEdit';
+import NameField from './NameField';
 
-import * as s from './CardModal.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './CardModal.module.scss';
 
 const CardModal = React.memo(
   ({

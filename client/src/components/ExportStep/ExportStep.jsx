@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
 import { Popup } from '../Utils';
 
 // eslint-disable-next-line no-unused-vars

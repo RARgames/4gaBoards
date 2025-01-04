@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Popup, Input, InputStyle } from '../Utils';
+import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
+import { Popup, Input, InputStyle } from '../Utils';
 import Item from './Item';
 
-import * as s from './MembershipsStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './MembershipsStep.module.scss';
 
 const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
   const [t] = useTranslation();

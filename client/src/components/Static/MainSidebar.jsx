@@ -1,23 +1,24 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import pick from 'lodash/pick';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import classNames from 'classnames';
+import pick from 'lodash/pick';
+import PropTypes from 'prop-types';
+
+import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
-import Connections from '../BoardActions/Connections';
 import BoardActionsPopup from '../BoardActions/BoardActionsPopup';
-import ProjectAddPopup from '../ProjectAddPopup';
+import Connections from '../BoardActions/Connections';
 import BoardAddPopup from '../BoardAddPopup';
-import DroppableTypes from '../../constants/DroppableTypes';
 import Filter from '../Filter';
+import ProjectAddPopup from '../ProjectAddPopup';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ProjectActionsPopup from './ProjectActionsPopup';
 
-import * as s from './MainSidebar.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './MainSidebar.module.scss';
 
 const MainSidebar = React.memo(
   ({

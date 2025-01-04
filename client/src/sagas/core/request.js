@@ -1,9 +1,9 @@
 import { call, fork, join, put, select, take } from 'redux-saga/effects';
 
-import selectors from '../../selectors';
 import actions from '../../actions';
-import { removeAccessToken } from '../../utils/access-token-storage';
 import ErrorCodes from '../../constants/ErrorCodes';
+import selectors from '../../selectors';
+import { removeAccessToken } from '../../utils/access-token-storage';
 
 let lastRequestTask;
 

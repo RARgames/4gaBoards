@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Popup } from './Utils';
+import PropTypes from 'prop-types';
 
 import UserInformationEdit from './UserInformationEdit';
+import { Popup } from './Utils';
 
 const UserInformationEditStep = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();

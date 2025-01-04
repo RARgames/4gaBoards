@@ -1,13 +1,13 @@
-import { dequal } from 'dequal';
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
+import { dequal } from 'dequal';
+import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
+import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
 
-import * as s from './CommentEdit.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as s from './CommentEdit.module.scss';
 
 const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onCurrentUserUpdate }, ref) => {
   const [t] = useTranslation();

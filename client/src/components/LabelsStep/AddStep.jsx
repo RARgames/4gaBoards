@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Popup, Form } from '../Utils';
+import PropTypes from 'prop-types';
 
-import { useForm } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
+import { useForm } from '../../hooks';
+import { Button, ButtonStyle, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
 import * as gStyles from '../../globalStyles.module.scss';

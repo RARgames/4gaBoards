@@ -1,9 +1,10 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
+
 import { useForm } from '../../hooks';
+import { Button, ButtonStyle, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gStyles from '../../globalStyles.module.scss';
 

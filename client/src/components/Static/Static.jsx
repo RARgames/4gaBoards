@@ -1,14 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Loader, LoaderSize } from '../Utils';
+import PropTypes from 'prop-types';
 
-import ProjectsContainer from '../../containers/ProjectsContainer';
-import BoardsContainer from '../../containers/BoardsContainer';
-import BoardContainer from '../../containers/BoardContainer';
-import SettingsContainer from '../../containers/Settings/SettingsContainer';
-import MainSidebarContainer from '../../containers/MainSidebarContainer';
 import Paths from '../../constants/Paths';
+import BoardContainer from '../../containers/BoardContainer';
+import BoardsContainer from '../../containers/BoardsContainer';
+import MainSidebarContainer from '../../containers/MainSidebarContainer';
+import ProjectsContainer from '../../containers/ProjectsContainer';
+import SettingsContainer from '../../containers/Settings/SettingsContainer';
+import { Loader, LoaderSize } from '../Utils';
 
 import * as s from './Static.module.scss';
 

@@ -1,11 +1,11 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import { changeCoreLanguage, logout } from './core';
-import request from '../request';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
 import { setAccessToken } from '../../../utils/access-token-storage';
+import request from '../request';
+import { changeCoreLanguage, logout } from './core';
 
 export function* createUser(data) {
   yield put(actions.createUser(data));

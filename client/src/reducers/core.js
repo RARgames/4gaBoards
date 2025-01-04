@@ -1,7 +1,6 @@
-import { LOCATION_CHANGE_HANDLE } from '../lib/redux-router';
-
 import ActionTypes from '../constants/ActionTypes';
 import ModalTypes from '../constants/ModalTypes';
+import { LOCATION_CHANGE_HANDLE } from '../lib/redux-router';
 
 const initialState = {
   isInitializing: true,

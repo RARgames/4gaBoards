@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
-import { Button, ButtonStyle, Input, InputStyle, Popup, Form } from '../Utils';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
+import { Button, ButtonStyle, Input, InputStyle, Popup, Form } from '../Utils';
 
 import * as gStyles from '../../globalStyles.module.scss';
 

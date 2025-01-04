@@ -1,47 +1,47 @@
-import http from './http';
-import socket from './socket';
 import accessTokens from './access-tokens';
-import users from './users';
-import projects from './projects';
-import register from './register';
-import projectManagers from './project-managers';
-import boards from './boards';
+import activities from './activities';
+import attachments from './attachments';
 import boardMemberships from './board-memberships';
+import boards from './boards';
+import cardLabels from './card-labels';
+import cardMemberships from './card-memberships';
+import cards from './cards';
+import commentActivities from './comment-activities';
 import core from './core';
+import http from './http';
 import labels from './labels';
 import lists from './lists';
-import cards from './cards';
-import cardMemberships from './card-memberships';
-import cardLabels from './card-labels';
+import notifications from './notifications';
+import projectManagers from './project-managers';
+import projects from './projects';
+import register from './register';
+import socket from './socket';
 import taskMemberships from './task-memberships';
 import tasks from './tasks';
-import attachments from './attachments';
-import activities from './activities';
-import commentActivities from './comment-activities';
-import notifications from './notifications';
 import userProjects from './user-projects';
+import users from './users';
 
 export { http, socket };
 
 export default {
   ...accessTokens,
-  ...users,
-  ...projects,
-  ...register,
-  ...projectManagers,
-  ...boards,
+  ...activities,
+  ...attachments,
   ...boardMemberships,
+  ...boards,
+  ...cardLabels,
+  ...cardMemberships,
+  ...cards,
+  ...commentActivities,
   ...core,
   ...labels,
   ...lists,
-  ...cards,
-  ...cardMemberships,
-  ...cardLabels,
+  ...notifications,
+  ...projectManagers,
+  ...projects,
+  ...register,
   ...taskMemberships,
   ...tasks,
-  ...attachments,
-  ...activities,
-  ...commentActivities,
-  ...notifications,
   ...userProjects,
+  ...users,
 };

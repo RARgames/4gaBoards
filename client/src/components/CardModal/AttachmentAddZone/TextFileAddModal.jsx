@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Input, InputStyle, Form, withModal } from '../../Utils';
-import { useForm } from '../../../hooks';
+import PropTypes from 'prop-types';
 
-import * as s from './TextFileAddModal.module.scss';
+import { useForm } from '../../../hooks';
+import { Button, ButtonStyle, Input, InputStyle, Form, withModal } from '../../Utils';
+
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as s from './TextFileAddModal.module.scss';
 
 const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
   const [t] = useTranslation();

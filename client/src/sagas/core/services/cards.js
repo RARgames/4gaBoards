@@ -1,12 +1,12 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import { goToBoard, goToCard } from './router';
-import request from '../request';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
+import request from '../request';
 import { addLabelToCard } from './labels';
+import { goToBoard, goToCard } from './router';
 import { addUserToCard } from './users';
 
 export function* createCard(listId, data, autoOpen) {

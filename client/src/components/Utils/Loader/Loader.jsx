@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import LoaderSize from './LoaderSize';
 
 import * as s from './Loader.module.scss';

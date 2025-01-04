@@ -1,10 +1,10 @@
-import { dequal } from 'dequal';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { dequal } from 'dequal';
+import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
 import { useForm } from '../../../hooks';
+import { Button, ButtonStyle, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
 
 import * as gStyles from '../../../globalStyles.module.scss';
 

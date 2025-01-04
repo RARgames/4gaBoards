@@ -1,13 +1,13 @@
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
 
 import { ProjectBackgroundTypes } from '../../constants/Enums';
 
-import * as s from './Background.module.scss';
 import * as globalStyles from '../../styles.module.scss';
+import * as s from './Background.module.scss';
 
 function Background({ type, name, imageUrl }) {
   return (

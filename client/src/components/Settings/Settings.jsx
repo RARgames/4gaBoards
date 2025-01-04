@@ -1,16 +1,16 @@
 import React, { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
-import ProfileSettingsContainer from '../../containers/Settings/ProfileSettingsContainer';
-import PreferencesSettingsContainer from '../../containers/Settings/PreferencesSettingsContainer';
+import Paths from '../../constants/Paths';
+import AboutSettingsContainer from '../../containers/Settings/AboutSettingsContainer';
 import AccountSettingsContainer from '../../containers/Settings/AccountSettingsContainer';
 import AuthenticationSettingsContainer from '../../containers/Settings/AuthenticationSettingsContainer';
-import AboutSettingsContainer from '../../containers/Settings/AboutSettingsContainer';
-import UsersSettingsContainer from '../../containers/Settings/UsersSettingsContainer';
 import InstanceSettingsContainer from '../../containers/Settings/InstanceSettingsContainer';
+import PreferencesSettingsContainer from '../../containers/Settings/PreferencesSettingsContainer';
+import ProfileSettingsContainer from '../../containers/Settings/ProfileSettingsContainer';
 import ProjectSettingsContainer from '../../containers/Settings/ProjectSettingsContainer';
-import Paths from '../../constants/Paths';
+import UsersSettingsContainer from '../../containers/Settings/UsersSettingsContainer';
 
 import * as s from './Settings.module.scss';
 

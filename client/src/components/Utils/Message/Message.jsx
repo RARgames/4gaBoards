@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
-
 import MessageStyle from './MessageStyle';
+
 import * as s from './Message.module.scss';
 
 const Message = React.forwardRef(({ title, style, content, className, onDismiss, ...props }, ref) => {

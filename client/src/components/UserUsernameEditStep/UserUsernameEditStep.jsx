@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
+import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
+import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import * as s from './UserUsernameEditStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './UserUsernameEditStep.module.scss';
 
 const createMessage = (error) => {
   if (!error) {

@@ -1,11 +1,12 @@
-import zxcvbn from 'zxcvbn';
 import React, { useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import zxcvbn from 'zxcvbn';
+
 import { useToggle } from '../../../lib/hooks';
-import { Icon, IconType, IconSize } from '../Icon';
 import { Button, ButtonStyle } from '../Button';
+import { Icon, IconType, IconSize } from '../Icon';
 import { ProgressBar, ProgressBarSize } from '../ProgressBar';
 import InputStyle from './InputStyle';
 

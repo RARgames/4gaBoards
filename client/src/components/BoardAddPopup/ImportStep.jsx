@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, FilePicker } from '../Utils';
 
 import * as s from './ImportStep.module.scss';

@@ -1,10 +1,10 @@
 import { createSelector } from 'redux-orm';
 
+import Paths from '../constants/Paths';
 import orm from '../orm';
+import { isLocalId } from '../utils/local-id';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
-import { isLocalId } from '../utils/local-id';
-import Paths from '../constants/Paths';
 
 export const makeSelectCardById = () =>
   createSelector(

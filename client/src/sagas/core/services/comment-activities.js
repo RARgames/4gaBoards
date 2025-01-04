@@ -1,11 +1,11 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import request from '../request';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
-import { createLocalId } from '../../../utils/local-id';
 import { ActivityTypes } from '../../../constants/Enums';
+import selectors from '../../../selectors';
+import { createLocalId } from '../../../utils/local-id';
+import request from '../request';
 
 export function* createCommentActivity(cardId, data) {
   const localId = yield call(createLocalId);

@@ -1,10 +1,10 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import { goToBoard, goToProject, goToRoot } from './router';
-import request from '../request';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
+import request from '../request';
+import { goToBoard, goToProject, goToRoot } from './router';
 
 export function* createProject(data) {
   yield put(actions.createProject(data));

@@ -1,5 +1,5 @@
-import PopupHeader from './PopupHeader';
 import PopupContent from './PopupContent';
+import PopupHeader from './PopupHeader';
 import PopupSeparator from './PopupSeparator';
 
 export default class Popup {

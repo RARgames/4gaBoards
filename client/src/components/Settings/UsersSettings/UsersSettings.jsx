@@ -1,15 +1,15 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, ButtonStyle, Table } from '../../Utils';
+import PropTypes from 'prop-types';
 
 import UserAddPopup from '../../UserAddPopup';
+import { Button, ButtonStyle, Table } from '../../Utils';
 import Item from './Item';
 
-import * as s from './UsersSettings.module.scss';
-import * as sShared from '../SettingsShared.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
+import * as s from './UsersSettings.module.scss';
 
 const UsersSettings = React.memo(
   ({

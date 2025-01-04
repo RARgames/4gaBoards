@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 

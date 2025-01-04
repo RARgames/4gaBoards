@@ -1,9 +1,9 @@
 import { call, fork } from 'redux-saga/effects';
 
-import loginSaga from './login';
+import { getAccessToken } from '../utils/access-token-storage';
 import coreSaga from './core';
 import coreServices from './core/services';
-import { getAccessToken } from '../utils/access-token-storage';
+import loginSaga from './login';
 
 export default function* rootSaga() {
   yield fork(coreServices.fetchCoreSettingsPublic);

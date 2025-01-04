@@ -1,20 +1,20 @@
 import React, { useCallback, useRef } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
+import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize } from '../Utils';
-import DueDateEditPopup from '../DueDateEditPopup';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import DueDate from '../DueDate';
-import User from '../User';
+import DueDateEditPopup from '../DueDateEditPopup';
 import MembershipsPopup from '../MembershipsPopup';
-
-import TaskEdit from './TaskEdit';
+import User from '../User';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize } from '../Utils';
 import ActionsPopup from './ActionsPopup';
+import TaskEdit from './TaskEdit';
 
-import * as s from './Item.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './Item.module.scss';
 
 const VARIANTS = {
   CARD: 'card',

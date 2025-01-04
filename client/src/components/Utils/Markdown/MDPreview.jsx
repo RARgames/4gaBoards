@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import MDEditor from '@uiw/react-md-editor';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import remarkGithub from 'remark-github';
+
 import MDSettings from './MDSettings';
 
 const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, className, ...props }, ref) => {

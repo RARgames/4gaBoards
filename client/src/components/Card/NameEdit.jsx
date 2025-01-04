@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
-import { useField } from '../../hooks';
+import PropTypes from 'prop-types';
 
-import * as s from './NameEdit.module.scss';
+import { useField } from '../../hooks';
+import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
+
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './NameEdit.module.scss';
 
 const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
   const [t] = useTranslation();

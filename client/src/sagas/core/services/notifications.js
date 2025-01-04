@@ -1,9 +1,9 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import request from '../request';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
+import request from '../request';
 
 export function* handleNotificationCreate(notification) {
   const { cardId } = yield select(selectors.selectPath);

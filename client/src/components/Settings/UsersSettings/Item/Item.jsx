@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Radio, RadioSize, Table } from '../../../Utils';
+import PropTypes from 'prop-types';
 
-import ActionsPopup from './ActionsPopup';
 import User from '../../../User';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Radio, RadioSize, Table } from '../../../Utils';
+import ActionsPopup from './ActionsPopup';
 
 import * as s from './Item.module.scss';
 // TODO get date in correct local region format

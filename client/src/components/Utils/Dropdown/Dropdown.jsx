@@ -1,14 +1,15 @@
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
-
-import * as s from './Dropdown.module.scss';
-import * as gStyles from '../../../globalStyles.module.scss';
 import DropdownStyle from './DropdownStyle';
+
+import * as gStyles from '../../../globalStyles.module.scss';
+import * as s from './Dropdown.module.scss';
 
 const Dropdown = React.forwardRef(
   (

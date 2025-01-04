@@ -1,12 +1,12 @@
 import { call, put, select, take } from 'redux-saga/effects';
-import { push } from '../../../lib/redux-router';
 
-import request from '../request';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
 import ActionTypes from '../../../constants/ActionTypes';
 import Paths from '../../../constants/Paths';
+import { push } from '../../../lib/redux-router';
+import selectors from '../../../selectors';
+import request from '../request';
 
 export function* goToRoot() {
   yield put(push(Paths.ROOT));

@@ -1,13 +1,13 @@
-import { dequal } from 'dequal';
 import React, { useCallback, useState, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Popup, Form } from '../Utils';
+import { dequal } from 'dequal';
+import PropTypes from 'prop-types';
 
-import { useForm, useSteps } from '../../hooks';
 import LabelColors from '../../constants/LabelColors';
-import Editor from './Editor';
+import { useForm, useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
+import { Button, ButtonStyle, Popup, Form } from '../Utils';
+import Editor from './Editor';
 
 import * as gStyles from '../../globalStyles.module.scss';
 

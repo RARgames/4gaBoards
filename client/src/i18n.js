@@ -1,9 +1,9 @@
-import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
 import { initReactI18next } from 'react-i18next';
 import formatDate from 'date-fns/format';
 import parseDate from 'date-fns/parse';
-import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import i18n from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
 import { embeddedLocales, languages } from './locales';
 

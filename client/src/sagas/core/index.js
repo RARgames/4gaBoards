@@ -1,10 +1,10 @@
 import { all, apply, fork, take } from 'redux-saga/effects';
 
-import watchers from './watchers';
-import services from './services';
 import { socket } from '../../api';
 import ActionTypes from '../../constants/ActionTypes';
 import Paths from '../../constants/Paths';
+import services from './services';
+import watchers from './watchers';
 
 export default function* coreSaga() {
   yield all(watchers.map((watcher) => fork(watcher)));

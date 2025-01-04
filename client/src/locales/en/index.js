@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 
-import login from './login';
 import core from './core';
+import login from './login';
 
 export default {
   language: 'en',

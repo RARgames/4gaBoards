@@ -1,17 +1,17 @@
-import truncate from 'lodash/truncate';
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router';
 import classNames from 'classnames';
+import truncate from 'lodash/truncate';
+import PropTypes from 'prop-types';
+
+import { ActivityTypes } from '../../constants/Enums';
+import Paths from '../../constants/Paths';
+import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
-import Paths from '../../constants/Paths';
-import { ActivityTypes } from '../../constants/Enums';
-import User from '../User';
-
-import * as s from './NotificationsPopup.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './NotificationsPopup.module.scss';
 
 const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
   const [t] = useTranslation();

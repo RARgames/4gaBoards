@@ -1,14 +1,14 @@
-import omit from 'lodash/omit';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import omit from 'lodash/omit';
+import PropTypes from 'prop-types';
+
+import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm } from '../../hooks';
-
-import * as s from './UserPasswordEditStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './UserPasswordEditStep.module.scss';
 
 const createMessage = (error) => {
   if (!error) {

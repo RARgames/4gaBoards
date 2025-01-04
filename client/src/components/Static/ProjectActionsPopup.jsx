@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Button, ButtonStyle, Icon, IconType, IconSize, withPopup } from '../Utils';
+import PropTypes from 'prop-types';
+
 import Paths from '../../constants/Paths';
 import { useSteps } from '../../hooks';
-import RenameStep from '../RenameStep';
 import { BoardAddStep } from '../BoardAddPopup';
+import RenameStep from '../RenameStep';
+import { Button, ButtonStyle, Icon, IconType, IconSize, withPopup } from '../Utils';
 
 import * as s from './ProjectActionsPopup.module.scss';
 

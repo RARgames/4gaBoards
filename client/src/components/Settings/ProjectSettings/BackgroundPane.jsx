@@ -1,16 +1,17 @@
-import { dequal } from 'dequal';
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import React, { useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, FilePicker } from '../../Utils';
-import ProjectBackgroundGradients from '../../../constants/ProjectBackgroundGradients';
-import { ProjectBackgroundTypes } from '../../../constants/Enums';
+import classNames from 'classnames';
+import { dequal } from 'dequal';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
 
-import * as s from './BackgroundPane.module.scss';
+import { ProjectBackgroundTypes } from '../../../constants/Enums';
+import ProjectBackgroundGradients from '../../../constants/ProjectBackgroundGradients';
+import { Button, ButtonStyle, Icon, IconType, IconSize, FilePicker } from '../../Utils';
+
 import * as globalStyles from '../../../styles.module.scss';
+import * as s from './BackgroundPane.module.scss';
 
 const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpdate, onImageUpdate, onImageDelete }) => {
   const [t] = useTranslation();

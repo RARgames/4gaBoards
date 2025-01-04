@@ -1,15 +1,15 @@
-import User from './User';
-import Project from './Project';
-import ProjectManager from './ProjectManager';
+import Activity from './Activity';
+import Attachment from './Attachment';
 import Board from './Board';
 import BoardMembership from './BoardMembership';
-import Label from './Label';
-import List from './List';
 import Card from './Card';
 import Core from './Core';
-import Task from './Task';
-import Attachment from './Attachment';
-import Activity from './Activity';
+import Label from './Label';
+import List from './List';
 import Notification from './Notification';
+import Project from './Project';
+import ProjectManager from './ProjectManager';
+import Task from './Task';
+import User from './User';
 
-export { User, Project, ProjectManager, Board, BoardMembership, Label, List, Card, Core, Task, Attachment, Activity, Notification };
+export { Activity, Attachment, Board, BoardMembership, Card, Core, Label, List, Notification, Project, ProjectManager, Task, User };

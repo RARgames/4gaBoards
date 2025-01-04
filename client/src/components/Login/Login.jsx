@@ -1,17 +1,17 @@
-import isEmail from 'validator/lib/isEmail';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import isEmail from 'validator/lib/isEmail';
+
+import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
+import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
+import { isUsername } from '../../utils/validator';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import { useForm } from '../../hooks';
-import { isUsername } from '../../utils/validator';
-import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
-
-import * as s from './Login.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './Login.module.scss';
 
 const createMessage = (error) => {
   if (!error) {

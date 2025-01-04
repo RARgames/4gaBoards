@@ -1,7 +1,7 @@
-import core from './core';
 import boards from './boards';
+import core from './core';
 
 export default {
-  ...core,
   ...boards,
+  ...core,
 };

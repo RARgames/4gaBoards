@@ -1,12 +1,12 @@
-import pick from 'lodash/pick';
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, withPopup } from '../Utils';
+import pick from 'lodash/pick';
+import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
-import User from '../User';
 import DeleteStep from '../DeleteStep';
+import User from '../User';
+import { Button, ButtonStyle, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
 

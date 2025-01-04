@@ -1,17 +1,18 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import InformationEdit from './InformationEdit';
-import BackgroundPane from './BackgroundPane';
-import DeletePopup from '../../DeletePopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
-import Memberships from '../../Memberships';
-import Paths from '../../../constants/Paths';
+import PropTypes from 'prop-types';
 
-import * as s from './ProjectSettings.module.scss';
-import * as sShared from '../SettingsShared.module.scss';
+import Paths from '../../../constants/Paths';
+import DeletePopup from '../../DeletePopup';
+import Memberships from '../../Memberships';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
+import BackgroundPane from './BackgroundPane';
+import InformationEdit from './InformationEdit';
+
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
+import * as s from './ProjectSettings.module.scss';
 
 const ProjectSettings = React.memo(
   ({ projectId, name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete }) => {

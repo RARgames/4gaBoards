@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState, useRef, useImperativeHandle } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { TextArea } from '../Utils';
+import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
+import { TextArea } from '../Utils';
 
 import * as s from './NameField.module.scss';
 

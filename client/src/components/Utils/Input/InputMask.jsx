@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import MaskedInputComponent from 'react-input-mask';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import InputStyle from './InputStyle';
 

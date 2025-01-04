@@ -1,14 +1,14 @@
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button } from '../Utils';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
 
 import LabelColors from '../../constants/LabelColors';
+import { Button } from '../Utils';
 
-import * as s from './Label.module.scss';
 import * as globalStyles from '../../styles.module.scss';
+import * as s from './Label.module.scss';
 
 const VARIANTS = {
   CARD: 'card',

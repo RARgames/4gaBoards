@@ -1,9 +1,11 @@
-const reactHooks = require('eslint-plugin-react-hooks');
-const reactPlugin = require('eslint-plugin-react');
-const jsxPlugin = require('eslint-plugin-jsx-a11y');
 const babelEslintParser = require('@babel/eslint-parser');
-const prettierPlugin = require('eslint-plugin-prettier');
 const prettierConfig = require('eslint-config-prettier');
+const jsxPlugin = require('eslint-plugin-jsx-a11y');
+const perfectionistPlugin = require('eslint-plugin-perfectionist'); // eslint-disable-line import/no-unresolved
+const prettierPlugin = require('eslint-plugin-prettier');
+const reactPlugin = require('eslint-plugin-react');
+const reactHooks = require('eslint-plugin-react-hooks');
+
 const baseConfig = require('../eslint-configs/base');
 const clientConfig = require('../eslint-configs/client');
 
@@ -64,6 +66,7 @@ module.exports = [
       react: reactPlugin,
       prettier: prettierPlugin,
       'jsx-a11y': jsxPlugin,
+      perfectionist: perfectionistPlugin,
     },
     rules: {
       // region react reactPlugin.configs.flat.recommended
@@ -88,6 +91,25 @@ module.exports = [
         {
           checkFragmentShorthand: true,
           warnOnDuplicates: true,
+        },
+      ],
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          newlinesBetween: 'always',
+          groups: ['react', { newlinesBetween: 'never' }, ['builtin', 'external', 'internal'], ['parent', 'sibling', 'index'], 'unknown', 'css', { newlinesBetween: 'never' }, 'moduleCss'],
+          customGroups: {
+            value: {
+              react: ['^react$', '^react-.+'],
+              css: ['^.*(?<!\\.module)\\.(css|scss)$'],
+              moduleCss: ['^.*\\.module\\.scss$'],
+            },
+          },
+          type: 'natural',
+          order: 'asc',
+          ignoreCase: true,
+          partitionByNewLine: false,
+          specialCharacters: 'keep',
         },
       ],
       // endregion

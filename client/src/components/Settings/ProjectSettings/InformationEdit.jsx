@@ -1,14 +1,14 @@
+import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { dequal } from 'dequal';
 import pickBy from 'lodash/pickBy';
-import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Form, Input, InputStyle } from '../../Utils';
 
 import { useForm } from '../../../hooks';
+import { Button, ButtonStyle, Form, Input, InputStyle } from '../../Utils';
 
-import * as s from './InformationEdit.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as s from './InformationEdit.module.scss';
 
 const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
   const [t] = useTranslation();

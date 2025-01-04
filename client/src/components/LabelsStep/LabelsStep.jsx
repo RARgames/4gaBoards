@@ -1,19 +1,19 @@
-import pick from 'lodash/pick';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, ButtonStyle, Popup, Input, InputStyle } from '../Utils';
+import pick from 'lodash/pick';
+import PropTypes from 'prop-types';
 
-import { useField, useSteps } from '../../hooks';
 import DroppableTypes from '../../constants/DroppableTypes';
+import { useField, useSteps } from '../../hooks';
+import { Button, ButtonStyle, Popup, Input, InputStyle } from '../Utils';
 import AddStep from './AddStep';
 import EditStep from './EditStep';
 import Item from './Item';
 
-import * as s from './LabelsStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './LabelsStep.module.scss';
 
 const StepTypes = {
   ADD: 'ADD',

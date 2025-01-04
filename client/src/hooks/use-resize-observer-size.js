@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useResizeObserver from '@react-hook/resize-observer';
+
 import { ResizeObserverSizeTypes } from '../constants/Enums';
 
 export default (target, type) => {

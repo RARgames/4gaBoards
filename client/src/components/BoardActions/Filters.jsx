@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
-import User from '../User';
 import Label from '../Label';
-import MembershipsPopup from '../MembershipsPopup';
 import LabelsPopup from '../LabelsPopup';
+import MembershipsPopup from '../MembershipsPopup';
+import User from '../User';
 import { Button } from '../Utils';
 
 import * as s from './Filters.module.scss';

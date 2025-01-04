@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import MarkdownEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
-import remarkGithub from 'remark-github';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import remarkGithub from 'remark-github';
+
 import { Icon, IconType, IconSize } from '../Icon';
 import MDSettings from './MDSettings';
 

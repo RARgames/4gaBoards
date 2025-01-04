@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import PropTypes from 'prop-types';
 
-import AddPopup from './AddPopup';
-import ActionsPopup from './ActionsPopup';
 import User from '../User';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import ActionsPopup from './ActionsPopup';
+import AddPopup from './AddPopup';
 
 import * as s from './Memberships.module.scss';
 

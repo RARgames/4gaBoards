@@ -1,9 +1,9 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import selectors from '../selectors';
-import entryActions from '../entry-actions';
 import Header from '../components/Header';
+import entryActions from '../entry-actions';
+import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const path = selectors.selectPathConstant(state);

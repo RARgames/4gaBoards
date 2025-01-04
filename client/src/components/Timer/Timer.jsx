@@ -1,12 +1,12 @@
-import upperFirst from 'lodash/upperFirst';
 import React, { useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { useForceUpdate, usePrevious } from '../../lib/hooks';
-import { Icon, IconType, IconSize } from '../Utils';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
 
+import { useForceUpdate, usePrevious } from '../../lib/hooks';
 import { formatTimer } from '../../utils/timer';
+import { Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Timer.module.scss';
 

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
 import { Popup, withPopup, Button, ButtonStyle, FilePicker } from '../../Utils';
 
 const AvatarEditStep = React.memo(({ defaultValue, onUpdate, onDelete, onClose }) => {

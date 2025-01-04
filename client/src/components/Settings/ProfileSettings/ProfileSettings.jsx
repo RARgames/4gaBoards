@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import AvatarEditPopup from './AvatarEditPopup';
+import PropTypes from 'prop-types';
+
 import User from '../../User';
 import UserInformationEdit from '../../UserInformationEdit';
 import { Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
+import AvatarEditPopup from './AvatarEditPopup';
 
-import * as s from './ProfileSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
+import * as s from './ProfileSettings.module.scss';
 
 const ProfileSettings = React.memo(({ name, avatarUrl, phone, organization, isAvatarUpdating, onUpdate, onAvatarUpdate }) => {
   const [t] = useTranslation();

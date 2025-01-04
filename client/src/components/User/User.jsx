@@ -1,8 +1,9 @@
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
+
 import { Button } from '../Utils';
 
 import * as s from './User.module.scss';

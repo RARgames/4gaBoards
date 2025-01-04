@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
 import { Radio, RadioSize, Table } from '../../Utils';
 
-import * as sShared from '../SettingsShared.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
 
 const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, demoMode, onCoreSettingsUpdate }) => {
   const [t] = useTranslation();

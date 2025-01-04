@@ -1,5 +1,5 @@
-import socket from './socket';
 import { transformAttachment } from './attachments';
+import socket from './socket';
 import { transformTask } from './tasks';
 
 /* Transformers */

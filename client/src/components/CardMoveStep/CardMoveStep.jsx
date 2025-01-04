@@ -1,13 +1,13 @@
 import React, { useMemo, useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
+import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle, useDidUpdate } from '../../lib/hooks';
+import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
 
-import * as s from './CardMoveStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './CardMoveStep.module.scss';
 
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {
   const [t] = useTranslation();

@@ -1,8 +1,9 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import selectors from '../selectors';
-import entryActions from '../entry-actions';
+import { bindActionCreators } from 'redux';
+
 import Register from '../components/Register';
+import entryActions from '../entry-actions';
+import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const {

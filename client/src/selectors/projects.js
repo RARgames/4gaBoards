@@ -1,9 +1,9 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import { isLocalId } from '../utils/local-id';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
-import { isLocalId } from '../utils/local-id';
 
 export const selectProject = createSelector(
   orm,

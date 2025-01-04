@@ -1,12 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle } from '../../Utils';
-import UserUsernameEditPopup from '../../UserUsernameEditPopup';
-import UserEmailEditPopup from '../../UserEmailEditPopup';
+import PropTypes from 'prop-types';
 
-import * as s from './AccountSettings.module.scss';
+import UserEmailEditPopup from '../../UserEmailEditPopup';
+import UserUsernameEditPopup from '../../UserUsernameEditPopup';
+import { Button, ButtonStyle } from '../../Utils';
+
 import * as sShared from '../SettingsShared.module.scss';
+import * as s from './AccountSettings.module.scss';
 
 const AccountSettings = React.memo(({ email, username, usernameUpdateForm, emailUpdateForm, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss }) => {
   const [t] = useTranslation();

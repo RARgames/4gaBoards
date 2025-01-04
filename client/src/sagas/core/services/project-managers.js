@@ -1,12 +1,12 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import request from '../request';
-import requests from '../requests';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
 import mergeRecords from '../../../utils/merge-records';
+import request from '../request';
+import requests from '../requests';
 
 export function* createProjectManager(projectId, data) {
   const localId = yield call(createLocalId);

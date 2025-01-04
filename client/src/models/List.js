@@ -1,7 +1,7 @@
 import { attr, fk } from 'redux-orm';
 
-import BaseModel from './BaseModel';
 import ActionTypes from '../constants/ActionTypes';
+import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
   static modelName = 'List';

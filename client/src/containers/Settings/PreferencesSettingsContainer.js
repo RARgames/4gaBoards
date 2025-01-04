@@ -1,9 +1,9 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import selectors from '../../selectors';
-import entryActions from '../../entry-actions';
 import PreferencesSettings from '../../components/Settings/PreferencesSettings';
+import entryActions from '../../entry-actions';
+import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
   const { language, subscribeToOwnCards, sidebarCompact } = selectors.selectCurrentUser(state);

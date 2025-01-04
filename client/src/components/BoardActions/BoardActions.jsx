@@ -1,18 +1,19 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import classNames from 'classnames';
 import pick from 'lodash/pick';
-import { Link } from 'react-router';
-import Filters from './Filters';
-import Memberships from '../Memberships';
-import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';
-import Connections from './Connections';
-import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
-import Paths from '../../constants/Paths';
+import PropTypes from 'prop-types';
 
-import * as s from './BoardActions.module.scss';
+import Paths from '../../constants/Paths';
+import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';
+import Memberships from '../Memberships';
+import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
+import Connections from './Connections';
+import Filters from './Filters';
+
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './BoardActions.module.scss';
 
 const BoardActions = React.memo(
   ({

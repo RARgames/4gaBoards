@@ -1,5 +1,5 @@
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeExternalLinks from 'rehype-external-links';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import { visit } from 'unist-util-visit';
 
 const colorNames = ['black', 'grey', 'white', 'brown', 'red', 'purple', 'pink', 'green', 'lime', 'yellow', 'blue', 'cyan', 'orange'];

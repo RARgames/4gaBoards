@@ -1,8 +1,8 @@
 import omit from 'lodash/omit';
 
-import socket from './socket';
-import { transformCard } from './cards';
 import { transformActivity } from './activities';
+import { transformCard } from './cards';
+import socket from './socket';
 
 /* Transformers */
 

@@ -1,16 +1,16 @@
-import pick from 'lodash/pick';
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import pick from 'lodash/pick';
+import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
-import MembershipsStep from '../MembershipsStep';
-import LabelsStep from '../LabelsStep';
-import DueDateEditStep from '../DueDateEditStep';
-import TimerEditStep from '../TimerEditStep';
 import CardMoveStep from '../CardMoveStep';
 import DeleteStep from '../DeleteStep';
+import DueDateEditStep from '../DueDateEditStep';
+import LabelsStep from '../LabelsStep';
+import MembershipsStep from '../MembershipsStep';
+import TimerEditStep from '../TimerEditStep';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
 

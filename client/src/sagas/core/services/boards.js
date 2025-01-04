@@ -1,11 +1,11 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import { goToBoard, goToProject } from './router';
-import request from '../request';
-import selectors from '../../../selectors';
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
+import request from '../request';
+import { goToBoard, goToProject } from './router';
 
 export function* createBoard(projectId, { import: boardImport, ...data }) {
   const nextData = {

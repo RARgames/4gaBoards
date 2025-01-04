@@ -1,13 +1,14 @@
 import React, { useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Dropdown, DropdownStyle, Radio, RadioSize, Table } from '../../Utils';
-import locales from '../../../locales';
+import PropTypes from 'prop-types';
 
-import * as s from './PreferencesSettings.module.scss';
-import * as sShared from '../SettingsShared.module.scss';
+import locales from '../../../locales';
+import { Dropdown, DropdownStyle, Radio, RadioSize, Table } from '../../Utils';
+
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as sShared from '../SettingsShared.module.scss';
+import * as s from './PreferencesSettings.module.scss';
 
 const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, onUpdate, onLanguageUpdate }) => {
   const [t] = useTranslation();

@@ -1,5 +1,5 @@
-import { getAccessToken } from '../utils/access-token-storage';
 import ActionTypes from '../constants/ActionTypes';
+import { getAccessToken } from '../utils/access-token-storage';
 
 const initialState = {
   accessToken: getAccessToken(),

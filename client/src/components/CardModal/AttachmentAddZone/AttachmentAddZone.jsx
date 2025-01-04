@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 import { useModal } from '../../../hooks';
 import TextFileAddModal from './TextFileAddModal';

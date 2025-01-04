@@ -1,5 +1,4 @@
-import { withPopup } from './Utils';
-
 import DeleteStep from './DeleteStep';
+import { withPopup } from './Utils';
 
 export default withPopup(DeleteStep);

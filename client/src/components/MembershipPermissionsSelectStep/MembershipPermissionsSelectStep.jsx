@@ -1,15 +1,15 @@
-import { dequal } from 'dequal';
-import omit from 'lodash/omit';
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
+import { dequal } from 'dequal';
+import omit from 'lodash/omit';
+import PropTypes from 'prop-types';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
+import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
 
-import * as s from './MembershipPermissionsSelectStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './MembershipPermissionsSelectStep.module.scss';
 
 const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, buttonContent, onSelect, onBack, onClose }) => {
   const [t] = useTranslation();

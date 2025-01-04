@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
+import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
 import Config from '../../../constants/Config';
 import { Icon, IconType, IconSize, ExternalLink, Button, ButtonStyle } from '../../Utils';
 
-import logo from '../../../assets/images/4gaboardsLogo1024w-white.png';
-
-import * as s from './AboutSettings.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
+import * as s from './AboutSettings.module.scss';
 
 const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) => {
   const [t] = useTranslation();

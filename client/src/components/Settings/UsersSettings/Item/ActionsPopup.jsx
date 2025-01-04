@@ -1,15 +1,15 @@
-import pick from 'lodash/pick';
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Popup, withPopup, Button, ButtonStyle } from '../../../Utils';
+import pick from 'lodash/pick';
+import PropTypes from 'prop-types';
 
 import { useSteps } from '../../../../hooks';
-import UserInformationEditStep from '../../../UserInformationEditStep';
-import UserUsernameEditStep from '../../../UserUsernameEditStep';
-import UserEmailEditStep from '../../../UserEmailEditStep';
-import UserPasswordEditStep from '../../../UserPasswordEditStep';
 import DeleteStep from '../../../DeleteStep';
+import UserEmailEditStep from '../../../UserEmailEditStep';
+import UserInformationEditStep from '../../../UserInformationEditStep';
+import UserPasswordEditStep from '../../../UserPasswordEditStep';
+import UserUsernameEditStep from '../../../UserUsernameEditStep';
+import { Popup, withPopup, Button, ButtonStyle } from '../../../Utils';
 
 const StepTypes = {
   EDIT_INFORMATION: 'EDIT_INFORMATION',

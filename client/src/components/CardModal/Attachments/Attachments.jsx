@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Gallery, Item as GalleryItem } from 'react-photoswipe-gallery';
-import { Button, ButtonStyle } from '../../Utils';
-import { useToggle } from '../../../lib/hooks';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
+import { useToggle } from '../../../lib/hooks';
+import { Button, ButtonStyle } from '../../Utils';
 import Item from './Item';
 
 import * as s from './Attachments.module.scss';

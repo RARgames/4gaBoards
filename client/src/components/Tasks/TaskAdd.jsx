@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
+import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { TextArea } from '../Utils';
-import { useForm } from '../../hooks';
 
 import * as s from './TaskAdd.module.scss';
 

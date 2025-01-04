@@ -1,10 +1,10 @@
-import { createSelector as createReselectSelector } from 'reselect';
 import { createSelector as createReduxOrmSelector } from 'redux-orm';
+import { createSelector as createReselectSelector } from 'reselect';
 
-import orm from '../orm';
-import { selectCurrentUserId } from './users';
-import matchPaths from '../utils/match-paths';
 import Paths from '../constants/Paths';
+import orm from '../orm';
+import matchPaths from '../utils/match-paths';
+import { selectCurrentUserId } from './users';
 
 export const selectPathname = ({
   router: {

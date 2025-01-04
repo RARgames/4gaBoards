@@ -1,8 +1,8 @@
 import { attr, many } from 'redux-orm';
 
-import BaseModel from './BaseModel';
 import ActionTypes from '../constants/ActionTypes';
 import { ProjectBackgroundTypes } from '../constants/Enums';
+import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
   static modelName = 'Project';

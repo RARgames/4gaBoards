@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button } from '../Utils';
+import PropTypes from 'prop-types';
 
 import User from '../User';
+import { Button } from '../Utils';
 
 import * as s from './Item.module.scss';
 

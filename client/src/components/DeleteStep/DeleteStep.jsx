@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Button, ButtonStyle, Popup } from '../Utils';
 
-import * as s from './DeleteStep.module.scss';
 import * as gStyles from '../../globalStyles.module.scss';
+import * as s from './DeleteStep.module.scss';
 
 const DeleteStep = React.memo(({ title, content, buttonContent, onConfirm, onBack }) => (
   <>

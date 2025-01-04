@@ -1,10 +1,11 @@
-import { all, call, cancel, fork, take, spawn, select } from 'redux-saga/effects';
 import i18n from 'i18next';
-import watchers from './watchers';
-import services from './services';
-import coreServices from '../core/services';
+import { all, call, cancel, fork, take, spawn, select } from 'redux-saga/effects';
+
 import ActionTypes from '../../constants/ActionTypes';
 import selectors from '../../selectors';
+import coreServices from '../core/services';
+import services from './services';
+import watchers from './watchers';
 
 function* postLoginSaga() {
   yield take(ActionTypes.CORE_INITIALIZE);

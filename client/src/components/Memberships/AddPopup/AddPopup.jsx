@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { Popup, Input, InputStyle, withPopup } from '../../Utils';
+import PropTypes from 'prop-types';
 
 import { useField, useSteps } from '../../../hooks';
+import { Popup, Input, InputStyle, withPopup } from '../../Utils';
 import UserItem from './UserItem';
 
-import * as s from './AddPopup.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as s from './AddPopup.module.scss';
 
 const StepTypes = {
   SELECT_PERMISSIONS: 'SELECT_PERMISSIONS',

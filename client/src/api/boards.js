@@ -1,7 +1,7 @@
-import socket from './socket';
-import http from './http';
-import { transformCard } from './cards';
 import { transformAttachment } from './attachments';
+import { transformCard } from './cards';
+import http from './http';
+import socket from './socket';
 import { transformTask } from './tasks';
 
 /* Actions */

@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
 import { ActivityTypes } from '../../../constants/Enums';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import CommentEdit from './CommentEdit';
 import Item from './Item';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 
-import * as s from './Activities.module.scss';
 import * as cStyles from '../CardModal.module.scss';
+import * as s from './Activities.module.scss';
 
 const Activities = React.memo(
   ({

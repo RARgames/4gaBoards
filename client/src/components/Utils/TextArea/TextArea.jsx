@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import TextareaAutosize from 'react-textarea-autosize';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import TextAreaStyle from './TextAreaStyle';
 
-import * as s from './TextArea.module.scss';
 import * as gStyles from '../../../globalStyles.module.scss';
+import * as s from './TextArea.module.scss';
 
 const TextArea = React.forwardRef(({ disableSpellcheck, style, className, isError, ...props }, ref) => {
   const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];

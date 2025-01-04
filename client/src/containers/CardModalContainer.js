@@ -1,13 +1,13 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import omit from 'lodash/omit';
-import { push } from '../lib/redux-router';
+import { bindActionCreators } from 'redux';
 
-import selectors from '../selectors';
-import entryActions from '../entry-actions';
-import Paths from '../constants/Paths';
-import { BoardMembershipRoles } from '../constants/Enums';
 import CardModal from '../components/CardModal';
+import { BoardMembershipRoles } from '../constants/Enums';
+import Paths from '../constants/Paths';
+import entryActions from '../entry-actions';
+import { push } from '../lib/redux-router';
+import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const { projectId } = selectors.selectPath(state);

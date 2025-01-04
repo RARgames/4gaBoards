@@ -1,15 +1,14 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
-import User from '../User';
-
-import Paths from '../../constants/Paths';
-import NotificationsPopup from './NotificationsPopup';
-import UserPopup from '../UserPopup';
+import PropTypes from 'prop-types';
 
 import logo from '../../assets/images/4gaboardsLogo128w-white.png';
+import Paths from '../../constants/Paths';
+import User from '../User';
+import UserPopup from '../UserPopup';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import NotificationsPopup from './NotificationsPopup';
 
 import * as s from './Header.module.scss';
 

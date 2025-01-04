@@ -1,13 +1,13 @@
 import React, { useCallback, useRef, useImperativeHandle } from 'react';
-import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, ProgressBar, ProgressBarSize, Icon, IconType, IconSize } from '../Utils';
-import DueDate from '../DueDate';
+import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
+import { useToggle } from '../../lib/hooks';
+import DueDate from '../DueDate';
+import { Button, ButtonStyle, ProgressBar, ProgressBarSize, Icon, IconType, IconSize } from '../Utils';
 import Item from './Item';
 import TaskAdd from './TaskAdd';
 

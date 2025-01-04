@@ -1,10 +1,10 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import selectors from '../selectors';
-import entryActions from '../entry-actions';
-import { BoardMembershipRoles } from '../constants/Enums';
 import Board from '../components/Board';
+import { BoardMembershipRoles } from '../constants/Enums';
+import entryActions from '../entry-actions';
+import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const { cardId } = selectors.selectPath(state);

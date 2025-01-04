@@ -1,7 +1,7 @@
 import { all, takeEvery } from 'redux-saga/effects';
 
-import services from '../services';
 import EntryActionTypes from '../../../constants/EntryActionTypes';
+import services from '../services';
 
 export default function* attachmentsWatchers() {
   yield all([

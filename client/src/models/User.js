@@ -1,7 +1,7 @@
 import { attr } from 'redux-orm';
 
-import BaseModel from './BaseModel';
 import ActionTypes from '../constants/ActionTypes';
+import BaseModel from './BaseModel';
 
 const DEFAULT_EMAIL_UPDATE_FORM = {
   data: {

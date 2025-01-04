@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import PropTypes from 'prop-types';
+
 import Paths from '../../constants/Paths';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './UserPopup.module.scss';
 

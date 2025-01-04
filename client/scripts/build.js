@@ -13,17 +13,18 @@ process.on('unhandledRejection', (err) => {
 // Ensure environment variables are read.
 require('../config/env');
 
-const path = require('path');
-const chalk = require('react-dev-utils/chalk');
-const fs = require('fs-extra');
-const bfj = require('bfj');
-const webpack = require('webpack');
-const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
-const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
-const printBuildError = require('react-dev-utils/printBuildError');
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
+const chalk = require('react-dev-utils/chalk');
+const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
+const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const printBuildError = require('react-dev-utils/printBuildError');
+const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
+const bfj = require('bfj');
+const fs = require('fs-extra');
+const path = require('path');
+const webpack = require('webpack');
+
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 

@@ -1,18 +1,19 @@
-import upperFirst from 'lodash/upperFirst';
-import camelCase from 'lodash/camelCase';
 import React, { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
-import Paths from '../../constants/Paths';
-import { ProjectBackgroundTypes } from '../../constants/Enums';
-import ProjectAddPopup from '../ProjectAddPopup';
+import classNames from 'classnames';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
+import PropTypes from 'prop-types';
 
-import * as s from './Projects.module.scss';
+import { ProjectBackgroundTypes } from '../../constants/Enums';
+import Paths from '../../constants/Paths';
+import ProjectAddPopup from '../ProjectAddPopup';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+
 import * as gStyles from '../../globalStyles.module.scss';
 import * as globalStyles from '../../styles.module.scss';
+import * as s from './Projects.module.scss';
 
 const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();

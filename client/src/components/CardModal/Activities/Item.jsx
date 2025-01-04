@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation, Trans } from 'react-i18next';
+import PropTypes from 'prop-types';
+
 import { ActivityTypes } from '../../../constants/Enums';
-import ItemComment from './ItemComment';
 import User from '../../User';
+import ItemComment from './ItemComment';
 
 import * as s from './Item.module.scss';
 

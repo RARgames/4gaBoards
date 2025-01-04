@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
 

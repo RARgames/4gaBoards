@@ -1,10 +1,11 @@
 import { call, put, select } from 'redux-saga/effects';
-import { replace } from '../../../lib/redux-router';
+
 import actions from '../../../actions';
 import api from '../../../api';
-import { setAccessToken } from '../../../utils/access-token-storage';
 import Paths from '../../../constants/Paths';
+import { replace } from '../../../lib/redux-router';
 import selectors from '../../../selectors';
+import { setAccessToken } from '../../../utils/access-token-storage';
 
 export function* authenticate(data) {
   yield put(actions.authenticate(data));

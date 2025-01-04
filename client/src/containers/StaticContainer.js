@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import selectors from '../selectors';
 import Static from '../components/Static';
+import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const path = selectors.selectPathConstant(state);

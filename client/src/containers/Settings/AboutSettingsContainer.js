@@ -1,9 +1,9 @@
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import selectors from '../../selectors';
-import entryActions from '../../entry-actions';
+import { bindActionCreators } from 'redux';
 
 import AboutSettings from '../../components/Settings/AboutSettings';
+import entryActions from '../../entry-actions';
+import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
   const coreSettings = selectors.selectCoreSettings(state);
