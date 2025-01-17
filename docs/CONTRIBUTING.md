@@ -10,7 +10,7 @@ Feel free to create a bug report as a new issue on GitHub. Before creating, plea
 
 ### Pull Requests
 
-If you want you can discuss your ideas with the team by creating an issue, or commenting on an existing one. You can also discuss using a PR. This will result in a much higher liklihood of your code being accepted.
+If you want you can discuss your ideas with the team by creating an issue, or commenting on an existing one. You can also discuss using a PR. This will result in a much higher likelihood of your code being accepted.
 
 If you’re looking for ways to get started, here's a list of ways to help us improve 4ga Boards:
 

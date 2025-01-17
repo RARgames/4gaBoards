@@ -104,6 +104,7 @@ const rehypePlugins = [
       ...defaultSchema,
       attributes: {
         ...defaultSchema.attributes,
+        a: [...(defaultSchema.attributes.a || []), ['rel'], ['target']],
         pre: [...(defaultSchema.attributes.pre || []), ['className', /^language-./]],
         code: [...(defaultSchema.attributes.code || []), ['className', 'code-highlight', /^language-./]],
         div: [...(defaultSchema.attributes.div || []), ['class', 'copied'], ['data-code']], // for copy button
