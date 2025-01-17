@@ -64,7 +64,7 @@ _or use: Demo user: `demo` Demo password: `demo` (please note that many users mi
 - Disabled changing instance settings
 - Disabled changing other users data
 - Every new user receives admin privileges
-- Data is cleared every day at 1:55 CET
+- Data is cleared every Monday at 1:55 CET
 
 ## Documentation
 
