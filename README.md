@@ -5,11 +5,11 @@
   </br>
   </br>
   <div>
-    <img src="https://img.shields.io/github/v/release/RARgames/4gaBoards?color=orange&style=flat-square)" alt="GitHub release (latest by date)">
-    <img src="https://img.shields.io/github/license/rargames/4gaBoards?style=flat-square" alt="GitHub">
-    <img src="https://img.shields.io/github/contributors/rargames/4gaboards?style=flat-square" alt="GitHub contributors">
+    <img src="https://img.shields.io/github/v/release/RARgames/4gaBoards?color=orange" alt="4ga Boards Latest Release" />
+    <img src="https://img.shields.io/github/license/rargames/4gaBoards" alt="4ga Boards License" />
+    <img src="https://img.shields.io/github/contributors/rargames/4gaboards" alt="4ga Boards Contributors" />
   </div>
-  </br>
+    <h1>4ga Boards</h1>
   Straightforward boards system for realtime project management
   </br>
   </br>
@@ -17,155 +17,96 @@
 
 ![4gaBoards_gif](https://github.com/user-attachments/assets/4724f221-9b07-4f01-9d7a-3348a11a029e)
 
-# 4ga Boards
-
 ## Features
 
-- Full dark mode
-- Intuitive UI/UX
-- Advanced Markdown Editor _(card description and comments)_
-- App design - no need to reload page
-- Multitasking capabilities _(while editing a card, you can still scroll, filter and review other cards. You can exit the card at any time, the description changes will be saved locally for you.)_
-- Projects/Boards sidebar _(easier navigation for many complex projects and boards)_
-- SSO Login/Register _(Google SSO + Github/Microsoft [Coming soon])_
-- App uses full screen _(no wasted screen space)_
-- Simplistic design _(No useless buttons/options, everything included by default)_
-- Automation of common actions with shortucts
-- Internationalization _(EN, PL, FR - 100%, other languages - partial support)_
-- Github 2-way sync [Coming soon]
-- Collapsable lists _(saves screen space for complex projects)_
+- **Dark Mode**
+- **Intuitive UI/UX**
+- **Advanced Markdown Editor**
+- **Export/Import Boards**
+- **Web App Design** - realtime updates without reloading page
+- **Multitasking Capabilities** - simultaneously edit/review cards and filter/rearrange the board, while keeping local description changes
+- **Google SSO Login/Register** _(Github/Microsoft - Coming soon)_
+- **Simplistic Wide Screen Design** - minimal clutter and no wasted space
+- **Powerful Shortcuts**
+- **Multiple Language Support** _(EN, PL, FR - 100%, other languages - partial support)_
+- **Collapsable Lists and Sidebar** - saves screen space and allows for easier navigation in complex projects
+- **Multi-level Hierarchy** - projects -> boards -> lists -> cards -> tasks
+- **Github 2-way sync** - Coming soon
 
-### Boards Structure
-
-- Projects -> Boards -> Lists -> Cards -> Tasks
-- Project: Title, Boards
-- Board: Title, Lists, Board Members(Editor, Commenter, Viewer), Card Filters
-- List: Title, Cards
-- Card: Description, Members, Labels, Due Date, Timer, Notifications, Tasks, Attachments, Comments
-- Task: Title, Members, Due Date
-
-### Basic Features
-
-- Real-time updates
-- Filter by members and labels
-- Customizable project backgrounds
-- User notifications
+[More Features](https://4gaboards.com/features)
 
 ## Demo
 
-Check out 4ga Boards using our [demo](https://demo.4gaboards.com).
-
-**Recommended: Create a new account** - You can use non-existing email (no email confirmations).
-
-_or use: Demo user: `demo` Demo password: `demo` (please note that many users might be using it at the same time causing disturbed experience e.g. changing user preferences)._
-
-### Demo mode - changed features:
-
-- Disabled changing instance settings
-- Disabled changing other users data
-- Every new user receives admin privileges
-- Data is cleared every Monday at 1:55 CET
+[Try 4ga Boards now!](https://4gaboards.com/try)
 
 ## Documentation
 
-[English](https://docs.4gaboards.com/en/home) | [Polski](https://docs.4gaboards.com/pl/home)
+[English](https://docs.4gaboards.com) | [Polski](https://docs.4gaboards.com/pl)
 
 ## Website
 
 [4ga Boards Website](https://4gaboards.com)
 
+Don't want to get your hands dirty?\
+Check [4ga Boards Professional Hosting](https://4gaboards.com/pricing).
+
 ## Roadmap
 
-Our main priority is to finish all tasks from the [#1](https://github.com/RARgames/4gaBoards/issues/1) issue.
-
-All tasks from [#1](https://github.com/RARgames/4gaBoards/issues/1) issue are described in separate issues.
+[4ga Boards Roadmap](https://github.com/RARgames/4gaBoards/issues/472)
 
 ## Deploy
 
-There are 2 types of installation:
+1. [Docker Compose (Recommended)](https://docs.4gaboards.com/docs/dev/install/docker-install)
+2. [Kubernetes](https://docs.4gaboards.com/docs/dev/install/k8s-install)
+3. [TrueNAS](https://docs.4gaboards.com/docs/dev/install/truenas-install)
+4. [Manual](https://docs.4gaboards.com/docs/dev/install/manual)
 
-1. [Dockerized](#1-docker-compose)
-2. [Without Docker](#2-without-docker)
+### Docker Compose (Recommended)
 
-### 1. Docker Compose
+Requirements: [Docker](https://docs.docker.com/install), [Docker Compose](https://docs.docker.com/compose/install)
 
-[![](https://d207aa93qlcgug.cloudfront.net/1.95.5.qa/img/nav/docker-logo-loggedout.png)](https://github.com/RARgames/4gaBoards/pkgs/container/4gaBoards)
+**Download `docker-compose.yml`** _(or create `docker-compose.yml` based on [the example](https://github.com/RARgames/4gaBoards/blob/main/docker-compose.yml))_
 
-- Make sure you have [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/) installed and operational.
-- Create `docker-compose.yml` based on [the example](https://raw.githubusercontent.com/RARgames/4gaBoards/main/docker-compose.yml). This is the ONLY file you will need. You can create this file on your machine by copying and pasting the content or download it:
-
-```
+```bash
 curl -L https://raw.githubusercontent.com/RARgames/4gaBoards/main/docker-compose.yml -o docker-compose.yml
 ```
 
-- Edit `BASE_URL` to match your domain name or IP address.
-- Edit `SECRET_KEY` with random value. You can generate it by `openssl rand -hex 64`.
-- Replace 2 occurrences of `notpassword` with generated db password in `POSTGRES_PASSWORD` and `DATABASE_URL`.
+**Configure 4ga Boards instance variables**
 
-Pull images and start services:
+Configure `environment` sections in `docker-compose.yml`:
 
-```
+Edit `BASE_URL` to match your domain name or IP address.\
+Edit `SECRET_KEY` with a random value. You can generate it by `openssl rand -hex 64`.\
+Edit `POSTGRES_PASSWORD` and `DATABASE_URL` replacing `notpassword` with randomly generated db password.\
+[4ga Boards instance variables](https://docs.4gaboards.com/docs/dev/install/docker-vars)
+
+**Pull images and start 4ga Boards**
+
+```bash
 docker compose up -d
 ```
 
-Default url: http://localhost:3000 Demo user: `demo` Demo password: `demo`
-
-### 2. Without Docker
-
-Installing without Docker is a bit more complicated, here's what you need to do:
-
-1. Clone this repository into a directory of your choice. (e.g. `/var/www/4gaBoards`)
-
-```bash
-mkdir -p /var/www/4gaBoards
-cd /var/www/4gaBoards
-git clone https://github.com/RARgames/4gaBoards.git .
-```
-
-2. Install dependencies, build client, copy build to the `server` directory.
-
-```bash
-npm i
-npm run client:build
-
-cp -r client/build server/public
-cp client/build/index.html server/views/index.ejs
-```
-
-**Note**: You can use `yarn` or `pnpm` instead of `npm`.
-
-3. Configure environment variables.
-
-```bash
-cp server/.env.sample server/.env
-
-# Edit .env file (You could use nano, vim, etc.)
-nano server/.env
-```
-
-**Note**: Before continuing, make sure you have your selected database created and running.
-
-4. Copy start script from the root directory to the `server` directory and start the server.
-
-```bash
-cp start.sh server
-cd server
-./start.sh
-```
-
-**Note**: You can use `pm2` or `systemd` to run the server in the background.
-
-Default url: http://localhost:1337 Demo user: `demo` Demo password: `demo`
-
-## [Additional information (Google SSO, Nginx Configuration, Logging, Rotating Logs, Fail2ban, Helm Chart)](https://github.com/RARgames/4gaBoards/blob/main/docs/ADDITIONAL_INFO.md)
+Default 4ga Boards url: http://localhost:3000 \
+Default user: `demo`\
+Default password: `demo`
 
 ## Backup and Restore
 
-Before executing backup/restore scripts, change current directory to the directory where docker-compose is located.
+Before executing backup/restore scripts, change current directory to the directory where `docker-compose.yml` is located.
 
-To backup your data use: `./boards-backup.sh`
+**Backup 4ga Boards instance data**
 
-To restore it use: `./boards-restore.sh 4gaBoards-backup.tgz` You can use any relative path.
+```bash
+./boards-backup.sh
+```
+
+**Restore 4ga Boards instance data**
+
+```bash
+./boards-restore.sh 4gaBoards-backup.tgz
+```
+
+_You can use any relative path._
 
 When restoring, the password has to match docker-compose password (If you don't remember it, you can set new password in docker-compose, but you have to skip altering the default user in backup.tgz/postgres.sql file e.g. comment line `ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'XXX'` before restoring the backup).
 
@@ -173,15 +114,26 @@ When restoring, the password has to match docker-compose password (If you don't 
 
 It's already available in 4ga Boards. Just add a project, then click Import while creating a new board.
 
-## [Migration from Planka](https://github.com/RARgames/4gaBoards/blob/main/docs/MIGRATION.md)
-
 ## Development
 
-Clone the repository into a directory of your choice, install dependencies, copy .env:
+Requirements: [Node.js](https://nodejs.org/en/download)\
+Optional requirements: [Docker](https://docs.docker.com/install/), [Docker Compose](https://docs.docker.com/compose/install/)
+
+**Clone 4ga Boards repository into a directory of your choice**
 
 ```bash
 git clone https://github.com/RARgames/4gaBoards.git .
+```
+
+**Install dependencies**
+
+```bash
 npm i
+```
+
+**Copy .env**
+
+```bash
 cp server/.env.sample server/.env
 ```
 
@@ -189,37 +141,59 @@ _Optional: Build client, copy build to the `server` directory to suppress startu
 
 ```bash
 npm run client:build
+```
+
+```bash
 cp -r client/build server/public
+```
+
+```bash
 cp client/build/index.html server/views/index.ejs
 ```
 
-Either use a local database or start the provided development database:
+**Start the provided development database** _(Optionally, use your own database)_
 
 ```bash
 docker compose -f docker-compose-dev.yml up -d
 ```
 
-Edit `DATABASE_URL` in `server/.env` if needed, then initialize the database:
+_If using your own database, edit `DATABASE_URL` in `server/.env`._
+
+**Initialize the database**
 
 ```bash
 npm run server:db:init
 ```
 
-Start the development server:
+**Start the development server**
 
 ```bash
 npm start
 ```
 
-Demo user: `demo` Demo password: `demo`
+Default 4ga Boards url: http://localhost:3000 \
+Default user: `demo`\
+Default password: `demo`
 
-## [Contributing](https://github.com/RARgames/4gaBoards/blob/main/docs/CONTRIBUTING.md)
+## Web Server Configuration
 
-## [Security](https://github.com/RARgames/4gaBoards/blob/main/docs/SECURITY.md)
+[Web Server Configuration](https://docs.4gaboards.com/docs/dev/web-server-config)
 
-## Tech stack
+## SSO (Single Sign-On)
 
-- React, Redux, Redux-Saga, Redux-ORM, react-beautiful-dnd
+[SSO](https://docs.4gaboards.com/docs/dev/sso)
+
+## Contributing
+
+[Full 4ga Boards Contribution Guidelines](https://4gaboards.com/contribute)
+
+## Security
+
+[Full 4ga Boards Security Information](https://4gaboards.com/security)
+
+## Tech Stack
+
+- React, Redux, Redux-Saga, Redux-ORM, react-beautiful-dnd, floating-ui
 - Sails.js, Knex.js
 - PostgreSQL
 
@@ -227,7 +201,7 @@ Demo user: `demo` Demo password: `demo`
 
 [MIT license](https://github.com/RARgames/4gaBoards/blob/main/LICENSE)
 
-## Main maintainers
+## Main Maintainers
 
 [![RARgames](https://github.com/RARgames.png?size=100)](https://github.com/RARgames)
 [![wilkobyl](https://github.com/wilkobyl.png?size=100)](https://github.com/wilkobyl)
