@@ -15,7 +15,7 @@
   </br>
 </div>
 
-![4gaBoards_gif](https://github.com/user-attachments/assets/1f6f1e41-a60d-4529-8cff-964b0d63962f)
+![4gaBoards_gif](https://github.com/user-attachments/assets/4724f221-9b07-4f01-9d7a-3348a11a029e)
 
 # 4ga Boards
 
