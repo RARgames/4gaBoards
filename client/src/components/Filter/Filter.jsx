@@ -18,12 +18,10 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
 
   const submit = useCallback(
     (val, overrideTarget = false) => {
-      const cleanValue = val.trim();
-
       if ((!overrideTarget && isTargetBoard) || (overrideTarget && !isTargetBoard)) {
-        onChangeFilterQuery({ query: cleanValue, target: 'board' });
+        onChangeFilterQuery({ query: val, target: 'board' });
       } else {
-        onChangeFilterQuery({ query: cleanValue, target: 'project' });
+        onChangeFilterQuery({ query: val, target: 'project' });
       }
     },
     [isTargetBoard, onChangeFilterQuery],
