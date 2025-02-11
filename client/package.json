@@ -183,5 +183,12 @@
     "presets": [
       "react-app"
     ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "core-js-pure"
+    ]
   }
 }
