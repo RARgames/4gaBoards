@@ -73,6 +73,9 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
       }
 
       event.preventDefault(); // Prevent text selecton when dragging board
+      if (document.activeElement) {
+        document.activeElement.blur();
+      }
       prevPosition.current = event.screenX;
 
       const selection = window.getSelection();
@@ -106,14 +109,14 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
   }, [listIds, isListAddOpened]);
 
   useEffect(() => {
-    window.addEventListener('mouseup', handleWindowMouseUp);
     window.addEventListener('mousemove', handleWindowMouseMove);
+    window.addEventListener('mouseup', handleWindowMouseUp);
 
     return () => {
-      window.removeEventListener('mouseup', handleWindowMouseUp);
       window.removeEventListener('mousemove', handleWindowMouseMove);
+      window.removeEventListener('mouseup', handleWindowMouseUp);
     };
-  }, [handleWindowMouseUp, handleWindowMouseMove]);
+  }, [handleWindowMouseMove, handleWindowMouseUp]);
 
   return (
     <div className={s.boardContainer}>
