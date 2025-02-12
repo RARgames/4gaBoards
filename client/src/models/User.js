@@ -109,6 +109,10 @@ export default class extends BaseModel {
         User.withId(payload.id).update(payload.data);
 
         break;
+      case ActionTypes.USER_UPDATE__FAILURE:
+        User.upsert(payload.user);
+
+        break;
       case ActionTypes.USER_UPDATE_HANDLE:
         User.upsert(payload.user);
 

@@ -30,13 +30,14 @@ export function* clearUserCreateError() {
 }
 
 export function* updateUser(id, data) {
+  const currentUser = yield select(selectors.selectCurrentUser);
   yield put(actions.updateUser(id, data));
 
   let user;
   try {
     ({ item: user } = yield call(request, api.updateUser, id, data));
   } catch (error) {
-    yield put(actions.updateUser.failure(id, error));
+    yield put(actions.updateUser.failure(id, error, currentUser));
     return;
   }
 

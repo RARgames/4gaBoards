@@ -48,11 +48,12 @@ updateUser.success = (user) => ({
   },
 });
 
-updateUser.failure = (id, error) => ({
+updateUser.failure = (id, error, user) => ({
   type: ActionTypes.USER_UPDATE__FAILURE,
   payload: {
     id,
     error,
+    user,
   },
 });
 
