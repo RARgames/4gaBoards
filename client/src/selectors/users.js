@@ -5,17 +5,28 @@ import { isLocalId } from '../utils/local-id';
 
 export const selectCurrentUserId = ({ auth: { userId } }) => userId;
 
-export const selectUsers = createSelector(orm, ({ User }) => User.getOrderedUndeletedQuerySet().toRefArray());
+export const selectUsers = createSelector(
+  orm,
+  (state) => selectCurrentUserId(state),
+  ({ User }, currentUserId) => {
+    const users = User.getOrderedUndeletedQuerySet().toRefArray();
+
+    return users.sort((a, b) => {
+      if (a.id === currentUserId) return -1;
+      if (b.id === currentUserId) return 1;
+      return a.name.localeCompare(b.name);
+    });
+  },
+);
 
 export const selectUsersExceptCurrent = createSelector(
   orm,
   (state) => selectCurrentUserId(state),
   ({ User }, id) =>
     User.getOrderedUndeletedQuerySet()
-      .exclude({
-        id,
-      })
-      .toRefArray(),
+      .exclude({ id })
+      .toRefArray()
+      .sort((a, b) => a.name.localeCompare(b.name)),
 );
 
 export const selectCurrentUser = createSelector(

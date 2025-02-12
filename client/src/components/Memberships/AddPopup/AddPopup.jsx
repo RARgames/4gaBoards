@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -19,10 +19,25 @@ const AddStep = React.memo(({ users, currentUserIds, permissionsSelectStep, titl
   const [step, openStep, handleBack] = useSteps();
   const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
+  const [sortedUsers, setSortedUsers] = useState([]);
+
+  const sortUsers = useCallback(() => {
+    setSortedUsers(
+      [...users].sort((a, b) => {
+        const aIsActive = currentUserIds.includes(a.id);
+        const bIsActive = currentUserIds.includes(b.id);
+        return bIsActive - aIsActive;
+      }),
+    );
+  }, [users, currentUserIds]);
+
+  useEffect(() => {
+    sortUsers();
+  }, [sortUsers]);
 
   const filteredUsers = useMemo(
-    () => users.filter((user) => user.email.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch))),
-    [users, cleanSearch],
+    () => sortedUsers.filter((user) => user.email.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch))),
+    [sortedUsers, cleanSearch],
   );
 
   const searchField = useRef(null);

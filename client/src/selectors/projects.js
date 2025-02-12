@@ -62,7 +62,7 @@ export const selectManagersForProject = createSelector(
       return projectModel;
     }
 
-    return projectModel
+    const managers = projectModel
       .getOrderedManagersQuerySet()
       .toModelArray()
       .map((projectManagerModel) => ({
@@ -73,35 +73,12 @@ export const selectManagersForProject = createSelector(
           isCurrent: projectManagerModel.user.id === currentUserId,
         },
       }));
-  },
-);
 
-export const selectManagersForCurrentProject = createSelector(
-  orm,
-  (state) => selectPath(state).projectId,
-  (state) => selectCurrentUserId(state),
-  ({ Project }, id, currentUserId) => {
-    if (!id) {
-      return id;
-    }
-
-    const projectModel = Project.withId(id);
-
-    if (!projectModel) {
-      return projectModel;
-    }
-
-    return projectModel
-      .getOrderedManagersQuerySet()
-      .toModelArray()
-      .map((projectManagerModel) => ({
-        ...projectManagerModel.ref,
-        isPersisted: !isLocalId(projectManagerModel.id),
-        user: {
-          ...projectManagerModel.user.ref,
-          isCurrent: projectManagerModel.user.id === currentUserId,
-        },
-      }));
+    return managers.sort((a, b) => {
+      if (a.user.isCurrent) return -1;
+      if (b.user.isCurrent) return 1;
+      return a.user.name.localeCompare(b.user.name);
+    });
   },
 );
 
@@ -150,7 +127,6 @@ export default {
   selectProject,
   selectCurrentProject,
   selectManagersForProject,
-  selectManagersForCurrentProject,
   selectBoardsForCurrentProject,
   selectIsCurrentUserManagerForCurrentProject,
 };

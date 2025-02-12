@@ -67,11 +67,11 @@ export const selectMembershipsForCurrentBoard = createSelector(
         },
       }));
 
-    const currentUserMembership = memberships.find((membership) => membership.user.isCurrent);
-    const otherMemberships = memberships.filter((membership) => !membership.user.isCurrent);
-    otherMemberships.sort((a, b) => a.user.name.localeCompare(b.user.name));
-
-    return currentUserMembership ? [currentUserMembership, ...otherMemberships] : otherMemberships;
+    return memberships.sort((a, b) => {
+      if (a.user.isCurrent) return -1;
+      if (b.user.isCurrent) return 1;
+      return a.user.name.localeCompare(b.user.name);
+    });
   },
 );
 
