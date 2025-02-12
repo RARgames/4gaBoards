@@ -55,7 +55,7 @@ export const selectMembershipsForCurrentBoard = createSelector(
       return boardModel;
     }
 
-    return boardModel
+    const memberships = boardModel
       .getOrderedMembershipsQuerySet()
       .toModelArray()
       .map((boardMembershipModel) => ({
@@ -66,6 +66,12 @@ export const selectMembershipsForCurrentBoard = createSelector(
           isCurrent: boardMembershipModel.user.id === currentUserId,
         },
       }));
+
+    const currentUserMembership = memberships.find((membership) => membership.user.isCurrent);
+    const otherMemberships = memberships.filter((membership) => !membership.user.isCurrent);
+    otherMemberships.sort((a, b) => a.user.name.localeCompare(b.user.name));
+
+    return currentUserMembership ? [currentUserMembership, ...otherMemberships] : otherMemberships;
   },
 );
 
