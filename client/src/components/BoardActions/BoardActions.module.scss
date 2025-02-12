@@ -33,11 +33,16 @@
     padding: 16px 20px;
   }
 
+  .githubAction {
+    flex: 0 0 auto;
+    margin-right: 6px;
+  }
+
   .githubGreen {
     fill: var(--textColorGreen);
   }
 
   .githubGrey {
-    fill: var(--textColor0);
+    fill: var(--textColor4);
   }
 }

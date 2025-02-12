@@ -92,7 +92,8 @@ export default class extends BaseModel {
   getIsFiltered() {
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
-    return filterUserIds.length > 0 || filterLabelIds.length > 0;
+    const { searchQuery } = this.board;
+    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchQuery !== '';
   }
 
   getFilteredOrderedCardsModelArray() {
@@ -104,6 +105,7 @@ export default class extends BaseModel {
 
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
+    const { searchQuery } = this.board;
 
     if (filterUserIds.length > 0) {
       cardModels = cardModels.filter((cardModel) => {
@@ -118,6 +120,10 @@ export default class extends BaseModel {
         const labels = cardModel.labels.toRefArray();
         return labels.some((label) => filterLabelIds.includes(label.id));
       });
+    }
+
+    if (searchQuery !== '') {
+      cardModels = cardModels.filter((cardModel) => cardModel.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }
 
     return cardModels;

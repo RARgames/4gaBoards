@@ -6,6 +6,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import CardSearch from '../CardSearch';
 import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';
 import Memberships from '../Memberships';
 import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
@@ -41,6 +42,7 @@ const BoardActions = React.memo(
     onLabelMove,
     onLabelDelete,
     onBoardUpdate,
+    onBoardSearchQueryUpdate,
   }) => {
     const [t] = useTranslation();
 
@@ -53,6 +55,16 @@ const BoardActions = React.memo(
 
     return (
       <div className={classNames(s.wrapper, gStyles.scrollableX)}>
+        <div className={s.githubAction}>
+          <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
+            <Icon
+              type={IconType.Github}
+              size={IconSize.Size14}
+              className={classNames(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
+              title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+            />
+          </Connections>
+        </div>
         <div title={boardData.name} className={classNames(s.title, s.action)}>
           {boardData.name}
         </div>
@@ -67,6 +79,9 @@ const BoardActions = React.memo(
             onUpdate={onMembershipUpdate}
             onDelete={onMembershipDelete}
           />
+        </div>
+        <div className={s.action}>
+          <CardSearch defaultValue="" onBoardSearchQueryUpdate={onBoardSearchQueryUpdate} />
         </div>
         <div className={s.action}>
           <Filters
@@ -84,16 +99,6 @@ const BoardActions = React.memo(
             onLabelMove={onLabelMove}
             onLabelDelete={onLabelDelete}
           />
-        </div>
-        <div className={s.action}>
-          <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
-            <Icon
-              type={IconType.Github}
-              size={IconSize.Size14}
-              className={classNames(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
-              title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
-            />
-          </Connections>
         </div>
         {isProjectManager && (
           <div className={classNames(s.action, s.actionRightFirst)}>
@@ -143,6 +148,7 @@ BoardActions.propTypes = {
   onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
+  onBoardSearchQueryUpdate: PropTypes.func.isRequired,
 };
 
 export default BoardActions;

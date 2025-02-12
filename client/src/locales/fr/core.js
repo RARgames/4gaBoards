@@ -185,6 +185,7 @@ export default {
       filterBoards: 'Filtrer les tableaux',
       filterByLabels_title: 'Filtrer par libellés',
       filterByMembers_title: 'Filtrer par membres',
+      filterCards: 'Filtrer les cartes...',
       filterProjects: 'Filtrer les projets',
       from4gaBoards: 'De 4ga Boards',
       fromTrello: 'De Trello',

@@ -16,7 +16,7 @@ import * as s from './Board.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
 
-const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove, onTaskMove }) => {
+const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove, onTaskMove }) => {
   const [t] = useTranslation();
   const [isListAddOpened, setIsListAddOpened] = useState(false);
   const wrapper = useRef(null);
@@ -36,18 +36,18 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
         return;
       }
 
-      const [, id] = parseDndDestination(draggableId);
+      const [, dndId] = parseDndDestination(draggableId);
 
       switch (type) {
         case DroppableTypes.LIST:
-          onListMove(id, destination.index);
+          onListMove(dndId, destination.index);
 
           break;
         case DroppableTypes.CARD: {
           const [, listId, indexOverride] = parseDndDestination(destination.droppableId);
           const [, sourceListId] = parseDndDestination(source.droppableId);
 
-          onCardMove(id, listId, (listId === sourceListId ? indexOverride - 1 : indexOverride) || destination.index);
+          onCardMove(dndId, listId, (listId === sourceListId ? indexOverride - 1 : indexOverride) || destination.index);
 
           break;
         }
@@ -120,7 +120,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
 
   return (
     <div className={s.boardContainer}>
-      <BoardActionsContainer />
+      <BoardActionsContainer boardId={id} />
       <div className={s.mainWrapper}>
         {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
         <div ref={wrapper} className={classNames(s.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
@@ -161,6 +161,7 @@ const Board = React.memo(({ listIds, isCardModalOpened, canEdit, onListCreate, o
 });
 
 Board.propTypes = {
+  id: PropTypes.string.isRequired,
   listIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isCardModalOpened: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,

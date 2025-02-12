@@ -15,6 +15,9 @@ export default class extends BaseModel {
     isFetching: attr({
       getDefault: () => null,
     }),
+    searchQuery: attr({
+      getDefault: () => '',
+    }),
     projectId: fk({
       to: 'Project',
       as: 'project',
@@ -87,6 +90,10 @@ export default class extends BaseModel {
         payload.boards.forEach((board) => {
           Board.upsert(board);
         });
+
+        break;
+      case ActionTypes.BOARD_SEARCH_QUERY_UPDATE:
+        Board.withId(payload.id).update({ searchQuery: payload.query });
 
         break;
       case ActionTypes.USER_TO_BOARD_FILTER_ADD:

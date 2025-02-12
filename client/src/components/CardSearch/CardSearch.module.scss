@@ -1,0 +1,22 @@
+:global(#app) {
+  .field {
+    width: 100%;
+    padding-right: 34px;
+    height: 36px;
+  }
+
+  .clearButton {
+    margin-left: -30px;
+
+    svg {
+      vertical-align: middle;
+      fill: var(--textColor3);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--textColor4);
+      }
+    }
+  }
+}

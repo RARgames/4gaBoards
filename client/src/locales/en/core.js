@@ -175,6 +175,7 @@ export default {
       filterBoards: 'Filter boards...',
       filterByLabels_title: 'Filter By Labels',
       filterByMembers_title: 'Filter By Members',
+      filterCards: 'Filter cards...',
       filterProjects: 'Filter projects...',
       from4gaBoards: 'From 4ga Boards',
       fromTrello: 'From Trello',

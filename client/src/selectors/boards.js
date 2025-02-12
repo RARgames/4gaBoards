@@ -175,7 +175,7 @@ export const selectFilterLabelsForCurrentBoard = createSelector(
   },
 );
 
-export const selectIsFIlteredForCurrentBoard = createSelector(
+export const selectIsFilteredForCurrentBoard = createSelector(
   orm,
   (state) => selectPath(state).boardId,
   ({ Board }, id) => {
@@ -190,8 +190,9 @@ export const selectIsFIlteredForCurrentBoard = createSelector(
     }
     const filterUsersArray = boardModel.filterUsers.toRefArray();
     const filterLabelsArray = boardModel.filterLabels.toRefArray();
+    const { searchQuery } = boardModel;
 
-    return filterUsersArray.length !== 0 || filterLabelsArray.length !== 0;
+    return filterUsersArray.length !== 0 || filterLabelsArray.length !== 0 || searchQuery !== '';
   },
 );
 
@@ -199,6 +200,49 @@ export const selectIsBoardWithIdExists = createSelector(
   orm,
   (_, id) => id,
   ({ Board }, id) => Board.idExists(id),
+);
+
+export const selectCardsCountForCurrentBoard = createSelector(
+  orm,
+  (state) => selectPath(state).boardId,
+  ({ Board }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const boardModel = Board.withId(id);
+
+    if (!boardModel) {
+      return boardModel;
+    }
+
+    const listModels = boardModel.getOrderedListsQuerySet().toModelArray();
+
+    const cardsCount = listModels.map((list) => list.getOrderedCardsQuerySet().count()).reduce((total, count) => total + count, 0);
+
+    return cardsCount;
+  },
+);
+
+export const selectFilteredCardsCountForCurrentBoard = createSelector(
+  orm,
+  (state) => selectPath(state).boardId,
+  ({ Board }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const boardModel = Board.withId(id);
+
+    if (!boardModel) {
+      return boardModel;
+    }
+
+    const listModels = boardModel.getOrderedListsQuerySet().toModelArray();
+
+    const filteredCardsCount = listModels.map((list) => list.getFilteredOrderedCardsModelArray().length).reduce((total, count) => total + count, 0);
+    return filteredCardsCount;
+  },
 );
 
 export default {
@@ -211,6 +255,8 @@ export default {
   selectListIdsForCurrentBoard,
   selectFilterUsersForCurrentBoard,
   selectFilterLabelsForCurrentBoard,
-  selectIsFIlteredForCurrentBoard,
+  selectIsFilteredForCurrentBoard,
   selectIsBoardWithIdExists,
+  selectCardsCountForCurrentBoard,
+  selectFilteredCardsCountForCurrentBoard,
 };

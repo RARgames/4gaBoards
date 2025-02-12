@@ -7,13 +7,14 @@ import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
-  const { cardId } = selectors.selectPath(state);
+  const { cardId, boardId } = selectors.selectPath(state);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const listIds = selectors.selectListIdsForCurrentBoard(state);
 
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
   return {
+    id: boardId,
     listIds,
     isCardModalOpened: !!cardId,
     canEdit: isCurrentUserEditor,

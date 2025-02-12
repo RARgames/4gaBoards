@@ -145,6 +145,14 @@ exportBoard.failure = (id, error) => ({
   },
 });
 
+const updateBoardSearchQuery = (id, query) => ({
+  type: ActionTypes.BOARD_SEARCH_QUERY_UPDATE,
+  payload: {
+    id,
+    query,
+  },
+});
+
 export default {
   createBoard,
   handleBoardCreate,
@@ -154,4 +162,5 @@ export default {
   deleteBoard,
   handleBoardDelete,
   exportBoard,
+  updateBoardSearchQuery,
 };

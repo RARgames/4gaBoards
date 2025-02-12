@@ -183,6 +183,7 @@ export default {
       filterBoards: 'Filtruj tablice...',
       filterByLabels_title: 'Filtruj wg etykiet',
       filterByMembers_title: 'Filtruj wg członków',
+      filterCards: 'Filtruj karty...',
       filterProjects: 'Filtruj projekty...',
       from4gaBoards: 'Z 4ga Boards',
       fromTrello: 'Z Trello',
