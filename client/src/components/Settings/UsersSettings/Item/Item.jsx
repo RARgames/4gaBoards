@@ -10,6 +10,7 @@ import * as s from './Item.module.scss';
 // TODO get date in correct local region format
 const Item = React.memo(
   ({
+    isCurrentUser,
     email,
     username,
     name,
@@ -49,12 +50,13 @@ const Item = React.memo(
         <Table.Cell title={username}>{username || '-'}</Table.Cell>
         <Table.Cell title={email}>{email}</Table.Cell>
         <Table.Cell>
-          <Radio size={RadioSize.Size12} checked={isAdmin} title={t('common.toggleAdmin')} disabled={demoMode} onChange={handleIsAdminChange} aria-label={t('common.toggleAdmin')} />
+          <Radio size={RadioSize.Size12} checked={isAdmin} title={t('common.toggleAdmin')} disabled={isCurrentUser || demoMode} onChange={handleIsAdminChange} aria-label={t('common.toggleAdmin')} />
         </Table.Cell>
         <Table.Cell title={ssoGoogleEmail}>{ssoGoogleEmail || '-'}</Table.Cell>
         <Table.Cell title={lastLogin}>{lastLogin ? new Date(lastLogin).toLocaleString(undefined, options).replace(/,/g, '').split(' ').reverse().join(' ') : '-'}</Table.Cell>
         <Table.Cell>
           <ActionsPopup
+            isCurrentUser={isCurrentUser}
             user={{
               email,
               username,
@@ -89,6 +91,7 @@ const Item = React.memo(
 );
 
 Item.propTypes = {
+  isCurrentUser: PropTypes.bool.isRequired,
   email: PropTypes.string.isRequired,
   username: PropTypes.string,
   name: PropTypes.string.isRequired,

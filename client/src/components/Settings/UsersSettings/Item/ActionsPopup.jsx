@@ -20,7 +20,7 @@ const StepTypes = {
 };
 
 const ActionsStep = React.memo(
-  ({ user, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete, onClose }) => {
+  ({ isCurrentUser, user, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete, onClose }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
 
@@ -51,6 +51,7 @@ const ActionsStep = React.memo(
         case StepTypes.EDIT_USERNAME:
           return (
             <UserUsernameEditStep
+              usePasswordConfirmation={isCurrentUser}
               defaultData={user.usernameUpdateForm.data}
               username={user.username}
               isSubmitting={user.usernameUpdateForm.isSubmitting}
@@ -64,6 +65,7 @@ const ActionsStep = React.memo(
         case StepTypes.EDIT_EMAIL:
           return (
             <UserEmailEditStep
+              usePasswordConfirmation={isCurrentUser}
               defaultData={user.emailUpdateForm.data}
               email={user.email}
               isSubmitting={user.emailUpdateForm.isSubmitting}
@@ -77,6 +79,7 @@ const ActionsStep = React.memo(
         case StepTypes.EDIT_PASSWORD:
           return (
             <UserPasswordEditStep
+              usePasswordConfirmation={isCurrentUser}
               defaultData={user.passwordUpdateForm.data}
               isSubmitting={user.passwordUpdateForm.isSubmitting}
               error={user.passwordUpdateForm.error}
@@ -106,14 +109,15 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
-        <Popup.Separator />
-        <Button style={ButtonStyle.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />
+        {!isCurrentUser && <Popup.Separator />}
+        {!isCurrentUser && <Button style={ButtonStyle.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />}
       </>
     );
   },
 );
 
 ActionsStep.propTypes = {
+  isCurrentUser: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onUsernameUpdate: PropTypes.func.isRequired,

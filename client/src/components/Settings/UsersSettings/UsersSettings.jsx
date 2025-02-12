@@ -13,6 +13,7 @@ import * as s from './UsersSettings.module.scss';
 
 const UsersSettings = React.memo(
   ({
+    currentUserId,
     userCreateDefaultData,
     userCreateIsSubmitting,
     userCreateError,
@@ -135,6 +136,7 @@ const UsersSettings = React.memo(
               {items.map((item) => (
                 <Item
                   key={item.id}
+                  isCurrentUser={currentUserId === item.id}
                   email={item.email}
                   username={item.username}
                   name={item.name}
@@ -167,6 +169,7 @@ const UsersSettings = React.memo(
 );
 
 UsersSettings.propTypes = {
+  currentUserId: PropTypes.string.isRequired,
   userCreateDefaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   userCreateIsSubmitting: PropTypes.bool.isRequired,
   userCreateError: PropTypes.object, // eslint-disable-line react/forbid-prop-types

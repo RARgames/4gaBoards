@@ -6,7 +6,8 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const users = selectors.selectUsersExceptCurrent(state);
+  const currentUser = selectors.selectCurrentUser(state);
+  const users = selectors.selectUsers(state);
   const coreSettings = selectors.selectCoreSettings(state);
 
   const {
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => {
   } = state;
 
   return {
+    currentUserId: currentUser.id,
     userCreateDefaultData: defaultData,
     userCreateIsSubmitting: isSubmitting,
     userCreateError: error,

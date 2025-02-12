@@ -2,6 +2,9 @@ const Errors = {
   USER_NOT_FOUND: {
     userNotFound: 'User not found',
   },
+  INSUFFICIENT_PERMISSIONS: {
+    insufficientPermissions: 'Insufficient permissions',
+  },
 };
 
 const avatarUrlValidator = (value) => _.isNull(value);
@@ -81,6 +84,9 @@ module.exports = {
     userNotFound: {
       responseType: 'notFound',
     },
+    insufficientPermissions: {
+      responseType: 'forbidden',
+    },
   },
 
   async fn(inputs) {
@@ -98,6 +104,10 @@ module.exports = {
 
     if (!user) {
       throw Errors.USER_NOT_FOUND;
+    }
+
+    if (currentUser.id === user.id && currentUser.isAdmin && inputs.isAdmin === false) {
+      throw Errors.INSUFFICIENT_PERMISSIONS;
     }
 
     const values = {

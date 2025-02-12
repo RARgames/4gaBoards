@@ -26,10 +26,15 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const { currentUser } = this.req;
     let user = await sails.helpers.users.getOne(inputs.id);
 
     if (!user) {
       throw Errors.USER_NOT_FOUND;
+    }
+
+    if (currentUser.id === user.id) {
+      throw Errors.INSUFFICIENT_PERMISSIONS;
     }
 
     if (sails.config.custom.demoMode) {
