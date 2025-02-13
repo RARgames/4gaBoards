@@ -54,6 +54,14 @@ const ActionsStep = React.memo(
       [onUpdate],
     );
 
+    const handleDelete = useCallback(
+      (id) => {
+        onDelete(id);
+        onClose();
+      },
+      [onClose, onDelete],
+    );
+
     if (step) {
       switch (step.type) {
         case StepTypes.EDIT_PERMISSIONS: {
@@ -76,7 +84,7 @@ const ActionsStep = React.memo(
               title={t(membership.user.isCurrent ? leaveConfirmationTitle : deleteConfirmationTitle, { context: 'title' })}
               content={t(membership.user.isCurrent ? leaveConfirmationContent : deleteConfirmationContent)}
               buttonContent={t(membership.user.isCurrent ? leaveConfirmationButtonContent : deleteConfirmationButtonContent)}
-              onConfirm={onDelete}
+              onConfirm={handleDelete}
               onBack={handleBack}
             />
           );
