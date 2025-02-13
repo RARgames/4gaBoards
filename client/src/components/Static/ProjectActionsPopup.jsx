@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
@@ -16,9 +16,22 @@ const StepTypes = {
   ADD: 'ADD',
 };
 
-const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultDataRename, isAdmin, onUpdate, onBoardCreate, onClose }) => {
+const ProjectActionsStep = React.memo(({ sidebarRef, projectId, managedProjects, defaultDataRename, isAdmin, onUpdate, onBoardCreate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
+
+  const handleSidebarScroll = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
+  useEffect(() => {
+    const sidebar = sidebarRef?.current;
+    sidebar?.addEventListener('scroll', handleSidebarScroll);
+
+    return () => {
+      sidebar?.removeEventListener('scroll', handleSidebarScroll);
+    };
+  }, [handleSidebarScroll, sidebarRef]);
 
   if (step) {
     switch (step.type) {
@@ -60,6 +73,7 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
 });
 
 ProjectActionsStep.propTypes = {
+  sidebarRef: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   projectId: PropTypes.string.isRequired,
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
