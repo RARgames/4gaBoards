@@ -9,6 +9,7 @@ import Paths from '../../constants/Paths';
 import { startTimer, stopTimer } from '../../utils/timer';
 import DueDate from '../DueDate';
 import Label from '../Label';
+import MembershipsPopup from '../MembershipsPopup';
 import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
@@ -150,6 +151,8 @@ const Card = React.memo(
       setIsDragOverTask(false);
     }, []);
 
+    const visibleMembersCount = 3;
+
     const contentNode = (
       <>
         <div>
@@ -222,11 +225,32 @@ const Card = React.memo(
           )}
           {users.length > 0 && (
             <span className={classNames(s.attachments, s.attachmentsRight, s.users)}>
-              {users.map((user) => (
-                <span key={user.id} className={classNames(s.attachment, s.attachmentRight, s.user)}>
-                  <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
-                </span>
-              ))}
+              <div className={s.popupWrapper2}>
+                <MembershipsPopup
+                  items={allBoardMemberships}
+                  currentUserIds={users.map((user) => user.id)}
+                  onUserSelect={(userId) => onUserAdd(userId, id)}
+                  onUserDeselect={(userId) => onUserRemove(userId, id)}
+                  offset={0}
+                >
+                  {users.slice(0, visibleMembersCount).map((user) => (
+                    <span key={user.id} className={classNames(s.attachment, s.user)}>
+                      <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
+                    </span>
+                  ))}
+                  {users.length > visibleMembersCount && (
+                    <span
+                      className={classNames(s.attachment, s.user, s.moreUsers)}
+                      title={users
+                        .slice(visibleMembersCount)
+                        .map((user) => user.name)
+                        .join(',\n')}
+                    >
+                      +{users.length - visibleMembersCount}
+                    </span>
+                  )}
+                </MembershipsPopup>
+              </div>
             </span>
           )}
         </div>

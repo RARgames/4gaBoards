@@ -18,6 +18,23 @@
     max-height: 28px;
   }
 
+  .user {
+    margin-right: -8px;
+  }
+
+  .moreUsers {
+    color: var(--textColorWhite);
+    background: rgba(0, 0, 0, 0.24);
+    border-radius: 50%;
+    text-align: center;
+    padding-right: 2px;
+    font-size: 14px;
+    line-height: 28px;
+    width: 28px;
+    height: 28px;
+    margin-right: 4px;
+  }
+
   .headerItems {
     display: inline-block;
     max-width: 100%;

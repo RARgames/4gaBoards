@@ -10,6 +10,10 @@
     width: 10px;
   }
 
+  .popupWrapper2 {
+    display: inline-block;
+  }
+
   .editCardButton {
     opacity: 0;
   }
@@ -24,10 +28,6 @@
 
   .attachmentLeft {
     margin-right: 4px;
-  }
-
-  .attachmentRight {
-    margin-left: 2px;
   }
 
   .attachments {
@@ -134,7 +134,19 @@
   }
 
   .user {
-    margin-right: -10px;
+    margin-right: -8px;
+  }
+
+  .moreUsers {
+    color: var(--textColorWhite);
+    background: rgba(0, 0, 0, 0.24);
+    border-radius: 50%;
+    text-align: center;
+    padding-right: 2px;
+    font-size: 12px;
+    line-height: 25px;
+    width: 24px;
+    height: 24px;
   }
 
   .users {

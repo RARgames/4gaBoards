@@ -397,6 +397,7 @@ const CardModal = React.memo(
       </div>
     );
 
+    const visibleMembersCount = 5;
     const membersNode = (
       <div className={s.headerItems}>
         <div className={s.text}>
@@ -411,11 +412,24 @@ const CardModal = React.memo(
             </div>
           )}
         </div>
-        {users.map((user) => (
-          <span key={user.id} className={s.headerItem}>
-            <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
-          </span>
-        ))}
+        <MembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
+          {users.slice(0, visibleMembersCount).map((user) => (
+            <span key={user.id} className={classNames(s.headerItem, s.user)}>
+              <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
+            </span>
+          ))}
+          {users.length > visibleMembersCount && (
+            <span
+              className={classNames(s.headerItem, s.user, s.moreUsers)}
+              title={users
+                .slice(visibleMembersCount)
+                .map((user) => user.name)
+                .join(',\n')}
+            >
+              +{users.length - visibleMembersCount}
+            </span>
+          )}
+        </MembershipsPopup>
       </div>
     );
 
