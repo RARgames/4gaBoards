@@ -8,7 +8,7 @@ import { Button } from '../../Utils';
 import * as s from './UserItem.module.scss';
 
 const UserItem = React.memo(({ name, avatarUrl, isActive, onSelect }) => (
-  <Button onClick={onSelect} disabled={isActive} className={s.menuItem}>
+  <Button onClick={onSelect} className={s.menuItem}>
     <span className={s.user}>
       <User name={name} avatarUrl={avatarUrl} />
     </span>

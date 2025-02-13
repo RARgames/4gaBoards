@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import User from '../User';
@@ -30,43 +31,106 @@ const Memberships = React.memo(
     onDelete,
   }) => {
     const [t] = useTranslation();
+    const visibleMembersCount = 5;
 
     return (
-      <>
-        <span className={s.users}>
-          {items.map((item) => (
-            <span key={item.id} className={s.user}>
-              <ActionsPopup
-                membership={item}
-                permissionsSelectStep={permissionsSelectStep}
-                leaveButtonContent={leaveButtonContent}
-                leaveConfirmationTitle={leaveConfirmationTitle}
-                leaveConfirmationContent={leaveConfirmationContent}
-                leaveConfirmationButtonContent={leaveConfirmationButtonContent}
-                deleteButtonContent={deleteButtonContent}
-                deleteConfirmationTitle={deleteConfirmationTitle}
-                deleteConfirmationContent={deleteConfirmationContent}
-                deleteConfirmationButtonContent={deleteConfirmationButtonContent}
-                canEdit={canEdit}
-                canLeave={items.length > 1 || canLeaveIfLast}
-                onUpdate={(data) => onUpdate(item.id, data)}
-                onDelete={() => onDelete(item.id)}
-              >
-                <User name={item.user.name} avatarUrl={item.user.avatarUrl} size="large" isDisabled={!item.isPersisted} />
-              </ActionsPopup>
-            </span>
-          ))}
-        </span>
-        {canEdit && (
-          <div className={s.addPopupWrapper}>
-            <AddPopup users={allUsers} currentUserIds={items.map((item) => item.user.id)} permissionsSelectStep={permissionsSelectStep} title={addTitle} onCreate={onCreate}>
-              <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={s.addUser}>
-                <Icon type={IconType.UserAdd} size={IconSize.Size20} />
-              </Button>
-            </AddPopup>
-          </div>
+      <div className={s.users}>
+        {items.slice(0, visibleMembersCount).map((item) => (
+          <span key={item.id} className={s.user}>
+            <ActionsPopup
+              membership={item}
+              permissionsSelectStep={permissionsSelectStep}
+              leaveButtonContent={leaveButtonContent}
+              leaveConfirmationTitle={leaveConfirmationTitle}
+              leaveConfirmationContent={leaveConfirmationContent}
+              leaveConfirmationButtonContent={leaveConfirmationButtonContent}
+              deleteButtonContent={deleteButtonContent}
+              deleteConfirmationTitle={deleteConfirmationTitle}
+              deleteConfirmationContent={deleteConfirmationContent}
+              deleteConfirmationButtonContent={deleteConfirmationButtonContent}
+              canEdit={canEdit}
+              canLeave={items.length > 1 || canLeaveIfLast}
+              onUpdate={(data) => onUpdate(item.id, data)}
+              onDelete={() => onDelete(item.id)}
+            >
+              <User name={item.user.name} avatarUrl={item.user.avatarUrl} size="large" isDisabled={!item.isPersisted} />
+            </ActionsPopup>
+          </span>
+        ))}
+        {!canEdit && items.length > visibleMembersCount && (
+          <Button
+            style={ButtonStyle.Icon}
+            className={classNames(s.addUser, s.moreMembersButton, s.cannotEdit)}
+            title={items
+              .slice(visibleMembersCount)
+              .map((item) => item.user.name)
+              .join(',\n')}
+          >
+            +{items.length - visibleMembersCount}
+          </Button>
         )}
-      </>
+        {canEdit && (
+          <AddPopup
+            memberships={items}
+            users={allUsers}
+            currentUserIds={items.map((item) => item.user.id)}
+            leaveButtonContent={leaveButtonContent}
+            leaveConfirmationTitle={leaveConfirmationTitle}
+            leaveConfirmationContent={leaveConfirmationContent}
+            leaveConfirmationButtonContent={leaveConfirmationButtonContent}
+            deleteButtonContent={deleteButtonContent}
+            deleteConfirmationTitle={deleteConfirmationTitle}
+            deleteConfirmationContent={deleteConfirmationContent}
+            deleteConfirmationButtonContent={deleteConfirmationButtonContent}
+            canEdit={canEdit}
+            canLeave={items.length > 1 || canLeaveIfLast}
+            permissionsSelectStep={permissionsSelectStep}
+            title={addTitle}
+            onCreate={onCreate}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+          >
+            {items.length > visibleMembersCount && (
+              <Button
+                style={ButtonStyle.Icon}
+                className={classNames(s.addUser, s.moreMembersButton)}
+                title={items
+                  .slice(visibleMembersCount)
+                  .map((item) => item.user.name)
+                  .join(',\n')}
+              >
+                +{items.length - visibleMembersCount}
+              </Button>
+            )}
+          </AddPopup>
+        )}
+        {canEdit && (
+          <AddPopup
+            memberships={items}
+            users={allUsers}
+            currentUserIds={items.map((item) => item.user.id)}
+            leaveButtonContent={leaveButtonContent}
+            leaveConfirmationTitle={leaveConfirmationTitle}
+            leaveConfirmationContent={leaveConfirmationContent}
+            leaveConfirmationButtonContent={leaveConfirmationButtonContent}
+            deleteButtonContent={deleteButtonContent}
+            deleteConfirmationTitle={deleteConfirmationTitle}
+            deleteConfirmationContent={deleteConfirmationContent}
+            deleteConfirmationButtonContent={deleteConfirmationButtonContent}
+            canEdit={canEdit}
+            canLeave={items.length > 1 || canLeaveIfLast}
+            permissionsSelectStep={permissionsSelectStep}
+            title={addTitle}
+            onCreate={onCreate}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+          >
+            <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={s.addUser}>
+              <Icon type={IconType.UserAdd} size={IconSize.Size20} />
+            </Button>
+          </AddPopup>
+        )}
+      </div>
     );
   },
 );

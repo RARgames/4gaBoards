@@ -1,0 +1,46 @@
+:global(#app) {
+  .wrapper {
+    min-width: 274px;
+  }
+
+  .backButton {
+    position: absolute;
+    left: 2px;
+    top: 12px;
+    z-index: 2000;
+  }
+
+  .user {
+    display: inline-block;
+    padding: 10px 8px 0px 8px;
+    margin-left: 16px;
+    vertical-align: top;
+  }
+
+  .content {
+    display: inline-block;
+    width: calc(100% - 68px);
+    margin-bottom: 6px;
+  }
+
+  .name {
+    color: var(--textColor0);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.2;
+    padding: 9px 28px 0 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+  }
+
+  .email {
+    color: var(--textColor1);
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 2px 0 2px 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+  }
+}

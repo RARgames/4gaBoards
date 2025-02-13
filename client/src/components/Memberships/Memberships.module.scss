@@ -1,5 +1,6 @@
 :global(#app) {
   .addUser {
+    color: var(--textColorWhite);
     background: rgba(0, 0, 0, 0.24);
     border-radius: 50%;
     box-shadow: none;
@@ -20,11 +21,24 @@
   }
 
   .users {
-    display: inline-block;
-    vertical-align: top;
+    display: flex;
+    margin-right: 4px;
+    margin-left: 4px;
+    align-items: center;
   }
 
-  .addPopupWrapper {
-    display: inline-block;
+  .moreMembersButton {
+    padding-right: 2px;
+    font-size: 14px;
+    line-height: 36px;
+    margin: 0 -6px 0 0;
+  }
+
+  .cannotEdit {
+    cursor: text;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.24);
+    }
   }
 }
