@@ -18,9 +18,9 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ProjectActionsPopup from './ProjectActionsPopup';
 
 import * as gStyles from '../../globalStyles.module.scss';
-import * as s from './MainSidebar.module.scss';
+import * as s from './Sidebar.module.scss';
 
-const MainSidebar = React.memo(
+const Sidebar = React.memo(
   ({
     children,
     settingsOnly,
@@ -340,7 +340,7 @@ const MainSidebar = React.memo(
   },
 );
 
-MainSidebar.propTypes = {
+Sidebar.propTypes = {
   children: PropTypes.node.isRequired,
   settingsOnly: PropTypes.bool,
   path: PropTypes.string.isRequired,
@@ -366,7 +366,7 @@ MainSidebar.propTypes = {
   onUserProjectUpdate: PropTypes.func.isRequired,
 };
 
-MainSidebar.defaultProps = {
+Sidebar.defaultProps = {
   settingsOnly: false,
   currProjectId: undefined,
   currBoardId: undefined,
@@ -374,4 +374,4 @@ MainSidebar.defaultProps = {
   filterTarget: undefined,
 };
 
-export default MainSidebar;
+export default Sidebar;

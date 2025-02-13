@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import MainSidebar from '../components/Static/MainSidebar';
+import Sidebar from '../components/Static/Sidebar';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
@@ -52,4 +52,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
