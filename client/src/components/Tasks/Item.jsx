@@ -76,7 +76,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
         <span
           className={classNames(s.moreMembers, variant === VARIANTS.CARD && s.moreMembersCard)}
           title={users
-            .slice(3)
+            .slice(visibleMembersCount)
             .map((user) => user.name)
             .join(',\n')}
         >
