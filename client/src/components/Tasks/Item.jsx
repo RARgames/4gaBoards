@@ -98,6 +98,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
               disabled={!isPersisted || !canEdit}
               className={s.checkbox}
               onChange={handleToggleChange}
+              title={isCompleted ? t('common.markAsUncompleted') : t('common.markAsCompleted')}
             />
             <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}

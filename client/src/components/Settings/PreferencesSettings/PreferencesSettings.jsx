@@ -66,7 +66,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
             <Table.Row>
               <Table.Cell>{t('common.subscribeToMyOwnCards')}</Table.Cell>
               <Table.Cell aria-label={t('common.toggleSettings')}>
-                <Radio size={RadioSize.Size12} checked={subscribeToOwnCards} onChange={handleSubscribeToOwnCardsChange} />
+                <Radio size={RadioSize.Size12} checked={subscribeToOwnCards} onChange={handleSubscribeToOwnCardsChange} title={t('common.toggleSubscribeToMyOwnCards')} />
               </Table.Cell>
               <Table.Cell>{subscribeToOwnCards ? t('common.enabled') : t('common.disabled')}</Table.Cell>
               <Table.Cell>{t('common.descriptionSubscribeToMyOwnCards')}</Table.Cell>
@@ -74,7 +74,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
             <Table.Row>
               <Table.Cell>{t('common.sidebarCompact')}</Table.Cell>
               <Table.Cell aria-label={t('common.toggleSettings')}>
-                <Radio size={RadioSize.Size12} checked={sidebarCompact} onChange={handleCompactSidebarChange} />
+                <Radio size={RadioSize.Size12} checked={sidebarCompact} onChange={handleCompactSidebarChange} title={t('common.toggleCompactSidebar')} />
               </Table.Cell>
               <Table.Cell>{sidebarCompact ? t('common.enabled') : t('common.disabled')}</Table.Cell>
               <Table.Cell>{t('common.descriptionCompactSidebar')}</Table.Cell>

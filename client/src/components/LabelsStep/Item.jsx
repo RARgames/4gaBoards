@@ -36,6 +36,7 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
               className={classNames(s.name, isActive && s.nameActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
               onClick={handleToggleClick}
+              title={name}
             >
               {name}
             </span>

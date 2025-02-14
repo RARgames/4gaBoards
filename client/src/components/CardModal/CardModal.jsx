@@ -389,7 +389,9 @@ const CardModal = React.memo(
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div className={classNames(canEdit && gStyles.cursorPointer)} onClick={handleDropdownClick}>
-              <div className={classNames(s.headerListField)}>{selectedList.name}</div>
+              <div className={classNames(s.headerListField)} title={selectedList.name}>
+                {selectedList.name}
+              </div>
               <Icon type={IconType.TriangleDown} title={t('common.moveCardToList')} size={IconSize.Size10} className={s.headerListFieldIcon} />
             </div>
           </Dropdown>

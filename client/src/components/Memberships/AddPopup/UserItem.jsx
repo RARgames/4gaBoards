@@ -12,7 +12,9 @@ const UserItem = React.memo(({ name, avatarUrl, isActive, onSelect }) => (
     <span className={s.user}>
       <User name={name} avatarUrl={avatarUrl} />
     </span>
-    <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)}>{name}</div>
+    <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)} title={name}>
+      {name}
+    </div>
   </Button>
 ));
 

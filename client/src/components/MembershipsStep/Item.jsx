@@ -17,7 +17,7 @@ const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDese
   }, [isActive, onUserSelect, onUserDeselect]);
 
   return (
-    <Button onClick={handleToggleClick} disabled={!isPersisted} className={s.menuItem}>
+    <Button onClick={handleToggleClick} disabled={!isPersisted} className={s.menuItem} title={user.name}>
       <span className={s.user}>
         <User name={user.name} avatarUrl={user.avatarUrl} />
       </span>

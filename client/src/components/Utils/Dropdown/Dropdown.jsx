@@ -299,6 +299,7 @@ const Dropdown = React.forwardRef(
             onBlur={handleBlur}
             readOnly={!isSearchable}
             placeholder={getDisplay()}
+            title={getDisplay()}
             {...props} // eslint-disable-line react/jsx-props-no-spreading
           />
           <Button

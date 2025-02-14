@@ -198,17 +198,17 @@ const Card = React.memo(
             <span className={s.attachments}>
               {description && (
                 <span className={classNames(s.attachment, s.attachmentLeft)}>
-                  <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={s.detailsIcon} />
+                  <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsDescription')} />
                 </span>
               )}
               {attachmentsCount > 0 && (
                 <span className={classNames(s.attachment, s.attachmentLeft)}>
-                  <Icon type={IconType.Attach} size={IconSize.Size14} className={s.detailsIcon} />
+                  <Icon type={IconType.Attach} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsAttachments', { count: attachmentsCount })} />
                 </span>
               )}
               {commentCount > 0 && (
                 <span className={classNames(s.attachment, s.attachmentLeft)}>
-                  <Icon type={IconType.Comment} size={IconSize.Size14} className={s.detailsIcon} />
+                  <Icon type={IconType.Comment} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsComments', { count: commentCount })} />
                 </span>
               )}
               {dueDate && (
