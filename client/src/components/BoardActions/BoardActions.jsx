@@ -61,7 +61,7 @@ const BoardActions = React.memo(
               type={IconType.Github}
               size={IconSize.Size14}
               className={classNames(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
-              title={boardData.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+              title={boardData.isGithubConnected ? t('common.connectedToGithub', { repo: boardData.githubRepo }) : t('common.notConnectedToGithub')}
             />
           </Connections>
         </div>

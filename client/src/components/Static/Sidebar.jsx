@@ -175,7 +175,7 @@ const Sidebar = React.memo(
                                         type={IconType.Github}
                                         size={IconSize.Size13}
                                         className={classNames(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
-                                        title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+                                        title={board.isGithubConnected ? t('common.connectedToGithub', { repo: board.githubRepo }) : t('common.notConnectedToGithub')}
                                       />
                                     </Connections>
                                   ) : (
