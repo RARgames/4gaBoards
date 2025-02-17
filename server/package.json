@@ -19,7 +19,7 @@
     "dotenv": "^16.4.7",
     "dotenv-cli": "^8.0.0",
     "fast-csv": "^5.0.2",
-    "filenamify": "^4.3.0",
+    "filenamify": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
     "lodash": "^4.17.21",
