@@ -119,7 +119,7 @@
     "@testing-library/user-event": "^14.5.2",
     "chai": "^5.1.2",
     "eslint": "^9.20.1",
-    "eslint-plugin-perfectionist": "^4.6.0",
+    "eslint-plugin-perfectionist": "^4.9.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
