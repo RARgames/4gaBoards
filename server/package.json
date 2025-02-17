@@ -51,7 +51,7 @@
     "nodemon": "^3.1.9"
   },
   "engines": {
-    "node": "^20.10"
+    "node": "^22.14"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
