@@ -1,13 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
-const moveFile = require('move-file');
 const { v4: uuid } = require('uuid');
 const sharp = require('sharp');
 
 const processFilename = async (filename) => {
   const { default: filenamify } = await import('filenamify');
   return filenamify(filename);
+};
+
+const moveFile = async (...args) => {
+  const moveFileModule = await import('move-file');
+  return moveFileModule.moveFile(...args);
 };
 
 module.exports = {
