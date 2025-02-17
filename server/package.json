@@ -17,7 +17,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
-    "dotenv-cli": "^7.4.4",
+    "dotenv-cli": "^8.0.0",
     "fast-csv": "^5.0.2",
     "filenamify": "^4.3.0",
     "jsonwebtoken": "^9.0.2",
