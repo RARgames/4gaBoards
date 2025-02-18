@@ -608,6 +608,7 @@
           return;
         }
         Object.defineProperty(self, option, {
+          enumerable: true,
           get() {
             if (option == 'url') {
               return _opts[option] || (self._raw && self._raw.io && self._raw.io.uri);
@@ -810,7 +811,7 @@
       })(function goAheadAndActuallyConnect() {
         // Now that we're ready to connect, create a raw underlying Socket
         // using Socket.io and save it as `_raw` (this will start it connecting)
-        self._raw = io(self.url, self);
+        self._raw = io.connect(self.url, self);
 
         // If the low-level transport throws an error _while connecting_, then set the _isConnecting flag
         // to false (since we're no longer connecting with any chance of success anyway).
