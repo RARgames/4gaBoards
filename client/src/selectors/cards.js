@@ -175,7 +175,8 @@ export const selectCurrentCard = createSelector(
 export const selectUsersForCurrentCard = createSelector(
   orm,
   (state) => selectPath(state).cardId,
-  ({ Card }, id) => {
+  (state) => selectCurrentUserId(state),
+  ({ Card }, id, currentUserId) => {
     if (!id) {
       return id;
     }
@@ -186,7 +187,11 @@ export const selectUsersForCurrentCard = createSelector(
       return cardModel;
     }
 
-    return cardModel.users.toRefArray();
+    return cardModel.users.toRefArray().sort((a, b) => {
+      if (a.id === currentUserId) return -1;
+      if (b.id === currentUserId) return 1;
+      return a.name.localeCompare(b.name);
+    });
   },
 );
 
