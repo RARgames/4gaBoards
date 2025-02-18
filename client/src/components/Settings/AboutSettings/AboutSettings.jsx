@@ -50,7 +50,7 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
         {demoMode && <div className={s.demoMode}>{t('common.demoMode')}</div>}
         <div className={s.links}>
           <div className={s.link}>
-            <ExternalLink href={i18n && i18n.resolvedLanguage === 'pl' ? 'https://docs.4gaboards.com/pl/home' : 'https://docs.4gaboards.com/en/home'}>{t('common.docs')}</ExternalLink>
+            <ExternalLink href={i18n && i18n.resolvedLanguage === 'pl' ? 'https://docs.4gaboards.com/pl' : 'https://docs.4gaboards.com'}>{t('common.docs')}</ExternalLink>
           </div>
           <div className={s.link}>
             <ExternalLink href="https://4gaboards.com">{t('common.website')}</ExternalLink>
