@@ -31,14 +31,19 @@ export const makeSelectUsersByCardId = () =>
   createSelector(
     orm,
     (_, id) => id,
-    ({ Card }, id) => {
+    (state) => selectCurrentUserId(state),
+    ({ Card }, id, currentUserId) => {
       const cardModel = Card.withId(id);
 
       if (!cardModel) {
         return cardModel;
       }
 
-      return cardModel.users.toRefArray();
+      return cardModel.users.toRefArray().sort((a, b) => {
+        if (a.id === currentUserId) return -1;
+        if (b.id === currentUserId) return 1;
+        return a.name.localeCompare(b.name);
+      });
     },
   );
 
