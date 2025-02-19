@@ -33,9 +33,11 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
 
   const handleCancel = useCallback(() => {
     setValue(defaultValue);
-    submit('');
+    if (value !== '') {
+      submit('');
+    }
     onFilterQueryClear();
-  }, [setValue, defaultValue, submit, onFilterQueryClear]);
+  }, [setValue, defaultValue, value, onFilterQueryClear, submit]);
 
   const handleChange = useCallback(
     (event) => {
