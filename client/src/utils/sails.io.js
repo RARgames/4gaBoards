@@ -640,6 +640,7 @@
 
       // Set up "eventQueue" to hold event handlers which have not been set on the actual raw socket yet.
       self.eventQueue = {};
+      self.managerEventQueue = {};
 
       // Listen for special `parseError` event sent from sockets hook on the backend
       // if an error occurs but a valid callback was not received from the client
@@ -880,9 +881,7 @@
             });
           }
 
-          // If there is a list of request contexts, indicate that their callbacks have been
-          // called and then wipe the list.  This prevents errors in the edge case of a response
-          // somehow coming back after the socket reconnects.
+          // If there is a list of request contexts, indicate that their callbacks have been called and then wipe the list. This prevents errors in the edge case of a response somehow coming back after the socket reconnects.
           if (requestCtxs.length) {
             requestCtxs.forEach(function (requestCtx) {
               requestCtx.calledCb = true;
@@ -1010,16 +1009,19 @@
     SailsSocket.prototype.replay = function () {
       const self = this;
 
-      // Pass events and a reference to the request queue
-      // off to the self._raw for consumption
+      // Pass events and a reference to the request queue off to the self._raw for consumption
       for (const evName in self.eventQueue) {
         for (const i in self.eventQueue[evName]) {
           self._raw.on(evName, self.eventQueue[evName][i]);
         }
       }
+      for (const evName in self.managerEventQueue) {
+        for (const i in self.managerEventQueue[evName]) {
+          self._raw.io.on(evName, self.managerEventQueue[evName][i]);
+        }
+      }
 
-      // Bind a one-time function to run the request queue
-      // when the self._raw connects.
+      // Bind a one-time function to run the request queue when the self._raw connects.
       if (!self.isConnected()) {
         self._raw.once('connect', runRequestQueue.bind(self, self));
       }
@@ -1056,6 +1058,30 @@
     };
 
     /**
+     * Chainable method to bind an event to the socket manager.
+     *
+     * @param  {String}   evName [event name]
+     * @param  {Function} fn     [event handler function]
+     * @return {SailsSocket}
+     */
+    SailsSocket.prototype.onManager = function (evName, fn) {
+      // Bind the event to the raw underlying socket if possible.
+      if (this._raw) {
+        this._raw.io.on(evName, fn);
+        return this;
+      }
+
+      // Otherwise queue the event binding.
+      if (!this.managerEventQueue[evName]) {
+        this.managerEventQueue[evName] = [fn];
+      } else {
+        this.managerEventQueue[evName].push(fn);
+      }
+
+      return this;
+    };
+
+    /**
      * Chainable method to unbind an event from the socket.
      *
      * @param  {String}   evName [event name]
@@ -1078,6 +1104,28 @@
     };
 
     /**
+     * Chainable method to unbind an event from the socket manager.
+     *
+     * @param  {String}   evName [event name]
+     * @param  {Function} fn     [event handler function]
+     * @return {SailsSocket}
+     */
+    SailsSocket.prototype.offManager = function (evName, fn) {
+      // Unbind the event from the raw underlying socket if possible.
+      if (this._raw) {
+        this._raw.io.off(evName, fn);
+        return this;
+      }
+
+      // Otherwise unqueue the queued event binding.
+      if (this.managerEventQueue[evName] && this.managerEventQueue[evName].indexOf(fn) > -1) {
+        this.managerEventQueue[evName].splice(this.managerEventQueue[evName].indexOf(fn), 1);
+      }
+
+      return this;
+    };
+
+    /**
      * Chainable method to unbind all events from the socket.
      *
      * @return {SailsSocket}
@@ -1091,6 +1139,7 @@
 
       // Otherwise queue the event binding.
       this.eventQueue = {};
+      this.managerEventQueue = {};
 
       return this;
     };
@@ -1268,9 +1317,6 @@
         'options.params :: e.g. { emailAddress: "mike@example.com" }' +
         '\n' +
         'options.headers :: e.g. { "x-my-custom-header": "some string" }';
-      // Old usage:
-      // var usage = 'Usage:\n socket.'+(options.method||'request')+'('+
-      //   ' destinationURL, [dataToSend], [fnToCallWhenComplete] )';
 
       // Validate options and callback
       if (typeof cb !== 'undefined' && typeof cb !== 'function') {
@@ -1358,20 +1404,6 @@
 
       // Send the request.
       _emitFrom(this, requestCtx);
-    };
-
-    /**
-     * Socket.prototype._request
-     *
-     * Simulate HTTP over Socket.io.
-     *
-     * @api private
-     * @param  {[type]}   options [description]
-     * @param  {Function} cb      [description]
-     */
-    // eslint-disable-next-line no-unused-vars
-    SailsSocket.prototype._request = function (options, cb) {
-      throw new Error('`_request()` was a private API deprecated as of v0.11 of the sails.io.js client. Use `.request()` instead.');
     };
 
     //  ██╗ ██████╗    ███████╗ █████╗ ██╗██╗     ███████╗

@@ -193,7 +193,7 @@ const createSocketEventsChannel = () =>
     });
 
     socket.on('disconnect', handleDisconnect);
-    socket.on('reconnect', handleReconnect);
+    socket.onManager('reconnect', handleReconnect);
 
     socket.on('coreSettingsUpdate', handleCoreSettingsUpdate);
 
@@ -258,7 +258,7 @@ const createSocketEventsChannel = () =>
 
     return () => {
       socket.off('disconnect', handleDisconnect);
-      socket.off('reconnect', handleReconnect);
+      socket.offManager('reconnect', handleReconnect);
 
       socket.off('coreSettingsUpdate', handleCoreSettingsUpdate);
 
