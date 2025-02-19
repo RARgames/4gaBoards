@@ -285,11 +285,7 @@
      * @api private
      * @factory
      */
-    function LoggerFactory(options) {
-      options = options || {
-        prefix: true,
-      };
-
+    function LoggerFactory() {
       // If `console.log` is not accessible, `log` is a noop.
       if (typeof console !== 'object' || typeof console.log !== 'function' || typeof console.log.bind !== 'function') {
         return function noop() {};
@@ -301,26 +297,14 @@
         // All logs are disabled when `io.sails.environment = 'production'`.
         if (io.sails.environment === 'production') return;
 
-        // Add prefix to log messages (unless disabled)
-        const PREFIX = '';
-        if (options.prefix && PREFIX !== '') {
-          args.unshift(PREFIX);
-        }
-
         // Call wrapped logger
         console.log.bind(console).apply(this, args);
       };
     }
-
     // Create a private logger instance
     const consolog = LoggerFactory();
-    consolog.noPrefix = LoggerFactory({
-      prefix: false,
-    });
 
     /**
-     * What is the `requestQueue`?
-     *
      * The request queue is used to simplify app-level connection logic i.e. so you don't have to wait for the socket to be connected to start trying to synchronize data.
      * @api private
      * @param  {SailsSocket}  socket
@@ -542,8 +526,7 @@
 
       // Listen for special `parseError` event sent from sockets hook on the backend if an error occurs but a valid callback was not received from the client (i.e. so the server had no other way to send back the error information)
       self.on('sails:parseError', function (err) {
-        consolog('Sails encountered an error parsing a socket message sent from this client, and did not have access to a callback function to respond with.');
-        consolog('Error details:', err);
+        consolog('Sails encountered an error parsing a socket message sent from this client, and did not have access to a callback function to respond with.\nError details:', err);
       });
 
       // FUTURE:
@@ -552,9 +535,7 @@
 
     /**
      * `SailsSocket.prototype._connect()`
-     *
      * Begin connecting this socket to the server.
-     *
      * @api private
      */
     SailsSocket.prototype._connect = function () {
@@ -707,7 +688,7 @@
         // 'connect' event is triggered when the socket establishes a connection successfully.
         self.on('connect', function socketConnected() {
           self._isConnecting = false;
-          consolog.noPrefix(`\n\nNow connected to ${self.url ? self.url : 'Sails'}. (using sails.io.js ${io.sails.sdk.platform} SDK @v${io.sails.sdk.version})\nConnected at: ${new Date()}\n\n\n`);
+          consolog(`\n\nNow connected to ${self.url ? self.url : 'Sails'}. (using sails.io.js ${io.sails.sdk.platform} SDK @v${io.sails.sdk.version})\nConnected at: ${new Date()}\n\n\n`);
         });
 
         self.on('disconnect', function () {
@@ -741,11 +722,8 @@
             });
           }
 
-          consolog.noPrefix(
-            `\n\nSocket was disconnected from Sails.` +
-              `\nUsually, this is due to one of the following reasons:` +
-              `\n-> the server ${self.url ? `${self.url} ` : ''}was taken down` +
-              `\n-> your browser lost internet connectivity\n\n\n`,
+          consolog(
+            `\n\nSocket was disconnected from Sails.\nUsually, this is due to one of the following reasons:\n-> the server ${self.url ? `${self.url} ` : ''}was taken down\n-> your browser lost internet connectivity\n\n\n`,
           );
         });
 
