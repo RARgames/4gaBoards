@@ -4,7 +4,6 @@ import Config from '../constants/Config';
 
 const http = {};
 
-// TODO: add all methods
 ['POST', 'GET'].forEach((method) => {
   http[method.toLowerCase()] = (url, data = {}, headers = {}) => {
     const isPostMethod = method === 'POST';
