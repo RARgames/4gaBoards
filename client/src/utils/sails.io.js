@@ -923,7 +923,7 @@
         });
 
         // 'error' event is triggered if connection can not be established (usually a failed authorization, due to a missing or invalid cookie)
-        self.on('error', function failedToConnect(err) {
+        self._raw.io.on('error', function failedToConnect(err) {
           self._isConnecting = false;
           /// /////////////////////////////////////////////////////////////////////////////////
           // Note:
