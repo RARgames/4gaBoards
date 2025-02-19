@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle, no-undef, no-param-reassign, prefer-rest-params, guard-for-in, no-restricted-syntax, prefer-spread, consistent-return, vars-on-top, no-var, no-empty, no-useless-escape, no-prototype-builtins, func-names, no-console */
-// TODO This repo is no longer updated: https://github.com/balderdashy/sails.io.js/blob/master/sails.io.js
+// TODO This file is a temp fix, because this repo is no longer updated: https://github.com/balderdashy/sails.io.js
+// FUTURE Switch to omit this file or create a new repo
 /// ///////////////////////////////////////////////////////////////////////////////////
 //                                                                                //
 //  ███████╗ █████╗ ██╗██╗     ███████╗   ██╗ ██████╗         ██╗███████╗         //
@@ -376,7 +377,7 @@
 
         // Add prefix to log messages (unless disabled)
         const PREFIX = '';
-        if (options.prefix) {
+        if (options.prefix && PREFIX !== '') {
           args.unshift(PREFIX);
         }
 
@@ -848,33 +849,10 @@
         // Replay event bindings from the eager socket
         self.replay();
 
-        /**
-         * 'connect' event is triggered when the socket establishes a connection
-         *  successfully.
-         */
+        // 'connect' event is triggered when the socket establishes a connection successfully.
         self.on('connect', function socketConnected() {
           self._isConnecting = false;
-          consolog.noPrefix(
-            `\n` +
-              `\n` +
-              // '    |>    ' + '\n' +
-              // '  \\___/  '+️
-              // '\n'+
-              `  |>    Now connected to ${self.url ? self.url : 'Sails'}.` +
-              `\n` +
-              `\\___/   For help, see: http://bit.ly/2q0QDpf` +
-              `\n` +
-              `        (using sails.io.js ${io.sails.sdk.platform} SDK @v${io.sails.sdk.version})` +
-              `\n` +
-              `         Connected at: ${new Date()}\n` +
-              `\n` +
-              `\n` +
-              // '\n'+
-              ``,
-            // ' ⚓︎ (development mode)'
-            // 'e.g. to send a GET request to Sails via WebSockets, run:'+ '\n' +
-            // '`io.socket.get("/foo", function serverRespondedWith (body, jwr) { console.log(body); })`'+ '\n' +
-          );
+          consolog.noPrefix(`\n\nNow connected to ${self.url ? self.url : 'Sails'}. (using sails.io.js ${io.sails.sdk.platform} SDK @v${io.sails.sdk.version})\nConnected at: ${new Date()}\n\n\n`);
         });
 
         self.on('disconnect', function () {
@@ -911,18 +889,19 @@
             });
           }
 
-          consolog('====================================');
-          consolog('Socket was disconnected from Sails.');
-          consolog(`Usually, this is due to one of the following reasons:\n -> the server ${self.url ? `${self.url} ` : ''}was taken down\n -> your browser lost internet connectivity`);
-          consolog('====================================');
+          consolog.noPrefix(
+            `\n\nSocket was disconnected from Sails.` +
+              `\nUsually, this is due to one of the following reasons:` +
+              `\n-> the server ${self.url ? `${self.url} ` : ''}was taken down` +
+              `\n-> your browser lost internet connectivity\n\n\n`,
+          );
         });
 
-        self.on('reconnecting', function (numAttempts) {
-          consolog(`\nSocket is trying to reconnect to ${self.url ? self.url : 'Sails'}...\n_-|>_-  (attempt #${numAttempts})\n\n`);
+        self._raw.io.on('reconnect_attempt', function (numAttempts) {
+          consolog(`\n\nSocket is trying to reconnect to ${self.url ? self.url : 'Sails'}... (attempt #${numAttempts})\n\n\n`);
         });
 
-        // eslint-disable-next-line no-unused-vars
-        self.on('reconnect', function (transport, numAttempts) {
+        self._raw.io.on('reconnect', function (numAttempts) {
           if (!self._isConnecting) {
             self.on('connect', runRequestQueue.bind(self, self));
           }
@@ -940,12 +919,10 @@
             numSecsOffline = '???';
           }
 
-          consolog(`\n |>    Socket reconnected successfully after\n\\___/   being offline at least ${numSecsOffline} seconds.\n\n`);
+          consolog(`\n\nSocket reconnected successfully (attempt #${numAttempts}) after being offline at least ${numSecsOffline} seconds.\n\n\n`);
         });
 
-        // 'error' event is triggered if connection can not be established.
-        // (usually because of a failed authorization, which is in turn
-        // usually due to a missing or invalid cookie)
+        // 'error' event is triggered if connection can not be established (usually a failed authorization, due to a missing or invalid cookie)
         self.on('error', function failedToConnect(err) {
           self._isConnecting = false;
           /// /////////////////////////////////////////////////////////////////////////////////
