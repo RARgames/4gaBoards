@@ -45,6 +45,6 @@ VOLUME /app/public/user-avatars
 VOLUME /app/public/project-background-images
 VOLUME /app/private/attachments
 
+HEALTHCHECK --interval=1s --timeout=5s --start-period=8s --retries=50 CMD curl -fs http://localhost:1337 || exit 1
 EXPOSE 1337
-
 CMD ["./start.sh"]
