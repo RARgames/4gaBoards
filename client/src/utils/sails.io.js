@@ -11,7 +11,6 @@
 
 /*
  * Note that this script is completely optional, but it is handy if you're using WebSockets from the browser to talk to your Sails server.
- *
  * For tips and documentation, visit: http://sailsjs.com/documentation/reference/web-sockets/socket-client
  * ------------------------------------------------------------------------
  * This file allows you to send and receive socket.io messages to & from Sails by simulating a REST client interface on top of socket.io.
@@ -48,13 +47,6 @@
   ];
 
   /**
-   * Constant containing the names of properties on `io.sails` which may be configured using HTML attributes on the script tag which loaded this file.
-   * @type {Array}
-   * (this is unused if loading from node.js)
-   */
-  const CONFIGURABLE_VIA_HTML_ATTR = ['autoConnect', 'reconnection', 'environment', 'headers', 'url', 'transports', 'path'];
-
-  /**
    * Constant containing the names of querystring parameters sent when connecting any SailsSocket.
    * @type {Dictionary}
    */
@@ -83,142 +75,6 @@
   // Build `versionString` (a querystring snippet) by combining SDK_INFO and CONNECTION_METADATA_PARAMS.
   SDK_INFO.versionString = `${CONNECTION_METADATA_PARAMS.version}=${SDK_INFO.version}&${CONNECTION_METADATA_PARAMS.platform}=${SDK_INFO.platform}&${CONNECTION_METADATA_PARAMS.language}=${SDK_INFO.language}`;
 
-  //   █████╗ ██████╗ ███████╗ ██████╗ ██████╗ ██████╗     ██╗  ██╗████████╗███╗   ███╗██╗
-  //  ██╔══██╗██╔══██╗██╔════╝██╔═══██╗██╔══██╗██╔══██╗    ██║  ██║╚══██╔══╝████╗ ████║██║
-  //  ███████║██████╔╝███████╗██║   ██║██████╔╝██████╔╝    ███████║   ██║   ██╔████╔██║██║
-  //  ██╔══██║██╔══██╗╚════██║██║   ██║██╔══██╗██╔══██╗    ██╔══██║   ██║   ██║╚██╔╝██║██║
-  //  ██║  ██║██████╔╝███████║╚██████╔╝██║  ██║██████╔╝    ██║  ██║   ██║   ██║ ╚═╝ ██║███████╗
-  //  ╚═╝  ╚═╝╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═════╝     ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝╚══════╝
-  //
-  //   █████╗ ████████╗████████╗██████╗ ██╗██████╗ ██╗   ██╗████████╗███████╗███████╗
-  //  ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██║██╔══██╗██║   ██║╚══██╔══╝██╔════╝██╔════╝
-  //  ███████║   ██║      ██║   ██████╔╝██║██████╔╝██║   ██║   ██║   █████╗  ███████╗
-  //  ██╔══██║   ██║      ██║   ██╔══██╗██║██╔══██╗██║   ██║   ██║   ██╔══╝  ╚════██║
-  //  ██║  ██║   ██║      ██║   ██║  ██║██║██████╔╝╚██████╔╝   ██║   ███████╗███████║
-  //  ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝╚═════╝  ╚═════╝    ╚═╝   ╚══════╝╚══════╝
-  //
-  //  ███████╗██████╗  ██████╗ ███╗   ███╗      ██╗███████╗ ██████╗██████╗ ██╗██████╗ ████████╗██╗
-  //  ██╔════╝██╔══██╗██╔═══██╗████╗ ████║     ██╔╝██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝╚██╗
-  //  █████╗  ██████╔╝██║   ██║██╔████╔██║    ██╔╝ ███████╗██║     ██████╔╝██║██████╔╝   ██║    ╚██╗
-  //  ██╔══╝  ██╔══██╗██║   ██║██║╚██╔╝██║    ╚██╗ ╚════██║██║     ██╔══██╗██║██╔═══╝    ██║    ██╔╝
-  //  ██║     ██║  ██║╚██████╔╝██║ ╚═╝ ██║     ╚██╗███████║╚██████╗██║  ██║██║██║        ██║   ██╔╝
-  //  ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝      ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   ╚═╝
-  //
-  //
-  // If available, grab the DOM element for the script tag which imported this file. (skip this if this SDK is being used outside of the DOM, i.e. in a Node process)
-  //
-  // This is used below to parse client-side sails.io.js configuration encoded as HTML attributes, as well as grabbing hold of the URL from whence the SDK was fetched.
-  const thisScriptTag = (function () {
-    if (typeof window !== 'object' || typeof window.document !== 'object' || typeof window.document.getElementsByTagName !== 'function') {
-      return null;
-    }
-
-    // Return the URL of the last script loaded (i.e. this one) (this must run before nextTick; see http://stackoverflow.com/a/2976714/486547)
-    const allScriptsCurrentlyInDOM = window.document.getElementsByTagName('script');
-    return allScriptsCurrentlyInDOM[allScriptsCurrentlyInDOM.length - 1];
-  })();
-
-  // Variables to contain src URL and other script tag config (for use below).
-  let urlThisScriptWasFetchedFrom = '';
-  const scriptTagConfig = {};
-
-  if (thisScriptTag) {
-    // Save the URL that this script was fetched from.
-    urlThisScriptWasFetchedFrom = thisScriptTag.src;
-
-    // Now parse the most common client-side configuration settings from the script tag where they may be encoded as HTML attributes.
-    //
-    // Any configuration which may be provided as an HTML attribute may also be provided prefixed with `data-`.  This is for folks who need to support browsers that have issues with nonstandard HTML attributes (or if the idea of using nonstandard HTML attributes just creeps you out)
-    //
-    // If a `data-` prefixed attr is provided, it takes precedence. (this is so that if you are already using one of these HTML attrs for some reason, you can keep it as-is and override it using `data-`. If you are using the `data-` prefixed version for some other purpose... well, in that case you'll just have to configure programmatically using `io.sails` instead.)
-    CONFIGURABLE_VIA_HTML_ATTR.forEach(function (configKey) {
-      scriptTagConfig[configKey] = (function () {
-        // Support 'data-' prefixed or normal attributes. (prefixed versions take precedence if provided)
-        let htmlAttrVal = thisScriptTag.getAttribute(`data-${configKey}`);
-        if (!htmlAttrVal) {
-          htmlAttrVal = thisScriptTag.getAttribute(configKey);
-        }
-
-        // The HTML attribute value should always be a string or `null`. We'll try to parse it as JSON and use that, but worst case fall back
-        // to the default situation of it being a string.
-        if (typeof htmlAttrVal === 'string') {
-          try {
-            return JSON.parse(htmlAttrVal);
-          } catch {
-            return htmlAttrVal;
-          }
-        }
-        // If `null` was returned from getAttribute(), it means that the HTML attribute was not specified, so we treat it as undefined (which will cause the property to be removed below)
-        else if (htmlAttrVal === null) {
-          return undefined;
-        }
-        // Any other contingency shouldn't be possible:
-        // - if no quotes are used in the HTML attribute, it still comes in as a string.
-        // - if no RHS is provided for the attribute, it still comes in as "" (empty string)
-        // (but we still handle this with an explicit error just in case--for debugging and support purposes)
-        else throw new Error(`sails.io.js :: Unexpected/invalid script tag configuration for \`${configKey}\`: \`${htmlAttrVal}\` (a \`${typeof htmlAttrVal}\`). Should be a string.`);
-      })();
-
-      if (scriptTagConfig[configKey] === undefined) {
-        delete scriptTagConfig[configKey];
-      }
-    });
-
-    // Now that they've been parsed, do an extremely lean version of logical type validation/coercion of provided values.
-
-    // `autoConnect`
-    if (typeof scriptTagConfig.autoConnect !== 'undefined') {
-      if (scriptTagConfig.autoConnect === '') {
-        // Special case for empty string.  It means `true` (see above).
-        scriptTagConfig.autoConnect = true;
-      } else if (typeof scriptTagConfig.autoConnect !== 'boolean') {
-        throw new Error(
-          `sails.io.js :: Unexpected/invalid configuration for \`autoConnect\` provided in script tag: \`${scriptTagConfig.autoConnect}\` (a \`${typeof scriptTagConfig.autoConnect}\`). Should be a boolean.`,
-        );
-      }
-    }
-
-    // `environment`
-    if (typeof scriptTagConfig.environment !== 'undefined') {
-      if (typeof scriptTagConfig.environment !== 'string') {
-        throw new Error(
-          `sails.io.js :: Unexpected/invalid configuration for \`environment\` provided in script tag: \`${scriptTagConfig.environment}\` (a \`${typeof scriptTagConfig.environment}\`). Should be a string.`,
-        );
-      }
-    }
-
-    // `headers`
-    if (typeof scriptTagConfig.headers !== 'undefined') {
-      if (typeof scriptTagConfig.headers !== 'object' || Array.isArray(scriptTagConfig.headers)) {
-        throw new Error(
-          `sails.io.js :: Unexpected/invalid configuration for \`headers\` provided in script tag: \`${
-            scriptTagConfig.headers
-          }\` (a \`${typeof scriptTagConfig.headers}\`). Should be a JSON-compatible dictionary (i.e. \`{}\`).  Don't forget those double quotes (""), even on key names!  Use single quotes ('') to wrap the HTML attribute value; e.g. \`headers='{"X-Auth": "foo"}'\``,
-        );
-      }
-    }
-
-    // `url`
-    if (typeof scriptTagConfig.url !== 'undefined') {
-      if (typeof scriptTagConfig.url !== 'string') {
-        throw new Error(`sails.io.js :: Unexpected/invalid configuration for \`url\` provided in script tag: \`${scriptTagConfig.url}\` (a \`${typeof scriptTagConfig.url}\`). Should be a string.`);
-      }
-    }
-
-    // OTHER `io.sails` options are NOT CURRENTLY SUPPORTED VIA HTML ATTRIBUTES.
-  }
-
-  // Grab a reference to the global socket.io client (if one is available). This is used via closure below to determine which `io` to use when the
-  // socket.io client instance (`io`) is augmented to become the Sails client SDK instance (still `io`).
-  const _existingGlobalSocketIO = typeof io !== 'undefined' ? io : undefined;
-
-  /// ///////////////////////////////////////////////////////////
-  /// // NOW FOR BUNCHES OF:
-  /// //  - PRIVATE FUNCTION DEFINITIONS
-  /// //  - CONSTRUCTORS
-  /// //  - AND METHODS
-  /// ///////////////////////////////////////////////////////////
-
   //  ███████╗ █████╗ ██╗██╗     ███████╗      ██╗ ██████╗        ██████╗██╗     ██╗███████╗███╗   ██╗████████╗
   //  ██╔════╝██╔══██╗██║██║     ██╔════╝      ██║██╔═══██╗      ██╔════╝██║     ██║██╔════╝████╗  ██║╚══██╔══╝
   //  ███████╗███████║██║██║     ███████╗█████╗██║██║   ██║█████╗██║     ██║     ██║█████╗  ██╔██╗ ██║   ██║
@@ -241,16 +97,7 @@
    */
 
   function SailsIOClient(_providedSocketIO) {
-    // First, determine which `io` we're augmenting.
-    //
-    // Prefer the passed-in `io` instance, but fall back to the global one if we've got it.
-    let io;
-    if (_providedSocketIO) {
-      io = _providedSocketIO;
-    } else {
-      io = _existingGlobalSocketIO;
-    }
-    // (note that for readability, we deliberately do not short circuit or use the tertiary operator above)
+    const io = _providedSocketIO;
 
     // If a socket.io client (`io`) is not available, none of this will work.
     if (!io) {
@@ -1215,17 +1062,7 @@
       useCORSRouteToGetCookie: true,
 
       // The environment we're running in. (logs are not displayed when this is set to 'production')
-      //
-      // Defaults to "development" unless this script was fetched from a URL that ends in `*.min.js` or '#production', or if the conventional `SAILS_LOCALS` global is set with an `_environment` of "production" or "staging".  (This setting may also be manually overridden.)
-      environment:
-        urlThisScriptWasFetchedFrom.match(/(\#production|\.min\.js)/g) ||
-        (typeof window === 'object' &&
-          window &&
-          typeof window.SAILS_LOCALS === 'object' &&
-          window.SAILS_LOCALS &&
-          (window.SAILS_LOCALS._environment === 'staging' || window.SAILS_LOCALS._environment === 'production'))
-          ? 'production'
-          : 'development',
+      environment: 'development',
 
       // The version of this sails.io.js client SDK
       sdk: SDK_INFO,
@@ -1234,28 +1071,9 @@
       transports: ['websocket'],
     };
 
-    //  ┌─┐─┐ ┬┌┬┐┌─┐┌┐┌┌┬┐  ┬┌─┐ ┌─┐┌─┐┬┬  ┌─┐  ┌┬┐┌─┐┌─┐┌─┐┬ ┬┬ ┌┬┐┌─┐
-    //  ├┤ ┌┴┬┘ │ ├┤ │││ ││  ││ │ └─┐├─┤││  └─┐   ││├┤ ├┤ ├─┤│ ││  │ └─┐
-    //  └─┘┴ └─ ┴ └─┘┘└┘─┴┘  ┴└─┘o└─┘┴ ┴┴┴─┘└─┘  ─┴┘└─┘└  ┴ ┴└─┘┴─┘┴ └─┘
-    //  ┬ ┬┬┌┬┐┬ ┬  ┌┬┐┬ ┬┌─┐  ╦ ╦╔╦╗╔╦╗╦    ╔═╗╔╦╗╔╦╗╦═╗╦╔╗ ╦ ╦╔╦╗╔═╗╔═╗
-    //  ││││ │ ├─┤   │ ├─┤├┤   ╠═╣ ║ ║║║║    ╠═╣ ║  ║ ╠╦╝║╠╩╗║ ║ ║ ║╣ ╚═╗
-    //  └┴┘┴ ┴ ┴ ┴   ┴ ┴ ┴└─┘  ╩ ╩ ╩ ╩ ╩╩═╝  ╩ ╩ ╩  ╩ ╩╚═╩╚═╝╚═╝ ╩ ╚═╝╚═╝
-    //  ┌─┐┬─┐┌─┐┌┬┐  ┌┬┐┬ ┬┌─┐  ┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┌┬┐┌─┐┌─┐
-    //  ├┤ ├┬┘│ ││││   │ ├─┤├┤   └─┐│  ├┬┘│├─┘ │    │ ├─┤│ ┬
-    //  └  ┴└─└─┘┴ ┴   ┴ ┴ ┴└─┘  └─┘└─┘┴└─┴┴   ┴    ┴ ┴ ┴└─┘
-    //
-    // Now fold in config provided as HTML attributes on the script tag: (note that if `io.sails.*` is changed after this script, those changes will still take precedence)
-    CONFIGURABLE_VIA_HTML_ATTR.forEach(function (configKey) {
-      if (typeof scriptTagConfig[configKey] !== 'undefined') {
-        io.sails[configKey] = scriptTagConfig[configKey];
-      }
-    });
-    // Note that the new HTML attribute configuration style may eventually completely replace the original approach of setting `io.sails` properties, since the new strategy is easier to reason about. Also, it would allow us to remove the timeout below someday.
-
     //  ┬┌─┐ ┌─┐┌─┐┬┬  ┌─┐ ╔═╗╔═╗╔╗╔╔╗╔╔═╗╔═╗╔╦╗
     //  ││ │ └─┐├─┤││  └─┐ ║  ║ ║║║║║║║║╣ ║   ║
     //  ┴└─┘o└─┘┴ ┴┴┴─┘└─┘o╚═╝╚═╝╝╚╝╝╚╝╚═╝╚═╝ ╩
-
     /**
      * Add `io.sails.connect` function as a wrapper for the built-in `io()` aka `io.connect()` method, returning a SailsSocket. This special function respects the configured io.sails connection URL, as well as sending other identifying information (most importantly, the current version of this SDK).
      * @param  {String} url  [optional]
@@ -1275,7 +1093,7 @@
       // If explicit connection url is specified, save it to options
       opts.url = url || opts.url || undefined;
 
-      // Instantiate and return a new SailsSocket- and try to connect immediately.
+      // Instantiate and return a new SailsSocket and try to connect immediately.
       const socket = new SailsSocket(opts);
       socket._connect();
       return socket;
@@ -1289,14 +1107,12 @@
     //  ╚═╝ ╚═════╝ ╚═╝╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝   ╚═╝
     //
     // The eager instance of Socket which will automatically try to connect using the host that this js file was served from.
-    //
     // This can be disabled or configured by setting properties on `io.sails.*` within the first cycle of the event loop.
 
     // Build `io.socket` so it exists (note that this DOES NOT start the connection process)
     io.socket = new SailsSocket();
 
     // This socket is not connected yet, and has not even _started_ connecting.
-    //
     // But in the mean time, this eager socket will be queue events bound by the user before the first cycle of the event loop (using `.on()`), which will later be rebound on the raw underlying socket.
 
     //  ┌─┐┌─┐┌┬┐  ┌─┐┬ ┬┌┬┐┌─┐   ┌─┐┌─┐┌┐┌┌┐┌┌─┐┌─┐┌┬┐  ┌┬┐┬┌┬┐┌─┐┬─┐
@@ -1317,7 +1133,6 @@
         return;
       }
 
-      // consolog('Eagerly auto-connecting socket to Sails... (requests will be queued in the mean-time)');
       io.socket._connect();
     }, 0);
 
