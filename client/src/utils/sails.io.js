@@ -803,142 +803,39 @@
     };
 
     /**
-     * Simulate a GET request to sails e.g. `socket.get('/user/3', Stats.populate)`
+     * Simulate GET, POST, PUT, PATCH, DELETE requests to sails e.g.
+     * socket.get('/user/3', Stats.populate)
+     * socket.post('/event', newMeeting, $spinner.hide)
+     * socket.post('/event/3', changedFields, $spinner.hide)
+     * socket.patch('/event/3', changedFields, $spinner.hide)
+     * socket.delete('/event', $spinner.hide)
      * @api public
      * @param {String} url    ::    destination URL
      * @param {Object} data   ::    parameters to send with the request [optional]
      * @param {Function} cb   ::    callback function to call when finished [optional]
      */
 
-    SailsSocket.prototype.get = function (url, data, cb) {
-      // `data` is optional
-      if (typeof data === 'function') {
-        cb = data;
-        data = {};
-      }
+    ['get', 'post', 'put', 'patch', 'delete'].forEach((method) => {
+      SailsSocket.prototype[method] = function (url, data, cb) {
+        // `data` is optional
+        if (typeof data === 'function') {
+          cb = data;
+          data = {};
+        }
 
-      return this.request(
-        {
-          method: 'get',
-          params: data,
-          url,
-        },
-        cb,
-      );
-    };
-
-    /**
-     * Simulate a POST request to sails e.g. `socket.post('/event', newMeeting, $spinner.hide)`
-     * @api public
-     * @param {String} url    ::    destination URL
-     * @param {Object} data   ::    parameters to send with the request [optional]
-     * @param {Function} cb   ::    callback function to call when finished [optional]
-     */
-
-    SailsSocket.prototype.post = function (url, data, cb) {
-      // `data` is optional
-      if (typeof data === 'function') {
-        cb = data;
-        data = {};
-      }
-
-      return this.request(
-        {
-          method: 'post',
-          data,
-          url,
-        },
-        cb,
-      );
-    };
+        return this.request(
+          {
+            method,
+            data,
+            url,
+          },
+          cb,
+        );
+      };
+    });
 
     /**
-     * Simulate a PUT request to sails e.g. `socket.post('/event/3', changedFields, $spinner.hide)`
-     * @api public
-     * @param {String} url    ::    destination URL
-     * @param {Object} data   ::    parameters to send with the request [optional]
-     * @param {Function} cb   ::    callback function to call when finished [optional]
-     */
-
-    SailsSocket.prototype.put = function (url, data, cb) {
-      // `data` is optional
-      if (typeof data === 'function') {
-        cb = data;
-        data = {};
-      }
-
-      return this.request(
-        {
-          method: 'put',
-          params: data,
-          url,
-        },
-        cb,
-      );
-    };
-
-    /**
-     * Simulate a PATCH request to sails e.g. `socket.patch('/event/3', changedFields, $spinner.hide)`
-     * @api public
-     * @param {String} url    ::    destination URL
-     * @param {Object} data   ::    parameters to send with the request [optional]
-     * @param {Function} cb   ::    callback function to call when finished [optional]
-     */
-
-    SailsSocket.prototype.patch = function (url, data, cb) {
-      // `data` is optional
-      if (typeof data === 'function') {
-        cb = data;
-        data = {};
-      }
-
-      return this.request(
-        {
-          method: 'patch',
-          params: data,
-          url,
-        },
-        cb,
-      );
-    };
-
-    /**
-     * Simulate a DELETE request to sails e.g. `socket.delete('/event', $spinner.hide)`
-     * @api public
-     * @param {String} url    ::    destination URL
-     * @param {Object} data   ::    parameters to send with the request [optional]
-     * @param {Function} cb   ::    callback function to call when finished [optional]
-     */
-
-    SailsSocket.prototype.delete = function (url, data, cb) {
-      // `data` is optional
-      if (typeof data === 'function') {
-        cb = data;
-        data = {};
-      }
-
-      return this.request(
-        {
-          method: 'delete',
-          params: data,
-          url,
-        },
-        cb,
-      );
-    };
-
-    /**
-     * Simulate an HTTP request to sails e.g.
-     *  ```
-     * socket.request({
-     *   url:'/user',
-     *   params: {},
-     *   method: 'POST',
-     *   headers: {}
-     * }, function (responseBody, JWR) {
-     *   // ...
-     * });
-     * ```
+     * Simulate an HTTP request to sails e.g. `socket.request({ url:'/user', params: {}, method: 'POST', headers: {} }, function (responseBody, JWR) { ... });`
      * @api public
      * @option {String} url    ::    destination URL
      * @option {Object} params ::    parameters to send with the request [optional]
@@ -951,12 +848,9 @@
       const usage =
         'Usage:\n' +
         'socket.request( options, [fnToCallWhenComplete] )\n\n' +
-        'options.url :: e.g. "/foo/bar"' +
-        '\n' +
-        'options.method :: e.g. "get", "post", "put", or "delete", etc.' +
-        '\n' +
-        'options.params :: e.g. { emailAddress: "mike@example.com" }' +
-        '\n' +
+        'options.url :: e.g. "/foo/bar"\n' +
+        'options.method :: e.g. "get", "post", "put", or "delete", etc.\n' +
+        'options.data :: e.g. { emailAddress: "mike@example.com" }\n' +
         'options.headers :: e.g. { "x-my-custom-header": "some string" }';
 
       // Validate options and callback
@@ -972,19 +866,8 @@
       if (options.headers && typeof options.headers !== 'object') {
         throw new Error(`Invalid \`headers\` provided (should be a dictionary with string values)\n${usage}`);
       }
-      if (options.params && typeof options.params !== 'object') {
-        throw new Error(`Invalid \`params\` provided (should be a dictionary with JSON-serializable values)\n${usage}`);
-      }
       if (options.data && typeof options.data !== 'object') {
         throw new Error(`Invalid \`data\` provided (should be a dictionary with JSON-serializable values)\n${usage}`);
-      }
-
-      // Accept either `params` or `data` for backwards compatibility (but not both!)
-      if (options.data && options.params) {
-        throw new Error(`Cannot specify both \`params\` and \`data\`!  They are aliases of each other.\n${usage}`);
-      } else if (options.data) {
-        options.params = options.data;
-        delete options.data;
       }
 
       // If this socket is not connected yet, queue up this request instead of sending it. (so it can be replayed when the socket comes online.)
@@ -1006,7 +889,7 @@
 
         headers: options.headers,
 
-        data: options.params || options.data || {},
+        data: options.data || {},
 
         // Remove trailing slashes and spaces to make packets smaller.
         url: options.url.replace(/^(.+)\/*\s*$/, '$1'),
