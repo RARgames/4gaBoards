@@ -376,8 +376,7 @@
         consolog('Sails encountered an error parsing a socket message sent from this client, and did not have access to a callback function to respond with.\nError details:', err);
       });
 
-      // FUTURE:
-      // Listen for a special private message on any connected that allows the server to set the environment (giving us 100% certainty that we guessed right) However, note that the `console.log`s called before and after connection are still forced to rely on our existing heuristics (to disable, tack #production onto the URL used to fetch this file.)
+      // FUTURE: Listen for a special private message on any connected that allows the server to set the environment (giving us 100% certainty that we guessed right) However, note that the `console.log`s called before and after connection are still forced to rely on our existing heuristics (to disable, tack #production onto the URL used to fetch this file.)
     }
 
     /**
