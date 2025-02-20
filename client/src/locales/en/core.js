@@ -324,6 +324,7 @@ export default {
       website: 'Website',
       writeComment: 'Write a comment...',
       writeCommentHint: '[Ctrl+Enter] - submit',
+      you: '(You)',
     },
 
     action: {

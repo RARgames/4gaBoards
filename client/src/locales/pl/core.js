@@ -339,6 +339,7 @@ export default {
       website: 'Strona internetowa',
       writeComment: 'Napisz komentarz...',
       writeCommentHint: '[Ctrl+Enter] - wyślij',
+      you: '(Ty)',
     },
 
     action: {

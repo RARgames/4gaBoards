@@ -46,7 +46,9 @@ const Item = React.memo(
         <Table.Cell>
           <User name={name} avatarUrl={avatarUrl} aria-label={t('common.userAvatar')} />
         </Table.Cell>
-        <Table.Cell title={name}>{name}</Table.Cell>
+        <Table.Cell title={name}>
+          {name} {isCurrentUser && <span className={s.currentUser}>{t('common.you')}</span>}
+        </Table.Cell>
         <Table.Cell title={username}>{username || '-'}</Table.Cell>
         <Table.Cell title={email}>{email}</Table.Cell>
         <Table.Cell>

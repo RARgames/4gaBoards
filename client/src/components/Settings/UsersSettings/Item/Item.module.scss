@@ -1,12 +1,12 @@
 :global(#app) {
   .editbutton {
     svg {
-      fill: var(--textColor1)
+      fill: var(--textColor1);
     }
 
     &:hover {
       svg {
-        fill: var(--textColor2)
+        fill: var(--textColor2);
       }
     }
   }
@@ -15,5 +15,10 @@
     td {
       max-width: 200px;
     }
+  }
+
+  .currentUser {
+    font-style: italic;
+    color: var(--textColor3);
   }
 }

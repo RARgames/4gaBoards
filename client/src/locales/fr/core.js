@@ -341,6 +341,7 @@ export default {
       website: 'Site Web',
       writeComment: 'Écrire un commentaire...',
       writeCommentHint: '[Ctrl+Enter] - pour commenter',
+      you: '(vous)',
     },
 
     action: {
