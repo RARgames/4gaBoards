@@ -12,7 +12,7 @@ module.exports.down = async (knex) => {
   await knex.schema.table('board', (table) => {
     /* Columns */
 
-    table.text('type').notNullable().defaultTo('kanban'); // FIXME: drop default
+    table.text('type').notNullable().defaultTo('kanban');
   });
 
   return knex.schema.table('card', (table) => {
