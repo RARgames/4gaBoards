@@ -491,13 +491,11 @@ module.exports = [
 
       // Enforce state initialization style
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/state-in-constructor.md
-      // TODO: set to "never" once babel-preset-airbnb supports public class fields
-      'react/state-in-constructor': ['error', 'always'],
+      'react/state-in-constructor': ['error', 'never'],
 
       // Enforces where React component static properties should be positioned
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/static-property-placement.md
-      // TODO: set to "static public field" once babel-preset-airbnb supports public class fields
-      'react/static-property-placement': ['error', 'property assignment'],
+      'react/static-property-placement': ['error', 'static public field'],
 
       // Disallow JSX props spreading
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-props-no-spreading.md
@@ -533,8 +531,7 @@ module.exports = [
 
       // Prevent adjacent inline elements not separated by whitespace
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-adjacent-inline-elements.md
-      // TODO: enable? semver-major
-      'react/no-adjacent-inline-elements': 'off',
+      'react/no-adjacent-inline-elements': 'error',
 
       // Enforce a specific function type for function components
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md

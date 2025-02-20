@@ -537,12 +537,11 @@ module.exports = [
       //region es6
       // enforces no braces where they can be omitted
       // https://eslint.org/docs/rules/arrow-body-style
-      // TODO: enable requireReturnForObjectLiteral?
       'arrow-body-style': [
         'error',
         'as-needed',
         {
-          requireReturnForObjectLiteral: false,
+          requireReturnForObjectLiteral: true,
         },
       ],
 
@@ -738,21 +737,11 @@ module.exports = [
       // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-amd.md
       'import/no-amd': 'error',
 
-      // No Node.js builtin modules
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-nodejs-modules.md
-      // TODO: enable?
-      'import/no-nodejs-modules': 'off',
-
       // Style guide:
 
       // disallow non-import statements appearing before import statements
       // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md
       'import/first': 'error',
-
-      // disallow namespace imports
-      // TODO: enable?
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-namespace.md
-      'import/no-namespace': 'off',
 
       // Ensure consistent use of file extension within the import path
       // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/extensions.md
@@ -835,7 +824,6 @@ module.exports = [
 
       // This rule enforces that all exports are declared at the bottom of the file.
       // https://github.com/benmosher/eslint-plugin-import/blob/98acd6afd04dcb6920b81330114e146dc8532ea4/docs/rules/exports-last.md
-      // TODO: enable?
       'import/exports-last': 'off',
 
       // Reports when named exports are not grouped together in a single export declaration
@@ -843,14 +831,6 @@ module.exports = [
       // in a single file.
       // https://github.com/benmosher/eslint-plugin-import/blob/44a038c06487964394b1e15b64f3bd34e5d40cde/docs/rules/group-exports.md
       'import/group-exports': 'off',
-
-      // forbid default exports. this is a terrible rule, do not use it.
-      // https://github.com/benmosher/eslint-plugin-import/blob/44a038c06487964394b1e15b64f3bd34e5d40cde/docs/rules/no-default-export.md
-      'import/no-default-export': 'off',
-
-      // Prohibit named exports. this is a terrible rule, do not use it.
-      // https://github.com/benmosher/eslint-plugin-import/blob/1ec80fa35fa1819e2d35a70e68fb6a149fb57c5e/docs/rules/no-named-export.md
-      'import/no-named-export': 'off',
 
       // Forbid a module from importing itself
       // https://github.com/benmosher/eslint-plugin-import/blob/44a038c06487964394b1e15b64f3bd34e5d40cde/docs/rules/no-self-import.md
@@ -880,15 +860,7 @@ module.exports = [
 
       // Reports modules without any exports, or with unused exports
       // https://github.com/benmosher/eslint-plugin-import/blob/f63dd261809de6883b13b6b5b960e6d7f42a7813/docs/rules/no-unused-modules.md
-      // TODO: enable once it supports CJS
-      'import/no-unused-modules': [
-        'off',
-        {
-          ignoreExports: [],
-          missingExports: true,
-          unusedExports: true,
-        },
-      ],
+      'import/no-unused-modules': 'error',
 
       // Reports the use of import declarations with CommonJS exports in any module except for the main module.
       // https://github.com/benmosher/eslint-plugin-import/blob/1012eb951767279ce3b540a4ec4f29236104bb5b/docs/rules/no-import-module-exports.md
@@ -950,13 +922,12 @@ module.exports = [
       //region style
       // enforce line breaks after opening and before closing array brackets
       // https://eslint.org/docs/rules/array-bracket-newline
-      // TODO: enable? semver-major
-      'array-bracket-newline': ['off', 'consistent'], // object option alternative: { multiline: true, minItems: 3 }
+      // object option alternative: { multiline: true, minItems: 3 }
+      'array-bracket-newline': ['error', 'consistent'],
 
       // enforce line breaks between array elements
       // https://eslint.org/docs/rules/array-element-newline
-      // TODO: enable? semver-major
-      'array-element-newline': ['off', { multiline: true, minItems: 3 }],
+      'array-element-newline': ['error', { multiline: true, minItems: 3 }],
 
       // enforce spacing inside array brackets
       'array-bracket-spacing': ['error', 'never'],
@@ -1060,7 +1031,6 @@ module.exports = [
 
       // enforces use of function declarations or expressions
       // https://eslint.org/docs/rules/func-style
-      // TODO: enable
       'func-style': ['off', 'expression'],
 
       // require line breaks inside function parentheses if there are line breaks between parameters
@@ -1151,18 +1121,6 @@ module.exports = [
         },
       ],
 
-      // enforce position of line comments
-      // https://eslint.org/docs/rules/line-comment-position
-      // TODO: enable?
-      'line-comment-position': [
-        'off',
-        {
-          position: 'above',
-          ignorePattern: '',
-          applyDefaultPatterns: true,
-        },
-      ],
-
       // disallow mixed 'LF' and 'CRLF' as linebreaks
       // https://eslint.org/docs/rules/linebreak-style
       'linebreak-style': ['error', 'unix'],
@@ -1241,11 +1199,6 @@ module.exports = [
       // enforce a particular style for multiline comments
       // https://eslint.org/docs/rules/multiline-comment-style
       'multiline-comment-style': ['off', 'starred-block'],
-
-      // require multiline ternary
-      // https://eslint.org/docs/rules/multiline-ternary
-      // TODO: enable?
-      'multiline-ternary': ['off', 'never'],
 
       // require a capital letter for constructors
       'new-cap': [
