@@ -20,14 +20,18 @@ export function* createProjectManager(projectId, data) {
   );
 
   let projectManager;
+  let boardMemberships;
   try {
-    ({ item: projectManager } = yield call(request, api.createProjectManager, projectId, data));
+    ({
+      item: projectManager,
+      included: { boardMemberships },
+    } = yield call(request, api.createProjectManager, projectId, data));
   } catch (error) {
     yield put(actions.createProjectManager.failure(localId, error));
     return;
   }
 
-  yield put(actions.createProjectManager.success(localId, projectManager));
+  yield put(actions.createProjectManager.success(localId, projectManager, boardMemberships));
 }
 
 export function* createManagerInCurrentProject(data) {

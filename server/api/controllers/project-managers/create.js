@@ -8,6 +8,9 @@ const Errors = {
   USER_ALREADY_PROJECT_MANAGER: {
     userAlreadyProjectManager: 'User already project manager',
   },
+  USER_ALREADY_BOARD_MEMBER: {
+    userAlreadyBoardMember: 'User already board member',
+  },
 };
 
 module.exports = {
@@ -32,6 +35,9 @@ module.exports = {
       responseType: 'notFound',
     },
     userAlreadyProjectManager: {
+      responseType: 'conflict',
+    },
+    userAlreadyBoardMember: {
       responseType: 'conflict',
     },
   },
@@ -77,8 +83,35 @@ module.exports = {
       })
       .tolerate('E_UNIQUE');
 
+    const boards = await sails.helpers.projects.getBoards(project.id);
+    const boardMemberships = await Promise.all(
+      boards.map(async (board) => {
+        const currBoardMemberships = await sails.helpers.boards.getBoardMemberships(board.id);
+        if (currBoardMemberships.some((membership) => membership.userId === user.id)) {
+          return null;
+        }
+
+        return sails.helpers.boardMemberships.createOne
+          .with({
+            values: {
+              role: 'editor',
+              canComment: null,
+              board,
+              user,
+            },
+            request: this.req,
+          })
+          .intercept('userAlreadyBoardMember', () => Errors.USER_ALREADY_BOARD_MEMBER);
+      }),
+    );
+
+    const filteredBoardMemberships = boardMemberships.filter((membership) => membership !== null);
+
     return {
       item: projectManager,
+      included: {
+        boardMemberships: filteredBoardMemberships,
+      },
     };
   },
 };

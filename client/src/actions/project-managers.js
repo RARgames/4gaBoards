@@ -7,11 +7,12 @@ const createProjectManager = (projectManager) => ({
   },
 });
 
-createProjectManager.success = (localId, projectManager) => ({
+createProjectManager.success = (localId, projectManager, boardMemberships) => ({
   type: ActionTypes.PROJECT_MANAGER_CREATE__SUCCESS,
   payload: {
     localId,
     projectManager,
+    boardMemberships,
   },
 });
 

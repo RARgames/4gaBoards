@@ -11,6 +11,9 @@ const Errors = {
   INVALID_IMPORT_FILE: {
     invalidImportFile: 'Invalid import file',
   },
+  USER_ALREADY_BOARD_MEMBER: {
+    userAlreadyBoardMember: 'User already board member',
+  },
 };
 
 module.exports = {
@@ -63,6 +66,9 @@ module.exports = {
     },
     uploadError: {
       responseType: 'unprocessableEntity',
+    },
+    userAlreadyBoardMember: {
+      responseType: 'conflict',
     },
   },
 
@@ -145,10 +151,37 @@ module.exports = {
       });
     }
 
+    const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);
+    const projectManagerBoardMemberships = await Promise.all(
+      projectManagers.map(async (projectManager) => {
+        if (projectManager.userId === boardMembership.userId) {
+          return null;
+        }
+        const user = await sails.helpers.users.getOne(projectManager.userId);
+        if (!user) {
+          return null;
+        }
+
+        return sails.helpers.boardMemberships.createOne
+          .with({
+            values: {
+              role: 'editor',
+              canComment: null,
+              board,
+              user,
+            },
+            request: this.req,
+          })
+          .intercept('userAlreadyBoardMember', () => Errors.USER_ALREADY_BOARD_MEMBER);
+      }),
+    );
+    const filteredProjectManagerBoardMemberships = projectManagerBoardMemberships.filter((membership) => membership !== null);
+    const allBoardMemberships = [boardMembership, ...filteredProjectManagerBoardMemberships];
+
     return {
       item: board,
       included: {
-        boardMemberships: [boardMembership],
+        boardMemberships: allBoardMemberships,
       },
     };
   },
