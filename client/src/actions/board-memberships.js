@@ -117,11 +117,12 @@ deleteBoardMembership.success = (boardMembership) => ({
   },
 });
 
-deleteBoardMembership.failure = (id, error) => ({
+deleteBoardMembership.failure = (id, error, boardMembership) => ({
   type: ActionTypes.BOARD_MEMBERSHIP_DELETE__FAILURE,
   payload: {
     id,
     error,
+    boardMembership,
   },
 });
 

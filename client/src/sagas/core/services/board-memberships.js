@@ -165,7 +165,7 @@ export function* deleteBoardMembership(id) {
   try {
     ({ item: boardMembership } = yield call(request, api.deleteBoardMembership, id));
   } catch (error) {
-    yield put(actions.deleteBoardMembership.failure(id, error));
+    yield put(actions.deleteBoardMembership.failure(id, error, boardMembership));
     return;
   }
 

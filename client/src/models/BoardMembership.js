@@ -94,6 +94,10 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.BOARD_MEMBERSHIP_DELETE__FAILURE:
+        BoardMembership.upsert(payload.boardMembership);
+
+        break;
       default:
     }
   }
