@@ -28,10 +28,11 @@ module.exports = {
     const { project } = path;
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
+    const isUserProjectManager = await sails.helpers.users.isProjectManager(boardMembership.userId, project.id);
     if (boardMembership.userId !== currentUser.id && !isProjectManager) {
       throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
     }
-    if (boardMembership.userId === currentUser.id && isProjectManager) {
+    if (isUserProjectManager) {
       throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
     }
 
@@ -50,7 +51,6 @@ module.exports = {
     const boardIds = boardMemberships.map((bm) => bm.boardId);
     const projects = await sails.helpers.boards.getMany({ id: boardIds });
     const projectIds = projects.map((p) => p.projectId);
-    const isUserProjectManager = await sails.helpers.users.isProjectManager(boardMembership.userId, project.id);
     if (!projectIds.includes(project.id) && !isUserProjectManager) {
       const userProject = await sails.helpers.userProjects.getOne({ userId: boardMembership.userId, projectId: project.id });
       if (userProject) {
