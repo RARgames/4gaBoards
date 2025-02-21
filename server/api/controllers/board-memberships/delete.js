@@ -27,12 +27,12 @@ module.exports = {
     let { boardMembership } = path;
     const { project } = path;
 
-    if (boardMembership.userId !== currentUser.id) {
-      const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
-
-      if (!isProjectManager) {
-        throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
-      }
+    const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
+    if (boardMembership.userId !== currentUser.id && !isProjectManager) {
+      throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
+    }
+    if (boardMembership.userId === currentUser.id && isProjectManager) {
+      throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
     }
 
     boardMembership = await sails.helpers.boardMemberships.deleteOne.with({
@@ -50,8 +50,8 @@ module.exports = {
     const boardIds = boardMemberships.map((bm) => bm.boardId);
     const projects = await sails.helpers.boards.getMany({ id: boardIds });
     const projectIds = projects.map((p) => p.projectId);
-    const isProjectManager = await sails.helpers.users.isProjectManager(boardMembership.userId, project.id);
-    if (!projectIds.includes(project.id) && !isProjectManager) {
+    const isUserProjectManager = await sails.helpers.users.isProjectManager(boardMembership.userId, project.id);
+    if (!projectIds.includes(project.id) && !isUserProjectManager) {
       const userProject = await sails.helpers.userProjects.getOne({ userId: boardMembership.userId, projectId: project.id });
       if (userProject) {
         await sails.helpers.userProjects.deleteOne.with({
