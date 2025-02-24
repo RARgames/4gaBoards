@@ -114,13 +114,15 @@ export const selectLabelsForCurrentBoard = createSelector(
       return boardModel;
     }
 
-    return boardModel
+    const labels = boardModel
       .getOrderedLabelsQuerySet()
       .toRefArray()
       .map((label) => ({
         ...label,
         isPersisted: !isLocalId(label.id),
       }));
+
+    return labels.sort((a, b) => a.name.localeCompare(b.name));
   },
 );
 
