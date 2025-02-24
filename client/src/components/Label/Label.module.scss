@@ -7,6 +7,7 @@
     max-width: 100%;
     outline: none;
     padding: 0;
+    position: relative;
   }
 
   .wrapper {
@@ -22,7 +23,28 @@
   }
 
   .wrapperHoverable:hover {
-    opacity: 0.75;
+    &:before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--userOverlay);
+    }
+  }
+
+  .wrapperRemovable:hover {
+    &:before {
+      position: absolute;
+      content: '×';
+      font-weight: 100;
+      color: var(--userOverlayIcon);
+      display: flex;
+      justify-content: center;
+      font-size: 24px;
+      line-height: 20px;
+    }
   }
 
   /* VARIANTS */

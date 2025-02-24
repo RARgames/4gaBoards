@@ -20,6 +20,8 @@ import { ReactComponent as Google } from '../../../assets/icons/Google.svg';
 import { ReactComponent as Hide } from '../../../assets/icons/Hide.svg';
 import { ReactComponent as Info } from '../../../assets/icons/Info.svg';
 import { ReactComponent as Key } from '../../../assets/icons/Key.svg';
+import { ReactComponent as Label } from '../../../assets/icons/Label.svg';
+import { ReactComponent as Labels } from '../../../assets/icons/Labels.svg';
 import { ReactComponent as Link } from '../../../assets/icons/Link.svg';
 import { ReactComponent as Minus } from '../../../assets/icons/Minus.svg';
 import { ReactComponent as MoveUpDown } from '../../../assets/icons/MoveUpDown.svg';
@@ -66,6 +68,8 @@ const IconType = {
   Hide,
   Info,
   Key,
+  Label,
+  Labels,
   Link,
   Minus,
   MoveUpDown,

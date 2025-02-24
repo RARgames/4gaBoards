@@ -29,7 +29,6 @@ export default {
       addTask: 'Add Task',
       addUser_title: 'Add User',
       administrator: 'Administrator',
-      all: 'All',
       allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'All changes will be automatically saved<br />after connection restored',
       areYouSureYouWantToDeleteThisAttachment: 'Are you sure you want to delete this attachment?',
       areYouSureYouWantToDeleteThisBoard: 'Are you sure you want to delete this board?',

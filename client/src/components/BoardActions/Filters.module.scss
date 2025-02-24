@@ -1,39 +1,38 @@
 :global(#app) {
   .filter {
-    margin-right: 10px;
-    display: inline-block;
+    background: var(--backgroundColorTmpDarkerField2);
+    border: solid var(--backgroundPopupSeparator);
+    border-width: 1px 1px 1px 0;
+
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+    }
   }
 
   .filterButton {
-    background: transparent;
     border: none;
     cursor: pointer;
     display: inline-block;
     outline: none;
     padding: 0;
+
+    &:hover {
+      background: var(--backgroundColorTmpBackgroundHover);
+    }
   }
 
   .filterItem {
+    background: var(--backgroundColorTmpDarkerField2);
     display: inline-block;
     font-size: 0;
     line-height: 0;
     margin-right: 4px;
     max-width: 190px;
-    vertical-align: top;
+    vertical-align: middle;
   }
 
-  .filterLabel {
-    background: rgba(0, 0, 0, 0.24);
-    border-radius: 3px;
-    color: var(--textColor0);
-    display: inline-block;
-    font-size: 12px;
-    line-height: 20px;
-    padding: 2px 8px;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.32);
-    }
+  .lastFilterItem {
+    margin-right: 0;
   }
 
   .filterTitle {
@@ -42,10 +41,23 @@
     display: inline-block;
     font-size: 12px;
     line-height: 20px;
-    padding: 2px 12px;
+    padding: 7px 6px;
   }
 
   .popupWrapper {
     display: inline-block;
+  }
+
+  .clearButton {
+    svg {
+      vertical-align: middle;
+      fill: var(--textColor3);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--textColor4);
+      }
+    }
   }
 }

@@ -16,9 +16,19 @@ const VARIANTS = {
   LABELS: 'labels',
 };
 
-const Label = React.memo(({ name, color, variant, isDisabled, onClick }) => {
+const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, className, onClick }) => {
   const contentNode = (
-    <div title={name} className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], onClick && s.wrapperHoverable, globalStyles[`background${upperFirst(camelCase(color))}`])}>
+    <div
+      title={name}
+      className={classNames(
+        s.wrapper,
+        s[`wrapper${upperFirst(variant)}`],
+        onClick && s.wrapperHoverable,
+        isRemovable && s.wrapperRemovable,
+        globalStyles[`background${upperFirst(camelCase(color))}`],
+        className,
+      )}
+    >
       {name}
     </div>
   );
@@ -37,12 +47,16 @@ Label.propTypes = {
   color: PropTypes.oneOf(LabelColors).isRequired,
   variant: PropTypes.oneOf(Object.values(VARIANTS)),
   isDisabled: PropTypes.bool,
+  isRemovable: PropTypes.bool,
+  className: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 Label.defaultProps = {
   variant: VARIANTS.CARDMODAL,
   isDisabled: false,
+  isRemovable: false,
+  className: undefined,
   onClick: undefined,
 };
 

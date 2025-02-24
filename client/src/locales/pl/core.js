@@ -33,7 +33,6 @@ export default {
       addTask: 'Dodaj zadanie',
       addUser_title: 'Dodaj użytkownika',
       administrator: 'Administrator',
-      all: 'Wszyscy',
       allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Wszystkie zmiany zostaną automatycznie zapisane<br />po przywróceniu połączenia',
       areYouSureYouWantToDeleteThisAttachment: 'Jesteś pewien że chcesz usunąć ten załącznik?',
       areYouSureYouWantToDeleteThisBoard: 'Jesteś pewien że chcesz usunąć tę tablicę?',

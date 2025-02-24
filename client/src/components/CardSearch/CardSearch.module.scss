@@ -1,12 +1,13 @@
 :global(#app) {
   .field {
     width: 100%;
-    padding-right: 34px;
+    padding-right: 26px;
     height: 36px;
+    border-radius: 3px 0 0 3px;
   }
 
   .clearButton {
-    margin-left: -30px;
+    margin-left: -24px;
 
     svg {
       vertical-align: middle;

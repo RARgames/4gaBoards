@@ -33,7 +33,6 @@ export default {
       addTask: 'Ajouter une tâche',
       addUser_title: 'Ajouter un utilisateur',
       administrator: 'Administrateur',
-      all: 'Tout',
       allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Toutes les modifications seront automatiquement enregistrées <br /> une fois la connexion rétablie',
       areYouSureYouWantToDeleteThisAttachment: 'Voulez-vous vraiment supprimer cette pièce jointe?',
       areYouSureYouWantToDeleteThisBoard: 'Êtes-vous sûr de vouloir supprimer ce forum?',

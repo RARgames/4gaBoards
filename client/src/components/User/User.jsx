@@ -39,7 +39,7 @@ const getInitials = (name) => {
   return ini.length > 2 ? ini[0] + ini[ini.length - 1] : ini;
 };
 
-const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, onClick }) => {
+const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, isRemovable, className, onClick }) => {
   const avatarBackground = useCallback(() => {
     if (!avatarUrl) {
       return null;
@@ -54,7 +54,14 @@ const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, onClick
   const contentNode = (
     <span
       title={skipTitle ? undefined : name}
-      className={classNames(s.wrapper, s[`wrapper${upperFirst(size)}`], onClick && s.wrapperHoverable, !avatarUrl && s[`background${upperFirst(camelCase(getColor(name)))}`])}
+      className={classNames(
+        s.wrapper,
+        s[`wrapper${upperFirst(size)}`],
+        onClick && s.wrapperHoverable,
+        isRemovable && s.wrapperRemovable,
+        !avatarUrl && s[`background${upperFirst(camelCase(getColor(name)))}`],
+        className,
+      )}
       style={avatarBackground(avatarUrl, size)}
     >
       {!avatarUrl && <span className={s.initials}>{getInitials(name)}</span>}
@@ -76,6 +83,8 @@ User.propTypes = {
   size: PropTypes.oneOf(Object.values(SIZES)),
   skipTitle: PropTypes.bool,
   isDisabled: PropTypes.bool,
+  isRemovable: PropTypes.bool,
+  className: PropTypes.string,
   onClick: PropTypes.func,
 };
 
@@ -84,6 +93,8 @@ User.defaultProps = {
   size: SIZES.MEDIUM,
   skipTitle: false,
   isDisabled: false,
+  isRemovable: false,
+  className: undefined,
   onClick: undefined,
 };
 
