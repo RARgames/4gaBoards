@@ -1,5 +1,6 @@
 import { ReactComponent as AddressCard } from '../../../assets/icons/AddressCard.svg';
 import { ReactComponent as AngleLeft } from '../../../assets/icons/AngleLeft.svg';
+import { ReactComponent as AnyMatch } from '../../../assets/icons/AnyMatch.svg';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/ArrowDown.svg';
 import { ReactComponent as ArrowLeftBig } from '../../../assets/icons/ArrowLeftBig.svg';
 import { ReactComponent as Attach } from '../../../assets/icons/Attach.svg';
@@ -23,6 +24,7 @@ import { ReactComponent as Key } from '../../../assets/icons/Key.svg';
 import { ReactComponent as Label } from '../../../assets/icons/Label.svg';
 import { ReactComponent as Labels } from '../../../assets/icons/Labels.svg';
 import { ReactComponent as Link } from '../../../assets/icons/Link.svg';
+import { ReactComponent as MatchCase } from '../../../assets/icons/MatchCase.svg';
 import { ReactComponent as Minus } from '../../../assets/icons/Minus.svg';
 import { ReactComponent as MoveUpDown } from '../../../assets/icons/MoveUpDown.svg';
 import { ReactComponent as Pause } from '../../../assets/icons/Pause.svg';
@@ -48,6 +50,7 @@ import { ReactComponent as WindowMaximize } from '../../../assets/icons/WindowMa
 const IconType = {
   AddressCard,
   AngleLeft,
+  AnyMatch,
   ArrowDown,
   ArrowLeftBig,
   Attach,
@@ -71,6 +74,7 @@ const IconType = {
   Label,
   Labels,
   Link,
+  MatchCase,
   Minus,
   MoveUpDown,
   Pause,

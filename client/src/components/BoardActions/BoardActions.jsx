@@ -82,7 +82,7 @@ const BoardActions = React.memo(
           />
         </div>
         <div className={s.action}>
-          <CardSearch defaultValue={boardSearchParams.query} onBoardSearchParamsUpdate={onBoardSearchParamsUpdate} />
+          <CardSearch defaultValue={boardSearchParams.query} matchCase={boardSearchParams.matchCase} anyMatch={boardSearchParams.anyMatch} onBoardSearchParamsUpdate={onBoardSearchParamsUpdate} />
           <Filters
             users={filterUsers}
             labels={filterLabels}

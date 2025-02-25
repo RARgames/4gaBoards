@@ -20,4 +20,27 @@
       }
     }
   }
+
+  .paramsWrapper {
+    display: flex;
+  }
+
+  .paramsButton {
+    background: var(--backgroundColorTmpDarkerField2);
+    border: solid var(--backgroundPopupSeparator);
+    border-width: 1px 1px 1px 0;
+    color: var(--textColor0);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 7px 6px;
+
+    &:hover {
+      background: var(--backgroundColorTmpBackgroundHover);
+    }
+  }
+
+  .paramsButtonActive {
+    background: var(--backgroundColorTmpBackgroundHover);
+  }
 }
