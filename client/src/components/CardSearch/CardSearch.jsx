@@ -39,12 +39,12 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
     [handleFieldChange, submit],
   );
 
-  const handleMatchCaseButtonClick = useCallback(() => {
+  const handleMatchCaseChange = useCallback(() => {
     setMatchCaseValue(!matchCaseValue);
     onBoardSearchParamsUpdate({ matchCase: !matchCaseValue });
   }, [matchCaseValue, onBoardSearchParamsUpdate]);
 
-  const handleAnyMatchButtonClick = useCallback(() => {
+  const handleAnyMatchChange = useCallback(() => {
     setAnyMatchValue(!anyMatchValue);
     onBoardSearchParamsUpdate({ anyMatch: !anyMatchValue });
   }, [anyMatchValue, onBoardSearchParamsUpdate]);
@@ -58,10 +58,22 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
         case 'Escape':
           handleCancel();
           break;
+        case 'c':
+          if (event.altKey) {
+            event.preventDefault();
+            handleMatchCaseChange();
+          }
+          break;
+        case 'v':
+          if (event.altKey) {
+            event.preventDefault();
+            handleAnyMatchChange();
+          }
+          break;
         default:
       }
     },
-    [handleCancel, handleSubmit],
+    [handleAnyMatchChange, handleCancel, handleMatchCaseChange, handleSubmit],
   );
 
   useEffect(() => {
@@ -83,10 +95,10 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
         </Form>
       </div>
       <div className={s.paramsWrapper}>
-        <Button title={t('common.matchCase')} className={classNames(s.paramsButton, matchCaseValue && s.paramsButtonActive)} onClick={handleMatchCaseButtonClick}>
+        <Button title={t('common.matchCase')} className={classNames(s.paramsButton, matchCaseValue && s.paramsButtonActive)} onClick={handleMatchCaseChange}>
           <Icon type={IconType.MatchCase} size={IconSize.Size13} />
         </Button>
-        <Button title={t('common.anyMatch')} className={classNames(s.paramsButton, anyMatchValue && s.paramsButtonActive)} onClick={handleAnyMatchButtonClick}>
+        <Button title={t('common.anyMatch')} className={classNames(s.paramsButton, anyMatchValue && s.paramsButtonActive)} onClick={handleAnyMatchChange}>
           <Icon type={IconType.AnyMatch} size={IconSize.Size13} />
         </Button>
       </div>
