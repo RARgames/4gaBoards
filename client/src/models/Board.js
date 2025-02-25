@@ -96,10 +96,18 @@ export default class extends BaseModel {
         });
 
         break;
-      case ActionTypes.BOARD_SEARCH_PARAMS_UPDATE:
-        Board.withId(payload.id).update({ searchParams: payload.searchParams });
+      case ActionTypes.BOARD_SEARCH_PARAMS_UPDATE: {
+        const board = Board.withId(payload.id);
+        Board.withId(payload.id).update({
+          searchParams: {
+            query: payload.searchParams.query !== undefined ? payload.searchParams.query : board.searchParams.query,
+            anyMatch: payload.searchParams.anyMatch !== undefined ? payload.searchParams.anyMatch : board.searchParams.anyMatch,
+            matchCase: payload.searchParams.matchCase !== undefined ? payload.searchParams.matchCase : board.searchParams.matchCase,
+          },
+        });
 
         break;
+      }
       case ActionTypes.USER_TO_BOARD_FILTER_ADD:
         Board.withId(payload.boardId).filterUsers.add(payload.id);
 
