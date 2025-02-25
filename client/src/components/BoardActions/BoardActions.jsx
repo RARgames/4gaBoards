@@ -30,6 +30,7 @@ const BoardActions = React.memo(
     canEdit,
     isProjectManager,
     boardData,
+    boardSearchParams,
     onMembershipCreate,
     onMembershipUpdate,
     onMembershipDelete,
@@ -42,7 +43,7 @@ const BoardActions = React.memo(
     onLabelMove,
     onLabelDelete,
     onBoardUpdate,
-    onBoardSearchQueryUpdate,
+    onBoardSearchParamsUpdate,
   }) => {
     const [t] = useTranslation();
 
@@ -81,7 +82,7 @@ const BoardActions = React.memo(
           />
         </div>
         <div className={s.action}>
-          <CardSearch defaultValue="" onBoardSearchQueryUpdate={onBoardSearchQueryUpdate} />
+          <CardSearch defaultValue={boardSearchParams.query} onBoardSearchParamsUpdate={onBoardSearchParamsUpdate} />
           <Filters
             users={filterUsers}
             labels={filterLabels}
@@ -134,6 +135,7 @@ BoardActions.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   isProjectManager: PropTypes.bool.isRequired,
   boardData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardSearchParams: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onMembershipCreate: PropTypes.func.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,
   onMembershipDelete: PropTypes.func.isRequired,
@@ -146,7 +148,7 @@ BoardActions.propTypes = {
   onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
-  onBoardSearchQueryUpdate: PropTypes.func.isRequired,
+  onBoardSearchParamsUpdate: PropTypes.func.isRequired,
 };
 
 export default BoardActions;

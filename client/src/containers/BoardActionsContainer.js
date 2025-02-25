@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
   const boardData = selectors.selectCurrentBoard(state);
+  const boardSearchParams = selectors.selectBoardSearchParamsForCurrentBoard(state);
 
   return {
     projectId,
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => {
     canEdit: isCurrentUserEditor,
     isProjectManager,
     boardData,
+    boardSearchParams,
   };
 };
 
@@ -52,7 +54,7 @@ const mapDispatchToProps = (dispatch, ownProps) =>
       onLabelMove: entryActions.moveLabel,
       onLabelDelete: entryActions.deleteLabel,
       onBoardUpdate: entryActions.updateBoard,
-      onBoardSearchQueryUpdate: (query) => entryActions.updateBoardSearchQuery(ownProps.boardId, query),
+      onBoardSearchParamsUpdate: (searchParams) => entryActions.updateBoardSearchParams(ownProps.boardId, searchParams),
     },
     dispatch,
   );

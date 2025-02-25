@@ -15,9 +15,6 @@ export default class extends BaseModel {
     isFetching: attr({
       getDefault: () => null,
     }),
-    searchQuery: attr({
-      getDefault: () => '',
-    }),
     projectId: fk({
       to: 'Project',
       as: 'project',
@@ -30,6 +27,13 @@ export default class extends BaseModel {
     }),
     filterUsers: many('User', 'filterBoards'),
     filterLabels: many('Label', 'filterBoards'),
+    searchParams: attr({
+      getDefault: () => ({
+        query: '',
+        anyMatch: false,
+        matchCase: false,
+      }),
+    }),
   };
 
   static reducer({ type, payload }, Board) {
@@ -92,8 +96,8 @@ export default class extends BaseModel {
         });
 
         break;
-      case ActionTypes.BOARD_SEARCH_QUERY_UPDATE:
-        Board.withId(payload.id).update({ searchQuery: payload.query });
+      case ActionTypes.BOARD_SEARCH_PARAMS_UPDATE:
+        Board.withId(payload.id).update({ searchParams: payload.searchParams });
 
         break;
       case ActionTypes.USER_TO_BOARD_FILTER_ADD:

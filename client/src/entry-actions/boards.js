@@ -74,11 +74,11 @@ const exportBoard = (id) => ({
   },
 });
 
-const updateBoardSearchQuery = (id, query) => ({
-  type: EntryActionTypes.BOARD_SEARCH_QUERY_UPDATE,
+const updateBoardSearchParams = (id, searchParams) => ({
+  type: EntryActionTypes.BOARD_SEARCH_PARAMS_UPDATE,
   payload: {
     id,
-    query,
+    searchParams,
   },
 });
 
@@ -93,5 +93,5 @@ export default {
   deleteBoard,
   handleBoardDelete,
   exportBoard,
-  updateBoardSearchQuery,
+  updateBoardSearchParams,
 };

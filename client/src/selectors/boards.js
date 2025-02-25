@@ -204,6 +204,24 @@ export const selectIsFilteredForCurrentBoard = createSelector(
   },
 );
 
+export const selectBoardSearchParamsForCurrentBoard = createSelector(
+  orm,
+  (state) => selectPath(state).boardId,
+  ({ Board }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const boardModel = Board.withId(id);
+
+    if (!boardModel) {
+      return boardModel;
+    }
+
+    return boardModel.searchParams;
+  },
+);
+
 export const selectIsBoardWithIdExists = createSelector(
   orm,
   (_, id) => id,
@@ -264,6 +282,7 @@ export default {
   selectFilterUsersForCurrentBoard,
   selectFilterLabelsForCurrentBoard,
   selectIsFilteredForCurrentBoard,
+  selectBoardSearchParamsForCurrentBoard,
   selectIsBoardWithIdExists,
   selectCardsCountForCurrentBoard,
   selectFilteredCardsCountForCurrentBoard,

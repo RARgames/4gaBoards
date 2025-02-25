@@ -167,8 +167,8 @@ export function* exportBoard(id) {
   yield put(actions.exportBoard.success(downloadUrl));
 }
 
-export function* updateBoardSearchQuery(id, query) {
-  yield put(actions.updateBoardSearchQuery(id, query));
+export function* updateBoardSearchParams(id, searchParams) {
+  yield put(actions.updateBoardSearchParams(id, searchParams));
 }
 
 export default {
@@ -182,5 +182,5 @@ export default {
   deleteBoard,
   handleBoardDelete,
   exportBoard,
-  updateBoardSearchQuery,
+  updateBoardSearchParams,
 };

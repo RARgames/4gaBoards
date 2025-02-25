@@ -92,8 +92,8 @@ export default class extends BaseModel {
   getIsFiltered() {
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
-    const { searchQuery } = this.board;
-    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchQuery !== '';
+    const { searchParams } = this.board;
+    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchParams.query !== '';
   }
 
   getFilteredOrderedCardsModelArray() {
@@ -105,27 +105,48 @@ export default class extends BaseModel {
 
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
-    const { searchQuery } = this.board;
+    const { searchParams } = this.board;
 
-    if (filterUserIds.length > 0) {
+    if (searchParams.anyMatch) {
+      if (filterUserIds.length > 0) {
+        cardModels = cardModels.filter((cardModel) => {
+          const users = cardModel.users.toRefArray();
+          const taskUsers = cardModel.tasksUsers;
+          return users.some((user) => filterUserIds.includes(user.id)) || taskUsers.some((user) => filterUserIds.includes(user.id));
+        });
+      }
+      if (filterLabelIds.length > 0) {
+        cardModels = cardModels.filter((cardModel) => {
+          const labels = cardModel.labels.toRefArray();
+          return labels.some((label) => filterLabelIds.includes(label.id));
+        });
+      }
+      if (searchParams.query !== '') {
+        if (searchParams.matchCase) {
+          cardModels = cardModels.filter((cardModel) => cardModel.name.includes(searchParams.query));
+        } else {
+          cardModels = cardModels.filter((cardModel) => cardModel.name.toLowerCase().includes(searchParams.query.toLowerCase()));
+        }
+      }
+    } else {
       cardModels = cardModels.filter((cardModel) => {
-        const users = cardModel.users.toRefArray();
-        const taskUsers = cardModel.tasksUsers;
-        return users.some((user) => filterUserIds.includes(user.id)) || taskUsers.some((user) => filterUserIds.includes(user.id));
+        const cardUserIds = cardModel.users.toRefArray().map((user) => user.id);
+        const taskUserIds = cardModel.tasksUsers.map((user) => user.id);
+        const cardLabelIds = cardModel.labels.toRefArray().map((label) => label.id);
+
+        const matchesLabels = filterLabelIds.length === 0 || filterLabelIds.every((labelId) => cardLabelIds.includes(labelId));
+        const matchesUsers = filterUserIds.length === 0 || filterUserIds.every((userId) => cardUserIds.includes(userId) || taskUserIds.includes(userId));
+        let matchesSearch = true;
+        if (searchParams.query !== '') {
+          if (searchParams.matchCase) {
+            matchesSearch = cardModel.name.includes(searchParams.query);
+          } else {
+            matchesSearch = cardModel.name.toLowerCase().includes(searchParams.query.toLowerCase());
+          }
+        }
+        return matchesLabels && matchesUsers && matchesSearch;
       });
     }
-
-    if (filterLabelIds.length > 0) {
-      cardModels = cardModels.filter((cardModel) => {
-        const labels = cardModel.labels.toRefArray();
-        return labels.some((label) => filterLabelIds.includes(label.id));
-      });
-    }
-
-    if (searchQuery !== '') {
-      cardModels = cardModels.filter((cardModel) => cardModel.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    }
-
     return cardModels;
   }
 

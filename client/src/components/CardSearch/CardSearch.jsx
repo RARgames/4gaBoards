@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -7,16 +7,16 @@ import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../U
 
 import * as s from './CardSearch.module.scss';
 
-const CardSearch = React.memo(({ defaultValue, onBoardSearchQueryUpdate }) => {
+const CardSearch = React.memo(({ defaultValue, onBoardSearchParamsUpdate }) => {
   const [t] = useTranslation();
   const field = useRef(null);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
 
   const submit = useCallback(
     (val) => {
-      onBoardSearchQueryUpdate(val);
+      onBoardSearchParamsUpdate({ query: val });
     },
-    [onBoardSearchQueryUpdate],
+    [onBoardSearchParamsUpdate],
   );
 
   const handleSubmit = useCallback(() => {
@@ -24,9 +24,9 @@ const CardSearch = React.memo(({ defaultValue, onBoardSearchQueryUpdate }) => {
   }, [submit, value]);
 
   const handleCancel = useCallback(() => {
-    setValue(defaultValue);
+    setValue('');
     submit('');
-  }, [setValue, defaultValue, submit]);
+  }, [setValue, submit]);
 
   const handleChange = useCallback(
     (event) => {
@@ -51,6 +51,11 @@ const CardSearch = React.memo(({ defaultValue, onBoardSearchQueryUpdate }) => {
     [handleCancel, handleSubmit],
   );
 
+  useEffect(() => {
+    setValue(defaultValue);
+    submit(defaultValue);
+  }, [defaultValue, setValue, submit]);
+
   return (
     <div>
       <Form onKeyDown={handleKeyDown}>
@@ -67,7 +72,7 @@ const CardSearch = React.memo(({ defaultValue, onBoardSearchQueryUpdate }) => {
 
 CardSearch.propTypes = {
   defaultValue: PropTypes.string.isRequired,
-  onBoardSearchQueryUpdate: PropTypes.func.isRequired,
+  onBoardSearchParamsUpdate: PropTypes.func.isRequired,
 };
 
 export default CardSearch;
