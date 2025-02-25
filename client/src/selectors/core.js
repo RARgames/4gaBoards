@@ -105,10 +105,8 @@ export const selectNextCardPosition = createSelector(
     const cardsList = listModel.getOrderedCardsModelArray();
     const filteredCardsList = listModel.getFilteredOrderedCardsModelArray();
 
-    if (isMovingcard && listModel.getIsFiltered() && index <= filteredCardsList.length) {
+    if (isMovingcard && listModel.getIsFiltered() && index <= filteredCardsList.length && !(index === 0 && filteredCardsList.length === 0)) {
       // this handles moveCard if filtering is on and card is not dropped onto AddCard button
-      // TODO index <= filteredCardsList.length - hacky way not to handle dropping onto AddCard button
-
       const elBeforeIndex = filteredCardsList[index - 1];
       const elAfterIndex = filteredCardsList[index];
 
