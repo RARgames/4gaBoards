@@ -154,11 +154,15 @@ module.exports = {
     const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);
     const projectManagerBoardMemberships = await Promise.all(
       projectManagers.map(async (projectManager) => {
-        if (projectManager.userId === boardMembership.userId) {
+        if (projectManager.userId === boardMembership?.userId) {
           return null;
         }
         const user = await sails.helpers.users.getOne(projectManager.userId);
         if (!user) {
+          return null;
+        }
+        const boardMember = await sails.helpers.boardMemberships.getMany({ userId: user.id, boardId: board.id });
+        if (boardMember && boardMember.length > 0) {
           return null;
         }
 

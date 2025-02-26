@@ -19,7 +19,7 @@ module.exports = {
   },
 
   exits: {
-    boardNotFound: {
+    userNotFound: {
       responseType: 'notFound',
     },
   },
