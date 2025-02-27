@@ -8,6 +8,7 @@ module.exports = {
   inputs: {
     projectId: {
       type: 'string',
+      regex: /^[0-9]+$/,
       required: true,
     },
     isCollapsed: {

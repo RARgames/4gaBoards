@@ -21,7 +21,7 @@ module.exports.routes = {
   'POST /api/core-settings': 'core/set-settings',
 
   'GET /api/user-projects': 'user-projects/index',
-  'GET /api/user-projects/:id': 'user-projects/show',
+  'GET /api/user-projects/:projectId': 'user-projects/show',
   'PATCH /api/user-projects/:projectId': 'user-projects/update',
 
   'GET /api/users': 'users/index',

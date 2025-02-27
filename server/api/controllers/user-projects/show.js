@@ -6,9 +6,9 @@ const Errors = {
 
 module.exports = {
   inputs: {
-    id: {
+    projectId: {
       type: 'string',
-      regex: /^[0-9]+|me$/,
+      regex: /^[0-9]+$/,
       required: true,
     },
   },
@@ -21,7 +21,7 @@ module.exports = {
 
   async fn(inputs) {
     const { currentUser } = this.req;
-    const userProject = await sails.helpers.userProjects.getOne({ userId: currentUser.id, projectId: inputs.id });
+    const userProject = await sails.helpers.userProjects.getOne({ userId: currentUser.id, projectId: inputs.projectId });
 
     if (!userProject) {
       throw Errors.USER_PROJECT_NOT_FOUND;
