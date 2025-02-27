@@ -147,7 +147,7 @@ module.exports = {
       return Promise.all(
         projectManagers.map(async (projectManager) => {
           if (allUsers[projectManager.userId]) {
-            await ProjectManager.create({
+            const pm = await ProjectManager.create({
               createdAt: parseJSON(projectManager.createdAt),
               updatedAt: parseJSON(projectManager.updatedAt),
               projectId: inputs.board.projectId,
@@ -155,6 +155,21 @@ module.exports = {
             })
               .tolerate('E_UNIQUE')
               .fetch();
+
+            if (pm) {
+              const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(inputs.board.projectId);
+
+              projectRelatedUserIds.forEach((userId) => {
+                sails.sockets.broadcast(
+                  `user:${userId}`,
+                  'projectManagerCreate',
+                  {
+                    item: pm,
+                  },
+                  inputs.request,
+                );
+              });
+            }
           }
         }),
       );
