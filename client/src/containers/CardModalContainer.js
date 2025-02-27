@@ -29,8 +29,8 @@ const mapStateToProps = (state) => {
   const attachments = selectors.selectAttachmentsForCurrentCard(state);
   const activities = selectors.selectActivitiesForCurrentCard(state);
   const user = selectors.selectCurrentUser(state);
+  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown } = selectors.selectCurrentUserPrefs(state);
   const userId = user.id;
-  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown } = user;
 
   const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
 
@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onCurrentUserUpdate: entryActions.updateCurrentUser,
+      onCurrentUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
       onUpdate: entryActions.updateCurrentCard,
       onMove: entryActions.moveCurrentCard,
       onTransfer: entryActions.transferCurrentCard,

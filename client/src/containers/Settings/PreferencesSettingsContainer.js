@@ -6,7 +6,7 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { language, subscribeToOwnCards, sidebarCompact } = selectors.selectCurrentUser(state);
+  const { language, subscribeToOwnCards, sidebarCompact } = selectors.selectCurrentUserPrefs(state);
 
   return {
     language,
@@ -18,8 +18,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onUpdate: entryActions.updateCurrentUser,
-      onLanguageUpdate: entryActions.updateCurrentUserLanguage,
+      onUpdate: entryActions.updateCurrentUserPrefs,
     },
     dispatch,
   );

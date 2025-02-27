@@ -34,6 +34,7 @@ const Dropdown = React.forwardRef(
       selectFirstOnSearch,
       keepState,
       returnOnChangeEvent,
+      forcePlaceholder,
       ...props
     },
     ref,
@@ -185,6 +186,9 @@ const Dropdown = React.forwardRef(
     );
 
     const getDisplay = useCallback(() => {
+      if (forcePlaceholder) {
+        return placeholder;
+      }
       if (isOpen && selectedItem) {
         if (selectedItem.id === savedDefaultItem?.id) {
           // Needed for language change returning item in old language
@@ -196,7 +200,7 @@ const Dropdown = React.forwardRef(
         return savedDefaultItem.name;
       }
       return placeholder;
-    }, [isOpen, placeholder, savedDefaultItem, selectedItem]);
+    }, [forcePlaceholder, isOpen, placeholder, savedDefaultItem, selectedItem]);
 
     const handleItemClick = useCallback(
       (item) => {
@@ -366,6 +370,7 @@ Dropdown.propTypes = {
   selectFirstOnSearch: PropTypes.bool,
   keepState: PropTypes.bool,
   returnOnChangeEvent: PropTypes.bool,
+  forcePlaceholder: PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
@@ -385,6 +390,7 @@ Dropdown.defaultProps = {
   selectFirstOnSearch: false,
   keepState: false,
   returnOnChangeEvent: false,
+  forcePlaceholder: false,
   className: undefined,
   dropdownMenuClassName: undefined,
 };

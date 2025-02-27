@@ -18,6 +18,7 @@ import register from './register';
 import socket from './socket';
 import taskMemberships from './task-memberships';
 import tasks from './tasks';
+import userPrefs from './user-prefs';
 import userProjects from './user-projects';
 import users from './users';
 
@@ -42,6 +43,7 @@ export default {
   ...register,
   ...taskMemberships,
   ...tasks,
+  ...userPrefs,
   ...userProjects,
   ...users,
 };

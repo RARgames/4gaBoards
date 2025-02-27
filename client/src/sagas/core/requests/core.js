@@ -68,6 +68,7 @@ export function* fetchCore() {
 
   const core = yield call(request, api.getCoreSettingsPublic);
   const userProjects = yield call(request, api.getUserProjects);
+  const userPrefs = yield call(request, api.getUserPrefs, user.id);
 
   return {
     user,
@@ -89,6 +90,7 @@ export function* fetchCore() {
     cards: mergeRecords(cards1, cards2),
     core,
     userProjects: userProjects.items,
+    userPrefs: userPrefs.item,
   };
 }
 

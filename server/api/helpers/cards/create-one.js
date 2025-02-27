@@ -81,7 +81,8 @@ module.exports = {
       inputs.request,
     );
 
-    if (values.creatorUser.subscribeToOwnCards && !inputs.values.duplicate) {
+    const userPrefs = await sails.helpers.userPrefs.getOne(values.creatorUser.id);
+    if (userPrefs.subscribeToOwnCards && !inputs.values.duplicate) {
       await CardSubscription.create({
         cardId: card.id,
         userId: card.creatorUserId,

@@ -41,13 +41,6 @@ const handleUserUpdate = (user) => ({
   },
 });
 
-const updateCurrentUserLanguage = (language) => ({
-  type: EntryActionTypes.CURRENT_USER_LANGUAGE_UPDATE,
-  payload: {
-    language,
-  },
-});
-
 const updateUserEmail = (id, data) => ({
   type: EntryActionTypes.USER_EMAIL_UPDATE,
   payload: {
@@ -253,7 +246,6 @@ export default {
   updateUser,
   updateCurrentUser,
   handleUserUpdate,
-  updateCurrentUserLanguage,
   updateUserEmail,
   updateCurrentUserEmail,
   clearUserEmailUpdateError,

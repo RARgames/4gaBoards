@@ -37,39 +37,6 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
-    language: {
-      type: 'string',
-      isNotEmptyString: true,
-      allowNull: true,
-    },
-    subscribeToOwnCards: {
-      type: 'boolean',
-    },
-    descriptionMode: {
-      type: 'string',
-      isIn: User.DESCRIPTION_MODES,
-      isNotEmptyString: true,
-    },
-    commentMode: {
-      type: 'string',
-      isIn: User.DESCRIPTION_MODES,
-      isNotEmptyString: true,
-    },
-    descriptionShown: {
-      type: 'boolean',
-    },
-    tasksShown: {
-      type: 'boolean',
-    },
-    attachmentsShown: {
-      type: 'boolean',
-    },
-    commentsShown: {
-      type: 'boolean',
-    },
-    sidebarCompact: {
-      type: 'boolean',
-    },
     ssoGoogleEmail: {
       type: 'string',
       isEmail: true,
@@ -111,23 +78,7 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, [
-        'isAdmin',
-        'name',
-        'phone',
-        'organization',
-        'language',
-        'subscribeToOwnCards',
-        'descriptionMode',
-        'commentMode',
-        'descriptionShown',
-        'tasksShown',
-        'attachmentsShown',
-        'commentsShown',
-        'sidebarCompact',
-        'ssoGoogleEmail',
-        'lastLogin',
-      ]),
+      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'ssoGoogleEmail', 'lastLogin']),
       avatar: inputs.avatarUrl,
     };
 

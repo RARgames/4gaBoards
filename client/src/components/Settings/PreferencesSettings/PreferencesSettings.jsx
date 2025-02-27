@@ -10,7 +10,7 @@ import * as gStyles from '../../../globalStyles.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
-const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, onUpdate, onLanguageUpdate }) => {
+const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, onUpdate }) => {
   const [t] = useTranslation();
   const languages = useMemo(
     () => [
@@ -42,9 +42,9 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
 
   const handleLanguageChange = useCallback(
     (value) => {
-      onLanguageUpdate(value.id === 'auto' ? null : value.id); // FIXME: hack
+      onUpdate({ language: value.id === 'auto' ? null : value.id }); // FIXME: hack
     },
-    [onLanguageUpdate],
+    [onUpdate],
   );
 
   return (
@@ -89,6 +89,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
                   defaultItem={selectedLanguage}
                   isSearchable
                   selectFirstOnSearch
+                  forcePlaceholder
                   onChange={handleLanguageChange}
                   className={s.languageDropdown}
                 />
@@ -108,7 +109,6 @@ PreferencesSettings.propTypes = {
   sidebarCompact: PropTypes.bool.isRequired,
   language: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
-  onLanguageUpdate: PropTypes.func.isRequired,
 };
 
 PreferencesSettings.defaultProps = {

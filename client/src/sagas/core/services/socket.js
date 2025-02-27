@@ -33,6 +33,7 @@ export function* handleSocketReconnect() {
     activities,
     notifications,
     userProjects,
+    userPrefs,
   } = yield call(requests.fetchCore); // TODO: handle error
   yield put(
     actions.handleSocketReconnect(
@@ -55,6 +56,7 @@ export function* handleSocketReconnect() {
       activities,
       notifications,
       userProjects,
+      userPrefs,
     ),
   );
 }

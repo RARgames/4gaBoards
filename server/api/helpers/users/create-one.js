@@ -68,6 +68,8 @@ module.exports = {
       )
       .fetch();
 
+    await sails.helpers.userPrefs.createOne.with({ values: { id: user.id } });
+
     // const userIds = await sails.helpers.users.getAdminIds();
 
     const users = await sails.helpers.users.getMany();

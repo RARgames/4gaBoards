@@ -42,6 +42,8 @@ module.exports = {
         await sails.helpers.projects.getManagerAndBoardMemberUserIds(projectIds),
       ); */
 
+      await sails.helpers.userPrefs.deleteOne.with({ record: user });
+
       const users = await sails.helpers.users.getMany();
       const userIds = [inputs.record.id, ...sails.helpers.utils.mapRecords(users)];
 

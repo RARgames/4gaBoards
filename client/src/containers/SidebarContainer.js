@@ -7,7 +7,8 @@ import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const path = selectors.selectPathConstant(state);
-  const { isAdmin, sidebarCompact } = selectors.selectCurrentUser(state);
+  const { isAdmin } = selectors.selectCurrentUser(state);
+  const { sidebarCompact } = selectors.selectCurrentUserPrefs(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
   const { projectId, boardId } = selectors.selectPath(state);

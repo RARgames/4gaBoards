@@ -8,7 +8,7 @@ import { MDEditor, Button, ButtonStyle } from '../Utils';
 import * as gStyles from '../../globalStyles.module.scss';
 import * as s from './DescriptionEdit.module.scss';
 
-const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserUpdate, onLocalDescChange, onClose }, ref) => {
+const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserPrefsUpdate, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(undefined);
   const textareaRef = useRef(null);
@@ -115,11 +115,11 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
     (preview) => {
       // TODO hacky way to update UI faster
       const timeout = setTimeout(() => {
-        onCurrentUserUpdate({ descriptionMode: preview });
+        onCurrentUserPrefsUpdate({ descriptionMode: preview });
       }, 0);
       return () => clearTimeout(timeout);
     },
-    [onCurrentUserUpdate],
+    [onCurrentUserPrefsUpdate],
   );
 
   return (
@@ -167,7 +167,7 @@ DescriptionEdit.propTypes = {
   descriptionMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
-  onCurrentUserUpdate: PropTypes.func.isRequired,
+  onCurrentUserPrefsUpdate: PropTypes.func.isRequired,
   onLocalDescChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

@@ -11,5 +11,6 @@ import Project from './Project';
 import ProjectManager from './ProjectManager';
 import Task from './Task';
 import User from './User';
+import UserPrefs from './UserPrefs';
 
-export { Activity, Attachment, Board, BoardMembership, Card, Core, Label, List, Notification, Project, ProjectManager, Task, User };
+export { Activity, Attachment, Board, BoardMembership, Card, Core, Label, List, Notification, Project, ProjectManager, Task, User, UserPrefs };

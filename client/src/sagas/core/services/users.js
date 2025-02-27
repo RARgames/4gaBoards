@@ -5,7 +5,7 @@ import api from '../../../api';
 import selectors from '../../../selectors';
 import { setAccessToken } from '../../../utils/access-token-storage';
 import request from '../request';
-import { changeCoreLanguage, logout } from './core';
+import { logout } from './core';
 
 export function* createUser(data) {
   yield put(actions.createUser(data));
@@ -60,21 +60,6 @@ export function* handleUserUpdate(user) {
   }
 
   yield put(actions.handleUserUpdate(user, users, isCurrent));
-}
-
-// TODO: add loading state
-export function* updateUserLanguage(id, language) {
-  yield call(changeCoreLanguage, language);
-
-  yield call(updateUser, id, {
-    language,
-  });
-}
-
-export function* updateCurrentUserLanguage(language) {
-  const id = yield select(selectors.selectCurrentUserId);
-
-  yield call(updateUserLanguage, id, language);
 }
 
 export function* updateUserEmail(id, data) {
@@ -343,8 +328,6 @@ export default {
   updateUser,
   updateCurrentUser,
   handleUserUpdate,
-  updateUserLanguage,
-  updateCurrentUserLanguage,
   updateUserEmail,
   updateCurrentUserEmail,
   clearUserEmailUpdateError,

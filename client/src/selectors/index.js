@@ -11,6 +11,7 @@ import projects from './projects';
 import router from './router';
 import socket from './socket';
 import tasks from './tasks';
+import userPrefs from './user-prefs';
 import users from './users';
 
 export default {
@@ -27,5 +28,6 @@ export default {
   ...router,
   ...socket,
   ...tasks,
+  ...userPrefs,
   ...users,
 };

@@ -11,7 +11,6 @@ export default function* usersWatchers() {
     takeEvery(EntryActionTypes.USER_UPDATE, ({ payload: { id, data } }) => services.updateUser(id, data)),
     takeEvery(EntryActionTypes.CURRENT_USER_UPDATE, ({ payload: { data } }) => services.updateCurrentUser(data)),
     takeEvery(EntryActionTypes.USER_UPDATE_HANDLE, ({ payload: { user } }) => services.handleUserUpdate(user)),
-    takeEvery(EntryActionTypes.CURRENT_USER_LANGUAGE_UPDATE, ({ payload: { language } }) => services.updateCurrentUserLanguage(language)),
     takeEvery(EntryActionTypes.USER_EMAIL_UPDATE, ({ payload: { id, data } }) => services.updateUserEmail(id, data)),
     takeEvery(EntryActionTypes.CURRENT_USER_EMAIL_UPDATE, ({ payload: { data } }) => services.updateCurrentUserEmail(data)),
     takeEvery(EntryActionTypes.USER_EMAIL_UPDATE_ERROR_CLEAR, ({ payload: { id } }) => services.clearUserEmailUpdateError(id)),

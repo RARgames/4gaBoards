@@ -41,15 +41,6 @@ export default class extends BaseModel {
     avatarUrl: attr(),
     phone: attr(),
     organization: attr(),
-    language: attr(),
-    subscribeToOwnCards: attr(),
-    descriptionMode: attr(),
-    commentMode: attr(),
-    descriptionShown: attr(),
-    tasksShown: attr(),
-    attachmentsShown: attr(),
-    commentsShown: attr(),
-    sidebarCompact: attr(),
     deletedAt: attr(),
     ssoGoogleEmail: attr(),
     lastLogin: attr(),
@@ -68,7 +59,7 @@ export default class extends BaseModel {
     usernameUpdateForm: attr({
       getDefault: () => DEFAULT_USERNAME_UPDATE_FORM,
     }),
-    filter: attr(),
+    filter: attr(), // TODO move to userPrefs?
   };
 
   static reducer({ type, payload }, User) {

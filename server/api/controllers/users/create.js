@@ -45,39 +45,6 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
-    language: {
-      type: 'string',
-      isNotEmptyString: true,
-      allowNull: true,
-    },
-    subscribeToOwnCards: {
-      type: 'boolean',
-    },
-    descriptionMode: {
-      type: 'string',
-      isIn: User.DESCRIPTION_MODES,
-      isNotEmptyString: true,
-    },
-    commentMode: {
-      type: 'string',
-      isIn: User.DESCRIPTION_MODES,
-      isNotEmptyString: true,
-    },
-    descriptionShown: {
-      type: 'boolean',
-    },
-    tasksShown: {
-      type: 'boolean',
-    },
-    attachmentsShown: {
-      type: 'boolean',
-    },
-    commentsShown: {
-      type: 'boolean',
-    },
-    sidebarCompact: {
-      type: 'boolean',
-    },
     ssoGoogleEmail: {
       type: 'string',
       isEmail: true,
@@ -98,24 +65,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const values = _.pick(inputs, [
-      'email',
-      'password',
-      'name',
-      'username',
-      'phone',
-      'organization',
-      'language',
-      'subscribeToOwnCards',
-      'descriptionMode',
-      'commentMode',
-      'descriptionShown',
-      'tasksShown',
-      'attachmentsShown',
-      'commentsShown',
-      'sidebarCompact',
-      'ssoGoogleEmail',
-    ]);
+    const values = _.pick(inputs, ['email', 'password', 'name', 'username', 'phone', 'organization', 'ssoGoogleEmail']);
 
     if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {
       throw Errors.WEAK_PASSWORD;

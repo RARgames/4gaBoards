@@ -97,6 +97,7 @@ module.exports = {
     const importUsers = async () => {
       return Promise.all(
         users.map(async (user) => {
+          // TODO matching by id should be used only for the same instance - add instance identifier to the export data
           const existingUserById = await sails.helpers.users.getOne(user.id);
           if (existingUserById) {
             allUsers[user.id] = existingUserById;
@@ -133,6 +134,8 @@ module.exports = {
                 'emailAlreadyInUse',
               )
               .fetch();
+
+            await sails.helpers.userPrefs.createOne.with({ values: { id: newUser.id } });
 
             allUsers[user.id] = newUser;
           }

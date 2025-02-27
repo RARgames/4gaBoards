@@ -32,6 +32,10 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleUserDelete(item));
     };
 
+    const handleUserPrefsUpdate = ({ item }) => {
+      emit(entryActions.handleUserPrefsUpdate(item));
+    };
+
     const handleProjectCreate = ({ item }) => {
       emit(entryActions.handleProjectCreate(item));
     };
@@ -201,6 +205,8 @@ const createSocketEventsChannel = () =>
     socket.on('userUpdate', handleUserUpdate);
     socket.on('userDelete', handleUserDelete);
 
+    socket.on('userPrefsUpdate', handleUserPrefsUpdate);
+
     socket.on('projectCreate', handleProjectCreate);
     socket.on('projectUpdate', handleProjectUpdate);
     socket.on('projectDelete', handleProjectDelete);
@@ -265,6 +271,8 @@ const createSocketEventsChannel = () =>
       socket.off('userCreate', handleUserCreate);
       socket.off('userUpdate', handleUserUpdate);
       socket.off('userDelete', handleUserDelete);
+
+      socket.off('userPrefsUpdate', handleUserPrefsUpdate);
 
       socket.off('projectCreate', handleProjectCreate);
       socket.off('projectUpdate', handleProjectUpdate);

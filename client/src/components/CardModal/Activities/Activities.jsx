@@ -30,7 +30,7 @@ const Activities = React.memo(
     onCommentDelete,
     toggleCommShown,
     commShown,
-    onCurrentUserUpdate,
+    onCurrentUserPrefsUpdate,
   }) => {
     const [t] = useTranslation();
     const visibilityRef = useRef(null);
@@ -125,7 +125,7 @@ const Activities = React.memo(
                   isGithubConnected={isGithubConnected}
                   githubRepo={githubRepo}
                   onUpdate={onCommentCreate}
-                  onCurrentUserUpdate={onCurrentUserUpdate}
+                  onCurrentUserPrefsUpdate={onCurrentUserPrefsUpdate}
                 >
                   <Button style={ButtonStyle.Default} content={t('common.addComment')} onClick={openAddComment} />
                 </CommentEdit>
@@ -146,7 +146,7 @@ const Activities = React.memo(
                       githubRepo={githubRepo}
                       onUpdate={(data) => handleCommentUpdate(item.id, data)}
                       onDelete={() => handleCommentDelete(item.id)}
-                      onCurrentUserUpdate={onCurrentUserUpdate}
+                      onCurrentUserPrefsUpdate={onCurrentUserPrefsUpdate}
                     />
                   ) : (
                     <Item key={item.id} type={item.type} data={item.data} createdAt={item.createdAt} user={item.user} />
@@ -181,7 +181,7 @@ Activities.propTypes = {
   onCommentDelete: PropTypes.func.isRequired,
   toggleCommShown: PropTypes.func.isRequired,
   commShown: PropTypes.bool.isRequired,
-  onCurrentUserUpdate: PropTypes.func.isRequired,
+  onCurrentUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
 export default Activities;
