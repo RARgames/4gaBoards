@@ -111,19 +111,19 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.26.8",
-    "@eslint/js": "^9.20.0",
+    "@eslint/js": "^9.21.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
     "chai": "^5.1.2",
-    "eslint": "^9.20.1",
+    "eslint": "^9.21.0",
     "eslint-plugin-perfectionist": "^4.9.0",
-    "eslint-config-prettier": "^10.0.1",
+    "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.1.0"
+    "eslint-plugin-react-hooks": "^5.2.0"
   },
   "jest": {
     "roots": [
