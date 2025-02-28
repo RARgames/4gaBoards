@@ -459,11 +459,23 @@ const CardModal = React.memo(
             </div>
           )}
         </div>
-        {labels.map((label) => (
-          <span key={label.id} className={s.headerItem}>
-            <Label name={label.name} color={label.color} variant="cardModal" />
-          </span>
-        ))}
+        <LabelsPopup
+          items={allLabels}
+          currentIds={labelIds}
+          onSelect={onLabelAdd}
+          onDeselect={onLabelRemove}
+          onCreate={onLabelCreate}
+          onUpdate={onLabelUpdate}
+          onMove={onLabelMove}
+          onDelete={onLabelDelete}
+          offset={0}
+        >
+          {labels.map((label) => (
+            <span key={label.id} className={s.headerItem}>
+              <Label name={label.name} color={label.color} variant="cardModal" />
+            </span>
+          ))}
+        </LabelsPopup>
       </div>
     );
 
