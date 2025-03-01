@@ -1,7 +1,7 @@
 :global(#app) {
   .addUser {
-    color: var(--textColorWhite);
-    background: rgba(0, 0, 0, 0.24);
+    color: var(--textColor1);
+    background: var(--shadowBlack02);
     border-radius: 50%;
     box-shadow: none;
     line-height: 40px;
@@ -9,7 +9,11 @@
     height: 36px;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.32);
+      background: var(--shadowBlack03);
+
+      svg {
+        fill: var(--textColor1);
+      }
     }
   }
 
@@ -38,7 +42,7 @@
     cursor: text;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.24);
+      background: var(--shadowBlack02);
     }
   }
 }

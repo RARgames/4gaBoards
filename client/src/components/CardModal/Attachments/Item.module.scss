@@ -107,7 +107,7 @@
 
     &:hover {
       .details {
-        background: rgba(9, 30, 66, 0.04);
+        background: var(--backgroundColorTmpBackgroundTasks);
       }
 
       .target {
@@ -117,6 +117,8 @@
   }
 
   .wrapperSubmitting {
-    background: rgba(9, 30, 66, 0.04);
+    display: flex;
+    align-items: center;
+    background: var(--backgroundColorTmpBackgroundTasks);
   }
 }
