@@ -9,7 +9,7 @@ import DeleteStep from '../DeleteStep';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
@@ -88,7 +88,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
       <Popup.Content>
         <Form onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
-          <div className={gStyles.controlsSpaceBetween}>
+          <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>

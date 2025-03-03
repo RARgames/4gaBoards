@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '../../Utils';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 
 // TODO replace with actual Github integration
 const Connections = React.memo(({ sidebarRef, defaultData, onUpdate, onBack, onClose }) => {
@@ -88,7 +88,7 @@ const Connections = React.memo(({ sidebarRef, defaultData, onUpdate, onBack, onC
             onChange={handleFieldChange}
             isError={isError}
           />
-          <div className={gStyles.controlsSpaceBetween}>
+          <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>

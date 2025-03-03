@@ -13,7 +13,7 @@ import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
 import Connections from './Connections';
 import Filters from './Filters';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './BoardActions.module.scss';
 
 const BoardActions = React.memo(
@@ -55,7 +55,7 @@ const BoardActions = React.memo(
     );
 
     return (
-      <div className={classNames(s.wrapper, gStyles.scrollableX)}>
+      <div className={classNames(s.wrapper, gs.scrollableX)}>
         <div className={s.githubAction}>
           <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
             <Icon

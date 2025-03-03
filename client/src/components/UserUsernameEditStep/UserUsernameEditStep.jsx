@@ -7,7 +7,7 @@ import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './UserUsernameEditStep.module.scss';
 
 const createMessage = (error) => {
@@ -169,7 +169,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
               />
             </>
           )}
-          <div className={gStyles.controls}>
+          <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>

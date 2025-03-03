@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 
 import { ProjectBackgroundTypes } from '../../constants/Enums';
 
-import * as globalStyles from '../../styles.module.scss';
+import * as bs from '../../backgrounds.module.scss';
 import * as s from './Background.module.scss';
 
 function Background({ type, name, imageUrl }) {
   return (
     <div
-      className={classNames(s.wrapper, type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(name))}`])}
+      className={classNames(s.wrapper, type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(name))}`])}
       style={{
         background: type === 'image' && `url("${imageUrl}") center / cover`,
       }}

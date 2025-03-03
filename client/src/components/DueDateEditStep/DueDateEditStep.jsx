@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Input, InputStyle, Popup, Form } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
@@ -108,7 +108,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
         <Form onKeyDown={handleKeyDown}>
           <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
-          <div className={gStyles.controlsSpaceBetween}>
+          <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>

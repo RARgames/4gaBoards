@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import LabelColors from '../../constants/LabelColors';
 import { Button } from '../Utils';
 
-import * as globalStyles from '../../styles.module.scss';
+import * as bs from '../../backgrounds.module.scss';
 import * as s from './Label.module.scss';
 
 const VARIANTS = {
@@ -20,14 +20,7 @@ const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, class
   const contentNode = (
     <div
       title={name}
-      className={classNames(
-        s.wrapper,
-        s[`wrapper${upperFirst(variant)}`],
-        onClick && s.wrapperHoverable,
-        isRemovable && s.wrapperRemovable,
-        globalStyles[`background${upperFirst(camelCase(color))}`],
-        className,
-      )}
+      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], onClick && s.wrapperHoverable, isRemovable && s.wrapperRemovable, bs[`background${upperFirst(camelCase(color))}`], className)}
     >
       {name}
     </div>

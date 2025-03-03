@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 
 const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
   const [t] = useTranslation();
@@ -61,7 +61,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
             onChange={handleFieldChange}
             isError={isError}
           />
-          <div className={gStyles.controls}>
+          <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>

@@ -6,7 +6,7 @@ import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './ListAdd.module.scss';
 
 const DEFAULT_DATA = {
@@ -103,7 +103,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
         onBlur={handleBlur}
         isError={isError}
       />
-      <div className={gStyles.controls}>
+      <div className={gs.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
         <Button style={ButtonStyle.Submit} content={t('action.addList')} onClick={handleSubmit} />
       </div>

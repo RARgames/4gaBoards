@@ -8,7 +8,7 @@ import { Popup, Input, InputStyle, withPopup } from '../../Utils';
 import ActionsStep from '../ActionsStep';
 import UserItem from './UserItem';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 import * as s from './AddPopup.module.scss';
 
 const StepTypes = {
@@ -160,7 +160,7 @@ const AddStep = React.memo(
         <Popup.Content>
           <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} />
           {filteredUsers.length > 0 && (
-            <div className={classNames(s.users, gStyles.scrollableY)}>
+            <div className={classNames(s.users, gs.scrollableY)}>
               {filteredUsers.map((user) => (
                 <UserItem key={user.id} name={user.name} avatarUrl={user.avatarUrl} isActive={currentUserIds.includes(user.id)} onSelect={() => handleUserSelect(user.id)} />
               ))}

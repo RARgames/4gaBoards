@@ -8,7 +8,7 @@ import { usePrevious } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './UserAddStep.module.scss';
 
 const createMessage = (error) => {
@@ -197,7 +197,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
             onChange={handleFieldChange}
             isError={isUsernameError}
           />
-          <div className={gStyles.controls}>
+          <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>

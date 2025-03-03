@@ -8,7 +8,7 @@ import Paths from '../../constants/Paths';
 import BoardAddPopup from '../BoardAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './Boards.module.scss';
 
 const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, onCreate }) => {
@@ -70,7 +70,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
           </div>
         </div>
       </div>
-      <div className={classNames(s.boardsWrapper, gStyles.scrollableY)}>
+      <div className={classNames(s.boardsWrapper, gs.scrollableY)}>
         {currentFilteredProject?.boards.map((item) => (
           <div key={item.id} className={classNames(s.boardWrapper)}>
             {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}

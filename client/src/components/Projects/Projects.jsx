@@ -11,8 +11,8 @@ import Paths from '../../constants/Paths';
 import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
-import * as globalStyles from '../../styles.module.scss';
+import * as bs from '../../backgrounds.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './Projects.module.scss';
 
 const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultData, isSubmitting, onCreate }) => {
@@ -56,11 +56,11 @@ const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultDa
           </div>
         </div>
       </div>
-      <div className={classNames(s.projectsWrapper, gStyles.scrollableY)}>
+      <div className={classNames(s.projectsWrapper, gs.scrollableY)}>
         {filteredProjects.map((item) => (
           <div
             key={item.id}
-            className={classNames(s.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && globalStyles[`background${upperFirst(camelCase(item.background.name))}`])}
+            className={classNames(s.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(item.background.name))}`])}
             style={{
               background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
             }}

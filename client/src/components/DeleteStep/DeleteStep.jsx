@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle, Popup } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './DeleteStep.module.scss';
 
 const DeleteStep = React.memo(({ title, content, buttonContent, onConfirm, onBack }) => (
@@ -11,7 +11,7 @@ const DeleteStep = React.memo(({ title, content, buttonContent, onConfirm, onBac
     <Popup.Header onBack={onBack}>{title}</Popup.Header>
     <Popup.Content>
       <div className={s.content}>{content}</div>
-      <div className={gStyles.controlsCenter}>
+      <div className={gs.controlsCenter}>
         <Button style={ButtonStyle.Cancel} content={buttonContent} onClick={onConfirm} className={s.deleteButton} />
       </div>
     </Popup.Content>

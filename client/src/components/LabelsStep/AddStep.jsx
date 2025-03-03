@@ -7,7 +7,7 @@ import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();
@@ -61,7 +61,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
       <Popup.Content>
         <Form onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
-          <div className={gStyles.controls}>
+          <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.createLabel')} onClick={handleSubmit} />
           </div>
         </Form>

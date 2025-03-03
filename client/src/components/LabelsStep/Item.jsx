@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as globalStyles from '../../styles.module.scss';
+import * as bs from '../../backgrounds.module.scss';
 import * as s from './Item.module.scss';
 
 const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
@@ -34,7 +34,7 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <span
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
-              className={classNames(s.name, isActive && s.nameActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
+              className={classNames(s.name, isActive && s.nameActive, bs[`background${upperFirst(camelCase(color))}`])}
               onClick={handleToggleClick}
               title={name}
             >

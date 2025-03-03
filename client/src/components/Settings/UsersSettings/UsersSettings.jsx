@@ -7,7 +7,7 @@ import UserAddPopup from '../../UserAddPopup';
 import { Button, ButtonStyle, Table } from '../../Utils';
 import Item from './Item';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './UsersSettings.module.scss';
 
@@ -118,7 +118,7 @@ const UsersSettings = React.memo(
           </div>
           {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
         </div>
-        <Table.Wrapper className={classNames(gStyles.scrollableXY)}>
+        <Table.Wrapper className={classNames(gs.scrollableXY)}>
           <Table>
             <Table.Header>
               <Table.HeaderRow>

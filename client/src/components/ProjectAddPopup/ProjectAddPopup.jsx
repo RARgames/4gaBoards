@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 
 const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClose }) => {
   const [t] = useTranslation();
@@ -52,7 +52,7 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
       <Popup.Content>
         <Form onKeyDown={handleKeyDown}>
           <Input ref={nameField} style={InputStyle.Default} name="name" placeholder={t('common.enterProjectName')} value={data.name} readOnly={isSubmitting} onChange={handleFieldChange} isError={isError} />
-          <div className={gStyles.controls}>
+          <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.addProject')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>

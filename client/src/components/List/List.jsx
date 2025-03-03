@@ -13,7 +13,7 @@ import ActionsPopup from './ActionsPopup';
 import CardAdd from './CardAdd';
 import NameEdit from './NameEdit';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './List.module.scss';
 
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, onUpdate, onDelete, onCardCreate }) => {
@@ -142,7 +142,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
         // eslint-disable-next-line react/jsx-props-no-spreading
         <div {...droppableProps} ref={innerRef} className={s.headerCollapsedInner}>
           {placeholder}
-          <Button style={ButtonStyle.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={classNames(s.headerCollapseButtonCollapsed, !canEdit && gStyles.cursorDefault)}>
+          <Button style={ButtonStyle.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={classNames(s.headerCollapseButtonCollapsed, !canEdit && gs.cursorDefault)}>
             <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
           </Button>
           <div className={s.headerNameCollapsed} title={name}>
@@ -183,12 +183,12 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
               className={s.header}
             >
-              <Button style={ButtonStyle.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={classNames(s.headerCollapseButton, !canEdit && gStyles.cursorDefault)}>
+              <Button style={ButtonStyle.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={classNames(s.headerCollapseButton, !canEdit && gs.cursorDefault)}>
                 <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={s.iconRotateRight} />
               </Button>
               <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <div className={classNames(s.headerName, canEdit && gStyles.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={name}>
+                <div className={classNames(s.headerName, canEdit && gs.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={name}>
                   {name}
                 </div>
               </NameEdit>
@@ -204,7 +204,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
               <div className={s.headerCardsCount}>{cardsCountText()}</div>
             </div>
             {/* eslint-disable-next-line prettier/prettier */}
-            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(s.cardsInnerWrapper, gStyles.scrollableY, listOuterWrapperScrollable && s.cardsInnerWrapperScrollable)}>
+            <div ref={(el) => {listWrapper.current = el; setListOuterWrapperElement(el);}} className={classNames(s.cardsInnerWrapper, gs.scrollableY, listOuterWrapperScrollable && s.cardsInnerWrapperScrollable)}>
               <div className={classNames(s.cardsOuterWrapper, listOuterWrapperScrollable && s.cardsOuterWrapperScrollable)}>{cardsNode}</div>
             </div>
             {addCardNode}

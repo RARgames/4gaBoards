@@ -13,7 +13,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize }
 import ActionsPopup from './ActionsPopup';
 import TaskEdit from './TaskEdit';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './Item.module.scss';
 
 const VARIANTS = {
@@ -66,7 +66,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
   const dueDateVariant = variant === VARIANTS.CARD ? 'tasksCard' : 'cardModal';
 
   const membersNode = (
-    <div className={classNames(s.members, gStyles.cursorPointer, isCompleted && s.itemCompleted)}>
+    <div className={classNames(s.members, gs.cursorPointer, isCompleted && s.itemCompleted)}>
       {users.slice(0, visibleMembersCount).map((user) => (
         <span key={user.id} className={s.member}>
           <User name={user.name} avatarUrl={user.avatarUrl} size={variant === VARIANTS.CARD ? 'cardTasks' : 'card'} />
@@ -91,7 +91,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
       {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
         const contentNode = (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(s.wrapper, gStyles.scrollableX, canEdit && s.contentHoverable)}>
+          <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(s.wrapper, gs.scrollableX, canEdit && s.contentHoverable)}>
             <Checkbox
               checked={isCompleted}
               size={variant === VARIANTS.CARD ? CheckboxSize.Size14 : CheckboxSize.Size20}
@@ -114,7 +114,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
                   membersNode
                 ))}
               {dueDate && (
-                <div className={classNames(s.dueDate, gStyles.cursorPointer, isCompleted && s.itemCompleted, variant === VARIANTS.CARD && s.dueDateCard)}>
+                <div className={classNames(s.dueDate, gs.cursorPointer, isCompleted && s.itemCompleted, variant === VARIANTS.CARD && s.dueDateCard)}>
                   {isPersisted && canEdit ? (
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
                       <DueDate variant={dueDateVariant} value={dueDate} />

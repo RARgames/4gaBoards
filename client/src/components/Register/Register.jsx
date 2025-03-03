@@ -9,7 +9,7 @@ import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './Register.module.scss';
 
 const createMessage = (error) => {
@@ -149,7 +149,7 @@ const Register = React.memo(
     }, []);
 
     return (
-      <div className={classNames(s.wrapper, gStyles.scrollableY)}>
+      <div className={classNames(s.wrapper, gs.scrollableY)}>
         <div className={s.loginWrapper}>
           <img src={logo} className={s.logo} alt="4ga Boards" />
           <h1 className={s.formTitle}>{t('common.createYourAccount')}</h1>

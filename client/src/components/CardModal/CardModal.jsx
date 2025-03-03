@@ -25,7 +25,7 @@ import Attachments from './Attachments';
 import DescriptionEdit from './DescriptionEdit';
 import NameField from './NameField';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './CardModal.module.scss';
 
 const CardModal = React.memo(
@@ -310,7 +310,7 @@ const CardModal = React.memo(
           <div className={s.headerTitleWrapper}>
             <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
               {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <div className={classNames(s.headerTitle, canEdit && gStyles.cursorPointer)} onClick={handleNameEdit} title={name}>
+              <div className={classNames(s.headerTitle, canEdit && gs.cursorPointer)} onClick={handleNameEdit} title={name}>
                 {name}
               </div>
             </NameField>
@@ -388,7 +388,7 @@ const CardModal = React.memo(
             dropdownMenuClassName={s.dropdownMenu}
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <div className={classNames(canEdit && gStyles.cursorPointer)} onClick={handleDropdownClick}>
+            <div className={classNames(canEdit && gs.cursorPointer)} onClick={handleDropdownClick}>
               <div className={classNames(s.headerListField)} title={selectedList.name}>
                 {selectedList.name}
               </div>
@@ -707,7 +707,7 @@ const CardModal = React.memo(
     const contentNode = (
       <div className={s.flexContainer}>
         {headerNode}
-        <div className={classNames(s.mainContainer, gStyles.scrollableY)}>
+        <div className={classNames(s.mainContainer, gs.scrollableY)}>
           <div className={s.moduleContainer}>
             {membersNode}
             {labelsNode}

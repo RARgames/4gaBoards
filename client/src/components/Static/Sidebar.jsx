@@ -17,7 +17,7 @@ import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ProjectActionsPopup from './ProjectActionsPopup';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './Sidebar.module.scss';
 
 const Sidebar = React.memo(
@@ -232,7 +232,7 @@ const Sidebar = React.memo(
               <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
             )}
           </div>
-          <div ref={sidebarRef} className={classNames(s.scrollable, gStyles.scrollableY)}>
+          <div ref={sidebarRef} className={classNames(s.scrollable, gs.scrollableY)}>
             {settingsOnly && (
               <div>
                 <div className={s.sidebarTitle}>

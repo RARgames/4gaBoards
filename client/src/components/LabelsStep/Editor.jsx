@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import LabelColors from '../../constants/LabelColors';
 import { Button, ButtonStyle, Input, InputStyle } from '../Utils';
 
-import * as globalStyles from '../../styles.module.scss';
+import * as bs from '../../backgrounds.module.scss';
 import * as s from './Editor.module.scss';
 
 const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
@@ -44,7 +44,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
             key={color}
             name="color"
             value={color}
-            className={classNames(s.colorButton, color === data.color && s.colorButtonActive, globalStyles[`background${upperFirst(camelCase(color))}`])}
+            className={classNames(s.colorButton, color === data.color && s.colorButtonActive, bs[`background${upperFirst(camelCase(color))}`])}
             onClick={onFieldChange}
           />
         ))}

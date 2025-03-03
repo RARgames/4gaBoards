@@ -10,7 +10,7 @@ import Paths from '../../constants/Paths';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './NotificationsPopup.module.scss';
 
 const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
@@ -81,7 +81,7 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
       <Popup.Header>{t('common.notifications', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {items.length > 0 ? (
-          <div className={classNames(s.wrapper, gStyles.scrollableY)}>
+          <div className={classNames(s.wrapper, gs.scrollableY)}>
             {items.map((item) => (
               <div key={item.id} className={s.item}>
                 {item.card && item.activity ? (

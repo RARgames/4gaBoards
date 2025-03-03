@@ -10,7 +10,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 import BackgroundPane from './BackgroundPane';
 import InformationEdit from './InformationEdit';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './ProjectSettings.module.scss';
 
@@ -95,7 +95,7 @@ const ProjectSettings = React.memo(
                   onDelete(projectId);
                 }}
               >
-                <div className={gStyles.controlsCenter}>
+                <div className={gs.controlsCenter}>
                   <Button style={ButtonStyle.Cancel} content={t('action.deleteProject', { context: 'title' })} />
                 </div>
               </DeletePopup>

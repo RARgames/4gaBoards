@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 import * as s from './CommentEdit.module.scss';
 
 const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onCurrentUserPrefsUpdate }, ref) => {
@@ -154,7 +154,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
         githubRepo={githubRepo}
         className={s.editor}
       />
-      <div className={gStyles.controls}>
+      <div className={gs.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
         <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
       </div>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Input, InputStyle, Form, withModal } from '../../Utils';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 import * as s from './TextFileAddModal.module.scss';
 
 const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
@@ -62,7 +62,7 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
           isError={isError}
         />
         <div className={s.inputLabel}>.txt</div>
-        <div className={gStyles.controls}>
+        <div className={gs.controls}>
           <Button style={ButtonStyle.Submit} content={t('action.createFile')} onClick={handleSubmit} />
         </div>
       </Form>

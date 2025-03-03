@@ -15,8 +15,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'photoswipe/dist/photoswipe.css';
 import '../assets/styles.css';
 import '../colors.css';
-import '../packages.module.scss';
-import '../styles.module.scss';
+import '../backgrounds.module.scss';
+import '../root.module.scss';
 
 function Root({ store, history }) {
   return (

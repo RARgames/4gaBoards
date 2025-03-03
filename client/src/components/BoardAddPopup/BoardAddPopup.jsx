@@ -8,7 +8,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
 import ImportStep from './ImportStep';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './BoardAddPopup.module.scss';
 
 const StepTypes = {
@@ -246,7 +246,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
               </div>
             </div>
           )}
-          <div className={gStyles.controlsSpaceBetween}>
+          <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={s.importButton}>
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}

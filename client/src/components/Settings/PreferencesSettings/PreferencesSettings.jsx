@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import locales from '../../../locales';
 import { Dropdown, DropdownStyle, Radio, RadioSize, Table } from '../../Utils';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
@@ -52,7 +52,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       <div className={sShared.header}>
         <h2 className={sShared.headerText}>{t('common.preferences')}</h2>
       </div>
-      <Table.Wrapper className={classNames(gStyles.scrollableXY)}>
+      <Table.Wrapper className={classNames(gs.scrollableXY)}>
         <Table>
           <Table.Header>
             <Table.HeaderRow>

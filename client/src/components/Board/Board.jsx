@@ -11,7 +11,7 @@ import ListContainer from '../../containers/ListContainer';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ListAdd from './ListAdd';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './Board.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
@@ -123,7 +123,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, onListCreat
       <BoardActionsContainer boardId={id} />
       <div className={s.mainWrapper}>
         {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-        <div ref={wrapper} className={classNames(s.wrapper, gStyles.scrollableX)} onMouseDown={handleMouseDown}>
+        <div ref={wrapper} className={classNames(s.wrapper, gs.scrollableX)} onMouseDown={handleMouseDown}>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
               {({ innerRef, droppableProps, placeholder }) => (
@@ -131,7 +131,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, onListCreat
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   data-drag-scroller
                   ref={innerRef}
-                  className={classNames(s.lists, gStyles.cursorGrab)}
+                  className={classNames(s.lists, gs.cursorGrab)}
                 >
                   {listIds.map((listId, index) => (
                     <ListContainer key={listId} id={listId} index={index} />

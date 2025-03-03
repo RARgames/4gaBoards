@@ -6,7 +6,7 @@ import { useForm } from '../../hooks';
 import { useToggle, useDidUpdate } from '../../lib/hooks';
 import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './CardMoveStep.module.scss';
 
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {
@@ -168,7 +168,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               />
             </>
           )}
-          <div className={gStyles.controls}>
+          <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} onClick={handleSubmit} />
           </div>
         </Form>

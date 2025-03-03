@@ -8,7 +8,7 @@ import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
 import DropdownStyle from './DropdownStyle';
 
-import * as gStyles from '../../../globalStyles.module.scss';
+import * as gs from '../../../globalStyles.module.scss';
 import * as s from './Dropdown.module.scss';
 
 const Dropdown = React.forwardRef(
@@ -322,7 +322,7 @@ const Dropdown = React.forwardRef(
                 {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
                 ref={refs.setFloating}
                 style={floatingStyles}
-                className={classNames(s.dropdownMenu, gStyles.scrollableY, getOptions().length > 0 && s.dropdownMenuWithChildren, dropdownMenuClassName)}
+                className={classNames(s.dropdownMenu, gs.scrollableY, getOptions().length > 0 && s.dropdownMenuWithChildren, dropdownMenuClassName)}
               >
                 {getOptions().map((item, index) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions

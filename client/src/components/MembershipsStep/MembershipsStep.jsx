@@ -7,7 +7,7 @@ import { useField } from '../../hooks';
 import { Popup, Input, InputStyle } from '../Utils';
 import Item from './Item';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './MembershipsStep.module.scss';
 
 const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
@@ -62,7 +62,7 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect
       <Popup.Content>
         <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchMembers')} onChange={handleSearchChange} />
         {filteredItems.length > 0 && (
-          <div className={classNames(s.menu, gStyles.scrollableY)}>
+          <div className={classNames(s.menu, gs.scrollableY)}>
             {filteredItems.map((item) => (
               <Item
                 key={item.id}

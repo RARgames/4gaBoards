@@ -12,7 +12,7 @@ import AddStep from './AddStep';
 import EditStep from './EditStep';
 import Item from './Item';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './LabelsStep.module.scss';
 
 const StepTypes = {
@@ -129,7 +129,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
                 <div
                   {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
                   ref={innerRef}
-                  className={classNames(s.items, gStyles.scrollableY)}
+                  className={classNames(s.items, gs.scrollableY)}
                 >
                   {filteredItems.map((item, index) => (
                     <Item

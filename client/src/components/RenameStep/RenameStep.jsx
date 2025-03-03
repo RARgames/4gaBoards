@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 
 const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
@@ -77,7 +77,7 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
             onFocus={handleFocus}
             isError={isError}
           />
-          <div className={gStyles.controlsSpaceBetween}>
+          <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={onClose} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>

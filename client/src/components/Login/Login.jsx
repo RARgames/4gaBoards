@@ -10,7 +10,7 @@ import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './Login.module.scss';
 
 const createMessage = (error) => {
@@ -138,7 +138,7 @@ const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, on
   }, []);
 
   return (
-    <div className={classNames(s.wrapper, gStyles.scrollableY)}>
+    <div className={classNames(s.wrapper, gs.scrollableY)}>
       <div className={s.loginWrapper}>
         <img src={logo} className={s.logo} alt="4ga Boards" />
         <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>

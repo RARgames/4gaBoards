@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useLocalStorage } from '../../hooks';
 import { MDEditor, Button, ButtonStyle } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './DescriptionEdit.module.scss';
 
 const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserPrefsUpdate, onLocalDescChange, onClose }, ref) => {
@@ -151,7 +151,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
         githubRepo={githubRepo}
         className={s.editor}
       />
-      <div className={gStyles.controls}>
+      <div className={gs.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
         <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
       </div>

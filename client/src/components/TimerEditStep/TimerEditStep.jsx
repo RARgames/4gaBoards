@@ -8,7 +8,7 @@ import { useToggle } from '../../lib/hooks';
 import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
 
-import * as gStyles from '../../globalStyles.module.scss';
+import * as gs from '../../globalStyles.module.scss';
 import * as s from './TimerEditStep.module.scss';
 
 const createData = (timer) => {
@@ -176,7 +176,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size13} />
             </Button>
           </div>
-          <div className={gStyles.controlsSpaceBetween}>
+          <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
             {isEditing && <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />}
             {!isEditing &&

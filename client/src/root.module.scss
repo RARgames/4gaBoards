@@ -1,5 +1,61 @@
 :global {
   #app {
+    //Root
+    background: var(--backgroundColor);
+
+    //MD Editor - Color Classes
+    .black {
+      color: var(--mdBlack);
+    }
+
+    .grey {
+      color: var(--textColor1);
+    }
+
+    .white {
+      color: var(--mdWhite);
+    }
+
+    .brown {
+      color: var(--mdBrown);
+    }
+
+    .red {
+      color: var(--mdRed);
+    }
+
+    .purple {
+      color: var(--mdPurple);
+    }
+
+    .pink {
+      color: var(--mdPink);
+    }
+
+    .green {
+      color: var(--mdGreen);
+    }
+
+    .lime {
+      color: var(--mdLime);
+    }
+
+    .yellow {
+      color: var(--mdYellow);
+    }
+
+    .blue {
+      color: var(--mdBlue);
+    }
+
+    .cyan {
+      color: var(--mdCyan);
+    }
+
+    .orange {
+      color: var(--mdOrange);
+    }
+
     //MD Editor
     .w-md-editor {
       padding-bottom: 0;
@@ -43,7 +99,7 @@
       padding: 10px;
       border-radius: 2px;
       background-color: var(--backgroundColorTmpDarkerField2);
-      font-family: 'Museo Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 14px;
     }
 
