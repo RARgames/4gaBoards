@@ -13,7 +13,7 @@ import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
 import Connections from './Connections';
 import Filters from './Filters';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './BoardActions.module.scss';
 
 const BoardActions = React.memo(

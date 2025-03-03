@@ -8,7 +8,7 @@ import { Popup, Input, InputStyle, withPopup } from '../../Utils';
 import ActionsStep from '../ActionsStep';
 import UserItem from './UserItem';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as s from './AddPopup.module.scss';
 
 const StepTypes = {

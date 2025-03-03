@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Form, Input, InputStyle } from '../../Utils';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as s from './InformationEdit.module.scss';
 
 const InformationEdit = React.memo(({ defaultData, onUpdate }) => {

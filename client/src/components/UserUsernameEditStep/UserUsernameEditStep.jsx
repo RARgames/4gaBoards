@@ -7,7 +7,7 @@ import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './UserUsernameEditStep.module.scss';
 
 const createMessage = (error) => {

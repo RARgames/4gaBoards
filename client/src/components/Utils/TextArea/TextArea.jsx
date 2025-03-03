@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import TextAreaStyle from './TextAreaStyle';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as s from './TextArea.module.scss';
 
 const TextArea = React.forwardRef(({ disableSpellcheck, style, className, isError, ...props }, ref) => {

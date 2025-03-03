@@ -17,7 +17,7 @@ import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ProjectActionsPopup from './ProjectActionsPopup';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './Sidebar.module.scss';
 
 const Sidebar = React.memo(

@@ -9,7 +9,7 @@ import DeleteStep from '../DeleteStep';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',

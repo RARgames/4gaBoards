@@ -8,7 +8,7 @@ import { Button, ButtonStyle } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
 import DropdownStyle from './DropdownStyle';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as s from './Dropdown.module.scss';
 
 const Dropdown = React.forwardRef(

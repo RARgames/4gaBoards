@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Input, InputStyle, Form, withModal } from '../../Utils';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as s from './TextFileAddModal.module.scss';
 
 const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {

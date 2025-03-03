@@ -12,7 +12,7 @@ import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as bs from '../../backgrounds.module.scss';
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './Projects.module.scss';
 
 const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultData, isSubmitting, onCreate }) => {

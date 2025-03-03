@@ -13,7 +13,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize }
 import ActionsPopup from './ActionsPopup';
 import TaskEdit from './TaskEdit';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './Item.module.scss';
 
 const VARIANTS = {

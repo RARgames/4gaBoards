@@ -11,7 +11,7 @@ import ListContainer from '../../containers/ListContainer';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ListAdd from './ListAdd';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './Board.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');

@@ -25,7 +25,7 @@ import Attachments from './Attachments';
 import DescriptionEdit from './DescriptionEdit';
 import NameField from './NameField';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './CardModal.module.scss';
 
 const CardModal = React.memo(

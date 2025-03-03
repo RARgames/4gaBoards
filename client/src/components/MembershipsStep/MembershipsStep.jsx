@@ -7,7 +7,7 @@ import { useField } from '../../hooks';
 import { Popup, Input, InputStyle } from '../Utils';
 import Item from './Item';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './MembershipsStep.module.scss';
 
 const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {

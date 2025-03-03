@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useLocalStorage } from '../../hooks';
 import { MDEditor, Button, ButtonStyle } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './DescriptionEdit.module.scss';
 
 const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserPrefsUpdate, onLocalDescChange, onClose }, ref) => {

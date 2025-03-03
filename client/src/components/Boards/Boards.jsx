@@ -8,7 +8,7 @@ import Paths from '../../constants/Paths';
 import BoardAddPopup from '../BoardAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './Boards.module.scss';
 
 const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, onCreate }) => {

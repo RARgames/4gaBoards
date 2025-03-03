@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks';
 import { Button, ButtonStyle, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 
 const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
   const [t] = useTranslation();

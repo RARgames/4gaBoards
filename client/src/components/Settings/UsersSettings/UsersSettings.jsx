@@ -7,7 +7,7 @@ import UserAddPopup from '../../UserAddPopup';
 import { Button, ButtonStyle, Table } from '../../Utils';
 import Item from './Item';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './UsersSettings.module.scss';
 

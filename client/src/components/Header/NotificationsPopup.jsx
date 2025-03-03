@@ -10,7 +10,7 @@ import Paths from '../../constants/Paths';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './NotificationsPopup.module.scss';
 
 const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {

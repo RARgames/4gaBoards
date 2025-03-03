@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { BoardMembershipRoles } from '../../constants/Enums';
 import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './MembershipPermissionsSelectStep.module.scss';
 
 const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, buttonContent, onSelect, onBack, onClose }) => {

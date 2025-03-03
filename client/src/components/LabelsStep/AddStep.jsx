@@ -7,7 +7,7 @@ import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();

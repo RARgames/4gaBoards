@@ -8,7 +8,7 @@ import { useDidUpdate, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
 import ImportStep from './ImportStep';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './BoardAddPopup.module.scss';
 
 const StepTypes = {

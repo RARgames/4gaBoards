@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 
 const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();

@@ -6,7 +6,7 @@ import { useForm } from '../../hooks';
 import { useToggle, useDidUpdate } from '../../lib/hooks';
 import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './CardMoveStep.module.scss';
 
 const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTransfer, onBoardFetch, onBack, onClose }) => {

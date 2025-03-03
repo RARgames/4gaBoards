@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '../Utils';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 
 const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClose }) => {
   const [t] = useTranslation();

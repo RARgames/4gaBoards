@@ -13,7 +13,7 @@ import ActionsPopup from './ActionsPopup';
 import CardAdd from './CardAdd';
 import NameEdit from './NameEdit';
 
-import * as gs from '../../globalStyles.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './List.module.scss';
 
 const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, onUpdate, onDelete, onCardCreate }) => {

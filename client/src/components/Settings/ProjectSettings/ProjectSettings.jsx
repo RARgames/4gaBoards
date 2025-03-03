@@ -10,7 +10,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 import BackgroundPane from './BackgroundPane';
 import InformationEdit from './InformationEdit';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './ProjectSettings.module.scss';
 

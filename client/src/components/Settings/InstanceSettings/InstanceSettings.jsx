@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { Radio, RadioSize, Table } from '../../Utils';
 
-import * as gs from '../../../globalStyles.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 
 const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, demoMode, onCoreSettingsUpdate }) => {
