@@ -1,11 +1,10 @@
 :global {
   #app {
-    background: var(--backgroundColor0);
+    background: var(--backgroundColor);
 
-    // TODO quick fix - change react md editor style, move to separate file
-    // TODO move color classes
+    //Color classes - Markdown Editor
     .black {
-      color: #000000;
+      color: var(--mdBlack);
     }
 
     .grey {
@@ -13,254 +12,47 @@
     }
 
     .white {
-      color: #FFFFFF;
+      color: var(--mdWhite);
     }
 
     .brown {
-      color: #aa4e0c;
+      color: var(--mdBrown);
     }
 
     .red {
-      color: #FF0000;
+      color: var(--mdRed);
     }
 
     .purple {
-      color: #9b0b9b;
+      color: var(--mdPurple);
     }
 
     .pink {
-      color: #FF00FF;
+      color: var(--mdPink);
     }
 
     .green {
-      color: #088f08;
+      color: var(--mdGreen);
     }
 
     .lime {
-      color: #00FF00;
+      color: var(--mdLime);
     }
 
     .yellow {
-      color: #FFFF00;
+      color: var(--mdYellow);
     }
 
     .blue {
-      color: #006eff;
+      color: var(--mdBlue);
     }
 
     .cyan {
-      color: #00FFFF;
+      color: var(--mdCyan);
     }
 
     .orange {
-      color: #FFA500;
-    }
-
-    .w-md-editor {
-      padding-bottom: 0;
-    }
-
-    .w-md-editor-bar {
-      color: var(--textColor0);
-      width: 30px;
-    }
-
-    .w-md-editor-toolbar {
-      background-color: var(--backgroundColorTmpDarkerField);
-    }
-
-    .w-md-editor-area {
-      background-color: var(--backgroundColorTmpDarkerField2);
-      border-radius: 2px;
-    }
-
-    .w-md-editor-text {
-      min-height: 100% !important;
-    }
-
-    .w-md-editor-text-input {
-      &::selection {
-        -webkit-text-fill-color: var(--textColorWhite);
-      }
-    }
-
-    .w-md-editor-preview {
-      background-color: var(--backgroundColorTmpDarkerField2);
-      padding: 10px;
-
-      .wmde-markdown {
-        padding: 0;
-        border-radius: 0;
-      }
-    }
-
-    .wmde-markdown {
-      padding: 10px;
-      border-radius: 2px;
-      background-color: var(--backgroundColorTmpDarkerField2);
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 14px;
-    }
-
-    .wmde-markdown>p {
-      white-space: pre-wrap;
-    }
-
-    .wmde-markdown>ul>li>p {
-      margin-top: 0px;
-    }
-
-    .wmde-markdown>ul {
-      white-space: normal;
-      line-height: 15px;
-      padding-left: 0.8em;
-    }
-
-    .wmde-markdown>ul.contains-task-list {
-      white-space: normal;
-      line-height: 15px;
-      padding-left: 1.3em;
-    }
-
-    .wmde-markdown>ul>li {
-      white-space: pre-wrap;
-    }
-
-    .wmde-markdown>ol {
-      white-space: normal;
-      line-height: 15px;
-      padding-left: 1em;
-    }
-
-    .wmde-markdown>ol>li {
-      white-space: pre-wrap;
-    }
-
-    .wmde-markdown>hr {
-      margin: 10px 0;
-    }
-
-    .wmde-markdown>h1,
-    .wmde-markdown>h2,
-    .wmde-markdown>h3,
-    .wmde-markdown>h4,
-    .wmde-markdown>h5,
-    .wmde-markdown>h6 {
-      margin: 12px 0 8px 0;
-    }
-
-    .wmde-markdown>blockquote>p {
-      white-space: pre-wrap;
-    }
-
-    .react-datepicker {
-      background: var(--backgroundList);
-      border: 0;
-      font-size: 14px;
-      font-family: "Museo Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
-      font-weight: 400;
-      width: 100%;
-      padding-bottom: 8px;
-    }
-
-    .react-datepicker__month-container {
-      width: 100%;
-    }
-
-    .react-datepicker__current-month,
-    .react-datepicker-time__header {
-      color: var(--textColor1);
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 32px;
-      padding-bottom: 4px;
-      text-transform: capitalize;
-    }
-
-    .react-datepicker__header {
-      background: var(--backgroundList);
-      border: 0;
-      padding: 0;
-    }
-
-    .react-datepicker__day {
-      background: var(--backgroundColor);
-      border-style: solid;
-      border-width: 0 0 1px 1px;
-      border-color: var(--textColorCalendar);
-    }
-
-    .react-datepicker__day-name,
-    .react-datepicker__day,
-    .react-datepicker__time-name {
-      color: var(--textColor1);
-      display: inline-block;
-      width: 40px;
-      font-weight: 500;
-      line-height: 28px;
-      text-align: center;
-      margin: 0;
-    }
-
-    .react-datepicker__day--selected,
-    .react-datepicker__day--in-selecting-range,
-    .react-datepicker__day--in-range {
-      border-radius: 0;
-      background: var(--backgroundCardOpened);
-      color: var(--textColorWhite);
-      font-weight: bold;
-    }
-
-    .react-datepicker__day-name {
-      border-bottom: 1px solid var(--textColorCalendar);
-    }
-
-    .react-datepicker__week {
-      border-right: 1px solid var(--textColorCalendar);
-    }
-
-    .react-datepicker__day-names {
-      background: var(--backgroundList);
-      border: 0;
-    }
-
-    .react-datepicker__day--outside-month {
-      color: var(--textColor4);
-      background: var(--backgroundColorTmpSeparatorLight);
-    }
-
-    .react-datepicker__month {
-      margin: 0.4rem 0 0;
-    }
-
-    .react-datepicker__navigation--previous,
-    .react-datepicker__navigation--next {
-      outline: none;
-    }
-
-    .react-datepicker__navigation--previous {
-      left: 0;
-    }
-
-    .react-datepicker__navigation--next {
-      right: 0;
-    }
-
-    .react-datepicker__navigation {
-      border-width: 7px 9px;
-      top: 0;
-    }
-
-    .react-datepicker__day {
-      outline: none;
-
-      &:hover {
-        border-radius: 0;
-      }
-    }
-
-    .pswp .pswp__img--placeholder {
-      display: none !important;
+      color: var(--mdOrange);
     }
   }
 }
@@ -385,7 +177,17 @@
   }
 
   .backgroundBlueDanube {
-    background: radial-gradient(circle, rgba(9, 9, 121, 1) 0%, rgba(2, 0, 36, 1) 0%, rgba(2, 29, 66, 1) 0%, rgba(2, 41, 78, 1) 0%, rgba(2, 57, 95, 1) 0%, rgba(1, 105, 144, 1) 100%, rgba(1, 151, 192, 1) 100%, rgba(0, 212, 255, 1) 100%) !important;
+    background: radial-gradient(
+      circle,
+      rgba(9, 9, 121, 1) 0%,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(2, 29, 66, 1) 0%,
+      rgba(2, 41, 78, 1) 0%,
+      rgba(2, 57, 95, 1) 0%,
+      rgba(1, 105, 144, 1) 100%,
+      rgba(1, 151, 192, 1) 100%,
+      rgba(0, 212, 255, 1) 100%
+    ) !important;
   }
 
   .backgroundSundownStripe {
@@ -489,7 +291,15 @@
   }
 
   .backgroundTheBow {
-    background: radial-gradient(circle farthest-corner at -8.9% 51.2%, rgba(255, 124, 0, 1) 0%, rgba(255, 124, 0, 1) 15.9%, rgba(255, 163, 77, 1) 15.9%, rgba(255, 163, 77, 1) 24.4%, rgba(19, 30, 37, 1) 24.5%, rgba(19, 30, 37, 1) 66%) !important;
+    background: radial-gradient(
+      circle farthest-corner at -8.9% 51.2%,
+      rgba(255, 124, 0, 1) 0%,
+      rgba(255, 124, 0, 1) 15.9%,
+      rgba(255, 163, 77, 1) 15.9%,
+      rgba(255, 163, 77, 1) 24.4%,
+      rgba(19, 30, 37, 1) 24.5%,
+      rgba(19, 30, 37, 1) 66%
+    ) !important;
   }
 
   .backgroundGreenMist {
