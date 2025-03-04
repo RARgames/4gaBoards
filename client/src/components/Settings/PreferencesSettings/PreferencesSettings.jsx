@@ -10,7 +10,7 @@ import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
-const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, onUpdate }) => {
+const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, onUpdate }) => {
   const [t] = useTranslation();
   const languages = useMemo(
     () => [
@@ -28,6 +28,21 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
   );
   const selectedLanguage = useMemo(() => languages.find((lang) => lang.id === (language || 'auto')), [languages, language]);
 
+  const defaultViews = useMemo(
+    () => [
+      {
+        id: 'list',
+        name: t('common.listView'),
+      },
+      {
+        id: 'board',
+        name: t('common.boardView'),
+      },
+    ],
+    [t],
+  );
+  const selectedDefaultView = useMemo(() => defaultViews.find((view) => view.id === defaultView), [defaultViews, defaultView]);
+
   const handleSubscribeToOwnCardsChange = useCallback(() => {
     onUpdate({
       subscribeToOwnCards: !subscribeToOwnCards,
@@ -39,6 +54,13 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       sidebarCompact: !sidebarCompact,
     });
   }, [sidebarCompact, onUpdate]);
+
+  const handleDefaultViewChange = useCallback(
+    (value) => {
+      onUpdate({ defaultView: value.id });
+    },
+    [onUpdate],
+  );
 
   const handleLanguageChange = useCallback(
     (value) => {
@@ -80,8 +102,26 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
               <Table.Cell>{t('common.descriptionCompactSidebar')}</Table.Cell>
             </Table.Row>
             <Table.Row>
+              <Table.Cell>{t('common.defaultView')}</Table.Cell>
+              <Table.Cell className={s.dropdownCell} aria-label={t('common.toggleSettings')}>
+                <Dropdown
+                  style={DropdownStyle.FullWidth}
+                  options={defaultViews}
+                  placeholder={selectedDefaultView.name}
+                  defaultItem={selectedDefaultView}
+                  isSearchable
+                  selectFirstOnSearch
+                  forcePlaceholder
+                  onChange={handleDefaultViewChange}
+                  className={s.dropdown}
+                />
+              </Table.Cell>
+              <Table.Cell>{selectedDefaultView.name}</Table.Cell>
+              <Table.Cell>{t('common.descriptionDefaultView')}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
               <Table.Cell> {t('common.language', { context: 'title' })}</Table.Cell>
-              <Table.Cell className={s.languageCell} aria-label={t('common.toggleSettings')}>
+              <Table.Cell className={s.dropdownCell} aria-label={t('common.toggleSettings')}>
                 <Dropdown
                   style={DropdownStyle.FullWidth}
                   options={languages}
@@ -91,7 +131,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
                   selectFirstOnSearch
                   forcePlaceholder
                   onChange={handleLanguageChange}
-                  className={s.languageDropdown}
+                  className={s.dropdown}
                 />
               </Table.Cell>
               <Table.Cell>{selectedLanguage.name}</Table.Cell>
@@ -108,6 +148,7 @@ PreferencesSettings.propTypes = {
   subscribeToOwnCards: PropTypes.bool.isRequired,
   sidebarCompact: PropTypes.bool.isRequired,
   language: PropTypes.string,
+  defaultView: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

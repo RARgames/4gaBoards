@@ -50,6 +50,11 @@ module.exports = {
     sidebarCompact: {
       type: 'boolean',
     },
+    defaultView: {
+      type: 'string',
+      isIn: UserPrefs.VIEW_MODES,
+      isNotEmptyString: true,
+    },
   },
 
   exits: {
@@ -77,7 +82,7 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, ['language', 'subscribeToOwnCards', 'descriptionMode', 'commentMode', 'descriptionShown', 'tasksShown', 'attachmentsShown', 'commentsShown', 'sidebarCompact']),
+      ..._.pick(inputs, ['language', 'subscribeToOwnCards', 'descriptionMode', 'commentMode', 'descriptionShown', 'tasksShown', 'attachmentsShown', 'commentsShown', 'sidebarCompact', 'defaultView']),
     };
 
     userPrefs = await sails.helpers.userPrefs.updateOne.with({

@@ -6,12 +6,13 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { language, subscribeToOwnCards, sidebarCompact } = selectors.selectCurrentUserPrefs(state);
+  const { language, subscribeToOwnCards, sidebarCompact, defaultView } = selectors.selectCurrentUserPrefs(state);
 
   return {
     language,
     subscribeToOwnCards,
     sidebarCompact,
+    defaultView,
   };
 };
 

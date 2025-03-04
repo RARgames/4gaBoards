@@ -6,9 +6,11 @@
  */
 
 const DESCRIPTION_MODES = ['edit', 'live', 'preview'];
+const VIEW_MODES = ['board', 'list'];
 
 module.exports = {
   DESCRIPTION_MODES,
+  VIEW_MODES,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -63,6 +65,13 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
       columnName: 'sidebar_compact',
+    },
+    defaultView: {
+      type: 'string',
+      isIn: VIEW_MODES,
+      isNotEmptyString: true,
+      columnName: 'default_view',
+      defaultsTo: 'board',
     },
   },
 

@@ -17,6 +17,7 @@ export default class extends BaseModel {
     attachmentsShown: attr(),
     commentsShown: attr(),
     sidebarCompact: attr(),
+    defaultView: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

@@ -68,6 +68,7 @@ export default {
       boards_title_other: '{{count}} Tableaux',
       boards_title: 'Tableaux',
       boards: 'tableaux',
+      boardView: 'Le tableau',
       canComment: 'Peut commenter',
       canEditContentOfBoard: 'Peut modifier le contenu du tableau',
       cannotEditInstanceSettings: "Vous n'êtes pas autorisé à modifier les paramètres de l'instance!",
@@ -102,6 +103,7 @@ export default {
       dangerZone_title: 'Zone de danger',
       dashboard: 'Tableau de bord',
       date: 'Date',
+      defaultView: 'Vue par défaut',
       deleteAttachment_title: 'Supprimer la pièce jointe',
       deleteBoard_title: 'Supprimer le tableau',
       deleteCard_title: 'Supprimer la carte',
@@ -116,6 +118,7 @@ export default {
       demoModeExplanation: "Mode démo - certaines fonctionnalités affectant les autres utilisateurs sont désactivées! Chaque nouvel utilisateur reçoit des privilèges d'administrateur.",
       description: 'Description',
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
+      descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
       descriptionSLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
@@ -221,6 +224,7 @@ export default {
       linkCard: 'Copier le lien',
       list: 'Lister',
       listActions_title: 'Liste des actions',
+      listView: 'La liste',
       managers: 'Gestionnaires',
       markAsCompleted: 'Marquer la tâche comme terminée',
       markAsUncompleted: 'Marquer la tâche comme non terminée',
