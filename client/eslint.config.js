@@ -1,5 +1,5 @@
 const babelEslintParser = require('@babel/eslint-parser');
-const prettierConfig = require('eslint-config-prettier');
+const prettierConfig = require('eslint-config-prettier/flat');
 const jsxPlugin = require('eslint-plugin-jsx-a11y');
 const perfectionistPlugin = require('eslint-plugin-perfectionist'); // eslint-disable-line import/no-unresolved
 const prettierPlugin = require('eslint-plugin-prettier');
