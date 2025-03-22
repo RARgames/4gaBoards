@@ -48,7 +48,7 @@ export default (WrappedComponent, defaultProps) => {
       <>
         {/* TODO temp removed: s.wrapper */}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps({ onClick: toggleOpen })} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)}>
+        <div ref={refs.setReference} {...getReferenceProps({ onClick: toggleOpen })} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch>
           {children}
         </div>
         {isOpen && (
