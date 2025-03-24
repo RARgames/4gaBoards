@@ -1,4 +1,4 @@
-const getFullSeconds = ({ startedAt, total }) => {
+export const getFullSeconds = ({ startedAt, total }) => {
   if (startedAt) {
     return Math.floor((new Date() - startedAt) / 1000) + total;
   }
