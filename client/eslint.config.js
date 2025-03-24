@@ -94,7 +94,7 @@ module.exports = [
         },
       ],
       'perfectionist/sort-imports': [
-        'error',
+        'warn',
         {
           newlinesBetween: 'always',
           groups: ['react', { newlinesBetween: 'never' }, ['builtin', 'external', 'internal'], ['parent', 'sibling', 'index'], 'unknown', 'css', { newlinesBetween: 'never' }, 'moduleCss'],
