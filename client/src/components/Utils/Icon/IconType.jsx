@@ -9,6 +9,7 @@ import { ReactComponent as Bell } from '../../../assets/icons/Bell.svg';
 import { ReactComponent as Board } from '../../../assets/icons/Board.svg';
 import { ReactComponent as Calendar } from '../../../assets/icons/Calendar.svg';
 import { ReactComponent as Check } from '../../../assets/icons/Check.svg';
+import { ReactComponent as CircleQuestion } from '../../../assets/icons/CircleQuestion.svg';
 import { ReactComponent as Close } from '../../../assets/icons/Close.svg';
 import { ReactComponent as Comment } from '../../../assets/icons/Comment.svg';
 import { ReactComponent as Duplicate } from '../../../assets/icons/Duplicate.svg';
@@ -60,6 +61,7 @@ const IconType = {
   Board,
   Calendar,
   Check,
+  CircleQuestion,
   Close,
   Comment,
   Duplicate,

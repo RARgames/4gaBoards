@@ -10,7 +10,7 @@
     padding-top: 4px;
   }
 
-  .wrapper {
+  .boardWrapper {
     flex: 1;
   }
 
@@ -54,5 +54,12 @@
     font-size: 14px;
     line-height: 20px;
     vertical-align: top;
+  }
+
+  .listWrapper {
+    flex: 1;
+    height: 100%;
+    width: calc(100% - 650px - 40px);
+    display: flex;
   }
 }

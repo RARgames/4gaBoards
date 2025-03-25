@@ -31,6 +31,8 @@ const BoardActions = React.memo(
     isProjectManager,
     boardData,
     boardSearchParams,
+    viewMode,
+    onViewModeChange,
     onMembershipCreate,
     onMembershipUpdate,
     onMembershipDelete,
@@ -99,6 +101,14 @@ const BoardActions = React.memo(
             onLabelDelete={onLabelDelete}
           />
         </div>
+        <div className={s.action}>
+          <Button style={ButtonStyle.IconBase} title={t('common.switchToBoardView')} onClick={() => onViewModeChange('board')} className={classNames(s.switchViewButton, viewMode === 'board' && s.active)}>
+            <Icon type={IconType.Board} size={IconSize.Size18} />
+          </Button>
+          <Button style={ButtonStyle.IconBase} title={t('common.switchToListView')} onClick={() => onViewModeChange('list')} className={classNames(s.switchViewButton, viewMode === 'list' && s.active)}>
+            <Icon type={IconType.List} size={IconSize.Size18} />
+          </Button>
+        </div>
         {isProjectManager && (
           <div className={classNames(s.action, s.actionRightFirst)}>
             <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
@@ -136,6 +146,8 @@ BoardActions.propTypes = {
   isProjectManager: PropTypes.bool.isRequired,
   boardData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardSearchParams: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  viewMode: PropTypes.string.isRequired,
+  onViewModeChange: PropTypes.func.isRequired,
   onMembershipCreate: PropTypes.func.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,
   onMembershipDelete: PropTypes.func.isRequired,

@@ -72,11 +72,7 @@
     }
   }
 
-  .iconButton {
-    padding: 0;
-    width: 20px;
-    height: 20px;
-
+  .iconBase {
     &:hover {
       svg {
         fill: var(--textColor3);
@@ -90,6 +86,13 @@
         fill: var(--textColor4);
       }
     }
+  }
+
+  .icon {
+    @extend .iconBase;
+    padding: 0;
+    width: 20px;
+    height: 20px;
   }
 
   .login {

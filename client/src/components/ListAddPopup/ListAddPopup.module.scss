@@ -1,0 +1,11 @@
+:global(#app) {
+  .content {
+    min-width: 300px;
+  }
+
+  .headerIcon {
+    margin-left: 4px;
+    fill: var(--textColor2);
+    vertical-align: baseline;
+  }
+}

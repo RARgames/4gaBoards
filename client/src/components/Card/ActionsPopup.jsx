@@ -109,6 +109,11 @@ const ActionsStep = React.memo(
       [onUpdate],
     );
 
+    const handleDelete = useCallback(() => {
+      onDelete();
+      onClose();
+    }, [onClose, onDelete]);
+
     if (step) {
       switch (step.type) {
         case StepTypes.USERS:
@@ -149,7 +154,7 @@ const ActionsStep = React.memo(
               title={t('common.deleteCard', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisCard')}
               buttonContent={t('action.deleteCard')}
-              onConfirm={onDelete}
+              onConfirm={handleDelete}
               onBack={handleBack}
             />
           );

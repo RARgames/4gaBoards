@@ -48,4 +48,22 @@
   .githubGrey {
     fill: var(--textColor4);
   }
+
+  .switchViewButton {
+    border: 1px solid var(--backgroundPopupSeparator);
+    padding: 8px 6px;
+
+    &:first-child {
+      border-right: 0px;
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+    }
+  }
+
+  .switchViewButton.active {
+    background: var(--backgroundSidebarItemActive);
+  }
 }

@@ -93,7 +93,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
   );
 
   useEffect(() => {
-    searchField.current.focus({
+    searchField.current?.focus({
       preventScroll: true,
     });
   }, []);
@@ -187,7 +187,7 @@ LabelsStep.propTypes = {
 
 LabelsStep.defaultProps = {
   title: 'common.labels',
-  canEdit: true,
+  canEdit: true, // TODO change to required here and simmilar places
   onBack: undefined,
 };
 

@@ -52,6 +52,7 @@ const Dropdown = React.forwardRef(
       setIsOpen(true);
       setSearchValue('');
       onErrorClear();
+      dropdown.current.focus();
       onOpen();
     }, [onErrorClear, onOpen]);
 
@@ -102,6 +103,9 @@ const Dropdown = React.forwardRef(
     }, [getOptions, selectedItem]);
 
     const getCurrItem = useCallback(() => {
+      if (!selectedItem) {
+        return null;
+      }
       return getOptions().find((item) => item.id === selectedItem.id);
     }, [getOptions, selectedItem]);
 
@@ -271,7 +275,7 @@ const Dropdown = React.forwardRef(
       middleware: [
         offset(0),
         flip(),
-        shift({ padding: 20 }),
+        shift({ padding: 10 }),
         size({
           apply({ rects, elements }) {
             Object.assign(elements.floating.style, {

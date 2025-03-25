@@ -8,6 +8,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import CardModalContainer from '../../containers/CardModalContainer';
 import ListContainer from '../../containers/ListContainer';
+import ListViewContainer from '../../containers/ListViewContainer';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ListAdd from './ListAdd';
 
@@ -16,11 +17,12 @@ import * as s from './Board.module.scss';
 
 const parseDndDestination = (dndId) => dndId.split(':');
 
-const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, onListCreate, onListMove, onCardMove, onTaskMove }) => {
+const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView, onListCreate, onListMove, onCardMove, onTaskMove }) => {
   const [t] = useTranslation();
   const [isListAddOpened, setIsListAddOpened] = useState(false);
   const wrapper = useRef(null);
   const prevPosition = useRef(null);
+  const [viewMode, setViewMode] = useState(defaultView);
 
   const handleAddListClick = useCallback(() => {
     setIsListAddOpened(true);
@@ -118,42 +120,52 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, onListCreat
     };
   }, [handleWindowMouseMove, handleWindowMouseUp]);
 
-  return (
-    <div className={s.boardContainer}>
-      <BoardActionsContainer boardId={id} />
-      <div className={s.mainWrapper}>
-        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-        <div ref={wrapper} className={classNames(s.wrapper, gs.scrollableX)} onMouseDown={handleMouseDown}>
-          <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
-              {({ innerRef, droppableProps, placeholder }) => (
-                <div
-                  {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-                  data-drag-scroller
-                  ref={innerRef}
-                  className={classNames(s.lists, gs.cursorGrab)}
-                >
-                  {listIds.map((listId, index) => (
-                    <ListContainer key={listId} id={listId} index={index} />
-                  ))}
-                  {placeholder}
-                  {canEdit && (
-                    <div data-drag-scroller className={s.list}>
-                      {isListAddOpened ? (
-                        <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
-                      ) : (
-                        <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
-                          <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
-                          <span className={s.addListButtonText}>{t('action.addList')}</span>
-                        </Button>
-                      )}
-                    </div>
+  const boardView = (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div ref={wrapper} className={classNames(s.boardWrapper, gs.scrollableX)} onMouseDown={handleMouseDown}>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
+          {({ innerRef, droppableProps, placeholder }) => (
+            <div
+              {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
+              data-drag-scroller
+              ref={innerRef}
+              className={classNames(s.lists, gs.cursorGrab)}
+            >
+              {listIds.map((listId, index) => (
+                <ListContainer key={listId} id={listId} index={index} />
+              ))}
+              {placeholder}
+              {canEdit && (
+                <div data-drag-scroller className={s.list}>
+                  {isListAddOpened ? (
+                    <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
+                  ) : (
+                    <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
+                      <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
+                      <span className={s.addListButtonText}>{t('action.addList')}</span>
+                    </Button>
                   )}
                 </div>
               )}
-            </Droppable>
-          </DragDropContext>
-        </div>
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </div>
+  );
+
+  const listView = (
+    <div className={classNames(s.listWrapper)}>
+      <ListViewContainer listIds={listIds} />
+    </div>
+  );
+
+  return (
+    <div className={s.boardContainer}>
+      <BoardActionsContainer boardId={id} viewMode={viewMode} onViewModeChange={setViewMode} />
+      <div className={s.mainWrapper}>
+        {viewMode === 'board' ? boardView : listView}
         {isCardModalOpened && <CardModalContainer />}
       </div>
     </div>
@@ -165,6 +177,7 @@ Board.propTypes = {
   listIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isCardModalOpened: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  defaultView: PropTypes.string.isRequired,
   onListCreate: PropTypes.func.isRequired,
   onListMove: PropTypes.func.isRequired,
   onCardMove: PropTypes.func.isRequired,

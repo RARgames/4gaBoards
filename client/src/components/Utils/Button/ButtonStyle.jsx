@@ -1,7 +1,8 @@
 const ButtonStyle = {
   Default: '_default',
   DefaultBorder: 'defaultBorder',
-  Icon: 'iconButton',
+  IconBase: 'iconBase',
+  Icon: 'icon',
   NoBackground: 'noBackground',
   Login: 'login',
   Submit: 'submit',

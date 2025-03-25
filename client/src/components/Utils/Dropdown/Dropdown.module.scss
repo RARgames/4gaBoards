@@ -32,7 +32,7 @@
   }
 
   .dropdownSearchInputError {
-    border: 1px solid var(--errorRed);
+    border: 1px solid var(--errorRed) !important;
 
     &::placeholder {
       color: var(--errorRed);

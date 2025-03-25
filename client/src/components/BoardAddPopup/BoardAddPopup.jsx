@@ -15,7 +15,7 @@ const StepTypes = {
   IMPORT: 'IMPORT',
 };
 
-const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, onCreate, onBack, onClose }) => {
+const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
 
   const [isDropdownError, setIsDropdownError] = useState(false);
@@ -259,7 +259,7 @@ const AddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin,
   );
 });
 
-AddStep.propTypes = {
+BoardAddStep.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   projectId: PropTypes.string,
   skipProjectDropdown: PropTypes.bool,
@@ -269,11 +269,11 @@ AddStep.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-AddStep.defaultProps = {
+BoardAddStep.defaultProps = {
   projectId: undefined,
   skipProjectDropdown: false,
   onBack: undefined,
 };
 
-export default withPopup(AddStep);
-export { AddStep as BoardAddStep };
+export default withPopup(BoardAddStep);
+export { BoardAddStep };
