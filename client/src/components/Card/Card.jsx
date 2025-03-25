@@ -234,7 +234,7 @@ const Card = React.memo(
                   offset={0}
                 >
                   {users.slice(0, visibleMembersCount).map((user) => (
-                    <span key={user.id} className={classNames(s.attachment, s.user)} data-prevent-card-switch>
+                    <span key={user.id} className={classNames(s.attachment, s.user)}>
                       <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
                     </span>
                   ))}

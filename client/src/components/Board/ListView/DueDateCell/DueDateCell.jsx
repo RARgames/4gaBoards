@@ -36,7 +36,7 @@ const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, onUpdate }) =
   }
 
   return (
-    <div className={cellClassName} data-prevent-card-switch>
+    <div className={cellClassName}>
       {canEdit ? (
         <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
           <DueDate value={dueDate} />
