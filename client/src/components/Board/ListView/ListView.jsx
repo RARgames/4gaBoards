@@ -117,6 +117,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
       cell: NameCellRenderer,
       enableSorting: true,
       sortingFn: 'localeSortingFn',
+      meta: { headerTitle: t('common.name') },
     },
     {
       accessorKey: 'labels',
@@ -144,8 +145,9 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
         if (b === '') return 1;
         return a.localeCompare(b);
       },
+      meta: { headerTitle: t('common.labels') },
     },
-    { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn' },
+    { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
     {
       accessorKey: 'hasDescription',
       header: t('common.hasDescription'),
@@ -158,15 +160,17 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
         if (a) return -1;
         return 1;
       },
+      meta: { headerTitle: t('common.hasDescription') },
     },
-    { accessorKey: 'attachmentsCount', header: t('common.attachmentCount'), cell: AttachmentsCountCellRenderer, enableSorting: true },
-    { accessorKey: 'commentCount', header: t('common.commentCount'), cell: CommentCountCellRenderer, enableSorting: true },
+    { accessorKey: 'attachmentsCount', header: t('common.attachmentCount'), cell: AttachmentsCountCellRenderer, enableSorting: true, meta: { headerTitle: t('common.attachmentCount') } },
+    { accessorKey: 'commentCount', header: t('common.commentCount'), cell: CommentCountCellRenderer, enableSorting: true, meta: { headerTitle: t('common.commentCount') } },
     {
       accessorKey: 'dueDate',
       header: t('common.dueDate', { context: 'title' }),
       cell: DueDateCellRenderer,
       enableSorting: true,
       sortUndefined: 'last',
+      meta: { headerTitle: t('common.dueDate', { context: 'title' }) },
     },
     {
       accessorKey: 'timer',
@@ -184,6 +188,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
         const b = getSortingValue(rowB.original[columnId]);
         return a - b;
       },
+      meta: { headerTitle: t('common.timer') },
     },
     {
       accessorKey: 'actions',
@@ -321,6 +326,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
                     colSpan={header.colSpan}
                     onClick={() => handleSortingChange(header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
                     className={classNames(s.tableHeaderCell, header.column.getCanSort() && gs.cursorPointer)}
+                    title={header.column.columnDef.meta?.headerTitle}
                   >
                     {/* TODO innerWrapper not needed */}
                     <div className={s.headerCellInnerWrapper}>
