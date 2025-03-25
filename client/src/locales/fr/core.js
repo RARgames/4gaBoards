@@ -160,6 +160,7 @@ export default {
       editLabel: "Modifier l'étiquette",
       editLabels: 'Modifier les étiquettes',
       editList: 'Modifier la liste',
+      editListView: 'Modifier la vue de la liste',
       editMembers: 'Modifier les membres',
       editor: 'Éditeur',
       editPassword_title: 'Modifier le mot de passe',

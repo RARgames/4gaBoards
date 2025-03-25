@@ -150,6 +150,7 @@ export default {
       editLabel: 'Edit Label',
       editLabels: 'Edit Labels',
       editList: 'Edit List',
+      editListView: 'Edit List View',
       editMembers: 'Edit Members',
       editor: 'Editor',
       editPassword_title: 'Edit Password',
