@@ -86,7 +86,8 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
   const [sorting, setSorting] = useState([]);
   const data = filteredCards;
 
-  const handleSortingChange = (canSort, newSorting) => {
+  const handleSortingChange = (e, canSort, newSorting) => {
+    if (e.target?.classList?.contains(s.resizer)) return;
     if (!canSort) return;
 
     setSorting((prevSorting) => {
@@ -331,7 +332,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
                     key={header.id}
                     style={{ width: `${header.getSize()}px` }}
                     colSpan={header.colSpan}
-                    onClick={() => handleSortingChange(header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
+                    onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
                     className={classNames(s.tableHeaderCell, header.column.getCanSort() && gs.cursorPointer)}
                     title={header.column.columnDef.meta?.headerTitle}
                   >
@@ -343,16 +344,8 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
                           {sortIndex && <sub className={s.sortingIndex}>({sortIndex})</sub>}
                         </div>
                       )}
-                      {header.column.getCanResize() && (
-                        //  eslint-disable-next-line jsx-a11y/no-static-element-interactions
-                        <div
-                          className={s.resizer}
-                          onMouseDown={(e) => {
-                            // TODO prevent sorting when clicking resizer
-                            header.getResizeHandler()(e);
-                          }}
-                        />
-                      )}
+                      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+                      {header.column.getCanResize() && <div className={s.resizer} onMouseDown={header.getResizeHandler()} />}
                     </div>
                   </Table.HeaderCell>
                 );
