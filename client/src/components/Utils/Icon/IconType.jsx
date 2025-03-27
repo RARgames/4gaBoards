@@ -39,6 +39,7 @@ import { ReactComponent as Server } from '../../../assets/icons/Server.svg';
 import { ReactComponent as Settings } from '../../../assets/icons/Settings.svg';
 import { ReactComponent as Show } from '../../../assets/icons/Show.svg';
 import { ReactComponent as Sliders } from '../../../assets/icons/Sliders.svg';
+import { ReactComponent as SortArrowUp } from '../../../assets/icons/SortArrowUp.svg';
 import { ReactComponent as Star } from '../../../assets/icons/Star.svg';
 import { ReactComponent as Switch } from '../../../assets/icons/Switch.svg';
 import { ReactComponent as Trash } from '../../../assets/icons/Trash.svg';
@@ -91,6 +92,7 @@ const IconType = {
   Settings,
   Show,
   Sliders,
+  SortArrowUp,
   Star,
   Switch,
   Trash,

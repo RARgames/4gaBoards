@@ -61,12 +61,7 @@
     padding: 8px;
     height: 100%;
 
-    //TODO added
     flex-shrink: 0;
-    // margin: 0 auto;
-    // white-space: nowrap;
-    // overflow: hidden;
-    // text-overflow: ellipsis;
 
     &:last-child {
       flex-shrink: 1;
@@ -77,13 +72,13 @@
     }
   }
 
-  .headerCellInnerWrapper {
-    // width: 100%;
-    // height: 100%;
-    margin: 0 auto;
+  .tableHeaderCellInnerWrapper {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    display: inline-flex;
+    align-items: center;
   }
 
   .tableBody {
@@ -212,5 +207,23 @@
 
   .iconTableSettingsButton {
     fill: var(--textColor1);
+  }
+
+  .iconTableHeader {
+    fill: var(--textColor1);
+    flex-shrink: 0;
+  }
+
+  .sortingIndicator {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .sortingIconRotated {
+    transform: rotate(180deg);
+  }
+
+  .sortingIndex {
+    margin-left: -3px;
   }
 }

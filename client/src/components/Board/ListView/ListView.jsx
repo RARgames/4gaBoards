@@ -106,6 +106,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     // labels: false,
   });
 
+  // TODO maybe use title in meta instead of customRenderer
   const columns = [
     // {
     //   header: '',
@@ -150,7 +151,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
     {
       accessorKey: 'hasDescription',
-      header: t('common.hasDescription'),
+      header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
       cell: HasDescriptionCellRenderer,
       enableSorting: true,
       sortingFn: (rowA, rowB, columnId) => {
@@ -160,10 +161,22 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
         if (a) return -1;
         return 1;
       },
-      meta: { headerTitle: t('common.hasDescription') },
+      meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
     },
-    { accessorKey: 'attachmentsCount', header: t('common.attachmentCount'), cell: AttachmentsCountCellRenderer, enableSorting: true, meta: { headerTitle: t('common.attachmentCount') } },
-    { accessorKey: 'commentCount', header: t('common.commentCount'), cell: CommentCountCellRenderer, enableSorting: true, meta: { headerTitle: t('common.commentCount') } },
+    {
+      accessorKey: 'attachmentsCount',
+      header: <Icon type={IconType.Attach} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.attachmentCount')} />,
+      cell: AttachmentsCountCellRenderer,
+      enableSorting: true,
+      meta: { headerTitle: t('common.attachmentCount'), headerSize: 20 },
+    },
+    {
+      accessorKey: 'commentCount',
+      header: <Icon type={IconType.Comment} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.commentCount')} />,
+      cell: CommentCountCellRenderer,
+      enableSorting: true,
+      meta: { headerTitle: t('common.commentCount'), headerSize: 20 },
+    },
     {
       accessorKey: 'dueDate',
       header: t('common.dueDate', { context: 'title' }),
@@ -223,7 +236,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
 
   const tableRef = useRef(null);
 
-  const measureTextWidth = (text, font = '14px Arial') => {
+  const measureTextWidth = (text, font) => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     if (!context) return 0;
@@ -233,25 +246,24 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
 
   const handleAutoSizeColumnsHandler = useCallback((parentRef, table0, columnId) => {
     try {
-      if (parentRef.current) {
-        // eslint-disable-next-line no-param-reassign
-        parentRef.current.style.tableLayout = 'auto';
-      }
-
       const newColumnSizes = {};
-      const font = '14px Arial';
+      const maxRowsToProcess = 1000;
+      const minColumnWidth = 50;
+      const maxColumnWidth = 300;
+      const columnPadding = 10;
+      const defaultFont = '14px Arial';
 
-      const columnsToResize = columnId
-        ? table0.getAllLeafColumns().filter((col) => col.id === columnId) // Single column
-        : table0.getAllLeafColumns(); // All columns
+      const firstTh = parentRef.current.querySelector('th');
+      const headerFont = firstTh ? window.getComputedStyle(firstTh).font : defaultFont;
+      const firstTd = parentRef.current.querySelector('td');
+      const bodyFont = firstTd ? window.getComputedStyle(firstTd).font : defaultFont;
+
+      const columnsToResize = columnId ? table0.getAllLeafColumns().filter((col) => col.id === columnId) : table0.getAllLeafColumns();
 
       if (!columnsToResize.length) {
         return;
       }
 
-      // TODO get x random rows instead
-      // Limit row processing to prevent hanging
-      const maxRowsToProcess = 1000;
       const rowsToProcess = table0.getCoreRowModel().rows.slice(0, maxRowsToProcess);
 
       columnsToResize.forEach((column) => {
@@ -262,22 +274,27 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
           return;
         }
 
-        const header = column.columnDef.header?.toString() || '';
-        let maxCellWidth = measureTextWidth(header, font);
+        let maxCellWidth;
+        if (column.columnDef.meta?.headerSize) {
+          maxCellWidth = column.columnDef.meta.headerSize;
+        } else {
+          const header = column.columnDef.header?.toString() || '';
+          maxCellWidth = measureTextWidth(header, headerFont);
+        }
+
         rowsToProcess.forEach((row) => {
           const cellValue = row.getValue(colId);
           const cellText = String(cellValue || '');
-          const cellWidth = measureTextWidth(cellText, font);
+          const cellWidth = measureTextWidth(cellText, bodyFont);
           if (cellWidth > maxCellWidth) {
             maxCellWidth = cellWidth;
           }
         });
 
-        const estimatedWidth = Math.min(Math.max(100, maxCellWidth + 20), 300); // TODO  Adjust padding and limits
+        const estimatedWidth = Math.min(Math.max(minColumnWidth, maxCellWidth + columnPadding), maxColumnWidth);
         newColumnSizes[colId] = estimatedWidth;
       });
 
-      // TODO adjust to the parent width - simpler way
       const totalNewColumnSizes = Object.values(newColumnSizes).reduce((sum, size) => sum + size, 0);
       const style = window.getComputedStyle(parentRef.current.parentNode);
       const maxVisibleWidth = parentRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
@@ -290,17 +307,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
       }
 
       table0.setColumnSizing(newColumnSizes);
-
-      // TODO recheck if needed
-      setTimeout(() => {
-        if (parentRef.current) {
-          // eslint-disable-next-line no-param-reassign
-          parentRef.current.style.tableLayout = 'fixed';
-        }
-      }, 0);
-    } catch (error) {
-      console.error('Error during auto-size columns:', error);
-    }
+    } catch {} // eslint-disable-line no-empty
   }, []);
 
   useEffect(() => {
@@ -328,13 +335,14 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
                     className={classNames(s.tableHeaderCell, header.column.getCanSort() && gs.cursorPointer)}
                     title={header.column.columnDef.meta?.headerTitle}
                   >
-                    {/* TODO innerWrapper not needed */}
-                    <div className={s.headerCellInnerWrapper}>
+                    <div className={s.tableHeaderCellInnerWrapper}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
-                      {sortedState === 'asc' && ` 🔼${sortIndex ? ` (${sortIndex})` : ''}`}
-                      {sortedState === 'desc' && ` 🔽${sortIndex ? ` (${sortIndex})` : ''}`}
-                      {/* TODO no sorting indicator when too small, bad design - 1st version */}
-
+                      {sortedState && (
+                        <div className={s.sortingIndicator}>
+                          <Icon type={IconType.SortArrowUp} size={IconSize.Size13} className={classNames(sortedState === 'desc' && s.sortingIconRotated)} />
+                          {sortIndex && <sub className={s.sortingIndex}>({sortIndex})</sub>}
+                        </div>
+                      )}
                       {header.column.getCanResize() && (
                         //  eslint-disable-next-line jsx-a11y/no-static-element-interactions
                         <div
@@ -365,6 +373,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
               {row.getVisibleCells().map((cell) => (
                 <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} className={classNames(s.tableBodyCell)}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {/* TODO cell could be generated istead of using a custom renderer */}
                 </Table.Cell>
               ))}
             </Table.Row>
