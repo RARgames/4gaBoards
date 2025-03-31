@@ -8,7 +8,8 @@ import {
   DueDateCellRenderer,
   TimerCellRenderer,
   ActionsCellRenderer,
-} from './CellRenderers';
+  ActionsHeaderRenderer,
+} from './Renderers';
 
 export {
   NameCellRenderer,
@@ -20,4 +21,5 @@ export {
   DueDateCellRenderer,
   TimerCellRenderer,
   ActionsCellRenderer,
+  ActionsHeaderRenderer,
 };

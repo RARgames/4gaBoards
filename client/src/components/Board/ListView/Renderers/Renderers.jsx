@@ -6,10 +6,11 @@ import ActionsCellContainer from '../../../../containers/ActionsCellContainer';
 import DueDateCellContainer from '../../../../containers/DueDateCellContainer';
 import LabelsCellContainer from '../../../../containers/LabelsCellContainer';
 import TimerCellContainer from '../../../../containers/TimerCellContainer';
+import ActionsHeader from '../ActionsHeader';
 import BoolCell from '../BoolCell';
 import DefaultCell from '../DefaultCell';
 
-import * as s from './CellRenderers.module.scss';
+import * as s from './Renderers.module.scss';
 
 function NameCellRenderer({ row }) {
   return <DefaultCell value={row.original.name} title={row.original.name} cellClassName={s.cellDefault} />;
@@ -113,6 +114,14 @@ TimerCellRenderer.propTypes = {
   }).isRequired,
 };
 
+function ActionsHeaderRenderer({ table }, handleResetColumnSortingClick, handleResetColumnWidths, handleResetColumnVisibilityClick) {
+  return <ActionsHeader table={table} onResetColumnSorting={handleResetColumnSortingClick} onResetColumnWidths={handleResetColumnWidths} onResetColumnVisibility={handleResetColumnVisibilityClick} />;
+}
+
+ActionsHeaderRenderer.propTypes = {
+  table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
 function ActionsCellRenderer({ row }) {
   return <ActionsCellContainer id={row.original.id} />;
 }
@@ -135,4 +144,5 @@ export {
   DueDateCellRenderer,
   TimerCellRenderer,
   ActionsCellRenderer,
+  ActionsHeaderRenderer,
 };

@@ -11,7 +11,6 @@ import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
 import {
-  ActionsCellRenderer,
   NameCellRenderer,
   LabelsCellRenderer,
   ListNameCellRenderer,
@@ -20,14 +19,22 @@ import {
   CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
-} from './CellRenderers';
+  ActionsHeaderRenderer,
+  ActionsCellRenderer,
+} from './Renderers';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './ListView.module.scss';
 
+const DEFAULT_COLUMN_VISIBILITY = {
+  // name: false,
+};
+
 const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, memberIds, canEdit, onCardCreate, onListCreate }) => {
   const [t] = useTranslation();
   const navigate = useNavigate();
+  const tableRef = useRef(null);
+  const [columnVisibility, setColumnVisibility] = useState(DEFAULT_COLUMN_VISIBILITY);
 
   const handleClick = useCallback(
     (event, id) => {
@@ -103,9 +110,13 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     });
   };
 
-  const [columnVisibility, setColumnVisibility] = useState({
-    // labels: false,
-  });
+  const handleResetColumnSortingClick = useCallback(() => {
+    setSorting([]);
+  }, []);
+
+  const handleResetColumnVisibilityClick = useCallback(() => {
+    setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
+  }, []);
 
   // TODO maybe use title in meta instead of customRenderer
   const columns = [
@@ -206,11 +217,8 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     },
     {
       accessorKey: 'actions',
-      header: (
-        <Button style={ButtonStyle.Icon} title={t('common.editListView')} className={s.tableSettingsButton}>
-          <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} className={s.iconTableSettingsButton} />
-        </Button>
-      ),
+      // eslint-disable-next-line no-use-before-define
+      header: (props) => ActionsHeaderRenderer(props, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick),
       cell: ActionsCellRenderer,
       enableSorting: false,
       enableResizing: false,
@@ -235,8 +243,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     onColumnVisibilityChange: setColumnVisibility,
   });
 
-  const tableRef = useRef(null);
-
   const measureTextWidth = (text, font) => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
@@ -245,77 +251,86 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     return context.measureText(text).width;
   };
 
-  const handleAutoSizeColumnsHandler = useCallback((parentRef, table0, columnId) => {
-    try {
-      const newColumnSizes = {};
-      const maxRowsToProcess = 1000;
-      const minColumnWidth = 50;
-      const maxColumnWidth = 300;
-      const columnPadding = 10;
-      const defaultFont = '14px Arial';
+  const handleAutoSizeColumnsHandler = useCallback(
+    (parentRef, columnId) => {
+      try {
+        const newColumnSizes = {};
+        const maxRowsToProcess = 1000;
+        const minColumnWidth = 50;
+        const maxColumnWidth = 300;
+        const columnPadding = 10;
+        const defaultFont = '14px Arial';
 
-      const firstTh = parentRef.current.querySelector('th');
-      const headerFont = firstTh ? window.getComputedStyle(firstTh).font : defaultFont;
-      const firstTd = parentRef.current.querySelector('td');
-      const bodyFont = firstTd ? window.getComputedStyle(firstTd).font : defaultFont;
+        const firstTh = parentRef.current.querySelector('th');
+        const headerFont = firstTh ? window.getComputedStyle(firstTh).font : defaultFont;
+        const firstTd = parentRef.current.querySelector('td');
+        const bodyFont = firstTd ? window.getComputedStyle(firstTd).font : defaultFont;
 
-      const columnsToResize = columnId ? table0.getAllLeafColumns().filter((col) => col.id === columnId) : table0.getAllLeafColumns();
+        const columnsToResize = columnId ? table.getAllLeafColumns().filter((col) => col.id === columnId) : table.getAllLeafColumns().filter((col) => col.getIsVisible());
 
-      if (!columnsToResize.length) {
-        return;
-      }
-
-      const rowsToProcess = table0.getCoreRowModel().rows.slice(0, maxRowsToProcess);
-
-      columnsToResize.forEach((column) => {
-        const colId = column.id;
-
-        if (column.columnDef.meta?.size) {
-          newColumnSizes[colId] = column.columnDef.meta.size;
+        if (!columnsToResize.length) {
           return;
         }
 
-        let maxCellWidth;
-        if (column.columnDef.meta?.headerSize) {
-          maxCellWidth = column.columnDef.meta.headerSize;
-        } else {
-          const header = column.columnDef.header?.toString() || '';
-          maxCellWidth = measureTextWidth(header, headerFont);
+        const rowsToProcess = table.getCoreRowModel().rows.slice(0, maxRowsToProcess);
+
+        columnsToResize.forEach((column) => {
+          const colId = column.id;
+
+          if (column.columnDef.meta?.size) {
+            newColumnSizes[colId] = column.columnDef.meta.size;
+            return;
+          }
+
+          let maxCellWidth;
+          if (column.columnDef.meta?.headerSize) {
+            maxCellWidth = column.columnDef.meta.headerSize;
+          } else {
+            const header = column.columnDef.header?.toString() || '';
+            maxCellWidth = measureTextWidth(header, headerFont);
+          }
+
+          rowsToProcess.forEach((row) => {
+            const cellValue = row.getValue(colId);
+            const cellText = String(cellValue || '');
+            const cellWidth = measureTextWidth(cellText, bodyFont);
+            if (cellWidth > maxCellWidth) {
+              maxCellWidth = cellWidth;
+            }
+          });
+
+          const estimatedWidth = Math.min(Math.max(minColumnWidth, maxCellWidth + columnPadding), maxColumnWidth);
+          newColumnSizes[colId] = estimatedWidth;
+        });
+
+        const totalNewColumnSizes = Object.values(newColumnSizes).reduce((sum, size) => sum + size, 0);
+        const style = window.getComputedStyle(parentRef.current.parentNode);
+        const maxVisibleWidth = parentRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+
+        if (totalNewColumnSizes < maxVisibleWidth) {
+          const scaleFactor = maxVisibleWidth / totalNewColumnSizes;
+          Object.keys(newColumnSizes).forEach((id) => {
+            newColumnSizes[id] *= scaleFactor;
+          });
         }
 
-        rowsToProcess.forEach((row) => {
-          const cellValue = row.getValue(colId);
-          const cellText = String(cellValue || '');
-          const cellWidth = measureTextWidth(cellText, bodyFont);
-          if (cellWidth > maxCellWidth) {
-            maxCellWidth = cellWidth;
-          }
-        });
+        table.setColumnSizing(newColumnSizes);
+      } catch {} // eslint-disable-line no-empty
+    },
+    [table],
+  );
 
-        const estimatedWidth = Math.min(Math.max(minColumnWidth, maxCellWidth + columnPadding), maxColumnWidth);
-        newColumnSizes[colId] = estimatedWidth;
-      });
-
-      const totalNewColumnSizes = Object.values(newColumnSizes).reduce((sum, size) => sum + size, 0);
-      const style = window.getComputedStyle(parentRef.current.parentNode);
-      const maxVisibleWidth = parentRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-
-      if (totalNewColumnSizes < maxVisibleWidth) {
-        const scaleFactor = maxVisibleWidth / totalNewColumnSizes;
-        Object.keys(newColumnSizes).forEach((id) => {
-          newColumnSizes[id] *= scaleFactor;
-        });
-      }
-
-      table0.setColumnSizing(newColumnSizes);
-    } catch {} // eslint-disable-line no-empty
-  }, []);
+  const handleResetColumnWidthsClick = useCallback(() => {
+    if (tableRef.current) {
+      handleAutoSizeColumnsHandler(tableRef);
+    }
+  }, [handleAutoSizeColumnsHandler]);
 
   useEffect(() => {
     if (tableRef.current) {
-      handleAutoSizeColumnsHandler(tableRef, table);
+      handleAutoSizeColumnsHandler(tableRef);
     }
-  }, [handleAutoSizeColumnsHandler, tableRef, table]);
+  }, [handleAutoSizeColumnsHandler, tableRef]);
 
   return (
     <div className={classNames(s.wrapper, gs.scrollableX)}>
@@ -366,7 +381,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
               {row.getVisibleCells().map((cell) => (
                 <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} className={classNames(s.tableBodyCell)}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  {/* TODO cell could be generated istead of using a custom renderer */}
                 </Table.Cell>
               ))}
             </Table.Row>
@@ -389,17 +403,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
           </CardAddPopup>
         </div>
       )}
-
-      {/* TODO move to table settings - toggle columns */}
-      {/* <div>
-
-        {table.getAllColumns().map((column) => (
-          <span key={column.id}>
-            <input type="checkbox" checked={column.getIsVisible()} onChange={() => column.toggleVisibility(!column.getIsVisible())} />
-            {column.columnDef.header}
-          </span>
-        ))}
-      </div> */}
     </div>
   );
 

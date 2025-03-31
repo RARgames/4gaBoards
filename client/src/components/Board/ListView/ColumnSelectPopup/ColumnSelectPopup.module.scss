@@ -1,0 +1,11 @@
+:global(#app) {
+  .checkbox {
+    display: inline-flex;
+    margin-right: 4px;
+    background: var(--backgroundColorTmpBackground);
+
+    &:hover {
+      background: var(--backgroundColorTmpBackgroundHover);
+    }
+  }
+}
