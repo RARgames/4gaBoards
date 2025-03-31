@@ -1,6 +1,11 @@
 :global(#app) {
-  .cellDefault {
+  .default {
     width: 100%;
     padding: 8px;
+  }
+
+  .compact {
+    width: 100%;
+    padding: 2px 4px;
   }
 }

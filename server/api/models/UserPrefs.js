@@ -7,10 +7,12 @@
 
 const DESCRIPTION_MODES = ['edit', 'live', 'preview'];
 const VIEW_MODES = ['board', 'list'];
+const LIST_VIEW_STYLES = ['default', 'compact'];
 
 module.exports = {
   DESCRIPTION_MODES,
   VIEW_MODES,
+  LIST_VIEW_STYLES,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -72,6 +74,13 @@ module.exports = {
       isNotEmptyString: true,
       columnName: 'default_view',
       defaultsTo: 'board',
+    },
+    listViewStyle: {
+      type: 'string',
+      isIn: LIST_VIEW_STYLES,
+      isNotEmptyString: true,
+      columnName: 'list_view_style',
+      defaultsTo: 'default',
     },
   },
 

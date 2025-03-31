@@ -10,6 +10,7 @@ import { getFullSeconds } from '../../../utils/timer';
 import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
+import ListViewStyle from './ListViewStyle';
 import {
   NameCellRenderer,
   LabelsCellRenderer,
@@ -30,7 +31,7 @@ const DEFAULT_COLUMN_VISIBILITY = {
   // name: false,
 };
 
-const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, memberIds, canEdit, onCardCreate, onListCreate }) => {
+const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, memberIds, listViewStyle, canEdit, onCardCreate, onListCreate }) => {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const tableRef = useRef(null);
@@ -241,6 +242,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
       },
     },
     onColumnVisibilityChange: setColumnVisibility,
+    listViewStyle: listViewStyle === 'compact' ? ListViewStyle.Compact : ListViewStyle.Default,
   });
 
   const measureTextWidth = (text, font) => {
@@ -327,15 +329,13 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
   }, [handleAutoSizeColumnsHandler]);
 
   useEffect(() => {
-    if (tableRef.current) {
-      handleAutoSizeColumnsHandler(tableRef);
-    }
-  }, [handleAutoSizeColumnsHandler, tableRef]);
+    handleResetColumnWidthsClick();
+  }, [handleResetColumnWidthsClick]);
 
   return (
     <div className={classNames(s.wrapper, gs.scrollableX)}>
       <Table ref={tableRef} className={s.table} style={{ width: `${table.getCenterTotalSize()}px` }}>
-        <Table.Header className={s.tableHeader}>
+        <Table.Header className={classNames(s.tableHeader, listViewStyle === 'compact' ? s.tableHeaderCompact : s.tableHeaderDefault)}>
           {table.getHeaderGroups().map((headerGroup) => (
             <Table.HeaderRow key={headerGroup.id} className={s.tableHeaderRow}>
               {headerGroup.headers.map((header) => {
@@ -368,7 +368,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
             </Table.HeaderRow>
           ))}
         </Table.Header>
-        <Table.Body className={s.tableBody}>
+        <Table.Body className={classNames(s.tableBody, listViewStyle === 'compact' ? s.tableBodyCompact : s.tableBodyDefault)}>
           {table.getRowModel().rows.map((row) => (
             <Table.Row
               key={row.id}
@@ -472,6 +472,7 @@ ListView.propTypes = {
   lists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   labelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  listViewStyle: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onListCreate: PropTypes.func.isRequired,

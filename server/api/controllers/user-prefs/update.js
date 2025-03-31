@@ -55,6 +55,11 @@ module.exports = {
       isIn: UserPrefs.VIEW_MODES,
       isNotEmptyString: true,
     },
+    listViewStyle: {
+      type: 'string',
+      isIn: UserPrefs.LIST_VIEW_STYLES,
+      isNotEmptyString: true,
+    },
   },
 
   exits: {
@@ -82,7 +87,19 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, ['language', 'subscribeToOwnCards', 'descriptionMode', 'commentMode', 'descriptionShown', 'tasksShown', 'attachmentsShown', 'commentsShown', 'sidebarCompact', 'defaultView']),
+      ..._.pick(inputs, [
+        'language',
+        'subscribeToOwnCards',
+        'descriptionMode',
+        'commentMode',
+        'descriptionShown',
+        'tasksShown',
+        'attachmentsShown',
+        'commentsShown',
+        'sidebarCompact',
+        'defaultView',
+        'listViewStyle',
+      ]),
     };
 
     userPrefs = await sails.helpers.userPrefs.updateOne.with({

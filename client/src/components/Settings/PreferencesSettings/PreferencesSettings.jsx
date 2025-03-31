@@ -10,7 +10,7 @@ import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
-const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, onUpdate }) => {
+const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, onUpdate }) => {
   const [t] = useTranslation();
   const languages = useMemo(
     () => [
@@ -43,6 +43,21 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
   );
   const selectedDefaultView = useMemo(() => defaultViews.find((view) => view.id === defaultView), [defaultViews, defaultView]);
 
+  const listViewStyles = useMemo(
+    () => [
+      {
+        id: 'default',
+        name: t('common.default'),
+      },
+      {
+        id: 'compact',
+        name: t('common.compact'),
+      },
+    ],
+    [t],
+  );
+  const selectedListViewStyle = useMemo(() => listViewStyles.find((style) => style.id === listViewStyle), [listViewStyles, listViewStyle]);
+
   const handleSubscribeToOwnCardsChange = useCallback(() => {
     onUpdate({
       subscribeToOwnCards: !subscribeToOwnCards,
@@ -58,6 +73,13 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
   const handleDefaultViewChange = useCallback(
     (value) => {
       onUpdate({ defaultView: value.id });
+    },
+    [onUpdate],
+  );
+
+  const handleListViewStyleChange = useCallback(
+    (value) => {
+      onUpdate({ listViewStyle: value.id });
     },
     [onUpdate],
   );
@@ -120,6 +142,24 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
               <Table.Cell>{t('common.descriptionDefaultView')}</Table.Cell>
             </Table.Row>
             <Table.Row>
+              <Table.Cell>{t('common.listViewStyle')}</Table.Cell>
+              <Table.Cell className={s.dropdownCell} aria-label={t('common.toggleSettings')}>
+                <Dropdown
+                  style={DropdownStyle.FullWidth}
+                  options={listViewStyles}
+                  placeholder={selectedListViewStyle.name}
+                  defaultItem={selectedListViewStyle}
+                  isSearchable
+                  selectFirstOnSearch
+                  forcePlaceholder
+                  onChange={handleListViewStyleChange}
+                  className={s.dropdown}
+                />
+              </Table.Cell>
+              <Table.Cell>{selectedDefaultView.name}</Table.Cell>
+              <Table.Cell>{t('common.descriptionDefaultView')}</Table.Cell>
+            </Table.Row>
+            <Table.Row>
               <Table.Cell> {t('common.language', { context: 'title' })}</Table.Cell>
               <Table.Cell className={s.dropdownCell} aria-label={t('common.toggleSettings')}>
                 <Dropdown
@@ -149,6 +189,7 @@ PreferencesSettings.propTypes = {
   sidebarCompact: PropTypes.bool.isRequired,
   language: PropTypes.string,
   defaultView: PropTypes.string.isRequired,
+  listViewStyle: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

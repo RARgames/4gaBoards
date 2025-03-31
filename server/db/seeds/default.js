@@ -27,6 +27,7 @@ exports.seed = async (knex) => {
     commentsShown: true,
     sidebarCompact: false,
     defaultView: 'board',
+    listViewStyle: 'default',
     createdAt: date,
   });
 };

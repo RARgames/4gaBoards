@@ -45,8 +45,8 @@ const makeMapStateToProps = () => {
 
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
+    const { listViewStyle } = selectors.selectCurrentUserPrefs(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
-
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
     return {
@@ -55,6 +55,7 @@ const makeMapStateToProps = () => {
       lists,
       labelIds,
       memberIds,
+      listViewStyle,
       canEdit: isCurrentUserEditor,
     };
   };

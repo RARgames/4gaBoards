@@ -9,14 +9,20 @@ import TimerCellContainer from '../../../../containers/TimerCellContainer';
 import ActionsHeader from '../ActionsHeader';
 import BoolCell from '../BoolCell';
 import DefaultCell from '../DefaultCell';
+import ListViewStyle from '../ListViewStyle';
 
 import * as s from './Renderers.module.scss';
 
-function NameCellRenderer({ row }) {
-  return <DefaultCell value={row.original.name} title={row.original.name} cellClassName={s.cellDefault} />;
+function NameCellRenderer({ table, row }) {
+  return <DefaultCell value={row.original.name} title={row.original.name} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 NameCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -24,11 +30,16 @@ NameCellRenderer.propTypes = {
   }).isRequired,
 };
 
-function LabelsCellRenderer({ row }) {
-  return <LabelsCellContainer id={row.original.id} labels={row.original.labels} cellClassName={s.cellDefault} />;
+function LabelsCellRenderer({ table, row }) {
+  return <LabelsCellContainer id={row.original.id} labels={row.original.labels} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 LabelsCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -37,11 +48,16 @@ LabelsCellRenderer.propTypes = {
   }).isRequired,
 };
 
-function ListNameCellRenderer({ row }) {
-  return <DefaultCell value={row.original.listName} title={row.original.listName} cellClassName={s.cellDefault} />;
+function ListNameCellRenderer({ table, row }) {
+  return <DefaultCell value={row.original.listName} title={row.original.listName} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 ListNameCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       listName: PropTypes.string.isRequired,
@@ -49,12 +65,17 @@ ListNameCellRenderer.propTypes = {
   }).isRequired,
 };
 
-function HasDescriptionCellRenderer({ row }) {
+function HasDescriptionCellRenderer({ table, row }) {
   const [t] = useTranslation();
-  return <BoolCell value={row.original.hasDescription} title={t('common.detailsDescription')} cellClassName={s.cellDefault} />;
+  return <BoolCell value={row.original.hasDescription} title={t('common.detailsDescription')} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 HasDescriptionCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       hasDescription: PropTypes.bool.isRequired,
@@ -62,12 +83,17 @@ HasDescriptionCellRenderer.propTypes = {
   }).isRequired,
 };
 
-function AttachmentsCountCellRenderer({ row }) {
+function AttachmentsCountCellRenderer({ table, row }) {
   const [t] = useTranslation();
-  return <DefaultCell value={row.original.attachmentsCount} title={t('common.detailsAttachments', { count: row.original.attachmentsCount })} cellClassName={s.cellDefault} />;
+  return <DefaultCell value={row.original.attachmentsCount} title={t('common.detailsAttachments', { count: row.original.attachmentsCount })} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 AttachmentsCountCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       attachmentsCount: PropTypes.number.isRequired,
@@ -75,12 +101,17 @@ AttachmentsCountCellRenderer.propTypes = {
   }).isRequired,
 };
 
-function CommentCountCellRenderer({ row }) {
+function CommentCountCellRenderer({ table, row }) {
   const [t] = useTranslation();
-  return <DefaultCell value={row.original.commentCount} title={t('common.detailsComments', { count: row.original.commentCount })} cellClassName={s.cellDefault} />;
+  return <DefaultCell value={row.original.commentCount} title={t('common.detailsComments', { count: row.original.commentCount })} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 CommentCountCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       commentCount: PropTypes.number.isRequired,
@@ -88,11 +119,16 @@ CommentCountCellRenderer.propTypes = {
   }).isRequired,
 };
 
-function DueDateCellRenderer({ row }) {
-  return <DueDateCellContainer id={row.original.id} dueDate={row.original.dueDate} cellClassName={s.cellDefault} />;
+function DueDateCellRenderer({ table, row }) {
+  return <DueDateCellContainer id={row.original.id} dueDate={row.original.dueDate} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 DueDateCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -101,11 +137,16 @@ DueDateCellRenderer.propTypes = {
   }).isRequired,
 };
 
-function TimerCellRenderer({ row }) {
-  return <TimerCellContainer id={row.original.id} timer={row.original.timer} cellClassName={s.cellDefault} />;
+function TimerCellRenderer({ table, row }) {
+  return <TimerCellContainer id={row.original.id} timer={row.original.timer} cellClassName={s[table.options.listViewStyle]} />;
 }
 
 TimerCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
   row: PropTypes.shape({
     original: PropTypes.shape({
       id: PropTypes.string.isRequired,
