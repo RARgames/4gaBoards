@@ -1,13 +1,16 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Label from '../../../Label';
 import LabelsPopup from '../../../LabelsPopup';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './LabelsCell.module.scss';
 
 const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelMove, onLabelDelete }) => {
+  const [t] = useTranslation();
   const labelIds = labels.map((label) => label.id);
 
   const labelsNode = labels.map((label) => (
@@ -16,26 +19,50 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
     </div>
   ));
 
+  const addLabelNode = (
+    <LabelsPopup
+      items={allLabels}
+      currentIds={labelIds}
+      onSelect={onLabelAdd}
+      onDeselect={onLabelRemove}
+      onCreate={onLabelCreate}
+      onUpdate={onLabelUpdate}
+      onMove={onLabelMove}
+      onDelete={onLabelDelete}
+      canEdit={canEdit}
+      offset={0}
+      wrapperClassName={s.popupWrapper}
+    >
+      <Button style={ButtonStyle.Icon} title={t('common.addLabel')} className={classNames(cellClassName, s.addButton)}>
+        <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
+      </Button>
+    </LabelsPopup>
+  );
+
+  if (!canEdit) {
+    return <div className={classNames(cellClassName, s.labels)}>{labelsNode}</div>;
+  }
+
+  if (labels.length === 0) {
+    return addLabelNode;
+  }
+
   return (
     <div className={classNames(cellClassName, s.labels)}>
-      {canEdit ? (
-        <LabelsPopup
-          items={allLabels}
-          currentIds={labelIds}
-          onSelect={onLabelAdd}
-          onDeselect={onLabelRemove}
-          onCreate={onLabelCreate}
-          onUpdate={onLabelUpdate}
-          onMove={onLabelMove}
-          onDelete={onLabelDelete}
-          canEdit={canEdit}
-          offset={0}
-        >
-          {labelsNode}
-        </LabelsPopup>
-      ) : (
-        labelsNode
-      )}
+      <LabelsPopup
+        items={allLabels}
+        currentIds={labelIds}
+        onSelect={onLabelAdd}
+        onDeselect={onLabelRemove}
+        onCreate={onLabelCreate}
+        onUpdate={onLabelUpdate}
+        onMove={onLabelMove}
+        onDelete={onLabelDelete}
+        canEdit={canEdit}
+        offset={0}
+      >
+        {labelsNode}
+      </LabelsPopup>
     </div>
   );
 });

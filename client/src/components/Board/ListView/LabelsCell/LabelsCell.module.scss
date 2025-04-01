@@ -10,4 +10,27 @@
     max-width: 100%;
     overflow: hidden;
   }
+
+  .popupWrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .addButton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    &:hover {
+      .iconAddButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .iconAddButton {
+    opacity: 0;
+  }
 }
