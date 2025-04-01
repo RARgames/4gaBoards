@@ -140,25 +140,31 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
       cell: LabelsCellRenderer,
       enableSorting: true,
       sortingFn: (rowA, rowB, columnId) => {
-        const getSortingValue = (labels) => {
-          if (!labels || labels.length === 0) return '';
-          return labels[0].name || '';
-        };
+        const getSortingValue = (labels) => labels?.map((label) => label.name || '') || [];
 
-        const a = getSortingValue(rowA.original[columnId]);
-        const b = getSortingValue(rowB.original[columnId]);
+        const aList = getSortingValue(rowA.original[columnId]);
+        const bList = getSortingValue(rowB.original[columnId]);
 
         // eslint-disable-next-line no-use-before-define
         const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
 
-        if (a === '' && b === '') return 0;
-        if (!isDescending) {
-          if (a === '') return 1;
-          if (b === '') return -1;
-        }
-        if (a === '') return -1;
-        if (b === '') return 1;
-        return a.localeCompare(b);
+        const compareRecursively = (aArr, bArr, index = 0) => {
+          if (index >= aArr.length && index >= bArr.length) return 0;
+          if (index >= aArr.length) return isDescending ? -1 : 1;
+          if (index >= bArr.length) return isDescending ? 1 : -1;
+
+          const a = aArr[index];
+          const b = bArr[index];
+
+          if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
+          if (a === '') return isDescending ? -1 : 1;
+          if (b === '') return isDescending ? 1 : -1;
+
+          const comparison = a.localeCompare(b);
+          return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
+        };
+
+        return compareRecursively(aList, bList);
       },
       meta: { headerTitle: t('common.labels') },
     },
