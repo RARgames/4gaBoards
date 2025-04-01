@@ -1,6 +1,7 @@
 import {
   NameCellRenderer,
   LabelsCellRenderer,
+  MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
   AttachmentsCountCellRenderer,
@@ -14,6 +15,7 @@ import {
 export {
   NameCellRenderer,
   LabelsCellRenderer,
+  MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
   AttachmentsCountCellRenderer,

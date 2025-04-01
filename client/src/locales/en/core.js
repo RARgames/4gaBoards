@@ -29,7 +29,7 @@ export default {
       addMembers: 'Add Members',
       addProject: 'Add Project',
       addTask: 'Add Task',
-      addUser_title: 'Add User',
+      addUser: 'Add User',
       administrator: 'Administrator',
       allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'All changes will be automatically saved<br />after connection restored',
       anyMatch: 'Any Match [Alt+V]',

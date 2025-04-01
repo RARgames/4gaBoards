@@ -14,6 +14,7 @@ import ListViewStyle from './ListViewStyle';
 import {
   NameCellRenderer,
   LabelsCellRenderer,
+  MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
   AttachmentsCountCellRenderer,
@@ -160,6 +161,40 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
         return a.localeCompare(b);
       },
       meta: { headerTitle: t('common.labels') },
+    },
+    {
+      accessorKey: 'users',
+      header: t('common.members'),
+      cell: MembersCellRenderer,
+      enableSorting: true,
+      sortingFn: (rowA, rowB, columnId) => {
+        const getSortingValue = (users) => users?.map((user) => user.name || '') || [];
+
+        const aList = getSortingValue(rowA.original[columnId]);
+        const bList = getSortingValue(rowB.original[columnId]);
+
+        // eslint-disable-next-line no-use-before-define
+        const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
+
+        const compareRecursively = (aArr, bArr, index = 0) => {
+          if (index >= aArr.length && index >= bArr.length) return 0;
+          if (index >= aArr.length) return isDescending ? -1 : 1;
+          if (index >= bArr.length) return isDescending ? 1 : -1;
+
+          const a = aArr[index];
+          const b = bArr[index];
+
+          if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
+          if (a === '') return isDescending ? -1 : 1;
+          if (b === '') return isDescending ? 1 : -1;
+
+          const comparison = a.localeCompare(b);
+          return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
+        };
+
+        return compareRecursively(aList, bList);
+      },
+      meta: { headerTitle: t('common.members') },
     },
     { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
     {

@@ -164,7 +164,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
 
   return (
     <>
-      <Popup.Header>{t('common.addUser', { context: 'title' })}</Popup.Header>
+      <Popup.Header>{t('common.addUser')}</Popup.Header>
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form>
@@ -198,7 +198,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
             isError={isUsernameError}
           />
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.addUser')} disabled={isSubmitting} onClick={handleSubmit} />
+            <Button style={ButtonStyle.Submit} content={t('common.addUser')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

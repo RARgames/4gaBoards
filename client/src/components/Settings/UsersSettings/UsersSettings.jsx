@@ -112,7 +112,7 @@ const UsersSettings = React.memo(
                 onMessageDismiss={onUserCreateMessageDismiss}
                 position="left-start"
               >
-                <Button style={ButtonStyle.Submit} content={t('action.addUser')} />
+                <Button style={ButtonStyle.Submit} content={t('common.addUser')} />
               </UserAddPopup>
             </div>
           </div>

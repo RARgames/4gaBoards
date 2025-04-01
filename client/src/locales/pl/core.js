@@ -33,7 +33,7 @@ export default {
       addMembers: 'Dodaj członków',
       addProject: 'Dodaj projekt',
       addTask: 'Dodaj zadanie',
-      addUser_title: 'Dodaj użytkownika',
+      addUser: 'Dodaj użytkownika',
       administrator: 'Administrator',
       allChangesWillBeAutomaticallySavedAfterConnectionRestored: 'Wszystkie zmiany zostaną automatycznie zapisane<br />po przywróceniu połączenia',
       anyMatch: 'Dowolne dopasowanie [Alt+V]',

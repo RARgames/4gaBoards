@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ActionsCellContainer from '../../../../containers/ActionsCellContainer';
 import DueDateCellContainer from '../../../../containers/DueDateCellContainer';
 import LabelsCellContainer from '../../../../containers/LabelsCellContainer';
+import MembersCellContainer from '../../../../containers/MembersCellContainer';
 import TimerCellContainer from '../../../../containers/TimerCellContainer';
 import ActionsHeader from '../ActionsHeader';
 import BoolCell from '../BoolCell';
@@ -44,6 +45,24 @@ LabelsCellRenderer.propTypes = {
     original: PropTypes.shape({
       id: PropTypes.string.isRequired,
       labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+    }).isRequired,
+  }).isRequired,
+};
+
+function MembersCellRenderer({ table, row }) {
+  return <MembersCellContainer id={row.original.id} users={row.original.users} cellClassName={s[table.options.listViewStyle]} />;
+}
+
+MembersCellRenderer.propTypes = {
+  table: PropTypes.shape({
+    options: PropTypes.shape({
+      listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
+    }).isRequired,
+  }).isRequired,
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
     }).isRequired,
   }).isRequired,
 };
@@ -178,6 +197,7 @@ ActionsCellRenderer.propTypes = {
 export {
   NameCellRenderer,
   LabelsCellRenderer,
+  MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
   AttachmentsCountCellRenderer,
