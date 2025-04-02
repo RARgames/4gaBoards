@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -25,8 +25,23 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
   const [step, openStep, handleBack] = useSteps();
   const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
+  const [sortedItems, setSortedItems] = useState([]);
 
-  const filteredItems = useMemo(() => items.filter((label) => (label.name && label.name.toLowerCase().includes(cleanSearch)) || label.color.includes(cleanSearch)), [items, cleanSearch]);
+  const sortItems = useCallback(() => {
+    setSortedItems(
+      [...items].sort((a, b) => {
+        const aIsActive = currentIds.includes(a.id);
+        const bIsActive = currentIds.includes(b.id);
+        return bIsActive - aIsActive;
+      }),
+    );
+  }, [items, currentIds]);
+
+  useEffect(() => {
+    sortItems();
+  }, [sortItems]);
+
+  const filteredItems = useMemo(() => sortedItems.filter((label) => (label.name && label.name.toLowerCase().includes(cleanSearch)) || label.color.includes(cleanSearch)), [sortedItems, cleanSearch]);
 
   const searchField = useRef(null);
 
