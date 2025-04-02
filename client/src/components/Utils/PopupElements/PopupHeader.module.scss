@@ -23,4 +23,10 @@
     position: relative;
     text-align: center;
   }
+
+  .headerIcon {
+    margin-left: 4px;
+    fill: var(--textColor2);
+    vertical-align: baseline;
+  }
 }

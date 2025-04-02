@@ -8,7 +8,7 @@ import { Icon, IconType, IconSize } from '../Icon';
 
 import * as s from './PopupHeader.module.scss';
 
-const PopupHeader = React.memo(({ children, className, onBack, ...props }) => {
+const PopupHeader = React.memo(({ children, className, tooltip, onBack, ...props }) => {
   const [t] = useTranslation();
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -18,7 +18,10 @@ const PopupHeader = React.memo(({ children, className, onBack, ...props }) => {
           <Icon type={IconType.AngleLeft} size={IconSize.Size14} />
         </Button>
       )}
-      <div className={s.content}>{children}</div>
+      <div className={s.content}>
+        {children}
+        {tooltip && <Icon type={IconType.CircleQuestion} size={IconSize.Size12} className={s.headerIcon} title={tooltip} />}
+      </div>
     </div>
   );
 });
@@ -26,11 +29,13 @@ const PopupHeader = React.memo(({ children, className, onBack, ...props }) => {
 PopupHeader.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  tooltip: PropTypes.string,
   onBack: PropTypes.func,
 };
 
 PopupHeader.defaultProps = {
   className: undefined,
+  tooltip: undefined,
   onBack: undefined,
 };
 

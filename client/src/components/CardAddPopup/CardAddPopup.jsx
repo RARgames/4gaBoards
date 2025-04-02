@@ -103,9 +103,8 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
+      <Popup.Header onBack={onBack} tooltip={t('common.addCardTooltip')}>
         {t('common.addCard', { context: 'title' })}
-        <Icon type={IconType.CircleQuestion} size={IconSize.Size12} className={s.headerIcon} title={t('common.addCardTooltip')} />
       </Popup.Header>
       <Popup.Content className={s.content}>
         <Form ref={formRef} tabIndex="0" onKeyDown={handleKeyDown}>

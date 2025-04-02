@@ -69,9 +69,8 @@ const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {
 
   return (
     <>
-      <Popup.Header onBack={onBack}>
+      <Popup.Header onBack={onBack} tooltip={t('common.addListTooltip')}>
         {t('common.addList')}
-        <Icon type={IconType.CircleQuestion} size={IconSize.Size12} className={s.headerIcon} title={t('common.addListTooltip')} />
       </Popup.Header>
       <Popup.Content className={s.content}>
         <Form onKeyDown={handleKeyDown}>
