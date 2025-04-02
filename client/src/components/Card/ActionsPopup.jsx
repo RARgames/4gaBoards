@@ -45,7 +45,6 @@ const ActionsStep = React.memo(
     onLabelRemove,
     onLabelCreate,
     onLabelUpdate,
-    onLabelMove,
     onLabelDelete,
     onClose,
   }) => {
@@ -127,7 +126,6 @@ const ActionsStep = React.memo(
               onDeselect={onLabelRemove}
               onCreate={onLabelCreate}
               onUpdate={onLabelUpdate}
-              onMove={onLabelMove}
               onDelete={onLabelDelete}
               onBack={handleBack}
             />
@@ -205,7 +203,6 @@ ActionsStep.propTypes = {
   onLabelRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
-  onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

@@ -41,10 +41,6 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-    position: {
-      type: 'number',
-      required: true,
-    },
     name: {
       type: 'string',
       isNotEmptyString: true,

@@ -26,31 +26,17 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
   }, [isPersisted, isActive, onSelect, onDeselect]);
 
   return (
-    <Draggable draggableId={id} index={index} isDragDisabled={!isPersisted || !canEdit}>
-      {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
-        const contentNode = (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} ref={innerRef} className={s.wrapper}>
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <span
-              {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
-              className={classNames(s.name, isActive && s.nameActive, bs[`background${upperFirst(camelCase(color))}`])}
-              onClick={handleToggleClick}
-              title={name}
-            >
-              {name}
-            </span>
-            {canEdit && (
-              <Button style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={s.editButton}>
-                <Icon type={IconType.Pencil} size={IconSize.Size14} />
-              </Button>
-            )}
-          </div>
-        );
-
-        return isDragging ? ReactDOM.createPortal(contentNode, document.body) : contentNode;
-      }}
-    </Draggable>
+    <div className={s.wrapper}>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+      <span className={classNames(s.name, isActive && s.nameActive, bs[`background${upperFirst(camelCase(color))}`])} onClick={handleToggleClick} title={name}>
+        {name}
+      </span>
+      {canEdit && (
+        <Button style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={s.editButton}>
+          <Icon type={IconType.Pencil} size={IconSize.Size14} />
+        </Button>
+      )}
+    </div>
   );
 });
 

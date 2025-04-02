@@ -34,7 +34,6 @@ const ActionsCell = React.memo(
     onLabelRemove,
     onLabelCreate,
     onLabelUpdate,
-    onLabelMove,
     onLabelDelete,
   }) => {
     const [t] = useTranslation();
@@ -73,7 +72,6 @@ const ActionsCell = React.memo(
           onLabelRemove={onLabelRemove}
           onLabelCreate={onLabelCreate}
           onLabelUpdate={onLabelUpdate}
-          onLabelMove={onLabelMove}
           onLabelDelete={onLabelDelete}
           position="left-start"
           offset={0}
@@ -117,7 +115,6 @@ ActionsCell.propTypes = {
   onLabelRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
-  onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
 };
 

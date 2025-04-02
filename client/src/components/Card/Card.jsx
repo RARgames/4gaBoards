@@ -56,7 +56,6 @@ const Card = React.memo(
     onLabelRemove,
     onLabelCreate,
     onLabelUpdate,
-    onLabelMove,
     onLabelDelete,
     onTaskUpdate,
     onTaskDuplicate,
@@ -304,7 +303,6 @@ const Card = React.memo(
                           onLabelRemove={onLabelRemove}
                           onLabelCreate={onLabelCreate}
                           onLabelUpdate={onLabelUpdate}
-                          onLabelMove={onLabelMove}
                           onLabelDelete={onLabelDelete}
                           position="left-start"
                           offset={0}
@@ -367,7 +365,6 @@ Card.propTypes = {
   onLabelRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
-  onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onTaskUpdate: PropTypes.func.isRequired,
   onTaskDuplicate: PropTypes.func.isRequired,

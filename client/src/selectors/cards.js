@@ -214,7 +214,7 @@ export const selectLabelsForCurrentCard = createSelector(
       return cardModel;
     }
 
-    return cardModel.labels.toRefArray();
+    return cardModel.labels.toRefArray().sort((a, b) => a.name.localeCompare(b.name));
   },
 );
 

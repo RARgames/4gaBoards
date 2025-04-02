@@ -7,16 +7,11 @@ import { createLocalId } from '../../../utils/local-id';
 import request from '../request';
 
 export function* createLabel(boardId, data) {
-  const nextData = {
-    ...data,
-    position: yield select(selectors.selectNextLabelPosition, boardId),
-  };
-
   const localId = yield call(createLocalId);
 
   yield put(
     actions.createLabel({
-      ...nextData,
+      ...data,
       boardId,
       id: localId,
     }),
@@ -24,7 +19,7 @@ export function* createLabel(boardId, data) {
 
   let label;
   try {
-    ({ item: label } = yield call(request, api.createLabel, boardId, nextData));
+    ({ item: label } = yield call(request, api.createLabel, boardId, data));
   } catch (error) {
     yield put(actions.createLabel.failure(localId, error));
     return;
@@ -59,15 +54,6 @@ export function* updateLabel(id, data) {
 
 export function* handleLabelUpdate(label) {
   yield put(actions.handleLabelUpdate(label));
-}
-
-export function* moveLabel(id, index) {
-  const { boardId } = yield select(selectors.selectLabelById, id);
-  const position = yield select(selectors.selectNextLabelPosition, boardId, index, id);
-
-  yield call(updateLabel, id, {
-    position,
-  });
 }
 
 export function* deleteLabel(id) {
@@ -164,7 +150,6 @@ export default {
   handleLabelCreate,
   updateLabel,
   handleLabelUpdate,
-  moveLabel,
   deleteLabel,
   handleLabelDelete,
   addLabelToCard,

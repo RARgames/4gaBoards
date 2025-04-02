@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './LabelsCell.module.scss';
 
-const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelMove, onLabelDelete }) => {
+const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelDelete }) => {
   const [t] = useTranslation();
   const labelIds = labels.map((label) => label.id);
 
@@ -27,7 +27,6 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
       onDeselect={onLabelRemove}
       onCreate={onLabelCreate}
       onUpdate={onLabelUpdate}
-      onMove={onLabelMove}
       onDelete={onLabelDelete}
       canEdit={canEdit}
       offset={0}
@@ -56,7 +55,6 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
         onDeselect={onLabelRemove}
         onCreate={onLabelCreate}
         onUpdate={onLabelUpdate}
-        onMove={onLabelMove}
         onDelete={onLabelDelete}
         canEdit={canEdit}
         offset={0}
@@ -76,7 +74,6 @@ LabelsCell.propTypes = {
   onLabelRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
-  onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
 };
 

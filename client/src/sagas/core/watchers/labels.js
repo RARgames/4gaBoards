@@ -9,7 +9,6 @@ export default function* labelsWatchers() {
     takeEvery(EntryActionTypes.LABEL_CREATE_HANDLE, ({ payload: { label } }) => services.handleLabelCreate(label)),
     takeEvery(EntryActionTypes.LABEL_UPDATE, ({ payload: { id, data } }) => services.updateLabel(id, data)),
     takeEvery(EntryActionTypes.LABEL_UPDATE_HANDLE, ({ payload: { label } }) => services.handleLabelUpdate(label)),
-    takeEvery(EntryActionTypes.LABEL_MOVE, ({ payload: { id, index } }) => services.moveLabel(id, index)),
     takeEvery(EntryActionTypes.LABEL_DELETE, ({ payload: { id } }) => services.deleteLabel(id)),
     takeEvery(EntryActionTypes.LABEL_DELETE_HANDLE, ({ payload: { label } }) => services.handleLabelDelete(label)),
     takeEvery(EntryActionTypes.LABEL_TO_CARD_ADD, ({ payload: { id, cardId } }) => services.addLabelToCard(id, cardId)),

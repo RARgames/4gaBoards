@@ -78,7 +78,6 @@ const CardModal = React.memo(
     onLabelRemove,
     onLabelCreate,
     onLabelUpdate,
-    onLabelMove,
     onLabelDelete,
     onTaskCreate,
     onTaskUpdate,
@@ -357,7 +356,6 @@ const CardModal = React.memo(
               onLabelRemove={onLabelRemove}
               onLabelCreate={onLabelCreate}
               onLabelUpdate={onLabelUpdate}
-              onLabelMove={onLabelMove}
               onLabelDelete={onLabelDelete}
               position="left-start"
               offset={0}
@@ -441,17 +439,7 @@ const CardModal = React.memo(
           {t('common.labels', { context: 'title' })}
           {canEdit && (
             <div className={s.popupWrapper}>
-              <LabelsPopup
-                items={allLabels}
-                currentIds={labelIds}
-                onSelect={onLabelAdd}
-                onDeselect={onLabelRemove}
-                onCreate={onLabelCreate}
-                onUpdate={onLabelUpdate}
-                onMove={onLabelMove}
-                onDelete={onLabelDelete}
-                offset={0}
-              >
+              <LabelsPopup items={allLabels} currentIds={labelIds} onSelect={onLabelAdd} onDeselect={onLabelRemove} onCreate={onLabelCreate} onUpdate={onLabelUpdate} onDelete={onLabelDelete} offset={0}>
                 <Button style={ButtonStyle.Icon} title={t('common.addLabel')}>
                   <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton2} />
                 </Button>
@@ -459,17 +447,7 @@ const CardModal = React.memo(
             </div>
           )}
         </div>
-        <LabelsPopup
-          items={allLabels}
-          currentIds={labelIds}
-          onSelect={onLabelAdd}
-          onDeselect={onLabelRemove}
-          onCreate={onLabelCreate}
-          onUpdate={onLabelUpdate}
-          onMove={onLabelMove}
-          onDelete={onLabelDelete}
-          offset={0}
-        >
+        <LabelsPopup items={allLabels} currentIds={labelIds} onSelect={onLabelAdd} onDeselect={onLabelRemove} onCreate={onLabelCreate} onUpdate={onLabelUpdate} onDelete={onLabelDelete} offset={0}>
           {labels.map((label) => (
             <span key={label.id} className={s.headerItem}>
               <Label name={label.name} color={label.color} variant="cardModal" />
@@ -791,7 +769,6 @@ CardModal.propTypes = {
   onLabelRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
-  onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onTaskCreate: PropTypes.func.isRequired,
   onTaskUpdate: PropTypes.func.isRequired,

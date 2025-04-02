@@ -29,14 +29,6 @@ const handleLabelUpdate = (label) => ({
   },
 });
 
-const moveLabel = (id, index) => ({
-  type: EntryActionTypes.LABEL_MOVE,
-  payload: {
-    id,
-    index,
-  },
-});
-
 const deleteLabel = (id) => ({
   type: EntryActionTypes.LABEL_DELETE,
   payload: {
@@ -114,7 +106,6 @@ export default {
   handleLabelCreate,
   updateLabel,
   handleLabelUpdate,
-  moveLabel,
   deleteLabel,
   handleLabelDelete,
   addLabelToCard,

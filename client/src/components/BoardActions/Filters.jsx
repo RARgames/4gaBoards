@@ -11,7 +11,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Filters.module.scss';
 
-const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, canEdit, onUserAdd, onUserRemove, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelMove, onLabelDelete }) => {
+const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, canEdit, onUserAdd, onUserRemove, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelDelete }) => {
   const [t] = useTranslation();
 
   const handleRemoveUserClick = useCallback(
@@ -75,7 +75,6 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, can
           onDeselect={onLabelRemove}
           onCreate={onLabelCreate}
           onUpdate={onLabelUpdate}
-          onMove={onLabelMove}
           onDelete={onLabelDelete}
           offset={16}
           wrapperClassName={s.popupWrapper}
@@ -115,7 +114,6 @@ Filters.propTypes = {
   onLabelRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
-  onLabelMove: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
 };
 
