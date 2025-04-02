@@ -39,13 +39,14 @@ export function* handleLabelCreate(label) {
 }
 
 export function* updateLabel(id, data) {
+  const oldLabel = yield select(selectors.selectLabelById, id);
   yield put(actions.updateLabel(id, data));
 
   let label;
   try {
     ({ item: label } = yield call(request, api.updateLabel, id, data));
   } catch (error) {
-    yield put(actions.updateLabel.failure(id, error));
+    yield put(actions.updateLabel.failure(id, error, oldLabel));
     return;
   }
 

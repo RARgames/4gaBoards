@@ -5,6 +5,9 @@ const Errors = {
   BOARD_NOT_FOUND: {
     boardNotFound: 'Board not found',
   },
+  INVALID_NAME: {
+    invalidName: 'Invalid name',
+  },
 };
 
 module.exports = {
@@ -33,6 +36,9 @@ module.exports = {
     boardNotFound: {
       responseType: 'notFound',
     },
+    invalidName: {
+      responseType: 'forbidden',
+    },
   },
 
   async fn(inputs) {
@@ -55,13 +61,15 @@ module.exports = {
 
     const values = _.pick(inputs, ['name', 'color']);
 
-    const label = await sails.helpers.labels.createOne.with({
-      values: {
-        ...values,
-        board,
-      },
-      request: this.req,
-    });
+    const label = await sails.helpers.labels.createOne
+      .with({
+        values: {
+          ...values,
+          board,
+        },
+        request: this.req,
+      })
+      .intercept('invalidName', () => Errors.INVALID_NAME);
 
     return {
       item: label,

@@ -22,8 +22,22 @@ module.exports = {
     },
   },
 
+  exits: {
+    invalidName: {},
+  },
+
   async fn(inputs) {
     const { values } = inputs;
+
+    if (values.name === null || values.name === '') {
+      throw 'invalidName';
+    }
+    // FUTURE check for name without case sensitivity - improve
+    const rawResult = await sails.sendNativeQuery(`SELECT * FROM label WHERE "board_id" = $1 AND LOWER("name") = LOWER($2) LIMIT 1`, [values.board.id, values.name]);
+    const existingLabel = rawResult.rows[0] || null;
+    if (existingLabel) {
+      throw 'invalidName';
+    }
 
     const label = await Label.create({
       ...values,

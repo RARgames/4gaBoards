@@ -51,13 +51,21 @@ export default class extends BaseModel {
       case ActionTypes.LABEL_UPDATE__SUCCESS:
       case ActionTypes.LABEL_UPDATE_HANDLE:
         Label.upsert(payload.label);
-
         break;
+
+      case ActionTypes.LABEL_UPDATE__FAILURE:
+        Label.upsert(payload.label);
+        break;
+
       case ActionTypes.LABEL_CREATE__SUCCESS:
         Label.withId(payload.localId).delete();
         Label.upsert(payload.label);
 
         break;
+      case ActionTypes.LABEL_CREATE__FAILURE:
+        Label.withId(payload.localId).delete();
+        break;
+
       case ActionTypes.LABEL_UPDATE:
         Label.withId(payload.id).update(payload.data);
 

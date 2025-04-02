@@ -45,11 +45,12 @@ updateLabel.success = (label) => ({
   },
 });
 
-updateLabel.failure = (id, error) => ({
+updateLabel.failure = (id, error, label) => ({
   type: ActionTypes.LABEL_UPDATE__FAILURE,
   payload: {
     id,
     error,
+    label,
   },
 });
 
