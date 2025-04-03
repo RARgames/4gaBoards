@@ -51,6 +51,7 @@ module.exports = {
     }
 
     const values = _.omit(card, ['id']); // Omit the id to create a new card
+    values.updatedAt = new Date().toUTCString();
     const copiedCard = await sails.helpers.cards.createOne
       .with({
         values: {
