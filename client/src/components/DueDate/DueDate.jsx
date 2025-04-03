@@ -49,7 +49,10 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
 
   const contentNode = value && (
-    <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], className)} title={`${titlePrefixString}${t(`format:date`, { value, postProcess: 'formatDate' })}`}>
+    <span
+      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], className)}
+      title={`${titlePrefixString}${t(variant === VARIANTS.LIST_VIEW ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' })}`}
+    >
       {variant !== VARIANTS.TASKS_CARD && variant !== VARIANTS.LIST_VIEW && t(`format:date`, { value, postProcess: 'formatDate' })}
       {variant === VARIANTS.LIST_VIEW && t(`format:dateTime`, { value, postProcess: 'formatDate' })}
       {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} />}

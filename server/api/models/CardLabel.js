@@ -32,4 +32,20 @@ module.exports = {
   },
 
   tableName: 'card_label',
+
+  async afterCreate(record, proceed) {
+    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+    if (card) {
+      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    }
+    proceed();
+  },
+
+  async afterDestroy(record, proceed) {
+    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+    if (card) {
+      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    }
+    proceed();
+  },
 };

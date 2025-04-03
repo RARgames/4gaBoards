@@ -32,4 +32,22 @@ module.exports = {
   },
 
   tableName: 'task_membership',
+
+  async afterCreate(record, proceed) {
+    const [task] = await Task.update({ id: record.taskId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+    if (task) {
+      const card = await Card.findOne({ id: task.cardId });
+      sails.sockets.broadcast(`board:${card.boardId}`, 'taskUpdate', { item: task });
+    }
+    proceed();
+  },
+
+  async afterDestroy(record, proceed) {
+    const [task] = await Task.update({ id: record.taskId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+    if (task) {
+      const card = await Card.findOne({ id: task.cardId });
+      sails.sockets.broadcast(`board:${card.boardId}`, 'taskUpdate', { item: task });
+    }
+    proceed();
+  },
 };

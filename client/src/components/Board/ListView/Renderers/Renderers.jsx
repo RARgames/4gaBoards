@@ -33,7 +33,7 @@ const listViewPropTypes = {
       commentCount: PropTypes.number.isRequired,
       dueDate: PropTypes.instanceOf(Date),
       timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-      createdAt: PropTypes.instanceOf(Date).isRequired,
+      createdAt: PropTypes.instanceOf(Date),
       updatedAt: PropTypes.instanceOf(Date),
     }).isRequired,
   }).isRequired,

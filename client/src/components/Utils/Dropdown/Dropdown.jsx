@@ -52,14 +52,14 @@ const Dropdown = React.forwardRef(
       setIsOpen(true);
       setSearchValue('');
       onErrorClear();
-      dropdown.current.focus();
+      dropdown.current?.focus();
       onOpen();
     }, [onErrorClear, onOpen]);
 
     const close = useCallback(() => {
       setIsOpen(false);
       setSearchValue('');
-      dropdown.current.blur();
+      dropdown.current?.blur();
       onClose();
     }, [onClose]);
 
@@ -75,7 +75,7 @@ const Dropdown = React.forwardRef(
 
     useEffect(() => {
       if (isOpen) {
-        dropdown.current.focus();
+        dropdown.current?.focus();
       }
     }, [isOpen]);
 

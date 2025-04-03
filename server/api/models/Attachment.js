@@ -54,4 +54,28 @@ module.exports = {
       coverUrl: this.image ? `${sails.config.custom.attachmentsUrl}/${this.id}/download/thumbnails/cover-256.${this.image.thumbnailsExtension}` : null,
     };
   },
+
+  async afterCreate(record, proceed) {
+    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+    if (card) {
+      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    }
+    proceed();
+  },
+
+  async afterUpdate(record, proceed) {
+    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+    if (card) {
+      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    }
+    proceed();
+  },
+
+  async afterDestroy(record, proceed) {
+    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+    if (card) {
+      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    }
+    proceed();
+  },
 };

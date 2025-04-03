@@ -49,4 +49,14 @@ module.exports = {
       columnName: 'user_id',
     },
   },
+
+  async afterUpdate(record, proceed) {
+    if (record.type === Types.COMMENT_CARD) {
+      const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
+      if (card) {
+        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+      }
+    }
+    proceed();
+  },
 };
