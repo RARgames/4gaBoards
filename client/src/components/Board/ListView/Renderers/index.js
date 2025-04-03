@@ -1,5 +1,5 @@
 import {
-  NameCellRenderer,
+  DefaultCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
@@ -8,12 +8,13 @@ import {
   CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
+  DateCellRenderer,
   ActionsCellRenderer,
   ActionsHeaderRenderer,
 } from './Renderers';
 
 export {
-  NameCellRenderer,
+  DefaultCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
@@ -22,6 +23,7 @@ export {
   CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
+  DateCellRenderer,
   ActionsCellRenderer,
   ActionsHeaderRenderer,
 };

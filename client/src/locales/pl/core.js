@@ -5,7 +5,7 @@ export default {
 
   format: {
     date: 'd.MM.yyyy',
-    time: 'p',
+    time: 'HH:mm',
     dateTime: '$t(format:date) $t(format:time)',
   },
 
@@ -101,6 +101,7 @@ export default {
       connectedToGithub: 'Połączono z GitHub: {{repo}}',
       connections: 'Edytuj połączenie z GitHub',
       connectToGithub: 'Połącz z GitHub',
+      created: 'Utworzono',
       createLabel_title: 'Stwórz etykietę',
       createTextFile_title: 'Stwórz plik tekstowy',
       currentPassword: 'Aktualne hasło',
@@ -346,6 +347,7 @@ export default {
       toTest: 'Do testów',
       unableToFetch: 'Nie można pobrać',
       unsavedChanges: 'Zmiany lokalne',
+      updated: 'Zaktualizowano',
       userActions_title: 'Edytuj użytkownika',
       userAddedThisCardToList: '<0>{{user}}</0><1> dodał tę kartę w {{list}}</1>',
       userAvatar: 'Avatar',

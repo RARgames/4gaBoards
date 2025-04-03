@@ -12,6 +12,7 @@ const VARIANTS = {
   CARD: 'card',
   CARDMODAL: 'cardModal',
   TASKS_CARD: 'tasksCard',
+  LIST_VIEW: 'listView',
 };
 
 const getDueStyle = (value) => {
@@ -37,15 +38,20 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
 
   useEffect(() => {
     if (value) {
-      setDueStyle(getDueStyle(value));
+      if (variant === VARIANTS.LIST_VIEW) {
+        setDueStyle('ListView');
+      } else {
+        setDueStyle(getDueStyle(value));
+      }
     }
-  }, [value]);
+  }, [value, variant]);
 
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
 
   const contentNode = value && (
     <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], className)} title={`${titlePrefixString}${t(`format:date`, { value, postProcess: 'formatDate' })}`}>
-      {variant !== VARIANTS.TASKS_CARD && t(`format:date`, { value, postProcess: 'formatDate' })}
+      {variant !== VARIANTS.TASKS_CARD && variant !== VARIANTS.LIST_VIEW && t(`format:date`, { value, postProcess: 'formatDate' })}
+      {variant === VARIANTS.LIST_VIEW && t(`format:dateTime`, { value, postProcess: 'formatDate' })}
       {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} />}
     </span>
   );

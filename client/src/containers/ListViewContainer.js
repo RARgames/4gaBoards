@@ -35,6 +35,8 @@ const makeMapStateToProps = () => {
         commentCount: card.commentCount,
         dueDate: card.dueDate || undefined, // undefined needed for TanStack Table sorting
         timer: card.timer || undefined, // undefined needed for TanStack Table sorting
+        createdAt: card.createdAt,
+        updatedAt: card.updatedAt || undefined, // undefined needed for TanStack Table sorting
         isPersisted: card.isPersisted,
       };
     });

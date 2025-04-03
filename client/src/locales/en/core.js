@@ -1,7 +1,7 @@
 export default {
   format: {
     date: 'd.MM.yyyy',
-    time: 'p',
+    time: 'HH:mm',
     dateTime: '$t(format:date) $t(format:time)',
   },
 
@@ -93,6 +93,7 @@ export default {
       connectedToGithub: 'Connected to GitHub: {{repo}}',
       connections: 'Edit GitHub Connection',
       connectToGithub: 'Connect to GitHub',
+      created: 'Created',
       createLabel_title: 'Create Label',
       createTextFile_title: 'Create Text File',
       currentPassword: 'Current password',
@@ -331,6 +332,7 @@ export default {
       toTest: 'To Test',
       unableToFetch: 'Unable to fetch',
       unsavedChanges: 'Local changes',
+      updated: 'Updated',
       userActions_title: 'User Actions',
       userAddedThisCardToList: '<0>{{user}}</0><1> added this card to {{list}}</1>',
       userAvatar: 'User Avatar',

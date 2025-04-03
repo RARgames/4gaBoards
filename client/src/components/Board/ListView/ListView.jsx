@@ -12,7 +12,7 @@ import ListAddPopup from '../../ListAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
 import ListViewStyle from './ListViewStyle';
 import {
-  NameCellRenderer,
+  DefaultCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
@@ -21,6 +21,7 @@ import {
   CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
+  DateCellRenderer,
   ActionsHeaderRenderer,
   ActionsCellRenderer,
 } from './Renderers';
@@ -120,7 +121,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
   }, []);
 
-  // TODO maybe use title in meta instead of customRenderer
   const columns = [
     // {
     //   header: '',
@@ -129,7 +129,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     {
       accessorKey: 'name',
       header: t('common.name'),
-      cell: NameCellRenderer,
+      cell: DefaultCellRenderer,
       enableSorting: true,
       sortingFn: 'localeSortingFn',
       meta: { headerTitle: t('common.name') },
@@ -256,6 +256,21 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
         return a - b;
       },
       meta: { headerTitle: t('common.timer') },
+    },
+    {
+      accessorKey: 'createdAt',
+      header: t('common.created'),
+      cell: DateCellRenderer,
+      enableSorting: true,
+      meta: { headerTitle: t('common.created') },
+    },
+    {
+      accessorKey: 'updatedAt',
+      header: t('common.updated'),
+      cell: DateCellRenderer,
+      enableSorting: true,
+      sortUndefined: 'last',
+      meta: { headerTitle: t('common.updated') },
     },
     {
       accessorKey: 'actions',
