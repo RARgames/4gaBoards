@@ -8,7 +8,11 @@ import * as gs from '../../../../global.module.scss';
 import * as s from './MarkdownCell.module.scss';
 
 const MarkdownCell = React.memo(({ value, cellClassName, isGithubConnected, githubRepo }) => {
-  return <div className={classNames(s.markdownWrapper, cellClassName, gs.scrollableY)}>{value && <MDPreview source={value} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />}</div>;
+  return (
+    <div className={cellClassName}>
+      <div className={classNames(s.markdownWrapper, gs.scrollableY)}>{value && <MDPreview source={value} isGithubConnected={isGithubConnected} githubRepo={githubRepo} className={s.markdown} />}</div>
+    </div>
+  );
 });
 
 MarkdownCell.propTypes = {
