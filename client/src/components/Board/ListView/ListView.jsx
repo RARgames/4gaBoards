@@ -15,6 +15,7 @@ import {
   DefaultCellRenderer,
   NumberCellRenderer,
   ImageCellRenderer,
+  MarkdownCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
@@ -33,7 +34,7 @@ const DEFAULT_COLUMN_VISIBILITY = {
   // name: false,
 };
 
-const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, memberIds, listViewStyle, canEdit, onCardCreate, onListCreate }) => {
+const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, githubRepo, lists, labelIds, memberIds, listViewStyle, canEdit, onCardCreate, onListCreate }) => {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const tableRef = useRef(null);
@@ -125,15 +126,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
 
   const columns = [
     {
-      accessorKey: 'coverUrl',
-      header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
-      cell: ImageCellRenderer,
-      enableSorting: true,
-      sortUndefined: 'last',
-      sortDescFirst: true,
-      meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
-    },
-    {
       accessorKey: 'notificationsCount',
       header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
       cell: NumberCellRenderer,
@@ -141,6 +133,15 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
       sortDescFirst: true,
       meta: { headerTitle: t('common.notifications'), headerSize: 20 },
       cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsNotifications', { count }) },
+    },
+    {
+      accessorKey: 'coverUrl',
+      header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
+      cell: ImageCellRenderer,
+      enableSorting: true,
+      sortUndefined: 'last',
+      sortDescFirst: true,
+      meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
     },
     {
       accessorKey: 'name',
@@ -291,6 +292,14 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
       enableSorting: true,
       sortUndefined: 'last',
       meta: { headerTitle: t('common.updated') },
+    },
+    {
+      accessorKey: 'description',
+      header: t('common.description'),
+      cell: MarkdownCellRenderer,
+      enableSorting: false,
+      meta: { headerTitle: t('common.description') },
+      cellProps: { isGithubConnected, githubRepo },
     },
     {
       accessorKey: 'actions',
@@ -507,6 +516,8 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
 ListView.propTypes = {
   currentCardId: PropTypes.string,
   filteredCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isGithubConnected: PropTypes.bool.isRequired,
+  githubRepo: PropTypes.string.isRequired,
   lists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   labelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

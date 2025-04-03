@@ -39,14 +39,15 @@ const makeMapStateToProps = () => {
         createdAt: card.createdAt,
         updatedAt: card.updatedAt || undefined, // undefined needed for TanStack Table sorting
         notificationsCount,
+        description: card.description,
         isPersisted: card.isPersisted,
       };
     });
 
+    const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
     const lists = listIds.map((id) => {
       return selectors.selectListById(state, id);
     });
-
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
     const { listViewStyle } = selectors.selectCurrentUserPrefs(state);
@@ -56,6 +57,8 @@ const makeMapStateToProps = () => {
     return {
       currentCardId,
       filteredCards,
+      isGithubConnected,
+      githubRepo,
       lists,
       labelIds,
       memberIds,

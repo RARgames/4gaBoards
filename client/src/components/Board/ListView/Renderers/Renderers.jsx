@@ -13,6 +13,7 @@ import DateCell from '../DateCell';
 import DefaultCell from '../DefaultCell';
 import ImageCell from '../ImageCell';
 import ListViewStyle from '../ListViewStyle';
+import MarkdownCell from '../MarkdownCell';
 
 import * as s from './Renderers.module.scss';
 
@@ -39,6 +40,7 @@ const listViewPropTypes = {
       createdAt: PropTypes.instanceOf(Date),
       updatedAt: PropTypes.instanceOf(Date),
       notificationsCount: PropTypes.number.isRequired,
+      description: PropTypes.string,
     }).isRequired,
   }).isRequired,
   cell: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types, react/no-unused-prop-types
@@ -59,6 +61,11 @@ function ImageCellRenderer({ table, column, getValue }) {
   return <ImageCell value={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 ImageCellRenderer.propTypes = listViewPropTypes;
+
+function MarkdownCellRenderer({ table, column, cell }) {
+  return <MarkdownCell value={cell.getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+}
+MarkdownCellRenderer.propTypes = listViewPropTypes;
 
 function LabelsCellRenderer({ table, row }) {
   return <LabelsCellContainer id={row.original.id} labels={row.original.labels} cellClassName={s[table.options.listViewStyle]} />;
@@ -110,6 +117,7 @@ export {
   DefaultCellRenderer,
   NumberCellRenderer,
   ImageCellRenderer,
+  MarkdownCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
