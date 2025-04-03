@@ -20,6 +20,7 @@ import { ReactComponent as FillDrip } from '../../../assets/icons/FillDrip.svg';
 import { ReactComponent as Github } from '../../../assets/icons/Github.svg';
 import { ReactComponent as Google } from '../../../assets/icons/Google.svg';
 import { ReactComponent as Hide } from '../../../assets/icons/Hide.svg';
+import { ReactComponent as Image } from '../../../assets/icons/Image.svg';
 import { ReactComponent as Info } from '../../../assets/icons/Info.svg';
 import { ReactComponent as Key } from '../../../assets/icons/Key.svg';
 import { ReactComponent as Label } from '../../../assets/icons/Label.svg';
@@ -73,6 +74,7 @@ const IconType = {
   Github,
   Google,
   Hide,
+  Image,
   Info,
   Key,
   Label,

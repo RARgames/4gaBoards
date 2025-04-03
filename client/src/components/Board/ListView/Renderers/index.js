@@ -1,6 +1,7 @@
 import {
   DefaultCellRenderer,
   NumberCellRenderer,
+  ImageCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
@@ -15,6 +16,7 @@ import {
 export {
   DefaultCellRenderer,
   NumberCellRenderer,
+  ImageCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,

@@ -1,0 +1,10 @@
+:global(#app) {
+  .imageWrapper {
+    display: flex;
+  }
+
+  .image {
+    width: 100%;
+    height: fit-content;
+  }
+}

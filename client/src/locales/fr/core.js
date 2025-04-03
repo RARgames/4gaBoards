@@ -101,6 +101,7 @@ export default {
       connectedToGithub: 'Connecté à GitHub: {{repo}}',
       connections: 'Modifier la connexion GitHub',
       connectToGithub: 'Se connecter à GitHub',
+      coverImage: 'Image de couverture',
       created: 'Créé',
       createLabel_title: 'Créer une étiquette',
       createTextFile_title: 'Créer un fichier texte',

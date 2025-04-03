@@ -93,6 +93,7 @@ export default {
       connectedToGithub: 'Connected to GitHub: {{repo}}',
       connections: 'Edit GitHub Connection',
       connectToGithub: 'Connect to GitHub',
+      coverImage: 'Cover Image',
       created: 'Created',
       createLabel_title: 'Create Label',
       createTextFile_title: 'Create Text File',

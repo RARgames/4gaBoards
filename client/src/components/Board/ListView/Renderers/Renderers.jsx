@@ -11,6 +11,7 @@ import ActionsHeader from '../ActionsHeader';
 import BoolCell from '../BoolCell';
 import DateCell from '../DateCell';
 import DefaultCell from '../DefaultCell';
+import ImageCell from '../ImageCell';
 import ListViewStyle from '../ListViewStyle';
 
 import * as s from './Renderers.module.scss';
@@ -25,6 +26,7 @@ const listViewPropTypes = {
   row: PropTypes.shape({
     original: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      coverUrl: PropTypes.string,
       name: PropTypes.string.isRequired,
       labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
       users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -52,6 +54,11 @@ function NumberCellRenderer({ table, column, getValue }) {
   return <DefaultCell value={getValue()} title={getValue().toString()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 NumberCellRenderer.propTypes = listViewPropTypes;
+
+function ImageCellRenderer({ table, column, getValue }) {
+  return <ImageCell value={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+}
+ImageCellRenderer.propTypes = listViewPropTypes;
 
 function LabelsCellRenderer({ table, row }) {
   return <LabelsCellContainer id={row.original.id} labels={row.original.labels} cellClassName={s[table.options.listViewStyle]} />;
@@ -102,6 +109,7 @@ ActionsCellRenderer.propTypes = listViewPropTypes;
 export {
   DefaultCellRenderer,
   NumberCellRenderer,
+  ImageCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,

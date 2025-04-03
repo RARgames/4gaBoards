@@ -14,6 +14,7 @@ import ListViewStyle from './ListViewStyle';
 import {
   DefaultCellRenderer,
   NumberCellRenderer,
+  ImageCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
@@ -90,8 +91,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
 
   //     const visibleMembersCount = 3;
 
-  // const renderCoverImage = (params) => (params.value ? <img src={params.value} alt="" className={s.cover} /> : null);
-
   const [sorting, setSorting] = useState([]);
   const data = filteredCards;
 
@@ -125,10 +124,15 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
   }, []);
 
   const columns = [
-    // {
-    //   header: '',
-    //   cell: ({ row }) => (row.original.coverUrl ? <img src={row.original.coverUrl} alt="" className={s.cover} /> : null),
-    // },
+    {
+      accessorKey: 'coverUrl',
+      header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
+      cell: ImageCellRenderer,
+      enableSorting: true,
+      sortUndefined: 'last',
+      sortDescFirst: true,
+      meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
+    },
     {
       accessorKey: 'notificationsCount',
       header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
@@ -478,7 +482,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     </div>
   );
 
-  //       {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
   //       <div className={s.details}>
   //         {tasks.length > 0 && (
   //           <Tasks
