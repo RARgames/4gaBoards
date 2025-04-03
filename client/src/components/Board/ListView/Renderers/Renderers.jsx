@@ -21,6 +21,7 @@ const listViewPropTypes = {
       listViewStyle: PropTypes.oneOf(Object.values(ListViewStyle)).isRequired,
     }).isRequired,
   }).isRequired,
+  column: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types, react/no-unused-prop-types
   row: PropTypes.shape({
     original: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -35,15 +36,22 @@ const listViewPropTypes = {
       timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
       createdAt: PropTypes.instanceOf(Date),
       updatedAt: PropTypes.instanceOf(Date),
+      notificationsCount: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
   cell: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types, react/no-unused-prop-types
+  getValue: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
 };
 
-function DefaultCellRenderer({ table, cell }) {
-  return <DefaultCell value={cell.getValue()} title={cell.getValue()} cellClassName={s[table.options.listViewStyle]} />;
+function DefaultCellRenderer({ table, column, cell }) {
+  return <DefaultCell value={cell.getValue()} title={cell.getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 DefaultCellRenderer.propTypes = listViewPropTypes;
+
+function NumberCellRenderer({ table, column, getValue }) {
+  return <DefaultCell value={getValue()} title={getValue().toString()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+}
+NumberCellRenderer.propTypes = listViewPropTypes;
 
 function LabelsCellRenderer({ table, row }) {
   return <LabelsCellContainer id={row.original.id} labels={row.original.labels} cellClassName={s[table.options.listViewStyle]} />;
@@ -66,29 +74,14 @@ function HasDescriptionCellRenderer({ table, row }) {
 }
 HasDescriptionCellRenderer.propTypes = listViewPropTypes;
 
-function AttachmentsCountCellRenderer({ table, row }) {
-  const [t] = useTranslation();
-  return <DefaultCell value={row.original.attachmentsCount} title={t('common.detailsAttachments', { count: row.original.attachmentsCount })} cellClassName={s[table.options.listViewStyle]} />;
-}
-AttachmentsCountCellRenderer.propTypes = listViewPropTypes;
-
-function CommentCountCellRenderer({ table, row }) {
-  const [t] = useTranslation();
-  return <DefaultCell value={row.original.commentCount} title={t('common.detailsComments', { count: row.original.commentCount })} cellClassName={s[table.options.listViewStyle]} />;
-}
-
-CommentCountCellRenderer.propTypes = listViewPropTypes;
-
 function DueDateCellRenderer({ table, row }) {
   return <DueDateCellContainer id={row.original.id} dueDate={row.original.dueDate} cellClassName={s[table.options.listViewStyle]} />;
 }
-
 DueDateCellRenderer.propTypes = listViewPropTypes;
 
 function TimerCellRenderer({ table, row }) {
   return <TimerCellContainer id={row.original.id} timer={row.original.timer} cellClassName={s[table.options.listViewStyle]} />;
 }
-
 TimerCellRenderer.propTypes = listViewPropTypes;
 
 function DateCellRenderer({ table, cell }) {
@@ -108,12 +101,11 @@ ActionsCellRenderer.propTypes = listViewPropTypes;
 
 export {
   DefaultCellRenderer,
+  NumberCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
-  AttachmentsCountCellRenderer,
-  CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
   DateCellRenderer,

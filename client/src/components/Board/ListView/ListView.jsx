@@ -13,12 +13,11 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Util
 import ListViewStyle from './ListViewStyle';
 import {
   DefaultCellRenderer,
+  NumberCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
-  AttachmentsCountCellRenderer,
-  CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
   DateCellRenderer,
@@ -102,14 +101,18 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
 
     setSorting((prevSorting) => {
       const existingColumn = prevSorting.find((so) => so.id === newSorting.id);
+      // eslint-disable-next-line no-use-before-define
+      const columnDef = columns.find((col) => col.accessorKey === newSorting.id || col.id === newSorting.id);
+      const sortDescFirst = columnDef?.sortDescFirst ?? false;
 
       if (existingColumn) {
-        if (existingColumn.desc === false) {
-          return prevSorting.map((so) => (so.id === newSorting.id ? { ...so, desc: true } : so));
+        if (existingColumn.desc === sortDescFirst) {
+          return prevSorting.map((so) => (so.id === newSorting.id ? { ...so, desc: !sortDescFirst } : so));
         }
         return prevSorting.filter((so) => so.id !== newSorting.id);
       }
-      return [...prevSorting, newSorting];
+
+      return [...prevSorting, { ...newSorting, desc: sortDescFirst }];
     });
   };
 
@@ -126,6 +129,15 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     //   header: '',
     //   cell: ({ row }) => (row.original.coverUrl ? <img src={row.original.coverUrl} alt="" className={s.cover} /> : null),
     // },
+    {
+      accessorKey: 'notificationsCount',
+      header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
+      cell: NumberCellRenderer,
+      enableSorting: true,
+      sortDescFirst: true,
+      meta: { headerTitle: t('common.notifications'), headerSize: 20 },
+      cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsNotifications', { count }) },
+    },
     {
       accessorKey: 'name',
       header: t('common.name'),
@@ -220,16 +232,20 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     {
       accessorKey: 'attachmentsCount',
       header: <Icon type={IconType.Attach} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.attachmentCount')} />,
-      cell: AttachmentsCountCellRenderer,
+      cell: NumberCellRenderer,
       enableSorting: true,
+      sortDescFirst: true,
       meta: { headerTitle: t('common.attachmentCount'), headerSize: 20 },
+      cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsAttachments', { count }) },
     },
     {
       accessorKey: 'commentCount',
       header: <Icon type={IconType.Comment} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.commentCount')} />,
-      cell: CommentCountCellRenderer,
+      cell: NumberCellRenderer,
       enableSorting: true,
+      sortDescFirst: true,
       meta: { headerTitle: t('common.commentCount'), headerSize: 20 },
+      cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsComments', { count }) },
     },
     {
       accessorKey: 'dueDate',
@@ -462,11 +478,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
     </div>
   );
 
-  // <>
-  //       <div>
-  //         {notificationsTotal > 0 && notificationsTotal <= 9 && <span className={s.notification}>{notificationsTotal}</span>}
-  //         {notificationsTotal > 9 && <span className={classNames(s.notification, s.notificationFull)}>9+</span>}
-  //       </div>
   //       {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
   //       <div className={s.details}>
   //         {tasks.length > 0 && (
@@ -488,38 +499,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, lists, labelIds, me
   //             onMouseLeaveTasks={handleTasksMouseOut}
   //           />
   //         )}
-  //         {users.length > 0 && (
-  //           <span className={classNames(s.attachments, s.attachmentsRight, s.users)}>
-  //             <div className={s.popupWrapper2}>
-  //               <MembershipsPopup
-  //                 items={allBoardMemberships}
-  //                 currentUserIds={users.map((user) => user.id)}
-  //                 onUserSelect={(userId) => onUserAdd(userId, id)}
-  //                 onUserDeselect={(userId) => onUserRemove(userId, id)}
-  //                 offset={0}
-  //               >
-  //                 {users.slice(0, visibleMembersCount).map((user) => (
-  //                   <span key={user.id} className={classNames(s.attachment, s.user)}>
-  //                     <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
-  //                   </span>
-  //                 ))}
-  //                 {users.length > visibleMembersCount && (
-  //                   <span
-  //                     className={classNames(s.attachment, s.user, s.moreUsers)}
-  //                     title={users
-  //                       .slice(visibleMembersCount)
-  //                       .map((user) => user.name)
-  //                       .join(',\n')}
-  //                   >
-  //                     +{users.length - visibleMembersCount}
-  //                   </span>
-  //                 )}
-  //               </MembershipsPopup>
-  //             </div>
-  //           </span>
-  //         )}
-  //       </div>
-  //     </>
 });
 
 ListView.propTypes = {

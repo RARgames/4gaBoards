@@ -128,6 +128,8 @@ export default {
       detailsComments_one: 'This card has {{count}} comment',
       detailsComments_other: 'This card has {{count}} comments',
       detailsDescription: 'This card has a description',
+      detailsNotifications_one: 'This card has {{count}} notification',
+      detailsNotifications_other: 'This card has {{count}} notifications',
       detectAutomatically: 'Detect automatically',
       disabled: 'Disabled',
       docs: 'Documentation',

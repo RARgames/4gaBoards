@@ -1,11 +1,10 @@
 import {
   DefaultCellRenderer,
+  NumberCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
-  AttachmentsCountCellRenderer,
-  CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
   DateCellRenderer,
@@ -15,12 +14,11 @@ import {
 
 export {
   DefaultCellRenderer,
+  NumberCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
   HasDescriptionCellRenderer,
-  AttachmentsCountCellRenderer,
-  CommentCountCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
   DateCellRenderer,
