@@ -6,16 +6,14 @@ import { BoardMembershipRoles } from '../constants/Enums';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
-const makeMapStateToProps = () => {
-  return (state) => {
-    const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
-    const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
-    const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+const mapStateToProps = (state) => {
+  const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+  const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
+  const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
-    return {
-      allBoardMemberships,
-      canEdit: isCurrentUserEditor,
-    };
+  return {
+    allBoardMemberships,
+    canEdit: isCurrentUserEditor,
   };
 };
 
@@ -33,4 +31,4 @@ const mapDispatchToProps = (dispatch, { id }) =>
     dispatch,
   );
 
-export default connect(makeMapStateToProps, mapDispatchToProps)(TasksCell);
+export default connect(mapStateToProps, mapDispatchToProps)(TasksCell);
