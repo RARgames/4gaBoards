@@ -241,10 +241,12 @@ const Dropdown = React.forwardRef(
             break;
           }
           case 'Enter': {
+            event.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
             handleSubmit(getCurrItem());
             break;
           }
           case 'Tab': {
+            event.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
             event.preventDefault(); // Prevent switching focus
             handleSubmit(getCurrItem());
             break;

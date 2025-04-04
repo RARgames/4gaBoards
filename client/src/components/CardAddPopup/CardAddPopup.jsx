@@ -26,9 +26,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
   const formRef = useRef(null);
   const [focusFromState, focusForm] = useToggle();
 
-  const [selectedList, setSelectedList] = useState(() => {
-    return null;
-  });
+  const [selectedList, setSelectedList] = useState(lists.length > 0 ? lists[0] : null);
 
   const handleSubmit = useCallback(
     (autoOpen, keepOpen) => {
