@@ -68,63 +68,59 @@ function NumberCellRenderer({ table, column, getValue }) {
 }
 NumberCellRenderer.propTypes = listViewPropTypes;
 
+function BoolCellRenderer({ table, column, getValue }) {
+  return <BoolCell value={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+}
+BoolCellRenderer.propTypes = listViewPropTypes;
+
 function ImageCellRenderer({ table, column, getValue }) {
   return <ImageCell value={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 ImageCellRenderer.propTypes = listViewPropTypes;
 
-function MarkdownCellRenderer({ table, column, cell }) {
-  return <MarkdownCell value={cell.getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function MarkdownCellRenderer({ table, column, getValue }) {
+  return <MarkdownCell value={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 MarkdownCellRenderer.propTypes = listViewPropTypes;
 
-function LabelsCellRenderer({ table, column, row }) {
-  return <LabelsCellContainer id={row.original.id} labels={row.original.labels} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function LabelsCellRenderer({ table, column, row, getValue }) {
+  return <LabelsCellContainer id={row.original.id} labels={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 LabelsCellRenderer.propTypes = listViewPropTypes;
 
-function MembersCellRenderer({ table, column, row }) {
-  return <MembersCellContainer id={row.original.id} users={row.original.users} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function MembersCellRenderer({ table, column, row, getValue }) {
+  return <MembersCellContainer id={row.original.id} users={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 MembersCellRenderer.propTypes = listViewPropTypes;
 
-function ListNameCellRenderer({ table, column, row }) {
-  return <DefaultCell value={row.original.listName} title={row.original.listName} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function ListNameCellRenderer({ table, column, getValue }) {
+  return <DefaultCell value={getValue()} title={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 ListNameCellRenderer.propTypes = listViewPropTypes;
 
-function HasDescriptionCellRenderer({ table, column, row }) {
-  const [t] = useTranslation();
-  return <BoolCell value={row.original.hasDescription} title={t('common.detailsDescription')} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
-}
-HasDescriptionCellRenderer.propTypes = listViewPropTypes;
-
-function DueDateCellRenderer({ table, column, row }) {
-  return <DueDateCellContainer id={row.original.id} dueDate={row.original.dueDate} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function DueDateCellRenderer({ table, column, row, getValue }) {
+  return <DueDateCellContainer id={row.original.id} dueDate={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 DueDateCellRenderer.propTypes = listViewPropTypes;
 
-function TimerCellRenderer({ table, column, row }) {
-  return <TimerCellContainer id={row.original.id} timer={row.original.timer} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function TimerCellRenderer({ table, column, row, getValue }) {
+  return <TimerCellContainer id={row.original.id} timer={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 TimerCellRenderer.propTypes = listViewPropTypes;
 
-function TasksCellRenderer({ table, column, row, cell }) {
-  return <TasksCellContainer id={row.original.id} tasks={cell.getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function TasksCellRenderer({ table, column, row, getValue }) {
+  return <TasksCellContainer id={row.original.id} tasks={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 TasksCellRenderer.propTypes = listViewPropTypes;
 
-function DateCellRenderer({ table, column, cell }) {
-  return <DateCell date={cell.getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+function DateCellRenderer({ table, column, getValue }) {
+  return <DateCell date={getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
 }
 DateCellRenderer.propTypes = listViewPropTypes;
 
 function ActionsHeaderRenderer({ table, column }) {
   return (
-    <ActionsHeader
-      table={table}
-      {...column.columnDef.headerProps} // eslint-disable-line react/jsx-props-no-spreading
-    />
+    <ActionsHeader table={table} {...column.columnDef.headerProps} /> // eslint-disable-line react/jsx-props-no-spreading
   );
 }
 ActionsHeaderRenderer.propTypes = listViewHeaderPropTypes;
@@ -137,12 +133,12 @@ ActionsCellRenderer.propTypes = listViewPropTypes;
 export {
   DefaultCellRenderer,
   NumberCellRenderer,
+  BoolCellRenderer,
   ImageCellRenderer,
   MarkdownCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
-  HasDescriptionCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
   TasksCellRenderer,

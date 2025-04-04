@@ -14,12 +14,12 @@ import ListViewStyle from './ListViewStyle';
 import {
   DefaultCellRenderer,
   NumberCellRenderer,
+  BoolCellRenderer,
   ImageCellRenderer,
   MarkdownCellRenderer,
   LabelsCellRenderer,
   MembersCellRenderer,
   ListNameCellRenderer,
-  HasDescriptionCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
   TasksCellRenderer,
@@ -332,10 +332,11 @@ const ListView = React.memo(
       {
         accessorKey: 'hasDescription',
         header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
-        cell: HasDescriptionCellRenderer,
+        cell: BoolCellRenderer,
         enableSorting: true,
         sortDescFirst: true,
         meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
+        cellProps: { getTitle: (trans) => trans('common.detailsDescription') },
       },
       {
         accessorKey: 'attachmentsCount',
