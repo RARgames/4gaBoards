@@ -55,6 +55,7 @@ const ListView = React.memo(
     const [t] = useTranslation();
     const navigate = useNavigate();
     const tableRef = useRef(null);
+    const [sorting, setSorting] = useState([]);
     const rowRefs = useRef({});
     const [columnVisibility, setColumnVisibility] = useState(listViewColumnVisibility);
 
@@ -88,8 +89,10 @@ const ListView = React.memo(
       scrollCardIntoView();
     }, [scrollCardIntoView]);
 
-    const [sorting, setSorting] = useState([]);
-    const data = filteredCards;
+    const handleResizerMouseDown = useCallback((e, header) => {
+      e.preventDefault(); // Prevent text selecton when dragging column resizer
+      header.getResizeHandler()(e);
+    }, []);
 
     const handleSortingChange = (e, canSort, newSorting) => {
       if (e.target?.classList?.contains(s.resizer)) return;
@@ -121,7 +124,7 @@ const ListView = React.memo(
     }, []);
 
     const table = useReactTable({
-      data,
+      data: filteredCards,
       columns: [],
       getCoreRowModel: getCoreRowModel(),
       getSortedRowModel: getSortedRowModel(),
@@ -448,7 +451,7 @@ const ListView = React.memo(
                           </div>
                         )}
                         {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-                        {header.column.getCanResize() && <div className={s.resizer} onMouseDown={header.getResizeHandler()} />}
+                        {header.column.getCanResize() && <div className={s.resizer} onMouseDown={(e) => handleResizerMouseDown(e, header)} />}
                       </div>
                     </Table.HeaderCell>
                   );
