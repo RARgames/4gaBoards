@@ -120,218 +120,9 @@ const ListView = React.memo(
       setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
     }, []);
 
-    const columns = [
-      {
-        accessorKey: 'notificationsCount',
-        header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
-        cell: NumberCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.notifications'), headerSize: 20 },
-        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsNotifications', { count }) },
-      },
-      {
-        accessorKey: 'coverUrl',
-        header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
-        cell: ImageCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
-      },
-      {
-        accessorKey: 'name',
-        header: t('common.name'),
-        cell: DefaultCellRenderer,
-        enableSorting: true,
-        sortingFn: 'localeSortingFn',
-        meta: { headerTitle: t('common.name') },
-      },
-      {
-        accessorKey: 'labels',
-        header: t('common.labels'),
-        cell: LabelsCellRenderer,
-        enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (labels) => labels?.map((label) => label.name || '') || [];
-
-          const aList = getSortingValue(rowA.original[columnId]);
-          const bList = getSortingValue(rowB.original[columnId]);
-
-          // eslint-disable-next-line no-use-before-define
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          const compareRecursively = (aArr, bArr, index = 0) => {
-            if (index >= aArr.length && index >= bArr.length) return 0;
-            if (index >= aArr.length) return isDescending ? -1 : 1;
-            if (index >= bArr.length) return isDescending ? 1 : -1;
-
-            const a = aArr[index];
-            const b = bArr[index];
-
-            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
-            if (a === '') return isDescending ? -1 : 1;
-            if (b === '') return isDescending ? 1 : -1;
-
-            const comparison = a.localeCompare(b);
-            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
-          };
-
-          return compareRecursively(aList, bList);
-        },
-        meta: { headerTitle: t('common.labels') },
-      },
-      {
-        accessorKey: 'users',
-        header: t('common.members'),
-        cell: MembersCellRenderer,
-        enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (users) => users?.map((user) => user.name || '') || [];
-
-          const aList = getSortingValue(rowA.original[columnId]);
-          const bList = getSortingValue(rowB.original[columnId]);
-
-          // eslint-disable-next-line no-use-before-define
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          const compareRecursively = (aArr, bArr, index = 0) => {
-            if (index >= aArr.length && index >= bArr.length) return 0;
-            if (index >= aArr.length) return isDescending ? -1 : 1;
-            if (index >= bArr.length) return isDescending ? 1 : -1;
-
-            const a = aArr[index];
-            const b = bArr[index];
-
-            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
-            if (a === '') return isDescending ? -1 : 1;
-            if (b === '') return isDescending ? 1 : -1;
-
-            const comparison = a.localeCompare(b);
-            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
-          };
-
-          return compareRecursively(aList, bList);
-        },
-        meta: { headerTitle: t('common.members') },
-      },
-      { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
-      {
-        accessorKey: 'hasDescription',
-        header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
-        cell: HasDescriptionCellRenderer,
-        enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const a = rowA.original[columnId];
-          const b = rowB.original[columnId];
-          if (a === b) return 0;
-          if (a) return -1;
-          return 1;
-        },
-        meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
-      },
-      {
-        accessorKey: 'attachmentsCount',
-        header: <Icon type={IconType.Attach} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.attachmentCount')} />,
-        cell: NumberCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.attachmentCount'), headerSize: 20 },
-        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsAttachments', { count }) },
-      },
-      {
-        accessorKey: 'commentCount',
-        header: <Icon type={IconType.Comment} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.commentCount')} />,
-        cell: NumberCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.commentCount'), headerSize: 20 },
-        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsComments', { count }) },
-      },
-      {
-        accessorKey: 'dueDate',
-        header: t('common.dueDate', { context: 'title' }),
-        cell: DueDateCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        meta: { headerTitle: t('common.dueDate', { context: 'title' }) },
-      },
-      {
-        accessorKey: 'timer',
-        header: t('common.timer'),
-        cell: TimerCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (timer) => {
-            if (!timer) return undefined;
-            return getFullSeconds({ startedAt: timer.startedAt, total: timer.total });
-          };
-
-          const a = getSortingValue(rowA.original[columnId]);
-          const b = getSortingValue(rowB.original[columnId]);
-          return a - b;
-        },
-        meta: { headerTitle: t('common.timer') },
-      },
-      {
-        accessorKey: 'tasks',
-        header: t('common.tasks'),
-        cell: TasksCellRenderer,
-        enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (tasks) => tasks.length;
-          const a = getSortingValue(rowA.original[columnId]);
-          const b = getSortingValue(rowB.original[columnId]);
-
-          // eslint-disable-next-line no-use-before-define
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          if (a === 0 && b === 0) return 0;
-          if (a === 0) return isDescending ? -1 : 1;
-          if (b === 0) return isDescending ? 1 : -1;
-
-          return a - b;
-        },
-        meta: { headerTitle: t('common.tasks') },
-      },
-      {
-        accessorKey: 'createdAt',
-        header: t('common.created'),
-        cell: DateCellRenderer,
-        enableSorting: true,
-        meta: { headerTitle: t('common.created') },
-      },
-      {
-        accessorKey: 'updatedAt',
-        header: t('common.updated'),
-        cell: DateCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        meta: { headerTitle: t('common.updated') },
-      },
-      {
-        accessorKey: 'description',
-        header: t('common.description'),
-        cell: MarkdownCellRenderer,
-        enableSorting: false,
-        meta: { headerTitle: t('common.description') },
-        cellProps: { isGithubConnected, githubRepo },
-      },
-      {
-        accessorKey: 'actions',
-        // eslint-disable-next-line no-use-before-define
-        header: (props) => ActionsHeaderRenderer(props, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate),
-        cell: ActionsCellRenderer,
-        enableSorting: false,
-        enableResizing: false,
-        meta: { size: 30 },
-      },
-    ];
-
     const table = useReactTable({
       data,
-      columns,
+      columns: [],
       getCoreRowModel: getCoreRowModel(),
       getSortedRowModel: getSortedRowModel(),
       enableMultiSort: true,
@@ -433,6 +224,219 @@ const ListView = React.memo(
     useEffect(() => {
       handleResetColumnWidthsClick();
     }, [handleResetColumnWidthsClick, boardId]);
+
+    const columns = [
+      {
+        accessorKey: 'notificationsCount',
+        header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
+        cell: NumberCellRenderer,
+        enableSorting: true,
+        sortDescFirst: true,
+        meta: { headerTitle: t('common.notifications'), headerSize: 20 },
+        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsNotifications', { count }) },
+      },
+      {
+        accessorKey: 'coverUrl',
+        header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
+        cell: ImageCellRenderer,
+        enableSorting: true,
+        sortUndefined: 'last',
+        sortDescFirst: true,
+        meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
+      },
+      {
+        accessorKey: 'name',
+        header: t('common.name'),
+        cell: DefaultCellRenderer,
+        enableSorting: true,
+        sortingFn: 'localeSortingFn',
+        meta: { headerTitle: t('common.name') },
+      },
+      {
+        accessorKey: 'labels',
+        header: t('common.labels'),
+        cell: LabelsCellRenderer,
+        enableSorting: true,
+        sortingFn: (rowA, rowB, columnId) => {
+          const getSortingValue = (labels) => labels?.map((label) => label.name || '') || [];
+
+          const aList = getSortingValue(rowA.original[columnId]);
+          const bList = getSortingValue(rowB.original[columnId]);
+
+          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
+
+          const compareRecursively = (aArr, bArr, index = 0) => {
+            if (index >= aArr.length && index >= bArr.length) return 0;
+            if (index >= aArr.length) return isDescending ? -1 : 1;
+            if (index >= bArr.length) return isDescending ? 1 : -1;
+
+            const a = aArr[index];
+            const b = bArr[index];
+
+            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
+            if (a === '') return isDescending ? -1 : 1;
+            if (b === '') return isDescending ? 1 : -1;
+
+            const comparison = a.localeCompare(b);
+            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
+          };
+
+          return compareRecursively(aList, bList);
+        },
+        meta: { headerTitle: t('common.labels') },
+      },
+      {
+        accessorKey: 'users',
+        header: t('common.members'),
+        cell: MembersCellRenderer,
+        enableSorting: true,
+        sortingFn: (rowA, rowB, columnId) => {
+          const getSortingValue = (users) => users?.map((user) => user.name || '') || [];
+
+          const aList = getSortingValue(rowA.original[columnId]);
+          const bList = getSortingValue(rowB.original[columnId]);
+
+          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
+
+          const compareRecursively = (aArr, bArr, index = 0) => {
+            if (index >= aArr.length && index >= bArr.length) return 0;
+            if (index >= aArr.length) return isDescending ? -1 : 1;
+            if (index >= bArr.length) return isDescending ? 1 : -1;
+
+            const a = aArr[index];
+            const b = bArr[index];
+
+            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
+            if (a === '') return isDescending ? -1 : 1;
+            if (b === '') return isDescending ? 1 : -1;
+
+            const comparison = a.localeCompare(b);
+            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
+          };
+
+          return compareRecursively(aList, bList);
+        },
+        meta: { headerTitle: t('common.members') },
+      },
+      { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
+      {
+        accessorKey: 'hasDescription',
+        header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
+        cell: HasDescriptionCellRenderer,
+        enableSorting: true,
+        sortingFn: (rowA, rowB, columnId) => {
+          const a = rowA.original[columnId];
+          const b = rowB.original[columnId];
+          if (a === b) return 0;
+          if (a) return -1;
+          return 1;
+        },
+        meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
+      },
+      {
+        accessorKey: 'attachmentsCount',
+        header: <Icon type={IconType.Attach} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.attachmentCount')} />,
+        cell: NumberCellRenderer,
+        enableSorting: true,
+        sortDescFirst: true,
+        meta: { headerTitle: t('common.attachmentCount'), headerSize: 20 },
+        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsAttachments', { count }) },
+      },
+      {
+        accessorKey: 'commentCount',
+        header: <Icon type={IconType.Comment} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.commentCount')} />,
+        cell: NumberCellRenderer,
+        enableSorting: true,
+        sortDescFirst: true,
+        meta: { headerTitle: t('common.commentCount'), headerSize: 20 },
+        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsComments', { count }) },
+      },
+      {
+        accessorKey: 'dueDate',
+        header: t('common.dueDate', { context: 'title' }),
+        cell: DueDateCellRenderer,
+        enableSorting: true,
+        sortUndefined: 'last',
+        meta: { headerTitle: t('common.dueDate', { context: 'title' }) },
+      },
+      {
+        accessorKey: 'timer',
+        header: t('common.timer'),
+        cell: TimerCellRenderer,
+        enableSorting: true,
+        sortUndefined: 'last',
+        sortingFn: (rowA, rowB, columnId) => {
+          const getSortingValue = (timer) => {
+            if (!timer) return undefined;
+            return getFullSeconds({ startedAt: timer.startedAt, total: timer.total });
+          };
+
+          const a = getSortingValue(rowA.original[columnId]);
+          const b = getSortingValue(rowB.original[columnId]);
+          return a - b;
+        },
+        meta: { headerTitle: t('common.timer') },
+      },
+      {
+        accessorKey: 'tasks',
+        header: t('common.tasks'),
+        cell: TasksCellRenderer,
+        enableSorting: true,
+        sortingFn: (rowA, rowB, columnId) => {
+          const getSortingValue = (tasks) => tasks.length;
+          const a = getSortingValue(rowA.original[columnId]);
+          const b = getSortingValue(rowB.original[columnId]);
+
+          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
+
+          if (a === 0 && b === 0) return 0;
+          if (a === 0) return isDescending ? -1 : 1;
+          if (b === 0) return isDescending ? 1 : -1;
+
+          return a - b;
+        },
+        meta: { headerTitle: t('common.tasks') },
+      },
+      {
+        accessorKey: 'createdAt',
+        header: t('common.created'),
+        cell: DateCellRenderer,
+        enableSorting: true,
+        meta: { headerTitle: t('common.created') },
+      },
+      {
+        accessorKey: 'updatedAt',
+        header: t('common.updated'),
+        cell: DateCellRenderer,
+        enableSorting: true,
+        sortUndefined: 'last',
+        meta: { headerTitle: t('common.updated') },
+      },
+      {
+        accessorKey: 'description',
+        header: t('common.description'),
+        cell: MarkdownCellRenderer,
+        enableSorting: false,
+        meta: { headerTitle: t('common.description') },
+        cellProps: { isGithubConnected, githubRepo },
+      },
+      {
+        accessorKey: 'actions',
+        header: ActionsHeaderRenderer,
+        cell: ActionsCellRenderer,
+        enableSorting: false,
+        enableResizing: false,
+        meta: { size: 30 },
+        headerProps: {
+          onResetColumnSorting: handleResetColumnSortingClick,
+          onResetColumnWidths: handleResetColumnWidthsClick,
+          onResetColumnVisibility: handleResetColumnVisibilityClick,
+          onUserPrefsUpdate,
+        },
+      },
+    ];
+
+    table.setOptions((prev) => ({ ...prev, columns }));
 
     return (
       <div className={classNames(s.wrapper, gs.scrollableX)}>

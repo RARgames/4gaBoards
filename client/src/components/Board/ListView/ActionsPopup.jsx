@@ -29,6 +29,16 @@ const ActionsStep = React.memo(({ table, onResetColumnWidths, onResetColumnSorti
     onClose();
   }, [onClose, onResetColumnVisibility, onResetColumnWidths, onUserPrefsUpdate, table]);
 
+  const handleResetColumnWidths = useCallback(() => {
+    onResetColumnWidths();
+    onClose();
+  }, [onClose, onResetColumnWidths]);
+
+  const handleResetColumnSorting = useCallback(() => {
+    onResetColumnSorting();
+    onClose();
+  }, [onClose, onResetColumnSorting]);
+
   if (step) {
     switch (step.type) {
       case StepTypes.COLUMNS_SELECT:
@@ -42,8 +52,8 @@ const ActionsStep = React.memo(({ table, onResetColumnWidths, onResetColumnSorti
       <Button style={ButtonStyle.PopupContext} content={t('common.selectColumns')} onClick={handleSelectColumnsClick} />
       <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnVisibility')} onClick={handleResetColumnVisibilityClick} />
       <Popup.Separator />
-      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnWidths')} onClick={onResetColumnWidths} />
-      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnSorting')} onClick={onResetColumnSorting} />
+      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnWidths')} onClick={handleResetColumnWidths} />
+      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnSorting')} onClick={handleResetColumnSorting} />
     </>
   );
 });

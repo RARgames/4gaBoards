@@ -9,7 +9,6 @@ import selectors from '../selectors';
 const makeMapStateToProps = () => {
   return (state) => {
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
-
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
     return {
