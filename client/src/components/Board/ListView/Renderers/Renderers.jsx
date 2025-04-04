@@ -6,6 +6,7 @@ import ActionsCellContainer from '../../../../containers/ActionsCellContainer';
 import DueDateCellContainer from '../../../../containers/DueDateCellContainer';
 import LabelsCellContainer from '../../../../containers/LabelsCellContainer';
 import MembersCellContainer from '../../../../containers/MembersCellContainer';
+import TasksCellContainer from '../../../../containers/TasksCellContainer';
 import TimerCellContainer from '../../../../containers/TimerCellContainer';
 import ActionsHeader from '../ActionsHeader';
 import BoolCell from '../BoolCell';
@@ -39,6 +40,7 @@ const listViewPropTypes = {
       timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
       createdAt: PropTypes.instanceOf(Date),
       updatedAt: PropTypes.instanceOf(Date),
+      tasks: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
       notificationsCount: PropTypes.number.isRequired,
       description: PropTypes.string,
     }).isRequired,
@@ -98,6 +100,11 @@ function TimerCellRenderer({ table, row }) {
 }
 TimerCellRenderer.propTypes = listViewPropTypes;
 
+function TasksCellRenderer({ table, column, row, cell }) {
+  return <TasksCellContainer id={row.original.id} tasks={cell.getValue()} cellClassName={s[table.options.listViewStyle]} {...column.columnDef.cellProps} />; // eslint-disable-line react/jsx-props-no-spreading
+}
+TasksCellRenderer.propTypes = listViewPropTypes;
+
 function DateCellRenderer({ table, cell }) {
   return <DateCell date={cell.getValue()} cellClassName={s[table.options.listViewStyle]} />;
 }
@@ -124,6 +131,7 @@ export {
   HasDescriptionCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
+  TasksCellRenderer,
   DateCellRenderer,
   ActionsCellRenderer,
   ActionsHeaderRenderer,

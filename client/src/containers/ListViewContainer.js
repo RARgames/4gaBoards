@@ -22,6 +22,10 @@ const makeMapStateToProps = () => {
       const users = selectors.selectUsersByCardId(state, cardId);
       const labels = selectors.selectLabelsByCardId(state, cardId);
       const attachmentsCount = selectors.selectAttachmentsCountByCardId(state, cardId);
+      const tasks = selectors.selectTasksByCardId(state, cardId).map((task) => ({
+        ...task,
+        users: selectors.selectUsersForTaskById(state, task.id),
+      }));
       const notificationsCount = selectors.selectNotificationsTotalByCardId(state, cardId);
 
       return {
@@ -38,6 +42,7 @@ const makeMapStateToProps = () => {
         timer: card.timer || undefined, // undefined needed for TanStack Table sorting
         createdAt: card.createdAt,
         updatedAt: card.updatedAt || undefined, // undefined needed for TanStack Table sorting
+        tasks,
         notificationsCount,
         description: card.description,
         isPersisted: card.isPersisted,

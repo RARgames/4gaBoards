@@ -22,6 +22,7 @@ import {
   HasDescriptionCellRenderer,
   DueDateCellRenderer,
   TimerCellRenderer,
+  TasksCellRenderer,
   DateCellRenderer,
   ActionsHeaderRenderer,
   ActionsCellRenderer,
@@ -81,16 +82,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
   //     return () => clearTimeout(timeout);
   //   }
   // }, [isOpen, scrollCardIntoView]);
-
-  //     const handleTasksMouseEnter = useCallback(() => {
-  //       setIsDragOverTask(true);
-  //     }, []);
-
-  //     const handleTasksMouseOut = useCallback(() => {
-  //       setIsDragOverTask(false);
-  //     }, []);
-
-  //     const visibleMembersCount = 3;
 
   const [sorting, setSorting] = useState([]);
   const data = filteredCards;
@@ -277,6 +268,27 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
         return a - b;
       },
       meta: { headerTitle: t('common.timer') },
+    },
+    {
+      accessorKey: 'tasks',
+      header: t('common.tasks'),
+      cell: TasksCellRenderer,
+      enableSorting: true,
+      sortingFn: (rowA, rowB, columnId) => {
+        const getSortingValue = (tasks) => tasks.length;
+        const a = getSortingValue(rowA.original[columnId]);
+        const b = getSortingValue(rowB.original[columnId]);
+
+        // eslint-disable-next-line no-use-before-define
+        const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
+
+        if (a === 0 && b === 0) return 0;
+        if (a === 0) return isDescending ? -1 : 1;
+        if (b === 0) return isDescending ? 1 : -1;
+
+        return a - b;
+      },
+      meta: { headerTitle: t('common.tasks') },
     },
     {
       accessorKey: 'createdAt',
@@ -490,27 +502,6 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
       )}
     </div>
   );
-
-  //       <div className={s.details}>
-  //         {tasks.length > 0 && (
-  //           <Tasks
-  //             variant="card"
-  //             isCardActive={isOpen}
-  //             cardId={id}
-  //             items={tasks}
-  //             canEdit={canEdit}
-  //             boardMemberships={allBoardMemberships}
-  //             onCreate={onTaskCreate}
-  //             onUpdate={onTaskUpdate}
-  //             onMove={onTaskMove}
-  //             onDuplicate={onTaskDuplicate}
-  //             onDelete={onTaskDelete}
-  //             onUserAdd={onUserToTaskAdd}
-  //             onUserRemove={onUserFromTaskRemove}
-  //             onMouseEnterTasks={handleTasksMouseEnter}
-  //             onMouseLeaveTasks={handleTasksMouseOut}
-  //           />
-  //         )}
 });
 
 ListView.propTypes = {

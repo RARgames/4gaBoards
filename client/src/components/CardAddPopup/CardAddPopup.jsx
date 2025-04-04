@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Form, withPopup, Dropdown, DropdownStyle, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonStyle, Popup, Form, withPopup, Dropdown, DropdownStyle, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAddPopup.module.scss';

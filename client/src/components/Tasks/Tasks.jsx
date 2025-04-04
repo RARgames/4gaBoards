@@ -16,6 +16,7 @@ import * as s from './Tasks.module.scss';
 const VARIANTS = {
   CARD: 'card',
   CARDMODAL: 'cardModal',
+  LISTVIEW: 'listView',
 };
 
 const Tasks = React.forwardRef(
@@ -128,11 +129,11 @@ const Tasks = React.forwardRef(
     );
 
     return (
-      <div className={s.wrapper}>
+      <div className={classNames(variant !== VARIANTS.LISTVIEW ? s.wrapper : s.wrapperListView)}>
         {items.length > 0 && (
           <div className={classNames(s.progressWrapper, isOpen && s.progressWrapperOpen)}>
-            <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={classNames(variant === VARIANTS.CARD ? s.progressCard : s.progress)} />
-            {variant === VARIANTS.CARD && (
+            <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={classNames(variant === VARIANTS.CARDMODAL ? s.progress : s.progressCard)} />
+            {variant !== VARIANTS.CARDMODAL && (
               <div className={s.progressItems}>
                 {closestNotCompletedTaslDueDate && (
                   <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} />
@@ -147,6 +148,7 @@ const Tasks = React.forwardRef(
         )}
         {variant === VARIANTS.CARDMODAL && <DragDropContext onDragEnd={handleDragEnd}>{tasksNode}</DragDropContext>}
         {variant === VARIANTS.CARD && isOpen && tasksNode}
+        {variant === VARIANTS.LISTVIEW && isOpen && <DragDropContext onDragEnd={handleDragEnd}>{tasksNode}</DragDropContext>}
       </div>
     );
   },

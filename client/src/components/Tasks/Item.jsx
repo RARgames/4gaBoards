@@ -19,6 +19,7 @@ import * as s from './Item.module.scss';
 const VARIANTS = {
   CARD: 'card',
   CARDMODAL: 'cardModal',
+  LISTVIEW: 'listView',
 };
 
 const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, users, isCompleted, isPersisted, canEdit, onUpdate, onDuplicate, onDelete, onUserAdd, onUserRemove }) => {
@@ -62,19 +63,44 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
     [onUpdate],
   );
 
-  const visibleMembersCount = variant === VARIANTS.CARD ? 1 : 3;
-  const dueDateVariant = variant === VARIANTS.CARD ? 'tasksCard' : 'cardModal';
+  let visibleMembersCount;
+  let dueDateVariant;
+  let userSize;
+  let checkboxSize;
+  switch (variant) {
+    case VARIANTS.CARD:
+      visibleMembersCount = 1;
+      dueDateVariant = 'tasksCard';
+      userSize = 'cardTasks';
+      checkboxSize = CheckboxSize.Size14;
+      break;
+    case VARIANTS.CARDMODAL:
+      visibleMembersCount = 3;
+      dueDateVariant = 'cardModal';
+      userSize = 'card';
+      checkboxSize = CheckboxSize.Size20;
+      break;
+    case VARIANTS.LISTVIEW:
+      visibleMembersCount = 3;
+      dueDateVariant = 'tasksCard';
+      userSize = 'cardTasks';
+      checkboxSize = CheckboxSize.Size14;
+      break;
+    default:
+      visibleMembersCount = 5;
+      break;
+  }
 
   const membersNode = (
     <div className={classNames(s.members, gs.cursorPointer, isCompleted && s.itemCompleted)}>
       {users.slice(0, visibleMembersCount).map((user) => (
         <span key={user.id} className={s.member}>
-          <User name={user.name} avatarUrl={user.avatarUrl} size={variant === VARIANTS.CARD ? 'cardTasks' : 'card'} />
+          <User name={user.name} avatarUrl={user.avatarUrl} size={userSize} />
         </span>
       ))}
       {users.length > visibleMembersCount && (
         <span
-          className={classNames(s.moreMembers, variant === VARIANTS.CARD && s.moreMembersCard)}
+          className={classNames(s.moreMembers, variant !== VARIANTS.CARDMODAL && s.moreMembersCard)}
           title={users
             .slice(visibleMembersCount)
             .map((user) => user.name)
@@ -94,7 +120,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
           <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(s.wrapper, gs.scrollableX, canEdit && s.contentHoverable)}>
             <Checkbox
               checked={isCompleted}
-              size={variant === VARIANTS.CARD ? CheckboxSize.Size14 : CheckboxSize.Size20}
+              size={checkboxSize}
               disabled={!isPersisted || !canEdit}
               className={s.checkbox}
               onChange={handleToggleChange}
@@ -114,7 +140,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
                   membersNode
                 ))}
               {dueDate && (
-                <div className={classNames(s.dueDate, gs.cursorPointer, isCompleted && s.itemCompleted, variant === VARIANTS.CARD && s.dueDateCard)}>
+                <div className={classNames(s.dueDate, gs.cursorPointer, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
                   {isPersisted && canEdit ? (
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
                       <DueDate variant={dueDateVariant} value={dueDate} />
@@ -139,7 +165,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
                   position="left-start"
                   offset={0}
                 >
-                  <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(s.button, s.target, variant === VARIANTS.CARD && s.buttonCard)}>
+                  <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
                     <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={s.icon} />
                   </Button>
                 </ActionsPopup>

@@ -6,46 +6,39 @@ import { useForm } from '../../hooks';
 import { Button, ButtonStyle, Popup, Form, withPopup, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
-import * as s from './ListAddPopup.module.scss';
+import * as s from './TaskAddPopup.module.scss';
 
 const DEFAULT_DATA = {
   name: '',
   isCollapsed: false,
 };
 
-const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {
+const TaskAddStep = React.memo(({ onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [isError, setIsError] = useState(false);
 
   const nameField = useRef(null);
 
-  const handleSubmit = useCallback(
-    (keepOpen) => {
-      const cleanData = {
-        ...data,
-        name: data.name.trim(),
-      };
+  const handleSubmit = useCallback(() => {
+    const cleanData = {
+      ...data,
+      name: data.name.trim(),
+    };
 
-      if (!cleanData.name) {
-        setData(DEFAULT_DATA);
-        nameField.current?.focus();
-        setIsError(true);
-        return;
-      }
-
-      onCreate(cleanData);
+    if (!cleanData.name) {
       setData(DEFAULT_DATA);
-      setIsError(false);
+      nameField.current?.focus();
+      setIsError(true);
+      return;
+    }
 
-      if (keepOpen) {
-        nameField.current?.focus();
-      } else {
-        onClose();
-      }
-    },
-    [data, onClose, onCreate, setData],
-  );
+    onCreate(cleanData);
+    setData(DEFAULT_DATA);
+    setIsError(false);
+
+    onClose();
+  }, [data, onClose, onCreate, setData]);
 
   const handleKeyDown = useCallback(
     (event) => {
@@ -53,8 +46,7 @@ const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {
       switch (event.key) {
         case 'Enter': {
           event.preventDefault(); // Prevent adding new line in TextArea
-          const keepOpen = event.shiftKey;
-          handleSubmit(keepOpen);
+          handleSubmit();
           break;
         }
         default:
@@ -69,14 +61,12 @@ const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {
 
   return (
     <>
-      <Popup.Header onBack={onBack} tooltip={t('common.addListTooltip')}>
-        {t('common.addList')}
-      </Popup.Header>
+      <Popup.Header onBack={onBack}>{t('common.addTask')}</Popup.Header>
       <Popup.Content className={s.content}>
         <Form onKeyDown={handleKeyDown}>
-          <TextArea ref={nameField} style={TextAreaStyle.Default} name="name" value={data.name} placeholder={t('common.enterListName')} maxRows={2} onChange={handleFieldChange} isError={isError} />
+          <TextArea ref={nameField} style={TextAreaStyle.Default} name="name" value={data.name} placeholder={t('common.enterTaskDescription')} maxRows={2} onChange={handleFieldChange} isError={isError} />
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('common.addList')} onClick={(e) => handleSubmit(e.shiftKey)} />
+            <Button style={ButtonStyle.Submit} content={t('common.addTask')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>
@@ -84,15 +74,15 @@ const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {
   );
 });
 
-ListAddStep.propTypes = {
+TaskAddStep.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
 };
 
-ListAddStep.defaultProps = {
+TaskAddStep.defaultProps = {
   onBack: undefined,
 };
 
-export default withPopup(ListAddStep);
-export { ListAddStep };
+export default withPopup(TaskAddStep);
+export { TaskAddStep };
