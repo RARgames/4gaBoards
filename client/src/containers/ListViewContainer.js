@@ -11,6 +11,7 @@ const makeMapStateToProps = () => {
 
   return (state, { listIds }) => {
     const currentCardId = selectors.selectPath(state).cardId;
+    const { boardId } = selectors.selectPath(state);
     const filteredCardIds = listIds.reduce((acc, id) => {
       const filteredCardIdsPart = selectFilteredCardIdsByListId(state, id);
       return acc.concat(filteredCardIdsPart);
@@ -61,6 +62,7 @@ const makeMapStateToProps = () => {
 
     return {
       currentCardId,
+      boardId,
       filteredCards,
       isGithubConnected,
       githubRepo,

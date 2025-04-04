@@ -35,7 +35,7 @@ const DEFAULT_COLUMN_VISIBILITY = {
   // name: false,
 };
 
-const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, githubRepo, lists, labelIds, memberIds, listViewStyle, canEdit, onCardCreate, onListCreate }) => {
+const ListView = React.memo(({ currentCardId, boardId, filteredCards, isGithubConnected, githubRepo, lists, labelIds, memberIds, listViewStyle, canEdit, onCardCreate, onListCreate }) => {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const tableRef = useRef(null);
@@ -416,7 +416,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
 
   useEffect(() => {
     handleResetColumnWidthsClick();
-  }, [handleResetColumnWidthsClick]);
+  }, [handleResetColumnWidthsClick, boardId]);
 
   return (
     <div className={classNames(s.wrapper, gs.scrollableX)}>
@@ -497,6 +497,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
 
 ListView.propTypes = {
   currentCardId: PropTypes.string,
+  boardId: PropTypes.string.isRequired,
   filteredCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
