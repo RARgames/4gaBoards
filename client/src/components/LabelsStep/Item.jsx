@@ -1,6 +1,4 @@
 import React, { useCallback } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import camelCase from 'lodash/camelCase';
@@ -12,7 +10,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import * as bs from '../../backgrounds.module.scss';
 import * as s from './Item.module.scss';
 
-const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
+const Item = React.memo(({ name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
   const [t] = useTranslation();
 
   const handleToggleClick = useCallback(() => {
@@ -41,8 +39,6 @@ const Item = React.memo(({ id, index, name, color, isPersisted, isActive, canEdi
 });
 
 Item.propTypes = {
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
   name: PropTypes.string,
   color: PropTypes.string.isRequired,
   isPersisted: PropTypes.bool.isRequired,

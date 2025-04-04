@@ -125,11 +125,9 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
       <Popup.Content>
         <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} />
         <div className={classNames(s.items, gs.scrollableY)}>
-          {filteredItems.map((item, index) => (
+          {filteredItems.map((item) => (
             <Item
               key={item.id}
-              id={item.id}
-              index={index}
               name={item.name}
               color={item.color}
               isPersisted={item.isPersisted}
