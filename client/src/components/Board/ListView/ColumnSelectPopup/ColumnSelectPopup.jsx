@@ -37,7 +37,8 @@ const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, 
                   onChange={() => handleColumnToggleVisibilityClick(column)}
                   title={t('common.toggleColumnVisibility')}
                 />
-                {column.columnDef.header}
+                <span>{column.columnDef.header}</span>
+                {column.columnDef.header !== column.columnDef.meta.headerTitle && <span className={s.headerTitle}>{column.columnDef.meta.headerTitle}</span>}
               </div>
             );
           })}
