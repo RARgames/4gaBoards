@@ -39,6 +39,7 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
   const [t] = useTranslation();
   const navigate = useNavigate();
   const tableRef = useRef(null);
+  const rowRefs = useRef({});
   const [columnVisibility, setColumnVisibility] = useState(DEFAULT_COLUMN_VISIBILITY);
 
   const handleClick = useCallback(
@@ -63,25 +64,13 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
     [navigate],
   );
 
-  // const scrollCardIntoView = useCallback(() => {
-  //   cardRef.current?.scrollIntoView({
-  //     behavior: 'auto',
-  //     block: 'nearest',
-  //     inline: 'nearest',
-  //   });
-  // }, []);
+  const scrollCardIntoView = useCallback(() => {
+    rowRefs.current[currentCardId]?.scrollIntoView({ behavior: 'auto', block: 'center' });
+  }, [currentCardId]);
 
-  // // TODO should be possible without 200ms timeout, but it's not due to other issues - somewhere else
-  // // eslint-disable-next-line consistent-return
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     const timeout = setTimeout(() => {
-  //       scrollCardIntoView();
-  //     }, 200);
-  //     // TODO this is not working for listview
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [isOpen, scrollCardIntoView]);
+  useEffect(() => {
+    scrollCardIntoView();
+  }, [scrollCardIntoView]);
 
   const [sorting, setSorting] = useState([]);
   const data = filteredCards;
@@ -468,6 +457,8 @@ const ListView = React.memo(({ currentCardId, filteredCards, isGithubConnected, 
         <Table.Body className={classNames(s.tableBody, listViewStyle === 'compact' ? s.tableBodyCompact : s.tableBodyDefault)}>
           {table.getRowModel().rows.map((row) => (
             <Table.Row
+              // eslint-disable-next-line no-return-assign
+              ref={(el) => (rowRefs.current[row.original.id] = el)}
               key={row.id}
               className={classNames(s.tableBodyRow, row.original.id === currentCardId && s.tableBodyRowSelected)}
               onClick={(e) => {
