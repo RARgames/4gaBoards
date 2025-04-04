@@ -19,6 +19,7 @@ export default class extends BaseModel {
     sidebarCompact: attr(),
     defaultView: attr(),
     listViewStyle: attr(),
+    listViewColumnVisibility: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

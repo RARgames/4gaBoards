@@ -6,7 +6,7 @@ import { Popup, Checkbox, CheckboxSize, withPopup } from '../../../Utils';
 
 import * as s from './ColumnSelectPopup.module.scss';
 
-const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, onBack }) => {
+const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, onUserPrefsUpdate, onBack }) => {
   const [t] = useTranslation();
 
   const handleColumnToggleVisibilityClick = useCallback(
@@ -14,9 +14,12 @@ const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, 
       column.toggleVisibility(!column.getIsVisible());
       setTimeout(() => {
         onResetColumnWidths();
+        onUserPrefsUpdate({
+          listViewColumnVisibility: table.getState().columnVisibility,
+        });
       }, 0);
     },
-    [onResetColumnWidths],
+    [onResetColumnWidths, onUserPrefsUpdate, table],
   );
 
   return (
@@ -52,6 +55,7 @@ ColumnSelectStep.propTypes = {
   table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   skipColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   onResetColumnWidths: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
 };
 

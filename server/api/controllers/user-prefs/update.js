@@ -10,6 +10,8 @@ const Errors = {
   },
 };
 
+const listViewColumnVisibilityValidator = (value) => _.isObject(value) && _.every(value, (v) => typeof v === 'boolean');
+
 module.exports = {
   inputs: {
     id: {
@@ -60,6 +62,10 @@ module.exports = {
       isIn: UserPrefs.LIST_VIEW_STYLES,
       isNotEmptyString: true,
     },
+    listViewColumnVisibility: {
+      type: 'json',
+      custom: listViewColumnVisibilityValidator,
+    },
   },
 
   exits: {
@@ -99,6 +105,7 @@ module.exports = {
         'sidebarCompact',
         'defaultView',
         'listViewStyle',
+        'listViewColumnVisibility',
       ]),
     };
 

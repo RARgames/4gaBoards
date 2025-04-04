@@ -110,14 +110,15 @@ function DateCellRenderer({ table, column, cell }) {
 }
 DateCellRenderer.propTypes = listViewPropTypes;
 
-function ActionsHeaderRenderer({ table, column }, handleResetColumnSortingClick, handleResetColumnWidths, handleResetColumnVisibilityClick) {
+function ActionsHeaderRenderer({ table, column }, handleResetColumnSortingClick, handleResetColumnWidths, handleResetColumnVisibilityClick, onUserPrefsUpdate) {
   return (
     <ActionsHeader
       table={table}
       onResetColumnSorting={handleResetColumnSortingClick}
       onResetColumnWidths={handleResetColumnWidths}
       onResetColumnVisibility={handleResetColumnVisibilityClick}
-      {...column.columnDef.cellProps} // eslint-disable-line react/jsx-props-no-spreading
+      onUserPrefsUpdate={onUserPrefsUpdate}
+      {...column.columnDef.headerProps} // eslint-disable-line react/jsx-props-no-spreading
     />
   );
 }

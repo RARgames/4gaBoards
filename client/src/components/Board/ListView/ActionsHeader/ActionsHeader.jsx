@@ -7,7 +7,7 @@ import ActionsPopup from '../ActionsPopup';
 
 import * as s from './ActionsHeader.module.scss';
 
-const ActionsHeader = React.memo(({ table, onResetColumnSorting, onResetColumnWidths, onResetColumnVisibility }) => {
+const ActionsHeader = React.memo(({ table, onResetColumnSorting, onResetColumnWidths, onResetColumnVisibility, onUserPrefsUpdate }) => {
   const [t] = useTranslation();
 
   return (
@@ -16,6 +16,7 @@ const ActionsHeader = React.memo(({ table, onResetColumnSorting, onResetColumnWi
       onResetColumnWidths={onResetColumnWidths}
       onResetColumnSorting={onResetColumnSorting}
       onResetColumnVisibility={onResetColumnVisibility}
+      onUserPrefsUpdate={onUserPrefsUpdate}
       position="left-start"
       offset={0}
       hideCloseButton
@@ -32,6 +33,7 @@ ActionsHeader.propTypes = {
   onResetColumnSorting: PropTypes.func.isRequired,
   onResetColumnWidths: PropTypes.func.isRequired,
   onResetColumnVisibility: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
 export default ActionsHeader;
