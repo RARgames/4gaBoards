@@ -133,6 +133,55 @@ const ListView = React.memo(
         localeSortingFn: (rowA, rowB, columnId) => {
           return rowA.original[columnId].localeCompare(rowB.original[columnId]);
         },
+        recursiveNameSortingFn: (rowA, rowB, columnId) => {
+          const getSortingValue = (values) => values?.map((value) => value.name || '') || [];
+
+          const aList = getSortingValue(rowA.original[columnId]);
+          const bList = getSortingValue(rowB.original[columnId]);
+
+          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
+
+          const compareRecursively = (aArr, bArr, index = 0) => {
+            if (index >= aArr.length && index >= bArr.length) return 0;
+            if (index >= aArr.length) return isDescending ? -1 : 1;
+            if (index >= bArr.length) return isDescending ? 1 : -1;
+
+            const a = aArr[index];
+            const b = bArr[index];
+
+            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
+            if (a === '') return isDescending ? -1 : 1;
+            if (b === '') return isDescending ? 1 : -1;
+
+            const comparison = a.localeCompare(b);
+            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
+          };
+
+          return compareRecursively(aList, bList);
+        },
+        timerSortingFn: (rowA, rowB, columnId) => {
+          const getSortingValue = (timer) => {
+            if (!timer) return undefined;
+            return getFullSeconds({ startedAt: timer.startedAt, total: timer.total });
+          };
+
+          const a = getSortingValue(rowA.original[columnId]);
+          const b = getSortingValue(rowB.original[columnId]);
+          return a - b;
+        },
+        lengthSortingFn: (rowA, rowB, columnId) => {
+          const getSortingValue = (value) => value.length;
+          const a = getSortingValue(rowA.original[columnId]);
+          const b = getSortingValue(rowB.original[columnId]);
+
+          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
+
+          if (a === 0 && b === 0) return 0;
+          if (a === 0) return isDescending ? -1 : 1;
+          if (b === 0) return isDescending ? 1 : -1;
+
+          return a - b;
+        },
       },
       onColumnVisibilityChange: setColumnVisibility,
       listViewStyle: listViewStyle === 'compact' ? ListViewStyle.Compact : ListViewStyle.Default,
@@ -257,32 +306,7 @@ const ListView = React.memo(
         header: t('common.labels'),
         cell: LabelsCellRenderer,
         enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (labels) => labels?.map((label) => label.name || '') || [];
-
-          const aList = getSortingValue(rowA.original[columnId]);
-          const bList = getSortingValue(rowB.original[columnId]);
-
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          const compareRecursively = (aArr, bArr, index = 0) => {
-            if (index >= aArr.length && index >= bArr.length) return 0;
-            if (index >= aArr.length) return isDescending ? -1 : 1;
-            if (index >= bArr.length) return isDescending ? 1 : -1;
-
-            const a = aArr[index];
-            const b = bArr[index];
-
-            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
-            if (a === '') return isDescending ? -1 : 1;
-            if (b === '') return isDescending ? 1 : -1;
-
-            const comparison = a.localeCompare(b);
-            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
-          };
-
-          return compareRecursively(aList, bList);
-        },
+        sortingFn: 'recursiveNameSortingFn',
         meta: { headerTitle: t('common.labels') },
       },
       {
@@ -290,32 +314,7 @@ const ListView = React.memo(
         header: t('common.members'),
         cell: MembersCellRenderer,
         enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (users) => users?.map((user) => user.name || '') || [];
-
-          const aList = getSortingValue(rowA.original[columnId]);
-          const bList = getSortingValue(rowB.original[columnId]);
-
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          const compareRecursively = (aArr, bArr, index = 0) => {
-            if (index >= aArr.length && index >= bArr.length) return 0;
-            if (index >= aArr.length) return isDescending ? -1 : 1;
-            if (index >= bArr.length) return isDescending ? 1 : -1;
-
-            const a = aArr[index];
-            const b = bArr[index];
-
-            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
-            if (a === '') return isDescending ? -1 : 1;
-            if (b === '') return isDescending ? 1 : -1;
-
-            const comparison = a.localeCompare(b);
-            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
-          };
-
-          return compareRecursively(aList, bList);
-        },
+        sortingFn: 'recursiveNameSortingFn',
         meta: { headerTitle: t('common.members') },
       },
       { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
@@ -324,13 +323,7 @@ const ListView = React.memo(
         header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
         cell: HasDescriptionCellRenderer,
         enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const a = rowA.original[columnId];
-          const b = rowB.original[columnId];
-          if (a === b) return 0;
-          if (a) return -1;
-          return 1;
-        },
+        sortDescFirst: true,
         meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
       },
       {
@@ -365,16 +358,8 @@ const ListView = React.memo(
         cell: TimerCellRenderer,
         enableSorting: true,
         sortUndefined: 'last',
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (timer) => {
-            if (!timer) return undefined;
-            return getFullSeconds({ startedAt: timer.startedAt, total: timer.total });
-          };
-
-          const a = getSortingValue(rowA.original[columnId]);
-          const b = getSortingValue(rowB.original[columnId]);
-          return a - b;
-        },
+        sortDescFirst: true,
+        sortingFn: 'timerSortingFn',
         meta: { headerTitle: t('common.timer') },
       },
       {
@@ -382,19 +367,8 @@ const ListView = React.memo(
         header: t('common.tasks'),
         cell: TasksCellRenderer,
         enableSorting: true,
-        sortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (tasks) => tasks.length;
-          const a = getSortingValue(rowA.original[columnId]);
-          const b = getSortingValue(rowB.original[columnId]);
-
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          if (a === 0 && b === 0) return 0;
-          if (a === 0) return isDescending ? -1 : 1;
-          if (b === 0) return isDescending ? 1 : -1;
-
-          return a - b;
-        },
+        sortDescFirst: true,
+        sortingFn: 'lengthSortingFn',
         meta: { headerTitle: t('common.tasks') },
       },
       {
