@@ -196,8 +196,13 @@ const ListView = React.memo(
     };
 
     const handleAutoSizeColumnsHandler = useCallback(
-      (parentRef, columnId) => {
+      (parentRef, scrollToEnd, columnId) => {
         try {
+          if (scrollToEnd) {
+            setTimeout(() => {
+              parentRef.current.parentNode.scrollBy({ left: parentRef.current.parentNode.scrollWidth, behavior: 'instant' });
+            }, 1);
+          }
           const newColumnSizes = {};
           const maxRowsToProcess = 1000;
           const minColumnWidth = 50;
@@ -264,11 +269,14 @@ const ListView = React.memo(
       [table],
     );
 
-    const handleResetColumnWidthsClick = useCallback(() => {
-      if (tableRef.current) {
-        handleAutoSizeColumnsHandler(tableRef);
-      }
-    }, [handleAutoSizeColumnsHandler]);
+    const handleResetColumnWidthsClick = useCallback(
+      (scrollToEnd = false) => {
+        if (tableRef.current) {
+          handleAutoSizeColumnsHandler(tableRef, scrollToEnd);
+        }
+      },
+      [handleAutoSizeColumnsHandler],
+    );
 
     useEffect(() => {
       handleResetColumnWidthsClick();

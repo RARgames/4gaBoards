@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -8,19 +8,31 @@ import * as s from './ColumnSelectPopup.module.scss';
 
 const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, onUserPrefsUpdate, onBack }) => {
   const [t] = useTranslation();
+  const [visibilityState, setVisibilityState] = useState(table.getState().columnVisibility);
 
   const handleColumnToggleVisibilityClick = useCallback(
     (column) => {
-      column.toggleVisibility(!column.getIsVisible());
-      setTimeout(() => {
-        onResetColumnWidths();
-        onUserPrefsUpdate({
-          listViewColumnVisibility: table.getState().columnVisibility,
-        });
-      }, 0);
+      const currentVisibility = visibilityState[column.id];
+
+      column.toggleVisibility(!currentVisibility);
+      setVisibilityState((prevState) => ({
+        ...prevState,
+        [column.id]: !currentVisibility,
+      }));
     },
-    [onResetColumnWidths, onUserPrefsUpdate, table],
+    [visibilityState],
   );
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      onResetColumnWidths(true);
+      onUserPrefsUpdate({
+        listViewColumnVisibility: visibilityState,
+      });
+    }, 0);
+
+    return () => clearTimeout(timeout);
+  }, [onResetColumnWidths, onUserPrefsUpdate, visibilityState]);
 
   return (
     <>
@@ -34,7 +46,7 @@ const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, 
             return (
               <div key={column.id}>
                 <Checkbox
-                  checked={column.getIsVisible()}
+                  checked={visibilityState[column.id]}
                   size={CheckboxSize.Size14}
                   className={s.checkbox}
                   onChange={() => handleColumnToggleVisibilityClick(column)}
