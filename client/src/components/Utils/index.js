@@ -15,6 +15,7 @@ import Popup from './PopupElements';
 import { ProgressBar, ProgressBarSize } from './ProgressBar';
 import { Radio, RadioSize } from './Radio';
 import Table from './Table';
+import TableLegacy from './TableLegacy';
 import { TextArea, TextAreaStyle } from './TextArea';
 
 export {
@@ -46,6 +47,7 @@ export {
   Radio,
   RadioSize,
   Table,
+  TableLegacy,
   TextArea,
   TextAreaStyle,
 };

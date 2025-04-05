@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { Radio, RadioSize, Table } from '../../Utils';
+import { Radio, RadioSize, TableLegacy as Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';

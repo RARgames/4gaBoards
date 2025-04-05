@@ -460,7 +460,7 @@ const ListView = React.memo(
               </Table.HeaderRow>
             ))}
           </Table.Header>
-          <Table.Body className={classNames(s.tableBody, listViewStyle === 'compact' ? s.tableBodyCompact : s.tableBodyDefault)}>
+          <Table.Body className={classNames(s.tableBody, gs.scrollableY, listViewStyle === 'compact' ? s.tableBodyCompact : s.tableBodyDefault)}>
             {table.getRowModel().rows.map((row) => (
               <Table.Row
                 // eslint-disable-next-line no-return-assign

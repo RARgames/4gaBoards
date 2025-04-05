@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import User from '../../../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Radio, RadioSize, Table } from '../../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Radio, RadioSize, TableLegacy as Table } from '../../../Utils';
 import ActionsPopup from './ActionsPopup';
 
 import * as s from './Item.module.scss';

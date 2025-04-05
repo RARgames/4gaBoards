@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import UserAddPopup from '../../UserAddPopup';
-import { Button, ButtonStyle, Table } from '../../Utils';
+import { Button, ButtonStyle, TableLegacy as Table } from '../../Utils';
 import Item from './Item';
 
 import * as gs from '../../../global.module.scss';

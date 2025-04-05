@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import locales from '../../../locales';
-import { Dropdown, DropdownStyle, Radio, RadioSize, Table } from '../../Utils';
+import { Dropdown, DropdownStyle, Radio, RadioSize, TableLegacy as Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
