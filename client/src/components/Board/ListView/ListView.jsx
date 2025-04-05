@@ -442,12 +442,11 @@ const ListView = React.memo(
                       onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
                       className={classNames(header.column.getCanSort() && gs.cursorPointer)}
                       title={header.column.columnDef.meta?.headerTitle}
+                      isCentered
                     >
-                      <div className={s.tableHeaderCellInnerWrapper}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        <Table.SortingIndicator sortedState={sortedState} sortIndex={sortIndex} />
-                        {header.column.getCanResize() && <Table.Resizer data-prevent-sorting onMouseDown={(e) => handleResizerMouseDown(e, header)} />}
-                      </div>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      <Table.SortingIndicator sortedState={sortedState} sortIndex={sortIndex} />
+                      {header.column.getCanResize() && <Table.Resizer data-prevent-sorting onMouseDown={(e) => handleResizerMouseDown(e, header)} />}
                     </Table.HeaderCell>
                   );
                 })}

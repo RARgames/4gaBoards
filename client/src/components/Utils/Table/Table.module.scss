@@ -42,12 +42,13 @@
   .headerCell {
     padding: 8px;
     display: inline-flex;
-    justify-content: center;
     align-items: center;
     position: relative;
     height: 100%;
     color: var(--textColor1);
     flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
 
     &:last-child {
       flex-shrink: 1;
@@ -56,6 +57,17 @@
         right: 2px;
       }
     }
+  }
+
+  .headerCellCenter {
+    justify-content: center;
+  }
+
+  .headerCellCenterInner {
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
   }
 
   .resizer {

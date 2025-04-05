@@ -39,10 +39,10 @@ const HeaderRow = React.memo(
 );
 
 const HeaderCell = React.memo(
-  React.forwardRef(({ children, className, ...props }, ref) => {
+  React.forwardRef(({ children, className, isCentered, ...props }, ref) => {
     return (
-      <th ref={ref} className={classNames(s.headerCell, className)} {...props}>
-        {children}
+      <th ref={ref} className={classNames(s.headerCell, className, isCentered && s.headerCellCenter)} {...props}>
+        {isCentered ? <div className={s.headerCellCenterInner}>{children}</div> : children}
       </th>
     );
   }),
@@ -132,11 +132,13 @@ HeaderRow.defaultProps = {
 HeaderCell.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  isCentered: PropTypes.bool,
 };
 
 HeaderCell.defaultProps = {
   children: undefined,
   className: undefined,
+  isCentered: false,
 };
 
 Resizer.propTypes = {
