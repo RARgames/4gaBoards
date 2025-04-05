@@ -242,14 +242,18 @@ const ListView = React.memo(
               maxCellWidth = measureTextWidth(header, headerFont);
             }
 
-            rowsToProcess.forEach((row) => {
-              const cellValue = row.getValue(colId);
-              const cellText = String(cellValue || '');
-              const cellWidth = measureTextWidth(cellText, bodyFont);
-              if (cellWidth > maxCellWidth) {
-                maxCellWidth = cellWidth;
-              }
-            });
+            if (column.columnDef.meta?.suggestedCellSize) {
+              maxCellWidth = column.columnDef.meta.suggestedCellSize;
+            } else {
+              rowsToProcess.forEach((row) => {
+                const cellValue = row.getValue(colId);
+                const cellText = String(cellValue || '');
+                const cellWidth = measureTextWidth(cellText, bodyFont);
+                if (cellWidth > maxCellWidth) {
+                  maxCellWidth = cellWidth;
+                }
+              });
+            }
 
             const estimatedWidth = Math.min(Math.max(minColumnWidth, maxCellWidth + columnPadding), maxColumnWidth);
             newColumnSizes[colId] = estimatedWidth;
@@ -362,7 +366,7 @@ const ListView = React.memo(
         cell: DueDateCellRenderer,
         enableSorting: true,
         sortUndefined: 'last',
-        meta: { headerTitle: t('common.dueDate', { context: 'title' }) },
+        meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedCellSize: 70 },
       },
       {
         accessorKey: 'timer',
@@ -388,7 +392,7 @@ const ListView = React.memo(
         header: t('common.created'),
         cell: DateCellRenderer,
         enableSorting: true,
-        meta: { headerTitle: t('common.created') },
+        meta: { headerTitle: t('common.created'), suggestedCellSize: 100 },
       },
       {
         accessorKey: 'updatedAt',
@@ -396,7 +400,7 @@ const ListView = React.memo(
         cell: DateCellRenderer,
         enableSorting: true,
         sortUndefined: 'last',
-        meta: { headerTitle: t('common.updated') },
+        meta: { headerTitle: t('common.updated'), suggestedCellSize: 100 },
       },
       {
         accessorKey: 'description',
