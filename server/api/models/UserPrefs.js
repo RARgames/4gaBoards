@@ -80,7 +80,7 @@ module.exports = {
       isIn: LIST_VIEW_STYLES,
       isNotEmptyString: true,
       columnName: 'list_view_style',
-      defaultsTo: 'default',
+      defaultsTo: 'compact',
     },
     listViewColumnVisibility: {
       type: 'json',
