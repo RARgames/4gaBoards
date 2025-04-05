@@ -1,11 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
+import * as s from './DefaultCell.module.scss';
 
 const DefaultCell = React.memo(({ value, title, cellClassName, hideOnZero, getTitle }) => {
   const [t] = useTranslation();
   return (
-    <div className={cellClassName}>
+    <div className={classNames(s.cell, cellClassName)}>
       <div title={getTitle ? getTitle(t, value) : title}>{typeof value === 'number' && hideOnZero && value === 0 ? '' : value}</div>
     </div>
   );
