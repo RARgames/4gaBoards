@@ -44,8 +44,8 @@ const DEFAULT_COLUMN_VISIBILITY = {
   dueDate: true,
   timer: true,
   tasks: true,
-  createdAt: false,
-  updatedAt: false,
+  createdAt: true,
+  updatedAt: true,
   description: false,
   actions: true,
 };

@@ -18,6 +18,11 @@ module.exports = {
       Object.assign(criteria, inputs.criteria);
     }
 
-    return UserPrefs.findOne(criteria);
+    let userPrefs = await UserPrefs.findOne(criteria);
+    if (!userPrefs) {
+      userPrefs = await sails.helpers.userPrefs.createOne.with({ values: { id: criteria.id } });
+    }
+
+    return userPrefs;
   },
 };

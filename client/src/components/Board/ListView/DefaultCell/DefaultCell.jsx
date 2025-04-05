@@ -12,7 +12,7 @@ const DefaultCell = React.memo(({ value, title, cellClassName, hideOnZero, getTi
 });
 
 DefaultCell.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string,
   cellClassName: PropTypes.string,
   hideOnZero: PropTypes.bool,
