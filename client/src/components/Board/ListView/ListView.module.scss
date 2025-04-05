@@ -7,35 +7,10 @@
     position: relative;
   }
 
-  // .popupWrapper {
-  //   display: inline-block;
-  //   position: relative;
-  //   width: 10px;
-  //   height: 20px;
-  // }
-
-  // .cover {
-  //   border-radius: 2px;
-  //   padding: 0 2px;
-  //   vertical-align: middle;
-  //   width: 100%;
-  // }
-
-  // .attachment {
-  //   display: inline-block;
-  //   line-height: 0;
-  //   margin: 0 0 6px 0;
-  //   max-width: 100%;
-  //   vertical-align: top;
-  // }
-
   .table {
     height: 100%;
     width: 100%;
     display: block;
-
-    // width: 100%;
-    // overflow-x: auto;
     table-layout: fixed;
     border-collapse: collapse;
   }
@@ -54,10 +29,8 @@
 
   .tableHeaderRow {
     display: block;
-
     width: 100%;
     height: 100%;
-
     display: flex;
   }
 
@@ -68,7 +41,6 @@
     position: relative;
     height: 100%;
     color: var(--textColor1);
-
     flex-shrink: 0;
 
     &:last-child {
@@ -83,15 +55,12 @@
   .tableHeaderCellInnerWrapper {
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-
     display: inline-flex;
     align-items: center;
   }
 
   .tableBody {
     display: block;
-    // width: 100%;
     overflow-y: auto;
     background: var(--backgroundSidebarItem);
   }
@@ -115,10 +84,8 @@
 
   .tableBodyCell {
     padding: 0; //TODO change to cell in every component instead of here
-
     display: inline-block;
     flex-shrink: 0;
-
     display: inline-flex;
     align-items: center;
     color: var(--textColor1);
@@ -131,10 +98,6 @@
       flex-shrink: 1;
     }
   }
-
-  // .tableBodyCellCenter {
-  //   justify-content: center;
-  // }
 
   .resizer {
     z-index: 1;
@@ -164,7 +127,6 @@
 
   .floatingButtonsWrapper {
     pointer-events: none;
-
     position: sticky;
     left: 90%;
     bottom: 10px;
@@ -177,7 +139,6 @@
 
   .floatingButton {
     pointer-events: auto;
-
     background: var(--backgroundList);
     color: var(--textColor2);
     height: 36px;
