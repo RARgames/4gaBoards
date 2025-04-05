@@ -1,24 +1,39 @@
 :global(#app) {
   .wrapper {
-    max-height: 100%;
-    width: 100%;
+    flex: 1;
+    height: 100%;
+    min-width: 100%;
+    position: relative;
   }
 
   .table {
+    height: 100%;
     width: 100%;
     border-collapse: collapse;
-    color: var(--textColor0);
+    display: block;
+    table-layout: fixed;
   }
 
   .header {
+    display: block;
     position: sticky;
     top: 0;
-    height: 60px;
     z-index: 1;
     box-shadow: 0 2px 5px var(--shadowBlack01);
   }
 
+  .headerDefault {
+    height: 60px;
+  }
+
+  .headerCompact {
+    height: 40px;
+  }
+
   .headerRow {
+    display: flex;
+    width: 100%;
+    height: 100%;
     background: var(--backgroundSidebar);
     color: var(--textColorWhite);
     font-weight: bold;
@@ -26,10 +41,77 @@
 
   .headerCell {
     padding: 8px;
-    text-align: left;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    color: var(--textColor1);
+    flex-shrink: 0;
+
+    &:last-child {
+      flex-shrink: 1;
+
+      .resizer {
+        right: 2px;
+      }
+    }
+  }
+
+  .resizer {
+    z-index: 1;
+    right: -5px;
+    position: absolute;
+    height: 40%;
+    width: 10px;
+    top: 35%;
+    cursor: ew-resize;
+
+    &:hover {
+      &::before {
+        background: var(--tableResizeHover);
+      }
+    }
+  }
+
+  .resizer::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 2px;
+    background: var(--tableResize);
+  }
+
+  .sortingIndicator {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .sortingIconRotated {
+    transform: rotate(180deg);
+  }
+
+  .sortingIndex {
+    margin-left: -3px;
+  }
+
+  .body {
+    display: block;
+    background: var(--backgroundSidebarItem);
+  }
+
+  .bodyDefault {
+    height: calc(100% - 60px);
+  }
+
+  .bodyCompact {
+    height: calc(100% - 40px);
   }
 
   .bodyRow {
+    display: flex;
     background: var(--backgroundSidebarItem);
 
     &:nth-of-type(odd) {
@@ -37,10 +119,27 @@
     }
   }
 
+  .bodyRowSelected {
+    border: 1px solid var(--borderOutline2);
+    background: var(--backgroundCardOpened) !important;
+  }
+
   .bodyCell {
-    padding: 8px;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: inline-block;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    color: var(--textColor1);
+
+    &:hover {
+      background: var(--shadowBlack015);
+    }
+
+    &:last-child {
+      flex-shrink: 1;
+    }
   }
 }

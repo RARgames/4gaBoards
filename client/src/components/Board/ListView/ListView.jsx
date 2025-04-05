@@ -67,7 +67,7 @@ const ListView = React.memo(
           if (target.dataset.preventCardSwitch) {
             return;
           }
-          if (target.classList.contains(s.tableBodyCell)) {
+          if (target.dataset.preventCardSwitchEnd) {
             break;
           }
           target = target.parentElement;
@@ -95,7 +95,7 @@ const ListView = React.memo(
     }, []);
 
     const handleSortingChange = (e, canSort, newSorting) => {
-      if (e.target?.classList?.contains(s.resizer)) return;
+      if (e.target?.dataset.preventSorting) return;
       if (!canSort) return;
 
       setSorting((prevSorting) => {
@@ -425,11 +425,11 @@ const ListView = React.memo(
     table.setOptions((prev) => ({ ...prev, columns }));
 
     return (
-      <div className={classNames(s.wrapper, gs.scrollableX)}>
-        <Table ref={tableRef} className={s.table} style={{ width: `${table.getCenterTotalSize()}px` }}>
-          <Table.Header className={classNames(s.tableHeader, listViewStyle === 'compact' ? s.tableHeaderCompact : s.tableHeaderDefault)}>
+      <Table.Wrapper className={classNames(s.wrapper, gs.scrollableX)}>
+        <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
+          <Table.Header style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
             {table.getHeaderGroups().map((headerGroup) => (
-              <Table.HeaderRow key={headerGroup.id} className={s.tableHeaderRow}>
+              <Table.HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   const sortedState = header.column.getIsSorted();
                   const sortIndex = sorting.length > 1 ? sorting.findIndex((so) => so.id === header.column.id) + 1 : null;
@@ -440,19 +440,13 @@ const ListView = React.memo(
                       style={{ width: `${header.getSize()}px` }}
                       colSpan={header.colSpan}
                       onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
-                      className={classNames(s.tableHeaderCell, header.column.getCanSort() && gs.cursorPointer)}
+                      className={classNames(header.column.getCanSort() && gs.cursorPointer)}
                       title={header.column.columnDef.meta?.headerTitle}
                     >
                       <div className={s.tableHeaderCellInnerWrapper}>
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {sortedState && (
-                          <div className={s.sortingIndicator}>
-                            <Icon type={IconType.SortArrowUp} size={IconSize.Size13} className={classNames(sortedState === 'desc' && s.sortingIconRotated)} />
-                            {sortIndex && <sub className={s.sortingIndex}>({sortIndex})</sub>}
-                          </div>
-                        )}
-                        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-                        {header.column.getCanResize() && <div className={s.resizer} onMouseDown={(e) => handleResizerMouseDown(e, header)} />}
+                        <Table.SortingIndicator sortedState={sortedState} sortIndex={sortIndex} />
+                        {header.column.getCanResize() && <Table.Resizer data-prevent-sorting onMouseDown={(e) => handleResizerMouseDown(e, header)} />}
                       </div>
                     </Table.HeaderCell>
                   );
@@ -460,20 +454,20 @@ const ListView = React.memo(
               </Table.HeaderRow>
             ))}
           </Table.Header>
-          <Table.Body className={classNames(s.tableBody, gs.scrollableY, listViewStyle === 'compact' ? s.tableBodyCompact : s.tableBodyDefault)}>
+          <Table.Body className={gs.scrollableY} style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
             {table.getRowModel().rows.map((row) => (
               <Table.Row
                 // eslint-disable-next-line no-return-assign
                 ref={(el) => (rowRefs.current[row.original.id] = el)}
                 key={row.id}
-                className={classNames(s.tableBodyRow, row.original.id === currentCardId && s.tableBodyRowSelected)}
+                selected={row.original.id === currentCardId}
                 onClick={(e) => {
                   if (!row.original.isPersisted) return;
                   handleClick(e, row.original.id);
                 }}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} className={classNames(s.tableBodyCell)}>
+                  <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} data-prevent-card-switch-end>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Table.Cell>
                 ))}
@@ -497,7 +491,7 @@ const ListView = React.memo(
             </CardAddPopup>
           </div>
         )}
-      </div>
+      </Table.Wrapper>
     );
   },
 );
