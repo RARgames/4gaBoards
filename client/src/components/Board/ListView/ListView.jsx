@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from '@tanstack/react-table';
@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Paths from '../../../constants/Paths';
-import { getFullSeconds } from '../../../utils/timer';
 import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
@@ -116,63 +115,12 @@ const ListView = React.memo(
       columnResizeMode: 'onChange',
       state: { sorting, columnVisibility },
       onSortingChange: handleSortingChange,
-      sortingFns: {
-        localeSortingFn: (rowA, rowB, columnId) => {
-          return rowA.original[columnId].localeCompare(rowB.original[columnId]);
-        },
-        recursiveNameSortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (values) => values?.map((value) => value.name || '') || [];
-
-          const aList = getSortingValue(rowA.original[columnId]);
-          const bList = getSortingValue(rowB.original[columnId]);
-
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          const compareRecursively = (aArr, bArr, index = 0) => {
-            if (index >= aArr.length && index >= bArr.length) return 0;
-            if (index >= aArr.length) return isDescending ? -1 : 1;
-            if (index >= bArr.length) return isDescending ? 1 : -1;
-
-            const a = aArr[index];
-            const b = bArr[index];
-
-            if (a === '' && b === '') return compareRecursively(aArr, bArr, index + 1);
-            if (a === '') return isDescending ? -1 : 1;
-            if (b === '') return isDescending ? 1 : -1;
-
-            const comparison = a.localeCompare(b);
-            return comparison !== 0 ? comparison : compareRecursively(aArr, bArr, index + 1);
-          };
-
-          return compareRecursively(aList, bList);
-        },
-        timerSortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (timer) => {
-            if (!timer) return undefined;
-            return getFullSeconds({ startedAt: timer.startedAt, total: timer.total });
-          };
-
-          const a = getSortingValue(rowA.original[columnId]);
-          const b = getSortingValue(rowB.original[columnId]);
-          return a - b;
-        },
-        lengthSortingFn: (rowA, rowB, columnId) => {
-          const getSortingValue = (value) => value.length;
-          const a = getSortingValue(rowA.original[columnId]);
-          const b = getSortingValue(rowB.original[columnId]);
-
-          const isDescending = table.getState().sorting.some((sort) => sort.id === columnId && sort.desc);
-
-          if (a === 0 && b === 0) return 0;
-          if (a === 0) return isDescending ? -1 : 1;
-          if (b === 0) return isDescending ? 1 : -1;
-
-          return a - b;
-        },
-      },
       onColumnVisibilityChange: setColumnVisibility,
       style: listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
     });
+
+    const sortingFunctions = Table.SortingFns(table);
+    table.setOptions((prev) => ({ ...prev, sortingFunctions }));
 
     const measureTextWidth = (text, font) => {
       const canvas = document.createElement('canvas');
@@ -273,142 +221,152 @@ const ListView = React.memo(
       handleResetColumnWidthsClick();
     }, [handleResetColumnWidthsClick, boardId]);
 
-    const columns = [
-      {
-        accessorKey: 'notificationsCount',
-        header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
-        cell: Table.Renderers.NumberCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.notifications'), headerSize: 20 },
-        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsNotifications', { count }) },
-      },
-      {
-        accessorKey: 'coverUrl',
-        header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
-        cell: Table.Renderers.ImageCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
-      },
-      {
-        accessorKey: 'name',
-        header: t('common.name'),
-        cell: Table.Renderers.DefaultCellRenderer,
-        enableSorting: true,
-        sortingFn: 'localeSortingFn',
-        meta: { headerTitle: t('common.name') },
-      },
-      {
-        accessorKey: 'labels',
-        header: t('common.labels'),
-        cell: LabelsCellRenderer,
-        enableSorting: true,
-        sortingFn: 'recursiveNameSortingFn',
-        meta: { headerTitle: t('common.labels') },
-      },
-      {
-        accessorKey: 'users',
-        header: t('common.members'),
-        cell: MembersCellRenderer,
-        enableSorting: true,
-        sortingFn: 'recursiveNameSortingFn',
-        meta: { headerTitle: t('common.members') },
-      },
-      { accessorKey: 'listName', header: t('common.listName'), cell: Table.Renderers.DefaultCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
-      {
-        accessorKey: 'hasDescription',
-        header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
-        cell: Table.Renderers.BoolCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
-        cellProps: { getTitle: (trans) => trans('common.detailsDescription') },
-      },
-      {
-        accessorKey: 'attachmentsCount',
-        header: <Icon type={IconType.Attach} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.attachmentCount')} />,
-        cell: Table.Renderers.NumberCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.attachmentCount'), headerSize: 20 },
-        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsAttachments', { count }) },
-      },
-      {
-        accessorKey: 'commentCount',
-        header: <Icon type={IconType.Comment} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.commentCount')} />,
-        cell: Table.Renderers.NumberCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        meta: { headerTitle: t('common.commentCount'), headerSize: 20 },
-        cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsComments', { count }) },
-      },
-      {
-        accessorKey: 'dueDate',
-        header: t('common.dueDate', { context: 'title' }),
-        cell: DueDateCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedCellSize: 70 },
-      },
-      {
-        accessorKey: 'timer',
-        header: t('common.timer'),
-        cell: TimerCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        sortDescFirst: true,
-        sortingFn: 'timerSortingFn',
-        meta: { headerTitle: t('common.timer') },
-      },
-      {
-        accessorKey: 'tasks',
-        header: t('common.tasks'),
-        cell: TasksCellRenderer,
-        enableSorting: true,
-        sortDescFirst: true,
-        sortingFn: 'lengthSortingFn',
-        meta: { headerTitle: t('common.tasks') },
-      },
-      {
-        accessorKey: 'createdAt',
-        header: t('common.created'),
-        cell: Table.Renderers.DateCellRenderer,
-        enableSorting: true,
-        meta: { headerTitle: t('common.created'), suggestedCellSize: 100 },
-      },
-      {
-        accessorKey: 'updatedAt',
-        header: t('common.updated'),
-        cell: Table.Renderers.DateCellRenderer,
-        enableSorting: true,
-        sortUndefined: 'last',
-        meta: { headerTitle: t('common.updated'), suggestedCellSize: 100 },
-      },
-      {
-        accessorKey: 'description',
-        header: t('common.description'),
-        cell: Table.Renderers.MarkdownCellRenderer,
-        enableSorting: false,
-        meta: { headerTitle: t('common.description') },
-        cellProps: { isGithubConnected, githubRepo },
-      },
-      {
-        accessorKey: 'actions',
-        header: Table.Renderers.ActionsHeaderRenderer,
-        cell: ActionsCellRenderer,
-        enableSorting: false,
-        enableResizing: false,
-        meta: { size: 30 },
-        headerProps: {
-          onResetColumnSorting: handleResetColumnSortingClick,
-          onResetColumnWidths: handleResetColumnWidthsClick,
-          onResetColumnVisibility: handleResetColumnVisibilityClick,
-          onUserPrefsUpdate,
+    const columns = useMemo(
+      () => [
+        {
+          accessorKey: 'notificationsCount',
+          header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
+          cell: Table.Renderers.NumberCellRenderer,
+          enableSorting: true,
+          sortDescFirst: true,
+          meta: { headerTitle: t('common.notifications'), headerSize: 20 },
+          cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsNotifications', { count }) },
         },
-      },
-    ];
+        {
+          accessorKey: 'coverUrl',
+          header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
+          cell: Table.Renderers.ImageCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          sortDescFirst: true,
+          meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
+        },
+        {
+          accessorKey: 'name',
+          header: t('common.name'),
+          cell: Table.Renderers.DefaultCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.localeSortingFn,
+          meta: { headerTitle: t('common.name') },
+        },
+        {
+          accessorKey: 'labels',
+          header: t('common.labels'),
+          cell: LabelsCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          meta: { headerTitle: t('common.labels') },
+        },
+        {
+          accessorKey: 'users',
+          header: t('common.members'),
+          cell: MembersCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          meta: { headerTitle: t('common.members') },
+        },
+        {
+          accessorKey: 'listName',
+          header: t('common.listName'),
+          cell: Table.Renderers.DefaultCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.localeSortingFn,
+          meta: { headerTitle: t('common.listName') },
+        },
+        {
+          accessorKey: 'hasDescription',
+          header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
+          cell: Table.Renderers.BoolCellRenderer,
+          enableSorting: true,
+          sortDescFirst: true,
+          meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
+          cellProps: { getTitle: (trans) => trans('common.detailsDescription') },
+        },
+        {
+          accessorKey: 'attachmentsCount',
+          header: <Icon type={IconType.Attach} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.attachmentCount')} />,
+          cell: Table.Renderers.NumberCellRenderer,
+          enableSorting: true,
+          sortDescFirst: true,
+          meta: { headerTitle: t('common.attachmentCount'), headerSize: 20 },
+          cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsAttachments', { count }) },
+        },
+        {
+          accessorKey: 'commentCount',
+          header: <Icon type={IconType.Comment} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.commentCount')} />,
+          cell: Table.Renderers.NumberCellRenderer,
+          enableSorting: true,
+          sortDescFirst: true,
+          meta: { headerTitle: t('common.commentCount'), headerSize: 20 },
+          cellProps: { hideOnZero: true, getTitle: (trans, count) => trans('common.detailsComments', { count }) },
+        },
+        {
+          accessorKey: 'dueDate',
+          header: t('common.dueDate', { context: 'title' }),
+          cell: DueDateCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedCellSize: 70 },
+        },
+        {
+          accessorKey: 'timer',
+          header: t('common.timer'),
+          cell: TimerCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          sortDescFirst: true,
+          sortingFn: sortingFunctions.timerSortingFn,
+          meta: { headerTitle: t('common.timer') },
+        },
+        {
+          accessorKey: 'tasks',
+          header: t('common.tasks'),
+          cell: TasksCellRenderer,
+          enableSorting: true,
+          sortDescFirst: true,
+          sortingFn: sortingFunctions.lengthSortingFn,
+          meta: { headerTitle: t('common.tasks') },
+        },
+        {
+          accessorKey: 'createdAt',
+          header: t('common.created'),
+          cell: Table.Renderers.DateCellRenderer,
+          enableSorting: true,
+          meta: { headerTitle: t('common.created'), suggestedCellSize: 100 },
+        },
+        {
+          accessorKey: 'updatedAt',
+          header: t('common.updated'),
+          cell: Table.Renderers.DateCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          meta: { headerTitle: t('common.updated'), suggestedCellSize: 100 },
+        },
+        {
+          accessorKey: 'description',
+          header: t('common.description'),
+          cell: Table.Renderers.MarkdownCellRenderer,
+          enableSorting: false,
+          meta: { headerTitle: t('common.description') },
+          cellProps: { isGithubConnected, githubRepo },
+        },
+        {
+          accessorKey: 'actions',
+          header: Table.Renderers.ActionsHeaderRenderer,
+          cell: ActionsCellRenderer,
+          enableSorting: false,
+          enableResizing: false,
+          meta: { size: 30 },
+          headerProps: {
+            onResetColumnSorting: handleResetColumnSortingClick,
+            onResetColumnWidths: handleResetColumnWidthsClick,
+            onResetColumnVisibility: handleResetColumnVisibilityClick,
+            onUserPrefsUpdate,
+          },
+        },
+      ],
+      [t, sortingFunctions, isGithubConnected, githubRepo, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate],
+    );
 
     table.setOptions((prev) => ({ ...prev, columns }));
 

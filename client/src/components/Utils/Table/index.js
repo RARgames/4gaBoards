@@ -1,4 +1,5 @@
 import { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, ActionsHeaderRenderer } from './Renderers';
+import SortingFns from './SortingFns';
 import Table from './Table';
 import { Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell } from './TableElements';
 import TableStyle from './TableStyle';
@@ -22,5 +23,6 @@ Table.Renderers = {
   DateCellRenderer,
   ActionsHeaderRenderer,
 };
+Table.SortingFns = SortingFns;
 
 export default Table;
