@@ -23,7 +23,7 @@
     "@babel/core": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/runtime": "^7.26.10",
-    "@floating-ui/react": "^0.27.4",
+    "@floating-ui/react": "^0.27.6",
     "@juggle/resize-observer": "^3.4.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.16",
     "@react-hook/resize-observer": "^1.2.6",
