@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
-import { Button, Icon, IconType, IconSize } from '../Utils';
+import { Button } from '../Utils/Button';
+import { Icon, IconType, IconSize } from '../Utils/Icon';
 
 import * as s from './DueDate.module.scss';
 

@@ -2,9 +2,11 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useSteps } from '../../../hooks';
-import { Button, ButtonStyle, Popup, withPopup } from '../../Utils';
-import { ColumnSelectStep } from './ColumnSelectPopup';
+import { useSteps } from '../../../../hooks';
+import { Button, ButtonStyle } from '../../Button';
+import withPopup from '../../Popup';
+import Popup from '../../PopupElements';
+import { ColumnSelectStep } from '../ColumnSelectPopup';
 
 const StepTypes = {
   COLUMNS_SELECT: 'COLUMNS_SELECT',

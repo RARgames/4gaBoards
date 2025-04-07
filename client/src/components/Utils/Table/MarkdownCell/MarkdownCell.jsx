@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { MDPreview } from '../../../Utils';
+import { MDPreview } from '../../Markdown';
 
 import * as gs from '../../../../global.module.scss';
 import * as s from './MarkdownCell.module.scss';

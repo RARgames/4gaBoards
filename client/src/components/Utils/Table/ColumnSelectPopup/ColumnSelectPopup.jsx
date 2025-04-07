@@ -2,7 +2,9 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Popup, Checkbox, CheckboxSize, withPopup } from '../../../Utils';
+import { Checkbox, CheckboxSize } from '../../Checkbox';
+import withPopup from '../../Popup';
+import Popup from '../../PopupElements';
 
 import * as s from './ColumnSelectPopup.module.scss';
 

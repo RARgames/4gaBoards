@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Icon, IconType, IconSize } from '../../../Utils';
+import { Icon, IconType, IconSize } from '../../Icon';
 
 import * as s from './BoolCell.module.scss';
 

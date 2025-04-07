@@ -21,7 +21,7 @@ const Wrapper = React.memo(
 const Header = React.memo(
   React.forwardRef(({ children, className, style, ...props }, ref) => {
     return (
-      <thead ref={ref} className={classNames(s.header, className, style && s[`header${style}`])} {...props}>
+      <thead ref={ref} className={classNames(s.header, className, style && s[`${style}Header`])} {...props}>
         {children}
       </thead>
     );
@@ -70,7 +70,7 @@ const SortingIndicator = React.memo(
 const Body = React.memo(
   React.forwardRef(({ children, className, style, ...props }, ref) => {
     return (
-      <tbody ref={ref} className={classNames(s.body, className, style && s[`body${style}`])} {...props}>
+      <tbody ref={ref} className={classNames(s.body, className, style && s[`${style}Body`])} {...props}>
         {children}
       </tbody>
     );

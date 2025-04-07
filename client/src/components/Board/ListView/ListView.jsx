@@ -10,23 +10,7 @@ import { getFullSeconds } from '../../../utils/timer';
 import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
-import ListViewStyle from './ListViewStyle';
-import {
-  DefaultCellRenderer,
-  NumberCellRenderer,
-  BoolCellRenderer,
-  ImageCellRenderer,
-  MarkdownCellRenderer,
-  LabelsCellRenderer,
-  MembersCellRenderer,
-  ListNameCellRenderer,
-  DueDateCellRenderer,
-  TimerCellRenderer,
-  TasksCellRenderer,
-  DateCellRenderer,
-  ActionsHeaderRenderer,
-  ActionsCellRenderer,
-} from './Renderers';
+import { LabelsCellRenderer, MembersCellRenderer, DueDateCellRenderer, TimerCellRenderer, TasksCellRenderer, ActionsCellRenderer } from './Renderers';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './ListView.module.scss';
@@ -187,7 +171,7 @@ const ListView = React.memo(
         },
       },
       onColumnVisibilityChange: setColumnVisibility,
-      listViewStyle: listViewStyle === 'compact' ? ListViewStyle.Compact : ListViewStyle.Default,
+      style: listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
     });
 
     const measureTextWidth = (text, font) => {
@@ -293,7 +277,7 @@ const ListView = React.memo(
       {
         accessorKey: 'notificationsCount',
         header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
-        cell: NumberCellRenderer,
+        cell: Table.Renderers.NumberCellRenderer,
         enableSorting: true,
         sortDescFirst: true,
         meta: { headerTitle: t('common.notifications'), headerSize: 20 },
@@ -302,7 +286,7 @@ const ListView = React.memo(
       {
         accessorKey: 'coverUrl',
         header: <Icon type={IconType.Image} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.coverImage')} />,
-        cell: ImageCellRenderer,
+        cell: Table.Renderers.ImageCellRenderer,
         enableSorting: true,
         sortUndefined: 'last',
         sortDescFirst: true,
@@ -311,7 +295,7 @@ const ListView = React.memo(
       {
         accessorKey: 'name',
         header: t('common.name'),
-        cell: DefaultCellRenderer,
+        cell: Table.Renderers.DefaultCellRenderer,
         enableSorting: true,
         sortingFn: 'localeSortingFn',
         meta: { headerTitle: t('common.name') },
@@ -332,11 +316,11 @@ const ListView = React.memo(
         sortingFn: 'recursiveNameSortingFn',
         meta: { headerTitle: t('common.members') },
       },
-      { accessorKey: 'listName', header: t('common.listName'), cell: ListNameCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
+      { accessorKey: 'listName', header: t('common.listName'), cell: Table.Renderers.DefaultCellRenderer, enableSorting: true, sortingFn: 'localeSortingFn', meta: { headerTitle: t('common.listName') } },
       {
         accessorKey: 'hasDescription',
         header: <Icon type={IconType.BarsStaggered} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.hasDescription')} />,
-        cell: BoolCellRenderer,
+        cell: Table.Renderers.BoolCellRenderer,
         enableSorting: true,
         sortDescFirst: true,
         meta: { headerTitle: t('common.hasDescription'), headerSize: 20 },
@@ -345,7 +329,7 @@ const ListView = React.memo(
       {
         accessorKey: 'attachmentsCount',
         header: <Icon type={IconType.Attach} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.attachmentCount')} />,
-        cell: NumberCellRenderer,
+        cell: Table.Renderers.NumberCellRenderer,
         enableSorting: true,
         sortDescFirst: true,
         meta: { headerTitle: t('common.attachmentCount'), headerSize: 20 },
@@ -354,7 +338,7 @@ const ListView = React.memo(
       {
         accessorKey: 'commentCount',
         header: <Icon type={IconType.Comment} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.commentCount')} />,
-        cell: NumberCellRenderer,
+        cell: Table.Renderers.NumberCellRenderer,
         enableSorting: true,
         sortDescFirst: true,
         meta: { headerTitle: t('common.commentCount'), headerSize: 20 },
@@ -390,14 +374,14 @@ const ListView = React.memo(
       {
         accessorKey: 'createdAt',
         header: t('common.created'),
-        cell: DateCellRenderer,
+        cell: Table.Renderers.DateCellRenderer,
         enableSorting: true,
         meta: { headerTitle: t('common.created'), suggestedCellSize: 100 },
       },
       {
         accessorKey: 'updatedAt',
         header: t('common.updated'),
-        cell: DateCellRenderer,
+        cell: Table.Renderers.DateCellRenderer,
         enableSorting: true,
         sortUndefined: 'last',
         meta: { headerTitle: t('common.updated'), suggestedCellSize: 100 },
@@ -405,14 +389,14 @@ const ListView = React.memo(
       {
         accessorKey: 'description',
         header: t('common.description'),
-        cell: MarkdownCellRenderer,
+        cell: Table.Renderers.MarkdownCellRenderer,
         enableSorting: false,
         meta: { headerTitle: t('common.description') },
         cellProps: { isGithubConnected, githubRepo },
       },
       {
         accessorKey: 'actions',
-        header: ActionsHeaderRenderer,
+        header: Table.Renderers.ActionsHeaderRenderer,
         cell: ActionsCellRenderer,
         enableSorting: false,
         enableResizing: false,

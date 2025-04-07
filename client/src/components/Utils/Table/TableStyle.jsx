@@ -1,6 +1,6 @@
 const TableStyle = {
-  Compact: 'Compact',
-  Default: 'Default',
+  Compact: 'compact',
+  Default: '_default',
 };
 
 export default TableStyle;

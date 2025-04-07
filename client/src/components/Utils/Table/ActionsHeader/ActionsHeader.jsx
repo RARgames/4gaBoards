@@ -2,8 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
-import ActionsPopup from '../ActionsPopup';
+import { Button, ButtonStyle } from '../../Button';
+import { Icon, IconType, IconSize } from '../../Icon';
+import ActionsPopup from './ActionsPopup';
 
 import * as s from './ActionsHeader.module.scss';
 

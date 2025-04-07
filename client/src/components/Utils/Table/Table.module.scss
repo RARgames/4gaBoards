@@ -1,4 +1,14 @@
 :global(#app) {
+  ._default {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .compact {
+    width: 100%;
+    padding: 2px 4px 2px 6px;
+  }
+
   .wrapper {
     flex: 1;
     height: 100%;
@@ -22,11 +32,11 @@
     box-shadow: 0 2px 5px var(--shadowBlack01);
   }
 
-  .headerDefault {
+  ._defaultHeader {
     height: 60px;
   }
 
-  .headerCompact {
+  .compactHeader {
     height: 40px;
   }
 
@@ -114,11 +124,11 @@
     background: var(--backgroundSidebarItem);
   }
 
-  .bodyDefault {
+  ._defaultBody {
     height: calc(100% - 60px);
   }
 
-  .bodyCompact {
+  .compactBody {
     height: calc(100% - 40px);
   }
 

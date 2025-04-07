@@ -1,3 +1,4 @@
+import { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, ActionsHeaderRenderer } from './Renderers';
 import Table from './Table';
 import { Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell } from './TableElements';
 import TableStyle from './TableStyle';
@@ -12,5 +13,14 @@ Table.Body = Body;
 Table.Row = Row;
 Table.Cell = Cell;
 Table.Style = TableStyle;
+Table.Renderers = {
+  DefaultCellRenderer,
+  NumberCellRenderer,
+  BoolCellRenderer,
+  ImageCellRenderer,
+  MarkdownCellRenderer,
+  DateCellRenderer,
+  ActionsHeaderRenderer,
+};
 
 export default Table;
