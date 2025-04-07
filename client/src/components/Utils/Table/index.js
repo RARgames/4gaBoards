@@ -3,6 +3,7 @@ import SortingFns from './SortingFns';
 import Table from './Table';
 import { Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell } from './TableElements';
 import TableStyle from './TableStyle';
+import useColumnAutoSizer from './use-column-auto-sizer';
 
 Table.Wrapper = Wrapper;
 Table.Header = Header;
@@ -24,5 +25,6 @@ Table.Renderers = {
   ActionsHeaderRenderer,
 };
 Table.SortingFns = SortingFns;
+Table.ColumnAutosizerHook = useColumnAutoSizer;
 
 export default Table;
