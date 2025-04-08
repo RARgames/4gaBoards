@@ -198,9 +198,9 @@ export const selectIsFilteredForCurrentBoard = createSelector(
     }
     const filterUsersArray = boardModel.filterUsers.toRefArray();
     const filterLabelsArray = boardModel.filterLabels.toRefArray();
-    const { searchQuery } = boardModel;
+    const { searchParams } = boardModel;
 
-    return filterUsersArray.length !== 0 || filterLabelsArray.length !== 0 || searchQuery !== '';
+    return filterUsersArray.length !== 0 || filterLabelsArray.length !== 0 || searchParams.query !== '';
   },
 );
 
