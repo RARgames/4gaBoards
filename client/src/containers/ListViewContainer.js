@@ -56,8 +56,7 @@ const makeMapStateToProps = () => {
     });
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
-    const { listViewStyle } = selectors.selectCurrentUserPrefs(state);
-    const { listViewColumnVisibility } = selectors.selectCurrentUserPrefs(state);
+    const { listViewStyle, listViewColumnVisibility, listViewFitScreen } = selectors.selectCurrentUserPrefs(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
@@ -72,6 +71,7 @@ const makeMapStateToProps = () => {
       memberIds,
       listViewStyle,
       listViewColumnVisibility,
+      listViewFitScreen,
       canEdit: isCurrentUserEditor,
     };
   };

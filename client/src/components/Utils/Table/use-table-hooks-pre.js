@@ -10,7 +10,7 @@ export default (tableRef, table) => {
   };
 
   const autoSizeColumns = useCallback(
-    (scrollToEnd, columnId) => {
+    (scrollToEnd, fitScreen, columnId) => {
       try {
         if (scrollToEnd) {
           setTimeout(() => {
@@ -74,8 +74,8 @@ export default (tableRef, table) => {
         const style = window.getComputedStyle(tableRef.current.parentNode);
         const maxVisibleWidth = tableRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
 
-        if (totalNewColumnSizes < maxVisibleWidth) {
-          const scaleFactor = maxVisibleWidth / totalNewColumnSizes;
+        if (fitScreen || (!fitScreen && totalNewColumnSizes < maxVisibleWidth)) {
+          const scaleFactor = (maxVisibleWidth - 1) / totalNewColumnSizes;
           Object.keys(newColumnSizes).forEach((id) => {
             newColumnSizes[id] *= scaleFactor;
           });
@@ -88,9 +88,9 @@ export default (tableRef, table) => {
   );
 
   const handleResetColumnWidthsClick = useCallback(
-    (scrollToEnd = false) => {
+    (scrollToEnd = false, fitScreen = false) => {
       if (tableRef.current) {
-        autoSizeColumns(scrollToEnd);
+        autoSizeColumns(scrollToEnd, fitScreen);
       }
     },
     [autoSizeColumns, tableRef],

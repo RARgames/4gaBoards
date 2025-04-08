@@ -66,6 +66,9 @@ module.exports = {
       type: 'json',
       custom: listViewColumnVisibilityValidator,
     },
+    listViewFitScreen: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -106,6 +109,7 @@ module.exports = {
         'defaultView',
         'listViewStyle',
         'listViewColumnVisibility',
+        'listViewFitScreen',
       ]),
     };
 

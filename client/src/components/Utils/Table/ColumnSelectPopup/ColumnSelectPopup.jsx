@@ -8,7 +8,7 @@ import Popup from '../../PopupElements';
 
 import * as s from './ColumnSelectPopup.module.scss';
 
-const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, onUserPrefsUpdate, onBack }) => {
+const ColumnSelectStep = React.memo(({ table, listViewFitScreen, skipColumns, onResetColumnWidths, onUserPrefsUpdate, onBack }) => {
   const [t] = useTranslation();
   const [visibilityState, setVisibilityState] = useState(table.getState().columnVisibility);
 
@@ -27,14 +27,14 @@ const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, 
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onResetColumnWidths(true);
+      onResetColumnWidths(true, listViewFitScreen);
       onUserPrefsUpdate({
         listViewColumnVisibility: visibilityState,
       });
     }, 0);
 
     return () => clearTimeout(timeout);
-  }, [onResetColumnWidths, onUserPrefsUpdate, visibilityState]);
+  }, [listViewFitScreen, onResetColumnWidths, onUserPrefsUpdate, visibilityState]);
 
   return (
     <>
@@ -67,6 +67,7 @@ const ColumnSelectStep = React.memo(({ table, skipColumns, onResetColumnWidths, 
 
 ColumnSelectStep.propTypes = {
   table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  listViewFitScreen: PropTypes.bool.isRequired,
   skipColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   onResetColumnWidths: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,

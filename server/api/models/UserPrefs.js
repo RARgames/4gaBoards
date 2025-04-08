@@ -104,6 +104,11 @@ module.exports = {
         actions: true,
       },
     },
+    listViewFitScreen: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'list_view_fit_screen',
+    },
   },
 
   tableName: 'user_prefs',

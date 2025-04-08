@@ -8,11 +8,12 @@ import ActionsPopup from './ActionsPopup';
 
 import * as s from './ActionsHeader.module.scss';
 
-const ActionsHeader = React.memo(({ table, onResetColumnSorting, onResetColumnWidths, onResetColumnVisibility, onUserPrefsUpdate }) => {
+const ActionsHeader = React.memo(({ table, listViewFitScreen, onResetColumnSorting, onResetColumnWidths, onResetColumnVisibility, onUserPrefsUpdate }) => {
   const [t] = useTranslation();
 
   return (
     <ActionsPopup
+      listViewFitScreen={listViewFitScreen}
       table={table}
       onResetColumnWidths={onResetColumnWidths}
       onResetColumnSorting={onResetColumnSorting}
@@ -31,6 +32,7 @@ const ActionsHeader = React.memo(({ table, onResetColumnSorting, onResetColumnWi
 
 ActionsHeader.propTypes = {
   table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  listViewFitScreen: PropTypes.bool.isRequired,
   onResetColumnSorting: PropTypes.func.isRequired,
   onResetColumnWidths: PropTypes.func.isRequired,
   onResetColumnVisibility: PropTypes.func.isRequired,

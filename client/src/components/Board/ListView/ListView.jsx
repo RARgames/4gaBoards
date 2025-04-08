@@ -34,7 +34,23 @@ const DEFAULT_COLUMN_VISIBILITY = {
 };
 
 const ListView = React.memo(
-  ({ currentCardId, boardId, filteredCards, isGithubConnected, githubRepo, lists, labelIds, memberIds, listViewStyle, listViewColumnVisibility, canEdit, onCardCreate, onListCreate, onUserPrefsUpdate }) => {
+  ({
+    currentCardId,
+    boardId,
+    filteredCards,
+    isGithubConnected,
+    githubRepo,
+    lists,
+    labelIds,
+    memberIds,
+    listViewStyle,
+    listViewColumnVisibility,
+    listViewFitScreen,
+    canEdit,
+    onCardCreate,
+    onListCreate,
+    onUserPrefsUpdate,
+  }) => {
     const [t] = useTranslation();
     const navigate = useNavigate();
     const tableRef = useRef(null);
@@ -92,8 +108,8 @@ const ListView = React.memo(
     table.setOptions((prev) => ({ ...prev, sortingFunctions }));
 
     useEffect(() => {
-      handleResetColumnWidthsClick();
-    }, [handleResetColumnWidthsClick, boardId]);
+      handleResetColumnWidthsClick(false, listViewFitScreen);
+    }, [handleResetColumnWidthsClick, boardId, listViewFitScreen]);
 
     const columns = useMemo(
       () => [
@@ -232,6 +248,7 @@ const ListView = React.memo(
           enableResizing: false,
           meta: { size: 30 },
           headerProps: {
+            listViewFitScreen,
             onResetColumnSorting: handleResetColumnSortingClick,
             onResetColumnWidths: handleResetColumnWidthsClick,
             onResetColumnVisibility: handleResetColumnVisibilityClick,
@@ -239,7 +256,7 @@ const ListView = React.memo(
           },
         },
       ],
-      [t, sortingFunctions, isGithubConnected, githubRepo, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate],
+      [t, sortingFunctions, isGithubConnected, githubRepo, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate, listViewFitScreen],
     );
 
     const { handleSortingChange } = Table.HooksPost(columns, setSorting);
@@ -327,6 +344,7 @@ ListView.propTypes = {
   memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   listViewStyle: PropTypes.string.isRequired,
   listViewColumnVisibility: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  listViewFitScreen: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onListCreate: PropTypes.func.isRequired,

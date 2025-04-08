@@ -298,6 +298,7 @@ export default {
       resetColumnSorting: 'Réinitialiser le tri des colonnes',
       resetColumnVisibility: 'Réinitialiser la visibilité des colonnes',
       resetColumnWidths: 'Réinitialiser la largeur des colonnes',
+      resetColumnWidthsFitScreen: "Réinitialiser la largeur des colonnes pour s'adapter à l'écran",
       searchLabels: 'Rechercher des étiquettes...',
       searchMembers: 'Rechercher des membres...',
       searchUsers: 'Rechercher des utilisateurs...',

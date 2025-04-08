@@ -20,6 +20,7 @@ export default class extends BaseModel {
     defaultView: attr(),
     listViewStyle: attr(),
     listViewColumnVisibility: attr(),
+    listViewFitScreen: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

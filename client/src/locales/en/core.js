@@ -280,6 +280,7 @@ export default {
       resetColumnSorting: 'Reset Column Sorting',
       resetColumnVisibility: 'Reset Column Visibility',
       resetColumnWidths: 'Reset Column Widths',
+      resetColumnWidthsFitScreen: 'Adjust Column Widths to Fit Screen',
       searchLabels: 'Search labels...',
       searchMembers: 'Search members...',
       searchUsers: 'Search users...',
