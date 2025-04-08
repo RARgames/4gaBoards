@@ -1,0 +1,16 @@
+:global(#app) {
+  .listName {
+    display: inline-flex;
+  }
+
+  .headerListField {
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3em;
+  }
+}
