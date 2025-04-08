@@ -61,6 +61,7 @@ const makeMapStateToProps = () => {
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
     return {
+      isCardModalOpened: !!currentCardId,
       currentCardId,
       boardId,
       filteredCards,

@@ -295,7 +295,7 @@ export default {
       resetColumnFilters: 'Zresetuj filtry kolumn',
       resetColumnSorting: 'Zresetuj sortowanie kolumn',
       resetColumnVisibility: 'Zresetuj widoczność kolumn',
-      resetColumnWidths: 'Zresetuj szerokości kolumn',
+      resetColumnWidths: 'Dopasuj szerokości kolumn do zawartości',
       resetColumnWidthsFitScreen: 'Dopasuj szerokości kolumn do ekranu',
       searchLabels: 'Szukaj etykiet...',
       searchMembers: 'Szukaj członków...',

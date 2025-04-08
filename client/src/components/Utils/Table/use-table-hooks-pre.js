@@ -19,9 +19,11 @@ export default (tableRef, table) => {
         }
         const newColumnSizes = {};
         const maxRowsToProcess = 1000;
-        const minColumnWidth = 50;
+        const minColumnWidth = 30;
         const maxColumnWidth = 300;
         const columnPadding = 10;
+        const offset = 3;
+        const minColumnScaleWidth = 20;
         const defaultFont = '14px Arial';
 
         const firstTh = tableRef.current.querySelector('th');
@@ -83,9 +85,33 @@ export default (tableRef, table) => {
         const maxVisibleWidth = tableRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
 
         if (fitScreen || (!fitScreen && totalNewColumnSizes < maxVisibleWidth)) {
-          const scaleFactor = (maxVisibleWidth - 1) / totalNewColumnSizes;
-          Object.keys(newColumnSizes).forEach((id) => {
-            newColumnSizes[id] *= scaleFactor;
+          const scaleFactor = (maxVisibleWidth - offset) / totalNewColumnSizes;
+          const scaledSizes = {};
+          let clampedTotal = 0;
+          const flexibleColumns = [];
+          let totalFlexibleOriginal = 0;
+
+          Object.entries(newColumnSizes).forEach(([id, size]) => {
+            const scaled = size * scaleFactor;
+            if (scaled < minColumnScaleWidth) {
+              scaledSizes[id] = minColumnScaleWidth;
+              clampedTotal += minColumnScaleWidth;
+            } else {
+              flexibleColumns.push(id);
+              scaledSizes[id] = scaled;
+              totalFlexibleOriginal += scaled;
+            }
+          });
+          const remainingWidth = maxVisibleWidth - clampedTotal;
+
+          flexibleColumns.forEach((id) => {
+            const original = scaledSizes[id];
+            const portion = original / totalFlexibleOriginal;
+            scaledSizes[id] = portion * remainingWidth;
+          });
+
+          Object.keys(scaledSizes).forEach((id) => {
+            newColumnSizes[id] = scaledSizes[id];
           });
         }
 

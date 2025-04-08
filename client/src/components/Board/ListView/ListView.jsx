@@ -35,6 +35,7 @@ const DEFAULT_COLUMN_VISIBILITY = {
 
 const ListView = React.memo(
   ({
+    isCardModalOpened,
     currentCardId,
     boardId,
     filteredCards,
@@ -109,7 +110,7 @@ const ListView = React.memo(
 
     useEffect(() => {
       handleResetColumnWidthsClick(false, listViewFitScreen);
-    }, [handleResetColumnWidthsClick, boardId, listViewFitScreen]);
+    }, [handleResetColumnWidthsClick, boardId, listViewFitScreen, isCardModalOpened]);
 
     const columns = useMemo(
       () => [
@@ -341,6 +342,7 @@ const ListView = React.memo(
 );
 
 ListView.propTypes = {
+  isCardModalOpened: PropTypes.bool.isRequired,
   currentCardId: PropTypes.string,
   boardId: PropTypes.string.isRequired,
   filteredCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

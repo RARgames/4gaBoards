@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 
 import { useSteps } from '../../../../hooks';
 import { Button, ButtonStyle } from '../../Button';
+import { Checkbox, CheckboxSize } from '../../Checkbox';
 import withPopup from '../../Popup';
 import Popup from '../../PopupElements';
 import { ColumnSelectStep } from '../ColumnSelectPopup';
+
+import * as s from './ActionsPopup.module.scss';
 
 const StepTypes = {
   COLUMNS_SELECT: 'COLUMNS_SELECT',
@@ -72,8 +75,15 @@ const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumn
       <Button style={ButtonStyle.PopupContext} content={t('common.selectColumns')} onClick={handleSelectColumnsClick} />
       <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnVisibility')} onClick={handleResetColumnVisibilityClick} />
       <Popup.Separator />
-      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnWidths')} onClick={() => handleResetColumnWidths(false)} />
-      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnWidthsFitScreen')} onClick={() => handleResetColumnWidths(true)} />
+      <Button style={ButtonStyle.PopupContext} title={t('common.resetColumnWidths')} onClick={() => handleResetColumnWidths(false)} className={s.buttonWithCheckbox}>
+        <Checkbox checked={!fitScreen} size={CheckboxSize.Size14} readOnly />
+        {t('common.resetColumnWidths')}
+      </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.resetColumnWidthsFitScreen')} onClick={() => handleResetColumnWidths(true)} className={s.buttonWithCheckbox}>
+        <Checkbox checked={fitScreen} size={CheckboxSize.Size14} readOnly />
+        {t('common.resetColumnWidthsFitScreen')}
+      </Button>
+      <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnSorting')} onClick={handleResetColumnSorting} />
     </>
   );
