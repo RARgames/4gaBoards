@@ -8,7 +8,7 @@ import Popup from '../../PopupElements';
 
 import * as s from './ColumnSelectPopup.module.scss';
 
-const ColumnSelectStep = React.memo(({ table, listViewFitScreen, skipColumns, onResetColumnWidths, onUserPrefsUpdate, onBack }) => {
+const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColumns, onResetColumnWidths, onUserPrefsUpdate, onBack }) => {
   const [t] = useTranslation();
   const [visibilityState, setVisibilityState] = useState(table.getState().columnVisibility);
 
@@ -27,14 +27,14 @@ const ColumnSelectStep = React.memo(({ table, listViewFitScreen, skipColumns, on
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onResetColumnWidths(true, listViewFitScreen);
+      onResetColumnWidths(true, fitScreen);
       onUserPrefsUpdate({
-        listViewColumnVisibility: visibilityState,
+        [userPrefsKeys.columnVisibility]: visibilityState,
       });
     }, 0);
 
     return () => clearTimeout(timeout);
-  }, [listViewFitScreen, onResetColumnWidths, onUserPrefsUpdate, visibilityState]);
+  }, [fitScreen, onResetColumnWidths, onUserPrefsUpdate, userPrefsKeys.columnVisibility, visibilityState]);
 
   return (
     <>
@@ -67,7 +67,8 @@ const ColumnSelectStep = React.memo(({ table, listViewFitScreen, skipColumns, on
 
 ColumnSelectStep.propTypes = {
   table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  listViewFitScreen: PropTypes.bool.isRequired,
+  fitScreen: PropTypes.bool.isRequired,
+  userPrefsKeys: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   skipColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   onResetColumnWidths: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,

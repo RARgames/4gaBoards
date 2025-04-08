@@ -12,7 +12,7 @@ const StepTypes = {
   COLUMNS_SELECT: 'COLUMNS_SELECT',
 };
 
-const ActionsStep = React.memo(({ table, listViewFitScreen, onResetColumnWidths, onResetColumnSorting, onResetColumnVisibility, onUserPrefsUpdate, onClose }) => {
+const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumnWidths, onResetColumnSorting, onResetColumnVisibility, onUserPrefsUpdate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -23,25 +23,25 @@ const ActionsStep = React.memo(({ table, listViewFitScreen, onResetColumnWidths,
   const handleResetColumnVisibilityClick = useCallback(() => {
     onResetColumnVisibility();
     setTimeout(() => {
-      onResetColumnWidths(false, listViewFitScreen);
+      onResetColumnWidths(false, fitScreen);
       onUserPrefsUpdate({
-        listViewColumnVisibility: table.getState().columnVisibility,
+        [userPrefsKeys.columnVisibility]: table.getState().columnVisibility,
       });
     }, 0);
     onClose();
-  }, [listViewFitScreen, onClose, onResetColumnVisibility, onResetColumnWidths, onUserPrefsUpdate, table]);
+  }, [fitScreen, onClose, onResetColumnVisibility, onResetColumnWidths, onUserPrefsUpdate, table, userPrefsKeys.columnVisibility]);
 
   const handleResetColumnWidths = useCallback(
-    (fitScreen) => {
-      onResetColumnWidths(false, fitScreen);
+    (fitScreenVariant) => {
+      onResetColumnWidths(false, fitScreenVariant);
       onClose();
       setTimeout(() => {
         onUserPrefsUpdate({
-          listViewFitScreen: fitScreen,
+          [userPrefsKeys.fitScreen]: fitScreenVariant,
         });
       }, 0);
     },
-    [onClose, onResetColumnWidths, onUserPrefsUpdate],
+    [onClose, onResetColumnWidths, onUserPrefsUpdate, userPrefsKeys.fitScreen],
   );
 
   const handleResetColumnSorting = useCallback(() => {
@@ -53,7 +53,15 @@ const ActionsStep = React.memo(({ table, listViewFitScreen, onResetColumnWidths,
     switch (step.type) {
       case StepTypes.COLUMNS_SELECT:
         return (
-          <ColumnSelectStep table={table} listViewFitScreen={listViewFitScreen} skipColumns={['actions']} onResetColumnWidths={onResetColumnWidths} onUserPrefsUpdate={onUserPrefsUpdate} onBack={handleBack} />
+          <ColumnSelectStep
+            table={table}
+            fitScreen={fitScreen}
+            userPrefsKeys={userPrefsKeys}
+            skipColumns={['actions']}
+            onResetColumnWidths={onResetColumnWidths}
+            onUserPrefsUpdate={onUserPrefsUpdate}
+            onBack={handleBack}
+          />
         );
       default:
     }
@@ -73,7 +81,8 @@ const ActionsStep = React.memo(({ table, listViewFitScreen, onResetColumnWidths,
 
 ActionsStep.propTypes = {
   table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  listViewFitScreen: PropTypes.bool.isRequired,
+  fitScreen: PropTypes.bool.isRequired,
+  userPrefsKeys: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onResetColumnWidths: PropTypes.func.isRequired,
   onResetColumnSorting: PropTypes.func.isRequired,
   onResetColumnVisibility: PropTypes.func.isRequired,

@@ -248,7 +248,11 @@ const ListView = React.memo(
           enableResizing: false,
           meta: { size: 30 },
           headerProps: {
-            listViewFitScreen,
+            fitScreen: listViewFitScreen,
+            userPrefsKeys: {
+              columnVisibility: 'listViewColumnVisibility',
+              fitScreen: 'listViewFitScreen',
+            },
             onResetColumnSorting: handleResetColumnSortingClick,
             onResetColumnWidths: handleResetColumnWidthsClick,
             onResetColumnVisibility: handleResetColumnVisibilityClick,

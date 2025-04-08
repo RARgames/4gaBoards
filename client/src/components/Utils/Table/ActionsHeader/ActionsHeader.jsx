@@ -8,13 +8,14 @@ import ActionsPopup from './ActionsPopup';
 
 import * as s from './ActionsHeader.module.scss';
 
-const ActionsHeader = React.memo(({ table, listViewFitScreen, onResetColumnSorting, onResetColumnWidths, onResetColumnVisibility, onUserPrefsUpdate }) => {
+const ActionsHeader = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumnSorting, onResetColumnWidths, onResetColumnVisibility, onUserPrefsUpdate }) => {
   const [t] = useTranslation();
 
   return (
     <ActionsPopup
-      listViewFitScreen={listViewFitScreen}
       table={table}
+      fitScreen={fitScreen}
+      userPrefsKeys={userPrefsKeys}
       onResetColumnWidths={onResetColumnWidths}
       onResetColumnSorting={onResetColumnSorting}
       onResetColumnVisibility={onResetColumnVisibility}
@@ -32,7 +33,8 @@ const ActionsHeader = React.memo(({ table, listViewFitScreen, onResetColumnSorti
 
 ActionsHeader.propTypes = {
   table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  listViewFitScreen: PropTypes.bool.isRequired,
+  fitScreen: PropTypes.bool.isRequired,
+  userPrefsKeys: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onResetColumnSorting: PropTypes.func.isRequired,
   onResetColumnWidths: PropTypes.func.isRequired,
   onResetColumnVisibility: PropTypes.func.isRequired,
