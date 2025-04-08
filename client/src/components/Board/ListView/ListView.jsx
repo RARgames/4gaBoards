@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from '@tanstack/react-table';
@@ -38,9 +38,8 @@ const ListView = React.memo(
     const [t] = useTranslation();
     const navigate = useNavigate();
     const tableRef = useRef(null);
-    const [sorting, setSorting] = useState([]);
     const rowRefs = useRef({});
-    const [columnVisibility, setColumnVisibility] = useState(listViewColumnVisibility);
+    const { columnVisibility, setColumnVisibility, sorting, setSorting, handleResetColumnSortingClick } = Table.HooksState(listViewColumnVisibility);
 
     const handleClick = useCallback(
       (event, id) => {
@@ -72,39 +71,9 @@ const ListView = React.memo(
       scrollCardIntoView();
     }, [scrollCardIntoView]);
 
-    const handleResizerMouseDown = useCallback((e, header) => {
-      e.preventDefault(); // Prevent text selecton when dragging column resizer
-      header.getResizeHandler()(e);
-    }, []);
-
-    const handleSortingChange = (e, canSort, newSorting) => {
-      if (e.target?.dataset.preventSorting) return;
-      if (!canSort) return;
-
-      setSorting((prevSorting) => {
-        const existingColumn = prevSorting.find((so) => so.id === newSorting.id);
-        // eslint-disable-next-line no-use-before-define
-        const columnDef = columns.find((col) => col.accessorKey === newSorting.id || col.id === newSorting.id);
-        const sortDescFirst = columnDef?.sortDescFirst ?? false;
-
-        if (existingColumn) {
-          if (existingColumn.desc === sortDescFirst) {
-            return prevSorting.map((so) => (so.id === newSorting.id ? { ...so, desc: !sortDescFirst } : so));
-          }
-          return prevSorting.filter((so) => so.id !== newSorting.id);
-        }
-
-        return [...prevSorting, { ...newSorting, desc: sortDescFirst }];
-      });
-    };
-
-    const handleResetColumnSortingClick = useCallback(() => {
-      setSorting([]);
-    }, []);
-
     const handleResetColumnVisibilityClick = useCallback(() => {
       setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
-    }, []);
+    }, [setColumnVisibility]);
 
     const table = useReactTable({
       data: filteredCards,
@@ -114,12 +83,11 @@ const ListView = React.memo(
       enableMultiSort: true,
       columnResizeMode: 'onChange',
       state: { sorting, columnVisibility },
-      onSortingChange: handleSortingChange,
       onColumnVisibilityChange: setColumnVisibility,
       style: listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
     });
 
-    const { handleResetColumnWidthsClick } = Table.ColumnAutosizerHook(tableRef, table);
+    const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
     const sortingFunctions = Table.SortingFns(table);
     table.setOptions((prev) => ({ ...prev, sortingFunctions }));
 
@@ -274,7 +242,8 @@ const ListView = React.memo(
       [t, sortingFunctions, isGithubConnected, githubRepo, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate],
     );
 
-    table.setOptions((prev) => ({ ...prev, columns }));
+    const { handleSortingChange } = Table.HooksPost(columns, setSorting);
+    table.setOptions((prev) => ({ ...prev, onSortingChange: handleSortingChange, columns }));
 
     return (
       <Table.Wrapper className={classNames(s.wrapper, gs.scrollableX)}>

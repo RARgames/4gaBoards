@@ -96,5 +96,10 @@ export default (tableRef, table) => {
     [autoSizeColumns, tableRef],
   );
 
-  return { autoSizeColumns, handleResetColumnWidthsClick };
+  const handleResizerMouseDown = useCallback((e, header) => {
+    e.preventDefault(); // Prevent text selecton when dragging column resizer
+    header.getResizeHandler()(e);
+  }, []);
+
+  return { autoSizeColumns, handleResetColumnWidthsClick, handleResizerMouseDown };
 };
