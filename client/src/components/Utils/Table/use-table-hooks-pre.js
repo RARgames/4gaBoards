@@ -55,6 +55,14 @@ export default (tableRef, table) => {
 
           if (column.columnDef.meta?.suggestedCellSize) {
             maxCellWidth = column.columnDef.meta.suggestedCellSize;
+          } else if (column.columnDef.meta?.getCellWidthWithArrayLength) {
+            rowsToProcess.forEach((row) => {
+              const cellValue = row.getValue(colId);
+              const cellWidth = column.columnDef.meta.getCellWidthWithArrayLength(cellValue.length);
+              if (cellWidth > maxCellWidth) {
+                maxCellWidth = cellWidth;
+              }
+            });
           } else {
             rowsToProcess.forEach((row) => {
               const cellValue = row.getValue(colId);

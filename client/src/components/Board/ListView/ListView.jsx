@@ -153,7 +153,10 @@ const ListView = React.memo(
           cell: MembersCellRenderer,
           enableSorting: true,
           sortingFn: sortingFunctions.recursiveNameSortingFn,
-          meta: { headerTitle: t('common.members') },
+          meta: {
+            headerTitle: t('common.members'),
+            getCellWidthWithArrayLength: (length) => length * 27,
+          },
         },
         {
           accessorKey: 'listName',
@@ -196,7 +199,7 @@ const ListView = React.memo(
           cell: DueDateCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedCellSize: 70 },
+          meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedCellSize: 110 },
         },
         {
           accessorKey: 'timer',
