@@ -9,7 +9,7 @@ import { TextArea } from '../../../Utils';
 import * as gs from '../../../../global.module.scss';
 import * as s from './NameCell.module.scss';
 
-const NameCell = React.forwardRef(({ cellClassName, defaultValue, canEdit, onUpdate }, ref) => {
+const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, onUpdate, onSetNameCellFns }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
@@ -49,6 +49,10 @@ const NameCell = React.forwardRef(({ cellClassName, defaultValue, canEdit, onUpd
     }),
     [open, close],
   );
+
+  useEffect(() => {
+    onSetNameCellFns((prev) => ({ ...prev, [id]: { open } }));
+  }, [id, open, onSetNameCellFns]);
 
   const handleKeyDown = useCallback(
     (event) => {
@@ -101,10 +105,12 @@ const NameCell = React.forwardRef(({ cellClassName, defaultValue, canEdit, onUpd
 });
 
 NameCell.propTypes = {
+  id: PropTypes.string.isRequired,
   cellClassName: PropTypes.string,
   defaultValue: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onSetNameCellFns: PropTypes.func.isRequired,
 };
 
 NameCell.defaultProps = {

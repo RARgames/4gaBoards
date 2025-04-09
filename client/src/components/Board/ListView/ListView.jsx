@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useMemo } from 'react';
+import React, { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
@@ -59,6 +59,7 @@ const ListView = React.memo(
     const tableRef = useRef(null);
     const tableBodyRef = useRef(null);
     const rowRefs = useRef({});
+    const [nameCellFns, setNameCellFns] = useState({});
     const prevFilteredCardIdsRef = useRef([]);
     const initialPageIndexRef = useRef(null);
     if (initialPageIndexRef.current === null) {
@@ -187,6 +188,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortingFn: sortingFunctions.localeSortingFn,
           meta: { headerTitle: t('common.name') },
+          cellProps: { onSetNameCellFns: setNameCellFns },
         },
         {
           accessorKey: 'labels',
@@ -310,9 +312,10 @@ const ListView = React.memo(
             onResetColumnVisibility: handleResetColumnVisibilityClick,
             onUserPrefsUpdate,
           },
+          cellProps: { onOpenNameEdit: (id) => nameCellFns[id]?.open() },
         },
       ],
-      [t, sortingFunctions, isGithubConnected, githubRepo, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate, listViewFitScreen],
+      [t, sortingFunctions, isGithubConnected, githubRepo, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate, listViewFitScreen, nameCellFns],
     );
 
     const { handleSortingChange } = Table.HooksPost(columns, setSorting);

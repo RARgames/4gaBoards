@@ -9,6 +9,7 @@ import * as s from './ActionsCell.module.scss';
 
 const ActionsCell = React.memo(
   ({
+    id,
     projectId,
     allProjectsToLists,
     allBoardMemberships,
@@ -35,13 +36,13 @@ const ActionsCell = React.memo(
     onLabelCreate,
     onLabelUpdate,
     onLabelDelete,
+    onOpenNameEdit,
   }) => {
     const [t] = useTranslation();
 
-    // const nameEdit = useRef(null);
     const handleNameEdit = useCallback(() => {
-      // nameEdit.current.open();
-    }, []);
+      onOpenNameEdit(id);
+    }, [onOpenNameEdit, id]);
 
     if (canEdit && isPersisted) {
       return (
@@ -59,7 +60,7 @@ const ActionsCell = React.memo(
           labels={allLabels}
           currentLabelIds={labels.map((label) => label.id)}
           url={url}
-          onNameEdit={handleNameEdit} // TODO not working
+          onNameEdit={handleNameEdit}
           onUpdate={onUpdate}
           onMove={onMove}
           onTransfer={onTransfer}
@@ -90,6 +91,7 @@ const ActionsCell = React.memo(
 );
 
 ActionsCell.propTypes = {
+  id: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -116,6 +118,7 @@ ActionsCell.propTypes = {
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
+  onOpenNameEdit: PropTypes.func.isRequired,
 };
 
 ActionsCell.defaultProps = {
