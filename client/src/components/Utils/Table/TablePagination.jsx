@@ -78,8 +78,8 @@ const TablePagination = React.memo(
         <Button style={ButtonStyle.Icon} title={t('common.previousPage')} onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
           <Icon type={IconType.AngleLeft} size={IconSize.Size13} />
         </Button>
-        <Input ref={pageField} name="page" placeholder={currentPageIndex} value={data.page} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={s.paginationPageInput} />/{' '}
-        {table.getPageCount()}
+        <Input ref={pageField} name="page" placeholder={currentPageIndex} value={data.page} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={s.paginationPageInput} />
+        <span>/{table.getPageCount()}</span>
         <Button style={ButtonStyle.Icon} title={t('common.nextPage')} onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
           <Icon type={IconType.AngleLeft} size={IconSize.Size13} className={s.paginationIconRotated} />
         </Button>
