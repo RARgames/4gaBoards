@@ -1,0 +1,22 @@
+:global(#app) {
+  .headerTitle {
+    display: -webkit-box;
+    width: 100%;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3em;
+  }
+
+  .field {
+    padding: 2px;
+    font-size: 14px;
+    line-height: 16px;
+
+    &::placeholder {
+      font-size: 14px;
+    }
+  }
+}

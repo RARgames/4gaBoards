@@ -9,7 +9,7 @@ import Paths from '../../../constants/Paths';
 import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
-import { LabelsCellRenderer, MembersCellRenderer, ListNameCellRenderer, DueDateCellRenderer, TimerCellRenderer, TasksCellRenderer, ActionsCellRenderer } from './Renderers';
+import { NameCellRenderer, LabelsCellRenderer, MembersCellRenderer, ListNameCellRenderer, DueDateCellRenderer, TimerCellRenderer, TasksCellRenderer, ActionsCellRenderer } from './Renderers';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './ListView.module.scss';
@@ -183,7 +183,7 @@ const ListView = React.memo(
         {
           accessorKey: 'name',
           header: t('common.name'),
-          cell: Table.Renderers.DefaultCellRenderer,
+          cell: NameCellRenderer,
           enableSorting: true,
           sortingFn: sortingFunctions.localeSortingFn,
           meta: { headerTitle: t('common.name') },
