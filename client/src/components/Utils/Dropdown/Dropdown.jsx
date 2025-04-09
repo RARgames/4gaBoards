@@ -23,6 +23,8 @@ const Dropdown = React.forwardRef(
       isError,
       className,
       dropdownMenuClassName,
+      inputClassName,
+      buttonClassName,
       onChange,
       onBlur,
       onOpen,
@@ -304,7 +306,7 @@ const Dropdown = React.forwardRef(
             onChange={handleSearch}
             value={searchValue}
             ref={dropdown}
-            className={classNames(s.dropdownSearchInput, isError && s.dropdownSearchInputError)}
+            className={classNames(s.dropdownSearchInput, isError && s.dropdownSearchInputError, inputClassName)}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -317,7 +319,7 @@ const Dropdown = React.forwardRef(
             style={ButtonStyle.Icon}
             title={isOpen ? t('common.closeDropdown') : t('common.openDropdown')}
             onClick={handleDropdownToggleClick}
-            className={classNames(s.dropdownButton, isError && s.dropdownButtonError)}
+            className={classNames(s.dropdownButton, isError && s.dropdownButtonError, buttonClassName)}
           >
             <Icon type={IconType.TriangleDown} size={IconSize.Size10} />
           </Button>
@@ -366,6 +368,8 @@ Dropdown.propTypes = {
   isError: PropTypes.bool,
   className: PropTypes.string,
   dropdownMenuClassName: PropTypes.string,
+  inputClassName: PropTypes.string,
+  buttonClassName: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onOpen: PropTypes.func,
@@ -400,6 +404,8 @@ Dropdown.defaultProps = {
   forcePlaceholder: false,
   className: undefined,
   dropdownMenuClassName: undefined,
+  inputClassName: undefined,
+  buttonClassName: undefined,
 };
 
 export default React.memo(Dropdown);

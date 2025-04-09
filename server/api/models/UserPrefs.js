@@ -8,11 +8,13 @@
 const DESCRIPTION_MODES = ['edit', 'live', 'preview'];
 const VIEW_MODES = ['board', 'list'];
 const LIST_VIEW_STYLES = ['default', 'compact'];
+const LIST_VIEW_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 
 module.exports = {
   DESCRIPTION_MODES,
   VIEW_MODES,
   LIST_VIEW_STYLES,
+  LIST_VIEW_ITEMS_PER_PAGE,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -108,6 +110,13 @@ module.exports = {
       type: 'boolean',
       defaultsTo: true,
       columnName: 'list_view_fit_screen',
+    },
+    listViewItemsPerPage: {
+      type: 'string',
+      isIn: LIST_VIEW_ITEMS_PER_PAGE,
+      isNotEmptyString: true,
+      columnName: 'list_view_items_per_page',
+      defaultsTo: 'all',
     },
   },
 

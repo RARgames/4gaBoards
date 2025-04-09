@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -47,6 +47,8 @@ const ListView = React.memo(
     listViewStyle,
     listViewColumnVisibility,
     listViewFitScreen,
+    listViewItemsPerPage,
+    currentCardIndex,
     canEdit,
     onCardCreate,
     onListCreate,
@@ -55,8 +57,22 @@ const ListView = React.memo(
     const [t] = useTranslation();
     const navigate = useNavigate();
     const tableRef = useRef(null);
+    const tableBodyRef = useRef(null);
     const rowRefs = useRef({});
-    const { columnVisibility, setColumnVisibility, sorting, setSorting, handleResetColumnSortingClick } = Table.HooksState(listViewColumnVisibility);
+    const prevFilteredCardIdsRef = useRef([]);
+    const initialPageIndexRef = useRef(null);
+    if (initialPageIndexRef.current === null) {
+      const pageSize = listViewItemsPerPage === 'all' ? filteredCards.length : Number(listViewItemsPerPage);
+      const pageIndex = Math.floor(currentCardIndex / pageSize);
+      initialPageIndexRef.current = { pageIndex: pageIndex === -1 ? 0 : pageIndex, pageSize };
+      initialPageIndexRef.current.pageSize = pageSize;
+    }
+
+    const { columnVisibility, setColumnVisibility, pagination, setPagination, sorting, setSorting, handleResetColumnSortingClick } = Table.HooksState(
+      listViewColumnVisibility,
+      initialPageIndexRef.current.pageIndex,
+      initialPageIndexRef.current.pageSize,
+    );
 
     const handleClick = useCallback(
       (event, id) => {
@@ -80,27 +96,34 @@ const ListView = React.memo(
       [navigate],
     );
 
-    const scrollCardIntoView = useCallback(() => {
-      rowRefs.current[currentCardId]?.scrollIntoView({ behavior: 'auto', block: 'center' });
-    }, [currentCardId]);
-
-    useEffect(() => {
-      scrollCardIntoView();
-    }, [scrollCardIntoView]);
-
     const handleResetColumnVisibilityClick = useCallback(() => {
       setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
     }, [setColumnVisibility]);
 
     const table = useReactTable({
+      autoResetPageIndex: false,
       data: filteredCards,
       columns: [],
       getCoreRowModel: getCoreRowModel(),
       getSortedRowModel: getSortedRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
       enableMultiSort: true,
       columnResizeMode: 'onChange',
-      state: { sorting, columnVisibility },
+      state: { sorting, columnVisibility, pagination },
       onColumnVisibilityChange: setColumnVisibility,
+      onPaginationChange: (updater) => {
+        setPagination((prev) => {
+          const nextPagination = typeof updater === 'function' ? updater(prev) : updater;
+          if (nextPagination.pageSize !== prev.pageSize) {
+            const nextPageIndex = Math.floor(currentCardIndex / nextPagination.pageSize);
+            nextPagination.pageIndex = nextPageIndex === -1 ? 0 : nextPageIndex;
+          }
+          if (nextPagination.pageIndex !== prev.pageIndex) {
+            tableBodyRef.current.scrollTo({ top: 0 });
+          }
+          return nextPagination;
+        });
+      },
       style: listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
     });
 
@@ -111,6 +134,31 @@ const ListView = React.memo(
     useEffect(() => {
       handleResetColumnWidthsClick(false, listViewFitScreen);
     }, [handleResetColumnWidthsClick, boardId, listViewFitScreen, isCardModalOpened]);
+
+    const scrollCardIntoView = useCallback(() => {
+      setTimeout(() => {
+        rowRefs.current[currentCardId]?.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }, 0);
+    }, [currentCardId]);
+
+    const adjustPageIndex = useCallback(() => {
+      const currentCardIds = filteredCards.map((card) => card.id);
+      const prevCardIds = prevFilteredCardIdsRef.current;
+      const haveCardsChanged = prevCardIds.length !== currentCardIds.length || prevCardIds.some((id, index) => id !== currentCardIds[index]);
+
+      if (haveCardsChanged) {
+        const { pageSize } = table.getState().pagination;
+        const pageIndex = Math.floor(currentCardIndex / pageSize);
+        setPagination((prev) => ({ ...prev, pageIndex: pageIndex === -1 ? 0 : pageIndex }));
+      }
+      scrollCardIntoView();
+
+      prevFilteredCardIdsRef.current = currentCardIds;
+    }, [currentCardIndex, filteredCards, scrollCardIntoView, setPagination, table]);
+
+    useEffect(() => {
+      adjustPageIndex();
+    }, [adjustPageIndex]);
 
     const columns = useMemo(
       () => [
@@ -299,7 +347,7 @@ const ListView = React.memo(
               </Table.HeaderRow>
             ))}
           </Table.Header>
-          <Table.Body className={gs.scrollableY} style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
+          <Table.Body ref={tableBodyRef} className={gs.scrollableY} style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
             {table.getRowModel().rows.map((row) => (
               <Table.Row
                 // eslint-disable-next-line no-return-assign
@@ -320,22 +368,24 @@ const ListView = React.memo(
             ))}
           </Table.Body>
         </Table>
-        {canEdit && (
-          <div className={s.floatingButtonsWrapper}>
-            <ListAddPopup onCreate={onListCreate} offset={5} position="top">
-              <Button style={ButtonStyle.DefaultBorder} title={t('common.addList', { context: 'title' })} className={s.floatingButton}>
-                <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.floatingButtonIcon} />
-                <span className={s.floatingButtonText}>{t('common.addList', { context: 'title' })}</span>
-              </Button>
-            </ListAddPopup>
-            <CardAddPopup lists={lists} labelIds={labelIds} memberIds={memberIds} onCreate={onCardCreate} offset={5} position="top">
-              <Button style={ButtonStyle.DefaultBorder} title={t('common.addCard', { context: 'title' })} className={s.floatingButton}>
-                <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.floatingButtonIcon} />
-                <span className={s.floatingButtonText}>{t('common.addCard', { context: 'title' })}</span>
-              </Button>
-            </CardAddPopup>
-          </div>
-        )}
+        <Table.Pagination table={table} itemsPerPage={listViewItemsPerPage} rowsCount={filteredCards.length} userPrefsKey="listViewItemsPerPage" onUserPrefsUpdate={onUserPrefsUpdate}>
+          {canEdit && (
+            <div className={s.paginationButtonsWrapper}>
+              <ListAddPopup onCreate={onListCreate} offset={5} position="top">
+                <Button style={ButtonStyle.DefaultBorder} title={t('common.addList', { context: 'title' })} className={s.paginationButton}>
+                  <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
+                  <span className={s.paginationButtonText}>{t('common.addList', { context: 'title' })}</span>
+                </Button>
+              </ListAddPopup>
+              <CardAddPopup lists={lists} labelIds={labelIds} memberIds={memberIds} onCreate={onCardCreate} offset={5} position="top">
+                <Button style={ButtonStyle.DefaultBorder} title={t('common.addCard', { context: 'title' })} className={s.paginationButton}>
+                  <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
+                  <span className={s.paginationButtonText}>{t('common.addCard', { context: 'title' })}</span>
+                </Button>
+              </CardAddPopup>
+            </div>
+          )}
+        </Table.Pagination>
       </Table.Wrapper>
     );
   },
@@ -354,7 +404,9 @@ ListView.propTypes = {
   listViewStyle: PropTypes.string.isRequired,
   listViewColumnVisibility: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   listViewFitScreen: PropTypes.bool.isRequired,
+  listViewItemsPerPage: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  currentCardIndex: PropTypes.number,
   onCardCreate: PropTypes.func.isRequired,
   onListCreate: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
@@ -362,6 +414,7 @@ ListView.propTypes = {
 
 ListView.defaultProps = {
   currentCardId: null,
+  currentCardIndex: undefined,
 };
 
 export default ListView;

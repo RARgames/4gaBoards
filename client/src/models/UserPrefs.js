@@ -21,6 +21,7 @@ export default class extends BaseModel {
     listViewStyle: attr(),
     listViewColumnVisibility: attr(),
     listViewFitScreen: attr(),
+    listViewItemsPerPage: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

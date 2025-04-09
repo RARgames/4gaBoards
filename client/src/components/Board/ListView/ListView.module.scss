@@ -3,24 +3,18 @@
     padding: 10px 20px 10px 20px;
   }
 
-  .floatingButtonsWrapper {
-    pointer-events: none;
-    position: sticky;
-    left: 90%;
-    bottom: 10px;
+  .paginationButtonsWrapper {
+    margin-left: auto;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: end;
-    width: fit-content;
+    gap: 6px;
   }
 
-  .floatingButton {
-    pointer-events: auto;
+  .paginationButton {
     background: var(--backgroundList);
     color: var(--textColor2);
-    height: 36px;
-    padding: 8px;
+    line-height: 16px;
+    font-size: 14px;
+    padding: 0 6px;
     text-align: left;
     width: fit-content;
 
@@ -28,22 +22,19 @@
       color: var(--textColor2);
       background: var(--backgroundListButton);
 
-      .addCardButtonIcon {
+      .paginationButtonIcon {
         fill: var(--textColor2);
       }
     }
   }
 
-  .floatingButtonIcon {
+  .paginationButtonIcon {
     fill: var(--textColor2);
   }
 
-  .floatingButtonText {
+  .paginationButtonText {
     display: inline-block;
-    font-size: 14px;
-    line-height: 20px;
     margin-left: 2px;
-    vertical-align: top;
   }
 
   .iconTableHeader {

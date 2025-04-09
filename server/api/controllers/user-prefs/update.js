@@ -69,6 +69,11 @@ module.exports = {
     listViewFitScreen: {
       type: 'boolean',
     },
+    listViewItemsPerPage: {
+      type: 'string',
+      isIn: UserPrefs.LIST_VIEW_ITEMS_PER_PAGE,
+      isNotEmptyString: true,
+    },
   },
 
   exits: {
@@ -110,6 +115,7 @@ module.exports = {
         'listViewStyle',
         'listViewColumnVisibility',
         'listViewFitScreen',
+        'listViewItemsPerPage',
       ]),
     };
 

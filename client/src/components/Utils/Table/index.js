@@ -2,10 +2,11 @@ import { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, ImageCellRen
 import SortingFns from './SortingFns';
 import Table from './Table';
 import { Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell } from './TableElements';
+import TablePagination from './TablePagination';
 import TableStyle from './TableStyle';
 import useTableHooksPost from './use-table-hooks-post';
 import useTableHooksPre from './use-table-hooks-pre';
-import useTableHooksState from './use-table-state-hooks';
+import useTableHooksState from './use-table-hooks-state';
 
 Table.Wrapper = Wrapper;
 Table.Header = Header;
@@ -16,6 +17,7 @@ Table.SortingIndicator = SortingIndicator;
 Table.Body = Body;
 Table.Row = Row;
 Table.Cell = Cell;
+Table.Pagination = TablePagination;
 Table.Style = TableStyle;
 Table.Renderers = {
   DefaultCellRenderer,
