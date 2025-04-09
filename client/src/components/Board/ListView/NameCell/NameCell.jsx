@@ -79,7 +79,7 @@ const NameCell = React.forwardRef(({ cellClassName, defaultValue, canEdit, onUpd
   if (!isOpen) {
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-      <div className={classNames(cellClassName, s.headerTitle, canEdit && gs.cursorPointer)} onClick={open} title={defaultValue} data-prevent-card-switch>
+      <div className={classNames(cellClassName, s.nameCell, canEdit && gs.cursorPointer)} onClick={open} title={defaultValue} data-prevent-card-switch>
         {defaultValue}
       </div>
     );

@@ -1,7 +1,7 @@
 :global(#app) {
-  .headerTitle {
+  .nameCell {
     display: -webkit-box;
-    width: 100%;
+    width: auto;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     line-clamp: 3;
