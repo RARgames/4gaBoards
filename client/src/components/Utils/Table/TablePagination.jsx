@@ -29,12 +29,12 @@ const TablePagination = React.memo(
         onUserPrefsUpdate({ [userPrefsKey]: item.id });
         setSelectedItemsPerPage(item);
         if (item.id === 'all') {
-          table.setPageSize(rowsCount);
+          table.setPageSize(Number.MAX_SAFE_INTEGER);
         } else {
           table.setPageSize(Number(item.id));
         }
       },
-      [onUserPrefsUpdate, rowsCount, table, userPrefsKey],
+      [onUserPrefsUpdate, table, userPrefsKey],
     );
 
     const handleSubmit = useCallback(() => {

@@ -63,7 +63,7 @@ const ListView = React.memo(
     const prevFilteredCardIdsRef = useRef([]);
     const initialPageIndexRef = useRef(null);
     if (initialPageIndexRef.current === null) {
-      const pageSize = listViewItemsPerPage === 'all' ? filteredCards.length : Number(listViewItemsPerPage);
+      const pageSize = listViewItemsPerPage === 'all' ? Number.MAX_SAFE_INTEGER : Number(listViewItemsPerPage);
       const pageIndex = Math.floor(currentCardIndex / pageSize);
       initialPageIndexRef.current = { pageIndex: pageIndex === -1 ? 0 : pageIndex, pageSize };
       initialPageIndexRef.current.pageSize = pageSize;
