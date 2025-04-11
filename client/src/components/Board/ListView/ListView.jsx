@@ -141,6 +141,10 @@ const ListView = React.memo(
       }, 0);
     }, [currentCardId]);
 
+    useEffect(() => {
+      scrollCardIntoView();
+    }, [scrollCardIntoView, pagination]);
+
     const adjustPageIndex = useCallback(() => {
       const currentCardIds = filteredCards.map((card) => card.id);
       const prevCardIds = prevFilteredCardIdsRef.current;
@@ -150,8 +154,8 @@ const ListView = React.memo(
         const { pageSize } = table.getState().pagination;
         const pageIndex = Math.floor(currentCardIndex / pageSize);
         setPagination((prev) => ({ ...prev, pageIndex: pageIndex === -1 ? 0 : pageIndex }));
+        scrollCardIntoView();
       }
-      scrollCardIntoView();
 
       prevFilteredCardIdsRef.current = currentCardIds;
     }, [currentCardIndex, filteredCards, scrollCardIntoView, setPagination, table]);
