@@ -157,7 +157,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
 
   const listView = (
     <div className={classNames(s.listWrapper)}>
-      <ListViewContainer listIds={listIds} />
+      <ListViewContainer />
     </div>
   );
 

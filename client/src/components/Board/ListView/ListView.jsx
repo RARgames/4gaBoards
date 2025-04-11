@@ -314,7 +314,7 @@ const ListView = React.memo(
           cellProps: { onOpenNameEdit: (id) => nameCellFns[id]?.open() },
         },
       ],
-      [t, sortingFunctions, isGithubConnected, githubRepo, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate, listViewFitScreen, nameCellFns],
+      [t, sortingFunctions, isGithubConnected, githubRepo, listViewFitScreen, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate, nameCellFns],
     );
 
     const { handleSortingChange } = Table.HooksPost(columns, setSorting);

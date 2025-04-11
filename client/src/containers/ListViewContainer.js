@@ -9,7 +9,8 @@ import selectors from '../selectors';
 const makeMapStateToProps = () => {
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
 
-  return (state, { listIds }) => {
+  return (state) => {
+    const listIds = selectors.selectListIdsForCurrentBoard(state);
     const currentCardId = selectors.selectPath(state).cardId;
     const { boardId } = selectors.selectPath(state);
     const filteredCardIds = listIds.reduce((acc, id) => {
