@@ -129,8 +129,7 @@ const ListView = React.memo(
     });
 
     const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
-    const sortingFunctions = Table.SortingFns(table);
-    table.setOptions((prev) => ({ ...prev, sortingFunctions }));
+    const sortingFunctions = Table.HooksSorting(table);
 
     useEffect(() => {
       handleResetColumnWidthsClick(false, listViewFitScreen);
