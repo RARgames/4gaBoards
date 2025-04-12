@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
+import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import ActionsPopup from '../Card/ActionsPopup';
 import DeletePopup from '../DeletePopup';
@@ -299,6 +300,12 @@ const CardModal = React.memo(
         return () => clearTimeout(timeout);
       }
     }, [getLocalDesc, id]);
+
+    useEffect(() => {
+      registerDescriptionOpenHandler(() => {
+        setIsDescOpened(true);
+      });
+    }, []);
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);

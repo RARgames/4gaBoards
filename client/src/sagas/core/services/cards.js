@@ -9,6 +9,12 @@ import { addLabelToCard } from './labels';
 import { goToBoard, goToCard } from './router';
 import { addUserToCard } from './users';
 
+let descriptionOpenHandler = null;
+
+export const registerDescriptionOpenHandler = (fn) => {
+  descriptionOpenHandler = fn;
+};
+
 export function* createCard(listId, data, autoOpen) {
   const { boardId } = yield select(selectors.selectListById, listId);
 
@@ -54,6 +60,11 @@ export function* createCard(listId, data, autoOpen) {
 
   if (autoOpen) {
     yield call(goToCard, card.id);
+    setTimeout(() => {
+      if (typeof descriptionOpenHandler === 'function') {
+        descriptionOpenHandler();
+      }
+    }, 0);
   }
 }
 
@@ -193,6 +204,7 @@ export function* handleCardDelete(card) {
 }
 
 export default {
+  registerDescriptionOpenHandler,
   createCard,
   handleCardCreate,
   updateCard,
