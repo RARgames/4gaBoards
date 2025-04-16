@@ -20,7 +20,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       },
       ...locales.map((locale) => ({
         id: locale.language,
-        flag: locale.country.toUpperCase(),
+        flags: locale.flags,
         name: locale.name,
       })),
     ],

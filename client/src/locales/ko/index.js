@@ -5,4 +5,5 @@ export default {
   country: 'kr',
   name: '한국어',
   embeddedLocale: login,
+  flags: ['KR'],
 };

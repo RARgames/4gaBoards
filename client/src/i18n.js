@@ -60,7 +60,7 @@ i18n
     resources: embeddedLocales,
     fallbackLng: 'en',
     supportedLngs: languages,
-    load: 'languageOnly',
+    load: 'currentOnly',
     interpolation: {
       escapeValue: false,
       format(value, format, language) {

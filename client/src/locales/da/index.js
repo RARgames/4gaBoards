@@ -5,4 +5,5 @@ export default {
   country: 'dk',
   name: 'Dansk',
   embeddedLocale: login,
+  flags: ['DK'],
 };

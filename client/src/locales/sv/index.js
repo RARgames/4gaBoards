@@ -5,4 +5,5 @@ export default {
   country: 'se',
   name: 'Svenska',
   embeddedLocale: login,
+  flags: ['SE'],
 };

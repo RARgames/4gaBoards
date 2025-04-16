@@ -5,4 +5,5 @@ export default {
   country: 'sk',
   name: 'Slovenčina',
   embeddedLocale: login,
+  flags: ['SK'],
 };

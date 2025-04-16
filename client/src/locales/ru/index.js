@@ -5,4 +5,5 @@ export default {
   country: 'ru',
   name: 'Русский',
   embeddedLocale: login,
+  flags: ['RU'],
 };
