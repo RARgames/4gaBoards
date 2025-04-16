@@ -6,7 +6,7 @@ import login from './login';
 export default {
   language: 'pt-BR',
   country: 'br',
-  name: 'Português (Brasil)',
+  name: 'Português',
   embeddedLocale: merge(login, core),
-  flags: ['BR'],
+  flags: ['BR', 'PT'],
 };
