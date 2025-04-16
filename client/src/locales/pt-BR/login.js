@@ -1,3 +1,5 @@
+/* Translated by dacampsss */
+
 export default {
   translation: {
     common: {

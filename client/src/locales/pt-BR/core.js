@@ -1,3 +1,5 @@
+/* Translated by dacampsss */
+
 export default {
   format: {
     date: 'd/MM/yyyy',
@@ -226,7 +228,7 @@ export default {
       leaveProject_title: 'Sair do Projeto',
       linkCard: 'Copiar Link',
       list: 'Lista',
-      listActions_title: 'Ações de Lita',
+      listActions_title: 'Ações de Lista',
       listName: 'Nome da Lista',
       listView: 'Lista',
       listViewStyle: 'Estilo da Visualização de Lista',
@@ -293,7 +295,7 @@ export default {
       seconds: 'Segundos',
       selectBoard: 'Selecionar painel',
       selectColumns: 'Selecionar Colunas',
-      selectedProject: 'Selected Projeto',
+      selectedProject: 'Projeto Selecionado',
       selectList: 'Selecionar lista',
       selectPermissions_title: 'Selecionar Permissões',
       selectProject: 'Selecionar projeto',
