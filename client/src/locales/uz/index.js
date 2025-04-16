@@ -5,4 +5,5 @@ export default {
   country: 'uz',
   name: "O'zbek",
   embeddedLocale: login,
+  flags: ['UZ'],
 };

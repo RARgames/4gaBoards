@@ -5,4 +5,5 @@ export default {
   country: 'cz',
   name: 'Čeština',
   embeddedLocale: login,
+  flags: ['CZ'],
 };

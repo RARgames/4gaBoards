@@ -28,3 +28,5 @@ export const embeddedLocales = locales.reduce(
   }),
   {},
 );
+
+export const flags = locales.map((locale) => locale.flags);

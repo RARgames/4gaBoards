@@ -5,4 +5,5 @@ export default {
   country: 'fr',
   name: 'Français',
   embeddedLocale: login,
+  flags: ['FR'],
 };

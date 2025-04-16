@@ -8,4 +8,5 @@ export default {
   country: 'gb',
   name: 'English',
   embeddedLocale: merge(login, core),
+  flags: ['GB', 'US'],
 };

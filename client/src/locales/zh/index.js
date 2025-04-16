@@ -5,4 +5,5 @@ export default {
   country: 'cn',
   name: '中文',
   embeddedLocale: login,
+  flags: ['CN'],
 };

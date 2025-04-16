@@ -8,4 +8,5 @@ export default {
   country: 'br',
   name: 'Português',
   embeddedLocale: merge(login, core),
+  flags: ['PT', 'BR'],
 };

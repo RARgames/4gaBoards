@@ -5,4 +5,5 @@ export default {
   country: 'jp',
   name: '日本語',
   embeddedLocale: login,
+  flags: ['JP'],
 };

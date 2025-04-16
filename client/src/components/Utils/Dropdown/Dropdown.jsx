@@ -344,7 +344,7 @@ const Dropdown = React.forwardRef(
                     onClick={(e) => handleItemClick(e, item)}
                     onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
                   >
-                    {item.flag && <Icon type={FlagType[item.flag]} size={IconSize.Size14} className={s.icon} />}
+                    {item.flags && item.flags.map((flag) => <Icon key={flag} type={FlagType[flag]} size={IconSize.Size14} className={s.icon} />)}
                     {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={s.icon} />}
                     {item.name}
                   </div>
