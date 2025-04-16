@@ -15,6 +15,7 @@ import { ReactComponent as SK } from '../../../assets/flags/SK.svg';
 import { ReactComponent as UZ } from '../../../assets/flags/UZ.svg';
 
 const FlagType = {
+  BR,
   CN,
   CZ,
   DE,
