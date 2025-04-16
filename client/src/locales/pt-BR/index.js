@@ -4,9 +4,9 @@ import core from './core';
 import login from './login';
 
 export default {
-  language: 'pt',
+  language: 'pt-BR',
   country: 'br',
-  name: 'Português',
+  name: 'Português (Brasil)',
   embeddedLocale: merge(login, core),
-  flags: ['PT', 'BR'],
+  flags: ['BR'],
 };
