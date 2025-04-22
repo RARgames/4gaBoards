@@ -102,7 +102,9 @@ const UsersSettings = React.memo(
         <div className={sShared.header}>
           <div className={sShared.headerFlex}>
             <div ref={offsetRef} className={s.headerButtonOffset} />
-            <h2 className={sShared.headerText}>{t('common.users')}</h2>
+            <h2 className={sShared.headerText}>
+              {t('common.users')} <span className={s.headerTextDetails}>({items.length})</span>
+            </h2>
             <div ref={headerButtonRef} className={s.headerButton}>
               <UserAddPopup
                 defaultData={userCreateDefaultData}
