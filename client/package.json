@@ -31,7 +31,7 @@
     "@tanstack/react-table": "^8.21.2",
     "@uiw/react-md-editor": "^4.0.5",
     "babel-jest": "^29.7.0",
-    "babel-loader": "^9.2.1",
+    "babel-loader": "^10.0.0",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-preset-react-app": "^10.1.0",
     "bfj": "^9.1.2",
