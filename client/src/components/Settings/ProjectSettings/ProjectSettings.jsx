@@ -15,7 +15,7 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './ProjectSettings.module.scss';
 
 const ProjectSettings = React.memo(
-  ({ projectId, name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete }) => {
+  ({ projectId, name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, isManager, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete }) => {
     const [t] = useTranslation();
 
     const handleBackgroundUpdate = useCallback(
@@ -66,6 +66,7 @@ const ProjectSettings = React.memo(
                 deleteConfirmationContent="common.areYouSureYouWantToRemoveThisManagerFromProject"
                 deleteConfirmationButtonContent="action.removeManager"
                 canLeaveIfLast={false}
+                canEdit={isManager}
                 onCreate={(data) => {
                   onManagerCreate(projectId, data);
                 }}
@@ -119,6 +120,7 @@ ProjectSettings.propTypes = {
   managers: PropTypes.array.isRequired,
   allUsers: PropTypes.array.isRequired,
   /* eslint-enable react/forbid-prop-types */
+  isManager: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onBackgroundImageUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

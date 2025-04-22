@@ -188,8 +188,8 @@ AddStep.propTypes = {
   deleteConfirmationTitle: PropTypes.string,
   deleteConfirmationContent: PropTypes.string,
   deleteConfirmationButtonContent: PropTypes.string,
-  canEdit: PropTypes.bool,
-  canLeaveIfLast: PropTypes.bool,
+  canEdit: PropTypes.bool.isRequired,
+  canLeaveIfLast: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
@@ -207,8 +207,6 @@ AddStep.defaultProps = {
   deleteConfirmationTitle: undefined,
   deleteConfirmationContent: undefined,
   deleteConfirmationButtonContent: undefined,
-  canEdit: true,
-  canLeaveIfLast: true,
   onUpdate: undefined,
 };
 

@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
   const { projectId } = selectors.selectPath(state);
   const { name, background, backgroundImage, isBackgroundImageUpdating } = selectors.selectProject(state, projectId);
   const managers = selectors.selectManagersForProject(state, projectId);
+  const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
 
   return {
     projectId,
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
     isBackgroundImageUpdating,
     managers,
     allUsers: users,
+    isManager,
   };
 };
 

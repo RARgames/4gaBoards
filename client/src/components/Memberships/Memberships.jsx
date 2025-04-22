@@ -84,6 +84,7 @@ const Memberships = React.memo(
             deleteConfirmationButtonContent={deleteConfirmationButtonContent}
             canEdit={canEdit}
             canLeave={items.length > 1 || canLeaveIfLast}
+            canLeaveIfLast={canLeaveIfLast}
             permissionsSelectStep={permissionsSelectStep}
             title={addTitle}
             onCreate={onCreate}
@@ -119,6 +120,7 @@ const Memberships = React.memo(
             deleteConfirmationButtonContent={deleteConfirmationButtonContent}
             canEdit={canEdit}
             canLeave={items.length > 1 || canLeaveIfLast}
+            canLeaveIfLast={canLeaveIfLast}
             permissionsSelectStep={permissionsSelectStep}
             title={addTitle}
             onCreate={onCreate}
@@ -150,7 +152,7 @@ Memberships.propTypes = {
   deleteConfirmationTitle: PropTypes.string,
   deleteConfirmationContent: PropTypes.string,
   deleteConfirmationButtonContent: PropTypes.string,
-  canEdit: PropTypes.bool,
+  canEdit: PropTypes.bool.isRequired,
   canLeaveIfLast: PropTypes.bool,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func,
@@ -168,7 +170,6 @@ Memberships.defaultProps = {
   deleteConfirmationTitle: undefined,
   deleteConfirmationContent: undefined,
   deleteConfirmationButtonContent: undefined,
-  canEdit: true,
   canLeaveIfLast: true,
   onUpdate: undefined,
 };
