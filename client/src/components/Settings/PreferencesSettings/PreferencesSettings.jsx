@@ -156,7 +156,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
                   className={s.dropdown}
                 />
               </Table.Cell>
-              <Table.Cell>{selectedDefaultView.name}</Table.Cell>
+              <Table.Cell>{selectedListViewStyle.name}</Table.Cell>
               <Table.Cell>{t('common.descriptionDefaultView')}</Table.Cell>
             </Table.Row>
             <Table.Row>
