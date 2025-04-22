@@ -47,6 +47,20 @@ export default (WrappedComponent, defaultProps) => {
 
     const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
 
+    const handleCloseClick = useCallback(
+      (e) => {
+        onOpenChange(false, e?.nativeEvent, 'close-button');
+      },
+      [onOpenChange],
+    );
+
+    const handleClose = useCallback(
+      (e) => {
+        onOpenChange(false, e?.nativeEvent, 'close-event');
+      },
+      [onOpenChange],
+    );
+
     const modalContent = (
       <FloatingPortal>
         <FloatingOverlay lockScroll className={s.modalOverlay}>
@@ -54,17 +68,12 @@ export default (WrappedComponent, defaultProps) => {
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <div className={classNames(s.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
               {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                <Button
-                  style={ButtonStyle.Icon}
-                  title={t('common.close')}
-                  onClick={(e) => onOpenChange(false, e?.nativeEvent, 'close-button')}
-                  className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}
-                >
+                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                   <Icon type={IconType.Close} size={IconSize.Size14} />
                 </Button>
               )}
               {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-              <WrappedComponent {...props} onClose={(e) => onOpenChange(false, e?.nativeEvent, 'close-event')} />
+              <WrappedComponent {...props} onClose={handleClose} />
             </div>
           </FloatingFocusManager>
         </FloatingOverlay>

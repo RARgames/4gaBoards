@@ -10,7 +10,7 @@ import { Icon, IconType, IconSize } from '../Icon';
 import * as s from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Popup = React.memo(({ children, disabled, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
+  const Popup = React.memo(({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -37,10 +37,24 @@ export default (WrappedComponent, defaultProps) => {
     });
 
     const click = useClick(context, { enabled: !disabled });
-    const dismiss = useDismiss(context);
+    const dismiss = useDismiss(context, { ancestorScroll: !keepOnScroll });
     const role = useRole(context, { role: 'dialog' });
 
     const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
+
+    const handleCloseClick = useCallback(
+      (e) => {
+        onOpenChange(false, e?.nativeEvent, 'close-button');
+      },
+      [onOpenChange],
+    );
+
+    const handleClose = useCallback(
+      (e) => {
+        onOpenChange(false, e?.nativeEvent, 'close-event');
+      },
+      [onOpenChange],
+    );
 
     const handleWithinPopupClick = useCallback((e) => {
       e.stopPropagation(); // TODO Prevent e.g. switching card - change how popup handles key input
@@ -59,17 +73,12 @@ export default (WrappedComponent, defaultProps) => {
               {/* eslint-disable-next-line react/jsx-props-no-spreading, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <div className={classNames(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} onClick={handleWithinPopupClick}>
                 {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                  <Button
-                    style={ButtonStyle.Icon}
-                    title={t('common.close')}
-                    onClick={(e) => onOpenChange(false, e?.nativeEvent, 'close-button')}
-                    className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}
-                  >
+                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                     <Icon type={IconType.Close} size={IconSize.Size14} />
                   </Button>
                 )}
                 {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                <WrappedComponent {...props} onClose={(e) => onOpenChange(false, e?.nativeEvent, 'close-event')} />
+                <WrappedComponent {...props} onClose={handleClose} />
               </div>
             </FloatingFocusManager>
           </FloatingPortal>
@@ -81,6 +90,7 @@ export default (WrappedComponent, defaultProps) => {
   Popup.propTypes = {
     children: PropTypes.node.isRequired,
     disabled: PropTypes.bool,
+    keepOnScroll: PropTypes.bool,
     className: PropTypes.string,
     hideCloseButton: PropTypes.bool,
     offset: PropTypes.number,
@@ -92,6 +102,7 @@ export default (WrappedComponent, defaultProps) => {
 
   Popup.defaultProps = {
     disabled: false,
+    keepOnScroll: false,
     className: undefined,
     hideCloseButton: false,
     offset: 10,

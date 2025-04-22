@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ const StepTypes = {
   DELETE: 'DELETE',
 };
 
-const BoardActionsStep = React.memo(({ sidebarRef, defaultDataRename, defaultDataGithub, onUpdate, onExport, onDelete, onClose }) => {
+const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onUpdate, onExport, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -26,19 +26,6 @@ const BoardActionsStep = React.memo(({ sidebarRef, defaultDataRename, defaultDat
     openStep(StepTypes.EXPORT);
     onExport();
   }, [onExport, openStep]);
-
-  const handleSidebarScroll = useCallback(() => {
-    onClose();
-  }, [onClose]);
-
-  useEffect(() => {
-    const sidebar = sidebarRef?.current;
-    sidebar?.addEventListener('scroll', handleSidebarScroll);
-
-    return () => {
-      sidebar?.removeEventListener('scroll', handleSidebarScroll);
-    };
-  }, [handleSidebarScroll, sidebarRef]);
 
   if (step) {
     switch (step.type) {
@@ -88,7 +75,6 @@ const BoardActionsStep = React.memo(({ sidebarRef, defaultDataRename, defaultDat
 });
 
 BoardActionsStep.propTypes = {
-  sidebarRef: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataGithub: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,

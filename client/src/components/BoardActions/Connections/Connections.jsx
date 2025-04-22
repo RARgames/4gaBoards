@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '
 import * as gs from '../../../global.module.scss';
 
 // TODO replace with actual Github integration
-const Connections = React.memo(({ sidebarRef, defaultData, onUpdate, onBack, onClose }) => {
+const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
   const inputRef = useRef(null);
   const [isError, setIsError] = useState(false);
@@ -56,19 +56,6 @@ const Connections = React.memo(({ sidebarRef, defaultData, onUpdate, onBack, onC
     [handleSubmit],
   );
 
-  const handleSidebarScroll = useCallback(() => {
-    onClose();
-  }, [onClose]);
-
-  useEffect(() => {
-    const sidebar = sidebarRef?.current;
-    sidebar?.addEventListener('scroll', handleSidebarScroll);
-
-    return () => {
-      sidebar?.removeEventListener('scroll', handleSidebarScroll);
-    };
-  }, [handleSidebarScroll, sidebarRef]);
-
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -99,7 +86,6 @@ const Connections = React.memo(({ sidebarRef, defaultData, onUpdate, onBack, onC
 });
 
 Connections.propTypes = {
-  sidebarRef: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
@@ -107,7 +93,6 @@ Connections.propTypes = {
 };
 
 Connections.defaultProps = {
-  sidebarRef: undefined,
   onBack: undefined,
 };
 

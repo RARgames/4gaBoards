@@ -49,7 +49,6 @@ const Sidebar = React.memo(
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
     const projectRefs = useRef({});
-    const sidebarRef = useRef(null);
     const boardRefs = useRef({});
     const isFilteringBoards = filterTarget === 'board' && !!filterQuery;
 
@@ -115,7 +114,6 @@ const Sidebar = React.memo(
             </Link>
             {isProjectManager && (
               <ProjectActionsPopup
-                sidebarRef={sidebarRef}
                 projectId={project.id}
                 managedProjects={managedProjects}
                 defaultDataRename={pick(project, 'name')}
@@ -164,13 +162,7 @@ const Sidebar = React.memo(
                                 </Link>
                                 {board.isGithubConnected &&
                                   (isProjectManager ? (
-                                    <Connections
-                                      sidebarRef={sidebarRef}
-                                      defaultData={pick(board, ['isGithubConnected', 'githubRepo'])}
-                                      onUpdate={(data) => onBoardUpdate(board.id, data)}
-                                      offset={30}
-                                      position="right-start"
-                                    >
+                                    <Connections defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
@@ -190,7 +182,6 @@ const Sidebar = React.memo(
                                   ))}
                                 {isProjectManager && (
                                   <BoardActionsPopup
-                                    sidebarRef={sidebarRef}
                                     defaultDataRename={pick(board, 'name')}
                                     defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
@@ -232,7 +223,7 @@ const Sidebar = React.memo(
               <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
             )}
           </div>
-          <div ref={sidebarRef} className={classNames(s.scrollable, gs.scrollableY)}>
+          <div className={classNames(s.scrollable, gs.scrollableY)}>
             {settingsOnly && (
               <div>
                 <div className={s.sidebarTitle}>
