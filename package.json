@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "confusing-browser-globals": "^1.0.11",
-    "eslint": "^9.24.0",
+    "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.6",
