@@ -62,14 +62,14 @@ export default (WrappedComponent, defaultProps) => {
                   <Button
                     style={ButtonStyle.Icon}
                     title={t('common.close')}
-                    onClick={(e) => onOpenChange(false, e.nativeEvent, 'close-button')}
+                    onClick={(e) => onOpenChange(false, e?.nativeEvent, 'close-button')}
                     className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}
                   >
                     <Icon type={IconType.Close} size={IconSize.Size14} />
                   </Button>
                 )}
                 {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                <WrappedComponent {...props} onClose={(e) => onOpenChange(false, e.nativeEvent, 'close-event')} />
+                <WrappedComponent {...props} onClose={(e) => onOpenChange(false, e?.nativeEvent, 'close-event')} />
               </div>
             </FloatingFocusManager>
           </FloatingPortal>

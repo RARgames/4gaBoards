@@ -71,9 +71,13 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
 });
 
 TextFileAddModal.propTypes = {
-  content: PropTypes.string.isRequired,
+  content: PropTypes.string,
   onCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+TextFileAddModal.defaultProps = {
+  content: '',
 };
 
 export default withModal(TextFileAddModal);

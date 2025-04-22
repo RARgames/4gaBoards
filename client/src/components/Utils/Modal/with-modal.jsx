@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFloating, useClick, useInteractions, useDismiss, useRole, FloatingFocusManager, FloatingOverlay, FloatingPortal } from '@floating-ui/react';
 import classNames from 'classnames';
@@ -10,29 +10,42 @@ import { Icon, IconType, IconSize } from '../Icon';
 import * as s from './Modal.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Modal = React.memo(({ children, className, hideCloseButton, closeButtonClassName, wrapperClassName, isModalOpen, setIsModalOpen, onClose, ...props }) => {
+  const Modal = React.forwardRef(({ children, disabled, className, hideCloseButton, closeButtonClassName, wrapperClassName, onClose, ...props }, ref) => {
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
 
+    useImperativeHandle(
+      ref,
+      () => ({
+        setIsOpen,
+      }),
+      [setIsOpen],
+    );
+
+    const onOpenChange = useCallback(
+      // eslint-disable-next-line no-unused-vars
+      (nextOpen, event, reason) => {
+        setIsOpen(nextOpen);
+
+        if (!nextOpen) {
+          if (onClose) {
+            onClose();
+          }
+        }
+      },
+      [onClose],
+    );
+
     const { refs, context } = useFloating({
-      open: isOpen || isModalOpen,
-      onOpenChange: setIsOpen && setIsModalOpen,
+      open: isOpen,
+      onOpenChange,
     });
 
-    const click = useClick(context);
+    const click = useClick(context, { enabled: !disabled });
     const dismiss = useDismiss(context);
     const role = useRole(context);
 
     const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
-
-    const handleClose = useCallback(() => {
-      setIsOpen(false);
-      setIsModalOpen(false);
-
-      if (onClose) {
-        onClose();
-      }
-    }, [onClose, setIsModalOpen]);
 
     const modalContent = (
       <FloatingPortal>
@@ -41,12 +54,17 @@ export default (WrappedComponent, defaultProps) => {
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <div className={classNames(s.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
               {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                <Button
+                  style={ButtonStyle.Icon}
+                  title={t('common.close')}
+                  onClick={(e) => onOpenChange(false, e?.nativeEvent, 'close-button')}
+                  className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}
+                >
                   <Icon type={IconType.Close} size={IconSize.Size14} />
                 </Button>
               )}
               {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-              <WrappedComponent {...props} onClose={handleClose} />
+              <WrappedComponent {...props} onClose={(e) => onOpenChange(false, e?.nativeEvent, 'close-event')} />
             </div>
           </FloatingFocusManager>
         </FloatingOverlay>
@@ -60,33 +78,31 @@ export default (WrappedComponent, defaultProps) => {
           <div ref={refs.setReference} {...getReferenceProps()} className={wrapperClassName}>
             {children}
           </div>
-          {(isOpen || isModalOpen) && modalContent}
+          {isOpen && modalContent}
         </>
       );
     }
 
-    return isOpen || isModalOpen ? modalContent : null;
+    return isOpen ? modalContent : null;
   });
 
   Modal.propTypes = {
     children: PropTypes.node,
+    disabled: PropTypes.bool,
     className: PropTypes.string,
     hideCloseButton: PropTypes.bool,
     closeButtonClassName: PropTypes.string,
     wrapperClassName: PropTypes.string,
-    isModalOpen: PropTypes.bool,
-    setIsModalOpen: PropTypes.func,
     onClose: PropTypes.func,
   };
 
   Modal.defaultProps = {
     children: undefined,
+    disabled: false,
     className: undefined,
     hideCloseButton: false,
     closeButtonClassName: undefined,
     wrapperClassName: undefined,
-    isModalOpen: false,
-    setIsModalOpen: () => {},
     onClose: undefined,
   };
 
