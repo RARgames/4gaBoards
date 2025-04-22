@@ -10,35 +10,37 @@ import { Icon, IconType, IconSize } from '../Icon';
 import * as s from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Popup = React.memo(({ children, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
+  const Popup = React.memo(({ children, disabled, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
 
+    const onOpenChange = useCallback(
+      // eslint-disable-next-line no-unused-vars
+      (nextOpen, event, reason) => {
+        setIsOpen(nextOpen);
+
+        if (!nextOpen) {
+          if (onClose) {
+            onClose();
+          }
+        }
+      },
+      [onClose],
+    );
+
     const { refs, floatingStyles, context } = useFloating({
       open: isOpen,
-      onOpenChange: setIsOpen,
+      onOpenChange,
       whileElementsMounted: autoUpdate,
       placement: defaultProps?.position ?? position,
       middleware: [posOffset(defaultProps?.offset ?? offset), flip(), shift({ padding: 6 })],
     });
 
-    const click = useClick(context);
+    const click = useClick(context, { enabled: !disabled });
     const dismiss = useDismiss(context);
     const role = useRole(context, { role: 'dialog' });
 
     const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
-
-    const handleClose = useCallback(() => {
-      setIsOpen(false);
-
-      if (onClose) {
-        onClose();
-      }
-    }, [onClose]);
-
-    const toggleOpen = useCallback(() => {
-      setIsOpen(!isOpen);
-    }, [isOpen]);
 
     const handleWithinPopupClick = useCallback((e) => {
       e.stopPropagation(); // TODO Prevent e.g. switching card - change how popup handles key input
@@ -48,7 +50,7 @@ export default (WrappedComponent, defaultProps) => {
       <>
         {/* TODO temp removed: s.wrapper */}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps({ onClick: toggleOpen })} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch>
+        <div ref={refs.setReference} {...getReferenceProps()} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch>
           {children}
         </div>
         {isOpen && (
@@ -57,12 +59,17 @@ export default (WrappedComponent, defaultProps) => {
               {/* eslint-disable-next-line react/jsx-props-no-spreading, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <div className={classNames(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} onClick={handleWithinPopupClick}>
                 {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleClose} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                  <Button
+                    style={ButtonStyle.Icon}
+                    title={t('common.close')}
+                    onClick={(e) => onOpenChange(false, e.nativeEvent, 'close-button')}
+                    className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}
+                  >
                     <Icon type={IconType.Close} size={IconSize.Size14} />
                   </Button>
                 )}
                 {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                <WrappedComponent {...props} onClose={handleClose} />
+                <WrappedComponent {...props} onClose={(e) => onOpenChange(false, e.nativeEvent, 'close-event')} />
               </div>
             </FloatingFocusManager>
           </FloatingPortal>
@@ -73,6 +80,7 @@ export default (WrappedComponent, defaultProps) => {
 
   Popup.propTypes = {
     children: PropTypes.node.isRequired,
+    disabled: PropTypes.bool,
     className: PropTypes.string,
     hideCloseButton: PropTypes.bool,
     offset: PropTypes.number,
@@ -83,6 +91,7 @@ export default (WrappedComponent, defaultProps) => {
   };
 
   Popup.defaultProps = {
+    disabled: false,
     className: undefined,
     hideCloseButton: false,
     offset: 10,

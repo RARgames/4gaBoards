@@ -32,6 +32,7 @@ const ActionsStep = React.memo(
     labels,
     currentLabelIds,
     url,
+    canEdit,
     onNameEdit,
     onUpdate,
     onMove,
@@ -127,6 +128,7 @@ const ActionsStep = React.memo(
               onCreate={onLabelCreate}
               onUpdate={onLabelUpdate}
               onDelete={onLabelDelete}
+              canEdit={canEdit}
               onBack={handleBack}
             />
           );
@@ -188,8 +190,9 @@ ActionsStep.propTypes = {
   currentUserIds: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
   currentLabelIds: PropTypes.array.isRequired,
-  url: PropTypes.string.isRequired,
   /* eslint-enable react/forbid-prop-types */
+  url: PropTypes.string.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,

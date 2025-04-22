@@ -290,6 +290,7 @@ const Card = React.memo(
                           labels={allLabels}
                           currentLabelIds={labels.map((label) => label.id)}
                           url={url}
+                          canEdit={canEdit}
                           onNameEdit={handleNameEdit}
                           onUpdate={onUpdate}
                           onMove={onMove}

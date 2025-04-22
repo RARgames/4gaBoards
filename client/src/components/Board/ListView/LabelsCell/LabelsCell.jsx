@@ -14,9 +14,22 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
   const labelIds = labels.map((label) => label.id);
 
   const labelsNode = labels.map((label) => (
-    <div key={label.id} className={s.attachment}>
+    <LabelsPopup
+      key={label.id}
+      items={allLabels}
+      currentIds={labelIds}
+      onSelect={onLabelAdd}
+      onDeselect={onLabelRemove}
+      onCreate={onLabelCreate}
+      onUpdate={onLabelUpdate}
+      onDelete={onLabelDelete}
+      canEdit={canEdit}
+      offset={0}
+      wrapperClassName={s.labelWrapper}
+      disabled={!canEdit}
+    >
       <Label name={label.name} color={label.color} variant="card" />
-    </div>
+    </LabelsPopup>
   ));
 
   const addLabelNode = (
@@ -38,31 +51,11 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
     </LabelsPopup>
   );
 
-  if (!canEdit) {
-    return <div className={classNames(cellClassName, s.labels)}>{labelsNode}</div>;
-  }
-
-  if (labels.length === 0) {
+  if (labels.length === 0 && canEdit) {
     return addLabelNode;
   }
 
-  return (
-    <div className={classNames(cellClassName, s.labels)}>
-      <LabelsPopup
-        items={allLabels}
-        currentIds={labelIds}
-        onSelect={onLabelAdd}
-        onDeselect={onLabelRemove}
-        onCreate={onLabelCreate}
-        onUpdate={onLabelUpdate}
-        onDelete={onLabelDelete}
-        canEdit={canEdit}
-        offset={0}
-      >
-        {labelsNode}
-      </LabelsPopup>
-    </div>
-  );
+  return <div className={classNames(cellClassName)}>{labelsNode}</div>;
 });
 
 LabelsCell.propTypes = {

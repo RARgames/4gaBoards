@@ -350,6 +350,7 @@ const CardModal = React.memo(
               labels={allLabels}
               currentLabelIds={labels.map((label) => label.id)}
               url={url}
+              canEdit={canEdit}
               onNameEdit={handleNameEdit}
               onUpdate={onUpdate}
               onMove={onMove}
@@ -446,7 +447,17 @@ const CardModal = React.memo(
           {t('common.labels', { context: 'title' })}
           {canEdit && (
             <div className={s.popupWrapper}>
-              <LabelsPopup items={allLabels} currentIds={labelIds} onSelect={onLabelAdd} onDeselect={onLabelRemove} onCreate={onLabelCreate} onUpdate={onLabelUpdate} onDelete={onLabelDelete} offset={0}>
+              <LabelsPopup
+                items={allLabels}
+                currentIds={labelIds}
+                canEdit={canEdit}
+                onSelect={onLabelAdd}
+                onDeselect={onLabelRemove}
+                onCreate={onLabelCreate}
+                onUpdate={onLabelUpdate}
+                onDelete={onLabelDelete}
+                offset={0}
+              >
                 <Button style={ButtonStyle.Icon} title={t('common.addLabel')}>
                   <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton2} />
                 </Button>
@@ -454,7 +465,17 @@ const CardModal = React.memo(
             </div>
           )}
         </div>
-        <LabelsPopup items={allLabels} currentIds={labelIds} onSelect={onLabelAdd} onDeselect={onLabelRemove} onCreate={onLabelCreate} onUpdate={onLabelUpdate} onDelete={onLabelDelete} offset={0}>
+        <LabelsPopup
+          items={allLabels}
+          currentIds={labelIds}
+          canEdit={canEdit}
+          onSelect={onLabelAdd}
+          onDeselect={onLabelRemove}
+          onCreate={onLabelCreate}
+          onUpdate={onLabelUpdate}
+          onDelete={onLabelDelete}
+          offset={0}
+        >
           {labels.map((label) => (
             <span key={label.id} className={s.headerItem}>
               <Label name={label.name} color={label.color} variant="cardModal" />

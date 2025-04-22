@@ -151,7 +151,7 @@ LabelsStep.propTypes = {
   currentIds: PropTypes.array.isRequired,
   /* eslint-enable react/forbid-prop-types */
   title: PropTypes.string,
-  canEdit: PropTypes.bool,
+  canEdit: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
   onDeselect: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
@@ -162,7 +162,6 @@ LabelsStep.propTypes = {
 
 LabelsStep.defaultProps = {
   title: 'common.labels',
-  canEdit: true, // TODO change to required here and simmilar places
   onBack: undefined,
 };
 

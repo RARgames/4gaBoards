@@ -1,14 +1,8 @@
 :global(#app) {
-  .attachment {
+  .labelWrapper {
     display: inline-flex;
     margin: 3px 4px 3px 0;
     max-width: 100%;
-  }
-
-  .labels {
-    display: inline-flex;
-    max-width: 100%;
-    overflow: hidden;
   }
 
   .popupWrapper {
