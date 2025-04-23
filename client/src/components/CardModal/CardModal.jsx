@@ -475,10 +475,11 @@ const CardModal = React.memo(
           onUpdate={onLabelUpdate}
           onDelete={onLabelDelete}
           offset={0}
+          disabled={!canEdit}
         >
           {labels.map((label) => (
             <span key={label.id} className={s.headerItem}>
-              <Label name={label.name} color={label.color} variant="cardModal" />
+              <Label name={label.name} color={label.color} variant="cardModal" isClickable={canEdit} />
             </span>
           ))}
         </LabelsPopup>

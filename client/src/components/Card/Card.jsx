@@ -194,7 +194,7 @@ const Card = React.memo(
                   wrapperClassName={classNames(s.attachment, s.attachmentLeft)}
                   disabled={!canEdit}
                 >
-                  <Label name={label.name} color={label.color} variant="card" />
+                  <Label name={label.name} color={label.color} variant="card" isClickable={canEdit} />
                 </LabelsPopup>
               ))}
             </span>

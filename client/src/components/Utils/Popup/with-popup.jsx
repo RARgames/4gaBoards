@@ -64,7 +64,7 @@ export default (WrappedComponent, defaultProps) => {
       <>
         {/* TODO temp removed: s.wrapper */}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps()} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch>
+        <div ref={refs.setReference} {...getReferenceProps()} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch={disabled ? undefined : true}>
           {children}
         </div>
         {isOpen && (

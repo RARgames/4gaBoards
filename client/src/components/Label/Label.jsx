@@ -8,6 +8,7 @@ import LabelColors from '../../constants/LabelColors';
 import { Button } from '../Utils';
 
 import * as bs from '../../backgrounds.module.scss';
+import * as gs from '../../global.module.scss';
 import * as s from './Label.module.scss';
 
 const VARIANTS = {
@@ -16,11 +17,19 @@ const VARIANTS = {
   LABELS: 'labels',
 };
 
-const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, className, onClick }) => {
+const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, isClickable, className, onClick }) => {
   const contentNode = (
     <div
       title={name}
-      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], onClick && s.wrapperHoverable, isRemovable && s.wrapperRemovable, bs[`background${upperFirst(camelCase(color))}`], className)}
+      className={classNames(
+        s.wrapper,
+        s[`wrapper${upperFirst(variant)}`],
+        onClick && s.wrapperHoverable,
+        isRemovable && s.wrapperRemovable,
+        bs[`background${upperFirst(camelCase(color))}`],
+        (onClick || isClickable) && gs.cursorPointer,
+        className,
+      )}
     >
       {name}
     </div>
@@ -42,6 +51,7 @@ Label.propTypes = {
   isDisabled: PropTypes.bool,
   isRemovable: PropTypes.bool,
   className: PropTypes.string,
+  isClickable: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
@@ -50,6 +60,7 @@ Label.defaultProps = {
   isDisabled: false,
   isRemovable: false,
   className: undefined,
+  isClickable: false,
   onClick: undefined,
 };
 

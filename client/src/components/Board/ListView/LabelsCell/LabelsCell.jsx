@@ -28,7 +28,7 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
       wrapperClassName={s.labelWrapper}
       disabled={!canEdit}
     >
-      <Label name={label.name} color={label.color} variant="card" />
+      <Label name={label.name} color={label.color} variant="card" isClickable={canEdit} />
     </LabelsPopup>
   ));
 
