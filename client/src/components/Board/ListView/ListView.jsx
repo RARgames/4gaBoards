@@ -234,11 +234,11 @@ const ListView = React.memo(
         },
         {
           accessorKey: 'listName',
-          header: t('common.listName'),
+          header: t('common.list'),
           cell: ListNameCellRenderer,
           enableSorting: true,
           sortingFn: sortingFunctions.localeSortingFn,
-          meta: { headerTitle: t('common.listName') },
+          meta: { headerTitle: t('common.list') },
         },
         {
           accessorKey: 'hasDescription',

@@ -237,7 +237,6 @@ export default {
       linkCard: 'Kopiuj link',
       list: 'Lista',
       listActions_title: 'Edytuj listę',
-      listName: 'Nazwa listy',
       listView: 'Lista',
       listViewStyle: 'Styl widoku listy',
       managers: 'Moderatorzy',

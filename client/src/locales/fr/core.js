@@ -239,7 +239,6 @@ export default {
       linkCard: 'Copier le lien',
       list: 'Lister',
       listActions_title: 'Liste des actions',
-      listName: 'Nom de la liste',
       listView: 'La liste',
       listViewStyle: 'Style de la vue de la liste',
       managers: 'Gestionnaires',

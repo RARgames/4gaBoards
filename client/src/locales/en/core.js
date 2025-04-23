@@ -226,7 +226,6 @@ export default {
       linkCard: 'Copy Link',
       list: 'List',
       listActions_title: 'List Actions',
-      listName: 'List Name',
       listView: 'List',
       listViewStyle: 'List View Style',
       managers: 'Managers',
