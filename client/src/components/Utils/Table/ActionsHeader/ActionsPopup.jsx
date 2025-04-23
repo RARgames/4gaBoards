@@ -62,6 +62,7 @@ const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumn
             userPrefsKeys={userPrefsKeys}
             skipColumns={['actions']}
             onResetColumnWidths={onResetColumnWidths}
+            onResetColumnVisibility={onResetColumnVisibility}
             onUserPrefsUpdate={onUserPrefsUpdate}
             onBack={handleBack}
           />

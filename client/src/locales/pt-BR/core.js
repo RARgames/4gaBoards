@@ -125,8 +125,7 @@ export default {
       descriptionSLanguage: 'Escolha o idioma que você deseja usar no 4ga Boards.',
       descriptionSsoRegistration: 'Habilita ou desabilita o registro de usuários por SSO. Esse método de registro permite que usuários criem uma conta por meiode contas externas, por ex. Contas Google.',
       descriptionSubscribeToMyOwnCards: 'Automaticamente se inscrever para os cartões criados por mim.',
-      descriptionUserRegistration:
-        'Habilita ou desabilita todos os métodos de registro de usuário. Se você desabilitar todos os métodos de registro, apenas administradores serão capazes de criar novos usuários.',
+      descriptionUserRegistration: 'Habilita ou desabilita todos os métodos de registro de usuário. Se você desabilitar todos os métodos de registro, apenas administradores serão capazes de criar novos usuários.', /* eslint-disable-line prettier/prettier */
       detailsAttachments_one: 'Este cartão tem {{count}} anexo',
       detailsAttachments_other: 'Este cartão tem {{count}} anexos',
       detailsComments_one: 'Este cartão tem {{count}} comentário',
@@ -292,10 +291,13 @@ export default {
       searchMembers: 'Procurar membros...',
       searchUsers: 'Procurar usuários...',
       seconds: 'Segundos',
+      selectAll: 'Selecionar Todos',
       selectBoard: 'Selecionar painel',
       selectColumns: 'Selecionar Colunas',
+      selectDefault: 'Selecionar Padrão',
       selectedProject: 'Projeto Selecionado',
       selectList: 'Selecionar lista',
+      selectNone: 'Selecionar Nenhum',
       selectPermissions_title: 'Selecionar Permissões',
       selectProject: 'Selecionar projeto',
       settings: 'Configurações',
