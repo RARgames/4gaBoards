@@ -374,7 +374,21 @@ const ListView = React.memo(
             ))}
           </Table.Body>
         </Table>
-        <Table.Pagination table={table} itemsPerPage={listViewItemsPerPage} rowsCount={filteredCards.length} userPrefsKey="listViewItemsPerPage" onUserPrefsUpdate={onUserPrefsUpdate}>
+        <Table.Pagination
+          table={table}
+          itemsPerPage={listViewItemsPerPage}
+          rowsCount={filteredCards.length}
+          userPrefsKey="listViewItemsPerPage"
+          fitScreen={listViewFitScreen}
+          userPrefsKeys={{
+            columnVisibility: 'listViewColumnVisibility',
+            fitScreen: 'listViewFitScreen',
+          }}
+          onResetColumnSorting={handleResetColumnSortingClick}
+          onResetColumnWidths={handleResetColumnWidthsClick}
+          onResetColumnVisibility={handleResetColumnVisibilityClick}
+          onUserPrefsUpdate={onUserPrefsUpdate}
+        >
           {canEdit && (
             <div className={s.paginationButtonsWrapper}>
               <ListAddPopup onCreate={onListCreate} offset={5} position="top">

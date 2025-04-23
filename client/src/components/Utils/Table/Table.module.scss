@@ -199,4 +199,16 @@
   .paginationDropdownButton {
     top: -2px;
   }
+
+  .tableSettingsButton {
+    &:hover {
+      .iconTableSettingsButton {
+        fill: var(--textColor3);
+      }
+    }
+  }
+
+  .iconTableSettingsButton {
+    fill: var(--textColor1);
+  }
 }
