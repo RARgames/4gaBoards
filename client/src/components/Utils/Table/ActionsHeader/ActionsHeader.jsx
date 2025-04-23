@@ -23,6 +23,7 @@ const ActionsHeader = React.memo(({ table, fitScreen, userPrefsKeys, onResetColu
       position="left-start"
       offset={0}
       hideCloseButton
+      keepOnScroll
     >
       <Button style={ButtonStyle.Icon} title={t('common.editListView')} className={s.tableSettingsButton}>
         <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} className={s.iconTableSettingsButton} />

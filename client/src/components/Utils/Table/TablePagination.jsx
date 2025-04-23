@@ -111,6 +111,7 @@ const TablePagination = React.memo(
             position="top"
             offset={4}
             hideCloseButton
+            keepOnScroll
           >
             <Button style={ButtonStyle.Icon} title={t('common.editListView')} className={s.tableSettingsButton}>
               <Icon type={IconType.Settings} size={IconSize.Size13} className={s.iconTableSettingsButton} />
