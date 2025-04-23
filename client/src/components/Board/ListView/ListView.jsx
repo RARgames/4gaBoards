@@ -101,6 +101,38 @@ const ListView = React.memo(
       setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
     }, [setColumnVisibility]);
 
+    const handleColumnVisibilityChange = useCallback(
+      (updater) => {
+        setColumnVisibility((prev) => {
+          const next = typeof updater === 'function' ? updater(prev) : updater;
+          const changedColumns = Object.keys(next).filter((key) => next[key] !== prev[key]);
+          const nowHidden = changedColumns.filter((col) => next[col] === false);
+          if (nowHidden.length > 0) {
+            setSorting((prevSorting) => prevSorting.filter((sort) => !nowHidden.includes(sort.id)));
+          }
+          return next;
+        });
+      },
+      [setColumnVisibility, setSorting],
+    );
+
+    const handlePaginationChange = useCallback(
+      (updater) => {
+        setPagination((prev) => {
+          const next = typeof updater === 'function' ? updater(prev) : updater;
+          if (next.pageSize !== prev.pageSize) {
+            const nextPageIndex = Math.floor(currentCardIndex / next.pageSize);
+            next.pageIndex = nextPageIndex === -1 ? 0 : nextPageIndex;
+          }
+          if (next.pageIndex !== prev.pageIndex) {
+            tableBodyRef.current.scrollTo({ top: 0 });
+          }
+          return next;
+        });
+      },
+      [currentCardIndex, setPagination],
+    );
+
     const table = useReactTable({
       autoResetPageIndex: false,
       data: filteredCards,
@@ -111,20 +143,8 @@ const ListView = React.memo(
       enableMultiSort: true,
       columnResizeMode: 'onChange',
       state: { sorting, columnVisibility, pagination },
-      onColumnVisibilityChange: setColumnVisibility,
-      onPaginationChange: (updater) => {
-        setPagination((prev) => {
-          const nextPagination = typeof updater === 'function' ? updater(prev) : updater;
-          if (nextPagination.pageSize !== prev.pageSize) {
-            const nextPageIndex = Math.floor(currentCardIndex / nextPagination.pageSize);
-            nextPagination.pageIndex = nextPageIndex === -1 ? 0 : nextPageIndex;
-          }
-          if (nextPagination.pageIndex !== prev.pageIndex) {
-            tableBodyRef.current.scrollTo({ top: 0 });
-          }
-          return nextPagination;
-        });
-      },
+      onColumnVisibilityChange: handleColumnVisibilityChange,
+      onPaginationChange: handlePaginationChange,
       style: listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
     });
 
