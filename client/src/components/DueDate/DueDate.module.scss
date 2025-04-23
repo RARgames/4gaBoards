@@ -39,6 +39,14 @@
     fill: var(--textColor1);
   }
 
+  .dueDateHoverable {
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(85%);
+    }
+  }
+
   /* Variants */
 
   .wrapperCard {
@@ -51,11 +59,6 @@
     font-size: 14px;
     font-weight: bold;
     line-height: 28px;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(85%);
-    }
   }
 
   .wrapperTasksCard {

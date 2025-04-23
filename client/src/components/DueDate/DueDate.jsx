@@ -33,7 +33,7 @@ const getDueStyle = (value) => {
 };
 
 // TODO remove old onClick and Button variant
-const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize, className, onClick }) => {
+const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize, isClickable, className, onClick }) => {
   const [t] = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
 
@@ -51,7 +51,7 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
 
   const contentNode = value && (
     <span
-      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], className)}
+      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], (onClick || isClickable) && s.dueDateHoverable, className)}
       title={`${titlePrefixString}${t(variant === VARIANTS.LIST_VIEW ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' })}`}
     >
       {variant !== VARIANTS.TASKS_CARD && variant !== VARIANTS.LIST_VIEW && t(`format:date`, { value, postProcess: 'formatDate' })}
@@ -75,6 +75,7 @@ DueDate.propTypes = {
   isDisabled: PropTypes.bool,
   titlePrefix: PropTypes.string,
   iconSize: PropTypes.oneOf(Object.values(IconSize)),
+  isClickable: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
 };
@@ -85,6 +86,7 @@ DueDate.defaultProps = {
   isDisabled: false,
   titlePrefix: undefined,
   iconSize: IconSize.Size13,
+  isClickable: false,
   className: undefined,
   onClick: undefined,
 };

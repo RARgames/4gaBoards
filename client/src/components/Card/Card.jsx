@@ -237,13 +237,9 @@ const Card = React.memo(
               )}
               {dueDate && (
                 <span className={classNames(s.attachment, s.attachmentLeft)}>
-                  {canEdit ? (
-                    <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-                      <DueDate value={dueDate} variant="card" />
-                    </DueDateEditPopup>
-                  ) : (
-                    <DueDate value={dueDate} variant="card" />
-                  )}
+                  <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
+                    <DueDate value={dueDate} variant="card" isClickable={canEdit} />
+                  </DueDateEditPopup>
                 </span>
               )}
               {timer && (

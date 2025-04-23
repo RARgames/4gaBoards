@@ -501,13 +501,9 @@ const CardModal = React.memo(
           )}
         </div>
         <span className={s.headerItem}>
-          {canEdit ? (
-            <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-              <DueDate value={dueDate} />
-            </DueDateEditPopup>
-          ) : (
-            <DueDate value={dueDate} />
-          )}
+          <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
+            <DueDate value={dueDate} isClickable={canEdit} />
+          </DueDateEditPopup>
         </span>
       </div>
     );

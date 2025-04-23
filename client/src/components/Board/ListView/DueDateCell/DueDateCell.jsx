@@ -37,13 +37,9 @@ const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, onUpdate }) =
 
   return (
     <div className={cellClassName}>
-      {canEdit ? (
-        <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-          <DueDate value={dueDate} />
-        </DueDateEditPopup>
-      ) : (
-        <DueDate value={dueDate} />
-      )}
+      <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
+        <DueDate value={dueDate} isClickable={canEdit} />
+      </DueDateEditPopup>
     </div>
   );
 });

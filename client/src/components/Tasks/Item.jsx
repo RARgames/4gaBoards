@@ -140,14 +140,10 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
                   membersNode
                 ))}
               {dueDate && (
-                <div className={classNames(s.dueDate, gs.cursorPointer, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
-                  {isPersisted && canEdit ? (
-                    <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
-                      <DueDate variant={dueDateVariant} value={dueDate} />
-                    </DueDateEditPopup>
-                  ) : (
-                    <DueDate variant={dueDateVariant} value={dueDate} />
-                  )}
+                <div className={classNames(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
+                  <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!(canEdit && isPersisted)}>
+                    <DueDate variant={dueDateVariant} value={dueDate} isClickable={canEdit && isPersisted} />
+                  </DueDateEditPopup>
                 </div>
               )}
               {isPersisted && canEdit && (
