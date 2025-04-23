@@ -8,7 +8,9 @@ import PropTypes from 'prop-types';
 import Paths from '../../constants/Paths';
 import { startTimer, stopTimer } from '../../utils/timer';
 import DueDate from '../DueDate';
+import DueDateEditPopup from '../DueDateEditPopup';
 import Label from '../Label';
+import LabelsPopup from '../LabelsPopup';
 import MembershipsPopup from '../MembershipsPopup';
 import Tasks from '../Tasks';
 import Timer from '../Timer';
@@ -150,7 +152,17 @@ const Card = React.memo(
       setIsDragOverTask(false);
     }, []);
 
+    const handleDueDateUpdate = useCallback(
+      (newDueDate) => {
+        onUpdate({
+          dueDate: newDueDate,
+        });
+      },
+      [onUpdate],
+    );
+
     const visibleMembersCount = 3;
+    const labelIds = labels.map((label) => label.id);
 
     const contentNode = (
       <>
@@ -168,9 +180,22 @@ const Card = React.memo(
           {labels.length > 0 && (
             <span className={s.labels}>
               {labels.map((label) => (
-                <span key={label.id} className={classNames(s.attachment, s.attachmentLeft)}>
+                <LabelsPopup
+                  key={label.id}
+                  items={allLabels}
+                  currentIds={labelIds}
+                  onSelect={onLabelAdd}
+                  onDeselect={onLabelRemove}
+                  onCreate={onLabelCreate}
+                  onUpdate={onLabelUpdate}
+                  onDelete={onLabelDelete}
+                  canEdit={canEdit}
+                  offset={0}
+                  wrapperClassName={classNames(s.attachment, s.attachmentLeft)}
+                  disabled={!canEdit}
+                >
                   <Label name={label.name} color={label.color} variant="card" />
-                </span>
+                </LabelsPopup>
               ))}
             </span>
           )}
@@ -212,7 +237,13 @@ const Card = React.memo(
               )}
               {dueDate && (
                 <span className={classNames(s.attachment, s.attachmentLeft)}>
-                  <DueDate value={dueDate} variant="card" />
+                  {canEdit ? (
+                    <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate}>
+                      <DueDate value={dueDate} variant="card" />
+                    </DueDateEditPopup>
+                  ) : (
+                    <DueDate value={dueDate} variant="card" />
+                  )}
                 </span>
               )}
               {timer && (
