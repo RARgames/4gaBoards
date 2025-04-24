@@ -384,6 +384,7 @@ const ListView = React.memo(
                   if (!row.original.isPersisted) return;
                   handleClick(e, row.original.id);
                 }}
+                className={classNames(canEdit && gs.cursorPointer)}
               >
                 {row.getVisibleCells().map((cell) => (
                   <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} data-prevent-card-switch-end>
