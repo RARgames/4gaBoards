@@ -123,8 +123,12 @@ module.exports = {
       throw Errors.CARD_NOT_FOUND; // Forbidden
     }
 
-    if (boardMembership.role !== BoardMembership.Roles.EDITOR) {
-      throw Errors.NOT_ENOUGH_RIGHTS;
+    const isEditor = boardMembership.role === BoardMembership.Roles.EDITOR;
+    if (!isEditor) {
+      const allowedOnlyIsSubscribed = Object.keys(inputs).every((key) => ['id', 'isSubscribed'].includes(key));
+      if (!allowedOnlyIsSubscribed) {
+        throw Errors.NOT_ENOUGH_RIGHTS;
+      }
     }
 
     let nextBoard;
