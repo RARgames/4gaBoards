@@ -92,7 +92,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
   }
 
   const membersNode = (
-    <div className={classNames(s.members, gs.cursorPointer, isCompleted && s.itemCompleted)}>
+    <div className={classNames(s.members, canEdit && gs.cursorPointer, isCompleted && s.itemCompleted)}>
       {users.slice(0, visibleMembersCount).map((user) => (
         <span key={user.id} className={s.member}>
           <User name={user.name} avatarUrl={user.avatarUrl} size={userSize} />
@@ -131,14 +131,19 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
               <span className={classNames(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
                 {name}
               </span>
-              {users &&
-                (isPersisted && canEdit ? (
-                  <MembershipsPopup items={boardMemberships} currentUserIds={users.map((user) => user.id)} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} position="left-start">
-                    {membersNode}
-                  </MembershipsPopup>
-                ) : (
-                  membersNode
-                ))}
+              {users && (
+                <MembershipsPopup
+                  items={boardMemberships}
+                  currentUserIds={users.map((user) => user.id)}
+                  onUserSelect={onUserAdd}
+                  onUserDeselect={onUserRemove}
+                  offset={0}
+                  position="left-start"
+                  disabled={!(canEdit && isPersisted)}
+                >
+                  {membersNode}
+                </MembershipsPopup>
+              )}
               {dueDate && (
                 <div className={classNames(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
                   <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!(canEdit && isPersisted)}>

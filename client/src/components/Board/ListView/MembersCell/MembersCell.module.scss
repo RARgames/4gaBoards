@@ -1,14 +1,7 @@
 :global(#app) {
-  .attachment {
+  .userWrapper {
     display: inline-block;
-  }
-
-  .user {
     margin-right: -8px;
-  }
-
-  .users {
-    display: inline-flex;
   }
 
   .popupWrapper {

@@ -14,9 +14,18 @@ const MembersCell = React.memo(({ id, users, allBoardMemberships, cellClassName,
   const userIds = users.map((user) => user.id);
 
   const usersNode = users.map((user) => (
-    <span key={user.id} className={classNames(s.attachment, s.user)}>
+    <MembershipsPopup
+      key={user.id}
+      items={allBoardMemberships}
+      currentUserIds={userIds}
+      onUserSelect={(userId) => onUserAdd(userId, id)}
+      onUserDeselect={(userId) => onUserRemove(userId, id)}
+      offset={0}
+      disabled={!canEdit}
+      wrapperClassName={s.userWrapper}
+    >
       <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
-    </span>
+    </MembershipsPopup>
   ));
 
   const addUserNode = (
@@ -34,21 +43,11 @@ const MembersCell = React.memo(({ id, users, allBoardMemberships, cellClassName,
     </MembershipsPopup>
   );
 
-  if (!canEdit) {
-    return <div className={classNames(cellClassName, s.users)}>{usersNode}</div>;
-  }
-
-  if (users.length === 0) {
+  if (users.length === 0 && canEdit) {
     return addUserNode;
   }
 
-  return (
-    <div className={classNames(cellClassName, s.users)}>
-      <MembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={(userId) => onUserAdd(userId, id)} onUserDeselect={(userId) => onUserRemove(userId, id)} offset={0}>
-        {usersNode}
-      </MembershipsPopup>
-    </div>
-  );
+  return <div className={classNames(cellClassName)}>{usersNode}</div>;
 });
 
 MembersCell.propTypes = {

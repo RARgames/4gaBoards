@@ -420,7 +420,7 @@ const CardModal = React.memo(
             </div>
           )}
         </div>
-        <MembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
+        <MembershipsPopup items={allBoardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} disabled={!canEdit}>
           {users.slice(0, visibleMembersCount).map((user, index) => (
             <span key={user.id} className={classNames(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
@@ -566,7 +566,7 @@ const CardModal = React.memo(
       descriptionEditOpenNode
     );
 
-    const descriptionNode = (description || canEdit) && (
+    const descriptionNode = (
       <div>
         <div className={s.moduleHeader}>
           <Icon type={IconType.BarsStaggered} size={IconSize.Size20} className={s.moduleIcon} />
@@ -583,7 +583,7 @@ const CardModal = React.memo(
         </div>
         <div>
           {descShown && canEdit && descriptionEditNode}
-          {descShown && !canEdit && (
+          {descShown && !canEdit && description && (
             <div className={s.descriptionText}>
               <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />
             </div>
@@ -595,7 +595,7 @@ const CardModal = React.memo(
     const completedTasks = tasks.filter((task) => task.isCompleted);
     const closestNotCompletedTaslDueDate = tasks.filter((task) => !task.isCompleted && task.dueDate).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0];
 
-    const tasksNode = (tasks.length > 0 || canEdit) && (
+    const tasksNode = (
       <div>
         <div className={s.moduleHeader}>
           <Icon type={IconType.Check} size={IconSize.Size20} className={s.moduleIcon} />
@@ -620,7 +620,7 @@ const CardModal = React.memo(
           </Button>
         </div>
         <div>
-          {taskShown && (
+          {taskShown && tasks.length > 0 && (
             <Tasks
               ref={tasksRef}
               variant="cardModal"
