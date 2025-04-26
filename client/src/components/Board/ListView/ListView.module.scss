@@ -1,12 +1,16 @@
 :global(#app) {
   .wrapper {
-    padding: 10px 20px 10px 20px;
+    padding: 0 20px 0 20px;
   }
 
   .paginationButtonsWrapper {
     margin-left: auto;
     display: flex;
     gap: 6px;
+  }
+
+  .popupWrapper {
+    height: 20px;
   }
 
   .paginationButton {

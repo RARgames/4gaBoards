@@ -8,10 +8,20 @@ import TableStyle from './TableStyle';
 
 import * as s from './Table.module.scss';
 
-const Wrapper = React.memo(
+const Container = React.memo(
   React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <div ref={ref} className={classNames(s.wrapper, className)} {...props}>
+      <div ref={ref} className={classNames(s.container, className)} {...props}>
+        {children}
+      </div>
+    );
+  }),
+);
+
+const Wrapper = React.memo(
+  React.forwardRef(({ children, className, isPaginated, ...props }, ref) => {
+    return (
+      <div ref={ref} className={classNames(s.wrapper, isPaginated && s.wrapperWithPagination, className)} {...props}>
         {children}
       </div>
     );
@@ -98,14 +108,26 @@ const Cell = React.memo(
   }),
 );
 
+Container.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
+
+Container.defaultProps = {
+  children: undefined,
+  className: undefined,
+};
+
 Wrapper.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  isPaginated: PropTypes.bool,
 };
 
 Wrapper.defaultProps = {
   children: undefined,
   className: undefined,
+  isPaginated: false,
 };
 
 Header.propTypes = {
@@ -198,4 +220,4 @@ Cell.defaultProps = {
   className: undefined,
 };
 
-export { Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell };
+export { Container, Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell };
