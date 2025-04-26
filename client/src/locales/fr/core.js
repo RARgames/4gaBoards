@@ -303,6 +303,7 @@ export default {
       resetColumnVisibility: 'Réinitialiser la visibilité des colonnes',
       resetColumnWidths: "Ajuster les colonnes pour s'adapter au contenu",
       resetColumnWidthsFitScreen: "Ajuster les colonnes pour s'adapter à l'écran",
+      resizeColumn: 'Redimensionner la colonne',
       searchLabels: 'Rechercher des étiquettes...',
       searchMembers: 'Rechercher des membres...',
       searchUsers: 'Rechercher des utilisateurs...',

@@ -301,6 +301,7 @@ export default {
       resetColumnVisibility: 'Zresetuj widoczność kolumn',
       resetColumnWidths: 'Dopasuj szerokości kolumn do zawartości',
       resetColumnWidthsFitScreen: 'Dopasuj szerokości kolumn do ekranu',
+      resizeColumn: 'Zmień szerokość kolumny',
       searchLabels: 'Szukaj etykiet...',
       searchMembers: 'Szukaj członków...',
       searchUsers: 'Szukaj użytkowników...',

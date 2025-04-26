@@ -285,6 +285,7 @@ export default {
       resetColumnVisibility: 'Reset Column Visibility',
       resetColumnWidths: 'Adjust Columns to Fit Content',
       resetColumnWidthsFitScreen: 'Adjust Columns to Fit Screen',
+      resizeColumn: 'Resize column',
       searchLabels: 'Search labels...',
       searchMembers: 'Search members...',
       searchUsers: 'Search users...',

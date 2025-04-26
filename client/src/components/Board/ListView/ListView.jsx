@@ -366,7 +366,7 @@ const ListView = React.memo(
                     >
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       <Table.SortingIndicator sortedState={sortedState} sortIndex={sortIndex} />
-                      {header.column.getCanResize() && <Table.Resizer data-prevent-sorting onMouseDown={(e) => handleResizerMouseDown(e, header)} />}
+                        {header.column.getCanResize() && <Table.Resizer data-prevent-sorting onMouseDown={(e) => handleResizerMouseDown(e, header)} title={t('common.resizeColumn')} />}
                     </Table.HeaderCell>
                   );
                 })}

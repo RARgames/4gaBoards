@@ -49,8 +49,9 @@ const HeaderCell = React.memo(
 );
 
 const Resizer = React.memo(
-  React.forwardRef(({ className, ...props }, ref) => {
-    return <div ref={ref} className={classNames(s.resizer, className)} {...props} />;
+  React.forwardRef(({ onMouseDown, className, ...props }, ref) => {
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    return <div ref={ref} className={classNames(s.resizer, onMouseDown && s.resizerHoverable, className)} onMouseDown={onMouseDown} {...props} />;
   }),
 );
 
@@ -142,10 +143,12 @@ HeaderCell.defaultProps = {
 };
 
 Resizer.propTypes = {
+  onMouseDown: PropTypes.func,
   className: PropTypes.string,
 };
 
 Resizer.defaultProps = {
+  onMouseDown: undefined,
   className: undefined,
 };
 
