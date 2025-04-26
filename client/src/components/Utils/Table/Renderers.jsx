@@ -6,6 +6,7 @@ import ActionsHeader from './ActionsHeader';
 import BoolCell from './BoolCell';
 import DateCell from './DateCell';
 import DefaultCell from './DefaultCell';
+import DivCell from './DivCell';
 import ImageCell from './ImageCell';
 import MarkdownCell from './MarkdownCell';
 import TableStyle from './TableStyle';
@@ -44,6 +45,11 @@ function BoolCellRenderer({ table, column, getValue }) {
 }
 BoolCellRenderer.propTypes = listViewPropTypes;
 
+function DivCellRenderer({ table, column, cell }) {
+  return <DivCell value={cell.getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
+}
+DivCellRenderer.propTypes = listViewPropTypes;
+
 function ImageCellRenderer({ table, column, getValue }) {
   return <ImageCell value={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
@@ -64,4 +70,4 @@ function ActionsHeaderRenderer({ table, column }) {
 }
 ActionsHeaderRenderer.propTypes = listViewHeaderPropTypes;
 
-export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, ActionsHeaderRenderer };
+export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, DivCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, ActionsHeaderRenderer };

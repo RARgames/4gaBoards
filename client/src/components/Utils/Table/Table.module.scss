@@ -10,7 +10,7 @@
   }
 
   .container {
-    height: 100%;
+    max-height: 100%;
     min-width: 100%;
     position: relative;
   }
@@ -130,7 +130,7 @@
 
   .body {
     display: block;
-    background: var(--backgroundSidebarItem);
+    background: var(--backgroundSidebarItemNone);
   }
 
   ._defaultBody {

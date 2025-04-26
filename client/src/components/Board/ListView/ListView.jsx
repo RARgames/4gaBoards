@@ -151,9 +151,21 @@ const ListView = React.memo(
     const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
     const sortingFunctions = Table.HooksSorting(table);
 
-    useEffect(() => {
+    const resetColumnsWidths = useCallback(() => {
       handleResetColumnWidthsClick(false, listViewFitScreen);
-    }, [handleResetColumnWidthsClick, boardId, listViewFitScreen, isCardModalOpened]);
+    }, [handleResetColumnWidthsClick, listViewFitScreen]);
+
+    useEffect(() => {
+      resetColumnsWidths();
+    }, [resetColumnsWidths, boardId, isCardModalOpened]);
+
+    // useEffect(() => {
+    //   window.addEventListener('resize', resetColumnsWidths);
+
+    //   return () => {
+    //     window.removeEventListener('resize', resetColumnsWidths);
+    //   };
+    // }, [resetColumnsWidths]);
 
     const scrollCardIntoView = useCallback(() => {
       setTimeout(() => {

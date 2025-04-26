@@ -1,9 +1,10 @@
 :global(#app) {
-  .dropdownCell {
-    overflow: visible;
+  .container {
+    height: calc(100% - 51px);
   }
 
-  .dropdown {
-    min-width: 175px;
+  .cell {
+    -webkit-line-clamp: none;
+    line-clamp: none;
   }
 }

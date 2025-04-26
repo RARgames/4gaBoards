@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import locales from '../../../locales';
-import { Dropdown, DropdownStyle, Radio, RadioSize, TableLegacy as Table } from '../../Utils';
+import { Dropdown, DropdownStyle, Radio, RadioSize, Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
@@ -12,6 +13,8 @@ import * as s from './PreferencesSettings.module.scss';
 
 const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, onUpdate }) => {
   const [t] = useTranslation();
+  const tableRef = useRef(null);
+
   const languages = useMemo(
     () => [
       {
@@ -91,95 +94,194 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
     [onUpdate],
   );
 
+  const filteredCards = useMemo(
+    () => [
+      {
+        id: 'subscribeToOwnCards',
+        preferences: t('common.subscribeToMyOwnCards'),
+        modifySettings: <Radio size={RadioSize.Size12} checked={subscribeToOwnCards} onChange={handleSubscribeToOwnCardsChange} title={t('common.toggleSubscribeToMyOwnCards')} />,
+        currentValue: subscribeToOwnCards ? t('common.enabled') : t('common.disabled'),
+        description: t('common.descriptionSubscribeToMyOwnCards'),
+      },
+      {
+        id: 'sidebarCompact',
+        preferences: t('common.sidebarCompact'),
+        modifySettings: <Radio size={RadioSize.Size12} checked={sidebarCompact} onChange={handleCompactSidebarChange} title={t('common.toggleCompactSidebar')} />,
+        currentValue: sidebarCompact ? t('common.enabled') : t('common.disabled'),
+        description: t('common.descriptionCompactSidebar'),
+      },
+      {
+        id: 'defaultView',
+        preferences: t('common.defaultView'),
+        modifySettings: (
+          <Dropdown
+            style={DropdownStyle.FullWidth}
+            options={defaultViews}
+            placeholder={selectedDefaultView.name}
+            defaultItem={selectedDefaultView}
+            isSearchable
+            selectFirstOnSearch
+            forcePlaceholder
+            onChange={handleDefaultViewChange}
+          />
+        ),
+        currentValue: selectedDefaultView.name,
+        description: t('common.descriptionDefaultView'),
+      },
+      {
+        id: 'listViewStyle',
+        preferences: t('common.listViewStyle'),
+        modifySettings: (
+          <Dropdown
+            style={DropdownStyle.FullWidth}
+            options={listViewStyles}
+            placeholder={selectedListViewStyle.name}
+            defaultItem={selectedListViewStyle}
+            isSearchable
+            selectFirstOnSearch
+            forcePlaceholder
+            onChange={handleListViewStyleChange}
+          />
+        ),
+        currentValue: selectedListViewStyle.name,
+        description: t('common.descriptionDefaultView'),
+      },
+      {
+        id: 'language',
+        preferences: t('common.language', { context: 'title' }),
+        modifySettings: (
+          <Dropdown
+            style={DropdownStyle.FullWidth}
+            options={languages}
+            placeholder={selectedLanguage.name}
+            defaultItem={selectedLanguage}
+            isSearchable
+            selectFirstOnSearch
+            forcePlaceholder
+            onChange={handleLanguageChange}
+          />
+        ),
+        currentValue: selectedLanguage.name,
+        description: t('common.descriptionSLanguage'),
+      },
+    ],
+    [
+      t,
+      subscribeToOwnCards,
+      handleSubscribeToOwnCardsChange,
+      sidebarCompact,
+      handleCompactSidebarChange,
+      defaultViews,
+      selectedDefaultView,
+      handleDefaultViewChange,
+      listViewStyles,
+      selectedListViewStyle,
+      handleListViewStyleChange,
+      languages,
+      selectedLanguage,
+      handleLanguageChange,
+    ],
+  );
+
+  const table = useReactTable({
+    data: filteredCards,
+    columns: [],
+    getCoreRowModel: getCoreRowModel(),
+    style: Table.Style.Default,
+  });
+
+  const { handleResetColumnWidthsClick } = Table.HooksPre(tableRef, table);
+
+  const resetColumnsWidths = useCallback(() => {
+    handleResetColumnWidthsClick(false, true);
+  }, [handleResetColumnWidthsClick]);
+
+  useEffect(() => {
+    resetColumnsWidths();
+  }, [resetColumnsWidths]);
+
+  // useEffect(() => {
+  //   window.addEventListener('resize', resetColumnsWidths);
+
+  //   return () => {
+  //     window.removeEventListener('resize', resetColumnsWidths);
+  //   };
+  // }, [resetColumnsWidths]);
+
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'preferences',
+        header: t('common.preferences'),
+        cell: Table.Renderers.DefaultCellRenderer,
+        enableSorting: false,
+        meta: { headerTitle: t('common.preferences') },
+        cellProps: { cellClassNameInner: s.cell },
+      },
+      {
+        accessorKey: 'modifySettings',
+        header: t('common.modifySettings'),
+        cell: Table.Renderers.DivCellRenderer,
+        enableSorting: false,
+        meta: { headerTitle: t('common.modifySettings'), suggestedCellSize: 200 },
+        cellProps: { ariaLabel: t('common.toggleSettings') },
+      },
+      {
+        accessorKey: 'currentValue',
+        header: t('common.currentValue'),
+        cell: Table.Renderers.DefaultCellRenderer,
+        enableSorting: false,
+        meta: { headerTitle: t('common.currentValue') },
+        cellProps: { cellClassNameInner: s.cell },
+      },
+      {
+        accessorKey: 'description',
+        header: t('common.description'),
+        cell: Table.Renderers.DefaultCellRenderer,
+        enableSorting: false,
+        meta: { headerTitle: t('common.description') },
+        cellProps: { cellClassNameInner: s.cell },
+      },
+    ],
+    [t],
+  );
+
+  table.setOptions((prev) => ({ ...prev, columns }));
+
   return (
     <div className={sShared.wrapper}>
       <div className={sShared.header}>
         <h2 className={sShared.headerText}>{t('common.preferences')}</h2>
       </div>
-      <Table.Wrapper className={classNames(gs.scrollableXY)}>
-        <Table>
-          <Table.Header>
-            <Table.HeaderRow>
-              <Table.HeaderCell>{t('common.preferences')}</Table.HeaderCell>
-              <Table.HeaderCell>{t('common.modifySettings')}</Table.HeaderCell>
-              <Table.HeaderCell>{t('common.currentValue')}</Table.HeaderCell>
-              <Table.HeaderCell>{t('common.description')}</Table.HeaderCell>
-            </Table.HeaderRow>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell>{t('common.subscribeToMyOwnCards')}</Table.Cell>
-              <Table.Cell aria-label={t('common.toggleSettings')}>
-                <Radio size={RadioSize.Size12} checked={subscribeToOwnCards} onChange={handleSubscribeToOwnCardsChange} title={t('common.toggleSubscribeToMyOwnCards')} />
-              </Table.Cell>
-              <Table.Cell>{subscribeToOwnCards ? t('common.enabled') : t('common.disabled')}</Table.Cell>
-              <Table.Cell>{t('common.descriptionSubscribeToMyOwnCards')}</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>{t('common.sidebarCompact')}</Table.Cell>
-              <Table.Cell aria-label={t('common.toggleSettings')}>
-                <Radio size={RadioSize.Size12} checked={sidebarCompact} onChange={handleCompactSidebarChange} title={t('common.toggleCompactSidebar')} />
-              </Table.Cell>
-              <Table.Cell>{sidebarCompact ? t('common.enabled') : t('common.disabled')}</Table.Cell>
-              <Table.Cell>{t('common.descriptionCompactSidebar')}</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>{t('common.defaultView')}</Table.Cell>
-              <Table.Cell className={s.dropdownCell} aria-label={t('common.toggleSettings')}>
-                <Dropdown
-                  style={DropdownStyle.FullWidth}
-                  options={defaultViews}
-                  placeholder={selectedDefaultView.name}
-                  defaultItem={selectedDefaultView}
-                  isSearchable
-                  selectFirstOnSearch
-                  forcePlaceholder
-                  onChange={handleDefaultViewChange}
-                  className={s.dropdown}
-                />
-              </Table.Cell>
-              <Table.Cell>{selectedDefaultView.name}</Table.Cell>
-              <Table.Cell>{t('common.descriptionDefaultView')}</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell>{t('common.listViewStyle')}</Table.Cell>
-              <Table.Cell className={s.dropdownCell} aria-label={t('common.toggleSettings')}>
-                <Dropdown
-                  style={DropdownStyle.FullWidth}
-                  options={listViewStyles}
-                  placeholder={selectedListViewStyle.name}
-                  defaultItem={selectedListViewStyle}
-                  isSearchable
-                  selectFirstOnSearch
-                  forcePlaceholder
-                  onChange={handleListViewStyleChange}
-                  className={s.dropdown}
-                />
-              </Table.Cell>
-              <Table.Cell>{selectedListViewStyle.name}</Table.Cell>
-              <Table.Cell>{t('common.descriptionDefaultView')}</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell> {t('common.language', { context: 'title' })}</Table.Cell>
-              <Table.Cell className={s.dropdownCell} aria-label={t('common.toggleSettings')}>
-                <Dropdown
-                  style={DropdownStyle.FullWidth}
-                  options={languages}
-                  placeholder={selectedLanguage.name}
-                  defaultItem={selectedLanguage}
-                  isSearchable
-                  selectFirstOnSearch
-                  forcePlaceholder
-                  onChange={handleLanguageChange}
-                  className={s.dropdown}
-                />
-              </Table.Cell>
-              <Table.Cell>{selectedLanguage.name}</Table.Cell>
-              <Table.Cell>{t('common.descriptionSLanguage')}</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </Table.Wrapper>
+      <Table.Container className={s.container}>
+        <Table.Wrapper className={classNames(gs.scrollableX)}>
+          <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
+            <Table.Header style={Table.Style.Default}>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Table.HeaderRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header, index) => (
+                    <Table.HeaderCell key={header.id} style={{ width: `${header.getSize()}px` }} colSpan={header.colSpan} title={header.column.columnDef.meta?.headerTitle} isCentered>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      {index + 1 < headerGroup.headers.length && <Table.Resizer />}
+                    </Table.HeaderCell>
+                  ))}
+                </Table.HeaderRow>
+              ))}
+            </Table.Header>
+            <Table.Body className={classNames(gs.scrollableY)} style={Table.Style.Default}>
+              {table.getRowModel().rows.map((row) => (
+                <Table.Row key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </Table.Cell>
+                  ))}
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        </Table.Wrapper>
+      </Table.Container>
     </div>
   );
 });

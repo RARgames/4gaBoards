@@ -1,6 +1,6 @@
-import { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, ActionsHeaderRenderer } from './Renderers';
+import { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, DivCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, ActionsHeaderRenderer } from './Renderers';
 import Table from './Table';
-import { Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell } from './TableElements';
+import { Container, Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell } from './TableElements';
 import TablePagination from './TablePagination';
 import TableStyle from './TableStyle';
 import useTableHooksPost from './use-table-hooks-post';
@@ -8,6 +8,7 @@ import useTableHooksPre from './use-table-hooks-pre';
 import useTableHooksSorting from './use-table-hooks-sorting';
 import useTableHooksState from './use-table-hooks-state';
 
+Table.Container = Container;
 Table.Wrapper = Wrapper;
 Table.Header = Header;
 Table.HeaderRow = HeaderRow;
@@ -23,6 +24,7 @@ Table.Renderers = {
   DefaultCellRenderer,
   NumberCellRenderer,
   BoolCellRenderer,
+  DivCellRenderer,
   ImageCellRenderer,
   MarkdownCellRenderer,
   DateCellRenderer,

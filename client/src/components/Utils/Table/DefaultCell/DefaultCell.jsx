@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 
 import * as s from './DefaultCell.module.scss';
 
-const DefaultCell = React.memo(({ value, title, cellClassName, hideOnZero, getTitle }) => {
+const DefaultCell = React.memo(({ value, title, cellClassName, cellClassNameInner, hideOnZero, getTitle }) => {
   const [t] = useTranslation();
   return (
-    <div className={classNames(s.cell, cellClassName)}>
-      <div title={getTitle ? getTitle(t, value) : title}>{typeof value === 'number' && hideOnZero && value === 0 ? '' : value}</div>
+    <div className={classNames(cellClassName)}>
+      <div className={classNames(s.cell, cellClassNameInner)} title={getTitle ? getTitle(t, value) : title}>
+        {typeof value === 'number' && hideOnZero && value === 0 ? '' : value}
+      </div>
     </div>
   );
 });
@@ -18,6 +20,7 @@ DefaultCell.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string,
   cellClassName: PropTypes.string,
+  cellClassNameInner: PropTypes.string,
   hideOnZero: PropTypes.bool,
   getTitle: PropTypes.func,
 };
@@ -25,6 +28,7 @@ DefaultCell.propTypes = {
 DefaultCell.defaultProps = {
   title: '',
   cellClassName: '',
+  cellClassNameInner: '',
   hideOnZero: false,
   getTitle: undefined,
 };
