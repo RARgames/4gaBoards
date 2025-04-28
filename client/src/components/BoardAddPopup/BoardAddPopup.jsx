@@ -161,15 +161,6 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
     [handleSubmit],
   );
 
-  const closeOtherDropdowns = useCallback((skipCloseRef) => {
-    if (skipCloseRef !== projectDropdownRef) {
-      projectDropdownRef.current?.close();
-    }
-    if (skipCloseRef !== templateDropdownRef) {
-      templateDropdownRef.current?.close();
-    }
-  }, []);
-
   useDidUpdate(() => {
     formRef.current.focus();
   }, [focusFromState]);
@@ -207,7 +198,6 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
                 isError={isDropdownError}
                 selectFirstOnSearch
                 onBlur={focusForm}
-                onOpen={() => closeOtherDropdowns(projectDropdownRef)}
                 onChange={handleProjectChange}
                 onErrorClear={() => setIsDropdownError(false)}
                 dropdownMenuClassName={s.dropdownMenu}
@@ -226,7 +216,6 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
                 isSearchable
                 selectFirstOnSearch
                 onBlur={focusForm}
-                onOpen={() => closeOtherDropdowns(templateDropdownRef)}
                 onChange={handleTemplateChange}
                 dropdownMenuClassName={s.dropdownMenu}
               />

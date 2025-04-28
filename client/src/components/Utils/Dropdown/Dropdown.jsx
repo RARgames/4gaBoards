@@ -1,6 +1,6 @@
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
+import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -37,6 +37,7 @@ const Dropdown = React.forwardRef(
       keepState,
       returnOnChangeEvent,
       forcePlaceholder,
+      keepOnScroll,
       ...props
     },
     ref,
@@ -273,8 +274,22 @@ const Dropdown = React.forwardRef(
       }
     }, [open, handleSubmit, isOpen, selectedItem]);
 
+    const onOpenChange = useCallback(
+      // eslint-disable-next-line no-unused-vars
+      (nextOpen, event, reason) => {
+        setIsOpen(nextOpen);
+
+        if (!nextOpen) {
+          setSearchValue('');
+          onClose();
+        }
+      },
+      [onClose],
+    );
+
     const { refs, floatingStyles, context } = useFloating({
       open: isOpen,
+      onOpenChange,
       whileElementsMounted: autoUpdate,
       placement: 'bottom',
       middleware: [
@@ -291,8 +306,9 @@ const Dropdown = React.forwardRef(
       ],
     });
 
+    const dismiss = useDismiss(context, { ancestorScroll: !keepOnScroll });
     const role = useRole(context, { role: 'dialog' });
-    const { getReferenceProps, getFloatingProps } = useInteractions([role]);
+    const { getReferenceProps, getFloatingProps } = useInteractions([dismiss, role]);
 
     if (!isOpen && children) {
       return children;
@@ -382,6 +398,7 @@ Dropdown.propTypes = {
   keepState: PropTypes.bool,
   returnOnChangeEvent: PropTypes.bool,
   forcePlaceholder: PropTypes.bool,
+  keepOnScroll: PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
@@ -406,6 +423,7 @@ Dropdown.defaultProps = {
   dropdownMenuClassName: undefined,
   inputClassName: undefined,
   buttonClassName: undefined,
+  keepOnScroll: false,
 };
 
 export default React.memo(Dropdown);

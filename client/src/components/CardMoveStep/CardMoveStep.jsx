@@ -73,21 +73,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
     [handleSubmit],
   );
 
-  const closeOtherDropdowns = useCallback((skipCloseRef) => {
-    if (skipCloseRef === dropdownProject) {
-      dropdownBoard.current?.close();
-      dropdownList.current?.close();
-    }
-    if (skipCloseRef === dropdownBoard) {
-      dropdownProject.current?.close();
-      dropdownList.current?.close();
-    }
-    if (skipCloseRef === dropdownList) {
-      dropdownProject.current?.close();
-      dropdownBoard.current?.close();
-    }
-  }, []);
-
   useDidUpdate(() => {
     formRef.current.focus();
   }, [focusFormState]);
@@ -114,7 +99,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             keepState
             returnOnChangeEvent
             onBlur={focusForm}
-            onOpen={() => closeOtherDropdowns(dropdownProject)}
             disabled={projectsToLists.length === 0}
             dropdownMenuClassName={s.dropdownMenu}
           />
@@ -137,7 +121,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 onBlur={focusForm}
-                onOpen={() => closeOtherDropdowns(dropdownBoard)}
                 disabled={selectedProject.boards.length === 0}
                 dropdownMenuClassName={s.dropdownMenu}
               />
@@ -162,7 +145,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 keepState
                 returnOnChangeEvent
                 onBlur={focusForm}
-                onOpen={() => closeOtherDropdowns(dropdownList)}
                 disabled={selectedBoard.lists.length === 0}
                 dropdownMenuClassName={s.dropdownMenu}
               />
