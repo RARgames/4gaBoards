@@ -23,7 +23,6 @@ export default (tableRef, table) => {
         const maxRowsToProcess = 1000;
         const minColumnWidth = 20;
         const maxColumnWidth = 300;
-        const offset = 3;
         const defaultFont = '14px Arial';
 
         const firstTh = tableRef.current.querySelector('th');
@@ -82,15 +81,15 @@ export default (tableRef, table) => {
         const recommendedTotalWidth = Object.values(recommendedColSizes).reduce((sum, val) => sum + val, 0);
 
         const style = window.getComputedStyle(tableRef.current.parentNode);
-        const maxVisibleWidth = tableRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        const availableWidth = tableRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
 
-        const visibleWidth = Math.max(maxVisibleWidth - offset, minTotalWidth);
-        if (fitScreen || (!fitScreen && recommendedTotalWidth < visibleWidth)) {
-          const scaleFactor = (maxVisibleWidth - offset) / minTotalWidth;
+        const maxAvailableWidth = Math.max(availableWidth, minTotalWidth);
+        if (fitScreen || (!fitScreen && recommendedTotalWidth < maxAvailableWidth)) {
+          const scaleFactor = availableWidth / minTotalWidth;
           if (scaleFactor < 1) {
             finalColSizes = minColSizes;
           } else {
-            const extraSpaceAvailable = maxVisibleWidth - minTotalWidth;
+            const extraSpaceAvailable = availableWidth - minTotalWidth;
             const extraSpaceNeeded = recommendedTotalWidth - minTotalWidth;
             const scaleFactorFinal = extraSpaceAvailable / extraSpaceNeeded;
             finalColSizes = Object.fromEntries(
