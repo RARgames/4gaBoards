@@ -160,10 +160,20 @@ const ListView = React.memo(
     }, [resetColumnsWidths, boardId, isCardModalOpened]);
 
     useEffect(() => {
-      window.addEventListener('resize', resetColumnsWidths);
+      let resizeTimeout;
+
+      const handleResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          resetColumnsWidths();
+        }, 100);
+      };
+
+      window.addEventListener('resize', handleResize);
 
       return () => {
-        window.removeEventListener('resize', resetColumnsWidths);
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(resizeTimeout);
       };
     }, [resetColumnsWidths]);
 
