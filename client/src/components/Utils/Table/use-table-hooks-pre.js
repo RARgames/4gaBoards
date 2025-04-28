@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 
 export default (tableRef, table) => {
-  const measureTextWidth = (text, font) => {
+  const measureTextWidth = (text, font, offset = 0) => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     if (!context) return 0;
     context.font = font;
-    return context.measureText(text).width;
+    return context.measureText(text).width + offset;
   };
 
   const asignIfLarger = (a, b) => {
@@ -55,8 +55,9 @@ export default (tableRef, table) => {
             estimatedSize = column.columnDef.meta.headerSize;
           } else {
             const header = column.columnDef.header?.toString() || '';
-            estimatedSize = measureTextWidth(header, headerFont);
+            estimatedSize = measureTextWidth(header, headerFont, 10);
           }
+          minColSizes[colId] = asignIfLarger(estimatedSize, minColWidth);
 
           if (column.columnDef.meta?.suggestedSize) {
             estimatedSize = asignIfLarger(estimatedSize, column.columnDef.meta.suggestedSize);
@@ -70,7 +71,7 @@ export default (tableRef, table) => {
             rowsToProcess.forEach((row) => {
               const cellValue = row.getValue(colId);
               const cellText = String(cellValue || '');
-              const cellWidth = measureTextWidth(cellText, bodyFont);
+              const cellWidth = measureTextWidth(cellText, bodyFont, 10);
               estimatedSize = asignIfLarger(estimatedSize, cellWidth);
             });
           }

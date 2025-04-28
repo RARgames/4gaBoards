@@ -214,7 +214,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortUndefined: 'last',
           sortDescFirst: true,
-          meta: { headerTitle: t('common.coverImage'), headerSize: 20 },
+          meta: { headerTitle: t('common.coverImage'), minSize: 50, headerSize: 20 },
         },
         {
           accessorKey: 'name',
