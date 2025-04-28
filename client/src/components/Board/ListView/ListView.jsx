@@ -159,13 +159,13 @@ const ListView = React.memo(
       resetColumnsWidths();
     }, [resetColumnsWidths, boardId, isCardModalOpened]);
 
-    // useEffect(() => {
-    //   window.addEventListener('resize', resetColumnsWidths);
+    useEffect(() => {
+      window.addEventListener('resize', resetColumnsWidths);
 
-    //   return () => {
-    //     window.removeEventListener('resize', resetColumnsWidths);
-    //   };
-    // }, [resetColumnsWidths]);
+      return () => {
+        window.removeEventListener('resize', resetColumnsWidths);
+      };
+    }, [resetColumnsWidths]);
 
     const scrollCardIntoView = useCallback(() => {
       setTimeout(() => {
@@ -285,7 +285,7 @@ const ListView = React.memo(
           cell: DueDateCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedCellSize: 110 },
+          meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedSize: 110 },
         },
         {
           accessorKey: 'timer',
@@ -311,7 +311,7 @@ const ListView = React.memo(
           header: t('common.created'),
           cell: Table.Renderers.DateCellRenderer,
           enableSorting: true,
-          meta: { headerTitle: t('common.created'), suggestedCellSize: 100 },
+          meta: { headerTitle: t('common.created'), suggestedSize: 100 },
         },
         {
           accessorKey: 'updatedAt',
@@ -319,7 +319,7 @@ const ListView = React.memo(
           cell: Table.Renderers.DateCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          meta: { headerTitle: t('common.updated'), suggestedCellSize: 100 },
+          meta: { headerTitle: t('common.updated'), suggestedSize: 100 },
         },
         {
           accessorKey: 'description',

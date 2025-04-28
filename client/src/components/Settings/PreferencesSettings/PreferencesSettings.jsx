@@ -200,13 +200,13 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
     resetColumnsWidths();
   }, [resetColumnsWidths]);
 
-  // useEffect(() => {
-  //   window.addEventListener('resize', resetColumnsWidths);
+  useEffect(() => {
+    window.addEventListener('resize', resetColumnsWidths);
 
-  //   return () => {
-  //     window.removeEventListener('resize', resetColumnsWidths);
-  //   };
-  // }, [resetColumnsWidths]);
+    return () => {
+      window.removeEventListener('resize', resetColumnsWidths);
+    };
+  }, [resetColumnsWidths]);
 
   const columns = useMemo(
     () => [
@@ -215,7 +215,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
         header: t('common.preferences'),
         cell: Table.Renderers.DefaultCellRenderer,
         enableSorting: false,
-        meta: { headerTitle: t('common.preferences') },
+        meta: { headerTitle: t('common.preferences'), minSize: 90 },
         cellProps: { cellClassNameInner: s.cell },
       },
       {
@@ -223,7 +223,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
         header: t('common.modifySettings'),
         cell: Table.Renderers.DivCellRenderer,
         enableSorting: false,
-        meta: { headerTitle: t('common.modifySettings'), suggestedCellSize: 200 },
+        meta: { headerTitle: t('common.modifySettings'), minSize: 90, suggestedSize: 200 },
         cellProps: { ariaLabel: t('common.toggleSettings') },
       },
       {
@@ -231,7 +231,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
         header: t('common.currentValue'),
         cell: Table.Renderers.DefaultCellRenderer,
         enableSorting: false,
-        meta: { headerTitle: t('common.currentValue') },
+        meta: { headerTitle: t('common.currentValue'), minSize: 90 },
         cellProps: { cellClassNameInner: s.cell },
       },
       {
@@ -239,7 +239,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
         header: t('common.description'),
         cell: Table.Renderers.DefaultCellRenderer,
         enableSorting: false,
-        meta: { headerTitle: t('common.description') },
+        meta: { headerTitle: t('common.description'), minSize: 90 },
         cellProps: { cellClassNameInner: s.cell },
       },
     ],

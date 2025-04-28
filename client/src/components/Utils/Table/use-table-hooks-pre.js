@@ -9,21 +9,21 @@ export default (tableRef, table) => {
     return context.measureText(text).width;
   };
 
+  const asignIfLarger = (a, b) => {
+    return Math.max(a, b);
+  };
+
   const autoSizeColumns = useCallback(
     (scrollToEnd, fitScreen, columnId) => {
       try {
-        if (scrollToEnd) {
-          setTimeout(() => {
-            tableRef.current.parentNode.scrollBy({ left: tableRef.current.parentNode.scrollWidth, behavior: 'instant' });
-          }, 1);
-        }
-        const newColumnSizes = {};
+        const minColSizes = {};
+        const recommendedColSizes = {};
+        let finalColSizes = {};
+
         const maxRowsToProcess = 1000;
-        const minColumnWidth = 30;
+        const minColumnWidth = 20;
         const maxColumnWidth = 300;
-        const columnPadding = 10;
         const offset = 3;
-        const minColumnScaleWidth = 20;
         const defaultFont = '14px Arial';
 
         const firstTh = tableRef.current.querySelector('th');
@@ -41,82 +41,75 @@ export default (tableRef, table) => {
 
         columnsToResize.forEach((column) => {
           const colId = column.id;
+          const minColWidth = column.columnDef.meta?.minSize ?? minColumnWidth;
+          const maxColWidth = column.columnDef.meta?.maxSize ?? maxColumnWidth;
+          minColSizes[colId] = minColWidth;
 
           if (column.columnDef.meta?.size) {
-            newColumnSizes[colId] = column.columnDef.meta.size;
+            recommendedColSizes[colId] = column.columnDef.meta.size;
+            minColSizes[colId] = column.columnDef.meta.size;
             return;
           }
 
-          let maxCellWidth;
+          let estimatedSize;
           if (column.columnDef.meta?.headerSize) {
-            maxCellWidth = column.columnDef.meta.headerSize;
+            estimatedSize = column.columnDef.meta.headerSize;
           } else {
             const header = column.columnDef.header?.toString() || '';
-            maxCellWidth = measureTextWidth(header, headerFont);
+            estimatedSize = measureTextWidth(header, headerFont);
           }
 
-          if (column.columnDef.meta?.suggestedCellSize) {
-            maxCellWidth = column.columnDef.meta.suggestedCellSize;
+          if (column.columnDef.meta?.suggestedSize) {
+            estimatedSize = asignIfLarger(estimatedSize, column.columnDef.meta.suggestedSize);
           } else if (column.columnDef.meta?.getCellWidthWithArrayLength) {
             rowsToProcess.forEach((row) => {
               const cellValue = row.getValue(colId);
-              const cellWidth = column.columnDef.meta.getCellWidthWithArrayLength(cellValue.length);
-              if (cellWidth > maxCellWidth) {
-                maxCellWidth = cellWidth;
-              }
+              const cellWidth = column.columnDef.meta.getCellWidthWithArrayLength(cellValue?.length ?? 0);
+              estimatedSize = asignIfLarger(estimatedSize, cellWidth);
             });
           } else {
             rowsToProcess.forEach((row) => {
               const cellValue = row.getValue(colId);
               const cellText = String(cellValue || '');
               const cellWidth = measureTextWidth(cellText, bodyFont);
-              if (cellWidth > maxCellWidth) {
-                maxCellWidth = cellWidth;
-              }
+              estimatedSize = asignIfLarger(estimatedSize, cellWidth);
             });
           }
 
-          const estimatedWidth = Math.min(Math.max(minColumnWidth, maxCellWidth + columnPadding), maxColumnWidth);
-          newColumnSizes[colId] = estimatedWidth;
+          recommendedColSizes[colId] = Math.min(Math.max(minColWidth, estimatedSize), maxColWidth);
         });
+        const minTotalWidth = Object.values(minColSizes).reduce((sum, val) => sum + val, 0);
+        const recommendedTotalWidth = Object.values(recommendedColSizes).reduce((sum, val) => sum + val, 0);
 
-        const totalNewColumnSizes = Object.values(newColumnSizes).reduce((sum, size) => sum + size, 0);
         const style = window.getComputedStyle(tableRef.current.parentNode);
         const maxVisibleWidth = tableRef.current.parentNode.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
 
-        if (fitScreen || (!fitScreen && totalNewColumnSizes < maxVisibleWidth)) {
-          const scaleFactor = (maxVisibleWidth - offset) / totalNewColumnSizes;
-          const scaledSizes = {};
-          let clampedTotal = 0;
-          const flexibleColumns = [];
-          let totalFlexibleOriginal = 0;
-
-          Object.entries(newColumnSizes).forEach(([id, size]) => {
-            const scaled = size * scaleFactor;
-            if (scaled < minColumnScaleWidth) {
-              scaledSizes[id] = minColumnScaleWidth;
-              clampedTotal += minColumnScaleWidth;
-            } else {
-              flexibleColumns.push(id);
-              scaledSizes[id] = scaled;
-              totalFlexibleOriginal += scaled;
-            }
-          });
-          const remainingWidth = maxVisibleWidth - clampedTotal;
-
-          flexibleColumns.forEach((id) => {
-            const original = scaledSizes[id];
-            const portion = original / totalFlexibleOriginal;
-            scaledSizes[id] = portion * remainingWidth;
-          });
-
-          Object.keys(scaledSizes).forEach((id) => {
-            newColumnSizes[id] = scaledSizes[id];
-          });
+        const visibleWidth = Math.max(maxVisibleWidth - offset, minTotalWidth);
+        if (fitScreen || (!fitScreen && recommendedTotalWidth < visibleWidth)) {
+          const scaleFactor = (maxVisibleWidth - offset) / minTotalWidth;
+          if (scaleFactor < 1) {
+            finalColSizes = minColSizes;
+          } else {
+            const extraSpaceAvailable = maxVisibleWidth - minTotalWidth;
+            const extraSpaceNeeded = recommendedTotalWidth - minTotalWidth;
+            const scaleFactorFinal = extraSpaceAvailable / extraSpaceNeeded;
+            finalColSizes = Object.fromEntries(
+              Object.entries(minColSizes).map(([id, minSize]) => {
+                const recommendedSize = recommendedColSizes[id];
+                const scaledSize = minSize + (recommendedSize - minSize) * scaleFactorFinal;
+                return [id, scaledSize];
+              }),
+            );
+          }
+        } else {
+          finalColSizes = recommendedColSizes;
         }
-
-        table.setColumnSizing(newColumnSizes);
+        table.setColumnSizing(finalColSizes);
       } catch {} // eslint-disable-line no-empty
+
+      if (scrollToEnd) {
+        tableRef.current.parentNode.scrollBy({ left: tableRef.current.parentNode.scrollWidth, behavior: 'instant' });
+      }
     },
     [tableRef, table],
   );
