@@ -51,7 +51,7 @@ const HeaderRow = React.memo(
 const HeaderCell = React.memo(
   React.forwardRef(({ children, className, isCentered, ...props }, ref) => {
     return (
-      <th ref={ref} className={classNames(s.headerCell, className, isCentered && s.headerCellCenter)} {...props}>
+      <th ref={ref} className={classNames(s.headerCell, className, isCentered ? s.headerCellCenter : s.headerCellLeft)} {...props}>
         {isCentered ? <div className={s.headerCellCenterInner}>{children}</div> : children}
       </th>
     );
