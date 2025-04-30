@@ -385,6 +385,7 @@ const ListView = React.memo(
                         onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
                         className={classNames(header.column.getCanSort() && gs.cursorPointer)}
                         title={header.column.columnDef.meta?.headerTitle}
+                        aria-label={header.column.columnDef.meta?.headerAriaLabel}
                         isCentered
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}

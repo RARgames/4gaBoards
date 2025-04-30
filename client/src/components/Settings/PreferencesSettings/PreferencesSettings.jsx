@@ -260,7 +260,14 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
               {table.getHeaderGroups().map((headerGroup) => (
                 <Table.HeaderRow key={headerGroup.id}>
                   {headerGroup.headers.map((header, index) => (
-                    <Table.HeaderCell key={header.id} style={{ width: `${header.getSize()}px` }} colSpan={header.colSpan} title={header.column.columnDef.meta?.headerTitle} isCentered>
+                    <Table.HeaderCell
+                      key={header.id}
+                      style={{ width: `${header.getSize()}px` }}
+                      colSpan={header.colSpan}
+                      title={header.column.columnDef.meta?.headerTitle}
+                      aria-label={header.column.columnDef.meta?.headerAriaLabel}
+                      isCentered
+                    >
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {index + 1 < headerGroup.headers.length && <Table.Resizer />}
                     </Table.HeaderCell>
