@@ -94,7 +94,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
     [onUpdate],
   );
 
-  const filteredCards = useMemo(
+  const data = useMemo(
     () => [
       {
         id: 'subscribeToOwnCards',
@@ -184,7 +184,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
   );
 
   const table = useReactTable({
-    data: filteredCards,
+    data,
     columns: [],
     getCoreRowModel: getCoreRowModel(),
     style: Table.Style.Default,

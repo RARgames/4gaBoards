@@ -1,1 +1,10 @@
-// :global(#app) {}
+:global(#app) {
+  .container {
+    min-height: 0;
+  }
+
+  .cell {
+    -webkit-line-clamp: none;
+    line-clamp: none;
+  }
+}

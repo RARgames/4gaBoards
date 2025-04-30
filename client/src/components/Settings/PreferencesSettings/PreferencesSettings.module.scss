@@ -1,6 +1,6 @@
 :global(#app) {
   .container {
-    height: calc(100% - 51px);
+    min-height: 0;
   }
 
   .cell {
