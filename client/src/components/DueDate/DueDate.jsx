@@ -33,7 +33,7 @@ const getDueStyle = (value) => {
 };
 
 // TODO remove old onClick and Button variant
-const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize, isClickable, className, onClick }) => {
+const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize, isClickable, className, onClick, showUndefined }) => {
   const [t] = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
 
@@ -49,7 +49,7 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
 
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
 
-  const contentNode = value && (
+  const contentNode = value ? (
     <span
       className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], (onClick || isClickable) && s.dueDateHoverable, className)}
       title={`${titlePrefixString}${t(variant === VARIANTS.LIST_VIEW ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' })}`}
@@ -58,6 +58,8 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
       {variant === VARIANTS.LIST_VIEW && t(`format:dateTime`, { value, postProcess: 'formatDate' })}
       {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} />}
     </span>
+  ) : (
+    showUndefined && <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], (onClick || isClickable) && s.dueDateHoverable, className)}>-</span>
   );
 
   return onClick ? (
@@ -78,6 +80,7 @@ DueDate.propTypes = {
   isClickable: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  showUndefined: PropTypes.bool,
 };
 
 DueDate.defaultProps = {
@@ -89,6 +92,7 @@ DueDate.defaultProps = {
   isClickable: false,
   className: undefined,
   onClick: undefined,
+  showUndefined: false,
 };
 
 export default DueDate;
