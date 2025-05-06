@@ -37,37 +37,24 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
       {
         id: 'enableRegistration',
         instanceSettings: t('common.enableRegistration'),
-        modifySettings: <Radio size={RadioSize.Size12} checked={registrationEnabled} disabled={demoMode} onChange={handleRegistrationEnabledChange} title={t('common.toggleUserRegistration')} />,
+        modifySettings: registrationEnabled,
+        modifySettingsProps: { onChange: handleRegistrationEnabledChange, disabled: demoMode, title: t('common.toggleUserRegistration') },
         currentValue: registrationEnabled ? t('common.enabled') : t('common.disabled'),
         description: t('common.descriptionUserRegistration'),
       },
       {
         id: 'enableLocalRegistration',
         instanceSettings: t('common.enableLocalRegistration'),
-        modifySettings: (
-          <Radio
-            size={RadioSize.Size12}
-            checked={registrationEnabled && localRegistrationEnabled}
-            disabled={!registrationEnabled || demoMode}
-            onChange={handleLocalRegistrationEnabledChange}
-            title={t('common.toggleLocalUserRegistration')}
-          />
-        ),
+        modifySettings: registrationEnabled && localRegistrationEnabled,
+        modifySettingsProps: { onChange: handleLocalRegistrationEnabledChange, disabled: !registrationEnabled || demoMode, title: t('common.toggleLocalUserRegistration') },
         currentValue: registrationEnabled && localRegistrationEnabled ? t('common.enabled') : t('common.disabled'),
         description: t('common.descriptionLocalRegistration'),
       },
       {
         id: 'enableSsoRegistration',
         instanceSettings: t('common.enableSsoRegistration'),
-        modifySettings: (
-          <Radio
-            size={RadioSize.Size12}
-            checked={registrationEnabled && ssoRegistrationEnabled}
-            disabled={!registrationEnabled || demoMode}
-            onChange={handleSsoRegistrationEnabledChange}
-            title={t('common.toggleSsoUserRegistration')}
-          />
-        ),
+        modifySettings: registrationEnabled && ssoRegistrationEnabled,
+        modifySettingsProps: { onChange: handleSsoRegistrationEnabledChange, disabled: !registrationEnabled || demoMode, title: t('common.toggleSsoUserRegistration') },
         currentValue: registrationEnabled && ssoRegistrationEnabled ? t('common.enabled') : t('common.disabled'),
         description: t('common.descriptionSsoRegistration'),
       },
@@ -113,7 +100,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
       {
         accessorKey: 'modifySettings',
         header: t('common.modifySettings'),
-        cell: Table.Renderers.DivCellRenderer,
+        cell: Table.Renderers.SettingsCellRenderer,
         enableSorting: false,
         meta: { headerTitle: t('common.modifySettings'), suggestedSize: 200 },
         cellProps: { ariaLabel: t('common.toggleSettings') },

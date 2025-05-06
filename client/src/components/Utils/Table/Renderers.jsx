@@ -6,10 +6,10 @@ import ActionsHeader from './ActionsHeader';
 import BoolCell from './BoolCell';
 import DateCell from './DateCell';
 import DefaultCell from './DefaultCell';
-import DivCell from './DivCell';
 import ImageCell from './ImageCell';
 import MarkdownCell from './MarkdownCell';
 import RadioCell from './RadioCell';
+import SettingsCell from './SettingsCell';
 import TableStyle from './TableStyle';
 
 import * as ts from './Table.module.scss';
@@ -46,10 +46,11 @@ function BoolCellRenderer({ table, column, getValue }) {
 }
 BoolCellRenderer.propTypes = listPropTypes;
 
-function DivCellRenderer({ table, column, cell }) {
-  return <DivCell value={cell.getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
+function SettingsCellRenderer({ table, column, row, cell }) {
+  const props = row.original?.[`${column.id}Props`];
+  return <SettingsCell value={cell.getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} {...props} />;
 }
-DivCellRenderer.propTypes = listPropTypes;
+SettingsCellRenderer.propTypes = listPropTypes;
 
 function ImageCellRenderer({ table, column, getValue }) {
   return <ImageCell value={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
@@ -76,4 +77,4 @@ function ActionsHeaderRenderer({ table, column }) {
 }
 ActionsHeaderRenderer.propTypes = listHeaderPropTypes;
 
-export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, DivCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, RadioCellRenderer, ActionsHeaderRenderer };
+export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, SettingsCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, RadioCellRenderer, ActionsHeaderRenderer };

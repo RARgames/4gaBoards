@@ -74,7 +74,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
     onUpdate({
       sidebarCompact: !sidebarCompact,
     });
-  }, [sidebarCompact, onUpdate]);
+  }, [onUpdate, sidebarCompact]);
 
   const handleDefaultViewChange = useCallback(
     (value) => {
@@ -109,86 +109,55 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       {
         id: 'subscribeToOwnCards',
         preferences: t('common.subscribeToMyOwnCards'),
-        modifySettings: <Radio size={RadioSize.Size12} checked={subscribeToOwnCards} onChange={handleSubscribeToOwnCardsChange} title={t('common.toggleSubscribeToMyOwnCards')} />,
+        modifySettings: subscribeToOwnCards,
+        modifySettingsProps: { onChange: handleSubscribeToOwnCardsChange, title: t('common.toggleSubscribeToMyOwnCards') },
         currentValue: subscribeToOwnCards ? t('common.enabled') : t('common.disabled'),
         description: t('common.descriptionSubscribeToMyOwnCards'),
       },
       {
         id: 'sidebarCompact',
         preferences: t('common.sidebarCompact'),
-        modifySettings: <Radio size={RadioSize.Size12} checked={sidebarCompact} onChange={handleCompactSidebarChange} title={t('common.toggleCompactSidebar')} />,
+        modifySettings: sidebarCompact,
+        modifySettingsProps: { onChange: handleCompactSidebarChange, title: t('common.toggleCompactSidebar') },
         currentValue: sidebarCompact ? t('common.enabled') : t('common.disabled'),
         description: t('common.descriptionCompactSidebar'),
       },
       {
         id: 'defaultView',
         preferences: t('common.defaultView'),
-        modifySettings: (
-          <Dropdown
-            style={DropdownStyle.FullWidth}
-            options={defaultViews}
-            placeholder={selectedDefaultView.name}
-            defaultItem={selectedDefaultView}
-            isSearchable
-            selectFirstOnSearch
-            forcePlaceholder
-            onChange={handleDefaultViewChange}
-          />
-        ),
+        modifySettings: selectedDefaultView,
+        modifySettingsProps: { onChange: handleDefaultViewChange, options: defaultViews, placeholder: selectedDefaultView.name, isSearchable: true, selectFirstOnSearch: true, forcePlaceholder: true },
         currentValue: selectedDefaultView.name,
         description: t('common.descriptionDefaultView'),
       },
       {
         id: 'listViewStyle',
         preferences: t('common.listViewStyle'),
-        modifySettings: (
-          <Dropdown
-            style={DropdownStyle.FullWidth}
-            options={listStyles}
-            placeholder={selectedListViewStyle.name}
-            defaultItem={selectedListViewStyle}
-            isSearchable
-            selectFirstOnSearch
-            forcePlaceholder
-            onChange={handleListViewStyleChange}
-          />
-        ),
+        modifySettings: selectedListViewStyle,
+        modifySettingsProps: { onChange: handleListViewStyleChange, options: listStyles, placeholder: selectedListViewStyle.name, isSearchable: true, selectFirstOnSearch: true, forcePlaceholder: true },
         currentValue: selectedListViewStyle.name,
         description: t('common.descriptionListViewStyle'),
       },
       {
         id: 'usersSettingsStyle',
         preferences: t('common.usersSettingsStyle'),
-        modifySettings: (
-          <Dropdown
-            style={DropdownStyle.FullWidth}
-            options={listStyles}
-            placeholder={selectedUsersSettingsStyle.name}
-            defaultItem={selectedUsersSettingsStyle}
-            isSearchable
-            selectFirstOnSearch
-            forcePlaceholder
-            onChange={handleUsersSettingsStyleChange}
-          />
-        ),
+        modifySettings: selectedUsersSettingsStyle,
+        modifySettingsProps: {
+          onChange: handleUsersSettingsStyleChange,
+          options: listStyles,
+          placeholder: selectedUsersSettingsStyle.name,
+          isSearchable: true,
+          selectFirstOnSearch: true,
+          forcePlaceholder: true,
+        },
         currentValue: selectedUsersSettingsStyle.name,
         description: t('common.descriptionUsersSettingsStyle'),
       },
       {
         id: 'language',
         preferences: t('common.language', { context: 'title' }),
-        modifySettings: (
-          <Dropdown
-            style={DropdownStyle.FullWidth}
-            options={languages}
-            placeholder={selectedLanguage.name}
-            defaultItem={selectedLanguage}
-            isSearchable
-            selectFirstOnSearch
-            forcePlaceholder
-            onChange={handleLanguageChange}
-          />
-        ),
+        modifySettings: selectedLanguage,
+        modifySettingsProps: { onChange: handleLanguageChange, options: languages, placeholder: selectedLanguage.name, isSearchable: true, selectFirstOnSearch: true, forcePlaceholder: true },
         currentValue: selectedLanguage.name,
         description: t('common.descriptionSLanguage'),
       },
@@ -199,17 +168,17 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       handleSubscribeToOwnCardsChange,
       sidebarCompact,
       handleCompactSidebarChange,
-      defaultViews,
       selectedDefaultView,
       handleDefaultViewChange,
-      listStyles,
+      defaultViews,
       selectedListViewStyle,
       handleListViewStyleChange,
+      listStyles,
       selectedUsersSettingsStyle,
       handleUsersSettingsStyleChange,
-      languages,
       selectedLanguage,
       handleLanguageChange,
+      languages,
     ],
   );
 
@@ -228,7 +197,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
 
   useEffect(() => {
     resetColumnsWidths();
-  }, [resetColumnsWidths]);
+  }, [resetColumnsWidths, sidebarCompact]);
 
   useEffect(() => {
     window.addEventListener('resize', resetColumnsWidths);
@@ -251,7 +220,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       {
         accessorKey: 'modifySettings',
         header: t('common.modifySettings'),
-        cell: Table.Renderers.DivCellRenderer,
+        cell: Table.Renderers.SettingsCellRenderer,
         enableSorting: false,
         meta: { headerTitle: t('common.modifySettings'), suggestedSize: 200 },
         cellProps: { ariaLabel: t('common.toggleSettings') },

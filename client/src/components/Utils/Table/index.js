@@ -1,4 +1,14 @@
-import { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, DivCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, RadioCellRenderer, ActionsHeaderRenderer } from './Renderers';
+import {
+  DefaultCellRenderer,
+  NumberCellRenderer,
+  BoolCellRenderer,
+  SettingsCellRenderer,
+  ImageCellRenderer,
+  MarkdownCellRenderer,
+  DateCellRenderer,
+  RadioCellRenderer,
+  ActionsHeaderRenderer,
+} from './Renderers';
 import Table from './Table';
 import { Container, Wrapper, Header, HeaderRow, HeaderCell, Resizer, SortingIndicator, Body, Row, Cell } from './TableElements';
 import TablePagination from './TablePagination';
@@ -24,7 +34,7 @@ Table.Renderers = {
   DefaultCellRenderer,
   NumberCellRenderer,
   BoolCellRenderer,
-  DivCellRenderer,
+  SettingsCellRenderer,
   ImageCellRenderer,
   MarkdownCellRenderer,
   DateCellRenderer,
