@@ -126,7 +126,7 @@ export default {
       demoModeExplanation: 'Tryb demo - niektóre funkcje wpływające na innych użytkowników są niedostępne! Każdy nowy użytkownik otrzymuje prawa administratora.',
       description: 'Opis',
       descriptionCompactSidebar: 'Zmniejsza panel boczny do minimalnej szerokości.',
-      descriptionDefaultView: 'Wybierz domyślny widok tablicy',
+      descriptionDefaultView: 'Wybierz domyślny widok tablicy.',
       descriptionListViewStyle: 'Wybierz styl widoku listy.',
       descriptionLocalRegistration: 'Włącz lub wyłącz lokalną rejestrację użytkowników. Ta metoda rejestracji umożliwia użytkownikom utworzenie konta przy użyciu nazwy użytkownika i hasła.',
       descriptionSLanguage: 'Wybierz język, którego chcesz używać w 4ga Boards.',
