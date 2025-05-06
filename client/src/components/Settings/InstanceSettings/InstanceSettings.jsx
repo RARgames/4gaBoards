@@ -4,7 +4,7 @@ import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-tabl
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import { Radio, RadioSize, Table } from '../../Utils';
+import { Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
