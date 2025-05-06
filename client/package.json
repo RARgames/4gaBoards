@@ -20,9 +20,9 @@
     ]
   },
   "dependencies": {
-    "@babel/core": "^7.26.10",
-    "@babel/preset-react": "^7.26.3",
-    "@babel/runtime": "^7.27.0",
+    "@babel/core": "^7.27.1",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/runtime": "^7.27.1",
     "@floating-ui/react": "^0.27.8",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
     "@react-hook/resize-observer": "^2.0.2",
@@ -106,16 +106,16 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.27.0",
+    "@babel/eslint-parser": "^7.27.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "chai": "^5.2.0",
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-perfectionist": "^4.12.3",
-    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0"
   },
