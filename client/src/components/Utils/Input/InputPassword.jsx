@@ -28,7 +28,8 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
 
   const handleToggleClick = useCallback(() => {
     toggleVisible();
-  }, [toggleVisible]);
+    ref.current?.focus();
+  }, [ref, toggleVisible]);
 
   const inputProps = {
     ...props,
