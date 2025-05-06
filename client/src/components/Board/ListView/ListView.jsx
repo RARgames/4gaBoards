@@ -66,7 +66,6 @@ const ListView = React.memo(
       const pageSize = listViewItemsPerPage === 'all' ? Number.MAX_SAFE_INTEGER : Number(listViewItemsPerPage);
       const pageIndex = Math.floor(currentCardIndex / pageSize);
       initialPageIndexRef.current = { pageIndex: pageIndex === -1 ? 0 : pageIndex, pageSize };
-      initialPageIndexRef.current.pageSize = pageSize;
     }
 
     const { columnVisibility, setColumnVisibility, pagination, setPagination, sorting, setSorting, handleResetColumnSortingClick } = Table.HooksState(
