@@ -16,7 +16,7 @@ function* postLoginSaga() {
   }
 
   const data = {
-    lastLogin: new Date().toUTCString(),
+    lastLogin: new Date(),
   };
   yield call(coreServices.updateCurrentUser, data);
 }

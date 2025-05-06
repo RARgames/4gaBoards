@@ -9,11 +9,12 @@ import DefaultCell from './DefaultCell';
 import DivCell from './DivCell';
 import ImageCell from './ImageCell';
 import MarkdownCell from './MarkdownCell';
+import RadioCell from './RadioCell';
 import TableStyle from './TableStyle';
 
 import * as ts from './Table.module.scss';
 
-const listViewPropTypes = {
+const listPropTypes = {
   table: PropTypes.shape({
     options: PropTypes.shape({
       style: PropTypes.oneOf(Object.values(TableStyle)).isRequired,
@@ -25,7 +26,7 @@ const listViewPropTypes = {
   getValue: PropTypes.func.isRequired,
 };
 
-const listViewHeaderPropTypes = {
+const listHeaderPropTypes = {
   table: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   column: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
@@ -33,41 +34,46 @@ const listViewHeaderPropTypes = {
 function DefaultCellRenderer({ table, column, cell }) {
   return <DefaultCell value={cell.getValue()} title={cell.getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
-DefaultCellRenderer.propTypes = listViewPropTypes;
+DefaultCellRenderer.propTypes = listPropTypes;
 
 function NumberCellRenderer({ table, column, getValue }) {
   return <DefaultCell value={getValue()} title={getValue().toString()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
-NumberCellRenderer.propTypes = listViewPropTypes;
+NumberCellRenderer.propTypes = listPropTypes;
 
 function BoolCellRenderer({ table, column, getValue }) {
   return <BoolCell value={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
-BoolCellRenderer.propTypes = listViewPropTypes;
+BoolCellRenderer.propTypes = listPropTypes;
 
 function DivCellRenderer({ table, column, cell }) {
   return <DivCell value={cell.getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
-DivCellRenderer.propTypes = listViewPropTypes;
+DivCellRenderer.propTypes = listPropTypes;
 
 function ImageCellRenderer({ table, column, getValue }) {
   return <ImageCell value={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
-ImageCellRenderer.propTypes = listViewPropTypes;
+ImageCellRenderer.propTypes = listPropTypes;
 
 function MarkdownCellRenderer({ table, column, getValue }) {
   return <MarkdownCell value={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
-MarkdownCellRenderer.propTypes = listViewPropTypes;
+MarkdownCellRenderer.propTypes = listPropTypes;
 
 function DateCellRenderer({ table, column, getValue }) {
   return <DateCell date={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
-DateCellRenderer.propTypes = listViewPropTypes;
+DateCellRenderer.propTypes = listPropTypes;
+
+function RadioCellRenderer({ table, column, row, getValue }) {
+  return <RadioCell id={row.original.id} checked={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
+}
+RadioCellRenderer.propTypes = listPropTypes;
 
 function ActionsHeaderRenderer({ table, column }) {
   return <ActionsHeader table={table} {...column.columnDef.headerProps} />;
 }
-ActionsHeaderRenderer.propTypes = listViewHeaderPropTypes;
+ActionsHeaderRenderer.propTypes = listHeaderPropTypes;
 
-export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, DivCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, ActionsHeaderRenderer };
+export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, DivCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, RadioCellRenderer, ActionsHeaderRenderer };

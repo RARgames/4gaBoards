@@ -7,8 +7,21 @@ import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
   const currentUser = selectors.selectCurrentUser(state);
-  const users = selectors.selectUsers(state);
+  const rawUsers = selectors.selectUsers(state);
+  const users = rawUsers.map(({ id, name, avatarUrl, username, email, isAdmin, ssoGoogleEmail, lastLogin, createdAt }) => ({
+    id,
+    avatar: avatarUrl || undefined, // undefined needed for TanStack Table sorting
+    name,
+    username: username || undefined, // undefined needed for TanStack Table sorting
+    email,
+    administrator: isAdmin,
+    ssoGoogleEmail: ssoGoogleEmail || undefined, // undefined needed for TanStack Table sorting
+    lastLogin: lastLogin || undefined, // undefined needed for TanStack Table sorting
+    createdAt,
+  }));
+
   const coreSettings = selectors.selectCoreSettings(state);
+  const { usersSettingsStyle, usersSettingsColumnVisibility, usersSettingsFitScreen, usersSettingsItemsPerPage } = selectors.selectCurrentUserPrefs(state);
 
   const {
     ui: {
@@ -23,6 +36,10 @@ const mapStateToProps = (state) => {
     userCreateError: error,
     items: users,
     demoMode: coreSettings.demoMode,
+    usersSettingsStyle,
+    usersSettingsColumnVisibility,
+    usersSettingsFitScreen,
+    usersSettingsItemsPerPage,
   };
 };
 
@@ -32,13 +49,7 @@ const mapDispatchToProps = (dispatch) =>
       onUserCreate: entryActions.createUser,
       onUserCreateMessageDismiss: entryActions.clearUserCreateError,
       onUpdate: entryActions.updateUser,
-      onUsernameUpdate: entryActions.updateUserUsername,
-      onUsernameUpdateMessageDismiss: entryActions.clearUserUsernameUpdateError,
-      onEmailUpdate: entryActions.updateUserEmail,
-      onEmailUpdateMessageDismiss: entryActions.clearUserEmailUpdateError,
-      onPasswordUpdate: entryActions.updateUserPassword,
-      onPasswordUpdateMessageDismiss: entryActions.clearUserPasswordUpdateError,
-      onDelete: entryActions.deleteUser,
+      onUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
     },
     dispatch,
   );

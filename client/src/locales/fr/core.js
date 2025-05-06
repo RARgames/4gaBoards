@@ -127,11 +127,13 @@ export default {
       description: 'Description',
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
+      descriptionListViewStyle: 'Sélectionnez le style de la vue de liste.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
       descriptionSLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
       descriptionSubscribeToMyOwnCards: 'Être abonné à mes propres cartes',
       descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.", // eslint-disable-line prettier/prettier
+      descriptionUsersSettingsStyle: 'Sélectionnez le style des paramètres des utilisateurs.',
       detailsAttachments_many: 'Cette carte a {{count}} pièces jointes',
       detailsAttachments_one: 'Cette carte a {{count}} pièce jointe',
       detailsAttachments_other: 'Cette carte a {{count}} pièces jointes',
@@ -373,6 +375,7 @@ export default {
       username: "Nom d'utilisateur",
       usernameAlreadyInUse: "Nom d'utilisateur déjà utilisé",
       users: 'Utilisateurs',
+      usersSettingsStyle: 'Style des paramètres utilisateurs',
       version: 'Version:',
       viewer: 'Téléspectateur',
       weakPassword: 'Mot de passe faible',

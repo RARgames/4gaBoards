@@ -10,7 +10,7 @@ const Errors = {
   },
 };
 
-const listViewColumnVisibilityValidator = (value) => _.isObject(value) && _.every(value, (v) => typeof v === 'boolean');
+const columnVisibilityValidator = (value) => _.isObject(value) && _.every(value, (v) => typeof v === 'boolean');
 
 module.exports = {
   inputs: {
@@ -59,19 +59,36 @@ module.exports = {
     },
     listViewStyle: {
       type: 'string',
-      isIn: UserPrefs.LIST_VIEW_STYLES,
+      isIn: UserPrefs.LIST_STYLES,
       isNotEmptyString: true,
     },
     listViewColumnVisibility: {
       type: 'json',
-      custom: listViewColumnVisibilityValidator,
+      custom: columnVisibilityValidator,
     },
     listViewFitScreen: {
       type: 'boolean',
     },
     listViewItemsPerPage: {
       type: 'string',
-      isIn: UserPrefs.LIST_VIEW_ITEMS_PER_PAGE,
+      isIn: UserPrefs.LIST_ITEMS_PER_PAGE,
+      isNotEmptyString: true,
+    },
+    usersSettingsStyle: {
+      type: 'string',
+      isIn: UserPrefs.LIST_STYLES,
+      isNotEmptyString: true,
+    },
+    usersSettingsColumnVisibility: {
+      type: 'json',
+      custom: columnVisibilityValidator,
+    },
+    usersSettingsFitScreen: {
+      type: 'boolean',
+    },
+    usersSettingsItemsPerPage: {
+      type: 'string',
+      isIn: UserPrefs.LIST_ITEMS_PER_PAGE,
       isNotEmptyString: true,
     },
   },
@@ -116,6 +133,10 @@ module.exports = {
         'listViewColumnVisibility',
         'listViewFitScreen',
         'listViewItemsPerPage',
+        'usersSettingsStyle',
+        'usersSettingsColumnVisibility',
+        'usersSettingsFitScreen',
+        'usersSettingsItemsPerPage',
       ]),
     };
 

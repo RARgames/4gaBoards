@@ -1,24 +1,65 @@
 :global(#app) {
-  .headerButton {
-    position: relative;
-    flex: 0 1 auto;
-  }
-
-  .headerButtonOffset {
-    position: relative;
-    height: 32px;
-    flex: 1 1 auto;
-  }
-
-  @media (max-width: 500px) {
-    .headerButtonOffset {
-      display: none;
-    }
+  .wrapper {
+    padding-bottom: 0;
   }
 
   .headerTextDetails {
     color: var(--textColor3);
     font-weight: normal;
     font-size: 18px;
+  }
+
+  .container {
+    min-height: 0;
+  }
+
+  .cell {
+    -webkit-line-clamp: none;
+    line-clamp: none;
+  }
+
+  .dateCell {
+    font-size: 14px;
+  }
+
+  .paginationButtonsWrapper {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+  }
+
+  .popupWrapper {
+    height: 20px;
+  }
+
+  .paginationButton {
+    display: inline-flex;
+    white-space: nowrap;
+    background: var(--backgroundList);
+    color: var(--textColor2);
+    line-height: 16px;
+    font-size: 14px;
+    padding: 0 6px;
+    text-align: left;
+    width: fit-content;
+    align-items: center;
+
+    &:hover {
+      color: var(--textColor2);
+      background: var(--backgroundListButton);
+
+      .paginationButtonIcon {
+        fill: var(--textColor2);
+      }
+    }
+  }
+
+  .paginationButtonIcon {
+    fill: var(--textColor2);
+  }
+
+  .paginationButtonText {
+    display: inline-block;
+    margin-left: 2px;
   }
 }

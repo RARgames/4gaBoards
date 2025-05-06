@@ -11,7 +11,7 @@ import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
-const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, onUpdate }) => {
+const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, onUpdate }) => {
   const [t] = useTranslation();
   const tableRef = useRef(null);
 
@@ -46,7 +46,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
   );
   const selectedDefaultView = useMemo(() => defaultViews.find((view) => view.id === defaultView), [defaultViews, defaultView]);
 
-  const listViewStyles = useMemo(
+  const listStyles = useMemo(
     () => [
       {
         id: 'default',
@@ -59,7 +59,10 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
     ],
     [t],
   );
-  const selectedListViewStyle = useMemo(() => listViewStyles.find((style) => style.id === listViewStyle), [listViewStyles, listViewStyle]);
+
+  const selectedListViewStyle = useMemo(() => listStyles.find((style) => style.id === listViewStyle), [listStyles, listViewStyle]);
+
+  const selectedUsersSettingsStyle = useMemo(() => listStyles.find((style) => style.id === usersSettingsStyle), [listStyles, usersSettingsStyle]);
 
   const handleSubscribeToOwnCardsChange = useCallback(() => {
     onUpdate({
@@ -83,6 +86,13 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
   const handleListViewStyleChange = useCallback(
     (value) => {
       onUpdate({ listViewStyle: value.id });
+    },
+    [onUpdate],
+  );
+
+  const handleUsersSettingsStyleChange = useCallback(
+    (value) => {
+      onUpdate({ usersSettingsStyle: value.id });
     },
     [onUpdate],
   );
@@ -134,7 +144,7 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
         modifySettings: (
           <Dropdown
             style={DropdownStyle.FullWidth}
-            options={listViewStyles}
+            options={listStyles}
             placeholder={selectedListViewStyle.name}
             defaultItem={selectedListViewStyle}
             isSearchable
@@ -144,7 +154,25 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
           />
         ),
         currentValue: selectedListViewStyle.name,
-        description: t('common.descriptionDefaultView'),
+        description: t('common.descriptionListViewStyle'),
+      },
+      {
+        id: 'usersSettingsStyle',
+        preferences: t('common.usersSettingsStyle'),
+        modifySettings: (
+          <Dropdown
+            style={DropdownStyle.FullWidth}
+            options={listStyles}
+            placeholder={selectedUsersSettingsStyle.name}
+            defaultItem={selectedUsersSettingsStyle}
+            isSearchable
+            selectFirstOnSearch
+            forcePlaceholder
+            onChange={handleUsersSettingsStyleChange}
+          />
+        ),
+        currentValue: selectedUsersSettingsStyle.name,
+        description: t('common.descriptionUsersSettingsStyle'),
       },
       {
         id: 'language',
@@ -174,9 +202,11 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       defaultViews,
       selectedDefaultView,
       handleDefaultViewChange,
-      listViewStyles,
+      listStyles,
       selectedListViewStyle,
       handleListViewStyleChange,
+      selectedUsersSettingsStyle,
+      handleUsersSettingsStyleChange,
       languages,
       selectedLanguage,
       handleLanguageChange,
@@ -299,6 +329,7 @@ PreferencesSettings.propTypes = {
   language: PropTypes.string,
   defaultView: PropTypes.string.isRequired,
   listViewStyle: PropTypes.string.isRequired,
+  usersSettingsStyle: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

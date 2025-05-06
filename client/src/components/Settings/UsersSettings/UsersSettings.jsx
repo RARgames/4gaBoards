@@ -1,15 +1,28 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import UserAddPopup from '../../UserAddPopup';
-import { Button, ButtonStyle, TableLegacy as Table } from '../../Utils';
-import Item from './Item';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
+import { ActionsCellRenderer, NameCellRenderer, UserAvatarRenderer } from './Renderers';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './UsersSettings.module.scss';
+
+const DEFAULT_COLUMN_VISIBILITY = {
+  avatar: true,
+  name: true,
+  username: true,
+  email: true,
+  administrator: true,
+  ssoGoogleEmail: true,
+  lastLogin: true,
+  createdAt: false,
+  actions: true,
+};
 
 const UsersSettings = React.memo(
   ({
@@ -19,152 +32,313 @@ const UsersSettings = React.memo(
     userCreateError,
     items,
     demoMode,
+    usersSettingsStyle,
+    usersSettingsColumnVisibility,
+    usersSettingsFitScreen,
+    usersSettingsItemsPerPage,
     onUserCreate,
     onUserCreateMessageDismiss,
     onUpdate,
-    onUsernameUpdate,
-    onUsernameUpdateMessageDismiss,
-    onEmailUpdate,
-    onEmailUpdateMessageDismiss,
-    onPasswordUpdate,
-    onPasswordUpdateMessageDismiss,
-    onDelete,
+    onUserPrefsUpdate,
   }) => {
     const [t] = useTranslation();
-    const offsetRef = useRef(null);
-    const headerButtonRef = useRef(null);
+    const tableRef = useRef(null);
+    const tableBodyRef = useRef(null);
+    const initialPageIndexRef = useRef(null);
+    if (initialPageIndexRef.current === null) {
+      const pageSize = usersSettingsItemsPerPage === 'all' ? Number.MAX_SAFE_INTEGER : Number(usersSettingsItemsPerPage);
+      initialPageIndexRef.current = { pageIndex: 0, pageSize };
+    }
 
-    const handleUpdate = useCallback(
-      (id, data) => {
-        onUpdate(id, data);
+    const { columnVisibility, setColumnVisibility, pagination, setPagination, sorting, setSorting, handleResetColumnSortingClick } = Table.HooksState(
+      usersSettingsColumnVisibility,
+      initialPageIndexRef.current.pageIndex,
+      initialPageIndexRef.current.pageSize,
+    );
+
+    const handleResetColumnVisibilityClick = useCallback(() => {
+      setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
+    }, [setColumnVisibility]);
+
+    const handleColumnVisibilityChange = useCallback(
+      (updater) => {
+        setColumnVisibility((prev) => {
+          const next = typeof updater === 'function' ? updater(prev) : updater;
+          const changedColumns = Object.keys(next).filter((key) => next[key] !== prev[key]);
+          const nowHidden = changedColumns.filter((col) => next[col] === false);
+          if (nowHidden.length > 0) {
+            setSorting((prevSorting) => prevSorting.filter((sort) => !nowHidden.includes(sort.id)));
+          }
+          return next;
+        });
+      },
+      [setColumnVisibility, setSorting],
+    );
+
+    const handlePaginationChange = useCallback(
+      (updater) => {
+        setPagination((prev) => {
+          const next = typeof updater === 'function' ? updater(prev) : updater;
+          if (next.pageSize !== prev.pageSize) {
+            next.pageIndex = 0;
+          }
+          if (next.pageIndex !== prev.pageIndex) {
+            tableBodyRef.current.scrollTo({ top: 0 });
+          }
+          return next;
+        });
+      },
+      [setPagination],
+    );
+
+    const handleIsAdminChange = useCallback(
+      (id, isAdmin) => {
+        onUpdate(id, {
+          isAdmin: !isAdmin,
+        });
       },
       [onUpdate],
     );
 
-    const handleUsernameUpdate = useCallback(
-      (id, data) => {
-        onUsernameUpdate(id, data);
-      },
-      [onUsernameUpdate],
-    );
+    const table = useReactTable({
+      autoResetPageIndex: false,
+      data: items,
+      columns: [],
+      getCoreRowModel: getCoreRowModel(),
+      getSortedRowModel: getSortedRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+      enableMultiSort: true,
+      columnResizeMode: 'onChange',
+      state: { sorting, columnVisibility, pagination },
+      onColumnVisibilityChange: handleColumnVisibilityChange,
+      onPaginationChange: handlePaginationChange,
+      style: usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
+    });
 
-    const handleUsernameUpdateMessageDismiss = useCallback(
-      (id) => {
-        onUsernameUpdateMessageDismiss(id);
-      },
-      [onUsernameUpdateMessageDismiss],
-    );
+    const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
+    const sortingFunctions = Table.HooksSorting(table);
 
-    const handleEmailUpdate = useCallback(
-      (id, data) => {
-        onEmailUpdate(id, data);
-      },
-      [onEmailUpdate],
-    );
-
-    const handleEmailUpdateMessageDismiss = useCallback(
-      (id) => {
-        onEmailUpdateMessageDismiss(id);
-      },
-      [onEmailUpdateMessageDismiss],
-    );
-
-    const handlePasswordUpdate = useCallback(
-      (id, data) => {
-        onPasswordUpdate(id, data);
-      },
-      [onPasswordUpdate],
-    );
-
-    const handlePasswordUpdateMessageDismiss = useCallback(
-      (id) => {
-        onPasswordUpdateMessageDismiss(id);
-      },
-      [onPasswordUpdateMessageDismiss],
-    );
-
-    const handleDelete = useCallback(
-      (id) => {
-        onDelete(id);
-      },
-      [onDelete],
-    );
+    const resetColumnsWidths = useCallback(() => {
+      handleResetColumnWidthsClick(false, usersSettingsFitScreen);
+    }, [handleResetColumnWidthsClick, usersSettingsFitScreen]);
 
     useEffect(() => {
-      if (headerButtonRef.current && offsetRef.current) {
-        offsetRef.current.style.maxWidth = `${headerButtonRef.current.offsetWidth}px`;
-      }
-    }, []);
+      resetColumnsWidths();
+    }, [resetColumnsWidths]);
 
-    // TODO scroll is too long - overlaping header
+    useEffect(() => {
+      window.addEventListener('resize', resetColumnsWidths);
+
+      return () => {
+        window.removeEventListener('resize', resetColumnsWidths);
+      };
+    }, [resetColumnsWidths]);
+
+    const columns = useMemo(
+      () => [
+        {
+          accessorKey: 'avatar',
+          header: Table.Renderers.EmptyHeaderRenderer,
+          cell: UserAvatarRenderer,
+          enableSorting: false,
+          enableResizing: false,
+          meta: { headerAriaLabel: t('common.userAvatar'), headerTitle: t('common.userAvatar'), size: 40 },
+        },
+        {
+          accessorKey: 'name',
+          header: t('common.name'),
+          cell: NameCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.localeSortingFn,
+          meta: { headerTitle: t('common.name') },
+        },
+        {
+          accessorKey: 'username',
+          header: t('common.username'),
+          cell: Table.Renderers.DefaultCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          sortingFn: sortingFunctions.localeSortingFn,
+          meta: { headerTitle: t('common.username') },
+          cellProps: { showEmpty: true, cellClassNameInner: s.cell },
+        },
+        {
+          accessorKey: 'email',
+          header: t('common.email'),
+          cell: Table.Renderers.DefaultCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.localeSortingFn,
+          meta: { headerTitle: t('common.email') },
+          cellProps: { cellClassNameInner: s.cell },
+        },
+        {
+          accessorKey: 'administrator',
+          header: t('common.administrator'),
+          cell: Table.Renderers.RadioCellRenderer,
+          enableSorting: true,
+          sortDescFirst: true,
+          meta: { headerTitle: t('common.administrator') },
+          cellProps: { title: t('common.toggleAdmin'), ariaLabel: t('common.toggleAdmin'), onChange: handleIsAdminChange, getIsDisabled: (id) => id === currentUserId || demoMode },
+        },
+        {
+          accessorKey: 'ssoGoogleEmail',
+          header: t('common.ssoGoogleEmail'),
+          cell: Table.Renderers.DefaultCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          sortingFn: sortingFunctions.localeSortingFn,
+          meta: { headerTitle: t('common.ssoGoogleEmail') },
+          cellProps: { showEmpty: true, cellClassNameInner: s.cell },
+        },
+
+        {
+          accessorKey: 'lastLogin',
+          header: t('common.lastLogin'),
+          cell: Table.Renderers.DateCellRenderer,
+          enableSorting: true,
+          sortDescFirst: true,
+          sortUndefined: 'last',
+          meta: { headerTitle: t('common.lastLogin'), suggestedSize: 100 },
+          cellProps: { className: s.dateCell, showUndefined: true },
+        },
+        {
+          accessorKey: 'createdAt',
+          header: t('common.created'),
+          cell: Table.Renderers.DateCellRenderer,
+          enableSorting: true,
+          meta: { headerTitle: t('common.created'), suggestedSize: 100 },
+          cellProps: { className: s.dateCell },
+        },
+        {
+          accessorKey: 'actions',
+          header: Table.Renderers.ActionsHeaderRenderer,
+          cell: ActionsCellRenderer,
+          enableSorting: false,
+          enableResizing: false,
+          meta: { headerAriaLabel: t('common.editUser'), headerTitle: t('common.editUser'), size: 35 },
+          headerProps: {
+            fitScreen: usersSettingsFitScreen,
+            userPrefsKeys: {
+              columnVisibility: 'usersSettingsColumnVisibility',
+              fitScreen: 'usersSettingsFitScreen',
+            },
+            onResetColumnSorting: handleResetColumnSortingClick,
+            onResetColumnWidths: handleResetColumnWidthsClick,
+            onResetColumnVisibility: handleResetColumnVisibilityClick,
+            onUserPrefsUpdate,
+          },
+        },
+      ],
+
+      [
+        currentUserId,
+        demoMode,
+        handleIsAdminChange,
+        handleResetColumnSortingClick,
+        handleResetColumnVisibilityClick,
+        handleResetColumnWidthsClick,
+        onUserPrefsUpdate,
+        sortingFunctions,
+        t,
+        usersSettingsFitScreen,
+      ],
+    );
+
+    const { handleSortingChange } = Table.HooksPost(columns, setSorting);
+    table.setOptions((prev) => ({ ...prev, onSortingChange: handleSortingChange, columns }));
+
     return (
-      <div className={sShared.wrapper}>
+      <div className={classNames(sShared.wrapper, s.wrapper)}>
         <div className={sShared.header}>
           <div className={sShared.headerFlex}>
-            <div ref={offsetRef} className={s.headerButtonOffset} />
             <h2 className={sShared.headerText}>
               {t('common.users')} <span className={s.headerTextDetails}>({items.length})</span>
             </h2>
-            <div ref={headerButtonRef} className={s.headerButton}>
+          </div>
+          {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
+        </div>
+        <Table.Container className={s.container}>
+          <Table.Wrapper isPaginated className={classNames(gs.scrollableX)}>
+            <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
+              <Table.Header style={usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <Table.HeaderRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      const sortedState = header.column.getIsSorted();
+                      const sortIndex = sorting.length > 1 ? sorting.findIndex((so) => so.id === header.column.id) + 1 : null;
+
+                      return (
+                        <Table.HeaderCell
+                          key={header.id}
+                          style={{ width: `${header.getSize()}px` }}
+                          colSpan={header.colSpan}
+                          onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
+                          className={classNames(header.column.getCanSort() && gs.cursorPointer)}
+                          title={header.column.columnDef.meta?.headerTitle}
+                          aria-label={header.column.columnDef.meta?.headerAriaLabel}
+                          isCentered
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          <Table.SortingIndicator sortedState={sortedState} sortIndex={sortIndex} />
+                          <Table.Resizer
+                            data-prevent-sorting
+                            onMouseDown={(e) => handleResizerMouseDown(e, header)}
+                            title={t('common.resizeColumn')}
+                            className={classNames(!header.column.getCanResize() && gs.cursorDefault)}
+                          />
+                        </Table.HeaderCell>
+                      );
+                    })}
+                  </Table.HeaderRow>
+                ))}
+              </Table.Header>
+              <Table.Body ref={tableBodyRef} className={classNames(gs.scrollableY)} style={usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
+                {table.getRowModel().rows.map((row) => (
+                  <Table.Row key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </Table.Cell>
+                    ))}
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </Table.Wrapper>
+          <Table.Pagination
+            table={table}
+            itemsPerPage={usersSettingsItemsPerPage}
+            rowsCount={items.length}
+            fitScreen={usersSettingsFitScreen}
+            userPrefsKeys={{
+              itemsPerPage: 'usersSettingsItemsPerPage',
+              columnVisibility: 'usersSettingsColumnVisibility',
+              fitScreen: 'userSettingsFitScreen',
+            }}
+            onResetColumnSorting={handleResetColumnSortingClick}
+            onResetColumnWidths={handleResetColumnWidthsClick}
+            onResetColumnVisibility={handleResetColumnVisibilityClick}
+            onUserPrefsUpdate={onUserPrefsUpdate}
+          >
+            <div className={s.paginationButtonsWrapper}>
               <UserAddPopup
                 defaultData={userCreateDefaultData}
                 isSubmitting={userCreateIsSubmitting}
                 error={userCreateError}
                 onCreate={onUserCreate}
                 onMessageDismiss={onUserCreateMessageDismiss}
-                position="left-start"
+                offset={5}
+                position="top"
+                wrapperClassName={s.popupWrapper}
               >
-                <Button style={ButtonStyle.Submit} content={t('common.addUser')} />
+                <Button style={ButtonStyle.DefaultBorder} title={t('common.addUser', { context: 'title' })} className={s.paginationButton}>
+                  <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
+                  <span className={s.paginationButtonText}>{t('common.addUser', { context: 'title' })}</span>
+                </Button>
               </UserAddPopup>
             </div>
-          </div>
-          {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
-        </div>
-        <Table.Wrapper className={classNames(gs.scrollableXY)}>
-          <Table>
-            <Table.Header>
-              <Table.HeaderRow>
-                <Table.HeaderCell aria-label={t('common.avatar')} />
-                <Table.HeaderCell>{t('common.name')}</Table.HeaderCell>
-                <Table.HeaderCell>{t('common.username')}</Table.HeaderCell>
-                <Table.HeaderCell>{t('common.email')}</Table.HeaderCell>
-                <Table.HeaderCell>{t('common.administrator')}</Table.HeaderCell>
-                <Table.HeaderCell>{t('common.ssoGoogleEmail')}</Table.HeaderCell>
-                <Table.HeaderCell>{t('common.lastLogin')}</Table.HeaderCell>
-                <Table.HeaderCell aria-label={t('common.editUser')} />
-              </Table.HeaderRow>
-            </Table.Header>
-            <Table.Body>
-              {items.map((item) => (
-                <Item
-                  key={item.id}
-                  isCurrentUser={currentUserId === item.id}
-                  email={item.email}
-                  username={item.username}
-                  name={item.name}
-                  avatarUrl={item.avatarUrl}
-                  organization={item.organization}
-                  phone={item.phone}
-                  ssoGoogleEmail={item.ssoGoogleEmail}
-                  lastLogin={item.lastLogin}
-                  isAdmin={item.isAdmin}
-                  demoMode={demoMode}
-                  emailUpdateForm={item.emailUpdateForm}
-                  passwordUpdateForm={item.passwordUpdateForm}
-                  usernameUpdateForm={item.usernameUpdateForm}
-                  onUpdate={(data) => handleUpdate(item.id, data)}
-                  onUsernameUpdate={(data) => handleUsernameUpdate(item.id, data)}
-                  onUsernameUpdateMessageDismiss={() => handleUsernameUpdateMessageDismiss(item.id)}
-                  onEmailUpdate={(data) => handleEmailUpdate(item.id, data)}
-                  onEmailUpdateMessageDismiss={() => handleEmailUpdateMessageDismiss(item.id)}
-                  onPasswordUpdate={(data) => handlePasswordUpdate(item.id, data)}
-                  onPasswordUpdateMessageDismiss={() => handlePasswordUpdateMessageDismiss(item.id)}
-                  onDelete={() => handleDelete(item.id)}
-                />
-              ))}
-            </Table.Body>
-          </Table>
-        </Table.Wrapper>
+          </Table.Pagination>
+        </Table.Container>
       </div>
     );
   },
@@ -177,16 +351,14 @@ UsersSettings.propTypes = {
   userCreateError: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   demoMode: PropTypes.bool.isRequired,
+  usersSettingsStyle: PropTypes.string.isRequired,
+  usersSettingsColumnVisibility: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  usersSettingsFitScreen: PropTypes.bool.isRequired,
+  usersSettingsItemsPerPage: PropTypes.string.isRequired,
   onUserCreate: PropTypes.func.isRequired,
   onUserCreateMessageDismiss: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  onUsernameUpdate: PropTypes.func.isRequired,
-  onUsernameUpdateMessageDismiss: PropTypes.func.isRequired,
-  onEmailUpdate: PropTypes.func.isRequired,
-  onEmailUpdateMessageDismiss: PropTypes.func.isRequired,
-  onPasswordUpdate: PropTypes.func.isRequired,
-  onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
 UsersSettings.defaultProps = {

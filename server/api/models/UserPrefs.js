@@ -7,14 +7,14 @@
 
 const DESCRIPTION_MODES = ['edit', 'live', 'preview'];
 const VIEW_MODES = ['board', 'list'];
-const LIST_VIEW_STYLES = ['default', 'compact'];
-const LIST_VIEW_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
+const LIST_STYLES = ['default', 'compact'];
+const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 
 module.exports = {
   DESCRIPTION_MODES,
   VIEW_MODES,
-  LIST_VIEW_STYLES,
-  LIST_VIEW_ITEMS_PER_PAGE,
+  LIST_STYLES,
+  LIST_ITEMS_PER_PAGE,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -79,7 +79,7 @@ module.exports = {
     },
     listViewStyle: {
       type: 'string',
-      isIn: LIST_VIEW_STYLES,
+      isIn: LIST_STYLES,
       isNotEmptyString: true,
       columnName: 'list_view_style',
       defaultsTo: 'compact',
@@ -113,9 +113,43 @@ module.exports = {
     },
     listViewItemsPerPage: {
       type: 'string',
-      isIn: LIST_VIEW_ITEMS_PER_PAGE,
+      isIn: LIST_ITEMS_PER_PAGE,
       isNotEmptyString: true,
       columnName: 'list_view_items_per_page',
+      defaultsTo: 'all',
+    },
+    usersSettingsStyle: {
+      type: 'string',
+      isIn: LIST_STYLES,
+      isNotEmptyString: true,
+      columnName: 'users_settings_style',
+      defaultsTo: 'compact',
+    },
+    usersSettingsColumnVisibility: {
+      type: 'json',
+      columnName: 'users_settings_column_visibility',
+      defaultsTo: {
+        avatar: true,
+        name: true,
+        username: true,
+        email: true,
+        administrator: true,
+        ssoGoogleEmail: true,
+        lastLogin: true,
+        createdAt: false,
+        actions: true,
+      },
+    },
+    usersSettingsFitScreen: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'users_settings_fit_screen',
+    },
+    usersSettingsItemsPerPage: {
+      type: 'string',
+      isIn: LIST_ITEMS_PER_PAGE,
+      isNotEmptyString: true,
+      columnName: 'users_settings_items_per_page',
       defaultsTo: 'all',
     },
   },

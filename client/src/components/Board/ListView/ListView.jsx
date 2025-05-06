@@ -424,9 +424,9 @@ const ListView = React.memo(
           table={table}
           itemsPerPage={listViewItemsPerPage}
           rowsCount={filteredCards.length}
-          userPrefsKey="listViewItemsPerPage"
           fitScreen={listViewFitScreen}
           userPrefsKeys={{
+            itemsPerPage: 'listViewItemsPerPage',
             columnVisibility: 'listViewColumnVisibility',
             fitScreen: 'listViewFitScreen',
           }}

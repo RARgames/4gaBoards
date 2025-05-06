@@ -1,0 +1,24 @@
+:global(#app) {
+  .popupWrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .editButton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      .iconEditCardButton {
+        fill: var(--textColor1);
+      }
+    }
+  }
+
+  .iconEditButton {
+    fill: var(--textColor1);
+  }
+}

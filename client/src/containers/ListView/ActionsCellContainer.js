@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import ActionsCell from '../components/Board/ListView/ActionsCell';
-import { BoardMembershipRoles } from '../constants/Enums';
-import entryActions from '../entry-actions';
-import selectors from '../selectors';
+import ActionsCell from '../../components/Board/ListView/ActionsCell';
+import { BoardMembershipRoles } from '../../constants/Enums';
+import entryActions from '../../entry-actions';
+import selectors from '../../selectors';
 
 const makeMapStateToProps = () => {
   const selectCardById = selectors.makeSelectCardById();

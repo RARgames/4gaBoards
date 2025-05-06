@@ -5,31 +5,46 @@ import PropTypes from 'prop-types';
 
 import * as s from './DefaultCell.module.scss';
 
-const DefaultCell = React.memo(({ value, title, cellClassName, cellClassNameInner, hideOnZero, getTitle }) => {
+const DefaultCell = React.memo(({ value, title, cellClassName, cellClassNameInner, hideOnZero, showEmpty, getTitle }) => {
   const [t] = useTranslation();
+
+  let cellValue = value;
+  if (typeof value === 'number') {
+    cellValue = value;
+    if (hideOnZero && value === 0) {
+      cellValue = '';
+    }
+  }
+  if (showEmpty && value === undefined) {
+    cellValue = '-';
+  }
+
   return (
     <div className={classNames(cellClassName)}>
       <div className={classNames(s.cell, cellClassNameInner)} title={getTitle ? getTitle(t, value) : title}>
-        {typeof value === 'number' && hideOnZero && value === 0 ? '' : value}
+        {cellValue}
       </div>
     </div>
   );
 });
 
 DefaultCell.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string,
   cellClassName: PropTypes.string,
   cellClassNameInner: PropTypes.string,
   hideOnZero: PropTypes.bool,
+  showEmpty: PropTypes.bool,
   getTitle: PropTypes.func,
 };
 
 DefaultCell.defaultProps = {
+  value: undefined,
   title: '',
   cellClassName: '',
   cellClassNameInner: '',
   hideOnZero: false,
+  showEmpty: false,
   getTitle: undefined,
 };
 

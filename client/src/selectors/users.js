@@ -5,6 +5,23 @@ import { isLocalId } from '../utils/local-id';
 
 export const selectCurrentUserId = ({ auth: { userId } }) => userId;
 
+export const makeSelectUserById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ User }, id) => {
+      const userModel = User.withId(id);
+
+      if (!userModel) {
+        return userModel;
+      }
+
+      return userModel.ref;
+    },
+  );
+
+export const selectUserById = makeSelectUserById();
+
 export const selectUsers = createSelector(
   orm,
   (state) => selectCurrentUserId(state),
@@ -220,6 +237,8 @@ export const selectIsFilteredForCurrentUser = createSelector(
 
 export default {
   selectCurrentUserId,
+  makeSelectUserById,
+  selectUserById,
   selectUsers,
   selectUsersExceptCurrent,
   selectCurrentUser,

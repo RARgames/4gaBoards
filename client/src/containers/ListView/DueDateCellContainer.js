@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import DueDateCell from '../components/Board/ListView/DueDateCell';
-import { BoardMembershipRoles } from '../constants/Enums';
-import entryActions from '../entry-actions';
-import selectors from '../selectors';
+import DueDateCell from '../../components/Board/ListView/DueDateCell';
+import { BoardMembershipRoles } from '../../constants/Enums';
+import entryActions from '../../entry-actions';
+import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);

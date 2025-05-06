@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import LabelsCell from '../components/Board/ListView/LabelsCell';
-import { BoardMembershipRoles } from '../constants/Enums';
-import entryActions from '../entry-actions';
-import selectors from '../selectors';
+import LabelsCell from '../../components/Board/ListView/LabelsCell';
+import { BoardMembershipRoles } from '../../constants/Enums';
+import entryActions from '../../entry-actions';
+import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
   const allLabels = selectors.selectLabelsForCurrentBoard(state);

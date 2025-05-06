@@ -44,6 +44,11 @@ const ActionsStep = React.memo(
       openStep(StepTypes.DELETE);
     }, [openStep]);
 
+    const handleDelete = useCallback(() => {
+      onDelete();
+      onClose();
+    }, [onClose, onDelete]);
+
     if (step) {
       switch (step.type) {
         case StepTypes.EDIT_INFORMATION:
@@ -95,7 +100,7 @@ const ActionsStep = React.memo(
               title={t('common.deleteUser', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisUser')}
               buttonContent={t('action.deleteUser')}
-              onConfirm={onDelete}
+              onConfirm={handleDelete}
               onBack={handleBack}
             />
           );

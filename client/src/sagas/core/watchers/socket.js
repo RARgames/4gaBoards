@@ -20,17 +20,17 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleCoreSettingsUpdate(item));
     };
 
-    const handleUserCreate = ({ item }) => {
+    const handleUserCreate = api.makeHandleUserCreate(({ item }) => {
       emit(entryActions.handleUserCreate(item));
-    };
+    });
 
-    const handleUserUpdate = ({ item }) => {
+    const handleUserUpdate = api.makeHandleUserUpdate(({ item }) => {
       emit(entryActions.handleUserUpdate(item));
-    };
+    });
 
-    const handleUserDelete = ({ item }) => {
+    const handleUserDelete = api.makeHandleUserDelete(({ item }) => {
       emit(entryActions.handleUserDelete(item));
-    };
+    });
 
     const handleUserPrefsUpdate = ({ item }) => {
       emit(entryActions.handleUserPrefsUpdate(item));

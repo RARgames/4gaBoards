@@ -2,14 +2,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ActionsCellContainer from '../../../containers/ActionsCellContainer';
-import DueDateCellContainer from '../../../containers/DueDateCellContainer';
-import LabelsCellContainer from '../../../containers/LabelsCellContainer';
-import ListNameCellContainer from '../../../containers/ListNameCellContainer';
-import MembersCellContainer from '../../../containers/MembersCellContainer';
-import NameCellContainer from '../../../containers/NameCellContainer';
-import TasksCellContainer from '../../../containers/TasksCellContainer';
-import TimerCellContainer from '../../../containers/TimerCellContainer';
+import ActionsCellContainer from '../../../containers/ListView/ActionsCellContainer';
+import DueDateCellContainer from '../../../containers/ListView/DueDateCellContainer';
+import LabelsCellContainer from '../../../containers/ListView/LabelsCellContainer';
+import ListNameCellContainer from '../../../containers/ListView/ListNameCellContainer';
+import MembersCellContainer from '../../../containers/ListView/MembersCellContainer';
+import NameCellContainer from '../../../containers/ListView/NameCellContainer';
+import TasksCellContainer from '../../../containers/ListView/TasksCellContainer';
+import TimerCellContainer from '../../../containers/ListView/TimerCellContainer';
 import { Table } from '../../Utils';
 
 import * as ts from '../../Utils/Table/Table.module.scss';
