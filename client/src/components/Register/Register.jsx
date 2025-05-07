@@ -51,7 +51,21 @@ const createMessage = (error) => {
 };
 
 const Register = React.memo(
-  ({ defaultData, isSubmitting, error, onRegister, onAuthenticateGoogleSso, onMessageDismiss, onLoginOpen, googleSsoEnabled, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled }) => {
+  ({
+    defaultData,
+    isSubmitting,
+    error,
+    onRegister,
+    onAuthenticateGoogleSso,
+    onAuthenticateGithubSso,
+    onMessageDismiss,
+    onLoginOpen,
+    googleSsoEnabled,
+    githubSsoEnabled,
+    registrationEnabled,
+    localRegistrationEnabled,
+    ssoRegistrationEnabled,
+  }) => {
     const [t] = useTranslation();
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
@@ -143,11 +157,6 @@ const Register = React.memo(
       passwordField.current.focus();
     }, [focusPasswordFieldState]);
 
-    useEffect(() => {
-      onMessageDismiss();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
       <div className={classNames(s.wrapper, gs.scrollableY)}>
         <div className={s.loginWrapper}>
@@ -155,6 +164,7 @@ const Register = React.memo(
           <h1 className={s.formTitle}>{t('common.createYourAccount')}</h1>
           <div>
             {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
+            {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={s.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
             <Form>
               {registrationEnabled && localRegistrationEnabled && (
                 <>
@@ -188,24 +198,38 @@ const Register = React.memo(
                     </div>
                     <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} isError={isCheckboxError} />
                   </div>
-                </>
-              )}
-              {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={s.registrationDisabledText}>{t('common.registrationDisabled')}</div>}
-              <div className={classNames(s.buttonsContainer, !localRegistrationEnabled && s.onlySsoButtonContainer)}>
-                {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                  <Button style={ButtonStyle.Login} title={t('common.registerWithGoogle')} onClick={onAuthenticateGoogleSso}>
-                    {t('common.registerWithGoogle')}
-                    <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
-                  </Button>
-                )}
-                {registrationEnabled && localRegistrationEnabled && (
                   <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={s.submitButton} onClick={handleSubmit}>
                     {t('common.register')}
                     <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
                   </Button>
-                )}
-              </div>
+                </>
+              )}
             </Form>
+            {registrationEnabled && ssoRegistrationEnabled && (googleSsoEnabled || githubSsoEnabled) && (
+              <>
+                {localRegistrationEnabled && (
+                  <div className={s.otherOptionsTextWrapper}>
+                    <div className={s.otherOptionsLine} />
+                    <div className={s.otherOptionsText}>{t('common.or')}</div>
+                    <div className={s.otherOptionsLine} />
+                  </div>
+                )}
+                <div className={s.otherOptions}>
+                  {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso}>
+                      <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'Google' })}
+                    </Button>
+                  )}
+                  {githubSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso}>
+                      <Icon type={IconType.Github} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'GitHub' })}
+                    </Button>
+                  )}
+                </div>
+              </>
+            )}
             <div className={s.alternateActionText}>{t('common.alreadyUser')}</div>
             <div className={s.alternateActionButtonContainer}>
               <Button style={ButtonStyle.Login} content={t('common.backToLogin')} onClick={onLoginOpen} />
@@ -223,9 +247,11 @@ Register.propTypes = {
   error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onRegister: PropTypes.func.isRequired,
   onAuthenticateGoogleSso: PropTypes.func.isRequired,
+  onAuthenticateGithubSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
   onLoginOpen: PropTypes.func.isRequired,
   googleSsoEnabled: PropTypes.bool.isRequired,
+  githubSsoEnabled: PropTypes.bool.isRequired,
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,

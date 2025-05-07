@@ -275,6 +275,7 @@ export default {
       ofProjects_other: 'de {{count}} projets',
       openDropdown: 'Ouvrir le menu déroulant',
       optional_inline: 'optionnel',
+      or: 'ou',
       organization: 'Organisation',
       perPage: 'par page',
       phone: 'Téléphone',

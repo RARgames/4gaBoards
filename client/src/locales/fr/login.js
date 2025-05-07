@@ -13,7 +13,7 @@ export default {
       localRegistrationDisabled: "L'enregistrement local de l'utilisateur est désactivé par l'administrateur",
       login: 'Se connecter',
       logInToBoards: 'Se connecter',
-      loginWithGoogle: 'Se connecter avec Google',
+      continueWith: 'Continuer avec {{provider}}',
       newToBoards: 'Vous débutez avec les cartes 4ga Boards?',
       noInternetConnection: 'Aucune connection internet',
       pageNotFound_title: 'Page non trouvée',

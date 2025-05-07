@@ -4,6 +4,7 @@ const ROOT = `${Config.BASE_PATH}/`;
 const LOGIN = `${Config.BASE_PATH}/login`;
 const REGISTER = `${Config.BASE_PATH}/register`;
 const GOOGLE_CALLBACK = `${Config.BASE_PATH}/google-callback`;
+const GITHUB_CALLBACK = `${Config.BASE_PATH}/github-callback`;
 const PROJECTS = `${Config.BASE_PATH}/projects/:id`;
 const BOARDS = `${Config.BASE_PATH}/boards/:id`;
 const CARDS = `${Config.BASE_PATH}/cards/:id`;
@@ -22,6 +23,7 @@ export default {
   LOGIN,
   REGISTER,
   GOOGLE_CALLBACK,
+  GITHUB_CALLBACK,
   PROJECTS,
   BOARDS,
   CARDS,

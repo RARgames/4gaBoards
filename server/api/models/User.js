@@ -64,6 +64,11 @@ module.exports = {
       columnName: 'sso_google_email',
       allowNull: true,
     },
+    ssoGithubId: {
+      type: 'string',
+      columnName: 'sso_github_id',
+      allowNull: true,
+    },
     lastLogin: {
       type: 'ref',
       columnName: 'last_login',

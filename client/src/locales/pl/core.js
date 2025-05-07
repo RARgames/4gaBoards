@@ -273,6 +273,7 @@ export default {
       ofProjects_one: 'z {{count}} projektu',
       openDropdown: 'Rozwiń menu',
       optional_inline: 'opcjonalny',
+      or: 'lub',
       organization: 'Organizacja',
       perPage: 'na stronę',
       phone: 'Telefon',

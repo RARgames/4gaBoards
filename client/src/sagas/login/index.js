@@ -24,7 +24,7 @@ function* postLoginSaga() {
 export default function* loginSaga() {
   const watcherTasks = yield all(watchers.map((watcher) => fork(watcher)));
 
-  yield take([ActionTypes.AUTHENTICATE__SUCCESS, ActionTypes.AUTHENTICATE_GOOGLE_SSO__SUCCESS, ActionTypes.REGISTER__SUCCESS]);
+  yield take([ActionTypes.AUTHENTICATE__SUCCESS, ActionTypes.AUTHENTICATE_GOOGLE_SSO__SUCCESS, ActionTypes.AUTHENTICATE_GITHUB_SSO__SUCCESS, ActionTypes.REGISTER__SUCCESS]);
   yield cancel(watcherTasks);
   yield call(services.goToRoot);
   yield spawn(postLoginSaga);

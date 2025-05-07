@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
     defaultData,
     isSubmitting,
     googleSsoEnabled: coreSettings ? coreSettings.googleSsoEnabled : false,
+    githubSsoEnabled: coreSettings ? coreSettings.githubSsoEnabled : false,
     registrationEnabled: coreSettings ? coreSettings.registrationEnabled : false,
     localRegistrationEnabled: coreSettings ? coreSettings.localRegistrationEnabled : false,
     ssoRegistrationEnabled: coreSettings ? coreSettings.ssoRegistrationEnabled : false,
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       onRegister: entryActions.register,
       onAuthenticateGoogleSso: entryActions.authenticateGoogleSso,
+      onAuthenticateGithubSso: entryActions.authenticateGithubSso,
       onMessageDismiss: entryActions.clearRegisterError,
       onLoginOpen: entryActions.loginOpen,
     },

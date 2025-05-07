@@ -65,6 +65,8 @@ module.exports = {
         ...core,
         googleSsoUrl: sails.config.custom.googleSsoUrl,
         googleSsoEnabled: !!sails.config.custom.googleClientId,
+        githubSsoUrl: sails.config.custom.githubSsoUrl,
+        githubSsoEnabled: !!sails.config.custom.githubClientId,
       },
     };
   },

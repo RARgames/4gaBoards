@@ -11,6 +11,8 @@
 module.exports.routes = {
   'GET /auth/google': 'AuthController.google',
   'GET /auth/google/callback': 'AuthController.googleCallback',
+  'GET /auth/github': 'AuthController.github',
+  'GET /auth/github/callback': 'AuthController.githubCallback',
 
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',

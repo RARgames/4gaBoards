@@ -24,6 +24,8 @@ module.exports = {
         registrationEnabled: core.registrationEnabled,
         googleSsoUrl: sails.config.custom.googleSsoUrl,
         googleSsoEnabled: !!sails.config.custom.googleClientId,
+        githubSsoUrl: sails.config.custom.githubSsoUrl,
+        githubSsoEnabled: !!sails.config.custom.githubClientId,
         demoMode: sails.config.custom.demoMode,
       },
     };

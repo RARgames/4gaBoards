@@ -40,6 +40,25 @@ authenticateGoogleSso.failure = (error) => ({
   },
 });
 
+const authenticateGithubSso = () => ({
+  type: ActionTypes.AUTHENTICATE_GITHUB_SSO,
+  payload: {},
+});
+
+authenticateGithubSso.success = (accessToken) => ({
+  type: ActionTypes.AUTHENTICATE_GITHUB_SSO__SUCCESS,
+  payload: {
+    accessToken,
+  },
+});
+
+authenticateGithubSso.failure = (error) => ({
+  type: ActionTypes.AUTHENTICATE_GITHUB_SSO__FAILURE,
+  payload: {
+    error,
+  },
+});
+
 const clearAuthenticateError = () => ({
   type: ActionTypes.AUTHENTICATE_ERROR_CLEAR,
   payload: {},
@@ -84,6 +103,7 @@ const clearRegisterError = () => ({
 export default {
   authenticate,
   authenticateGoogleSso,
+  authenticateGithubSso,
   clearAuthenticateError,
   registerOpen,
   loginOpen,

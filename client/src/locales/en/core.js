@@ -259,6 +259,7 @@ export default {
       ofProjects_other: 'of {{count}} projects',
       openDropdown: 'Open dropdown',
       optional_inline: 'optional',
+      or: 'or',
       organization: 'Organization',
       perPage: 'per page',
       phone: 'Phone',

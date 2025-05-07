@@ -261,6 +261,7 @@ export default {
       ofProjects_other: 'de {{count}} projetos',
       openDropdown: 'Abrir lista suspensa',
       optional_inline: 'opcional',
+      or: 'ou',
       organization: 'Organização',
       perPage: 'por página',
       phone: 'Telefone',

@@ -17,7 +17,7 @@ module.exports = {
 
   async fn(inputs) {
     const email = inputs.email.toLowerCase();
-    let user = await sails.helpers.users.getOne({ ssoGoogleEmail: email });
+    let user = await sails.helpers.users.getOne({ ssoGoogleEmail: email }); // TODO temp same email for github
     // Default SSO login
     if (user) {
       return user;

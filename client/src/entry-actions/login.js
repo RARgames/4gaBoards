@@ -12,6 +12,11 @@ const authenticateGoogleSso = () => ({
   payload: {},
 });
 
+const authenticateGithubSso = () => ({
+  type: EntryActionTypes.AUTHENTICATE_GITHUB_SSO,
+  payload: {},
+});
+
 const clearAuthenticateError = () => ({
   type: EntryActionTypes.AUTHENTICATE_ERROR_CLEAR,
   payload: {},
@@ -42,6 +47,7 @@ const clearRegisterError = () => ({
 export default {
   authenticate,
   authenticateGoogleSso,
+  authenticateGithubSso,
   clearAuthenticateError,
   registerOpen,
   loginOpen,

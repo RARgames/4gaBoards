@@ -13,7 +13,7 @@ export default {
       localRegistrationDisabled: 'User local registration is disabled by the administrator',
       login: 'Logowanie',
       logInToBoards: 'Logowanie',
-      loginWithGoogle: 'Zaloguj przy użyciu Google',
+      continueWith: 'Kontynuuj z {{provider}}',
       newToBoards: 'Nowy użytkownik?',
       noInternetConnection: 'Brak połączenia z internetem',
       pageNotFound_title: 'Nie znaleziono strony',

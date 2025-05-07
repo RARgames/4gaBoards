@@ -40,17 +40,11 @@
   }
 
   .ssoIcon {
-    margin-left: 6px;
-  }
-
-  .buttonsContainer {
-    display: flex;
-    justify-content: space-between;
-    gap: 4px;
+    margin-right: 6px;
   }
 
   .submitButton {
-    margin-left: auto;
+    width: 100%;
   }
 
   .submitButtonIcon {
@@ -59,13 +53,37 @@
     margin-left: 6px;
   }
 
+  .otherOptionsTextWrapper {
+    margin: 20px 0 16px 0;
+    display: grid;
+    grid-template-columns: 1fr min-content 1fr;
+    align-items: center;
+  }
+
+  .otherOptionsLine {
+    height: 1px;
+    background: var(--textColor4);
+  }
+
+  .otherOptionsText {
+    margin: 0 1rem;
+    text-transform: uppercase;
+    color: var(--textColor3);
+  }
+
+  .otherOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
   .alternateActionText {
     color: var(--textColor3);
     text-align: center;
     font-size: 16px;
     font-weight: bold;
     line-height: 20px;
-    margin: 40px 0 16px 0;
+    margin: 20px 0 16px 0;
   }
 
   .alternateActionButtonContainer {

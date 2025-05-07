@@ -42,6 +42,11 @@ module.exports = {
       isEmail: true,
       allowNull: true,
     },
+    ssoGithubId: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+    },
     lastLogin: {
       type: 'ref',
     },
@@ -78,7 +83,7 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'ssoGoogleEmail', 'lastLogin']),
+      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'ssoGoogleEmail', 'ssoGithubId', 'lastLogin']),
       avatar: inputs.avatarUrl,
     };
 

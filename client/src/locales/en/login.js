@@ -13,7 +13,7 @@ export default {
       localRegistrationDisabled: 'User local registration is disabled by the administrator',
       login: 'Login',
       logInToBoards: 'Log in',
-      loginWithGoogle: 'Login with Google',
+      continueWith: 'Continue with {{provider}}',
       newToBoards: 'New to 4ga Boards?',
       noInternetConnection: 'No internet connection',
       pageNotFound_title: 'Page Not Found',

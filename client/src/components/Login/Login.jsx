@@ -57,142 +57,168 @@ const createMessage = (error) => {
   }
 };
 
-const Login = React.memo(({ defaultData, isSubmitting, error, onAuthenticate, onAuthenticateGoogleSso, onMessageDismiss, onRegisterOpen, googleSsoEnabled, registrationEnabled }) => {
-  const [t] = useTranslation();
-  const [isUsernameError, setIsUsernameError] = useState(false);
-  const [isPasswordError, setIsPasswordError] = useState(false);
-  const wasSubmitting = usePrevious(isSubmitting);
-  const [data, handleFieldChange, setData] = useForm(() => ({
-    emailOrUsername: '',
-    password: '',
-    ...defaultData,
-  }));
+const Login = React.memo(
+  ({
+    defaultData,
+    isSubmitting,
+    error,
+    onAuthenticate,
+    onAuthenticateGoogleSso,
+    onAuthenticateGithubSso,
+    onMessageDismiss,
+    onRegisterOpen,
+    googleSsoEnabled,
+    githubSsoEnabled,
+    registrationEnabled,
+    localRegistrationEnabled,
+    ssoRegistrationEnabled,
+  }) => {
+    const [t] = useTranslation();
+    const [isUsernameError, setIsUsernameError] = useState(false);
+    const [isPasswordError, setIsPasswordError] = useState(false);
+    const wasSubmitting = usePrevious(isSubmitting);
+    const [data, handleFieldChange, setData] = useForm(() => ({
+      emailOrUsername: '',
+      password: '',
+      ...defaultData,
+    }));
 
-  const message = useMemo(() => createMessage(error), [error]);
-  const [focusPasswordFieldState, focusPasswordField] = useToggle();
+    const message = useMemo(() => createMessage(error), [error]);
+    const [focusPasswordFieldState, focusPasswordField] = useToggle();
 
-  const emailOrUsernameField = useRef(null);
-  const passwordField = useRef(null);
+    const emailOrUsernameField = useRef(null);
+    const passwordField = useRef(null);
 
-  const mainTitle = '4ga Boards';
+    const mainTitle = '4ga Boards';
 
-  useEffect(() => {
-    document.title = `${t('common.login')} | ${mainTitle}`;
-  }, [t]);
+    useEffect(() => {
+      document.title = `${t('common.login')} | ${mainTitle}`;
+    }, [t]);
 
-  const handleSubmit = useCallback(() => {
-    const cleanData = {
-      ...data,
-      emailOrUsername: data.emailOrUsername.trim(),
-    };
+    const handleSubmit = useCallback(() => {
+      const cleanData = {
+        ...data,
+        emailOrUsername: data.emailOrUsername.trim(),
+      };
 
-    if (!isEmail(cleanData.emailOrUsername) && !isUsername(cleanData.emailOrUsername)) {
-      emailOrUsernameField.current.focus();
-      setIsUsernameError(true);
-      return;
-    }
-
-    if (!cleanData.password) {
-      passwordField.current.focus();
-      setIsPasswordError(true);
-      return;
-    }
-
-    onAuthenticate(cleanData);
-  }, [onAuthenticate, data]);
-
-  useEffect(() => {
-    emailOrUsernameField.current.focus();
-  }, []);
-
-  useEffect(() => {
-    if (wasSubmitting && !isSubmitting && error) {
-      switch (error.message) {
-        case 'Invalid username or password':
-          focusPasswordField();
-          setIsUsernameError(true);
-          setIsPasswordError(true);
-          break;
-        default:
+      if (!isEmail(cleanData.emailOrUsername) && !isUsername(cleanData.emailOrUsername)) {
+        emailOrUsernameField.current.focus();
+        setIsUsernameError(true);
+        return;
       }
-    }
-  }, [isSubmitting, wasSubmitting, error, setData, focusPasswordField]);
 
-  const handleUsernameKeyDown = useCallback(() => {
-    setIsUsernameError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+      if (!cleanData.password) {
+        passwordField.current.focus();
+        setIsPasswordError(true);
+        return;
+      }
 
-  const handlePasswordKeyDown = useCallback(() => {
-    setIsPasswordError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+      onAuthenticate(cleanData);
+    }, [onAuthenticate, data]);
 
-  useDidUpdate(() => {
-    passwordField.current.focus();
-  }, [focusPasswordFieldState]);
+    useEffect(() => {
+      emailOrUsernameField.current.focus();
+    }, []);
 
-  useEffect(() => {
-    onMessageDismiss();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    useEffect(() => {
+      if (wasSubmitting && !isSubmitting && error) {
+        switch (error.message) {
+          case 'Invalid username or password':
+            focusPasswordField();
+            setIsUsernameError(true);
+            setIsPasswordError(true);
+            break;
+          default:
+        }
+      }
+    }, [isSubmitting, wasSubmitting, error, setData, focusPasswordField]);
 
-  return (
-    <div className={classNames(s.wrapper, gs.scrollableY)}>
-      <div className={s.loginWrapper}>
-        <img src={logo} className={s.logo} alt="4ga Boards" />
-        <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
-        <div>
-          {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
-          <Form>
-            <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
-            <Input
-              ref={emailOrUsernameField}
-              style={InputStyle.LoginRegister}
-              name="emailOrUsername"
-              value={data.emailOrUsername}
-              readOnly={isSubmitting}
-              onKeyDown={handleUsernameKeyDown}
-              onChange={handleFieldChange}
-              isError={isUsernameError}
-            />
-            <div className={s.inputLabel}>{t('common.password')}</div>
-            <Input.Password
-              ref={passwordField}
-              style={InputStyle.LoginRegister}
-              name="password"
-              value={data.password}
-              readOnly={isSubmitting}
-              onKeyDown={handlePasswordKeyDown}
-              onChange={handleFieldChange}
-              isError={isPasswordError}
-            />
-            <div className={s.buttonsContainer}>
-              {googleSsoEnabled && (
-                <Button style={ButtonStyle.Login} title={t('common.loginWithGoogle')} onClick={onAuthenticateGoogleSso}>
-                  {t('common.loginWithGoogle')}
-                  <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
-                </Button>
-              )}
+    const handleUsernameKeyDown = useCallback(() => {
+      setIsUsernameError(false);
+      onMessageDismiss();
+    }, [onMessageDismiss]);
+
+    const handlePasswordKeyDown = useCallback(() => {
+      setIsPasswordError(false);
+      onMessageDismiss();
+    }, [onMessageDismiss]);
+
+    useDidUpdate(() => {
+      passwordField.current.focus();
+    }, [focusPasswordFieldState]);
+
+    return (
+      <div className={classNames(s.wrapper, gs.scrollableY)}>
+        <div className={s.loginWrapper}>
+          <img src={logo} className={s.logo} alt="4ga Boards" />
+          <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
+          <div>
+            {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
+            <Form>
+              <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
+              <Input
+                ref={emailOrUsernameField}
+                style={InputStyle.LoginRegister}
+                name="emailOrUsername"
+                value={data.emailOrUsername}
+                readOnly={isSubmitting}
+                onKeyDown={handleUsernameKeyDown}
+                onChange={handleFieldChange}
+                isError={isUsernameError}
+              />
+              <div className={s.inputLabel}>{t('common.password')}</div>
+              <Input.Password
+                ref={passwordField}
+                style={InputStyle.LoginRegister}
+                name="password"
+                value={data.password}
+                readOnly={isSubmitting}
+                onKeyDown={handlePasswordKeyDown}
+                onChange={handleFieldChange}
+                isError={isPasswordError}
+              />
               <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={s.submitButton} onClick={handleSubmit}>
                 {t('action.logIn')}
                 <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
               </Button>
-            </div>
-          </Form>
-          {registrationEnabled && (
-            <>
-              <div className={s.alternateActionText}>{t('common.newToBoards')}</div>
-              <div className={s.alternateActionButtonContainer}>
-                <Button style={ButtonStyle.Login} content={t('common.createAccount')} onClick={onRegisterOpen} />
-              </div>
-            </>
-          )}
+            </Form>
+            {(googleSsoEnabled || githubSsoEnabled) && (
+              <>
+                <div className={s.otherOptionsTextWrapper}>
+                  <div className={s.otherOptionsLine} />
+                  <div className={s.otherOptionsText}>{t('common.or')}</div>
+                  <div className={s.otherOptionsLine} />
+                </div>
+                <div className={s.otherOptions}>
+                  {googleSsoEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso}>
+                      <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'Google' })}
+                    </Button>
+                  )}
+                  {githubSsoEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso}>
+                      <Icon type={IconType.Github} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'GitHub' })}
+                    </Button>
+                  )}
+                </div>
+              </>
+            )}
+            {registrationEnabled && (localRegistrationEnabled || ssoRegistrationEnabled) && (
+              <>
+                <div className={s.alternateActionText}>{t('common.newToBoards')}</div>
+                <div className={s.alternateActionButtonContainer}>
+                  <Button style={ButtonStyle.Login} content={t('common.createAccount')} onClick={onRegisterOpen} />
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 Login.propTypes = {
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -200,10 +226,14 @@ Login.propTypes = {
   error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onAuthenticate: PropTypes.func.isRequired,
   onAuthenticateGoogleSso: PropTypes.func.isRequired,
+  onAuthenticateGithubSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
   onRegisterOpen: PropTypes.func.isRequired,
   googleSsoEnabled: PropTypes.bool.isRequired,
+  githubSsoEnabled: PropTypes.bool.isRequired,
   registrationEnabled: PropTypes.bool.isRequired,
+  localRegistrationEnabled: PropTypes.bool.isRequired,
+  ssoRegistrationEnabled: PropTypes.bool.isRequired,
 };
 
 Login.defaultProps = {

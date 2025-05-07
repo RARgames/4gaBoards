@@ -15,7 +15,7 @@ export default {
       localRegistrationDisabled: 'O registro de usuários locais foi desabilitado pela administração',
       login: 'Login',
       logInToBoards: 'Entrar',
-      loginWithGoogle: 'Entrar com Google',
+      continueWith: 'Continuar com o {{provider}}',
       newToBoards: 'Novo no 4ga Boards?',
       noInternetConnection: 'Sem conexão com a internet',
       pageNotFound_title: 'Página Não Encontrada',
