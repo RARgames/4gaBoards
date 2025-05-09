@@ -28,8 +28,8 @@ export function* clearAuthenticateError() {
 
 export function* authenticateSso(provider) {
   yield put(actions.authenticateSso(provider));
-  const { sso } = yield select(selectors.selectCoreSettings);
-  const ssoUrl = sso[provider]?.url;
+  const { ssoUrls } = yield select(selectors.selectCoreSettings);
+  const ssoUrl = ssoUrls[provider];
   if (!ssoUrl) {
     yield put(actions.authenticateSso.failure(provider, { code: 'E_NOT_FOUND', message: 'SSO URL not found' }));
     return;
