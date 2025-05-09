@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import isEmail from 'validator/lib/isEmail';
 
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
+import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox } from '../Utils';
@@ -51,23 +52,7 @@ const createMessage = (error) => {
 };
 
 const Register = React.memo(
-  ({
-    defaultData,
-    isSubmitting,
-    error,
-    onRegister,
-    onAuthenticateGoogleSso,
-    onAuthenticateGithubSso,
-    onAuthenticateMicrosoftSso,
-    onMessageDismiss,
-    onLoginOpen,
-    googleSsoEnabled,
-    githubSsoEnabled,
-    microsoftSsoEnabled,
-    registrationEnabled,
-    localRegistrationEnabled,
-    ssoRegistrationEnabled,
-  }) => {
+  ({ defaultData, isSubmitting, error, ssoAvailable, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, onRegister, onAuthenticateSso, onMessageDismiss, onLoginOpen }) => {
     const [t] = useTranslation();
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
@@ -207,7 +192,7 @@ const Register = React.memo(
                 </>
               )}
             </Form>
-            {registrationEnabled && ssoRegistrationEnabled && (googleSsoEnabled || githubSsoEnabled || microsoftSsoEnabled) && (
+            {registrationEnabled && ssoRegistrationEnabled && Object.values(ssoAvailable).some(Boolean) && (
               <>
                 {localRegistrationEnabled && (
                   <div className={s.otherOptionsTextWrapper}>
@@ -217,20 +202,20 @@ const Register = React.memo(
                   </div>
                 )}
                 <div className={s.otherOptions}>
-                  {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso} className={s.button}>
+                  {ssoAvailable[SsoTypes.GOOGLE] && registrationEnabled && ssoRegistrationEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={() => onAuthenticateSso(SsoTypes.GOOGLE)} className={s.button}>
                       <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'Google' })}
                     </Button>
                   )}
-                  {githubSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso} className={s.button}>
+                  {ssoAvailable[SsoTypes.GITHUB] && registrationEnabled && ssoRegistrationEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={() => onAuthenticateSso(SsoTypes.GITHUB)} className={s.button}>
                       <Icon type={IconType.Github} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'GitHub' })}
                     </Button>
                   )}
-                  {microsoftSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={onAuthenticateMicrosoftSso} className={s.button}>
+                  {ssoAvailable[SsoTypes.MICROSOFT] && registrationEnabled && ssoRegistrationEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={() => onAuthenticateSso(SsoTypes.MICROSOFT)} className={s.button}>
                       <Icon type={IconType.Microsoft} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'Microsoft' })}
                     </Button>
@@ -253,18 +238,14 @@ Register.propTypes = {
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  onRegister: PropTypes.func.isRequired,
-  onAuthenticateGoogleSso: PropTypes.func.isRequired,
-  onAuthenticateGithubSso: PropTypes.func.isRequired,
-  onAuthenticateMicrosoftSso: PropTypes.func.isRequired,
-  onMessageDismiss: PropTypes.func.isRequired,
-  onLoginOpen: PropTypes.func.isRequired,
-  googleSsoEnabled: PropTypes.bool.isRequired,
-  githubSsoEnabled: PropTypes.bool.isRequired,
-  microsoftSsoEnabled: PropTypes.bool.isRequired,
+  ssoAvailable: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  onRegister: PropTypes.func.isRequired,
+  onAuthenticateSso: PropTypes.func.isRequired,
+  onMessageDismiss: PropTypes.func.isRequired,
+  onLoginOpen: PropTypes.func.isRequired,
 };
 
 Register.defaultProps = {

@@ -22,14 +22,10 @@ export default (state = initialState, { type, payload }) => {
         isSubmitting: true,
       };
     case ActionTypes.AUTHENTICATE__SUCCESS:
-    case ActionTypes.AUTHENTICATE_GOOGLE_SSO__SUCCESS:
-    case ActionTypes.AUTHENTICATE_GITHUB_SSO__SUCCESS:
-    case ActionTypes.AUTHENTICATE_MICROSOFT_SSO__SUCCESS:
+    case ActionTypes.AUTHENTICATE_SSO__SUCCESS:
       return initialState;
     case ActionTypes.AUTHENTICATE__FAILURE:
-    case ActionTypes.AUTHENTICATE_GOOGLE_SSO__FAILURE:
-    case ActionTypes.AUTHENTICATE_GITHUB_SSO__FAILURE:
-    case ActionTypes.AUTHENTICATE_MICROSOFT_SSO__FAILURE:
+    case ActionTypes.AUTHENTICATE_SSO__FAILURE:
       return {
         ...state,
         isSubmitting: false,

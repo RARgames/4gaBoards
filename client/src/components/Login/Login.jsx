@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import isEmail from 'validator/lib/isEmail';
 
 import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
+import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
@@ -58,23 +59,7 @@ const createMessage = (error) => {
 };
 
 const Login = React.memo(
-  ({
-    defaultData,
-    isSubmitting,
-    error,
-    onAuthenticate,
-    onAuthenticateGoogleSso,
-    onAuthenticateGithubSso,
-    onAuthenticateMicrosoftSso,
-    onMessageDismiss,
-    onRegisterOpen,
-    googleSsoEnabled,
-    githubSsoEnabled,
-    microsoftSsoEnabled,
-    registrationEnabled,
-    localRegistrationEnabled,
-    ssoRegistrationEnabled,
-  }) => {
+  ({ defaultData, isSubmitting, error, ssoAvailable, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, onAuthenticate, onAuthenticateSso, onMessageDismiss, onRegisterOpen }) => {
     const [t] = useTranslation();
     const [isUsernameError, setIsUsernameError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
@@ -184,7 +169,7 @@ const Login = React.memo(
                 <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
               </Button>
             </Form>
-            {(googleSsoEnabled || githubSsoEnabled || microsoftSsoEnabled) && (
+            {Object.values(ssoAvailable).some(Boolean) && (
               <>
                 <div className={s.otherOptionsTextWrapper}>
                   <div className={s.otherOptionsLine} />
@@ -192,20 +177,20 @@ const Login = React.memo(
                   <div className={s.otherOptionsLine} />
                 </div>
                 <div className={s.otherOptions}>
-                  {googleSsoEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso} className={s.button}>
+                  {ssoAvailable[SsoTypes.GOOGLE] && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={() => onAuthenticateSso(SsoTypes.GOOGLE)} className={s.button}>
                       <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'Google' })}
                     </Button>
                   )}
-                  {githubSsoEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso} className={s.button}>
+                  {ssoAvailable[SsoTypes.GITHUB] && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={() => onAuthenticateSso(SsoTypes.GITHUB)} className={s.button}>
                       <Icon type={IconType.Github} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'GitHub' })}
                     </Button>
                   )}
-                  {microsoftSsoEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={onAuthenticateMicrosoftSso} className={s.button}>
+                  {ssoAvailable[SsoTypes.MICROSOFT] && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={() => onAuthenticateSso(SsoTypes.MICROSOFT)} className={s.button}>
                       <Icon type={IconType.Microsoft} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'Microsoft' })}
                     </Button>
@@ -232,18 +217,14 @@ Login.propTypes = {
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  onAuthenticate: PropTypes.func.isRequired,
-  onAuthenticateGoogleSso: PropTypes.func.isRequired,
-  onAuthenticateGithubSso: PropTypes.func.isRequired,
-  onAuthenticateMicrosoftSso: PropTypes.func.isRequired,
-  onMessageDismiss: PropTypes.func.isRequired,
-  onRegisterOpen: PropTypes.func.isRequired,
-  googleSsoEnabled: PropTypes.bool.isRequired,
-  githubSsoEnabled: PropTypes.bool.isRequired,
-  microsoftSsoEnabled: PropTypes.bool.isRequired,
+  ssoAvailable: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  onAuthenticate: PropTypes.func.isRequired,
+  onAuthenticateSso: PropTypes.func.isRequired,
+  onMessageDismiss: PropTypes.func.isRequired,
+  onRegisterOpen: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {

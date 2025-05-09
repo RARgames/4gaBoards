@@ -1,9 +1,10 @@
 import { call, put, select } from 'redux-saga/effects';
 
+import { SsoTypes } from '../../../constants/Enums';
 import Paths from '../../../constants/Paths';
 import { push } from '../../../lib/redux-router';
 import selectors from '../../../selectors';
-import { authenticateGoogleSsoCallback, authenticateGithubSsoCallback, authenticateMicrosoftSsoCallback } from './login';
+import { authenticateSsoCallback } from './login';
 
 export function* goToLogin() {
   yield put(push(Paths.LOGIN));
@@ -35,19 +36,17 @@ export function* handleLocationChange() {
     case Paths.SETTINGS_USERS:
     case Paths.SETTINGS_PROJECT:
       yield call(goToLogin);
-
       break;
     case Paths.GOOGLE_CALLBACK: {
-      yield call(authenticateGoogleSsoCallback);
-
+      yield call(authenticateSsoCallback, SsoTypes.GOOGLE);
       break;
     }
     case Paths.GITHUB_CALLBACK: {
-      yield call(authenticateGithubSsoCallback);
+      yield call(authenticateSsoCallback, SsoTypes.GITHUB);
       break;
     }
     case Paths.MICROSOFT_CALLBACK: {
-      yield call(authenticateMicrosoftSsoCallback);
+      yield call(authenticateSsoCallback, SsoTypes.MICROSOFT);
       break;
     }
     default:

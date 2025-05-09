@@ -21,66 +21,32 @@ authenticate.failure = (error) => ({
   },
 });
 
-const authenticateGoogleSso = () => ({
-  type: ActionTypes.AUTHENTICATE_GOOGLE_SSO,
-  payload: {},
-});
-
-authenticateGoogleSso.success = (accessToken) => ({
-  type: ActionTypes.AUTHENTICATE_GOOGLE_SSO__SUCCESS,
-  payload: {
-    accessToken,
-  },
-});
-
-authenticateGoogleSso.failure = (error) => ({
-  type: ActionTypes.AUTHENTICATE_GOOGLE_SSO__FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const authenticateGithubSso = () => ({
-  type: ActionTypes.AUTHENTICATE_GITHUB_SSO,
-  payload: {},
-});
-
-authenticateGithubSso.success = (accessToken) => ({
-  type: ActionTypes.AUTHENTICATE_GITHUB_SSO__SUCCESS,
-  payload: {
-    accessToken,
-  },
-});
-
-authenticateGithubSso.failure = (error) => ({
-  type: ActionTypes.AUTHENTICATE_GITHUB_SSO__FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const authenticateMicrosoftSso = () => ({
-  type: ActionTypes.AUTHENTICATE_MICROSOFT_SSO,
-  payload: {},
-});
-
-authenticateMicrosoftSso.success = (accessToken) => ({
-  type: ActionTypes.AUTHENTICATE_MICROSOFT_SSO__SUCCESS,
-  payload: {
-    accessToken,
-  },
-});
-
-authenticateMicrosoftSso.failure = (error) => ({
-  type: ActionTypes.AUTHENTICATE_MICROSOFT_SSO__FAILURE,
-  payload: {
-    error,
-  },
-});
-
 const clearAuthenticateError = () => ({
   type: ActionTypes.AUTHENTICATE_ERROR_CLEAR,
   payload: {},
+});
+
+const authenticateSso = (provider) => ({
+  type: ActionTypes.AUTHENTICATE_SSO,
+  payload: {
+    provider,
+  },
+});
+
+authenticateSso.success = (provider, accessToken) => ({
+  type: ActionTypes.AUTHENTICATE_SSO__SUCCESS,
+  payload: {
+    provider,
+    accessToken,
+  },
+});
+
+authenticateSso.failure = (provider, error) => ({
+  type: ActionTypes.AUTHENTICATE_SSO__FAILURE,
+  payload: {
+    provider,
+    error,
+  },
 });
 
 const registerOpen = () => ({
@@ -121,10 +87,8 @@ const clearRegisterError = () => ({
 
 export default {
   authenticate,
-  authenticateGoogleSso,
-  authenticateGithubSso,
-  authenticateMicrosoftSso,
   clearAuthenticateError,
+  authenticateSso,
   registerOpen,
   loginOpen,
   register,

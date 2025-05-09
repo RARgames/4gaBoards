@@ -24,3 +24,9 @@ export const ResizeObserverSizeTypes = {
   SCROLL_WIDTH: 'scrollWidth',
   SCROLLABLE: 'scrollable',
 };
+
+export const SsoTypes = {
+  GOOGLE: 'google',
+  GITHUB: 'github',
+  MICROSOFT: 'microsoft',
+};

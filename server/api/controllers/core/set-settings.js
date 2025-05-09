@@ -46,6 +46,12 @@ module.exports = {
     const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled']);
 
     core = await Core.updateOne({ id: 0 }).set({ ...values });
+    const coreItem = {
+      ...core,
+      ssoUrls: sails.config.custom.ssoUrls,
+      ssoAvailable: sails.config.custom.ssoAvailable,
+      demoMode: sails.config.custom.demoMode,
+    };
 
     const users = await sails.helpers.users.getMany();
     const userIds = sails.helpers.utils.mapRecords(users);
@@ -54,22 +60,14 @@ module.exports = {
         `user:${userId}`,
         'coreSettingsUpdate',
         {
-          item: core,
+          item: coreItem,
         },
         inputs.request,
       );
     });
 
     return {
-      item: {
-        ...core,
-        googleSsoUrl: sails.config.custom.googleSsoUrl,
-        googleSsoEnabled: !!sails.config.custom.googleClientId,
-        githubSsoUrl: sails.config.custom.githubSsoUrl,
-        githubSsoEnabled: !!sails.config.custom.githubClientId,
-        microsoftSsoUrl: sails.config.custom.microsoftSsoUrl,
-        microsoftSsoEnabled: !!sails.config.custom.microsoftClientId,
-      },
+      item: coreItem,
     };
   },
 };

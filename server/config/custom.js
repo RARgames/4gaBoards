@@ -39,12 +39,21 @@ module.exports.custom = {
 
   gettingStartedProjectsPath: path.join(sails.config.appPath, 'public', 'getting-started-project'),
 
-  googleSsoUrl: `${process.env.BASE_URL}/auth/google`,
-  googleClientId: process.env.GOOGLE_CLIENT_ID,
-  githubSsoUrl: `${process.env.BASE_URL}/auth/github`,
-  githubClientId: process.env.GITHUB_CLIENT_ID,
-  microsoftSsoUrl: `${process.env.BASE_URL}/auth/microsoft`,
-  microsoftClientId: process.env.MICROSOFT_CLIENT_ID,
+  ssoUrls: {
+    google: `${process.env.BASE_URL}/auth/google`,
+    github: `${process.env.BASE_URL}/auth/github`,
+    microsoft: `${process.env.BASE_URL}/auth/microsoft`,
+  },
+  ssoClientIds: {
+    google: process.env.GOOGLE_CLIENT_ID,
+    github: process.env.GITHUB_CLIENT_ID,
+    microsoft: process.env.MICROSOFT_CLIENT_ID,
+  },
+  ssoAvailable: {
+    google: !!process.env.GOOGLE_CLIENT_ID,
+    github: !!process.env.GITHUB_CLIENT_ID,
+    microsoft: !!process.env.MICROSOFT_CLIENT_ID,
+  },
 
   demoMode: process.env.DEMO_MODE === 'true',
 

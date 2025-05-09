@@ -2,6 +2,7 @@ import isUndefined from 'lodash/isUndefined';
 import { createSelector } from 'redux-orm';
 
 import Config from '../constants/Config';
+import { SsoTypes } from '../constants/Enums';
 import orm from '../orm';
 
 export const selectAccessToken = ({ auth: { accessToken } }) => accessToken;
@@ -11,9 +12,26 @@ export const selectIsCoreInitializing = ({ core: { isInitializing } }) => isInit
 export const selectIsLogouting = ({ core: { isLogouting } }) => isLogouting;
 
 export const selectCoreSettings = createSelector(orm, ({ Core }) => {
-  const coreModel = Core.withId(0);
+  let coreModel = Core.withId(0);
 
   if (!coreModel) {
+    const ssoAvailable = Object.values(SsoTypes).reduce((acc, type) => {
+      acc[type] = false;
+      return acc;
+    }, {});
+    const ssoUrls = Object.values(SsoTypes).reduce((acc, type) => {
+      acc[type] = '';
+      return acc;
+    }, {});
+
+    coreModel = {
+      ssoRegistrationEnabled: false,
+      localRegistrationEnabled: false,
+      registrationEnabled: false,
+      ssoUrls,
+      ssoAvailable,
+      demoMode: false,
+    };
     return coreModel;
   }
 

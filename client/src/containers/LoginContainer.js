@@ -16,12 +16,10 @@ const mapStateToProps = (state) => {
   return {
     defaultData,
     isSubmitting,
-    googleSsoEnabled: coreSettings ? coreSettings.googleSsoEnabled : false,
-    githubSsoEnabled: coreSettings ? coreSettings.githubSsoEnabled : false,
-    microsoftSsoEnabled: coreSettings ? coreSettings.microsoftSsoEnabled : false,
-    registrationEnabled: coreSettings ? coreSettings.registrationEnabled : false,
-    localRegistrationEnabled: coreSettings ? coreSettings.localRegistrationEnabled : false,
-    ssoRegistrationEnabled: coreSettings ? coreSettings.ssoRegistrationEnabled : false,
+    ssoAvailable: coreSettings.ssoAvailable,
+    registrationEnabled: coreSettings.registrationEnabled,
+    localRegistrationEnabled: coreSettings.localRegistrationEnabled,
+    ssoRegistrationEnabled: coreSettings.ssoRegistrationEnabled,
     error,
   };
 };
@@ -30,9 +28,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onAuthenticate: entryActions.authenticate,
-      onAuthenticateGoogleSso: entryActions.authenticateGoogleSso,
-      onAuthenticateGithubSso: entryActions.authenticateGithubSso,
-      onAuthenticateMicrosoftSso: entryActions.authenticateMicrosoftSso,
+      onAuthenticateSso: entryActions.authenticateSso,
       onMessageDismiss: entryActions.clearAuthenticateError,
       onRegisterOpen: entryActions.registerOpen,
     },

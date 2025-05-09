@@ -7,19 +7,11 @@ const authenticate = (data) => ({
   },
 });
 
-const authenticateGoogleSso = () => ({
-  type: EntryActionTypes.AUTHENTICATE_GOOGLE_SSO,
-  payload: {},
-});
-
-const authenticateGithubSso = () => ({
-  type: EntryActionTypes.AUTHENTICATE_GITHUB_SSO,
-  payload: {},
-});
-
-const authenticateMicrosoftSso = () => ({
-  type: EntryActionTypes.AUTHENTICATE_MICROSOFT_SSO,
-  payload: {},
+const authenticateSso = (provider) => ({
+  type: EntryActionTypes.AUTHENTICATE_SSO,
+  payload: {
+    provider,
+  },
 });
 
 const clearAuthenticateError = () => ({
@@ -51,9 +43,7 @@ const clearRegisterError = () => ({
 
 export default {
   authenticate,
-  authenticateGoogleSso,
-  authenticateGithubSso,
-  authenticateMicrosoftSso,
+  authenticateSso,
   clearAuthenticateError,
   registerOpen,
   loginOpen,
