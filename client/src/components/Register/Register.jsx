@@ -58,10 +58,12 @@ const Register = React.memo(
     onRegister,
     onAuthenticateGoogleSso,
     onAuthenticateGithubSso,
+    onAuthenticateMicrosoftSso,
     onMessageDismiss,
     onLoginOpen,
     googleSsoEnabled,
     githubSsoEnabled,
+    microsoftSsoEnabled,
     registrationEnabled,
     localRegistrationEnabled,
     ssoRegistrationEnabled,
@@ -198,14 +200,14 @@ const Register = React.memo(
                     </div>
                     <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} isError={isCheckboxError} />
                   </div>
-                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={s.submitButton} onClick={handleSubmit}>
+                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={classNames(s.submitButton, s.button)} onClick={handleSubmit}>
                     {t('common.register')}
                     <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
                   </Button>
                 </>
               )}
             </Form>
-            {registrationEnabled && ssoRegistrationEnabled && (googleSsoEnabled || githubSsoEnabled) && (
+            {registrationEnabled && ssoRegistrationEnabled && (googleSsoEnabled || githubSsoEnabled || microsoftSsoEnabled) && (
               <>
                 {localRegistrationEnabled && (
                   <div className={s.otherOptionsTextWrapper}>
@@ -216,15 +218,21 @@ const Register = React.memo(
                 )}
                 <div className={s.otherOptions}>
                   {googleSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso}>
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso} className={s.button}>
                       <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'Google' })}
                     </Button>
                   )}
                   {githubSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso}>
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso} className={s.button}>
                       <Icon type={IconType.Github} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'GitHub' })}
+                    </Button>
+                  )}
+                  {microsoftSsoEnabled && registrationEnabled && ssoRegistrationEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={onAuthenticateMicrosoftSso} className={s.button}>
+                      <Icon type={IconType.Microsoft} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'Microsoft' })}
                     </Button>
                   )}
                 </div>
@@ -248,10 +256,12 @@ Register.propTypes = {
   onRegister: PropTypes.func.isRequired,
   onAuthenticateGoogleSso: PropTypes.func.isRequired,
   onAuthenticateGithubSso: PropTypes.func.isRequired,
+  onAuthenticateMicrosoftSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
   onLoginOpen: PropTypes.func.isRequired,
   googleSsoEnabled: PropTypes.bool.isRequired,
   githubSsoEnabled: PropTypes.bool.isRequired,
+  microsoftSsoEnabled: PropTypes.bool.isRequired,
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,

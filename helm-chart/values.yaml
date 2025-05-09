@@ -68,6 +68,8 @@ env:
     GOOGLE_CLIENT_SECRET: googleClientSecret
     GITHUB_CLIENT_ID: githubClientId
     GITHUB_CLIENT_SECRET: githubClientSecret
+    MICROSOFT_CLIENT_ID: microsoftClientId
+    MICROSOFT_CLIENT_SECRET: microsoftClientSecret
 
 pv:
   storageClass: standard

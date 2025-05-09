@@ -50,6 +50,11 @@ module.exports = {
       isEmail: true,
       allowNull: true,
     },
+    ssoMicrosoftId: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+    },
     ssoGithubId: {
       type: 'string',
       isNotEmptyString: true,
@@ -70,7 +75,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const values = _.pick(inputs, ['email', 'password', 'name', 'username', 'phone', 'organization', 'ssoGoogleEmail', 'ssoGithubId']);
+    const values = _.pick(inputs, ['email', 'password', 'name', 'username', 'phone', 'organization', 'ssoGoogleEmail', 'ssoGithubId', 'ssoMicrosoftId']);
 
     if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {
       throw Errors.WEAK_PASSWORD;

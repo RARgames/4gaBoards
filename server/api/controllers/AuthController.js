@@ -53,4 +53,26 @@ module.exports = {
       }
     })(req, res, next);
   },
+
+  microsoft(req, res, next) {
+    passport.authenticate('microsoft-msal', { prompt: 'login' })(req, res, next);
+  },
+
+  microsoftCallback(req, res, next) {
+    passport.authenticate('microsoft-msal', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
+      if (err) {
+        res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?error=${err.code}`);
+        return;
+      }
+
+      try {
+        const user = await sails.helpers.users.getCreateOneForMicrosoftSso(profile.id, profile.email, profile.displayName);
+        const accessToken = sails.helpers.utils.createToken(user.id);
+        await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
+        res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?accessToken=${accessToken}`);
+      } catch (error) {
+        res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?error=${error.code}`);
+      }
+    })(req, res, next);
+  },
 };

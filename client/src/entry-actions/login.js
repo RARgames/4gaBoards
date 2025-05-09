@@ -17,6 +17,11 @@ const authenticateGithubSso = () => ({
   payload: {},
 });
 
+const authenticateMicrosoftSso = () => ({
+  type: EntryActionTypes.AUTHENTICATE_MICROSOFT_SSO,
+  payload: {},
+});
+
 const clearAuthenticateError = () => ({
   type: EntryActionTypes.AUTHENTICATE_ERROR_CLEAR,
   payload: {},
@@ -48,6 +53,7 @@ export default {
   authenticate,
   authenticateGoogleSso,
   authenticateGithubSso,
+  authenticateMicrosoftSso,
   clearAuthenticateError,
   registerOpen,
   loginOpen,

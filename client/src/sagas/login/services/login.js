@@ -68,6 +68,29 @@ export function* authenticateGithubSsoCallback() {
   }
 }
 
+export function* authenticateMicrosoftSso() {
+  const { microsoftSsoUrl } = yield select(selectors.selectCoreSettings);
+  window.location.replace(microsoftSsoUrl);
+}
+
+export function* authenticateMicrosoftSsoCallback() {
+  const params = new URLSearchParams(window.location.search);
+  const accessToken = params.get('accessToken');
+  const err = params.get('error');
+  yield put(replace(Paths.LOGIN));
+
+  if (err !== null) {
+    yield put(actions.authenticateMicrosoftSso.failure({ code: 'E_UNAUTHORIZED', message: err }));
+    return;
+  }
+  if (accessToken !== null) {
+    yield call(setAccessToken, accessToken);
+    yield put(actions.authenticateMicrosoftSso.success(accessToken));
+  } else {
+    yield put(actions.authenticateMicrosoftSso.failure({ code: 'E_UNAUTHORIZED', message: 'Unknown error' }));
+  }
+}
+
 export function* clearAuthenticateError() {
   yield put(actions.clearAuthenticateError());
 }
@@ -107,6 +130,8 @@ export default {
   authenticateGoogleSsoCallback,
   authenticateGithubSso,
   authenticateGithubSsoCallback,
+  authenticateMicrosoftSso,
+  authenticateMicrosoftSsoCallback,
   clearAuthenticateError,
   registerOpen,
   loginOpen,

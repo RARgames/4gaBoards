@@ -29,6 +29,7 @@ import { ReactComponent as Labels } from '../../../assets/icons/Labels.svg';
 import { ReactComponent as Link } from '../../../assets/icons/Link.svg';
 import { ReactComponent as List } from '../../../assets/icons/List.svg';
 import { ReactComponent as MatchCase } from '../../../assets/icons/MatchCase.svg';
+import { ReactComponent as Microsoft } from '../../../assets/icons/Microsoft.svg';
 import { ReactComponent as Minus } from '../../../assets/icons/Minus.svg';
 import { ReactComponent as MoveUpDown } from '../../../assets/icons/MoveUpDown.svg';
 import { ReactComponent as Pause } from '../../../assets/icons/Pause.svg';
@@ -84,6 +85,7 @@ const IconType = {
   Link,
   List,
   MatchCase,
+  Microsoft,
   Minus,
   MoveUpDown,
   Pause,

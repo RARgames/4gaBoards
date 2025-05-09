@@ -44,6 +44,7 @@ export default class extends BaseModel {
     deletedAt: attr(),
     ssoGoogleEmail: attr(),
     ssoGithubId: attr(),
+    ssoMicrosoftId: attr(),
     lastLogin: attr(),
     isAdmin: attr({
       getDefault: () => false,

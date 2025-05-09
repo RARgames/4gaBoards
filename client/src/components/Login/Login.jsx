@@ -65,10 +65,12 @@ const Login = React.memo(
     onAuthenticate,
     onAuthenticateGoogleSso,
     onAuthenticateGithubSso,
+    onAuthenticateMicrosoftSso,
     onMessageDismiss,
     onRegisterOpen,
     googleSsoEnabled,
     githubSsoEnabled,
+    microsoftSsoEnabled,
     registrationEnabled,
     localRegistrationEnabled,
     ssoRegistrationEnabled,
@@ -177,12 +179,12 @@ const Login = React.memo(
                 onChange={handleFieldChange}
                 isError={isPasswordError}
               />
-              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={s.submitButton} onClick={handleSubmit}>
+              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={classNames(s.submitButton, s.button)} onClick={handleSubmit}>
                 {t('action.logIn')}
                 <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
               </Button>
             </Form>
-            {(googleSsoEnabled || githubSsoEnabled) && (
+            {(googleSsoEnabled || githubSsoEnabled || microsoftSsoEnabled) && (
               <>
                 <div className={s.otherOptionsTextWrapper}>
                   <div className={s.otherOptionsLine} />
@@ -191,15 +193,21 @@ const Login = React.memo(
                 </div>
                 <div className={s.otherOptions}>
                   {googleSsoEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso}>
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={onAuthenticateGoogleSso} className={s.button}>
                       <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'Google' })}
                     </Button>
                   )}
                   {githubSsoEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso}>
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={onAuthenticateGithubSso} className={s.button}>
                       <Icon type={IconType.Github} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'GitHub' })}
+                    </Button>
+                  )}
+                  {microsoftSsoEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={onAuthenticateMicrosoftSso} className={s.button}>
+                      <Icon type={IconType.Microsoft} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'Microsoft' })}
                     </Button>
                   )}
                 </div>
@@ -227,10 +235,12 @@ Login.propTypes = {
   onAuthenticate: PropTypes.func.isRequired,
   onAuthenticateGoogleSso: PropTypes.func.isRequired,
   onAuthenticateGithubSso: PropTypes.func.isRequired,
+  onAuthenticateMicrosoftSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
   onRegisterOpen: PropTypes.func.isRequired,
   googleSsoEnabled: PropTypes.bool.isRequired,
   githubSsoEnabled: PropTypes.bool.isRequired,
+  microsoftSsoEnabled: PropTypes.bool.isRequired,
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,

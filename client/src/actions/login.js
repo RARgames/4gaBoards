@@ -59,6 +59,25 @@ authenticateGithubSso.failure = (error) => ({
   },
 });
 
+const authenticateMicrosoftSso = () => ({
+  type: ActionTypes.AUTHENTICATE_MICROSOFT_SSO,
+  payload: {},
+});
+
+authenticateMicrosoftSso.success = (accessToken) => ({
+  type: ActionTypes.AUTHENTICATE_MICROSOFT_SSO__SUCCESS,
+  payload: {
+    accessToken,
+  },
+});
+
+authenticateMicrosoftSso.failure = (error) => ({
+  type: ActionTypes.AUTHENTICATE_MICROSOFT_SSO__FAILURE,
+  payload: {
+    error,
+  },
+});
+
 const clearAuthenticateError = () => ({
   type: ActionTypes.AUTHENTICATE_ERROR_CLEAR,
   payload: {},
@@ -104,6 +123,7 @@ export default {
   authenticate,
   authenticateGoogleSso,
   authenticateGithubSso,
+  authenticateMicrosoftSso,
   clearAuthenticateError,
   registerOpen,
   loginOpen,

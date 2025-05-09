@@ -15,6 +15,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
+    "@azure/msal-node": "^3.5.3",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.5.0",
     "dotenv-cli": "^8.0.0",
@@ -28,6 +29,7 @@
     "passport": "^0.7.0",
     "passport-github": "^1.1.0",
     "passport-google-oauth20": "^2.0.0",
+    "passport-strategy": "^1.0.0",
     "rimraf": "^6.0.1",
     "sails": "^1.5.14",
     "sails-hook-orm": "^4.0.3",

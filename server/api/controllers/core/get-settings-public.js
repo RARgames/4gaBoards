@@ -26,6 +26,8 @@ module.exports = {
         googleSsoEnabled: !!sails.config.custom.googleClientId,
         githubSsoUrl: sails.config.custom.githubSsoUrl,
         githubSsoEnabled: !!sails.config.custom.githubClientId,
+        microsoftSsoUrl: sails.config.custom.microsoftSsoUrl,
+        microsoftSsoEnabled: !!sails.config.custom.microsoftClientId,
         demoMode: sails.config.custom.demoMode,
       },
     };

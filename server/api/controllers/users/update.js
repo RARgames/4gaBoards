@@ -47,6 +47,11 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
+    ssoMicrosoftId: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+    },
     lastLogin: {
       type: 'ref',
     },
@@ -83,7 +88,7 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'ssoGoogleEmail', 'ssoGithubId', 'lastLogin']),
+      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'ssoGoogleEmail', 'ssoGithubId', 'ssoMicrosoftId', 'lastLogin']),
       avatar: inputs.avatarUrl,
     };
 

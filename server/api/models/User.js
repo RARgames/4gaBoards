@@ -69,6 +69,11 @@ module.exports = {
       columnName: 'sso_github_id',
       allowNull: true,
     },
+    ssoMicrosoftId: {
+      type: 'string',
+      columnName: 'sso_microsoft_id',
+      allowNull: true,
+    },
     lastLogin: {
       type: 'ref',
       columnName: 'last_login',

@@ -43,6 +43,8 @@ module.exports.custom = {
   googleClientId: process.env.GOOGLE_CLIENT_ID,
   githubSsoUrl: `${process.env.BASE_URL}/auth/github`,
   githubClientId: process.env.GITHUB_CLIENT_ID,
+  microsoftSsoUrl: `${process.env.BASE_URL}/auth/microsoft`,
+  microsoftClientId: process.env.MICROSOFT_CLIENT_ID,
 
   demoMode: process.env.DEMO_MODE === 'true',
 

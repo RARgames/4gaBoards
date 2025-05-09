@@ -39,6 +39,12 @@
     width: 100%;
   }
 
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .ssoIcon {
     margin-right: 6px;
   }
