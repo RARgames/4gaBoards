@@ -10,6 +10,7 @@ module.exports = {
     },
     displayName: {
       type: 'string',
+      allowNull: true,
     },
   },
 
