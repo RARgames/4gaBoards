@@ -620,7 +620,7 @@ const CardModal = React.memo(
           </Button>
         </div>
         <div>
-          {taskShown && tasks.length > 0 && (
+          {taskShown && (
             <Tasks
               ref={tasksRef}
               variant="cardModal"
