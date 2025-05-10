@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFloating, shift, flip, offset as posOffset, useClick, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
+import { useFloating, shift, flip, offset as posOffset, size, useClick, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ import { Icon, IconType, IconSize } from '../Icon';
 import * as s from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Popup = React.memo(({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
+  const Popup = React.memo(({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, disableShiftCrossAxis, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -33,7 +33,24 @@ export default (WrappedComponent, defaultProps) => {
       onOpenChange,
       whileElementsMounted: autoUpdate,
       placement: defaultProps?.position ?? position,
-      middleware: [posOffset(defaultProps?.offset ?? offset), flip(), shift({ padding: 6 })],
+      middleware: [
+        posOffset(defaultProps?.offset ?? offset),
+        flip({
+          padding: 12,
+        }),
+        shift({
+          crossAxis: !(defaultProps?.disableShiftCrossAxis ?? disableShiftCrossAxis),
+          padding: 6,
+        }),
+        size({
+          apply({ availableWidth, availableHeight, elements }) {
+            Object.assign(elements.floating.style, {
+              maxWidth: `${availableWidth - 12}px`,
+              maxHeight: `${availableHeight - 12}px`,
+            });
+          },
+        }),
+      ],
     });
 
     const click = useClick(context, { enabled: !disabled });
@@ -95,6 +112,7 @@ export default (WrappedComponent, defaultProps) => {
     hideCloseButton: PropTypes.bool,
     offset: PropTypes.number,
     position: PropTypes.string,
+    disableShiftCrossAxis: PropTypes.bool,
     closeButtonClassName: PropTypes.string,
     wrapperClassName: PropTypes.string,
     onClose: PropTypes.func,
@@ -107,6 +125,7 @@ export default (WrappedComponent, defaultProps) => {
     hideCloseButton: false,
     offset: 10,
     position: 'bottom',
+    disableShiftCrossAxis: false,
     closeButtonClassName: undefined,
     wrapperClassName: undefined,
     onClose: undefined,

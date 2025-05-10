@@ -300,7 +300,7 @@ const Sidebar = React.memo(
           </div>
           <div>
             {!settingsOnly && (
-              <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right-end">
+              <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={s.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={s.footerButtonIcon} />
                   {t('common.addProject')}
@@ -308,7 +308,7 @@ const Sidebar = React.memo(
               </ProjectAddPopup>
             )}
             {managedProjects.length > 0 && !settingsOnly && (
-              <BoardAddPopup projects={managedProjects} projectId={currProjectId} isAdmin={isAdmin} onCreate={onBoardCreate} offset={2} position="right-end">
+              <BoardAddPopup projects={managedProjects} projectId={currProjectId} isAdmin={isAdmin} onCreate={onBoardCreate} offset={2} position="right">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={s.footerButtonIcon} />
                   {t('common.addBoard')}

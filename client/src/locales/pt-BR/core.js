@@ -291,7 +291,7 @@ export default {
       resetColumnWidths: 'Ajustar Colunas para Preencher Conteúdo',
       resetColumnWidthsFitScreen: 'Ajustar Colunas para Preencher Tela',
       resizeColumn: 'Redimensionar Coluna',
-      searchLabels: 'Procurar rótulos...',
+      searchLabels: 'Procurar rótulos ou crie um...',
       searchMembers: 'Procurar membros...',
       searchUsers: 'Procurar usuários...',
       seconds: 'Segundos',

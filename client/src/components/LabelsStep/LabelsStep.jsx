@@ -5,7 +5,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import { useField, useSteps } from '../../hooks';
-import { Button, ButtonStyle, Popup, Input, InputStyle } from '../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Icon, IconSize, IconType } from '../Utils';
 import AddStep from './AddStep';
 import EditStep from './EditStep';
 import Item from './Item';
@@ -123,7 +123,14 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
     <>
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} />
+        <div className={s.inputWrapper}>
+          <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} />
+          {canEdit && (
+            <Button style={ButtonStyle.Icon} title={t('action.createNewLabel')} onClick={handleAddClick} className={s.addButton}>
+              <Icon type={IconType.Plus} size={IconSize.Size14} />
+            </Button>
+          )}
+        </div>
         <div className={classNames(s.items, gs.scrollableY)}>
           {filteredItems.map((item) => (
             <Item
@@ -139,7 +146,6 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
             />
           ))}
         </div>
-        {canEdit && <Button style={ButtonStyle.NoBackground} content={t('action.createNewLabel')} onClick={handleAddClick} />}
       </Popup.Content>
     </>
   );

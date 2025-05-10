@@ -289,7 +289,7 @@ export default {
       resetColumnWidths: 'Adjust Columns to Fit Content',
       resetColumnWidthsFitScreen: 'Adjust Columns to Fit Screen',
       resizeColumn: 'Resize column',
-      searchLabels: 'Search labels...',
+      searchLabels: 'Search labels or create one...',
       searchMembers: 'Search members...',
       searchUsers: 'Search users...',
       seconds: 'Seconds',

@@ -52,7 +52,7 @@
     border-radius: 3px;
     line-height: 20px;
     width: 100%;
-    height: 100%;
+    height: fit-content;
 
     &:hover {
       color: var(--textColor3);
@@ -170,7 +170,7 @@
     border-radius: 3px;
     line-height: 20px;
     width: 100%;
-    height: 100%;
+    height: fit-content;
 
     &:hover {
       background: var(--backgroundPopupHover);

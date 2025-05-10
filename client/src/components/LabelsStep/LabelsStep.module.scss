@@ -1,6 +1,14 @@
 :global(#app) {
+  .inputWrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .addButton {
+    margin-left: 8px;
+  }
+
   .items {
     margin-top: 8px;
-    max-height: 60vh;
   }
 }

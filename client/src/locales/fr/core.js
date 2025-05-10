@@ -307,7 +307,7 @@ export default {
       resetColumnWidths: "Ajuster les colonnes pour s'adapter au contenu",
       resetColumnWidthsFitScreen: "Ajuster les colonnes pour s'adapter à l'écran",
       resizeColumn: 'Redimensionner la colonne',
-      searchLabels: 'Rechercher des étiquettes...',
+      searchLabels: 'Rechercher des étiquettes ou en créer une...',
       searchMembers: 'Rechercher des membres...',
       searchUsers: 'Rechercher des utilisateurs...',
       seconds: 'Secondes',

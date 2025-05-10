@@ -305,7 +305,7 @@ export default {
       resetColumnWidths: 'Dopasuj szerokości kolumn do zawartości',
       resetColumnWidthsFitScreen: 'Dopasuj szerokości kolumn do ekranu',
       resizeColumn: 'Zmień szerokość kolumny',
-      searchLabels: 'Szukaj etykiet...',
+      searchLabels: 'Szukaj etykiet lub dodaj nową...',
       searchMembers: 'Szukaj członków...',
       searchUsers: 'Szukaj użytkowników...',
       seconds: 'Sekundy',

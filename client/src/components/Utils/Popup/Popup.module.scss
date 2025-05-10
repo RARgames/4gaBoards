@@ -10,11 +10,13 @@
     background: var(--backgroundPopup);
     color: var(--textColor1);
     width: min-content;
-    max-width: calc(100vw - 20px);
-    max-height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
     border-radius: 3px;
     text-align: left;
     z-index: 2000;
-    box-shadow: -1px -1px 3px var(--backgroundPopupShadow), 1px 1px 3px var(--backgroundPopupShadow);
+    box-shadow:
+      -1px -1px 3px var(--backgroundPopupShadow),
+      1px 1px 3px var(--backgroundPopupShadow);
   }
 }
