@@ -25,10 +25,10 @@
 - **Export/Import Boards**
 - **Web App Design** - realtime updates without reloading page
 - **Multitasking Capabilities** - simultaneously edit/review cards and filter/rearrange the board, while keeping local description changes
-- **Google SSO Login/Register** _(Github/Microsoft - Coming soon)_
+- **Google/GitHub/Microsoft SSO Login/Register**
 - **Simplistic Wide Screen Design** - minimal clutter and no wasted space
 - **Powerful Shortcuts**
-- **Multiple Language Support** _(EN, PL, FR - 100%, other languages - partial support)_
+- **Multiple Language Support** _(EN, PL, FR, PT - 100%, other languages - partial support)_
 - **Collapsable Lists and Sidebar** - saves screen space and allows for easier navigation in complex projects
 - **Multi-level Hierarchy** - projects -> boards -> lists -> cards -> tasks
 - **Github 2-way sync** - Coming soon
