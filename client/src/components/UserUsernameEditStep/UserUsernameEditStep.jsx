@@ -130,7 +130,9 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
   }, [onMessageDismiss]);
 
   useDidUpdate(() => {
-    currentPasswordField.current.focus();
+    if (usePasswordConfirmation) {
+      currentPasswordField.current.focus();
+    }
   }, [focusCurrentPasswordFieldState]);
 
   useEffect(() => {

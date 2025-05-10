@@ -302,6 +302,7 @@ export default {
       selectNone: 'Select None',
       selectPermissions_title: 'Select Permissions',
       selectProject: 'Select project',
+      setPassword_title: 'Set Password',
       settings: 'Settings',
       settingsAbout: 'Settings: About',
       settingsAccount: 'Settings: Account',

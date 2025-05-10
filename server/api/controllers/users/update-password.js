@@ -58,7 +58,7 @@ module.exports = {
     }
 
     if (inputs.id === currentUser.id) {
-      if (!inputs.currentPassword) {
+      if (!!currentUser.password && !inputs.currentPassword) {
         throw Errors.INVALID_CURRENT_PASSWORD;
       }
     } else if (!currentUser.isAdmin) {
@@ -66,7 +66,6 @@ module.exports = {
     }
 
     let user = await sails.helpers.users.getOne(inputs.id);
-
     if (!user) {
       throw Errors.USER_NOT_FOUND;
     }
@@ -77,7 +76,7 @@ module.exports = {
       }
     }
 
-    if (inputs.id === currentUser.id && !bcrypt.compareSync(inputs.currentPassword, user.password)) {
+    if (inputs.id === currentUser.id && !!currentUser.password && !bcrypt.compareSync(inputs.currentPassword, user.password)) {
       throw Errors.INVALID_CURRENT_PASSWORD;
     }
 

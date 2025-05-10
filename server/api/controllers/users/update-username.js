@@ -54,7 +54,7 @@ module.exports = {
     const { currentUser } = this.req;
 
     if (inputs.id === currentUser.id) {
-      if (!inputs.currentPassword) {
+      if (!!currentUser.password && !inputs.currentPassword) {
         throw Errors.INVALID_CURRENT_PASSWORD;
       }
     } else if (!currentUser.isAdmin) {
@@ -73,7 +73,7 @@ module.exports = {
       }
     }
 
-    if (inputs.id === currentUser.id && !bcrypt.compareSync(inputs.currentPassword, user.password)) {
+    if (inputs.id === currentUser.id && !!currentUser.password && !bcrypt.compareSync(inputs.currentPassword, user.password)) {
       throw Errors.INVALID_CURRENT_PASSWORD;
     }
 

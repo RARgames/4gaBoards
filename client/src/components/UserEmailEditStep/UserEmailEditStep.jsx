@@ -135,7 +135,9 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
   }, []);
 
   useDidUpdate(() => {
-    currentPasswordField.current.focus();
+    if (usePasswordConfirmation) {
+      currentPasswordField.current.focus();
+    }
   }, [focusCurrentPasswordFieldState]);
 
   return (

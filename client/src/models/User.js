@@ -42,6 +42,7 @@ export default class extends BaseModel {
     phone: attr(),
     organization: attr(),
     deletedAt: attr(),
+    isPasswordAuthenticated: attr(),
     ssoGoogleEmail: attr(),
     ssoGithubId: attr(),
     ssoMicrosoftId: attr(),

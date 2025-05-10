@@ -304,6 +304,7 @@ export default {
       selectNone: 'Selecionar Nenhum',
       selectPermissions_title: 'Selecionar Permissões',
       selectProject: 'Selecionar projeto',
+      setPassword_title: 'Definir Senha',
       settings: 'Configurações',
       settingsAbout: 'Configurações: Sobre',
       settingsAccount: 'Configurações: Conta',

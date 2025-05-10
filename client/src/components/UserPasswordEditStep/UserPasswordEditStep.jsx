@@ -39,7 +39,7 @@ const createMessage = (error) => {
   }
 };
 
-const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, usePasswordConfirmation, onUpdate, onMessageDismiss, onBack, onClose }) => {
+const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, usePasswordConfirmation, title, onUpdate, onMessageDismiss, onBack, onClose }) => {
   const [t] = useTranslation();
   const [isPasswordError, setIsPasswordError] = useState(false);
   const [isNewPasswordError, setIsNewPasswordError] = useState(false);
@@ -108,7 +108,9 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
   }, [onMessageDismiss]);
 
   useDidUpdate(() => {
-    currentPasswordField.current.focus();
+    if (usePasswordConfirmation) {
+      currentPasswordField.current.focus();
+    }
   }, [focusCurrentPasswordFieldState]);
 
   useEffect(() => {
@@ -118,7 +120,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
 
   return (
     <>
-      <Popup.Header onBack={onBack}>{t('common.editPassword', { context: 'title' })}</Popup.Header>
+      <Popup.Header onBack={onBack}>{title || t('common.editPassword', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form>
@@ -161,6 +163,7 @@ UserPasswordEditStep.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   usePasswordConfirmation: PropTypes.bool,
+  title: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
   onBack: PropTypes.func,
@@ -169,6 +172,7 @@ UserPasswordEditStep.propTypes = {
 
 UserPasswordEditStep.defaultProps = {
   error: undefined,
+  title: undefined,
   usePasswordConfirmation: false,
   onBack: undefined,
 };

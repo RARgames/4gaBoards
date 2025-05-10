@@ -6,11 +6,12 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { email, username, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
+  const { email, username, isPasswordAuthenticated, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
 
   return {
     email,
     username,
+    isPasswordAuthenticated,
     emailUpdateForm,
     usernameUpdateForm,
   };

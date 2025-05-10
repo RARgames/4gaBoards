@@ -8,7 +8,7 @@ import { Button, ButtonStyle } from '../../Utils';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './AuthenticationSettings.module.scss';
 
-const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdate, onPasswordUpdateMessageDismiss }) => {
+const AuthenticationSettings = React.memo(({ isPasswordAuthenticated, passwordUpdateForm, onPasswordUpdate, onPasswordUpdateMessageDismiss }) => {
   const [t] = useTranslation();
 
   return (
@@ -20,14 +20,15 @@ const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdat
         <div className={s.actionsWrapper}>
           <div className={s.action}>
             <UserPasswordEditPopup
-              usePasswordConfirmation
+              usePasswordConfirmation={isPasswordAuthenticated}
               defaultData={passwordUpdateForm.data}
               isSubmitting={passwordUpdateForm.isSubmitting}
               error={passwordUpdateForm.error}
+              title={isPasswordAuthenticated ? t('common.editPassword', { context: 'title' }) : t('common.setPassword', { context: 'title' })}
               onUpdate={onPasswordUpdate}
               onMessageDismiss={onPasswordUpdateMessageDismiss}
             >
-              <Button style={ButtonStyle.DefaultBorder} content={t('action.editPassword', { context: 'title' })} />
+              <Button style={ButtonStyle.DefaultBorder} content={isPasswordAuthenticated ? t('action.editPassword', { context: 'title' }) : t('common.setPassword', { context: 'title' })} />
             </UserPasswordEditPopup>
           </div>
         </div>
@@ -37,9 +38,8 @@ const AuthenticationSettings = React.memo(({ passwordUpdateForm, onPasswordUpdat
 });
 
 AuthenticationSettings.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  passwordUpdateForm: PropTypes.object.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  isPasswordAuthenticated: PropTypes.bool.isRequired,
+  passwordUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onPasswordUpdate: PropTypes.func.isRequired,
   onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
 };

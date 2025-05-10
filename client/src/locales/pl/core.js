@@ -318,6 +318,7 @@ export default {
       selectNone: 'Wybierz żadne',
       selectPermissions_title: 'Wybierz uprawnienia',
       selectProject: 'Wybierz projekt',
+      setPassword_title: 'Ustaw hasło',
       settings: 'Ustawienia',
       settingsAbout: 'Ustawienia: O 4ga Boards',
       settingsAccount: 'Ustawienia: Konto',

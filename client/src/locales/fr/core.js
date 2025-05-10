@@ -320,6 +320,7 @@ export default {
       selectNone: 'Sélectionner aucun',
       selectPermissions_title: 'Sélectionner les autorisations',
       selectProject: 'Sélectionner un projet',
+      setPassword_title: 'Définir le mot de passe',
       settings: 'Réglages',
       settingsAbout: 'Paramètres: À propos',
       settingsAccount: 'Paramètres: Compte',
