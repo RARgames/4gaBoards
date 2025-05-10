@@ -31,6 +31,7 @@ module.exports = {
     if (user) {
       const updatedValues = {
         ssoMicrosoftId: inputs.id,
+        ssoMicrosoftEmail: email,
       };
       user = await sails.helpers.users.updateOne(user, updatedValues, {}); // TODO: {} - needed for updateOne - fix it
 
@@ -51,6 +52,7 @@ module.exports = {
     const newValues = {
       email,
       ssoMicrosoftId: inputs.id,
+      ssoMicrosoftEmail: email,
       name: inputs.displayName || email,
     };
     user = await sails.helpers.users.createOne(newValues);

@@ -22,7 +22,7 @@ module.exports = {
       }
 
       try {
-        const user = await sails.helpers.users.getCreateOneForGoogleSso(profile.emails[0].value, profile.displayName);
+        const user = await sails.helpers.users.getCreateOneForGoogleSso(profile.id, profile.emails[0].value, profile.displayName);
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/google-callback?accessToken=${accessToken}`);

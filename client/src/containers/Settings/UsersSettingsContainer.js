@@ -8,7 +8,7 @@ import selectors from '../../selectors';
 const mapStateToProps = (state) => {
   const currentUser = selectors.selectCurrentUser(state);
   const rawUsers = selectors.selectUsers(state);
-  const users = rawUsers.map(({ id, name, avatarUrl, username, email, isAdmin, ssoGoogleEmail, lastLogin, createdAt }) => ({
+  const users = rawUsers.map(({ id, name, avatarUrl, username, email, isAdmin, ssoGoogleEmail, ssoGithubUsername, ssoMicrosoftEmail, lastLogin, createdAt }) => ({
     id,
     avatar: avatarUrl || undefined, // undefined needed for TanStack Table sorting
     name,
@@ -16,6 +16,8 @@ const mapStateToProps = (state) => {
     email,
     administrator: isAdmin,
     ssoGoogleEmail: ssoGoogleEmail || undefined, // undefined needed for TanStack Table sorting
+    ssoGithubUsername: ssoGithubUsername || undefined, // undefined needed for TanStack Table sorting
+    ssoMicrosoftEmail: ssoMicrosoftEmail || undefined, // undefined needed for TanStack Table sorting
     lastLogin: lastLogin || undefined, // undefined needed for TanStack Table sorting
     createdAt,
   }));

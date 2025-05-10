@@ -43,6 +43,7 @@ module.exports = {
     const newValues = {
       email: `${inputs.username}@github-sso-4ga-boards.com`,
       ssoGithubId: inputs.id,
+      ssoGithubUsername: inputs.username,
       name: inputs.displayName || inputs.username,
       username: isUsernameTaken ? undefined : inputs.username.toLowerCase(),
     };

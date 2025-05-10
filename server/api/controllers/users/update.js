@@ -37,6 +37,11 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
+    ssoGoogleId: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+    },
     ssoGoogleEmail: {
       type: 'string',
       isEmail: true,
@@ -47,9 +52,19 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
+    ssoGithubUsername: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+    },
     ssoMicrosoftId: {
       type: 'string',
       isNotEmptyString: true,
+      allowNull: true,
+    },
+    ssoMicrosoftEmail: {
+      type: 'string',
+      isEmail: true,
       allowNull: true,
     },
     lastLogin: {
@@ -88,7 +103,7 @@ module.exports = {
     }
 
     const values = {
-      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'ssoGoogleEmail', 'ssoGithubId', 'ssoMicrosoftId', 'lastLogin']),
+      ..._.pick(inputs, ['isAdmin', 'name', 'phone', 'organization', 'ssoGoogleId', 'ssoGoogleEmail', 'ssoGithubId', 'ssoGithubUsername', 'ssoMicrosoftId', 'ssoMicrosoftEmail', 'lastLogin']),
       avatar: inputs.avatarUrl,
     };
 
