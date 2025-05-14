@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     createdAt,
   }));
 
-  const coreSettings = selectors.selectCoreSettings(state);
+  const { demoMode } = selectors.selectCoreSettings(state);
   const { usersSettingsStyle, usersSettingsColumnVisibility, usersSettingsFitScreen, usersSettingsItemsPerPage } = selectors.selectCurrentUserPrefs(state);
 
   const {
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
     userCreateIsSubmitting: isSubmitting,
     userCreateError: error,
     items: users,
-    demoMode: coreSettings.demoMode,
+    demoMode,
     usersSettingsStyle,
     usersSettingsColumnVisibility,
     usersSettingsFitScreen,

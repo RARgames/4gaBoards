@@ -6,13 +6,13 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const coreSettings = selectors.selectCoreSettings(state);
+  const { registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, demoMode } = selectors.selectCoreSettings(state);
 
   return {
-    registrationEnabled: coreSettings.registrationEnabled,
-    localRegistrationEnabled: coreSettings.localRegistrationEnabled,
-    ssoRegistrationEnabled: coreSettings.ssoRegistrationEnabled,
-    demoMode: coreSettings.demoMode,
+    registrationEnabled,
+    localRegistrationEnabled,
+    ssoRegistrationEnabled,
+    demoMode,
   };
 };
 

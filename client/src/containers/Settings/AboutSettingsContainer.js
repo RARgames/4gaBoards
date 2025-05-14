@@ -6,10 +6,10 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const coreSettings = selectors.selectCoreSettings(state);
+  const { demoMode } = selectors.selectCoreSettings(state);
 
   return {
-    demoMode: coreSettings.demoMode,
+    demoMode,
   };
 };
 
