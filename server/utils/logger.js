@@ -14,7 +14,7 @@ const logfile = `${process.cwd()}/logs/4gaBoards.log`;
  * Refer {@link https://github.com/winstonjs/winston#logging here}
  * for more information on Winston log levels.
  */
-const logLevel = 'warn'; // process.env.NODE_ENV === 'production' ? 'info' : 'debug';
+const logLevel = process.env.LOG_LEVEL || 'warn';
 
 const logFormat = winston.format.combine(
   winston.format.uncolorize(),

@@ -9,9 +9,9 @@ services:
     environment:
       POSTGRES_DB: 4gaBoards
       POSTGRES_PASSWORD: notpassword
-      POSTGRES_INITDB_ARGS: "-A scram-sha-256"
+      POSTGRES_INITDB_ARGS: '-A scram-sha-256'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d 4gaBoards"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d 4gaBoards']
       interval: 1s
       timeout: 5s
       retries: 50
@@ -32,6 +32,25 @@ services:
       SECRET_KEY: notsecretkey
       DATABASE_URL: postgresql://postgres:notpassword@db/4gaBoards
       NODE_ENV: production
+      ## Optional
+      ### Google OAuth2.0
+      # GOOGLE_CLIENT_ID= #Client id from the project on: https://console.cloud.google.com/
+      # GOOGLE_CLIENT_SECRET= #Secret from the project: generated in app settings
+
+      ### GitHub OAuth2.0
+      # GITHUB_CLIENT_ID= #Client id from the app after creating on: https://github.com/settings/applications/new or https://github.com/settings/apps/new
+      # GITHUB_CLIENT_SECRET= #Client secret from the app: generated in app settings
+
+      ### Microsoft OIDC
+      # MICROSOFT_CLIENT_ID= #Client id from the app after creating on: https://portal.azure.com/
+      # MICROSOFT_CLIENT_SECRET= #Client secret from the app: generated in app settings
+
+      # CLIENT_URL=http://localhost:3000 #Main boards URL - usually not needed if running production defaults to BASE_URL, if development defaults to http://localhost:3000
+
+      ### Other settings
+      # LOG_LEVEL=warn #Log levels from highest to lowest - error, warn, info, http, verbose, debug, silly
+      # TRUST_PROXY=0
+      # TOKEN_EXPIRES_IN=365 # In days
     depends_on:
       db:
         condition: service_healthy
