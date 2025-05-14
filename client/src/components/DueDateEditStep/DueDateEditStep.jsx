@@ -98,7 +98,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
   );
 
   useEffect(() => {
-    dateField.current.focus();
+    dateField.current.focus({ preventScroll: true });
   }, []);
 
   return (
