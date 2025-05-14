@@ -76,10 +76,7 @@
     }
     white-space: nowrap;
 
-    &:hover,
-    &:focus,
-    &:active {
-      outline: none;
+    &:hover {
       color: var(--textColorGoldHover);
 
       path {
