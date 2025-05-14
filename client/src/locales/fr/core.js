@@ -124,6 +124,8 @@ export default {
       deleteUser_title: "Supprimer l'utilisateur",
       demoMode: 'Mode démo',
       demoModeExplanation: "Mode démo - certaines fonctionnalités affectant les autres utilisateurs sont désactivées! Chaque nouvel utilisateur reçoit des privilèges d'administrateur.",
+      demoModeGithubExtra: 'Votre soutien accélère le développement',
+      demoModeGithubMain: 'Étoile 4ga Boards sur GitHub!',
       description: 'Description',
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',

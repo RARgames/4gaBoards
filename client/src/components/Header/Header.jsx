@@ -1,18 +1,19 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 import logo from '../../assets/images/4gaboardsLogo128w-white.png';
 import Paths from '../../constants/Paths';
 import User from '../User';
 import UserPopup from '../UserPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink } from '../Utils';
 import NotificationsPopup from './NotificationsPopup';
 
 import * as s from './Header.module.scss';
 
-const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, onNotificationDelete, onLogout }) => {
+const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, demoMode, onNotificationDelete, onLogout }) => {
   const [t] = useTranslation();
 
   const getPageHeaderTitle = useCallback(() => {
@@ -52,6 +53,17 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
       <div className={s.title} title={getPageHeaderTitle()}>
         {getPageHeaderTitle()}
       </div>
+      {demoMode && (
+        <div className={classNames(s.demoMode, s.hideOnSmallGithub)}>
+          <ExternalLink href="https://github.com/RARgames/4gaBoards" className={s.demoModeGithub}>
+            <Icon type={IconType.Github} size={IconSize.Size20} />
+            <div className={s.demoModeGithubTexts}>
+              <span className={s.demoModeGithubTextMain}>{t('common.demoModeGithubMain')}</span>
+              <span className={s.demoModeGithubTextExtra}>{t('common.demoModeGithubExtra')}</span>
+            </div>
+          </ExternalLink>
+        </div>
+      )}
       <div className={s.menuRight}>
         <Link to={Paths.SETTINGS} className={s.hideOnSmall}>
           <Button style={ButtonStyle.Header} title={t('common.settings')}>
@@ -91,6 +103,7 @@ Header.propTypes = {
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
+  demoMode: PropTypes.bool.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };

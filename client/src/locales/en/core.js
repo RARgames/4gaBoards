@@ -116,6 +116,8 @@ export default {
       deleteUser_title: 'Delete User',
       demoMode: 'Demo Mode',
       demoModeExplanation: 'Demo Mode - some features affecting other users are disabled! Every new user receives admin privileges.',
+      demoModeGithubExtra: 'Your support speeds up development',
+      demoModeGithubMain: 'Star 4ga Boards on GitHub!',
       description: 'Description',
       descriptionCompactSidebar: 'This option makes the sidebar narrower.',
       descriptionDefaultView: 'Select the default view when opening the board.',

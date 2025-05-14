@@ -30,12 +30,18 @@
 
   .menuRight {
     display: flex;
-    justify-content: flex-end;
+    margin-left: auto;
   }
 
   @media (max-width: 600px) {
     .hideOnSmall {
       display: none;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hideOnSmallGithub {
+      display: none !important;
     }
   }
 
@@ -52,5 +58,48 @@
     text-align: center;
     transform: translate(-8px, -6px);
     width: 16px;
+  }
+
+  .demoMode {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .demoModeGithub {
+    display: inline-flex;
+    align-items: center;
+    color: var(--textColorGold);
+
+    path {
+      fill: var(--textColorGold);
+    }
+    white-space: nowrap;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+      color: var(--textColorGoldHover);
+
+      path {
+        fill: var(--textColorGoldHover);
+      }
+    }
+  }
+
+  .demoModeGithubTexts {
+    display: flex;
+    flex-direction: column;
+    margin-left: 6px;
+    align-items: center;
+  }
+
+  .demoModeGithubTextMain {
+    font-size: 16px;
+  }
+
+  .demoModeGithubTextExtra {
+    font-size: 10px;
   }
 }

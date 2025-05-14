@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
   const currentProject = selectors.selectCurrentProject(state);
   const notifications = selectors.selectNotificationsForCurrentUser(state);
   const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
+  const { demoMode } = selectors.selectCoreSettings(state);
 
   return {
     path,
@@ -21,6 +22,7 @@ const mapStateToProps = (state) => {
     user: currentUser,
     canEditProject: isCurrentUserManager,
     isAdmin: currentUser.isAdmin,
+    demoMode,
   };
 };
 

@@ -118,6 +118,8 @@ export default {
       deleteUser_title: 'Excluir Usuário',
       demoMode: 'Modo Demonstrativo',
       demoModeExplanation: 'Modo Demonstrativo - alguns recursos que afetam outros usuários são desabilitados! Todo novo usuário recebe direitos administrativos.',
+      demoModeGithubExtra: 'Seu apoio acelera o desenvolvimento',
+      demoModeGithubMain: 'Estrela 4ga Boards no GitHub!',
       description: 'Descrição',
       descriptionCompactSidebar: 'Esta opção faz a barra lateral mais compacta.',
       descriptionDefaultView: 'Selecione a visualização padrão ao abrir um painel.',

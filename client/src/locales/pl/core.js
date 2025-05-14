@@ -124,6 +124,8 @@ export default {
       deleteUser_title: 'Usuń użytkownika',
       demoMode: 'Tryb demo',
       demoModeExplanation: 'Tryb demo - niektóre funkcje wpływające na innych użytkowników są niedostępne! Każdy nowy użytkownik otrzymuje prawa administratora.',
+      demoModeGithubExtra: 'Twoje wsparcie przyspiesza rozwój',
+      demoModeGithubMain: 'Zostaw gwiazdkę 4ga Boards na GitHub!',
       description: 'Opis',
       descriptionCompactSidebar: 'Zmniejsza panel boczny do minimalnej szerokości.',
       descriptionDefaultView: 'Wybierz domyślny widok tablicy.',
