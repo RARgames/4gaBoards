@@ -139,9 +139,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   }, []);
 
   useEffect(() => {
-    nameField.current.focus({
-      preventScroll: true,
-    });
+    nameField.current.focus({ preventScroll: true });
   }, []);
 
   useDidUpdate(() => {

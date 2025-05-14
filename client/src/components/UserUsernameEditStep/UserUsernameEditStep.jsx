@@ -88,9 +88,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
   }, [username, usePasswordConfirmation, onUpdate, onClose, data]);
 
   useEffect(() => {
-    usernameField.current.focus({
-      preventScroll: true,
-    });
+    usernameField.current.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {

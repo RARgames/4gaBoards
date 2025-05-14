@@ -105,9 +105,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
   }, [onCreate, data]);
 
   useEffect(() => {
-    emailField.current.focus({
-      preventScroll: true,
-    });
+    emailField.current.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {

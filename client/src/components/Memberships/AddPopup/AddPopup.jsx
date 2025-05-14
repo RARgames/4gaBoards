@@ -99,9 +99,7 @@ const AddStep = React.memo(
     );
 
     useEffect(() => {
-      searchField.current.focus({
-        preventScroll: true,
-      });
+      searchField.current.focus({ preventScroll: true });
     }, []);
 
     if (step) {

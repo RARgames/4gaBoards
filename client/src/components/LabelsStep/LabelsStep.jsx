@@ -95,9 +95,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
   );
 
   useEffect(() => {
-    searchField.current?.focus({
-      preventScroll: true,
-    });
+    searchField.current?.focus({ preventScroll: true });
   }, []);
 
   if (step) {
