@@ -51,6 +51,7 @@ module.exports = {
       ssoUrls: sails.config.custom.ssoUrls,
       ssoAvailable: sails.config.custom.ssoAvailable,
       demoMode: sails.config.custom.demoMode,
+      projectCreationAll: sails.config.custom.projectCreationAll,
     };
 
     const users = await sails.helpers.users.getMany();

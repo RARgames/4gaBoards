@@ -15,7 +15,7 @@ import * as bs from '../../backgrounds.module.scss';
 import * as gs from '../../global.module.scss';
 import * as s from './Projects.module.scss';
 
-const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultData, isSubmitting, onCreate }) => {
+const Projects = React.memo(({ projects, filteredProjects, isFiltered, canAdd, defaultData, isSubmitting, onCreate }) => {
   const [t] = useTranslation();
   const headerButtonGroupRef = useRef(null);
   const headerButtonGroupOffsetRef = useRef(null);
@@ -46,14 +46,16 @@ const Projects = React.memo(({ projects, filteredProjects, isFiltered, defaultDa
           <span>{getProjectsText()}</span> <span className={s.headerDetails}>{getBoardsText()}</span>
         </div>
         <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
-          <div className={s.headerButton}>
-            <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate} offset={16} position="bottom">
-              <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={s.addButton}>
-                <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
-                {t('common.addProject')}
-              </Button>
-            </ProjectAddPopup>
-          </div>
+          {canAdd && (
+            <div className={s.headerButton}>
+              <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate} offset={16} position="bottom">
+                <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={s.addButton}>
+                  <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
+                  {t('common.addProject')}
+                </Button>
+              </ProjectAddPopup>
+            </div>
+          )}
         </div>
       </div>
       <div className={classNames(s.projectsWrapper, gs.scrollableY)}>
@@ -84,6 +86,7 @@ Projects.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFiltered: PropTypes.bool.isRequired,
+  canAdd: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,

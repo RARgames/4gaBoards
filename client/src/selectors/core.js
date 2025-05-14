@@ -31,6 +31,7 @@ export const selectCoreSettings = createSelector(orm, ({ Core }) => {
       ssoUrls,
       ssoAvailable,
       demoMode: false,
+      projectCreationAll: false,
     };
     return coreModel;
   }

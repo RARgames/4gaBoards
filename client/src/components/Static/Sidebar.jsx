@@ -31,6 +31,7 @@ const Sidebar = React.memo(
     currProjectId,
     currBoardId,
     isAdmin,
+    canAddProject,
     defaultData,
     isSubmitting,
     filterQuery,
@@ -299,7 +300,7 @@ const Sidebar = React.memo(
             {!settingsOnly && <div>{projectsNode}</div>}
           </div>
           <div>
-            {!settingsOnly && (
+            {!settingsOnly && canAddProject && (
               <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onProjectCreate} offset={2} position="right">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addProject')} className={s.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={s.footerButtonIcon} />
@@ -341,6 +342,7 @@ Sidebar.propTypes = {
   currProjectId: PropTypes.string,
   currBoardId: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
+  canAddProject: PropTypes.bool.isRequired,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
   filterQuery: PropTypes.string,

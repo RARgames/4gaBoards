@@ -12,12 +12,6 @@ const path = require('path');
 const sails = require('sails');
 
 module.exports.custom = {
-  /**
-   *
-   * Any other custom config this Sails app should use during development.
-   *
-   */
-
   baseUrl: process.env.BASE_URL,
   clientUrl: process.env.CLIENT_URL || (process.env.NODE_ENV === 'production' ? process.env.BASE_URL : 'http://localhost:3000'),
 
@@ -56,6 +50,8 @@ module.exports.custom = {
   },
 
   demoMode: process.env.DEMO_MODE === 'true',
+
+  projectCreationAll: process.env.PROJECT_CREATION_ALL !== 'false',
 
   positionGap: 65535,
   requiredPasswordStrength: 2,

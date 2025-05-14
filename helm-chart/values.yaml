@@ -70,6 +70,7 @@ env:
     # GITHUB_CLIENT_SECRET: githubClientSecret
     # MICROSOFT_CLIENT_ID: microsoftClientId
     # MICROSOFT_CLIENT_SECRET: microsoftClientSecret
+    # PROJECT_CREATION_ALL=true
     # LOG_LEVEL: warn
     # TRUST_PROXY: 0
     # TOKEN_EXPIRES_IN: 365
