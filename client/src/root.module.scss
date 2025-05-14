@@ -261,6 +261,10 @@
       }
     }
 
+    .react-datepicker__day--today {
+      color: var(--textColorYellow);
+    }
+
     //Photoswipe
     .pswp .pswp__img--placeholder {
       display: none !important;
