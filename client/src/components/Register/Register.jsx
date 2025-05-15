@@ -100,11 +100,13 @@ const Register = React.memo(
 
     const handlePolicyToggleChange = useCallback(
       (e) => {
-        setIsCheckboxError(false);
-        onMessageDismiss();
+        if (isCheckboxError) {
+          setIsCheckboxError(false);
+          onMessageDismiss();
+        }
         setData({ ...data, policy: e.target.checked });
       },
-      [data, onMessageDismiss, setData],
+      [data, isCheckboxError, onMessageDismiss, setData],
     );
 
     const handleSubmit = useCallback(() => {
@@ -151,17 +153,21 @@ const Register = React.memo(
     }, [isSubmitting, wasSubmitting, error, setData, focusPasswordField]);
 
     const handleEmailKeyDown = useCallback(() => {
-      setIsEmailError(false);
-      onMessageDismiss();
-    }, [onMessageDismiss]);
+      if (isEmailError) {
+        setIsEmailError(false);
+        onMessageDismiss();
+      }
+    }, [isEmailError, onMessageDismiss]);
 
     const handlePasswordKeyDown = useCallback(() => {
-      setIsPasswordError(false);
-      onMessageDismiss();
-    }, [onMessageDismiss]);
+      if (isPasswordError) {
+        setIsPasswordError(false);
+        onMessageDismiss();
+      }
+    }, [isPasswordError, onMessageDismiss]);
 
     useDidUpdate(() => {
-      passwordField.current.focus();
+      passwordField.current?.focus();
     }, [focusPasswordFieldState]);
 
     return (

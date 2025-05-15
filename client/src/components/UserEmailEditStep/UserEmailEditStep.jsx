@@ -88,7 +88,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
   }, [email, usePasswordConfirmation, onUpdate, onClose, data]);
 
   useEffect(() => {
-    emailField.current.focus({ preventScroll: true });
+    emailField.current?.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
@@ -118,19 +118,22 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
   }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
 
   const handleEmailKeyDown = useCallback(() => {
-    setIsEmailError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isEmailError) {
+      setIsEmailError(false);
+      onMessageDismiss();
+    }
+  }, [isEmailError, onMessageDismiss]);
 
   const handlePasswordKeyDown = useCallback(() => {
-    setIsPasswordError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isPasswordError) {
+      setIsPasswordError(false);
+      onMessageDismiss();
+    }
+  }, [isPasswordError, onMessageDismiss]);
 
   useEffect(() => {
     onMessageDismiss();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onMessageDismiss]);
 
   useDidUpdate(() => {
     if (usePasswordConfirmation) {

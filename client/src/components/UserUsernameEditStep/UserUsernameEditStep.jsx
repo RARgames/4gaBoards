@@ -88,7 +88,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
   }, [username, usePasswordConfirmation, onUpdate, onClose, data]);
 
   useEffect(() => {
-    usernameField.current.focus({ preventScroll: true });
+    usernameField.current?.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
@@ -118,14 +118,18 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
   }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
 
   const handleUsernameKeyDown = useCallback(() => {
-    setIsUsernameError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isUsernameError) {
+      setIsUsernameError(false);
+      onMessageDismiss();
+    }
+  }, [isUsernameError, onMessageDismiss]);
 
   const handlePasswordKeyDown = useCallback(() => {
-    setIsPasswordError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isPasswordError) {
+      setIsPasswordError(false);
+      onMessageDismiss();
+    }
+  }, [isPasswordError, onMessageDismiss]);
 
   useDidUpdate(() => {
     if (usePasswordConfirmation) {
@@ -135,8 +139,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
 
   useEffect(() => {
     onMessageDismiss();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onMessageDismiss]);
 
   return (
     <>

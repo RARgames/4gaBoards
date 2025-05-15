@@ -104,7 +104,7 @@ const Login = React.memo(
     }, [onAuthenticate, data]);
 
     useEffect(() => {
-      emailOrUsernameField.current.focus();
+      emailOrUsernameField.current?.focus();
     }, []);
 
     useEffect(() => {
@@ -121,17 +121,21 @@ const Login = React.memo(
     }, [isSubmitting, wasSubmitting, error, setData, focusPasswordField]);
 
     const handleUsernameKeyDown = useCallback(() => {
-      setIsUsernameError(false);
-      onMessageDismiss();
-    }, [onMessageDismiss]);
+      if (isUsernameError) {
+        setIsUsernameError(false);
+        onMessageDismiss();
+      }
+    }, [isUsernameError, onMessageDismiss]);
 
     const handlePasswordKeyDown = useCallback(() => {
-      setIsPasswordError(false);
-      onMessageDismiss();
-    }, [onMessageDismiss]);
+      if (isPasswordError) {
+        setIsPasswordError(false);
+        onMessageDismiss();
+      }
+    }, [isPasswordError, onMessageDismiss]);
 
     useDidUpdate(() => {
-      passwordField.current.focus();
+      passwordField.current?.focus();
     }, [focusPasswordFieldState]);
 
     return (

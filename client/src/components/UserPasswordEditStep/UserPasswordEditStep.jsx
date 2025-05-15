@@ -74,7 +74,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
   }, [usePasswordConfirmation, onUpdate, data]);
 
   useEffect(() => {
-    passwordField.current.focus({ preventScroll: true });
+    passwordField.current?.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
@@ -96,14 +96,18 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
   }, [isSubmitting, wasSubmitting, error, onClose, setData, focusCurrentPasswordField]);
 
   const handlePasswordKeyDown = useCallback(() => {
-    setIsPasswordError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isPasswordError) {
+      setIsPasswordError(false);
+      onMessageDismiss();
+    }
+  }, [isPasswordError, onMessageDismiss]);
 
   const handleNewPasswordKeyDown = useCallback(() => {
-    setIsNewPasswordError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isNewPasswordError) {
+      setIsNewPasswordError(false);
+      onMessageDismiss();
+    }
+  }, [isNewPasswordError, onMessageDismiss]);
 
   useDidUpdate(() => {
     if (usePasswordConfirmation) {
@@ -113,8 +117,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
 
   useEffect(() => {
     onMessageDismiss();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onMessageDismiss]);
 
   return (
     <>

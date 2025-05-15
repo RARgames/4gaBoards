@@ -53,12 +53,6 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     password: '',
     name: '',
     username: '',
-    descriptionMode: 'edit',
-    commentMode: 'edit',
-    descriptionShown: true,
-    tasksShown: true,
-    attachmentsShown: true,
-    commentsShown: true,
     ...defaultData,
   }));
 
@@ -105,7 +99,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
   }, [onCreate, data]);
 
   useEffect(() => {
-    emailField.current.focus({ preventScroll: true });
+    emailField.current?.focus({ preventScroll: true });
   }, []);
 
   useEffect(() => {
@@ -136,29 +130,36 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
   }, [isSubmitting, wasSubmitting, error, onClose]);
 
   const handleEmailKeyDown = useCallback(() => {
-    setIsEmailError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isEmailError) {
+      setIsEmailError(false);
+      onMessageDismiss();
+    }
+  }, [isEmailError, onMessageDismiss]);
 
   const handlePasswordKeyDown = useCallback(() => {
-    setIsPasswordError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isPasswordError) {
+      setIsPasswordError(false);
+      onMessageDismiss();
+    }
+  }, [isPasswordError, onMessageDismiss]);
 
   const handleNameKeyDown = useCallback(() => {
-    setIsNameError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isNameError) {
+      setIsNameError(false);
+      onMessageDismiss();
+    }
+  }, [isNameError, onMessageDismiss]);
 
   const handleUsernameKeyDown = useCallback(() => {
-    setIsUsernameError(false);
-    onMessageDismiss();
-  }, [onMessageDismiss]);
+    if (isUsernameError) {
+      setIsUsernameError(false);
+      onMessageDismiss();
+    }
+  }, [isUsernameError, onMessageDismiss]);
 
   useEffect(() => {
     onMessageDismiss();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onMessageDismiss]);
 
   return (
     <>
