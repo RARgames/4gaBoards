@@ -18,6 +18,26 @@ const createMessage = (error) => {
     return error;
   }
   switch (error.message) {
+    case 'registrationDisabled':
+      return {
+        type: 'error',
+        content: 'common.registrationDisabled',
+      };
+    case 'localRegistrationDisabled':
+      return {
+        type: 'error',
+        content: 'common.localRegistrationDisabled',
+      };
+    case 'ssoRegistrationDisabled':
+      return {
+        type: 'error',
+        content: 'common.ssoRegistrationDisabled',
+      };
+    case 'coreNotFound':
+      return {
+        type: 'error',
+        content: 'common.coreNotFound',
+      };
     case 'Failed to fetch':
       return {
         type: 'warning',

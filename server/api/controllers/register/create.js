@@ -10,6 +10,15 @@ const Errors = {
   POLICY_NOT_ACCEPTED: {
     policyNotAccepted: 'Policy not accepted',
   },
+  CORE_NOT_FOUND: {
+    coreNotFound: 'coreNotFound',
+  },
+  REGISTRATION_DISABLED: {
+    registrationDisabled: 'registrationDisabled',
+  },
+  LOCAL_REGISTRATION_DISABLED: {
+    localRegistrationDisabled: 'localRegistrationDisabled',
+  },
 };
 
 module.exports = {
@@ -43,6 +52,15 @@ module.exports = {
     policyNotAccepted: {
       responseType: 'conflict',
     },
+    coreNotFound: {
+      responseType: 'notFound',
+    },
+    registrationDisabled: {
+      responseType: 'forbidden',
+    },
+    localRegistrationDisabled: {
+      responseType: 'forbidden',
+    },
   },
 
   async fn(inputs) {
@@ -53,6 +71,17 @@ module.exports = {
     }
     if (!values.policy) {
       throw Errors.POLICY_NOT_ACCEPTED;
+    }
+
+    const core = await Core.findOne({ id: 0 });
+    if (!core) {
+      throw Errors.CORE_NOT_FOUND;
+    }
+    if (!core.registrationEnabled) {
+      throw Errors.REGISTRATION_DISABLED;
+    }
+    if (!core.localRegistrationEnabled) {
+      throw Errors.LOCAL_REGISTRATION_DISABLED;
     }
 
     const user = await sails.helpers.users.createOne.with({ values, request: this.req }).intercept('emailAlreadyInUse', () => Errors.EMAIL_ALREADY_IN_USE);
