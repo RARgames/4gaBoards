@@ -44,6 +44,7 @@ import { ReactComponent as Show } from '../../../assets/icons/Show.svg';
 import { ReactComponent as Sliders } from '../../../assets/icons/Sliders.svg';
 import { ReactComponent as SortArrowUp } from '../../../assets/icons/SortArrowUp.svg';
 import { ReactComponent as Star } from '../../../assets/icons/Star.svg';
+import { ReactComponent as StarHalf } from '../../../assets/icons/StarHalf.svg';
 import { ReactComponent as Switch } from '../../../assets/icons/Switch.svg';
 import { ReactComponent as Trash } from '../../../assets/icons/Trash.svg';
 import { ReactComponent as Trello } from '../../../assets/icons/Trello.svg';
@@ -100,6 +101,7 @@ const IconType = {
   Sliders,
   SortArrowUp,
   Star,
+  StarHalf,
   Switch,
   Trash,
   Trello,

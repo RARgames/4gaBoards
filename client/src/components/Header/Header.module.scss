@@ -45,6 +45,12 @@
     }
   }
 
+  @media (max-width: 1000px) {
+    .hideOnSmallFeedback {
+      display: none !important;
+    }
+  }
+
   .notification {
     position: absolute;
     background: var(--notificationRed);
@@ -66,7 +72,7 @@
     margin: 0 auto;
   }
 
-  .demoModeGithub {
+  .demoModeNotice {
     display: inline-flex;
     align-items: center;
     color: var(--textColorGold);
@@ -85,18 +91,25 @@
     }
   }
 
-  .demoModeGithubTexts {
+  .demoModeNoticeTexts {
     display: flex;
     flex-direction: column;
     margin-left: 6px;
     align-items: center;
   }
 
-  .demoModeGithubTextMain {
+  .demoModeNoticeTextMain {
     font-size: 16px;
   }
 
-  .demoModeGithubTextExtra {
+  .demoModeNoticeTextExtra {
     font-size: 10px;
+  }
+
+  .demoModeNoticeSeparator {
+    width: 1px;
+    height: 30px;
+    background: var(--textColor4);
+    margin: 0 10px;
   }
 }

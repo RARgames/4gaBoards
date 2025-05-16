@@ -205,6 +205,8 @@ export default {
       expandList: 'Pokaż listę',
       exportBoard_title: 'Eksportuj tablicę',
       exportBoardExplanation: 'Pobieranie rozpocznie się automatycznie, gdy eksport będzie gotowy.',
+      feedbackMain: 'Chętnie poznamy Twoją opinię!',
+      feedbackExtra: 'To dla nas bardzo ważne',
       fetching: 'Pobieranie...',
       filterBoards: 'Filtruj tablice...',
       filterByLabels_title: 'Filtruj wg etykiet',

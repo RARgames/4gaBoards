@@ -54,12 +54,20 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
         {getPageHeaderTitle()}
       </div>
       {demoMode && (
-        <div className={classNames(s.demoMode, s.hideOnSmallGithub)}>
-          <ExternalLink href="https://github.com/RARgames/4gaBoards" className={s.demoModeGithub}>
+        <div className={s.demoMode}>
+          <ExternalLink href="https://github.com/RARgames/4gaBoards" className={classNames(s.demoModeNotice, s.hideOnSmallGithub)}>
             <Icon type={IconType.Github} size={IconSize.Size20} />
-            <div className={s.demoModeGithubTexts}>
-              <span className={s.demoModeGithubTextMain}>{t('common.demoModeGithubMain')}</span>
-              <span className={s.demoModeGithubTextExtra}>{t('common.demoModeGithubExtra')}</span>
+            <div className={s.demoModeNoticeTexts}>
+              <span className={s.demoModeNoticeTextMain}>{t('common.demoModeGithubMain')}</span>
+              <span className={s.demoModeNoticeTextExtra}>{t('common.demoModeGithubExtra')}</span>
+            </div>
+          </ExternalLink>
+          <div className={classNames(s.demoModeNoticeSeparator, s.hideOnSmallFeedback)} />
+          <ExternalLink href="https://forms.gle/FqjR7uhBp9Gn2fu26" className={classNames(s.demoModeNotice, s.hideOnSmallFeedback)}>
+            <Icon type={IconType.StarHalf} size={IconSize.Size20} />
+            <div className={s.demoModeNoticeTexts}>
+              <span className={s.demoModeNoticeTextMain}>{t('common.feedbackMain')}</span>
+              <span className={s.demoModeNoticeTextExtra}>{t('common.feedbackExtra')}</span>
             </div>
           </ExternalLink>
         </div>

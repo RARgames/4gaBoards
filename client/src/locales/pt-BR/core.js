@@ -196,6 +196,8 @@ export default {
       expandList: 'Expandir Lista',
       exportBoard_title: 'Exportar Painel',
       exportBoardExplanation: 'Seu download terá início automaticamente, quando a exportação estiver pronta.',
+      feedbackMain: 'Adoraríamos ouvir seu feedback!',
+      feedbackExtra: 'Isso significa muito para nós',
       fetching: 'Carregando...',
       filterBoards: 'Filtrar boards...',
       filterByLabels_title: 'Filtrar Por Rótulos',

@@ -194,6 +194,8 @@ export default {
       expandList: 'Expand List',
       exportBoard_title: 'Export Board',
       exportBoardExplanation: 'Your download will start automatically, when the export is ready.',
+      feedbackExtra: 'It means a lot for us',
+      feedbackMain: "We'd love to hear your feedback!",
       fetching: 'Fetching...',
       filterBoards: 'Filter boards...',
       filterByLabels_title: 'Filter By Labels',

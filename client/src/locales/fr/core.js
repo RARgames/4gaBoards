@@ -207,6 +207,8 @@ export default {
       expandList: 'Développer la liste',
       exportBoard_title: 'Exporter le tableau',
       exportBoardExplanation: "Votre téléchargement démarrera automatiquement lorsque l'exportation sera prête.",
+      feedbackMain: "Nous serions ravis d'avoir votre avis!",
+      feedbackExtra: 'Cela compte beaucoup pour nous',
       fetching: 'Récupération...',
       filterBoards: 'Filtrer les tableaux',
       filterByLabels_title: 'Filtrer par libellés',
