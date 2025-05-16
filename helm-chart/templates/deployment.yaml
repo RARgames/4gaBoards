@@ -54,6 +54,22 @@ spec:
             value: {{ .Values.env.required.SECRET_KEY }}
           - name: CLIENT_URL
             value: {{ .Values.env.optional.CLIENT_URL }}
+          - name: DEFAULT_ADMIN_USERNAME
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_USERNAME }}
+          - name: DEFAULT_ADMIN_EMAIL
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_EMAIL }}
+          - name: DEFAULT_ADMIN_NAME
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_NAME }}
+          - name: DEFAULT_ADMIN_PASSWORD
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_PASSWORD }}
+          - name: DEFAULT_PROJECT_CREATION_ALL
+            value: {{ .Values.env.optional.DEFAULT_PROJECT_CREATION_ALL }}
+          - name: DEFAULT_REGISTRATION_ENABLED
+            value: {{ .Values.env.optional.DEFAULT_REGISTRATION_ENABLED }}
+          - name: DEFAULT_LOCAL_REGISTRATION_ENABLED
+            value: {{ .Values.env.optional.DEFAULT_LOCAL_REGISTRATION_ENABLED }}
+          - name: DEFAULT_SSO_REGISTRATION_ENABLED
+            value: {{ .Values.env.optional.DEFAULT_SSO_REGISTRATION_ENABLED }}
           - name: GOOGLE_CLIENT_ID
             value: {{ .Values.env.optional.GOOGLE_CLIENT_ID }}
           - name: GOOGLE_CLIENT_SECRET
@@ -66,6 +82,14 @@ spec:
             value: {{ .Values.env.optional.MICROSOFT_CLIENT_ID }}
           - name: MICROSOFT_CLIENT_SECRET
             value: {{ .Values.env.optional.MICROSOFT_CLIENT_SECRET }}
+          - name: DEMO_MODE
+            value: {{ .Values.env.optional.DEMO_MODE }}
+          - name: LOG_LEVEL
+            value: {{ .Values.env.optional.LOG_LEVEL }}
+          - name: TRUST_PROXY
+            value: {{ .Values.env.optional.TRUST_PROXY }}
+          - name: TOKEN_EXPIRES_IN
+            value: {{ .Values.env.optional.TOKEN_EXPIRES_IN }}
           - name: DATABASE_URL
             {{- if .Values.postgresql.enabled }}
             value: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc/{{ .Values.postgresql.auth.database }}"

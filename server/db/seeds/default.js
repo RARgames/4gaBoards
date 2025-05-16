@@ -2,13 +2,17 @@ const bcrypt = require('bcrypt');
 
 exports.seed = async (knex) => {
   const date = new Date().toUTCString();
+  const adminUsername = process.env.DEFAULT_ADMIN_USERNAME || 'demo';
+  const adminEmail = process.env.DEFAULT_ADMIN_EMAIL || 'demo@demo.demo';
+  const adminName = process.env.DEFAULT_ADMIN_NAME || 'Demo Demo';
+  const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'demo';
 
   await knex('user_account').insert({
-    email: 'demo@demo.demo',
-    password: bcrypt.hashSync('demo', 10),
+    email: adminEmail.toLowerCase(),
+    password: bcrypt.hashSync(adminPassword, 10),
     isAdmin: true,
-    name: 'Demo Demo',
-    username: 'demo',
+    name: adminName,
+    username: adminUsername.toLowerCase(),
     createdAt: date,
     updatedAt: date,
   });
