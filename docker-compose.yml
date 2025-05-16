@@ -32,27 +32,33 @@ services:
       SECRET_KEY: notsecretkey
       DATABASE_URL: postgresql://postgres:notpassword@db/4gaBoards
       NODE_ENV: production
+
       ## Optional
+      ### Default settings (applied only on first run)
+      # DEFAULT_PROJECT_CREATION_ALL: true #Defaults to true, false = only admins can create projects
+      # DEFAULT_REGISTRATION_ENABLED: true #Defaults to true, false = registration disabled
+      # DEFAULT_LOCAL_REGISTRATION_ENABLED: true #Defaults to true, false = local registration disabled
+      # DEFAULT_SSO_REGISTRATION_ENABLED: true #Defaults to true, false = SSO registration disabled
+
       ### Google OAuth2.0
-      # GOOGLE_CLIENT_ID= #Client id from the project on: https://console.cloud.google.com/
-      # GOOGLE_CLIENT_SECRET= #Secret from the project: generated in app settings
+      # GOOGLE_CLIENT_ID: googleClientId #Client id from the project on: https://console.cloud.google.com/
+      # GOOGLE_CLIENT_SECRET: googleClientSecret #Secret from the project: generated in app settings
 
       ### GitHub OAuth2.0
-      # GITHUB_CLIENT_ID= #Client id from the app after creating on: https://github.com/settings/applications/new or https://github.com/settings/apps/new
-      # GITHUB_CLIENT_SECRET= #Client secret from the app: generated in app settings
+      # GITHUB_CLIENT_ID: githubClientId #Client id from the app after creating on: https://github.com/settings/applications/new or https://github.com/settings/apps/new
+      # GITHUB_CLIENT_SECRET: githubClientSecret #Client secret from the app: generated in app settings
 
       ### Microsoft OIDC
-      # MICROSOFT_CLIENT_ID= #Client id from the app after creating on: https://portal.azure.com/
-      # MICROSOFT_CLIENT_SECRET= #Client secret from the app: generated in app settings
-
-      # CLIENT_URL=http://localhost:3000 #Main boards URL - usually not needed if running production defaults to BASE_URL, if development defaults to http://localhost:3000
+      # MICROSOFT_CLIENT_ID: microsoftClientId #Client id from the app after creating on: https://portal.azure.com/
+      # MICROSOFT_CLIENT_SECRET: microsoftClientSecret #Client secret from the app: generated in app settings
 
       ### Other settings
-      # DEMO_MODE=false # Default to false, true = demo mode enabled
-      # PROJECT_CREATION_ALL=true #Defaults to true, false = only admins can create projects
-      # LOG_LEVEL=warn #Log levels from highest to lowest - error, warn, info, http, verbose, debug, silly
-      # TRUST_PROXY=0
-      # TOKEN_EXPIRES_IN=365 # In days
+      # DEMO_MODE: false #Defaults to false, true = demo mode enabled
+      # LOG_LEVEL: warn #Log levels from highest to lowest - error, warn, info, http, verbose, debug, silly
+      # TRUST_PROXY: 0
+      # TOKEN_EXPIRES_IN: 365 #In days
+      # CLIENT_URL=http://localhost:3000 #Main boards URL - usually not needed if running production defaults to BASE_URL, if development defaults to http://localhost:3000
+
     depends_on:
       db:
         condition: service_healthy

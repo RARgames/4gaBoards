@@ -2,6 +2,9 @@ const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
   },
+  CORE_NOT_FOUND: {
+    coreNotFound: 'coreNotFound',
+  },
 };
 
 module.exports = {
@@ -16,12 +19,19 @@ module.exports = {
     notEnoughRights: {
       responseType: 'forbidden',
     },
+    coreNotFound: {
+      responseType: 'notFound',
+    },
   },
 
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    if (!currentUser.isAdmin && !sails.config.custom.projectCreationAll) {
+    const core = await Core.findOne({ id: 0 });
+    if (!core) {
+      throw Errors.CORE_NOT_FOUND;
+    }
+    if (!currentUser.isAdmin && !core.projectCreationAllEnabled) {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 

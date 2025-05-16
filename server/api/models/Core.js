@@ -26,6 +26,11 @@ module.exports = {
       defaultsTo: true,
       columnName: 'sso_registration_enabled',
     },
+    projectCreationAllEnabled: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'project_creation_all_enabled',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

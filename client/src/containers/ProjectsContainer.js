@@ -8,7 +8,7 @@ import selectors from '../selectors';
 const mapStateToProps = (state) => {
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const isFiltered = selectors.selectIsFilteredForCurrentUser(state);
-  const { projectCreationAll } = selectors.selectCoreSettings(state);
+  const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
   const { isAdmin } = selectors.selectCurrentUser(state);
   const {
     ui: {
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     projects,
     filteredProjects,
     isFiltered,
-    canAdd: projectCreationAll || isAdmin,
+    canAdd: projectCreationAllEnabled || isAdmin,
     defaultData,
     isSubmitting,
   };

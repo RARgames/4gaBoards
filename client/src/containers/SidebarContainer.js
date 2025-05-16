@@ -8,7 +8,7 @@ import selectors from '../selectors';
 const mapStateToProps = (state) => {
   const path = selectors.selectPathConstant(state);
   const { isAdmin } = selectors.selectCurrentUser(state);
-  const { projectCreationAll } = selectors.selectCoreSettings(state);
+  const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
   const { sidebarCompact } = selectors.selectCurrentUserPrefs(state);
   const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     currProjectId: projectId,
     currBoardId: boardId,
     isAdmin,
-    canAddProject: projectCreationAll || isAdmin,
+    canAddProject: projectCreationAllEnabled || isAdmin,
     defaultData,
     isSubmitting,
     filterQuery,

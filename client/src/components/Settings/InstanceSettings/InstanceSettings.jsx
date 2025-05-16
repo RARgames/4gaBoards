@@ -10,7 +10,7 @@ import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './InstanceSettings.module.scss';
 
-const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, demoMode, onCoreSettingsUpdate }) => {
+const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, demoMode, onCoreSettingsUpdate }) => {
   const [t] = useTranslation();
   const tableRef = useRef(null);
 
@@ -31,6 +31,12 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
       ssoRegistrationEnabled: !ssoRegistrationEnabled,
     });
   }, [onCoreSettingsUpdate, ssoRegistrationEnabled]);
+
+  const handleProjectCreationAllEnabledChange = useCallback(() => {
+    onCoreSettingsUpdate({
+      projectCreationAllEnabled: !projectCreationAllEnabled,
+    });
+  }, [onCoreSettingsUpdate, projectCreationAllEnabled]);
 
   const data = useMemo(
     () => [
@@ -58,8 +64,27 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
         currentValue: registrationEnabled && ssoRegistrationEnabled ? t('common.enabled') : t('common.disabled'),
         description: t('common.descriptionSsoRegistration'),
       },
+      {
+        id: 'enableProjectCreationAll',
+        instanceSettings: t('common.enableProjectCreationAll'),
+        modifySettings: projectCreationAllEnabled,
+        modifySettingsProps: { onChange: handleProjectCreationAllEnabledChange, disabled: demoMode, title: t('common.toggleProjectCreationAll') },
+        currentValue: projectCreationAllEnabled ? t('common.enabled') : t('common.disabled'),
+        description: t('common.descriptionProjectCreationAll'),
+      },
     ],
-    [demoMode, handleLocalRegistrationEnabledChange, handleRegistrationEnabledChange, handleSsoRegistrationEnabledChange, localRegistrationEnabled, registrationEnabled, ssoRegistrationEnabled, t],
+    [
+      demoMode,
+      handleLocalRegistrationEnabledChange,
+      handleProjectCreationAllEnabledChange,
+      handleRegistrationEnabledChange,
+      handleSsoRegistrationEnabledChange,
+      localRegistrationEnabled,
+      projectCreationAllEnabled,
+      registrationEnabled,
+      ssoRegistrationEnabled,
+      t,
+    ],
   );
 
   const table = useReactTable({
@@ -179,6 +204,7 @@ InstanceSettings.propTypes = {
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  projectCreationAllEnabled: PropTypes.bool.isRequired,
   demoMode: PropTypes.bool.isRequired,
   onCoreSettingsUpdate: PropTypes.func.isRequired,
 };

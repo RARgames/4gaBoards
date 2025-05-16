@@ -64,17 +64,30 @@ env:
     BASE_URL: http://localhost:80
   optional:
     CLIENT_URL: http://localhost:80
-    # GOOGLE_CLIENT_ID: googleClientId
-    # GOOGLE_CLIENT_SECRET: googleClientSecret
-    # GITHUB_CLIENT_ID: githubClientId
-    # GITHUB_CLIENT_SECRET: githubClientSecret
-    # MICROSOFT_CLIENT_ID: microsoftClientId
-    # MICROSOFT_CLIENT_SECRET: microsoftClientSecret
-    # DEMO_MODE=false
-    # PROJECT_CREATION_ALL=true
-    # LOG_LEVEL: warn
+
+    ### Default settings (applied only on first run)
+    # DEFAULT_PROJECT_CREATION_ALL: true #Defaults to true, false = only admins can create projects
+    # DEFAULT_REGISTRATION_ENABLED: true #Defaults to true, false = registration disabled
+    # DEFAULT_LOCAL_REGISTRATION_ENABLED: true #Defaults to true, false = local registration disabled
+    # DEFAULT_SSO_REGISTRATION_ENABLED: true #Defaults to true, false = SSO registration disabled
+
+    ### Google OAuth2.0
+    # GOOGLE_CLIENT_ID: googleClientId #Client id from the project on: https://console.cloud.google.com/
+    # GOOGLE_CLIENT_SECRET: googleClientSecret #Secret from the project: generated in app settings
+
+    ### GitHub OAuth2.0
+    # GITHUB_CLIENT_ID: githubClientId #Client id from the app after creating on: https://github.com/settings/applications/new or https://github.com/settings/apps/new
+    # GITHUB_CLIENT_SECRET: githubClientSecret #Client secret from the app: generated in app settings
+
+    ### Microsoft OIDC
+    # MICROSOFT_CLIENT_ID: microsoftClientId #Client id from the app after creating on: https://portal.azure.com/
+    # MICROSOFT_CLIENT_SECRET: microsoftClientSecret #Client secret from the app: generated in app settings
+
+    ### Other settings
+    # DEMO_MODE: false
+    # LOG_LEVEL: warn #Log levels from highest to lowest - error, warn, info, http, verbose, debug, silly
     # TRUST_PROXY: 0
-    # TOKEN_EXPIRES_IN: 365
+    # TOKEN_EXPIRES_IN: 365 #In days
 
 pv:
   storageClass: standard

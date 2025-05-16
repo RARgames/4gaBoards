@@ -131,6 +131,7 @@ export default {
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
       descriptionListViewStyle: 'Sélectionnez le style de la vue de liste.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
+      descriptionProjectCreationAll: 'Activez ou désactivez la création de projets pour tous les utilisateurs. Si vous la désactivez, seuls les administrateurs pourront créer de nouveaux projets.',
       descriptionSLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
       descriptionSubscribeToMyOwnCards: 'Être abonné à mes propres cartes',
@@ -187,6 +188,7 @@ export default {
       empty: 'Vide',
       enabled: 'Activé',
       enableLocalRegistration: "Enregistrement local de l'utilisateur",
+      enableProjectCreationAll: 'Création de projet pour tous les utilisateurs',
       enableRegistration: 'Enregistrement des utilisateurs',
       enableSsoRegistration: "Enregistrement SSO de l'utilisateur",
       enterAttachmentName: 'Entrez le nom de la pièce jointe...',
@@ -207,8 +209,8 @@ export default {
       expandList: 'Développer la liste',
       exportBoard_title: 'Exporter le tableau',
       exportBoardExplanation: "Votre téléchargement démarrera automatiquement lorsque l'exportation sera prête.",
-      feedbackMain: "Nous serions ravis d'avoir votre avis!",
       feedbackExtra: 'Cela compte beaucoup pour nous',
+      feedbackMain: "Nous serions ravis d'avoir votre avis!",
       fetching: 'Récupération...',
       filterBoards: 'Filtrer les tableaux',
       filterByLabels_title: 'Filtrer par libellés',
@@ -364,6 +366,7 @@ export default {
       toggleDescription: 'Basculer les pièces jointes',
       toggleFilter: 'Basculer le filtre : tableaux/projets [Tab]',
       toggleLocalUserRegistration: "Basculer l'enregistrement local de l'utilisateur",
+      toggleProjectCreationAll: 'Activer/désactiver la création de projet pour tous les utilisateurs',
       toggleSettings: 'Basculer les paramètres',
       toggleSsoUserRegistration: "Basculer l'enregistrement SSO de l'utilisateur",
       toggleSubscribeToMyOwnCards: "Basculer l'abonnement à mes propres cartes",

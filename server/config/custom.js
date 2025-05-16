@@ -50,7 +50,6 @@ module.exports.custom = {
   },
 
   demoMode: process.env.DEMO_MODE === 'true',
-  projectCreationAll: process.env.PROJECT_CREATION_ALL !== 'false',
 
   positionGap: 65535,
   requiredPasswordStrength: 2,

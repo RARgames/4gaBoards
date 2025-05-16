@@ -18,6 +18,9 @@ module.exports = {
     ssoRegistrationEnabled: {
       type: 'boolean',
     },
+    projectCreationAllEnabled: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -43,7 +46,7 @@ module.exports = {
     if (!core) {
       throw Errors.CORE_NOT_FOUND;
     }
-    const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled']);
+    const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled']);
 
     core = await Core.updateOne({ id: 0 }).set({ ...values });
     const coreItem = {
@@ -51,7 +54,6 @@ module.exports = {
       ssoUrls: sails.config.custom.ssoUrls,
       ssoAvailable: sails.config.custom.ssoAvailable,
       demoMode: sails.config.custom.demoMode,
-      projectCreationAll: sails.config.custom.projectCreationAll,
     };
 
     const users = await sails.helpers.users.getMany();

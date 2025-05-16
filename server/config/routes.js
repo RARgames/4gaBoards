@@ -21,8 +21,8 @@ module.exports.routes = {
 
   'POST /api/register': 'register/create',
 
-  'GET /api/core-settings-public': 'core/get-settings-public',
-  'POST /api/core-settings': 'core/set-settings',
+  'GET /api/core-settings-public': 'core/show',
+  'POST /api/core-settings': 'core/update',
 
   'GET /api/user-projects': 'user-projects/index',
   'GET /api/user-projects/:projectId': 'user-projects/show',

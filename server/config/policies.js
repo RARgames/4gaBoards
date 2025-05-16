@@ -22,7 +22,7 @@ module.exports.policies = {
   'users/delete': ['is-authenticated', 'is-admin'],
 
   'access-tokens/create': true,
-  'core/get-settings-public': true,
+  'core/show': true,
   'auth/*': true,
   'register/create': true,
 };

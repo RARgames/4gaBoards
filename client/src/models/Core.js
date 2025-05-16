@@ -11,6 +11,7 @@ export default class extends BaseModel {
     registrationEnabled: attr(),
     localRegistrationEnabled: attr(),
     ssoRegistrationEnabled: attr(),
+    projectCreationAllEnabled: attr(),
     demoMode: attr(),
   };
 
