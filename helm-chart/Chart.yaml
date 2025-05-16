@@ -3,7 +3,7 @@ name: 4ga-boards
 description: 4ga Boards Helm chart for Kubernetes
 type: application
 version: 1.0.0
-appVersion: "3.2.5"
+appVersion: "3.2.6"
 dependencies:
 - condition: postgresql.enabled
   name: postgresql
