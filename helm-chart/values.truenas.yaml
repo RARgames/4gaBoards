@@ -1,3 +1,5 @@
+# https://docs.4gaboards.com/docs/dev/install/truenas-vars
+
 service:
   type: NodePort
   nodePort: 30001
