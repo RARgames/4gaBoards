@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "chai": "^5.2.0",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
     "mocha": "^11.2.2",
