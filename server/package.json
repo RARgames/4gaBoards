@@ -35,7 +35,7 @@
     "sails-hook-orm": "^4.0.3",
     "sails-hook-sockets": "^3.0.2",
     "sails-postgresql": "^5.0.1",
-    "sharp": "^0.34.1",
+    "sharp": "^0.34.2",
     "tar": "^7.4.3",
     "uuid": "^11.1.0",
     "validator": "^13.15.0",
@@ -44,10 +44,10 @@
   },
   "devDependencies": {
     "chai": "^5.2.0",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
-    "mocha": "^11.2.2",
+    "mocha": "^11.4.0",
     "nodemon": "^3.1.10"
   },
   "engines": {
