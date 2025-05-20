@@ -201,6 +201,13 @@ Default password: `demo`
 
 [MIT license](https://github.com/RARgames/4gaBoards/blob/main/LICENSE)
 
+## Socials
+
+[![4ga Boards X](https://github.com/user-attachments/assets/546daf03-fa8b-46c8-87eb-4ec21dc6f6f7)](https://x.com/4gaBoards)
+[![4ga Boards LinkedIn](https://github.com/user-attachments/assets/f100afab-7092-4e8b-87d7-91296be3e337)](https://www.linkedin.com/company/4ga-boards)
+[![4ga Boards YouTube](https://github.com/user-attachments/assets/40336262-4713-4f82-9062-0035eb7df425)](https://www.youtube.com/@4gaBoards)
+[![4ga Boards Facebook](https://github.com/user-attachments/assets/054df8f7-9ef4-411e-a7b8-1955fa50d31e)](https://www.facebook.com/4gaBoards)
+
 ## Main Maintainers
 
 [![RARgames](https://github.com/RARgames.png?size=100)](https://github.com/RARgames)
