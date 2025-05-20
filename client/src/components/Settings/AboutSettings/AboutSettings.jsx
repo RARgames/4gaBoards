@@ -62,6 +62,30 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
             </ExternalLink>
           </div>
           <div className={s.link}>
+            <ExternalLink href="https://x.com/4gaBoards">
+              <Icon type={IconType.X} size={IconSize.Size13} className={s.icon} />
+              {t('common.x')}
+            </ExternalLink>
+          </div>
+          <div className={s.link}>
+            <ExternalLink href="https://www.youtube.com/@4gaBoards">
+              <Icon type={IconType.Youtube} size={IconSize.Size13} className={s.icon} />
+              {t('common.youtube')}
+            </ExternalLink>
+          </div>
+          <div className={s.link}>
+            <ExternalLink href="https://www.linkedin.com/company/4ga-boards">
+              <Icon type={IconType.Linkedin} size={IconSize.Size13} className={s.icon} />
+              {t('common.linkedin')}
+            </ExternalLink>
+          </div>
+          <div className={s.link}>
+            <ExternalLink href="https://www.facebook.com/4gaBoards">
+              <Icon type={IconType.Facebook} size={IconSize.Size13} className={s.icon} />
+              {t('common.facebook')}
+            </ExternalLink>
+          </div>
+          <div className={s.link}>
             <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
           </div>
           <div className={s.link}>

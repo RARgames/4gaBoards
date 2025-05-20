@@ -196,6 +196,7 @@ export default {
       expandList: 'Expand List',
       exportBoard_title: 'Export Board',
       exportBoardExplanation: 'Your download will start automatically, when the export is ready.',
+      facebook: 'Facebook',
       feedbackExtra: 'It means a lot for us',
       feedbackMain: "We'd love to hear your feedback!",
       fetching: 'Fetching...',
@@ -232,6 +233,7 @@ export default {
       leaveBoard_title: 'Leave Board',
       leaveProject_title: 'Leave Project',
       linkCard: 'Copy Link',
+      linkedin: 'LinkedIn',
       list: 'List',
       listActions_title: 'List Actions',
       listView: 'List',
@@ -375,7 +377,9 @@ export default {
       website: 'Website',
       writeComment: 'Write a comment...',
       writeCommentHint: '[Ctrl+Enter] - submit',
+      x: 'X',
       you: '(You)',
+      youtube: 'YouTube',
     },
 
     action: {

@@ -209,6 +209,7 @@ export default {
       expandList: 'Développer la liste',
       exportBoard_title: 'Exporter le tableau',
       exportBoardExplanation: "Votre téléchargement démarrera automatiquement lorsque l'exportation sera prête.",
+      facebook: 'Facebook',
       feedbackExtra: 'Cela compte beaucoup pour nous',
       feedbackMain: "Nous serions ravis d'avoir votre avis!",
       fetching: 'Récupération...',
@@ -245,6 +246,7 @@ export default {
       leaveBoard_title: 'Quitter le tableau',
       leaveProject_title: 'Quitter le projet',
       linkCard: 'Copier le lien',
+      linkedin: 'LinkedIn',
       list: 'Lister',
       listActions_title: 'Liste des actions',
       listView: 'La liste',
@@ -393,7 +395,9 @@ export default {
       website: 'Site Web',
       writeComment: 'Écrire un commentaire...',
       writeCommentHint: '[Ctrl+Enter] - pour commenter',
+      x: 'X',
       you: '(vous)',
+      youtube: 'YouTube',
     },
 
     action: {

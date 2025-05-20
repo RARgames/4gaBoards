@@ -17,6 +17,7 @@ import { ReactComponent as Duplicate } from '../../../assets/icons/Duplicate.svg
 import { ReactComponent as EllipsisVertical } from '../../../assets/icons/EllipsisVertical.svg';
 import { ReactComponent as Eye } from '../../../assets/icons/Eye.svg';
 import { ReactComponent as EyeSlash } from '../../../assets/icons/EyeSlash.svg';
+import { ReactComponent as Facebook } from '../../../assets/icons/Facebook.svg';
 import { ReactComponent as FillDrip } from '../../../assets/icons/FillDrip.svg';
 import { ReactComponent as Github } from '../../../assets/icons/Github.svg';
 import { ReactComponent as Google } from '../../../assets/icons/Google.svg';
@@ -27,6 +28,7 @@ import { ReactComponent as Key } from '../../../assets/icons/Key.svg';
 import { ReactComponent as Label } from '../../../assets/icons/Label.svg';
 import { ReactComponent as Labels } from '../../../assets/icons/Labels.svg';
 import { ReactComponent as Link } from '../../../assets/icons/Link.svg';
+import { ReactComponent as Linkedin } from '../../../assets/icons/Linkedin.svg';
 import { ReactComponent as List } from '../../../assets/icons/List.svg';
 import { ReactComponent as MatchCase } from '../../../assets/icons/MatchCase.svg';
 import { ReactComponent as Microsoft } from '../../../assets/icons/Microsoft.svg';
@@ -53,6 +55,8 @@ import { ReactComponent as User } from '../../../assets/icons/User.svg';
 import { ReactComponent as UserAdd } from '../../../assets/icons/UserAdd.svg';
 import { ReactComponent as Users } from '../../../assets/icons/Users.svg';
 import { ReactComponent as WindowMaximize } from '../../../assets/icons/WindowMaximize.svg';
+import { ReactComponent as X } from '../../../assets/icons/X.svg';
+import { ReactComponent as Youtube } from '../../../assets/icons/Youtube.svg';
 
 const IconType = {
   AddressCard,
@@ -74,6 +78,7 @@ const IconType = {
   EllipsisVertical,
   Eye,
   EyeSlash,
+  Facebook,
   FillDrip,
   Github,
   Google,
@@ -84,6 +89,7 @@ const IconType = {
   Label,
   Labels,
   Link,
+  Linkedin,
   List,
   MatchCase,
   Microsoft,
@@ -110,6 +116,8 @@ const IconType = {
   UserAdd,
   Users,
   WindowMaximize,
+  X,
+  Youtube,
 };
 
 export default IconType;

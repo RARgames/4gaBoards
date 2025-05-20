@@ -198,6 +198,7 @@ export default {
       expandList: 'Expandir Lista',
       exportBoard_title: 'Exportar Painel',
       exportBoardExplanation: 'Seu download terá início automaticamente, quando a exportação estiver pronta.',
+      facebook: 'Facebook',
       feedbackExtra: 'Isso significa muito para nós',
       feedbackMain: 'Adoraríamos ouvir seu feedback!',
       fetching: 'Carregando...',
@@ -234,6 +235,7 @@ export default {
       leaveBoard_title: 'Sair do Painel',
       leaveProject_title: 'Sair do Projeto',
       linkCard: 'Copiar Link',
+      linkedin: 'LinkedIn',
       list: 'Lista',
       listActions_title: 'Ações de Lista',
       listView: 'Lista',
@@ -377,7 +379,9 @@ export default {
       website: 'Site',
       writeComment: 'Escreva um comentário...',
       writeCommentHint: '[Ctrl+Enter] - confirmar',
+      x: 'X',
       you: '(Você)',
+      youtube: 'YouTube',
     },
 
     action: {
