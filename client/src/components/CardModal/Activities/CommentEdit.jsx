@@ -107,10 +107,10 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
   const handlePreviewUpdate = useCallback(
     (preview) => {
       // TODO hacky way to update UI faster
-      const timeout = setTimeout(() => {
-        onCurrentUserPrefsUpdate({ commentMode: preview });
-      }, 0);
-      return () => clearTimeout(timeout);
+      // const timeout = setTimeout(() => {
+      onCurrentUserPrefsUpdate({ commentMode: preview });
+      // }, 0);
+      // return () => clearTimeout(timeout);
     },
     [onCurrentUserPrefsUpdate],
   );
