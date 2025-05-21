@@ -114,6 +114,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
             style={DropdownStyle.Default}
             options={lists}
             placeholder={lists.length < 1 ? t('common.noLists') : selectedList ? selectedList.name : t('common.selectList')} // eslint-disable-line no-nested-ternary
+            defaultItem={selectedList}
             isSearchable
             isError={isDropdownError}
             selectFirstOnSearch

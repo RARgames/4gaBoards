@@ -35,14 +35,10 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
   const handleFieldChangeOverride = useCallback(
     (event) => {
       const data = event.target;
-
-      if (data.name === 'projectId') {
-        dropdownBoard.current?.clearSavedDefaultItem();
-      } else if (data.name === 'boardId') {
+      if (data.name === 'boardId') {
         if (selectedProject.boards.find((board) => board.id === data.value).isFetching === null) {
           onBoardFetch(data.value);
         }
-        dropdownList.current?.clearSavedDefaultItem();
       }
 
       handleFieldChange(event);
@@ -96,7 +92,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             onChange={handleFieldChangeOverride}
             isSearchable
             selectFirstOnSearch
-            keepState
             returnOnChangeEvent
             onBlur={focusForm}
             disabled={projectsToLists.length === 0}
@@ -118,7 +113,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 onChange={handleFieldChangeOverride}
                 isSearchable
                 selectFirstOnSearch
-                keepState
                 returnOnChangeEvent
                 onBlur={focusForm}
                 disabled={selectedProject.boards.length === 0}
@@ -142,7 +136,6 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 onChange={handleFieldChangeOverride}
                 isSearchable
                 selectFirstOnSearch
-                keepState
                 returnOnChangeEvent
                 onBlur={focusForm}
                 disabled={selectedBoard.lists.length === 0}

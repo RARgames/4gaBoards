@@ -34,9 +34,7 @@ const Dropdown = React.forwardRef(
       submitOnBlur,
       stayOpenOnBlur,
       selectFirstOnSearch,
-      keepState,
       returnOnChangeEvent,
-      forcePlaceholder,
       keepOnScroll,
       ...props
     },
@@ -45,7 +43,6 @@ const Dropdown = React.forwardRef(
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [savedDefaultItem, setSavedDefaultItem] = useState(defaultItem);
     const [searchValue, setSearchValue] = useState('');
     const dropdown = useRef(null);
     const itemsRef = useRef([]);
@@ -71,7 +68,6 @@ const Dropdown = React.forwardRef(
       () => ({
         open,
         close,
-        clearSavedDefaultItem: () => setSavedDefaultItem(null),
       }),
       [open, close],
     );
@@ -133,7 +129,7 @@ const Dropdown = React.forwardRef(
     const handleSubmit = useCallback(
       (item) => {
         if (item) {
-          if (savedDefaultItem && savedDefaultItem.id === item.id) {
+          if (defaultItem && defaultItem.id === item.id) {
             close();
             return;
           }
@@ -142,14 +138,10 @@ const Dropdown = React.forwardRef(
           } else {
             onChange(item);
           }
-          setSavedDefaultItem(null);
-          if (keepState) {
-            setSavedDefaultItem(item);
-          }
         }
         close();
       },
-      [close, keepState, onChange, returnOnChangeEvent, savedDefaultItem],
+      [close, onChange, returnOnChangeEvent, defaultItem],
     );
 
     const handleCancel = useCallback(() => {
@@ -163,16 +155,13 @@ const Dropdown = React.forwardRef(
       if (!isOpen) {
         open();
       }
-      if (!savedDefaultItem) {
-        setSavedDefaultItem(defaultItem);
-      }
-      if (savedDefaultItem) {
+      if (defaultItem) {
         const index = getOptions()
           .map((item) => item.id)
-          .indexOf(savedDefaultItem.id);
+          .indexOf(defaultItem.id);
         selectItemByIndex(index >= 0 ? index : 0);
       }
-    }, [defaultItem, getOptions, isOpen, open, savedDefaultItem, selectItemByIndex]);
+    }, [getOptions, isOpen, open, defaultItem, selectItemByIndex]);
 
     const handleBlur = useCallback(
       (event) => {
@@ -193,21 +182,14 @@ const Dropdown = React.forwardRef(
     );
 
     const getDisplay = useCallback(() => {
-      if (forcePlaceholder) {
-        return placeholder;
-      }
       if (isOpen && selectedItem) {
-        if (selectedItem.id === savedDefaultItem?.id) {
-          // Needed for language change returning item in old language
-          return savedDefaultItem.name;
-        }
         return selectedItem.name;
       }
-      if (savedDefaultItem) {
-        return savedDefaultItem.name;
+      if (defaultItem) {
+        return defaultItem.name;
       }
       return placeholder;
-    }, [forcePlaceholder, isOpen, placeholder, savedDefaultItem, selectedItem]);
+    }, [isOpen, placeholder, defaultItem, selectedItem]);
 
     const handleItemClick = useCallback(
       (e, item) => {
@@ -356,7 +338,7 @@ const Dropdown = React.forwardRef(
                     key={item.id}
                     id={item.id}
                     name={item.name}
-                    className={classNames(s.dropdownItem, savedDefaultItem && savedDefaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
+                    className={classNames(s.dropdownItem, defaultItem && defaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
                     onClick={(e) => handleItemClick(e, item)}
                     onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
                   >
@@ -395,9 +377,7 @@ Dropdown.propTypes = {
   submitOnBlur: PropTypes.bool,
   stayOpenOnBlur: PropTypes.bool,
   selectFirstOnSearch: PropTypes.bool,
-  keepState: PropTypes.bool,
   returnOnChangeEvent: PropTypes.bool,
-  forcePlaceholder: PropTypes.bool,
   keepOnScroll: PropTypes.bool,
 };
 
@@ -416,9 +396,7 @@ Dropdown.defaultProps = {
   submitOnBlur: false,
   stayOpenOnBlur: false,
   selectFirstOnSearch: false,
-  keepState: false,
   returnOnChangeEvent: false,
-  forcePlaceholder: false,
   className: undefined,
   dropdownMenuClassName: undefined,
   inputClassName: undefined,
