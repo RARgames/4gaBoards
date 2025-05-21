@@ -85,7 +85,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 
   const handleChange = useCallback(
     (value) => {
-      const event = { target: { name: 'text', value } }; // TODO get name from mdEditorRef.current (causing first input delay)
+      const event = { target: { name: 'text', value } };
       handleFieldChange(event);
     },
     [handleFieldChange],

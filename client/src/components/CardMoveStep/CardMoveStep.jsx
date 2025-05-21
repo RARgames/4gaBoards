@@ -32,7 +32,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
 
   const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === path.listId)) || null, [selectedBoard, path.listId]);
 
-  const handleFieldChangeOverride = useCallback(
+  const handleChange = useCallback(
     (event) => {
       const data = event.target;
       if (data.name === 'boardId') {
@@ -89,7 +89,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             }))}
             placeholder={projectsToLists.length === 0 ? t('common.noProjects') : t('common.selectProject')}
             defaultItem={selectedProject}
-            onChange={handleFieldChangeOverride}
+            onChange={handleChange}
             isSearchable
             selectFirstOnSearch
             returnOnChangeEvent
@@ -110,7 +110,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 }))}
                 placeholder={selectedProject.boards.length === 0 ? t('common.noBoards') : t('common.selectBoard')}
                 defaultItem={selectedBoard}
-                onChange={handleFieldChangeOverride}
+                onChange={handleChange}
                 isSearchable
                 selectFirstOnSearch
                 returnOnChangeEvent
@@ -133,7 +133,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 }))}
                 placeholder={selectedBoard.lists.length === 0 ? t('common.noLists') : t('common.selectList')}
                 defaultItem={selectedList}
-                onChange={handleFieldChangeOverride}
+                onChange={handleChange}
                 isSearchable
                 selectFirstOnSearch
                 returnOnChangeEvent
