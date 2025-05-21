@@ -36,7 +36,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
 
     if (!cleanData.name) {
       setIsError(true);
-      editorRef.current.focus();
+      editorRef.current?.focus();
       return;
     }
 

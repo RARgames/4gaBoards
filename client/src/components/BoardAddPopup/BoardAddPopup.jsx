@@ -116,7 +116,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
     };
 
     if (!cleanData.name) {
-      nameField.current.focus();
+      nameField.current?.focus();
       setIsInputError(true);
       return;
     }
@@ -139,11 +139,11 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   }, []);
 
   useEffect(() => {
-    nameField.current.focus({ preventScroll: true });
+    nameField.current?.focus({ preventScroll: true });
   }, []);
 
   useDidUpdate(() => {
-    nameField.current.focus();
+    nameField.current?.focus();
   }, [focusNameFieldState]);
 
   const handleFormKeyDown = useCallback(
@@ -160,7 +160,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   );
 
   useDidUpdate(() => {
-    formRef.current.focus();
+    formRef.current?.focus();
   }, [focusFromState]);
 
   if (step && step.type === StepTypes.IMPORT) {

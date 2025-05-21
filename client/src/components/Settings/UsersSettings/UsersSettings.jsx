@@ -85,7 +85,7 @@ const UsersSettings = React.memo(
             next.pageIndex = 0;
           }
           if (next.pageIndex !== prev.pageIndex) {
-            tableBodyRef.current.scrollTo({ top: 0 });
+            tableBodyRef.current?.scrollTo({ top: 0 });
           }
           return next;
         });

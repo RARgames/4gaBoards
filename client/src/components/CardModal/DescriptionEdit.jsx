@@ -25,9 +25,9 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
   const focus = useCallback(() => {
     if (!textareaRef.current) return;
 
-    textareaRef.current.focus();
+    textareaRef.current?.focus();
     const { length } = textareaRef.current.value;
-    textareaRef.current.setSelectionRange(length, length);
+    textareaRef.current?.setSelectionRange(length, length);
   }, []);
 
   const open = useCallback(() => {

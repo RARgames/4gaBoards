@@ -59,13 +59,13 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
 
   const handleSubmit = useCallback(() => {
     if (!data.password) {
-      passwordField.current.focus();
+      passwordField.current?.focus();
       setIsNewPasswordError(true);
       return;
     }
 
     if (usePasswordConfirmation && !data.currentPassword) {
-      currentPasswordField.current.focus();
+      currentPasswordField.current?.focus();
       setIsPasswordError(true);
       return;
     }
@@ -89,7 +89,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
         focusCurrentPasswordField();
         setIsPasswordError(true);
       } else if (error.message === 'Weak password') {
-        passwordField.current.focus();
+        passwordField.current?.focus();
         setIsNewPasswordError(true);
       }
     }
@@ -111,7 +111,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
 
   useDidUpdate(() => {
     if (usePasswordConfirmation) {
-      currentPasswordField.current.focus();
+      currentPasswordField.current?.focus();
     }
   }, [focusCurrentPasswordFieldState]);
 

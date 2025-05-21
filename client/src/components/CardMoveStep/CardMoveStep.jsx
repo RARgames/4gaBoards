@@ -37,12 +37,12 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
       const data = event.target;
 
       if (data.name === 'projectId') {
-        dropdownBoard?.current?.clearSavedDefaultItem();
+        dropdownBoard.current?.clearSavedDefaultItem();
       } else if (data.name === 'boardId') {
         if (selectedProject.boards.find((board) => board.id === data.value).isFetching === null) {
           onBoardFetch(data.value);
         }
-        dropdownList?.current?.clearSavedDefaultItem();
+        dropdownList.current?.clearSavedDefaultItem();
       }
 
       handleFieldChange(event);
@@ -74,7 +74,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
   );
 
   useDidUpdate(() => {
-    formRef.current.focus();
+    formRef.current?.focus();
   }, [focusFormState]);
 
   return (

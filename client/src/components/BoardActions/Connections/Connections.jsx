@@ -27,7 +27,7 @@ const Connections = React.memo(({ defaultData, onUpdate, onBack, onClose }) => {
     };
     cleanData.isGithubConnected = !!cleanData.githubRepo;
     if (!/^$|^\w+\/\w+$/.test(cleanData.githubRepo)) {
-      inputRef.current.focus();
+      inputRef.current?.focus();
       setIsError(true);
       return;
     }

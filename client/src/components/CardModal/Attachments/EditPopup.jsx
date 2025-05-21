@@ -26,7 +26,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
     };
 
     if (!cleanData.name) {
-      nameField.current.focus();
+      nameField.current?.focus();
       setIsError(true);
       return;
     }
@@ -43,7 +43,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
   }, []);
 
   useEffect(() => {
-    nameField.current.focus();
+    nameField.current?.focus();
   }, []);
 
   return (

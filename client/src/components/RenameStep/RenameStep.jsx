@@ -25,7 +25,7 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
     };
 
     if (!cleanData.name) {
-      field.current.focus();
+      field.current?.focus();
       setIsError(true);
       return;
     }
@@ -57,7 +57,7 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
   );
 
   useEffect(() => {
-    field.current.focus();
+    field.current?.focus();
   }, []);
 
   return (

@@ -84,7 +84,7 @@ const Add = React.forwardRef(({ children, onCreate }, ref) => {
 
   useEffect(() => {
     if (isOpen) {
-      nameField.current.focus();
+      nameField.current?.focus();
     }
   }, [isOpen]);
 

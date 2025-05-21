@@ -131,7 +131,7 @@ const Card = React.memo(
     );
 
     const handleNameEdit = useCallback(() => {
-      nameEdit.current.open();
+      nameEdit.current?.open();
     }, []);
 
     const getStyle = (style, snapshot) => {

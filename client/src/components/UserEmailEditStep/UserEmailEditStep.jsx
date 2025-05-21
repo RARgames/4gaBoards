@@ -64,7 +64,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
     };
 
     if (!isEmail(cleanData.email)) {
-      emailField.current.focus();
+      emailField.current?.focus();
       setIsEmailError(true);
       return;
     }
@@ -76,7 +76,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
 
     if (usePasswordConfirmation) {
       if (!cleanData.currentPassword) {
-        currentPasswordField.current.focus();
+        currentPasswordField.current?.focus();
         setIsPasswordError(true);
         return;
       }
@@ -96,7 +96,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
       if (error) {
         switch (error.message) {
           case 'Email already in use':
-            emailField.current.focus();
+            emailField.current?.focus();
             setIsEmailError(true);
 
             break;
@@ -137,7 +137,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
 
   useDidUpdate(() => {
     if (usePasswordConfirmation) {
-      currentPasswordField.current.focus();
+      currentPasswordField.current?.focus();
     }
   }, [focusCurrentPasswordFieldState]);
 

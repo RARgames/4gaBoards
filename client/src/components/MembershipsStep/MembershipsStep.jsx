@@ -51,7 +51,7 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect
   );
 
   useEffect(() => {
-    searchField.current.focus({ preventScroll: true });
+    searchField.current?.focus({ preventScroll: true });
   }, []);
 
   return (

@@ -46,7 +46,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
       }
 
       if (selectedList === null) {
-        listDropdownRef.current?.open(); // TODO have to enter submit 2 times on error
+        listDropdownRef.current?.open(); // TODO with default first list (just add option to create new list)
         setIsDropdownError(true);
         return;
       }

@@ -31,7 +31,7 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
 
   const handleSubmit = useCallback(() => {
     if (!cleanData.name) {
-      nameField.current.focus();
+      nameField.current?.focus();
       setIsError(true);
       return;
     }

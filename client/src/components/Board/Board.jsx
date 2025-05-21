@@ -94,7 +94,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
         return;
       }
 
-      wrapper.current.scrollBy({ left: prevPosition.current - event.screenX });
+      wrapper.current?.scrollBy({ left: prevPosition.current - event.screenX });
       prevPosition.current = event.screenX;
     },
     [prevPosition],

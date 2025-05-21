@@ -72,25 +72,25 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     };
 
     if (!isEmail(cleanData.email)) {
-      emailField.current.focus();
+      emailField.current?.focus();
       setIsEmailError(true);
       return;
     }
 
     if (!cleanData.password) {
-      passwordField.current.focus();
+      passwordField.current?.focus();
       setIsPasswordError(true);
       return;
     }
 
     if (!cleanData.name) {
-      nameField.current.focus();
+      nameField.current?.focus();
       setIsNameError(true);
       return;
     }
 
     if (cleanData.username && !isUsername(cleanData.username)) {
-      usernameField.current.focus();
+      usernameField.current?.focus();
       setIsUsernameError(true);
       return;
     }
@@ -107,17 +107,17 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
       if (error) {
         switch (error.message) {
           case 'Email already in use':
-            emailField.current.focus();
+            emailField.current?.focus();
             setIsEmailError(true);
 
             break;
           case 'Username already in use':
-            usernameField.current.focus();
+            usernameField.current?.focus();
             setIsUsernameError(true);
 
             break;
           case 'Weak password':
-            passwordField.current.focus();
+            passwordField.current?.focus();
             setIsPasswordError(true);
 
             break;

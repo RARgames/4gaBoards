@@ -64,7 +64,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
     };
 
     if (!cleanData.username || !isUsername(cleanData.username)) {
-      usernameField.current.focus();
+      usernameField.current?.focus();
       setIsUsernameError(true);
       return;
     }
@@ -76,7 +76,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
 
     if (usePasswordConfirmation) {
       if (!cleanData.currentPassword) {
-        currentPasswordField.current.focus();
+        currentPasswordField.current?.focus();
         setIsPasswordError(true);
         return;
       }
@@ -96,7 +96,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
       if (error) {
         switch (error.message) {
           case 'Username already in use':
-            usernameField.current.focus();
+            usernameField.current?.focus();
             setIsUsernameError(true);
 
             break;
@@ -133,7 +133,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
 
   useDidUpdate(() => {
     if (usePasswordConfirmation) {
-      currentPasswordField.current.focus();
+      currentPasswordField.current?.focus();
     }
   }, [focusCurrentPasswordFieldState]);
 

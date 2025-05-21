@@ -26,7 +26,7 @@ const AvatarEditStep = React.memo(({ defaultValue, onUpdate, onDelete, onClose }
   }, [onDelete, onClose]);
 
   useEffect(() => {
-    field.current.focus();
+    field.current?.focus();
   }, []);
 
   return (

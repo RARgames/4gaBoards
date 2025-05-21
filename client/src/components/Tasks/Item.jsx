@@ -28,7 +28,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
 
   const handleClick = useCallback(() => {
     if (isPersisted && canEdit) {
-      nameEdit.current.open();
+      nameEdit.current?.open();
     }
   }, [isPersisted, canEdit]);
 
@@ -51,7 +51,7 @@ const Item = React.memo(({ variant, id, index, name, dueDate, boardMemberships, 
   }, [isCompleted, onUpdate]);
 
   const handleNameEdit = useCallback(() => {
-    nameEdit.current.open();
+    nameEdit.current?.open();
   }, []);
 
   const handleDueDateUpdate = useCallback(

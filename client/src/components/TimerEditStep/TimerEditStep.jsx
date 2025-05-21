@@ -75,19 +75,19 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
     };
 
     if (Number.isNaN(parts.hours)) {
-      hoursField.current.focus();
+      hoursField.current?.focus();
       setIsHoursError(true);
       return;
     }
 
     if (Number.isNaN(parts.minutes) || parts.minutes > 60) {
-      minutesField.current.focus();
+      minutesField.current?.focus();
       setIsMinutesError(true);
       return;
     }
 
     if (Number.isNaN(parts.seconds) || parts.seconds > 60) {
-      secondsField.current.focus();
+      secondsField.current?.focus();
       setIsSecondsError(true);
       return;
     }
@@ -117,7 +117,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
 
   useEffect(() => {
     if (isEditing) {
-      hoursField.current.focus();
+      hoursField.current?.focus();
     }
   }, [isEditing]);
 

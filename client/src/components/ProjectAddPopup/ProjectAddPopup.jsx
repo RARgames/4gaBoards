@@ -20,7 +20,7 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
     };
 
     if (!cleanData.name) {
-      nameField.current.focus();
+      nameField.current?.focus();
       setIsError(true);
       return;
     }

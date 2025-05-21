@@ -35,7 +35,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
           return;
         }
         setIsError(true);
-        field.current.focus();
+        field.current?.focus();
         return;
       }
 
@@ -76,7 +76,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   useEffect(() => {
     if (isOpen) {
-      field.current.focus();
+      field.current?.focus();
     }
   }, [isOpen]);
 

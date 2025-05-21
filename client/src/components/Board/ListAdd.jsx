@@ -35,7 +35,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     };
 
     if (!cleanData.name) {
-      nameField.current.focus();
+      nameField.current?.focus();
       setIsError(true);
       return;
     }
@@ -82,11 +82,11 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
   );
 
   useEffect(() => {
-    nameField.current.focus();
+    nameField.current?.focus();
   }, []);
 
   useDidUpdate(() => {
-    nameField.current.focus();
+    nameField.current?.focus();
   }, [focusNameFieldState]);
 
   return (

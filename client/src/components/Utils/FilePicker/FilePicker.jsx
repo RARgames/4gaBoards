@@ -7,7 +7,7 @@ const FilePicker = React.memo(({ children, accept, multiple, onSelect }) => {
   const field = useRef(null);
 
   const handleTriggerClick = useCallback(() => {
-    field.current.click();
+    field.current?.click();
   }, []);
 
   const handleFieldChange = useCallback(

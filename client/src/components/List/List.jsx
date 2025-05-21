@@ -47,7 +47,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
 
   const handleHeaderNameClick = useCallback(() => {
     if (isPersisted && canEdit) {
-      nameEdit.current.open();
+      nameEdit.current?.open();
     }
   }, [isPersisted, canEdit]);
 
@@ -69,7 +69,7 @@ const List = React.memo(({ id, index, name, isPersisted, isCollapsed, cardIds, i
   }, []);
 
   const handleNameEdit = useCallback(() => {
-    nameEdit.current.open();
+    nameEdit.current?.open();
   }, []);
 
   const handleNameEditClose = useCallback(() => {

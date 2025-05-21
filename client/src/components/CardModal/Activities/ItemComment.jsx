@@ -15,7 +15,7 @@ const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user,
   const commentEdit = useRef(null);
 
   const handleEditClick = useCallback(() => {
-    commentEdit.current.open();
+    commentEdit.current?.open();
   }, []);
 
   return (

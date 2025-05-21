@@ -124,7 +124,7 @@ const ListView = React.memo(
             next.pageIndex = nextPageIndex === -1 ? 0 : nextPageIndex;
           }
           if (next.pageIndex !== prev.pageIndex) {
-            tableBodyRef.current.scrollTo({ top: 0 });
+            tableBodyRef.current?.scrollTo({ top: 0 });
           }
           return next;
         });

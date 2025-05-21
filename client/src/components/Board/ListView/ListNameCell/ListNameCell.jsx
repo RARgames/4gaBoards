@@ -16,7 +16,7 @@ const ListNameCell = React.memo(({ cellClassName, projectId, boardId, listId, al
 
   const handleDropdownClick = useCallback(() => {
     if (canEdit) {
-      dropdown.current.open();
+      dropdown.current?.open();
     }
   }, [canEdit]);
 

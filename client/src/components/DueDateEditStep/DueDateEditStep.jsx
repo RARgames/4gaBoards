@@ -58,7 +58,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
 
   const handleSubmit = useCallback(() => {
     if (!nullableDate) {
-      dateField.current.focus();
+      dateField.current?.focus();
       setIsError(true);
       return;
     }
@@ -98,7 +98,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
   );
 
   useEffect(() => {
-    dateField.current.focus({ preventScroll: true });
+    dateField.current?.focus({ preventScroll: true });
   }, []);
 
   return (

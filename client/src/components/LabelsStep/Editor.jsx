@@ -17,8 +17,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
   const nameField = useRef(null);
 
   const focus = useCallback(() => {
-    if (!nameField.current) return;
-    nameField.current.focus();
+    nameField.current?.focus();
   }, []);
 
   useImperativeHandle(
@@ -30,7 +29,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
   );
 
   useEffect(() => {
-    nameField.current.focus();
+    nameField.current?.focus();
   }, []);
 
   return (

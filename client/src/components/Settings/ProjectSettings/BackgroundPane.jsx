@@ -60,7 +60,7 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
   }, [onUpdate]);
 
   useEffect(() => {
-    field.current.focus();
+    field.current?.focus();
   }, []);
 
   return (

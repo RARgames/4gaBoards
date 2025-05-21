@@ -53,7 +53,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
   const handleToggleClick = useCallback(() => {
     toggleFilterTarget();
     submit(value, true);
-    field.current.focus();
+    field.current?.focus();
   }, [submit, toggleFilterTarget, value]);
 
   const handleKeyDown = useCallback(
@@ -82,13 +82,13 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
           toggleFilterTarget();
         }
         handleCancel();
-        field.current.focus();
+        field.current?.focus();
       } else if (path === Paths.PROJECTS) {
         if (!isTargetBoard) {
           toggleFilterTarget();
         }
         handleCancel();
-        field.current.focus();
+        field.current?.focus();
       }
     }
     prevPathRef.current = path;

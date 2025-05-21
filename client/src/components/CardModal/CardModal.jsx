@@ -235,7 +235,7 @@ const CardModal = React.memo(
 
     const handleNameEdit = useCallback(() => {
       if (canEdit) {
-        nameEdit.current.open();
+        nameEdit.current?.open();
       }
     }, [canEdit]);
 
@@ -256,7 +256,7 @@ const CardModal = React.memo(
 
     const handleDropdownClick = useCallback(() => {
       if (canEdit) {
-        dropdown.current.open();
+        dropdown.current?.open();
       }
     }, [canEdit]);
 
@@ -267,7 +267,7 @@ const CardModal = React.memo(
       if (!isDescOpened) {
         setIsDescOpened(true);
       } else if (descEditRef.current) {
-        descEditRef.current.focus();
+        descEditRef.current?.focus();
       }
     }, [descShown, handleToggleDescShown, isDescOpened]);
 

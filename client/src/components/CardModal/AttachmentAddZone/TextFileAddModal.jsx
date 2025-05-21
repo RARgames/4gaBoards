@@ -25,7 +25,7 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
     };
 
     if (!cleanData.name) {
-      nameField.current.focus();
+      nameField.current?.focus();
       setIsError(true);
       return;
     }
@@ -43,7 +43,7 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
   }, []);
 
   useEffect(() => {
-    nameField.current.focus();
+    nameField.current?.focus();
   }, []);
 
   return (

@@ -116,12 +116,12 @@ const Register = React.memo(
         name: data.email.split('@')[0],
       };
       if (!isEmail(cleanData.email)) {
-        emailField.current.focus();
+        emailField.current?.focus();
         setIsEmailError(true);
         return;
       }
       if (!cleanData.password) {
-        passwordField.current.focus();
+        passwordField.current?.focus();
         setIsPasswordError(true);
         return;
       }
@@ -141,7 +141,7 @@ const Register = React.memo(
             setIsPasswordError(true);
             break;
           case 'Email already in use':
-            emailField.current.focus();
+            emailField.current?.focus();
             setIsEmailError(true);
             break;
           case 'Policy not accepted':

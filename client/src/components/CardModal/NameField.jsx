@@ -64,7 +64,7 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
 
   useEffect(() => {
     if (isOpen) {
-      field.current.focus();
+      field.current?.focus();
     }
   }, [isOpen]);
 

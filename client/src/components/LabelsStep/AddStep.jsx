@@ -28,7 +28,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
 
     if (!cleanData.name) {
       setIsError(true);
-      editorRef.current.focus();
+      editorRef.current?.focus();
       return;
     }
 

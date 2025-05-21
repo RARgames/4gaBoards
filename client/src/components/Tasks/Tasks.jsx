@@ -34,9 +34,7 @@ const Tasks = React.forwardRef(
     );
 
     const openTaskAdd = useCallback(() => {
-      if (taskAddRef.current) {
-        taskAddRef.current.open();
-      }
+      taskAddRef.current?.open();
     }, []);
 
     useImperativeHandle(

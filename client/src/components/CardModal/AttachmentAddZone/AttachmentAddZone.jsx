@@ -73,7 +73,7 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
         }
 
         openModal({ content: event.clipboardData.getData('Text') });
-        modalRef.current.setIsOpen(true);
+        modalRef.current?.setIsOpen(true);
       }
 
       // Not used actively - fallback for browsers that do not support clipboardData.files

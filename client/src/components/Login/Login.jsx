@@ -89,13 +89,13 @@ const Login = React.memo(
       };
 
       if (!isEmail(cleanData.emailOrUsername) && !isUsername(cleanData.emailOrUsername)) {
-        emailOrUsernameField.current.focus();
+        emailOrUsernameField.current?.focus();
         setIsUsernameError(true);
         return;
       }
 
       if (!cleanData.password) {
-        passwordField.current.focus();
+        passwordField.current?.focus();
         setIsPasswordError(true);
         return;
       }

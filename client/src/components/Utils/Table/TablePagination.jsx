@@ -42,7 +42,7 @@ const TablePagination = React.memo(
       const pageNumber = parseInt(data.page, 10);
       const maxPage = itemsPerPage === 'all' ? 1 : Math.ceil(rowsCount / Number(itemsPerPage));
       if (Number.isNaN(pageNumber) || pageNumber < 1 || pageNumber > maxPage) {
-        pageField.current.focus();
+        pageField.current?.focus();
         setData({ page: '' });
         return;
       }

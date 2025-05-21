@@ -76,7 +76,7 @@ const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, o
 
   useEffect(() => {
     if (isOpen) {
-      field.current.focus();
+      field.current?.focus();
     }
   }, [isOpen]);
 
