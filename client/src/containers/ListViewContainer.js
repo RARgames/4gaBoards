@@ -12,7 +12,6 @@ const makeMapStateToProps = () => {
   return (state) => {
     const listIds = selectors.selectListIdsForCurrentBoard(state);
     const currentCardId = selectors.selectPath(state).cardId;
-    const { boardId } = selectors.selectPath(state);
     const filteredCardIds = listIds.reduce((acc, id) => {
       const filteredCardIdsPart = selectFilteredCardIdsByListId(state, id);
       return acc.concat(filteredCardIdsPart);
@@ -65,7 +64,6 @@ const makeMapStateToProps = () => {
     return {
       isCardModalOpened: !!currentCardId,
       currentCardId,
-      boardId,
       filteredCards,
       isGithubConnected,
       githubRepo,

@@ -37,7 +37,6 @@ const ListView = React.memo(
   ({
     isCardModalOpened,
     currentCardId,
-    boardId,
     filteredCards,
     isGithubConnected,
     githubRepo,
@@ -156,7 +155,7 @@ const ListView = React.memo(
 
     useEffect(() => {
       resetColumnsWidths();
-    }, [resetColumnsWidths, boardId, isCardModalOpened]);
+    }, [resetColumnsWidths, isCardModalOpened]);
 
     useEffect(() => {
       let resizeTimeout;
@@ -196,10 +195,11 @@ const ListView = React.memo(
         const pageIndex = Math.floor(currentCardIndex / pageSize);
         setPagination((prev) => ({ ...prev, pageIndex: pageIndex === -1 ? 0 : pageIndex }));
         scrollCardIntoView();
+        resetColumnsWidths();
       }
 
       prevFilteredCardIdsRef.current = currentCardIds;
-    }, [currentCardIndex, filteredCards, scrollCardIntoView, setPagination, table]);
+    }, [currentCardIndex, filteredCards, resetColumnsWidths, scrollCardIntoView, setPagination, table]);
 
     useEffect(() => {
       adjustPageIndex();
@@ -459,7 +459,6 @@ const ListView = React.memo(
 ListView.propTypes = {
   isCardModalOpened: PropTypes.bool.isRequired,
   currentCardId: PropTypes.string,
-  boardId: PropTypes.string.isRequired,
   filteredCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
