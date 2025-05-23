@@ -192,8 +192,7 @@ const Dropdown = React.forwardRef(
     }, [isOpen, placeholder, defaultItem, selectedItem]);
 
     const handleItemClick = useCallback(
-      (e, item) => {
-        e.stopPropagation(); // TODO Prevent switching card in ListView - change how dropdown handles click input
+      (item) => {
         setSelectedItem(item);
         handleSubmit(item);
       },
@@ -339,8 +338,9 @@ const Dropdown = React.forwardRef(
                     id={item.id}
                     name={item.name}
                     className={classNames(s.dropdownItem, defaultItem && defaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
-                    onClick={(e) => handleItemClick(e, item)}
+                    onClick={() => handleItemClick(item)}
                     onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
+                    data-prevent-card-switch
                   >
                     {item.flags && item.flags.map((flag) => <Icon key={flag} type={FlagType[flag]} size={IconSize.Size14} className={s.icon} />)}
                     {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={s.icon} />}
