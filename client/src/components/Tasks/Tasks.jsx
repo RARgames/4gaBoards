@@ -25,13 +25,9 @@ const Tasks = React.forwardRef(
     const taskAddRef = useRef(null);
     const [isOpen, toggleOpen] = useToggle();
 
-    const handleToggleClick = useCallback(
-      (event) => {
-        event.stopPropagation(); // TODO Prevent card switch - change how Card handles click events
-        toggleOpen();
-      },
-      [toggleOpen],
-    );
+    const handleToggleClick = useCallback(() => {
+      toggleOpen();
+    }, [toggleOpen]);
 
     const openTaskAdd = useCallback(() => {
       taskAddRef.current?.open();
@@ -136,7 +132,7 @@ const Tasks = React.forwardRef(
                 {closestNotCompletedTaslDueDate && (
                   <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} />
                 )}
-                <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton}>
+                <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton} data-prevent-card-switch>
                   {completedItems.length}/{items.length}
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
                 </Button>
