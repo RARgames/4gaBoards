@@ -66,7 +66,6 @@ export function* handleBoardCreate(board, requestId) {
   }
 }
 
-// TODO check - not getting any calls rn?
 export function* fetchBoard(id) {
   yield put(actions.fetchBoard(id));
 
