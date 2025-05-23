@@ -15,6 +15,7 @@ assignees: ''
  - Browser: 
  - OS: 
  - Installation type (e.g. Docker/K8S/Manual):
+ - Installation OS:
 
 **Steps to reproduce** _(optional)_
 
