@@ -73,10 +73,6 @@ export default (WrappedComponent, defaultProps) => {
       [onOpenChange],
     );
 
-    const handleWithinPopupClick = useCallback((e) => {
-      e.stopPropagation(); // TODO Prevent e.g. switching card - change how popup handles key input
-    }, []);
-
     return (
       <>
         {/* TODO temp removed: s.wrapper */}
@@ -87,8 +83,8 @@ export default (WrappedComponent, defaultProps) => {
         {isOpen && (
           <FloatingPortal>
             <FloatingFocusManager context={context} modal={false} returnFocus={false}>
-              {/* eslint-disable-next-line react/jsx-props-no-spreading, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <div className={classNames(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} onClick={handleWithinPopupClick}>
+              {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+              <div className={classNames(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} data-prevent-card-switch>
                 {!(defaultProps?.hideCloseButton || hideCloseButton) && (
                   <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                     <Icon type={IconType.Close} size={IconSize.Size14} />
