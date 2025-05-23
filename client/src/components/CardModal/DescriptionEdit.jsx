@@ -23,11 +23,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
   );
 
   const focus = useCallback(() => {
-    if (!textareaRef.current) return;
-
     textareaRef.current?.focus();
-    const { length } = textareaRef.current.value;
-    textareaRef.current?.setSelectionRange(length, length);
   }, []);
 
   const open = useCallback(() => {
@@ -113,11 +109,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
 
   const handlePreviewUpdate = useCallback(
     (preview) => {
-      // TODO hacky way to update UI faster
-      const timeout = setTimeout(() => {
-        onCurrentUserPrefsUpdate({ descriptionMode: preview });
-      }, 0);
-      return () => clearTimeout(timeout);
+      onCurrentUserPrefsUpdate({ descriptionMode: preview });
     },
     [onCurrentUserPrefsUpdate],
   );
@@ -134,7 +126,6 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
             if (node.textarea && !wasOpen) {
               setWasOpen(true);
               textareaRef.current = node.textarea;
-              focus();
             }
           }
         }}

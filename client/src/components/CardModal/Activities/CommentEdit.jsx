@@ -29,14 +29,6 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
     setData(null);
   }, [setData]);
 
-  const focus = useCallback(() => {
-    if (!textareaRef.current) return;
-
-    textareaRef.current?.focus();
-    const { length } = textareaRef.current.value;
-    textareaRef.current?.setSelectionRange(length, length);
-  }, []);
-
   const submit = useCallback(() => {
     const cleanData = {
       ...data,
@@ -44,7 +36,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
     };
 
     if (!cleanData.text) {
-      focus();
+      textareaRef.current?.focus();
       return;
     }
 
@@ -53,7 +45,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
     }
 
     close();
-  }, [data, defaultData, close, focus, onUpdate]);
+  }, [data, defaultData, close, onUpdate]);
 
   const handleSubmit = useCallback(() => {
     submit();
@@ -106,11 +98,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 
   const handlePreviewUpdate = useCallback(
     (preview) => {
-      // TODO hacky way to update UI faster
-      // const timeout = setTimeout(() => {
       onCurrentUserPrefsUpdate({ commentMode: preview });
-      // }, 0);
-      // return () => clearTimeout(timeout);
     },
     [onCurrentUserPrefsUpdate],
   );
@@ -138,7 +126,6 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
             if (node.textarea && !wasOpen) {
               setWasOpen(true);
               textareaRef.current = node.textarea;
-              focus();
             }
           }
         }}

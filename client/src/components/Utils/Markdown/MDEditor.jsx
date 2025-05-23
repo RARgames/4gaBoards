@@ -49,6 +49,7 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, .
         remarkPlugins,
         rehypePlugins,
       }}
+      autoFocusEnd
       commands={[
         ...commands.getCommands(),
         commands.divider,
