@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
-import { Button } from '../Utils/Button';
 import { Icon, IconType, IconSize } from '../Utils/Icon';
 
 import * as s from './DueDate.module.scss';
@@ -32,8 +31,7 @@ const getDueStyle = (value) => {
   return 'Normal';
 };
 
-// TODO remove old onClick and Button variant
-const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize, isClickable, className, onClick, showUndefined }) => {
+const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable, className, showUndefined }) => {
   const [t] = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
 
@@ -49,9 +47,9 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
 
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
 
-  const contentNode = value ? (
+  return value ? (
     <span
-      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], (onClick || isClickable) && s.dueDateHoverable, className)}
+      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)}
       title={`${titlePrefixString}${t(variant === VARIANTS.LIST_VIEW ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' })}`}
     >
       {variant !== VARIANTS.TASKS_CARD && variant !== VARIANTS.LIST_VIEW && t(`format:date`, { value, postProcess: 'formatDate' })}
@@ -59,39 +57,27 @@ const DueDate = React.memo(({ value, variant, isDisabled, titlePrefix, iconSize,
       {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} />}
     </span>
   ) : (
-    showUndefined && <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], (onClick || isClickable) && s.dueDateHoverable, className)}>-</span>
-  );
-
-  return onClick ? (
-    <Button title={t('common.editDueDate')} onClick={onClick} disabled={isDisabled} className={s.button}>
-      {contentNode}
-    </Button>
-  ) : (
-    contentNode
+    showUndefined && <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)}>-</span>
   );
 });
 
 DueDate.propTypes = {
   value: PropTypes.instanceOf(Date),
   variant: PropTypes.oneOf(Object.values(VARIANTS)),
-  isDisabled: PropTypes.bool,
   titlePrefix: PropTypes.string,
   iconSize: PropTypes.oneOf(Object.values(IconSize)),
   isClickable: PropTypes.bool,
   className: PropTypes.string,
-  onClick: PropTypes.func,
   showUndefined: PropTypes.bool,
 };
 
 DueDate.defaultProps = {
   value: undefined,
   variant: VARIANTS.CARDMODAL,
-  isDisabled: false,
   titlePrefix: undefined,
   iconSize: IconSize.Size13,
   isClickable: false,
   className: undefined,
-  onClick: undefined,
   showUndefined: false,
 };
 
