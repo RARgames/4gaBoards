@@ -8,7 +8,7 @@ import { MDEditor, Button, ButtonStyle } from '../Utils';
 import * as gs from '../../global.module.scss';
 import * as s from './DescriptionEdit.module.scss';
 
-const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onCurrentUserPrefsUpdate, onLocalDescChange, onClose }, ref) => {
+const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, descriptionHeight, descriptionMode, isGithubConnected, githubRepo, onUserPrefsUpdate, onLocalDescChange, onClose }, ref) => {
   const [t] = useTranslation();
   const [value, setValue] = useState(undefined);
   const textareaRef = useRef(null);
@@ -109,9 +109,9 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
 
   const handlePreviewUpdate = useCallback(
     (preview) => {
-      onCurrentUserPrefsUpdate({ descriptionMode: preview });
+      onUserPrefsUpdate({ descriptionMode: preview });
     },
-    [onCurrentUserPrefsUpdate],
+    [onUserPrefsUpdate],
   );
 
   return (
@@ -158,7 +158,7 @@ DescriptionEdit.propTypes = {
   descriptionMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
-  onCurrentUserPrefsUpdate: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
   onLocalDescChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

@@ -9,7 +9,7 @@ import CommentEdit from './CommentEdit';
 
 import * as s from './ItemComment.module.scss';
 
-const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onCurrentUserPrefsUpdate }) => {
+const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onUserPrefsUpdate }) => {
   const [t] = useTranslation();
 
   const commentEdit = useRef(null);
@@ -61,7 +61,7 @@ const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user,
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
         onUpdate={onUpdate}
-        onCurrentUserPrefsUpdate={onCurrentUserPrefsUpdate}
+        onUserPrefsUpdate={onUserPrefsUpdate}
       >
         <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} className={s.preview} />
       </CommentEdit>
@@ -81,7 +81,7 @@ ItemComment.propTypes = {
   githubRepo: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onCurrentUserPrefsUpdate: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
 ItemComment.defaultProps = {

@@ -66,7 +66,7 @@ const CardModal = React.memo(
     commentMode,
     commentCount,
     url,
-    onCurrentUserPrefsUpdate,
+    onUserPrefsUpdate,
     onUpdate,
     onMove,
     onTransfer,
@@ -120,39 +120,23 @@ const CardModal = React.memo(
 
     const handleToggleDescShown = useCallback(() => {
       toggleDescShown();
-      // TODO hacky way to update UI faster
-      const timeout = setTimeout(() => {
-        onCurrentUserPrefsUpdate({ descriptionShown: !descShown });
-      }, 0);
-      return () => clearTimeout(timeout);
-    }, [descShown, onCurrentUserPrefsUpdate, toggleDescShown]);
+      onUserPrefsUpdate({ descriptionShown: !descShown });
+    }, [descShown, onUserPrefsUpdate, toggleDescShown]);
 
     const handleToggleTasksShown = useCallback(() => {
       toggleTasksShown();
-      // TODO hacky way to update UI faster
-      const timeout = setTimeout(() => {
-        onCurrentUserPrefsUpdate({ tasksShown: !taskShown });
-      }, 0);
-      return () => clearTimeout(timeout);
-    }, [taskShown, onCurrentUserPrefsUpdate, toggleTasksShown]);
+      onUserPrefsUpdate({ tasksShown: !taskShown });
+    }, [taskShown, onUserPrefsUpdate, toggleTasksShown]);
 
     const handleToggleAttacShown = useCallback(() => {
       toggleAttacShown();
-      // TODO hacky way to update UI faster
-      const timeout = setTimeout(() => {
-        onCurrentUserPrefsUpdate({ attachmentsShown: !attacShown });
-      }, 0);
-      return () => clearTimeout(timeout);
-    }, [attacShown, onCurrentUserPrefsUpdate, toggleAttacShown]);
+      onUserPrefsUpdate({ attachmentsShown: !attacShown });
+    }, [attacShown, onUserPrefsUpdate, toggleAttacShown]);
 
     const handleToggleCommShown = useCallback(() => {
       toggleCommShown();
-      // TODO hacky way to update UI faster
-      const timeout = setTimeout(() => {
-        onCurrentUserPrefsUpdate({ commentsShown: !commShown });
-      }, 0);
-      return () => clearTimeout(timeout);
-    }, [commShown, onCurrentUserPrefsUpdate, toggleCommShown]);
+      onUserPrefsUpdate({ commentsShown: !commShown });
+    }, [commShown, onUserPrefsUpdate, toggleCommShown]);
 
     const handleNameUpdate = useCallback(
       (newName) => {
@@ -558,7 +542,7 @@ const CardModal = React.memo(
         descriptionHeight={descriptionHeight}
         descriptionMode={descriptionMode}
         userId={userId}
-        onCurrentUserPrefsUpdate={onCurrentUserPrefsUpdate}
+        onUserPrefsUpdate={onUserPrefsUpdate}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
       />
@@ -703,7 +687,7 @@ const CardModal = React.memo(
         onCommentDelete={onCommentActivityDelete}
         toggleCommShown={handleToggleCommShown}
         commShown={commShown}
-        onCurrentUserPrefsUpdate={onCurrentUserPrefsUpdate}
+        onUserPrefsUpdate={onUserPrefsUpdate}
       />
     );
 
@@ -781,7 +765,7 @@ CardModal.propTypes = {
   commentMode: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
-  onCurrentUserPrefsUpdate: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,

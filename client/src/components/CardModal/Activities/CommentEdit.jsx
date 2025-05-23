@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
 import * as gs from '../../../global.module.scss';
 import * as s from './CommentEdit.module.scss';
 
-const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onCurrentUserPrefsUpdate }, ref) => {
+const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onUserPrefsUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [wasOpen, setWasOpen] = useState(false);
@@ -98,9 +98,9 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 
   const handlePreviewUpdate = useCallback(
     (preview) => {
-      onCurrentUserPrefsUpdate({ commentMode: preview });
+      onUserPrefsUpdate({ commentMode: preview });
     },
-    [onCurrentUserPrefsUpdate],
+    [onUserPrefsUpdate],
   );
 
   useEffect(() => {
@@ -157,7 +157,7 @@ CommentEdit.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  onCurrentUserPrefsUpdate: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
 export default React.memo(CommentEdit);

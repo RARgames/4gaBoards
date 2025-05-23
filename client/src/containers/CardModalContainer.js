@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onCurrentUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
+      onUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
       onUpdate: entryActions.updateCurrentCard,
       onMove: entryActions.moveCurrentCard,
       onTransfer: entryActions.transferCurrentCard,
