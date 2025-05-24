@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
 import { startTimer, stopTimer } from '../../utils/timer';
+import { extractFirstLikelyUrl } from '../../utils/url';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import Label from '../Label';
@@ -15,7 +16,7 @@ import MembershipsPopup from '../MembershipsPopup';
 import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink } from '../Utils';
 import ActionsPopup from './ActionsPopup';
 import NameEdit from './NameEdit';
 
@@ -163,12 +164,19 @@ const Card = React.memo(
 
     const visibleMembersCount = 3;
     const labelIds = labels.map((label) => label.id);
+    const link = extractFirstLikelyUrl(name);
+    const isLink = !!link;
 
     const contentNode = (
       <>
         <div>
           <div className={s.detailsTitle}>
             <div title={name} className={s.name}>
+              {isLink && (
+                <ExternalLink href={link}>
+                  <Icon type={IconType.Link} size={IconSize.Size13} className={s.link} />
+                </ExternalLink>
+              )}
               {name}
             </div>
           </div>

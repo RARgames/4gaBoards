@@ -19,4 +19,12 @@
       font-size: 14px;
     }
   }
+
+  .link {
+    margin-right: 2px;
+
+    &:hover {
+      fill: var(--textColor3);
+    }
+  }
 }

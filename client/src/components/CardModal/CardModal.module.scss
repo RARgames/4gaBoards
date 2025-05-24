@@ -249,4 +249,13 @@
     margin-left: 4px;
     cursor: pointer;
   }
+
+  .link {
+    margin-right: 2px;
+    vertical-align: 0%;
+
+    &:hover {
+      fill: var(--textColor3);
+    }
+  }
 }

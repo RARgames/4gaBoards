@@ -55,6 +55,7 @@ module.exports = [
         getComputedStyle: false,
         localStorage: false,
         IntersectionObserver: false,
+        URL: false,
         // From ...globals.jest
         describe: false,
         test: false,
