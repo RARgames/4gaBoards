@@ -136,20 +136,22 @@ const Activities = React.memo(
                     <Item.Comment
                       key={item.id}
                       data={item.data}
-                      createdAt={item.createdAt}
-                      updatedAt={item.updatedAt}
                       isPersisted={item.isPersisted}
                       user={item.user}
                       canEdit={(item.user.isCurrent && canEdit) || canEditAllComments}
                       commentMode={commentMode}
                       isGithubConnected={isGithubConnected}
                       githubRepo={githubRepo}
+                      createdAt={item.createdAt}
+                      createdBy={item.createdBy}
+                      updatedAt={item.updatedAt}
+                      updatedBy={item.updatedBy}
                       onUpdate={(data) => handleCommentUpdate(item.id, data)}
                       onDelete={() => handleCommentDelete(item.id)}
                       onUserPrefsUpdate={onUserPrefsUpdate}
                     />
                   ) : (
-                    <Item key={item.id} type={item.type} data={item.data} createdAt={item.createdAt} user={item.user} />
+                    <Item key={item.id} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} />
                   ),
                 )}
               </div>

@@ -8,7 +8,7 @@ import ItemComment from './ItemComment';
 
 import * as s from './Item.module.scss';
 
-const Item = React.memo(({ type, data, createdAt, user }) => {
+const Item = React.memo(({ type, data, user, createdAt }) => {
   const [t] = useTranslation();
 
   // TODO fully rewrite contentNodes
@@ -86,8 +86,8 @@ Item.Comment = ItemComment;
 Item.propTypes = {
   type: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  createdAt: PropTypes.instanceOf(Date).isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  createdAt: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default Item;

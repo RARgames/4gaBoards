@@ -23,9 +23,8 @@ module.exports = {
     const action = await Action.archiveOne(inputs.record.id);
 
     if (action.type === 'commentCard') {
-      const cards = await sails.helpers.cards.getMany({ id: action.cardId });
-      if (cards.length > 0) {
-        const card = cards[0];
+      const card = await Card.findOne(action.cardId);
+      if (card) {
         await sails.helpers.cards.updateOne.with({
           record: card,
           values: {

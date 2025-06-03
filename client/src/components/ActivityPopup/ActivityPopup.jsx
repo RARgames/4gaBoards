@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import DueDate from '../DueDate';
 import User from '../User';
-import { Popup } from '../Utils';
+import { Popup, withPopup } from '../Utils';
 
-import * as s from './ActivityStep.module.scss';
+import * as s from './ActivityPopup.module.scss';
 
 const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, onBack }) => {
   const [t] = useTranslation();
@@ -46,11 +46,12 @@ ActivityStep.propTypes = {
 };
 
 ActivityStep.defaultProps = {
-  onBack: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  onBack: undefined,
 };
 
-export default ActivityStep;
+export default withPopup(ActivityStep);
+export { ActivityStep };

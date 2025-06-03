@@ -22,9 +22,9 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
-    const action = await Action.updateOne(inputs.record.id).set({ ...values });
+    const action = await Action.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (action) {
       sails.sockets.broadcast(

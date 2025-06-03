@@ -13,6 +13,7 @@ export default {
       actions: 'Comments',
       activityCreated: 'Created',
       activityFor: 'Activity for {{name}}',
+      activityForComment: 'Activity for the comment by {{name}}',
       activityUpdated: 'Updated',
       addAttachment: 'Add attachment',
       addAttachmentButton: 'Add Attachment',

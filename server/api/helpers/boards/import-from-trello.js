@@ -87,6 +87,7 @@ module.exports = {
                 `${trelloComment.data.text}\n\n---\n*Note: imported comment, originally posted by ` +
                 `\n${trelloComment.memberCreator.fullName} (${trelloComment.memberCreator.username}) on ${trelloComment.date}*`,
             },
+            createdById: currentUser.id,
           }).fetch();
         }),
       );

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
-import ActivityStep from '../ActivityStep';
+import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
 import DueDateEditStep from '../DueDateEditStep';
 import MembershipsStep from '../MembershipsStep';

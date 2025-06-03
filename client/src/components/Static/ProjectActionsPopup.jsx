@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
 import { useSteps } from '../../hooks';
-import ActivityStep from '../ActivityStep';
+import { ActivityStep } from '../ActivityPopup';
 import { BoardAddStep } from '../BoardAddPopup';
 import RenameStep from '../RenameStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, withPopup } from '../Utils';

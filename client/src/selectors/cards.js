@@ -294,6 +294,7 @@ export const selectActivitiesForCurrentCard = createSelector(
       .toModelArray()
       .map((activityModel) => ({
         ...activityModel.ref,
+        ...getMeta(activityModel),
         isPersisted: !isLocalId(activityModel.id),
         user: {
           ...activityModel.user.ref,

@@ -37,6 +37,7 @@ module.exports = {
       ...values,
       cardId: values.card.id,
       userId: values.user.id,
+      createdById: currentUser.id,
     }).fetch();
 
     if (values.type === 'commentCard' && !values.duplicate) {

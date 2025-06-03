@@ -2,6 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import ActivityPopup from '../../ActivityPopup';
 import DeletePopup from '../../DeletePopup';
 import User from '../../User';
 import { MDPreview, Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
@@ -9,7 +10,7 @@ import CommentEdit from './CommentEdit';
 
 import * as s from './ItemComment.module.scss';
 
-const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, onUpdate, onDelete, onUserPrefsUpdate }) => {
+const ItemComment = React.memo(({ data, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onDelete, onUserPrefsUpdate }) => {
   const [t] = useTranslation();
 
   const commentEdit = useRef(null);
@@ -36,6 +37,13 @@ const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user,
             <Button style={ButtonStyle.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={s.button}>
               <Icon type={IconType.Pencil} size={IconSize.Size10} className={s.buttonIcon} />
             </Button>
+            <div className={s.popupWrapper}>
+              <ActivityPopup title={t('common.activityForComment', { name: user.name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} position="left-start" offset={0}>
+                <Button style={ButtonStyle.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.button}>
+                  <Icon type={IconType.Activity} size={IconSize.Size10} className={s.buttonIcon} />
+                </Button>
+              </ActivityPopup>
+            </div>
             <div className={s.popupWrapper}>
               <DeletePopup
                 title={t('common.deleteComment', { context: 'title' })}
@@ -71,14 +79,16 @@ const ItemComment = React.memo(({ data, createdAt, updatedAt, isPersisted, user,
 
 ItemComment.propTypes = {
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  createdAt: PropTypes.instanceOf(Date).isRequired,
-  updatedAt: PropTypes.instanceOf(Date),
   isPersisted: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   commentMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
+  createdAt: PropTypes.instanceOf(Date).isRequired,
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
@@ -86,6 +96,8 @@ ItemComment.propTypes = {
 
 ItemComment.defaultProps = {
   updatedAt: null,
+  createdBy: undefined,
+  updatedBy: undefined,
 };
 
 export default ItemComment;

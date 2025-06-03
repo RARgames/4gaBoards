@@ -9,6 +9,10 @@ module.exports.up = async (knex) => {
       table.renameColumn('creator_user_id', 'created_by_id');
       table.bigInteger('updated_by_id');
     });
+    await trx.schema.alterTable('action', (table) => {
+      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
+      table.bigInteger('updated_by_id');
+    });
     await trx.schema.alterTable('board', (table) => {
       table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
       table.bigInteger('updated_by_id');
@@ -67,6 +71,10 @@ module.exports.down = async (knex) => {
   });
   await knex.schema.alterTable('attachment', (table) => {
     table.renameColumn('created_by_id', 'creator_user_id');
+    table.dropColumn('updated_by_id');
+  });
+  await knex.schema.alterTable('action', (table) => {
+    table.dropColumn('created_by_id');
     table.dropColumn('updated_by_id');
   });
   await knex.schema.alterTable('board', (table) => {

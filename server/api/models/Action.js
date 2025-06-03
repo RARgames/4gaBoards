@@ -48,6 +48,15 @@ module.exports = {
       required: true,
       columnName: 'user_id',
     },
+    createdById: {
+      model: 'User',
+      required: true,
+      columnName: 'created_by_id',
+    },
+    updatedById: {
+      model: 'User',
+      columnName: 'updated_by_id',
+    },
   },
 
   async afterUpdate(record, proceed) {

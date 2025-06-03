@@ -10,9 +10,6 @@ export default class extends BaseModel {
     id: attr(),
     type: attr(),
     data: attr(),
-    createdAt: attr({
-      getDefault: () => new Date(),
-    }),
     isInCard: attr({
       getDefault: () => true,
     }),
@@ -25,6 +22,20 @@ export default class extends BaseModel {
       to: 'User',
       as: 'user',
       relatedName: 'activities',
+    }),
+    createdAt: attr({
+      getDefault: () => new Date(),
+    }),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdActivities',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedActivities',
     }),
   };
 

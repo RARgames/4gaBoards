@@ -17,6 +17,7 @@ export default {
       actions: 'Actions',
       activityCreated: 'Créé',
       activityFor: 'Activité pour {{name}}',
+      activityForComment: 'Activité pour le commentaire de {{name}}',
       activityUpdated: 'Mis à jour',
       addAttachment: 'Ajouter une pièce jointe',
       addAttachmentButton: 'Ajouter une pièce jointe',

@@ -15,6 +15,7 @@ export default {
       actions: 'Comentários',
       activityCreated: 'Criado',
       activityFor: 'Atividade de {{name}}',
+      activityForComment: 'Atividade de comentário de {{name}}',
       activityUpdated: 'Atualizado',
       addAttachment: 'Adicionar anexo',
       addAttachmentButton: 'Adicionar Anexo',

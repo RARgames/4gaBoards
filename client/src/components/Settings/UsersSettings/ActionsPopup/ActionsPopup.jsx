@@ -4,7 +4,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../../../hooks';
-import ActivityStep from '../../../ActivityStep';
+import { ActivityStep } from '../../../ActivityPopup';
 import DeleteStep from '../../../DeleteStep';
 import UserEmailEditStep from '../../../UserEmailEditStep';
 import UserInformationEditStep from '../../../UserInformationEditStep';

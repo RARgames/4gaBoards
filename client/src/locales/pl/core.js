@@ -17,6 +17,7 @@ export default {
       actions: 'Komentarze',
       activityCreated: 'Utworzono',
       activityFor: 'Aktywność dla {{name}}',
+      activityForComment: 'Aktywność dla komentarza {{name}}',
       activityUpdated: 'Zaktualizowano',
       addAttachment: 'Dodaj załącznik',
       addAttachmentButton: 'Dodaj załącznik',
