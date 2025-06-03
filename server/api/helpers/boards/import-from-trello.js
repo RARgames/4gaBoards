@@ -51,6 +51,7 @@ module.exports = {
           return CardLabel.create({
             cardId: boardsCard.id,
             labelId: trelloTo4gaBoardsLabels[trelloLabel.id].id,
+            createdById: currentUser.id,
           });
         }),
       );
@@ -65,6 +66,7 @@ module.exports = {
             position: trelloCheckItem.pos,
             name: trelloCheckItem.name,
             isCompleted: trelloCheckItem.state === 'complete',
+            createdById: currentUser.id,
           }).fetch();
         }),
       );
@@ -124,6 +126,7 @@ module.exports = {
             name: trelloLabel.name || null,
             color: get4gaBoardsLabelColor(trelloLabel.color),
             position: sails.config.custom.positionGap * (index + 1),
+            createdById: currentUser.id,
           }).fetch();
 
           trelloTo4gaBoardsLabels[trelloLabel.id] = boardsLabel;
@@ -139,6 +142,7 @@ module.exports = {
             name: trelloList.name,
             position: trelloList.pos,
             isCollapsed: false,
+            createdById: currentUser.id,
           }).fetch();
 
           return importCards(boardsList, trelloList);

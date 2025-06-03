@@ -88,19 +88,19 @@ module.exports = {
     }).fetch();
 
     if (inputs.import && inputs.import.type === Board.ImportTypes.BOARDS) {
-      await sails.helpers.boards.importFromBoards(
+      await sails.helpers.boards.importFromBoards.with({
         currentUser,
         board,
-        inputs.import.board.importTempDir,
-        inputs.import.importFilePath,
-        inputs.import.importNonExistingUsers,
-        inputs.import.importProjectManagers,
-        inputs.import.importGettingStartedProject,
-        inputs.request,
-      );
+        importTempDir: inputs.import.board.importTempDir,
+        importFilePath: inputs.import.importFilePath,
+        importNonExistingUsers: inputs.import.importNonExistingUsers,
+        importProjectManagers: inputs.import.importProjectManagers,
+        importGettingStartedProject: inputs.import.importGettingStartedProject,
+        request: inputs.request,
+      });
     }
     if (inputs.import && inputs.import.type === Board.ImportTypes.TRELLO) {
-      await sails.helpers.boards.importFromTrello(currentUser, board, inputs.import.board);
+      await sails.helpers.boards.importFromTrello.with({ currentUser, board, trelloBoard: inputs.import.board });
     }
 
     const boardMembership = await BoardMembership.create({
