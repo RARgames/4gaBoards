@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../../hooks';
+import ActivityStep from '../../ActivityStep';
 import DeleteStep from '../../DeleteStep';
 import ExportStep from '../../ExportStep';
 import RenameStep from '../../RenameStep';
@@ -16,9 +17,10 @@ const StepTypes = {
   GITHUB: 'GITHUB',
   EXPORT: 'EXPORT',
   DELETE: 'DELETE',
+  ACTIVITY: 'ACTIVITY',
 };
 
-const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onUpdate, onExport, onDelete, onClose }) => {
+const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onExport, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -26,6 +28,10 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
     openStep(StepTypes.EXPORT);
     onExport();
   }, [onExport, openStep]);
+
+  const handleActivityClick = useCallback(() => {
+    openStep(StepTypes.ACTIVITY);
+  }, [openStep]);
 
   if (step) {
     switch (step.type) {
@@ -47,6 +53,8 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
             onBack={handleBack}
           />
         );
+      case StepTypes.ACTIVITY:
+        return <ActivityStep title={t('common.activityFor', { name: defaultDataRename.name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
       default:
     }
   }
@@ -65,6 +73,10 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
         <Icon type={IconType.Board} size={IconSize.Size13} className={s.icon} />
         {t('common.exportBoard', { context: 'title' })}
       </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
+        <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+        {t('common.checkActivity', { context: 'title' })}
+      </Button>
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
         <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -77,10 +89,21 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, onU
 BoardActionsStep.propTypes = {
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataGithub: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+BoardActionsStep.defaultProps = {
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default withPopup(BoardActionsStep);

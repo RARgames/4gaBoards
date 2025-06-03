@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
 import { useSteps } from '../../hooks';
+import ActivityStep from '../ActivityStep';
 import { BoardAddStep } from '../BoardAddPopup';
 import RenameStep from '../RenameStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, withPopup } from '../Utils';
@@ -14,9 +15,10 @@ import * as s from './ProjectActionsPopup.module.scss';
 const StepTypes = {
   RENAME: 'RENAME',
   ADD: 'ADD',
+  ACTIVITY: 'ACTIVITY',
 };
 
-const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultDataRename, isAdmin, onUpdate, onBoardCreate, onClose }) => {
+const ProjectActionsStep = React.memo(({ name, projectId, managedProjects, defaultDataRename, isAdmin, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onBoardCreate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -35,6 +37,8 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
         );
       case StepTypes.ADD:
         return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
+      case StepTypes.ACTIVITY:
+        return <ActivityStep title={t('common.activityFor', { name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
       default:
     }
   }
@@ -51,6 +55,10 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
           {t('common.projectSettings', { context: 'title' })}
         </Button>
       </Link>
+      <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
+        <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+        {t('common.checkActivity', { context: 'title' })}
+      </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
         <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
         {t('common.addBoard', { context: 'title' })}
@@ -60,13 +68,25 @@ const ProjectActionsStep = React.memo(({ projectId, managedProjects, defaultData
 });
 
 ProjectActionsStep.propTypes = {
+  name: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isAdmin: PropTypes.bool.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+ProjectActionsStep.defaultProps = {
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default withPopup(ProjectActionsStep);

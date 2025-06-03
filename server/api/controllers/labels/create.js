@@ -67,6 +67,7 @@ module.exports = {
           ...values,
           board,
         },
+        currentUser,
         request: this.req,
       })
       .intercept('invalidName', () => Errors.INVALID_NAME);

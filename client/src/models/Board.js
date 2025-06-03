@@ -34,6 +34,18 @@ export default class extends BaseModel {
         matchCase: false,
       }),
     }),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdBoards',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedBoards',
+    }),
   };
 
   static reducer({ type, payload }, Board) {

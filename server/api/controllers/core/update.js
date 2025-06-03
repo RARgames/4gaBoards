@@ -48,7 +48,7 @@ module.exports = {
     }
     const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled']);
 
-    core = await Core.updateOne({ id: 0 }).set({ ...values });
+    core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values });
     const coreItem = {
       ...core,
       ssoUrls: sails.config.custom.ssoUrls,
@@ -65,7 +65,7 @@ module.exports = {
         {
           item: coreItem,
         },
-        inputs.request,
+        this.req,
       );
     });
 

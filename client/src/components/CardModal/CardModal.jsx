@@ -67,6 +67,10 @@ const CardModal = React.memo(
     commentMode,
     commentCount,
     url,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
     onUserPrefsUpdate,
     onUpdate,
     onMove,
@@ -330,6 +334,7 @@ const CardModal = React.memo(
           {canEdit && (
             <ActionsPopup
               card={{
+                name,
                 dueDate,
                 timer,
                 boardId,
@@ -343,6 +348,10 @@ const CardModal = React.memo(
               currentLabelIds={labels.map((label) => label.id)}
               url={url}
               canEdit={canEdit}
+              createdAt={createdAt}
+              createdBy={createdBy}
+              updatedAt={updatedAt}
+              updatedBy={updatedBy}
               onNameEdit={handleNameEdit}
               onUpdate={onUpdate}
               onMove={onMove}
@@ -773,6 +782,10 @@ CardModal.propTypes = {
   commentMode: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
@@ -809,6 +822,10 @@ CardModal.defaultProps = {
   description: undefined,
   dueDate: undefined,
   timer: undefined,
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default CardModal;

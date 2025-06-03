@@ -9,7 +9,7 @@ const makeMapStateToProps = () => {
   const selectUserById = selectors.makeSelectUserById();
 
   return (state, { id }) => {
-    const { email, username, name, organization, phone, isAdmin, emailUpdateForm, passwordUpdateForm, usernameUpdateForm } = selectUserById(state, id);
+    const { email, username, name, organization, phone, isAdmin, emailUpdateForm, passwordUpdateForm, usernameUpdateForm, createdAt, createdBy, updatedAt, updatedBy } = selectUserById(state, id);
     const currentUser = selectors.selectCurrentUser(state);
     const isCurrentUser = currentUser.id === id;
 
@@ -24,6 +24,10 @@ const makeMapStateToProps = () => {
       emailUpdateForm,
       passwordUpdateForm,
       usernameUpdateForm,
+      createdAt,
+      createdBy,
+      updatedAt,
+      updatedBy,
     };
   };
 };

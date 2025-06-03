@@ -33,7 +33,7 @@ module.exports = {
       const updatedValues = {
         ssoGoogleId: inputs.id,
       };
-      user = await sails.helpers.users.updateOne(user, updatedValues, {});
+      user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
       return user;
     }
     // TODO end legacy way of authentication - to remove after some time
@@ -44,8 +44,7 @@ module.exports = {
         ssoGoogleId: inputs.id,
         ssoGoogleEmail: email,
       };
-      user = await sails.helpers.users.updateOne(user, updatedValues, {}); // TODO: {} - needed for updateOne - fix it
-
+      user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
       return user;
     }
     // Register new user
@@ -66,7 +65,7 @@ module.exports = {
       ssoGoogleEmail: email,
       name: inputs.displayName || email.split('@')[0],
     };
-    user = await sails.helpers.users.createOne(newValues);
+    user = await sails.helpers.users.createOne.with({ values: newValues });
 
     if (user) {
       return user;

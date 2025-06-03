@@ -11,7 +11,7 @@ const parseJSON = (json) => {
 
 module.exports = {
   inputs: {
-    user: {
+    currentUser: {
       type: 'ref',
       required: true,
     },
@@ -46,6 +46,8 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     const { projectManagers, boardMemberships, lists, cards, cardMemberships, actions, attachments, cardLabels, cardSubscriptions, labels, tasks, taskMemberships, users } = await sails.helpers.utils.loadCsvs(
       inputs.importTempDir,
       ['projectManagers', 'boardMemberships', 'lists', 'cards', 'cardMemberships', 'actions', 'attachments', 'cardLabels', 'cardSubscriptions', 'labels', 'tasks', 'taskMemberships', 'users'],
@@ -53,28 +55,28 @@ module.exports = {
 
     if (inputs.importGettingStartedProject) {
       boardMemberships.forEach((boardMembership) => {
-        boardMembership.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+        boardMembership.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
       cards.forEach((card) => {
-        card.creatorUserId = inputs.user.id; // eslint-disable-line no-param-reassign
+        card.createdById = currentUser.id; // eslint-disable-line no-param-reassign
       });
       cardMemberships.forEach((cardMembership) => {
-        cardMembership.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+        cardMembership.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
       actions.forEach((action) => {
-        action.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+        action.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
       attachments.forEach((attachment) => {
-        attachment.creatorUserId = inputs.user.id; // eslint-disable-line no-param-reassign
+        attachment.createdById = currentUser.id; // eslint-disable-line no-param-reassign
       });
       cardSubscriptions.forEach((cardSubscription) => {
-        cardSubscription.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+        cardSubscription.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
       taskMemberships.forEach((taskMembership) => {
-        taskMembership.userId = inputs.user.id; // eslint-disable-line no-param-reassign
+        taskMembership.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
       users.forEach((user) => {
-        user.id = inputs.user.id; // eslint-disable-line no-param-reassign
+        user.id = currentUser.id; // eslint-disable-line no-param-reassign
       });
     }
 
@@ -126,6 +128,7 @@ module.exports = {
               name: user.name,
               email: user.email,
               avatar: fileData && fileData.dirname ? { dirname: fileData.dirname, extension: avatarData.extension } : null,
+              createdById: currentUser.id,
             })
               .intercept(
                 {
@@ -135,7 +138,7 @@ module.exports = {
               )
               .fetch();
 
-            await sails.helpers.userPrefs.createOne.with({ values: { id: newUser.id } });
+            await sails.helpers.userPrefs.createOne.with({ values: { id: newUser.id }, currentUser });
 
             allUsers[user.id] = newUser;
           }
@@ -147,11 +150,14 @@ module.exports = {
       return Promise.all(
         projectManagers.map(async (projectManager) => {
           if (allUsers[projectManager.userId]) {
+            const updatedAt = parseJSON(projectManager.updatedAt);
             const pm = await ProjectManager.create({
-              createdAt: parseJSON(projectManager.createdAt),
-              updatedAt: parseJSON(projectManager.updatedAt),
               projectId: inputs.board.projectId,
               userId: allUsers[projectManager.userId].id,
+              createdAt: parseJSON(projectManager.createdAt),
+              createdById: allUsers[projectManager.createdById]?.id ?? currentUser.id,
+              updatedAt,
+              updatedById: updatedAt && (allUsers[projectManager.updatedById]?.id ?? currentUser.id),
             })
               .tolerate('E_UNIQUE')
               .fetch();
@@ -179,13 +185,16 @@ module.exports = {
       return Promise.all(
         boardMemberships.map(async (boardMembership) => {
           if (allUsers[boardMembership.userId]) {
+            const updatedAt = parseJSON(boardMembership.updatedAt);
             await BoardMembership.create({
-              createdAt: parseJSON(boardMembership.createdAt),
-              updatedAt: parseJSON(boardMembership.updatedAt),
               boardId: inputs.board.id,
               userId: allUsers[boardMembership.userId].id,
               role: boardMembership.role,
               ...(boardMembership.canComment !== '' && { canComment: boardMembership.canComment }),
+              createdAt: parseJSON(boardMembership.createdAt),
+              createdById: allUsers[boardMembership.createdById]?.id ?? currentUser.id,
+              updatedAt,
+              updatedById: updatedAt && (allUsers[boardMembership.updatedById]?.id ?? currentUser.id),
             })
               .tolerate('E_UNIQUE')
               .fetch();
@@ -206,13 +215,16 @@ module.exports = {
     const importLabels = async () => {
       return Promise.all(
         labels.map(async (label) => {
+          const updatedAt = parseJSON(label.updatedAt);
           const newLabel = await Label.create({
-            createdAt: parseJSON(label.createdAt),
-            updatedAt: parseJSON(label.updatedAt),
             boardId: inputs.board.id,
             name: label.name || null,
             color: getLabelColor(label.color),
             position: label.position,
+            createdAt: parseJSON(label.createdAt),
+            createdById: allUsers[label.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[label.updatedById]?.id ?? currentUser.id),
           }).fetch();
 
           importedLabels[label.id] = newLabel;
@@ -230,16 +242,18 @@ module.exports = {
           };
           const fileData = await sails.helpers.attachments.processUploadedFile(metadata, inputs.importGettingStartedProject);
 
+          const updatedAt = parseJSON(attachment.updatedAt);
           const newAttachment = await Attachment.create({
-            createdAt: parseJSON(attachment.createdAt),
-            updatedAt: parseJSON(attachment.updatedAt),
             cardId: newCard.id,
-            creatorUserId: allUsers[attachment.creatorUserId] ? allUsers[attachment.creatorUserId].id : inputs.user.id,
             // TODO add original attachment author here, migration, attachmentCreate
             name: attachment.name,
             image: parseJSON(attachment.image),
             filename: attachment.filename,
             dirname: fileData.dirname,
+            createdAt: parseJSON(attachment.createdAt),
+            createdById: allUsers[attachment.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[attachment.updatedById]?.id ?? currentUser.id),
           }).fetch();
 
           importedAttachments[attachment.id] = newAttachment;
@@ -251,11 +265,14 @@ module.exports = {
       return Promise.all(
         getCardMembershipsOfCard(card.id).map(async (cardMembership) => {
           if (allUsers[cardMembership.userId]) {
+            const updatedAt = parseJSON(cardMembership.updatedAt);
             await CardMembership.create({
-              createdAt: parseJSON(cardMembership.createdAt),
-              updatedAt: parseJSON(cardMembership.updatedAt),
               cardId: newCard.id,
               userId: allUsers[cardMembership.userId].id,
+              createdAt: parseJSON(cardMembership.createdAt),
+              createdById: allUsers[cardMembership.createdById]?.id ?? currentUser.id,
+              updatedAt,
+              updatedById: updatedAt && (allUsers[cardMembership.updatedById]?.id ?? currentUser.id),
             })
               .tolerate('E_UNIQUE')
               .fetch();
@@ -269,11 +286,11 @@ module.exports = {
         getCardSubscriptionsOfCard(card.id).map(async (cardSubscription) => {
           if (allUsers[cardSubscription.userId]) {
             await CardSubscription.create({
-              createdAt: parseJSON(cardSubscription.createdAt),
-              updatedAt: parseJSON(cardSubscription.updatedAt),
               cardId: newCard.id,
               userId: allUsers[cardSubscription.userId].id,
               isPermanent: cardSubscription.isPermanent,
+              createdAt: parseJSON(cardSubscription.createdAt),
+              updatedAt: parseJSON(cardSubscription.updatedAt),
             })
               .tolerate('E_UNIQUE')
               .fetch();
@@ -286,11 +303,14 @@ module.exports = {
       return Promise.all(
         getCardLabelsOfCard(card.id).map(async (cardLabel) => {
           if (importedLabels[cardLabel.labelId]) {
+            const updatedAt = parseJSON(cardLabel.updatedAt);
             await CardLabel.create({
-              createdAt: parseJSON(cardLabel.createdAt),
-              updatedAt: parseJSON(cardLabel.updatedAt),
               cardId: newCard.id,
               labelId: importedLabels[cardLabel.labelId].id,
+              createdAt: parseJSON(cardLabel.createdAt),
+              createdById: allUsers[cardLabel.createdById]?.id ?? currentUser.id,
+              updatedAt,
+              updatedById: updatedAt && (allUsers[cardLabel.updatedById]?.id ?? currentUser.id),
             });
           }
         }),
@@ -301,11 +321,14 @@ module.exports = {
       return Promise.all(
         getTaskMembershipsOfTask(task.id).map(async (taskMembership) => {
           if (allUsers[taskMembership.userId]) {
+            const updatedAt = parseJSON(taskMembership.updatedAt);
             await TaskMembership.create({
-              createdAt: parseJSON(taskMembership.createdAt),
-              updatedAt: parseJSON(taskMembership.updatedAt),
               taskId: newTask.id,
               userId: allUsers[taskMembership.userId].id,
+              createdAt: parseJSON(taskMembership.createdAt),
+              createdById: allUsers[taskMembership.createdById]?.id ?? currentUser.id,
+              updatedAt,
+              updatedById: updatedAt && (allUsers[taskMembership.updatedById]?.id ?? currentUser.id),
             })
               .tolerate('E_UNIQUE')
               .fetch();
@@ -317,14 +340,17 @@ module.exports = {
     const importTasks = async (newCard, card) => {
       return Promise.all(
         getTasksOfCard(card.id).map(async (task) => {
+          const updatedAt = parseJSON(task.updatedAt);
           const newTask = await Task.create({
-            createdAt: parseJSON(task.createdAt),
-            updatedAt: parseJSON(task.updatedAt),
             cardId: newCard.id,
             position: task.position,
             name: task.name,
             isCompleted: task.isCompleted,
             dueDate: parseJSON(task.dueDate),
+            createdAt: parseJSON(task.createdAt),
+            createdById: allUsers[task.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[task.updatedById]?.id ?? currentUser.id),
           }).fetch();
 
           await importTaskMemberships(newTask, task);
@@ -353,12 +379,12 @@ module.exports = {
           }
 
           await Action.create({
-            createdAt: parseJSON(action.createdAt),
-            updatedAt: parseJSON(action.updatedAt),
             cardId: newCard.id,
-            userId: allUsers[action.userId] ? allUsers[action.userId].id : inputs.user.id,
+            userId: allUsers[action.userId] ? allUsers[action.userId].id : currentUser.id,
             type: action.type,
             data: newData,
+            createdAt: parseJSON(action.createdAt),
+            updatedAt: parseJSON(action.updatedAt),
           }).fetch();
         }),
       );
@@ -367,11 +393,10 @@ module.exports = {
     const importCards = async (newList, list) => {
       return Promise.all(
         getCardsOfList(list.id).map(async (card) => {
+          const updatedAt = parseJSON(card.updatedAt);
           const newCard = await Card.create({
-            createdAt: parseJSON(card.createdAt),
             boardId: inputs.board.id,
             listId: newList.id,
-            creatorUserId: allUsers[card.creatorUserId] ? allUsers[card.creatorUserId].id : inputs.user.id,
             // TODO add original card author here, migration, cardCreate
             position: card.position,
             name: card.name,
@@ -379,6 +404,10 @@ module.exports = {
             dueDate: parseJSON(card.dueDate),
             commentCount: card.commentCount,
             timer: parseJSON(card.timer),
+            createdAt: parseJSON(card.createdAt),
+            createdById: allUsers[card.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[card.updatedById]?.id ?? currentUser.id),
           }).fetch();
 
           await importAttachments(newCard, card);
@@ -397,13 +426,16 @@ module.exports = {
     const importLists = async () => {
       return Promise.all(
         lists.map(async (list) => {
+          const updatedAt = parseJSON(list.updatedAt);
           const newList = await List.create({
-            createdAt: parseJSON(list.createdAt),
-            updatedAt: parseJSON(list.updatedAt),
             boardId: inputs.board.id,
             name: list.name,
             position: list.position,
             isCollapsed: list.isCollapsed,
+            createdAt: parseJSON(list.createdAt),
+            createdById: allUsers[list.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[list.updatedById]?.id ?? currentUser.id),
           }).fetch();
 
           importedLists[list.id] = newList;

@@ -69,6 +69,7 @@ module.exports = {
         ...values,
         card,
       },
+      currentUser,
       request: this.req,
     });
 

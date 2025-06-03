@@ -11,6 +11,7 @@ import MarkdownCell from './MarkdownCell';
 import RadioCell from './RadioCell';
 import SettingsCell from './SettingsCell';
 import TableStyle from './TableStyle';
+import UserCell from './UserCell';
 
 import * as ts from './Table.module.scss';
 
@@ -67,6 +68,11 @@ function DateCellRenderer({ table, column, getValue }) {
 }
 DateCellRenderer.propTypes = listPropTypes;
 
+function UserCellRenderer({ table, column, getValue }) {
+  return <UserCell value={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
+}
+UserCellRenderer.propTypes = listPropTypes;
+
 function RadioCellRenderer({ table, column, row, getValue }) {
   return <RadioCell id={row.original.id} checked={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
@@ -77,4 +83,4 @@ function ActionsHeaderRenderer({ table, column }) {
 }
 ActionsHeaderRenderer.propTypes = listHeaderPropTypes;
 
-export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, SettingsCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, RadioCellRenderer, ActionsHeaderRenderer };
+export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, SettingsCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, UserCellRenderer, RadioCellRenderer, ActionsHeaderRenderer };

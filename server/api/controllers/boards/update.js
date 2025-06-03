@@ -52,6 +52,7 @@ module.exports = {
     board = await sails.helpers.boards.updateOne.with({
       values,
       record: board,
+      currentUser,
       request: this.req,
     });
 

@@ -4,6 +4,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
+import ActivityStep from '../ActivityStep';
 import CardMoveStep from '../CardMoveStep';
 import DeleteStep from '../DeleteStep';
 import DueDateEditStep from '../DueDateEditStep';
@@ -21,6 +22,7 @@ const StepTypes = {
   EDIT_TIMER: 'EDIT_TIMER',
   MOVE: 'MOVE',
   DELETE: 'DELETE',
+  ACTIVITY: 'ACTIVITY',
 };
 
 const ActionsStep = React.memo(
@@ -33,6 +35,10 @@ const ActionsStep = React.memo(
     currentLabelIds,
     url,
     canEdit,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
     onNameEdit,
     onUpdate,
     onMove,
@@ -74,6 +80,10 @@ const ActionsStep = React.memo(
 
     const handleMoveClick = useCallback(() => {
       openStep(StepTypes.MOVE);
+    }, [openStep]);
+
+    const handleActivityClick = useCallback(() => {
+      openStep(StepTypes.ACTIVITY);
     }, [openStep]);
 
     const handleDuplicateClick = useCallback(() => {
@@ -158,6 +168,8 @@ const ActionsStep = React.memo(
               onBack={handleBack}
             />
           );
+        case StepTypes.ACTIVITY:
+          return <ActivityStep title={t('common.activityFor', { name: card.name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
         default:
       }
     }
@@ -172,6 +184,7 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />
         <Button style={ButtonStyle.PopupContext} content={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick} />
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -193,6 +206,10 @@ ActionsStep.propTypes = {
   /* eslint-enable react/forbid-prop-types */
   url: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onNameEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
@@ -208,6 +225,13 @@ ActionsStep.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+ActionsStep.defaultProps = {
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default withPopup(ActionsStep);

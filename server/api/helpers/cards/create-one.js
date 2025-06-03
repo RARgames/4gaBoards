@@ -11,10 +11,6 @@ const valuesValidator = (value) => {
     return false;
   }
 
-  if (!_.isPlainObject(value.creatorUser)) {
-    return false;
-  }
-
   return true;
 };
 
@@ -25,11 +21,15 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
-    request: {
-      type: 'ref',
-    },
     duplicate: {
       type: 'boolean',
+    },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
+    request: {
+      type: 'ref',
     },
   },
 
@@ -38,7 +38,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (_.isUndefined(values.position)) {
       throw 'positionMustBeInValues';
@@ -69,7 +69,7 @@ module.exports = {
       position,
       boardId: values.list.boardId,
       listId: values.list.id,
-      creatorUserId: values.creatorUser.id,
+      createdById: currentUser.id,
     }).fetch();
 
     sails.sockets.broadcast(
@@ -81,14 +81,14 @@ module.exports = {
       inputs.request,
     );
 
-    const userPrefs = await sails.helpers.userPrefs.getOne(values.creatorUser.id);
+    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
     if (userPrefs.subscribeToOwnCards && !inputs.values.duplicate) {
       await CardSubscription.create({
         cardId: card.id,
-        userId: card.creatorUserId,
+        userId: card.createdById,
       }).tolerate('E_UNIQUE');
 
-      sails.sockets.broadcast(`user:${card.creatorUserId}`, 'cardUpdate', {
+      sails.sockets.broadcast(`user:${card.createdById}`, 'cardUpdate', {
         item: {
           id: card.id,
           isSubscribed: true,
@@ -103,8 +103,9 @@ module.exports = {
         data: {
           list: _.pick(values.list, ['id', 'name']),
         },
-        user: values.creatorUser,
+        user: currentUser,
       },
+      currentUser,
     });
 
     return card;

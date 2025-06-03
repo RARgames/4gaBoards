@@ -66,6 +66,7 @@ module.exports = {
     cardMembership = await sails.helpers.cardMemberships.deleteOne.with({
       board,
       record: cardMembership,
+      currentUser,
       request: this.req,
     });
 

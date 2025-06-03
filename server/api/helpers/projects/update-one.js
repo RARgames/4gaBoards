@@ -28,6 +28,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -38,7 +42,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (values.backgroundImage) {
       values.background = {
@@ -60,7 +64,7 @@ module.exports = {
           backgroundImage: {
             '!=': null,
           },
-        }).set({ ...values });
+        }).set({ updatedById: currentUser.id, ...values });
 
         if (!project) {
           delete values.background;
@@ -69,7 +73,7 @@ module.exports = {
     }
 
     if (!project) {
-      project = await Project.updateOne(inputs.record.id).set({ ...values });
+      project = await Project.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
     }
 
     if (project) {

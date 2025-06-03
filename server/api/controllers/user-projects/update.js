@@ -39,6 +39,7 @@ module.exports = {
     userProject = await sails.helpers.userProjects.updateOne.with({
       values,
       record: userProject,
+      currentUser,
       request: this.req,
     });
 

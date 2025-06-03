@@ -86,6 +86,7 @@ module.exports = {
       values: {
         backgroundImage: fileData,
       },
+      currentUser,
       request: this.req,
     });
 

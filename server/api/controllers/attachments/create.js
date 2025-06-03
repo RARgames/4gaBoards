@@ -82,8 +82,8 @@ module.exports = {
       values: {
         ...fileData,
         card,
-        creatorUser: currentUser,
       },
+      currentUser,
       requestId: inputs.requestId,
       request: this.req,
     });

@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
@@ -24,6 +25,7 @@ export const selectProject = createSelector(
 
     return {
       ...projectModel.ref,
+      ...getMeta(projectModel),
       firstBoardId: boardsModels[0] && boardsModels[0].id,
     };
   },
@@ -43,7 +45,10 @@ export const selectCurrentProject = createSelector(
       return projectModel;
     }
 
-    return projectModel.ref;
+    return {
+      ...projectModel.ref,
+      ...getMeta(projectModel),
+    };
   },
 );
 
@@ -99,6 +104,7 @@ export const selectBoardsForCurrentProject = createSelector(
 
     return projectModel.getOrderedBoardsModelArrayAvailableForUser(currentUserId).map((boardModel) => ({
       ...boardModel.ref,
+      ...getMeta(boardModel),
       isPersisted: !isLocalId(boardModel.id),
     }));
   },

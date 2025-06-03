@@ -1,14 +1,5 @@
 import socket from './socket';
-
-/* Transformers */
-
-export const transformActivity = (activity) => ({
-  ...activity,
-  createdAt: new Date(activity.createdAt),
-  ...(activity.updatedAt && {
-    updatedAt: new Date(activity.updatedAt),
-  }),
-});
+import { transformActivity } from './transformers';
 
 /* Actions */
 

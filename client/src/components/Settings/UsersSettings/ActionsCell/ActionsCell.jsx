@@ -16,6 +16,10 @@ const ActionsCell = React.memo(
     organization,
     phone,
     isAdmin,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
     emailUpdateForm,
     passwordUpdateForm,
     usernameUpdateForm,
@@ -44,6 +48,10 @@ const ActionsCell = React.memo(
           passwordUpdateForm,
           usernameUpdateForm,
         }}
+        createdAt={createdAt}
+        createdBy={createdBy}
+        updatedAt={updatedAt}
+        updatedBy={updatedBy}
         onUpdate={onUpdate}
         onUsernameUpdate={onUsernameUpdate}
         onUsernameUpdateMessageDismiss={onUsernameUpdateMessageDismiss}
@@ -74,6 +82,10 @@ ActionsCell.propTypes = {
   organization: PropTypes.string,
   phone: PropTypes.string,
   isAdmin: PropTypes.bool.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   emailUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   passwordUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   usernameUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -91,6 +103,10 @@ ActionsCell.defaultProps = {
   username: undefined,
   organization: undefined,
   phone: undefined,
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default ActionsCell;

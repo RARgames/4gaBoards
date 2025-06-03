@@ -7,7 +7,7 @@ module.exports = {
       type: 'string',
       defaultsTo: 'en',
     },
-    user: {
+    currentUser: {
       type: 'ref',
       required: true,
     },
@@ -21,7 +21,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const currentUser = inputs.user;
+    const { currentUser } = inputs;
 
     let { language } = inputs;
     const directories = fs
@@ -36,7 +36,7 @@ module.exports = {
 
     const { project, projectManager } = await sails.helpers.projects.createOne.with({
       values: { name: data.projects[0].name },
-      user: currentUser,
+      currentUser,
       request: inputs.request,
     });
 
@@ -45,6 +45,7 @@ module.exports = {
         projectId: project.id,
         userId: currentUser.id,
       },
+      currentUser,
       request: inputs.request,
     });
 
@@ -69,7 +70,7 @@ module.exports = {
         isImportedBoard: true,
       },
       import: boardImport,
-      user: currentUser,
+      currentUser,
       request: inputs.request,
     });
 

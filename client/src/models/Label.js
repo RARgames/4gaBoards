@@ -15,6 +15,18 @@ export default class extends BaseModel {
       as: 'board',
       relatedName: 'labels',
     }),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdLabels',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedLabels',
+    }),
   };
 
   static reducer({ type, payload }, Label) {

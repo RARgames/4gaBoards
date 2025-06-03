@@ -29,24 +29,32 @@ module.exports = {
       required: true,
       columnName: 'user_id',
     },
+    createdById: {
+      model: 'User',
+      required: true,
+      columnName: 'created_by_id',
+    },
+    updatedById: {
+      model: 'User',
+      columnName: 'updated_by_id',
+    },
   },
 
   tableName: 'task_membership',
 
   async afterCreate(record, proceed) {
-    const [task] = await Task.update({ id: record.taskId }).set({ updatedAt: new Date().toUTCString() }).fetch();
-    if (task) {
-      const card = await Card.findOne({ id: task.cardId });
-      sails.sockets.broadcast(`board:${card.boardId}`, 'taskUpdate', { item: task });
-    }
-    proceed();
-  },
-
-  async afterDestroy(record, proceed) {
-    const [task] = await Task.update({ id: record.taskId }).set({ updatedAt: new Date().toUTCString() }).fetch();
-    if (task) {
-      const card = await Card.findOne({ id: task.cardId });
-      sails.sockets.broadcast(`board:${card.boardId}`, 'taskUpdate', { item: task });
+    if (record.createdById) {
+      const task = await Task.updateOne(record.taskId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
+      if (task) {
+        const card = await Card.findOne(task.cardId);
+        sails.sockets.broadcast(`board:${card.boardId}`, 'taskUpdate', {
+          item: {
+            id: task.id,
+            updatedAt: task.updatedAt,
+            updatedById: task.updatedById,
+          },
+        });
+      }
     }
     proceed();
   },

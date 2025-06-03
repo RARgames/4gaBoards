@@ -7,9 +7,14 @@ module.exports = {
       custom: criteriaValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
     const criteria = {};
 
     if (_.isString(inputs.criteria)) {
@@ -20,7 +25,7 @@ module.exports = {
 
     let userPrefs = await UserPrefs.findOne(criteria);
     if (!userPrefs) {
-      userPrefs = await sails.helpers.userPrefs.createOne.with({ values: { id: criteria.id } });
+      userPrefs = await sails.helpers.userPrefs.createOne.with({ values: { id: criteria.id }, currentUser });
     }
 
     return userPrefs;

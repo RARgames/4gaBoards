@@ -21,6 +21,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -31,7 +35,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (values.user) {
       values.userId = values.user.id;
@@ -40,6 +44,7 @@ module.exports = {
     const cardMembership = await CardMembership.create({
       ...values,
       cardId: values.card.id,
+      createdById: currentUser.id,
     })
       .intercept('E_UNIQUE', 'userAlreadyCardMember')
       .fetch();

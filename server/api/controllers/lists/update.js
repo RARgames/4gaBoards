@@ -58,6 +58,7 @@ module.exports = {
     list = await sails.helpers.lists.updateOne.with({
       values,
       record: list,
+      currentUser,
       request: this.req,
     });
 

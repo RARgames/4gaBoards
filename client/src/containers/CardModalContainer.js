@@ -17,8 +17,25 @@ const mapStateToProps = (state) => {
   const allLabels = selectors.selectLabelsForCurrentBoard(state);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-  const { name, description, dueDate, timer, isSubscribed, isActivitiesFetching, isAllActivitiesFetched, isActivitiesDetailsVisible, isActivitiesDetailsFetching, boardId, listId, id, commentCount } =
-    selectors.selectCurrentCard(state);
+  const {
+    name,
+    description,
+    dueDate,
+    timer,
+    isSubscribed,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
+    isActivitiesDetailsVisible,
+    isActivitiesDetailsFetching,
+    boardId,
+    listId,
+    id,
+    commentCount,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+  } = selectors.selectCurrentCard(state);
 
   const users = selectors.selectUsersForCurrentCard(state);
   const labels = selectors.selectLabelsForCurrentCard(state);
@@ -79,6 +96,10 @@ const mapStateToProps = (state) => {
     canEditAllCommentActivities: isCurrentUserManager,
     commentMode,
     url,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
   };
 };
 

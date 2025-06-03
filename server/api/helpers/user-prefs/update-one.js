@@ -17,6 +17,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },

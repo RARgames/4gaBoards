@@ -1,5 +1,5 @@
-import { transformActivity } from './activities';
 import socket from './socket';
+import { transformActivity } from './transformers';
 
 /* Actions */
 

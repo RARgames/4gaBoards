@@ -27,6 +27,9 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+    },
     request: {
       type: 'ref',
     },
@@ -38,7 +41,8 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
+
     let hashedPassword;
     if (values.password) {
       hashedPassword = bcrypt.hashSync(values.password, 10);
@@ -48,11 +52,12 @@ module.exports = {
       values.username = values.username.toLowerCase();
     }
 
-    const user = await User.create({
+    let user = await User.create({
       ...values,
       email: values.email.toLowerCase(),
       password: hashedPassword,
       isAdmin: sails.config.custom.demoMode,
+      createdById: currentUser?.id ?? '0',
     })
       .intercept(
         {
@@ -68,7 +73,11 @@ module.exports = {
       )
       .fetch();
 
-    await sails.helpers.userPrefs.createOne.with({ values: { id: user.id } });
+    if (!currentUser) {
+      user = await User.updateOne({ id: user.id }).set({ createdById: user.id });
+    }
+
+    await sails.helpers.userPrefs.createOne.with({ values: { id: user.id }, currentUser: user });
 
     // const userIds = await sails.helpers.users.getAdminIds();
 

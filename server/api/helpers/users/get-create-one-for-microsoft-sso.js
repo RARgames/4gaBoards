@@ -34,8 +34,7 @@ module.exports = {
         ssoMicrosoftId: inputs.id,
         ssoMicrosoftEmail: email,
       };
-      user = await sails.helpers.users.updateOne(user, updatedValues, {}); // TODO: {} - needed for updateOne - fix it
-
+      user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
       return user;
     }
     // Register new user
@@ -56,7 +55,7 @@ module.exports = {
       ssoMicrosoftEmail: email,
       name: inputs.displayName || email,
     };
-    user = await sails.helpers.users.createOne(newValues);
+    user = await sails.helpers.users.createOne.with({ values: newValues });
 
     if (user) {
       return user;

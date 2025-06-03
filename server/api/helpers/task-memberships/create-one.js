@@ -25,6 +25,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -35,11 +39,12 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const taskMembership = await TaskMembership.create({
       taskId: values.taskId,
       userId: values.userId,
+      createdById: currentUser.id,
     })
       .intercept('E_UNIQUE', 'userAlreadyTaskMember')
       .fetch();

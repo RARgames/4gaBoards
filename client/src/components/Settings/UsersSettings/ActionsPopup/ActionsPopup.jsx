@@ -4,6 +4,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../../../hooks';
+import ActivityStep from '../../../ActivityStep';
 import DeleteStep from '../../../DeleteStep';
 import UserEmailEditStep from '../../../UserEmailEditStep';
 import UserInformationEditStep from '../../../UserInformationEditStep';
@@ -17,10 +18,27 @@ const StepTypes = {
   EDIT_EMAIL: 'EDIT_EMAIL',
   EDIT_PASSWORD: 'EDIT_PASSWORD',
   DELETE: 'DELETE',
+  ACTIVITY: 'ACTIVITY',
 };
 
 const ActionsStep = React.memo(
-  ({ isCurrentUser, user, onUpdate, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss, onPasswordUpdate, onPasswordUpdateMessageDismiss, onDelete, onClose }) => {
+  ({
+    isCurrentUser,
+    user,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    onUpdate,
+    onUsernameUpdate,
+    onUsernameUpdateMessageDismiss,
+    onEmailUpdate,
+    onEmailUpdateMessageDismiss,
+    onPasswordUpdate,
+    onPasswordUpdateMessageDismiss,
+    onDelete,
+    onClose,
+  }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
 
@@ -42,6 +60,10 @@ const ActionsStep = React.memo(
 
     const handleDeleteClick = useCallback(() => {
       openStep(StepTypes.DELETE);
+    }, [openStep]);
+
+    const handleActivityClick = useCallback(() => {
+      openStep(StepTypes.ACTIVITY);
     }, [openStep]);
 
     const handleDelete = useCallback(() => {
@@ -104,6 +126,8 @@ const ActionsStep = React.memo(
               onBack={handleBack}
             />
           );
+        case StepTypes.ACTIVITY:
+          return <ActivityStep title={t('common.activityFor', { name: user.name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
         default:
       }
     }
@@ -114,6 +138,7 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick} />
         {!isCurrentUser && <Popup.Separator />}
         {!isCurrentUser && <Button style={ButtonStyle.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />}
       </>
@@ -124,6 +149,10 @@ const ActionsStep = React.memo(
 ActionsStep.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onUsernameUpdate: PropTypes.func.isRequired,
   onUsernameUpdateMessageDismiss: PropTypes.func.isRequired,
@@ -133,6 +162,13 @@ ActionsStep.propTypes = {
   onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+ActionsStep.defaultProps = {
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default withPopup(ActionsStep);

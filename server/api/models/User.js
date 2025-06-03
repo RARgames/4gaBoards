@@ -128,6 +128,15 @@ module.exports = {
       via: 'userId',
       through: 'TaskMembership',
     },
+    createdById: {
+      model: 'User',
+      required: true,
+      columnName: 'created_by_id',
+    },
+    updatedById: {
+      model: 'User',
+      columnName: 'updated_by_id',
+    },
   },
 
   tableName: 'user_account',
@@ -138,5 +147,17 @@ module.exports = {
       isPasswordAuthenticated: !!this.password,
       avatarUrl: this.avatar && `${sails.config.custom.userAvatarsUrl}/${this.avatar.dirname}/square-100.${this.avatar.extension}`,
     };
+  },
+
+  async beforeUpdate(record, proceed) {
+    sails.config.models.beforeUpdate(record, () => {
+      if (record.lastLogin) {
+        delete record.updatedById; // eslint-disable-line no-param-reassign
+        delete record.updatedAt; // eslint-disable-line no-param-reassign
+      }
+      // TODO temp solution for lastLogin
+
+      proceed();
+    });
   },
 };

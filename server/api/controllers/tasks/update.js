@@ -71,6 +71,7 @@ module.exports = {
       values,
       board,
       record: task,
+      currentUser,
       request: this.req,
     });
 

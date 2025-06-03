@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 
 export const makeSelectListById = () =>
@@ -16,6 +17,7 @@ export const makeSelectListById = () =>
 
       return {
         ...listModel.ref,
+        ...getMeta(listModel),
         isPersisted: !isLocalId(id),
       };
     },

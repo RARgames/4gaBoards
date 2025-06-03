@@ -48,7 +48,7 @@ module.exports = {
       name: inputs.displayName || inputs.username,
       username: isUsernameTaken ? undefined : inputs.username.toLowerCase(),
     };
-    user = await sails.helpers.users.createOne(newValues);
+    user = await sails.helpers.users.createOne.with({ values: newValues });
 
     if (user) {
       return user;

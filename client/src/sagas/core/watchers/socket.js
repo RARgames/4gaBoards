@@ -36,17 +36,17 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleUserPrefsUpdate(item));
     };
 
-    const handleProjectCreate = ({ item }) => {
+    const handleProjectCreate = api.makeHandleProjectCreate(({ item }) => {
       emit(entryActions.handleProjectCreate(item));
-    };
+    });
 
-    const handleProjectUpdate = ({ item }) => {
+    const handleProjectUpdate = api.makeHandleProjectUpdate(({ item }) => {
       emit(entryActions.handleProjectUpdate(item));
-    };
+    });
 
-    const handleProjectDelete = ({ item }) => {
+    const handleProjectDelete = api.makeHandleProjectDelete(({ item }) => {
       emit(entryActions.handleProjectDelete(item));
-    };
+    });
 
     const handleUserProjectUpdate = ({ item }) => {
       emit(entryActions.handleUserProjectUpdate(item));
@@ -60,17 +60,17 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleProjectManagerDelete(item));
     };
 
-    const handleBoardCreate = ({ item, requestId }) => {
+    const handleBoardCreate = api.makeHandleBoardCreate(({ item, requestId }) => {
       emit(entryActions.handleBoardCreate(item, requestId));
-    };
+    });
 
-    const handleBoardUpdate = ({ item }) => {
+    const handleBoardUpdate = api.makeHandleBoardUpdate(({ item }) => {
       emit(entryActions.handleBoardUpdate(item));
-    };
+    });
 
-    const handleBoardDelete = ({ item }) => {
+    const handleBoardDelete = api.makeHandleBoardDelete(({ item }) => {
       emit(entryActions.handleBoardDelete(item));
-    };
+    });
 
     const handleBoardMembershipCreate = ({ item }) => {
       emit(entryActions.handleBoardMembershipCreate(item));
@@ -84,17 +84,17 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleBoardMembershipDelete(item));
     };
 
-    const handleListCreate = ({ item }) => {
+    const handleListCreate = api.makeHandleListCreate(({ item }) => {
       emit(entryActions.handleListCreate(item));
-    };
+    });
 
-    const handleListUpdate = ({ item }) => {
+    const handleListUpdate = api.makeHandleListUpdate(({ item }) => {
       emit(entryActions.handleListUpdate(item));
-    };
+    });
 
-    const handleListDelete = ({ item }) => {
+    const handleListDelete = api.makeHandleListDelete(({ item }) => {
       emit(entryActions.handleListDelete(item));
-    };
+    });
 
     const handleLabelCreate = ({ item }) => {
       emit(entryActions.handleLabelCreate(item));

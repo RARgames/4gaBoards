@@ -11,8 +11,9 @@ module.exports = {
       type: 'json',
       required: true,
     },
-    user: {
+    currentUser: {
       type: 'ref',
+      required: true,
     },
     request: {
       type: 'ref',
@@ -20,7 +21,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const criteria = {};
 
@@ -30,9 +31,7 @@ module.exports = {
       criteria.id = inputs.recordsOrIds;
     }
 
-    if (inputs.user) {
-      criteria.userId = inputs.user.id;
-    }
+    criteria.userId = currentUser.id;
 
     const notifications = await Notification.update(criteria)
       .set({ ...values })

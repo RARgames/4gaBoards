@@ -8,13 +8,17 @@ module.exports = {
       type: 'json',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
     const role = values.role || inputs.record.role;
 
     if (role === BoardMembership.Roles.EDITOR) {
@@ -27,7 +31,7 @@ module.exports = {
       }
     }
 
-    const boardMembership = await BoardMembership.updateOne(inputs.record.id).set({ ...values });
+    const boardMembership = await BoardMembership.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (boardMembership) {
       sails.sockets.broadcast(

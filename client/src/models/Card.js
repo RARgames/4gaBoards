@@ -50,6 +50,18 @@ export default class extends BaseModel {
     }),
     users: many('User', 'cards'),
     labels: many('Label', 'cards'),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdCards',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedCards',
+    }),
   };
 
   static reducer({ type, payload }, Card) {

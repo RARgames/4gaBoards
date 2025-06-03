@@ -173,7 +173,7 @@ module.exports = {
           board: nextBoard,
           list: nextList,
         },
-        user: currentUser,
+        currentUser,
         request: this.req,
       })
       .intercept('positionMustBeInValues', () => Errors.POSITION_MUST_BE_PRESENT)

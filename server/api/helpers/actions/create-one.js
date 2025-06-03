@@ -21,13 +21,17 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const action = await Action.create({
       ...values,
@@ -41,6 +45,7 @@ module.exports = {
         values: {
           commentCount: values.card.commentCount + 1,
         },
+        currentUser,
         request: this.req,
       });
     }
@@ -63,6 +68,7 @@ module.exports = {
             userId,
             action,
           },
+          currentUser,
         }),
       ),
     );

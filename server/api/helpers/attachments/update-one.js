@@ -12,15 +12,19 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
-    const attachment = await Attachment.updateOne(inputs.record.id).set({ ...values });
+    const attachment = await Attachment.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (attachment) {
       sails.sockets.broadcast(

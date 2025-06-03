@@ -42,7 +42,9 @@ const makeMapStateToProps = () => {
         dueDate: card.dueDate || undefined, // undefined needed for TanStack Table sorting
         timer: card.timer || undefined, // undefined needed for TanStack Table sorting
         createdAt: card.createdAt,
+        createdBy: card.createdBy,
         updatedAt: card.updatedAt || undefined, // undefined needed for TanStack Table sorting
+        updatedBy: card.updatedBy || undefined, // undefined needed for TanStack Table sorting
         tasks,
         notificationsCount,
         description: card.description,

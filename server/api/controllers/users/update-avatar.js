@@ -87,7 +87,7 @@ module.exports = {
       values: {
         avatar: fileData,
       },
-      user: currentUser,
+      currentUser,
       request: this.req,
     });
 

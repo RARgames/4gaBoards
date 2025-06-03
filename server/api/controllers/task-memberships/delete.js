@@ -66,6 +66,7 @@ module.exports = {
     taskMembership = await sails.helpers.taskMemberships.deleteOne.with({
       board,
       record: taskMembership,
+      currentUser,
       request: this.req,
     });
 

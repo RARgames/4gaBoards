@@ -7,10 +7,6 @@ const valuesValidator = (value) => {
     return false;
   }
 
-  if (!_.isPlainObject(value.creatorUser)) {
-    return false;
-  }
-
   return true;
 };
 
@@ -19,6 +15,10 @@ module.exports = {
     values: {
       type: 'ref',
       custom: valuesValidator,
+      required: true,
+    },
+    currentUser: {
+      type: 'ref',
       required: true,
     },
     requestId: {
@@ -31,12 +31,12 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const attachment = await Attachment.create({
       ...values,
       cardId: values.card.id,
-      creatorUserId: values.creatorUser.id,
+      createdById: currentUser.id,
     }).fetch();
 
     sails.sockets.broadcast(

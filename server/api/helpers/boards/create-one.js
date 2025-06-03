@@ -37,7 +37,7 @@ module.exports = {
       type: 'json',
       custom: importValidator,
     },
-    user: {
+    currentUser: {
       type: 'ref',
       required: true,
     },
@@ -51,7 +51,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const projectManagerUserIds = await sails.helpers.projects.getManagerUserIds(values.project.id);
     const boards = await sails.helpers.projects.getBoards(values.project.id);
@@ -84,11 +84,12 @@ module.exports = {
       ...values,
       position,
       projectId: values.project.id,
+      createdById: currentUser.id,
     }).fetch();
 
     if (inputs.import && inputs.import.type === Board.ImportTypes.BOARDS) {
       await sails.helpers.boards.importFromBoards(
-        inputs.user,
+        currentUser,
         board,
         inputs.import.board.importTempDir,
         inputs.import.importFilePath,
@@ -99,13 +100,14 @@ module.exports = {
       );
     }
     if (inputs.import && inputs.import.type === Board.ImportTypes.TRELLO) {
-      await sails.helpers.boards.importFromTrello(inputs.user, board, inputs.import.board);
+      await sails.helpers.boards.importFromTrello(currentUser, board, inputs.import.board);
     }
 
     const boardMembership = await BoardMembership.create({
       boardId: board.id,
-      userId: inputs.user.id,
+      userId: currentUser.id,
       role: BoardMembership.Roles.EDITOR,
+      createdById: currentUser.id,
     })
       .tolerate('E_UNIQUE')
       .fetch();

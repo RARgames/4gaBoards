@@ -1,15 +1,7 @@
 import omit from 'lodash/omit';
 
-import { transformActivity } from './activities';
-import { transformCard } from './cards';
 import socket from './socket';
-
-/* Transformers */
-
-export const transformNotification = (notification) => ({
-  ...omit(notification, 'actionId'),
-  activityId: notification.actionId,
-});
+import { transformActivity, transformCard, transformNotification } from './transformers';
 
 /* Actions */
 

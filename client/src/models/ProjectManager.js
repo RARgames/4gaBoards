@@ -18,6 +18,18 @@ export default class extends BaseModel {
       as: 'user',
       relatedName: 'projectManagers',
     }),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdProjectManagers',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedProjectManagers',
+    }),
   };
 
   static reducer({ type, payload }, ProjectManager) {

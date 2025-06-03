@@ -45,6 +45,7 @@ module.exports = {
 
     label = await sails.helpers.labels.deleteOne.with({
       record: label,
+      currentUser,
       request: this.req,
     });
 

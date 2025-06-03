@@ -16,6 +16,16 @@ export default class extends BaseModel {
       as: 'board',
       relatedName: 'lists',
     }),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdLists',
+    }),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedLists',
+    }),
   };
 
   static reducer({ type, payload }, List) {

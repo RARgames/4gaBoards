@@ -40,10 +40,14 @@ module.exports = {
       required: true,
       columnName: 'card_id',
     },
-    creatorUserId: {
+    createdById: {
       model: 'User',
       required: true,
-      columnName: 'creator_user_id',
+      columnName: 'created_by_id',
+    },
+    updatedById: {
+      model: 'User',
+      columnName: 'updated_by_id',
     },
   },
 
@@ -56,25 +60,33 @@ module.exports = {
   },
 
   async afterCreate(record, proceed) {
-    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
-    if (card) {
-      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    if (record.createdById) {
+      const card = await Card.updateOne(record.cardId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
+      if (card) {
+        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
+          item: {
+            id: card.id,
+            updatedAt: card.updatedAt,
+            updatedById: card.updatedById,
+          },
+        });
+      }
     }
     proceed();
   },
 
   async afterUpdate(record, proceed) {
-    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
-    if (card) {
-      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
-    }
-    proceed();
-  },
-
-  async afterDestroy(record, proceed) {
-    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
-    if (card) {
-      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    if (record.updatedById) {
+      const card = await Card.updateOne(record.cardId).set({ updatedAt: new Date().toUTCString(), updatedById: record.updatedById });
+      if (card) {
+        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
+          item: {
+            id: card.id,
+            updatedAt: card.updatedAt,
+            updatedById: card.updatedById,
+          },
+        });
+      }
     }
     proceed();
   },

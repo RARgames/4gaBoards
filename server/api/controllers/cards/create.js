@@ -96,9 +96,9 @@ module.exports = {
         values: {
           ...values,
           list,
-          creatorUser: currentUser,
           commentCount: 0,
         },
+        currentUser,
         request: this.req,
       })
       .intercept('positionMustBeInValues', () => Errors.POSITION_MUST_BE_PRESENT);

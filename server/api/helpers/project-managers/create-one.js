@@ -21,6 +21,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -31,11 +35,12 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const projectManager = await ProjectManager.create({
       projectId: values.project.id,
       userId: values.user.id,
+      createdById: currentUser.id,
     })
       .intercept('E_UNIQUE', 'userAlreadyProjectManager')
       .fetch();

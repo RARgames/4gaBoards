@@ -1,4 +1,4 @@
-import { attr, many } from 'redux-orm';
+import { attr, many, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import { ProjectBackgroundTypes } from '../constants/Enums';
@@ -20,6 +20,18 @@ export default class extends BaseModel {
       to: 'User',
       through: 'ProjectManager',
       relatedName: 'projects',
+    }),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdProjects',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedProjects',
     }),
   };
 

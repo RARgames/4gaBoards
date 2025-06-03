@@ -45,6 +45,7 @@ module.exports = {
 
     list = await sails.helpers.lists.deleteOne.with({
       record: list,
+      currentUser,
       request: this.req,
     });
 

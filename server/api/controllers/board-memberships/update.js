@@ -45,6 +45,7 @@ module.exports = {
     boardMembership = await sails.helpers.boardMemberships.updateOne.with({
       values,
       record: boardMembership,
+      currentUser,
       request: this.req,
     });
 

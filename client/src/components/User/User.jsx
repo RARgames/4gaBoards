@@ -4,7 +4,7 @@ import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
-import { Button } from '../Utils';
+import { Button } from '../Utils/Button';
 
 import * as s from './User.module.scss';
 

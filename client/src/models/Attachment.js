@@ -17,6 +17,18 @@ export default class extends BaseModel {
       as: 'card',
       relatedName: 'attachments',
     }),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdAttachments',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedAttachments',
+    }),
   };
 
   static reducer({ type, payload }, Attachment) {

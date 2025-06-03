@@ -2,6 +2,7 @@ import { createSelector } from 'redux-orm';
 
 import Paths from '../constants/Paths';
 import orm from '../orm';
+import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
@@ -19,6 +20,7 @@ export const makeSelectCardById = () =>
 
       return {
         ...cardModel.ref,
+        ...getMeta(cardModel),
         coverUrl: cardModel.coverAttachment && cardModel.coverAttachment.coverUrl,
         isPersisted: !isLocalId(id),
       };
@@ -79,10 +81,11 @@ export const makeSelectTasksByCardId = () =>
 
       return cardModel
         .getOrderedTasksQuerySet()
-        .toRefArray()
-        .map((task) => ({
-          ...task,
-          isPersisted: !isLocalId(task.id),
+        .toModelArray()
+        .map((taskModel) => ({
+          ...taskModel.ref,
+          ...getMeta(taskModel),
+          isPersisted: !isLocalId(taskModel.id),
         }));
     },
   );
@@ -173,7 +176,10 @@ export const selectCurrentCard = createSelector(
       return cardModel;
     }
 
-    return cardModel.ref;
+    return {
+      ...cardModel.ref,
+      ...getMeta(cardModel),
+    };
   },
 );
 
@@ -234,10 +240,11 @@ export const selectTasksForCurrentCard = createSelector(
 
     return cardModel
       .getOrderedTasksQuerySet()
-      .toRefArray()
-      .map((task) => ({
-        ...task,
-        isPersisted: !isLocalId(task.id),
+      .toModelArray()
+      .map((taskModel) => ({
+        ...taskModel.ref,
+        ...getMeta(taskModel),
+        isPersisted: !isLocalId(taskModel.id),
       }));
   },
 );

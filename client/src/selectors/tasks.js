@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import getMeta from '../utils/get-meta';
 import { selectCurrentUserId } from './users';
 
 export const makeSelectTaskById = () =>
@@ -14,7 +15,10 @@ export const makeSelectTaskById = () =>
         return taskModel;
       }
 
-      return taskModel.ref;
+      return {
+        ...taskModel.ref,
+        ...getMeta(taskModel),
+      };
     },
   );
 

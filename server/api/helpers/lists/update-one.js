@@ -21,13 +21,17 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (!_.isUndefined(values.position)) {
       const lists = await sails.helpers.boards.getLists(inputs.record.boardId, inputs.record.id);
@@ -53,7 +57,7 @@ module.exports = {
       });
     }
 
-    const list = await List.updateOne(inputs.record.id).set({ ...values });
+    const list = await List.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (list) {
       sails.sockets.broadcast(

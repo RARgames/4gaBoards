@@ -58,6 +58,7 @@ module.exports = {
         card,
         user: currentUser,
       },
+      currentUser,
       request: this.req,
     });
 

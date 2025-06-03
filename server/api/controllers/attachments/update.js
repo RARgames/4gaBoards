@@ -56,6 +56,7 @@ module.exports = {
       values,
       board,
       record: attachment,
+      currentUser,
       request: this.req,
     });
 

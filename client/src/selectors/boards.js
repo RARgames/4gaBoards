@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
@@ -16,7 +17,10 @@ export const makeSelectBoardById = () =>
         return boardModel;
       }
 
-      return boardModel.ref;
+      return {
+        ...boardModel.ref,
+        ...getMeta(boardModel),
+      };
     },
   );
 
@@ -36,7 +40,10 @@ export const selectCurrentBoard = createSelector(
       return boardModel;
     }
 
-    return boardModel.ref;
+    return {
+      ...boardModel.ref,
+      ...getMeta(boardModel),
+    };
   },
 );
 

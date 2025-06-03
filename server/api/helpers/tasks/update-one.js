@@ -25,13 +25,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (!_.isUndefined(values.position)) {
       const tasks = await sails.helpers.cards.getTasks(inputs.record.cardId, inputs.record.id);
@@ -57,7 +61,7 @@ module.exports = {
       });
     }
 
-    const task = await Task.updateOne(inputs.record.id).set({ ...values });
+    const task = await Task.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (task) {
       sails.sockets.broadcast(

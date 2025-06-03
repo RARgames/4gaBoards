@@ -47,6 +47,10 @@ const Card = React.memo(
     allLabels,
     url,
     canEdit,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
     onUpdate,
     onMove,
     onTransfer,
@@ -313,6 +317,7 @@ const Card = React.memo(
                       <div className={s.popupWrapper}>
                         <ActionsPopup
                           card={{
+                            name,
                             dueDate,
                             timer,
                             boardId,
@@ -326,6 +331,10 @@ const Card = React.memo(
                           currentLabelIds={labels.map((label) => label.id)}
                           url={url}
                           canEdit={canEdit}
+                          createdAt={createdAt}
+                          createdBy={createdBy}
+                          updatedAt={updatedAt}
+                          updatedBy={updatedBy}
                           onNameEdit={handleNameEdit}
                           onUpdate={onUpdate}
                           onMove={onMove}
@@ -389,6 +398,10 @@ Card.propTypes = {
   url: PropTypes.string.isRequired,
   /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
@@ -416,6 +429,10 @@ Card.defaultProps = {
   timer: undefined,
   coverUrl: undefined,
   description: undefined,
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default Card;

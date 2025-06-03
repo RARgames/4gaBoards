@@ -1,0 +1,17 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    justify-content: space-around;
+    color: var(--textColor1);
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .metaUser {
+    margin: 2px 0;
+  }
+}

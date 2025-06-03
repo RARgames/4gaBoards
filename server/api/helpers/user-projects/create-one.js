@@ -4,6 +4,10 @@ module.exports = {
       type: 'json',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },

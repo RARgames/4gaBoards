@@ -55,9 +55,14 @@ module.exports = {
       required: true,
       columnName: 'list_id',
     },
-    creatorUserId: {
+    createdById: {
       model: 'User',
-      columnName: 'creator_user_id',
+      required: true,
+      columnName: 'created_by_id',
+    },
+    updatedById: {
+      model: 'User',
+      columnName: 'updated_by_id',
     },
     coverAttachmentId: {
       model: 'Attachment',
@@ -90,5 +95,37 @@ module.exports = {
       collection: 'Action',
       via: 'cardId',
     },
+  },
+
+  async afterCreate(record, proceed) {
+    if (record.createdById) {
+      const list = await List.updateOne(record.listId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
+      if (list) {
+        sails.sockets.broadcast(`board:${list.boardId}`, 'listUpdate', {
+          item: {
+            id: list.id,
+            updatedAt: list.updatedAt,
+            updatedById: list.updatedById,
+          },
+        });
+      }
+    }
+    proceed();
+  },
+
+  async afterUpdate(record, proceed) {
+    if (record.updatedById) {
+      const list = await List.updateOne(record.listId).set({ updatedAt: new Date().toUTCString(), updatedById: record.updatedById });
+      if (list) {
+        sails.sockets.broadcast(`board:${list.boardId}`, 'listUpdate', {
+          item: {
+            id: list.id,
+            updatedAt: list.updatedAt,
+            updatedById: list.updatedById,
+          },
+        });
+      }
+    }
+    proceed();
   },
 };

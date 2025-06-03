@@ -10,6 +10,7 @@ import * as s from './ActionsCell.module.scss';
 const ActionsCell = React.memo(
   ({
     id,
+    name,
     projectId,
     allProjectsToLists,
     allBoardMemberships,
@@ -23,6 +24,10 @@ const ActionsCell = React.memo(
     users,
     labels,
     canEdit,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
     onUpdate,
     onMove,
     onTransfer,
@@ -48,6 +53,7 @@ const ActionsCell = React.memo(
       return (
         <ActionsPopup
           card={{
+            name,
             dueDate,
             timer,
             boardId,
@@ -61,6 +67,10 @@ const ActionsCell = React.memo(
           currentLabelIds={labels.map((label) => label.id)}
           url={url}
           canEdit={canEdit}
+          createdAt={createdAt}
+          createdBy={createdBy}
+          updatedAt={updatedAt}
+          updatedBy={updatedBy}
           onNameEdit={handleNameEdit}
           onUpdate={onUpdate}
           onMove={onMove}
@@ -93,6 +103,7 @@ const ActionsCell = React.memo(
 
 ActionsCell.propTypes = {
   id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -106,6 +117,10 @@ ActionsCell.propTypes = {
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
@@ -125,6 +140,10 @@ ActionsCell.propTypes = {
 ActionsCell.defaultProps = {
   dueDate: undefined,
   timer: undefined,
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default ActionsCell;

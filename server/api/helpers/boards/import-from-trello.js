@@ -1,6 +1,6 @@
 module.exports = {
   inputs: {
-    user: {
+    currentUser: {
       type: 'ref',
       required: true,
     },
@@ -15,6 +15,8 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     const trelloTo4gaBoardsLabels = {};
 
     const getTrelloLists = () => inputs.trelloBoard.lists.filter((list) => !list.closed);
@@ -76,7 +78,7 @@ module.exports = {
         trelloComments.map(async (trelloComment) => {
           return Action.create({
             cardId: boardsCard.id,
-            userId: inputs.user.id,
+            userId: currentUser.id,
             type: 'commentCard',
             data: {
               text:
@@ -94,7 +96,7 @@ module.exports = {
           const boardsCard = await Card.create({
             boardId: inputs.board.id,
             listId: boardsList.id,
-            creatorUserId: inputs.user.id,
+            createdById: currentUser.id,
             position: trelloCard.pos,
             name: trelloCard.name,
             description: trelloCard.desc || null,

@@ -1,20 +1,5 @@
 import socket from './socket';
-
-/* Transformers */
-
-export const transformTask = (task) => ({
-  ...task,
-  ...(task.dueDate && {
-    dueDate: new Date(task.dueDate),
-  }),
-});
-
-export const transformTaskData = (data) => ({
-  ...data,
-  ...(data.dueDate && {
-    dueDate: data.dueDate.toISOString(),
-  }),
-});
+import { transformTask, transformTaskData } from './transformers';
 
 /* Actions */
 

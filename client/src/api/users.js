@@ -1,22 +1,6 @@
 import http from './http';
 import socket from './socket';
-
-/* Transformers */
-
-export const transformUser = (user) => ({
-  ...user,
-  createdAt: new Date(user.createdAt),
-  ...(user.lastLogin && {
-    lastLogin: new Date(user.lastLogin),
-  }),
-});
-
-export const transformUserData = (data) => ({
-  ...data,
-  ...(data.lastLogin && {
-    lastLogin: data.lastLogin.toISOString(),
-  }),
-});
+import { transformUser, transformUserData } from './transformers';
 
 /* Actions */
 

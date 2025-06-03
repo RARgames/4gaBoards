@@ -39,7 +39,7 @@ module.exports = {
 
     const { project, projectManager } = await sails.helpers.projects.createOne.with({
       values,
-      user: currentUser,
+      currentUser,
       request: this.req,
     });
 
@@ -48,6 +48,7 @@ module.exports = {
         projectId: project.id,
         userId: currentUser.id,
       },
+      currentUser,
       request: this.req,
     });
 

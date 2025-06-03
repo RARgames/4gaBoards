@@ -21,13 +21,17 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const projectManagerUserIds = await sails.helpers.projects.getManagerUserIds(inputs.record.projectId);
 
@@ -60,7 +64,7 @@ module.exports = {
       });
     }
 
-    const board = await Board.updateOne(inputs.record.id).set({ ...values });
+    const board = await Board.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (board) {
       boardRelatedUserIds.forEach((userId) => {

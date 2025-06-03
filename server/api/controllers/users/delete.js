@@ -43,6 +43,7 @@ module.exports = {
 
     user = await sails.helpers.users.deleteOne.with({
       record: user,
+      currentUser,
       request: this.req,
     });
 
@@ -55,6 +56,7 @@ module.exports = {
     userProjects.forEach(async (userProject) => {
       await sails.helpers.userProjects.deleteOne.with({
         record: userProject,
+        currentUser,
         request: this.req,
       });
     });

@@ -133,7 +133,7 @@ module.exports = {
         isImportedBoard: !!inputs.importType,
       },
       import: boardImport,
-      user: currentUser,
+      currentUser,
       requestId: inputs.requestId,
       request: this.req,
     });
@@ -146,6 +146,7 @@ module.exports = {
             ...valuesList,
             board,
           },
+          currentUser,
           request: this.req,
         });
       });
@@ -174,6 +175,7 @@ module.exports = {
               board,
               user,
             },
+            currentUser,
             request: this.req,
           })
           .intercept('userAlreadyBoardMember', () => Errors.USER_ALREADY_BOARD_MEMBER);

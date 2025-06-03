@@ -23,6 +23,9 @@ const DEFAULT_COLUMN_VISIBILITY = {
   ssoMicrosoftEmail: false,
   lastLogin: true,
   createdAt: false,
+  createdBy: false,
+  updatedAt: false,
+  updatedBy: false,
   actions: true,
 };
 
@@ -224,11 +227,36 @@ const UsersSettings = React.memo(
         },
         {
           accessorKey: 'createdAt',
-          header: t('common.created'),
+          header: t('common.createdAt'),
           cell: Table.Renderers.DateCellRenderer,
           enableSorting: true,
-          meta: { headerTitle: t('common.created'), suggestedSize: 110 },
+          meta: { headerTitle: t('common.createdAt'), suggestedSize: 110 },
           cellProps: { className: s.dateCell },
+        },
+        {
+          accessorKey: 'createdBy',
+          header: t('common.createdBy'),
+          cell: Table.Renderers.UserCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          meta: { headerTitle: t('common.createdBy') },
+        },
+        {
+          accessorKey: 'updatedAt',
+          header: t('common.updatedAt'),
+          cell: Table.Renderers.DateCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          meta: { headerTitle: t('common.updatedAt'), suggestedSize: 110 },
+          cellProps: { className: s.dateCell },
+        },
+        {
+          accessorKey: 'updatedBy',
+          header: t('common.updatedBy'),
+          cell: Table.Renderers.UserCellRenderer,
+          enableSorting: true,
+          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          meta: { headerTitle: t('common.updatedBy') },
         },
         {
           accessorKey: 'actions',

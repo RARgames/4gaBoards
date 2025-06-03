@@ -17,6 +17,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -27,7 +31,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (values.name === null || values.name === '') {
       throw 'invalidName';
@@ -39,7 +43,7 @@ module.exports = {
       throw 'invalidName';
     }
 
-    const label = await Label.updateOne(inputs.record.id).set({ ...values });
+    const label = await Label.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (label) {
       sails.sockets.broadcast(

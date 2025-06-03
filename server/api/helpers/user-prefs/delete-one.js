@@ -4,6 +4,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
   },
 
   async fn(inputs) {

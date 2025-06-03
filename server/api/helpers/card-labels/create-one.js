@@ -21,6 +21,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -31,12 +35,13 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const cardLabel = await CardLabel.create({
       ...values,
       cardId: values.card.id,
       labelId: values.label.id,
+      createdById: currentUser.id,
     })
       .intercept('E_UNIQUE', 'labelAlreadyInCard')
       .fetch();

@@ -4,12 +4,18 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     const boardMemberships = await BoardMembership.destroy({
       boardId: inputs.record.id,
     }).fetch();
@@ -33,6 +39,23 @@ module.exports = {
           inputs.request,
         );
       });
+
+      let project = await Project.findOne(board.projectId);
+      if (project) {
+        project = await Project.updateOne(project.id).set({ updatedById: currentUser.id });
+        if (project) {
+          const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(project.id);
+          projectRelatedUserIds.forEach((userId) => {
+            sails.sockets.broadcast(`user:${userId}`, 'projectUpdate', {
+              item: {
+                id: project.id,
+                updatedAt: project.updatedAt,
+                updatedById: project.updatedById,
+              },
+            });
+          });
+        }
+      }
     }
 
     return board;

@@ -11,7 +11,11 @@ export default (table) => {
         return rowA.original[columnId].localeCompare(rowB.original[columnId]);
       },
       recursiveNameSortingFn: (rowA, rowB, columnId) => {
-        const getSortingValue = (values) => values?.map((value) => value.name || '') || [];
+        const getSortingValue = (values) => {
+          // eslint-disable-next-line no-nested-ternary
+          const array = Array.isArray(values) ? values : values ? [values] : [];
+          return array.map((value) => value.name || '');
+        };
 
         const aList = getSortingValue(rowA.original[columnId]);
         const bList = getSortingValue(rowB.original[columnId]);

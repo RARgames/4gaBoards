@@ -1,4 +1,4 @@
-import { attr } from 'redux-orm';
+import { attr, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import BaseModel from './BaseModel';
@@ -13,6 +13,18 @@ export default class extends BaseModel {
     ssoRegistrationEnabled: attr(),
     projectCreationAllEnabled: attr(),
     demoMode: attr(),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdCoreSettings',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedCoreSettings',
+    }),
   };
 
   static reducer({ type, payload }, Core) {

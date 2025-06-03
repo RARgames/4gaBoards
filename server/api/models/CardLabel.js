@@ -29,22 +29,31 @@ module.exports = {
       required: true,
       columnName: 'label_id',
     },
+    createdById: {
+      model: 'User',
+      required: true,
+      columnName: 'created_by_id',
+    },
+    updatedById: {
+      model: 'User',
+      columnName: 'updated_by_id',
+    },
   },
 
   tableName: 'card_label',
 
   async afterCreate(record, proceed) {
-    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
-    if (card) {
-      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
-    }
-    proceed();
-  },
-
-  async afterDestroy(record, proceed) {
-    const [card] = await Card.update({ id: record.cardId }).set({ updatedAt: new Date().toUTCString() }).fetch();
-    if (card) {
-      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
+    if (record.createdById) {
+      const card = await Card.updateOne(record.cardId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
+      if (card) {
+        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
+          item: {
+            id: card.id,
+            updatedAt: card.updatedAt,
+            updatedById: card.updatedById,
+          },
+        });
+      }
     }
     proceed();
   },

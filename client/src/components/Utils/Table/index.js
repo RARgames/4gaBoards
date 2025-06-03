@@ -6,6 +6,7 @@ import {
   ImageCellRenderer,
   MarkdownCellRenderer,
   DateCellRenderer,
+  UserCellRenderer,
   RadioCellRenderer,
   ActionsHeaderRenderer,
 } from './Renderers';
@@ -38,6 +39,7 @@ Table.Renderers = {
   ImageCellRenderer,
   MarkdownCellRenderer,
   DateCellRenderer,
+  UserCellRenderer,
   RadioCellRenderer,
   ActionsHeaderRenderer,
 };

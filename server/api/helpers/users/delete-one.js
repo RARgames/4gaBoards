@@ -4,12 +4,18 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     await ProjectManager.destroy({
       userId: inputs.record.id,
     });
@@ -42,7 +48,7 @@ module.exports = {
         await sails.helpers.projects.getManagerAndBoardMemberUserIds(projectIds),
       ); */
 
-      await sails.helpers.userPrefs.deleteOne.with({ record: user });
+      await sails.helpers.userPrefs.deleteOne.with({ record: user, currentUser });
 
       const users = await sails.helpers.users.getMany();
       const userIds = [inputs.record.id, ...sails.helpers.utils.mapRecords(users)];

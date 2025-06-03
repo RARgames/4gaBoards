@@ -13,7 +13,7 @@ const makeMapStateToProps = () => {
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
 
   return (state, { id, index }) => {
-    const { name, isPersisted, isCollapsed } = selectListById(state, id);
+    const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy } = selectListById(state, id);
     const cardIds = selectCardIdsByListId(state, id);
     const isFiltered = selectIsFilteredByListId(state, id);
     const filteredCardIds = selectFilteredCardIdsByListId(state, id);
@@ -35,6 +35,10 @@ const makeMapStateToProps = () => {
       labelIds,
       memberIds,
       canEdit: isCurrentUserEditor,
+      createdAt,
+      createdBy,
+      updatedAt,
+      updatedBy,
     };
   };
 };

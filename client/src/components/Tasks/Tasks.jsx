@@ -100,6 +100,10 @@ const Tasks = React.forwardRef(
                 isCompleted={item.isCompleted}
                 isPersisted={item.isPersisted}
                 canEdit={canEdit}
+                createdAt={item.createdAt}
+                createdBy={item.createdBy}
+                updatedAt={item.updatedAt}
+                updatedBy={item.updatedBy}
                 onUpdate={(data) => handleUpdate(item.id, data)}
                 onDuplicate={() => onDuplicate(item.id)}
                 onDelete={() => handleDelete(item.id)}

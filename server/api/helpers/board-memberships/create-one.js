@@ -21,6 +21,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -31,7 +35,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (values.role === BoardMembership.Roles.EDITOR) {
       delete values.canComment;
@@ -45,6 +49,7 @@ module.exports = {
       ...values,
       boardId: values.board.id,
       userId: values.user.id,
+      createdById: currentUser.id,
     })
       .intercept('E_UNIQUE', 'userAlreadyBoardMember')
       .fetch();

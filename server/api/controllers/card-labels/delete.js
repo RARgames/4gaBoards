@@ -66,6 +66,7 @@ module.exports = {
     cardLabel = await sails.helpers.cardLabels.deleteOne.with({
       board,
       record: cardLabel,
+      currentUser,
       request: this.req,
     });
 

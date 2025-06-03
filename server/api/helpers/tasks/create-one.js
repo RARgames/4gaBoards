@@ -21,13 +21,17 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     const tasks = await sails.helpers.cards.getTasks(values.card.id);
 
@@ -53,6 +57,7 @@ module.exports = {
       ...values,
       position,
       cardId: values.card.id,
+      createdById: currentUser.id,
     }).fetch();
 
     sails.sockets.broadcast(

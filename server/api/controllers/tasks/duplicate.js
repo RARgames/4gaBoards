@@ -48,6 +48,7 @@ module.exports = {
         ..._.omit(task, ['id', 'cardId']), // Omit the id to ensure a new task is created
         card,
       },
+      currentUser,
       request: this.req,
     });
 
@@ -60,6 +61,7 @@ module.exports = {
             taskId: newTask.id,
             userId: taskMembership.userId,
           },
+          currentUser,
           request: this.req,
         });
       }),

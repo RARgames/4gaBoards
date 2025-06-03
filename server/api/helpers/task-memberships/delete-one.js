@@ -8,12 +8,18 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     const taskMembership = await TaskMembership.destroyOne(inputs.record.id);
 
     if (taskMembership) {
@@ -26,7 +32,7 @@ module.exports = {
         inputs.request,
       );
 
-      const task = await Task.findOne({ id: taskMembership.taskId });
+      let task = await Task.findOne(taskMembership.taskId);
       if (task) {
         const { cardId } = task;
 
@@ -55,6 +61,21 @@ module.exports = {
               },
             });
           }
+        }
+        task = await Task.updateOne(task.id).set({ updatedById: currentUser.id });
+        if (task) {
+          sails.sockets.broadcast(
+            `board:${inputs.board.id}`,
+            'taskUpdate',
+            {
+              item: {
+                id: task.id,
+                updatedAt: task.updatedAt,
+                updatedById: task.updatedById,
+              },
+            },
+            inputs.request,
+          );
         }
       }
     }

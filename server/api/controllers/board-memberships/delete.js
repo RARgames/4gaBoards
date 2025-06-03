@@ -39,6 +39,7 @@ module.exports = {
     boardMembership = await sails.helpers.boardMemberships.deleteOne.with({
       project,
       record: boardMembership,
+      currentUser,
       request: this.req,
     });
 
@@ -56,6 +57,7 @@ module.exports = {
       if (userProject) {
         await sails.helpers.userProjects.deleteOne.with({
           record: userProject,
+          currentUser,
           request: this.req,
         });
       }

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
+import ActivityStep from '../ActivityStep';
 import DeleteStep from '../DeleteStep';
 import DueDateEditStep from '../DueDateEditStep';
 import MembershipsStep from '../MembershipsStep';
@@ -14,9 +15,10 @@ const StepTypes = {
   DELETE: 'DELETE',
   EDIT_DUE_DATE: 'EDIT_DUE_DATE',
   EDIT_MEMBERS: 'EDIT_MEMBERS',
+  ACTIVITY: 'ACTIVITY',
 };
 
-const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, onDuplicate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
+const ActionsStep = React.memo(({ name, dueDate, boardMemberships, users, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onDuplicate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
   const userIds = users.map((user) => user.id);
@@ -49,23 +51,29 @@ const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, on
     openStep(StepTypes.EDIT_MEMBERS);
   }, [openStep]);
 
+  const handleActivityClick = useCallback(() => {
+    openStep(StepTypes.ACTIVITY);
+  }, [openStep]);
+
   if (step) {
-    if (step.type === StepTypes.DELETE) {
-      return (
-        <DeleteStep
-          title={t('common.deleteTask', { context: 'title' })}
-          content={t('common.areYouSureYouWantToDeleteThisTask')}
-          buttonContent={t('action.deleteTask')}
-          onConfirm={onDelete}
-          onBack={handleBack}
-        />
-      );
-    }
-    if (step.type === StepTypes.EDIT_DUE_DATE) {
-      return <DueDateEditStep defaultValue={dueDate} onUpdate={handleDueDateUpdate} onBack={handleBack} onClose={onClose} />;
-    }
-    if (step.type === StepTypes.EDIT_MEMBERS) {
-      return <MembershipsStep items={boardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
+    switch (step.type) {
+      case StepTypes.EDIT_DUE_DATE:
+        return <DueDateEditStep defaultValue={dueDate} onUpdate={handleDueDateUpdate} onBack={handleBack} onClose={onClose} />;
+      case StepTypes.EDIT_MEMBERS:
+        return <MembershipsStep items={boardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
+      case StepTypes.DELETE:
+        return (
+          <DeleteStep
+            title={t('common.deleteTask', { context: 'title' })}
+            content={t('common.areYouSureYouWantToDeleteThisTask')}
+            buttonContent={t('action.deleteTask')}
+            onConfirm={onDelete}
+            onBack={handleBack}
+          />
+        );
+      case StepTypes.ACTIVITY:
+        return <ActivityStep title={t('common.activityFor', { name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
+      default:
     }
   }
 
@@ -87,6 +95,10 @@ const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, on
         <Icon type={IconType.Duplicate} size={IconSize.Size13} className={s.icon} />
         {t('common.duplicateTask', { context: 'title' })}
       </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
+        <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+        {t('common.checkActivity', { context: 'title' })}
+      </Button>
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('action.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
         <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -97,9 +109,14 @@ const ActionsStep = React.memo(({ dueDate, boardMemberships, users, onUpdate, on
 });
 
 ActionsStep.propTypes = {
+  name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,
   onNameEdit: PropTypes.func.isRequired,
@@ -111,6 +128,10 @@ ActionsStep.propTypes = {
 
 ActionsStep.defaultProps = {
   dueDate: undefined,
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default withPopup(ActionsStep);

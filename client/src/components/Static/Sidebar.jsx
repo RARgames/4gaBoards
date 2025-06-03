@@ -115,10 +115,15 @@ const Sidebar = React.memo(
             </Link>
             {isProjectManager && (
               <ProjectActionsPopup
+                name={project.name}
                 projectId={project.id}
                 managedProjects={managedProjects}
                 defaultDataRename={pick(project, 'name')}
                 isAdmin={isAdmin}
+                createdAt={project.createdAt}
+                createdBy={project.createdBy}
+                updatedAt={project.updatedAt}
+                updatedBy={project.updatedBy}
                 onUpdate={(data) => onProjectUpdate(project.id, data)}
                 onBoardCreate={onBoardCreate}
                 position="right-start"
@@ -185,6 +190,10 @@ const Sidebar = React.memo(
                                   <BoardActionsPopup
                                     defaultDataRename={pick(board, 'name')}
                                     defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
+                                    createdAt={board.createdAt}
+                                    createdBy={board.createdBy}
+                                    updatedAt={board.updatedAt}
+                                    updatedBy={board.updatedBy}
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
                                     onExport={() => onBoardExport(board.id)}
                                     onDelete={() => onBoardDelete(board.id)}

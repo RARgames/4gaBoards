@@ -49,6 +49,7 @@ module.exports = {
     task = await sails.helpers.tasks.deleteOne.with({
       board,
       record: task,
+      currentUser,
       request: this.req,
     });
 

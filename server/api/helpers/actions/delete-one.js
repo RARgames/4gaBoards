@@ -8,12 +8,18 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     const action = await Action.archiveOne(inputs.record.id);
 
     if (action.type === 'commentCard') {
@@ -25,6 +31,7 @@ module.exports = {
           values: {
             commentCount: card.commentCount - 1,
           },
+          currentUser,
           request: this.req,
         });
       }

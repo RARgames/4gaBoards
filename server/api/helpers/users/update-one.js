@@ -38,7 +38,7 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
-    user: {
+    currentUser: {
       type: 'ref',
       required: true,
     },
@@ -53,7 +53,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (!_.isUndefined(values.email)) {
       values.email = values.email.toLowerCase();
@@ -80,7 +80,7 @@ module.exports = {
       id: inputs.record.id,
       deletedAt: null,
     })
-      .set({ ...values })
+      .set({ updatedById: currentUser.id, ...values })
       .intercept(
         {
           message: 'Unexpected error from database adapter: conflicting key value violates exclusion constraint "user_email_unique"',
@@ -113,7 +113,7 @@ module.exports = {
           inputs.request,
         );
 
-        if (user.id === inputs.user.id && inputs.request && inputs.request.isSocket) {
+        if (user.id === currentUser.id && inputs.request && inputs.request.isSocket) {
           const tempRoom = uuid();
 
           sails.sockets.addRoomMembersToRooms(`@user:${user.id}`, tempRoom, () => {

@@ -4,7 +4,7 @@ module.exports = {
       type: 'json',
       required: true,
     },
-    user: {
+    currentUser: {
       type: 'ref',
       required: true,
     },
@@ -14,13 +14,14 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
-    const project = await Project.create({ ...values }).fetch();
+    const project = await Project.create({ createdById: currentUser.id, ...values }).fetch();
 
     const projectManager = await ProjectManager.create({
       projectId: project.id,
-      userId: inputs.user.id,
+      userId: currentUser.id,
+      createdById: currentUser.id,
     }).fetch();
 
     sails.sockets.broadcast(

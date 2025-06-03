@@ -69,6 +69,7 @@ module.exports = {
           project,
           user,
         },
+        currentUser,
         request: this.req,
       })
       .intercept('userAlreadyProjectManager', () => Errors.USER_ALREADY_PROJECT_MANAGER);
@@ -79,6 +80,7 @@ module.exports = {
           projectId: project.id,
           userId: user.id,
         },
+        currentUser,
         request: this.req,
       })
       .tolerate('E_UNIQUE');
@@ -99,6 +101,7 @@ module.exports = {
               board,
               user,
             },
+            currentUser,
             request: this.req,
           })
           .intercept('userAlreadyBoardMember', () => Errors.USER_ALREADY_BOARD_MEMBER);

@@ -72,6 +72,7 @@ module.exports = {
           card,
           userId: inputs.userId,
         },
+        currentUser,
         request: this.req,
       })
       .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER);

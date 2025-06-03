@@ -64,6 +64,7 @@ module.exports = {
       .with({
         values,
         record: label,
+        currentUser,
         request: this.req,
       })
       .intercept('invalidName', () => Errors.INVALID_NAME);

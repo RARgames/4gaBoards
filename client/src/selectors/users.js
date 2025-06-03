@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 
 export const selectCurrentUserId = ({ auth: { userId } }) => userId;
@@ -16,7 +17,10 @@ export const makeSelectUserById = () =>
         return userModel;
       }
 
-      return userModel.ref;
+      return {
+        ...userModel.ref,
+        ...getMeta(userModel),
+      };
     },
   );
 
@@ -26,7 +30,12 @@ export const selectUsers = createSelector(
   orm,
   (state) => selectCurrentUserId(state),
   ({ User }, currentUserId) => {
-    const users = User.getOrderedUndeletedQuerySet().toRefArray();
+    const users = User.getOrderedUndeletedQuerySet()
+      .toModelArray()
+      .map((userModel) => ({
+        ...userModel.ref,
+        ...getMeta(userModel),
+      }));
 
     return users.sort((a, b) => {
       if (a.id === currentUserId) return -1;
@@ -90,6 +99,7 @@ export const selectProjectsForCurrentUser = createSelector(
         });
         return {
           ...boardModel.ref,
+          ...getMeta(boardModel),
           notificationsTotal: notificationsBoardTotal,
           isPersisted: !isLocalId(boardModel.id),
         };
@@ -97,6 +107,7 @@ export const selectProjectsForCurrentUser = createSelector(
 
       return {
         ...projectModel.ref,
+        ...getMeta(projectModel),
         notificationsTotal,
         firstBoardId: boardsModels[0] && boardsModels[0].id,
         boards: boardsRefs,

@@ -1,12 +1,6 @@
 import http from './http';
 import socket from './socket';
-
-/* Transformers */
-
-export const transformAttachment = (attachment) => ({
-  ...attachment,
-  createdAt: new Date(attachment.createdAt),
-});
+import { transformAttachment } from './transformers';
 
 /* Actions */
 

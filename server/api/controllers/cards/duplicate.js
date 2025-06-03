@@ -8,6 +8,15 @@ const Errors = {
   LIST_NOT_FOUND: {
     listNotFound: 'List not found',
   },
+  POSITION_MUST_BE_PRESENT: {
+    positionMustBeInValues: 'Position must be present in values',
+  },
+  LABEL_ALREADY_IN_CARD: {
+    labelAlreadyInCard: 'Label already in card',
+  },
+  USER_ALREADY_CARD_MEMBER: {
+    userAlreadyCardMember: 'User already card member',
+  },
 };
 
 module.exports = {
@@ -28,6 +37,15 @@ module.exports = {
     },
     listNotFound: {
       responseType: 'notFound',
+    },
+    positionMustBeInValues: {
+      responseType: 'unprocessableEntity',
+    },
+    labelAlreadyInCard: {
+      responseType: 'conflict',
+    },
+    userAlreadyCardMember: {
+      responseType: 'conflict',
     },
   },
 
@@ -57,9 +75,9 @@ module.exports = {
         values: {
           ...values,
           list,
-          creatorUser: currentUser,
           duplicate: true,
         },
+        currentUser,
         request: this.req,
       })
       .intercept('positionMustBeInValues', () => Errors.POSITION_MUST_BE_PRESENT);
@@ -89,6 +107,7 @@ module.exports = {
             ..._.omit(task, ['id', 'cardId']), // Omit the id and cardId to ensure a new task is created for the copied card
             card: copiedCard,
           },
+          currentUser,
           request: this.req,
         });
         newTaskIdMapping[task.id] = newTask.id;
@@ -102,22 +121,24 @@ module.exports = {
           .with({
             values: {
               card: copiedCard,
-              label: { id: cardLabel.labelId, boardId: copiedCard.boardId }, // Construct the label object expected by the helper
+              label: { id: cardLabel.labelId, boardId: copiedCard.boardId },
             },
+            currentUser,
             request: this.req,
           })
-          .intercept('labelAlreadyInCard', () => Errors.LABEL_ALREADY_IN_CARD); // Handle the specific error if the label is already associated with the card
+          .intercept('labelAlreadyInCard', () => Errors.LABEL_ALREADY_IN_CARD);
       }),
       ...memberUsers.map((memberUser) => {
         return sails.helpers.cardMemberships.createOne
           .with({
             values: {
-              card: copiedCard, // Pass the copied card's ID
-              userId: memberUser.userId, // Use the userId from the original memberUser
+              card: copiedCard,
+              userId: memberUser.userId,
             },
+            currentUser,
             request: this.req,
           })
-          .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER); // Handle the specific error if the user is already a member of the card
+          .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER);
       }),
       ...taskMemberships.map((taskMembership) => {
         return sails.helpers.taskMemberships.createOne.with({
@@ -126,6 +147,7 @@ module.exports = {
             taskId: newTaskIdMapping[taskMembership.taskId],
             userId: taskMembership.userId,
           },
+          currentUser,
           request: this.req,
         });
       }),
@@ -136,8 +158,8 @@ module.exports = {
             cardId: copiedCard.id,
             createdAt: attachment.createdAt,
             card: copiedCard,
-            creatorUser: currentUser,
           },
+          currentUser,
           request: this.req,
         });
       }),
@@ -149,6 +171,7 @@ module.exports = {
             card: copiedCard,
             user: actionsUsers.find((user) => user.id === action.userId),
           },
+          currentUser,
           request: this.req,
         });
       }),

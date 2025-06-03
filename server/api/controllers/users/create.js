@@ -90,6 +90,8 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const { currentUser } = this.req;
+
     const values = _.pick(inputs, ['email', 'password', 'name', 'username', 'phone', 'organization', 'ssoGoogleId', 'ssoGoogleEmail', 'ssoGithubId', 'ssoGithubUsername', 'ssoMicrosoftId', 'ssoMicrosoftEmail']);
 
     if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {
@@ -99,6 +101,7 @@ module.exports = {
     const user = await sails.helpers.users.createOne
       .with({
         values,
+        currentUser,
         request: this.req,
       })
       .intercept('emailAlreadyInUse', () => Errors.EMAIL_ALREADY_IN_USE)

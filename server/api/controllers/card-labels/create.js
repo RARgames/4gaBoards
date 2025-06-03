@@ -75,6 +75,7 @@ module.exports = {
           card,
           label,
         },
+        currentUser,
         request: this.req,
       })
       .intercept('labelAlreadyInCard', () => Errors.LABEL_ALREADY_IN_CARD);

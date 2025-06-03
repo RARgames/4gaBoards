@@ -10,12 +10,18 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     const cardIds = await sails.helpers.boards.getCardIds(inputs.record.boardId);
 
     await CardSubscription.destroy({
@@ -23,10 +29,28 @@ module.exports = {
       userId: inputs.record.userId,
     });
 
-    await CardMembership.destroy({
+    const removedCardMemberships = await CardMembership.destroy({
       cardId: cardIds,
       userId: inputs.record.userId,
-    });
+    }).fetch();
+
+    const affectedCardIds = sails.helpers.utils.mapRecords(removedCardMemberships, 'cardId');
+    const cards = await Card.find({ id: affectedCardIds });
+
+    await Promise.all(
+      cards.map(async (card) => {
+        const updatedCard = await Card.updateOne({ id: card.id }).set({ updatedById: currentUser.id });
+        if (updatedCard) {
+          sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
+            item: {
+              id: updatedCard.id,
+              updatedAt: updatedCard.updatedAt,
+              updatedById: updatedCard.updatedById,
+            },
+          });
+        }
+      }),
+    );
 
     const boardMembership = await BoardMembership.destroyOne(inputs.record.id);
 
@@ -61,6 +85,26 @@ module.exports = {
             sails.sockets.removeRoomMembersFromRooms(tempRoom, tempRoom);
           });
         });
+      }
+
+      let board = await Board.findOne(boardMembership.boardId);
+      if (board) {
+        board = await Board.updateOne(board.id).set({ updatedById: currentUser.id });
+        if (board) {
+          const projectManagerUserIds = await sails.helpers.projects.getManagerUserIds(board.projectId);
+          const boardMemberUserIds = await sails.helpers.boards.getMemberUserIds(board.id);
+          const boardRelatedUserIds = _.union(projectManagerUserIds, boardMemberUserIds);
+
+          boardRelatedUserIds.forEach((userId) => {
+            sails.sockets.broadcast(`user:${userId}`, 'boardUpdate', {
+              item: {
+                id: board.id,
+                updatedAt: board.updatedAt,
+                updatedById: board.updatedById,
+              },
+            });
+          });
+        }
       }
     }
 

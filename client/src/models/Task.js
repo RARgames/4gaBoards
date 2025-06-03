@@ -20,6 +20,18 @@ export default class extends BaseModel {
       relatedName: 'tasks',
     }),
     users: many('User', 'tasks'),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdTasks',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedTasks',
+    }),
   };
 
   static reducer({ type, payload }, Task) {

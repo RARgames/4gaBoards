@@ -1,3 +1,4 @@
+import { ReactComponent as Activity } from '../../../assets/icons/Activity.svg';
 import { ReactComponent as AddressCard } from '../../../assets/icons/AddressCard.svg';
 import { ReactComponent as AngleLeft } from '../../../assets/icons/AngleLeft.svg';
 import { ReactComponent as AngleLeftDouble } from '../../../assets/icons/AngleLeftDouble.svg';
@@ -59,6 +60,7 @@ import { ReactComponent as X } from '../../../assets/icons/X.svg';
 import { ReactComponent as Youtube } from '../../../assets/icons/Youtube.svg';
 
 const IconType = {
+  Activity,
   AddressCard,
   AngleLeft,
   AngleLeftDouble,

@@ -112,7 +112,7 @@ module.exports = {
       throw Errors.INSUFFICIENT_PERMISSIONS;
     }
 
-    let userPrefs = await sails.helpers.userPrefs.getOne(currentUser.id);
+    let userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
     if (!userPrefs) {
       throw Errors.USER_PREFS_NOT_FOUND;
     }
@@ -143,6 +143,7 @@ module.exports = {
     userPrefs = await sails.helpers.userPrefs.updateOne.with({
       values,
       record: currentUser,
+      currentUser,
       request: this.req,
     });
 

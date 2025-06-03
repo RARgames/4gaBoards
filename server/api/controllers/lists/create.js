@@ -62,6 +62,7 @@ module.exports = {
         ...values,
         board,
       },
+      currentUser,
       request: this.req,
     });
 

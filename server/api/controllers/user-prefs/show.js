@@ -32,7 +32,7 @@ module.exports = {
       throw Errors.INSUFFICIENT_PERMISSIONS;
     }
 
-    const userPrefs = await sails.helpers.userPrefs.getOne(currentUser.id);
+    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
 
     if (!userPrefs) {
       throw Errors.USER_PREFS_NOT_FOUND;

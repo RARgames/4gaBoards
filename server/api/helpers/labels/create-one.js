@@ -17,6 +17,10 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
     request: {
       type: 'ref',
     },
@@ -27,7 +31,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values } = inputs;
+    const { values, currentUser } = inputs;
 
     if (values.name === null || values.name === '') {
       throw 'invalidName';
@@ -42,6 +46,7 @@ module.exports = {
     const label = await Label.create({
       ...values,
       boardId: values.board.id,
+      createdById: currentUser.id,
     }).fetch();
 
     sails.sockets.broadcast(

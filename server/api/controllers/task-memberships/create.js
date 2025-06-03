@@ -78,6 +78,7 @@ module.exports = {
           taskId: inputs.taskId,
           userId: inputs.userId,
         },
+        currentUser,
         request: this.req,
       })
       .intercept('userAlreadyTaskMember', () => Errors.USER_ALREADY_TASK_MEMBER);

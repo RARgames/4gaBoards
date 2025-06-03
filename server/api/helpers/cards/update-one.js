@@ -29,8 +29,9 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
-    user: {
+    currentUser: {
       type: 'ref',
+      required: true,
     },
     board: {
       type: 'ref',
@@ -53,6 +54,7 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
     const { isSubscribed, ...values } = inputs.values;
 
     if (values.board || values.list || !_.isUndefined(values.position)) {
@@ -93,10 +95,6 @@ module.exports = {
       } else if (values.board) {
         throw 'listMustBeInValues';
       }
-    }
-
-    if ((!_.isUndefined(isSubscribed) || values.board || values.list) && !inputs.user) {
-      throw 'userMustBePresent';
     }
 
     if (!_.isUndefined(values.position)) {
@@ -155,7 +153,7 @@ module.exports = {
         });
       }
 
-      card = await Card.updateOne(inputs.record.id).set({ ...values });
+      card = await Card.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
       if (!card) {
         return card;
@@ -176,6 +174,7 @@ module.exports = {
                 ..._.omit(label, ['id', 'boardId']),
                 board: values.board,
               },
+              currentUser,
             });
 
             return id;
@@ -222,13 +221,14 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
-            user: inputs.user,
+            user: currentUser,
             type: Action.Types.MOVE_CARD,
             data: {
               fromList: _.pick(inputs.list, ['id', 'name']),
               toList: _.pick(values.list, ['id', 'name']),
             },
           },
+          currentUser,
         });
       }
 
@@ -236,27 +236,27 @@ module.exports = {
     }
 
     if (!_.isUndefined(isSubscribed)) {
-      const prevIsSubscribed = await sails.helpers.users.isCardSubscriber(inputs.user.id, card.id);
+      const prevIsSubscribed = await sails.helpers.users.isCardSubscriber(currentUser.id, card.id);
       const existingSubscription = await CardSubscription.findOne({
         cardId: card.id,
-        userId: inputs.user.id,
+        userId: currentUser.id,
       });
 
       if (isSubscribed !== prevIsSubscribed) {
         if (isSubscribed && !existingSubscription) {
           await CardSubscription.create({
             cardId: card.id,
-            userId: inputs.user.id,
+            userId: currentUser.id,
           }).tolerate('E_UNIQUE');
         } else if (!isSubscribed && existingSubscription) {
           await CardSubscription.destroyOne({
             cardId: card.id,
-            userId: inputs.user.id,
+            userId: currentUser.id,
           });
         }
 
         sails.sockets.broadcast(
-          `user:${inputs.user.id}`,
+          `user:${currentUser.id}`,
           'cardUpdate',
           {
             item: {
