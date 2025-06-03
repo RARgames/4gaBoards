@@ -151,7 +151,7 @@ module.exports = {
         projectManagers.map(async (projectManager) => {
           if (allUsers[projectManager.userId]) {
             const updatedAt = parseJSON(projectManager.updatedAt);
-            const pm = await ProjectManager.create({
+            const newProjectManager = await ProjectManager.create({
               projectId: inputs.board.projectId,
               userId: allUsers[projectManager.userId].id,
               createdAt: parseJSON(projectManager.createdAt),
@@ -162,7 +162,7 @@ module.exports = {
               .tolerate('E_UNIQUE')
               .fetch();
 
-            if (pm) {
+            if (newProjectManager) {
               const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(inputs.board.projectId);
 
               projectRelatedUserIds.forEach((userId) => {
@@ -170,7 +170,7 @@ module.exports = {
                   `user:${userId}`,
                   'projectManagerCreate',
                   {
-                    item: pm,
+                    item: newProjectManager,
                   },
                   inputs.request,
                 );
@@ -186,7 +186,7 @@ module.exports = {
         boardMemberships.map(async (boardMembership) => {
           if (allUsers[boardMembership.userId]) {
             const updatedAt = parseJSON(boardMembership.updatedAt);
-            await BoardMembership.create({
+            const newBoardMembership = await BoardMembership.create({
               boardId: inputs.board.id,
               userId: allUsers[boardMembership.userId].id,
               role: boardMembership.role,
@@ -203,7 +203,7 @@ module.exports = {
               `user:${allUsers[boardMembership.userId].id}`,
               'boardMembershipCreate',
               {
-                item: boardMembership,
+                item: newBoardMembership,
               },
               inputs.request,
             );
@@ -273,9 +273,7 @@ module.exports = {
               createdById: allUsers[cardMembership.createdById]?.id ?? currentUser.id,
               updatedAt,
               updatedById: updatedAt && (allUsers[cardMembership.updatedById]?.id ?? currentUser.id),
-            })
-              .tolerate('E_UNIQUE')
-              .fetch();
+            }).tolerate('E_UNIQUE');
           }
         }),
       );
@@ -291,9 +289,7 @@ module.exports = {
               isPermanent: cardSubscription.isPermanent,
               createdAt: parseJSON(cardSubscription.createdAt),
               updatedAt: parseJSON(cardSubscription.updatedAt),
-            })
-              .tolerate('E_UNIQUE')
-              .fetch();
+            }).tolerate('E_UNIQUE');
           }
         }),
       );
@@ -329,9 +325,7 @@ module.exports = {
               createdById: allUsers[taskMembership.createdById]?.id ?? currentUser.id,
               updatedAt,
               updatedById: updatedAt && (allUsers[taskMembership.updatedById]?.id ?? currentUser.id),
-            })
-              .tolerate('E_UNIQUE')
-              .fetch();
+            }).tolerate('E_UNIQUE');
           }
         }),
       );
@@ -385,7 +379,7 @@ module.exports = {
             data: newData,
             createdAt: parseJSON(action.createdAt),
             updatedAt: parseJSON(action.updatedAt),
-          }).fetch();
+          });
         }),
       );
     };
