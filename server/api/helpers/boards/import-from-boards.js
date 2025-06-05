@@ -57,17 +57,11 @@ module.exports = {
       boardMemberships.forEach((boardMembership) => {
         boardMembership.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
-      cards.forEach((card) => {
-        card.createdById = currentUser.id; // eslint-disable-line no-param-reassign
-      });
       cardMemberships.forEach((cardMembership) => {
         cardMembership.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
       actions.forEach((action) => {
         action.userId = currentUser.id; // eslint-disable-line no-param-reassign
-      });
-      attachments.forEach((attachment) => {
-        attachment.createdById = currentUser.id; // eslint-disable-line no-param-reassign
       });
       cardSubscriptions.forEach((cardSubscription) => {
         cardSubscription.userId = currentUser.id; // eslint-disable-line no-param-reassign

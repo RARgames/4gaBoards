@@ -1,2 +1,2 @@
-id,createdAt,updatedAt,position,name,isGithubConnected,githubRepo,isImportedBoard,projectId
-1454092510174381070,"""2025-02-26T01:22:15.000Z""",,65535,Poznaj 4ga Boards,false,,true,1454092510006608907
+id,createdAt,position,name,isGithubConnected,githubRepo,isImportedBoard,projectId
+1526511027275957805,"""2025-06-05T23:24:54.000Z""",65535,Poznaj 4ga Boards,false,,true,1526511023920514602
