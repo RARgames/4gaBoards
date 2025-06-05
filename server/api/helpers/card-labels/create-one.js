@@ -46,14 +46,18 @@ module.exports = {
       .intercept('E_UNIQUE', 'labelAlreadyInCard')
       .fetch();
 
-    sails.sockets.broadcast(
-      `board:${values.card.boardId}`,
-      'cardLabelCreate',
-      {
-        item: cardLabel,
-      },
-      inputs.request,
-    );
+    if (cardLabel) {
+      sails.sockets.broadcast(
+        `board:${values.card.boardId}`,
+        'cardLabelCreate',
+        {
+          item: cardLabel,
+        },
+        inputs.request,
+      );
+
+      await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser });
+    }
 
     return cardLabel;
   },

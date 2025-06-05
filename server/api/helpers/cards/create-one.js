@@ -72,41 +72,45 @@ module.exports = {
       createdById: currentUser.id,
     }).fetch();
 
-    sails.sockets.broadcast(
-      `board:${card.boardId}`,
-      'cardCreate',
-      {
-        item: card,
-      },
-      inputs.request,
-    );
-
-    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
-    if (userPrefs.subscribeToOwnCards && !inputs.values.duplicate) {
-      await CardSubscription.create({
-        cardId: card.id,
-        userId: card.createdById,
-      }).tolerate('E_UNIQUE');
-
-      sails.sockets.broadcast(`user:${card.createdById}`, 'cardUpdate', {
-        item: {
-          id: card.id,
-          isSubscribed: true,
+    if (card) {
+      sails.sockets.broadcast(
+        `board:${card.boardId}`,
+        'cardCreate',
+        {
+          item: card,
         },
+        inputs.request,
+      );
+
+      const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
+      if (userPrefs.subscribeToOwnCards && !inputs.values.duplicate) {
+        await CardSubscription.create({
+          cardId: card.id,
+          userId: card.createdById,
+        }).tolerate('E_UNIQUE');
+
+        sails.sockets.broadcast(`user:${card.createdById}`, 'cardUpdate', {
+          item: {
+            id: card.id,
+            isSubscribed: true,
+          },
+        });
+      }
+
+      await sails.helpers.actions.createOne.with({
+        values: {
+          card,
+          type: inputs.values.duplicate ? Action.Types.DUPLICATE_CARD : Action.Types.CREATE_CARD,
+          data: {
+            list: _.pick(values.list, ['id', 'name']),
+          },
+          user: currentUser,
+        },
+        currentUser,
       });
-    }
 
-    await sails.helpers.actions.createOne.with({
-      values: {
-        card,
-        type: inputs.values.duplicate ? Action.Types.DUPLICATE_CARD : Action.Types.CREATE_CARD,
-        data: {
-          list: _.pick(values.list, ['id', 'name']),
-        },
-        user: currentUser,
-      },
-      currentUser,
-    });
+      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser });
+    }
 
     return card;
   },

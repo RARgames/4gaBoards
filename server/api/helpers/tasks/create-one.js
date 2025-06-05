@@ -60,14 +60,18 @@ module.exports = {
       createdById: currentUser.id,
     }).fetch();
 
-    sails.sockets.broadcast(
-      `board:${values.card.boardId}`,
-      'taskCreate',
-      {
-        item: task,
-      },
-      inputs.request,
-    );
+    if (task) {
+      sails.sockets.broadcast(
+        `board:${values.card.boardId}`,
+        'taskCreate',
+        {
+          item: task,
+        },
+        inputs.request,
+      );
+
+      await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser });
+    }
 
     return task;
   },

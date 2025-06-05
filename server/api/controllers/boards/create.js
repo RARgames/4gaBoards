@@ -5,6 +5,9 @@ const Errors = {
   PROJECT_NOT_FOUND: {
     projectNotFound: 'Project not found',
   },
+  BOARD_CREATE_FAILED: {
+    boardCreateFailed: 'Board create failed',
+  },
   NO_IMPORT_FILE_WAS_UPLOADED: {
     noImportFileWasUploaded: 'No import file was uploaded',
   },
@@ -59,6 +62,9 @@ module.exports = {
 
   exits: {
     projectNotFound: {
+      responseType: 'notFound',
+    },
+    boardCreateFailed: {
       responseType: 'notFound',
     },
     noImportFileWasUploaded: {
@@ -126,17 +132,19 @@ module.exports = {
       }
     }
 
-    const { board, boardMembership } = await sails.helpers.boards.createOne.with({
-      values: {
-        ...values,
-        project,
-        isImportedBoard: !!inputs.importType,
-      },
-      import: boardImport,
-      currentUser,
-      requestId: inputs.requestId,
-      request: this.req,
-    });
+    const { board, boardMembership } = await sails.helpers.boards.createOne
+      .with({
+        values: {
+          ...values,
+          project,
+          isImportedBoard: !!inputs.importType,
+        },
+        import: boardImport,
+        currentUser,
+        requestId: inputs.requestId,
+        request: this.req,
+      })
+      .intercept('boardCreateFailed', () => Errors.BOARD_CREATE_FAILED);
 
     if (inputs.lists && !inputs.importType) {
       inputs.lists.map(async (list) => {

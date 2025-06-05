@@ -35,6 +35,10 @@ module.exports = {
         },
         inputs.request,
       );
+
+      if (action.type === 'commentCard') {
+        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser });
+      }
     }
 
     return action;

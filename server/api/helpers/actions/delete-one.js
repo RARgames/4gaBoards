@@ -22,20 +22,6 @@ module.exports = {
 
     const action = await Action.archiveOne(inputs.record.id);
 
-    if (action.type === 'commentCard') {
-      const card = await Card.findOne(action.cardId);
-      if (card) {
-        await sails.helpers.cards.updateOne.with({
-          record: card,
-          values: {
-            commentCount: card.commentCount - 1,
-          },
-          currentUser,
-          request: this.req,
-        });
-      }
-    }
-
     if (action) {
       sails.sockets.broadcast(
         `board:${inputs.board.id}`,
@@ -45,6 +31,22 @@ module.exports = {
         },
         inputs.request,
       );
+
+      if (action.type === 'commentCard') {
+        const card = await Card.findOne(action.cardId);
+        if (card) {
+          await sails.helpers.cards.updateOne.with({
+            record: card,
+            values: {
+              commentCount: card.commentCount - 1,
+            },
+            currentUser,
+            request: this.req,
+          });
+        }
+
+        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser });
+      }
     }
 
     return action;

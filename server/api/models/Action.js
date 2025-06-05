@@ -58,14 +58,4 @@ module.exports = {
       columnName: 'updated_by_id',
     },
   },
-
-  async afterUpdate(record, proceed) {
-    if (record.type === Types.COMMENT_CARD) {
-      const card = await Card.updateOne(record.cardId).set({ updatedAt: new Date().toUTCString(), updatedById: record.userId });
-      if (card) {
-        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', { item: card });
-      }
-    }
-    proceed();
-  },
 };

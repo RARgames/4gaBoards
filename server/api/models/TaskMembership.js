@@ -41,21 +41,4 @@ module.exports = {
   },
 
   tableName: 'task_membership',
-
-  async afterCreate(record, proceed) {
-    if (record.createdById) {
-      const task = await Task.updateOne(record.taskId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
-      if (task) {
-        const card = await Card.findOne(task.cardId);
-        sails.sockets.broadcast(`board:${card.boardId}`, 'taskUpdate', {
-          item: {
-            id: task.id,
-            updatedAt: task.updatedAt,
-            updatedById: task.updatedById,
-          },
-        });
-      }
-    }
-    proceed();
-  },
 };

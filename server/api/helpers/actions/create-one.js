@@ -40,39 +40,45 @@ module.exports = {
       createdById: currentUser.id,
     }).fetch();
 
-    if (values.type === 'commentCard' && !values.duplicate) {
-      await sails.helpers.cards.updateOne.with({
-        record: values.card,
-        values: {
-          commentCount: values.card.commentCount + 1,
-        },
-        currentUser,
-        request: this.req,
-      });
-    }
-
-    sails.sockets.broadcast(
-      `board:${values.card.boardId}`,
-      'actionCreate',
-      {
-        item: action,
-      },
-      inputs.request,
-    );
-
-    const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-
-    await Promise.all(
-      subscriptionUserIds.map(async (userId) =>
-        sails.helpers.notifications.createOne.with({
+    if (action) {
+      if (values.type === 'commentCard' && !values.duplicate) {
+        await sails.helpers.cards.updateOne.with({
+          record: values.card,
           values: {
-            userId,
-            action,
+            commentCount: values.card.commentCount + 1,
           },
           currentUser,
-        }),
-      ),
-    );
+          request: this.req,
+        });
+      }
+
+      sails.sockets.broadcast(
+        `board:${values.card.boardId}`,
+        'actionCreate',
+        {
+          item: action,
+        },
+        inputs.request,
+      );
+
+      const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
+
+      await Promise.all(
+        subscriptionUserIds.map(async (userId) =>
+          sails.helpers.notifications.createOne.with({
+            values: {
+              userId,
+              action,
+            },
+            currentUser,
+          }),
+        ),
+      );
+
+      if (action.type === 'commentCard') {
+        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser });
+      }
+    }
 
     return action;
   },

@@ -41,20 +41,4 @@ module.exports = {
   },
 
   tableName: 'card_label',
-
-  async afterCreate(record, proceed) {
-    if (record.createdById) {
-      const card = await Card.updateOne(record.cardId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
-      if (card) {
-        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
-          item: {
-            id: card.id,
-            updatedAt: card.updatedAt,
-            updatedById: card.updatedById,
-          },
-        });
-      }
-    }
-    proceed();
-  },
 };

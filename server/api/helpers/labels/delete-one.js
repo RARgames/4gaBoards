@@ -25,16 +25,7 @@ module.exports = {
 
     await Promise.all(
       cards.map(async (card) => {
-        const updatedCard = await Card.updateOne({ id: card.id }).set({ updatedById: currentUser.id });
-        if (updatedCard) {
-          sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
-            item: {
-              id: updatedCard.id,
-              updatedAt: updatedCard.updatedAt,
-              updatedById: updatedCard.updatedById,
-            },
-          });
-        }
+        await sails.helpers.cards.updateMeta.with({ id: card.id, currentUser });
       }),
     );
 
@@ -50,25 +41,7 @@ module.exports = {
         inputs.request,
       );
 
-      let board = await Board.findOne(label.boardId);
-      if (board) {
-        board = await Board.updateOne(board.id).set({ updatedById: currentUser.id });
-        if (board) {
-          const projectManagerUserIds = await sails.helpers.projects.getManagerUserIds(board.projectId);
-          const boardMemberUserIds = await sails.helpers.boards.getMemberUserIds(board.id);
-          const boardRelatedUserIds = _.union(projectManagerUserIds, boardMemberUserIds);
-
-          boardRelatedUserIds.forEach((userId) => {
-            sails.sockets.broadcast(`user:${userId}`, 'boardUpdate', {
-              item: {
-                id: board.id,
-                updatedAt: board.updatedAt,
-                updatedById: board.updatedById,
-              },
-            });
-          });
-        }
-      }
+      await sails.helpers.boards.updateMeta.with({ id: label.boardId, currentUser });
     }
 
     return label;

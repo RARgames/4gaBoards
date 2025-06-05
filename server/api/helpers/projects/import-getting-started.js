@@ -18,6 +18,7 @@ module.exports = {
 
   exits: {
     projectNotFound: {},
+    boardCreateFailed: {},
   },
 
   async fn(inputs) {
@@ -61,18 +62,22 @@ module.exports = {
       importGettingStartedProject: true,
     };
 
-    const { board, boardMembership } = await sails.helpers.boards.createOne.with({
-      values: {
-        name: data.boards[0].name,
-        position: sails.config.custom.positionGap,
-        isGithubConnected: false,
-        project,
-        isImportedBoard: true,
-      },
-      import: boardImport,
-      currentUser,
-      request: inputs.request,
-    });
+    const { board, boardMembership } = await sails.helpers.boards.createOne
+      .with({
+        values: {
+          name: data.boards[0].name,
+          position: sails.config.custom.positionGap,
+          isGithubConnected: false,
+          project,
+          isImportedBoard: true,
+        },
+        import: boardImport,
+        currentUser,
+        request: inputs.request,
+      })
+      .intercept('boardCreateFailed', () => {
+        throw 'boardCreateFailed';
+      });
 
     return {
       item: project,

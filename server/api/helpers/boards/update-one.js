@@ -77,6 +77,8 @@ module.exports = {
           inputs.request,
         );
       });
+
+      await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser });
     }
 
     return board;

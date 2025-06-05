@@ -159,6 +159,8 @@ module.exports = {
         return card;
       }
 
+      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser });
+
       if (values.board) {
         const labels = await sails.helpers.boards.getLabels(card.boardId);
         const labelByName = _.keyBy(labels, 'name');
@@ -186,6 +188,7 @@ module.exports = {
             CardLabel.create({
               labelId,
               cardId: card.id,
+              createdById: currentUser.id,
             })
               .tolerate('E_UNIQUE')
               .fetch(),

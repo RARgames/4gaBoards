@@ -54,6 +54,8 @@ module.exports = {
         },
         inputs.request,
       );
+
+      await sails.helpers.boards.updateMeta.with({ id: label.boardId, currentUser });
     }
 
     return label;

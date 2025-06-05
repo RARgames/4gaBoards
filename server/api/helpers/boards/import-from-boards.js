@@ -372,13 +372,16 @@ module.exports = {
             // TODO add original action author here, migration, actionCreate
           }
 
+          const updatedAt = parseJSON(action.updatedAt);
           await Action.create({
             cardId: newCard.id,
             userId: allUsers[action.userId] ? allUsers[action.userId].id : currentUser.id,
             type: action.type,
             data: newData,
             createdAt: parseJSON(action.createdAt),
-            updatedAt: parseJSON(action.updatedAt),
+            createdById: allUsers[action.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[action.updatedById]?.id ?? currentUser.id),
           });
         }),
       );

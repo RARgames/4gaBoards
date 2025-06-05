@@ -32,19 +32,7 @@ module.exports = {
         inputs.request,
       );
 
-      let card = await Card.findOne(cardLabel.cardId);
-      if (card) {
-        card = await Card.updateOne(card.id).set({ updatedById: currentUser.id });
-        if (card) {
-          sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
-            item: {
-              id: card.id,
-              updatedAt: card.updatedAt,
-              updatedById: card.updatedById,
-            },
-          });
-        }
-      }
+      await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser });
     }
 
     return cardLabel;

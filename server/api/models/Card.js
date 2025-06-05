@@ -96,36 +96,4 @@ module.exports = {
       via: 'cardId',
     },
   },
-
-  async afterCreate(record, proceed) {
-    if (record.createdById) {
-      const list = await List.updateOne(record.listId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
-      if (list) {
-        sails.sockets.broadcast(`board:${list.boardId}`, 'listUpdate', {
-          item: {
-            id: list.id,
-            updatedAt: list.updatedAt,
-            updatedById: list.updatedById,
-          },
-        });
-      }
-    }
-    proceed();
-  },
-
-  async afterUpdate(record, proceed) {
-    if (record.updatedById) {
-      const list = await List.updateOne(record.listId).set({ updatedAt: new Date().toUTCString(), updatedById: record.updatedById });
-      if (list) {
-        sails.sockets.broadcast(`board:${list.boardId}`, 'listUpdate', {
-          item: {
-            id: list.id,
-            updatedAt: list.updatedAt,
-            updatedById: list.updatedById,
-          },
-        });
-      }
-    }
-    proceed();
-  },
 };

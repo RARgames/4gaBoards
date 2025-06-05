@@ -57,36 +57,4 @@ module.exports = {
       columnName: 'updated_by_id',
     },
   },
-
-  async afterCreate(record, proceed) {
-    if (record.createdById) {
-      const card = await Card.updateOne(record.cardId).set({ updatedAt: new Date().toUTCString(), updatedById: record.createdById });
-      if (card) {
-        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
-          item: {
-            id: card.id,
-            updatedAt: card.updatedAt,
-            updatedById: card.updatedById,
-          },
-        });
-      }
-    }
-    proceed();
-  },
-
-  async afterUpdate(record, proceed) {
-    if (record.updatedById) {
-      const card = await Card.updateOne(record.cardId).set({ updatedAt: new Date().toUTCString(), updatedById: record.updatedById });
-      if (card) {
-        sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
-          item: {
-            id: card.id,
-            updatedAt: card.updatedAt,
-            updatedById: card.updatedById,
-          },
-        });
-      }
-    }
-    proceed();
-  },
 };

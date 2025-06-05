@@ -49,42 +49,46 @@ module.exports = {
       .intercept('E_UNIQUE', 'userAlreadyTaskMember')
       .fetch();
 
-    sails.sockets.broadcast(
-      `board:${values.card.boardId}`,
-      'taskMembershipCreate',
-      {
-        item: taskMembership,
-      },
-      inputs.request,
-    );
+    if (taskMembership) {
+      sails.sockets.broadcast(
+        `board:${values.card.boardId}`,
+        'taskMembershipCreate',
+        {
+          item: taskMembership,
+        },
+        inputs.request,
+      );
 
-    const existingSubscription = await CardSubscription.findOne({
-      cardId: values.card.id,
-      userId: values.userId,
-    });
-
-    if (!existingSubscription) {
-      const cardSubscription = await CardSubscription.create({
+      const existingSubscription = await CardSubscription.findOne({
         cardId: values.card.id,
         userId: values.userId,
-        isPermanent: false,
-      })
-        .tolerate('E_UNIQUE')
-        .fetch();
+      });
 
-      if (cardSubscription) {
-        sails.sockets.broadcast(
-          `user:${values.userId}`,
-          'cardUpdate',
-          {
-            item: {
-              id: values.card.id,
-              isSubscribed: true,
+      if (!existingSubscription) {
+        const cardSubscription = await CardSubscription.create({
+          cardId: values.card.id,
+          userId: values.userId,
+          isPermanent: false,
+        })
+          .tolerate('E_UNIQUE')
+          .fetch();
+
+        if (cardSubscription) {
+          sails.sockets.broadcast(
+            `user:${values.userId}`,
+            'cardUpdate',
+            {
+              item: {
+                id: values.card.id,
+                isSubscribed: true,
+              },
             },
-          },
-          inputs.request,
-        );
+            inputs.request,
+          );
+        }
       }
+
+      await sails.helpers.tasks.updateMeta.with({ id: taskMembership.taskId, currentUser });
     }
 
     return taskMembership;

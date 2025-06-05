@@ -72,6 +72,8 @@ module.exports = {
         },
         inputs.request,
       );
+
+      await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser });
     }
 
     return task;

@@ -49,14 +49,18 @@ module.exports = {
       createdById: currentUser.id,
     }).fetch();
 
-    sails.sockets.broadcast(
-      `board:${label.boardId}`,
-      'labelCreate',
-      {
-        item: label,
-      },
-      inputs.request,
-    );
+    if (label) {
+      sails.sockets.broadcast(
+        `board:${label.boardId}`,
+        'labelCreate',
+        {
+          item: label,
+        },
+        inputs.request,
+      );
+
+      await sails.helpers.boards.updateMeta.with({ id: label.boardId, currentUser });
+    }
 
     return label;
   },

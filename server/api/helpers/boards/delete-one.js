@@ -40,22 +40,7 @@ module.exports = {
         );
       });
 
-      let project = await Project.findOne(board.projectId);
-      if (project) {
-        project = await Project.updateOne(project.id).set({ updatedById: currentUser.id });
-        if (project) {
-          const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(project.id);
-          projectRelatedUserIds.forEach((userId) => {
-            sails.sockets.broadcast(`user:${userId}`, 'projectUpdate', {
-              item: {
-                id: project.id,
-                updatedAt: project.updatedAt,
-                updatedById: project.updatedById,
-              },
-            });
-          });
-        }
-      }
+      await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser });
     }
 
     return board;

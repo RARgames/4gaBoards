@@ -39,15 +39,19 @@ module.exports = {
       createdById: currentUser.id,
     }).fetch();
 
-    sails.sockets.broadcast(
-      `board:${values.card.boardId}`,
-      'attachmentCreate',
-      {
-        item: attachment,
-        requestId: inputs.requestId,
-      },
-      inputs.request,
-    );
+    if (attachment) {
+      sails.sockets.broadcast(
+        `board:${values.card.boardId}`,
+        'attachmentCreate',
+        {
+          item: attachment,
+          requestId: inputs.requestId,
+        },
+        inputs.request,
+      );
+
+      await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser });
+    }
 
     return attachment;
   },

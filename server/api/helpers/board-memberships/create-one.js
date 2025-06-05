@@ -54,23 +54,27 @@ module.exports = {
       .intercept('E_UNIQUE', 'userAlreadyBoardMember')
       .fetch();
 
-    sails.sockets.broadcast(
-      `user:${boardMembership.userId}`,
-      'boardMembershipCreate',
-      {
-        item: boardMembership,
-      },
-      inputs.request,
-    );
+    if (boardMembership) {
+      sails.sockets.broadcast(
+        `user:${boardMembership.userId}`,
+        'boardMembershipCreate',
+        {
+          item: boardMembership,
+        },
+        inputs.request,
+      );
 
-    sails.sockets.broadcast(
-      `board:${boardMembership.boardId}`,
-      'boardMembershipCreate',
-      {
-        item: boardMembership,
-      },
-      inputs.request,
-    );
+      sails.sockets.broadcast(
+        `board:${boardMembership.boardId}`,
+        'boardMembershipCreate',
+        {
+          item: boardMembership,
+        },
+        inputs.request,
+      );
+
+      await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser });
+    }
 
     return boardMembership;
   },

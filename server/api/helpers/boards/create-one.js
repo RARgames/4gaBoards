@@ -49,6 +49,9 @@ module.exports = {
       type: 'ref',
     },
   },
+  exits: {
+    boardCreateFailed: {},
+  },
 
   async fn(inputs) {
     const { values, currentUser } = inputs;
@@ -87,6 +90,10 @@ module.exports = {
       createdById: currentUser.id,
     }).fetch();
 
+    if (!board) {
+      throw 'boardCreateFailed';
+    }
+
     if (inputs.import && inputs.import.type === Board.ImportTypes.BOARDS) {
       await sails.helpers.boards.importFromBoards.with({
         currentUser,
@@ -123,6 +130,8 @@ module.exports = {
         inputs.request,
       );
     });
+
+    await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser });
 
     return {
       board,

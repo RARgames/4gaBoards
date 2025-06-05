@@ -45,18 +45,22 @@ module.exports = {
       .intercept('E_UNIQUE', 'userAlreadyProjectManager')
       .fetch();
 
-    const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(projectManager.projectId);
+    if (projectManager) {
+      const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(projectManager.projectId);
 
-    projectRelatedUserIds.forEach((userId) => {
-      sails.sockets.broadcast(
-        `user:${userId}`,
-        'projectManagerCreate',
-        {
-          item: projectManager,
-        },
-        inputs.request,
-      );
-    });
+      projectRelatedUserIds.forEach((userId) => {
+        sails.sockets.broadcast(
+          `user:${userId}`,
+          'projectManagerCreate',
+          {
+            item: projectManager,
+          },
+          inputs.request,
+        );
+      });
+
+      await sails.helpers.projects.updateMeta.with({ id: projectManager.projectId, currentUser });
+    }
 
     return projectManager;
   },

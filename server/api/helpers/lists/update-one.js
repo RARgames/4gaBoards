@@ -68,6 +68,8 @@ module.exports = {
         },
         inputs.request,
       );
+
+      await sails.helpers.boards.updateMeta.with({ id: list.boardId, currentUser });
     }
 
     return list;

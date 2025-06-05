@@ -39,16 +39,7 @@ module.exports = {
 
     await Promise.all(
       cards.map(async (card) => {
-        const updatedCard = await Card.updateOne({ id: card.id }).set({ updatedById: currentUser.id });
-        if (updatedCard) {
-          sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
-            item: {
-              id: updatedCard.id,
-              updatedAt: updatedCard.updatedAt,
-              updatedById: updatedCard.updatedById,
-            },
-          });
-        }
+        await sails.helpers.cards.updateMeta.with({ id: card.id, currentUser });
       }),
     );
 
@@ -106,6 +97,8 @@ module.exports = {
           });
         }
       }
+
+      await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser });
     }
 
     return boardMembership;
