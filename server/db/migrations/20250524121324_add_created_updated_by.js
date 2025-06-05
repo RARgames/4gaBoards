@@ -1,6 +1,8 @@
 module.exports.up = async (knex) => {
   await knex.transaction(async (trx) => {
     const oldestUserAccount = await trx('user_account').orderBy('created_at', 'asc').first();
+    const oldestUserId = oldestUserAccount?.id ?? 0;
+
     await trx.schema.alterTable('card', (table) => {
       table.renameColumn('creator_user_id', 'created_by_id');
       table.bigInteger('updated_by_id');
@@ -9,58 +11,18 @@ module.exports.up = async (knex) => {
       table.renameColumn('creator_user_id', 'created_by_id');
       table.bigInteger('updated_by_id');
     });
-    await trx.schema.alterTable('action', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
+
+    const addCols = (table) => {
+      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserId);
       table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('board', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('board_membership', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('card_label', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('card_membership', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('label', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('list', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('project', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('project_manager', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('task', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('task_membership', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('user_account', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
-    await trx.schema.alterTable('core', (table) => {
-      table.bigInteger('created_by_id').notNullable().defaultTo(oldestUserAccount.id);
-      table.bigInteger('updated_by_id');
-    });
+    };
+    const alterCols = (table) => {
+      table.bigInteger('created_by_id').notNullable().defaultTo(null).alter();
+    };
+
+    const tables = ['action', 'board', 'board_membership', 'card_label', 'card_membership', 'label', 'list', 'project', 'project_manager', 'task', 'task_membership', 'user_account', 'core'];
+    await Promise.all(tables.map((t) => trx.schema.alterTable(t, addCols)));
+    await Promise.all(tables.map((t) => trx.schema.alterTable(t, alterCols)));
   });
 };
 

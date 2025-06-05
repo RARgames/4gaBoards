@@ -7,15 +7,18 @@ exports.seed = async (knex) => {
   const adminName = process.env.DEFAULT_ADMIN_NAME || 'Demo Demo';
   const adminPassword = process.env.DEFAULT_ADMIN_PASSWORD || 'demo';
 
-  await knex('user_account').insert({
-    email: adminEmail.toLowerCase(),
-    password: bcrypt.hashSync(adminPassword, 10),
-    isAdmin: true,
-    name: adminName,
-    username: adminUsername.toLowerCase(),
-    createdAt: date,
-    updatedAt: date,
-  });
+  const [adminUser] = await knex('user_account')
+    .insert({
+      email: adminEmail.toLowerCase(),
+      password: bcrypt.hashSync(adminPassword, 10),
+      isAdmin: true,
+      name: adminName,
+      username: adminUsername.toLowerCase(),
+      createdAt: date,
+      createdById: 0,
+    })
+    .returning(['id']);
+  await knex('user_account').where({ id: adminUser.id }).update({ createdById: adminUser.id });
 
   const projectCreationAllEnabled = process.env.DEFAULT_PROJECT_CREATION_ALL !== 'false';
   const registrationEnabled = process.env.DEFAULT_REGISTRATION_ENABLED !== 'false';
@@ -30,7 +33,7 @@ exports.seed = async (knex) => {
       ssoRegistrationEnabled,
       projectCreationAllEnabled,
       createdAt: date,
-      updatedAt: date,
+      createdById: adminUser.id,
     })
     .onConflict('id')
     .merge({
@@ -39,5 +42,6 @@ exports.seed = async (knex) => {
       ssoRegistrationEnabled,
       projectCreationAllEnabled,
       updatedAt: date,
+      updatedById: adminUser.id,
     });
 };
