@@ -110,7 +110,7 @@ module.exports = {
       await sails.helpers.boards.importFromTrello.with({ currentUser, board, trelloBoard: inputs.import.board });
     }
 
-    const boardMembership = await BoardMembership.create({
+    await BoardMembership.create({
       boardId: board.id,
       userId: currentUser.id,
       role: BoardMembership.Roles.EDITOR,
@@ -118,6 +118,7 @@ module.exports = {
     })
       .tolerate('E_UNIQUE')
       .fetch();
+    const boardMemberships = await sails.helpers.boards.getBoardMemberships(board.id);
 
     projectManagerUserIds.forEach((userId) => {
       sails.sockets.broadcast(
@@ -135,7 +136,7 @@ module.exports = {
 
     return {
       board,
-      boardMembership,
+      boardMemberships,
     };
   },
 };

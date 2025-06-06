@@ -132,7 +132,7 @@ module.exports = {
       }
     }
 
-    const { board, boardMembership } = await sails.helpers.boards.createOne
+    const { board, boardMemberships } = await sails.helpers.boards.createOne
       .with({
         values: {
           ...values,
@@ -163,7 +163,7 @@ module.exports = {
     const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);
     const projectManagerBoardMemberships = await Promise.all(
       projectManagers.map(async (projectManager) => {
-        if (projectManager.userId === boardMembership?.userId) {
+        if (boardMemberships?.some((m) => m.userId === projectManager.userId)) {
           return null;
         }
         const user = await sails.helpers.users.getOne(projectManager.userId);
@@ -190,7 +190,7 @@ module.exports = {
       }),
     );
     const filteredProjectManagerBoardMemberships = projectManagerBoardMemberships.filter((membership) => membership !== null);
-    const allBoardMemberships = [boardMembership, ...filteredProjectManagerBoardMemberships];
+    const allBoardMemberships = [...(boardMemberships ?? []), ...filteredProjectManagerBoardMemberships];
 
     return {
       item: board,

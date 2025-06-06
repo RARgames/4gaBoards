@@ -193,14 +193,16 @@ module.exports = {
               .tolerate('E_UNIQUE')
               .fetch();
 
-            sails.sockets.broadcast(
-              `user:${allUsers[boardMembership.userId].id}`,
-              'boardMembershipCreate',
-              {
-                item: newBoardMembership,
-              },
-              inputs.request,
-            );
+            if (newBoardMembership.userId !== currentUser.id) {
+              sails.sockets.broadcast(
+                `user:${newBoardMembership.userId}`,
+                'boardMembershipCreate',
+                {
+                  item: newBoardMembership,
+                },
+                inputs.request,
+              );
+            }
           }
         }),
       );

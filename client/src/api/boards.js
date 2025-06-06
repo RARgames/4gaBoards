@@ -27,7 +27,7 @@ const getBoard = (id, subscribe, headers) =>
       tasks: body.included.tasks.map(transformTask),
       users: body.included.users.map(transformUser),
       lists: body.included.lists.map(transformList),
-      projects: body.included.lists.map(transformProject),
+      projects: body.included.projects.map(transformProject),
     },
   }));
 
