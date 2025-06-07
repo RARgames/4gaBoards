@@ -229,211 +229,236 @@ module.exports = {
     };
 
     const importAttachments = async (newCard, card) => {
-      return Promise.all(
-        getAttachmentsOfCard(card.id).map(async (attachment) => {
+      const attachmentsToImport = getAttachmentsOfCard(card.id);
+
+      const filesData = await Promise.all(
+        attachmentsToImport.map((attachment) => {
           const dirPath = path.join(inputs.importTempDir, 'attachments', attachment.dirname, attachment.filename);
-          const metadata = {
+          return sails.helpers.attachments.processUploadedFile({
             fd: dirPath,
             filename: attachment.filename,
-          };
-          const fileData = await sails.helpers.attachments.processUploadedFile(metadata);
-
-          const updatedAt = parseJSON(attachment.updatedAt);
-          const newAttachment = await Attachment.create({
-            cardId: newCard.id,
-            // TODO add original attachment author here, migration, attachmentCreate
-            name: attachment.name,
-            image: parseJSON(attachment.image),
-            filename: attachment.filename,
-            dirname: fileData.dirname,
-            createdAt: parseJSON(attachment.createdAt),
-            createdById: allUsers[attachment.createdById]?.id ?? currentUser.id,
-            updatedAt,
-            updatedById: updatedAt && (allUsers[attachment.updatedById]?.id ?? currentUser.id),
-          }).fetch();
-
-          importedAttachments[attachment.id] = newAttachment;
+          });
         }),
       );
+
+      const attachmentRecords = attachmentsToImport.map((attachment, i) => {
+        const updatedAt = parseJSON(attachment.updatedAt);
+        return {
+          cardId: newCard.id,
+          name: attachment.name,
+          image: parseJSON(attachment.image),
+          filename: attachment.filename,
+          dirname: filesData[i].dirname,
+          createdAt: parseJSON(attachment.createdAt),
+          createdById: allUsers[attachment.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[attachment.updatedById]?.id ?? currentUser.id),
+          // TODO add original attachment author here, migration, attachmentCreate
+        };
+      });
+
+      const insertedAttachments = await Attachment.createEach(attachmentRecords).fetch();
+
+      attachmentsToImport.forEach((attachment, i) => {
+        importedAttachments[attachment.id] = insertedAttachments[i];
+      });
     };
 
     const importCardMemberships = async (newCard, card) => {
-      return Promise.all(
-        getCardMembershipsOfCard(card.id).map(async (cardMembership) => {
-          if (allUsers[cardMembership.userId]) {
-            const updatedAt = parseJSON(cardMembership.updatedAt);
-            await CardMembership.create({
-              cardId: newCard.id,
-              userId: allUsers[cardMembership.userId].id,
-              createdAt: parseJSON(cardMembership.createdAt),
-              createdById: allUsers[cardMembership.createdById]?.id ?? currentUser.id,
-              updatedAt,
-              updatedById: updatedAt && (allUsers[cardMembership.updatedById]?.id ?? currentUser.id),
-            }).tolerate('E_UNIQUE');
-          }
-        }),
-      );
+      const cardMembershipsToImport = getCardMembershipsOfCard(card.id).filter((cardMembership) => allUsers[cardMembership.userId]);
+
+      const cardMembershipRecords = cardMembershipsToImport.map((cardMembership) => {
+        const updatedAt = parseJSON(cardMembership.updatedAt);
+        return {
+          cardId: newCard.id,
+          userId: allUsers[cardMembership.userId].id,
+          createdAt: parseJSON(cardMembership.createdAt),
+          createdById: allUsers[cardMembership.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[cardMembership.updatedById]?.id ?? currentUser.id),
+        };
+      });
+
+      await CardMembership.createEach(cardMembershipRecords).tolerate('E_UNIQUE');
     };
 
     const importCardSubscriptions = async (newCard, card) => {
-      return Promise.all(
-        getCardSubscriptionsOfCard(card.id).map(async (cardSubscription) => {
-          if (allUsers[cardSubscription.userId]) {
-            await CardSubscription.create({
-              cardId: newCard.id,
-              userId: allUsers[cardSubscription.userId].id,
-              isPermanent: cardSubscription.isPermanent,
-              createdAt: parseJSON(cardSubscription.createdAt),
-              updatedAt: parseJSON(cardSubscription.updatedAt),
-            }).tolerate('E_UNIQUE');
-          }
-        }),
-      );
+      const cardSubscriptionsToImport = getCardSubscriptionsOfCard(card.id).filter((cardSubscription) => allUsers[cardSubscription.userId]);
+
+      const cardSubscriptionRecords = cardSubscriptionsToImport.map((cardSubscription) => ({
+        cardId: newCard.id,
+        userId: allUsers[cardSubscription.userId].id,
+        isPermanent: cardSubscription.isPermanent,
+        createdAt: parseJSON(cardSubscription.createdAt),
+        updatedAt: parseJSON(cardSubscription.updatedAt),
+      }));
+
+      await CardSubscription.createEach(cardSubscriptionRecords).tolerate('E_UNIQUE');
     };
 
     const importCardLabels = async (newCard, card) => {
-      return Promise.all(
-        getCardLabelsOfCard(card.id).map(async (cardLabel) => {
-          if (importedLabels[cardLabel.labelId]) {
-            const updatedAt = parseJSON(cardLabel.updatedAt);
-            await CardLabel.create({
-              cardId: newCard.id,
-              labelId: importedLabels[cardLabel.labelId].id,
-              createdAt: parseJSON(cardLabel.createdAt),
-              createdById: allUsers[cardLabel.createdById]?.id ?? currentUser.id,
-              updatedAt,
-              updatedById: updatedAt && (allUsers[cardLabel.updatedById]?.id ?? currentUser.id),
-            });
-          }
-        }),
-      );
+      const cardLabelsToImport = getCardLabelsOfCard(card.id).filter((cardLabel) => importedLabels[cardLabel.labelId]);
+
+      const labelRecords = cardLabelsToImport.map((cardLabel) => {
+        const updatedAt = parseJSON(cardLabel.updatedAt);
+        return {
+          cardId: newCard.id,
+          labelId: importedLabels[cardLabel.labelId].id,
+          createdAt: parseJSON(cardLabel.createdAt),
+          createdById: allUsers[cardLabel.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[cardLabel.updatedById]?.id ?? currentUser.id),
+        };
+      });
+
+      await CardLabel.createEach(labelRecords);
     };
 
     const importTaskMemberships = async (newTask, task) => {
-      return Promise.all(
-        getTaskMembershipsOfTask(task.id).map(async (taskMembership) => {
-          if (allUsers[taskMembership.userId]) {
-            const updatedAt = parseJSON(taskMembership.updatedAt);
-            await TaskMembership.create({
-              taskId: newTask.id,
-              userId: allUsers[taskMembership.userId].id,
-              createdAt: parseJSON(taskMembership.createdAt),
-              createdById: allUsers[taskMembership.createdById]?.id ?? currentUser.id,
-              updatedAt,
-              updatedById: updatedAt && (allUsers[taskMembership.updatedById]?.id ?? currentUser.id),
-            }).tolerate('E_UNIQUE');
-          }
-        }),
-      );
+      const taskMembershipsToImport = getTaskMembershipsOfTask(task.id).filter((taskMembership) => allUsers[taskMembership.userId]);
+
+      const taskMembershipRecords = taskMembershipsToImport.map((taskMembership) => {
+        const updatedAt = parseJSON(taskMembership.updatedAt);
+        return {
+          taskId: newTask.id,
+          userId: allUsers[taskMembership.userId].id,
+          createdAt: parseJSON(taskMembership.createdAt),
+          createdById: allUsers[taskMembership.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[taskMembership.updatedById]?.id ?? currentUser.id),
+        };
+      });
+
+      await TaskMembership.createEach(taskMembershipRecords).tolerate('E_UNIQUE');
     };
 
     const importTasks = async (newCard, card) => {
-      return Promise.all(
-        getTasksOfCard(card.id).map(async (task) => {
-          const updatedAt = parseJSON(task.updatedAt);
-          const newTask = await Task.create({
-            cardId: newCard.id,
-            position: task.position,
-            name: task.name,
-            isCompleted: task.isCompleted,
-            dueDate: parseJSON(task.dueDate),
-            createdAt: parseJSON(task.createdAt),
-            createdById: allUsers[task.createdById]?.id ?? currentUser.id,
-            updatedAt,
-            updatedById: updatedAt && (allUsers[task.updatedById]?.id ?? currentUser.id),
-          }).fetch();
+      const tasksToImport = getTasksOfCard(card.id);
 
-          await importTaskMemberships(newTask, task);
+      const taskRecords = tasksToImport.map((task) => {
+        const updatedAt = parseJSON(task.updatedAt);
+        return {
+          cardId: newCard.id,
+          position: task.position,
+          name: task.name,
+          isCompleted: task.isCompleted,
+          dueDate: parseJSON(task.dueDate),
+          createdAt: parseJSON(task.createdAt),
+          createdById: allUsers[task.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[task.updatedById]?.id ?? currentUser.id),
+        };
+      });
+
+      const insertedTasks = await Task.createEach(taskRecords).fetch();
+
+      await Promise.all(
+        tasksToImport.map((task, i) => {
+          return importTaskMemberships(insertedTasks[i], task);
         }),
       );
     };
 
     const importActions = async (newCard, card) => {
-      return Promise.all(
-        getActionsOfCard(card.id).map(async (action) => {
-          const newData = parseJSON(action.data);
-          if (newData) {
-            if (newData.list) {
-              newData.list.id = importedLists[newData.list.id] ? importedLists[newData.list.id].id : null;
-            }
-            if (newData.fromList) {
-              newData.fromList.id = importedLists[newData.fromList.id] ? importedLists[newData.fromList.id].id : null;
-            }
-            if (newData.toList) {
-              newData.toList.id = importedLists[newData.toList.id] ? importedLists[newData.toList.id].id : null;
-            }
-            if (newData.text && !allUsers[action.userId]) {
-              newData.text = `${newData.text}\n\n---\n*Imported comment, original author: unknown*`;
-            }
-            // TODO add original action author here, migration, actionCreate
+      const actionRecords = getActionsOfCard(card.id).map((action) => {
+        const newData = parseJSON(action.data);
+        if (newData) {
+          if (newData.list) {
+            newData.list.id = importedLists[newData.list.id]?.id ?? null;
           }
+          if (newData.fromList) {
+            newData.fromList.id = importedLists[newData.fromList.id]?.id ?? null;
+          }
+          if (newData.toList) {
+            newData.toList.id = importedLists[newData.toList.id]?.id ?? null;
+          }
+          if (newData.text && !allUsers[action.userId]) {
+            newData.text = `${newData.text}\n\n---\n*Imported comment, original author: unknown*`;
+          }
+          // TODO add original action author here, migration, actionCreate
+        }
+        const updatedAt = parseJSON(action.updatedAt);
 
-          const updatedAt = parseJSON(action.updatedAt);
-          await Action.create({
-            cardId: newCard.id,
-            userId: allUsers[action.userId] ? allUsers[action.userId].id : currentUser.id,
-            type: action.type,
-            data: newData,
-            createdAt: parseJSON(action.createdAt),
-            createdById: allUsers[action.createdById]?.id ?? currentUser.id,
-            updatedAt,
-            updatedById: updatedAt && (allUsers[action.updatedById]?.id ?? currentUser.id),
-          });
-        }),
-      );
+        return {
+          cardId: newCard.id,
+          userId: allUsers[action.userId]?.id ?? currentUser.id,
+          type: action.type,
+          data: newData,
+          createdAt: parseJSON(action.createdAt),
+          createdById: allUsers[action.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[action.updatedById]?.id ?? currentUser.id),
+        };
+      });
+
+      await Action.createEach(actionRecords);
     };
 
     const importCards = async (newList, list) => {
-      return Promise.all(
-        getCardsOfList(list.id).map(async (card) => {
-          const updatedAt = parseJSON(card.updatedAt);
-          const newCard = await Card.create({
-            boardId: inputs.board.id,
-            listId: newList.id,
-            // TODO add original card author here, migration, cardCreate
-            position: card.position,
-            name: card.name,
-            description: card.description || null,
-            dueDate: parseJSON(card.dueDate),
-            commentCount: card.commentCount,
-            timer: parseJSON(card.timer),
-            createdAt: parseJSON(card.createdAt),
-            createdById: allUsers[card.createdById]?.id ?? currentUser.id,
-            updatedAt,
-            updatedById: updatedAt && (allUsers[card.updatedById]?.id ?? currentUser.id),
-          }).fetch();
+      const cardsToImport = getCardsOfList(list.id);
 
-          await importAttachments(newCard, card);
-          await Card.update({ id: newCard.id }).set({ coverAttachmentId: importedAttachments[card.coverAttachmentId] ? importedAttachments[card.coverAttachmentId].id : null });
-          await importCardMemberships(newCard, card);
-          await importCardSubscriptions(newCard, card);
-          await importCardLabels(newCard, card);
-          await importTasks(newCard, card);
-          await importActions(newCard, card);
+      const cardRecords = cardsToImport.map((card) => {
+        const updatedAt = parseJSON(card.updatedAt);
+        return {
+          boardId: inputs.board.id,
+          listId: newList.id,
+          position: card.position,
+          name: card.name,
+          description: card.description || null,
+          dueDate: parseJSON(card.dueDate),
+          commentCount: card.commentCount,
+          timer: parseJSON(card.timer),
+          createdAt: parseJSON(card.createdAt),
+          createdById: allUsers[card.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[card.updatedById]?.id ?? currentUser.id),
+          // TODO add original card author here, migration, cardCreate
+        };
+      });
 
-          return newCard;
+      const insertedCards = await Card.createEach(cardRecords).fetch();
+
+      await Promise.all(
+        cardsToImport.map(async (card, i) => {
+          const newCard = insertedCards[i];
+          await Promise.all([
+            importAttachments(newCard, card),
+            importCardMemberships(newCard, card),
+            importCardSubscriptions(newCard, card),
+            importCardLabels(newCard, card),
+            importTasks(newCard, card),
+            importActions(newCard, card),
+          ]);
+
+          const coverAttachmentId = importedAttachments[card.coverAttachmentId]?.id ?? null;
+          if (coverAttachmentId) {
+            await Card.updateOne(newCard.id).set({ updatedAt: null, coverAttachmentId });
+          }
         }),
       );
     };
 
     const importLists = async () => {
-      return Promise.all(
-        lists.map(async (list) => {
-          const updatedAt = parseJSON(list.updatedAt);
-          const newList = await List.create({
-            boardId: inputs.board.id,
-            name: list.name,
-            position: list.position,
-            isCollapsed: list.isCollapsed,
-            createdAt: parseJSON(list.createdAt),
-            createdById: allUsers[list.createdById]?.id ?? currentUser.id,
-            updatedAt,
-            updatedById: updatedAt && (allUsers[list.updatedById]?.id ?? currentUser.id),
-          }).fetch();
+      const listRecords = lists.map((list) => {
+        const updatedAt = parseJSON(list.updatedAt);
+        return {
+          boardId: inputs.board.id,
+          name: list.name,
+          position: list.position,
+          isCollapsed: list.isCollapsed,
+          createdAt: parseJSON(list.createdAt),
+          createdById: allUsers[list.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[list.updatedById]?.id ?? currentUser.id),
+        };
+      });
 
-          importedLists[list.id] = newList;
+      const insertedLists = await List.createEach(listRecords).fetch();
 
-          return importCards(newList, list);
+      await Promise.all(
+        lists.map((list, i) => {
+          importedLists[list.id] = insertedLists[i];
+          return importCards(insertedLists[i], list);
         }),
       );
     };

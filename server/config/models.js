@@ -88,7 +88,11 @@ module.exports.models = {
     proceed();
   },
   beforeUpdate(valuesToSet, proceed) {
-    valuesToSet.updatedAt = new Date().toUTCString(); // eslint-disable-line no-param-reassign
+    if (!Object.prototype.hasOwnProperty.call(valuesToSet, 'updatedAt')) {
+      valuesToSet.updatedAt = new Date().toUTCString(); // eslint-disable-line no-param-reassign
+    } else if (valuesToSet.updatedAt === null) {
+      delete valuesToSet.updatedAt; // eslint-disable-line no-param-reassign
+    }
 
     proceed();
   },
