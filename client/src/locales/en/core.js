@@ -202,6 +202,7 @@ export default {
       expandList: 'Expand List',
       exportBoard_title: 'Export Board',
       exportBoardExplanation: 'Your download will start automatically, when the export is ready.',
+      exportSkipActions: 'Skip actions (history)',
       exportSkipAttachments: 'Skip attachments',
       exportSkipMetadata: 'Skip metadata',
       exportSkipProjectBackgrounds: 'Skip project backgrounds',

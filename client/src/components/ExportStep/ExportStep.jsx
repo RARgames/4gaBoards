@@ -21,6 +21,7 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
   const [skipUserAvatars, toggleSkipUserAvatars] = useToggle(false);
   const [skipProjectBackgrounds, toggleSKipProjectBackgrounds] = useToggle(false);
   const [skipMetadata, toggleSkipMetafata] = useToggle(false);
+  const [skipActions, toggleSkipActions] = useToggle(true);
   const [step, openStep, handleBack] = useSteps();
 
   const handleSubmit = useCallback(() => {
@@ -29,11 +30,12 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
       skipUserAvatars,
       skipProjectBackgrounds,
       skipMetadata,
+      skipActions,
     };
 
     onExport(data);
     openStep(StepTypes.EXPORT_CONFIRMATION);
-  }, [onExport, skipAttachments, skipUserAvatars, skipProjectBackgrounds, skipMetadata, openStep]);
+  }, [skipAttachments, skipUserAvatars, skipProjectBackgrounds, skipMetadata, skipActions, onExport, openStep]);
 
   const handleFormKeyDown = useCallback(
     (e) => {
@@ -74,6 +76,10 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
               <Checkbox checked={skipMetadata} className={s.checkbox} onChange={toggleSkipMetafata} />
             </div>
             <div className={s.checkboxText}>{t('common.exportSkipMetadata')}</div>
+            <div className={s.checkboxWrapper}>
+              <Checkbox checked={skipActions} className={s.checkbox} onChange={toggleSkipActions} />
+            </div>
+            <div className={s.checkboxText}>{t('common.exportSkipActions')}</div>
           </div>
           <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.exportBoard', { context: 'title' })} className={s.submitButton} onClick={handleSubmit} />

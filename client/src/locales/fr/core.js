@@ -215,6 +215,7 @@ export default {
       expandList: 'Développer la liste',
       exportBoard_title: 'Exporter le tableau',
       exportBoardExplanation: "Votre téléchargement démarrera automatiquement lorsque l'exportation sera prête.",
+      exportSkipActions: 'Ignorer les actions (historique)',
       exportSkipAttachments: 'Ignorer les pièces jointes',
       exportSkipMetadata: 'Ignorer les métadonnées',
       exportSkipProjectBackgrounds: "Ignorer les images d'arrière-plan du projet",

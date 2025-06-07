@@ -204,6 +204,7 @@ export default {
       expandList: 'Expandir Lista',
       exportBoard_title: 'Exportar Painel',
       exportBoardExplanation: 'Seu download terá início automaticamente, quando a exportação estiver pronta.',
+      exportSkipActions: 'Pular ações (histórico)',
       exportSkipAttachments: 'Pular anexos',
       exportSkipMetadata: 'Pular metadados',
       exportSkipProjectBackgrounds: 'Pular planos de fundo do projeto',

@@ -213,6 +213,7 @@ export default {
       expandList: 'Pokaż listę',
       exportBoard_title: 'Eksportuj tablicę',
       exportBoardExplanation: 'Pobieranie rozpocznie się automatycznie, gdy eksport będzie gotowy.',
+      exportSkipActions: 'Pomiń akcje (historia)',
       exportSkipAttachments: 'Pomiń załączniki',
       exportSkipMetadata: 'Pomiń metadane',
       exportSkipProjectBackgrounds: 'Pomiń tła projektów',

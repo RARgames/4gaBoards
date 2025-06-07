@@ -24,6 +24,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    skipActions: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     skipAttachments: {
       type: 'boolean',
       defaultsTo: false,
@@ -68,7 +72,10 @@ module.exports = {
     const cards = await sails.helpers.boards.getCards(board.id);
     const cardIds = sails.helpers.utils.mapRecords(cards);
     const cardMemberships = await sails.helpers.cards.getCardMemberships(cardIds);
-    const actions = await Action.find({ cardId: cardIds });
+    let actions = await Action.find({ cardId: cardIds });
+    if (inputs.skipActions) {
+      actions = actions.filter((action) => action.type === Action.Types.CREATE_CARD || action.type === Action.Types.DUPLICATE_CARD || action.type === Action.Types.COMMENT_CARD);
+    }
     let attachments = await sails.helpers.cards.getAttachments(cardIds);
     if (inputs.skipAttachments) {
       attachments = {};
