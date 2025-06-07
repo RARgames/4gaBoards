@@ -195,7 +195,7 @@ const Sidebar = React.memo(
                                     updatedAt={board.updatedAt}
                                     updatedBy={board.updatedBy}
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
-                                    onExport={() => onBoardExport(board.id)}
+                                    onExport={(data) => onBoardExport(board.id, data)}
                                     onDelete={() => onBoardDelete(board.id)}
                                     position="right-start"
                                     offset={10}

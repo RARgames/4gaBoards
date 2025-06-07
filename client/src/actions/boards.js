@@ -123,10 +123,11 @@ const handleBoardDelete = (board) => ({
   },
 });
 
-const exportBoard = (id) => ({
+const exportBoard = (id, data) => ({
   type: ActionTypes.BOARD_EXPORT,
   payload: {
     id,
+    data,
   },
 });
 

@@ -32,7 +32,7 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
-    skipProjectBackgroundImages: {
+    skipProjectBackgrounds: {
       type: 'boolean',
       defaultsTo: false,
     },
@@ -97,7 +97,7 @@ module.exports = {
         card.coverAttachmentId = undefined; // eslint-disable-line no-param-reassign
       });
     }
-    if (inputs.skipProjectBackgroundImages) {
+    if (inputs.skipProjectBackgrounds) {
       project.backgroundImage = undefined;
       project.background = undefined;
     }
@@ -183,7 +183,7 @@ module.exports = {
         );
       }
 
-      if (!inputs.skipProjectBackgroundImages && project.backgroundImage !== null) {
+      if (!inputs.skipProjectBackgrounds && project.backgroundImage !== null) {
         const projectBackgroundDir = path.join(tempDir, 'project-background-images', project.backgroundImage.dirname);
         fs.mkdirSync(projectBackgroundDir, { recursive: true });
         const projectBackgroundFilename = `original.${project.backgroundImage.extension}`;

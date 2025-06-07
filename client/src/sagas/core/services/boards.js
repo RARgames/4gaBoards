@@ -152,12 +152,12 @@ export function* handleBoardDelete(board) {
   yield put(actions.handleBoardDelete(board));
 }
 
-export function* exportBoard(id) {
-  yield put(actions.exportBoard(id));
+export function* exportBoard(id, data) {
+  yield put(actions.exportBoard(id, data));
 
   let downloadUrl;
   try {
-    ({ item: downloadUrl } = yield call(request, api.exportBoard, id));
+    ({ item: downloadUrl } = yield call(request, api.exportBoard, id, data));
   } catch (error) {
     yield put(actions.exportBoard.failure(id, error));
     return;

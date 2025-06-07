@@ -43,7 +43,7 @@ const deleteBoard = (id, headers) =>
     item: transformBoard(body.item),
   }));
 
-const exportBoard = (id, headers) => socket.get(`/boards/${id}/export`, undefined, headers);
+const exportBoard = (id, data, headers) => socket.get(`/boards/${id}/export`, data, headers);
 
 /* Event handlers */
 

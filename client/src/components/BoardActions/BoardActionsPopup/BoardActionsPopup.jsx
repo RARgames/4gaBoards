@@ -26,8 +26,7 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, cre
 
   const handleExportClick = useCallback(() => {
     openStep(StepTypes.EXPORT);
-    onExport();
-  }, [onExport, openStep]);
+  }, [openStep]);
 
   const handleActivityClick = useCallback(() => {
     openStep(StepTypes.ACTIVITY);
@@ -42,7 +41,7 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, cre
       case StepTypes.GITHUB:
         return <ConnectionsStep defaultData={defaultDataGithub} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
       case StepTypes.EXPORT:
-        return <ExportStep title={t('common.exportBoard', { context: 'title' })} onBack={handleBack} onClose={onClose} />;
+        return <ExportStep title={t('common.exportBoard', { context: 'title' })} onExport={onExport} onBack={handleBack} onClose={onClose} />;
       case StepTypes.DELETE:
         return (
           <DeleteStep
