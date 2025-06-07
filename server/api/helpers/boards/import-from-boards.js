@@ -236,7 +236,7 @@ module.exports = {
             fd: dirPath,
             filename: attachment.filename,
           };
-          const fileData = await sails.helpers.attachments.processUploadedFile(metadata, inputs.importGettingStartedProject);
+          const fileData = await sails.helpers.attachments.processUploadedFile(metadata);
 
           const updatedAt = parseJSON(attachment.updatedAt);
           const newAttachment = await Attachment.create({

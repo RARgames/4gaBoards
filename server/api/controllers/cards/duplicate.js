@@ -151,6 +151,7 @@ module.exports = {
           request: this.req,
         });
       }),
+      // TODO think about how to handle attachments duplication (now it duplicates only db records, but not files)
       ...attachments.map((attachment) => {
         return sails.helpers.attachments.createOne.with({
           values: {

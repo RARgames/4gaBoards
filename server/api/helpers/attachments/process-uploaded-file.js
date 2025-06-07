@@ -22,7 +22,7 @@ module.exports = {
     },
     copyFile: {
       type: 'boolean',
-      defaultsTo: false,
+      defaultsTo: true,
     },
   },
 

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const fastcsv = require('fast-csv');
 const tar = require('tar');
+const sanitizeItem = require('../../utils/sanitize-item');
 
 const Errors = {
   BOARD_NOT_FOUND: {
@@ -18,6 +19,22 @@ module.exports = {
       type: 'string',
       regex: /^[0-9]+$/,
       required: true,
+    },
+    skipMetadata: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
+    skipAttachments: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
+    skipUserAvatars: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
+    skipProjectBackgroundImages: {
+      type: 'boolean',
+      defaultsTo: false,
     },
   },
 
@@ -52,7 +69,10 @@ module.exports = {
     const cardIds = sails.helpers.utils.mapRecords(cards);
     const cardMemberships = await sails.helpers.cards.getCardMemberships(cardIds);
     const actions = await Action.find({ cardId: cardIds });
-    const attachments = await sails.helpers.cards.getAttachments(cardIds);
+    let attachments = await sails.helpers.cards.getAttachments(cardIds);
+    if (inputs.skipAttachments) {
+      attachments = {};
+    }
     const cardLabels = await sails.helpers.cards.getCardLabels(cardIds);
     const cardSubscriptions = await sails.helpers.cardSubscriptions.getMany({
       cardId: cardIds,
@@ -70,8 +90,17 @@ module.exports = {
       id: user.id,
       name: user.name,
       email: user.email,
-      avatar: user.avatar,
+      avatar: !inputs.skipUserAvatars ? user.avatar : undefined,
     }));
+    if (inputs.skipAttachments) {
+      cards.forEach((card) => {
+        card.coverAttachmentId = undefined; // eslint-disable-line no-param-reassign
+      });
+    }
+    if (inputs.skipProjectBackgroundImages) {
+      project.backgroundImage = undefined;
+      project.background = undefined;
+    }
 
     const data = {
       projects: project,
@@ -107,7 +136,8 @@ module.exports = {
 
           const items = Array.isArray(value) ? value : [value];
           items.forEach((item) => {
-            const serializedItem = Object.fromEntries(Object.entries(item).map(([k, v]) => [k, v !== null && typeof v === 'object' ? JSON.stringify(v) : v]));
+            const sanitized = sanitizeItem(item, inputs.skipMetadata);
+            const serializedItem = Object.fromEntries(Object.entries(sanitized).map(([k, v]) => [k, v !== null && typeof v === 'object' ? JSON.stringify(v) : v]));
             csvStream.write(serializedItem);
           });
           csvStream.end();
@@ -129,27 +159,31 @@ module.exports = {
         fs.writeFileSync(filePath, value, 'utf8');
       });
 
-      await Promise.all(
-        attachments.map(async (attachment) => {
-          const attachmentDir = path.join(tempDir, 'attachments', attachment.dirname);
-          fs.mkdirSync(attachmentDir, { recursive: true });
-          const attachmentPath = path.join(sails.config.custom.attachmentsPath, attachment.dirname, attachment.filename);
-          fs.copyFileSync(attachmentPath, path.join(attachmentDir, attachment.filename));
-        }),
-      );
+      if (!inputs.skipAttachments) {
+        await Promise.all(
+          attachments.map(async (attachment) => {
+            const attachmentDir = path.join(tempDir, 'attachments', attachment.dirname);
+            fs.mkdirSync(attachmentDir, { recursive: true });
+            const attachmentPath = path.join(sails.config.custom.attachmentsPath, attachment.dirname, attachment.filename);
+            fs.copyFileSync(attachmentPath, path.join(attachmentDir, attachment.filename));
+          }),
+        );
+      }
 
-      await Promise.all(
-        users.map(async (user) => {
-          if (user.avatar === null) return;
-          const avatarDir = path.join(tempDir, 'user-avatars', user.avatar.dirname);
-          fs.mkdirSync(avatarDir, { recursive: true });
-          const avatarFilename = `original.${user.avatar.extension}`;
-          const avatarPath = path.join(sails.config.custom.fullUserAvatarsPath, user.avatar.dirname, avatarFilename);
-          fs.copyFileSync(avatarPath, path.join(avatarDir, avatarFilename));
-        }),
-      );
+      if (!inputs.skipUserAvatars) {
+        await Promise.all(
+          users.map(async (user) => {
+            if (user.avatar === null) return;
+            const avatarDir = path.join(tempDir, 'user-avatars', user.avatar.dirname);
+            fs.mkdirSync(avatarDir, { recursive: true });
+            const avatarFilename = `original.${user.avatar.extension}`;
+            const avatarPath = path.join(sails.config.custom.fullUserAvatarsPath, user.avatar.dirname, avatarFilename);
+            fs.copyFileSync(avatarPath, path.join(avatarDir, avatarFilename));
+          }),
+        );
+      }
 
-      if (project.backgroundImage !== null) {
+      if (!inputs.skipProjectBackgroundImages && project.backgroundImage !== null) {
         const projectBackgroundDir = path.join(tempDir, 'project-background-images', project.backgroundImage.dirname);
         fs.mkdirSync(projectBackgroundDir, { recursive: true });
         const projectBackgroundFilename = `original.${project.backgroundImage.extension}`;
