@@ -8,6 +8,9 @@ module.exports = {
     coreNotFound: {
       responseType: 'notFound',
     },
+    ssoRegistrationDisabled: {
+      responseType: 'unauthorized',
+    },
   },
 
   google(req, res, next) {
@@ -22,7 +25,7 @@ module.exports = {
       }
 
       try {
-        const user = await sails.helpers.users.getCreateOneForGoogleSso(profile.id, profile.emails[0].value, profile.displayName);
+        const user = await sails.helpers.users.getCreateOneForGoogleSso.with({ id: profile.id, email: profile.emails[0].value, displayName: profile.displayName });
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/google-callback?accessToken=${accessToken}`);
@@ -44,7 +47,7 @@ module.exports = {
       }
 
       try {
-        const user = await sails.helpers.users.getCreateOneForGithubSso(profile.id, profile.username, profile.displayName);
+        const user = await sails.helpers.users.getCreateOneForGithubSso.with({ id: profile.id, username: profile.username, displayName: profile.displayName });
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/github-callback?accessToken=${accessToken}`);
@@ -66,7 +69,7 @@ module.exports = {
       }
 
       try {
-        const user = await sails.helpers.users.getCreateOneForMicrosoftSso(profile.id, profile.email, profile.displayName);
+        const user = await sails.helpers.users.getCreateOneForMicrosoftSso.with({ id: profile.id, email: profile.email, displayName: profile.displayName });
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?accessToken=${accessToken}`);
