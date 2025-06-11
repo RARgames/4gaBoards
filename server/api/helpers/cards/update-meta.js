@@ -16,19 +16,10 @@ module.exports = {
   async fn(inputs) {
     const { id, currentUser } = inputs;
 
-    const card = await Card.updateOne(id).set({ updatedAt: new Date().toUTCString(), updatedById: currentUser.id });
-    if (card) {
-      sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
-        item: {
-          id: card.id,
-          updatedAt: card.updatedAt,
-          updatedById: card.updatedById,
-        },
-      });
+    sails.helpers.cards.updateMetaInternal.with({ id, currentUser }).catch((err) => {
+      sails.log.error('cards.updateMetaInternal failed:', err);
+    });
 
-      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser });
-    }
-
-    return card;
+    return undefined;
   },
 };

@@ -16,20 +16,10 @@ module.exports = {
   async fn(inputs) {
     const { id, currentUser } = inputs;
 
-    const project = await Project.updateOne(id).set({ updatedAt: new Date().toUTCString(), updatedById: currentUser.id });
-    if (project) {
-      const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(project.id);
-      projectRelatedUserIds.forEach((userId) => {
-        sails.sockets.broadcast(`user:${userId}`, 'projectUpdate', {
-          item: {
-            id: project.id,
-            updatedAt: project.updatedAt,
-            updatedById: project.updatedById,
-          },
-        });
-      });
-    }
+    sails.helpers.projects.updateMetaInternal.with({ id, currentUser }).catch((err) => {
+      sails.log.error('projects.updateMetaInternal failed:', err);
+    });
 
-    return project;
+    return undefined;
   },
 };
