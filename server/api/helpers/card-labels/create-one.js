@@ -25,6 +25,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -35,7 +39,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     const cardLabel = await CardLabel.create({
       ...values,
@@ -56,7 +60,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser });
+      await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser, skipMetaUpdate });
     }
 
     return cardLabel;

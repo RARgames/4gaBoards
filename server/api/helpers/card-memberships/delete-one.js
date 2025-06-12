@@ -12,13 +12,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
 
     const cardMembership = await CardMembership.destroyOne(inputs.record.id);
 
@@ -54,7 +58,7 @@ module.exports = {
         }
       }
 
-      await sails.helpers.cards.updateMeta.with({ id: cardMembership.cardId, currentUser });
+      await sails.helpers.cards.updateMeta.with({ id: cardMembership.cardId, currentUser, skipMetaUpdate });
     }
 
     return cardMembership;

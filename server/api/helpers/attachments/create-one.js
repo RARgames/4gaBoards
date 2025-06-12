@@ -21,6 +21,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     requestId: {
       type: 'string',
       isNotEmptyString: true,
@@ -31,7 +35,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     const attachment = await Attachment.create({
       ...values,
@@ -50,7 +54,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser });
+      await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser, skipMetaUpdate });
     }
 
     return attachment;

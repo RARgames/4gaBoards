@@ -25,13 +25,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     if (!_.isUndefined(values.position)) {
       const lists = await sails.helpers.boards.getLists(inputs.record.boardId, inputs.record.id);
@@ -69,7 +73,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.boards.updateMeta.with({ id: list.boardId, currentUser });
+      await sails.helpers.boards.updateMeta.with({ id: list.boardId, currentUser, skipMetaUpdate });
     }
 
     return list;

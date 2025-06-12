@@ -8,13 +8,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
 
     const boardMemberships = await BoardMembership.destroy({
       boardId: inputs.record.id,
@@ -40,7 +44,7 @@ module.exports = {
         );
       });
 
-      await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser });
+      await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser, skipMetaUpdate });
     }
 
     return board;

@@ -8,13 +8,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
 
     const list = await List.archiveOne(inputs.record.id);
 
@@ -28,7 +32,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.boards.updateMeta.with({ id: list.boardId, currentUser });
+      await sails.helpers.boards.updateMeta.with({ id: list.boardId, currentUser, skipMetaUpdate });
     }
 
     return list;

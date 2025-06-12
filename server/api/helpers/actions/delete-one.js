@@ -12,13 +12,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
 
     const action = await Action.archiveOne(inputs.record.id);
 
@@ -45,7 +49,7 @@ module.exports = {
           });
         }
 
-        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser });
+        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
       }
     }
 

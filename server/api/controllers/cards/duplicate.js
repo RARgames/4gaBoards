@@ -78,6 +78,7 @@ module.exports = {
           duplicate: true,
         },
         currentUser,
+        skipMetaUpdate: true,
         request: this.req,
       })
       .intercept('positionMustBeInValues', () => Errors.POSITION_MUST_BE_PRESENT);
@@ -88,7 +89,6 @@ module.exports = {
 
     const cardLabels = await CardLabel.find({ cardId: card.id });
     const memberUsers = await CardMembership.find({ cardId: card.id });
-    // TODO use task duplicate helper
     const tasks = await Task.find({ cardId: card.id });
     const taskIds = sails.helpers.utils.mapRecords(tasks);
     const taskMemberships = await sails.helpers.cards.getTaskMemberships(taskIds);
@@ -99,7 +99,7 @@ module.exports = {
     const coverAttachmentDirname = coverAttachment != null ? coverAttachment.dirname : undefined;
 
     const newTaskIdMapping = {};
-
+    // TODO make duplication faster - see import from boards approach - use createEach directly, to not cause many broadcasts
     await Promise.all(
       tasks.map(async (task) => {
         const newTask = await sails.helpers.tasks.createOne.with({
@@ -108,6 +108,7 @@ module.exports = {
             card: copiedCard,
           },
           currentUser,
+          skipMetaUpdate: true,
           request: this.req,
         });
         newTaskIdMapping[task.id] = newTask.id;
@@ -124,6 +125,7 @@ module.exports = {
               label: { id: cardLabel.labelId, boardId: copiedCard.boardId },
             },
             currentUser,
+            skipMetaUpdate: true,
             request: this.req,
           })
           .intercept('labelAlreadyInCard', () => Errors.LABEL_ALREADY_IN_CARD);
@@ -136,6 +138,7 @@ module.exports = {
               userId: memberUser.userId,
             },
             currentUser,
+            skipMetaUpdate: true,
             request: this.req,
           })
           .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER);
@@ -148,6 +151,7 @@ module.exports = {
             userId: taskMembership.userId,
           },
           currentUser,
+          skipMetaUpdate: true,
           request: this.req,
         });
       }),
@@ -161,21 +165,25 @@ module.exports = {
             card: copiedCard,
           },
           currentUser,
+          skipMetaUpdate: true,
           request: this.req,
         });
       }),
-      ...actions.map((action) => {
-        return sails.helpers.actions.createOne.with({
-          values: {
-            ..._.omit(action, ['id']),
-            duplicate: true,
-            card: copiedCard,
-            user: actionsUsers.find((user) => user.id === action.userId),
-          },
-          currentUser,
-          request: this.req,
-        });
-      }),
+      ...actions
+        .filter((action) => action.type === Action.Types.COMMENT_CARD)
+        .map((action) => {
+          return sails.helpers.actions.createOne.with({
+            values: {
+              ..._.omit(action, ['id']),
+              duplicate: true,
+              card: copiedCard,
+              user: actionsUsers.find((user) => user.id === action.userId),
+            },
+            currentUser,
+            skipMetaUpdate: true,
+            request: this.req,
+          });
+        }),
     ];
 
     await Promise.all(copiedItemsPromises);
@@ -189,7 +197,7 @@ module.exports = {
     const createdAttachments = await sails.helpers.cards.getAttachments(copiedCard.id);
     const createdCoverAttachment = createdAttachments.find((attachment) => attachment.dirname === coverAttachmentDirname);
     const createdCoverAttachmentId = createdCoverAttachment != null ? createdCoverAttachment.id : undefined;
-    await Card.updateOne({ id: copiedCard.id }).set({ coverAttachmentId: createdCoverAttachmentId });
+    await Card.updateOne({ id: copiedCard.id }).set({ updatedById: currentUser.id, coverAttachmentId: createdCoverAttachmentId });
 
     return {
       item: copiedCard,

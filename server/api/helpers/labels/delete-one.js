@@ -8,13 +8,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
 
     const removedCardLabels = await CardLabel.destroy({
       labelId: inputs.record.id,
@@ -25,7 +29,7 @@ module.exports = {
 
     await Promise.all(
       cards.map(async (card) => {
-        await sails.helpers.cards.updateMeta.with({ id: card.id, currentUser });
+        await sails.helpers.cards.updateMeta.with({ id: card.id, currentUser, skipMetaUpdate });
       }),
     );
 
@@ -41,7 +45,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.boards.updateMeta.with({ id: label.boardId, currentUser });
+      await sails.helpers.boards.updateMeta.with({ id: label.boardId, currentUser, skipMetaUpdate });
     }
 
     return label;

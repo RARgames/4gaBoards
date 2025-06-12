@@ -25,13 +25,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     const tasks = await sails.helpers.cards.getTasks(values.card.id);
 
@@ -70,7 +74,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser });
+      await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser, skipMetaUpdate });
     }
 
     return task;

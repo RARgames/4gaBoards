@@ -16,13 +16,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     const action = await Action.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
@@ -37,7 +41,7 @@ module.exports = {
       );
 
       if (action.type === 'commentCard') {
-        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser });
+        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
       }
     }
 

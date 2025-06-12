@@ -12,13 +12,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
     const role = values.role || inputs.record.role;
 
     if (role === BoardMembership.Roles.EDITOR) {
@@ -43,7 +47,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser });
+      await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser, skipMetaUpdate });
     }
 
     return boardMembership;

@@ -19,13 +19,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
 
     if (inputs.record.id === inputs.card.coverAttachmentId) {
       await sails.helpers.cards.updateOne.with({
@@ -61,7 +65,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser });
+      await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser, skipMetaUpdate });
     }
 
     return attachment;

@@ -25,6 +25,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -35,7 +39,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     if (values.user) {
       values.userId = values.user.id;
@@ -88,7 +92,7 @@ module.exports = {
         }
       }
 
-      await sails.helpers.cards.updateMeta.with({ id: cardMembership.cardId, currentUser });
+      await sails.helpers.cards.updateMeta.with({ id: cardMembership.cardId, currentUser, skipMetaUpdate });
     }
 
     return cardMembership;

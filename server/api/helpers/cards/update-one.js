@@ -33,6 +33,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     board: {
       type: 'ref',
     },
@@ -54,7 +58,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
     const { isSubscribed, ...values } = inputs.values;
 
     if (values.board || values.list || !_.isUndefined(values.position)) {
@@ -159,7 +163,7 @@ module.exports = {
         return card;
       }
 
-      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser });
+      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser, skipMetaUpdate });
 
       if (values.board) {
         const labels = await sails.helpers.boards.getLabels(card.boardId);

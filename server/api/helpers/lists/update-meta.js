@@ -11,10 +11,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
   },
 
   async fn(inputs) {
-    const { id, currentUser } = inputs;
+    const { id, currentUser, skipMetaUpdate } = inputs;
+    if (skipMetaUpdate) {
+      return undefined;
+    }
 
     sails.helpers.lists.updateMetaInternal.with({ id, currentUser }).catch((err) => {
       sails.log.error('lists.updateMetaInternal failed:', err);

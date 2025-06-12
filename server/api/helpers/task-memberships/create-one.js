@@ -29,6 +29,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -39,7 +43,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     const taskMembership = await TaskMembership.create({
       taskId: values.taskId,
@@ -88,7 +92,7 @@ module.exports = {
         }
       }
 
-      await sails.helpers.tasks.updateMeta.with({ id: taskMembership.taskId, currentUser });
+      await sails.helpers.tasks.updateMeta.with({ id: taskMembership.taskId, currentUser, skipMetaUpdate });
     }
 
     return taskMembership;

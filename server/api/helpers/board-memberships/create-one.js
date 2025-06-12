@@ -25,6 +25,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -35,7 +39,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     if (values.role === BoardMembership.Roles.EDITOR) {
       delete values.canComment;
@@ -73,7 +77,7 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser });
+      await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser, skipMetaUpdate });
     }
 
     return boardMembership;

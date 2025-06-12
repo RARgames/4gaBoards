@@ -28,6 +28,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -38,7 +42,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     if (_.isUndefined(values.position)) {
       throw 'positionMustBeInValues';
@@ -109,7 +113,7 @@ module.exports = {
         currentUser,
       });
 
-      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser });
+      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser, skipMetaUpdate });
     }
 
     return card;

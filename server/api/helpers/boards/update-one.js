@@ -25,13 +25,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipMetaUpdate } = inputs;
 
     const projectManagerUserIds = await sails.helpers.projects.getManagerUserIds(inputs.record.projectId);
 
@@ -78,7 +82,7 @@ module.exports = {
         );
       });
 
-      await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser });
+      await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser, skipMetaUpdate });
     }
 
     return board;
