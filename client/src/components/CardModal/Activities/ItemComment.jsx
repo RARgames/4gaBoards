@@ -2,10 +2,11 @@ import React, { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import MDPreviewContainer from '../../../containers/MDPreviewContainer';
 import ActivityPopup from '../../ActivityPopup';
 import DeletePopup from '../../DeletePopup';
 import User from '../../User';
-import { MDPreview, Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
+import { Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
 import CommentEdit from './CommentEdit';
 
 import * as s from './ItemComment.module.scss';
@@ -71,7 +72,7 @@ const ItemComment = React.memo(({ data, isPersisted, user, canEdit, commentMode,
         onUpdate={onUpdate}
         onUserPrefsUpdate={onUserPrefsUpdate}
       >
-        <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} className={s.preview} />
+        <MDPreviewContainer source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} className={s.preview} />
       </CommentEdit>
     </div>
   );

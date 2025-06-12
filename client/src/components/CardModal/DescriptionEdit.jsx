@@ -2,8 +2,9 @@ import React, { useCallback, useImperativeHandle, useState, useRef, useEffect } 
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import MDEditorContainer from '../../containers/MDEditorContainer';
 import { useLocalStorage } from '../../hooks';
-import { MDEditor, Button, ButtonStyle } from '../Utils';
+import { Button, ButtonStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './DescriptionEdit.module.scss';
@@ -116,7 +117,7 @@ const DescriptionEdit = React.forwardRef(({ defaultValue, onUpdate, cardId, desc
 
   return (
     <>
-      <MDEditor
+      <MDEditorContainer
         value={value}
         ref={(node) => {
           if (node) {

@@ -137,6 +137,7 @@ export default {
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
       descriptionListViewStyle: 'Sélectionnez le style de la vue de liste.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
+      descriptionPreferredDetailsFont: 'Sélectionnez la police que vous souhaitez utiliser dans la description de la carte et les commentaires.',
       descriptionProjectCreationAll: 'Activez ou désactivez la création de projets pour tous les utilisateurs. Si vous la désactivez, seuls les administrateurs pourront créer de nouveaux projets.',
       descriptionSLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
@@ -269,6 +270,7 @@ export default {
       members: 'Membres',
       minutes: 'Minutes',
       modifySettings: 'Modifier les paramètres',
+      monospace: 'Monospace',
       moveCard_title: 'Déplacer la carte',
       moveCardToList: 'Déplacer la carte vers la liste',
       name: 'Nom',
@@ -299,6 +301,7 @@ export default {
       perPage: 'par page',
       phone: 'Téléphone',
       preferences: 'Préférences',
+      preferredDetailsFont: 'Police des détails préférée',
       previousPage: 'Page précédente',
       profile: 'Profil',
       profileAndSettings: 'Profil et paramètres',

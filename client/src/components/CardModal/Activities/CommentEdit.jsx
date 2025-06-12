@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
+import MDEditorContainer from '../../../containers/MDEditorContainer';
 import { useForm } from '../../../hooks';
-import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
+import { Button, ButtonStyle, Form } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './CommentEdit.module.scss';
@@ -115,7 +116,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 
   return (
     <Form>
-      <MDEditor
+      <MDEditorContainer
         name="text"
         value={data.text}
         ref={(node) => {

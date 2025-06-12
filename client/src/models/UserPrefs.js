@@ -26,6 +26,7 @@ export default class extends BaseModel {
     usersSettingsColumnVisibility: attr(),
     usersSettingsFitScreen: attr(),
     usersSettingsItemsPerPage: attr(),
+    preferredDetailsFont: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

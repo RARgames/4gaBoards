@@ -91,6 +91,11 @@ module.exports = {
       isIn: UserPrefs.LIST_ITEMS_PER_PAGE,
       isNotEmptyString: true,
     },
+    preferredDetailsFont: {
+      type: 'string',
+      isIn: UserPrefs.PREFERRED_FONTS,
+      isNotEmptyString: true,
+    },
   },
 
   exits: {
@@ -137,6 +142,7 @@ module.exports = {
         'usersSettingsColumnVisibility',
         'usersSettingsFitScreen',
         'usersSettingsItemsPerPage',
+        'preferredDetailsFont',
       ]),
     };
 

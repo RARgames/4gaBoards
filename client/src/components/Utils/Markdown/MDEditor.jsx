@@ -4,14 +4,16 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import remarkGithub from 'remark-github';
 
+import { PreferredFonts } from '../../../constants/Enums';
 import { Icon, IconType, IconSize } from '../Icon';
 import MDSettings from './MDSettings';
 
 import * as s from './MD.module.scss';
 
-const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, ...props }, ref) => {
+const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, preferredDetailsFont, className, ...props }, ref) => {
   const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
   const { rehypePlugins, colorNames } = MDSettings;
+  const isMonospaceSelected = preferredDetailsFont === PreferredFonts.MONOSPACE;
 
   const coloredText = useCallback((color) => {
     return {
@@ -64,8 +66,7 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, .
           },
         ),
       ]}
-      // TODO temp removed s.editor
-      className={classNames(className)}
+      className={classNames(className, s.editor, isMonospaceSelected && s.fontMonospace)}
       // TODO add mention
       // TODO add full functionality to mention and issue
     />
@@ -96,6 +97,7 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, className, .
 MDEditor.propTypes = {
   isGithubConnected: PropTypes.bool,
   githubRepo: PropTypes.string,
+  preferredDetailsFont: PropTypes.string.isRequired,
   className: PropTypes.string,
 };
 

@@ -11,7 +11,7 @@ import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
-const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, onUpdate }) => {
+const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, onUpdate }) => {
   const [t] = useTranslation();
   const tableRef = useRef(null);
 
@@ -64,6 +64,22 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
 
   const selectedUsersSettingsStyle = useMemo(() => listStyles.find((style) => style.id === usersSettingsStyle), [listStyles, usersSettingsStyle]);
 
+  const preferredFonts = useMemo(
+    () => [
+      {
+        id: 'default',
+        name: t('common.default'),
+      },
+      {
+        id: 'monospace',
+        name: t('common.monospace'),
+      },
+    ],
+    [t],
+  );
+
+  const selectedPreferredDetailsFont = useMemo(() => preferredFonts.find((style) => style.id === preferredDetailsFont), [preferredDetailsFont, preferredFonts]);
+
   const handleSubscribeToOwnCardsChange = useCallback(() => {
     onUpdate({
       subscribeToOwnCards: !subscribeToOwnCards,
@@ -93,6 +109,13 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
   const handleUsersSettingsStyleChange = useCallback(
     (value) => {
       onUpdate({ usersSettingsStyle: value.id });
+    },
+    [onUpdate],
+  );
+
+  const handlePreferredDetailsFontChange = useCallback(
+    (value) => {
+      onUpdate({ preferredDetailsFont: value.id });
     },
     [onUpdate],
   );
@@ -153,6 +176,20 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
         description: t('common.descriptionUsersSettingsStyle'),
       },
       {
+        id: 'preferredDetailsFont',
+        preferences: t('common.preferredDetailsFont'),
+        modifySettings: selectedPreferredDetailsFont,
+        modifySettingsProps: {
+          onChange: handlePreferredDetailsFontChange,
+          options: preferredFonts,
+          placeholder: selectedPreferredDetailsFont.name,
+          isSearchable: true,
+          selectFirstOnSearch: true,
+        },
+        currentValue: selectedPreferredDetailsFont.name,
+        description: t('common.descriptionPreferredDetailsFont'),
+      },
+      {
         id: 'language',
         preferences: t('common.language', { context: 'title' }),
         modifySettings: selectedLanguage,
@@ -175,6 +212,9 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       listStyles,
       selectedUsersSettingsStyle,
       handleUsersSettingsStyleChange,
+      selectedPreferredDetailsFont,
+      handlePreferredDetailsFontChange,
+      preferredFonts,
       selectedLanguage,
       handleLanguageChange,
       languages,
@@ -298,6 +338,7 @@ PreferencesSettings.propTypes = {
   defaultView: PropTypes.string.isRequired,
   listViewStyle: PropTypes.string.isRequired,
   usersSettingsStyle: PropTypes.string.isRequired,
+  preferredDetailsFont: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

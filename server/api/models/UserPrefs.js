@@ -9,12 +9,14 @@ const DESCRIPTION_MODES = ['edit', 'live', 'preview'];
 const VIEW_MODES = ['board', 'list'];
 const LIST_STYLES = ['default', 'compact'];
 const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
+const PREFERRED_FONTS = ['default', 'monospace'];
 
 module.exports = {
   DESCRIPTION_MODES,
   VIEW_MODES,
   LIST_STYLES,
   LIST_ITEMS_PER_PAGE,
+  PREFERRED_FONTS,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -158,6 +160,13 @@ module.exports = {
       isNotEmptyString: true,
       columnName: 'users_settings_items_per_page',
       defaultsTo: 'all',
+    },
+    preferredDetailsFont: {
+      type: 'string',
+      isIn: PREFERRED_FONTS,
+      isNotEmptyString: true,
+      columnName: 'preferred_details_font',
+      defaultsTo: 'default',
     },
   },
 

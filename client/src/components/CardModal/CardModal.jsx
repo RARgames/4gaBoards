@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import MDPreviewContainer from '../../containers/MDPreviewContainer';
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
@@ -19,7 +20,7 @@ import Tasks from '../Tasks';
 import Timer from '../Timer';
 import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview, ExternalLink } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, ExternalLink } from '../Utils';
 import Activities from './Activities';
 import AttachmentAdd from './AttachmentAdd';
 import AttachmentAddZone from './AttachmentAddZone';
@@ -540,7 +541,7 @@ const CardModal = React.memo(
 
     const descriptionEditOpenNode = description ? (
       <Button title={t('common.editDescription')} onClick={handleDescClick} className={classNames(s.descriptionText, s.cursorPointer)} ref={descriptionEditButtonRef}>
-        <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />
+        <MDPreviewContainer source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />
       </Button>
     ) : (
       <Button style={ButtonStyle.Default} title={t('common.addDescription')} onClick={handleDescClick} className={s.descriptionButton}>
@@ -586,7 +587,7 @@ const CardModal = React.memo(
           {descShown && canEdit && descriptionEditNode}
           {descShown && !canEdit && description && (
             <div className={s.descriptionText}>
-              <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />
+              <MDPreviewContainer source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />
             </div>
           )}
         </div>

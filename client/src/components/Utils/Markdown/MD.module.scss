@@ -1,4 +1,17 @@
 :global(#app) {
+  .editor {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  .preview {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  .fontMonospace {
+    font-family: 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', 'monospace';
+    --md-editor-font-family: 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', 'monospace';
+  }
+
   .coloredTextButton {
     svg {
       vertical-align: -5%;

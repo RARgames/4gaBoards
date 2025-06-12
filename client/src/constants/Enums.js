@@ -30,3 +30,8 @@ export const SsoTypes = {
   GITHUB: 'github',
   MICROSOFT: 'microsoft',
 };
+
+export const PreferredFonts = {
+  DEFAULT: 'default',
+  MONOSPACE: 'monospace',
+};
