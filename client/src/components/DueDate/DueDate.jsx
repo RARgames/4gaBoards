@@ -38,6 +38,7 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
   const [t] = useTranslation();
   const { i18n } = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
+  const [, forceUpdate] = useState(0);
 
   useEffect(() => {
     if (value) {
@@ -72,6 +73,47 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
     zh: zhCN,
   };
   const locale = localeMap[i18n.resolvedLanguage] || enUS;
+
+  useEffect(() => {
+    if (!showRelative || !value) return;
+
+    let intervalId;
+    let timeout;
+
+    const updateInterval = () => {
+      const diffInSeconds = Math.abs((value.getTime() - new Date().getTime()) / 1000);
+      if (diffInSeconds < 60) {
+        return 1000;
+      }
+      if (diffInSeconds < 3600) {
+        return 60000;
+      }
+      return 300000;
+    };
+
+    const setupInterval = () => {
+      const interval = updateInterval();
+      intervalId = setInterval(() => {
+        forceUpdate((x) => x + 1);
+      }, interval);
+
+      timeout = setTimeout(
+        () => {
+          clearInterval(intervalId);
+          setupInterval();
+        },
+        Math.max(interval, 60000),
+      );
+    };
+
+    setupInterval();
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeout);
+    };
+  }, [showRelative, value]);
 
   if (value) {
     const preFormattedValue = t(variant === VARIANTS.LIST_VIEW || variant === VARIANTS.CARDMODAL_ACTIVITY ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' });
