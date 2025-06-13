@@ -20,7 +20,8 @@ const makeMapStateToProps = () => {
 
     const { projectId } = selectors.selectPath(state);
     const allProjectsToLists = selectors.selectProjectsToListsForCurrentUser(state);
-    const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+    const allBoardAndCardMemberships = selectors.selectBoardAndCardMembershipsByCardId(state, id);
+    const allBoardAndTaskMemberships = selectors.selectBoardAndTaskMembershipsByCardId(state, id);
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
@@ -58,7 +59,8 @@ const makeMapStateToProps = () => {
       attachmentsCount,
       commentCount,
       allProjectsToLists,
-      allBoardMemberships,
+      allBoardAndCardMemberships,
+      allBoardAndTaskMemberships,
       allLabels,
       canEdit: isCurrentUserEditor,
       url,

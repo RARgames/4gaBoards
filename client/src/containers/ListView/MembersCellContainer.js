@@ -6,8 +6,8 @@ import { BoardMembershipRoles } from '../../constants/Enums';
 import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
-const mapStateToProps = (state) => {
-  const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+const mapStateToProps = (state, { id }) => {
+  const allBoardMemberships = selectors.selectBoardAndCardMembershipsByCardId(state, id);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 

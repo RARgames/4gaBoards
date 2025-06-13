@@ -115,12 +115,6 @@ export default class extends BaseModel {
   }
 
   deleteRelated() {
-    this.board.cards.toModelArray().forEach((cardModel) => {
-      try {
-        cardModel.users.remove(this.userId);
-      } catch {} // eslint-disable-line no-empty
-    });
-
     try {
       this.board.filterUsers.remove(this.userId);
     } catch {} // eslint-disable-line no-empty

@@ -63,7 +63,7 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect
           <div className={classNames(s.menu, gs.scrollableY)}>
             {filteredItems.map((item) => (
               <Item
-                key={item.id}
+                key={item.user.id}
                 isPersisted={item.isPersisted}
                 isActive={currentUserIds.includes(item.user.id)}
                 user={item.user}

@@ -82,6 +82,72 @@ export const selectMembershipsForCurrentBoard = createSelector(
   },
 );
 
+// This returns all memberships for the current board without duplicates (board, card, task memberships)
+export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
+  orm,
+  (state) => selectPath(state).boardId,
+  (state) => selectCurrentUserId(state),
+  ({ Board }, id, currentUserId) => {
+    if (!id) return id;
+
+    const boardModel = Board.withId(id);
+    if (!boardModel) return boardModel;
+
+    const userMap = new Map();
+
+    boardModel
+      .getOrderedMembershipsQuerySet()
+      .toModelArray()
+      .forEach((boardMembershipModel) => {
+        const membership = {
+          ...boardMembershipModel.ref,
+          isPersisted: !isLocalId(boardMembershipModel.id),
+          user: {
+            ...boardMembershipModel.user.ref,
+            isCurrent: boardMembershipModel.user.id === currentUserId,
+          },
+        };
+        userMap.set(membership.user.id, membership);
+      });
+
+    boardModel.cards.toModelArray().forEach((card) => {
+      card.users.toModelArray().forEach((user) => {
+        if (!userMap.has(user.id)) {
+          userMap.set(user.id, {
+            isPersisted: !isLocalId(user.id),
+            user: {
+              ...user.ref,
+              isCurrent: user.id === currentUserId,
+            },
+          });
+        }
+      });
+      card
+        .getOrderedTasksQuerySet()
+        .toModelArray()
+        .forEach((task) => {
+          task.users.toModelArray().forEach((user) => {
+            if (!userMap.has(user.id)) {
+              userMap.set(user.id, {
+                isPersisted: !isLocalId(user.id),
+                user: {
+                  ...user.ref,
+                  isCurrent: user.id === currentUserId,
+                },
+              });
+            }
+          });
+        });
+    });
+
+    return Array.from(userMap.values()).sort((a, b) => {
+      if (a.user.isCurrent) return -1;
+      if (b.user.isCurrent) return 1;
+      return a.user.name.localeCompare(b.user.name);
+    });
+  },
+);
+
 export const selectCurrentUserMembershipForCurrentBoard = createSelector(
   orm,
   (state) => selectPath(state).boardId,
@@ -283,6 +349,7 @@ export default {
   selectBoardById,
   selectCurrentBoard,
   selectMembershipsForCurrentBoard,
+  selectBoardCardAndTaskMembershipsForCurrentBoard,
   selectCurrentUserMembershipForCurrentBoard,
   selectLabelsForCurrentBoard,
   selectListIdsForCurrentBoard,

@@ -342,6 +342,224 @@ export const selectUrlForCard = createSelector(
   },
 );
 
+export const selectBoardAndCardMembershipsByCardId = createSelector(
+  orm,
+  (_, id) => id,
+  (state) => selectPath(state).boardId,
+  (state) => selectCurrentUserId(state),
+  ({ Board, Card }, id, boardId, currentUserId) => {
+    if (!id) return id;
+    if (!boardId) return boardId;
+
+    const cardModel = Card.withId(id);
+    const boardModel = Board.withId(boardId);
+
+    if (!cardModel) return cardModel;
+    if (!boardModel) return boardModel;
+
+    const userMap = new Map();
+
+    boardModel
+      .getOrderedMembershipsQuerySet()
+      .toModelArray()
+      .forEach((boardMembershipModel) => {
+        const membership = {
+          ...boardMembershipModel.ref,
+          isPersisted: !isLocalId(boardMembershipModel.id),
+          user: {
+            ...boardMembershipModel.user.ref,
+            isCurrent: boardMembershipModel.user.id === currentUserId,
+          },
+        };
+        userMap.set(membership.user.id, membership);
+      });
+
+    cardModel.users.toModelArray().forEach((user) => {
+      if (!userMap.has(user.id)) {
+        userMap.set(user.id, {
+          isPersisted: !isLocalId(user.id),
+          user: {
+            ...user.ref,
+            isCurrent: user.id === currentUserId,
+          },
+        });
+      }
+    });
+
+    return Array.from(userMap.values()).sort((a, b) => {
+      if (a.user.isCurrent) return -1;
+      if (b.user.isCurrent) return 1;
+      return a.user.name.localeCompare(b.user.name);
+    });
+  },
+);
+
+export const selectBoardAndCardMembershipsForCurrentCard = createSelector(
+  orm,
+  (state) => selectPath(state).cardId,
+  (state) => selectPath(state).boardId,
+  (state) => selectCurrentUserId(state),
+  ({ Board, Card }, id, boardId, currentUserId) => {
+    if (!id) return id;
+    if (!boardId) return boardId;
+
+    const cardModel = Card.withId(id);
+    const boardModel = Board.withId(boardId);
+
+    if (!cardModel) return cardModel;
+    if (!boardModel) return boardModel;
+
+    const userMap = new Map();
+
+    boardModel
+      .getOrderedMembershipsQuerySet()
+      .toModelArray()
+      .forEach((boardMembershipModel) => {
+        const membership = {
+          ...boardMembershipModel.ref,
+          isPersisted: !isLocalId(boardMembershipModel.id),
+          user: {
+            ...boardMembershipModel.user.ref,
+            isCurrent: boardMembershipModel.user.id === currentUserId,
+          },
+        };
+        userMap.set(membership.user.id, membership);
+      });
+
+    cardModel.users.toModelArray().forEach((user) => {
+      if (!userMap.has(user.id)) {
+        userMap.set(user.id, {
+          isPersisted: !isLocalId(user.id),
+          user: {
+            ...user.ref,
+            isCurrent: user.id === currentUserId,
+          },
+        });
+      }
+    });
+
+    return Array.from(userMap.values()).sort((a, b) => {
+      if (a.user.isCurrent) return -1;
+      if (b.user.isCurrent) return 1;
+      return a.user.name.localeCompare(b.user.name);
+    });
+  },
+);
+
+export const selectBoardAndTaskMembershipsByCardId = createSelector(
+  orm,
+  (_, id) => id,
+  (state) => selectPath(state).boardId,
+  (state) => selectCurrentUserId(state),
+  ({ Board, Card }, id, boardId, currentUserId) => {
+    if (!id) return id;
+    if (!boardId) return boardId;
+
+    const cardModel = Card.withId(id);
+    const boardModel = Board.withId(boardId);
+
+    if (!cardModel) return cardModel;
+    if (!boardModel) return boardModel;
+
+    const userMap = new Map();
+
+    boardModel
+      .getOrderedMembershipsQuerySet()
+      .toModelArray()
+      .forEach((boardMembershipModel) => {
+        const membership = {
+          ...boardMembershipModel.ref,
+          isPersisted: !isLocalId(boardMembershipModel.id),
+          user: {
+            ...boardMembershipModel.user.ref,
+            isCurrent: boardMembershipModel.user.id === currentUserId,
+          },
+        };
+        userMap.set(membership.user.id, membership);
+      });
+
+    cardModel
+      .getOrderedTasksQuerySet()
+      .toModelArray()
+      .forEach((task) => {
+        task.users.toModelArray().forEach((user) => {
+          if (!userMap.has(user.id)) {
+            userMap.set(user.id, {
+              isPersisted: !isLocalId(user.id),
+              user: {
+                ...user.ref,
+                isCurrent: user.id === currentUserId,
+              },
+            });
+          }
+        });
+      });
+
+    return Array.from(userMap.values()).sort((a, b) => {
+      if (a.user.isCurrent) return -1;
+      if (b.user.isCurrent) return 1;
+      return a.user.name.localeCompare(b.user.name);
+    });
+  },
+);
+
+export const selectBoardAndTaskMembershipsForCurrentCard = createSelector(
+  orm,
+  (state) => selectPath(state).cardId,
+  (state) => selectPath(state).boardId,
+  (state) => selectCurrentUserId(state),
+  ({ Board, Card }, id, boardId, currentUserId) => {
+    if (!id) return id;
+    if (!boardId) return boardId;
+
+    const cardModel = Card.withId(id);
+    const boardModel = Board.withId(boardId);
+
+    if (!cardModel) return cardModel;
+    if (!boardModel) return boardModel;
+
+    const userMap = new Map();
+
+    boardModel
+      .getOrderedMembershipsQuerySet()
+      .toModelArray()
+      .forEach((boardMembershipModel) => {
+        const membership = {
+          ...boardMembershipModel.ref,
+          isPersisted: !isLocalId(boardMembershipModel.id),
+          user: {
+            ...boardMembershipModel.user.ref,
+            isCurrent: boardMembershipModel.user.id === currentUserId,
+          },
+        };
+        userMap.set(membership.user.id, membership);
+      });
+
+    cardModel
+      .getOrderedTasksQuerySet()
+      .toModelArray()
+      .forEach((task) => {
+        task.users.toModelArray().forEach((user) => {
+          if (!userMap.has(user.id)) {
+            userMap.set(user.id, {
+              isPersisted: !isLocalId(user.id),
+              user: {
+                ...user.ref,
+                isCurrent: user.id === currentUserId,
+              },
+            });
+          }
+        });
+      });
+
+    return Array.from(userMap.values()).sort((a, b) => {
+      if (a.user.isCurrent) return -1;
+      if (b.user.isCurrent) return 1;
+      return a.user.name.localeCompare(b.user.name);
+    });
+  },
+);
+
 export default {
   makeSelectCardById,
   selectCardById,
@@ -367,4 +585,8 @@ export default {
   selectActivitiesForCurrentCard,
   selectNotificationIdsForCurrentCard,
   selectUrlForCard,
+  selectBoardAndCardMembershipsByCardId,
+  selectBoardAndCardMembershipsForCurrentCard,
+  selectBoardAndTaskMembershipsByCardId,
+  selectBoardAndTaskMembershipsForCurrentCard,
 };

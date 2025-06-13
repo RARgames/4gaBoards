@@ -23,6 +23,7 @@ const BoardActions = React.memo(
     isFiltered,
     filteredCardCount,
     memberships,
+    allBoardCardAndTaskMemberships,
     labels,
     filterUsers,
     filterLabels,
@@ -87,7 +88,7 @@ const BoardActions = React.memo(
           <Filters
             users={filterUsers}
             labels={filterLabels}
-            allBoardMemberships={memberships}
+            allBoardMemberships={allBoardCardAndTaskMemberships}
             allLabels={labels}
             canEdit={canEdit}
             onUserAdd={onUserToFilterAdd}
@@ -135,6 +136,7 @@ BoardActions.propTypes = {
   isFiltered: PropTypes.bool.isRequired,
   filteredCardCount: PropTypes.number.isRequired,
   memberships: PropTypes.array.isRequired,
+  allBoardCardAndTaskMemberships: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
   filterUsers: PropTypes.array.isRequired,
   filterLabels: PropTypes.array.isRequired,
