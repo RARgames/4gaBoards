@@ -23,6 +23,8 @@ module.exports.up = async (knex) => {
     const tables = ['action', 'board', 'board_membership', 'card_label', 'card_membership', 'label', 'list', 'project', 'project_manager', 'task', 'task_membership', 'user_account', 'core'];
     await Promise.all(tables.map((t) => trx.schema.alterTable(t, addCols)));
     await Promise.all(tables.map((t) => trx.schema.alterTable(t, alterCols)));
+    const allTables = [...tables, 'card', 'attachment'];
+    await Promise.all(allTables.map((t) => trx(t).whereNotNull('updated_at').update({ updated_by_id: oldestUserId })));
   });
 };
 
