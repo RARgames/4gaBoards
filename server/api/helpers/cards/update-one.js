@@ -157,13 +157,20 @@ module.exports = {
         });
       }
 
-      card = await Card.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
+      const onlyBoardAndListArePresentAndUndefined = _.isEqual(Object.keys(values).sort(), ['board', 'list']) && _.isUndefined(values.board) && _.isUndefined(values.list);
+      if (!onlyBoardAndListArePresentAndUndefined) {
+        card = await Card.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
+      } else {
+        card = inputs.record;
+      }
 
       if (!card) {
         return card;
       }
 
-      await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser, skipMetaUpdate });
+      if (!onlyBoardAndListArePresentAndUndefined) {
+        await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser, skipMetaUpdate });
+      }
 
       if (values.board) {
         const labels = await sails.helpers.boards.getLabels(card.boardId);
