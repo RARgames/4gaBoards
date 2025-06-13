@@ -11,7 +11,7 @@ import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
-const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, onUpdate }) => {
+const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, onUpdate }) => {
   const [t] = useTranslation();
   const tableRef = useRef(null);
 
@@ -120,6 +120,12 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
     [onUpdate],
   );
 
+  const handleHideCardModalActivityChange = useCallback(() => {
+    onUpdate({
+      hideCardModalActivity: !hideCardModalActivity,
+    });
+  }, [onUpdate, hideCardModalActivity]);
+
   const handleLanguageChange = useCallback(
     (value) => {
       onUpdate({ language: value.id === 'auto' ? null : value.id }); // FIXME: hack
@@ -190,12 +196,20 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
         description: t('common.descriptionPreferredDetailsFont'),
       },
       {
+        id: 'hideCardModalActivity',
+        preferences: t('common.hideCardModalActivity'),
+        modifySettings: hideCardModalActivity,
+        modifySettingsProps: { onChange: handleHideCardModalActivityChange, title: t('common.toggleHideCardModalActivity') },
+        currentValue: hideCardModalActivity ? t('common.enabled') : t('common.disabled'),
+        description: t('common.descriptionHideCardModalActivity'),
+      },
+      {
         id: 'language',
         preferences: t('common.language', { context: 'title' }),
         modifySettings: selectedLanguage,
         modifySettingsProps: { onChange: handleLanguageChange, options: languages, placeholder: selectedLanguage.name, isSearchable: true, selectFirstOnSearch: true },
         currentValue: selectedLanguage.name,
-        description: t('common.descriptionSLanguage'),
+        description: t('common.descriptionLanguage'),
       },
     ],
     [
@@ -215,6 +229,8 @@ const PreferencesSettings = React.memo(({ subscribeToOwnCards, sidebarCompact, l
       selectedPreferredDetailsFont,
       handlePreferredDetailsFontChange,
       preferredFonts,
+      hideCardModalActivity,
+      handleHideCardModalActivityChange,
       selectedLanguage,
       handleLanguageChange,
       languages,
@@ -339,6 +355,7 @@ PreferencesSettings.propTypes = {
   listViewStyle: PropTypes.string.isRequired,
   usersSettingsStyle: PropTypes.string.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
+  hideCardModalActivity: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

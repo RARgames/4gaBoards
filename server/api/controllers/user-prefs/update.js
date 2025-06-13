@@ -96,6 +96,9 @@ module.exports = {
       isIn: UserPrefs.PREFERRED_FONTS,
       isNotEmptyString: true,
     },
+    hideCardModalActivity: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -143,6 +146,7 @@ module.exports = {
         'usersSettingsFitScreen',
         'usersSettingsItemsPerPage',
         'preferredDetailsFont',
+        'hideCardModalActivity',
       ]),
     };
 

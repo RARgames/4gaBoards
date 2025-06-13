@@ -60,6 +60,8 @@ const mapStateToProps = (state) => {
   }
   const url = selectors.selectUrlForCard(state, id);
 
+  const { hideCardModalActivity } = selectors.selectCurrentUserPrefs(state);
+
   return {
     name,
     id,
@@ -100,6 +102,7 @@ const mapStateToProps = (state) => {
     createdBy,
     updatedAt,
     updatedBy,
+    hideCardModalActivity,
   };
 };
 

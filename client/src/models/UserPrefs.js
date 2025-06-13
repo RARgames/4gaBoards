@@ -27,6 +27,7 @@ export default class extends BaseModel {
     usersSettingsFitScreen: attr(),
     usersSettingsItemsPerPage: attr(),
     preferredDetailsFont: attr(),
+    hideCardModalActivity: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

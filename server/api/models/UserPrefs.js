@@ -168,6 +168,11 @@ module.exports = {
       columnName: 'preferred_details_font',
       defaultsTo: 'default',
     },
+    hideCardModalActivity: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'hide_card_modal_activity',
+    },
   },
 
   tableName: 'user_prefs',

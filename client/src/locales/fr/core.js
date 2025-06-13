@@ -136,11 +136,12 @@ export default {
       description: 'Description',
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
+      descriptionHideCardModalActivity: 'Masquer les activités créées et mises à jour dans la fenêtre modale de la carte',
+      descriptionLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionListViewStyle: 'Sélectionnez le style de la vue de liste.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
       descriptionPreferredDetailsFont: 'Sélectionnez la police que vous souhaitez utiliser dans la description de la carte et les commentaires.',
       descriptionProjectCreationAll: 'Activez ou désactivez la création de projets pour tous les utilisateurs. Si vous la désactivez, seuls les administrateurs pourront créer de nouveaux projets.',
-      descriptionSLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
       descriptionSubscribeToMyOwnCards: 'Être abonné à mes propres cartes',
       descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.", // eslint-disable-line prettier/prettier
@@ -238,6 +239,7 @@ export default {
       github: 'GitHub',
       hasDescription: 'Il a une description',
       hideBoards: 'Masquer les tableaux',
+      hideCardModalActivity: 'Masquer l’activité de la fenêtre modale de la carte',
       hideSidebar: 'Masquer la barre latérale',
       hideTasks: 'Masquer les tâches',
       hours: 'Les heures',
@@ -382,6 +384,7 @@ export default {
       toggleCompactSidebar: 'Basculer la barre latérale compacte',
       toggleDescription: 'Basculer les pièces jointes',
       toggleFilter: 'Basculer le filtre : tableaux/projets [Tab]',
+      toggleHideCardModalActivity: 'Basculer la visibilité des activités dans la fenêtre modale de la carte',
       toggleLocalUserRegistration: "Basculer l'enregistrement local de l'utilisateur",
       toggleProjectCreationAll: 'Activer/désactiver la création de projet pour tous les utilisateurs',
       toggleSettings: 'Basculer les paramètres',

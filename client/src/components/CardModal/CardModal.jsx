@@ -72,6 +72,7 @@ const CardModal = React.memo(
     createdBy,
     updatedAt,
     updatedBy,
+    hideCardModalActivity,
     onUserPrefsUpdate,
     onUpdate,
     onMove,
@@ -732,8 +733,8 @@ const CardModal = React.memo(
             {labelsNode}
             {dueDateNode}
             {timerNode}
-            {createdNode}
-            {updatedNode}
+            {!hideCardModalActivity && createdNode}
+            {!hideCardModalActivity && updatedNode}
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>
@@ -802,6 +803,7 @@ CardModal.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  hideCardModalActivity: PropTypes.bool.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
