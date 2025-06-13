@@ -3,7 +3,7 @@ import { createSelector } from 'redux-orm';
 import orm from '../orm';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
-import sortMemberships from '../utils/sort-memberships';
+import { sortByCurrentUserAndName } from '../utils/membership-helpers';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
 
@@ -75,7 +75,7 @@ export const selectMembershipsForCurrentBoard = createSelector(
         },
       }));
 
-    return sortMemberships(memberships);
+    return sortByCurrentUserAndName(memberships);
   },
 );
 
@@ -90,7 +90,7 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
     const boardModel = Board.withId(id);
     if (!boardModel) return boardModel;
 
-    const userMap = new Map();
+    const memberships = new Map();
 
     boardModel
       .getOrderedMembershipsQuerySet()
@@ -104,13 +104,13 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
             isCurrent: boardMembershipModel.user.id === currentUserId,
           },
         };
-        userMap.set(membership.user.id, membership);
+        memberships.set(membership.user.id, membership);
       });
 
     boardModel.cards.toModelArray().forEach((card) => {
       card.users.toModelArray().forEach((user) => {
-        if (!userMap.has(user.id)) {
-          userMap.set(user.id, {
+        if (!memberships.has(user.id)) {
+          memberships.set(user.id, {
             isPersisted: !isLocalId(user.id),
             user: {
               ...user.ref,
@@ -124,8 +124,8 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
         .toModelArray()
         .forEach((task) => {
           task.users.toModelArray().forEach((user) => {
-            if (!userMap.has(user.id)) {
-              userMap.set(user.id, {
+            if (!memberships.has(user.id)) {
+              memberships.set(user.id, {
                 isPersisted: !isLocalId(user.id),
                 user: {
                   ...user.ref,
@@ -137,7 +137,7 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
         });
     });
 
-    return sortMemberships(Array.from(userMap.values()));
+    return sortByCurrentUserAndName(Array.from(memberships.values()));
   },
 );
 

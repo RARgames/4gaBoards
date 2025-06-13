@@ -4,7 +4,7 @@ import Paths from '../constants/Paths';
 import orm from '../orm';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
-import sortMemberships from '../utils/sort-memberships';
+import { sortByCurrentUserAndName, addBoardMemberships, addCardMemberships, addTaskMemberships } from '../utils/membership-helpers';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
 
@@ -358,36 +358,11 @@ export const selectBoardAndCardMembershipsByCardId = createSelector(
     if (!cardModel) return cardModel;
     if (!boardModel) return boardModel;
 
-    const userMap = new Map();
+    const memberships = new Map();
+    addBoardMemberships(boardModel, memberships, currentUserId);
+    addCardMemberships(cardModel, memberships, currentUserId);
 
-    boardModel
-      .getOrderedMembershipsQuerySet()
-      .toModelArray()
-      .forEach((boardMembershipModel) => {
-        const membership = {
-          ...boardMembershipModel.ref,
-          isPersisted: !isLocalId(boardMembershipModel.id),
-          user: {
-            ...boardMembershipModel.user.ref,
-            isCurrent: boardMembershipModel.user.id === currentUserId,
-          },
-        };
-        userMap.set(membership.user.id, membership);
-      });
-
-    cardModel.users.toModelArray().forEach((user) => {
-      if (!userMap.has(user.id)) {
-        userMap.set(user.id, {
-          isPersisted: !isLocalId(user.id),
-          user: {
-            ...user.ref,
-            isCurrent: user.id === currentUserId,
-          },
-        });
-      }
-    });
-
-    return sortMemberships(Array.from(userMap.values()));
+    return sortByCurrentUserAndName(Array.from(memberships.values()));
   },
 );
 
@@ -406,36 +381,11 @@ export const selectBoardAndCardMembershipsForCurrentCard = createSelector(
     if (!cardModel) return cardModel;
     if (!boardModel) return boardModel;
 
-    const userMap = new Map();
+    const memberships = new Map();
+    addBoardMemberships(boardModel, memberships, currentUserId);
+    addCardMemberships(cardModel, memberships, currentUserId);
 
-    boardModel
-      .getOrderedMembershipsQuerySet()
-      .toModelArray()
-      .forEach((boardMembershipModel) => {
-        const membership = {
-          ...boardMembershipModel.ref,
-          isPersisted: !isLocalId(boardMembershipModel.id),
-          user: {
-            ...boardMembershipModel.user.ref,
-            isCurrent: boardMembershipModel.user.id === currentUserId,
-          },
-        };
-        userMap.set(membership.user.id, membership);
-      });
-
-    cardModel.users.toModelArray().forEach((user) => {
-      if (!userMap.has(user.id)) {
-        userMap.set(user.id, {
-          isPersisted: !isLocalId(user.id),
-          user: {
-            ...user.ref,
-            isCurrent: user.id === currentUserId,
-          },
-        });
-      }
-    });
-
-    return sortMemberships(Array.from(userMap.values()));
+    return sortByCurrentUserAndName(Array.from(memberships.values()));
   },
 );
 
@@ -454,41 +404,11 @@ export const selectBoardAndTaskMembershipsByCardId = createSelector(
     if (!cardModel) return cardModel;
     if (!boardModel) return boardModel;
 
-    const userMap = new Map();
+    const memberships = new Map();
+    addBoardMemberships(boardModel, memberships, currentUserId);
+    addTaskMemberships(cardModel, memberships, currentUserId);
 
-    boardModel
-      .getOrderedMembershipsQuerySet()
-      .toModelArray()
-      .forEach((boardMembershipModel) => {
-        const membership = {
-          ...boardMembershipModel.ref,
-          isPersisted: !isLocalId(boardMembershipModel.id),
-          user: {
-            ...boardMembershipModel.user.ref,
-            isCurrent: boardMembershipModel.user.id === currentUserId,
-          },
-        };
-        userMap.set(membership.user.id, membership);
-      });
-
-    cardModel
-      .getOrderedTasksQuerySet()
-      .toModelArray()
-      .forEach((task) => {
-        task.users.toModelArray().forEach((user) => {
-          if (!userMap.has(user.id)) {
-            userMap.set(user.id, {
-              isPersisted: !isLocalId(user.id),
-              user: {
-                ...user.ref,
-                isCurrent: user.id === currentUserId,
-              },
-            });
-          }
-        });
-      });
-
-    return sortMemberships(Array.from(userMap.values()));
+    return sortByCurrentUserAndName(Array.from(memberships.values()));
   },
 );
 
@@ -507,41 +427,11 @@ export const selectBoardAndTaskMembershipsForCurrentCard = createSelector(
     if (!cardModel) return cardModel;
     if (!boardModel) return boardModel;
 
-    const userMap = new Map();
+    const memberships = new Map();
+    addBoardMemberships(boardModel, memberships, currentUserId);
+    addTaskMemberships(cardModel, memberships, currentUserId);
 
-    boardModel
-      .getOrderedMembershipsQuerySet()
-      .toModelArray()
-      .forEach((boardMembershipModel) => {
-        const membership = {
-          ...boardMembershipModel.ref,
-          isPersisted: !isLocalId(boardMembershipModel.id),
-          user: {
-            ...boardMembershipModel.user.ref,
-            isCurrent: boardMembershipModel.user.id === currentUserId,
-          },
-        };
-        userMap.set(membership.user.id, membership);
-      });
-
-    cardModel
-      .getOrderedTasksQuerySet()
-      .toModelArray()
-      .forEach((task) => {
-        task.users.toModelArray().forEach((user) => {
-          if (!userMap.has(user.id)) {
-            userMap.set(user.id, {
-              isPersisted: !isLocalId(user.id),
-              user: {
-                ...user.ref,
-                isCurrent: user.id === currentUserId,
-              },
-            });
-          }
-        });
-      });
-
-    return sortMemberships(Array.from(userMap.values()));
+    return sortByCurrentUserAndName(Array.from(memberships.values()));
   },
 );
 
