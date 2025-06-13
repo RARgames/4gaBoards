@@ -14,7 +14,7 @@ const makeMapStateToProps = () => {
   return (state, { id }) => {
     const { projectId } = selectors.selectPath(state);
     const allProjectsToLists = selectors.selectProjectsToListsForCurrentUser(state);
-    const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+    const allBoardMemberships = selectors.selectBoardAndCardMembershipsByCardId(state, id);
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const url = selectors.selectUrlForCard(state, id);
     const { name, dueDate, timer, boardId, listId, createdAt, createdBy, updatedAt, updatedBy, isPersisted } = selectCardById(state, id);

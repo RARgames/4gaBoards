@@ -3,6 +3,7 @@ import { createSelector } from 'redux-orm';
 import orm from '../orm';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
+import sortMemberships from '../utils/sort-memberships';
 import { selectPath } from './router';
 import { selectCurrentUserId } from './users';
 
@@ -79,11 +80,7 @@ export const selectManagersForProject = createSelector(
         },
       }));
 
-    return managers.sort((a, b) => {
-      if (a.user.isCurrent) return -1;
-      if (b.user.isCurrent) return 1;
-      return a.user.name.localeCompare(b.user.name);
-    });
+    return sortMemberships(managers);
   },
 );
 
