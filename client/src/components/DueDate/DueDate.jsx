@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { enUS, cs, da, de, es, fr, it, ja, ko, pl, ptBR, ru, sk, sv, uz, zhCN } from 'date-fns/locale'; // TODO should be moved to locales - cannot get it to working with embeddedLocales
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
@@ -11,6 +13,7 @@ import * as s from './DueDate.module.scss';
 const VARIANTS = {
   CARD: 'card',
   CARDMODAL: 'cardModal',
+  CARDMODAL_ACTIVITY: 'cardModalActivity',
   TASKS_CARD: 'tasksCard',
   LIST_VIEW: 'listView',
 };
@@ -31,14 +34,17 @@ const getDueStyle = (value) => {
   return 'Normal';
 };
 
-const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable, className, showUndefined }) => {
+const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable, className, showUndefined, showRelative }) => {
   const [t] = useTranslation();
+  const { i18n } = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
 
   useEffect(() => {
     if (value) {
       if (variant === VARIANTS.LIST_VIEW) {
         setDueStyle('ListView');
+      } else if (variant === VARIANTS.CARDMODAL_ACTIVITY) {
+        setDueStyle('CardModalActivity');
       } else {
         setDueStyle(getDueStyle(value));
       }
@@ -46,19 +52,38 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
   }, [value, variant]);
 
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
+  // TODO localeMap is temp solution - move to locales
+  const localeMap = {
+    en: enUS,
+    cs,
+    da,
+    de,
+    es,
+    fr,
+    it,
+    ja,
+    ko,
+    pl,
+    'pt-BR': ptBR,
+    ru,
+    sk,
+    sv,
+    uz,
+    zh: zhCN,
+  };
+  const locale = localeMap[i18n.resolvedLanguage] || enUS;
 
-  return value ? (
-    <span
-      className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)}
-      title={`${titlePrefixString}${t(variant === VARIANTS.LIST_VIEW ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' })}`}
-    >
-      {variant !== VARIANTS.TASKS_CARD && variant !== VARIANTS.LIST_VIEW && t(`format:date`, { value, postProcess: 'formatDate' })}
-      {variant === VARIANTS.LIST_VIEW && t(`format:dateTime`, { value, postProcess: 'formatDate' })}
-      {variant === VARIANTS.TASKS_CARD && <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} />}
-    </span>
-  ) : (
-    showUndefined && <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)}>-</span>
-  );
+  if (value) {
+    const preFormattedValue = t(variant === VARIANTS.LIST_VIEW || variant === VARIANTS.CARDMODAL_ACTIVITY ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' });
+    const formattedValue = showRelative ? formatDistanceToNowStrict(value, { locale, addSuffix: true }) : preFormattedValue;
+    return (
+      <div className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)} title={`${titlePrefixString}${preFormattedValue}`}>
+        {variant === VARIANTS.TASKS_CARD ? <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} /> : formattedValue}
+      </div>
+    );
+  }
+
+  return showUndefined ? <div className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)}>-</div> : null;
 });
 
 DueDate.propTypes = {
@@ -69,6 +94,7 @@ DueDate.propTypes = {
   isClickable: PropTypes.bool,
   className: PropTypes.string,
   showUndefined: PropTypes.bool,
+  showRelative: PropTypes.bool,
 };
 
 DueDate.defaultProps = {
@@ -79,6 +105,7 @@ DueDate.defaultProps = {
   isClickable: false,
   className: undefined,
   showUndefined: false,
+  showRelative: false,
 };
 
 export default DueDate;

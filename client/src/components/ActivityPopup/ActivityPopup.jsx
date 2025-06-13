@@ -20,14 +20,14 @@ const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updat
             <div className={s.meta}>
               {t('common.activityCreated')}
               {createdBy && <User name={createdBy.name} avatarUrl={createdBy.avatarUrl} size="small" className={s.metaUser} />}
-              {createdAt && <DueDate value={createdAt} variant="listView" showUndefined />}
+              {createdAt && <DueDate value={createdAt} variant="listView" />}
             </div>
           )}
           {(updatedAt || updatedBy) && (
             <div className={s.meta}>
               {t('common.activityUpdated')}
               {updatedBy && <User name={updatedBy.name} avatarUrl={updatedBy.avatarUrl} size="small" className={s.metaUser} />}
-              {updatedAt && <DueDate value={updatedAt} variant="listView" showUndefined />}
+              {updatedAt && <DueDate value={updatedAt} variant="listView" />}
             </div>
           )}
         </div>

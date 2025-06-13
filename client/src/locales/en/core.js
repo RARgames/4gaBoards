@@ -99,6 +99,7 @@ export default {
       connections: 'Edit GitHub Connection',
       connectToGithub: 'Connect to GitHub',
       coverImage: 'Cover Image',
+      created: 'Created',
       createdAt: 'Created At',
       createdBy: 'Created By',
       createLabel_title: 'Create Label',

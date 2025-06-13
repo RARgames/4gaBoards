@@ -107,6 +107,7 @@ export default {
       connections: 'Edytuj połączenie z GitHub',
       connectToGithub: 'Połącz z GitHub',
       coverImage: 'wyrózniony obrazek',
+      created: 'Utworzono',
       createdAt: 'Utworzono',
       createdBy: 'Utworzone przez',
       createLabel_title: 'Stwórz etykietę',

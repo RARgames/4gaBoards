@@ -305,6 +305,9 @@ const CardModal = React.memo(
     const headerNode = (
       <div className={s.header}>
         <div className={s.headerFirstLine}>
+          <Button style={ButtonStyle.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={s.headerNotificationsButton}>
+            <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} className={s.headerNotificationsIcon} />
+          </Button>
           <div className={s.headerTitleWrapper}>
             <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
               {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
@@ -530,11 +533,22 @@ const CardModal = React.memo(
       </div>
     );
 
-    const subscribeNode = (
+    const createdNode = (
       <div className={s.headerItems}>
-        <div className={s.text}>{t('common.notifications')}</div>
-        <span className={s.headerItem}>
-          <Button style={ButtonStyle.Default} content={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={s.subscribeButton} />
+        <div className={s.text}>{t('common.created')}</div>
+        <span className={classNames(s.headerItem, s.activity)}>
+          {createdBy && <User name={createdBy.name} avatarUrl={createdBy.avatarUrl} size="small" className={s.activityItem} />}
+          {createdAt && <DueDate value={createdAt} variant="cardModalActivity" showRelative />}
+        </span>
+      </div>
+    );
+
+    const updatedNode = (
+      <div className={s.headerItems}>
+        <div className={s.text}>{t('common.updated')}</div>
+        <span className={classNames(s.headerItem, s.activity)}>
+          {updatedBy && <User name={updatedBy.name} avatarUrl={updatedBy.avatarUrl} size="small" className={s.activityItem} />}
+          {updatedAt && <DueDate value={updatedAt} variant="cardModalActivity" showRelative />}
         </span>
       </div>
     );
@@ -718,7 +732,8 @@ const CardModal = React.memo(
             {labelsNode}
             {dueDateNode}
             {timerNode}
-            {subscribeNode}
+            {createdNode}
+            {updatedNode}
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>

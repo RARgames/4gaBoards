@@ -123,6 +123,14 @@
     line-clamp: 3;
   }
 
+  .headerNotificationsButton {
+    align-self: center;
+  }
+
+  .headerNotificationsIcon {
+    margin: auto;
+  }
+
   .headerListFieldWrapper {
     padding: 3px;
   }
@@ -154,14 +162,6 @@
     max-height: 20px;
     margin-bottom: 4px;
     text-transform: uppercase;
-  }
-
-  .subscribeButton {
-    padding: 0px 6px 0px 6px;
-    width: auto;
-    min-width: 84px;
-    height: 28px;
-    text-align: center;
   }
 
   .alignCenter {
@@ -257,5 +257,14 @@
     &:hover {
       fill: var(--textColor3);
     }
+  }
+
+  .activity {
+    display: flex;
+    align-items: center;
+  }
+
+  .activityItem {
+    margin-right: 4px;
   }
 }

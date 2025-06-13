@@ -8,6 +8,7 @@ import { ReactComponent as ArrowLeftBig } from '../../../assets/icons/ArrowLeftB
 import { ReactComponent as Attach } from '../../../assets/icons/Attach.svg';
 import { ReactComponent as BarsStaggered } from '../../../assets/icons/BarsStaggered.svg';
 import { ReactComponent as Bell } from '../../../assets/icons/Bell.svg';
+import { ReactComponent as BellEmpty } from '../../../assets/icons/BellEmpty.svg';
 import { ReactComponent as Board } from '../../../assets/icons/Board.svg';
 import { ReactComponent as Calendar } from '../../../assets/icons/Calendar.svg';
 import { ReactComponent as Check } from '../../../assets/icons/Check.svg';
@@ -70,6 +71,7 @@ const IconType = {
   Attach,
   BarsStaggered,
   Bell,
+  BellEmpty,
   Board,
   Calendar,
   Check,

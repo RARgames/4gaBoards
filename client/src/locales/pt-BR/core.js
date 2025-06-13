@@ -101,6 +101,7 @@ export default {
       connections: 'Editar Conexão do GitHub',
       connectToGithub: 'Conectar ao GitHub',
       coverImage: 'Imagem de Capa',
+      created: 'Criado',
       createdAt: 'Criado em',
       createdBy: 'Criado por',
       createLabel_title: 'Criar Rótulo',

@@ -39,6 +39,11 @@
     fill: var(--textColor1);
   }
 
+  .dueCardModalActivity {
+    color: var(--textColor2);
+    fill: var(--textColor2);
+  }
+
   .dueDateHoverable {
     cursor: pointer;
 
@@ -69,6 +74,10 @@
   }
 
   .wrapperListView {
+    font-size: 12px;
+  }
+
+  .wrapperCardModalActivity {
     font-size: 12px;
   }
 }
