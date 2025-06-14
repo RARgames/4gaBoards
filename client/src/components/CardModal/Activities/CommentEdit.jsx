@@ -3,14 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
-import MDEditorContainer from '../../../containers/MDEditorContainer';
 import { useForm } from '../../../hooks';
-import { Button, ButtonStyle, Form } from '../../Utils';
+import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './CommentEdit.module.scss';
 
-const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, onUpdate, onUserPrefsUpdate }, ref) => {
+const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, preferredDetailsFont, onUpdate, onUserPrefsUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [wasOpen, setWasOpen] = useState(false);
@@ -116,7 +115,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 
   return (
     <Form>
-      <MDEditorContainer
+      <MDEditor
         name="text"
         value={data.text}
         ref={(node) => {
@@ -140,6 +139,7 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
         }}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
+        preferredDetailsFont={preferredDetailsFont}
         className={s.editor}
       />
       <div className={gs.controls}>
@@ -157,6 +157,7 @@ CommentEdit.propTypes = {
   commentMode: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
+  preferredDetailsFont: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
 };

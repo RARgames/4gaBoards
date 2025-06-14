@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import MDPreviewContainer from '../../containers/MDPreviewContainer';
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
@@ -20,7 +19,7 @@ import Tasks from '../Tasks';
 import Timer from '../Timer';
 import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, ExternalLink } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, ExternalLink, MDPreview } from '../Utils';
 import Activities from './Activities';
 import AttachmentAdd from './AttachmentAdd';
 import AttachmentAddZone from './AttachmentAddZone';
@@ -56,6 +55,8 @@ const CardModal = React.memo(
     tasksShown,
     attachmentsShown,
     commentsShown,
+    hideCardModalActivity,
+    preferredDetailsFont,
     userId,
     isGithubConnected,
     githubRepo,
@@ -73,7 +74,6 @@ const CardModal = React.memo(
     createdBy,
     updatedAt,
     updatedBy,
-    hideCardModalActivity,
     onUserPrefsUpdate,
     onUpdate,
     onMove,
@@ -557,7 +557,7 @@ const CardModal = React.memo(
 
     const descriptionEditOpenNode = description ? (
       <Button title={t('common.editDescription')} onClick={handleDescClick} className={classNames(s.descriptionText, s.cursorPointer)} ref={descriptionEditButtonRef}>
-        <MDPreviewContainer source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />
+        <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} />
       </Button>
     ) : (
       <Button style={ButtonStyle.Default} title={t('common.addDescription')} onClick={handleDescClick} className={s.descriptionButton}>
@@ -579,6 +579,7 @@ const CardModal = React.memo(
         onUserPrefsUpdate={onUserPrefsUpdate}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
+        preferredDetailsFont={preferredDetailsFont}
       />
     ) : (
       descriptionEditOpenNode
@@ -603,7 +604,7 @@ const CardModal = React.memo(
           {descShown && canEdit && descriptionEditNode}
           {descShown && !canEdit && description && (
             <div className={s.descriptionText}>
-              <MDPreviewContainer source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} />
+              <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} />
             </div>
           )}
         </div>
@@ -714,6 +715,7 @@ const CardModal = React.memo(
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
         commentCount={commentCount}
+        preferredDetailsFont={preferredDetailsFont}
         onFetch={onActivitiesFetch}
         onDetailsToggle={onActivitiesDetailsToggle}
         onCommentCreate={onCommentActivityCreate}
@@ -787,6 +789,8 @@ CardModal.propTypes = {
   tasksShown: PropTypes.bool.isRequired,
   attachmentsShown: PropTypes.bool.isRequired,
   commentsShown: PropTypes.bool.isRequired,
+  hideCardModalActivity: PropTypes.bool.isRequired,
+  preferredDetailsFont: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
@@ -805,7 +809,6 @@ CardModal.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  hideCardModalActivity: PropTypes.bool.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,

@@ -23,6 +23,7 @@ const Activities = React.memo(
     isGithubConnected,
     githubRepo,
     commentCount,
+    preferredDetailsFont,
     onFetch,
     onDetailsToggle,
     onCommentCreate,
@@ -124,6 +125,7 @@ const Activities = React.memo(
                   commentMode={commentMode}
                   isGithubConnected={isGithubConnected}
                   githubRepo={githubRepo}
+                  preferredDetailsFont={preferredDetailsFont}
                   onUpdate={onCommentCreate}
                   onUserPrefsUpdate={onUserPrefsUpdate}
                 >
@@ -146,6 +148,7 @@ const Activities = React.memo(
                       createdBy={item.createdBy}
                       updatedAt={item.updatedAt}
                       updatedBy={item.updatedBy}
+                      preferredDetailsFont={preferredDetailsFont}
                       onUpdate={(data) => handleCommentUpdate(item.id, data)}
                       onDelete={() => handleCommentDelete(item.id)}
                       onUserPrefsUpdate={onUserPrefsUpdate}
@@ -176,6 +179,7 @@ Activities.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
+  preferredDetailsFont: PropTypes.string.isRequired,
   onFetch: PropTypes.func.isRequired,
   onDetailsToggle: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,

@@ -51,6 +51,7 @@ const ListView = React.memo(
     listViewItemsPerPage,
     currentCardIndex,
     canEdit,
+    preferredDetailsFont,
     onCardCreate,
     onListCreate,
     onUserPrefsUpdate,
@@ -354,7 +355,7 @@ const ListView = React.memo(
           cell: Table.Renderers.MarkdownCellRenderer,
           enableSorting: false,
           meta: { headerTitle: t('common.description') },
-          cellProps: { isGithubConnected, githubRepo },
+          cellProps: { isGithubConnected, githubRepo, preferredDetailsFont },
         },
         {
           accessorKey: 'actions',
@@ -377,7 +378,19 @@ const ListView = React.memo(
           cellProps: { onOpenNameEdit: (id) => nameCellFns[id]?.open() },
         },
       ],
-      [t, sortingFunctions, isGithubConnected, githubRepo, listViewFitScreen, handleResetColumnSortingClick, handleResetColumnWidthsClick, handleResetColumnVisibilityClick, onUserPrefsUpdate, nameCellFns],
+      [
+        t,
+        sortingFunctions,
+        isGithubConnected,
+        githubRepo,
+        preferredDetailsFont,
+        listViewFitScreen,
+        handleResetColumnSortingClick,
+        handleResetColumnWidthsClick,
+        handleResetColumnVisibilityClick,
+        onUserPrefsUpdate,
+        nameCellFns,
+      ],
     );
 
     const { handleSortingChange } = Table.HooksPost(columns, setSorting);
@@ -487,8 +500,9 @@ ListView.propTypes = {
   listViewColumnVisibility: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   listViewFitScreen: PropTypes.bool.isRequired,
   listViewItemsPerPage: PropTypes.string.isRequired,
-  canEdit: PropTypes.bool.isRequired,
   currentCardIndex: PropTypes.number,
+  canEdit: PropTypes.bool.isRequired,
+  preferredDetailsFont: PropTypes.string.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onListCreate: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,

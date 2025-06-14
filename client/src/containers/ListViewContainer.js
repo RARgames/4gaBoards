@@ -62,6 +62,7 @@ const makeMapStateToProps = () => {
     const currentCardIndex = filteredCards.findIndex((card) => card.id === currentCardId);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+    const { preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
 
     return {
       isCardModalOpened: !!currentCardId,
@@ -78,6 +79,7 @@ const makeMapStateToProps = () => {
       listViewItemsPerPage,
       currentCardIndex,
       canEdit: isCurrentUserEditor,
+      preferredDetailsFont,
     };
   };
 };

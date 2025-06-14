@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
   const attachments = selectors.selectAttachmentsForCurrentCard(state);
   const activities = selectors.selectActivitiesForCurrentCard(state);
   const user = selectors.selectCurrentUser(state);
-  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown } = selectors.selectCurrentUserPrefs(state);
+  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
   const userId = user.id;
 
   const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
@@ -60,8 +60,6 @@ const mapStateToProps = (state) => {
     isCurrentUserEditorOrCanComment = isCurrentUserEditor || currentUserMembership.canComment;
   }
   const url = selectors.selectUrlForCard(state, id);
-
-  const { hideCardModalActivity } = selectors.selectCurrentUserPrefs(state);
 
   return {
     name,
@@ -87,6 +85,8 @@ const mapStateToProps = (state) => {
     tasksShown,
     attachmentsShown,
     commentsShown,
+    hideCardModalActivity,
+    preferredDetailsFont,
     userId,
     isGithubConnected,
     githubRepo,
@@ -104,7 +104,6 @@ const mapStateToProps = (state) => {
     createdBy,
     updatedAt,
     updatedBy,
-    hideCardModalActivity,
   };
 };
 
