@@ -8,27 +8,29 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser } = inputs;
+    const { currentUser, skipMetaUpdate } = inputs;
 
     await ProjectManager.destroy({
       userId: inputs.record.id,
     });
 
-    await BoardMembership.destroy({
+    const boardMemberships = await BoardMembership.destroy({
       userId: inputs.record.id,
-    });
+    }).fetch();
+
+    await Promise.all(boardMemberships.map((boardMembership) => sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser, skipMetaUpdate })));
 
     await CardSubscription.destroy({
-      userId: inputs.record.id,
-    });
-
-    await CardMembership.destroy({
       userId: inputs.record.id,
     });
 
@@ -37,6 +39,7 @@ module.exports = {
       deletedAt: null,
     }).set({
       deletedAt: new Date().toUTCString(),
+      deletedById: currentUser.id,
     });
 
     if (user) {

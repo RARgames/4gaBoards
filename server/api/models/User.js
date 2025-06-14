@@ -50,10 +50,6 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
-    deletedAt: {
-      type: 'ref',
-      columnName: 'deleted_at',
-    },
     passwordChangedAt: {
       type: 'ref',
       columnName: 'password_changed_at',
@@ -93,6 +89,10 @@ module.exports = {
     lastLogin: {
       type: 'ref',
       columnName: 'last_login',
+    },
+    deletedAt: {
+      type: 'ref',
+      columnName: 'deleted_at',
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
@@ -136,6 +136,10 @@ module.exports = {
     updatedById: {
       model: 'User',
       columnName: 'updated_by_id',
+    },
+    deletedById: {
+      model: 'User',
+      columnName: 'deleted_by_id',
     },
   },
 

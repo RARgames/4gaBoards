@@ -41,7 +41,6 @@ export default class extends BaseModel {
     avatarUrl: attr(),
     phone: attr(),
     organization: attr(),
-    deletedAt: attr(),
     isPasswordAuthenticated: attr(),
     ssoGoogleEmail: attr(),
     ssoGithubUsername: attr(),
@@ -74,6 +73,12 @@ export default class extends BaseModel {
       to: 'User',
       as: 'updatedBy',
       relatedName: 'updatedUsers',
+    }),
+    deletedAt: attr(),
+    deletedById: fk({
+      to: 'User',
+      as: 'deletedBy',
+      relatedName: 'deletedUsers',
     }),
   };
 

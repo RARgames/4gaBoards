@@ -25,6 +25,12 @@ module.exports.up = async (knex) => {
     await Promise.all(tables.map((t) => trx.schema.alterTable(t, alterCols)));
     const allTables = [...tables, 'card', 'attachment'];
     await Promise.all(allTables.map((t) => trx(t).whereNotNull('updated_at').update({ updated_by_id: oldestUserId })));
+
+    await trx.schema.alterTable('user_account', (table) => {
+      table.bigInteger('deleted_by_id');
+    });
+
+    await trx('user_account').whereNotNull('deleted_at').update({ deleted_by_id: oldestUserId });
   });
 };
 
@@ -84,6 +90,7 @@ module.exports.down = async (knex) => {
   await knex.schema.alterTable('user_account', (table) => {
     table.dropColumn('created_by_id');
     table.dropColumn('updated_by_id');
+    table.dropColumn('deleted_by_id');
   });
   await knex.schema.alterTable('core', (table) => {
     table.dropColumn('created_by_id');
