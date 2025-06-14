@@ -14,10 +14,14 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const { currentUser } = inputs;
+
     const projectManagers = await ProjectManager.destroy({
       projectId: inputs.record.id,
     }).fetch();
+    // TODO should be also probably archived
 
+    await Project.updateOne(inputs.record.id).set({ updatedById: currentUser.id });
     const project = await Project.archiveOne(inputs.record.id);
 
     if (project) {

@@ -23,7 +23,9 @@ module.exports = {
     const boardMemberships = await BoardMembership.destroy({
       boardId: inputs.record.id,
     }).fetch();
+    // TODO should be also probably archived
 
+    await Board.updateOne(inputs.record.id).set({ updatedById: currentUser.id });
     const board = await Board.archiveOne(inputs.record.id);
 
     if (board) {

@@ -24,6 +24,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser, skipMetaUpdate } = inputs;
 
+    await Action.updateOne(inputs.record.id).set({ updatedById: currentUser.id });
     const action = await Action.archiveOne(inputs.record.id);
 
     if (action) {

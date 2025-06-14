@@ -20,6 +20,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser, skipMetaUpdate } = inputs;
 
+    await Card.updateOne(inputs.record.id).set({ updatedById: currentUser.id });
     const card = await Card.archiveOne(inputs.record.id);
 
     if (card) {

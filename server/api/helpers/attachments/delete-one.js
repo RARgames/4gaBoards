@@ -42,6 +42,7 @@ module.exports = {
       });
     }
 
+    await Attachment.updateOne(inputs.record.id).set({ updatedById: currentUser.id });
     const attachment = await Attachment.archiveOne(inputs.record.id);
 
     if (attachment) {

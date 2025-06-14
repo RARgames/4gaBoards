@@ -20,6 +20,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser, skipMetaUpdate } = inputs;
 
+    await List.updateOne(inputs.record.id).set({ updatedById: currentUser.id });
     const list = await List.archiveOne(inputs.record.id);
 
     if (list) {
