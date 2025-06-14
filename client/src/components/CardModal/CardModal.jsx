@@ -735,7 +735,7 @@ const CardModal = React.memo(
             {dueDateNode}
             {timerNode}
             {!hideCardModalActivity && createdNode}
-            {!hideCardModalActivity && updatedNode}
+            {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>
