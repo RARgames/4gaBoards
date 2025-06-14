@@ -155,6 +155,9 @@ module.exports = {
         await CardLabel.destroy({
           cardId: inputs.record.id,
         });
+
+        const prevCard = await Card.findOne(inputs.record.id);
+        await sails.helpers.lists.updateMeta.with({ id: prevCard.listId, currentUser, skipMetaUpdate });
       }
 
       const onlyBoardAndListArePresentAndUndefined = _.isEqual(Object.keys(values).sort(), ['board', 'list']) && _.isUndefined(values.board) && _.isUndefined(values.list);

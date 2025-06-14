@@ -38,14 +38,14 @@ const addCardMemberships = (cardModel, memberships, currentUserId) => {
   });
 };
 
-const addTaskMemberships = (cardModel, userMap, currentUserId) => {
+const addTaskMemberships = (cardModel, memberships, currentUserId) => {
   cardModel
     .getOrderedTasksQuerySet()
     .toModelArray()
     .forEach((task) => {
       task.users.toModelArray().forEach((user) => {
-        if (!userMap.has(user.id)) {
-          userMap.set(user.id, {
+        if (!memberships.has(user.id)) {
+          memberships.set(user.id, {
             isPersisted: !isLocalId(user.id),
             user: {
               ...user.ref,
