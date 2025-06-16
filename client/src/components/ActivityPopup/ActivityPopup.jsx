@@ -8,7 +8,7 @@ import { Popup, withPopup } from '../Utils';
 
 import * as s from './ActivityPopup.module.scss';
 
-const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, onBack }) => {
+const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, memberships, isNotMemberTitle, onBack }) => {
   const [t] = useTranslation();
 
   return (
@@ -19,14 +19,32 @@ const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updat
           {(createdAt || createdBy) && (
             <div className={s.meta}>
               {t('common.activityCreated')}
-              {createdBy && <User name={createdBy.name} avatarUrl={createdBy.avatarUrl} size="small" className={s.metaUser} />}
+              {createdBy && (
+                <User
+                  name={createdBy.name}
+                  avatarUrl={createdBy.avatarUrl}
+                  size="small"
+                  isMember={memberships ? memberships.some((m) => m.user?.id === createdBy.id) : true}
+                  isNotMemberTitle={isNotMemberTitle}
+                  className={s.metaUser}
+                />
+              )}
               {createdAt && <DueDate value={createdAt} variant="listView" />}
             </div>
           )}
           {(updatedAt || updatedBy) && (
             <div className={s.meta}>
               {t('common.activityUpdated')}
-              {updatedBy && <User name={updatedBy.name} avatarUrl={updatedBy.avatarUrl} size="small" className={s.metaUser} />}
+              {updatedBy && (
+                <User
+                  name={updatedBy.name}
+                  avatarUrl={updatedBy.avatarUrl}
+                  size="small"
+                  isMember={memberships ? memberships.some((m) => m.user?.id === updatedBy.id) : true}
+                  isNotMemberTitle={isNotMemberTitle}
+                  className={s.metaUser}
+                />
+              )}
               {updatedAt && <DueDate value={updatedAt} variant="listView" />}
             </div>
           )}
@@ -42,6 +60,8 @@ ActivityStep.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  isNotMemberTitle: PropTypes.string.isRequired,
   onBack: PropTypes.func,
 };
 
@@ -50,6 +70,7 @@ ActivityStep.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  memberships: undefined,
   onBack: undefined,
 };
 

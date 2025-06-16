@@ -43,6 +43,7 @@ const Card = React.memo(
     attachmentsCount,
     commentCount,
     allProjectsToLists,
+    allBoardMemberships,
     allBoardAndCardMemberships,
     allBoardAndTaskMemberships,
     allLabels,
@@ -274,7 +275,7 @@ const Card = React.memo(
                 >
                   {users.slice(0, visibleMembersCount).map((user) => (
                     <span key={user.id} className={classNames(s.attachment, s.user)}>
-                      <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
+                      <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={allBoardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
                     </span>
                   ))}
                   {users.length > visibleMembersCount && (
@@ -394,6 +395,7 @@ Card.propTypes = {
   attachmentsCount: PropTypes.number.isRequired,
   commentCount: PropTypes.number.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
+  allBoardMemberships: PropTypes.array.isRequired,
   allBoardAndCardMemberships: PropTypes.array.isRequired,
   allBoardAndTaskMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,

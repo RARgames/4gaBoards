@@ -11,7 +11,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Filters.module.scss';
 
-const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, canEdit, onUserAdd, onUserRemove, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelDelete }) => {
+const Filters = React.memo(({ users, labels, allBoardMemberships, memberships, allLabels, canEdit, onUserAdd, onUserRemove, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelDelete }) => {
   const [t] = useTranslation();
 
   const handleRemoveUserClick = useCallback(
@@ -56,7 +56,15 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, allLabels, can
         </MembershipsPopup>
         {users.map((user, index) => (
           <span key={user.id} className={classNames(s.filterItem, index + 1 === users.length && s.lastFilterItem)}>
-            <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" onClick={() => handleRemoveUserClick(user.id)} isRemovable />
+            <User
+              name={user.name}
+              avatarUrl={user.avatarUrl}
+              size="tiny"
+              onClick={() => handleRemoveUserClick(user.id)}
+              isMember={memberships.some((m) => m.user?.id === user.id)}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+              isRemovable
+            />
           </span>
         ))}
         {users.length > 0 && (
@@ -105,6 +113,7 @@ Filters.propTypes = {
   users: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
   allBoardMemberships: PropTypes.array.isRequired,
+  memberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,
   /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,

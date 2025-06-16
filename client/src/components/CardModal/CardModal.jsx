@@ -61,6 +61,7 @@ const CardModal = React.memo(
     isGithubConnected,
     githubRepo,
     allProjectsToLists,
+    allBoardMemberships,
     allBoardAndCardMemberships,
     allBoardAndTaskMemberships,
     allLabels,
@@ -430,7 +431,7 @@ const CardModal = React.memo(
         <MembershipsPopup items={allBoardAndCardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} disabled={!canEdit}>
           {users.slice(0, visibleMembersCount).map((user, index) => (
             <span key={user.id} className={classNames(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}>
-              <User name={user.name} avatarUrl={user.avatarUrl} size="small" />
+              <User name={user.name} avatarUrl={user.avatarUrl} size="small" isMember={allBoardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
             </span>
           ))}
           {users.length > visibleMembersCount && (
@@ -539,7 +540,16 @@ const CardModal = React.memo(
       <div className={s.headerItems}>
         <div className={s.text}>{t('common.created')}</div>
         <span className={classNames(s.headerItem, s.activity)}>
-          {createdBy && <User name={createdBy.name} avatarUrl={createdBy.avatarUrl} size="small" className={s.activityItem} />}
+          {createdBy && (
+            <User
+              name={createdBy.name}
+              avatarUrl={createdBy.avatarUrl}
+              size="small"
+              isMember={allBoardMemberships.some((m) => m.user?.id === createdBy.id)}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+              className={s.activityItem}
+            />
+          )}
           {createdAt && <DueDate value={createdAt} variant="cardModalActivity" showRelative />}
         </span>
       </div>
@@ -549,7 +559,16 @@ const CardModal = React.memo(
       <div className={s.headerItems}>
         <div className={s.text}>{t('common.updated')}</div>
         <span className={classNames(s.headerItem, s.activity)}>
-          {updatedBy && <User name={updatedBy.name} avatarUrl={updatedBy.avatarUrl} size="small" className={s.activityItem} />}
+          {updatedBy && (
+            <User
+              name={updatedBy.name}
+              avatarUrl={updatedBy.avatarUrl}
+              size="small"
+              isMember={allBoardMemberships.some((m) => m.user?.id === updatedBy.id)}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+              className={s.activityItem}
+            />
+          )}
           {updatedAt && <DueDate value={updatedAt} variant="cardModalActivity" showRelative />}
         </span>
       </div>
@@ -716,6 +735,7 @@ const CardModal = React.memo(
         githubRepo={githubRepo}
         commentCount={commentCount}
         preferredDetailsFont={preferredDetailsFont}
+        allBoardMemberships={allBoardMemberships}
         onFetch={onActivitiesFetch}
         onDetailsToggle={onActivitiesDetailsToggle}
         onCommentCreate={onCommentActivityCreate}
@@ -795,6 +815,7 @@ CardModal.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
+  allBoardMemberships: PropTypes.array.isRequired,
   allBoardAndCardMemberships: PropTypes.array.isRequired,
   allBoardAndTaskMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,

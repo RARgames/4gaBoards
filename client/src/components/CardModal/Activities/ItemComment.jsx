@@ -11,7 +11,24 @@ import CommentEdit from './CommentEdit';
 import * as s from './ItemComment.module.scss';
 
 const ItemComment = React.memo(
-  ({ data, isPersisted, user, canEdit, commentMode, isGithubConnected, githubRepo, preferredDetailsFont, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onDelete, onUserPrefsUpdate }) => {
+  ({
+    data,
+    isPersisted,
+    user,
+    canEdit,
+    commentMode,
+    isGithubConnected,
+    githubRepo,
+    preferredDetailsFont,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    allBoardMemberships,
+    onUpdate,
+    onDelete,
+    onUserPrefsUpdate,
+  }) => {
     const [t] = useTranslation();
 
     const commentEdit = useRef(null);
@@ -24,7 +41,7 @@ const ItemComment = React.memo(
       <div className={s.content}>
         <div className={s.title}>
           <span className={s.user}>
-            <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
+            <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" isMember={allBoardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
           </span>
           <span className={s.author}>{user.name}</span>
           <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
@@ -45,6 +62,8 @@ const ItemComment = React.memo(
                   createdBy={createdBy}
                   updatedAt={updatedAt}
                   updatedBy={updatedBy}
+                  memberships={allBoardMemberships}
+                  isNotMemberTitle={t('common.noLongerBoardMember')}
                   position="left-start"
                   offset={0}
                 >
@@ -101,6 +120,7 @@ ItemComment.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,

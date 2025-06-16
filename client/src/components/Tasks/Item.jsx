@@ -96,7 +96,13 @@ const Item = React.memo(
       <div className={classNames(s.members, canEdit && gs.cursorPointer, isCompleted && s.itemCompleted)}>
         {users.slice(0, visibleMembersCount).map((user) => (
           <span key={user.id} className={s.member}>
-            <User name={user.name} avatarUrl={user.avatarUrl} size={userSize} />
+            <User
+              name={user.name}
+              avatarUrl={user.avatarUrl}
+              size={userSize}
+              isMember={!!boardMemberships.find((m) => m.user?.id === user.id)?.user?.isBoardMember}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+            />
           </span>
         ))}
         {users.length > visibleMembersCount && (

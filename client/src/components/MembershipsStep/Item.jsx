@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -8,6 +9,8 @@ import { Button } from '../Utils';
 import * as s from './Item.module.scss';
 
 const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDeselect }) => {
+  const [t] = useTranslation();
+
   const handleToggleClick = useCallback(() => {
     if (isActive) {
       onUserDeselect();
@@ -19,7 +22,7 @@ const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDese
   return (
     <Button onClick={handleToggleClick} disabled={!isPersisted} className={s.menuItem} title={user.name}>
       <span className={s.user}>
-        <User name={user.name} avatarUrl={user.avatarUrl} />
+        <User name={user.name} avatarUrl={user.avatarUrl} isMember={user.isBoardMember} isNotMemberTitle={t('common.noLongerBoardMember')} />
       </span>
       <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)}>{user.name}</div>
     </Button>

@@ -15,7 +15,7 @@ const StepTypes = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, onNameEdit, onCardAdd, onDelete, onClose }) => {
+const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -48,7 +48,18 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
           />
         );
       case StepTypes.ACTIVITY:
-        return <ActivityStep title={t('common.activityFor', { name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
+        return (
+          <ActivityStep
+            title={t('common.activityFor', { name })}
+            createdAt={createdAt}
+            createdBy={createdBy}
+            updatedAt={updatedAt}
+            updatedBy={updatedBy}
+            memberships={boardMemberships}
+            isNotMemberTitle={t('common.noLongerBoardMember')}
+            onBack={handleBack}
+          />
+        );
       default:
     }
   }
@@ -82,6 +93,7 @@ ActionsStep.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

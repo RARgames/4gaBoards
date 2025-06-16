@@ -17,7 +17,27 @@ import * as gs from '../../global.module.scss';
 import * as s from './List.module.scss';
 
 const List = React.memo(
-  ({ id, index, name, isPersisted, isCollapsed, cardIds, isFiltered, filteredCardIds, labelIds, memberIds, canEdit, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onDelete, onCardCreate }) => {
+  ({
+    id,
+    index,
+    name,
+    isPersisted,
+    isCollapsed,
+    cardIds,
+    isFiltered,
+    filteredCardIds,
+    labelIds,
+    memberIds,
+    canEdit,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    boardMemberships,
+    onUpdate,
+    onDelete,
+    onCardCreate,
+  }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
     const [nameEditHeight, setNameEditHeight] = useState(0);
@@ -201,6 +221,7 @@ const List = React.memo(
                       createdBy={createdBy}
                       updatedAt={updatedAt}
                       updatedBy={updatedBy}
+                      boardMemberships={boardMemberships}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onDelete={onDelete}
@@ -245,6 +266,7 @@ List.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,

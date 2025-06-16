@@ -284,6 +284,8 @@ export default {
       noBoards: 'Pas de tableaux',
       noConnectionToServer: 'Pas de connexion au serveur',
       noLists: 'Pas de listes',
+      noLongerBoardMember: "Cet utilisateur n'est plus membre de ce tableau!",
+      noLongerProjectMember: "Cet utilisateur n'est plus membre de ce projet!",
       noProjects: 'Pas de projets',
       notConnectedToGithub: 'Non connecté à GitHub',
       notifications: 'Notifications',

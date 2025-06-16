@@ -63,6 +63,7 @@ const makeMapStateToProps = () => {
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const { preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
+    const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
 
     return {
       isCardModalOpened: !!currentCardId,
@@ -80,6 +81,7 @@ const makeMapStateToProps = () => {
       currentCardIndex,
       canEdit: isCurrentUserEditor,
       preferredDetailsFont,
+      allBoardMemberships,
     };
   };
 };

@@ -124,6 +124,7 @@ const Sidebar = React.memo(
                 createdBy={project.createdBy}
                 updatedAt={project.updatedAt}
                 updatedBy={project.updatedBy}
+                memberships={project.memberships}
                 onUpdate={(data) => onProjectUpdate(project.id, data)}
                 onBoardCreate={onBoardCreate}
                 position="right-start"
@@ -194,6 +195,7 @@ const Sidebar = React.memo(
                                     createdBy={board.createdBy}
                                     updatedAt={board.updatedAt}
                                     updatedBy={board.updatedBy}
+                                    memberships={board.memberships}
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
                                     onExport={(data) => onBoardExport(board.id, data)}
                                     onDelete={() => onBoardDelete(board.id)}

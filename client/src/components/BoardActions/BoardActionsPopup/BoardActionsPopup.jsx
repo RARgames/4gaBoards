@@ -20,7 +20,7 @@ const StepTypes = {
   ACTIVITY: 'ACTIVITY',
 };
 
-const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onExport, onDelete, onClose }) => {
+const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, createdAt, createdBy, updatedAt, updatedBy, memberships, onUpdate, onExport, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -53,7 +53,18 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, cre
           />
         );
       case StepTypes.ACTIVITY:
-        return <ActivityStep title={t('common.activityFor', { name: defaultDataRename.name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
+        return (
+          <ActivityStep
+            title={t('common.activityFor', { name: defaultDataRename.name })}
+            createdAt={createdAt}
+            createdBy={createdBy}
+            updatedAt={updatedAt}
+            updatedBy={updatedBy}
+            memberships={memberships}
+            isNotMemberTitle={t('common.noLongerBoardMember')}
+            onBack={handleBack}
+          />
+        );
       default:
     }
   }
@@ -92,6 +103,7 @@ BoardActionsStep.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

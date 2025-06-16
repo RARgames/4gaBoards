@@ -24,7 +24,13 @@ const MembersCell = React.memo(({ id, users, allBoardMemberships, cellClassName,
       disabled={!canEdit}
       wrapperClassName={s.userWrapper}
     >
-      <User name={user.name} avatarUrl={user.avatarUrl} size="card" />
+      <User
+        name={user.name}
+        avatarUrl={user.avatarUrl}
+        size="card"
+        isMember={!!allBoardMemberships.find((m) => m.user?.id === user.id)?.user?.isBoardMember}
+        isNotMemberTitle={t('common.noLongerBoardMember')}
+      />
     </MembershipsPopup>
   ));
 

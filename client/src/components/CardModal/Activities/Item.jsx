@@ -8,7 +8,7 @@ import ItemComment from './ItemComment';
 
 import * as s from './Item.module.scss';
 
-const Item = React.memo(({ type, data, user, createdAt }) => {
+const Item = React.memo(({ type, data, user, createdAt, allBoardMemberships }) => {
   const [t] = useTranslation();
 
   // TODO fully rewrite contentNodes
@@ -72,7 +72,7 @@ const Item = React.memo(({ type, data, user, createdAt }) => {
   return (
     <div className={s.content}>
       <span className={s.user}>
-        <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" />
+        <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" isMember={allBoardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
       </span>
       <span className={s.author}>{user.name}</span>
       <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>
@@ -88,6 +88,7 @@ Item.propTypes = {
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   createdAt: PropTypes.instanceOf(Date).isRequired,
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default Item;

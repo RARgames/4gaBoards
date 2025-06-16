@@ -271,6 +271,8 @@ export default {
       noBoards: 'No boards',
       noConnectionToServer: 'No connection to server',
       noLists: 'No lists',
+      noLongerBoardMember: 'This user is no longer a member of this board!',
+      noLongerProjectMember: 'This user is no longer a member of this project!',
       noProjects: 'No projects',
       notConnectedToGithub: 'Not connected to GitHub',
       notifications: 'Notifications',

@@ -18,7 +18,7 @@ const StepTypes = {
   ACTIVITY: 'ACTIVITY',
 };
 
-const ProjectActionsStep = React.memo(({ name, projectId, managedProjects, defaultDataRename, isAdmin, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onBoardCreate, onClose }) => {
+const ProjectActionsStep = React.memo(({ name, projectId, managedProjects, defaultDataRename, isAdmin, createdAt, createdBy, updatedAt, updatedBy, memberships, onUpdate, onBoardCreate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -38,7 +38,18 @@ const ProjectActionsStep = React.memo(({ name, projectId, managedProjects, defau
       case StepTypes.ADD:
         return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
       case StepTypes.ACTIVITY:
-        return <ActivityStep title={t('common.activityFor', { name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
+        return (
+          <ActivityStep
+            title={t('common.activityFor', { name })}
+            createdAt={createdAt}
+            createdBy={createdBy}
+            updatedAt={updatedAt}
+            updatedBy={updatedBy}
+            memberships={memberships}
+            isNotMemberTitle={t('common.noLongerProjectMember')}
+            onBack={handleBack}
+          />
+        );
       default:
     }
   }
@@ -77,6 +88,7 @@ ProjectActionsStep.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

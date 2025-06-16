@@ -273,6 +273,8 @@ export default {
       noBoards: 'Sem painéis',
       noConnectionToServer: 'Sem conexão com o servidor',
       noLists: 'Sem listas',
+      noLongerBoardMember: 'Este usuário não é mais membro deste quadro!',
+      noLongerProjectMember: 'Este usuário não é mais membro deste projeto!',
       noProjects: 'Sem projetos',
       notConnectedToGithub: 'Sem conexão com o GitHub',
       notifications: 'Notificações',

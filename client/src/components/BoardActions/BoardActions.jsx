@@ -89,6 +89,7 @@ const BoardActions = React.memo(
             users={filterUsers}
             labels={filterLabels}
             allBoardMemberships={allBoardCardAndTaskMemberships}
+            memberships={memberships}
             allLabels={labels}
             canEdit={canEdit}
             onUserAdd={onUserToFilterAdd}

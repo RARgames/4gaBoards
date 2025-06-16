@@ -169,7 +169,18 @@ const ActionsStep = React.memo(
             />
           );
         case StepTypes.ACTIVITY:
-          return <ActivityStep title={t('common.activityFor', { name: card.name })} createdAt={createdAt} createdBy={createdBy} updatedAt={updatedAt} updatedBy={updatedBy} onBack={handleBack} />;
+          return (
+            <ActivityStep
+              title={t('common.activityFor', { name: card.name })}
+              createdAt={createdAt}
+              createdBy={createdBy}
+              updatedAt={updatedAt}
+              updatedBy={updatedBy}
+              memberships={boardMemberships}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+              onBack={handleBack}
+            />
+          );
         default:
       }
     }

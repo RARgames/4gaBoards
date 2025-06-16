@@ -20,6 +20,7 @@ const makeMapStateToProps = () => {
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
+    const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
@@ -39,6 +40,7 @@ const makeMapStateToProps = () => {
       createdBy,
       updatedAt,
       updatedBy,
+      boardMemberships,
     };
   };
 };

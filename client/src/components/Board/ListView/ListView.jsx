@@ -52,6 +52,7 @@ const ListView = React.memo(
     currentCardIndex,
     canEdit,
     preferredDetailsFont,
+    allBoardMemberships,
     onCardCreate,
     onListCreate,
     onUserPrefsUpdate,
@@ -332,6 +333,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortingFn: sortingFunctions.recursiveNameSortingFn,
           meta: { headerTitle: t('common.createdBy') },
+          cellProps: { getIsMember: (id) => allBoardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
         },
         {
           accessorKey: 'updatedAt',
@@ -348,6 +350,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortingFn: sortingFunctions.recursiveNameSortingFn,
           meta: { headerTitle: t('common.updatedBy') },
+          cellProps: { getIsMember: (id) => allBoardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
         },
         {
           accessorKey: 'description',
@@ -389,6 +392,7 @@ const ListView = React.memo(
         handleResetColumnWidthsClick,
         handleResetColumnVisibilityClick,
         onUserPrefsUpdate,
+        allBoardMemberships,
         nameCellFns,
       ],
     );
@@ -503,6 +507,7 @@ ListView.propTypes = {
   currentCardIndex: PropTypes.number,
   canEdit: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onCardCreate: PropTypes.func.isRequired,
   onListCreate: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,

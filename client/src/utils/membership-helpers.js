@@ -18,6 +18,7 @@ const addBoardMemberships = (boardModel, memberships, currentUserId) => {
         user: {
           ...boardMembershipModel.user.ref,
           isCurrent: boardMembershipModel.user.id === currentUserId,
+          isBoardMember: true,
         },
       };
       memberships.set(membership.user.id, membership);
@@ -32,6 +33,7 @@ const addCardMemberships = (cardModel, memberships, currentUserId) => {
         user: {
           ...user.ref,
           isCurrent: user.id === currentUserId,
+          isBoardMember: false,
         },
       });
     }
@@ -50,6 +52,7 @@ const addTaskMemberships = (cardModel, memberships, currentUserId) => {
             user: {
               ...user.ref,
               isCurrent: user.id === currentUserId,
+              isBoardMember: false,
             },
           });
         }

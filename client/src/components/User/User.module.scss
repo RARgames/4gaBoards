@@ -22,6 +22,7 @@
     outline: none;
     text-align: center;
     vertical-align: middle;
+    position: relative;
   }
 
   .wrapperHoverable:hover {
@@ -47,6 +48,13 @@
       justify-content: center;
       font-size: 24px;
     }
+  }
+
+  .grayOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--grayOverlay);
+    border-radius: inherit;
   }
 
   /* Sizes */
