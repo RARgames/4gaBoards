@@ -29,7 +29,7 @@
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-table": "^8.21.3",
     "@uiw/react-md-editor": "^4.0.7",
-    "babel-jest": "^29.7.0",
+    "babel-jest": "^30.0.0",
     "babel-loader": "^10.0.0",
     "babel-preset-react-app": "^10.1.0",
     "bfj": "^9.1.2",
