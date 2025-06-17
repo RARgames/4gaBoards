@@ -10,8 +10,8 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
 import BoardActionsPopup from '../BoardActions/BoardActionsPopup';
-import Connections from '../BoardActions/Connections';
 import BoardAddPopup from '../BoardAddPopup';
+import ConnectionsPopup from '../ConnectionsPopup';
 import Filter from '../Filter';
 import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
@@ -169,14 +169,14 @@ const Sidebar = React.memo(
                                 </Link>
                                 {board.isGithubConnected &&
                                   (isProjectManager ? (
-                                    <Connections defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
+                                    <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
                                         className={clsx(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
                                         title={board.isGithubConnected ? t('common.connectedToGithub', { repo: board.githubRepo }) : t('common.notConnectedToGithub')}
                                       />
-                                    </Connections>
+                                    </ConnectionsPopup>
                                   ) : (
                                     <div>
                                       <Icon

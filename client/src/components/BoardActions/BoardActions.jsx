@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
 import CardSearch from '../CardSearch';
+import ConnectionsPopup from '../ConnectionsPopup';
 import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';
 import Memberships from '../Memberships';
 import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
-import Connections from './Connections';
 import Filters from './Filters';
 
 import * as gs from '../../global.module.scss';
@@ -59,14 +59,14 @@ const BoardActions = React.memo(
     return (
       <div className={clsx(s.wrapper, gs.scrollableX)}>
         <div className={s.githubAction}>
-          <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
+          <ConnectionsPopup defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
             <Icon
               type={IconType.Github}
               size={IconSize.Size14}
               className={clsx(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
               title={boardData.isGithubConnected ? t('common.connectedToGithub', { repo: boardData.githubRepo }) : t('common.notConnectedToGithub')}
             />
-          </Connections>
+          </ConnectionsPopup>
         </div>
         <div title={boardData.name} className={clsx(s.title, s.action)}>
           {boardData.name}

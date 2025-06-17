@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 import { useSteps } from '../../../hooks';
 import { ActivityStep } from '../../ActivityPopup';
+import { ConnectionsStep } from '../../ConnectionsPopup';
 import DeleteStep from '../../DeleteStep';
 import ExportStep from '../../ExportStep';
 import RenameStep from '../../RenameStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../../Utils';
-import { ConnectionsStep } from '../Connections';
 
 import * as s from './BoardActionsPopup.module.scss';
 

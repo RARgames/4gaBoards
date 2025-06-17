@@ -159,7 +159,6 @@ module.exports = {
         delete record.updatedById; // eslint-disable-line no-param-reassign
         delete record.updatedAt; // eslint-disable-line no-param-reassign
       }
-      // TODO temp solution for lastLogin
 
       proceed();
     });
