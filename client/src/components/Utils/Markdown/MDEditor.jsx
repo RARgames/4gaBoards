@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import MarkdownEditor, { commands, selectWord, executeCommand } from '@uiw/react-md-editor';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import remarkGithub from 'remark-github';
 
@@ -66,7 +66,7 @@ const MDEditor = React.forwardRef(({ isGithubConnected, githubRepo, preferredDet
           },
         ),
       ]}
-      className={classNames(className, s.editor, isMonospaceSelected && s.fontMonospace)}
+      className={clsx(className, s.editor, isMonospaceSelected && s.fontMonospace)}
       // TODO add mention
       // TODO add full functionality to mention and issue
     />

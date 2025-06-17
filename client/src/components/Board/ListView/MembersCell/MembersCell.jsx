@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import MembershipsPopup from '../../../MembershipsPopup';
@@ -39,7 +39,7 @@ const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMembershi
       offset={0}
       wrapperClassName={s.popupWrapper}
     >
-      <Button style={ButtonStyle.Icon} title={t('common.addMember')} className={classNames(cellClassName, s.addButton)}>
+      <Button style={ButtonStyle.Icon} title={t('common.addMember')} className={clsx(cellClassName, s.addButton)}>
         <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
       </Button>
     </MembershipsPopup>
@@ -49,7 +49,7 @@ const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMembershi
     return addUserNode;
   }
 
-  return <div className={classNames(cellClassName)}>{usersNode}</div>;
+  return <div className={clsx(cellClassName)}>{usersNode}</div>;
 });
 
 MembersCell.propTypes = {

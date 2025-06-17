@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Label from '../Label';
@@ -56,7 +56,7 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, boardMembershi
           </Button>
         </MembershipsPopup>
         {users.map((user, index) => (
-          <span key={user.id} className={classNames(s.filterItem, index + 1 === users.length && s.lastFilterItem)}>
+          <span key={user.id} className={clsx(s.filterItem, index + 1 === users.length && s.lastFilterItem)}>
             <User
               name={user.name}
               avatarUrl={user.avatarUrl}
@@ -95,7 +95,7 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, boardMembershi
           </Button>
         </LabelsPopup>
         {labels.map((label, index) => (
-          <span key={label.id} className={classNames(s.filterItem, index + 1 === labels.length && s.lastFilterItem)}>
+          <span key={label.id} className={clsx(s.filterItem, index + 1 === labels.length && s.lastFilterItem)}>
             <Label name={label.name} color={label.color} variant="labels" onClick={() => handleRemoveLabelClick(label.id)} isRemovable />
           </span>
         ))}

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -122,7 +122,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
 
   const boardView = (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div ref={wrapper} className={classNames(s.boardWrapper, gs.scrollableX)} onMouseDown={handleMouseDown}>
+    <div ref={wrapper} className={clsx(s.boardWrapper, gs.scrollableX)} onMouseDown={handleMouseDown}>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
           {({ innerRef, droppableProps, placeholder }) => (
@@ -130,7 +130,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
               {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
               data-drag-scroller
               ref={innerRef}
-              className={classNames(s.lists, gs.cursorGrab)}
+              className={clsx(s.lists, gs.cursorGrab)}
             >
               {listIds.map((listId, index) => (
                 <ListContainer key={listId} id={listId} index={index} />
@@ -156,7 +156,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
   );
 
   const listView = (
-    <div className={classNames(s.listWrapper)}>
+    <div className={clsx(s.listWrapper)}>
       <ListViewContainer />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { enUS, cs, da, de, es, fr, it, ja, ko, pl, ptBR, ru, sk, sv, uz, zhCN } from 'date-fns/locale'; // TODO should be moved to locales - cannot get it to working with embeddedLocales
 import upperFirst from 'lodash/upperFirst';
@@ -119,13 +119,13 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
     const preFormattedValue = t(variant === VARIANTS.LIST_VIEW || variant === VARIANTS.CARDMODAL_ACTIVITY ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' });
     const formattedValue = showRelative ? formatDistanceToNowStrict(value, { locale, addSuffix: true }) : preFormattedValue;
     return (
-      <div className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)} title={`${titlePrefixString}${preFormattedValue}`}>
+      <div className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)} title={`${titlePrefixString}${preFormattedValue}`}>
         {variant === VARIANTS.TASKS_CARD ? <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} /> : formattedValue}
       </div>
     );
   }
 
-  return showUndefined ? <div className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)}>-</div> : null;
+  return showUndefined ? <div className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)}>-</div> : null;
 });
 
 DueDate.propTypes = {

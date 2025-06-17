@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import TaskAddPopup from '../../../TaskAddPopup';
@@ -17,7 +17,7 @@ const TasksCell = React.memo(
       if (canEdit) {
         return (
           <TaskAddPopup onCreate={onTaskCreate} wrapperClassName={s.popupWrapper}>
-            <Button style={ButtonStyle.Icon} title={t('common.addTask')} className={classNames(cellClassName, s.addButton)}>
+            <Button style={ButtonStyle.Icon} title={t('common.addTask')} className={clsx(cellClassName, s.addButton)}>
               <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
             </Button>
           </TaskAddPopup>

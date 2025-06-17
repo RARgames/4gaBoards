@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { Icon, IconSize, IconType } from '../Icon';
@@ -11,7 +11,7 @@ import * as s from './Table.module.scss';
 const Container = React.memo(
   React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <div ref={ref} className={classNames(s.container, className)} {...props}>
+      <div ref={ref} className={clsx(s.container, className)} {...props}>
         {children}
       </div>
     );
@@ -21,7 +21,7 @@ const Container = React.memo(
 const Wrapper = React.memo(
   React.forwardRef(({ children, className, isPaginated, ...props }, ref) => {
     return (
-      <div ref={ref} className={classNames(s.wrapper, isPaginated && s.wrapperWithPagination, className)} {...props}>
+      <div ref={ref} className={clsx(s.wrapper, isPaginated && s.wrapperWithPagination, className)} {...props}>
         {children}
       </div>
     );
@@ -31,7 +31,7 @@ const Wrapper = React.memo(
 const Header = React.memo(
   React.forwardRef(({ children, className, style, ...props }, ref) => {
     return (
-      <thead ref={ref} className={classNames(s.header, className, style && s[`${style}Header`])} {...props}>
+      <thead ref={ref} className={clsx(s.header, className, style && s[`${style}Header`])} {...props}>
         {children}
       </thead>
     );
@@ -41,7 +41,7 @@ const Header = React.memo(
 const HeaderRow = React.memo(
   React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <tr ref={ref} className={classNames(s.headerRow, className)} {...props}>
+      <tr ref={ref} className={clsx(s.headerRow, className)} {...props}>
         {children}
       </tr>
     );
@@ -51,7 +51,7 @@ const HeaderRow = React.memo(
 const HeaderCell = React.memo(
   React.forwardRef(({ children, className, isCentered, ...props }, ref) => {
     return (
-      <th ref={ref} className={classNames(s.headerCell, className, isCentered ? s.headerCellCenter : s.headerCellLeft)} {...props}>
+      <th ref={ref} className={clsx(s.headerCell, className, isCentered ? s.headerCellCenter : s.headerCellLeft)} {...props}>
         {isCentered ? <div className={s.headerCellCenterInner}>{children}</div> : children}
       </th>
     );
@@ -61,7 +61,7 @@ const HeaderCell = React.memo(
 const Resizer = React.memo(
   React.forwardRef(({ onMouseDown, className, ...props }, ref) => {
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    return <div ref={ref} className={classNames(s.resizer, onMouseDown && s.resizerHoverable, className)} onMouseDown={onMouseDown} {...props} />;
+    return <div ref={ref} className={clsx(s.resizer, onMouseDown && s.resizerHoverable, className)} onMouseDown={onMouseDown} {...props} />;
   }),
 );
 
@@ -69,8 +69,8 @@ const SortingIndicator = React.memo(
   React.forwardRef(({ className, sortedState, sortIndex, ...props }, ref) => {
     return (
       sortedState && (
-        <div ref={ref} className={classNames(s.sortingIndicator, className)} {...props}>
-          <Icon type={IconType.SortArrowUp} size={IconSize.Size13} className={classNames(sortedState === 'desc' && s.sortingIconRotated)} />
+        <div ref={ref} className={clsx(s.sortingIndicator, className)} {...props}>
+          <Icon type={IconType.SortArrowUp} size={IconSize.Size13} className={clsx(sortedState === 'desc' && s.sortingIconRotated)} />
           {sortIndex && <sub className={s.sortingIndex}>({sortIndex})</sub>}
         </div>
       )
@@ -81,7 +81,7 @@ const SortingIndicator = React.memo(
 const Body = React.memo(
   React.forwardRef(({ children, className, style, ...props }, ref) => {
     return (
-      <tbody ref={ref} className={classNames(s.body, className, style && s[`${style}Body`])} {...props}>
+      <tbody ref={ref} className={clsx(s.body, className, style && s[`${style}Body`])} {...props}>
         {children}
       </tbody>
     );
@@ -91,7 +91,7 @@ const Body = React.memo(
 const Row = React.memo(
   React.forwardRef(({ children, className, selected, ...props }, ref) => {
     return (
-      <tr ref={ref} className={classNames(s.bodyRow, className, selected && s.bodyRowSelected)} {...props}>
+      <tr ref={ref} className={clsx(s.bodyRow, className, selected && s.bodyRowSelected)} {...props}>
         {children}
       </tr>
     );
@@ -101,7 +101,7 @@ const Row = React.memo(
 const Cell = React.memo(
   React.forwardRef(({ children, className, ...props }, ref) => {
     return (
-      <td ref={ref} className={classNames(s.bodyCell, className)} {...props}>
+      <td ref={ref} className={clsx(s.bodyCell, className)} {...props}>
         {children}
       </td>
     );

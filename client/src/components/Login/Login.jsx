@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import isEmail from 'validator/lib/isEmail';
 
@@ -139,7 +139,7 @@ const Login = React.memo(
     }, [focusPasswordFieldState]);
 
     return (
-      <div className={classNames(s.wrapper, gs.scrollableY)}>
+      <div className={clsx(s.wrapper, gs.scrollableY)}>
         <div className={s.loginWrapper}>
           <img src={logo} className={s.logo} alt="4ga Boards" />
           <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
@@ -168,7 +168,7 @@ const Login = React.memo(
                 onChange={handleFieldChange}
                 isError={isPasswordError}
               />
-              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={classNames(s.submitButton, s.button)} onClick={handleSubmit}>
+              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
                 {t('action.logIn')}
                 <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
               </Button>

@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useImperativeHandle } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
@@ -121,7 +121,7 @@ const Tasks = React.forwardRef(
                 <Button
                   style={ButtonStyle.Default}
                   content={t('common.addTask')}
-                  className={classNames(s.taskButton, variant === VARIANTS.CARD && s.taskButtonCard, isCardActive && variant === VARIANTS.CARD && s.taskButtonCardActive)}
+                  className={clsx(s.taskButton, variant === VARIANTS.CARD && s.taskButtonCard, isCardActive && variant === VARIANTS.CARD && s.taskButtonCardActive)}
                 />
               </TaskAdd>
             )}
@@ -131,10 +131,10 @@ const Tasks = React.forwardRef(
     );
 
     return (
-      <div className={classNames(variant !== VARIANTS.LISTVIEW ? s.wrapper : s.wrapperListView)}>
+      <div className={clsx(variant !== VARIANTS.LISTVIEW ? s.wrapper : s.wrapperListView)}>
         {items.length > 0 && (
-          <div className={classNames(s.progressWrapper, isOpen && s.progressWrapperOpen)}>
-            <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={classNames(variant === VARIANTS.CARDMODAL ? s.progress : s.progressCard)} />
+          <div className={clsx(s.progressWrapper, isOpen && s.progressWrapperOpen)}>
+            <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={clsx(variant === VARIANTS.CARDMODAL ? s.progress : s.progressCard)} />
             {variant !== VARIANTS.CARDMODAL && (
               <div className={s.progressItems}>
                 {closestNotCompletedTaslDueDate && (
@@ -142,7 +142,7 @@ const Tasks = React.forwardRef(
                 )}
                 <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton} data-prevent-card-switch>
                   {completedItems.length}/{items.length}
-                  <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
+                  <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
                 </Button>
               </div>
             )}

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../../constants/Paths';
@@ -402,7 +402,7 @@ const ListView = React.memo(
 
     return (
       <Table.Container>
-        <Table.Wrapper isPaginated className={classNames(s.wrapper, gs.scrollableX)}>
+        <Table.Wrapper isPaginated className={clsx(s.wrapper, gs.scrollableX)}>
           <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
             <Table.Header style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -417,7 +417,7 @@ const ListView = React.memo(
                         style={{ width: `${header.getSize()}px` }}
                         colSpan={header.colSpan}
                         onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
-                        className={classNames(header.column.getCanSort() && gs.cursorPointer)}
+                        className={clsx(header.column.getCanSort() && gs.cursorPointer)}
                         title={header.column.columnDef.meta?.headerTitle}
                         aria-label={header.column.columnDef.meta?.headerAriaLabel}
                         isCentered
@@ -442,7 +442,7 @@ const ListView = React.memo(
                     if (!row.original.isPersisted) return;
                     handleClick(e, row.original.id);
                   }}
-                  className={classNames(canEdit && gs.cursorPointer)}
+                  className={clsx(canEdit && gs.cursorPointer)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} data-prevent-card-switch-end>

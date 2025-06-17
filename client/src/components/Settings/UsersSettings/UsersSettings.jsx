@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import UserAddPopup from '../../UserAddPopup';
@@ -297,7 +297,7 @@ const UsersSettings = React.memo(
     table.setOptions((prev) => ({ ...prev, onSortingChange: handleSortingChange, columns }));
 
     return (
-      <div className={classNames(sShared.wrapper, s.wrapper)}>
+      <div className={clsx(sShared.wrapper, s.wrapper)}>
         <div className={sShared.header}>
           <div className={sShared.headerFlex}>
             <h2 className={sShared.headerText}>
@@ -307,7 +307,7 @@ const UsersSettings = React.memo(
           {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
         </div>
         <Table.Container className={s.container}>
-          <Table.Wrapper isPaginated className={classNames(gs.scrollableX)}>
+          <Table.Wrapper isPaginated className={clsx(gs.scrollableX)}>
             <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
               <Table.Header style={usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -322,7 +322,7 @@ const UsersSettings = React.memo(
                           style={{ width: `${header.getSize()}px` }}
                           colSpan={header.colSpan}
                           onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
-                          className={classNames(header.column.getCanSort() && gs.cursorPointer)}
+                          className={clsx(header.column.getCanSort() && gs.cursorPointer)}
                           title={header.column.columnDef.meta?.headerTitle}
                           aria-label={header.column.columnDef.meta?.headerAriaLabel}
                           isCentered
@@ -333,7 +333,7 @@ const UsersSettings = React.memo(
                             data-prevent-sorting
                             onMouseDown={(e) => handleResizerMouseDown(e, header)}
                             title={t('common.resizeColumn')}
-                            className={classNames(!header.column.getCanResize() && gs.cursorDefault)}
+                            className={clsx(!header.column.getCanResize() && gs.cursorDefault)}
                           />
                         </Table.HeaderCell>
                       );
@@ -341,7 +341,7 @@ const UsersSettings = React.memo(
                   </Table.HeaderRow>
                 ))}
               </Table.Header>
-              <Table.Body ref={tableBodyRef} className={classNames(gs.scrollableY)} style={usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
+              <Table.Body ref={tableBodyRef} className={clsx(gs.scrollableY)} style={usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
                 {table.getRowModel().rows.map((row) => (
                   <Table.Row key={row.id}>
                     {row.getVisibleCells().map((cell) => (

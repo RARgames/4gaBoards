@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
@@ -72,7 +72,7 @@ const TablePagination = React.memo(
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <div ref={ref} className={classNames(s.pagination, className)} {...props}>
+      <div ref={ref} className={clsx(s.pagination, className)} {...props}>
         <Button style={ButtonStyle.Icon} title={t('common.firstPage')} onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}>
           <Icon type={IconType.AngleLeftDouble} size={IconSize.Size13} />
         </Button>

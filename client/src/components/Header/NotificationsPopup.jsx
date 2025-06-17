@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
 
@@ -81,7 +81,7 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
       <Popup.Header>{t('common.notifications', { context: 'title' })}</Popup.Header>
       <Popup.Content>
         {items.length > 0 ? (
-          <div className={classNames(s.wrapper, gs.scrollableY)}>
+          <div className={clsx(s.wrapper, gs.scrollableY)}>
             {items.map((item) => (
               <div key={item.id} className={s.item}>
                 {item.card && item.activity ? (

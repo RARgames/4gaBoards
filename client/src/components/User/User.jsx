@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
@@ -56,7 +56,7 @@ const User = React.memo(({ name, avatarUrl, size, skipTitle, isDisabled, isRemov
   const contentNode = (
     <span
       title={skipTitle ? undefined : fullTitle}
-      className={classNames(
+      className={clsx(
         s.wrapper,
         s[`wrapper${upperFirst(size)}`],
         onClick && s.wrapperHoverable,

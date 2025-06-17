@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import logo from '../../assets/images/4gaboardsLogo128w-white.png';
@@ -55,15 +55,15 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
       </div>
       {demoMode && (
         <div className={s.demoMode}>
-          <ExternalLink href="https://github.com/RARgames/4gaBoards" className={classNames(s.demoModeNotice, s.hideOnSmallGithub)}>
+          <ExternalLink href="https://github.com/RARgames/4gaBoards" className={clsx(s.demoModeNotice, s.hideOnSmallGithub)}>
             <Icon type={IconType.Github} size={IconSize.Size20} />
             <div className={s.demoModeNoticeTexts}>
               <span className={s.demoModeNoticeTextMain}>{t('common.demoModeGithubMain')}</span>
               <span className={s.demoModeNoticeTextExtra}>{t('common.demoModeGithubExtra')}</span>
             </div>
           </ExternalLink>
-          <div className={classNames(s.demoModeNoticeSeparator, s.hideOnSmallFeedback)} />
-          <ExternalLink href="https://forms.gle/FqjR7uhBp9Gn2fu26" className={classNames(s.demoModeNotice, s.hideOnSmallFeedback)}>
+          <div className={clsx(s.demoModeNoticeSeparator, s.hideOnSmallFeedback)} />
+          <ExternalLink href="https://forms.gle/FqjR7uhBp9Gn2fu26" className={clsx(s.demoModeNotice, s.hideOnSmallFeedback)}>
             <Icon type={IconType.StarHalf} size={IconSize.Size20} />
             <div className={s.demoModeNoticeTexts}>
               <span className={s.demoModeNoticeTextMain}>{t('common.feedbackMain')}</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import User from '../../User';
@@ -12,7 +12,7 @@ const UserItem = React.memo(({ name, avatarUrl, isActive, onSelect }) => (
     <span className={s.user}>
       <User name={name} avatarUrl={avatarUrl} />
     </span>
-    <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)} title={name}>
+    <div className={clsx(s.menuItemText, isActive && s.menuItemTextActive)} title={name}>
       {name}
     </div>
   </Button>

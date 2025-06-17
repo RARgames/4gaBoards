@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFloating, shift, flip, offset as posOffset, size, useClick, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle } from '../Button';
@@ -77,16 +77,16 @@ export default (WrappedComponent, defaultProps) => {
       <>
         {/* TODO temp removed: s.wrapper */}
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps()} className={classNames(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch={disabled ? undefined : true}>
+        <div ref={refs.setReference} {...getReferenceProps()} className={clsx(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch={disabled ? undefined : true}>
           {children}
         </div>
         {isOpen && (
           <FloatingPortal>
             <FloatingFocusManager context={context} modal={false} returnFocus={false}>
               {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-              <div className={classNames(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} data-prevent-card-switch>
+              <div className={clsx(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} data-prevent-card-switch>
                 {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                     <Icon type={IconType.Close} size={IconSize.Size14} />
                   </Button>
                 )}

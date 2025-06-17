@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import * as s from './DefaultCell.module.scss';
@@ -20,8 +20,8 @@ const DefaultCell = React.memo(({ value, title, cellClassName, cellClassNameInne
   }
 
   return (
-    <div className={classNames(cellClassName)}>
-      <div className={classNames(s.cell, cellClassNameInner)} title={getTitle ? getTitle(t, value) : title}>
+    <div className={clsx(cellClassName)}>
+      <div className={clsx(s.cell, cellClassNameInner)} title={getTitle ? getTitle(t, value) : title}>
         {cellValue}
       </div>
     </div>

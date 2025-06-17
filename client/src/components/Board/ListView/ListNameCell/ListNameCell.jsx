@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useCallback } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { Dropdown, DropdownStyle } from '../../../Utils';
@@ -21,7 +21,7 @@ const ListNameCell = React.memo(({ cellClassName, projectId, boardId, listId, al
   }, [canEdit]);
 
   return (
-    <div className={classNames(cellClassName, s.listName)}>
+    <div className={clsx(cellClassName, s.listName)}>
       <Dropdown
         ref={dropdown}
         style={DropdownStyle.FullWidth}
@@ -36,8 +36,8 @@ const ListNameCell = React.memo(({ cellClassName, projectId, boardId, listId, al
         selectFirstOnSearch
       >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-        <div className={classNames(canEdit && gs.cursorPointer)} onClick={handleDropdownClick} data-prevent-card-switch>
-          <div className={classNames(s.headerListField)} title={selectedList.name}>
+        <div className={clsx(canEdit && gs.cursorPointer)} onClick={handleDropdownClick} data-prevent-card-switch>
+          <div className={clsx(s.headerListField)} title={selectedList.name}>
             {selectedList.name}
           </div>
         </div>

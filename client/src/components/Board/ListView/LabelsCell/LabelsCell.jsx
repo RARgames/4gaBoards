@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Label from '../../../Label';
@@ -45,7 +45,7 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
       offset={0}
       wrapperClassName={s.popupWrapper}
     >
-      <Button style={ButtonStyle.Icon} title={t('common.addLabel')} className={classNames(cellClassName, s.addButton)}>
+      <Button style={ButtonStyle.Icon} title={t('common.addLabel')} className={clsx(cellClassName, s.addButton)}>
         <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
       </Button>
     </LabelsPopup>
@@ -55,7 +55,7 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
     return addLabelNode;
   }
 
-  return <div className={classNames(cellClassName)}>{labelsNode}</div>;
+  return <div className={clsx(cellClassName)}>{labelsNode}</div>;
 });
 
 LabelsCell.propTypes = {

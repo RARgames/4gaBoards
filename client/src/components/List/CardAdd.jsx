@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
@@ -105,7 +105,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
   }, [focusNameFieldState]);
 
   return (
-    <Form className={classNames(s.wrapper, !isOpen && s.wrapperClosed)}>
+    <Form className={clsx(s.wrapper, !isOpen && s.wrapperClosed)}>
       <TextArea
         ref={nameField}
         style={TextAreaStyle.Default}

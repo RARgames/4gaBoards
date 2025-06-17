@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { MDPreview } from '../../Markdown';
@@ -10,7 +10,7 @@ import * as s from './MarkdownCell.module.scss';
 const MarkdownCell = React.memo(({ value, cellClassName, isGithubConnected, githubRepo, preferredDetailsFont }) => {
   return (
     <div className={cellClassName}>
-      <div className={classNames(s.markdownWrapper, gs.scrollableY)}>
+      <div className={clsx(s.markdownWrapper, gs.scrollableY)}>
         {value && <MDPreview source={value} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} className={s.markdown} />}
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import * as s from './Form.module.scss';
@@ -14,7 +14,7 @@ const Form = React.forwardRef(({ onSubmit, children, className, ...props }, ref)
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <form ref={ref} onSubmit={handleSubmit} className={classNames(s.form, className)} {...props}>
+    <form ref={ref} onSubmit={handleSubmit} className={clsx(s.form, className)} {...props}>
       {children}
     </form>
   );

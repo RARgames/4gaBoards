@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DeletePopup from '../../DeletePopup';
@@ -30,7 +30,7 @@ const Item = React.forwardRef(({ name, url, coverUrl, createdAt, isCover, isPers
 
   if (!isPersisted) {
     return (
-      <div className={classNames(s.wrapper, s.wrapperSubmitting)}>
+      <div className={clsx(s.wrapper, s.wrapperSubmitting)}>
         <Loader size={LoaderSize.Normal} />
       </div>
     );

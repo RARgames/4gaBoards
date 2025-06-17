@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import ButtonStyle from './ButtonStyle';
@@ -12,7 +12,7 @@ const Button = React.forwardRef(({ children, title, type, style, content, classN
       ref={ref}
       title={title || content}
       type={type || (style === ButtonStyle.Submit ? 'submit' : 'button')} // eslint-disable-line react/button-has-type
-      className={classNames(s.button, style && s[style], className)}
+      className={clsx(s.button, style && s[style], className)}
       {...props} // eslint-disable-line react/jsx-props-no-spreading
     >
       {content !== undefined ? content : children}

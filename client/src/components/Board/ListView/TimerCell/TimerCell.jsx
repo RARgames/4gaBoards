@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { startTimer, stopTimer } from '../../../../utils/timer';
@@ -32,7 +32,7 @@ const TimerCell = React.memo(({ timer, cellClassName, canEdit, onUpdate }) => {
     if (canEdit) {
       return (
         <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate} wrapperClassName={s.popupWrapper}>
-          <Button style={ButtonStyle.Icon} title={t('common.editTimer')} className={classNames(cellClassName, s.addButton)}>
+          <Button style={ButtonStyle.Icon} title={t('common.editTimer')} className={clsx(cellClassName, s.addButton)}>
             <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
           </Button>
         </TimerEditPopup>
@@ -43,7 +43,7 @@ const TimerCell = React.memo(({ timer, cellClassName, canEdit, onUpdate }) => {
   }
 
   return (
-    <div className={classNames(cellClassName, s.attachment)} data-prevent-card-switch>
+    <div className={clsx(cellClassName, s.attachment)} data-prevent-card-switch>
       <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
     </div>
   );

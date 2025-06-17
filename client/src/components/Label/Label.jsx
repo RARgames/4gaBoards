@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
@@ -21,7 +21,7 @@ const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, isCli
   const contentNode = (
     <div
       title={name}
-      className={classNames(
+      className={clsx(
         s.wrapper,
         s[`wrapper${upperFirst(variant)}`],
         onClick && s.wrapperHoverable,

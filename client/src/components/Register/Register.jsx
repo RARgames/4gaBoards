@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import isEmail from 'validator/lib/isEmail';
 
@@ -171,7 +171,7 @@ const Register = React.memo(
     }, [focusPasswordFieldState]);
 
     return (
-      <div className={classNames(s.wrapper, gs.scrollableY)}>
+      <div className={clsx(s.wrapper, gs.scrollableY)}>
         <div className={s.loginWrapper}>
           <img src={logo} className={s.logo} alt="4ga Boards" />
           <h1 className={s.formTitle}>{t('common.createYourAccount')}</h1>
@@ -205,13 +205,13 @@ const Register = React.memo(
                     isError={isPasswordError}
                   />
                   <div className={s.checkboxWrapper}>
-                    <div className={classNames(s.inputLabel, s.checkboxLabel)}>
+                    <div className={clsx(s.inputLabel, s.checkboxLabel)}>
                       {t('common.accept')} <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink> {t('common.and')}{' '}
                       <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
                     </div>
                     <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} isError={isCheckboxError} />
                   </div>
-                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={classNames(s.submitButton, s.button)} onClick={handleSubmit}>
+                  <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
                     {t('common.register')}
                     <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
                   </Button>

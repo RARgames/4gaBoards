@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
@@ -50,7 +50,7 @@ const Timer = React.memo(({ as, startedAt, total, variant, isDisabled, onClick }
   );
 
   const contentNode = (
-    <span className={classNames(s.wrapper, s[`wrapper${upperFirst(variant)}`], startedAt && s.wrapperActive, onClick && s.wrapperHoverable)}>
+    <span className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], startedAt && s.wrapperActive, onClick && s.wrapperHoverable)}>
       <Icon type={startedAt ? IconType.Pause : IconType.Play} size={IconSize.Size8} className={s.timerIcon} />
       {formatTimer({ startedAt, total })}
     </span>

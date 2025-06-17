@@ -1,7 +1,7 @@
 import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle } from '../Button';
@@ -297,13 +297,13 @@ const Dropdown = React.forwardRef(
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <div ref={refs.setReference} {...getReferenceProps()} className={classNames(s.dropdownContainer, styles, className)}>
+      <div ref={refs.setReference} {...getReferenceProps()} className={clsx(s.dropdownContainer, styles, className)}>
         <div>
           <input
             onChange={handleSearch}
             value={searchValue}
             ref={dropdown}
-            className={classNames(s.dropdownSearchInput, isError && s.dropdownSearchInputError, inputClassName)}
+            className={clsx(s.dropdownSearchInput, isError && s.dropdownSearchInputError, inputClassName)}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -316,7 +316,7 @@ const Dropdown = React.forwardRef(
             style={ButtonStyle.Icon}
             title={isOpen ? t('common.closeDropdown') : t('common.openDropdown')}
             onClick={handleDropdownToggleClick}
-            className={classNames(s.dropdownButton, isError && s.dropdownButtonError, buttonClassName)}
+            className={clsx(s.dropdownButton, isError && s.dropdownButtonError, buttonClassName)}
           >
             <Icon type={IconType.TriangleDown} size={IconSize.Size10} />
           </Button>
@@ -328,7 +328,7 @@ const Dropdown = React.forwardRef(
                 {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
                 ref={refs.setFloating}
                 style={floatingStyles}
-                className={classNames(s.dropdownMenu, gs.scrollableY, getOptions().length > 0 && s.dropdownMenuWithChildren, dropdownMenuClassName)}
+                className={clsx(s.dropdownMenu, gs.scrollableY, getOptions().length > 0 && s.dropdownMenuWithChildren, dropdownMenuClassName)}
               >
                 {getOptions().map((item, index) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -337,7 +337,7 @@ const Dropdown = React.forwardRef(
                     key={item.id}
                     id={item.id}
                     name={item.name}
-                    className={classNames(s.dropdownItem, defaultItem && defaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
+                    className={clsx(s.dropdownItem, defaultItem && defaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
                     onClick={() => handleItemClick(item)}
                     onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
                     data-prevent-card-switch

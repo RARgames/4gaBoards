@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DueDate from '../../../DueDate';
@@ -25,7 +25,7 @@ const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, onUpdate }) =
     if (canEdit) {
       return (
         <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} wrapperClassName={s.popupWrapper}>
-          <Button style={ButtonStyle.Icon} title={t('common.addDueDate')} className={classNames(cellClassName, s.addButton)}>
+          <Button style={ButtonStyle.Icon} title={t('common.addDueDate')} className={clsx(cellClassName, s.addButton)}>
             <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
           </Button>
         </DueDateEditPopup>

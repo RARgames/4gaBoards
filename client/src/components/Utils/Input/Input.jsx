@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import InputStyle from './InputStyle';
@@ -10,7 +10,7 @@ const Input = React.memo(
   React.forwardRef(({ style, className, isError, ...props }, ref) => {
     const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
     // eslint-disable-next-line react/jsx-props-no-spreading
-    return <input ref={ref} className={classNames(s.input, styles, className, isError && s.inputError)} {...props} />;
+    return <input ref={ref} className={clsx(s.input, styles, className, isError && s.inputError)} {...props} />;
   }),
 );
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
@@ -35,10 +35,10 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
   }, [projectId]);
 
   return (
-    <div className={classNames(s.wrapper)}>
+    <div className={clsx(s.wrapper)}>
       <div className={s.header}>
         <div ref={headerButtonGroupOffsetRef} />
-        <div className={classNames(s.headerText)}>
+        <div className={clsx(s.headerText)}>
           <span>{getBoardsText()}</span> <span className={s.headerDetails}>[{t('common.selectedProject')}]</span>
         </div>
         <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
@@ -70,9 +70,9 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
           </div>
         </div>
       </div>
-      <div className={classNames(s.boardsWrapper, gs.scrollableY)}>
+      <div className={clsx(s.boardsWrapper, gs.scrollableY)}>
         {currentFilteredProject?.boards.map((item) => (
-          <div key={item.id} className={classNames(s.boardWrapper)}>
+          <div key={item.id} className={clsx(s.boardWrapper)}>
             {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
             <Link to={Paths.BOARDS.replace(':id', item.id)}>
               <div className={s.board}>

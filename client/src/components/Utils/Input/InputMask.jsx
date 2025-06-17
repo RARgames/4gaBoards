@@ -1,6 +1,6 @@
 import React from 'react';
 import MaskedInputComponent from 'react-input-mask';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import InputStyle from './InputStyle';
@@ -20,7 +20,7 @@ class MaskedInput extends MaskedInputComponent {
 const InputMask = React.forwardRef(({ style, className, mask, maskChar, isError, ...props }, ref) => {
   const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <MaskedInput ref={ref} className={classNames(s.input, styles, className, isError && s.inputError)} mask={mask} maskChar={maskChar} {...props} />;
+  return <MaskedInput ref={ref} className={clsx(s.input, styles, className, isError && s.inputError)} mask={mask} maskChar={maskChar} {...props} />;
 });
 
 InputMask.propTypes = {

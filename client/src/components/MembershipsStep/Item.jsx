@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import User from '../User';
@@ -24,7 +24,7 @@ const Item = React.memo(({ isPersisted, isActive, user, memberships, onUserSelec
       <span className={s.user}>
         <User name={user.name} avatarUrl={user.avatarUrl} isMember={memberships ? memberships.some((m) => m.user?.id === user.id) : true} isNotMemberTitle={t('common.noLongerBoardMember')} />
       </span>
-      <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)}>{user.name}</div>
+      <div className={clsx(s.menuItemText, isActive && s.menuItemTextActive)}>{user.name}</div>
     </Button>
   );
 });

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
@@ -57,21 +57,21 @@ const BoardActions = React.memo(
     );
 
     return (
-      <div className={classNames(s.wrapper, gs.scrollableX)}>
+      <div className={clsx(s.wrapper, gs.scrollableX)}>
         <div className={s.githubAction}>
           <Connections defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
             <Icon
               type={IconType.Github}
               size={IconSize.Size14}
-              className={classNames(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
+              className={clsx(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
               title={boardData.isGithubConnected ? t('common.connectedToGithub', { repo: boardData.githubRepo }) : t('common.notConnectedToGithub')}
             />
           </Connections>
         </div>
-        <div title={boardData.name} className={classNames(s.title, s.action)}>
+        <div title={boardData.name} className={clsx(s.title, s.action)}>
           {boardData.name}
         </div>
-        <div className={classNames(s.cardsCount, s.action)}>{isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}</div>
+        <div className={clsx(s.cardsCount, s.action)}>{isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}</div>
         <div className={s.action}>
           <Memberships
             items={memberships}
@@ -102,15 +102,15 @@ const BoardActions = React.memo(
           />
         </div>
         <div className={s.action}>
-          <Button style={ButtonStyle.IconBase} title={t('common.switchToBoardView')} onClick={() => onViewModeChange('board')} className={classNames(s.switchViewButton, viewMode === 'board' && s.active)}>
+          <Button style={ButtonStyle.IconBase} title={t('common.switchToBoardView')} onClick={() => onViewModeChange('board')} className={clsx(s.switchViewButton, viewMode === 'board' && s.active)}>
             <Icon type={IconType.Board} size={IconSize.Size18} />
           </Button>
-          <Button style={ButtonStyle.IconBase} title={t('common.switchToListView')} onClick={() => onViewModeChange('list')} className={classNames(s.switchViewButton, viewMode === 'list' && s.active)}>
+          <Button style={ButtonStyle.IconBase} title={t('common.switchToListView')} onClick={() => onViewModeChange('list')} className={clsx(s.switchViewButton, viewMode === 'list' && s.active)}>
             <Icon type={IconType.List} size={IconSize.Size18} />
           </Button>
         </div>
         {isProjectManager && (
-          <div className={classNames(s.action, s.actionRightFirst)}>
+          <div className={clsx(s.action, s.actionRightFirst)}>
             <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
               <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
                 <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
@@ -118,7 +118,7 @@ const BoardActions = React.memo(
             </Link>
           </div>
         )}
-        <div className={classNames(s.action, s.actionRightLast, !isProjectManager && s.actionRightFirst)}>
+        <div className={clsx(s.action, s.actionRightLast, !isProjectManager && s.actionRightFirst)}>
           <Link to={Paths.PROJECTS.replace(':id', projectId)}>
             <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
               <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />

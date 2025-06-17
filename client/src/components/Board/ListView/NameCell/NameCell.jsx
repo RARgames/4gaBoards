@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../../../hooks';
@@ -87,7 +87,7 @@ const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, o
   if (!isOpen) {
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-      <div className={classNames(cellClassName, s.nameCell, canEdit && gs.cursorPointer)} onClick={open} title={defaultValue} data-prevent-card-switch>
+      <div className={clsx(cellClassName, s.nameCell, canEdit && gs.cursorPointer)} onClick={open} title={defaultValue} data-prevent-card-switch>
         {isLink && (
           <ExternalLink href={link}>
             <Icon type={IconType.Link} size={IconSize.Size13} className={s.link} />

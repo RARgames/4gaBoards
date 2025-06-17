@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
@@ -187,7 +187,7 @@ const Card = React.memo(
             </div>
           </div>
           {notificationsTotal > 0 && notificationsTotal <= 9 && <span className={s.notification}>{notificationsTotal}</span>}
-          {notificationsTotal > 9 && <span className={classNames(s.notification, s.notificationFull)}>9+</span>}
+          {notificationsTotal > 9 && <span className={clsx(s.notification, s.notificationFull)}>9+</span>}
         </div>
         {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
         <div className={s.details}>
@@ -205,7 +205,7 @@ const Card = React.memo(
                   onDelete={onLabelDelete}
                   canEdit={canEdit}
                   offset={0}
-                  wrapperClassName={classNames(s.attachment, s.attachmentLeft)}
+                  wrapperClassName={clsx(s.attachment, s.attachmentLeft)}
                   disabled={!canEdit}
                 >
                   <Label name={label.name} color={label.color} variant="card" isClickable={canEdit} />
@@ -236,36 +236,36 @@ const Card = React.memo(
           {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
             <span className={s.attachments}>
               {description && (
-                <span className={classNames(s.attachment, s.attachmentLeft)}>
+                <span className={clsx(s.attachment, s.attachmentLeft)}>
                   <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsDescription')} />
                 </span>
               )}
               {attachmentsCount > 0 && (
-                <span className={classNames(s.attachment, s.attachmentLeft)}>
+                <span className={clsx(s.attachment, s.attachmentLeft)}>
                   <Icon type={IconType.Attach} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsAttachments', { count: attachmentsCount })} />
                 </span>
               )}
               {commentCount > 0 && (
-                <span className={classNames(s.attachment, s.attachmentLeft)}>
+                <span className={clsx(s.attachment, s.attachmentLeft)}>
                   <Icon type={IconType.Comment} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsComments', { count: commentCount })} />
                 </span>
               )}
               {dueDate && (
-                <span className={classNames(s.attachment, s.attachmentLeft)}>
+                <span className={clsx(s.attachment, s.attachmentLeft)}>
                   <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
                     <DueDate value={dueDate} variant="card" isClickable={canEdit} />
                   </DueDateEditPopup>
                 </span>
               )}
               {timer && (
-                <span className={classNames(s.attachment, s.attachmentLeft)} data-prevent-card-switch>
+                <span className={clsx(s.attachment, s.attachmentLeft)} data-prevent-card-switch>
                   <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
                 </span>
               )}
             </span>
           )}
           {users.length > 0 && (
-            <span className={classNames(s.attachments, s.attachmentsRight, s.users)}>
+            <span className={clsx(s.attachments, s.attachmentsRight, s.users)}>
               <div className={s.popupWrapper2}>
                 <MembershipsPopup
                   items={boardAndCardMemberships}
@@ -276,13 +276,13 @@ const Card = React.memo(
                   offset={0}
                 >
                   {users.slice(0, visibleMembersCount).map((user) => (
-                    <span key={user.id} className={classNames(s.attachment, s.user)}>
+                    <span key={user.id} className={clsx(s.attachment, s.user)}>
                       <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
                     </span>
                   ))}
                   {users.length > visibleMembersCount && (
                     <span
-                      className={classNames(s.attachment, s.user, s.moreUsers)}
+                      className={clsx(s.attachment, s.user, s.moreUsers)}
                       title={users
                         .slice(visibleMembersCount)
                         .map((user) => user.name)
@@ -305,7 +305,7 @@ const Card = React.memo(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={s.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
             <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div ref={cardRef} className={classNames(s.card, isOpen && s.cardOpen)}>
+              <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen)}>
                 {isPersisted ? (
                   <>
                     {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
@@ -358,7 +358,7 @@ const Card = React.memo(
                           offset={0}
                           hideCloseButton
                         >
-                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={classNames(s.editCardButton, s.target)}>
+                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={clsx(s.editCardButton, s.target)}>
                             <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                           </Button>
                         </ActionsPopup>

@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DueDate from '../DueDate';
@@ -114,7 +114,7 @@ const Item = React.memo(
     }
 
     const membersNode = (
-      <div className={classNames(s.members, canEdit && gs.cursorPointer, isCompleted && s.itemCompleted)}>
+      <div className={clsx(s.members, canEdit && gs.cursorPointer, isCompleted && s.itemCompleted)}>
         {users.slice(0, visibleMembersCount).map((user) => (
           <span key={user.id} className={s.member}>
             <User name={user.name} avatarUrl={user.avatarUrl} size={userSize} isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
@@ -122,7 +122,7 @@ const Item = React.memo(
         ))}
         {users.length > visibleMembersCount && (
           <span
-            className={classNames(s.moreMembers, variant !== VARIANTS.CARDMODAL && s.moreMembersCard)}
+            className={clsx(s.moreMembers, variant !== VARIANTS.CARDMODAL && s.moreMembersCard)}
             title={users
               .slice(visibleMembersCount)
               .map((user) => user.name)
@@ -139,7 +139,7 @@ const Item = React.memo(
         {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
           const contentNode = (
             // eslint-disable-next-line react/jsx-props-no-spreading
-            <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={classNames(s.wrapper, gs.scrollableX, canEdit && s.contentHoverable)}>
+            <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={clsx(s.wrapper, gs.scrollableX, canEdit && s.contentHoverable)}>
               <Checkbox
                 checked={isCompleted}
                 size={checkboxSize}
@@ -150,7 +150,7 @@ const Item = React.memo(
               />
               <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <span className={classNames(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
+                <span className={clsx(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
                   {name}
                 </span>
                 {users && (
@@ -168,7 +168,7 @@ const Item = React.memo(
                   </MembershipsPopup>
                 )}
                 {dueDate && (
-                  <div className={classNames(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
+                  <div className={clsx(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!(canEdit && isPersisted)}>
                       <DueDate variant={dueDateVariant} value={dueDate} isClickable={canEdit && isPersisted} />
                     </DueDateEditPopup>
@@ -195,7 +195,7 @@ const Item = React.memo(
                     position="left-start"
                     offset={0}
                   >
-                    <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={classNames(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
+                    <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={clsx(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={s.icon} />
                     </Button>
                   </ActionsPopup>

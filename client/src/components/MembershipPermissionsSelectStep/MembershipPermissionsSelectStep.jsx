@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { dequal } from 'dequal';
 import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
@@ -66,14 +66,14 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
         <Form onKeyDown={handleKeyDown}>
-          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={classNames(data.role === BoardMembershipRoles.EDITOR && s.selected)}>
+          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={clsx(data.role === BoardMembershipRoles.EDITOR && s.selected)}>
             <div className={s.menuItemTitle}>{t('common.editor')}</div>
             <div className={s.menuItemDescription}>{t('common.canEditContentOfBoard')}</div>
           </Button>
           <Button
             style={ButtonStyle.Popup}
             onClick={() => handleSelectRoleClick(BoardMembershipRoles.VIEWER)}
-            className={classNames(data.role === BoardMembershipRoles.VIEWER && s.selected, data.role !== BoardMembershipRoles.VIEWER && s.last)}
+            className={clsx(data.role === BoardMembershipRoles.VIEWER && s.selected, data.role !== BoardMembershipRoles.VIEWER && s.last)}
           >
             <div className={s.menuItemTitle}>{t('common.viewer')}</div>
             <div className={s.menuItemDescription}>{t('common.canOnlyViewBoard')}</div>
@@ -81,7 +81,7 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
           {data.role === BoardMembershipRoles.VIEWER && (
             <div className={s.commentSettings}>
               <Radio size={RadioSize.Size12} name="canComment" checked={data.canComment} onChange={handleSettingChange} className={s.commentSettingsRadio} />
-              <div className={classNames(s.commentSettingsText, s.last)}>{t('common.canComment')}</div>
+              <div className={clsx(s.commentSettingsText, s.last)}>{t('common.canComment')}</div>
             </div>
           )}
           <div className={gs.controls}>

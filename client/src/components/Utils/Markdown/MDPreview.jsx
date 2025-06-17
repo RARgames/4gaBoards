@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import MDEditor from '@uiw/react-md-editor';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import remarkGithub from 'remark-github';
 
@@ -29,7 +29,7 @@ const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, pre
         source={source}
         remarkPlugins={remarkPlugins}
         rehypePlugins={MDSettings.rehypePlugins}
-        className={classNames(className, s.preview, isMonospaceSelected && s.fontMonospace)}
+        className={clsx(className, s.preview, isMonospaceSelected && s.fontMonospace)}
         {...props} // eslint-disable-line react/jsx-props-no-spreading
       />
     </div>

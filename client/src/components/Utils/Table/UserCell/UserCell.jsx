@@ -1,11 +1,11 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import User from '../../../User';
 
 const UserCell = React.memo(({ value, isNotMemberTitle, cellClassName, getIsMember }) => {
-  return <div className={classNames(cellClassName)}>{value && <User name={value.name} avatarUrl={value.avatarUrl} size="card" isMember={getIsMember(value.id)} isNotMemberTitle={isNotMemberTitle} />}</div>;
+  return <div className={clsx(cellClassName)}>{value && <User name={value.name} avatarUrl={value.avatarUrl} size="card" isMember={getIsMember(value.id)} isNotMemberTitle={isNotMemberTitle} />}</div>;
 });
 
 UserCell.propTypes = {

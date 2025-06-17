@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
@@ -129,7 +129,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
             </Button>
           )}
         </div>
-        <div className={classNames(s.items, gs.scrollableY)}>
+        <div className={clsx(s.items, gs.scrollableY)}>
           {filteredItems.map((item) => (
             <Item
               key={item.id}

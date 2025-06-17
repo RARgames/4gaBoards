@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import User from '../User';
@@ -60,7 +60,7 @@ const Memberships = React.memo(
         {!canEdit && items.length > visibleMembersCount && (
           <Button
             style={ButtonStyle.Icon}
-            className={classNames(s.addUser, s.moreMembersButton, s.cannotEdit)}
+            className={clsx(s.addUser, s.moreMembersButton, s.cannotEdit)}
             title={items
               .slice(visibleMembersCount)
               .map((item) => item.user.name)
@@ -94,7 +94,7 @@ const Memberships = React.memo(
             {items.length > visibleMembersCount && (
               <Button
                 style={ButtonStyle.Icon}
-                className={classNames(s.addUser, s.moreMembersButton)}
+                className={clsx(s.addUser, s.moreMembersButton)}
                 title={items
                   .slice(visibleMembersCount)
                   .map((item) => item.user.name)

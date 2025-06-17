@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
@@ -26,7 +26,7 @@ const Item = React.memo(({ name, color, isPersisted, isActive, canEdit, onSelect
   return (
     <div className={s.wrapper}>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-      <span className={classNames(s.name, isActive && s.nameActive, bs[`background${upperFirst(camelCase(color))}`])} onClick={handleToggleClick} title={name}>
+      <span className={clsx(s.name, isActive && s.nameActive, bs[`background${upperFirst(camelCase(color))}`])} onClick={handleToggleClick} title={name}>
         {name}
       </span>
       {canEdit && (

@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
@@ -12,7 +12,7 @@ import * as s from './Background.module.scss';
 function Background({ type, name, imageUrl }) {
   return (
     <div
-      className={classNames(s.wrapper, type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(name))}`])}
+      className={clsx(s.wrapper, type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(name))}`])}
       style={{
         background: type === 'image' && `url("${imageUrl}") center / cover`,
       }}

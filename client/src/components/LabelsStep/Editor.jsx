@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
@@ -43,7 +43,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
             key={color}
             name="color"
             value={color}
-            className={classNames(s.colorButton, color === data.color && s.colorButtonActive, bs[`background${upperFirst(camelCase(color))}`])}
+            className={clsx(s.colorButton, color === data.color && s.colorButtonActive, bs[`background${upperFirst(camelCase(color))}`])}
             onClick={onFieldChange}
           />
         ))}

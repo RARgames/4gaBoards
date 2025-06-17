@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFloating, useClick, useInteractions, useDismiss, useRole, FloatingFocusManager, FloatingOverlay, FloatingPortal } from '@floating-ui/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle } from '../Button';
@@ -66,9 +66,9 @@ export default (WrappedComponent, defaultProps) => {
         <FloatingOverlay lockScroll className={s.modalOverlay}>
           <FloatingFocusManager context={context} returnFocus={false}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <div className={classNames(s.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
+            <div className={clsx(s.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
               {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={classNames(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                   <Icon type={IconType.Close} size={IconSize.Size14} />
                 </Button>
               )}

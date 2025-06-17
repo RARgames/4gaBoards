@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useLocalStorage } from '../../hooks';
@@ -314,7 +314,7 @@ const CardModal = React.memo(
           <div className={s.headerTitleWrapper}>
             <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
               {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-              <div className={classNames(s.headerTitle, canEdit && gs.cursorPointer)} onClick={handleNameEdit} title={name}>
+              <div className={clsx(s.headerTitle, canEdit && gs.cursorPointer)} onClick={handleNameEdit} title={name}>
                 {isLink && (
                   <ExternalLink href={link}>
                     <Icon type={IconType.Link} size={IconSize.Size13} className={s.link} />
@@ -403,8 +403,8 @@ const CardModal = React.memo(
             dropdownMenuClassName={s.dropdownMenu}
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-            <div className={classNames(canEdit && gs.cursorPointer)} onClick={handleDropdownClick}>
-              <div className={classNames(s.headerListField)} title={selectedList.name}>
+            <div className={clsx(canEdit && gs.cursorPointer)} onClick={handleDropdownClick}>
+              <div className={clsx(s.headerListField)} title={selectedList.name}>
                 {selectedList.name}
               </div>
               <Icon type={IconType.TriangleDown} title={t('common.moveCardToList')} size={IconSize.Size10} className={s.headerListFieldIcon} />
@@ -431,13 +431,13 @@ const CardModal = React.memo(
         </div>
         <MembershipsPopup items={boardAndCardMemberships} currentUserIds={userIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} disabled={!canEdit}>
           {users.slice(0, visibleMembersCount).map((user, index) => (
-            <span key={user.id} className={classNames(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}>
+            <span key={user.id} className={clsx(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="small" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
             </span>
           ))}
           {users.length > visibleMembersCount && (
             <span
-              className={classNames(s.headerItem, s.user, s.moreUsers)}
+              className={clsx(s.headerItem, s.user, s.moreUsers)}
               title={users
                 .slice(visibleMembersCount)
                 .map((user) => user.name)
@@ -540,7 +540,7 @@ const CardModal = React.memo(
     const createdNode = (
       <div className={s.headerItems}>
         <div className={s.text}>{t('common.created')}</div>
-        <span className={classNames(s.headerItem, s.activity)}>
+        <span className={clsx(s.headerItem, s.activity)}>
           {createdBy && (
             <User
               name={createdBy.name}
@@ -559,7 +559,7 @@ const CardModal = React.memo(
     const updatedNode = (
       <div className={s.headerItems}>
         <div className={s.text}>{t('common.updated')}</div>
-        <span className={classNames(s.headerItem, s.activity)}>
+        <span className={clsx(s.headerItem, s.activity)}>
           {updatedBy && (
             <User
               name={updatedBy.name}
@@ -576,7 +576,7 @@ const CardModal = React.memo(
     );
 
     const descriptionEditOpenNode = description ? (
-      <Button title={t('common.editDescription')} onClick={handleDescClick} className={classNames(s.descriptionText, s.cursorPointer)} ref={descriptionEditButtonRef}>
+      <Button title={t('common.editDescription')} onClick={handleDescClick} className={clsx(s.descriptionText, s.cursorPointer)} ref={descriptionEditButtonRef}>
         <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} />
       </Button>
     ) : (
@@ -752,7 +752,7 @@ const CardModal = React.memo(
     const contentNode = (
       <div className={s.flexContainer}>
         {headerNode}
-        <div className={classNames(s.mainContainer, gs.scrollableY)}>
+        <div className={clsx(s.mainContainer, gs.scrollableY)}>
           <div className={s.moduleContainer}>
             {membersNode}
             {labelsNode}

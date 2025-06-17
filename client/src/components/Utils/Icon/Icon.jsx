@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import FlagType from './FlagType';
@@ -11,7 +11,7 @@ import * as s from './Icon.module.scss';
 const Icon = React.memo(({ type, size, className, ...props }) => {
   const IconComponent = type;
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return type ? <IconComponent className={classNames(s.icon, s[size], className)} {...props} /> : null;
+  return type ? <IconComponent className={clsx(s.icon, s[size], className)} {...props} /> : null;
 });
 
 Icon.propTypes = {

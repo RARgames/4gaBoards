@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import ProgressBarSize from './ProgressBarSize';
@@ -27,8 +27,8 @@ const ProgressBar = React.forwardRef(({ value, total, color, size, className, ..
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <div ref={ref} className={classNames(s.progressContainer, className)} {...props}>
-      <div className={classNames(s.progressBar, size && s[size], color === undefined && getDefaultColor())} style={{ width: `${percentage}%`, backgroundColor: color }} />
+    <div ref={ref} className={clsx(s.progressContainer, className)} {...props}>
+      <div className={clsx(s.progressBar, size && s[size], color === undefined && getDefaultColor())} style={{ width: `${percentage}%`, backgroundColor: color }} />
     </div>
   );
 });

@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
@@ -95,10 +95,10 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
         </Form>
       </div>
       <div className={s.paramsWrapper}>
-        <Button title={t('common.matchCase')} className={classNames(s.paramsButton, matchCaseValue && s.paramsButtonActive)} onClick={handleMatchCaseChange}>
+        <Button title={t('common.matchCase')} className={clsx(s.paramsButton, matchCaseValue && s.paramsButtonActive)} onClick={handleMatchCaseChange}>
           <Icon type={IconType.MatchCase} size={IconSize.Size13} />
         </Button>
-        <Button title={t('common.anyMatch')} className={classNames(s.paramsButton, anyMatchValue && s.paramsButtonActive)} onClick={handleAnyMatchChange}>
+        <Button title={t('common.anyMatch')} className={clsx(s.paramsButton, anyMatchValue && s.paramsButtonActive)} onClick={handleAnyMatchChange}>
           <Icon type={IconType.AnyMatch} size={IconSize.Size13} />
         </Button>
       </div>

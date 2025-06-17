@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
@@ -106,12 +106,12 @@ const Sidebar = React.memo(
       return (
         <div key={project.id}>
           {/* eslint-disable-next-line no-return-assign */}
-          <div className={classNames(s.sidebarItemProject, !currBoardId && currProjectId === project.id && s.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
+          <div className={clsx(s.sidebarItemProject, !currBoardId && currProjectId === project.id && s.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
             <Button style={ButtonStyle.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={s.sidebarButton} onClick={() => handleToggleProjectCollapse(project)}>
-              <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={classNames(s.collapseIcon, project.isCollapsed && s.collapseIconCollapsed)} />
+              <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.collapseIcon, project.isCollapsed && s.collapseIconCollapsed)} />
             </Button>
             <Link to={Paths.PROJECTS.replace(':id', project.id)} className={s.sidebarItemInner}>
-              <Button style={ButtonStyle.NoBackground} content={project.name} className={classNames(s.sidebarButton, s.sidebarButtonPadding)} />
+              <Button style={ButtonStyle.NoBackground} content={project.name} className={clsx(s.sidebarButton, s.sidebarButtonPadding)} />
             </Link>
             {isProjectManager && (
               <ProjectActionsPopup
@@ -131,7 +131,7 @@ const Sidebar = React.memo(
                 offset={10}
                 hideCloseButton
               >
-                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={classNames(s.sidebarButton, s.hoverButton)}>
+                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={clsx(s.sidebarButton, s.hoverButton)}>
                   <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                 </Button>
               </ProjectActionsPopup>
@@ -152,20 +152,20 @@ const Sidebar = React.memo(
                             {board.isPersisted && (
                               <div
                                 key={board.id}
-                                className={classNames(s.sidebarItemBoard, currBoardId === board.id && s.sidebarItemActive)}
+                                className={clsx(s.sidebarItemBoard, currBoardId === board.id && s.sidebarItemActive)}
                                 // eslint-disable-next-line no-return-assign
                                 ref={(el) => (boardRefs.current[board.id] = el)}
                               >
                                 {isProjectManager && (
                                   // eslint-disable-next-line react/jsx-props-no-spreading
                                   <div {...dragHandleProps}>
-                                    <Button style={ButtonStyle.Icon} title={t('common.reorderBoards')} className={classNames(s.reorderBoardsButton, s.hoverButton)}>
+                                    <Button style={ButtonStyle.Icon} title={t('common.reorderBoards')} className={clsx(s.reorderBoardsButton, s.hoverButton)}>
                                       <Icon type={IconType.MoveUpDown} size={IconSize.Size13} />
                                     </Button>
                                   </div>
                                 )}
-                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={classNames(s.sidebarItemInner, !isProjectManager && s.boardCannotManage)}>
-                                  <Button style={ButtonStyle.NoBackground} content={board.name} className={classNames(s.boardButton, s.sidebarButton)} />
+                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={clsx(s.sidebarItemInner, !isProjectManager && s.boardCannotManage)}>
+                                  <Button style={ButtonStyle.NoBackground} content={board.name} className={clsx(s.boardButton, s.sidebarButton)} />
                                 </Link>
                                 {board.isGithubConnected &&
                                   (isProjectManager ? (
@@ -173,7 +173,7 @@ const Sidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={classNames(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
+                                        className={clsx(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
                                         title={board.isGithubConnected ? t('common.connectedToGithub', { repo: board.githubRepo }) : t('common.notConnectedToGithub')}
                                       />
                                     </Connections>
@@ -182,7 +182,7 @@ const Sidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={classNames(board.isGithubConnected ? s.githubGreen : s.githubGrey, s.githubCannotManage)}
+                                        className={clsx(board.isGithubConnected ? s.githubGreen : s.githubGrey, s.githubCannotManage)}
                                         title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
                                       />
                                     </div>
@@ -229,54 +229,54 @@ const Sidebar = React.memo(
         <Button style={ButtonStyle.Icon} title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')} onClick={toggleSidebar} className={s.toggleSidebarButton}>
           <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
         </Button>
-        <div className={classNames(s.sidebar, sidebarCompact && s.sidebarCompact, !sidebarShown && s.sidebarHidden)}>
+        <div className={clsx(s.sidebar, sidebarCompact && s.sidebarCompact, !sidebarShown && s.sidebarHidden)}>
           <div>
             {!settingsOnly && (
               <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
             )}
           </div>
-          <div className={classNames(s.scrollable, gs.scrollableY)}>
+          <div className={clsx(s.scrollable, gs.scrollableY)}>
             {settingsOnly && (
               <div>
                 <div className={s.sidebarTitle}>
                   <Icon type={IconType.Settings} size={IconSize.Size16} className={s.sidebarTitleIcon} />
                   {t('common.settings')}
                 </div>
-                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_PROFILE && s.sidebarActive)}>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_PROFILE && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_PROFILE}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.profile')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.profile')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.User} size={IconSize.Size14} className={s.icon} />
                       {t('common.profile')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_PREFERENCES && s.sidebarActive)}>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_PREFERENCES && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_PREFERENCES}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.preferences')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.preferences')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.Sliders} size={IconSize.Size14} className={s.icon} />
                       {t('common.preferences')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_ACCOUNT && s.sidebarActive)}>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_ACCOUNT && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_ACCOUNT}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.account')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.account')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.AddressCard} size={IconSize.Size14} className={s.icon} />
                       {t('common.account')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_AUTHENTICATION && s.sidebarActive)}>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_AUTHENTICATION && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_AUTHENTICATION}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.authentication')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.authentication')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.Key} size={IconSize.Size14} className={s.icon} />
                       {t('common.authentication')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_ABOUT && s.sidebarActive)}>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_ABOUT && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_ABOUT}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.aboutShort')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.aboutShort')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.Info} size={IconSize.Size14} className={s.icon} />
                       {t('common.aboutShort')}
                     </Button>
@@ -290,17 +290,17 @@ const Sidebar = React.memo(
                   <Icon type={IconType.Server} size={IconSize.Size16} className={s.sidebarTitleIcon} />
                   {t('common.instanceSettings')}
                 </div>
-                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_USERS && s.sidebarActive)}>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_USERS && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_USERS}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.Users} size={IconSize.Size14} className={s.icon} />
                       {t('common.users')}
                     </Button>
                   </Link>
                 </div>
-                <div className={classNames(s.sidebarItem, path === Paths.SETTINGS_INSTANCE && s.sidebarActive)}>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_INSTANCE && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_INSTANCE}>
-                    <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={classNames(s.sidebarButton, s.sidebarButtonPadding)}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.Settings} size={IconSize.Size14} className={s.icon} />
                       {t('common.settings')}
                     </Button>
@@ -337,7 +337,7 @@ const Sidebar = React.memo(
             )}
           </div>
         </div>
-        <div className={classNames(s.content, sidebarCompact && s.contentCompact)}>{children}</div>
+        <div className={clsx(s.content, sidebarCompact && s.contentCompact)}>{children}</div>
       </div>
     );
   },

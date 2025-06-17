@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { Table } from '../../Utils';
@@ -161,7 +161,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
         {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
       </div>
       <Table.Container className={s.container}>
-        <Table.Wrapper className={classNames(gs.scrollableX)}>
+        <Table.Wrapper className={clsx(gs.scrollableX)}>
           <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
             <Table.Header style={Table.Style.Default}>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -182,7 +182,7 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
                 </Table.HeaderRow>
               ))}
             </Table.Header>
-            <Table.Body className={classNames(gs.scrollableY)} style={Table.Style.Default}>
+            <Table.Body className={clsx(gs.scrollableY)} style={Table.Style.Default}>
               {table.getRowModel().rows.map((row) => (
                 <Table.Row key={row.id}>
                   {row.getVisibleCells().map((cell) => (

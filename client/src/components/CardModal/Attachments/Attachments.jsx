@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Gallery, Item as GalleryItem } from 'react-photoswipe-gallery';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useToggle } from '../../../lib/hooks';
@@ -66,9 +66,9 @@ const Attachments = React.memo(({ items, canEdit, onUpdate, onDelete, onCoverUpd
       props = {
         content: isPdf ? (
           // eslint-disable-next-line jsx-a11y/alt-text
-          <object data={item.url} type="application/pdf" className={classNames(s.content, s.contentPdf)} />
+          <object data={item.url} type="application/pdf" className={clsx(s.content, s.contentPdf)} />
         ) : (
-          <span className={classNames(s.content, s.contentError)}>{t('common.thereIsNoPreviewAvailableForThisAttachment')}</span>
+          <span className={clsx(s.content, s.contentError)}>{t('common.thereIsNoPreviewAvailableForThisAttachment')}</span>
         ),
       };
     }

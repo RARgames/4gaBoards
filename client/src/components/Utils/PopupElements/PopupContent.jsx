@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import * as s from './PopupContent.module.scss';
@@ -7,7 +7,7 @@ import * as s from './PopupContent.module.scss';
 const PopupContent = React.memo(({ children, className, ...props }) => {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <div className={classNames(s.wrapper, className)} {...props}>
+    <div className={clsx(s.wrapper, className)} {...props}>
       {children}
     </div>
   );

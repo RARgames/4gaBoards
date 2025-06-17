@@ -1,11 +1,11 @@
 import React from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import * as s from './PopupSeparator.module.scss';
 
 const PopupSeparator = React.memo(({ className }) => {
-  return <div className={classNames(s.separator, className)} />;
+  return <div className={clsx(s.separator, className)} />;
 });
 
 PopupSeparator.propTypes = {

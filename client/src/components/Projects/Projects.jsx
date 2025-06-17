@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
@@ -42,7 +42,7 @@ const Projects = React.memo(({ projects, filteredProjects, isFiltered, canAdd, d
     <div className={s.wrapper}>
       <div className={s.header}>
         <div ref={headerButtonGroupOffsetRef} />
-        <div className={classNames(s.headerText)}>
+        <div className={clsx(s.headerText)}>
           <span>{getProjectsText()}</span> <span className={s.headerDetails}>{getBoardsText()}</span>
         </div>
         <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
@@ -58,11 +58,11 @@ const Projects = React.memo(({ projects, filteredProjects, isFiltered, canAdd, d
           )}
         </div>
       </div>
-      <div className={classNames(s.projectsWrapper, gs.scrollableY)}>
+      <div className={clsx(s.projectsWrapper, gs.scrollableY)}>
         {filteredProjects.map((item) => (
           <div
             key={item.id}
-            className={classNames(s.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(item.background.name))}`])}
+            className={clsx(s.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(item.background.name))}`])}
             style={{
               background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
             }}

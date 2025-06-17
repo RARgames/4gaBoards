@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import zxcvbn from 'zxcvbn';
 
@@ -40,7 +40,7 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
   return (
     <div className={sPassword.inputWrapper}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <input {...inputProps} className={classNames(s.input, sPassword.inputPassword, styles, className, isError && s.inputError)} />
+      <input {...inputProps} className={clsx(s.input, sPassword.inputPassword, styles, className, isError && s.inputError)} />
       <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>

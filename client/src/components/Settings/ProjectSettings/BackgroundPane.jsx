@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { dequal } from 'dequal';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
@@ -72,11 +72,7 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
             key={gradient}
             name="gradient"
             value={gradient}
-            className={classNames(
-              s.gradientButton,
-              item && item.type === ProjectBackgroundTypes.GRADIENT && gradient === item.name && s.gradientButtonActive,
-              bs[`background${upperFirst(camelCase(gradient))}`],
-            )}
+            className={clsx(s.gradientButton, item && item.type === ProjectBackgroundTypes.GRADIENT && gradient === item.name && s.gradientButtonActive, bs[`background${upperFirst(camelCase(gradient))}`])}
             onClick={handleGradientClick}
           />
         ))}
