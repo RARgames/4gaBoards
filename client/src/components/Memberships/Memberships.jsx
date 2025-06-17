@@ -138,10 +138,8 @@ const Memberships = React.memo(
 );
 
 Memberships.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  items: PropTypes.array.isRequired,
-  allUsers: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   permissionsSelectStep: PropTypes.elementType,
   addTitle: PropTypes.string,
   leaveButtonContent: PropTypes.string,

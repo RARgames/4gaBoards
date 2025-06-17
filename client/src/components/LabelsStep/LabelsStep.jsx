@@ -150,10 +150,8 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
 });
 
 LabelsStep.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  items: PropTypes.array.isRequired,
-  currentIds: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   title: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,

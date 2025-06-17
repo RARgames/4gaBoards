@@ -208,15 +208,13 @@ const ActionsStep = React.memo(
 );
 
 ActionsStep.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  card: PropTypes.object.isRequired,
-  projectsToLists: PropTypes.array.isRequired,
-  allBoardMemberships: PropTypes.array.isRequired,
-  boardMemberships: PropTypes.array.isRequired,
-  currentUserIds: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
-  currentLabelIds: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  projectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentLabelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   url: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),

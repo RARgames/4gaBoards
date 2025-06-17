@@ -46,10 +46,8 @@ function Root({ store, history }) {
 }
 
 Root.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  history: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default Root;

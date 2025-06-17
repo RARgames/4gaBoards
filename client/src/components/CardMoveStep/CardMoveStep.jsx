@@ -153,10 +153,8 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
 });
 
 CardMoveStep.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  projectsToLists: PropTypes.array.isRequired,
-  defaultPath: PropTypes.object.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  projectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  defaultPath: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,

@@ -132,17 +132,15 @@ const BoardActions = React.memo(
 
 BoardActions.propTypes = {
   projectId: PropTypes.string.isRequired,
-  /* eslint-disable react/forbid-prop-types */
   cardCount: PropTypes.number.isRequired,
   isFiltered: PropTypes.bool.isRequired,
   filteredCardCount: PropTypes.number.isRequired,
-  memberships: PropTypes.array.isRequired,
-  allBoardCardAndTaskMemberships: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
-  filterUsers: PropTypes.array.isRequired,
-  filterLabels: PropTypes.array.isRequired,
-  allUsers: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allBoardCardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  filterUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  filterLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   isProjectManager: PropTypes.bool.isRequired,
   boardData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

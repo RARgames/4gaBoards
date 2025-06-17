@@ -111,15 +111,11 @@ const ProjectSettings = React.memo(
 ProjectSettings.propTypes = {
   projectId: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  /* eslint-disable react/forbid-prop-types */
-  background: PropTypes.object,
-  backgroundImage: PropTypes.object,
-  /* eslint-enable react/forbid-prop-types */
+  background: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  backgroundImage: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isBackgroundImageUpdating: PropTypes.bool.isRequired,
-  /* eslint-disable react/forbid-prop-types */
-  managers: PropTypes.array.isRequired,
-  allUsers: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  managers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isManager: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onBackgroundImageUpdate: PropTypes.func.isRequired,

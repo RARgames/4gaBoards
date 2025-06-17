@@ -171,11 +171,9 @@ const AddStep = React.memo(
 );
 
 AddStep.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  memberships: PropTypes.array.isRequired,
-  users: PropTypes.array.isRequired,
-  currentUserIds: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   permissionsSelectStep: PropTypes.elementType,
   title: PropTypes.string,
   leaveButtonContent: PropTypes.string,

@@ -80,10 +80,8 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, memberships,
 });
 
 MembershipsStep.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  items: PropTypes.array.isRequired,
-  currentUserIds: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   title: PropTypes.string,
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onUserSelect: PropTypes.func.isRequired,

@@ -390,20 +390,18 @@ Card.propTypes = {
   isPersisted: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   notificationsTotal: PropTypes.number.isRequired,
-  /* eslint-disable react/forbid-prop-types */
-  users: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
-  tasks: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  tasks: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   description: PropTypes.string,
   attachmentsCount: PropTypes.number.isRequired,
   commentCount: PropTypes.number.isRequired,
-  allProjectsToLists: PropTypes.array.isRequired,
-  boardMemberships: PropTypes.array.isRequired,
-  boardAndCardMemberships: PropTypes.array.isRequired,
-  boardAndTaskMemberships: PropTypes.array.isRequired,
-  allLabels: PropTypes.array.isRequired,
+  allProjectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardAndCardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   url: PropTypes.string.isRequired,
-  /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types

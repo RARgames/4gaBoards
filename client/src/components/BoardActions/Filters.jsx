@@ -110,13 +110,11 @@ const Filters = React.memo(({ users, labels, allBoardMemberships, boardMembershi
 });
 
 Filters.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  users: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
-  allBoardMemberships: PropTypes.array.isRequired,
-  boardMemberships: PropTypes.array.isRequired,
-  allLabels: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,

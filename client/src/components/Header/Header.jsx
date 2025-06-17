@@ -103,11 +103,9 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
 
 Header.propTypes = {
   path: PropTypes.string,
-  /* eslint-disable react/forbid-prop-types */
-  project: PropTypes.object,
-  user: PropTypes.object.isRequired,
-  notifications: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  project: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  notifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,

@@ -800,12 +800,11 @@ CardModal.propTypes = {
   listId: PropTypes.string.isRequired,
   boardId: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
-  /* eslint-disable react/forbid-prop-types */
-  users: PropTypes.array.isRequired,
-  labels: PropTypes.array.isRequired,
-  tasks: PropTypes.array.isRequired,
-  attachments: PropTypes.array.isRequired,
-  activities: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  tasks: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  attachments: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   descriptionMode: PropTypes.string.isRequired,
   descriptionShown: PropTypes.bool.isRequired,
   tasksShown: PropTypes.bool.isRequired,
@@ -816,12 +815,11 @@ CardModal.propTypes = {
   userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
-  allProjectsToLists: PropTypes.array.isRequired,
-  boardMemberships: PropTypes.array.isRequired,
-  boardAndCardMemberships: PropTypes.array.isRequired,
-  boardAndTaskMemberships: PropTypes.array.isRequired,
-  allLabels: PropTypes.array.isRequired,
-  /* eslint-enable react/forbid-prop-types */
+  allProjectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardAndCardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   canEditCommentActivities: PropTypes.bool.isRequired,
   canEditAllCommentActivities: PropTypes.bool.isRequired,
