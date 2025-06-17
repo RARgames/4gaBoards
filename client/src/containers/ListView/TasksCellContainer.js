@@ -8,11 +8,13 @@ import selectors from '../../selectors';
 
 const mapStateToProps = (state, { id }) => {
   const allBoardMemberships = selectors.selectBoardAndTaskMembershipsByCardId(state, id);
+  const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
   return {
     allBoardMemberships,
+    boardMemberships,
     canEdit: isCurrentUserEditor,
   };
 };

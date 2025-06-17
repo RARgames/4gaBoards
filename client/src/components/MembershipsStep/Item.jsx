@@ -8,7 +8,7 @@ import { Button } from '../Utils';
 
 import * as s from './Item.module.scss';
 
-const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDeselect }) => {
+const Item = React.memo(({ isPersisted, isActive, user, memberships, onUserSelect, onUserDeselect }) => {
   const [t] = useTranslation();
 
   const handleToggleClick = useCallback(() => {
@@ -22,7 +22,7 @@ const Item = React.memo(({ isPersisted, isActive, user, onUserSelect, onUserDese
   return (
     <Button onClick={handleToggleClick} disabled={!isPersisted} className={s.menuItem} title={user.name}>
       <span className={s.user}>
-        <User name={user.name} avatarUrl={user.avatarUrl} isMember={user.isBoardMember} isNotMemberTitle={t('common.noLongerBoardMember')} />
+        <User name={user.name} avatarUrl={user.avatarUrl} isMember={memberships ? memberships.some((m) => m.user?.id === user.id) : true} isNotMemberTitle={t('common.noLongerBoardMember')} />
       </span>
       <div className={classNames(s.menuItemText, isActive && s.menuItemTextActive)}>{user.name}</div>
     </Button>
@@ -33,6 +33,7 @@ Item.propTypes = {
   isPersisted: PropTypes.bool.isRequired,
   isActive: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUserSelect: PropTypes.func.isRequired,
   onUserDeselect: PropTypes.func.isRequired,
 };

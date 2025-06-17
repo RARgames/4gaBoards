@@ -23,7 +23,28 @@ const VARIANTS = {
 };
 
 const Item = React.memo(
-  ({ variant, id, index, name, dueDate, boardMemberships, users, isCompleted, isPersisted, canEdit, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onDuplicate, onDelete, onUserAdd, onUserRemove }) => {
+  ({
+    variant,
+    id,
+    index,
+    name,
+    dueDate,
+    allBoardMemberships,
+    boardMemberships,
+    users,
+    isCompleted,
+    isPersisted,
+    canEdit,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    onUpdate,
+    onDuplicate,
+    onDelete,
+    onUserAdd,
+    onUserRemove,
+  }) => {
     const [t] = useTranslation();
     const nameEdit = useRef(null);
 
@@ -96,13 +117,7 @@ const Item = React.memo(
       <div className={classNames(s.members, canEdit && gs.cursorPointer, isCompleted && s.itemCompleted)}>
         {users.slice(0, visibleMembersCount).map((user) => (
           <span key={user.id} className={s.member}>
-            <User
-              name={user.name}
-              avatarUrl={user.avatarUrl}
-              size={userSize}
-              isMember={!!boardMemberships.find((m) => m.user?.id === user.id)?.user?.isBoardMember}
-              isNotMemberTitle={t('common.noLongerBoardMember')}
-            />
+            <User name={user.name} avatarUrl={user.avatarUrl} size={userSize} isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
           </span>
         ))}
         {users.length > visibleMembersCount && (
@@ -140,8 +155,9 @@ const Item = React.memo(
                 </span>
                 {users && (
                   <MembershipsPopup
-                    items={boardMemberships}
+                    items={allBoardMemberships}
                     currentUserIds={users.map((user) => user.id)}
+                    memberships={boardMemberships}
                     onUserSelect={onUserAdd}
                     onUserDeselect={onUserRemove}
                     offset={0}
@@ -162,6 +178,7 @@ const Item = React.memo(
                   <ActionsPopup
                     name={name}
                     dueDate={dueDate}
+                    allBoardMemberships={allBoardMemberships}
                     boardMemberships={boardMemberships}
                     users={users}
                     createdAt={createdAt}
@@ -200,6 +217,7 @@ Item.propTypes = {
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isCompleted: PropTypes.bool.isRequired,

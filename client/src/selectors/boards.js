@@ -102,7 +102,6 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
           user: {
             ...boardMembershipModel.user.ref,
             isCurrent: boardMembershipModel.user.id === currentUserId,
-            isBoardMember: true,
           },
         };
         memberships.set(membership.user.id, membership);
@@ -116,7 +115,6 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
             user: {
               ...user.ref,
               isCurrent: user.id === currentUserId,
-              isBoardMember: false,
             },
           });
         }
@@ -132,7 +130,6 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
                 user: {
                   ...user.ref,
                   isCurrent: user.id === currentUserId,
-                  isBoardMember: false,
                 },
               });
             }

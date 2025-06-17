@@ -10,7 +10,7 @@ import Item from './Item';
 import * as gs from '../../global.module.scss';
 import * as s from './MembershipsStep.module.scss';
 
-const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect, onUserDeselect, onBack }) => {
+const MembershipsStep = React.memo(({ items, currentUserIds, title, memberships, onUserSelect, onUserDeselect, onBack }) => {
   const [t] = useTranslation();
   const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
@@ -67,6 +67,7 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, onUserSelect
                 isPersisted={item.isPersisted}
                 isActive={currentUserIds.includes(item.user.id)}
                 user={item.user}
+                memberships={memberships}
                 onUserSelect={() => handleUserSelect(item.user.id)}
                 onUserDeselect={() => handleUserDeselect(item.user.id)}
               />
@@ -84,6 +85,7 @@ MembershipsStep.propTypes = {
   currentUserIds: PropTypes.array.isRequired,
   /* eslint-enable react/forbid-prop-types */
   title: PropTypes.string,
+  memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onUserSelect: PropTypes.func.isRequired,
   onUserDeselect: PropTypes.func.isRequired,
   onBack: PropTypes.func,
@@ -91,6 +93,7 @@ MembershipsStep.propTypes = {
 
 MembershipsStep.defaultProps = {
   title: 'common.members',
+  memberships: undefined,
   onBack: undefined,
 };
 

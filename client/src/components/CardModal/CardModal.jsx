@@ -61,9 +61,9 @@ const CardModal = React.memo(
     isGithubConnected,
     githubRepo,
     allProjectsToLists,
-    allBoardMemberships,
-    allBoardAndCardMemberships,
-    allBoardAndTaskMemberships,
+    boardMemberships,
+    boardAndCardMemberships,
+    boardAndTaskMemberships,
     allLabels,
     canEdit,
     canEditCommentActivities,
@@ -349,7 +349,8 @@ const CardModal = React.memo(
                 projectId,
               }}
               projectsToLists={allProjectsToLists}
-              boardMemberships={allBoardAndCardMemberships}
+              allBoardMemberships={boardAndCardMemberships}
+              boardMemberships={boardMemberships}
               currentUserIds={users.map((user) => user.id)}
               labels={allLabels}
               currentLabelIds={labels.map((label) => label.id)}
@@ -420,7 +421,7 @@ const CardModal = React.memo(
           {t('common.members', { context: 'title' })}
           {canEdit && (
             <div className={s.popupWrapper}>
-              <MembershipsPopup items={allBoardAndCardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
+              <MembershipsPopup items={boardAndCardMemberships} currentUserIds={userIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
                 <Button style={ButtonStyle.Icon} title={t('common.addMember')}>
                   <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton2} />
                 </Button>
@@ -428,10 +429,10 @@ const CardModal = React.memo(
             </div>
           )}
         </div>
-        <MembershipsPopup items={allBoardAndCardMemberships} currentUserIds={userIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} disabled={!canEdit}>
+        <MembershipsPopup items={boardAndCardMemberships} currentUserIds={userIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} disabled={!canEdit}>
           {users.slice(0, visibleMembersCount).map((user, index) => (
             <span key={user.id} className={classNames(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}>
-              <User name={user.name} avatarUrl={user.avatarUrl} size="small" isMember={allBoardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
+              <User name={user.name} avatarUrl={user.avatarUrl} size="small" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
             </span>
           ))}
           {users.length > visibleMembersCount && (
@@ -545,7 +546,7 @@ const CardModal = React.memo(
               name={createdBy.name}
               avatarUrl={createdBy.avatarUrl}
               size="small"
-              isMember={allBoardMemberships.some((m) => m.user?.id === createdBy.id)}
+              isMember={boardMemberships.some((m) => m.user?.id === createdBy.id)}
               isNotMemberTitle={t('common.noLongerBoardMember')}
               className={s.activityItem}
             />
@@ -564,7 +565,7 @@ const CardModal = React.memo(
               name={updatedBy.name}
               avatarUrl={updatedBy.avatarUrl}
               size="small"
-              isMember={allBoardMemberships.some((m) => m.user?.id === updatedBy.id)}
+              isMember={boardMemberships.some((m) => m.user?.id === updatedBy.id)}
               isNotMemberTitle={t('common.noLongerBoardMember')}
               className={s.activityItem}
             />
@@ -665,7 +666,8 @@ const CardModal = React.memo(
               cardId={id}
               items={tasks}
               canEdit={canEdit}
-              boardMemberships={allBoardAndTaskMemberships}
+              allBoardMemberships={boardAndTaskMemberships}
+              boardMemberships={boardMemberships}
               onCreate={onTaskCreate}
               onUpdate={onTaskUpdate}
               onMove={onTaskMove}
@@ -735,7 +737,7 @@ const CardModal = React.memo(
         githubRepo={githubRepo}
         commentCount={commentCount}
         preferredDetailsFont={preferredDetailsFont}
-        allBoardMemberships={allBoardMemberships}
+        boardMemberships={boardMemberships}
         onFetch={onActivitiesFetch}
         onDetailsToggle={onActivitiesDetailsToggle}
         onCommentCreate={onCommentActivityCreate}
@@ -815,9 +817,9 @@ CardModal.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
-  allBoardMemberships: PropTypes.array.isRequired,
-  allBoardAndCardMemberships: PropTypes.array.isRequired,
-  allBoardAndTaskMemberships: PropTypes.array.isRequired,
+  boardMemberships: PropTypes.array.isRequired,
+  boardAndCardMemberships: PropTypes.array.isRequired,
+  boardAndTaskMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,
   /* eslint-enable react/forbid-prop-types */
   canEdit: PropTypes.bool.isRequired,

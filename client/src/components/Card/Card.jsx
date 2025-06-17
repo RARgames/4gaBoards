@@ -43,9 +43,9 @@ const Card = React.memo(
     attachmentsCount,
     commentCount,
     allProjectsToLists,
-    allBoardMemberships,
-    allBoardAndCardMemberships,
-    allBoardAndTaskMemberships,
+    boardMemberships,
+    boardAndCardMemberships,
+    boardAndTaskMemberships,
     allLabels,
     url,
     canEdit,
@@ -220,7 +220,8 @@ const Card = React.memo(
               cardId={id}
               items={tasks}
               canEdit={canEdit}
-              boardMemberships={allBoardAndTaskMemberships}
+              allBoardMemberships={boardAndTaskMemberships}
+              boardMemberships={boardMemberships}
               onCreate={onTaskCreate}
               onUpdate={onTaskUpdate}
               onMove={onTaskMove}
@@ -267,15 +268,16 @@ const Card = React.memo(
             <span className={classNames(s.attachments, s.attachmentsRight, s.users)}>
               <div className={s.popupWrapper2}>
                 <MembershipsPopup
-                  items={allBoardAndCardMemberships}
+                  items={boardAndCardMemberships}
                   currentUserIds={users.map((user) => user.id)}
+                  memberships={boardMemberships}
                   onUserSelect={(userId) => onUserAdd(userId, id)}
                   onUserDeselect={(userId) => onUserRemove(userId, id)}
                   offset={0}
                 >
                   {users.slice(0, visibleMembersCount).map((user) => (
                     <span key={user.id} className={classNames(s.attachment, s.user)}>
-                      <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={allBoardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
+                      <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
                     </span>
                   ))}
                   {users.length > visibleMembersCount && (
@@ -327,7 +329,8 @@ const Card = React.memo(
                             projectId,
                           }}
                           projectsToLists={allProjectsToLists}
-                          boardMemberships={allBoardAndCardMemberships}
+                          allBoardMemberships={boardAndCardMemberships}
+                          boardMemberships={boardMemberships}
                           currentUserIds={users.map((user) => user.id)}
                           labels={allLabels}
                           currentLabelIds={labels.map((label) => label.id)}
@@ -395,9 +398,9 @@ Card.propTypes = {
   attachmentsCount: PropTypes.number.isRequired,
   commentCount: PropTypes.number.isRequired,
   allProjectsToLists: PropTypes.array.isRequired,
-  allBoardMemberships: PropTypes.array.isRequired,
-  allBoardAndCardMemberships: PropTypes.array.isRequired,
-  allBoardAndTaskMemberships: PropTypes.array.isRequired,
+  boardMemberships: PropTypes.array.isRequired,
+  boardAndCardMemberships: PropTypes.array.isRequired,
+  boardAndTaskMemberships: PropTypes.array.isRequired,
   allLabels: PropTypes.array.isRequired,
   url: PropTypes.string.isRequired,
   /* eslint-enable react/forbid-prop-types */

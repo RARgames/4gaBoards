@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './MembersCell.module.scss';
 
-const MembersCell = React.memo(({ id, users, allBoardMemberships, cellClassName, canEdit, onUserAdd, onUserRemove }) => {
+const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMemberships, cellClassName, canEdit, onUserAdd, onUserRemove }) => {
   const [t] = useTranslation();
   const userIds = users.map((user) => user.id);
 
@@ -18,19 +18,14 @@ const MembersCell = React.memo(({ id, users, allBoardMemberships, cellClassName,
       key={user.id}
       items={allBoardMemberships}
       currentUserIds={userIds}
+      memberships={boardMemberships}
       onUserSelect={(userId) => onUserAdd(userId, id)}
       onUserDeselect={(userId) => onUserRemove(userId, id)}
       offset={0}
       disabled={!canEdit}
       wrapperClassName={s.userWrapper}
     >
-      <User
-        name={user.name}
-        avatarUrl={user.avatarUrl}
-        size="card"
-        isMember={!!allBoardMemberships.find((m) => m.user?.id === user.id)?.user?.isBoardMember}
-        isNotMemberTitle={t('common.noLongerBoardMember')}
-      />
+      <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
     </MembershipsPopup>
   ));
 
@@ -38,6 +33,7 @@ const MembersCell = React.memo(({ id, users, allBoardMemberships, cellClassName,
     <MembershipsPopup
       items={allBoardMemberships}
       currentUserIds={userIds}
+      memberships={boardMemberships}
       onUserSelect={(userId) => onUserAdd(userId, id)}
       onUserDeselect={(userId) => onUserRemove(userId, id)}
       offset={0}
@@ -59,6 +55,7 @@ const MembersCell = React.memo(({ id, users, allBoardMemberships, cellClassName,
 MembersCell.propTypes = {
   id: PropTypes.string.isRequired,
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   cellClassName: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,

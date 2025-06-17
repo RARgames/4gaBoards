@@ -24,7 +24,7 @@ const Activities = React.memo(
     githubRepo,
     commentCount,
     preferredDetailsFont,
-    allBoardMemberships,
+    boardMemberships,
     onFetch,
     onDetailsToggle,
     onCommentCreate,
@@ -150,13 +150,13 @@ const Activities = React.memo(
                       updatedAt={item.updatedAt}
                       updatedBy={item.updatedBy}
                       preferredDetailsFont={preferredDetailsFont}
-                      allBoardMemberships={allBoardMemberships}
+                      boardMemberships={boardMemberships}
                       onUpdate={(data) => handleCommentUpdate(item.id, data)}
                       onDelete={() => handleCommentDelete(item.id)}
                       onUserPrefsUpdate={onUserPrefsUpdate}
                     />
                   ) : (
-                    <Item key={item.id} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} allBoardMemberships={allBoardMemberships} />
+                    <Item key={item.id} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} boardMemberships={boardMemberships} />
                   ),
                 )}
               </div>
@@ -182,7 +182,7 @@ Activities.propTypes = {
   githubRepo: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
-  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onFetch: PropTypes.func.isRequired,
   onDetailsToggle: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,

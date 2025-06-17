@@ -20,7 +20,10 @@ const VARIANTS = {
 };
 
 const Tasks = React.forwardRef(
-  ({ variant, isCardActive, cardId, items, canEdit, boardMemberships, onCreate, onUpdate, onDuplicate, onMove, onDelete, onUserAdd, onUserRemove, onMouseEnterTasks, onMouseLeaveTasks }, ref) => {
+  (
+    { variant, isCardActive, cardId, items, canEdit, allBoardMemberships, boardMemberships, onCreate, onUpdate, onDuplicate, onMove, onDelete, onUserAdd, onUserRemove, onMouseEnterTasks, onMouseLeaveTasks },
+    ref,
+  ) => {
     const [t] = useTranslation();
     const taskAddRef = useRef(null);
     const [isOpen, toggleOpen] = useToggle();
@@ -95,6 +98,7 @@ const Tasks = React.forwardRef(
                 index={index}
                 name={item.name}
                 dueDate={item.dueDate}
+                allBoardMemberships={allBoardMemberships}
                 boardMemberships={boardMemberships}
                 users={item.users}
                 isCompleted={item.isCompleted}
@@ -158,6 +162,7 @@ Tasks.propTypes = {
   cardId: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
+  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,

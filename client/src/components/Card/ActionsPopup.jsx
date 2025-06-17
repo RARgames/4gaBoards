@@ -29,6 +29,7 @@ const ActionsStep = React.memo(
   ({
     card,
     projectsToLists,
+    allBoardMemberships,
     boardMemberships,
     currentUserIds,
     labels,
@@ -127,7 +128,7 @@ const ActionsStep = React.memo(
     if (step) {
       switch (step.type) {
         case StepTypes.USERS:
-          return <MembershipsStep items={boardMemberships} currentUserIds={currentUserIds} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
+          return <MembershipsStep items={allBoardMemberships} currentUserIds={currentUserIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
         case StepTypes.LABELS:
           return (
             <LabelsStep
@@ -210,6 +211,7 @@ ActionsStep.propTypes = {
   /* eslint-disable react/forbid-prop-types */
   card: PropTypes.object.isRequired,
   projectsToLists: PropTypes.array.isRequired,
+  allBoardMemberships: PropTypes.array.isRequired,
   boardMemberships: PropTypes.array.isRequired,
   currentUserIds: PropTypes.array.isRequired,
   labels: PropTypes.array.isRequired,
