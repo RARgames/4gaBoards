@@ -2,13 +2,13 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useSteps } from '../../../hooks';
-import { ActivityStep } from '../../ActivityPopup';
-import { ConnectionsStep } from '../../ConnectionsPopup';
-import DeleteStep from '../../DeleteStep';
-import ExportStep from '../../ExportStep';
-import RenameStep from '../../RenameStep';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../../Utils';
+import { useSteps } from '../../hooks';
+import { ActivityStep } from '../ActivityPopup';
+import { ConnectionsStep } from '../ConnectionsPopup';
+import DeleteStep from '../DeleteStep';
+import ExportStep from '../ExportStep';
+import RenameStep from '../RenameStep';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './BoardActionsPopup.module.scss';
 

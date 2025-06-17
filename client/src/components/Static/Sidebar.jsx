@@ -9,13 +9,13 @@ import PropTypes from 'prop-types';
 import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
-import BoardActionsPopup from '../BoardActions/BoardActionsPopup';
+import BoardActionsPopup from '../BoardActionsPopup';
 import BoardAddPopup from '../BoardAddPopup';
 import ConnectionsPopup from '../ConnectionsPopup';
 import Filter from '../Filter';
+import ProjectActionsPopup from '../ProjectActionsPopup';
 import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
-import ProjectActionsPopup from './ProjectActionsPopup';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Sidebar.module.scss';
