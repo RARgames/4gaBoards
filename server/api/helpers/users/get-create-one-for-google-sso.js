@@ -27,16 +27,6 @@ module.exports = {
     if (user) {
       return user;
     }
-    // TODO start legacy way of authentication - to remove after some time
-    user = await sails.helpers.users.getOne({ ssoGoogleEmail: email });
-    if (user) {
-      const updatedValues = {
-        ssoGoogleId: inputs.id,
-      };
-      user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
-      return user;
-    }
-    // TODO end legacy way of authentication - to remove after some time
     user = await sails.helpers.users.getOne({ email });
     // First time SSO login
     if (user) {

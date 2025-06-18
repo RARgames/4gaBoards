@@ -114,7 +114,7 @@
     }
   }
 
-  //TODO think about multiline buttons - word-wrap: break-word and min-height instead of white-space, text-overflow
+  // TODO think about multiline buttons - word-wrap: break-word and min-height instead of white-space, text-overflow
   .controlButtons {
     color: var(--textColorWhite);
     border-radius: 3px;
@@ -190,7 +190,7 @@
       }
     }
 
-    //TODO temp disabled - until the popup button focus is handled correctly
+    // TODO temp disabled - until the popup button focus is handled correctly
     // &:focus {
     //   outline: none;
     //   box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
