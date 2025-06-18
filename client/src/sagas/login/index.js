@@ -1,7 +1,8 @@
 import i18n from 'i18next';
-import { all, call, cancel, fork, take, spawn, select } from 'redux-saga/effects';
+import { all, call, cancel, fork, take, spawn, select, put } from 'redux-saga/effects';
 
 import ActionTypes from '../../constants/ActionTypes';
+import { push } from '../../lib/redux-router';
 import selectors from '../../selectors';
 import coreServices from '../core/services';
 import services from './services';
@@ -26,6 +27,12 @@ export default function* loginSaga() {
 
   yield take([ActionTypes.AUTHENTICATE__SUCCESS, ActionTypes.AUTHENTICATE_SSO__SUCCESS, ActionTypes.REGISTER__SUCCESS]);
   yield cancel(watcherTasks);
-  yield call(services.goToRoot);
+  const preLoginPath = JSON.parse(localStorage.getItem('pre_login_path'));
+  if (preLoginPath) {
+    localStorage.removeItem('pre_login_path');
+    yield put(push(preLoginPath));
+  } else {
+    yield call(services.goToRoot);
+  }
   yield spawn(postLoginSaga);
 }
