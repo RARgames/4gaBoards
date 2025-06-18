@@ -74,7 +74,7 @@ module.exports = {
       .fetch();
 
     if (!currentUser) {
-      user = await User.updateOne({ id: user.id }).set({ createdById: user.id });
+      user = await User.updateOne({ id: user.id }).set({ createdById: user.id, updatedAt: null });
     }
 
     await sails.helpers.userPrefs.createOne.with({ values: { id: user.id }, currentUser: user });
