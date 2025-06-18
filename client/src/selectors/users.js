@@ -90,6 +90,9 @@ export const selectProjectsForCurrentUser = createSelector(
     const projects = userModel.getOrderedAvailableProjectsModelArray().map((projectModel) => {
       const boardsModels = projectModel.getOrderedBoardsModelArrayAvailableForUser(userModel.id);
       const projectMemberships = new Map();
+      projectModel.managerUsers.toRefArray().forEach((user) => {
+        projectMemberships.set(user.id, { user });
+      });
 
       let notificationsTotal = 0;
       const boardsRefs = boardsModels.map((boardModel) => {
