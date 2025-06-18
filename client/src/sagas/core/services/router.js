@@ -32,6 +32,10 @@ export function* goToCard(cardId) {
   yield put(push(Paths.CARDS.replace(':id', cardId)));
 }
 
+export function* goToPath(path) {
+  yield put(push(path));
+}
+
 export function* handleLocationChange() {
   const pathsMatch = yield select(selectors.selectPathsMatch);
 
@@ -113,5 +117,6 @@ export default {
   goToProjectSettings,
   goToBoard,
   goToCard,
+  goToPath,
   handleLocationChange,
 };
