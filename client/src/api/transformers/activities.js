@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 export const transformActivity = (activity) => ({
   ...activity,
-  ...(activity.createdBy && {
+  ...(activity.createdAt && {
     createdAt: new Date(activity.createdAt),
   }),
   ...(activity.updatedAt && {

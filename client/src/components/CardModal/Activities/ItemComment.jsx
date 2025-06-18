@@ -44,8 +44,8 @@ const ItemComment = React.memo(
             <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
           </span>
           <span className={s.author}>{user.name}</span>
-          <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
-          {updatedAt !== null && (
+          {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>}
+          {updatedAt && (
             <span className={s.edited} title={`${t('common.edited')} ${t('format:dateTime', { postProcess: 'formatDate', value: updatedAt })}`}>
               {t('common.edited')}
             </span>
@@ -116,7 +116,7 @@ ItemComment.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
-  createdAt: PropTypes.instanceOf(Date).isRequired,
+  createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -127,7 +127,8 @@ ItemComment.propTypes = {
 };
 
 ItemComment.defaultProps = {
-  updatedAt: null,
+  createdAt: undefined,
+  updatedAt: undefined,
   createdBy: undefined,
   updatedBy: undefined,
 };

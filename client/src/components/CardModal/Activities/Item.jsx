@@ -75,7 +75,7 @@ const Item = React.memo(({ type, data, user, createdAt, boardMemberships }) => {
         <User name={user.name} avatarUrl={user.avatarUrl} size="tiny" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
       </span>
       <span className={s.author}>{user.name}</span>
-      <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>
+      {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
       <div className={s.contentText}>{contentNode}</div>
     </div>
   );
@@ -87,8 +87,12 @@ Item.propTypes = {
   type: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  createdAt: PropTypes.instanceOf(Date).isRequired,
+  createdAt: PropTypes.instanceOf(Date),
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
+Item.defaultProps = {
+  createdAt: undefined,
 };
 
 export default Item;
