@@ -1,4 +1,4 @@
-const skipMetadataKeys = ['createdById', 'updatedById', 'updatedAt'];
+const skipMetadataKeys = ['createdAt', 'createdById', 'updatedById', 'updatedAt'];
 
 module.exports = function sanitizeItem(item, skipMetadata) {
   if (!skipMetadata) return item;
