@@ -140,6 +140,8 @@ module.exports = {
             },
             currentUser,
             skipMetaUpdate: true,
+            duplicate: true,
+            request: this.req,
           })
           .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER);
       }),
@@ -152,6 +154,8 @@ module.exports = {
           },
           currentUser,
           skipMetaUpdate: true,
+          duplicate: true,
+          request: this.req,
         });
       }),
       // TODO think about how to handle attachments duplication (now it duplicates only db records, but not files)

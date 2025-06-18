@@ -29,6 +29,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    duplicate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -87,7 +91,7 @@ module.exports = {
                 isSubscribed: true,
               },
             },
-            inputs.request,
+            inputs.duplicate ? undefined : inputs.request,
           );
         }
       }
