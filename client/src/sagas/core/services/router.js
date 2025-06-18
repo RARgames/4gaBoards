@@ -4,7 +4,7 @@ import actions from '../../../actions';
 import api from '../../../api';
 import ActionTypes from '../../../constants/ActionTypes';
 import Paths from '../../../constants/Paths';
-import { push } from '../../../lib/redux-router';
+import { push, replace } from '../../../lib/redux-router';
 import selectors from '../../../selectors';
 import request from '../request';
 
@@ -13,7 +13,7 @@ export function* goToRoot() {
 }
 
 export function* goToSettingsHome() {
-  yield put(push(Paths.SETTINGS_PROFILE));
+  yield put(replace(Paths.SETTINGS_PROFILE));
 }
 
 export function* goToProject(projectId) {
