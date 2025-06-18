@@ -68,8 +68,9 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.omit(card, ['id']); // Omit the id to create a new card
+    const values = _.omit(card, ['id', 'createdAt', 'createdById', 'updatedAt', 'updatedById']); // Omit the id to create a new card
     values.updatedAt = new Date().toUTCString();
+    values.updatedById = currentUser.id;
     const copiedCard = await sails.helpers.cards.createOne
       .with({
         values: {
@@ -139,7 +140,6 @@ module.exports = {
             },
             currentUser,
             skipMetaUpdate: true,
-            request: this.req,
           })
           .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER);
       }),
@@ -152,7 +152,6 @@ module.exports = {
           },
           currentUser,
           skipMetaUpdate: true,
-          request: this.req,
         });
       }),
       // TODO think about how to handle attachments duplication (now it duplicates only db records, but not files)

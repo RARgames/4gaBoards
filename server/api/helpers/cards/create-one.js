@@ -87,13 +87,13 @@ module.exports = {
       );
 
       const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
-      if (userPrefs.subscribeToOwnCards && !inputs.values.duplicate) {
+      if (userPrefs.subscribeToOwnCards) {
         await CardSubscription.create({
           cardId: card.id,
-          userId: card.createdById,
+          userId: currentUser.id,
         }).tolerate('E_UNIQUE');
 
-        sails.sockets.broadcast(`user:${card.createdById}`, 'cardUpdate', {
+        sails.sockets.broadcast(`user:${currentUser.id}`, 'cardUpdate', {
           item: {
             id: card.id,
             isSubscribed: true,
