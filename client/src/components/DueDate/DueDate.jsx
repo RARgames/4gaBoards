@@ -82,10 +82,10 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
 
     const updateInterval = () => {
       const diffInSeconds = Math.abs((value.getTime() - new Date().getTime()) / 1000);
-      if (diffInSeconds < 60) {
+      if (diffInSeconds <= 60) {
         return 1000;
       }
-      if (diffInSeconds < 3600) {
+      if (diffInSeconds <= 3600) {
         return 60000;
       }
       return 300000;
