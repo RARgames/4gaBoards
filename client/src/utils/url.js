@@ -20,7 +20,7 @@ export const normalizeToUrl = (string) => {
 };
 
 export const extractFirstLikelyUrl = (string) => {
-  const match = string.match(/\b[^\s.]+\.[^\s.,]+\b/);
+  const match = string.match(/\b[^\s.]+(?:\.[^\s.,]+)+\b/);
   return match ? normalizeToUrl(match[0]) : null;
 };
 
