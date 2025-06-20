@@ -200,7 +200,9 @@ module.exports = {
     const createdAttachments = await sails.helpers.cards.getAttachments(copiedCard.id);
     const createdCoverAttachment = createdAttachments.find((attachment) => attachment.dirname === coverAttachmentDirname);
     const createdCoverAttachmentId = createdCoverAttachment != null ? createdCoverAttachment.id : undefined;
-    await Card.updateOne({ id: copiedCard.id }).set({ updatedById: currentUser.id, coverAttachmentId: createdCoverAttachmentId });
+    const updatedCard = await Card.updateOne({ id: copiedCard.id }).set({ updatedById: currentUser.id, coverAttachmentId: createdCoverAttachmentId });
+
+    await sails.helpers.lists.updateMeta.with({ id: updatedCard.listId, currentUser });
 
     return {
       item: copiedCard,
