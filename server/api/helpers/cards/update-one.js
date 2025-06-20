@@ -247,6 +247,7 @@ module.exports = {
           },
           currentUser,
         });
+        await sails.helpers.lists.updateMeta.with({ id: inputs.list.id, currentUser, skipMetaUpdate });
       }
 
       // TODO: add transfer action
