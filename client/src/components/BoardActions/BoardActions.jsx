@@ -83,7 +83,7 @@ const BoardActions = React.memo(
             onDelete={onMembershipDelete}
           />
         </div>
-        <div className={s.action}>
+        <div className={clsx(s.action, s.actionFlex)}>
           <CardSearch defaultValue={boardSearchParams.query} matchCase={boardSearchParams.matchCase} anyMatch={boardSearchParams.anyMatch} onBoardSearchParamsUpdate={onBoardSearchParamsUpdate} />
           <Filters
             users={filterUsers}
