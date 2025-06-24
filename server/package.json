@@ -15,7 +15,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.6.0",
+    "@azure/msal-node": "^3.6.1",
     "bcrypt": "^6.0.0",
     "dotenv": "^16.5.0",
     "dotenv-cli": "^8.0.0",
@@ -47,7 +47,7 @@
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.1",
-    "mocha": "^11.6.0",
+    "mocha": "^11.7.0",
     "nodemon": "^3.1.10"
   },
   "engines": {

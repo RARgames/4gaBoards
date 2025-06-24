@@ -45,7 +45,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2"
   },
@@ -53,8 +53,8 @@
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.4.1",
-    "prettier": "^3.5.3"
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.0",
+    "prettier": "^3.6.0"
   }
 }
