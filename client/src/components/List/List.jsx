@@ -38,6 +38,8 @@ const List = React.memo(
       };
     }, []);
 
+    const [isHidden, setIsHidden] = useState(true);
+
     const handleToggleCollapseClick = useCallback(() => {
       if (isPersisted && canEdit) {
         onUpdate({
@@ -150,6 +152,11 @@ const List = React.memo(
               {name}
             </div>
             <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
+            <div className="popup-menu" style={{ display: isHidden ? 'none' : 'block' }}>
+              <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton}>
+                <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
+              </Button>
+            </div>
           </div>
         )}
       </Droppable>
@@ -161,7 +168,7 @@ const List = React.memo(
           {({ innerRef, draggableProps, dragHandleProps }) => (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <div {...draggableProps} data-drag-scroller ref={innerRef} className={s.innerWrapperCollapsed}>
-              <div className={s.outerWrapper}>
+              <div className={s.outerWrapper} onMouseEnter={() => setIsHidden(!isHidden)} onMouseLeave={() => setIsHidden(!isHidden)}>
                 <div
                   {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
                   className={s.headerCollapsed}
