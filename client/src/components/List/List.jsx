@@ -46,6 +46,7 @@ const List = React.memo(
           isCollapsed: !isCollapsed,
         });
       }
+      setIsHidden();
     }, [isPersisted, canEdit, onUpdate, isCollapsed]);
 
     const handleHeaderNameClick = useCallback(() => {
