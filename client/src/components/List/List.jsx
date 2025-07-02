@@ -65,6 +65,10 @@ const List = React.memo(
     );
 
     const handleAddCardClick = useCallback(() => {
+      setIsAddCardOpen(true);
+    }, []);
+
+    const handleAddCardClickPlus = useCallback(() => {
       if (isPersisted && canEdit) {
         onUpdate({
           isCollapsed: !isCollapsed,
@@ -160,7 +164,7 @@ const List = React.memo(
             </div>
             <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
             <div className="popup-menu" style={{ display: isHidden ? 'none' : 'block' }}>
-              <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton}>
+              <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClickPlus} className={s.addCardButton}>
                 <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
               </Button>
             </div>
