@@ -65,8 +65,14 @@ const List = React.memo(
     );
 
     const handleAddCardClick = useCallback(() => {
+      if (isPersisted && canEdit) {
+        onUpdate({
+          isCollapsed: !isCollapsed,
+        });
+      }
+      setIsHidden();
       setIsAddCardOpen(true);
-    }, []);
+    }, [isCollapsed, onUpdate, isPersisted, canEdit]);
 
     const handleAddCardClose = useCallback(() => {
       setIsAddCardOpen(false);
