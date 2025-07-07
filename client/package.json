@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "@babel/core": "^7.27.4",
+    "@babel/core": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@babel/runtime": "^7.27.6",
     "@floating-ui/react": "^0.27.13",
