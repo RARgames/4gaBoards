@@ -155,8 +155,10 @@ const AddStep = React.memo(
     return (
       <>
         <Popup.Header>{t(title, { context: 'title' })}</Popup.Header>
-        <Popup.Content>
-          <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} />
+        <Popup.Content className={s.content}>
+          <div className={s.fieldWrapper}>
+            <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} />
+          </div>
           {filteredUsers.length > 0 && (
             <div className={clsx(s.users, gs.scrollableY)}>
               {filteredUsers.map((user) => (
