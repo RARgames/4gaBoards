@@ -18,12 +18,12 @@ const makeMapStateToProps = () => {
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const url = selectors.selectUrlForCard(state, id);
-    const { name, dueDate, timer, boardId, listId, createdAt, createdBy, updatedAt, updatedBy, isPersisted } = selectCardById(state, id);
+    const activities = selectors.selectActivitiesByCardId(state, id);
+    const { name, dueDate, timer, boardId, listId, isActivitiesFetching, isAllActivitiesFetched, createdAt, createdBy, updatedAt, updatedBy, isPersisted } = selectCardById(state, id);
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
 
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
-
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
     return {
@@ -41,6 +41,9 @@ const makeMapStateToProps = () => {
       isPersisted,
       users,
       labels,
+      activities,
+      isActivitiesFetching,
+      isAllActivitiesFetched,
       canEdit: isCurrentUserEditor,
       createdAt,
       createdBy,
@@ -66,6 +69,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onLabelCreate: (data) => entryActions.createLabelInCurrentBoard(data),
       onLabelUpdate: (labelId, data) => entryActions.updateLabel(labelId, data),
       onLabelDelete: (labelId) => entryActions.deleteLabel(labelId),
+      onActivitiesFetch: () => entryActions.fetchActivitiesInCard(id),
     },
     dispatch,
   );

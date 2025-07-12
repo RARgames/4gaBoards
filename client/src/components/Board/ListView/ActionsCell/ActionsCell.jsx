@@ -24,6 +24,9 @@ const ActionsCell = React.memo(
     isPersisted,
     users,
     labels,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
     canEdit,
     createdAt,
     createdBy,
@@ -43,6 +46,7 @@ const ActionsCell = React.memo(
     onLabelUpdate,
     onLabelDelete,
     onOpenNameEdit,
+    onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
 
@@ -73,6 +77,10 @@ const ActionsCell = React.memo(
           createdBy={createdBy}
           updatedAt={updatedAt}
           updatedBy={updatedBy}
+          activities={activities}
+          isActivitiesFetching={isActivitiesFetching}
+          isAllActivitiesFetched={isAllActivitiesFetched}
+          onActivitiesFetch={onActivitiesFetch}
           onNameEdit={handleNameEdit}
           onUpdate={onUpdate}
           onMove={onMove}
@@ -119,6 +127,9 @@ ActionsCell.propTypes = {
   isPersisted: PropTypes.bool.isRequired,
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -138,6 +149,7 @@ ActionsCell.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onOpenNameEdit: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 ActionsCell.defaultProps = {
