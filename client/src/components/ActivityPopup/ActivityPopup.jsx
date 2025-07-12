@@ -14,7 +14,9 @@ const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updat
 
   return (
     <>
-      <Popup.Header onBack={onBack}>{title}</Popup.Header>
+      <Popup.Header onBack={onBack} title={title} className={s.header}>
+        {title}
+      </Popup.Header>
       <Popup.Content className={s.content}>
         <div className={s.wrapper}>
           {(createdAt || createdBy) && (
