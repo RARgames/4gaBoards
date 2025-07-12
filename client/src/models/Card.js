@@ -21,16 +21,16 @@ export default class extends BaseModel {
     isSubscribed: attr({
       getDefault: () => false,
     }),
+    isCommentsFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllCommentsFetched: attr({
+      getDefault: () => false,
+    }),
     isActivitiesFetching: attr({
       getDefault: () => false,
     }),
     isAllActivitiesFetched: attr({
-      getDefault: () => false,
-    }),
-    isActivitiesDetailsVisible: attr({
-      getDefault: () => false,
-    }),
-    isActivitiesDetailsFetching: attr({
       getDefault: () => false,
     }),
     boardId: fk({
@@ -228,41 +228,32 @@ export default class extends BaseModel {
 
         break;
       }
-      case ActionTypes.ACTIVITIES_FETCH:
+      case ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH:
+        Card.withId(payload.cardId).update({
+          isCommentsFetching: true,
+        });
+
+        break;
+      case ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH__SUCCESS:
+        Card.withId(payload.cardId).update({
+          isCommentsFetching: false,
+          isAllCommentsFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_CARD_FETCH:
         Card.withId(payload.cardId).update({
           isActivitiesFetching: true,
         });
 
         break;
-      case ActionTypes.ACTIVITIES_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_CARD_FETCH__SUCCESS:
         Card.withId(payload.cardId).update({
           isActivitiesFetching: false,
           isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
         });
 
         break;
-      case ActionTypes.ACTIVITIES_DETAILS_TOGGLE: {
-        const cardModel = Card.withId(payload.cardId);
-        cardModel.isActivitiesDetailsVisible = payload.isVisible;
-
-        if (payload.isVisible) {
-          cardModel.isActivitiesDetailsFetching = true;
-        }
-
-        break;
-      }
-      case ActionTypes.ACTIVITIES_DETAILS_TOGGLE__SUCCESS: {
-        const cardModel = Card.withId(payload.cardId);
-
-        cardModel.update({
-          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
-          isActivitiesDetailsFetching: false,
-        });
-
-        cardModel.deleteActivities();
-
-        break;
-      }
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.cards.forEach((card) => {
           Card.upsert(card);
@@ -285,14 +276,16 @@ export default class extends BaseModel {
     return this.attachments.count();
   }
 
-  getFilteredOrderedInCardActivitiesQuerySet() {
-    const filter = {};
+  getOrderedCardCommentsQuerySet() {
+    return this.activities.filter({ type: ActivityTypes.COMMENT_CARD }).orderBy('createdAt', false);
+  }
 
-    if (!this.isActivitiesDetailsVisible) {
-      filter.type = ActivityTypes.COMMENT_CARD;
-    }
+  getOrderedCardActivitiesQuerySet() {
+    return this.activities.filter((activity) => activity.type !== ActivityTypes.COMMENT_CARD).orderBy('createdAt', false);
+  }
 
-    return this.activities.filter(filter).orderBy('createdAt', false);
+  getOrderedCardActivitiesFullQuerySet() {
+    return this.activities.orderBy('createdAt', false);
   }
 
   getUnreadNotificationsQuerySet() {

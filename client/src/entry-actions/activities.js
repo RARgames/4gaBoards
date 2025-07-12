@@ -5,10 +5,10 @@ const fetchActivitiesInCurrentCard = () => ({
   payload: {},
 });
 
-const toggleActivitiesDetailsInCurrentCard = (isVisible) => ({
-  type: EntryActionTypes.ACTIVITIES_DETAILS_IN_CURRENT_CARD_TOGGLE,
+const fetchActivitiesInCard = (cardId) => ({
+  type: EntryActionTypes.ACTIVITIES_CARD_FETCH,
   payload: {
-    isVisible,
+    cardId,
   },
 });
 
@@ -35,7 +35,7 @@ const handleActivityDelete = (activity) => ({
 
 export default {
   fetchActivitiesInCurrentCard,
-  toggleActivitiesDetailsInCurrentCard,
+  fetchActivitiesInCard,
   handleActivityCreate,
   handleActivityUpdate,
   handleActivityDelete,

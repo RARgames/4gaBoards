@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import { ActivityTypes } from '../../../constants/Enums';
 import User from '../../User';
-import ItemComment from './ItemComment';
 
 import * as s from './Item.module.scss';
 
@@ -80,8 +79,6 @@ const Item = React.memo(({ type, data, user, createdAt, boardMemberships }) => {
     </div>
   );
 });
-
-Item.Comment = ItemComment;
 
 Item.propTypes = {
   type: PropTypes.string.isRequired,

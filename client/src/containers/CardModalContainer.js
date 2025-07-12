@@ -27,8 +27,8 @@ const mapStateToProps = (state) => {
     isSubscribed,
     isActivitiesFetching,
     isAllActivitiesFetched,
-    isActivitiesDetailsVisible,
-    isActivitiesDetailsFetching,
+    isCommentsFetching,
+    isAllCommentsFetched,
     boardId,
     listId,
     id,
@@ -46,7 +46,8 @@ const mapStateToProps = (state) => {
     users: selectors.selectUsersForTaskById(state, task.id),
   }));
   const attachments = selectors.selectAttachmentsForCurrentCard(state);
-  const activities = selectors.selectActivitiesForCurrentCard(state);
+  const comments = selectors.selectCommentsForCurrentCard(state);
+  const activities = selectors.selectActivitiesByCardId(state, id);
   const user = selectors.selectCurrentUser(state);
   const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
   const userId = user.id;
@@ -71,8 +72,8 @@ const mapStateToProps = (state) => {
     isSubscribed,
     isActivitiesFetching,
     isAllActivitiesFetched,
-    isActivitiesDetailsVisible,
-    isActivitiesDetailsFetching,
+    isCommentsFetching,
+    isAllCommentsFetched,
     listId,
     boardId,
     projectId,
@@ -80,6 +81,7 @@ const mapStateToProps = (state) => {
     labels,
     tasks,
     attachments,
+    comments,
     activities,
     descriptionMode,
     descriptionShown,
@@ -137,7 +139,7 @@ const mapDispatchToProps = (dispatch) =>
       onAttachmentUpdate: entryActions.updateAttachment,
       onAttachmentDelete: entryActions.deleteAttachment,
       onActivitiesFetch: entryActions.fetchActivitiesInCurrentCard,
-      onActivitiesDetailsToggle: entryActions.toggleActivitiesDetailsInCurrentCard,
+      onCommentsFetch: entryActions.fetchCommentActivitiesInCurrentCard,
       onCommentActivityCreate: entryActions.createCommentActivityInCurrentCard,
       onCommentActivityUpdate: entryActions.updateCommentActivity,
       onCommentActivityDelete: entryActions.deleteCommentActivity,

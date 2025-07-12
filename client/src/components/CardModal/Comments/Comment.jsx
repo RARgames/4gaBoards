@@ -8,9 +8,9 @@ import User from '../../User';
 import { Icon, IconType, IconSize, Button, ButtonStyle, MDPreview } from '../../Utils';
 import CommentEdit from './CommentEdit';
 
-import * as s from './ItemComment.module.scss';
+import * as s from './Comment.module.scss';
 
-const ItemComment = React.memo(
+const Comment = React.memo(
   ({
     data,
     isPersisted,
@@ -107,7 +107,7 @@ const ItemComment = React.memo(
   },
 );
 
-ItemComment.propTypes = {
+Comment.propTypes = {
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isPersisted: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -126,11 +126,11 @@ ItemComment.propTypes = {
   onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
-ItemComment.defaultProps = {
+Comment.defaultProps = {
   createdAt: undefined,
   updatedAt: undefined,
   createdBy: undefined,
   updatedBy: undefined,
 };
 
-export default ItemComment;
+export default Comment;

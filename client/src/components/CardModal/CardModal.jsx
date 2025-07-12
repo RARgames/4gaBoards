@@ -20,10 +20,10 @@ import Timer from '../Timer';
 import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, ExternalLink, MDPreview } from '../Utils';
-import Activities from './Activities';
 import AttachmentAdd from './AttachmentAdd';
 import AttachmentAddZone from './AttachmentAddZone';
 import Attachments from './Attachments';
+import Comments from './Comments';
 import DescriptionEdit from './DescriptionEdit';
 import NameField from './NameField';
 
@@ -40,8 +40,8 @@ const CardModal = React.memo(
     isSubscribed,
     isActivitiesFetching,
     isAllActivitiesFetched,
-    isActivitiesDetailsVisible,
-    isActivitiesDetailsFetching,
+    isCommentsFetching,
+    isAllCommentsFetched,
     listId,
     boardId,
     projectId,
@@ -49,6 +49,7 @@ const CardModal = React.memo(
     labels,
     tasks,
     attachments,
+    comments,
     activities,
     descriptionMode,
     descriptionShown,
@@ -100,7 +101,7 @@ const CardModal = React.memo(
     onAttachmentUpdate,
     onAttachmentDelete,
     onActivitiesFetch,
-    onActivitiesDetailsToggle,
+    onCommentsFetch,
     onCommentActivityCreate,
     onCommentActivityUpdate,
     onCommentActivityDelete,
@@ -360,6 +361,10 @@ const CardModal = React.memo(
               createdBy={createdBy}
               updatedAt={updatedAt}
               updatedBy={updatedBy}
+              activities={activities}
+              isActivitiesFetching={isActivitiesFetching}
+              isAllActivitiesFetched={isAllActivitiesFetched}
+              onActivitiesFetch={onActivitiesFetch}
               onNameEdit={handleNameEdit}
               onUpdate={onUpdate}
               onMove={onMove}
@@ -723,13 +728,11 @@ const CardModal = React.memo(
       </div>
     );
 
-    const activitiesNode = (
-      <Activities
-        items={activities}
-        isFetching={isActivitiesFetching}
-        isAllFetched={isAllActivitiesFetched}
-        isDetailsVisible={isActivitiesDetailsVisible}
-        isDetailsFetching={isActivitiesDetailsFetching}
+    const commentsNode = (
+      <Comments
+        items={comments}
+        isFetching={isCommentsFetching}
+        isAllFetched={isAllCommentsFetched}
         canEdit={canEditCommentActivities}
         canEditAllComments={canEditAllCommentActivities}
         commentMode={commentMode}
@@ -738,8 +741,7 @@ const CardModal = React.memo(
         commentCount={commentCount}
         preferredDetailsFont={preferredDetailsFont}
         boardMemberships={boardMemberships}
-        onFetch={onActivitiesFetch}
-        onDetailsToggle={onActivitiesDetailsToggle}
+        onFetch={onCommentsFetch}
         onCommentCreate={onCommentActivityCreate}
         onCommentUpdate={onCommentActivityUpdate}
         onCommentDelete={onCommentActivityDelete}
@@ -775,7 +777,7 @@ const CardModal = React.memo(
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>
-            {activitiesNode}
+            {commentsNode}
             <hr className={s.hr} />
           </div>
         </div>
@@ -795,8 +797,8 @@ CardModal.propTypes = {
   isSubscribed: PropTypes.bool.isRequired,
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
-  isActivitiesDetailsVisible: PropTypes.bool.isRequired,
-  isActivitiesDetailsFetching: PropTypes.bool.isRequired,
+  isCommentsFetching: PropTypes.bool.isRequired,
+  isAllCommentsFetched: PropTypes.bool.isRequired,
   listId: PropTypes.string.isRequired,
   boardId: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
@@ -804,6 +806,7 @@ CardModal.propTypes = {
   labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   tasks: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   attachments: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  comments: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   descriptionMode: PropTypes.string.isRequired,
   descriptionShown: PropTypes.bool.isRequired,
@@ -855,7 +858,7 @@ CardModal.propTypes = {
   onAttachmentUpdate: PropTypes.func.isRequired,
   onAttachmentDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
-  onActivitiesDetailsToggle: PropTypes.func.isRequired,
+  onCommentsFetch: PropTypes.func.isRequired,
   onCommentActivityCreate: PropTypes.func.isRequired,
   onCommentActivityUpdate: PropTypes.func.isRequired,
   onCommentActivityDelete: PropTypes.func.isRequired,

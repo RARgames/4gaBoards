@@ -7,6 +7,36 @@ import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
 import request from '../request';
 
+export function* fetchCommentActivitiesInCard(cardId) {
+  const lastId = yield select(selectors.selectLastCommentActivityIdByCardId, cardId);
+
+  yield put(actions.fetchCommentActivitiesCard(cardId));
+
+  let activities;
+  let users;
+
+  try {
+    ({
+      items: activities,
+      included: { users },
+    } = yield call(request, api.getActivities, cardId, {
+      beforeId: lastId,
+      onlyComments: true,
+    }));
+  } catch (error) {
+    yield put(actions.fetchCommentActivitiesCard.failure(cardId, error));
+    return;
+  }
+
+  yield put(actions.fetchCommentActivitiesCard.success(cardId, activities, users));
+}
+
+export function* fetchCommentActivitiesInCurrentCard() {
+  const { cardId } = yield select(selectors.selectPath);
+
+  yield call(fetchCommentActivitiesInCard, cardId);
+}
+
 export function* createCommentActivity(cardId, data) {
   const localId = yield call(createLocalId);
   const userId = yield select(selectors.selectCurrentUserId);
@@ -67,6 +97,8 @@ export function* deleteCommentActivity(id) {
 }
 
 export default {
+  fetchCommentActivitiesInCard,
+  fetchCommentActivitiesInCurrentCard,
   createCommentActivity,
   createCommentActivityInCurrentCard,
   updateCommentActivity,

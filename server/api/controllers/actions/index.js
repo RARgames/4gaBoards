@@ -15,7 +15,10 @@ module.exports = {
       type: 'string',
       regex: /^[0-9]+$/,
     },
-    withDetails: {
+    onlyComments: {
+      type: 'boolean',
+    },
+    exceptComments: {
       type: 'boolean',
     },
   },
@@ -37,11 +40,11 @@ module.exports = {
       const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
 
       if (!isProjectManager) {
-        throw Errors.BOARD_NOT_FOUND; // Forbidden
+        throw Errors.CARD_NOT_FOUND; // Forbidden
       }
     }
 
-    const actions = await sails.helpers.cards.getActions(card.id, inputs.beforeId, inputs.withDetails);
+    const actions = await sails.helpers.cards.getActions(card.id, inputs.beforeId, inputs.onlyComments, inputs.exceptComments);
 
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);

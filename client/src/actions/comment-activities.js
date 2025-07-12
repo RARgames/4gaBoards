@@ -1,5 +1,29 @@
 import ActionTypes from '../constants/ActionTypes';
 
+const fetchCommentActivitiesCard = (cardId) => ({
+  type: ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH,
+  payload: {
+    cardId,
+  },
+});
+
+fetchCommentActivitiesCard.success = (cardId, activities, users) => ({
+  type: ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH__SUCCESS,
+  payload: {
+    cardId,
+    activities,
+    users,
+  },
+});
+
+fetchCommentActivitiesCard.failure = (cardId, error) => ({
+  type: ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH__FAILURE,
+  payload: {
+    cardId,
+    error,
+  },
+});
+
 const createCommentActivity = (activity) => ({
   type: ActionTypes.COMMENT_ACTIVITY_CREATE,
   payload: {
@@ -69,6 +93,7 @@ deleteCommentActivity.failure = (id, error) => ({
 });
 
 export default {
+  fetchCommentActivitiesCard,
   createCommentActivity,
   updateCommentActivity,
   deleteCommentActivity,

@@ -1,39 +1,14 @@
 import ActionTypes from '../constants/ActionTypes';
 
-const fetchActivities = (cardId) => ({
-  type: ActionTypes.ACTIVITIES_FETCH,
+const fetchCardActivities = (cardId) => ({
+  type: ActionTypes.ACTIVITIES_CARD_FETCH,
   payload: {
     cardId,
   },
 });
 
-fetchActivities.success = (cardId, activities, users) => ({
-  type: ActionTypes.ACTIVITIES_FETCH__SUCCESS,
-  payload: {
-    cardId,
-    activities,
-    users,
-  },
-});
-
-fetchActivities.failure = (cardId, error) => ({
-  type: ActionTypes.ACTIVITIES_FETCH__FAILURE,
-  payload: {
-    cardId,
-    error,
-  },
-});
-
-const toggleActivitiesDetails = (cardId, isVisible) => ({
-  type: ActionTypes.ACTIVITIES_DETAILS_TOGGLE,
-  payload: {
-    cardId,
-    isVisible,
-  },
-});
-
-toggleActivitiesDetails.success = (cardId, activities, users) => ({
-  type: ActionTypes.ACTIVITIES_DETAILS_TOGGLE__SUCCESS,
+fetchCardActivities.success = (cardId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_CARD_FETCH__SUCCESS,
   payload: {
     cardId,
     activities,
@@ -41,8 +16,8 @@ toggleActivitiesDetails.success = (cardId, activities, users) => ({
   },
 });
 
-toggleActivitiesDetails.failure = (cardId, error) => ({
-  type: ActionTypes.ACTIVITIES_DETAILS_TOGGLE__FAILURE,
+fetchCardActivities.failure = (cardId, error) => ({
+  type: ActionTypes.ACTIVITIES_CARD_FETCH__FAILURE,
   payload: {
     cardId,
     error,
@@ -71,8 +46,7 @@ const handleActivityDelete = (activity) => ({
 });
 
 export default {
-  fetchActivities,
-  toggleActivitiesDetails,
+  fetchCardActivities,
   handleActivityCreate,
   handleActivityUpdate,
   handleActivityDelete,

@@ -48,6 +48,9 @@ const Card = React.memo(
     boardAndTaskMemberships,
     allLabels,
     url,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
     canEdit,
     createdAt,
     createdBy,
@@ -73,6 +76,7 @@ const Card = React.memo(
     onUserFromTaskRemove,
     onTaskCreate,
     onTaskMove,
+    onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
     const nameEdit = useRef(null);
@@ -340,6 +344,10 @@ const Card = React.memo(
                           createdBy={createdBy}
                           updatedAt={updatedAt}
                           updatedBy={updatedBy}
+                          activities={activities}
+                          isActivitiesFetching={isActivitiesFetching}
+                          isAllActivitiesFetched={isAllActivitiesFetched}
+                          onActivitiesFetch={onActivitiesFetch}
                           onNameEdit={handleNameEdit}
                           onUpdate={onUpdate}
                           onMove={onMove}
@@ -402,6 +410,9 @@ Card.propTypes = {
   boardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   url: PropTypes.string.isRequired,
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -427,6 +438,7 @@ Card.propTypes = {
   onUserFromTaskRemove: PropTypes.func.isRequired,
   onTaskCreate: PropTypes.func.isRequired,
   onTaskMove: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {

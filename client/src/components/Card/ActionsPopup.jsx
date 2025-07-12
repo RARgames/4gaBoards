@@ -40,6 +40,9 @@ const ActionsStep = React.memo(
     createdBy,
     updatedAt,
     updatedBy,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
     onNameEdit,
     onUpdate,
     onMove,
@@ -55,6 +58,7 @@ const ActionsStep = React.memo(
     onLabelUpdate,
     onLabelDelete,
     onClose,
+    onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
@@ -179,6 +183,10 @@ const ActionsStep = React.memo(
               updatedBy={updatedBy}
               memberships={boardMemberships}
               isNotMemberTitle={t('common.noLongerBoardMember')}
+              activities={activities}
+              isFetching={isActivitiesFetching}
+              isAllFetched={isAllActivitiesFetched}
+              onFetch={onActivitiesFetch}
               onBack={handleBack}
             />
           );
@@ -221,6 +229,9 @@ ActionsStep.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
@@ -236,6 +247,7 @@ ActionsStep.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {

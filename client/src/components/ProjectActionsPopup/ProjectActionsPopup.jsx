@@ -47,6 +47,11 @@ const ProjectActionsStep = React.memo(({ name, projectId, managedProjects, defau
             updatedBy={updatedBy}
             memberships={memberships}
             isNotMemberTitle={t('common.noLongerProjectMember')}
+            // TODO replace with actual activities
+            activities={[]}
+            isFetching={false}
+            isAllFetched
+            onFetch={() => {}}
             onBack={handleBack}
           />
         );

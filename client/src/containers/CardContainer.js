@@ -26,7 +26,10 @@ const makeMapStateToProps = () => {
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-    const { name, dueDate, timer, coverUrl, description, boardId, listId, isPersisted, commentCount, createdAt, createdBy, updatedAt, updatedBy } = selectCardById(state, id);
+    const { name, dueDate, timer, coverUrl, description, boardId, listId, isPersisted, commentCount, isActivitiesFetching, isAllActivitiesFetched, createdAt, createdBy, updatedAt, updatedBy } = selectCardById(
+      state,
+      id,
+    );
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
@@ -39,6 +42,7 @@ const makeMapStateToProps = () => {
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const url = selectors.selectUrlForCard(state, id);
+    const activities = selectors.selectActivitiesByCardId(state, id);
 
     return {
       id,
@@ -66,6 +70,9 @@ const makeMapStateToProps = () => {
       allLabels,
       canEdit: isCurrentUserEditor,
       url,
+      activities,
+      isActivitiesFetching,
+      isAllActivitiesFetched,
       createdAt,
       createdBy,
       updatedAt,
@@ -97,6 +104,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onUserFromTaskRemove: (userId, taskId) => entryActions.removeUserFromTask(userId, taskId),
       onTaskCreate: (data) => entryActions.createTask(id, data),
       onTaskMove: (taskId, index) => entryActions.moveTask(taskId, index),
+      onActivitiesFetch: () => entryActions.fetchActivitiesInCard(id),
     },
     dispatch,
   );

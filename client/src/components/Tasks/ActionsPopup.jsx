@@ -82,6 +82,11 @@ const ActionsStep = React.memo(
               updatedBy={updatedBy}
               memberships={boardMemberships}
               isNotMemberTitle={t('common.noLongerBoardMember')}
+              // TODO replace with actual activities
+              activities={[]}
+              isFetching={false}
+              isAllFetched
+              onFetch={() => {}}
               onBack={handleBack}
             />
           );

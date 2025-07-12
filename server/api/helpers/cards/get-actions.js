@@ -12,7 +12,11 @@ module.exports = {
     beforeId: {
       type: 'string',
     },
-    withDetails: {
+    onlyComments: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
+    exceptComments: {
       type: 'boolean',
       defaultsTo: false,
     },
@@ -23,14 +27,17 @@ module.exports = {
       cardId: inputs.idOrIds,
     };
 
+    if (inputs.onlyComments) {
+      criteria.type = Action.Types.COMMENT_CARD;
+    }
+    if (inputs.exceptComments) {
+      criteria.type = { '!=': Action.Types.COMMENT_CARD };
+    }
+
     if (!_.isUndefined(inputs.beforeId)) {
       criteria.id = {
         '<': inputs.beforeId,
       };
-    }
-
-    if (!inputs.withDetails) {
-      criteria.type = Action.Types.COMMENT_CARD;
     }
 
     return sails.helpers.actions.getMany(criteria, LIMIT);

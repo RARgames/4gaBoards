@@ -61,8 +61,8 @@ export default class extends BaseModel {
         });
 
         break;
-      case ActionTypes.ACTIVITIES_FETCH__SUCCESS:
-      case ActionTypes.ACTIVITIES_DETAILS_TOGGLE__SUCCESS:
+      case ActionTypes.ACTIVITIES_CARD_FETCH__SUCCESS:
+      case ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.activities.forEach((activity) => {
           Activity.upsert(activity);

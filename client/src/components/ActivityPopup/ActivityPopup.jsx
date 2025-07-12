@@ -5,16 +5,17 @@ import PropTypes from 'prop-types';
 import DueDate from '../DueDate';
 import User from '../User';
 import { Popup, withPopup } from '../Utils';
+import Activities from './Activities';
 
 import * as s from './ActivityPopup.module.scss';
 
-const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, memberships, isNotMemberTitle, onBack }) => {
+const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, memberships, isNotMemberTitle, activities, isFetching, isAllFetched, onFetch, onBack }) => {
   const [t] = useTranslation();
 
   return (
     <>
       <Popup.Header onBack={onBack}>{title}</Popup.Header>
-      <Popup.Content>
+      <Popup.Content className={s.content}>
         <div className={s.wrapper}>
           {(createdAt || createdBy) && (
             <div className={s.meta}>
@@ -49,6 +50,7 @@ const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updat
             </div>
           )}
         </div>
+        <Activities items={activities} isFetching={isFetching} isAllFetched={isAllFetched} boardMemberships={memberships ?? []} onFetch={onFetch} />
       </Popup.Content>
     </>
   );
@@ -61,7 +63,11 @@ ActivityStep.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  isNotMemberTitle: PropTypes.string.isRequired,
+  isNotMemberTitle: PropTypes.string,
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isFetching: PropTypes.bool.isRequired,
+  isAllFetched: PropTypes.bool.isRequired,
+  onFetch: PropTypes.func.isRequired,
   onBack: PropTypes.func,
 };
 
@@ -71,6 +77,7 @@ ActivityStep.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   memberships: undefined,
+  isNotMemberTitle: '',
   onBack: undefined,
 };
 

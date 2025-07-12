@@ -2,21 +2,18 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { ActivityTypes } from '../../../constants/Enums';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
+import Comment from './Comment';
 import CommentEdit from './CommentEdit';
-import Item from './Item';
 
 import * as cStyles from '../CardModal.module.scss';
-import * as s from './Activities.module.scss';
+import * as s from './Comments.module.scss';
 
-const Activities = React.memo(
+const Comments = React.memo(
   ({
     items,
     isFetching,
     isAllFetched,
-    isDetailsVisible,
-    isDetailsFetching,
     canEdit,
     canEditAllComments,
     commentMode,
@@ -26,7 +23,6 @@ const Activities = React.memo(
     preferredDetailsFont,
     boardMemberships,
     onFetch,
-    onDetailsToggle,
     onCommentCreate,
     onCommentUpdate,
     onCommentDelete,
@@ -41,17 +37,6 @@ const Activities = React.memo(
     const openAddComment = useCallback(() => {
       commentAddRef.current?.open();
     }, []);
-
-    const handleToggleDetailsClick = useCallback(() => {
-      if (!commShown) {
-        toggleCommShown(true);
-        if (!isDetailsVisible) {
-          onDetailsToggle(true);
-        }
-      } else {
-        onDetailsToggle(!isDetailsVisible);
-      }
-    }, [commShown, isDetailsVisible, onDetailsToggle, toggleCommShown]);
 
     const handleCommentUpdate = useCallback(
       (id, data) => {
@@ -95,8 +80,6 @@ const Activities = React.memo(
       };
     }, [handleVisibilityChange, onFetch, items]);
 
-    // TODO fix activities not in order - by date
-
     return (
       <div>
         <div className={cStyles.moduleHeader}>
@@ -110,9 +93,6 @@ const Activities = React.memo(
           )}
           <Button style={ButtonStyle.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
             <Icon type={commShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={s.icon} />
-          </Button>
-          <Button style={ButtonStyle.Icon} title={isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')} onClick={handleToggleDetailsClick} className={s.toggleButton}>
-            {isDetailsVisible && commShown ? t('action.hideDetails') : t('action.showDetails')}
           </Button>
         </div>
         <div>
@@ -134,47 +114,41 @@ const Activities = React.memo(
                 </CommentEdit>
               )}
               <div className={s.comments}>
-                {items.map((item) =>
-                  item.type === ActivityTypes.COMMENT_CARD ? (
-                    <Item.Comment
-                      key={item.id}
-                      data={item.data}
-                      isPersisted={item.isPersisted}
-                      user={item.user}
-                      canEdit={(item.user.isCurrent && canEdit) || canEditAllComments}
-                      commentMode={commentMode}
-                      isGithubConnected={isGithubConnected}
-                      githubRepo={githubRepo}
-                      createdAt={item.createdAt}
-                      createdBy={item.createdBy}
-                      updatedAt={item.updatedAt}
-                      updatedBy={item.updatedBy}
-                      preferredDetailsFont={preferredDetailsFont}
-                      boardMemberships={boardMemberships}
-                      onUpdate={(data) => handleCommentUpdate(item.id, data)}
-                      onDelete={() => handleCommentDelete(item.id)}
-                      onUserPrefsUpdate={onUserPrefsUpdate}
-                    />
-                  ) : (
-                    <Item key={item.id} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} boardMemberships={boardMemberships} />
-                  ),
-                )}
+                {items.map((item) => (
+                  <Comment
+                    key={item.id}
+                    data={item.data}
+                    isPersisted={item.isPersisted}
+                    user={item.user}
+                    canEdit={(item.user.isCurrent && canEdit) || canEditAllComments}
+                    commentMode={commentMode}
+                    isGithubConnected={isGithubConnected}
+                    githubRepo={githubRepo}
+                    createdAt={item.createdAt}
+                    createdBy={item.createdBy}
+                    updatedAt={item.updatedAt}
+                    updatedBy={item.updatedBy}
+                    preferredDetailsFont={preferredDetailsFont}
+                    boardMemberships={boardMemberships}
+                    onUpdate={(data) => handleCommentUpdate(item.id, data)}
+                    onDelete={() => handleCommentDelete(item.id)}
+                    onUserPrefsUpdate={onUserPrefsUpdate}
+                  />
+                ))}
               </div>
             </>
           )}
-          {isFetching || isDetailsFetching ? commShown && <Loader size={LoaderSize.Normal} /> : !isAllFetched && <div ref={visibilityRef} />}
+          {isFetching ? commShown && <Loader size={LoaderSize.Normal} /> : !isAllFetched && <div ref={visibilityRef} />}
         </div>
       </div>
     );
   },
 );
 
-Activities.propTypes = {
+Comments.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
-  isDetailsVisible: PropTypes.bool.isRequired,
-  isDetailsFetching: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   canEditAllComments: PropTypes.bool.isRequired,
   commentMode: PropTypes.string.isRequired,
@@ -184,7 +158,6 @@ Activities.propTypes = {
   preferredDetailsFont: PropTypes.string.isRequired,
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onFetch: PropTypes.func.isRequired,
-  onDetailsToggle: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,
   onCommentUpdate: PropTypes.func.isRequired,
   onCommentDelete: PropTypes.func.isRequired,
@@ -193,4 +166,4 @@ Activities.propTypes = {
   onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
-export default Activities;
+export default Comments;

@@ -5,11 +5,10 @@ import api from '../../../api';
 import selectors from '../../../selectors';
 import request from '../request';
 
-export function* fetchActivities(cardId) {
-  const { isActivitiesDetailsVisible } = yield select(selectors.selectCardById, cardId);
+export function* fetchActivitiesInCard(cardId) {
   const lastId = yield select(selectors.selectLastActivityIdByCardId, cardId);
 
-  yield put(actions.fetchActivities(cardId));
+  yield put(actions.fetchCardActivities(cardId));
 
   let activities;
   let users;
@@ -20,49 +19,20 @@ export function* fetchActivities(cardId) {
       included: { users },
     } = yield call(request, api.getActivities, cardId, {
       beforeId: lastId,
-      withDetails: isActivitiesDetailsVisible,
+      exceptComments: true,
     }));
   } catch (error) {
-    yield put(actions.fetchActivities.failure(cardId, error));
+    yield put(actions.fetchCardActivities.failure(cardId, error));
     return;
   }
 
-  yield put(actions.fetchActivities.success(cardId, activities, users));
+  yield put(actions.fetchCardActivities.success(cardId, activities, users));
 }
 
 export function* fetchActivitiesInCurrentCard() {
   const { cardId } = yield select(selectors.selectPath);
 
-  yield call(fetchActivities, cardId);
-}
-
-export function* toggleActivitiesDetails(cardId, isVisible) {
-  yield put(actions.toggleActivitiesDetails(cardId, isVisible));
-
-  if (isVisible) {
-    let activities;
-    let users;
-
-    try {
-      ({
-        items: activities,
-        included: { users },
-      } = yield call(request, api.getActivities, cardId, {
-        withDetails: isVisible,
-      }));
-    } catch (error) {
-      yield put(actions.toggleActivitiesDetails.failure(cardId, error));
-      return;
-    }
-
-    yield put(actions.toggleActivitiesDetails.success(cardId, activities, users));
-  }
-}
-
-export function* toggleActivitiesDetailsInCurrentCard(isVisible) {
-  const { cardId } = yield select(selectors.selectPath);
-
-  yield call(toggleActivitiesDetails, cardId, isVisible);
+  yield call(fetchActivitiesInCard, cardId);
 }
 
 export function* handleActivityCreate(activity) {
@@ -78,10 +48,8 @@ export function* handleActivityDelete(activity) {
 }
 
 export default {
-  fetchActivities,
+  fetchActivitiesInCard,
   fetchActivitiesInCurrentCard,
-  toggleActivitiesDetails,
-  toggleActivitiesDetailsInCurrentCard,
   handleActivityCreate,
   handleActivityUpdate,
   handleActivityDelete,
