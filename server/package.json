@@ -17,7 +17,7 @@
   "dependencies": {
     "@azure/msal-node": "^3.6.2",
     "bcrypt": "^6.0.0",
-    "dotenv": "^17.1.0",
+    "dotenv": "^17.2.0",
     "dotenv-cli": "^8.0.0",
     "fast-csv": "^5.0.2",
     "filenamify": "^6.0.0",
