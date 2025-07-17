@@ -55,19 +55,17 @@
 
   .itemContent {
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
     overflow: hidden;
-    padding: 0 4px;
+    padding: 0 2px;
     word-break: break-word;
     color: var(--textColor2);
   }
 
   .itemDeleted {
     display: inline-block;
-    line-height: 20px;
-    min-height: 20px;
-    padding: 0 4px 0 8px;
-    vertical-align: top;
-    width: calc(100% - 20px);
+    font-size: 13px;
+    padding: 0 2px;
+    color: var(--textColor2);
   }
 }
