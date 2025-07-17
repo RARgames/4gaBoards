@@ -12,6 +12,7 @@ import * as s from './ActivityMessage.module.scss';
 const cardNameTruncateLength = 30;
 const commentTruncateLength = 50;
 const listNameTruncateLength = 30;
+const taskNameTruncateLength = 30;
 
 const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked, onClose }) => {
   switch (activity.type) {
@@ -130,6 +131,48 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           }}
         >
           {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
+        </Trans>
+      );
+    }
+
+    case ActivityTypes.CARD_TASK_USER_ADD: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const userName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+      const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+
+      return (
+        <Trans
+          i18nKey={card ? 'activity.cardTaskUserAdd' : 'activity.cardTaskUserAddShort'}
+          values={{
+            user: userName,
+            task: taskName,
+            card: cardName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
+          <span className={s.data} />
+        </Trans>
+      );
+    }
+
+    case ActivityTypes.CARD_TASK_USER_REMOVE: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const userName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+      const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+
+      return (
+        <Trans
+          i18nKey={card ? 'activity.cardTaskUserRemove' : 'activity.cardTaskUserRemoveShort'}
+          values={{
+            user: userName,
+            task: taskName,
+            card: cardName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
           <span className={s.data} />
         </Trans>
       );

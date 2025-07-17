@@ -96,6 +96,26 @@ module.exports = {
         }
       }
 
+      const user = await User.findOne(taskMembership.userId);
+      const task = await Task.findOne(taskMembership.taskId);
+      if (user && task) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card: values.card,
+            type: Action.Types.CARD_TASK_USER_ADD,
+            data: {
+              id: taskMembership.id,
+              userId: taskMembership.userId,
+              taskId: taskMembership.taskId,
+              name: user.name,
+              taskName: task.name,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.tasks.updateMeta.with({ id: taskMembership.taskId, currentUser, skipMetaUpdate });
     }
 
