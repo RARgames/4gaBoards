@@ -48,11 +48,11 @@ module.exports = {
     }
 
     const values = {
-      type: Action.Types.COMMENT_CARD,
+      type: Action.Types.CARD_COMMENT,
       data: _.pick(inputs, ['text']),
     };
 
-    const action = await sails.helpers.actions.createOne.with({
+    const action = await sails.helpers.commentActions.createOne.with({
       values: {
         ...values,
         card,

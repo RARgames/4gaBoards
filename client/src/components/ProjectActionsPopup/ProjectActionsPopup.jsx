@@ -106,4 +106,4 @@ ProjectActionsStep.defaultProps = {
   updatedBy: undefined,
 };
 
-export default withPopup(ProjectActionsStep);
+export default withPopup(ProjectActionsStep, { isWidthAuto: true });

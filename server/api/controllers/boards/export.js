@@ -74,7 +74,7 @@ module.exports = {
     const cardMemberships = await sails.helpers.cards.getCardMemberships(cardIds);
     let actions = await Action.find({ cardId: cardIds });
     if (inputs.skipActions) {
-      actions = actions.filter((action) => action.type === Action.Types.CREATE_CARD || action.type === Action.Types.DUPLICATE_CARD || action.type === Action.Types.COMMENT_CARD);
+      actions = actions.filter((action) => action.type === Action.Types.CARD_CREATE || action.type === Action.Types.CARD_DUPLICATE || action.type === Action.Types.CARD_COMMENT);
     }
     let attachments = await sails.helpers.cards.getAttachments(cardIds);
     if (inputs.skipAttachments) {

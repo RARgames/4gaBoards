@@ -31,7 +31,7 @@ module.exports = {
     const path = await sails.helpers.actions
       .getProjectPath({
         id: inputs.id,
-        type: Action.Types.COMMENT_CARD,
+        type: Action.Types.CARD_COMMENT,
       })
       .intercept('pathNotFound', () => Errors.COMMENT_ACTION_NOT_FOUND);
 
@@ -59,7 +59,7 @@ module.exports = {
       }
     }
 
-    action = await sails.helpers.actions.deleteOne.with({
+    action = await sails.helpers.commentActions.deleteOne.with({
       board,
       record: action,
       currentUser,

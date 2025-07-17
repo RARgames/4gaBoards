@@ -26,7 +26,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, skipMetaUpdate } = inputs;
+    const { values, currentUser } = inputs;
 
     const action = await Action.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
@@ -39,10 +39,6 @@ module.exports = {
         },
         inputs.request,
       );
-
-      if (action.type === 'commentCard') {
-        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
-      }
     }
 
     return action;

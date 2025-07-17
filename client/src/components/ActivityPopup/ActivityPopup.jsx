@@ -83,5 +83,5 @@ ActivityStep.defaultProps = {
   onBack: undefined,
 };
 
-export default withPopup(ActivityStep);
+export default withPopup(ActivityStep, { isWidthAuto: true });
 export { ActivityStep };

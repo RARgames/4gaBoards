@@ -28,10 +28,10 @@ module.exports = {
     };
 
     if (inputs.onlyComments) {
-      criteria.type = Action.Types.COMMENT_CARD;
+      criteria.type = Action.Types.CARD_COMMENT;
     }
     if (inputs.exceptComments) {
-      criteria.type = { '!=': Action.Types.COMMENT_CARD };
+      criteria.type = { '!=': Action.Types.CARD_COMMENT };
     }
 
     if (!_.isUndefined(inputs.beforeId)) {

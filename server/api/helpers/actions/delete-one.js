@@ -22,7 +22,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { currentUser, skipMetaUpdate } = inputs;
+    const { currentUser } = inputs;
 
     await Action.updateOne(inputs.record.id).set({ updatedById: currentUser.id });
     const action = await Action.archiveOne(inputs.record.id);
@@ -36,22 +36,6 @@ module.exports = {
         },
         inputs.request,
       );
-
-      if (action.type === 'commentCard') {
-        const card = await Card.findOne(action.cardId);
-        if (card) {
-          await sails.helpers.cards.updateOne.with({
-            record: card,
-            values: {
-              commentCount: card.commentCount - 1,
-            },
-            currentUser,
-            request: this.req,
-          });
-        }
-
-        await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
-      }
     }
 
     return action;

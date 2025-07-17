@@ -10,95 +10,102 @@ import { Icon, IconType, IconSize } from '../Icon';
 import * as s from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Popup = React.memo(({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, disableShiftCrossAxis, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
-    const [t] = useTranslation();
-    const [isOpen, setIsOpen] = useState(false);
+  const Popup = React.memo(
+    ({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, disableShiftCrossAxis, closeButtonClassName, wrapperClassName, isWidthAuto, onClose, ...props }) => {
+      const [t] = useTranslation();
+      const [isOpen, setIsOpen] = useState(false);
 
-    const onOpenChange = useCallback(
-      // eslint-disable-next-line no-unused-vars
-      (nextOpen, event, reason) => {
-        setIsOpen(nextOpen);
+      const onOpenChange = useCallback(
+        // eslint-disable-next-line no-unused-vars
+        (nextOpen, event, reason) => {
+          setIsOpen(nextOpen);
 
-        if (!nextOpen) {
-          if (onClose) {
-            onClose();
+          if (!nextOpen) {
+            if (onClose) {
+              onClose();
+            }
           }
-        }
-      },
-      [onClose],
-    );
+        },
+        [onClose],
+      );
 
-    const { refs, floatingStyles, context } = useFloating({
-      open: isOpen,
-      onOpenChange,
-      whileElementsMounted: autoUpdate,
-      placement: defaultProps?.position ?? position,
-      middleware: [
-        posOffset(defaultProps?.offset ?? offset),
-        flip({
-          padding: 12,
-        }),
-        shift({
-          crossAxis: !(defaultProps?.disableShiftCrossAxis ?? disableShiftCrossAxis),
-          padding: 6,
-        }),
-        size({
-          apply({ availableWidth, availableHeight, elements }) {
-            Object.assign(elements.floating.style, {
-              maxWidth: `${availableWidth - 12}px`,
-              maxHeight: `${availableHeight - 12}px`,
-            });
-          },
-        }),
-      ],
-    });
+      const { refs, floatingStyles, context } = useFloating({
+        open: isOpen,
+        onOpenChange,
+        whileElementsMounted: autoUpdate,
+        placement: defaultProps?.position ?? position,
+        middleware: [
+          posOffset(defaultProps?.offset ?? offset),
+          flip({
+            padding: 12,
+          }),
+          shift({
+            crossAxis: !(defaultProps?.disableShiftCrossAxis ?? disableShiftCrossAxis),
+            padding: 6,
+          }),
+          size({
+            apply({ availableWidth, availableHeight, elements }) {
+              Object.assign(elements.floating.style, {
+                maxWidth: `${availableWidth - 12}px`,
+                maxHeight: `${availableHeight - 12}px`,
+              });
+            },
+          }),
+        ],
+      });
 
-    const click = useClick(context, { enabled: !disabled });
-    const dismiss = useDismiss(context, { ancestorScroll: !keepOnScroll });
-    const role = useRole(context, { role: 'dialog' });
+      const click = useClick(context, { enabled: !disabled });
+      const dismiss = useDismiss(context, { ancestorScroll: !keepOnScroll });
+      const role = useRole(context, { role: 'dialog' });
 
-    const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
+      const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
 
-    const handleCloseClick = useCallback(
-      (e) => {
-        onOpenChange(false, e?.nativeEvent, 'close-button');
-      },
-      [onOpenChange],
-    );
+      const handleCloseClick = useCallback(
+        (e) => {
+          onOpenChange(false, e?.nativeEvent, 'close-button');
+        },
+        [onOpenChange],
+      );
 
-    const handleClose = useCallback(
-      (e) => {
-        onOpenChange(false, e?.nativeEvent, 'close-event');
-      },
-      [onOpenChange],
-    );
+      const handleClose = useCallback(
+        (e) => {
+          onOpenChange(false, e?.nativeEvent, 'close-event');
+        },
+        [onOpenChange],
+      );
 
-    return (
-      <>
-        {/* TODO temp removed: s.wrapper */}
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <div ref={refs.setReference} {...getReferenceProps()} className={clsx(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch={disabled ? undefined : true}>
-          {children}
-        </div>
-        {isOpen && (
-          <FloatingPortal>
-            <FloatingFocusManager context={context} modal={false} returnFocus={false}>
-              {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-              <div className={clsx(s.popup, className, defaultProps?.className)} ref={refs.setFloating} style={floatingStyles} {...getFloatingProps()} data-prevent-card-switch>
-                {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                  <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
-                    <Icon type={IconType.Close} size={IconSize.Size14} />
-                  </Button>
-                )}
-                {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                <WrappedComponent {...props} onClose={handleClose} />
-              </div>
-            </FloatingFocusManager>
-          </FloatingPortal>
-        )}
-      </>
-    );
-  });
+      return (
+        <>
+          {/* TODO temp removed: s.wrapper */}
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <div ref={refs.setReference} {...getReferenceProps()} className={clsx(wrapperClassName, defaultProps?.wrapperClassName)} data-prevent-card-switch={disabled ? undefined : true}>
+            {children}
+          </div>
+          {isOpen && (
+            <FloatingPortal>
+              <FloatingFocusManager context={context} modal={false} returnFocus={false}>
+                <div
+                  className={clsx(s.popup, className, defaultProps?.className, (isWidthAuto || defaultProps?.isWidthAuto) && s.widthAuto)}
+                  ref={refs.setFloating}
+                  style={floatingStyles}
+                  {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
+                  data-prevent-card-switch
+                >
+                  {!(defaultProps?.hideCloseButton || hideCloseButton) && (
+                    <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                      <Icon type={IconType.Close} size={IconSize.Size14} />
+                    </Button>
+                  )}
+                  {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+                  <WrappedComponent {...props} onClose={handleClose} />
+                </div>
+              </FloatingFocusManager>
+            </FloatingPortal>
+          )}
+        </>
+      );
+    },
+  );
 
   Popup.propTypes = {
     children: PropTypes.node.isRequired,
@@ -111,6 +118,7 @@ export default (WrappedComponent, defaultProps) => {
     disableShiftCrossAxis: PropTypes.bool,
     closeButtonClassName: PropTypes.string,
     wrapperClassName: PropTypes.string,
+    isWidthAuto: PropTypes.bool,
     onClose: PropTypes.func,
   };
 
@@ -124,6 +132,7 @@ export default (WrappedComponent, defaultProps) => {
     disableShiftCrossAxis: false,
     closeButtonClassName: undefined,
     wrapperClassName: undefined,
+    isWidthAuto: false,
     onClose: undefined,
   };
 

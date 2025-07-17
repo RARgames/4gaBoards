@@ -35,7 +35,7 @@ module.exports = {
     const path = await sails.helpers.actions
       .getProjectPath({
         id: inputs.id,
-        type: Action.Types.COMMENT_CARD,
+        type: Action.Types.CARD_COMMENT,
       })
       .intercept('pathNotFound', () => Errors.COMMENT_ACTION_NOT_FOUND);
 
@@ -67,7 +67,7 @@ module.exports = {
       data: _.pick(inputs, ['text']),
     };
 
-    action = await sails.helpers.actions.updateOne.with({
+    action = await sails.helpers.commentActions.updateOne.with({
       values,
       board,
       record: action,

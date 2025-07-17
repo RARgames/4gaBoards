@@ -41,7 +41,7 @@ module.exports = {
         .map((checklist) => checklist.checkItems)
         .flat();
 
-    const getTrelloCommentsOfCard = (cardId) => inputs.trelloBoard.actions.filter((action) => action.type === 'commentCard' && action.data && action.data.card && action.data.card.id === cardId);
+    const getTrelloCommentsOfCard = (cardId) => inputs.trelloBoard.actions.filter((action) => action.type === Action.Types.CARD_COMMENT && action.data && action.data.card && action.data.card.id === cardId);
 
     const get4gaBoardsLabelColor = (trelloLabelColor) => Label.COLORS.find((color) => color.indexOf(trelloLabelColor) !== -1) || 'desert-sand';
 
@@ -81,7 +81,7 @@ module.exports = {
           return Action.create({
             cardId: boardsCard.id,
             userId: currentUser.id,
-            type: 'commentCard',
+            type: Action.Types.CARD_COMMENT,
             data: {
               text:
                 `${trelloComment.data.text}\n\n---\n*Note: imported comment, originally posted by ` +
@@ -111,7 +111,7 @@ module.exports = {
           await importTasks(boardsCard, trelloCard);
           await importComments(boardsCard, trelloCard);
 
-          const commentCount = await Action.count({ cardId: boardsCard.id, type: 'commentCard' });
+          const commentCount = await Action.count({ cardId: boardsCard.id, type: Action.Types.CARD_COMMENT });
           await Card.update({ id: boardsCard.id }).set({ commentCount });
 
           return boardsCard;

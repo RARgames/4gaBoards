@@ -257,4 +257,4 @@ ActionsStep.defaultProps = {
   updatedBy: undefined,
 };
 
-export default withPopup(ActionsStep);
+export default withPopup(ActionsStep, { isWidthAuto: true });

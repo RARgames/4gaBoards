@@ -277,11 +277,11 @@ export default class extends BaseModel {
   }
 
   getOrderedCardCommentsQuerySet() {
-    return this.activities.filter({ type: ActivityTypes.COMMENT_CARD }).orderBy('createdAt', false);
+    return this.activities.filter({ type: ActivityTypes.CARD_COMMENT }).orderBy('createdAt', false);
   }
 
   getOrderedCardActivitiesQuerySet() {
-    return this.activities.filter((activity) => activity.type !== ActivityTypes.COMMENT_CARD).orderBy('createdAt', false);
+    return this.activities.filter((activity) => activity.type !== ActivityTypes.CARD_COMMENT).orderBy('createdAt', false);
   }
 
   getOrderedCardActivitiesFullQuerySet() {

@@ -1,0 +1,13 @@
+:global(#app) {
+  .data {
+    color: var(--textColor0);
+  }
+
+  .linked {
+    color: var(--linkedCard);
+
+    &:hover {
+      color: var(--linkedCardHover);
+    }
+  }
+}

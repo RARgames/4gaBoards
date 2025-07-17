@@ -173,9 +173,9 @@ module.exports = {
         });
       }),
       ...actions
-        .filter((action) => action.type === Action.Types.COMMENT_CARD)
+        .filter((action) => action.type === Action.Types.CARD_COMMENT)
         .map((action) => {
-          return sails.helpers.actions.createOne.with({
+          return sails.helpers.commentActions.createOne.with({
             values: {
               ..._.omit(action, ['id']),
               duplicate: true,

@@ -1,13 +1,25 @@
 :global(#app) {
+  .wrapper {
+    margin: 0 -12px;
+    max-width: 35vw;
+  }
+
   .item {
-    padding: 12px;
+    padding: 4px 8px 12px 8px;
 
     &:hover {
       background: var(--backgroundPopupHover);
     }
   }
 
+  .itemHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
   .itemButton {
+    margin-left: auto;
     svg {
       fill: var(--textColor3);
     }
@@ -19,15 +31,35 @@
     }
   }
 
+  .user {
+    display: inline-block;
+    padding: 4px 8px 0 0;
+    vertical-align: top;
+  }
+
+  .author {
+    color: var(--textColor0);
+    display: inline-block;
+    font-weight: bold;
+    line-height: 20px;
+    margin-right: 8px;
+    padding: 6px 0px 4px 0px;
+  }
+
+  .date {
+    color: var(--textColor3);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
   .itemContent {
     display: inline-block;
     font-size: 12px;
-    min-height: 36px;
     overflow: hidden;
-    padding: 0 4px 0 8px;
-    vertical-align: top;
-    width: calc(100% - 56px);
+    padding: 0 4px;
     word-break: break-word;
+    color: var(--textColor2);
   }
 
   .itemDeleted {
@@ -37,9 +69,5 @@
     padding: 0 4px 0 8px;
     vertical-align: top;
     width: calc(100% - 20px);
-  }
-
-  .wrapper {
-    margin: 0 -12px;
   }
 }

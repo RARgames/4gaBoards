@@ -47,7 +47,7 @@ export function* createCommentActivity(cardId, data) {
       userId,
       data,
       id: localId,
-      type: ActivityTypes.COMMENT_CARD,
+      type: ActivityTypes.CARD_COMMENT,
     }),
   );
 

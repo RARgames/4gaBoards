@@ -12,7 +12,6 @@
     display: inline-block;
     margin-bottom: 16px;
     vertical-align: top;
-    width: max(calc(35vw - 24px), calc(274px - 24px));
   }
 
   .date {
@@ -28,7 +27,7 @@
 
   .contentText {
     background: var(--backgroundColorTmpDarkerField);
-    color: var(--textColor3);
+    color: var(--textColor2);
   }
 
   .user {

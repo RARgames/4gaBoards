@@ -239,7 +239,7 @@ module.exports = {
           values: {
             card,
             user: currentUser,
-            type: Action.Types.MOVE_CARD,
+            type: Action.Types.CARD_MOVE,
             data: {
               fromList: _.pick(inputs.list, ['id', 'name']),
               toList: _.pick(values.list, ['id', 'name']),

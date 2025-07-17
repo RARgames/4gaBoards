@@ -1,72 +1,14 @@
 import React from 'react';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { ActivityTypes } from '../../../constants/Enums';
+import ActivityMessage from '../../ActivityMessage';
 import User from '../../User';
 
 import * as s from './Item.module.scss';
 
 const Item = React.memo(({ type, data, user, createdAt, boardMemberships }) => {
   const [t] = useTranslation();
-
-  // TODO fully rewrite contentNodes
-  let contentNode;
-  switch (type) {
-    case ActivityTypes.DUPLICATE_CARD:
-      contentNode = (
-        <Trans
-          i18nKey="common.userDuplicatedThisCard"
-          values={{
-            user: user.name,
-            list: data.list.name,
-          }}
-        />
-      );
-
-      break;
-    case ActivityTypes.CREATE_CARD:
-      contentNode = (
-        <Trans
-          i18nKey="common.userAddedThisCardToList"
-          values={{
-            user: user.name,
-            list: data.list.name,
-          }}
-        >
-          {/* <span className={s.author}>{user.name}</span> */}
-          <span className={s.text}>
-            {' added this card to '}
-            {data.list.name}
-          </span>
-        </Trans>
-      );
-
-      break;
-    case ActivityTypes.MOVE_CARD:
-      contentNode = (
-        <Trans
-          i18nKey="common.userMovedThisCardFromListToList"
-          values={{
-            user: user.name,
-            fromList: data.fromList.name,
-            toList: data.toList.name,
-          }}
-        >
-          {/* <span className={s.author}>{user.name}</span> */}
-          <span className={s.text}>
-            {' moved this card from '}
-            {data.fromList.name}
-            {' to '}
-            {data.toList.name}
-          </span>
-        </Trans>
-      );
-
-      break;
-    default:
-      contentNode = null;
-  }
 
   return (
     <div className={s.content}>
@@ -75,7 +17,9 @@ const Item = React.memo(({ type, data, user, createdAt, boardMemberships }) => {
       </span>
       <span className={s.author}>{user.name}</span>
       {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
-      <div className={s.contentText}>{contentNode}</div>
+      <div className={s.contentText}>
+        <ActivityMessage activity={{ type, data, user }} />
+      </div>
     </div>
   );
 });
