@@ -15,9 +15,9 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.6.2",
+    "@azure/msal-node": "^3.6.3",
     "bcrypt": "^6.0.0",
-    "dotenv": "^17.1.0",
+    "dotenv": "^17.2.0",
     "dotenv-cli": "^8.0.0",
     "fast-csv": "^5.0.2",
     "filenamify": "^6.0.0",
@@ -35,7 +35,7 @@
     "sails-hook-orm": "^4.0.3",
     "sails-hook-sockets": "^3.0.2",
     "sails-postgresql": "^5.0.1",
-    "sharp": "^0.34.2",
+    "sharp": "^0.34.3",
     "tar": "^7.4.3",
     "uuid": "^11.1.0",
     "validator": "^13.15.15",
@@ -43,8 +43,8 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "chai": "^5.2.0",
-    "eslint": "^9.30.1",
+    "chai": "^5.2.1",
+    "eslint": "^9.31.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
     "mocha": "^11.7.1",
