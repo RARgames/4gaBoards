@@ -37,8 +37,8 @@ const Types = {
   // CARD_ATTACHMENT_DELETE: 'cardAttachmentDelete',
 
   /* CARD Label Activities */
-  // CARD_LABEL_ADD: 'cardLabelAdd',
-  // CARD_LABEL_REMOVE: 'cardLabelRemove',
+  CARD_LABEL_ADD: 'cardLabelAdd',
+  CARD_LABEL_REMOVE: 'cardLabelRemove',
 
   /* CARD Comment Activities */
   CARD_COMMENT: 'cardComment',

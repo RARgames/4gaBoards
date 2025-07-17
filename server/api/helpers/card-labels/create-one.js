@@ -60,6 +60,20 @@ module.exports = {
         inputs.request,
       );
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          card: values.card,
+          type: Action.Types.CARD_LABEL_ADD,
+          data: {
+            id: cardLabel.id,
+            labelId: cardLabel.labelId,
+            name: values.label.name,
+          },
+          user: currentUser,
+        },
+        currentUser,
+      });
+
       await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser, skipMetaUpdate });
     }
 

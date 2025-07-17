@@ -36,33 +36,17 @@ module.exports = {
           },
           currentUser,
         });
+
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card,
+            type: Action.Types.CARD_COMMENT_DELETE,
+            data: { id: action.id, text: action.data.text },
+            user: currentUser,
+          },
+          currentUser,
+        });
       }
-
-      const commentDeleteAction = await Action.create({
-        type: Action.Types.CARD_COMMENT_DELETE,
-        data: action.data,
-        cardId: action.cardId,
-        userId: action.userId,
-        createdById: currentUser.id,
-      }).fetch();
-
-      sails.sockets.broadcast(`board:${card.boardId}`, 'actionCreate', {
-        item: commentDeleteAction,
-      });
-
-      const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-
-      await Promise.all(
-        subscriptionUserIds.map(async (userId) =>
-          sails.helpers.notifications.createOne.with({
-            values: {
-              userId,
-              action: commentDeleteAction,
-            },
-            currentUser,
-          }),
-        ),
-      );
 
       await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
     }

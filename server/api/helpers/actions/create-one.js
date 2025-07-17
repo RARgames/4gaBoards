@@ -25,10 +25,6 @@ module.exports = {
       type: 'ref',
       required: true,
     },
-    skipMetaUpdate: {
-      type: 'boolean',
-      defaultsTo: false,
-    },
     skipNotifications: {
       type: 'boolean',
       defaultsTo: false,

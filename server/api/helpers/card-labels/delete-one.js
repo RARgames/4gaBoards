@@ -36,6 +36,24 @@ module.exports = {
         inputs.request,
       );
 
+      const card = await Card.findOne(inputs.record.cardId);
+      const label = await Label.findOne(cardLabel.labelId);
+      if (card && label) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card,
+            type: Action.Types.CARD_LABEL_REMOVE,
+            data: {
+              id: cardLabel.id,
+              labelId: cardLabel.labelId,
+              name: label.name,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser, skipMetaUpdate });
     }
 

@@ -37,7 +37,7 @@ module.exports = {
   async fn(inputs) {
     const { values, currentUser, skipMetaUpdate } = inputs;
 
-    const action = await sails.helpers.actions.createOne.with({ values, currentUser, skipMetaUpdate, skipNotifications: true, request: inputs.request });
+    const action = await sails.helpers.actions.createOne.with({ values, currentUser, skipNotifications: true, request: inputs.request });
 
     if (action) {
       if (!values.duplicate) {
@@ -50,31 +50,15 @@ module.exports = {
         });
       }
 
-      const commentCreateAction = await Action.create({
-        type: Action.Types.CARD_COMMENT_CREATE,
-        data: values.data,
-        cardId: values.card.id,
-        userId: values.user.id,
-        createdById: currentUser.id,
-      }).fetch();
-
-      sails.sockets.broadcast(`board:${values.card.boardId}`, 'actionCreate', {
-        item: commentCreateAction,
+      await sails.helpers.actions.createOne.with({
+        values: {
+          card: values.card,
+          type: Action.Types.CARD_COMMENT_CREATE,
+          data: { id: action.id, text: action.data.text },
+          user: currentUser,
+        },
+        currentUser,
       });
-
-      const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-
-      await Promise.all(
-        subscriptionUserIds.map(async (userId) =>
-          sails.helpers.notifications.createOne.with({
-            values: {
-              userId,
-              action: commentCreateAction,
-            },
-            currentUser,
-          }),
-        ),
-      );
 
       await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
     }

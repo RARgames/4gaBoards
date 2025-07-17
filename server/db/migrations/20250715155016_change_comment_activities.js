@@ -5,7 +5,7 @@ module.exports.up = async (knex) => {
   await knex('action').where({ type: 'createCard' }).update({ type: 'cardCreate' });
   await knex.raw(`
     INSERT INTO action (card_id, user_id, type, data, created_at, created_by_id, updated_at, updated_by_id)
-    SELECT card_id, user_id, 'cardCommentCreate', data, created_at, created_by_id, updated_at, updated_by_id
+    SELECT card_id, user_id, 'cardCommentCreate', json_build_object('id', id::text, 'text', (data::json)->>'text'), created_at, created_by_id, updated_at, updated_by_id
     FROM action
     WHERE type = 'cardComment'
   `);
