@@ -38,6 +38,7 @@ dotenvFiles.forEach((dotenvFile) => {
       // eslint-disable-next-line global-require
       require('dotenv').config({
         path: dotenvFile,
+        quiet: true,
       }),
     );
   }
