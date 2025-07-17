@@ -430,6 +430,16 @@ export default {
       cardCommentUpdateShort: 'Modifié un commentaire <1>{{prevComment}}</1> en <2>{{comment}}</2>',
       cardCommentDelete: 'Supprimé un commentaire <1>{{comment}}</1> de <0>{{card}}</0>',
       cardCommentDeleteShort: 'Supprimé un commentaire <1>{{comment}}</1>',
+      cardAttachmentCreate: 'Ajouté la pièce jointe <1>{{attachment}}</1> à <0>{{card}}</0>',
+      cardAttachmentCreateShort: 'Ajouté la pièce jointe <1>{{attachment}}</1>',
+      cardAttachmentUpdate: 'Renommé la pièce jointe <1>{{prevAttachment}}</1> en <2>{{attachment}}</2> dans <0>{{card}}</0>',
+      cardAttachmentUpdateShort: 'Renommé la pièce jointe <1>{{prevAttachment}}</1> en <2>{{attachment}}</2>',
+      cardAttachmentDelete: 'Supprimé la pièce jointe <1>{{attachment}}</1> de <0>{{card}}</0>',
+      cardAttachmentDeleteShort: 'Supprimé la pièce jointe <1>{{attachment}}</1>',
+      cardLabelAdd: "Ajouté l'étiquette <1>{{label}}</1> à <0>{{card}}</0>",
+      cardLabelAddShort: "Ajouté l'étiquette <1>{{label}}</1>",
+      cardLabelRemove: "Supprimé l'étiquette <1>{{label}}</1> de <0>{{card}}</0>",
+      cardLabelRemoveShort: "Supprimé l'étiquette <1>{{label}}</1>",
     },
 
     action: {

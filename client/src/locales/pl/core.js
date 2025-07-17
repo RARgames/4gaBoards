@@ -428,6 +428,16 @@ export default {
       cardCommentUpdateShort: 'Zaktualizowano komentarz <1>{{prevComment}}</1> na <2>{{comment}}</2>',
       cardCommentDelete: 'Usunięto komentarz <1>{{comment}}</1> z <0>{{card}}</0>',
       cardCommentDeleteShort: 'Usunięto komentarz <1>{{comment}}</1>',
+      cardAttachmentCreate: 'Dodano załącznik <1>{{attachment}}</1> do <0>{{card}}</0>',
+      cardAttachmentCreateShort: 'Dodano załącznik <1>{{attachment}}</1>',
+      cardAttachmentUpdate: 'Zmieniono nazwę załącznika <1>{{prevAttachment}}</1> na <2>{{attachment}}</2> w <0>{{card}}</0>',
+      cardAttachmentUpdateShort: 'Zmieniono nazwę załącznika <1>{{prevAttachment}}</1> na <2>{{attachment}}</2>',
+      cardAttachmentDelete: 'Usunięto załącznik <1>{{attachment}}</1> z <0>{{card}}</0>',
+      cardAttachmentDeleteShort: 'Usunięto załącznik <1>{{attachment}}</1>',
+      cardLabelAdd: 'Dodano etykietę <1>{{label}}</1> do <0>{{card}}</0>',
+      cardLabelAddShort: 'Dodano etykietę <1>{{label}}</1>',
+      cardLabelRemove: 'Usunięto etykietę <1>{{label}}</1> z <0>{{card}}</0>',
+      cardLabelRemoveShort: 'Usunięto etykietę <1>{{label}}</1>',
     },
 
     action: {

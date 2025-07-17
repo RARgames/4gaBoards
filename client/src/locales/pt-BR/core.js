@@ -414,6 +414,16 @@ export default {
       cardCommentUpdateShort: 'Atualizou um comentário de <1>{{prevComment}}</1> para <2>{{comment}}</2>',
       cardCommentDelete: 'Excluiu um comentário <1>{{comment}}</1> de <0>{{card}}</0>',
       cardCommentDeleteShort: 'Excluiu um comentário <1>{{comment}}</1>',
+      cardAttachmentCreate: 'Adicionado anexo <1>{{attachment}}</1> a <0>{{card}}</0>',
+      cardAttachmentCreateShort: 'Adicionado anexo <1>{{attachment}}</1>',
+      cardAttachmentUpdate: 'Renomeado anexo <1>{{prevAttachment}}</1> para <2>{{attachment}}</2> em <0>{{card}}</0>',
+      cardAttachmentUpdateShort: 'Renomeado anexo <1>{{prevAttachment}}</1> para <2>{{attachment}}</2>',
+      cardAttachmentDelete: 'Removido anexo <1>{{attachment}}</1> de <0>{{card}}</0>',
+      cardAttachmentDeleteShort: 'Removido anexo <1>{{attachment}}</1>',
+      cardLabelAdd: 'Adicionada etiqueta <1>{{label}}</1> a <0>{{card}}</0>',
+      cardLabelAddShort: 'Adicionada etiqueta <1>{{label}}</1>',
+      cardLabelRemove: 'Removida etiqueta <1>{{label}}</1> de <0>{{card}}</0>',
+      cardLabelRemoveShort: 'Removida etiqueta <1>{{label}}</1>',
     },
 
     action: {

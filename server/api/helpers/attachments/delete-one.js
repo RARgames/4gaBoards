@@ -66,6 +66,19 @@ module.exports = {
         inputs.request,
       );
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          card: inputs.card,
+          type: Action.Types.CARD_ATTACHMENT_DELETE,
+          data: {
+            id: attachment.id,
+            name: attachment.name,
+          },
+          user: currentUser,
+        },
+        currentUser,
+      });
+
       await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser, skipMetaUpdate });
     }
 

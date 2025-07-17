@@ -35,9 +35,9 @@ export const ActivityTypes = {
   // CARD_TASK_USER_REMOVE: 'cardTaskUserRemove',
 
   /* CARD Attachment Activities */
-  // CARD_ATTACHMENT_CREATE: 'cardAttachmentCreate',
-  // CARD_ATTACHMENT_UPDATE: 'cardAttachmentUpdate',
-  // CARD_ATTACHMENT_DELETE: 'cardAttachmentDelete',
+  CARD_ATTACHMENT_CREATE: 'cardAttachmentCreate',
+  CARD_ATTACHMENT_UPDATE: 'cardAttachmentUpdate',
+  CARD_ATTACHMENT_DELETE: 'cardAttachmentDelete',
 
   /* CARD Label Activities */
   CARD_LABEL_ADD: 'cardLabelAdd',

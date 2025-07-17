@@ -135,6 +135,66 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
       );
     }
 
+    case ActivityTypes.CARD_ATTACHMENT_CREATE: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const attachmentName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+
+      return (
+        <Trans
+          i18nKey={card ? 'activity.cardAttachmentCreate' : 'activity.cardAttachmentCreateShort'}
+          values={{
+            user: activity.user.name,
+            attachment: attachmentName,
+            card: cardName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
+        </Trans>
+      );
+    }
+
+    case ActivityTypes.CARD_ATTACHMENT_UPDATE: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const prevAttachmentName = isTruncated ? truncate(activity.data.prevName, { length: commentTruncateLength }) : activity.data.prevName;
+      const attachmentName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+
+      return (
+        <Trans
+          i18nKey={card ? 'activity.cardAttachmentUpdate' : 'activity.cardAttachmentUpdateShort'}
+          values={{
+            user: activity.user.name,
+            prevAttachment: prevAttachmentName,
+            attachment: attachmentName,
+            card: cardName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
+          <span className={s.data} />
+        </Trans>
+      );
+    }
+
+    case ActivityTypes.CARD_ATTACHMENT_DELETE: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const attachmentName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+
+      return (
+        <Trans
+          i18nKey={card ? 'activity.cardAttachmentDelete' : 'activity.cardAttachmentDeleteShort'}
+          values={{
+            user: activity.user.name,
+            attachment: attachmentName,
+            card: cardName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
+        </Trans>
+      );
+    }
+
     case ActivityTypes.CARD_LABEL_ADD: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const labelName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;

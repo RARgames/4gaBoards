@@ -40,6 +40,23 @@ module.exports = {
         inputs.request,
       );
 
+      const card = await Card.findOne(attachment.cardId);
+      if (card) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card,
+            type: Action.Types.CARD_ATTACHMENT_UPDATE,
+            data: {
+              id: attachment.id,
+              prevName: inputs.record.name,
+              name: attachment.name,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser, skipMetaUpdate });
     }
 
