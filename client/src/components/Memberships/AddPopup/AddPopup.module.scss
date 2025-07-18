@@ -1,14 +1,5 @@
 :global(#app) {
-  .content {
-    padding: 0 2px 12px 0;
-  }
-
-  .fieldWrapper {
-    margin: 0 10px 0 12px;
-  }
-
   .users {
-    padding: 0 0 0 12px;
     max-height: calc(50vh - 120px);
   }
 }

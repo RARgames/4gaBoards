@@ -64,4 +64,4 @@ NotificationsStep.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default withPopup(NotificationsStep, { isWidthAuto: true });
+export default withPopup(NotificationsStep);

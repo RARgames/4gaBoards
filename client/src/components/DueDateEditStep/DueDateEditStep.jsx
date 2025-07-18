@@ -104,7 +104,7 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.dueDate', { context: 'title' })}</Popup.Header>
-      <Popup.Content>
+      <Popup.Content isMinContent>
         <Form onKeyDown={handleKeyDown}>
           <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />

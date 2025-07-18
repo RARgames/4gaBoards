@@ -64,7 +64,7 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
   return (
     <>
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
-      <Popup.Content>
+      <Popup.Content isMinContent>
         <Form onKeyDown={handleKeyDown}>
           <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={clsx(data.role === BoardMembershipRoles.EDITOR && s.selected)}>
             <div className={s.menuItemTitle}>{t('common.editor')}</div>

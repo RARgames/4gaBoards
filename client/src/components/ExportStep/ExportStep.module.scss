@@ -3,9 +3,10 @@
     width: auto;
   }
 
-  .checkboxesWrapper {
-    width: 100%;
+  .wrapper {
     margin-bottom: 6px;
+    display: flex;
+    flex-direction: column;
   }
 
   .checkboxWrapper {
@@ -25,7 +26,6 @@
   .checkboxText {
     padding-left: 4px;
     display: inline-block;
-    width: calc(100% - 20px);
     vertical-align: middle;
   }
 }

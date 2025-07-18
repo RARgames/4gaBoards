@@ -1,20 +1,18 @@
 import React from 'react';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import User from '../../User';
-import { Button } from '../../Utils';
+import { Button, Icon, IconType, IconSize } from '../../Utils';
 
 import * as s from './UserItem.module.scss';
 
 const UserItem = React.memo(({ name, avatarUrl, isActive, onSelect }) => (
   <Button onClick={onSelect} className={s.menuItem}>
-    <span className={s.user}>
-      <User name={name} avatarUrl={avatarUrl} />
-    </span>
-    <div className={clsx(s.menuItemText, isActive && s.menuItemTextActive)} title={name}>
+    <User name={name} avatarUrl={avatarUrl} />
+    <div className={s.menuItemText} title={name}>
       {name}
     </div>
+    {isActive && <Icon type={IconType.Check} size={IconSize.Size14} />}
   </Button>
 ));
 

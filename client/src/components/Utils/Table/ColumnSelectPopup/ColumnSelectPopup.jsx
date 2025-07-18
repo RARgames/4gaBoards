@@ -71,7 +71,7 @@ const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColu
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.selectColumns')}</Popup.Header>
-      <Popup.Content>
+      <Popup.Content isMinContent>
         <div>
           {table.getAllColumns().map((column) => {
             if (skipColumns.includes(column.id)) {
@@ -86,8 +86,7 @@ const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColu
                   onChange={() => handleColumnToggleVisibilityClick(column)}
                   title={t('common.toggleColumnVisibility')}
                 />
-                <span>{column.columnDef.header}</span>
-                {column.columnDef.header !== column.columnDef.meta.headerTitle && <span className={s.headerTitle}>{column.columnDef.meta.headerTitle}</span>}
+                <span>{column.columnDef.header !== column.columnDef.meta.headerTitle ? column.columnDef.meta.headerTitle : column.columnDef.header}</span>
               </div>
             );
           })}

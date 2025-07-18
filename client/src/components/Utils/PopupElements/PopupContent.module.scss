@@ -6,4 +6,12 @@
     flex-direction: column;
     overflow: hidden;
   }
+
+  .minContent {
+    max-width: min-content;
+  }
+
+  .limitedWidth {
+    max-width: 35vw;
+  }
 }

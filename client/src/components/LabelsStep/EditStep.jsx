@@ -85,7 +85,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.editLabel', { context: 'title' })}</Popup.Header>
-      <Popup.Content>
+      <Popup.Content isMinContent>
         <Form onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={gs.controlsSpaceBetween}>

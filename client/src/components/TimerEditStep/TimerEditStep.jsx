@@ -124,7 +124,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.editTimer', { context: 'title' })}</Popup.Header>
-      <Popup.Content>
+      <Popup.Content isMinContent>
         <Form>
           <div className={s.fieldWrapper}>
             <div className={s.fieldBox}>

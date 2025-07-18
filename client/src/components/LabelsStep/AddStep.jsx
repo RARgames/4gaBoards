@@ -58,7 +58,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.createLabel', { context: 'title' })}</Popup.Header>
-      <Popup.Content>
+      <Popup.Content isMinContent>
         <Form onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={gs.controls}>

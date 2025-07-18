@@ -9,7 +9,7 @@
   .popup {
     background: var(--backgroundPopup);
     color: var(--textColor1);
-    width: min-content;
+    width: auto;
     display: flex;
     flex-direction: column;
     border-radius: 3px;
@@ -18,9 +18,5 @@
     box-shadow:
       -1px -1px 3px var(--backgroundPopupShadow),
       1px 1px 3px var(--backgroundPopupShadow);
-  }
-
-  .widthAuto {
-    width: auto;
   }
 }
