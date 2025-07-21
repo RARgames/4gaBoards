@@ -52,7 +52,7 @@
   "devDependencies": {
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^9.31.0",
-    "eslint-config-prettier": "^10.1.5",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.1",
     "prettier": "^3.6.2"
