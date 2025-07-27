@@ -251,6 +251,9 @@ const List = React.memo(
                   <div className={s.popupWrapper}>
                     <ActionsPopup
                       name={name}
+                      listId={id}
+                      boardId="0"
+                      projectId="0"
                       createdAt={createdAt}
                       createdBy={createdBy}
                       updatedAt={updatedAt}
