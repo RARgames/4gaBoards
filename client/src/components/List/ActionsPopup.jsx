@@ -6,6 +6,7 @@ import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import addMailId from './MailIdAdd';
 
 import * as s from './ActionsPopup.module.scss';
 
@@ -31,6 +32,9 @@ const ActionsStep = React.memo(
     onDelete,
     onActivitiesFetch,
     onClose,
+    listId,
+    boardId,
+    projectId
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
@@ -51,6 +55,10 @@ const ActionsStep = React.memo(
     const handleActivityClick = useCallback(() => {
       openStep(StepTypes.ACTIVITY);
     }, [openStep]);
+
+  const handleEmailClick = useCallback(async () => {
+    addMailId({ listId, boardId, projectId });
+  }, [listId, boardId, projectId]);
 
     if (step) {
       switch (step.type) {
@@ -102,6 +110,9 @@ const ActionsStep = React.memo(
           <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
           {t('action.addCard', { context: 'title' })}
         </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('action.generateMailId', { context: 'title' })} onClick={handleEmailClick}>
+        {t('action.generateMailId', { context: 'title' })}
+      </Button>
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -128,6 +139,9 @@ ActionsStep.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  listId: PropTypes.number.isRequired,
+  boardId: PropTypes.number,
+  projectId: PropTypes.number,
 };
 
 ActionsStep.defaultProps = {
@@ -136,6 +150,8 @@ ActionsStep.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
+  boardId: 0,
+  projectId: 0,
 };
 
 export default withPopup(ActionsStep);

@@ -728,6 +728,7 @@ export default {
       editPermissions: 'Edytuj uprawnienia',
       editTimer_title: 'Edytuj stoper',
       editUsername_title: 'Edytuj nazwę użytkownika',
+      generateMailId: 'Wygeneruj mail id',
       hideDetails: 'Ukryj aktywność',
       import: 'Importuj',
       leaveBoard: 'Opuść tablicę',
