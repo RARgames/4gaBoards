@@ -23,6 +23,7 @@ module.exports = {
     },
     duplicate: {
       type: 'boolean',
+      defaultsTo: false,
     },
     currentUser: {
       type: 'ref',
@@ -104,7 +105,7 @@ module.exports = {
       await sails.helpers.actions.createOne.with({
         values: {
           card,
-          type: inputs.values.duplicate ? Action.Types.CARD_DUPLICATE : Action.Types.CARD_CREATE,
+          type: inputs.duplicate ? Action.Types.CARD_DUPLICATE : Action.Types.CARD_CREATE,
           data: {
             list: _.pick(values.list, ['id', 'name']),
           },

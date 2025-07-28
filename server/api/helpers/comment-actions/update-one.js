@@ -32,12 +32,13 @@ module.exports = {
 
     if (action) {
       const card = await Card.findOne(action.cardId);
-      if (card) {
+      const user = await User.findOne(action.userId);
+      if (card && user) {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
             type: Action.Types.CARD_COMMENT_UPDATE,
-            data: { id: action.id, prevText: inputs.record.data.text, text: action.data.text },
+            data: { id: action.id, userId: action.userId, prevText: inputs.record.data.text, text: action.data.text, userName: user.name },
             user: currentUser,
           },
           currentUser,

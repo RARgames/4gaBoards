@@ -29,6 +29,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    skipActions: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -50,15 +54,17 @@ module.exports = {
         });
       }
 
-      await sails.helpers.actions.createOne.with({
-        values: {
-          card: values.card,
-          type: Action.Types.CARD_COMMENT_CREATE,
-          data: { id: action.id, text: action.data.text },
-          user: currentUser,
-        },
-        currentUser,
-      });
+      if (!inputs.skipActions) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card: values.card,
+            type: Action.Types.CARD_COMMENT_CREATE,
+            data: { id: action.id, text: action.data.text },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
 
       await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
     }

@@ -37,6 +37,22 @@ module.exports = {
         inputs.request,
       );
 
+      const card = await Card.findOne(task.cardId);
+      if (card) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card,
+            type: Action.Types.CARD_TASK_DELETE,
+            data: {
+              id: task.id,
+              name: task.name,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser, skipMetaUpdate });
     }
 

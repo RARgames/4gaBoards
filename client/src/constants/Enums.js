@@ -13,10 +13,10 @@ export const ActivityTypes = {
 
   /* CARD Activities */
   CARD_CREATE: 'cardCreate',
+  CARD_DUPLICATE: 'cardDuplicate',
   // CARD_UPDATE: 'cardUpdate',
   CARD_MOVE: 'cardMove',
   // CARD_TRANSFER: 'cardTransfer',
-  CARD_DUPLICATE: 'cardDuplicate',
   // CARD_DELETE: 'cardDelete',
 
   /* CARD User Activities */
@@ -24,11 +24,11 @@ export const ActivityTypes = {
   // CARD_USER_REMOVE: 'cardUserRemove',
 
   /* CARD Task Activities */
-  // CARD_TASK_CREATE: 'cardTaskCreate',
-  // CARD_TASK_UPDATE: 'cardTaskUpdate',
-  // CARD_TASK_DUPLICATE: 'cardTaskDuplicate',
-  // CARD_TASK_MOVE: 'cardTaskMove',
-  // CARD_TASK_DELETE: 'cardTaskDelete',
+  CARD_TASK_CREATE: 'cardTaskCreate',
+  CARD_TASK_UPDATE: 'cardTaskUpdate',
+  CARD_TASK_DUPLICATE: 'cardTaskDuplicate',
+  CARD_TASK_MOVE: 'cardTaskMove',
+  CARD_TASK_DELETE: 'cardTaskDelete',
 
   /* CARD Task User Activities */
   CARD_TASK_USER_ADD: 'cardTaskUserAdd',

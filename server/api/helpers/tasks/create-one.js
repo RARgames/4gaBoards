@@ -29,6 +29,14 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    duplicate: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
+    skipActions: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -73,6 +81,21 @@ module.exports = {
         },
         inputs.request,
       );
+
+      if (!inputs.skipActions) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card: values.card,
+            type: inputs.duplicate ? Action.Types.CARD_TASK_DUPLICATE : Action.Types.CARD_TASK_CREATE,
+            data: {
+              id: task.id,
+              name: task.name,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
 
       await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser, skipMetaUpdate });
     }

@@ -37,15 +37,18 @@ module.exports = {
           currentUser,
         });
 
-        await sails.helpers.actions.createOne.with({
-          values: {
-            card,
-            type: Action.Types.CARD_COMMENT_DELETE,
-            data: { id: action.id, text: action.data.text },
-            user: currentUser,
-          },
-          currentUser,
-        });
+        const user = await User.findOne(action.userId);
+        if (user) {
+          await sails.helpers.actions.createOne.with({
+            values: {
+              card,
+              type: Action.Types.CARD_COMMENT_DELETE,
+              data: { id: action.id, userId: action.userId, text: action.data.text, userName: user.name },
+              user: currentUser,
+            },
+            currentUser,
+          });
+        }
       }
 
       await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });

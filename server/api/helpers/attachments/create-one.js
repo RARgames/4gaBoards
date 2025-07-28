@@ -25,6 +25,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    skipActions: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     requestId: {
       type: 'string',
       isNotEmptyString: true,
@@ -54,18 +58,20 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.actions.createOne.with({
-        values: {
-          card: values.card,
-          type: Action.Types.CARD_ATTACHMENT_CREATE,
-          data: {
-            id: attachment.id,
-            name: attachment.name,
+      if (!inputs.skipActions) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card: values.card,
+            type: Action.Types.CARD_ATTACHMENT_CREATE,
+            data: {
+              id: attachment.id,
+              name: attachment.name,
+            },
+            user: currentUser,
           },
-          user: currentUser,
-        },
-        currentUser,
-      });
+          currentUser,
+        });
+      }
 
       await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser, skipMetaUpdate });
     }

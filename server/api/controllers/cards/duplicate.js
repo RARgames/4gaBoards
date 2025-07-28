@@ -76,8 +76,8 @@ module.exports = {
         values: {
           ...values,
           list,
-          duplicate: true,
         },
+        duplicate: true,
         currentUser,
         skipMetaUpdate: true,
         request: this.req,
@@ -109,6 +109,7 @@ module.exports = {
             card: copiedCard,
           },
           currentUser,
+          skipActions: true,
           skipMetaUpdate: true,
           request: this.req,
         });
@@ -155,6 +156,7 @@ module.exports = {
           currentUser,
           skipMetaUpdate: true,
           duplicate: true,
+          skipActions: true,
           request: this.req,
         });
       }),
@@ -169,6 +171,7 @@ module.exports = {
           },
           currentUser,
           skipMetaUpdate: true,
+          skipActions: true,
           request: this.req,
         });
       }),
@@ -184,6 +187,7 @@ module.exports = {
             },
             currentUser,
             skipMetaUpdate: true,
+            skipActions: true,
             request: this.req,
           });
         }),

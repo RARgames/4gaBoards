@@ -49,6 +49,7 @@ module.exports = {
         card,
       },
       currentUser,
+      duplicate: true,
       request: this.req,
     });
 
@@ -62,6 +63,7 @@ module.exports = {
             userId: taskMembership.userId,
           },
           currentUser,
+          skipActions: true,
           request: this.req,
         });
       }),

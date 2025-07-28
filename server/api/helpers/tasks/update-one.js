@@ -77,6 +77,27 @@ module.exports = {
         inputs.request,
       );
 
+      const card = await Card.findOne(inputs.record.cardId);
+      if (card) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card,
+            type: values.position ? Action.Types.CARD_TASK_MOVE : Action.Types.CARD_TASK_UPDATE,
+            data: {
+              id: task.id,
+              name: task.name,
+              prevName: values.name && inputs.record.name,
+              position: values.position && task.position,
+              isCompleted: values.isCompleted && task.isCompleted,
+              prevDueDate: values.dueDate !== undefined && inputs.record.dueDate,
+              dueDate: values.dueDate && task.dueDate,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser, skipMetaUpdate });
     }
 
