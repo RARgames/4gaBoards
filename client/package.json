@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/core": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
-    "@babel/runtime": "^7.27.6",
+    "@babel/runtime": "^7.28.2",
     "@floating-ui/react": "^0.27.13",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.1",
     "@react-hook/resize-observer": "^2.0.2",
