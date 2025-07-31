@@ -33,8 +33,6 @@ const ActionsStep = React.memo(
     onActivitiesFetch,
     onClose,
     listId,
-    boardId,
-    projectId
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
@@ -57,8 +55,8 @@ const ActionsStep = React.memo(
     }, [openStep]);
 
   const handleEmailClick = useCallback(async () => {
-    addMailId({ listId, boardId, projectId });
-  }, [listId, boardId, projectId]);
+    addMailId({ listId });
+  }, [listId]);
 
     if (step) {
       switch (step.type) {
@@ -140,8 +138,6 @@ ActionsStep.propTypes = {
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   listId: PropTypes.number.isRequired,
-  boardId: PropTypes.number,
-  projectId: PropTypes.number,
 };
 
 ActionsStep.defaultProps = {
@@ -150,8 +146,6 @@ ActionsStep.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
-  boardId: 0,
-  projectId: 0,
 };
 
 export default withPopup(ActionsStep);

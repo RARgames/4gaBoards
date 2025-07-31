@@ -4,20 +4,19 @@ const Errors = {
   MISSING_RELATIONS: {
     missingRelations: 'Missing required related entities',
   },
+  NOT_ENOUGH_RIGHTS: {
+    notEnoughRights: 'Not enough rights',
+  },
+  LIST_NOT_FOUND: {
+    listNotFound: 'List not found',
+  },
+  MAIL_ALREADY_EXISTS: {
+    mailAlreadyExists: 'Mail already exists for this user and list',
+  },
 };
 
 module.exports = {
   inputs: {
-    projectId: {
-      type: 'string',
-      regex: /^[0-9]+$/,
-      required: true,
-    },
-    boardId: {
-      type: 'string',
-      regex: /^[0-9]+$/,
-      required: true,
-    },
     listId: {
       type: 'string',
       regex: /^[0-9]+$/,
@@ -29,20 +28,57 @@ module.exports = {
     missingRelations: {
       responseType: 'badRequest',
     },
+    notEnoughRights: {
+      responseType: 'forbidden',
+    },
+    listNotFound: {
+      responseType: 'notFound',
+    },
+    mailAlreadyExists: {
+      responseType: 'conflict',
+    },
   },
 
   async fn(inputs) {
-    const mailId = crypto.randomBytes(8).toString('hex');
-
     const { currentUser } = this.req;
 
-    const mail = await Mail.create({
-      mailId,
+    const { list, board, project } = await sails.helpers.lists.getProjectPath(inputs.listId)
+      .intercept('pathNotFound', () => Errors.MISSING_RELATIONS);
+
+    const boardMembership = await BoardMembership.findOne({
+      boardId: board.id,
       userId: currentUser.id,
-      projectId: inputs.projectId,
-      boardId: inputs.boardId,
-      listId: inputs.listId,
-    }).fetch();
+    });
+
+    if (!boardMembership) {
+      throw Errors.LIST_NOT_FOUND; // Forbidden
+    }
+
+    if (boardMembership.role !== BoardMembership.Roles.EDITOR) {
+      throw Errors.NOT_ENOUGH_RIGHTS;
+    }
+
+    const existing = await Mail.findOne({
+      userId: currentUser.id,
+      listId: list.id,
+    });
+
+    if (existing) {
+      throw Errors.MAIL_ALREADY_EXISTS;
+    }
+
+    const mailId = crypto.randomBytes(8).toString('hex');
+
+    const mail = await sails.helpers.mails.createOne.with({
+      values: {
+        mailId,
+        userId: currentUser.id,
+        listId: list.id,
+        boardId: board.id,
+        projectId: project.id,
+      },
+      request: this.req,
+    });
 
     return {
       item: mail,
