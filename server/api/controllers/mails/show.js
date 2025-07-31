@@ -21,19 +21,18 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const mail = await Mail.findOne({ mailId: inputs.mailId });
+    const { mail, board, project } = await sails.helpers.mails.getProjectPath(inputs.mailId)
+      .intercept('pathNotFound', () => Errors.MAIL_NOT_FOUND);
 
-    if (!mail) {
-      throw Errors.MAIL_NOT_FOUND;
+    const isBoardMember = await sails.helpers.users.isBoardMember(currentUser.id, board.id);
+
+    if (!isBoardMember) {
+      const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
+
+      if (!isProjectManager) {
+        throw Errors.MAIL_NOT_FOUND; // Forbidden
+      }
     }
-
-    // if (mail.userId !== currentUser.id) {
-    //   const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, mail.projectId);
-    //
-    //   if (!isProjectManager) {
-    //     throw Errors.MAIL_NOT_FOUND;
-    //   }
-    // }
 
     return {
       item: mail,

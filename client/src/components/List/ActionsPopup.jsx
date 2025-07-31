@@ -16,7 +16,7 @@ const StepTypes = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose, listId, boardId, projectId }) => {
+const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose, listId }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -38,8 +38,8 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
   }, [openStep]);
 
   const handleEmailClick = useCallback(async () => {
-    addMailId({ listId, boardId, projectId });
-  }, [listId, boardId, projectId]);
+    addMailId({ listId });
+  }, [listId]);
 
   if (step) {
     switch (step.type) {
@@ -113,8 +113,6 @@ ActionsStep.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   listId: PropTypes.number.isRequired,
-  boardId: PropTypes.number,
-  projectId: PropTypes.number,
 };
 
 ActionsStep.defaultProps = {
@@ -122,8 +120,6 @@ ActionsStep.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
-  boardId: 0,
-  projectId: 0,
 };
 
 export default withPopup(ActionsStep);
