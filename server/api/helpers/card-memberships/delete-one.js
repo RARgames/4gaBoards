@@ -58,6 +58,24 @@ module.exports = {
         }
       }
 
+      const card = await Card.findOne(cardMembership.cardId);
+      const user = await User.findOne(cardMembership.userId);
+      if (card && user) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card,
+            type: Action.Types.CARD_USER_REMOVE,
+            data: {
+              id: cardMembership.id,
+              userId: cardMembership.userId,
+              name: user.name,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.cards.updateMeta.with({ id: cardMembership.cardId, currentUser, skipMetaUpdate });
     }
 

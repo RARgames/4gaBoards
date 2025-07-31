@@ -138,6 +138,42 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
       );
     }
 
+    case ActivityTypes.CARD_USER_ADD: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const userName = isTruncated ? truncate(activity.data.name, { length: userNameTruncateLength }) : activity.data.name;
+
+      return (
+        <Trans
+          i18nKey={card ? 'activity.cardUserAdd' : 'activity.cardUserAddShort'}
+          values={{
+            user: userName,
+            card: cardName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
+        </Trans>
+      );
+    }
+
+    case ActivityTypes.CARD_USER_REMOVE: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const userName = isTruncated ? truncate(activity.data.name, { length: userNameTruncateLength }) : activity.data.name;
+
+      return (
+        <Trans
+          i18nKey={card ? 'activity.cardUserRemove' : 'activity.cardUserRemoveShort'}
+          values={{
+            user: userName,
+            card: cardName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
+          <span className={s.data} />
+        </Trans>
+      );
+    }
+
     case ActivityTypes.CARD_TASK_CREATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const taskName = isTruncated ? truncate(activity.data.name, { length: taskNameTruncateLength }) : activity.data.name;

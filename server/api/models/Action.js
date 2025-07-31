@@ -17,8 +17,8 @@ const Types = {
   // CARD_DELETE: 'cardDelete',
 
   /* CARD User Activities */
-  // CARD_USER_ADD: 'cardUserAdd',
-  // CARD_USER_REMOVE: 'cardUserRemove',
+  CARD_USER_ADD: 'cardUserAdd',
+  CARD_USER_REMOVE: 'cardUserRemove',
 
   /* CARD Task Activities */
   CARD_TASK_CREATE: 'cardTaskCreate',
