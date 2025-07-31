@@ -2,8 +2,8 @@ import socket from './socket';
 
 /* Actions */
 
-const createMail = (data, headers) =>
-  socket.post(`/mails`, data, headers).then((body) => ({
+const createMail = (listId, headers) =>
+  socket.post(`/lists/${listId}/mails`, {}, headers).then((body) => ({
     ...body,
     item: body.item,
   }));
