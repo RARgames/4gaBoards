@@ -1,7 +1,7 @@
 module.exports = {
   inputs: {
-    criteria: {
-      type: 'json',
+    mailId: {
+      type: 'string',
       required: true,
     },
   },
@@ -11,7 +11,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const mail = await Mail.findOne(inputs.criteria);
+    const mail = await Mail.findOne({ mailId: inputs.mailId });
 
     if (!mail) {
       throw 'pathNotFound';
