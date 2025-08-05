@@ -33,6 +33,23 @@ module.exports = {
         inputs.request,
       );
 
+      const list = await List.findOne(card.listId);
+      if (list) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card,
+            type: Action.Types.CARD_DELETE,
+            data: {
+              id: card.id,
+              listId: card.listId,
+              listName: list.name,
+            },
+            user: currentUser,
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser, skipMetaUpdate });
     }
 

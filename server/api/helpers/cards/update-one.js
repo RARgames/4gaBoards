@@ -250,6 +250,38 @@ module.exports = {
         await sails.helpers.lists.updateMeta.with({ id: inputs.list.id, currentUser, skipMetaUpdate });
       }
 
+      const list = await List.findOne(card.listId);
+      const prevAttachment = inputs.record.coverAttachmentId ? await Attachment.findOne(inputs.record.coverAttachmentId) : undefined;
+      const attachment = card.coverAttachmentId ? await Attachment.findOne(card.coverAttachmentId) : undefined;
+      await sails.helpers.actions.createOne.with({
+        values: {
+          card,
+          type: Action.Types.CARD_UPDATE,
+          data: {
+            id: card.id,
+            name: card.name,
+            prevName: values.name && inputs.record.name,
+            prevDescription: values.description !== undefined ? inputs.record.description : undefined,
+            description: values.description && card.description,
+            prevDueDate: values.dueDate !== undefined ? inputs.record.dueDate : undefined,
+            dueDate: values.dueDate && card.dueDate,
+            prevTimer: values.timer !== undefined ? inputs.record.timer : undefined,
+            timer: values.timer && card.timer,
+            prevCoverAttachmentId: values.coverAttachmentId !== undefined ? inputs.record.coverAttachmentId : undefined,
+            // eslint-disable-next-line no-nested-ternary
+            prevCoverAttachmentName: values.coverAttachmentId !== undefined ? (prevAttachment ? prevAttachment.name : null) : undefined,
+            coverAttachmentId: values.coverAttachmentId && card.coverAttachmentId,
+            coverAttachmentName: values.coverAttachmentId && attachment ? attachment.name : null,
+            prevPosition: values.position && inputs.record.position,
+            position: values.position && card.position,
+            listId: values.position && list?.id,
+            listName: values.position && list?.name,
+          },
+          user: currentUser,
+        },
+        currentUser,
+      });
+
       // TODO: add transfer action
     }
 

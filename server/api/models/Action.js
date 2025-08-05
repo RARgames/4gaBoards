@@ -11,10 +11,10 @@ const Types = {
   /* CARD Activities */
   CARD_CREATE: 'cardCreate',
   CARD_DUPLICATE: 'cardDuplicate',
-  // CARD_UPDATE: 'cardUpdate',
+  CARD_UPDATE: 'cardUpdate',
   CARD_MOVE: 'cardMove',
   // CARD_TRANSFER: 'cardTransfer',
-  // CARD_DELETE: 'cardDelete',
+  CARD_DELETE: 'cardDelete',
 
   /* CARD User Activities */
   CARD_USER_ADD: 'cardUserAdd',

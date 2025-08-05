@@ -51,3 +51,26 @@ export const formatTimer = (timer) => {
 
   return timeParts.join(':');
 };
+
+export const formatTimerActivities = (timer) => {
+  const { hours, minutes, seconds } = getTimerParts(timer);
+
+  const formatPart = (part) => {
+    if (Number.isNaN(part)) {
+      return '00';
+    }
+    if (part < 10) {
+      return `0${part}`;
+    }
+    return part;
+  };
+
+  const timeParts = [formatPart(minutes), formatPart(seconds)];
+
+  if (hours > 0) {
+    timeParts.unshift(formatPart(hours));
+    return `${timeParts.join(':')}`;
+  }
+
+  return timeParts.join(':');
+};
