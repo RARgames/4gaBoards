@@ -19,7 +19,7 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "dotenv-cli": "^9.0.0",
-    "fast-csv": "^5.0.2",
+    "fast-csv": "^5.0.5",
     "filenamify": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
