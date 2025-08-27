@@ -33,7 +33,6 @@ module.exports = {
 
     listId: {
       model: 'List',
-      required: true,
       columnName: 'list_id',
     },
   },

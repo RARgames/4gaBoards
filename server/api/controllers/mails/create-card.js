@@ -13,6 +13,12 @@ const Errors = {
   POSITION_MUST_BE_PRESENT: {
     positionMustBePresent: 'Position must be present',
   },
+  MAIL_PATH_INVALID: {
+    mailPathInvalid: 'Mail Path invalid',
+  },
+  BOARD_HAS_NO_LISTS: {
+    boardHasNoLists: 'Board has no lists',
+  }
 };
 
 const dueDateValidator = (value) => moment(value, moment.ISO_8601, true).isValid();
@@ -74,17 +80,38 @@ module.exports = {
     positionMustBePresent: {
       responseType: 'unprocessableEntity'
     },
+    mailPathInvalid: {
+      responseType: 'notFound'
+    },
+    boardHasNoLists: {
+      responseType: 'notFound'
+    }
   },
 
   async fn(inputs) {
-    const { mail, list } = await sails.helpers.mails.getProjectPath(inputs.mailId)
-      .intercept('pathNotFound', () => Errors.LIST_NOT_FOUND);
+    const { mail, list, board } = await sails.helpers.mails.getProjectPath(inputs.mailId)
+      .intercept('pathNotFound', () => Errors.MAIL_PATH_INVALID);
+
+    let targetList = list;
+    if (!targetList && board) {
+      const lists = await List.find({
+      where: { boardId: board.id },
+      sort: 'position ASC',
+      limit: 1
+      });
+
+      if (!lists.length) {
+        throw Errors.BOARD_HAS_NO_LISTS;
+      }
+
+      targetList = lists[0];
+    }
 
     const currentUser = await User.findOne({ id: mail.userId });
     if (!currentUser) throw Errors.USER_NOT_FOUND;
 
     const boardMembership = await BoardMembership.findOne({
-      boardId: list.boardId,
+      boardId: targetList.boardId,
       userId: currentUser.id,
     });
 
@@ -102,7 +129,7 @@ module.exports = {
       .with({
         values: {
           ...values,
-          list,
+          list: targetList,
           commentCount: 0,
         },
         currentUser,

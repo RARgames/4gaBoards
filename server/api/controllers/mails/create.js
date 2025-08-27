@@ -1,5 +1,3 @@
-const crypto = require('crypto');
-
 const Errors = {
   MISSING_RELATIONS: {
     missingRelations: 'Missing required related entities',
@@ -9,6 +7,9 @@ const Errors = {
   },
   LIST_NOT_FOUND: {
     listNotFound: 'List not found',
+  },
+  BOARD_NOT_FOUND: {
+    boardNotFound: 'Board not found',
   },
   MAIL_ALREADY_EXISTS: {
     mailAlreadyExists: 'Mail already exists for this user and list',
@@ -20,7 +21,10 @@ module.exports = {
     listId: {
       type: 'string',
       regex: /^[0-9]+$/,
-      required: true,
+    },
+    boardId: {
+      type: 'string',
+      regex: /^[0-9]+$/,
     },
   },
 
@@ -34,6 +38,9 @@ module.exports = {
     listNotFound: {
       responseType: 'notFound',
     },
+    boardNotFound: {
+      responseType: 'notFound',
+    },
     mailAlreadyExists: {
       responseType: 'conflict',
     },
@@ -42,8 +49,18 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const { list, board, project } = await sails.helpers.lists.getProjectPath(inputs.listId)
-      .intercept('pathNotFound', () => Errors.MISSING_RELATIONS);
+    let list = null;
+    let board, project;
+
+    if (inputs.listId) {
+      ({ list, board, project } = await sails.helpers.lists.getProjectPath(inputs.listId)
+        .intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
+    } else if (inputs.boardId) {
+      ({ board, project } = await sails.helpers.boards.getProjectPath(inputs.boardId)
+        .intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
+    } else {
+      throw Errors.MISSING_RELATIONS;
+    }
 
     const boardMembership = await BoardMembership.findOne({
       boardId: board.id,
@@ -51,29 +68,33 @@ module.exports = {
     });
 
     if (!boardMembership) {
-      throw Errors.LIST_NOT_FOUND; // Forbidden
+      if (list) {
+        throw Errors.LIST_NOT_FOUND; // Forbidden
+      }
+      throw Errors.BOARD_NOT_FOUND; // Forbidden
     }
 
     if (boardMembership.role !== BoardMembership.Roles.EDITOR) {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const existing = await Mail.findOne({
-      userId: currentUser.id,
-      listId: list.id,
-    });
+    const criteria = { userId: currentUser.id };
+    if (list) {
+      criteria.listId = list.id;
+    } else {
+      criteria.boardId = board.id;
+      criteria.listId = null;
+    }
 
+    const existing = await Mail.findOne(criteria);
     if (existing) {
       throw Errors.MAIL_ALREADY_EXISTS;
     }
 
-    const mailId = crypto.randomBytes(8).toString('hex');
-
     const mail = await sails.helpers.mails.createOne.with({
       values: {
-        mailId,
         userId: currentUser.id,
-        listId: list.id,
+        listId: list ? list.id : null,
         boardId: board.id,
         projectId: project.id,
       },
