@@ -83,6 +83,7 @@ module.exports.routes = {
   'DELETE /api/cards/:cardId/labels/:labelId': 'card-labels/delete',
 
   'POST /api/lists/:listId/mails': 'mails/create',
+  'POST /api/boards/:boardId/mails': 'mails/create',
   'POST /api/mails/:mailId/cards': 'mails/create-card',
   'GET /api/mails/:mailId': 'mails/show',
   'POST /api/mails/:listId/update': 'mails/update',
