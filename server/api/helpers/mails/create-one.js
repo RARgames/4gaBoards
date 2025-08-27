@@ -1,10 +1,11 @@
+const crypto = require('crypto');
+
 const valuesValidator = (value) => {
   return _.isPlainObject(value)
-    && typeof value.mailId === 'string'
     && typeof value.userId === 'string'
     && typeof value.projectId === 'string'
     && typeof value.boardId === 'string'
-    && typeof value.listId === 'string';
+    && (typeof value.listId === 'string' || value.listId == null);
 };
 
 module.exports = {
@@ -20,8 +21,19 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const mail = await Mail.create(inputs.values).fetch();
+    let mailId;
+    let mail;
 
-    return mail;
+    do {
+      mailId = crypto.randomBytes(8).toString('hex');
+      mail = await Mail.findOne({ mailId });
+    } while (mail);
+
+    const newMail = await Mail.create({
+      ...inputs.values,
+      mailId
+    }).fetch();
+
+    return newMail;
   },
 };
