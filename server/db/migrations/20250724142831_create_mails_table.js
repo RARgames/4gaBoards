@@ -4,12 +4,12 @@ module.exports.up = (knex) =>
 
     table.bigInteger('id').primary().defaultTo(knex.raw('next_id()'));
 
-    table.text('mail_id').notNullable().unique();
+    table.text('mail_id').notNullable().unique(); // random ID (hex string)
 
     table.bigInteger('user_id').notNullable();
     table.bigInteger('project_id').notNullable();
     table.bigInteger('board_id').notNullable();
-    table.bigInteger('list_id').notNullable();
+    table.bigInteger('list_id').nullable();
 
     table.timestamp('created_at', true);
     table.timestamp('updated_at', true);
