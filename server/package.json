@@ -15,7 +15,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.6.4",
+    "@azure/msal-node": "^3.7.3",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "dotenv-cli": "^9.0.0",
