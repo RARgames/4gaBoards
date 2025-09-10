@@ -15,10 +15,10 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.6.4",
+    "@azure/msal-node": "^3.7.3",
     "bcrypt": "^6.0.0",
-    "dotenv": "^17.2.1",
-    "dotenv-cli": "^9.0.0",
+    "dotenv": "^17.2.2",
+    "dotenv-cli": "^10.0.0",
     "fast-csv": "^5.0.5",
     "filenamify": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
@@ -31,7 +31,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-strategy": "^1.0.0",
     "rimraf": "^6.0.1",
-    "sails": "^1.5.14",
+    "sails": "^1.5.15",
     "sails-hook-orm": "^4.0.3",
     "sails-hook-sockets": "^3.0.2",
     "sails-postgresql": "^5.0.1",
@@ -43,11 +43,11 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "chai": "^5.2.1",
-    "eslint": "^9.32.0",
+    "chai": "^6.0.1",
+    "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.3",
-    "mocha": "^11.7.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "mocha": "^11.7.2",
     "nodemon": "^3.1.10"
   },
   "engines": {
