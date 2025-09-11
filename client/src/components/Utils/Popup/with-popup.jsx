@@ -13,13 +13,24 @@ export default (WrappedComponent, defaultProps) => {
   const Popup = React.memo(({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, disableShiftCrossAxis, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
-    const [enableScrollDismiss, setEnableScrollDismiss] = useState(false);
+    const [enableScrollDismiss, setEnableScrollDismiss] = useState(true);
     const scrollDismissTimeoutRef = useRef(null);
 
-    const [step, setStep] = useState(null);
-    const handleStepChange = useCallback((newStep) => {
-      setStep(newStep);
+    const handleInsideClick = useCallback(() => {
       setEnableScrollDismiss(false);
+
+      if (scrollDismissTimeoutRef.current) {
+        clearTimeout(scrollDismissTimeoutRef.current);
+      }
+
+      scrollDismissTimeoutRef.current = setTimeout(() => {
+        setEnableScrollDismiss(true);
+        scrollDismissTimeoutRef.current = null;
+      }, 0);
+    }, []);
+
+    useEffect(() => {
+      return () => clearTimeout(scrollDismissTimeoutRef.current);
     }, []);
 
     const onOpenChange = useCallback(
@@ -28,9 +39,6 @@ export default (WrappedComponent, defaultProps) => {
         setIsOpen(nextOpen);
 
         if (!nextOpen) {
-          clearTimeout(scrollDismissTimeoutRef.current);
-          setEnableScrollDismiss(false);
-          setStep(null);
           if (onClose) {
             onClose();
           }
@@ -38,17 +46,6 @@ export default (WrappedComponent, defaultProps) => {
       },
       [onClose],
     );
-
-    useEffect(() => {
-      clearTimeout(scrollDismissTimeoutRef.current);
-      scrollDismissTimeoutRef.current = setTimeout(() => {
-        setEnableScrollDismiss(true);
-      }, 200);
-    }, [step, isOpen]);
-
-    useEffect(() => {
-      return () => clearTimeout(scrollDismissTimeoutRef.current);
-    }, []);
 
     const { refs, floatingStyles, context } = useFloating({
       open: isOpen,
@@ -105,10 +102,12 @@ export default (WrappedComponent, defaultProps) => {
         {isOpen && (
           <FloatingPortal>
             <FloatingFocusManager context={context} modal={false} returnFocus={false}>
+              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <div
                 className={clsx(s.popup, className, defaultProps?.className)}
                 ref={refs.setFloating}
                 style={floatingStyles}
+                onClick={handleInsideClick}
                 {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
                 data-prevent-card-switch
               >
@@ -118,7 +117,7 @@ export default (WrappedComponent, defaultProps) => {
                   </Button>
                 )}
                 {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                <WrappedComponent {...props} onStepChange={handleStepChange} onClose={handleClose} />
+                <WrappedComponent {...props} onClose={handleClose} />
               </div>
             </FloatingFocusManager>
           </FloatingPortal>

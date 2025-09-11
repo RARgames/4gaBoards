@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
@@ -18,76 +18,70 @@ const StepTypes = {
   ACTIVITY: 'ACTIVITY',
 };
 
-const ProjectActionsStep = React.memo(
-  ({ name, projectId, managedProjects, defaultDataRename, isAdmin, createdAt, createdBy, updatedAt, updatedBy, memberships, onUpdate, onBoardCreate, onClose, onStepChange }) => {
-    const [t] = useTranslation();
-    const [step, openStep, handleBack] = useSteps();
+const ProjectActionsStep = React.memo(({ name, projectId, managedProjects, defaultDataRename, isAdmin, createdAt, createdBy, updatedAt, updatedBy, memberships, onUpdate, onBoardCreate, onClose }) => {
+  const [t] = useTranslation();
+  const [step, openStep, handleBack] = useSteps();
 
-    useEffect(() => {
-      onStepChange(step);
-    }, [onStepChange, step]);
-
-    if (step) {
-      switch (step.type) {
-        case StepTypes.RENAME:
-          return (
-            <RenameStep
-              title={t('common.renameProject', { context: 'title' })}
-              defaultData={defaultDataRename}
-              placeholder={t('common.enterProjectName')}
-              onUpdate={onUpdate}
-              onBack={handleBack}
-              onClose={onClose}
-            />
-          );
-        case StepTypes.ADD:
-          return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
-        case StepTypes.ACTIVITY:
-          return (
-            <ActivityStep
-              title={t('common.activityFor', { name })}
-              createdAt={createdAt}
-              createdBy={createdBy}
-              updatedAt={updatedAt}
-              updatedBy={updatedBy}
-              memberships={memberships}
-              isNotMemberTitle={t('common.noLongerProjectMember')}
-              // TODO replace with actual activities
-              activities={[]}
-              isFetching={false}
-              isAllFetched
-              onFetch={() => {}}
-              onBack={handleBack}
-            />
-          );
-        default:
-      }
+  if (step) {
+    switch (step.type) {
+      case StepTypes.RENAME:
+        return (
+          <RenameStep
+            title={t('common.renameProject', { context: 'title' })}
+            defaultData={defaultDataRename}
+            placeholder={t('common.enterProjectName')}
+            onUpdate={onUpdate}
+            onBack={handleBack}
+            onClose={onClose}
+          />
+        );
+      case StepTypes.ADD:
+        return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
+      case StepTypes.ACTIVITY:
+        return (
+          <ActivityStep
+            title={t('common.activityFor', { name })}
+            createdAt={createdAt}
+            createdBy={createdBy}
+            updatedAt={updatedAt}
+            updatedBy={updatedBy}
+            memberships={memberships}
+            isNotMemberTitle={t('common.noLongerProjectMember')}
+            // TODO replace with actual activities
+            activities={[]}
+            isFetching={false}
+            isAllFetched
+            onFetch={() => {}}
+            onBack={handleBack}
+          />
+        );
+      default:
     }
+  }
 
-    return (
-      <>
-        <Button style={ButtonStyle.PopupContext} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
-          <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-          {t('common.renameProject', { context: 'title' })}
+  return (
+    <>
+      <Button style={ButtonStyle.PopupContext} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+        <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+        {t('common.renameProject', { context: 'title' })}
+      </Button>
+      <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })}>
+          <Icon type={IconType.ProjectSettings} size={IconSize.Size13} className={s.icon} />
+          {t('common.projectSettings', { context: 'title' })}
         </Button>
-        <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-          <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })}>
-            <Icon type={IconType.ProjectSettings} size={IconSize.Size13} className={s.icon} />
-            {t('common.projectSettings', { context: 'title' })}
-          </Button>
-        </Link>
-        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
-          <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
-          {t('common.checkActivity', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
-          <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
-          {t('common.addBoard', { context: 'title' })}
-        </Button>
-      </>
-    );
-  },
-);
+      </Link>
+      <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
+        <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+        {t('common.checkActivity', { context: 'title' })}
+      </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
+        <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
+        {t('common.addBoard', { context: 'title' })}
+      </Button>
+    </>
+  );
+});
 
 ProjectActionsStep.propTypes = {
   name: PropTypes.string.isRequired,
@@ -103,7 +97,6 @@ ProjectActionsStep.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  onStepChange: PropTypes.func.isRequired,
 };
 
 ProjectActionsStep.defaultProps = {

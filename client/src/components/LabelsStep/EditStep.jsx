@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ const StepTypes = {
   DELETE: 'DELETE',
 };
 
-const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack, onStepChange }) => {
+const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   const [t] = useTranslation();
   const [isError, setIsError] = useState(false);
   const editorRef = useRef(null);
@@ -27,10 +27,6 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack, onStepCh
   }));
 
   const [step, openStep, handleBack] = useSteps();
-
-  useEffect(() => {
-    onStepChange(step);
-  }, [onStepChange, step]);
 
   const handleSubmit = useCallback(() => {
     const cleanData = {
@@ -107,7 +103,6 @@ EditStep.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onBack: PropTypes.func.isRequired,
-  onStepChange: PropTypes.func.isRequired,
 };
 
 export default EditStep;

@@ -18,13 +18,9 @@ const StepTypes = {
   EDIT: 'EDIT',
 };
 
-const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, onDeselect, onCreate, onUpdate, onDelete, onBack, onStepChange }) => {
+const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, onDeselect, onCreate, onUpdate, onDelete, onBack }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
-
-  useEffect(() => {
-    onStepChange(step);
-  }, [onStepChange, step]);
 
   const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
@@ -165,7 +161,6 @@ LabelsStep.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onBack: PropTypes.func,
-  onStepChange: PropTypes.func.isRequired,
 };
 
 LabelsStep.defaultProps = {

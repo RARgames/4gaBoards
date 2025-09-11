@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -20,7 +20,7 @@ const StepTypes = {
   ACTIVITY: 'ACTIVITY',
 };
 
-const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, createdAt, createdBy, updatedAt, updatedBy, memberships, onUpdate, onExport, onDelete, onClose, onStepChange }) => {
+const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, createdAt, createdBy, updatedAt, updatedBy, memberships, onUpdate, onExport, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -31,10 +31,6 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, cre
   const handleActivityClick = useCallback(() => {
     openStep(StepTypes.ACTIVITY);
   }, [openStep]);
-
-  useEffect(() => {
-    onStepChange(step);
-  }, [onStepChange, step]);
 
   if (step) {
     switch (step.type) {
@@ -117,7 +113,6 @@ BoardActionsStep.propTypes = {
   onExport: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  onStepChange: PropTypes.func.isRequired,
 };
 
 BoardActionsStep.defaultProps = {

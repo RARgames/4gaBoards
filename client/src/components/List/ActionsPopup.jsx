@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -15,13 +15,9 @@ const StepTypes = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose, onStepChange }) => {
+const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
-
-  useEffect(() => {
-    onStepChange(step);
-  }, [onStepChange, step]);
 
   const handleEditNameClick = useCallback(() => {
     onNameEdit();
@@ -107,7 +103,6 @@ ActionsStep.propTypes = {
   onCardAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  onStepChange: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {
