@@ -123,6 +123,41 @@
     line-clamp: 3;
   }
 
+  @media screen and (max-height: 400px) {
+    .headerTitle {
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+    }
+  }
+
+  @media screen and (min-height: 401px) and (max-height: 600px) {
+    .headerTitle {
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+  }
+
+  @media screen and (min-height: 601px) and (max-height: 799px) {
+    .headerTitle {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+    }
+  }
+
+  @media screen and (min-height: 800px) and (max-height: 899px) {
+    .headerTitle {
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+    }
+  }
+
+  @media screen and (min-height: 900px) {
+    .headerTitle {
+      -webkit-line-clamp: 12;
+      line-clamp: 12;
+    }
+  }
+
   .headerNotificationsButton {
     align-self: center;
   }
