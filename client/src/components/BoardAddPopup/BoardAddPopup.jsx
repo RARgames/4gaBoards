@@ -15,7 +15,7 @@ const StepTypes = {
   IMPORT: 'IMPORT',
 };
 
-const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, onCreate, onBack, onClose }) => {
+const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, onCreate, onBack, onClose, onStepChange }) => {
   const [t] = useTranslation();
 
   const [isDropdownError, setIsDropdownError] = useState(false);
@@ -49,6 +49,11 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   const [focusFromState, focusForm] = useToggle();
 
   const [step, openStep, handleBack] = useSteps();
+
+  useEffect(() => {
+    onStepChange(step);
+  }, [onStepChange, step]);
+
   const [focusNameFieldState, focusNameField] = useToggle();
 
   const nameField = useRef(null);
@@ -254,6 +259,7 @@ BoardAddStep.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  onStepChange: PropTypes.func.isRequired,
 };
 
 BoardAddStep.defaultProps = {

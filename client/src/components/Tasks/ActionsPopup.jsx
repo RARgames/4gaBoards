@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -19,9 +19,14 @@ const StepTypes = {
 };
 
 const ActionsStep = React.memo(
-  ({ name, dueDate, allBoardMemberships, boardMemberships, users, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onDuplicate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose }) => {
+  ({ name, dueDate, allBoardMemberships, boardMemberships, users, createdAt, createdBy, updatedAt, updatedBy, onUpdate, onDuplicate, onNameEdit, onDelete, onUserAdd, onUserRemove, onClose, onStepChange }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
+
+    useEffect(() => {
+      onStepChange(step);
+    }, [onStepChange, step]);
+
     const userIds = users.map((user) => user.id);
 
     const handleEditNameClick = useCallback(() => {
@@ -143,6 +148,7 @@ ActionsStep.propTypes = {
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  onStepChange: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {

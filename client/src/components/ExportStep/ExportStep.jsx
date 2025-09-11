@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -14,7 +14,7 @@ const StepTypes = {
   EXPORT_CONFIRMATION: 'EXPORT_CONFIRMATION',
 };
 
-const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
+const ExportStep = React.memo(({ title, onExport, onBack, onClose, onStepChange }) => {
   const [t] = useTranslation();
 
   const [skipAttachments, toggleSkipAttachments] = useToggle(false);
@@ -23,6 +23,10 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
   const [skipMetadata, toggleSkipMetafata] = useToggle(false);
   const [skipActions, toggleSkipActions] = useToggle(true);
   const [step, openStep, handleBack] = useSteps();
+
+  useEffect(() => {
+    onStepChange(step);
+  }, [onStepChange, step]);
 
   const handleSubmit = useCallback(() => {
     const data = {
@@ -105,6 +109,7 @@ ExportStep.propTypes = {
   onExport: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  onStepChange: PropTypes.func.isRequired,
 };
 
 ExportStep.defaultProps = {

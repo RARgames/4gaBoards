@@ -37,9 +37,15 @@ const AddStep = React.memo(
     onUpdate,
     onDelete,
     onClose,
+    onStepChange,
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
+
+    useEffect(() => {
+      onStepChange(step);
+    }, [onStepChange, step]);
+
     const [search, handleSearchChange] = useField('');
     const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
     const [sortedUsers, setSortedUsers] = useState([]);
@@ -190,6 +196,7 @@ AddStep.propTypes = {
   onUpdate: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  onStepChange: PropTypes.func.isRequired,
 };
 
 AddStep.defaultProps = {

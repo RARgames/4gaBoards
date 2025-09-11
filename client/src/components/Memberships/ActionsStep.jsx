@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
@@ -33,9 +33,14 @@ const ActionsStep = React.memo(
     onDelete,
     onBack,
     onClose,
+    onStepChange,
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
+
+    useEffect(() => {
+      onStepChange(step);
+    }, [onStepChange, step]);
 
     const handleEditPermissionsClick = useCallback(() => {
       openStep(StepTypes.EDIT_PERMISSIONS);
@@ -136,6 +141,7 @@ ActionsStep.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  onStepChange: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {

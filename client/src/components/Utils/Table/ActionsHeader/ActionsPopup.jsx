@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -15,9 +15,13 @@ const StepTypes = {
   COLUMNS_SELECT: 'COLUMNS_SELECT',
 };
 
-const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumnWidths, onResetColumnSorting, onResetColumnVisibility, onUserPrefsUpdate, onClose }) => {
+const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumnWidths, onResetColumnSorting, onResetColumnVisibility, onUserPrefsUpdate, onClose, onStepChange }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
+
+  useEffect(() => {
+    onStepChange(step);
+  }, [onStepChange, step]);
 
   const handleSelectColumnsClick = useCallback(() => {
     openStep(StepTypes.COLUMNS_SELECT);
@@ -99,6 +103,7 @@ ActionsStep.propTypes = {
   onResetColumnVisibility: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  onStepChange: PropTypes.func.isRequired,
 };
 
 export default withPopup(ActionsStep);
