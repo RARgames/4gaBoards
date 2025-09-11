@@ -42,7 +42,7 @@ export default (WrappedComponent, defaultProps) => {
       clearTimeout(scrollDismissTimeoutRef.current);
       scrollDismissTimeoutRef.current = setTimeout(() => {
         setEnableScrollDismiss(true);
-      }, 200);
+      }, 500);
     }, [step, isOpen]);
 
     useEffect(() => {
