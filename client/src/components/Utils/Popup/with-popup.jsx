@@ -19,6 +19,7 @@ export default (WrappedComponent, defaultProps) => {
     const [step, setStep] = useState(null);
     const handleStepChange = useCallback((newStep) => {
       setStep(newStep);
+      setEnableScrollDismiss(false);
     }, []);
 
     const onOpenChange = useCallback(
@@ -42,7 +43,7 @@ export default (WrappedComponent, defaultProps) => {
       clearTimeout(scrollDismissTimeoutRef.current);
       scrollDismissTimeoutRef.current = setTimeout(() => {
         setEnableScrollDismiss(true);
-      }, 500);
+      }, 200);
     }, [step, isOpen]);
 
     useEffect(() => {
