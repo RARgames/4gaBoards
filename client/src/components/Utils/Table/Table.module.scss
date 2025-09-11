@@ -186,6 +186,7 @@
     align-items: center;
     width: 100%;
     padding: 4px 26px 4px 26px;
+    overflow-x: auto;
   }
 
   .paginationIconRotated {
@@ -203,6 +204,7 @@
     margin: 0 4px;
     line-height: 16px;
     font-size: 14px;
+    min-width: 106px;
   }
 
   .paginationDropdownInput {
