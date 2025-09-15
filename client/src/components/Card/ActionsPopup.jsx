@@ -110,7 +110,6 @@ const ActionsStep = React.memo(
     );
 
     const handleCopyLink = useCallback(() => {
-      // eslint-disable-next-line no-undef
       navigator.clipboard.writeText(url);
       onClose();
     }, [onClose, url]);

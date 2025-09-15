@@ -1,7 +1,7 @@
 const babelEslintParser = require('@babel/eslint-parser');
 const prettierConfig = require('eslint-config-prettier/flat');
 const jsxPlugin = require('eslint-plugin-jsx-a11y');
-const perfectionistPlugin = require('eslint-plugin-perfectionist'); // eslint-disable-line import/no-unresolved
+const perfectionistPlugin = require('eslint-plugin-perfectionist');
 const prettierPlugin = require('eslint-plugin-prettier');
 const reactPlugin = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
@@ -56,6 +56,7 @@ module.exports = [
         localStorage: false,
         IntersectionObserver: false,
         URL: false,
+        navigator: false,
         // From ...globals.jest
         describe: false,
         test: false,
