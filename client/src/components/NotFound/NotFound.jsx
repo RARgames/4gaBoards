@@ -1,19 +1,25 @@
-import React, { useEffect } from 'react';
-import { useTranslation, Trans } from 'react-i18next';
+import React, { useEffect, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import HeaderContainer from '../../containers/HeaderContainer';
-import { Loader, LoaderSize } from '../Utils';
+import { Loader, LoaderSize, Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './NotFound.module.scss';
 
 const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   const [t] = useTranslation();
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const mainTitle = '4ga Boards';
 
   useEffect(() => {
     document.title = `${t('common.pageNotFound', { context: 'title' })} | ${mainTitle}`;
   }, [t]);
+
+  const handleCollapse = useCallback(() => {
+    setIsCollapsed(true);
+  }, []);
 
   return (
     <>
@@ -26,15 +32,15 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
         </>
       )}
       {isSocketDisconnected && (
-        <div className={s.message}>
-          <div className={s.messageHeader}>{t('common.noConnectionToServer')}</div>
-          <div className={s.messageContent}>
-            <Trans i18nKey="common.allChangesWillBeAutomaticallySavedAfterConnectionRestored">
-              All changes will be automatically saved
-              <br />
-              after connection restored
-            </Trans>
+        <div className={clsx(s.message, isCollapsed && s.messageCollapsed)}>
+          <div className={s.messageHeader}>
+            <Icon className={clsx(s.messageIcon, isCollapsed && s.messageIconCollapsed)} type={IconType.NoConnection} size={IconSize.Size20} />
+            <div className={clsx(s.messageTitle, isCollapsed && s.collapsed)}>{t('common.noConnection')}</div>
+            <Button style={ButtonStyle.Icon} title={t('common.close')} className={clsx(s.messageCloseButton, isCollapsed && s.collapsed)} onClick={handleCollapse}>
+              <Icon className={s.messageCloseIcon} type={IconType.Close} size={IconSize.Size16} />
+            </Button>
           </div>
+          <div className={clsx(s.messageContent, isCollapsed && s.collapsed)}>{t('common.allChangesWillBeAutomaticallySaved')}</div>
         </div>
       )}
     </>

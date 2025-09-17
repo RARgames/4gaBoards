@@ -7,21 +7,47 @@
     padding: 12px 18px;
     position: fixed;
     right: 20px;
-    width: 390px;
     z-index: 10001;
+  }
+
+  .messageCollapsed {
+    padding: 6px;
+  }
+
+  .messageHeader {
+    display: flex;
+  }
+
+  .messageIcon {
+    color: var(--textColor0);
+    margin-right: 6px;
+  }
+
+  .messageIconCollapsed {
+    margin-right: 0;
+  }
+
+  .messageTitle {
+    color: var(--textColor0);
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .messageCloseButton {
+    margin: -8px -14px 0 auto;
+  }
+
+  .messageCloseIcon {
+    color: var(--textColor0);
   }
 
   .messageContent {
     color: var(--textColor0);
-    font-size: 16px;
-    line-height: 1.4;
+    font-size: 14px;
   }
 
-  .messageHeader {
-    color: var(--textColor0);
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 1.2;
-    margin-bottom: 8px;
+  .collapsed {
+    display: none;
   }
 }

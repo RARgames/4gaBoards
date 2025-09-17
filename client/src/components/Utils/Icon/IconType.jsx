@@ -36,6 +36,7 @@ import { ReactComponent as MatchCase } from '../../../assets/icons/MatchCase.svg
 import { ReactComponent as Microsoft } from '../../../assets/icons/Microsoft.svg';
 import { ReactComponent as Minus } from '../../../assets/icons/Minus.svg';
 import { ReactComponent as MoveUpDown } from '../../../assets/icons/MoveUpDown.svg';
+import { ReactComponent as NoConnection } from '../../../assets/icons/NoConnection.svg';
 import { ReactComponent as Pause } from '../../../assets/icons/Pause.svg';
 import { ReactComponent as Pencil } from '../../../assets/icons/Pencil.svg';
 import { ReactComponent as Play } from '../../../assets/icons/Play.svg';
@@ -99,6 +100,7 @@ const IconType = {
   Microsoft,
   Minus,
   MoveUpDown,
+  NoConnection,
   Pause,
   Pencil,
   Play,
