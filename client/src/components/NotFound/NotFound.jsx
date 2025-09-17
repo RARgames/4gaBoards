@@ -17,9 +17,9 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
     document.title = `${t('common.pageNotFound', { context: 'title' })} | ${mainTitle}`;
   }, [t]);
 
-  const handleCollapse = useCallback(() => {
-    setIsCollapsed(true);
-  }, []);
+  const handleToggleCollapse = useCallback(() => {
+    setIsCollapsed(!isCollapsed);
+  }, [isCollapsed]);
 
   return (
     <>
@@ -32,11 +32,12 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
         </>
       )}
       {isSocketDisconnected && (
-        <div className={clsx(s.message, isCollapsed && s.messageCollapsed)}>
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+        <div className={clsx(s.message, isCollapsed && s.messageCollapsed)} onClick={handleToggleCollapse}>
           <div className={s.messageHeader}>
             <Icon className={clsx(s.messageIcon, isCollapsed && s.messageIconCollapsed)} type={IconType.NoConnection} size={IconSize.Size20} />
             <div className={clsx(s.messageTitle, isCollapsed && s.collapsed)}>{t('common.noConnection')}</div>
-            <Button style={ButtonStyle.Icon} title={t('common.close')} className={clsx(s.messageCloseButton, isCollapsed && s.collapsed)} onClick={handleCollapse}>
+            <Button style={ButtonStyle.Icon} title={t('common.close')} className={clsx(s.messageCloseButton, isCollapsed && s.collapsed)} onClick={handleToggleCollapse}>
               <Icon className={s.messageCloseIcon} type={IconType.Close} size={IconSize.Size16} />
             </Button>
           </div>

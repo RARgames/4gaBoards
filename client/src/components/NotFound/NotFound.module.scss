@@ -27,6 +27,8 @@
   .messageIcon {
     color: var(--textColor0);
     margin-right: 6px;
+    flex-shrink: 0;
+    align-self: center;
   }
 
   .messageIconCollapsed {
@@ -37,7 +39,6 @@
     color: var(--textColor0);
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 8px;
   }
 
   .messageCloseButton {
@@ -51,6 +52,7 @@
   .messageContent {
     color: var(--textColor0);
     font-size: 14px;
+    margin-top: 8px;
   }
 
   .collapsed {
