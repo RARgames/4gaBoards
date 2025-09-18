@@ -53,17 +53,18 @@
 
   .notification {
     position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--notificationRed);
-    border-radius: 8px;
     color: var(--textColorWhite);
-    display: inline-block;
     font-size: 12px;
     font-weight: bold;
-    height: 16px;
     line-height: 16px;
-    text-align: center;
+    border-radius: 3px;
     transform: translate(-8px, -6px);
-    width: 16px;
+    padding: 0 2px;
+    min-width: 14px;
   }
 
   .demoMode {
