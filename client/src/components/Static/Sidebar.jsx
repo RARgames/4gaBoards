@@ -113,6 +113,7 @@ const Sidebar = React.memo(
             <Link to={Paths.PROJECTS.replace(':id', project.id)} className={s.sidebarItemInner}>
               <Button style={ButtonStyle.NoBackground} content={project.name} className={clsx(s.sidebarButton, s.sidebarButtonPadding)} />
             </Link>
+            {project.notificationsTotal > 0 && <span className={clsx(s.notification, !isProjectManager && s.notificationNonManager)}>{project.notificationsTotal}</span>}
             {isProjectManager && (
               <ProjectActionsPopup
                 name={project.name}
@@ -173,8 +174,8 @@ const Sidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={clsx(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
-                                        title={board.isGithubConnected ? t('common.connectedToGithub', { repo: board.githubRepo }) : t('common.notConnectedToGithub')}
+                                        className={clsx(s.githubGreen, board.notificationsTotal > 0 && s.githubNotifications)}
+                                        title={t('common.connectedToGithub', { repo: board.githubRepo })}
                                       />
                                     </ConnectionsPopup>
                                   ) : (
@@ -182,11 +183,12 @@ const Sidebar = React.memo(
                                       <Icon
                                         type={IconType.Github}
                                         size={IconSize.Size13}
-                                        className={clsx(board.isGithubConnected ? s.githubGreen : s.githubGrey, s.githubCannotManage)}
-                                        title={board.isGithubConnected ? t('common.connectedToGithub') : t('common.notConnectedToGithub')}
+                                        className={clsx(s.githubGreen, s.githubCannotManage, board.notificationsTotal > 0 && s.githubNotificationsCannotManage)}
+                                        title={t('common.connectedToGithub', { repo: board.githubRepo })}
                                       />
                                     </div>
                                   ))}
+                                {board.notificationsTotal > 0 && <span className={clsx(s.notification, !isProjectManager && s.notificationNonManager)}>{board.notificationsTotal}</span>}
                                 {isProjectManager && (
                                   <BoardActionsPopup
                                     defaultDataRename={pick(board, 'name')}

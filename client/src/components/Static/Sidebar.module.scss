@@ -175,6 +175,7 @@
 
   .githubGreen {
     fill: var(--textColorGreen);
+    margin-left: 4px;
   }
 
   .githubGrey {
@@ -183,6 +184,14 @@
 
   .githubCannotManage {
     margin-right: 20px;
+  }
+
+  .githubNotifications {
+    margin-right: 4px;
+  }
+
+  .githubNotificationsCannotManage {
+    margin-right: 24px;
   }
 
   .boardButton {
@@ -211,5 +220,19 @@
 
   .reorderBoardsButton {
     width: 13px;
+  }
+
+  .notification {
+    background: var(--notificationRed);
+    color: var(--textColorWhite);
+    font-size: 12px;
+    padding: 0px 4px;
+    border-radius: 3px;
+    text-align: left;
+    margin-left: 4px;
+  }
+
+  .notificationNonManager {
+    margin-right: 20px;
   }
 }
