@@ -1,7 +1,7 @@
 :global(#app) {
   .wrapper {
     margin: 0 -12px;
-    max-width: 35vw;
+    max-width: max(274px, 35vw);
   }
 
   .item {
