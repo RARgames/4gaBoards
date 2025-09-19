@@ -40,11 +40,9 @@ module.exports = {
             card,
             type: Action.Types.CARD_DELETE,
             data: {
-              id: card.id,
               listId: card.listId,
               listName: list.name,
             },
-            user: currentUser,
           },
           currentUser,
         });

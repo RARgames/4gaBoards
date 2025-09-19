@@ -7,10 +7,6 @@ const valuesValidator = (value) => {
     return false;
   }
 
-  if (!_.isPlainObject(value.user)) {
-    return false;
-  }
-
   return true;
 };
 
@@ -40,8 +36,12 @@ module.exports = {
     const action = await Action.create({
       ...values,
       cardId: values.card.id,
-      userId: values.user.id,
+      userId: currentUser.id,
       createdById: currentUser.id,
+      data: {
+        ...values.data,
+        ...(!values.data?.cardName && values.type !== Action.Types.CARD_COMMENT ? { cardName: values.card.name } : {}),
+      },
     }).fetch();
 
     if (action) {

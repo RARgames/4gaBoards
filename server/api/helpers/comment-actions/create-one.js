@@ -59,8 +59,10 @@ module.exports = {
           values: {
             card: values.card,
             type: Action.Types.CARD_COMMENT_CREATE,
-            data: { id: action.id, text: action.data.text },
-            user: currentUser,
+            data: {
+              commentActionId: action.id,
+              commentActionText: action.data.text,
+            },
           },
           currentUser,
         });

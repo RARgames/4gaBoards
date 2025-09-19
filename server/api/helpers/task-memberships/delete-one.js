@@ -75,13 +75,12 @@ module.exports = {
               card,
               type: Action.Types.CARD_TASK_USER_REMOVE,
               data: {
-                id: taskMembership.id,
+                taskMembershipId: taskMembership.id,
                 userId: taskMembership.userId,
                 taskId: taskMembership.taskId,
-                name: user.name,
+                userName: user.name,
                 taskName: task.name,
               },
-              user: currentUser,
             },
             currentUser,
           });

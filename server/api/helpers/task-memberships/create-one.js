@@ -109,13 +109,12 @@ module.exports = {
               card: values.card,
               type: Action.Types.CARD_TASK_USER_ADD,
               data: {
-                id: taskMembership.id,
+                taskMembershipId: taskMembership.id,
                 userId: taskMembership.userId,
                 taskId: taskMembership.taskId,
-                name: user.name,
+                userName: user.name,
                 taskName: task.name,
               },
-              user: currentUser,
             },
             currentUser,
           });

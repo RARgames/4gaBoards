@@ -65,11 +65,10 @@ module.exports = {
           card: values.card,
           type: Action.Types.CARD_LABEL_ADD,
           data: {
-            id: cardLabel.id,
+            cardLabelId: cardLabel.id,
             labelId: cardLabel.labelId,
-            name: values.label.name,
+            labelName: values.label.name,
           },
-          user: currentUser,
         },
         currentUser,
       });

@@ -71,10 +71,9 @@ module.exports = {
           card: inputs.card,
           type: Action.Types.CARD_ATTACHMENT_DELETE,
           data: {
-            id: attachment.id,
-            name: attachment.name,
+            attachmentId: attachment.id,
+            attachmentName: attachment.name,
           },
-          user: currentUser,
         },
         currentUser,
       });

@@ -38,8 +38,13 @@ module.exports = {
           values: {
             card,
             type: Action.Types.CARD_COMMENT_UPDATE,
-            data: { id: action.id, userId: action.userId, prevText: inputs.record.data.text, text: action.data.text, userName: user.name },
-            user: currentUser,
+            data: {
+              commentActionId: action.id,
+              commentActionPrevText: inputs.record.data.text,
+              commentActionText: action.data.text,
+              userId: action.userId,
+              userName: user.name,
+            },
           },
           currentUser,
         });

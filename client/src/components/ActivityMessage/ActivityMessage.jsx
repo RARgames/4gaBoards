@@ -24,7 +24,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
   switch (activity.type) {
     case ActivityTypes.CARD_CREATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const listName = isTruncated ? truncate(activity.data.list.name, { length: listNameTruncateLength }) : activity.data.list.name;
+      const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
 
       return (
         <Trans
@@ -42,7 +42,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_DUPLICATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const listName = isTruncated ? truncate(activity.data.list.name, { length: listNameTruncateLength }) : activity.data.list.name;
+      const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
 
       return (
         <Trans
@@ -59,10 +59,10 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_UPDATE: {
-      const cardName = isTruncated ? truncate(activity.data.name, { length: cardNameTruncateLength }) : activity.data.name;
+      const cardName = isTruncated ? truncate(activity.data.cardName, { length: cardNameTruncateLength }) : activity.data.cardName;
 
-      if (activity.data.prevName) {
-        const prevCardName = isTruncated ? truncate(activity.data.prevName, { length: cardNameTruncateLength }) : activity.data.prevName;
+      if (activity.data.cardPrevName) {
+        const prevCardName = isTruncated ? truncate(activity.data.cardPrevName, { length: cardNameTruncateLength }) : activity.data.cardPrevName;
         return (
           <Trans
             i18nKey={card ? 'activity.cardUpdateName' : 'activity.cardUpdateNameShort'}
@@ -76,25 +76,25 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           </Trans>
         );
       }
-      if (activity.data.description !== undefined) {
-        const { prevDescription, description } = activity.data;
-        const prevDescriptionTruncated = isTruncated || isDescriptionTruncated ? truncate(prevDescription, { length: descriptionTruncateLength }) : prevDescription;
-        const descriptionTruncated = isTruncated || isDescriptionTruncated ? truncate(description, { length: descriptionTruncateLength }) : description;
+      if (activity.data.cardDescription !== undefined) {
+        const { cardPrevDescription, cardDescription } = activity.data;
+        const prevDescriptionTruncated = isTruncated || isDescriptionTruncated ? truncate(cardPrevDescription, { length: descriptionTruncateLength }) : cardPrevDescription;
+        const descriptionTruncated = isTruncated || isDescriptionTruncated ? truncate(cardDescription, { length: descriptionTruncateLength }) : cardDescription;
 
         let firstTitle = '';
         let secondTitle = '';
 
         let key;
-        if (prevDescription !== null && description !== null) {
+        if (cardPrevDescription !== null && cardDescription !== null) {
           key = card ? 'activity.cardUpdateDescription' : 'activity.cardUpdateDescriptionShort';
-          firstTitle = prevDescription;
-          secondTitle = description;
-        } else if (prevDescription === null && description !== null) {
+          firstTitle = cardPrevDescription;
+          secondTitle = cardDescription;
+        } else if (cardPrevDescription === null && cardDescription !== null) {
           key = card ? 'activity.cardUpdateDescriptionAdd' : 'activity.cardUpdateDescriptionAddShort';
-          firstTitle = description;
-        } else if (prevDescription !== null && description === null) {
+          firstTitle = cardDescription;
+        } else if (cardPrevDescription !== null && cardDescription === null) {
           key = card ? 'activity.cardUpdateDescriptionRemove' : 'activity.cardUpdateDescriptionRemoveShort';
-          firstTitle = prevDescription;
+          firstTitle = cardPrevDescription;
         }
 
         return (
@@ -112,14 +112,14 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           </Trans>
         );
       }
-      if (activity.data.dueDate !== undefined) {
-        const { prevDueDate, dueDate } = activity.data;
+      if (activity.data.cardDueDate !== undefined) {
+        const { cardPrevDueDate, cardDueDate } = activity.data;
         let key;
-        if (prevDueDate !== null && dueDate !== null) {
+        if (cardPrevDueDate !== null && cardDueDate !== null) {
           key = card ? 'activity.cardUpdateDueDate' : 'activity.cardUpdateDueDateShort';
-        } else if (prevDueDate === null && dueDate !== null) {
+        } else if (cardPrevDueDate === null && cardDueDate !== null) {
           key = card ? 'activity.cardUpdateDueDateAdd' : 'activity.cardUpdateDueDateAddShort';
-        } else if (prevDueDate !== null && dueDate === null) {
+        } else if (cardPrevDueDate !== null && cardDueDate === null) {
           key = card ? 'activity.cardUpdateDueDateRemove' : 'activity.cardUpdateDueDateRemoveShort';
         }
 
@@ -128,8 +128,8 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
             i18nKey={key}
             values={{
               card: cardName,
-              dueDate: t(`format:date`, { value: dueDate, postProcess: 'formatDate' }),
-              prevDueDate: t(`format:date`, { value: prevDueDate, postProcess: 'formatDate' }),
+              dueDate: t(`format:date`, { value: cardDueDate, postProcess: 'formatDate' }),
+              prevDueDate: t(`format:date`, { value: cardPrevDueDate, postProcess: 'formatDate' }),
             }}
           >
             {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
@@ -138,14 +138,14 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           </Trans>
         );
       }
-      if (activity.data.timer !== undefined) {
-        const { prevTimer, timer } = activity.data;
+      if (activity.data.cardTimer !== undefined) {
+        const { cardPrevTimer, cardTimer } = activity.data;
         let key;
-        if (prevTimer !== null && timer !== null) {
+        if (cardPrevTimer !== null && cardTimer !== null) {
           key = card ? 'activity.cardUpdateTimer' : 'activity.cardUpdateTimerShort';
-        } else if (prevTimer === null && timer !== null) {
+        } else if (cardPrevTimer === null && cardTimer !== null) {
           key = card ? 'activity.cardUpdateTimerAdd' : 'activity.cardUpdateTimerAddShort';
-        } else if (prevTimer !== null && timer === null) {
+        } else if (cardPrevTimer !== null && cardTimer === null) {
           key = card ? 'activity.cardUpdateTimerRemove' : 'activity.cardUpdateTimerRemoveShort';
         }
 
@@ -154,8 +154,8 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
             i18nKey={key}
             values={{
               card: cardName,
-              timer: formatTimerActivities({ startedAt: timer?.startedAt, total: timer?.total }),
-              prevTimer: formatTimerActivities({ startedAt: prevTimer?.startedAt, total: prevTimer?.total }),
+              timer: formatTimerActivities({ startedAt: cardTimer?.startedAt, total: cardTimer?.total }),
+              prevTimer: formatTimerActivities({ startedAt: cardPrevTimer?.startedAt, total: cardPrevTimer?.total }),
             }}
           >
             {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
@@ -164,25 +164,25 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           </Trans>
         );
       }
-      if (activity.data.coverAttachmentName !== undefined) {
-        const { prevCoverAttachmentName, coverAttachmentName } = activity.data;
-        const coverAttachmentNameTruncated = isTruncated ? truncate(coverAttachmentName, { length: defaultTruncateLength }) : coverAttachmentName;
-        const prevCoverAttachmentNameTruncated = isTruncated ? truncate(prevCoverAttachmentName, { length: defaultTruncateLength }) : prevCoverAttachmentName;
+      if (activity.data.cardCoverAttachmentName !== undefined) {
+        const { cardPrevCoverAttachmentName, cardCoverAttachmentName } = activity.data;
+        const cardCoverAttachmentNameTruncated = isTruncated ? truncate(cardCoverAttachmentName, { length: defaultTruncateLength }) : cardCoverAttachmentName;
+        const cardPrevCoverAttachmentNameTruncated = isTruncated ? truncate(cardPrevCoverAttachmentName, { length: defaultTruncateLength }) : cardPrevCoverAttachmentName;
 
         let firstTitle = '';
         let secondTitle = '';
 
         let key;
-        if (prevCoverAttachmentName !== null && coverAttachmentName !== null) {
+        if (cardPrevCoverAttachmentName !== null && cardCoverAttachmentName !== null) {
           key = card ? 'activity.cardUpdateCoverAttachment' : 'activity.cardUpdateCoverAttachmentShort';
-          firstTitle = prevCoverAttachmentNameTruncated;
-          secondTitle = coverAttachmentNameTruncated;
-        } else if (prevCoverAttachmentName === null && coverAttachmentName !== null) {
+          firstTitle = cardPrevCoverAttachmentNameTruncated;
+          secondTitle = cardCoverAttachmentNameTruncated;
+        } else if (cardPrevCoverAttachmentName === null && cardCoverAttachmentName !== null) {
           key = card ? 'activity.cardUpdateCoverAttachmentAdd' : 'activity.cardUpdateCoverAttachmentAddShort';
-          firstTitle = coverAttachmentNameTruncated;
-        } else if (prevCoverAttachmentName !== null && coverAttachmentName === null) {
+          firstTitle = cardCoverAttachmentNameTruncated;
+        } else if (cardPrevCoverAttachmentName !== null && cardCoverAttachmentName === null) {
           key = card ? 'activity.cardUpdateCoverAttachmentRemove' : 'activity.cardUpdateCoverAttachmentRemoveShort';
-          firstTitle = prevCoverAttachmentNameTruncated;
+          firstTitle = cardPrevCoverAttachmentNameTruncated;
         }
 
         return (
@@ -190,8 +190,8 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
             i18nKey={key}
             values={{
               card: cardName,
-              coverAttachment: coverAttachmentNameTruncated,
-              prevCoverAttachment: prevCoverAttachmentNameTruncated,
+              coverAttachment: cardCoverAttachmentNameTruncated,
+              prevCoverAttachment: cardPrevCoverAttachmentNameTruncated,
             }}
           >
             {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} title={cardName} /> : <span />}
@@ -200,7 +200,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           </Trans>
         );
       }
-      if (activity.data.position !== undefined) {
+      if (activity.data.cardPosition !== undefined) {
         const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
 
         return (
@@ -222,8 +222,8 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_MOVE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const fromListName = isTruncated ? truncate(activity.data.fromList.name, { length: listNameTruncateLength }) : activity.data.fromList.name;
-      const toListName = isTruncated ? truncate(activity.data.toList.name, { length: listNameTruncateLength }) : activity.data.toList.name;
+      const fromListName = isTruncated ? truncate(activity.data.listFromName, { length: listNameTruncateLength }) : activity.data.listFromName;
+      const toListName = isTruncated ? truncate(activity.data.listToName, { length: listNameTruncateLength }) : activity.data.listToName;
 
       return (
         <Trans
@@ -258,7 +258,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_COMMENT_CREATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const cardComment = isTruncated ? truncate(activity.data.text, { length: commentTruncateLength }) : activity.data.text;
+      const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
 
       return (
         <Trans
@@ -276,8 +276,8 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_COMMENT_UPDATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const prevCardComment = isTruncated ? truncate(activity.data.prevText, { length: commentTruncateLength }) : activity.data.prevText;
-      const cardComment = isTruncated ? truncate(activity.data.text, { length: commentTruncateLength }) : activity.data.text;
+      const prevCardComment = isTruncated ? truncate(activity.data.prevCommentActionText, { length: commentTruncateLength }) : activity.data.prevCommentActionText;
+      const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       return (
@@ -300,7 +300,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_COMMENT_DELETE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const cardComment = isTruncated ? truncate(activity.data.text, { length: commentTruncateLength }) : activity.data.text;
+      const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       return (
@@ -321,7 +321,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_USER_ADD: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const userName = isTruncated ? truncate(activity.data.name, { length: userNameTruncateLength }) : activity.data.name;
+      const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       return (
         <Trans
@@ -339,7 +339,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_USER_REMOVE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const userName = isTruncated ? truncate(activity.data.name, { length: userNameTruncateLength }) : activity.data.name;
+      const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       return (
         <Trans
@@ -357,7 +357,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_TASK_CREATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const taskName = isTruncated ? truncate(activity.data.name, { length: taskNameTruncateLength }) : activity.data.name;
+      const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
@@ -375,10 +375,10 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_TASK_UPDATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const taskName = isTruncated ? truncate(activity.data.name, { length: taskNameTruncateLength }) : activity.data.name;
+      const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       if (activity.data.prevName) {
-        const prevTaskName = isTruncated ? truncate(activity.data.prevName, { length: taskNameTruncateLength }) : activity.data.prevName;
+        const prevTaskName = isTruncated ? truncate(activity.data.prevTaskName, { length: taskNameTruncateLength }) : activity.data.prevTaskName;
         return (
           <Trans
             i18nKey={card ? 'activity.cardTaskUpdateName' : 'activity.cardTaskUpdateNameShort'}
@@ -394,14 +394,14 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           </Trans>
         );
       }
-      if (activity.data.isCompleted !== undefined) {
+      if (activity.data.taskIsCompleted !== undefined) {
         return (
           <Trans
             i18nKey={card ? 'activity.cardTaskUpdateIsCompleted' : 'activity.cardTaskUpdateIsCompletedShort'}
             values={{
               task: taskName,
               card: cardName,
-              isCompleted: activity.data.isCompleted ? t('activity.cardTaskCompleted') : t('activity.cardTaskUncompleted'),
+              isCompleted: activity.data.taskIsCompleted ? t('activity.cardTaskCompleted') : t('activity.cardTaskUncompleted'),
             }}
           >
             {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
@@ -410,14 +410,14 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           </Trans>
         );
       }
-      if (activity.data.dueDate !== undefined) {
-        const { prevDueDate, dueDate } = activity.data;
+      if (activity.data.taskDueDate !== undefined) {
+        const { taskPrevDueDate, taskDueDate } = activity.data;
         let key;
-        if (prevDueDate !== null && dueDate !== null) {
+        if (taskPrevDueDate !== null && taskDueDate !== null) {
           key = card ? 'activity.cardTaskUpdateDueDate' : 'activity.cardTaskUpdateDueDateShort';
-        } else if (prevDueDate === null && dueDate !== null) {
+        } else if (taskPrevDueDate === null && taskDueDate !== null) {
           key = card ? 'activity.cardTaskUpdateDueDateAdd' : 'activity.cardTaskUpdateDueDateAddShort';
-        } else if (prevDueDate !== null && dueDate === null) {
+        } else if (taskPrevDueDate !== null && taskDueDate === null) {
           key = card ? 'activity.cardTaskUpdateDueDateRemove' : 'activity.cardTaskUpdateDueDateRemoveShort';
         }
 
@@ -427,8 +427,8 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
             values={{
               task: taskName,
               card: cardName,
-              dueDate: t(`format:date`, { value: dueDate, postProcess: 'formatDate' }),
-              prevDueDate: t(`format:date`, { value: prevDueDate, postProcess: 'formatDate' }),
+              dueDate: t(`format:date`, { value: taskDueDate, postProcess: 'formatDate' }),
+              prevDueDate: t(`format:date`, { value: taskPrevDueDate, postProcess: 'formatDate' }),
             }}
           >
             {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} /> : <span />}
@@ -443,7 +443,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_TASK_DUPLICATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const taskName = isTruncated ? truncate(activity.data.name, { length: taskNameTruncateLength }) : activity.data.name;
+      const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
@@ -461,7 +461,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_TASK_MOVE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const taskName = isTruncated ? truncate(activity.data.name, { length: taskNameTruncateLength }) : activity.data.name;
+      const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
@@ -479,7 +479,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_TASK_DELETE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const taskName = isTruncated ? truncate(activity.data.name, { length: taskNameTruncateLength }) : activity.data.name;
+      const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
@@ -497,7 +497,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_TASK_USER_ADD: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const userName = isTruncated ? truncate(activity.data.name, { length: userNameTruncateLength }) : activity.data.name;
+      const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
@@ -518,7 +518,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_TASK_USER_REMOVE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const userName = isTruncated ? truncate(activity.data.name, { length: userNameTruncateLength }) : activity.data.name;
+      const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
@@ -539,7 +539,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_ATTACHMENT_CREATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const attachmentName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+      const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
 
       return (
         <Trans
@@ -557,14 +557,14 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_ATTACHMENT_UPDATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const prevAttachmentName = isTruncated ? truncate(activity.data.prevName, { length: commentTruncateLength }) : activity.data.prevName;
-      const attachmentName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+      const attachmentPrevName = isTruncated ? truncate(activity.data.attachmentPrevName, { length: commentTruncateLength }) : activity.data.attachmentPrevName;
+      const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
 
       return (
         <Trans
           i18nKey={card ? 'activity.cardAttachmentUpdate' : 'activity.cardAttachmentUpdateShort'}
           values={{
-            prevAttachment: prevAttachmentName,
+            prevAttachment: attachmentPrevName,
             attachment: attachmentName,
             card: cardName,
           }}
@@ -578,7 +578,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_ATTACHMENT_DELETE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const attachmentName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+      const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
 
       return (
         <Trans
@@ -596,7 +596,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_LABEL_ADD: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const labelName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+      const labelName = isTruncated ? truncate(activity.data.labelName, { length: commentTruncateLength }) : activity.data.labelName;
 
       return (
         <Trans
@@ -614,7 +614,7 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_LABEL_REMOVE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const labelName = isTruncated ? truncate(activity.data.name, { length: commentTruncateLength }) : activity.data.name;
+      const labelName = isTruncated ? truncate(activity.data.labelName, { length: commentTruncateLength }) : activity.data.labelName;
 
       return (
         <Trans

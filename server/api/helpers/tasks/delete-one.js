@@ -44,10 +44,9 @@ module.exports = {
             card,
             type: Action.Types.CARD_TASK_DELETE,
             data: {
-              id: task.id,
-              name: task.name,
+              taskId: task.id,
+              taskName: task.name,
             },
-            user: currentUser,
           },
           currentUser,
         });

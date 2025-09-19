@@ -64,10 +64,9 @@ module.exports = {
             card: values.card,
             type: Action.Types.CARD_ATTACHMENT_CREATE,
             data: {
-              id: attachment.id,
-              name: attachment.name,
+              attachmentId: attachment.id,
+              attachmentName: attachment.name,
             },
-            user: currentUser,
           },
           currentUser,
         });

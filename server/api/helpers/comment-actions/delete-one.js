@@ -43,8 +43,12 @@ module.exports = {
             values: {
               card,
               type: Action.Types.CARD_COMMENT_DELETE,
-              data: { id: action.id, userId: action.userId, text: action.data.text, userName: user.name },
-              user: currentUser,
+              data: {
+                commentActionId: action.id,
+                userId: action.userId,
+                commentActionText: action.data.text,
+                userName: user.name,
+              },
             },
             currentUser,
           });

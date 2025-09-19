@@ -103,11 +103,10 @@ module.exports = {
             card: values.card,
             type: Action.Types.CARD_USER_ADD,
             data: {
-              id: cardMembership.id,
+              cardMembershipId: cardMembership.id,
               userId: cardMembership.userId,
-              name: user.name,
+              userName: user.name,
             },
-            user: currentUser,
           },
           currentUser,
         });

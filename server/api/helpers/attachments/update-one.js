@@ -47,11 +47,10 @@ module.exports = {
             card,
             type: Action.Types.CARD_ATTACHMENT_UPDATE,
             data: {
-              id: attachment.id,
-              prevName: inputs.record.name,
-              name: attachment.name,
+              attachmentId: attachment.id,
+              attachmentPrevName: inputs.record.name,
+              attachmentName: attachment.name,
             },
-            user: currentUser,
           },
           currentUser,
         });

@@ -44,11 +44,10 @@ module.exports = {
             card,
             type: Action.Types.CARD_LABEL_REMOVE,
             data: {
-              id: cardLabel.id,
+              cardLabelId: cardLabel.id,
               labelId: cardLabel.labelId,
-              name: label.name,
+              labelName: label.name,
             },
-            user: currentUser,
           },
           currentUser,
         });

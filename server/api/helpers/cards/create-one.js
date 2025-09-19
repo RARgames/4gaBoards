@@ -107,9 +107,9 @@ module.exports = {
           card,
           type: inputs.duplicate ? Action.Types.CARD_DUPLICATE : Action.Types.CARD_CREATE,
           data: {
-            list: _.pick(values.list, ['id', 'name']),
+            listId: values.list.id,
+            listName: values.list.name,
           },
-          user: currentUser,
         },
         currentUser,
       });

@@ -88,10 +88,9 @@ module.exports = {
             card: values.card,
             type: inputs.duplicate ? Action.Types.CARD_TASK_DUPLICATE : Action.Types.CARD_TASK_CREATE,
             data: {
-              id: task.id,
-              name: task.name,
+              taskId: task.id,
+              taskName: task.name,
             },
-            user: currentUser,
           },
           currentUser,
         });
