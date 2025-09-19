@@ -53,4 +53,18 @@
     width: fit-content;
     text-align: center;
   }
+
+  .donateButton {
+    border-color: var(--backgroundColor);
+    background: var(--textColorGold);
+    color: var(--backgroundColor);
+    width: fit-content;
+    text-align: center;
+    margin: 2px 0 4px 0;
+
+    &:hover {
+      background: var(--textColorGoldHover);
+      color: var(--backgroundColor);
+    }
+  }
 }

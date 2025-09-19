@@ -354,6 +354,7 @@ export default {
       stopTimer: 'Parar Timer',
       subscribed: 'Inscrito',
       subscribeToMyOwnCards: 'Inscrever-se para meus próprios cartões',
+      supportDevelopment: 'Apoiar o Desenvolvimento do 4ga Boards',
       switchToBoardView: 'Mudar para Visualização de Painel',
       switchToListView: 'Mudar para Visualização de Lista',
       taskActions_title: 'Ações da Tarefa',

@@ -50,11 +50,14 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
         {demoMode && <div className={s.demoMode}>{t('common.demoMode')}</div>}
         <div className={s.links}>
           <div className={s.link}>
-            <ExternalLink href={i18n && i18n.resolvedLanguage === 'pl' ? 'https://docs.4gaboards.com/pl' : 'https://docs.4gaboards.com'}>{t('common.docs')}</ExternalLink>
-          </div>
-          <div className={s.link}>
             <ExternalLink href="https://4gaboards.com">{t('common.website')}</ExternalLink>
           </div>
+          <div className={s.link}>
+            <ExternalLink href={i18n && i18n.resolvedLanguage === 'pl' ? 'https://docs.4gaboards.com/pl' : 'https://docs.4gaboards.com'}>{t('common.docs')}</ExternalLink>
+          </div>
+          <ExternalLink href="https://www.paypal.com/donate/?hosted_button_id=86RVDTMNLBBPJ">
+            <Button style={ButtonStyle.DefaultBorder} content={t('common.supportDevelopment')} className={s.donateButton} />
+          </ExternalLink>
           <div className={s.link}>
             <ExternalLink href="https://github.com/RARgames/4gaBoards">
               <Icon type={IconType.Github} size={IconSize.Size13} className={s.icon} />

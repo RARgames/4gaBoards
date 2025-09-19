@@ -368,6 +368,7 @@ export default {
       stopTimer: 'Wyłącz stoper',
       subscribed: 'Zasubskrybowano',
       subscribeToMyOwnCards: 'Subskrybuj kartę po utworzeniu',
+      supportDevelopment: 'Wesprzyj rozwój 4ga Boards',
       switchToBoardView: 'Zmień na widok tablicy',
       switchToListView: 'Zmień na widok listy',
       taskActions_title: 'Edytuj zadanie',

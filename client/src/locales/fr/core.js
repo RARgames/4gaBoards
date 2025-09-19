@@ -370,6 +370,7 @@ export default {
       stopTimer: 'Arrêter le minuteur',
       subscribed: 'Abonné',
       subscribeToMyOwnCards: 'Être abonné à mes propres cartes par défaut',
+      supportDevelopment: 'Supporter le développement de 4ga Boards',
       switchToBoardView: 'Passer à la vue du tableau',
       switchToListView: 'Passer à la vue de la liste',
       taskActions_title: 'Actions de tâche',

@@ -352,6 +352,7 @@ export default {
       stopTimer: 'Stop Timer',
       subscribed: 'Subscribed',
       subscribeToMyOwnCards: 'Subscribe to my own cards',
+      supportDevelopment: 'Support 4ga Boards Development',
       switchToBoardView: 'Switch to Board View',
       switchToListView: 'Switch to List View',
       taskActions_title: 'Task Actions',
