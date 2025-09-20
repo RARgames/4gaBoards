@@ -77,12 +77,22 @@ export default class extends BaseModel {
         }
 
         if (payload.cardMemberships) {
+          const cardIds = new Set(payload.cardMemberships.map(({ cardId }) => cardId));
+          cardIds.forEach((cardId) => {
+            Card.withId(cardId).deleteUsers();
+          });
+
           payload.cardMemberships.forEach(({ cardId, userId }) => {
             Card.withId(cardId).users.add(userId);
           });
         }
 
         if (payload.cardLabels) {
+          const cardIds = new Set(payload.cardLabels.map(({ cardId }) => cardId));
+          cardIds.forEach((cardId) => {
+            Card.withId(cardId).deleteLabels();
+          });
+
           payload.cardLabels.forEach(({ cardId, labelId }) => {
             Card.withId(cardId).labels.add(labelId);
           });
@@ -298,9 +308,17 @@ export default class extends BaseModel {
     return this.board && this.board.isAvailableForUser(userId);
   }
 
-  deleteClearable() {
+  deleteUsers() {
     this.users.clear();
+  }
+
+  deleteLabels() {
     this.labels.clear();
+  }
+
+  deleteClearable() {
+    this.deleteUsers();
+    this.deleteLabels();
   }
 
   deleteActivities() {

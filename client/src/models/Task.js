@@ -47,11 +47,10 @@ export default class extends BaseModel {
         }
 
         if (payload.taskMemberships) {
-          Task.all()
-            .toModelArray()
-            .forEach((taskModel) => {
-              taskModel.deleteClearable();
-            });
+          const taskIds = new Set(payload.taskMemberships.map(({ taskId }) => taskId));
+          taskIds.forEach((taskId) => {
+            Task.withId(taskId).deleteUsers();
+          });
 
           payload.taskMemberships.forEach(({ taskId, userId }) => {
             Task.withId(taskId).users.add(userId);
@@ -80,19 +79,6 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.CARD_DUPLICATE__SUCCESS:
-        if (payload.tasks) {
-          payload.tasks.forEach((task) => {
-            Task.upsert(task);
-          });
-        }
-
-        if (payload.taskMemberships) {
-          payload.taskMemberships.forEach(({ taskId, userId }) => {
-            Task.withId(taskId).users.add(userId);
-          });
-        }
-
-        break;
       case ActionTypes.BOARD_FETCH__SUCCESS:
         if (payload.tasks) {
           payload.tasks.forEach((task) => {
@@ -101,9 +87,9 @@ export default class extends BaseModel {
         }
 
         if (payload.taskMemberships) {
-          const taskIds = payload.taskMemberships.map(({ taskId }) => taskId);
+          const taskIds = new Set(payload.taskMemberships.map(({ taskId }) => taskId));
           taskIds.forEach((taskId) => {
-            Task.withId(taskId).deleteClearable();
+            Task.withId(taskId).deleteUsers();
           });
 
           payload.taskMemberships.forEach(({ taskId, userId }) => {
@@ -191,8 +177,12 @@ export default class extends BaseModel {
     }
   }
 
-  deleteClearable() {
+  deleteUsers() {
     this.users.clear();
+  }
+
+  deleteClearable() {
+    this.deleteUsers();
   }
 
   deleteWithClearable() {

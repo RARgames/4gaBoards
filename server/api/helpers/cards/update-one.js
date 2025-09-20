@@ -133,17 +133,11 @@ module.exports = {
       card = inputs.record;
     } else {
       let prevLabels;
+      const prevCard = await Card.findOne(inputs.record.id);
       if (values.board) {
         const boardMemberUserIds = await sails.helpers.boards.getMemberUserIds(values.board.id);
 
         await CardSubscription.destroy({
-          cardId: inputs.record.id,
-          userId: {
-            '!=': boardMemberUserIds,
-          },
-        });
-
-        await CardMembership.destroy({
           cardId: inputs.record.id,
           userId: {
             '!=': boardMemberUserIds,
@@ -156,7 +150,6 @@ module.exports = {
           cardId: inputs.record.id,
         });
 
-        const prevCard = await Card.findOne(inputs.record.id);
         await sails.helpers.lists.updateMeta.with({ id: prevCard.listId, currentUser, skipMetaUpdate });
       }
 
@@ -210,6 +203,9 @@ module.exports = {
         );
 
         sails.sockets.broadcast(`board:${card.boardId}`, 'cardUpdate', {
+          item: card,
+        });
+        sails.sockets.broadcast(`board:${prevCard.boardId}`, 'cardUpdate', {
           item: card,
         });
 
@@ -284,8 +280,6 @@ module.exports = {
           });
         }
       }
-
-      // TODO: add transfer action
     }
 
     if (!_.isUndefined(isSubscribed)) {
