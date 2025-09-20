@@ -122,6 +122,9 @@ export default class extends BaseModel {
         } catch {} // eslint-disable-line no-empty
 
         break;
+      case ActionTypes.USER_TO_TASK_ADD__FAILURE:
+        Task.withId(payload.taskId).users.remove(payload.id);
+        break;
       case ActionTypes.USER_FROM_TASK_REMOVE:
         Task.withId(payload.taskId).users.remove(payload.id);
 
@@ -132,6 +135,9 @@ export default class extends BaseModel {
           Task.withId(payload.taskMembership.taskId).users.remove(payload.taskMembership.userId);
         } catch {} // eslint-disable-line no-empty
 
+        break;
+      case ActionTypes.USER_FROM_TASK_REMOVE__FAILURE:
+        Task.withId(payload.taskId).users.add(payload.id);
         break;
       case ActionTypes.TASK_CREATE:
       case ActionTypes.TASK_CREATE_HANDLE:
