@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { ActivityTypes } from '../../constants/Enums';
 import Paths from '../../constants/Paths';
-import { formatTimerActivities } from '../../utils/timer';
+import { formatTimerActivities, getTimerState } from '../../utils/timer';
 
 import * as s from './ActivityMessage.module.scss';
 
@@ -133,13 +133,26 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
       }
       if (activity.data.cardTimer !== undefined) {
         const { cardPrevTimer, cardTimer } = activity.data;
+        const state = getTimerState(cardPrevTimer, cardTimer);
         let key;
-        if (cardPrevTimer !== null && cardTimer !== null) {
-          key = card ? 'activity.cardUpdateTimer' : 'activity.cardUpdateTimerShort';
-        } else if (cardPrevTimer === null && cardTimer !== null) {
-          key = card ? 'activity.cardUpdateTimerAdd' : 'activity.cardUpdateTimerAddShort';
-        } else if (cardPrevTimer !== null && cardTimer === null) {
-          key = card ? 'activity.cardUpdateTimerRemove' : 'activity.cardUpdateTimerRemoveShort';
+        switch (state) {
+          case 'start':
+            key = card ? 'activity.cardUpdateTimerStart' : 'activity.cardUpdateTimerStartShort';
+            break;
+          case 'stop':
+            key = card ? 'activity.cardUpdateTimerStop' : 'activity.cardUpdateTimerStopShort';
+            break;
+          case 'edit':
+            key = card ? 'activity.cardUpdateTimerEdit' : 'activity.cardUpdateTimerEditShort';
+            break;
+          case 'add':
+            key = card ? 'activity.cardUpdateTimerAdd' : 'activity.cardUpdateTimerAddShort';
+            break;
+          case 'remove':
+            key = card ? 'activity.cardUpdateTimerRemove' : 'activity.cardUpdateTimerRemoveShort';
+            break;
+          default:
+            key = '';
         }
 
         return (

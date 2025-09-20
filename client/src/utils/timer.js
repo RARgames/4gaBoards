@@ -52,8 +52,28 @@ export const formatTimer = (timer) => {
   return timeParts.join(':');
 };
 
+export const getTimerState = (prev, next) => {
+  const prevRunning = !!prev?.startedAt;
+  const nextRunning = !!next?.startedAt;
+
+  if (!prev && next) return 'add';
+  if (prev && !next) return 'remove';
+
+  if (!prevRunning && nextRunning) return 'start';
+  if (prevRunning && !nextRunning) return 'stop';
+
+  if (prev.total !== next.total && ((!prevRunning && !nextRunning) || (prevRunning && nextRunning))) {
+    return 'edit';
+  }
+
+  return 'none';
+};
+
 export const formatTimerActivities = (timer) => {
-  const { hours, minutes, seconds } = getTimerParts(timer);
+  let { hours, minutes, seconds } = getTimerParts(timer);
+  if ([hours, minutes, seconds].every(Number.isNaN)) {
+    ({ hours, minutes, seconds } = getTimerParts({ ...timer, startedAt: null }));
+  }
 
   const formatPart = (part) => {
     if (Number.isNaN(part)) {
