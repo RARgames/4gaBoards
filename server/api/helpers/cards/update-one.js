@@ -249,40 +249,40 @@ module.exports = {
           currentUser,
         });
         await sails.helpers.lists.updateMeta.with({ id: inputs.list.id, currentUser, skipMetaUpdate });
-      }
-
-      const list = await List.findOne(card.listId);
-      const prevAttachment = inputs.record.coverAttachmentId ? await Attachment.findOne(inputs.record.coverAttachmentId) : undefined;
-      const attachment = card.coverAttachmentId ? await Attachment.findOne(card.coverAttachmentId) : undefined;
-      const data = {
-        cardPrevName: values.name && inputs.record.name,
-        cardPrevDescription: values.description !== undefined ? inputs.record.description : undefined,
-        cardDescription: values.description && card.description,
-        cardPrevDueDate: values.dueDate !== undefined ? inputs.record.dueDate : undefined,
-        cardDueDate: values.dueDate && card.dueDate,
-        cardPrevTimer: values.timer !== undefined ? inputs.record.timer : undefined,
-        cardTimer: values.timer && card.timer,
-        cardPrevCoverAttachmentId: values.coverAttachmentId !== undefined ? inputs.record.coverAttachmentId : undefined,
-        // eslint-disable-next-line no-nested-ternary
-        cardPrevCoverAttachmentName: values.coverAttachmentId !== undefined ? (prevAttachment ? prevAttachment.name : null) : undefined,
-        cardCoverAttachmentId: values.coverAttachmentId && card.coverAttachmentId,
-        // eslint-disable-next-line no-nested-ternary
-        cardCoverAttachmentName: values.coverAttachmentId !== undefined ? (attachment ? attachment.name : null) : undefined,
-        cardPrevPosition: values.position && inputs.record.position,
-        cardPosition: values.position && card.position,
-        listId: values.position && list?.id,
-        listName: values.position && list?.name,
-      };
-      const hasDefinedValues = Object.values(data).some((v) => v !== undefined);
-      if (hasDefinedValues) {
-        await sails.helpers.actions.createOne.with({
-          values: {
-            card,
-            type: Action.Types.CARD_UPDATE,
-            data,
-          },
-          currentUser,
-        });
+      } else {
+        const list = await List.findOne(card.listId);
+        const prevAttachment = inputs.record.coverAttachmentId ? await Attachment.findOne(inputs.record.coverAttachmentId) : undefined;
+        const attachment = card.coverAttachmentId ? await Attachment.findOne(card.coverAttachmentId) : undefined;
+        const data = {
+          cardPrevName: values.name && inputs.record.name,
+          cardPrevDescription: values.description !== undefined ? inputs.record.description : undefined,
+          cardDescription: values.description && card.description,
+          cardPrevDueDate: values.dueDate !== undefined ? inputs.record.dueDate : undefined,
+          cardDueDate: values.dueDate && card.dueDate,
+          cardPrevTimer: values.timer !== undefined ? inputs.record.timer : undefined,
+          cardTimer: values.timer && card.timer,
+          cardPrevCoverAttachmentId: values.coverAttachmentId !== undefined ? inputs.record.coverAttachmentId : undefined,
+          // eslint-disable-next-line no-nested-ternary
+          cardPrevCoverAttachmentName: values.coverAttachmentId !== undefined ? (prevAttachment ? prevAttachment.name : null) : undefined,
+          cardCoverAttachmentId: values.coverAttachmentId && card.coverAttachmentId,
+          // eslint-disable-next-line no-nested-ternary
+          cardCoverAttachmentName: values.coverAttachmentId !== undefined ? (attachment ? attachment.name : null) : undefined,
+          cardPrevPosition: values.position && inputs.record.position,
+          cardPosition: values.position && card.position,
+          listId: values.position && list?.id,
+          listName: values.position && list?.name,
+        };
+        const hasDefinedValues = Object.values(data).some((v) => v !== undefined);
+        if (hasDefinedValues) {
+          await sails.helpers.actions.createOne.with({
+            values: {
+              card,
+              type: Action.Types.CARD_UPDATE,
+              data,
+            },
+            currentUser,
+          });
+        }
       }
 
       // TODO: add transfer action
