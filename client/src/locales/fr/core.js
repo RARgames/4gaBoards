@@ -463,6 +463,8 @@ export default {
       cardCommentCreateShort: 'Ajouté un commentaire <1>{{comment}}</1>',
       cardCommentUpdate: 'Modifié un commentaire <1>{{prevComment}}</1> en <2>{{comment}}</2> (auteur: <3>{{user}}</3>) dans <0>{{card}}</0>',
       cardCommentUpdateShort: 'Modifié un commentaire <1>{{prevComment}}</1> en <2>{{comment}}</2> (auteur: <3>{{user}}</3>)',
+      cardCommentUpdateOwn: 'Commentaire personnel mis à jour de <1>{{prevComment}}</1> à <2>{{comment}}</2> dans <0>{{card}}</0>',
+      cardCommentUpdateOwnShort: 'Commentaire personnel mis à jour de <1>{{prevComment}}</1> à <2>{{comment}}</2>',
       cardCommentDelete: 'Supprimé un commentaire <1>{{comment}}</1> supprimé par <2>{{user}}</2> de <0>{{card}}</0>',
       cardCommentDeleteShort: 'Supprimé un commentaire <1>{{comment}}</1> supprimé par <2>{{user}}</2>',
       cardUserAdd: 'Utilisateur <1>{{user}}</1> ajouté à <0>{{card}}</0>',

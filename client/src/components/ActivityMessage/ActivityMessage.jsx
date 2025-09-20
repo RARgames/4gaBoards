@@ -275,13 +275,20 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
     case ActivityTypes.CARD_COMMENT_UPDATE: {
       const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
-      const prevCardComment = isTruncated ? truncate(activity.data.prevCommentActionText, { length: commentTruncateLength }) : activity.data.prevCommentActionText;
+      const prevCardComment = isTruncated ? truncate(activity.data.commentActionPrevText, { length: commentTruncateLength }) : activity.data.commentActionPrevText;
       const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
+      let key;
+      if (activity.userId === activity.data.userId) {
+        key = card ? 'activity.cardCommentUpdateOwn' : 'activity.cardCommentUpdateOwnShort';
+      } else {
+        key = card ? 'activity.cardCommentUpdate' : 'activity.cardCommentUpdateShort';
+      }
+
       return (
         <Trans
-          i18nKey={card ? 'activity.cardCommentUpdate' : 'activity.cardCommentUpdateShort'}
+          i18nKey={key}
           values={{
             prevComment: prevCardComment,
             comment: cardComment,

@@ -18,7 +18,7 @@ const Item = React.memo(({ type, data, user, createdAt, boardMemberships }) => {
       <span className={s.author}>{user.name}</span>
       {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
       <div className={s.contentText}>
-        <ActivityMessage activity={{ type, data, user }} />
+        <ActivityMessage activity={{ type, data, user, userId: user?.id }} />
       </div>
     </div>
   );

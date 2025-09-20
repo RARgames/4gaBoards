@@ -445,6 +445,8 @@ export default {
       cardCommentCreateShort: 'Added comment <1>{{comment}}</1>',
       cardCommentUpdate: 'Updated comment <1>{{prevComment}}</1> to <2>{{comment}}</2> (author: <3>{{user}}</3>) in <0>{{card}}</0>',
       cardCommentUpdateShort: 'Updated comment <1>{{prevComment}}</1> to <2>{{comment}}</2> (author: <3>{{user}}</3>)',
+      cardCommentUpdateOwn: 'Updated own comment <1>{{prevComment}}</1> to <2>{{comment}}</2> in <0>{{card}}</0>',
+      cardCommentUpdateOwnShort: 'Updated own comment <1>{{prevComment}}</1> to <2>{{comment}}</2>',
       cardCommentDelete: 'Deleted comment <1>{{comment}}</1> by <2>{{user}}</2> from <0>{{card}}</0>',
       cardCommentDeleteShort: 'Deleted comment <1>{{comment}}</1> by <2>{{user}}</2>',
       cardUserAdd: 'Added user <1>{{user}}</1> to <0>{{card}}</0>',
