@@ -420,7 +420,7 @@ module.exports = {
             newData.userId = allUsers[newData.userId]?.id ?? null;
           }
           if (newData.text && !allUsers[action.userId]) {
-            newData.text = `${newData.text}\n\n---\n*Imported comment, original author: ${action.newData.userName ?? 'unknown'}*`;
+            newData.text = `${newData.text}\n\n---\n*Imported comment, original author: ${newData.userName ?? 'unknown'}*`;
           }
         }
         const updatedAt = parseJSON(action.updatedAt);

@@ -1,40 +1,41 @@
 id,position,name,description,dueDate,timer,commentCount,boardId,listId,coverAttachmentId
-1535719361803715712,32767.5,Edytor tekstu: Opis karty i komentarze,Zarówno opis karty jak i komentarze umożliwiają wykorzystywanie składni Markdown.,,,1,1535719359614288995,1535719361292010608,
-1535719361711441010,32767.5,Different language of Getting Started?,"The Getting Started project is available in:
+1605293212367324729,32767.5,Different language of Getting Started?,"The Getting Started project is available in:
 - English - <!--red-->EN<!--red-end-->
 - Polish - <!--red-->PL<!--red-end-->
 
 To access the Getting Started in different languages:
 - Change your display language in 4ga Boards - Go to Settings -> Preferences -> Language
-- Re-import Getting Started project - Go to Settings -> About -> Import Getting Started Project",,,0,1535719359614288995,1535719361292010601,
-1535719361711441009,65535,Filtrowanie tablic/projektów,"Użyj pola <!--lime-->Filtruj...<!--lime-end--> w panelu bocznym aby wyszukać konkretne projekty/tablice.
-
-Zmień rodzaj wyszukiwania (P dla projektów, B dla tablic) klikając przycisk `Tab` lub ikonkę <!--orange-->Skrzyżowanych strzałek<!--orange-end-->.
-
-Usuń filtry klikając `Esc` lub ikonę <!--orange-->X<!--orange-end--> .",,,0,1535719359614288995,1535719361292010603,
-1535719361803715711,65535,Przejdź do ustawień,"Ustawienia dostępne są po kliknięciu ikony  <!--orange-->Zębatki <!--orange-end-->lub twój awatar w prawym górnym rogu.
+- Re-import Getting Started project - Go to Settings -> About -> Import Getting Started Project",,,0,1605293210387613227,1605293211964671537,
+1605293212442822219,32767.5,Edytor tekstu: Opis karty i komentarze,Zarówno opis karty jak i komentarze umożliwiają wykorzystywanie składni Markdown.,,,1,1605293210387613227,1605293211973060152,
+1605293212409267783,65535,Przejdź do ustawień,"Ustawienia dostępne są po kliknięciu ikony  <!--orange-->Zębatki <!--orange-end-->lub twój awatar w prawym górnym rogu.
 Aby przejść do ustawień projektu kliknij ikonę <!--orange-->Zębatki w prostokącie<!--orange-end--> (widoczna tylko w przypadku posiadania uprawnień moderatora projektu).
 
 Więcej o ustawieniach i uprawnieniach przeczytasz w:
-https://docs.4gaboards.com/pl/docs/admin-settings",,,0,1535719359614288995,1535719361292010606,
-1535719361711441013,65535,Wprowadzenie,"Witamy w 4ga Boards!
+https://docs.4gaboards.com/pl/docs/admin-settings",,,0,1605293210387613227,1605293211973060150,
+1605293212400879165,65535,Strona 4ga Boards,https://4gaboards.com,,,0,1605293210387613227,1605293211973060146,
+1605293212375713338,65535,Wprowadzenie,"Witamy w 4ga Boards!
 
 Ta tablica (ang. board) pozwoli ci poznać najważniejsze oraz unikalne funkcje programu. Zawiera także garść porad i sztuczek które pozwolą najefektywniej wykorzystać potencjał 4ga Boards.
 
 Pełna dokumentacja znajduje się na stronie:
-https://docs.4gaboards.com/pl",,,0,1535719359614288995,1535719361292010601,
-1535719361711441011,65535,Tą kartę zobaczysz dopiero jak rozwiniesz listę,,,,0,1535719359614288995,1535719361292010605,
-1535719361711441012,65535,Strona 4ga Boards,https://4gaboards.com,,,0,1535719359614288995,1535719361292010602,
-1535719361803715713,65535,Opis: Zmiany lokalne,"Napis <!--yellow-->Zmiany lokalne<!--yellow-end--> oznacza że opis karty jest edytowany i zmiany nie są zarejestrowane na serwerze.
-
-Aby je zapisać użyj skrótu `Ctrl` + `Enter` lub kliknij przycisk <!--lime-->Zapisz<!--lime-end-->.",,,0,1535719359614288995,1535719361292010608,
-1535719361887601799,65535,Karta,"Możesz ukryć niektóre elementy karty (opis, zadania, załączniki, komentarze) przy pomocy znajdującej się przy danym elemencie ikony <!--orange-->Minusa<!--orange-end-->. Aby przywrócić domyślny widok elementu, kliknij ikonę <!--orange-->Plusa<!--orange-end-->. Zmiany te przenoszą się na inne karty dla konkretnego użytkownika.
+https://docs.4gaboards.com/pl",,,0,1605293210387613227,1605293211964671537,
+1605293212442822218,65535,Karta,"Możesz ukryć niektóre elementy karty (opis, zadania, załączniki, komentarze) przy pomocy znajdującej się przy danym elemencie ikony <!--orange-->Minusa<!--orange-end-->. Aby przywrócić domyślny widok elementu, kliknij ikonę <!--orange-->Plusa<!--orange-end-->. Zmiany te przenoszą się na inne karty dla konkretnego użytkownika.
 
 Prawy górny róg widoku karty zawiera:
 - Ikonę <!--orange-->Kosza<!--orange-end--> usuwającą kartę (wymagane potwierdzenie w osobnym okienku),
 - Ikonę <!--orange-->Menu kontekstowego<!--orange-end--> (trzy kropki) karty otwierającego menu kontekstowe.
-- Ikonę <!--orange-->X<!--orange-end--> zamykającą widok karty.",,,0,1535719359614288995,1535719361292010607,
-1535719361711441015,131070,Przydatne skróty klawiszowe,"## Przydatne skróty klawiszowe
+- Ikonę <!--orange-->X<!--orange-end--> zamykającą widok karty.",,,0,1605293210387613227,1605293211973060151,
+1605293212400879167,65535,Filtrowanie tablic/projektów,"Użyj pola <!--lime-->Filtruj...<!--lime-end--> w panelu bocznym aby wyszukać konkretne projekty/tablice.
+
+Zmień rodzaj wyszukiwania (P dla projektów, B dla tablic) klikając przycisk `Tab` lub ikonkę <!--orange-->Skrzyżowanych strzałek<!--orange-end-->.
+
+Usuń filtry klikając `Esc` lub ikonę <!--orange-->X<!--orange-end--> .",,,0,1605293210387613227,1605293211973060147,
+1605293212400879166,65535,Tą kartę zobaczysz dopiero jak rozwiniesz listę,,,,0,1605293210387613227,1605293211973060149,
+1605293212451210829,65535,Opis: Zmiany lokalne,"Napis <!--yellow-->Zmiany lokalne<!--yellow-end--> oznacza że opis karty jest edytowany i zmiany nie są zarejestrowane na serwerze.
+
+Aby je zapisać użyj skrótu `Ctrl` + `Enter` lub kliknij przycisk <!--lime-->Zapisz<!--lime-end-->.",,,0,1605293210387613227,1605293211973060152,
+1605293212417656392,131070,Jak zmienić język?,Przejdź do Ustawienia -> Preferencje -> Język i wybierz odpowiedni język z rozwijanego menu.,,,0,1605293210387613227,1605293211973060150,
+1605293212375713339,131070,Przydatne skróty klawiszowe,"## Przydatne skróty klawiszowe
 
 `Ctrl` + `Enter`
 
@@ -43,25 +44,32 @@ widok karty.
 
 `Shift` + `Scroll`
 
-Przytrzymaj shift aby przewijać w poziomie.",,,0,1535719359614288995,1535719361292010601,
-1535719361803715714,131070,Jak zmienić język?,Przejdź do Ustawienia -> Preferencje -> Język i wybierz odpowiedni język z rozwijanego menu.,,,0,1535719359614288995,1535719361292010606,
-1535719361887601800,131070,Przenoszenie kart,"Aby przesuwać kartę w obrębie tablicy przeciągnij ją na odpowiednią listę lub wybierz nazwę listy z rozwijanego menu pod nazwą karty.
+Przytrzymaj shift aby przewijać w poziomie.",,,0,1605293210387613227,1605293211964671537,
+1605293212409267776,131070,Dokumentacja,https://docs.4gaboards.com/pl,,,0,1605293210387613227,1605293211973060146,
+1605293212409267779,131070,Nawigacja w obrębie tablicy,"Większość elementów takich jak listy czy karty można swobodnie ustawiać poprzez przeciąganie ich po ekranie.
+
+Przesuwaj listy ze zbyt dużą ilością kart przy użyciu `Scroll` (Kółka myszki) bądź paska przewijania.
+
+Przeciągaj tablicę z dużą ilością list klikając `Shift` + `Scroll` (Kółko myszki), przytrzymując w pustym miejscu i przeciągając myszką lub użyj paska przewijania na dole strony.",,,0,1605293210387613227,1605293211973060147,
+1605293212451210828,131070,Przenoszenie kart,"Aby przesuwać kartę w obrębie tablicy przeciągnij ją na odpowiednią listę lub wybierz nazwę listy z rozwijanego menu pod nazwą karty.
 
 
-Przenoś karty pomiędzy projektami/tablicami klikając ikonę <!--orange-->Menu kontekstowego<!--orange-end--> i wybierając opcję <!--lime-->Przenieś kartę<!--lime-end-->.",,,0,1535719359614288995,1535719361292010607,
-1535719361803715716,131070,Edytor tekstu: Opcje wyświetlania,"Opcje wyświetlania mogą być zmienione poprzez ikony w prawym górnym rogu lub poprzez skróty:
+Przenoś karty pomiędzy projektami/tablicami klikając ikonę <!--orange-->Menu kontekstowego<!--orange-end--> i wybierając opcję <!--lime-->Przenieś kartę<!--lime-end-->.",,,0,1605293210387613227,1605293211973060151,
+1605293212451210831,131070,Edytor tekstu: Opcje wyświetlania,"Opcje wyświetlania mogą być zmienione poprzez ikony w prawym górnym rogu lub poprzez skróty:
 
 - Podgląd edycji (`Ctrl` + `7`) - pokazuje tylko edytowany tekst wraz ze składnią Markdown.
 - Podgląd edycji na żywo (`Ctrl` + `8`) - po lewej stronie pokazuje edytor ze składnią Markdown, po prawej podgląd ostatecznej wersji tekstu.
 - Podgląd na żywo (`Ctrl` + `9`) - pokazuje tylko podgląd ostatecznej wersji tekstu.
-- Podgląd pełnoekranowy (`Ctrl` + `0`).",,,0,1535719359614288995,1535719361292010608,
-1535719361711441019,131070,Dokumentacja,https://docs.4gaboards.com/pl,,,0,1535719359614288995,1535719361292010602,
-1535719361711441014,131070,Nawigacja w obrębie tablicy,"Większość elementów takich jak listy czy karty można swobodnie ustawiać poprzez przeciąganie ich po ekranie.
+- Podgląd pełnoekranowy (`Ctrl` + `0`).",,,0,1605293210387613227,1605293211973060152,
+1605293212409267780,196605,"Pasek tablicy (filtrowanie, członkowie)","Każda tablica posiada menu w którym można:
 
-Przesuwaj listy ze zbyt dużą ilością kart przy użyciu `Scroll` (Kółka myszki) bądź paska przewijania.
-
-Przeciągaj tablicę z dużą ilością list klikając `Shift` + `Scroll` (Kółko myszki), przytrzymując w pustym miejscu i przeciągając myszką lub użyj paska przewijania na dole strony.",,,0,1535719359614288995,1535719361292010603,
-1535719361803715717,196605,Edytor tekstu: Zaawansowane funkcje,"### Poznaj edytor tekstu Markdown używany w 4ga Boards.
+- Zobaczyć nazwę tablicy,
+- Zobaczyć liczbę kart po filtrowaniu,
+- Dodać lub usunąć członków (jeśli jesteś moderatorem projektu),
+- Filtrować istniejące karty po przypisanych do nich użytkownikach,
+- Filtrować istniejące karty po przypisanych do nich etykietach oraz tworzyć, edytować i usuwać etykiety,
+- Zarządzać integracją z GitHubem (w trakcie implementacji, obecnie dostępne linkowanie).",,,0,1605293210387613227,1605293211973060147,
+1605293212451210832,196605,Edytor tekstu: Zaawansowane funkcje,"### Poznaj edytor tekstu Markdown używany w 4ga Boards.
 
 4ga Boards używa zaawansowanego edytora typu Markdown.
 Dopasuj rozmiar edytora tekstu przeciągając ikonę <!--orange-->Trzech kropek<!--orange-end--> w prawym dolnym rogu edytora.
@@ -134,9 +142,8 @@ Dodawaj listy zadań:
 - [ ] Zadanie 2
 
 Dodawaj kolorowy tekst:
-<!--red-->Kolorowy<!--red-end--> <!--lime-->tekst<!--lime-end-->",,,0,1535719359614288995,1535719361292010608,
-1535719361711441021,196605,GitHub,https://github.com/RARgames/4gaBoards,,,0,1535719359614288995,1535719361292010602,
-1535719361711441017,196605,Wykorzystaj potencjał 4ga Boards,"## Jak w pełni wykorzystać możliwości 4ga Boards?
+<!--red-->Kolorowy<!--red-end--> <!--lime-->tekst<!--lime-end-->",,,0,1605293210387613227,1605293211973060152,
+1605293212375713340,196605,Wykorzystaj potencjał 4ga Boards,"## Jak w pełni wykorzystać możliwości 4ga Boards?
 
 ### Jednocześnie edytuj karty oraz tablice
 
@@ -155,22 +162,17 @@ Inni użytkownicy nie zobaczą twoich zmian dopóki ich nie opublikujesz. Pamię
 
 ### Usprawnij pracę dzięki zwijaniu list
 
-Bałagan na tablicy? Zaoszczędź miejsce przez zwinięcie niektórych, mniej używanych list. Możesz wciąż z nich korzystać oraz umieszczać w nich karty.",,,0,1535719359614288995,1535719361292010601,
-1535719361803715715,196605,Zbyt szeroki panel boczny? Chcesz schować panel boczny?,"Aby zmienić rozmiar panelu bocznego przejdź do Ustawienia -> Preferencje -> Kompaktowy panel boczny.
+Bałagan na tablicy? Zaoszczędź miejsce przez zwinięcie niektórych, mniej używanych list. Możesz wciąż z nich korzystać oraz umieszczać w nich karty.",,,0,1605293210387613227,1605293211964671537,
+1605293212409267777,196605,GitHub,https://github.com/RARgames/4gaBoards,,,0,1605293210387613227,1605293211973060146,
+1605293212451210830,196605,Członkowie,"Zarządzaj członkami karty klikając ikonę <!--orange-->Plusa<!--orange-end--> przy napisie ""Członkowie"".
 
-Zwiń/rozwiń panel boczny klikając ikonę <!--orange-->Minimalizacji panelu bocznego<!--orange-end--> przy logo 4ga Boards w nagłówku.",,,0,1535719359614288995,1535719361292010606,
-1535719361887601801,196605,Członkowie,"Zarządzaj członkami karty klikając ikonę <!--orange-->Plusa<!--orange-end--> przy napisie ""Członkowie"".
+Jeśli członek nie jest możliwy do dodania oraz jesteś moderatorem projektu, dodaj członka klikając ikonę <!--orange-->Dodaj użytkownika<!--orange-end--> w menu tablicy.",,,0,1605293210387613227,1605293211973060151,
+1605293212417656393,196605,Zbyt szeroki panel boczny? Chcesz schować panel boczny?,"Aby zmienić rozmiar panelu bocznego przejdź do Ustawienia -> Preferencje -> Kompaktowy panel boczny.
 
-Jeśli członek nie jest możliwy do dodania oraz jesteś moderatorem projektu, dodaj członka klikając ikonę <!--orange-->Dodaj użytkownika<!--orange-end--> w menu tablicy.",,,0,1535719359614288995,1535719361292010607,
-1535719361711441016,196605,"Pasek tablicy (filtrowanie, członkowie)","Każda tablica posiada menu w którym można:
-
-- Zobaczyć nazwę tablicy,
-- Zobaczyć liczbę kart po filtrowaniu,
-- Dodać lub usunąć członków (jeśli jesteś moderatorem projektu),
-- Filtrować istniejące karty po przypisanych do nich użytkownikach,
-- Filtrować istniejące karty po przypisanych do nich etykietach oraz tworzyć, edytować i usuwać etykiety,
-- Zarządzać integracją z GitHubem (w trakcie implementacji, obecnie dostępne linkowanie).",,,0,1535719359614288995,1535719361292010603,
-1535719361803715718,262140,Edytor tekstu: GitHub,"### Aby skorzystać z podanych niżej funkcjonalności tablica musi zostać połączona z GitHub.
+Zwiń/rozwiń panel boczny klikając ikonę <!--orange-->Minimalizacji panelu bocznego<!--orange-end--> przy logo 4ga Boards w nagłówku.",,,0,1605293210387613227,1605293211973060150,
+1605293212409267781,262140,Dodaj członka do tablicy,Dodaj członka do tablicy klikając ikonę <!--orange-->Dodaj użytkownika<!--orange-end--> (użytkownik z plusem).,,,0,1605293210387613227,1605293211973060147,
+1605293212409267778,262140,Podoba Ci się 4ga Boards?,Wyraź swoją wdzięczność i zostaw gwiazdkę na stronie 4ga Boards na [GitHub](https://github.com/RARgames/4gaBoards)!,,,0,1605293210387613227,1605293211973060146,1605293213910828669
+1605293212451210834,262140,Edytor tekstu: GitHub,"### Aby skorzystać z podanych niżej funkcjonalności tablica musi zostać połączona z GitHub.
 
 Domyślnie tablica <!--red-->NIE jest<!--red-end--> połączona z GitHubem (użyj ikony <!--orange-->GitHub<!--orange-end--> z menu tablicy, aby połączyć).
 
@@ -195,30 +197,28 @@ dodaj link do commita w repozytorium używając:
 Dodaj wzmiankę o użytkowniku (mention):
 aby wspomnieć użytkownika użyj `@(username)`, np. `@RARgames`
 
-Możesz również wkleić link aby połączyć commit, issue albo PR, komentarz do commita, issue albo PR , użytkownika.",,,0,1535719359614288995,1535719361292010608,
-1535719361887601802,262140,Etykiety,"Zarządzaj etykietami przypisanymi do karty klikając ikonę <!--orange-->Plusa<!--orange-end-->.
-W wyskakującym okienku możesz również dodać (przycisk <!--lime-->Stwórz nową etykietę<!--lime-end-->) lub edytować/usunąć (ikona <!--orange-->Ołówka<!--orange-end-->) etykiety dla całej tablicy.",,,0,1535719359614288995,1535719361292010607,
-1535719361711441018,262140,Dodaj członka do tablicy,Dodaj członka do tablicy klikając ikonę <!--orange-->Dodaj użytkownika<!--orange-end--> (użytkownik z plusem).,,,0,1535719359614288995,1535719361292010603,
-1535719361711441022,262140,Podoba Ci się 4ga Boards?,Wyraź swoją wdzięczność i zostaw gwiazdkę na stronie 4ga Boards na [GitHub](https://github.com/RARgames/4gaBoards)!,,,0,1535719359614288995,1535719361292010602,1535719363389162674
-1535719361887601803,327675,Termin,"Dodaj termin do karty klikając ikonę <!--orange-->Plusa<!--orange-end-->.
+Możesz również wkleić link aby połączyć commit, issue albo PR, komentarz do commita, issue albo PR , użytkownika.",,,0,1605293210387613227,1605293211973060152,
+1605293212451210833,262140,Etykiety,"Zarządzaj etykietami przypisanymi do karty klikając ikonę <!--orange-->Plusa<!--orange-end-->.
+W wyskakującym okienku możesz również dodać (przycisk <!--lime-->Stwórz nową etykietę<!--lime-end-->) lub edytować/usunąć (ikona <!--orange-->Ołówka<!--orange-end-->) etykiety dla całej tablicy.",,,0,1605293210387613227,1605293211973060151,
+1605293212409267782,327675,Zwijanie/rozwijanie list,Aby rozwinąć/zwinąć listy kliknij ikonę <!--orange-->Trójkąta<!--orange-end--> przy nazwie listy.,,,0,1605293210387613227,1605293211973060147,
+1605293212451210835,327675,Termin,"Dodaj termin do karty klikając ikonę <!--orange-->Plusa<!--orange-end-->.
 Edytuj/usuń termin klikając ikonę <!--orange-->Ołówka<!--orange-end-->.
 
 Jeśli termin dla karty jest wypada później niż dwa tygodnie będzie on wyświetlony na <!--grey-->szaro<!--grey-end-->;
 jeśli wypada w przeciągu dwóch tygodni - na <!--yellow-->żółto<!--yellow-end-->;
-termin przekroczony będzie się wyświetlał na <!--red-->czerwono<!--red-end-->.","""2024-10-17T10:00:00.000Z""",,0,1535719359614288995,1535719361292010607,
-1535719361711441020,327675,Zwijanie/rozwijanie list,Aby rozwinąć/zwinąć listy kliknij ikonę <!--orange-->Trójkąta<!--orange-end--> przy nazwie listy.,,,0,1535719359614288995,1535719361292010603,
-1535719361887601804,393210,Stoper,"Włącz/wyłącz stoper klikając na niego.
-Zresetuj stoper klikając na ikonę <!--orange-->Ołówka<!--orange-end--> a następnie wybierając opcję <!--lime-->Usuń<!--lime-end-->.",,"{""total"":4325,""startedAt"":null}",0,1535719359614288995,1535719361292010607,
-1535719361887601805,458745,Powiadomienia,"Zapisz/wypisz się z powiadomień dla danej karty klikając w przycisk <!--lime-->Zapisz się/Wypisz się<!--lime-end--> aby otrzymywać/przestać otrzymywać powiadomienia jeśli inny użytkownik zrobi zmiany w danej karcie, np. doda komentarz.
+termin przekroczony będzie się wyświetlał na <!--red-->czerwono<!--red-end-->.","""2024-10-17T10:00:00.000Z""",,0,1605293210387613227,1605293211973060151,
+1605293212451210836,393210,Stoper,"Włącz/wyłącz stoper klikając na niego.
+Zresetuj stoper klikając na ikonę <!--orange-->Ołówka<!--orange-end--> a następnie wybierając opcję <!--lime-->Usuń<!--lime-end-->.",,"{""total"":4325,""startedAt"":null}",0,1605293210387613227,1605293211973060151,
+1605293212451210837,458745,Powiadomienia,"Zapisz/wypisz się z powiadomień dla danej karty klikając w przycisk <!--lime-->Zapisz się/Wypisz się<!--lime-end--> aby otrzymywać/przestać otrzymywać powiadomienia jeśli inny użytkownik zrobi zmiany w danej karcie, np. doda komentarz.
 
-Powiadomienia widoczne są po naciśnięciu ikony <!--orange-->Dzwonka<!--orange-end--> w nagłówku.",,,0,1535719359614288995,1535719361292010607,
-1535719361887601806,524280,Lista zadań,"Dodaj nowe zadanie klikając na przycisk <!--lime-->Dodaj zadanie<!--lime-end--> bądź ikonę <!--orange-->Plusa<!--orange-end-->.
+Powiadomienia widoczne są po naciśnięciu ikony <!--orange-->Dzwonka<!--orange-end--> w nagłówku.",,,0,1605293210387613227,1605293211973060151,
+1605293212451210838,524280,Lista zadań,"Dodaj nowe zadanie klikając na przycisk <!--lime-->Dodaj zadanie<!--lime-end--> bądź ikonę <!--orange-->Plusa<!--orange-end-->.
 
 Dodaj członka/termin do zadania najeżdżając kursorem na odpowiednie zadanie, klikając w ikonę <!--orange-->Menu kontekstowego<!--orange-end--> i wybierając opcję <!--lime-->Dodaj członków/Dodaj termin<!--lime-end-->.
 Zarządzaj członkami/terminami zadania klikając <!--lime-->Członka/Termin<!--lime-end--> bądź przez menu kontekstowe.
 
-Zwiń/rozwiń zadania na karcie klikając w ikonę <!--orange-->Trójkąta<!--orange-end--> przy liczbie zadań.",,,0,1535719359614288995,1535719361292010607,
-1535719361887601807,589815,Załączniki,"### Załączniki
+Zwiń/rozwiń zadania na karcie klikając w ikonę <!--orange-->Trójkąta<!--orange-end--> przy liczbie zadań.",,,0,1605293210387613227,1605293211973060151,
+1605293212451210839,589815,Załączniki,"### Załączniki
 
 Dodaj załączniki do karty używając skrótu `CTRL`+`V`, przeciągając je na kartę lub klikając w przycisk <!--lime-->Dodaj załącznik<!--lime-end--> i wybierając go z dysku.
 Usuń załącznik, po najechaniu na niego klikając ikonę <!--orange-->Ołówka<!--orange-end--> i wybierając opcję <!--lime-->Usuń<!--lime-end-->.
@@ -228,4 +228,4 @@ Usuń załącznik, po najechaniu na niego klikając ikonę <!--orange-->Ołówka
 Po załączeniu obrazka możesz go użyć w celu wyróżnienia kart (obrazek pojawi się na karcie).
 
 Dodaj wyróżnienie klikając w przycisk <!--lime-->Dodaj wyróżnienie<!--lime-end--> przy odpowiednim obrazku.
-Usuń wyróżnienie klikając w przycisk <!--lime-->Usuń wyróżnienie<!--lime-end-->.",,,0,1535719359614288995,1535719361292010607,1535719363976365251
+Usuń wyróżnienie klikając w przycisk <!--lime-->Usuń wyróżnienie<!--lime-end-->.",,,0,1605293210387613227,1605293211973060151,1605293213910828671

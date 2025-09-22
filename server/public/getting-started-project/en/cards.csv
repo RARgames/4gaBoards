@@ -1,43 +1,43 @@
 id,position,name,description,dueDate,timer,commentCount,boardId,listId,coverAttachmentId
-1535715377097476006,32767.5,Different language of Getting Started?,"The Getting Started project is available in:
+1605293049158567379,32767.5,Different language of Getting Started?,"The Getting Started project is available in:
 - English - <!--red-->EN<!--red-end-->
 - Polish - <!--red-->PL<!--red-end-->
 
 To access the Getting Started in different languages:
 - Change your display language in 4ga Boards - Go to Settings -> Preferences -> Language
-- Re-import Getting Started project - Go to Settings -> About -> Import Getting Started Project",,,0,1535715374916437911,1535715376594159517,
-1535715377105864628,32767.5,Text editor: Description and Comments,Both the card description and comments allow the use of Markdown syntax.,,,1,1535715374916437911,1535715376594159524,
-1535715377105864627,65535,Go to Settings,"Settings can be accessed by clicking the <!--orange-->Cog<!--orange-end--> icon or your profile picture.
-
-You can also go to the project settings directly by clicking the <!--orange-->Boxed Cog<!--orange-end--> icon (visible only if you have project manager permissions).
-
-More about settings and permissions:
-https://docs.4gaboards.com/docs/admin-settings",,,0,1535715374916437911,1535715376594159522,
-1535715377097476005,65535,You will see this card only after you expand the list,,,,0,1535715374916437911,1535715376594159521,
-1535715377097476007,65535,Projects/boards filtering,"Use the <!--lime-->Filter...<!--lime-end--> field in the sidebar to filter projects/boards.
-
-Change filtering type (P - Project, B - Board) by pressing `Tab` or clicking the <!--orange-->Shuffle<!--orange-end--> icon (double arrow).
-
-Remove filters by pressing `Esc` or clicking the <!--orange-->X<!--orange-end--> icon.",,,0,1535715374916437911,1535715376594159519,
-1535715377097476009,65535,Getting Started,"## Welcome to 4ga Boards!
+- Re-import Getting Started project - Go to Settings -> About -> Import Getting Started Project",,,0,1605293047145301445,1605293048755914187,
+1605293049242453477,32767.5,Text editor: Description and Comments,Both the card description and comments allow the use of Markdown syntax.,,,1,1605293047145301445,1605293048764302802,
+1605293049192121824,65535,You will see this card only after you expand the list,,,,0,1605293047145301445,1605293048764302799,
+1605293049158567380,65535,4ga Boards Website,https://4gaboards.com,,,0,1605293047145301445,1605293048764302796,
+1605293049166955990,65535,Getting Started,"## Welcome to 4ga Boards!
 
 This board is an introduction of how to use 4ga Boards, including some of the basic and unique features. It includes some tips & tricks to help get most of 4ga Boards.
 
 For full guide please visit the documentation:
-https://docs.4gaboards.com",,,0,1535715374916437911,1535715376594159517,
-1535715377105864631,65535,Description: Local changes,"The <!--yellow-->Local changes<!--yellow-end--> text indicates that the description is still in the edit mode and the changes are not yet registered on the server.
-
-To save them press `Ctrl` + `Enter` or click the <!--lime-->Save<!--lime-end--> button.",,,0,1535715374916437911,1535715376594159524,
-1535715377105864629,65535,Cards,"If the card view gets cluttered, you can hide certain elements (description, tasks, attachments, comments) by clicking the <!--orange-->Minus<!--orange-end--> icon next to them. Click the <!--orange-->Plus<!--orange-end--> icon to show them again. This is saved across cards.
+https://docs.4gaboards.com",,,0,1605293047145301445,1605293048755914187,
+1605293049242453476,65535,Cards,"If the card view gets cluttered, you can hide certain elements (description, tasks, attachments, comments) by clicking the <!--orange-->Minus<!--orange-end--> icon next to them. Click the <!--orange-->Plus<!--orange-end--> icon to show them again. This is saved across cards.
 
 Card view menu icons on the top-right corner:
 
 - Delete card by clicking the <!--orange-->Trash<!--orange-end--> icon (it will open popup to confirm deleting).
 - Open card context menu by clicking the <!--orange-->Ellipsis<!--orange-end--> icon (three dots).
-- Close card view by clicking the <!--orange-->X<!--orange-end--> icon.",,,0,1535715374916437911,1535715376594159523,
-1535715377097476008,65535,4ga Boards Website,https://4gaboards.com,,,0,1535715374916437911,1535715376594159518,
-1535715377105864630,131070,How to change language?,Go to Settings -> Preferences -> Language and select appriopriate language from the dropdown list.,,,0,1535715374916437911,1535715376594159522,
-1535715377097476010,131070,Useful key combinations,"## Useful key combinations
+- Close card view by clicking the <!--orange-->X<!--orange-end--> icon.",,,0,1605293047145301445,1605293048764302801,
+1605293049242453483,65535,Description: Local changes,"The <!--yellow-->Local changes<!--yellow-end--> text indicates that the description is still in the edit mode and the changes are not yet registered on the server.
+
+To save them press `Ctrl` + `Enter` or click the <!--lime-->Save<!--lime-end--> button.",,,0,1605293047145301445,1605293048764302802,
+1605293049158567381,65535,Projects/boards filtering,"Use the <!--lime-->Filter...<!--lime-end--> field in the sidebar to filter projects/boards.
+
+Change filtering type (P - Project, B - Board) by pressing `Tab` or clicking the <!--orange-->Shuffle<!--orange-end--> icon (double arrow).
+
+Remove filters by pressing `Esc` or clicking the <!--orange-->X<!--orange-end--> icon.",,,0,1605293047145301445,1605293048764302797,
+1605293049200510433,65535,Go to Settings,"Settings can be accessed by clicking the <!--orange-->Cog<!--orange-end--> icon or your profile picture.
+
+You can also go to the project settings directly by clicking the <!--orange-->Boxed Cog<!--orange-end--> icon (visible only if you have project manager permissions).
+
+More about settings and permissions:
+https://docs.4gaboards.com/docs/admin-settings",,,0,1605293047145301445,1605293048764302800,
+1605293049208899042,131070,How to change language?,Go to Settings -> Preferences -> Language and select appriopriate language from the dropdown list.,,,0,1605293047145301445,1605293048764302800,
+1605293049166955992,131070,Useful key combinations,"## Useful key combinations
 
 `Ctrl` + `Enter`
 
@@ -46,38 +46,52 @@ If you use it while creating new card it will automatically open card view.
 
 `Shift` + `Scroll`
 
-Hold shift to scroll horizontally.",,,0,1535715374916437911,1535715376594159517,
-1535715377097476012,131070,Navigating across the board,"Most of the board elements can be drag and dropped across the board.
+Hold shift to scroll horizontally.",,,0,1605293047145301445,1605293048755914187,
+1605293049166955991,131070,Documentation,https://docs.4gaboards.com,,,0,1605293047145301445,1605293048764302796,
+1605293049166955994,131070,Navigating across the board,"Most of the board elements can be drag and dropped across the board.
 
 Move around the list with many cards with mouse `Scroll` or scrollbar.
 
-Move around the board with many lists by pressing `Shift` + `Scroll` or by clicking on the empty spot and dragging the board.",,,0,1535715374916437911,1535715376594159519,
-1535715377097476016,131070,Documentation,https://docs.4gaboards.com,,,0,1535715374916437911,1535715376594159518,
-1535715377105864632,131070,Text editor: View options,"View options can be changed with icons on the top-right or using shortcuts:
+Move around the board with many lists by pressing `Shift` + `Scroll` or by clicking on the empty spot and dragging the board.",,,0,1605293047145301445,1605293048764302797,
+1605293049242453478,131070,Moving cards,"Move cards across lists by dragging and dropping or use dropdown menu below the card's name.
+
+Move across projects/boards by clicking the <!--orange-->Ellipsis<!--orange-end--> icon and press the <!--lime-->Move Card<!--lime-end--> button from the card context menu.",,,0,1605293047145301445,1605293048764302801,
+1605293049242453486,131070,Text editor: View options,"View options can be changed with icons on the top-right or using shortcuts:
 
 - Edit code (`Ctrl` + `7`) - shows only the edited text with Markdown syntax.
 - Live code (`Ctrl` + `8`) - shows both Markdown syntax (on left) and live text preview (on the right).
 - Preview code (`Ctrl` + `9`) - shows just the text preview.
-- Toggle fullscreen (`Ctrl` + `0`)",,,0,1535715374916437911,1535715376594159524,
-1535715377105864633,131070,Moving cards,"Move cards across lists by dragging and dropping or use dropdown menu below the card's name.
+- Toggle fullscreen (`Ctrl` + `0`)",,,0,1605293047145301445,1605293048764302802,
+1605293049166955995,196605,GitHub,https://github.com/RARgames/4gaBoards,,,0,1605293047145301445,1605293048764302796,
+1605293049166955993,196605,Work efficiently,"## How to work efficiently with 4ga Boards?
 
-Move across projects/boards by clicking the <!--orange-->Ellipsis<!--orange-end--> icon and press the <!--lime-->Move Card<!--lime-end--> button from the card context menu.",,,0,1535715374916437911,1535715376594159523,
-1535715377105864636,196605,Too wide sidebar? Do you want to hide it?,"To adjust sidebar width, go to Settings  -> Preferences -> Compact Sidebar.
+### Simultaneously edit cards and boards
 
-Hide/show sidebar by clicking the <!--orange-->Minimize Sidebar<!--orange-end--> icon close to 4ga Boards logo.",,,0,1535715374916437911,1535715376594159522,
-1535715377105864634,196605,Members,"Manage members of the card by clicking the <!--orange-->Plus<!--orange-end--> icon near Members.
+You can keep working on the board (edit other cards, move them across lists, review other
+changes) while having an open card view.
 
-If the member is not available and you are the project manager, add the member in board menu by clicking the <!--orange-->Add User<!--orange-end--> icon.",,,0,1535715374916437911,1535715376594159523,
-1535715377097476017,196605,GitHub,https://github.com/RARgames/4gaBoards,,,0,1535715374916437911,1535715376594159518,
-1535715377097476013,196605,"Board menu (filtering, members)","Each board has a board menu, in which you can:
+### Don't save description changes everytime you leave the card
+
+Local changes are saved even if you switch to another card/board/project/browser tab.
+
+On the same device, you can come back to your local changes at anytime, even after closing the browser tab or restarting your device.
+
+### Remember to save changes!
+
+Save your changes if you have something important! Other users cannot see them before saving.
+
+### Efficiently work with collapsed lists
+
+Cluttered workspace? Save space by collapsing some lists. You can still move cards to them.",,,0,1605293047145301445,1605293048755914187,
+1605293049166955997,196605,"Board menu (filtering, members)","Each board has a board menu, in which you can:
 
 - See the board name,
 - See the number of cards after filtering,
 - Manage members of the board (if you are a project manager),
 - Filter existing cards by members attached to them,
 - Filter cards by labels (also create/edit the labels).
-- Set up GitHub integration (WIP - Only linking available).",,,0,1535715374916437911,1535715376594159519,
-1535715377105864635,196605,Text editor: Advanced features,"### Check out the Markdown editor in 4ga Boards!
+- Set up GitHub integration (WIP - Only linking available).",,,0,1605293047145301445,1605293048764302797,
+1605293049242453488,196605,Text editor: Advanced features,"### Check out the Markdown editor in 4ga Boards!
 
 In 4ga Boards we are using very powerful Markdown editor.
 
@@ -149,31 +163,16 @@ Add task list:
 - [ ] Task 2
 
 Add colored text:
-<!--red-->Colored<!--red-end--> <!--lime-->text<!--lime-end-->",,,0,1535715374916437911,1535715376594159524,
-1535715377097476011,196605,Work efficiently,"## How to work efficiently with 4ga Boards?
+<!--red-->Colored<!--red-end--> <!--lime-->text<!--lime-end-->",,,0,1605293047145301445,1605293048764302802,
+1605293049242453479,196605,Members,"Manage members of the card by clicking the <!--orange-->Plus<!--orange-end--> icon near Members.
 
-### Simultaneously edit cards and boards
+If the member is not available and you are the project manager, add the member in board menu by clicking the <!--orange-->Add User<!--orange-end--> icon.",,,0,1605293047145301445,1605293048764302801,
+1605293049208899043,196605,Too wide sidebar? Do you want to hide it?,"To adjust sidebar width, go to Settings  -> Preferences -> Compact Sidebar.
 
-You can keep working on the board (edit other cards, move them across lists, review other
-changes) while having an open card view.
-
-### Don't save description changes everytime you leave the card
-
-Local changes are saved even if you switch to another card/board/project/browser tab.
-
-On the same device, you can come back to your local changes at anytime, even after closing the browser tab or restarting your device.
-
-### Remember to save changes!
-
-Save your changes if you have something important! Other users cannot see them before saving.
-
-### Efficiently work with collapsed lists
-
-Cluttered workspace? Save space by collapsing some lists. You can still move cards to them.",,,0,1535715374916437911,1535715376594159517,
-1535715377105864637,262140,Labels,"Manage labels of the card by clicking the <!--orange-->Plus<!--orange-end--> icon.
-In the popup you can also add (<!--lime-->Create new label<!--lime-end--> button) and edit/remove (<!--orange-->Pencil<!--orange-end--> icon) labels for the whole board.",,,0,1535715374916437911,1535715376594159523,
-1535715377097476014,262140,Add users to the board,Add users to the current board by clicking the <!--orange-->Add User<!--orange-end--> icon (user with a plus).,,,0,1535715374916437911,1535715376594159519,
-1535715377105864639,262140,Text editor: GitHub,"### To use features from this section the board has to be connected with GitHub.
+Hide/show sidebar by clicking the <!--orange-->Minimize Sidebar<!--orange-end--> icon close to 4ga Boards logo.",,,0,1605293047145301445,1605293048764302800,
+1605293049166955998,262140,Add users to the board,Add users to the current board by clicking the <!--orange-->Add User<!--orange-end--> icon (user with a plus).,,,0,1605293047145301445,1605293048764302797,
+1605293049166955996,262140,Enjoying 4ga Boards?,Show your appreciation and leave a star on 4ga Boards [GitHub](https://github.com/RARgames/4gaBoards)!,,,0,1605293047145301445,1605293048764302796,1605293050769180184
+1605293049242453489,262140,Text editor: GitHub,"### To use features from this section the board has to be connected with GitHub.
 
 By default a board <!--red-->is NOT<!--red-end--> connected to GitHub (use <!--orange-->GitHub<!--orange-end--> icon from the board menu to connect.
 
@@ -199,27 +198,28 @@ Add mention:
 to mention user use:
 `@(username)`, e.g. `@RARgames`
 
-Alternatively you can paste links to link commit, commit comment, issue or PR, issue or PR comment, user.",,,0,1535715374916437911,1535715376594159524,
-1535715377097476018,262140,Enjoying 4ga Boards?,Show your appreciation and leave a star on 4ga Boards [GitHub](https://github.com/RARgames/4gaBoards)!,,,0,1535715374916437911,1535715376594159518,1535715379446286327
-1535715377097476015,327675,Collapse/Expand lists,Collapse/Expand lists by clicking the <!--orange-->Triangle<!--orange-end--> icon near the list name.,,,0,1535715374916437911,1535715376594159519,
-1535715377105864638,327675,Due Date,"Add due date by clicking the <!--orange-->Plus<!--orange-end--> icon.
+Alternatively you can paste links to link commit, commit comment, issue or PR, issue or PR comment, user.",,,0,1605293047145301445,1605293048764302802,
+1605293049242453480,262140,Labels,"Manage labels of the card by clicking the <!--orange-->Plus<!--orange-end--> icon.
+In the popup you can also add (<!--lime-->Create new label<!--lime-end--> button) and edit/remove (<!--orange-->Pencil<!--orange-end--> icon) labels for the whole board.",,,0,1605293047145301445,1605293048764302801,
+1605293049242453481,327675,Due Date,"Add due date by clicking the <!--orange-->Plus<!--orange-end--> icon.
 Edit/remove due date by clicking the <!--orange-->Pencil<!--orange-end--> icon.
 
 If the due date is further than two weeks, it will appear <!--grey-->grey<!--grey-end-->;
 if it is in the range of two weeks - <!--yellow-->yellow<!--yellow-end-->;
-if overdue - <!--red-->red<!--red-end-->.","""2024-10-17T10:00:00.000Z""",,0,1535715374916437911,1535715376594159523,
-1535715377105864640,393210,Timer,"Start/pause the timer by clicking on it.
-Reset the timer by clicking the <!--orange-->Pencil<!--orange-end--> icon and then the <!--lime-->Remove<!--lime-end--> button.",,"{""total"":4325,""startedAt"":null}",0,1535715374916437911,1535715376594159523,
-1535715377105864641,458745,Notifications,"Subscribe/unsubscribe to card notifications by clicking the <!--lime-->Subscribe/Unsubscribe<!--lime-end--> button to get/stop getting notifications when other board member makes changes to the card, e.g. add a comment.
+if overdue - <!--red-->red<!--red-end-->.","""2024-10-17T10:00:00.000Z""",,0,1605293047145301445,1605293048764302801,
+1605293049166955999,327675,Collapse/Expand lists,Collapse/Expand lists by clicking the <!--orange-->Triangle<!--orange-end--> icon near the list name.,,,0,1605293047145301445,1605293048764302797,
+1605293049242453482,393210,Timer,"Start/pause the timer by clicking on it.
+Reset the timer by clicking the <!--orange-->Pencil<!--orange-end--> icon and then the <!--lime-->Remove<!--lime-end--> button.",,"{""total"":4325,""startedAt"":null}",0,1605293047145301445,1605293048764302801,
+1605293049242453484,458745,Notifications,"Subscribe/unsubscribe to card notifications by clicking the <!--lime-->Subscribe/Unsubscribe<!--lime-end--> button to get/stop getting notifications when other board member makes changes to the card, e.g. add a comment.
 
-Check notifications by clicking the <!--orange-->Bell<!--orange-end--> icon in the header.",,,0,1535715374916437911,1535715376594159523,
-1535715377105864642,524280,Tasks,"Add new task by clicking the <!--lime-->Add Task<!--lime-end--> button or the <!--orange-->Plus<!--orange-end--> icon.
+Check notifications by clicking the <!--orange-->Bell<!--orange-end--> icon in the header.",,,0,1605293047145301445,1605293048764302801,
+1605293049242453485,524280,Tasks,"Add new task by clicking the <!--lime-->Add Task<!--lime-end--> button or the <!--orange-->Plus<!--orange-end--> icon.
 
 Add member/due date to the task by hoverring over the task, clicking the <!--orange-->Ellipsis<!--orange-end--> icon and selecting <!--lime-->Add Members/Add Due Date<!--lime-end-->.
 Manage task due date/members by clicking the <!--lime-->Member/Due Date<!--lime-end--> next to the task or through the context menu.
 
-Expand/collapse tasks on the card by clicking the <!--orange-->Triangle<!--orange-end--> icon on the card, near the number of tasks.",,,0,1535715374916437911,1535715376594159523,
-1535715377105864643,589815,Attachments,"### Attachments
+Expand/collapse tasks on the card by clicking the <!--orange-->Triangle<!--orange-end--> icon on the card, near the number of tasks.",,,0,1605293047145301445,1605293048764302801,
+1605293049242453487,589815,Attachments,"### Attachments
 
 Add attachments to your card by `CTRL`+`V`, dropping them on the card or clicking the <!--lime-->Add attachment<!--lime-end--> button and selecting from the disc.
 Remove the attachment by hovering over it, clicking the <!--orange-->Pencil<!--orange-end--> icon and selecting the <!--lime-->Delete<!--lime-end--> button.
@@ -229,4 +229,4 @@ Remove the attachment by hovering over it, clicking the <!--orange-->Pencil<!--o
 If the attachment is an image, you can use it as a cover that will appear on the card.
 
 Add cover image by clicking the <!--lime-->Make Cover<!--lime-end--> button near the desired image.
-Remove cover image by clicking the <!--lime-->Remove Cover<!--lime-end--> button.",,,0,1535715374916437911,1535715376594159523,1535715379278514166
+Remove cover image by clicking the <!--lime-->Remove Cover<!--lime-end--> button.",,,0,1605293047145301445,1605293048764302801,1605293050777568794
