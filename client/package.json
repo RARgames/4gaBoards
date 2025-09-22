@@ -89,7 +89,7 @@
     "reselect": "^5.1.1",
     "resolve": "^1.22.10",
     "resolve-url-loader": "^5.0.0",
-    "sass": "^1.92.1",
+    "sass": "^1.93.0",
     "sass-loader": "^16.0.5",
     "semver": "^7.7.2",
     "socket.io-client": "^4.8.1",
