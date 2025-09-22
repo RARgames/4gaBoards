@@ -32,11 +32,12 @@ module.exports = {
 
   async fn(inputs) {
     const { values, currentUser } = inputs;
+    const actionUser = values.user || currentUser;
 
     const action = await Action.create({
       ...values,
       cardId: values.card.id,
-      userId: currentUser.id,
+      userId: actionUser.id,
       createdById: currentUser.id,
       data: {
         ...values.data,
