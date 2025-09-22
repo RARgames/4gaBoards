@@ -45,10 +45,12 @@ module.exports = {
 
     if (action) {
       if (!values.duplicate) {
+        const commentActions = await sails.helpers.cards.getActions.with({ idOrIds: values.card.id, onlyComments: true });
+
         await sails.helpers.cards.updateOne.with({
           record: values.card,
           values: {
-            commentCount: values.card.commentCount + 1,
+            commentCount: commentActions.length,
           },
           currentUser,
         });

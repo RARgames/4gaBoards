@@ -29,10 +29,12 @@ module.exports = {
     if (action) {
       const card = await Card.findOne(action.cardId);
       if (card) {
+        const commentActions = await sails.helpers.cards.getActions.with({ idOrIds: card.id, onlyComments: true });
+
         await sails.helpers.cards.updateOne.with({
           record: card,
           values: {
-            commentCount: card.commentCount - 1,
+            commentCount: commentActions.length,
           },
           currentUser,
         });
