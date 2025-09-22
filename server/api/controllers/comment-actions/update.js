@@ -64,7 +64,10 @@ module.exports = {
     }
 
     const values = {
-      data: _.pick(inputs, ['text']),
+      data: {
+        ...action.data,
+        text: inputs.text,
+      },
     };
 
     action = await sails.helpers.commentActions.updateOne.with({

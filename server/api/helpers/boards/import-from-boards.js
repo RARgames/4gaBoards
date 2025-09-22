@@ -76,7 +76,12 @@ module.exports = {
 
     const importedLists = {};
     const importedLabels = {};
+    const importedCardLabels = {};
     const importedAttachments = {};
+    const importedCardMemberships = {};
+    const importedTasks = {};
+    const importedTaskMemberships = {};
+    const importedActions = {};
     const allUsers = {};
 
     const getCardsOfList = (listId) => cards.filter((card) => card.listId === listId);
@@ -279,7 +284,11 @@ module.exports = {
         };
       });
 
-      await CardMembership.createEach(cardMembershipRecords).tolerate('E_UNIQUE');
+      const insertedCardMemberships = await CardMembership.createEach(cardMembershipRecords).tolerate('E_UNIQUE').fetch();
+
+      cardMembershipsToImport.forEach((cardMembership, i) => {
+        importedCardMemberships[cardMembership.id] = insertedCardMemberships[i];
+      });
     };
 
     const importCardSubscriptions = async (newCard, card) => {
@@ -311,7 +320,11 @@ module.exports = {
         };
       });
 
-      await CardLabel.createEach(labelRecords);
+      const insertedCardLabels = await CardLabel.createEach(labelRecords).fetch();
+
+      cardLabelsToImport.forEach((cardLabel, i) => {
+        importedCardLabels[cardLabel.id] = insertedCardLabels[i];
+      });
     };
 
     const importTaskMemberships = async (newTask, task) => {
@@ -329,7 +342,11 @@ module.exports = {
         };
       });
 
-      await TaskMembership.createEach(taskMembershipRecords).tolerate('E_UNIQUE');
+      const insertedTaskMemberships = await TaskMembership.createEach(taskMembershipRecords).tolerate('E_UNIQUE').fetch();
+
+      taskMembershipsToImport.forEach((taskMembership, i) => {
+        importedTaskMemberships[taskMembership.id] = insertedTaskMemberships[i];
+      });
     };
 
     const importTasks = async (newCard, card) => {
@@ -354,28 +371,57 @@ module.exports = {
 
       await Promise.all(
         tasksToImport.map((task, i) => {
+          importedTasks[task.id] = insertedTasks[i];
           return importTaskMemberships(insertedTasks[i], task);
         }),
       );
     };
 
     const importActions = async (newCard, card) => {
-      const actionRecords = getActionsOfCard(card.id).map((action) => {
+      const actionsToImport = getActionsOfCard(card.id);
+
+      const actionRecords = actionsToImport.map((action) => {
         const newData = parseJSON(action.data);
         if (newData) {
-          if (newData.list) {
-            newData.list.id = importedLists[newData.list.id]?.id ?? null;
+          if (newData.listId) {
+            newData.listId = importedLists[newData.listId]?.id ?? null;
           }
-          if (newData.fromList) {
-            newData.fromList.id = importedLists[newData.fromList.id]?.id ?? null;
+          if (newData.listFromId) {
+            newData.listFromId = importedLists[newData.listFromId]?.id ?? null;
           }
-          if (newData.toList) {
-            newData.toList.id = importedLists[newData.toList.id]?.id ?? null;
+          if (newData.listToId) {
+            newData.listToId = importedLists[newData.listToId]?.id ?? null;
+          }
+          if (newData.cardPrevCoverAttachmentId) {
+            newData.cardPrevCoverAttachmentId = importedAttachments[newData.cardPrevCoverAttachmentId]?.id ?? null;
+          }
+          if (newData.cardCoverAttachmentId) {
+            newData.cardCoverAttachmentId = importedAttachments[newData.cardCoverAttachmentId]?.id ?? null;
+          }
+          if (newData.attachmentId) {
+            newData.attachmentId = importedAttachments[newData.attachmentId]?.id ?? null;
+          }
+          if (newData.labelId) {
+            newData.labelId = importedLabels[newData.labelId]?.id ?? null;
+          }
+          if (newData.cardLabelId) {
+            newData.cardLabelId = importedCardLabels[newData.cardLabelId]?.id ?? null;
+          }
+          if (newData.taskId) {
+            newData.taskId = importedTasks[newData.taskId]?.id ?? null;
+          }
+          if (newData.taskMembershipId) {
+            newData.taskMembershipId = importedTaskMemberships[newData.taskMembershipId]?.id ?? null;
+          }
+          if (newData.cardMembershipId) {
+            newData.cardMembershipId = importedCardMemberships[newData.cardMembershipId]?.id ?? null;
+          }
+          if (newData.userId) {
+            newData.userId = allUsers[newData.userId]?.id ?? null;
           }
           if (newData.text && !allUsers[action.userId]) {
-            newData.text = `${newData.text}\n\n---\n*Imported comment, original author: unknown*`;
+            newData.text = `${newData.text}\n\n---\n*Imported comment, original author: ${action.newData.userName ?? 'unknown'}*`;
           }
-          // TODO add original action author here, migration, actionCreate
         }
         const updatedAt = parseJSON(action.updatedAt);
 
@@ -391,7 +437,22 @@ module.exports = {
         };
       });
 
-      await Action.createEach(actionRecords);
+      const insertedActions = await Action.createEach(actionRecords).fetch();
+
+      actionsToImport.forEach((action, i) => {
+        importedActions[action.id] = insertedActions[i];
+      });
+
+      const insertedActionToUpdate = insertedActions.filter((action) => [Action.Types.CARD_COMMENT_CREATE, Action.Types.CARD_COMMENT_UPDATE, Action.Types.CARD_COMMENT_DELETE].includes(action.type));
+
+      const updatedActions = insertedActionToUpdate.map((action) => {
+        const updatedData = { ...action.data, commentActionId: importedActions[action.data.commentActionId]?.id ?? null };
+        return { ...action, data: updatedData };
+      });
+
+      if (updatedActions.length) {
+        await Promise.all(updatedActions.map((action) => Action.updateOne({ id: action.id }).set({ data: action.data })));
+      }
     };
 
     const importCards = async (newList, list) => {
@@ -421,14 +482,8 @@ module.exports = {
       await Promise.all(
         cardsToImport.map(async (card, i) => {
           const newCard = insertedCards[i];
-          await Promise.all([
-            importAttachments(newCard, card),
-            importCardMemberships(newCard, card),
-            importCardSubscriptions(newCard, card),
-            importCardLabels(newCard, card),
-            importTasks(newCard, card),
-            importActions(newCard, card),
-          ]);
+          await Promise.all([importAttachments(newCard, card), importCardMemberships(newCard, card), importCardSubscriptions(newCard, card), importCardLabels(newCard, card), importTasks(newCard, card)]);
+          await importActions(newCard, card);
 
           const coverAttachmentId = importedAttachments[card.coverAttachmentId]?.id ?? null;
           if (coverAttachmentId) {

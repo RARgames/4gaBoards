@@ -6,6 +6,7 @@
     "console": "dotenv sails console",
     "db:init": "node db/init.js",
     "db:migrate": "knex migrate:latest --cwd db",
+    "db:rollback_one": "knex migrate:down --cwd db",
     "db:rollback": "knex migrate:rollback --cwd db",
     "db:migration_make": "knex migrate:make new_migration --cwd db",
     "db:seed": "knex seed:run --cwd db",

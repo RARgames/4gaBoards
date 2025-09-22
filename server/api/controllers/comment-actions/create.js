@@ -49,7 +49,11 @@ module.exports = {
 
     const values = {
       type: Action.Types.CARD_COMMENT,
-      data: _.pick(inputs, ['text']),
+      data: {
+        text: inputs.text,
+        userId: currentUser.id,
+        userName: currentUser.name,
+      },
     };
 
     const action = await sails.helpers.commentActions.createOne.with({
