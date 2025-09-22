@@ -409,6 +409,10 @@ export default {
       cardDuplicateShort: 'Duplicou este cartão em <1>{{list}}</1>',
       cardMove: 'Moveu <0>{{card}}</0> de <1>{{fromList}}</1> para <2>{{toList}}</2>',
       cardMoveShort: 'Moveu este cartão de <1>{{fromList}}</1> para <2>{{toList}}</2>',
+      cardTransferProject: 'Transferido <0>{{card}}</0> de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
+      cardTransferProjectShort: 'Este cartão foi transferido de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
+      cardTransferBoard: 'Transferido <0>{{card}}</0> dentro do projeto de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
+      cardTransferBoardShort: 'Este cartão foi transferido dentro do projeto de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
       cardDelete: 'Excluído <0>{{card}}</0> de <1>{{list}}</1>',
       cardDeleteShort: 'Este cartão foi excluído de <1>{{list}}</1>',
       cardUpdateName: 'Nome atualizado de <1>{{prevCard}}</1> para <0>{{card}}</0>',

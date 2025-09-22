@@ -13,7 +13,7 @@ const Types = {
   CARD_DUPLICATE: 'cardDuplicate',
   CARD_UPDATE: 'cardUpdate',
   CARD_MOVE: 'cardMove',
-  // CARD_TRANSFER: 'cardTransfer',
+  CARD_TRANSFER: 'cardTransfer',
   CARD_DELETE: 'cardDelete',
 
   /* CARD User Activities */

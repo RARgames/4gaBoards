@@ -13,6 +13,8 @@ import * as s from './ActivityMessage.module.scss';
 const cardNameTruncateLength = 30;
 const commentTruncateLength = 50;
 const listNameTruncateLength = 30;
+const boardNameTruncateLength = 30;
+const projectNameTruncateLength = 30;
 const taskNameTruncateLength = 30;
 const userNameTruncateLength = 20;
 const descriptionTruncateLength = 100;
@@ -236,6 +238,47 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
           {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
           <span className={s.data} title={fromListName} />
           <span className={s.data} title={toListName} />
+        </Trans>
+      );
+    }
+
+    case ActivityTypes.CARD_TRANSFER: {
+      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const fromListName = isTruncated ? truncate(activity.data.listFromName, { length: listNameTruncateLength }) : activity.data.listFromName;
+      const toListName = isTruncated ? truncate(activity.data.listToName, { length: listNameTruncateLength }) : activity.data.listToName;
+      const fromBoardName = isTruncated ? truncate(activity.data.boardFromName, { length: boardNameTruncateLength }) : activity.data.boardFromName;
+      const toBoardName = isTruncated ? truncate(activity.data.boardToName, { length: boardNameTruncateLength }) : activity.data.boardToName;
+      const fromProjectName = isTruncated ? truncate(activity.data.projectFromName, { length: projectNameTruncateLength }) : activity.data.projectFromName;
+      const toProjectName = isTruncated ? truncate(activity.data.projectToName, { length: projectNameTruncateLength }) : activity.data.projectToName;
+
+      let key;
+
+      if (activity.data.projectFromId !== activity.data.projectToId) {
+        key = card ? 'activity.cardTransferProject' : 'activity.cardTransferProjectShort';
+      } else {
+        key = card ? 'activity.cardTransferBoard' : 'activity.cardTransferBoardShort';
+      }
+
+      return (
+        <Trans
+          i18nKey={key}
+          values={{
+            card: cardName,
+            fromList: fromListName,
+            fromBoard: fromBoardName,
+            toList: toListName,
+            toBoard: toBoardName,
+            fromProject: fromProjectName,
+            toProject: toProjectName,
+          }}
+        >
+          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          <span className={s.data} title={fromListName} />
+          <span className={s.data} title={fromBoardName} />
+          <span className={s.data} title={toListName} />
+          <span className={s.data} title={toBoardName} />
+          <span className={s.data} title={fromProjectName} />
+          <span className={s.data} title={toProjectName} />
         </Trans>
       );
     }

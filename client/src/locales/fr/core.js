@@ -425,6 +425,10 @@ export default {
       cardDuplicateShort: 'Dupliqué cette carte dans <1>{{list}}</1>',
       cardMove: 'Déplacé <0>{{card}}</0> de <1>{{fromList}}</1> vers <2>{{toList}}</2>',
       cardMoveShort: 'Déplacé cette carte de <1>{{fromList}}</1> vers <2>{{toList}}</2>',
+      cardTransferProject: 'Carte <0>{{card}}</0> transférée de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
+      cardTransferProjectShort: 'Cette carte a été transférée de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
+      cardTransferBoard: 'Carte <0>{{card}}</0> transférée dans le projet de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
+      cardTransferBoardShort: 'Cette carte a été transférée dans le projet de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
       cardDelete: 'Supprimé <0>{{card}}</0> de <1>{{list}}</1>',
       cardDeleteShort: 'Cette carte a été supprimée de <1>{{list}}</1>',
       cardUpdateName: 'Nom mis à jour de <1>{{prevCard}}</1> à <0>{{card}}</0>',
