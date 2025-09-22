@@ -51,7 +51,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, skipMetaUpdate } = inputs;
+    const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
 
     const taskMembership = await TaskMembership.create({
       taskId: values.taskId,
@@ -100,7 +100,7 @@ module.exports = {
         }
       }
 
-      if (!inputs.skipActions) {
+      if (!skipActions) {
         const user = await User.findOne(taskMembership.userId);
         const task = await Task.findOne(taskMembership.taskId);
         if (user && task) {

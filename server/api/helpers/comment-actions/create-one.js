@@ -39,7 +39,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, skipMetaUpdate } = inputs;
+    const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
 
     const action = await sails.helpers.actions.createOne.with({ values, currentUser, skipNotifications: true, request: inputs.request });
 
@@ -56,7 +56,7 @@ module.exports = {
         });
       }
 
-      if (!inputs.skipActions) {
+      if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
             card: values.card,

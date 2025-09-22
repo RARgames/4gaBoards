@@ -33,6 +33,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    skipActions: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -43,7 +47,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, skipMetaUpdate } = inputs;
+    const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
 
     if (values.user) {
       values.userId = values.user.id;
@@ -96,20 +100,22 @@ module.exports = {
         }
       }
 
-      const user = await User.findOne(cardMembership.userId);
-      if (user) {
-        await sails.helpers.actions.createOne.with({
-          values: {
-            card: values.card,
-            type: Action.Types.CARD_USER_ADD,
-            data: {
-              cardMembershipId: cardMembership.id,
-              userId: cardMembership.userId,
-              userName: user.name,
+      if (!skipActions) {
+        const user = await User.findOne(cardMembership.userId);
+        if (user) {
+          await sails.helpers.actions.createOne.with({
+            values: {
+              card: values.card,
+              type: Action.Types.CARD_USER_ADD,
+              data: {
+                cardMembershipId: cardMembership.id,
+                userId: cardMembership.userId,
+                userName: user.name,
+              },
             },
-          },
-          currentUser,
-        });
+            currentUser,
+          });
+        }
       }
 
       await sails.helpers.cards.updateMeta.with({ id: cardMembership.cardId, currentUser, skipMetaUpdate });

@@ -29,6 +29,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    skipActions: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
@@ -39,7 +43,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, skipMetaUpdate } = inputs;
+    const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
 
     const cardLabel = await CardLabel.create({
       ...values,
@@ -60,18 +64,20 @@ module.exports = {
         inputs.request,
       );
 
-      await sails.helpers.actions.createOne.with({
-        values: {
-          card: values.card,
-          type: Action.Types.CARD_LABEL_ADD,
-          data: {
-            cardLabelId: cardLabel.id,
-            labelId: cardLabel.labelId,
-            labelName: values.label.name,
+      if (!skipActions) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            card: values.card,
+            type: Action.Types.CARD_LABEL_ADD,
+            data: {
+              cardLabelId: cardLabel.id,
+              labelId: cardLabel.labelId,
+              labelName: values.label.name,
+            },
           },
-        },
-        currentUser,
-      });
+          currentUser,
+        });
+      }
 
       await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser, skipMetaUpdate });
     }

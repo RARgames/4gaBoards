@@ -110,8 +110,8 @@ module.exports = {
             card: copiedCard,
           },
           currentUser,
-          skipActions: true,
           skipMetaUpdate: true,
+          skipActions: true,
           request: this.req,
         });
         newTaskIdMapping[task.id] = newTask.id;
@@ -129,6 +129,7 @@ module.exports = {
             },
             currentUser,
             skipMetaUpdate: true,
+            skipActions: true,
             request: this.req,
           })
           .intercept('labelAlreadyInCard', () => Errors.LABEL_ALREADY_IN_CARD);
@@ -143,6 +144,7 @@ module.exports = {
             currentUser,
             skipMetaUpdate: true,
             duplicate: true,
+            skipActions: true,
             request: this.req,
           })
           .intercept('userAlreadyCardMember', () => Errors.USER_ALREADY_CARD_MEMBER);

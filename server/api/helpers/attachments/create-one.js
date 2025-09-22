@@ -39,7 +39,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, skipMetaUpdate } = inputs;
+    const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
 
     const attachment = await Attachment.create({
       ...values,
@@ -58,7 +58,7 @@ module.exports = {
         inputs.request,
       );
 
-      if (!inputs.skipActions) {
+      if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
             card: values.card,

@@ -43,7 +43,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, skipMetaUpdate } = inputs;
+    const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
 
     const tasks = await sails.helpers.cards.getTasks(values.card.id);
 
@@ -82,7 +82,7 @@ module.exports = {
         inputs.request,
       );
 
-      if (!inputs.skipActions) {
+      if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
             card: values.card,
