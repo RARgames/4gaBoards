@@ -1,5 +1,5 @@
 id,type,data,cardId,userId
-1605293050534299154,cardComment,"{""text"":""Sample comment with **Markdown syntax**."",""userId"":895703383690707969,""userName"":""RAR""}",1605293049242453477,895703383690707969
+1605293050534299154,cardComment,"{""text"":""Sample comment with **Markdown syntax**."",""userId"":""895703383690707969"",""userName"":""RAR""}",1605293049242453477,895703383690707969
 1605293049661883893,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Navigating across the board"",""listName"":""Basics""}",1605293049166955994,895703383690707969
 1605293050030982655,cardCreate,"{""listId"":""1605293048764302799"",""cardName"":""You will see this card only after you expand the list"",""listName"":""Collapsed list""}",1605293049192121824,895703383690707969
 1605293050400081420,cardCreate,"{""listId"":""1605293048764302800"",""cardName"":""How to change language?"",""listName"":""Settings""}",1605293049208899042,895703383690707969
