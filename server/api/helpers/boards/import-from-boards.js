@@ -62,6 +62,14 @@ module.exports = {
       });
       actions.forEach((action) => {
         action.userId = currentUser.id; // eslint-disable-line no-param-reassign
+        if (action.data) {
+          const data = parseJSON(action.data);
+          if (data && data.userId && data.userName) {
+            data.userId = currentUser.id;
+            data.userName = currentUser.name;
+            action.data = JSON.stringify(data); // eslint-disable-line no-param-reassign
+          }
+        }
       });
       cardSubscriptions.forEach((cardSubscription) => {
         cardSubscription.userId = currentUser.id; // eslint-disable-line no-param-reassign
