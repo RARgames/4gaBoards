@@ -56,10 +56,10 @@ const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, o
   }, [id, open, onSetNameCellFns]);
 
   const handleKeyDown = useCallback(
-    (event) => {
-      switch (event.key) {
+    (e) => {
+      switch (e.key) {
         case 'Enter':
-          event.preventDefault(); // Prevent adding new line in TextArea
+          e.preventDefault(); // Prevent adding new line in TextArea
           submit();
           break;
         case 'Escape':

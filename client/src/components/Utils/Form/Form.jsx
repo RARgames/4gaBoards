@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import * as s from './Form.module.scss';
 
 const Form = React.forwardRef(({ onSubmit, children, className, ...props }, ref) => {
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent reloading page after form submit (when submit button has no onClick handler)
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent reloading page after form submit (when submit button has no onClick handler)
     if (onSubmit) {
-      onSubmit(event);
+      onSubmit(e);
     }
   };
 

@@ -64,8 +64,8 @@ const DescriptionEdit = React.forwardRef(
     }, [close]);
 
     const handleBlur = useCallback(
-      (event) => {
-        if (event.relatedTarget && event.relatedTarget.closest(`.${s.editor}`)) {
+      (e) => {
+        if (e.relatedTarget && e.relatedTarget.closest(`.${s.editor}`)) {
           return;
         }
 
@@ -91,10 +91,10 @@ const DescriptionEdit = React.forwardRef(
     );
 
     const handleEditorKeyDown = useCallback(
-      (event) => {
-        if (event.key === 'Escape') {
+      (e) => {
+        if (e.key === 'Escape') {
           handleCancel();
-        } else if (event.ctrlKey && event.key === 'Enter') {
+        } else if (e.ctrlKey && e.key === 'Enter') {
           handleSubmit();
         }
       },

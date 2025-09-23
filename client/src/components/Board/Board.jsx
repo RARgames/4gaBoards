@@ -65,20 +65,20 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
   );
 
   const handleMouseDown = useCallback(
-    (event) => {
-      if (event.button && event.button !== 0) {
+    (e) => {
+      if (e.button && e.button !== 0) {
         return;
       }
 
-      if (event.target !== wrapper.current && !event.target.dataset.dragScroller) {
+      if (e.target !== wrapper.current && !e.target.dataset.dragScroller) {
         return;
       }
 
-      event.preventDefault(); // Prevent text selecton when dragging board
+      e.preventDefault(); // Prevent text selecton when dragging board
       if (document.activeElement) {
         document.activeElement.blur();
       }
-      prevPosition.current = event.screenX;
+      prevPosition.current = e.screenX;
 
       const selection = window.getSelection();
       if (selection && selection.removeAllRanges) {
@@ -89,13 +89,13 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
   );
 
   const handleWindowMouseMove = useCallback(
-    (event) => {
+    (e) => {
       if (!prevPosition.current) {
         return;
       }
 
-      wrapper.current?.scrollBy({ left: prevPosition.current - event.screenX });
-      prevPosition.current = event.screenX;
+      wrapper.current?.scrollBy({ left: prevPosition.current - e.screenX });
+      prevPosition.current = e.screenX;
     },
     [prevPosition],
   );

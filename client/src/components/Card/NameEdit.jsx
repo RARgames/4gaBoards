@@ -60,11 +60,11 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   );
 
   const handleFieldKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter':
-          event.preventDefault(); // Prevent adding new line in TextArea
+          e.preventDefault(); // Prevent adding new line in TextArea
           submit();
           break;
         case 'Escape':

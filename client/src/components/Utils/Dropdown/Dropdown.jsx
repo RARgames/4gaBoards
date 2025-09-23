@@ -164,8 +164,8 @@ const Dropdown = React.forwardRef(
     }, [getOptions, isOpen, open, defaultItem, selectItemByIndex]);
 
     const handleBlur = useCallback(
-      (event) => {
-        if (event.relatedTarget && (event.relatedTarget.closest(`.${s.dropdownMenu}`) || event.relatedTarget.closest(`.${s.dropdownContainer}`))) {
+      (e) => {
+        if (e.relatedTarget && (e.relatedTarget.closest(`.${s.dropdownMenu}`) || e.relatedTarget.closest(`.${s.dropdownContainer}`))) {
           return;
         }
         if (onBlur) {
@@ -211,8 +211,8 @@ const Dropdown = React.forwardRef(
     }, []);
 
     const handleKeyDown = useCallback(
-      (event) => {
-        switch (event.key) {
+      (e) => {
+        switch (e.key) {
           case 'ArrowUp': {
             const currIndex = getCurrItemIndex();
             const prevIndex = Math.max(0, currIndex - 1);
@@ -226,18 +226,18 @@ const Dropdown = React.forwardRef(
             break;
           }
           case 'Enter': {
-            event.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
+            e.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
             handleSubmit(getCurrItem());
             break;
           }
           case 'Tab': {
-            event.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
-            event.preventDefault(); // Prevent switching focus
+            e.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
+            e.preventDefault(); // Prevent switching focus
             handleSubmit(getCurrItem());
             break;
           }
           case 'Escape': {
-            event.stopPropagation(); // TODO Prevent closing whole popup - change how popup handles key input
+            e.stopPropagation(); // TODO Prevent closing whole popup - change how popup handles key input
             handleCancel();
             break;
           }

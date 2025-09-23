@@ -43,9 +43,9 @@ const ConnectionsStep = React.memo(({ defaultData, onUpdate, onBack, onClose }) 
   }, [onClose]);
 
   const handleFieldKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
           handleSubmit();
           break;

@@ -33,15 +33,15 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
   const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === path.listId)) || null, [selectedBoard, path.listId]);
 
   const handleChange = useCallback(
-    (event) => {
-      const data = event.target;
+    (e) => {
+      const data = e.target;
       if (data.name === 'boardId') {
         if (selectedProject.boards.find((board) => board.id === data.value).isFetching === null) {
           onBoardFetch(data.value);
         }
       }
 
-      handleFieldChange(event);
+      handleFieldChange(e);
     },
     [handleFieldChange, onBoardFetch, selectedProject],
   );

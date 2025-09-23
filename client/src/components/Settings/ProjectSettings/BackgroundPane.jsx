@@ -19,10 +19,10 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
   const field = useRef(null);
 
   const handleGradientClick = useCallback(
-    (event) => {
+    (e) => {
       const background = {
         type: ProjectBackgroundTypes.GRADIENT,
-        name: event.target.value,
+        name: e.target.value,
       };
 
       if (!dequal(background, item)) {

@@ -66,12 +66,12 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
   }, [close]);
 
   const handleFieldKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
-          event.preventDefault(); // Prevent adding new line in TextArea
-          const autoOpen = event.ctrlKey;
+          e.preventDefault(); // Prevent adding new line in TextArea
+          const autoOpen = e.ctrlKey;
           submit(autoOpen);
           break;
         }

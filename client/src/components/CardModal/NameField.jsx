@@ -43,10 +43,10 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
   );
 
   const handleKeyDown = useCallback(
-    (event) => {
-      switch (event.key) {
+    (e) => {
+      switch (e.key) {
         case 'Enter':
-          event.preventDefault(); // Prevent adding new line in TextArea
+          e.preventDefault(); // Prevent adding new line in TextArea
           submit();
           break;
         case 'Escape':

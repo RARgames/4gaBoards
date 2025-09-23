@@ -41,11 +41,11 @@ const TaskAddStep = React.memo(({ onCreate, onBack, onClose }) => {
   }, [data, onClose, onCreate, setData]);
 
   const handleKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
-          event.preventDefault(); // Prevent adding new line in TextArea
+          e.preventDefault(); // Prevent adding new line in TextArea
           handleSubmit();
           break;
         }

@@ -48,12 +48,12 @@ const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {
   );
 
   const handleKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
-          event.preventDefault(); // Prevent adding new line in TextArea
-          const keepOpen = event.shiftKey;
+          e.preventDefault(); // Prevent adding new line in TextArea
+          const keepOpen = e.shiftKey;
           handleSubmit(keepOpen);
           break;
         }

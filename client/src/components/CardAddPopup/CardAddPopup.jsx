@@ -67,13 +67,13 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
   );
 
   const handleKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
-          event.preventDefault(); // Prevent adding new line in TextArea
-          const autoOpen = event.ctrlKey;
-          const keepOpen = event.shiftKey;
+          e.preventDefault(); // Prevent adding new line in TextArea
+          const autoOpen = e.ctrlKey;
+          const keepOpen = e.shiftKey;
           handleSubmit(autoOpen, keepOpen);
           break;
         }

@@ -30,9 +30,9 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
   }, [data, onCreate, onClose]);
 
   const handleKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter':
           handleSubmit();
           break;

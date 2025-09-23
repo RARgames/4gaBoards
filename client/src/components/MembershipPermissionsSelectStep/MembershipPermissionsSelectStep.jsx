@@ -28,8 +28,8 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
     }));
   }, []);
 
-  const handleSettingChange = useCallback((event) => {
-    const { name, checked } = event.target;
+  const handleSettingChange = useCallback((e) => {
+    const { name, checked } = e.target;
     setData((prevData) => ({
       ...prevData,
       [name]: checked,
@@ -45,8 +45,8 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
   }, [defaultData, onSelect, onClose, data]);
 
   const handleKeyDown = useCallback(
-    (event) => {
-      switch (event.key) {
+    (e) => {
+      switch (e.key) {
         case 'Enter': {
           handleSubmit();
           break;

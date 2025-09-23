@@ -93,9 +93,9 @@ const Card = React.memo(
     }, []);
 
     const handleClick = useCallback(
-      (event) => {
+      (e) => {
         // Prevent card click if user is trying to edit card details such as tasks
-        let { target } = event;
+        let { target } = e;
         while (target) {
           if (target.dataset.preventCardSwitch) {
             return;

@@ -84,9 +84,9 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
   }, [defaultValue, onUpdate, onClose]);
 
   const handleKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
           handleSubmit();
           break;

@@ -40,10 +40,10 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
   }, [setValue, defaultValue, value, onFilterQueryClear, submit]);
 
   const handleChange = useCallback(
-    (event) => {
-      handleFieldChange(event);
-      submit(event.target.value);
-      if (event.target.value === '') {
+    (e) => {
+      handleFieldChange(e);
+      submit(e.target.value);
+      if (e.target.value === '') {
         onFilterQueryClear();
       }
     },
@@ -57,8 +57,8 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
   }, [submit, toggleFilterTarget, value]);
 
   const handleKeyDown = useCallback(
-    (event) => {
-      switch (event.key) {
+    (e) => {
+      switch (e.key) {
         case 'Enter':
           handleSubmit();
           break;
@@ -66,7 +66,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
           handleCancel();
           break;
         case 'Tab':
-          event.preventDefault(); // Prevent switching focus
+          e.preventDefault(); // Prevent switching focus
           handleToggleClick();
           break;
         default:

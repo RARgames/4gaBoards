@@ -65,10 +65,10 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
   );
 
   const handleFieldKeyDown = useCallback(
-    (event) => {
-      if (event.ctrlKey && event.key === 'Enter') {
+    (e) => {
+      if (e.ctrlKey && e.key === 'Enter') {
         submit();
-      } else if (event.key === 'Escape') {
+      } else if (e.key === 'Escape') {
         handleCancel();
       }
     },
@@ -77,19 +77,19 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
 
   const handleChange = useCallback(
     (value) => {
-      const event = { target: { name: 'text', value } };
-      handleFieldChange(event);
+      const e = { target: { name: 'text', value } };
+      handleFieldChange(e);
     },
     [handleFieldChange],
   );
 
   const handleBlur = useCallback(
-    (event) => {
-      if (event.relatedTarget && event.relatedTarget.closest(`.${s.editor}`)) {
+    (e) => {
+      if (e.relatedTarget && e.relatedTarget.closest(`.${s.editor}`)) {
         return;
       }
 
-      if (event.target.value.trim() === defaultData.text.trim()) {
+      if (e.target.value.trim() === defaultData.text.trim()) {
         handleCancel();
       }
     },

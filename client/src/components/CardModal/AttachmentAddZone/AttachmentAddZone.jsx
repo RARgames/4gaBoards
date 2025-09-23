@@ -46,12 +46,12 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
   );
 
   useEffect(() => {
-    const handlePaste = (event) => {
-      if (!event.clipboardData) {
+    const handlePaste = (e) => {
+      if (!e.clipboardData) {
         return;
       }
 
-      const { files, items } = event.clipboardData; // BUG Firefox does not provide multiple files: https://bugzilla.mozilla.org/show_bug.cgi?id=864052
+      const { files, items } = e.clipboardData; // BUG Firefox does not provide multiple files: https://bugzilla.mozilla.org/show_bug.cgi?id=864052
 
       if (files.length > 0) {
         [...files].forEach((file) => {
@@ -67,12 +67,12 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
       const item = items[0];
 
       if (item.kind === 'string') {
-        if (['input', 'textarea'].includes(event.target.tagName.toLowerCase()) && event.target === document.activeElement) {
+        if (['input', 'textarea'].includes(e.target.tagName.toLowerCase()) && e.target === document.activeElement) {
           // Allows input to be pasted into input fields
           return;
         }
 
-        openModal({ content: event.clipboardData.getData('Text') });
+        openModal({ content: e.clipboardData.getData('Text') });
         modalRef.current?.setIsOpen(true);
       }
 

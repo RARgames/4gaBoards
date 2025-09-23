@@ -32,9 +32,9 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
   }, [setValue, submit]);
 
   const handleChange = useCallback(
-    (event) => {
-      handleFieldChange(event);
-      submit(event.target.value);
+    (e) => {
+      handleFieldChange(e);
+      submit(e.target.value);
     },
     [handleFieldChange, submit],
   );
@@ -50,8 +50,8 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
   }, [anyMatchValue, onBoardSearchParamsUpdate]);
 
   const handleKeyDown = useCallback(
-    (event) => {
-      switch (event.key) {
+    (e) => {
+      switch (e.key) {
         case 'Enter':
           handleSubmit();
           break;
@@ -59,14 +59,14 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
           handleCancel();
           break;
         case 'c':
-          if (event.altKey) {
-            event.preventDefault();
+          if (e.altKey) {
+            e.preventDefault();
             handleMatchCaseChange();
           }
           break;
         case 'v':
-          if (event.altKey) {
-            event.preventDefault();
+          if (e.altKey) {
+            e.preventDefault();
             handleAnyMatchChange();
           }
           break;

@@ -38,11 +38,11 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
   }, [data, defaultData, onClose, onUpdate]);
 
   const handleFieldKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
-          event.preventDefault(); // Prevent adding new line in TextArea
+          e.preventDefault(); // Prevent adding new line in TextArea
           handleSubmit();
           break;
         }

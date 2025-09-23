@@ -52,15 +52,15 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   }, [openStep]);
 
   const handleKeyDown = useCallback(
-    (event) => {
+    (e) => {
       setIsError(false);
-      switch (event.key) {
+      switch (e.key) {
         case 'Enter': {
           handleSubmit();
           break;
         }
         case 'Escape': {
-          event.stopPropagation(); // TODO Prevent closing whole popup - change how popup handles key input
+          e.stopPropagation(); // TODO Prevent closing whole popup - change how popup handles key input
           onBack();
           break;
         }
