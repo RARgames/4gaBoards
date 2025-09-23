@@ -13,6 +13,7 @@ import * as s from './Core.module.scss';
 const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard }) => {
   const [t] = useTranslation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showDisconnected, setShowDisconnected] = useState(false);
   const mainTitle = '4ga Boards';
 
   useEffect(() => {
@@ -33,6 +34,16 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
     setIsCollapsed(!isCollapsed);
   }, [isCollapsed]);
 
+  useEffect(() => {
+    let disconnectedTimeout;
+    if (isSocketDisconnected) {
+      disconnectedTimeout = setTimeout(() => setShowDisconnected(true), 20);
+    } else {
+      setShowDisconnected(false);
+    }
+    return () => clearTimeout(disconnectedTimeout);
+  }, [isSocketDisconnected]);
+
   return (
     <>
       {isInitializing ? (
@@ -46,7 +57,7 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
           <StaticContainer />
         </>
       )}
-      {isSocketDisconnected && (
+      {showDisconnected && (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={clsx(s.message, isCollapsed && s.messageCollapsed)} onClick={handleToggleCollapse}>
           <div className={s.messageHeader}>

@@ -11,6 +11,7 @@ import * as s from './NotFound.module.scss';
 const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   const [t] = useTranslation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showDisconnected, setShowDisconnected] = useState(false);
   const mainTitle = '4ga Boards';
 
   useEffect(() => {
@@ -20,6 +21,16 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
   const handleToggleCollapse = useCallback(() => {
     setIsCollapsed(!isCollapsed);
   }, [isCollapsed]);
+
+  useEffect(() => {
+    let disconnectedTimeout;
+    if (isSocketDisconnected) {
+      disconnectedTimeout = setTimeout(() => setShowDisconnected(true), 20);
+    } else {
+      setShowDisconnected(false);
+    }
+    return () => clearTimeout(disconnectedTimeout);
+  }, [isSocketDisconnected]);
 
   return (
     <>
@@ -31,7 +42,7 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
           <h1 className={s.text}>{t('common.pageNotFound', { context: 'title' })}</h1>
         </>
       )}
-      {isSocketDisconnected && (
+      {showDisconnected && (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={clsx(s.message, isCollapsed && s.messageCollapsed)} onClick={handleToggleCollapse}>
           <div className={s.messageHeader}>
