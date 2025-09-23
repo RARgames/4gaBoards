@@ -145,10 +145,19 @@ module.exports = {
         });
 
         prevLabels = await sails.helpers.cards.getLabels(inputs.record.id);
+        const prevCardLabels = await sails.helpers.cards.getCardLabels(inputs.record.id);
 
         await CardLabel.destroy({
           cardId: inputs.record.id,
         });
+
+        await Promise.all(
+          prevCardLabels.map(async (cardLabel) =>
+            sails.sockets.broadcast(`board:${prevCard.boardId}`, 'cardLabelDelete', {
+              item: cardLabel,
+            }),
+          ),
+        );
 
         await sails.helpers.lists.updateMeta.with({ id: prevCard.listId, currentUser, skipMetaUpdate });
       }
@@ -190,15 +199,18 @@ module.exports = {
           }),
         );
 
+        const newLabels = await Label.find(labelIds);
         await Promise.all(
-          labelIds.map(async (labelId) =>
-            CardLabel.create({
-              labelId,
-              cardId: card.id,
-              createdById: currentUser.id,
-            })
-              .tolerate('E_UNIQUE')
-              .fetch(),
+          newLabels.map(async (label) =>
+            sails.helpers.cardLabels.createOne.with({
+              values: {
+                card,
+                label,
+              },
+              currentUser,
+              skipActions: true,
+              skipMetaUpdate: true,
+            }),
           ),
         );
 

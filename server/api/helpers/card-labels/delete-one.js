@@ -16,13 +16,17 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    skipActions: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { currentUser, skipMetaUpdate } = inputs;
+    const { currentUser, skipMetaUpdate, skipActions } = inputs;
 
     const cardLabel = await CardLabel.destroyOne(inputs.record.id);
 
@@ -36,21 +40,23 @@ module.exports = {
         inputs.request,
       );
 
-      const card = await Card.findOne(inputs.record.cardId);
-      const label = await Label.findOne(cardLabel.labelId);
-      if (card && label) {
-        await sails.helpers.actions.createOne.with({
-          values: {
-            card,
-            type: Action.Types.CARD_LABEL_REMOVE,
-            data: {
-              cardLabelId: cardLabel.id,
-              labelId: cardLabel.labelId,
-              labelName: label.name,
+      if (!skipActions) {
+        const card = await Card.findOne(inputs.record.cardId);
+        const label = await Label.findOne(cardLabel.labelId);
+        if (card && label) {
+          await sails.helpers.actions.createOne.with({
+            values: {
+              card,
+              type: Action.Types.CARD_LABEL_REMOVE,
+              data: {
+                cardLabelId: cardLabel.id,
+                labelId: cardLabel.labelId,
+                labelName: label.name,
+              },
             },
-          },
-          currentUser,
-        });
+            currentUser,
+          });
+        }
       }
 
       await sails.helpers.cards.updateMeta.with({ id: cardLabel.cardId, currentUser, skipMetaUpdate });
