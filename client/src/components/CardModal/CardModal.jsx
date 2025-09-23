@@ -115,6 +115,7 @@ const CardModal = React.memo(
     const tasksRef = useRef(null);
     const descEditRef = useRef(null);
     const descriptionEditButtonRef = useRef(null);
+    const didMountRef = useRef(false);
     const [descriptionHeight, setDescriptionHeight] = useState(0);
     const [unsavedDesc, setUnsavedDesc] = useState(false);
     const [, getLocalDesc] = useLocalStorage(`desc-${id}`);
@@ -127,6 +128,14 @@ const CardModal = React.memo(
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
+
+    useEffect(() => {
+      if (!didMountRef.current) {
+        didMountRef.current = true;
+        return;
+      }
+      onBoardFetch(boardId);
+    }, [boardId, onBoardFetch]);
 
     const handleToggleDescShown = useCallback(() => {
       toggleDescShown();

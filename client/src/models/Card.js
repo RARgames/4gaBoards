@@ -70,6 +70,7 @@ export default class extends BaseModel {
       case ActionTypes.CORE_INITIALIZE:
       case ActionTypes.PROJECT_MANAGER_CREATE_HANDLE:
       case ActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE:
+      case ActionTypes.BOARD_FETCH__SUCCESS:
         if (payload.cards) {
           payload.cards.forEach((card) => {
             Card.upsert(card);
@@ -159,20 +160,6 @@ export default class extends BaseModel {
         try {
           Card.withId(payload.cardMembership.cardId).users.remove(payload.cardMembership.userId);
         } catch {} // eslint-disable-line no-empty
-
-        break;
-      case ActionTypes.BOARD_FETCH__SUCCESS:
-        payload.cards.forEach((card) => {
-          Card.upsert(card);
-        });
-
-        payload.cardMemberships.forEach(({ cardId, userId }) => {
-          Card.withId(cardId).users.add(userId);
-        });
-
-        payload.cardLabels.forEach(({ cardId, labelId }) => {
-          Card.withId(cardId).labels.add(labelId);
-        });
 
         break;
       case ActionTypes.LABEL_TO_CARD_ADD:
