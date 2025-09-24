@@ -41,7 +41,6 @@ export default {
       boardNotFound_title: 'Tabuľa neexistuje',
       cardActions_title: 'Akcie na karte',
       cardNotFound_title: 'Karta neexistuje',
-      cardOrActionAreDeleted: 'Karta alebo akcia sú zmazané',
       color: 'Farba',
       createBoard_title: 'Vytvoriť tabuľu',
       createLabel_title: 'Vytvoriť štítok',

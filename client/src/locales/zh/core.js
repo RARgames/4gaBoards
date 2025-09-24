@@ -37,7 +37,6 @@ export default {
       boardNotFound_title: '面板不存在',
       cardActions_title: '卡片操作',
       cardNotFound_title: '卡片不存在',
-      cardOrActionAreDeleted: '卡片或操作已经被删除',
       color: '颜色',
       createBoard_title: '创建面板',
       createLabel_title: '创建标签',

@@ -10,4 +10,12 @@
       color: var(--linkedCardHover);
     }
   }
+
+  .linkedDeleted {
+    color: var(--linkedCardDeleted);
+
+    &:hover {
+      color: var(--linkedCardDeletedHover);
+    }
+  }
 }

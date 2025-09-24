@@ -41,7 +41,6 @@ export default {
       boardNotFound_title: 'Tabule nenalezena',
       cardActions_title: 'Akce na kartě',
       cardNotFound_title: 'Karta nenalezena',
-      cardOrActionAreDeleted: 'Karta nebo akce je smazána',
       color: 'Barva',
       createBoard_title: 'Vytvořit tabuli',
       createLabel_title: 'Vytvořit štítek',

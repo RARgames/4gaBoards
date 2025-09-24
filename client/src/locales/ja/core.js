@@ -41,7 +41,6 @@ export default {
       boardNotFound_title: 'ボードが見つかりません',
       cardActions_title: 'カードのアクション',
       cardNotFound_title: 'カードが見つかりません',
-      cardOrActionAreDeleted: 'カードやアクションが削除されます',
       color: '色',
       createBoard_title: 'ボードを作成',
       createLabel_title: 'ラベルを作成',

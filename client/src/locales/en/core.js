@@ -79,7 +79,6 @@ export default {
       card: 'card',
       cardActions_title: 'Card Actions',
       cardNotFound_title: 'Card Not Found',
-      cardOrActionAreDeleted: 'Card or action are deleted',
       cards_one: '{{count}} card',
       cards_other: '{{count}} cards',
       cards_title_one: '{{count}} Card',
@@ -491,6 +490,7 @@ export default {
       cardLabelAddShort: 'Added label <1>{{label}}</1>',
       cardLabelRemove: 'Removed label <1>{{label}}</1> from <0>{{card}}</0>',
       cardLabelRemoveShort: 'Removed label <1>{{label}}</1>',
+      deletedCard: 'Deleted card: {{card}}',
     },
 
     action: {

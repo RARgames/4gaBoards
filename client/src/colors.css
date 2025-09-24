@@ -24,6 +24,8 @@
   --borderOutline2: #34b7cd;
   --linkedCard: #8deeff;
   --linkedCardHover: #77cfdf;
+  --linkedCardDeleted: #f57272;
+  --linkedCardDeletedHover: #d36b6b;
   --selectionBackground: #0664d4;
   --loginBackground: #2185d0;
   --loginBackgroundDark: #2075b6;

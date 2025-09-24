@@ -41,7 +41,6 @@ export default {
       boardNotFound_title: 'Tavla Ej Funnen',
       cardActions_title: 'Kortåtgärder',
       cardNotFound_title: 'Kort Ej Funnet',
-      cardOrActionAreDeleted: 'Kort eller åtgärd är borttagen',
       color: 'Färg',
       createBoard_title: 'Skapa Tavla',
       createLabel_title: 'Skapa Etikett',

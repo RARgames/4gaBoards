@@ -37,7 +37,6 @@ export default {
       boardNotFound_title: 'Doska Topilmadi',
       cardActions_title: 'Karta Amallari',
       cardNotFound_title: 'Karta Topilmadi',
-      cardOrActionAreDeleted: "Karta yoki amal o'chirilgan",
       color: 'Rang',
       createBoard_title: 'Doska Yaratish',
       createLabel_title: 'Yorliq Yaratish',

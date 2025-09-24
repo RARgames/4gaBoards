@@ -41,7 +41,6 @@ export default {
       boardNotFound_title: 'Bræt ikke fundet',
       cardActions_title: 'Korthandlinger',
       cardNotFound_title: 'Kort ikke fundet',
-      cardOrActionAreDeleted: 'Kort eller handling er slettet',
       color: 'Farve',
       createBoard_title: 'Opret bræt',
       createLabel_title: 'Opret mærkat',

@@ -81,7 +81,6 @@ export default {
       card: 'cartão',
       cardActions_title: 'Ações do Cartão',
       cardNotFound_title: 'Cartão Não Encontrado',
-      cardOrActionAreDeleted: 'Cartão ou ação foram excluídos',
       cards_one: '{{count}} cartão',
       cards_other: '{{count}} cartões',
       cards_title_one: '{{count}} Cartão',
@@ -493,6 +492,7 @@ export default {
       cardLabelAddShort: 'Adicionada etiqueta <1>{{label}}</1>',
       cardLabelRemove: 'Removida etiqueta <1>{{label}}</1> de <0>{{card}}</0>',
       cardLabelRemoveShort: 'Removida etiqueta <1>{{label}}</1>',
+      deletedCard: 'Cartão excluído: {{card}}',
     },
 
     action: {

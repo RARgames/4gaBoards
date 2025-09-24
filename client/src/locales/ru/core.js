@@ -39,7 +39,6 @@ export default {
       canOnlyViewBoard: 'Может только просматривать доску',
       cardActions: 'Действия с карточкой',
       cardNotFound: 'Карточка не найдена',
-      cardOrActionAreDeleted: 'Карточка или действие удалены',
       color: 'Цвет',
       connectionRestored: 'Соединение восстановлено',
       createBoard: 'Создание доски',

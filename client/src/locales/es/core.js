@@ -36,7 +36,6 @@ export default {
       boardNotFound_title: 'Tablero no encontrado',
       cardActions_title: 'Acciones de las tarjetas',
       cardNotFound_title: 'tarjeta no encontrada',
-      cardOrActionAreDeleted: 'La tarjeta o la acción está eliminada',
       color: 'Color',
       createBoard_title: 'Crear Tablero',
       createLabel_title: 'Crear Etiqueta',

@@ -42,7 +42,6 @@ export default {
       boardNotFound_title: 'Board nicht gefunden',
       cardActions_title: 'Kartenaktionen',
       cardNotFound_title: 'Karte nicht gefunden',
-      cardOrActionAreDeleted: 'Karte oder Aktion wurden gelöscht',
       color: 'Farbe',
       createBoard_title: 'Board erstellen',
       createLabel_title: 'Label erstellen',

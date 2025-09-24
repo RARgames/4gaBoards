@@ -7,7 +7,7 @@ import User from '../../User';
 
 import * as s from './Item.module.scss';
 
-const Item = React.memo(({ type, data, user, createdAt, boardMemberships }) => {
+const Item = React.memo(({ card, type, data, user, createdAt, boardMemberships }) => {
   const [t] = useTranslation();
 
   return (
@@ -18,13 +18,14 @@ const Item = React.memo(({ type, data, user, createdAt, boardMemberships }) => {
       <span className={s.author}>{user.name}</span>
       {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
       <div className={s.contentText}>
-        <ActivityMessage activity={{ type, data, user, userId: user?.id }} />
+        <ActivityMessage activity={{ type, data, user, userId: user?.id }} card={card} />
       </div>
     </div>
   );
 });
 
 Item.propTypes = {
+  card: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   type: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -33,6 +34,7 @@ Item.propTypes = {
 };
 
 Item.defaultProps = {
+  card: undefined,
   createdAt: undefined,
 };
 

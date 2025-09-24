@@ -43,7 +43,6 @@ export default {
       boardNotFound_title: '보드를 찾을 수 없습니다.',
       cardActions_title: 'Card Actions',
       cardNotFound_title: '항목카드를 찾을 수 없습니다.',
-      cardOrActionAreDeleted: '항목카드 혹은 활동내역이 삭제되었습니다.',
       color: 'Color',
       createBoard_title: '보드명칭을 입력하세요.',
       createLabel_title: '라벨 생성',

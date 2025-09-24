@@ -28,7 +28,7 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
           <div className={clsx(s.wrapper, gs.scrollableY)}>
             {items.map((item) => (
               <div key={item.id} className={s.item}>
-                {item.card && item.activity ? (
+                {item.activity && (
                   <>
                     <div className={s.itemHeader}>
                       <span className={s.user}>
@@ -44,8 +44,6 @@ const NotificationsStep = React.memo(({ items, onDelete, onClose }) => {
                       <ActivityMessage activity={item.activity} card={item.card} isTruncated isCardLinked onClose={onClose} />
                     </span>
                   </>
-                ) : (
-                  <div className={s.itemDeleted}>{t('common.cardOrActionAreDeleted')}</div>
                 )}
               </div>
             ))}

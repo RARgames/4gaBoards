@@ -85,7 +85,6 @@ export default {
       card: 'carte',
       cardActions_title: 'Actions sur la carte',
       cardNotFound_title: 'Carte non trouvée',
-      cardOrActionAreDeleted: "La carte ou l'action sont supprimées",
       cards_many: '{{count}} cartes',
       cards_one: '{{count}} carte',
       cards_other: '{{count}} cartes',
@@ -509,6 +508,7 @@ export default {
       cardLabelAddShort: "Ajouté l'étiquette <1>{{label}}</1>",
       cardLabelRemove: "Supprimé l'étiquette <1>{{label}}</1> de <0>{{card}}</0>",
       cardLabelRemoveShort: "Supprimé l'étiquette <1>{{label}}</1>",
+      deletedCard: 'Carte supprimée : {{card}}',
     },
 
     action: {

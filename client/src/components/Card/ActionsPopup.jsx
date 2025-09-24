@@ -182,6 +182,7 @@ const ActionsStep = React.memo(
               updatedBy={updatedBy}
               memberships={boardMemberships}
               isNotMemberTitle={t('common.noLongerBoardMember')}
+              card={card}
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}

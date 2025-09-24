@@ -40,7 +40,6 @@ export default {
       canOnlyViewBoard: 'Può solo vedere la bacheca',
       cardActions_title: 'Card Azioni',
       cardNotFound_title: 'Card non trovata',
-      cardOrActionAreDeleted: "La card o l'azione vengono eliminate",
       color: 'Colore',
       createBoard_title: 'Crea Bacheca',
       createLabel_title: 'Crea Etichetta',

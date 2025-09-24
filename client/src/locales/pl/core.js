@@ -85,7 +85,6 @@ export default {
       card: 'karta',
       cardActions_title: 'Edycja karty',
       cardNotFound_title: 'Karta nie znaleziona',
-      cardOrActionAreDeleted: 'Karta lub akcja została usunięta',
       cards_few: '{{count}} karty',
       cards_many: '{{count}} kart',
       cards_one: '{{count}} karta',
@@ -507,6 +506,7 @@ export default {
       cardLabelAddShort: 'Dodano etykietę <1>{{label}}</1>',
       cardLabelRemove: 'Usunięto etykietę <1>{{label}}</1> z <0>{{card}}</0>',
       cardLabelRemoveShort: 'Usunięto etykietę <1>{{label}}</1>',
+      deletedCard: 'Usunięta karta: {{card}}',
     },
 
     action: {

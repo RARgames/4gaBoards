@@ -23,57 +23,71 @@ const isDescriptionTruncated = true;
 
 const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked, onClose }) => {
   const [t] = useTranslation();
+
+  const cardName = isTruncated ? truncate(card?.name || activity.data?.cardName, { length: cardNameTruncateLength }) : card?.name || activity.data?.cardName;
+
   switch (activity.type) {
     case ActivityTypes.CARD_CREATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardCreate' : 'activity.cardCreateShort'}
+          i18nKey={isCardLinked ? 'activity.cardCreate' : 'activity.cardCreateShort'}
           values={{
             card: cardName,
             list: listName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={listName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_DUPLICATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardDuplicate' : 'activity.cardDuplicateShort'}
+          i18nKey={isCardLinked ? 'activity.cardDuplicate' : 'activity.cardDuplicateShort'}
           values={{
             card: cardName,
             list: listName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={listName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_UPDATE: {
-      const cardName = isTruncated ? truncate(activity.data.cardName, { length: cardNameTruncateLength }) : activity.data.cardName;
-
       if (activity.data.cardPrevName) {
         const prevCardName = isTruncated ? truncate(activity.data.cardPrevName, { length: cardNameTruncateLength }) : activity.data.cardPrevName;
         return (
           <Trans
-            i18nKey={card ? 'activity.cardUpdateName' : 'activity.cardUpdateNameShort'}
+            i18nKey={isCardLinked ? 'activity.cardUpdateName' : 'activity.cardUpdateNameShort'}
             values={{
               prevCard: prevCardName,
               card: cardName,
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span className={s.data} title={cardName} />}
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {isCardLinked ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+            ) : card ? (
+              <span className={s.data} title={cardName} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={prevCardName} />
           </Trans>
         );
@@ -85,11 +99,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
         let key;
         if (cardPrevDescription !== null && cardDescription !== null) {
-          key = card ? 'activity.cardUpdateDescription' : 'activity.cardUpdateDescriptionShort';
+          key = isCardLinked ? 'activity.cardUpdateDescription' : 'activity.cardUpdateDescriptionShort';
         } else if (cardPrevDescription === null && cardDescription !== null) {
-          key = card ? 'activity.cardUpdateDescriptionAdd' : 'activity.cardUpdateDescriptionAddShort';
+          key = isCardLinked ? 'activity.cardUpdateDescriptionAdd' : 'activity.cardUpdateDescriptionAddShort';
         } else if (cardPrevDescription !== null && cardDescription === null) {
-          key = card ? 'activity.cardUpdateDescriptionRemove' : 'activity.cardUpdateDescriptionRemoveShort';
+          key = isCardLinked ? 'activity.cardUpdateDescriptionRemove' : 'activity.cardUpdateDescriptionRemoveShort';
         }
 
         return (
@@ -101,7 +115,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
               prevDescription: prevDescriptionTruncated,
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={descriptionTruncated} />
             <span className={s.data} title={prevDescriptionTruncated} />
           </Trans>
@@ -111,11 +129,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
         const { cardPrevDueDate, cardDueDate } = activity.data;
         let key;
         if (cardPrevDueDate !== null && cardDueDate !== null) {
-          key = card ? 'activity.cardUpdateDueDate' : 'activity.cardUpdateDueDateShort';
+          key = isCardLinked ? 'activity.cardUpdateDueDate' : 'activity.cardUpdateDueDateShort';
         } else if (cardPrevDueDate === null && cardDueDate !== null) {
-          key = card ? 'activity.cardUpdateDueDateAdd' : 'activity.cardUpdateDueDateAddShort';
+          key = isCardLinked ? 'activity.cardUpdateDueDateAdd' : 'activity.cardUpdateDueDateAddShort';
         } else if (cardPrevDueDate !== null && cardDueDate === null) {
-          key = card ? 'activity.cardUpdateDueDateRemove' : 'activity.cardUpdateDueDateRemoveShort';
+          key = isCardLinked ? 'activity.cardUpdateDueDateRemove' : 'activity.cardUpdateDueDateRemoveShort';
         }
 
         return (
@@ -127,7 +145,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
               prevDueDate: t(`format:date`, { value: cardPrevDueDate, postProcess: 'formatDate' }),
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={t('format:dateTime', { postProcess: 'formatDate', value: cardDueDate })} />
             <span className={s.data} title={t('format:dateTime', { postProcess: 'formatDate', value: cardPrevDueDate })} />
           </Trans>
@@ -139,19 +161,19 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
         let key;
         switch (state) {
           case 'start':
-            key = card ? 'activity.cardUpdateTimerStart' : 'activity.cardUpdateTimerStartShort';
+            key = isCardLinked ? 'activity.cardUpdateTimerStart' : 'activity.cardUpdateTimerStartShort';
             break;
           case 'stop':
-            key = card ? 'activity.cardUpdateTimerStop' : 'activity.cardUpdateTimerStopShort';
+            key = isCardLinked ? 'activity.cardUpdateTimerStop' : 'activity.cardUpdateTimerStopShort';
             break;
           case 'edit':
-            key = card ? 'activity.cardUpdateTimerEdit' : 'activity.cardUpdateTimerEditShort';
+            key = isCardLinked ? 'activity.cardUpdateTimerEdit' : 'activity.cardUpdateTimerEditShort';
             break;
           case 'add':
-            key = card ? 'activity.cardUpdateTimerAdd' : 'activity.cardUpdateTimerAddShort';
+            key = isCardLinked ? 'activity.cardUpdateTimerAdd' : 'activity.cardUpdateTimerAddShort';
             break;
           case 'remove':
-            key = card ? 'activity.cardUpdateTimerRemove' : 'activity.cardUpdateTimerRemoveShort';
+            key = isCardLinked ? 'activity.cardUpdateTimerRemove' : 'activity.cardUpdateTimerRemoveShort';
             break;
           default:
             key = '';
@@ -166,7 +188,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
               prevTimer: formatTimerActivities({ startedAt: cardPrevTimer?.startedAt, total: cardPrevTimer?.total }),
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} />
             <span className={s.data} />
           </Trans>
@@ -179,11 +205,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
         let key;
         if (cardPrevCoverAttachmentName !== null && cardCoverAttachmentName !== null) {
-          key = card ? 'activity.cardUpdateCoverAttachment' : 'activity.cardUpdateCoverAttachmentShort';
+          key = isCardLinked ? 'activity.cardUpdateCoverAttachment' : 'activity.cardUpdateCoverAttachmentShort';
         } else if (cardPrevCoverAttachmentName === null && cardCoverAttachmentName !== null) {
-          key = card ? 'activity.cardUpdateCoverAttachmentAdd' : 'activity.cardUpdateCoverAttachmentAddShort';
+          key = isCardLinked ? 'activity.cardUpdateCoverAttachmentAdd' : 'activity.cardUpdateCoverAttachmentAddShort';
         } else if (cardPrevCoverAttachmentName !== null && cardCoverAttachmentName === null) {
-          key = card ? 'activity.cardUpdateCoverAttachmentRemove' : 'activity.cardUpdateCoverAttachmentRemoveShort';
+          key = isCardLinked ? 'activity.cardUpdateCoverAttachmentRemove' : 'activity.cardUpdateCoverAttachmentRemoveShort';
         }
 
         return (
@@ -195,7 +221,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
               prevCoverAttachment: cardPrevCoverAttachmentNameTruncated,
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} title={cardName} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} onClick={onClose} title={cardName} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={cardCoverAttachmentNameTruncated} />
             <span className={s.data} title={cardPrevCoverAttachmentNameTruncated} />
           </Trans>
@@ -206,13 +236,17 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
 
         return (
           <Trans
-            i18nKey={card ? 'activity.cardUpdatePosition' : 'activity.cardUpdatePositionShort'}
+            i18nKey={isCardLinked ? 'activity.cardUpdatePosition' : 'activity.cardUpdatePositionShort'}
             values={{
               card: cardName,
               list: listName,
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} onClick={onClose} title={cardName} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} onClick={onClose} title={cardName} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={listName} />
           </Trans>
         );
@@ -222,20 +256,23 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_MOVE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const fromListName = isTruncated ? truncate(activity.data.listFromName, { length: listNameTruncateLength }) : activity.data.listFromName;
       const toListName = isTruncated ? truncate(activity.data.listToName, { length: listNameTruncateLength }) : activity.data.listToName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardMove' : 'activity.cardMoveShort'}
+          i18nKey={isCardLinked ? 'activity.cardMove' : 'activity.cardMoveShort'}
           values={{
             card: cardName,
             fromList: fromListName,
             toList: toListName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={fromListName} />
           <span className={s.data} title={toListName} />
         </Trans>
@@ -243,7 +280,6 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_TRANSFER: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const fromListName = isTruncated ? truncate(activity.data.listFromName, { length: listNameTruncateLength }) : activity.data.listFromName;
       const toListName = isTruncated ? truncate(activity.data.listToName, { length: listNameTruncateLength }) : activity.data.listToName;
       const fromBoardName = isTruncated ? truncate(activity.data.boardFromName, { length: boardNameTruncateLength }) : activity.data.boardFromName;
@@ -254,9 +290,9 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
       let key;
 
       if (activity.data.projectFromId !== activity.data.projectToId) {
-        key = card ? 'activity.cardTransferProject' : 'activity.cardTransferProjectShort';
+        key = isCardLinked ? 'activity.cardTransferProject' : 'activity.cardTransferProjectShort';
       } else {
-        key = card ? 'activity.cardTransferBoard' : 'activity.cardTransferBoardShort';
+        key = isCardLinked ? 'activity.cardTransferBoard' : 'activity.cardTransferBoardShort';
       }
 
       return (
@@ -272,7 +308,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
             toProject: toProjectName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={fromListName} />
           <span className={s.data} title={fromBoardName} />
           <span className={s.data} title={toListName} />
@@ -284,49 +324,57 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_DELETE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
+      const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardDelete' : 'activity.cardDeleteShort'}
+          i18nKey={isCardLinked ? 'activity.cardDelete' : 'activity.cardDeleteShort'}
           values={{
             card: cardName,
+            list: listName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
+          <span className={s.data} title={listName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_COMMENT_CREATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardCommentCreate' : 'activity.cardCommentCreateShort'}
+          i18nKey={isCardLinked ? 'activity.cardCommentCreate' : 'activity.cardCommentCreateShort'}
           values={{
             comment: cardComment,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={cardComment} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_COMMENT_UPDATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const prevCardComment = isTruncated ? truncate(activity.data.commentActionPrevText, { length: commentTruncateLength }) : activity.data.commentActionPrevText;
       const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       let key;
       if (activity.userId === activity.data.userId) {
-        key = card ? 'activity.cardCommentUpdateOwn' : 'activity.cardCommentUpdateOwnShort';
+        key = isCardLinked ? 'activity.cardCommentUpdateOwn' : 'activity.cardCommentUpdateOwnShort';
       } else {
-        key = card ? 'activity.cardCommentUpdate' : 'activity.cardCommentUpdateShort';
+        key = isCardLinked ? 'activity.cardCommentUpdate' : 'activity.cardCommentUpdateShort';
       }
 
       return (
@@ -339,7 +387,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
             user: userName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={prevCardComment} />
           <span className={s.data} title={cardComment} />
           <span className={s.data} title={userName} />
@@ -348,20 +400,23 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_COMMENT_DELETE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardCommentDelete' : 'activity.cardCommentDeleteShort'}
+          i18nKey={isCardLinked ? 'activity.cardCommentDelete' : 'activity.cardCommentDeleteShort'}
           values={{
             comment: cardComment,
             card: cardName,
             user: userName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={cardComment} />
           <span className={s.data} title={userName} />
         </Trans>
@@ -369,75 +424,87 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_USER_ADD: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardUserAdd' : 'activity.cardUserAddShort'}
+          i18nKey={isCardLinked ? 'activity.cardUserAdd' : 'activity.cardUserAddShort'}
           values={{
             user: userName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={userName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_USER_REMOVE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardUserRemove' : 'activity.cardUserRemoveShort'}
+          i18nKey={isCardLinked ? 'activity.cardUserRemove' : 'activity.cardUserRemoveShort'}
           values={{
             user: userName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={userName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_TASK_CREATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardTaskCreate' : 'activity.cardTaskCreateShort'}
+          i18nKey={isCardLinked ? 'activity.cardTaskCreate' : 'activity.cardTaskCreateShort'}
           values={{
             task: taskName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={taskName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_TASK_UPDATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       if (activity.data.taskPrevName) {
         const taskPrevName = isTruncated ? truncate(activity.data.taskPrevName, { length: taskNameTruncateLength }) : activity.data.taskPrevName;
         return (
           <Trans
-            i18nKey={card ? 'activity.cardTaskUpdateName' : 'activity.cardTaskUpdateNameShort'}
+            i18nKey={isCardLinked ? 'activity.cardTaskUpdateName' : 'activity.cardTaskUpdateNameShort'}
             values={{
               task: taskName,
               prevTask: taskPrevName,
               card: cardName,
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={taskPrevName} />
             <span className={s.data} title={taskName} />
           </Trans>
@@ -446,14 +513,18 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
       if (activity.data.taskIsCompleted !== undefined) {
         return (
           <Trans
-            i18nKey={card ? 'activity.cardTaskUpdateIsCompleted' : 'activity.cardTaskUpdateIsCompletedShort'}
+            i18nKey={isCardLinked ? 'activity.cardTaskUpdateIsCompleted' : 'activity.cardTaskUpdateIsCompletedShort'}
             values={{
               task: taskName,
               card: cardName,
               isCompleted: activity.data.taskIsCompleted ? t('activity.cardTaskCompleted') : t('activity.cardTaskUncompleted'),
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={taskName} />
             <span className={s.data} />
           </Trans>
@@ -463,11 +534,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
         const { taskPrevDueDate, taskDueDate } = activity.data;
         let key;
         if (taskPrevDueDate !== null && taskDueDate !== null) {
-          key = card ? 'activity.cardTaskUpdateDueDate' : 'activity.cardTaskUpdateDueDateShort';
+          key = isCardLinked ? 'activity.cardTaskUpdateDueDate' : 'activity.cardTaskUpdateDueDateShort';
         } else if (taskPrevDueDate === null && taskDueDate !== null) {
-          key = card ? 'activity.cardTaskUpdateDueDateAdd' : 'activity.cardTaskUpdateDueDateAddShort';
+          key = isCardLinked ? 'activity.cardTaskUpdateDueDateAdd' : 'activity.cardTaskUpdateDueDateAddShort';
         } else if (taskPrevDueDate !== null && taskDueDate === null) {
-          key = card ? 'activity.cardTaskUpdateDueDateRemove' : 'activity.cardTaskUpdateDueDateRemoveShort';
+          key = isCardLinked ? 'activity.cardTaskUpdateDueDateRemove' : 'activity.cardTaskUpdateDueDateRemoveShort';
         }
 
         return (
@@ -480,7 +551,11 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
               prevDueDate: t(`format:date`, { value: taskPrevDueDate, postProcess: 'formatDate' }),
             }}
           >
-            {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+            {isCardLinked && card ? (
+              <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+            ) : (
+              <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+            )}
             <span className={s.data} title={taskName} />
             <span className={s.data} title={t('format:dateTime', { postProcess: 'formatDate', value: taskDueDate })} />
             <span className={s.data} title={t('format:dateTime', { postProcess: 'formatDate', value: taskPrevDueDate })} />
@@ -491,74 +566,86 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_TASK_DUPLICATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardTaskDuplicate' : 'activity.cardTaskDuplicateShort'}
+          i18nKey={isCardLinked ? 'activity.cardTaskDuplicate' : 'activity.cardTaskDuplicateShort'}
           values={{
             task: taskName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={taskName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_TASK_MOVE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardTaskMove' : 'activity.cardTaskMoveShort'}
+          i18nKey={isCardLinked ? 'activity.cardTaskMove' : 'activity.cardTaskMoveShort'}
           values={{
             task: taskName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={taskName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_TASK_DELETE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardTaskDelete' : 'activity.cardTaskDeleteShort'}
+          i18nKey={isCardLinked ? 'activity.cardTaskDelete' : 'activity.cardTaskDeleteShort'}
           values={{
             task: taskName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={taskName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_TASK_USER_ADD: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardTaskUserAdd' : 'activity.cardTaskUserAddShort'}
+          i18nKey={isCardLinked ? 'activity.cardTaskUserAdd' : 'activity.cardTaskUserAddShort'}
           values={{
             user: userName,
             task: taskName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={taskName} />
           <span className={s.data} title={userName} />
         </Trans>
@@ -566,20 +653,23 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_TASK_USER_REMOVE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
       const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardTaskUserRemove' : 'activity.cardTaskUserRemoveShort'}
+          i18nKey={isCardLinked ? 'activity.cardTaskUserRemove' : 'activity.cardTaskUserRemoveShort'}
           values={{
             user: userName,
             task: taskName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={taskName} />
           <span className={s.data} title={userName} />
         </Trans>
@@ -587,38 +677,44 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_ATTACHMENT_CREATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardAttachmentCreate' : 'activity.cardAttachmentCreateShort'}
+          i18nKey={isCardLinked ? 'activity.cardAttachmentCreate' : 'activity.cardAttachmentCreateShort'}
           values={{
             attachment: attachmentName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={attachmentName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_ATTACHMENT_UPDATE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const attachmentPrevName = isTruncated ? truncate(activity.data.attachmentPrevName, { length: commentTruncateLength }) : activity.data.attachmentPrevName;
       const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardAttachmentUpdate' : 'activity.cardAttachmentUpdateShort'}
+          i18nKey={isCardLinked ? 'activity.cardAttachmentUpdate' : 'activity.cardAttachmentUpdateShort'}
           values={{
             prevAttachment: attachmentPrevName,
             attachment: attachmentName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={attachmentPrevName} />
           <span className={s.data} title={attachmentName} />
         </Trans>
@@ -626,54 +722,63 @@ const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked,
     }
 
     case ActivityTypes.CARD_ATTACHMENT_DELETE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardAttachmentDelete' : 'activity.cardAttachmentDeleteShort'}
+          i18nKey={isCardLinked ? 'activity.cardAttachmentDelete' : 'activity.cardAttachmentDeleteShort'}
           values={{
             attachment: attachmentName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={attachmentName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_LABEL_ADD: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const labelName = isTruncated ? truncate(activity.data.labelName, { length: commentTruncateLength }) : activity.data.labelName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardLabelAdd' : 'activity.cardLabelAddShort'}
+          i18nKey={isCardLinked ? 'activity.cardLabelAdd' : 'activity.cardLabelAddShort'}
           values={{
             label: labelName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={labelName} />
         </Trans>
       );
     }
 
     case ActivityTypes.CARD_LABEL_REMOVE: {
-      const cardName = isTruncated ? truncate(card?.name, { length: cardNameTruncateLength }) : card?.name;
       const labelName = isTruncated ? truncate(activity.data.labelName, { length: commentTruncateLength }) : activity.data.labelName;
 
       return (
         <Trans
-          i18nKey={card ? 'activity.cardLabelRemove' : 'activity.cardLabelRemoveShort'}
+          i18nKey={isCardLinked ? 'activity.cardLabelRemove' : 'activity.cardLabelRemoveShort'}
           values={{
             label: labelName,
             card: cardName,
           }}
         >
-          {isCardLinked ? <Link to={Paths.CARDS.replace(':id', card.id)} className={s.linked} title={cardName} onClick={onClose} /> : <span />}
+          {isCardLinked && card ? (
+            <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />
+          ) : (
+            <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+          )}
           <span className={s.data} title={labelName} />
         </Trans>
       );
