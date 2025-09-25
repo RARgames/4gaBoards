@@ -61,7 +61,7 @@ export function* handleProjectManagerCreate(projectManager) {
   let tasks;
   let taskMemberships;
   let attachments;
-  let deletedNotifications;
+  let notifications;
 
   if (isCurrentUser) {
     const { boardId } = yield select(selectors.selectPath);
@@ -86,7 +86,7 @@ export function* handleProjectManagerCreate(projectManager) {
       ({ project, board, users: users2, boardMemberships: boardMemberships2, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments } = body);
 
       if (body.card) {
-        deletedNotifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
+        notifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
       }
     }
   } else {
@@ -114,7 +114,7 @@ export function* handleProjectManagerCreate(projectManager) {
       tasks,
       taskMemberships,
       attachments,
-      deletedNotifications,
+      notifications,
     ),
   );
 }

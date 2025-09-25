@@ -58,7 +58,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
   let tasks;
   let taskMemberships;
   let attachments;
-  let deletedNotifications;
+  let notifications;
   let userProject;
 
   if (isCurrentUser) {
@@ -91,7 +91,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
       ({ project, board: board1, users: users2, boardMemberships: boardMemberships2, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments } = body);
 
       if (body.card) {
-        deletedNotifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
+        notifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
       }
     }
 
@@ -122,7 +122,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
       tasks,
       taskMemberships,
       attachments,
-      deletedNotifications,
+      notifications,
       userProject,
     ),
   );

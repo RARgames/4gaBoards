@@ -7,28 +7,30 @@ import request from '../request';
 
 export function* handleNotificationCreate(notification) {
   const { cardId } = yield select(selectors.selectPath);
+  const newNotification = notification;
 
-  if (notification.cardId === cardId) {
+  if (newNotification.cardId === cardId) {
     try {
-      yield call(request, api.updateNotifications, [notification.id], {
+      yield call(request, api.updateNotifications, [newNotification.id], {
         isRead: true,
       });
     } catch {} // eslint-disable-line no-empty
-  } else {
-    let users;
-    let cards;
-    let activities;
 
-    try {
-      ({
-        included: { users, cards, activities },
-      } = yield call(request, api.getNotification, notification.id));
-    } catch {
-      return;
-    }
-
-    yield put(actions.handleNotificationCreate(notification, users, cards, activities));
+    newNotification.isRead = true;
   }
+  let users;
+  let cards;
+  let activities;
+
+  try {
+    ({
+      included: { users, cards, activities },
+    } = yield call(request, api.getNotification, newNotification.id));
+  } catch {
+    return;
+  }
+
+  yield put(actions.handleNotificationCreate(newNotification, users, cards, activities));
 }
 
 export function* updateNotification(id, data) {

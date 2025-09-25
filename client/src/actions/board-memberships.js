@@ -39,7 +39,7 @@ const handleBoardMembershipCreate = (
   tasks,
   taskMemberships,
   attachments,
-  deletedNotifications,
+  notifications,
   userProject,
 ) => ({
   type: ActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE,
@@ -59,7 +59,7 @@ const handleBoardMembershipCreate = (
     tasks,
     taskMemberships,
     attachments,
-    deletedNotifications,
+    notifications,
     userProject,
   },
 });

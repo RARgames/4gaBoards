@@ -48,7 +48,7 @@ export function* fetchCore() {
 
   const body = yield call(request, api.getNotifications);
 
-  let { items: notifications } = body;
+  const { items: notifications } = body;
 
   const {
     included: { users: users3, cards: cards2, activities },
@@ -61,8 +61,6 @@ export function* fetchCore() {
       yield call(request, api.updateNotifications, notificationIds, {
         isRead: true,
       });
-
-      notifications = notifications.filter((notification) => !notificationIds.includes(notification.id));
     }
   }
 

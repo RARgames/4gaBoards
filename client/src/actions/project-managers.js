@@ -40,7 +40,7 @@ const handleProjectManagerCreate = (
   tasks,
   taskMembership,
   attachments,
-  deletedNotifications,
+  notifications,
 ) => ({
   type: ActionTypes.PROJECT_MANAGER_CREATE_HANDLE,
   payload: {
@@ -59,7 +59,7 @@ const handleProjectManagerCreate = (
     tasks,
     taskMembership,
     attachments,
-    deletedNotifications,
+    notifications,
   },
 });
 

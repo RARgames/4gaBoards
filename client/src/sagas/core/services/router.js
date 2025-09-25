@@ -72,7 +72,7 @@ export function* handleLocationChange() {
   let tasks;
   let taskMemberships;
   let attachments;
-  let deletedNotifications;
+  let notifications;
 
   switch (pathsMatch.pattern.path) {
     case Paths.BOARDS:
@@ -95,7 +95,7 @@ export function* handleLocationChange() {
 
         if (notificationIds && notificationIds.length > 0) {
           try {
-            ({ items: deletedNotifications } = yield call(request, api.updateNotifications, notificationIds, {
+            ({ items: notifications } = yield call(request, api.updateNotifications, notificationIds, {
               isRead: true,
             }));
           } catch {} // eslint-disable-line no-empty
@@ -107,7 +107,7 @@ export function* handleLocationChange() {
     default:
   }
 
-  yield put(actions.handleLocationChange(board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, deletedNotifications));
+  yield put(actions.handleLocationChange(board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, notifications));
 }
 
 export default {
