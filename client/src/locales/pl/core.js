@@ -507,6 +507,8 @@ export default {
       cardLabelRemove: 'Usunięto etykietę <1>{{label}}</1> z <0>{{card}}</0>',
       cardLabelRemoveShort: 'Usunięto etykietę <1>{{label}}</1>',
       deletedCard: 'Usunięta karta: {{card}}',
+      noBoardAvailable: 'Brak dostępnej tablicy',
+      noProjectAvailable: 'Brak dostępnego projektu',
     },
 
     action: {

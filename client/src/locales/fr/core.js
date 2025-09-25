@@ -509,6 +509,8 @@ export default {
       cardLabelRemove: "Supprimé l'étiquette <1>{{label}}</1> de <0>{{card}}</0>",
       cardLabelRemoveShort: "Supprimé l'étiquette <1>{{label}}</1>",
       deletedCard: 'Carte supprimée : {{card}}',
+      noBoardAvailable: 'Aucune tablica disponible',
+      noProjectAvailable: 'Aucun projet disponible',
     },
 
     action: {

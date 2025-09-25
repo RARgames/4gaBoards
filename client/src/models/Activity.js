@@ -19,6 +19,16 @@ export default class extends BaseModel {
       as: 'card',
       relatedName: 'activities',
     }),
+    boardId: fk({
+      to: 'Board',
+      as: 'board',
+      relatedName: 'activities',
+    }),
+    projectId: fk({
+      to: 'Project',
+      as: 'project',
+      relatedName: 'activities',
+    }),
     userId: fk({
       to: 'User',
       as: 'user',

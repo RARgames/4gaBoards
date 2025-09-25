@@ -53,6 +53,39 @@
     line-height: 20px;
   }
 
+  .board {
+    color: var(--textColor2);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    padding-left: 12px;
+    margin-left: auto;
+  }
+
+  .project {
+    color: var(--textColor2);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    margin: 0 12px 0 4px;
+
+    &::before {
+      content: '•';
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+      color: var(--textColor3);
+    }
+  }
+
+  .empty {
+    &::before {
+      content: 'N/A';
+      color: var(--linkedCardDeleted);
+      font-style: italic;
+    }
+  }
+
   .itemContent {
     display: inline-block;
     font-size: 13px;

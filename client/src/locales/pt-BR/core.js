@@ -493,6 +493,8 @@ export default {
       cardLabelRemove: 'Removida etiqueta <1>{{label}}</1> de <0>{{card}}</0>',
       cardLabelRemoveShort: 'Removida etiqueta <1>{{label}}</1>',
       deletedCard: 'Cartão excluído: {{card}}',
+      noBoardAvailable: 'Nenhuma tabela disponível',
+      noProjectAvailable: 'Nenhum projeto disponível',
     },
 
     action: {

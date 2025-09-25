@@ -95,6 +95,16 @@ module.exports = {
       required: true,
       columnName: 'card_id',
     },
+    boardId: {
+      model: 'Board',
+      required: true,
+      columnName: 'board_id',
+    },
+    projectId: {
+      model: 'Project',
+      required: true,
+      columnName: 'project_id',
+    },
     userId: {
       model: 'User',
       required: true,

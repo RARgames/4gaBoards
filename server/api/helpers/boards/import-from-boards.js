@@ -436,6 +436,7 @@ module.exports = {
         return {
           cardId: newCard.id,
           userId: allUsers[action.userId]?.id ?? currentUser.id,
+          scope: action.scope,
           type: action.type,
           data: newData,
           createdAt: parseJSON(action.createdAt),

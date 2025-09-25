@@ -491,6 +491,8 @@ export default {
       cardLabelRemove: 'Removed label <1>{{label}}</1> from <0>{{card}}</0>',
       cardLabelRemoveShort: 'Removed label <1>{{label}}</1>',
       deletedCard: 'Deleted card: {{card}}',
+      noBoardAvailable: 'No board available',
+      noProjectAvailable: 'No project available',
     },
 
     action: {

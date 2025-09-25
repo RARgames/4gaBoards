@@ -30,13 +30,24 @@ module.exports = {
     },
   },
 
+  exits: {
+    boardNotFound: {},
+  },
+
   async fn(inputs) {
     const { values, currentUser } = inputs;
     const actionUser = values.user || currentUser;
 
+    const board = await Board.findOne(values.card.boardId);
+    if (!board) {
+      throw 'boardNotFound';
+    }
+
     const action = await Action.create({
       ...values,
       cardId: values.card.id,
+      boardId: values.card.boardId,
+      projectId: board.projectId,
       userId: actionUser.id,
       createdById: currentUser.id,
       data: {

@@ -218,6 +218,8 @@ export const selectNotificationsForCurrentUser = createSelector(
         activity: notificationModel.activity && {
           ...notificationModel.activity.ref,
           user: notificationModel.activity.user.ref,
+          board: notificationModel.activity.board && notificationModel.activity.board.ref,
+          project: notificationModel.activity.project && notificationModel.activity.project.ref,
         },
         card: notificationModel.card && notificationModel.card.ref,
       }));
