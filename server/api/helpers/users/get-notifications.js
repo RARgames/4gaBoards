@@ -11,8 +11,8 @@ module.exports = {
 
   async fn(inputs) {
     return sails.helpers.notifications.getMany({
-      isRead: false,
       userId: inputs.idOrIds,
+      deletedAt: null,
     });
   },
 };

@@ -11,12 +11,14 @@ const mapStateToProps = (state) => {
   const currentUser = selectors.selectCurrentUser(state);
   const currentProject = selectors.selectCurrentProject(state);
   const notifications = selectors.selectNotificationsForCurrentUser(state);
+  const notificationCount = notifications.filter((n) => !n.isRead).length;
   const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
   const { demoMode } = selectors.selectCoreSettings(state);
 
   return {
     path,
     notifications,
+    notificationCount,
     isLogouting,
     project: currentProject,
     user: currentUser,
@@ -29,6 +31,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
+      onNotificationUpdate: entryActions.updateNotification,
       onNotificationDelete: entryActions.deleteNotification,
       onLogout: entryActions.logout,
     },

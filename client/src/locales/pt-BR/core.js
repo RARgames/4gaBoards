@@ -495,6 +495,9 @@ export default {
       deletedCard: 'Cartão excluído: {{card}}',
       noBoardAvailable: 'Nenhuma tabela disponível',
       noProjectAvailable: 'Nenhum projeto disponível',
+      markAsRead: 'Marcar como lido',
+      markAsUnread: 'Marcar como não lido',
+      delete: 'Excluir',
     },
 
     action: {

@@ -13,7 +13,7 @@ import NotificationsPopup from './NotificationsPopup';
 
 import * as s from './Header.module.scss';
 
-const Header = React.memo(({ path, project, user, notifications, isLogouting, canEditProject, isAdmin, demoMode, onNotificationDelete, onLogout }) => {
+const Header = React.memo(({ path, project, user, notifications, notificationCount, isLogouting, canEditProject, isAdmin, demoMode, onNotificationUpdate, onNotificationDelete, onLogout }) => {
   const [t] = useTranslation();
 
   const getPageHeaderTitle = useCallback(() => {
@@ -85,10 +85,10 @@ const Header = React.memo(({ path, project, user, notifications, isLogouting, ca
             </Button>
           </Link>
         )}
-        <NotificationsPopup items={notifications} onDelete={onNotificationDelete}>
+        <NotificationsPopup items={notifications} onUpdate={onNotificationUpdate} onDelete={onNotificationDelete}>
           <Button style={ButtonStyle.Header} title={t('common.notifications')}>
             <Icon type={IconType.Bell} size={IconSize.Size18} />
-            {notifications.length > 0 && <span className={s.notification}>{notifications.length}</span>}
+            {notificationCount > 0 && <span className={s.notification}>{notificationCount}</span>}
           </Button>
         </NotificationsPopup>
         <UserPopup canEditProject={canEditProject} projectId={project?.id} isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
@@ -106,10 +106,12 @@ Header.propTypes = {
   project: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   notifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  notificationCount: PropTypes.number.isRequired,
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
   demoMode: PropTypes.bool.isRequired,
+  onNotificationUpdate: PropTypes.func.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };

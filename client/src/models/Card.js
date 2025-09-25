@@ -288,6 +288,7 @@ export default class extends BaseModel {
   getUnreadNotificationsQuerySet() {
     return this.notifications.filter({
       isRead: false,
+      deletedAt: null,
     });
   }
 

@@ -353,9 +353,9 @@ export default class extends BaseModel {
   getOrderedUnreadNotificationsQuerySet() {
     return this.notifications
       .filter({
-        isRead: false,
+        deletedAt: null,
       })
-      .orderBy('id', false);
+      .orderBy('createdAt', false);
   }
 
   getOrderedAvailableProjectsModelArray() {

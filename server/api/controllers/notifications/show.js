@@ -24,7 +24,7 @@ module.exports = {
 
     const notification = await Notification.findOne({
       id: inputs.id,
-      isRead: false,
+      deletedAt: null,
       userId: currentUser.id,
     });
 

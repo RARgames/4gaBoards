@@ -12,14 +12,21 @@
     }
   }
 
+  .itemRead {
+    opacity: 0.5;
+  }
+
   .itemHeader {
     display: flex;
     align-items: center;
     margin-bottom: 4px;
   }
 
-  .itemButton {
+  .firstItemButton {
     margin-left: auto;
+  }
+
+  .itemButton {
     svg {
       fill: var(--textColor3);
     }

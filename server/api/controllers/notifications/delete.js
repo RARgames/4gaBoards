@@ -11,9 +11,6 @@ module.exports = {
       required: true,
       regex: /^[0-9]+(,[0-9]+)*$/,
     },
-    isRead: {
-      type: 'boolean',
-    },
   },
 
   exits: {
@@ -33,10 +30,8 @@ module.exports = {
       }
     });
 
-    const values = _.pick(inputs, ['isRead']);
-
     const notifications = await sails.helpers.notifications.updateMany.with({
-      values,
+      values: { deletedAt: new Date() },
       recordsOrIds: ids,
       currentUser,
       request: this.req,

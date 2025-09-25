@@ -511,6 +511,9 @@ export default {
       deletedCard: 'Carte supprimée : {{card}}',
       noBoardAvailable: 'Aucune tablica disponible',
       noProjectAvailable: 'Aucun projet disponible',
+      markAsRead: 'Marquer comme lu',
+      markAsUnread: 'Marquer comme non lu',
+      delete: 'Supprimer',
     },
 
     action: {

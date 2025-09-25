@@ -33,6 +33,12 @@ const updateNotifications = (ids, data, headers) =>
     items: body.items.map(transformNotification),
   }));
 
+const deleteNotifications = (ids, headers) =>
+  socket.delete(`/notifications/${ids.join(',')}`, undefined, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformNotification),
+  }));
+
 /* Event handlers */
 
 const makeHandleNotificationCreate = (next) => (body) => {
@@ -43,11 +49,14 @@ const makeHandleNotificationCreate = (next) => (body) => {
 };
 
 const makeHandleNotificationUpdate = makeHandleNotificationCreate;
+const makeHandleNotificationDelete = makeHandleNotificationCreate;
 
 export default {
   getNotifications,
   getNotification,
   updateNotifications,
+  deleteNotifications,
   makeHandleNotificationCreate,
   makeHandleNotificationUpdate,
+  makeHandleNotificationDelete,
 };

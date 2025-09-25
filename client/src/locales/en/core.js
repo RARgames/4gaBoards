@@ -493,6 +493,9 @@ export default {
       deletedCard: 'Deleted card: {{card}}',
       noBoardAvailable: 'No board available',
       noProjectAvailable: 'No project available',
+      markAsRead: 'Mark as read',
+      markAsUnread: 'Mark as unread',
+      delete: 'Delete',
     },
 
     action: {

@@ -193,6 +193,10 @@ const createSocketEventsChannel = () =>
     });
 
     const handleNotificationUpdate = api.makeHandleNotificationUpdate(({ item }) => {
+      emit(entryActions.handleNotificationUpdate(item));
+    });
+
+    const handleNotificationDelete = api.makeHandleNotificationDelete(({ item }) => {
       emit(entryActions.handleNotificationDelete(item));
     });
 
@@ -261,6 +265,7 @@ const createSocketEventsChannel = () =>
 
     socket.on('notificationCreate', handleNotificationCreate);
     socket.on('notificationUpdate', handleNotificationUpdate);
+    socket.on('notificationDelete', handleNotificationDelete);
 
     return () => {
       socket.off('disconnect', handleDisconnect);
@@ -328,6 +333,7 @@ const createSocketEventsChannel = () =>
 
       socket.off('notificationCreate', handleNotificationCreate);
       socket.off('notificationUpdate', handleNotificationUpdate);
+      socket.off('notificationDelete', handleNotificationDelete);
     };
   });
 

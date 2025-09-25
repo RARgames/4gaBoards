@@ -100,6 +100,7 @@ module.exports.routes = {
   'GET /api/notifications': 'notifications/index',
   'GET /api/notifications/:id': 'notifications/show',
   'PATCH /api/notifications/:ids': 'notifications/update',
+  'DELETE /api/notifications/:ids': 'notifications/delete',
 
   'GET /attachments/:id/download/:filename': {
     action: 'attachments/download',

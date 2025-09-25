@@ -31,14 +31,26 @@ export function* handleNotificationCreate(notification) {
   }
 }
 
+export function* updateNotification(id, data) {
+  yield put(actions.updateNotification(id, data));
+
+  let notifications;
+  try {
+    ({ items: notifications } = yield call(request, api.updateNotifications, [id], data));
+  } catch (error) {
+    yield put(actions.updateNotification.failure(id, error));
+    return;
+  }
+
+  yield put(actions.updateNotification.success(notifications[0]));
+}
+
 export function* deleteNotification(id) {
   yield put(actions.deleteNotification(id));
 
   let notifications;
   try {
-    ({ items: notifications } = yield call(request, api.updateNotifications, [id], {
-      isRead: true,
-    }));
+    ({ items: notifications } = yield call(request, api.deleteNotifications, [id]));
   } catch (error) {
     yield put(actions.deleteNotification.failure(id, error));
     return;
@@ -47,12 +59,18 @@ export function* deleteNotification(id) {
   yield put(actions.deleteNotification.success(notifications[0]));
 }
 
+export function* handleNotificationUpdate(notification) {
+  yield put(actions.handleNotificationUpdate(notification));
+}
+
 export function* handleNotificationDelete(notification) {
   yield put(actions.handleNotificationDelete(notification));
 }
 
 export default {
   handleNotificationCreate,
+  updateNotification,
   deleteNotification,
+  handleNotificationUpdate,
   handleNotificationDelete,
 };

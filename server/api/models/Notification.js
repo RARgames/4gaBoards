@@ -16,6 +16,10 @@ module.exports = {
       defaultsTo: false,
       columnName: 'is_read',
     },
+    deletedAt: {
+      type: 'ref',
+      columnName: 'deleted_at',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

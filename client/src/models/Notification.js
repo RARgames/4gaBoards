@@ -25,6 +25,7 @@ export default class extends BaseModel {
       to: 'Activity',
       as: 'activity',
     }),
+    deletedAt: attr(),
   };
 
   static reducer({ type, payload }, Notification) {
@@ -54,6 +55,15 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
+        Notification.upsert(payload.notification);
+
+        break;
+      case ActionTypes.NOTIFICATION_UPDATE:
+        Notification.withId(payload.id).update(payload.data);
+
+        break;
+      case ActionTypes.NOTIFICATION_UPDATE__SUCCESS:
+      case ActionTypes.NOTIFICATION_UPDATE_HANDLE:
         Notification.upsert(payload.notification);
 
         break;

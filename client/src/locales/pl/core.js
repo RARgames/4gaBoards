@@ -509,6 +509,9 @@ export default {
       deletedCard: 'Usunięta karta: {{card}}',
       noBoardAvailable: 'Brak dostępnej tablicy',
       noProjectAvailable: 'Brak dostępnego projektu',
+      markAsRead: 'Oznacz jako przeczytane',
+      markAsUnread: 'Oznacz jako nieprzeczytane',
+      delete: 'Usuń',
     },
 
     action: {
