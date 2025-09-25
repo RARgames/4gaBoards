@@ -47,6 +47,7 @@ module.exports = {
           await sails.helpers.actions.createOne.with({
             values: {
               card,
+              scope: Action.Scopes.CARD,
               type: Action.Types.CARD_LABEL_REMOVE,
               data: {
                 cardLabelId: cardLabel.id,

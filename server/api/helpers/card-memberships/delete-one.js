@@ -64,6 +64,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
+            scope: Action.Scopes.CARD,
             type: Action.Types.CARD_USER_REMOVE,
             data: {
               cardMembershipId: cardMembership.id,

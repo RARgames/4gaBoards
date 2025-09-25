@@ -5,6 +5,17 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
+const Scopes = {
+  INSTANCE: 'instance',
+  USER: 'user',
+  PROJECT: 'project',
+  BOARD: 'board',
+  LIST: 'list',
+  CARD: 'card',
+  TASK: 'task',
+  COMMENT: 'comment',
+};
+
 const Types = {
   // TODO Add all activity types
 
@@ -48,6 +59,7 @@ const Types = {
 };
 
 module.exports = {
+  Scopes,
   Types,
 
   attributes: {
@@ -55,6 +67,11 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
+    scope: {
+      type: 'string',
+      isIn: Object.values(Scopes),
+      required: true,
+    },
     type: {
       type: 'string',
       isIn: Object.values(Types),

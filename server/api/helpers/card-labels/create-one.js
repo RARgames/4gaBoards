@@ -68,6 +68,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card: values.card,
+            scope: Action.Scopes.CARD,
             type: Action.Types.CARD_LABEL_ADD,
             data: {
               cardLabelId: cardLabel.id,

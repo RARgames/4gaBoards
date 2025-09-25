@@ -105,6 +105,7 @@ module.exports = {
       await sails.helpers.actions.createOne.with({
         values: {
           card,
+          scope: Action.Scopes.CARD,
           type: inputs.duplicate ? Action.Types.CARD_DUPLICATE : Action.Types.CARD_CREATE,
           data: {
             listId: values.list.id,

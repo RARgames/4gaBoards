@@ -43,7 +43,7 @@ const Activities = React.memo(({ card, items, isFetching, isAllFetched, boardMem
     <div>
       <div className={clsx(s.comments, gs.scrollableY)}>
         {items.map((item) => (
-          <Item key={item.id} card={card} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} boardMemberships={boardMemberships} />
+          <Item key={item.id} card={card} scope={item.scope} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} boardMemberships={boardMemberships} />
         ))}
         {isFetching ? <Loader size={LoaderSize.Normal} /> : !isAllFetched && <div ref={visibilityRef} />}
       </div>

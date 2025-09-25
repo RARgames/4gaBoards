@@ -82,6 +82,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
+            scope: Action.Scopes.CARD,
             type: values.position ? Action.Types.CARD_TASK_MOVE : Action.Types.CARD_TASK_UPDATE,
             data: {
               taskId: task.id,

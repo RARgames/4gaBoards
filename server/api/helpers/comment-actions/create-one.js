@@ -41,7 +41,15 @@ module.exports = {
   async fn(inputs) {
     const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
 
-    const action = await sails.helpers.actions.createOne.with({ values, currentUser, skipNotifications: true, request: inputs.request });
+    const action = await sails.helpers.actions.createOne.with({
+      values: {
+        ...values,
+        scope: Action.Scopes.CARD,
+      },
+      currentUser,
+      skipNotifications: true,
+      request: inputs.request,
+    });
 
     if (action) {
       if (!values.duplicate) {
@@ -60,6 +68,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card: values.card,
+            scope: Action.Scopes.CARD,
             type: Action.Types.CARD_COMMENT_CREATE,
             data: {
               commentActionId: action.id,

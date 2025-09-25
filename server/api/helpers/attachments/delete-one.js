@@ -69,6 +69,7 @@ module.exports = {
       await sails.helpers.actions.createOne.with({
         values: {
           card: inputs.card,
+          scope: Action.Scopes.CARD,
           type: Action.Types.CARD_ATTACHMENT_DELETE,
           data: {
             attachmentId: attachment.id,

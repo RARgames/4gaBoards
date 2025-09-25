@@ -251,6 +251,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
+            scope: Action.Scopes.CARD,
             type: Action.Types.CARD_TRANSFER,
             data: {
               listFromId: inputs.list.id,
@@ -273,6 +274,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
+            scope: Action.Scopes.CARD,
             type: Action.Types.CARD_MOVE,
             data: {
               listFromId: inputs.list.id,
@@ -312,6 +314,7 @@ module.exports = {
           await sails.helpers.actions.createOne.with({
             values: {
               card,
+              scope: Action.Scopes.CARD,
               type: Action.Types.CARD_UPDATE,
               data,
             },
