@@ -57,4 +57,10 @@ try {
 }
 
 // Start server
-sails.lift(rc('sails'));
+sails.lift(rc('sails'), (err) => {
+  if (err) {
+    // eslint-disable-next-line no-console
+    console.error('Error lifting 4ga Boards app:', err);
+    process.exit(2);
+  }
+});
