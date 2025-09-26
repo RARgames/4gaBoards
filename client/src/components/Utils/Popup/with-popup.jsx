@@ -26,7 +26,7 @@ export default (WrappedComponent, defaultProps) => {
       scrollDismissTimeoutRef.current = setTimeout(() => {
         setEnableScrollDismiss(true);
         scrollDismissTimeoutRef.current = null;
-      }, 0);
+      }, 200);
     }, []);
 
     useEffect(() => {
