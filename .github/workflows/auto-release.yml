@@ -2,7 +2,7 @@ name: Auto Release
 on:
   push:
     branches:
-      - main
+      - '*'
 
 jobs:
   release:
@@ -28,6 +28,12 @@ jobs:
       - name: Get short SHA for beta
         id: slug
         run: echo "sha7=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_OUTPUT
+        
+      - name: Sanitize branch name
+        id: branch
+        run: |
+          safe_branch_name=$(echo "${GITHUB_REF_NAME}" | tr '[:upper:]' '[:lower:]' | tr '/' '-' | sed 's/[^a-z0-9._-]//g; s/^[.-]//')
+          echo "safe_branch_name=$safe_branch_name" >> $GITHUB_OUTPUT
 
       - name: Increment version
         id: increment_version
@@ -37,22 +43,28 @@ jobs:
           minor=$(echo $latest_tag | cut -d. -f2)
           patch=$(echo $latest_tag | cut -d. -f3)
           beta_tag=""
+          branch_tag=${{ steps.branch.outputs.safe_branch_name }}
 
-          if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
-            major=$((major + 1))
-            minor=0
-            patch=0
-            beta=false
-          elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
-            minor=$((minor + 1))
-            patch=0
-            beta=false
-          elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
-            patch=$((patch + 1))
-            beta=false
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+            if [[ "${{ steps.latest_commit.outputs.message }}" == *"[MAJOR]"* ]]; then
+                major=$((major + 1))
+                minor=0
+                patch=0
+                beta=false
+            elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[MINOR]"* ]]; then
+                minor=$((minor + 1))
+                patch=0
+                beta=false
+            elif [[ "${{ steps.latest_commit.outputs.message }}" == *"[PATCH]"* ]]; then
+                patch=$((patch + 1))
+                beta=false
+            else
+                beta=true
+                beta_tag="-${{ steps.slug.outputs.sha7 }}"
+            fi
           else
             beta=true
-            beta_tag="-${{ steps.slug.outputs.sha7 }}"
+            beta_tag="-${branch_tag}-${{ steps.slug.outputs.sha7 }}"
           fi
 
           new_tag="v$major.$minor.$patch"
