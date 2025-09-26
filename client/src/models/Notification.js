@@ -63,10 +63,19 @@ export default class extends BaseModel {
         Notification.upsert(payload.notification);
 
         break;
-      case ActionTypes.NOTIFICATION_UPDATE:
-        Notification.withId(payload.id).update(payload.data);
+      case ActionTypes.NOTIFICATION_UPDATE: {
+        const notification = Notification.withId(payload.id);
+
+        if (notification) {
+          notification.update(payload.data);
+
+          // TODO hacky way to trigger re-render so the notification is counted as unread
+          Notification.upsert({ id: 'local:notification_reload', cardId: notification.cardId, userId: notification.userId });
+          Notification.withId('local:notification_reload').delete();
+        }
 
         break;
+      }
       case ActionTypes.NOTIFICATION_UPDATE__SUCCESS:
       case ActionTypes.NOTIFICATION_UPDATE_HANDLE:
         Notification.upsert(payload.notification);

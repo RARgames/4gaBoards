@@ -26,8 +26,8 @@ module.exports = {
     const { currentUser } = this.req;
     const ids = inputs.ids.split(',');
 
-    const notificationsToDelete = await Notification.find({ id: ids });
-    notificationsToDelete.forEach((notification) => {
+    const notificationsToUpdate = await Notification.find({ id: ids });
+    notificationsToUpdate.forEach((notification) => {
       if (notification.userId !== currentUser.id) {
         throw Errors.INSUFFICIENT_PERMISSIONS;
       }
