@@ -56,15 +56,15 @@ export const getTimerState = (prev, next) => {
   const prevRunning = !!prev?.startedAt;
   const nextRunning = !!next?.startedAt;
 
+  if (prev?.total !== next?.total && ((!prevRunning && !nextRunning) || (prevRunning && nextRunning))) {
+    return 'edit';
+  }
+
   if (!prev && next) return 'add';
   if (prev && !next) return 'remove';
 
   if (!prevRunning && nextRunning) return 'start';
   if (prevRunning && !nextRunning) return 'stop';
-
-  if (prev.total !== next.total && ((!prevRunning && !nextRunning) || (prevRunning && nextRunning))) {
-    return 'edit';
-  }
 
   return 'none';
 };
