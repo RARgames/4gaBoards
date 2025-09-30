@@ -15,6 +15,7 @@
     "client:start": "npm start --prefix client",
     "client:test": "npm test --prefix client",
     "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
+    "docker:build_local": "docker build -t rargames0/4gaboards:local -f Dockerfile . && docker push rargames0/4gaboards:local",
     "postinstall": "(cd server && npm i && cd ../client && npm i)",
     "lint": "npm run server:lint && npm run client:lint",
     "prepare": "husky",
@@ -48,7 +49,7 @@
   "dependencies": {
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.0"
+    "lint-staged": "^16.2.3"
   },
   "devDependencies": {
     "confusing-browser-globals": "^1.0.11",
