@@ -4,6 +4,8 @@ services:
     restart: unless-stopped
     volumes:
       - db-data:/var/lib/postgresql/data
+    networks:
+      - boards-network
     ports:
       - 5432:5432
     environment:
@@ -12,3 +14,5 @@ services:
 
 volumes:
   db-data:
+networks:
+  boards-network:
