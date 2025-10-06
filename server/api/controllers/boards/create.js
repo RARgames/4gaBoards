@@ -8,6 +8,9 @@ const Errors = {
   BOARD_CREATE_FAILED: {
     boardCreateFailed: 'Board create failed',
   },
+  IMPORT_FROM_BOARD_FAILED: {
+    importFromBoardFailed: 'Import from board failed',
+  },
   NO_IMPORT_FILE_WAS_UPLOADED: {
     noImportFileWasUploaded: 'No import file was uploaded',
   },
@@ -144,7 +147,8 @@ module.exports = {
         requestId: inputs.requestId,
         request: this.req,
       })
-      .intercept('boardCreateFailed', () => Errors.BOARD_CREATE_FAILED);
+      .intercept('boardCreateFailed', () => Errors.BOARD_CREATE_FAILED)
+      .intercept('importFromBoardFailed', () => Errors.IMPORT_FROM_BOARD_FAILED);
 
     if (inputs.lists && !inputs.importType) {
       inputs.lists.map(async (list) => {

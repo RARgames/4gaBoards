@@ -43,6 +43,7 @@ module.exports = {
 
   exits: {
     invalidFile: {},
+    importFromBoardFailed: {},
   },
 
   async fn(inputs) {
@@ -538,7 +539,8 @@ module.exports = {
       await importLabels();
       await importLists();
     } catch (error) {
-      console.error(error); // eslint-disable-line no-console
+      console.error('Import from board failed: ', error); // eslint-disable-line no-console
+      throw 'importFromBoardFailed';
     }
 
     if (!inputs.importGettingStartedProject) {

@@ -55,6 +55,7 @@ module.exports = {
   },
   exits: {
     boardCreateFailed: {},
+    importFromBoardFailed: {},
   },
 
   async fn(inputs) {
@@ -99,16 +100,20 @@ module.exports = {
     }
 
     if (inputs.import && inputs.import.type === Board.ImportTypes.BOARDS) {
-      await sails.helpers.boards.importFromBoards.with({
-        currentUser,
-        board,
-        importTempDir: inputs.import.board.importTempDir,
-        importFilePath: inputs.import.importFilePath,
-        importNonExistingUsers: inputs.import.importNonExistingUsers,
-        importProjectManagers: inputs.import.importProjectManagers,
-        importGettingStartedProject: inputs.import.importGettingStartedProject,
-        request: inputs.request,
-      });
+      await sails.helpers.boards.importFromBoards
+        .with({
+          currentUser,
+          board,
+          importTempDir: inputs.import.board.importTempDir,
+          importFilePath: inputs.import.importFilePath,
+          importNonExistingUsers: inputs.import.importNonExistingUsers,
+          importProjectManagers: inputs.import.importProjectManagers,
+          importGettingStartedProject: inputs.import.importGettingStartedProject,
+          request: inputs.request,
+        })
+        .intercept('importFromBoardFailed', () => {
+          throw 'importFromBoardFailed';
+        });
     }
     if (inputs.import && inputs.import.type === Board.ImportTypes.TRELLO) {
       await sails.helpers.boards.importFromTrello.with({ currentUser, board, trelloBoard: inputs.import.board });
