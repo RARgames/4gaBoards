@@ -43,6 +43,7 @@ const List = React.memo(
     onDelete,
     onCardCreate,
     onActivitiesFetch,
+    onMailCreate,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -256,7 +257,6 @@ const List = React.memo(
                   <div className={s.popupWrapper}>
                     <ActionsPopup
                       name={name}
-                      listId={id}
                       createdAt={createdAt}
                       createdBy={createdBy}
                       updatedAt={updatedAt}
@@ -270,6 +270,7 @@ const List = React.memo(
                       onCardAdd={handleCardAdd}
                       onDelete={onDelete}
                       onActivitiesFetch={onActivitiesFetch}
+                      onMailCreate={onMailCreate}
                       position="left-start"
                       offset={0}
                       hideCloseButton
@@ -321,6 +322,7 @@ List.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {
