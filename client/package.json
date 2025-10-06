@@ -33,7 +33,7 @@
     "babel-loader": "^10.0.0",
     "babel-preset-react-app": "^10.1.0",
     "bfj": "^9.1.2",
-    "browserslist": "^4.26.2",
+    "browserslist": "^4.26.3",
     "camelcase": "^8.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "clsx": "^2.1.1",
