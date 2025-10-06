@@ -435,6 +435,8 @@ module.exports = {
 
         return {
           cardId: newCard.id,
+          boardId: newCard.boardId,
+          projectId: inputs.board.projectId,
           userId: allUsers[action.userId]?.id ?? currentUser.id,
           scope: action.scope,
           type: action.type,
