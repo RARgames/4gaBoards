@@ -6,6 +6,6 @@ import services from '../services';
 export default function* mailsWatchers() {
   yield all([
     takeEvery(EntryActionTypes.MAIL_CREATE, ({ payload: { listId } }) => services.createMail(listId)),
-    takeEvery(EntryActionTypes.MAIL_CREATE_HANDLE, ({ payload: { mail } }) => services.createMail(mail)),
+    takeEvery(EntryActionTypes.MAIL_CREATE_HANDLE, ({ payload: { mail } }) => services.handleMailCreate(mail)),
   ]);
 }
