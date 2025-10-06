@@ -57,6 +57,8 @@ module.exports = [
         IntersectionObserver: false,
         URL: false,
         navigator: false,
+        requestAnimationFrame: false,
+        cancelAnimationFrame: false,
         // From ...globals.jest
         describe: false,
         test: false,

@@ -48,7 +48,6 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   const formRef = useRef(null);
   const [focusFromState, focusForm] = useToggle();
   const [step, openStep, handleBack] = useSteps();
-  const [focusNameFieldState, focusNameField] = useToggle();
   const nameField = useRef(null);
 
   const handleProjectChange = useCallback((value) => {
@@ -101,8 +100,10 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
 
   const handleImportBack = useCallback(() => {
     handleBack();
-    focusNameField();
-  }, [handleBack, focusNameField]);
+    requestAnimationFrame(() => {
+      nameField.current?.focus({ preventScroll: true });
+    });
+  }, [handleBack]);
 
   const handleSubmit = useCallback(() => {
     const cleanData = {
@@ -139,10 +140,6 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   useEffect(() => {
     nameField.current?.focus({ preventScroll: true });
   }, []);
-
-  useDidUpdate(() => {
-    nameField.current?.focus();
-  }, [focusNameFieldState]);
 
   const handleFormKeyDown = useCallback(
     (e) => {
