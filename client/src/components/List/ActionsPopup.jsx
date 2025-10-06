@@ -6,7 +6,6 @@ import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
-import addMailId from './MailIdAdd';
 
 import * as s from './ActionsPopup.module.scss';
 
@@ -16,7 +15,7 @@ const StepTypes = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose, listId }) => {
+const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose, onMailCreate }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -37,9 +36,9 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
     openStep(StepTypes.ACTIVITY);
   }, [openStep]);
 
-  const handleEmailClick = useCallback(async () => {
-    addMailId({ listId });
-  }, [listId]);
+  const handleMailClick = useCallback(() => {
+    onMailCreate();
+  }, [onMailCreate]);
 
   if (step) {
     switch (step.type) {
@@ -89,7 +88,7 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
         <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
         {t('action.addCard', { context: 'title' })}
       </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('action.generateMailId', { context: 'title' })} onClick={handleEmailClick}>
+      <Button style={ButtonStyle.PopupContext} title={t('action.generateMailId', { context: 'title' })} onClick={handleMailClick}>
         {t('action.generateMailId', { context: 'title' })}
       </Button>
       <Popup.Separator />
@@ -112,7 +111,7 @@ ActionsStep.propTypes = {
   onCardAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  listId: PropTypes.number.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {
