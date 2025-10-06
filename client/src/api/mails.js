@@ -1,27 +1,38 @@
 import socket from './socket';
+import { transformMail } from './transformers';
 
 /* Actions */
 
 const createMail = (listId, headers) =>
   socket.post(`/lists/${listId}/mails`, {}, headers).then((body) => ({
     ...body,
-    item: body.item,
+    item: transformMail(body.item),
   }));
 
 const showMail = (mailId, headers) =>
   socket.get(`/mails/${mailId}`, {}, headers).then((body) => ({
     ...body,
-    item: body.item,
+    item: transformMail(body.item),
   }));
 
-const updateMail = (listId, headers) =>
-  socket.post(`/mails/${listId}/update`, {}, headers).then((body) => ({
+const updateMail = (mailId, headers) =>
+  socket.post(`/mails/${mailId}/update`, {}, headers).then((body) => ({
     ...body,
-    item: body.item,
+    item: transformMail(body.item),
   }));
+
+/* Event handlers */
+
+const makeHandleMailCreate = (next) => (body) => {
+  next({
+    ...body,
+    item: transformMail(body.item),
+  });
+};
 
 export default {
   createMail,
   showMail,
   updateMail,
+  makeHandleMailCreate,
 };
