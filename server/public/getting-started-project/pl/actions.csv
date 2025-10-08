@@ -1,33 +1,33 @@
-id,type,data,cardId,userId
-1605293213541729908,cardComment,"{""text"":""Przykładowy komentarz ze **składnią Markdown**."",""userId"":""895703383690707969"",""userName"":""RAR""}",1605293212442822219,895703383690707969
-1605293212769977945,cardCreate,"{""listId"":""1605293211973060149"",""cardName"":""Tą kartę zobaczysz dopiero jak rozwiniesz listę"",""listName"":""Zwinięta lista z kartami""}",1605293212400879166,895703383690707969
-1605293213139076708,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Dodaj członka do tablicy"",""listName"":""Podstawy""}",1605293212409267781,895703383690707969
-1605293213877274235,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Stoper"",""listName"":""Karty""}",1605293212451210836,895703383690707969
-1605293214246372998,cardCreate,"{""listId"":""1605293211973060150"",""cardName"":""Przejdź do ustawień"",""listName"":""Ustawienia""}",1605293212409267783,895703383690707969
-1605293212845475422,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Wprowadzenie"",""listName"":""Wprowadzenie""}",1605293212375713338,895703383690707969
-1605293213575284343,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Opis: Zmiany lokalne"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210829,895703383690707969
-1605293213944383105,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Wykorzystaj potencjał 4ga Boards"",""listName"":""Wprowadzenie""}",1605293212375713340,895703383690707969
-1605293214347036299,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""Podoba Ci się 4ga Boards?"",""listName"":""Przydatne linki""}",1605293212409267778,895703383690707969
-1605293212845475423,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Different language of Getting Started?"",""listName"":""Wprowadzenie""}",1605293212367324729,895703383690707969
-1605293213575284342,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: Zaawansowane funkcje"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210832,895703383690707969
-1605293213977937538,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Przydatne skróty klawiszowe"",""listName"":""Wprowadzenie""}",1605293212375713339,895703383690707969
-1605293212870641249,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Filtrowanie tablic/projektów"",""listName"":""Podstawy""}",1605293212400879167,895703383690707969
-1605293213608838777,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Termin"",""listName"":""Karty""}",1605293212451210835,895703383690707969
-1605293214011491973,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: GitHub"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210834,895703383690707969
-1605293213139076707,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Pasek tablicy (filtrowanie, członkowie)"",""listName"":""Podstawy""}",1605293212409267780,895703383690707969
-1605293214279927431,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Członkowie"",""listName"":""Karty""}",1605293212451210830,895703383690707969
-1605293212870641250,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Nawigacja w obrębie tablicy"",""listName"":""Podstawy""}",1605293212409267779,895703383690707969
-1605293213608838778,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Przenoszenie kart"",""listName"":""Karty""}",1605293212451210828,895703383690707969
-1605293214011491972,cardCreate,"{""listId"":""1605293211973060150"",""cardName"":""Zbyt szeroki panel boczny? Chcesz schować panel boczny?"",""listName"":""Ustawienia""}",1605293212417656393,895703383690707969
-1605293213541729906,cardCreate,"{""listId"":""1605293211973060150"",""cardName"":""Jak zmienić język?"",""listName"":""Ustawienia""}",1605293212417656392,895703383690707969
-1605293213910828668,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Powiadomienia"",""listName"":""Karty""}",1605293212451210837,895703383690707969
-1605293214279927432,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Etykiety"",""listName"":""Karty""}",1605293212451210833,895703383690707969
-1605293213172631142,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""Strona 4ga Boards"",""listName"":""Przydatne linki""}",1605293212400879165,895703383690707969
-1605293213541729907,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: Opis karty i komentarze"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212442822219,895703383690707969
-1605293214649026188,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Lista zadań"",""listName"":""Karty""}",1605293212451210838,895703383690707969
-1605293213575284341,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: Opcje wyświetlania"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210831,895703383690707969
-1605293213977937539,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Zwijanie/rozwijanie list"",""listName"":""Podstawy""}",1605293212409267782,895703383690707969
-1605293213575284344,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Karta"",""listName"":""Karty""}",1605293212442822218,895703383690707969
-1605293213944383104,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""Dokumentacja"",""listName"":""Przydatne linki""}",1605293212409267776,895703383690707969
-1605293214313481866,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Załączniki"",""listName"":""Karty""}",1605293212451210839,895703383690707969
-1605293213172631141,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""GitHub"",""listName"":""Przydatne linki""}",1605293212409267777,895703383690707969
+id,scope,type,data,cardId,userId
+1605293213541729908,card,cardComment,"{""text"":""Przykładowy komentarz ze **składnią Markdown**."",""userId"":""895703383690707969"",""userName"":""RAR""}",1605293212442822219,895703383690707969
+1605293212769977945,card,cardCreate,"{""listId"":""1605293211973060149"",""cardName"":""Tą kartę zobaczysz dopiero jak rozwiniesz listę"",""listName"":""Zwinięta lista z kartami""}",1605293212400879166,895703383690707969
+1605293213139076708,card,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Dodaj członka do tablicy"",""listName"":""Podstawy""}",1605293212409267781,895703383690707969
+1605293213877274235,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Stoper"",""listName"":""Karty""}",1605293212451210836,895703383690707969
+1605293214246372998,card,cardCreate,"{""listId"":""1605293211973060150"",""cardName"":""Przejdź do ustawień"",""listName"":""Ustawienia""}",1605293212409267783,895703383690707969
+1605293212845475422,card,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Wprowadzenie"",""listName"":""Wprowadzenie""}",1605293212375713338,895703383690707969
+1605293213575284343,card,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Opis: Zmiany lokalne"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210829,895703383690707969
+1605293213944383105,card,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Wykorzystaj potencjał 4ga Boards"",""listName"":""Wprowadzenie""}",1605293212375713340,895703383690707969
+1605293214347036299,card,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""Podoba Ci się 4ga Boards?"",""listName"":""Przydatne linki""}",1605293212409267778,895703383690707969
+1605293212845475423,card,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Different language of Getting Started?"",""listName"":""Wprowadzenie""}",1605293212367324729,895703383690707969
+1605293213575284342,card,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: Zaawansowane funkcje"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210832,895703383690707969
+1605293213977937538,card,cardCreate,"{""listId"":""1605293211964671537"",""cardName"":""Przydatne skróty klawiszowe"",""listName"":""Wprowadzenie""}",1605293212375713339,895703383690707969
+1605293212870641249,card,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Filtrowanie tablic/projektów"",""listName"":""Podstawy""}",1605293212400879167,895703383690707969
+1605293213608838777,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Termin"",""listName"":""Karty""}",1605293212451210835,895703383690707969
+1605293214011491973,card,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: GitHub"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210834,895703383690707969
+1605293213139076707,card,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Pasek tablicy (filtrowanie, członkowie)"",""listName"":""Podstawy""}",1605293212409267780,895703383690707969
+1605293214279927431,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Członkowie"",""listName"":""Karty""}",1605293212451210830,895703383690707969
+1605293212870641250,card,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Nawigacja w obrębie tablicy"",""listName"":""Podstawy""}",1605293212409267779,895703383690707969
+1605293213608838778,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Przenoszenie kart"",""listName"":""Karty""}",1605293212451210828,895703383690707969
+1605293214011491972,card,cardCreate,"{""listId"":""1605293211973060150"",""cardName"":""Zbyt szeroki panel boczny? Chcesz schować panel boczny?"",""listName"":""Ustawienia""}",1605293212417656393,895703383690707969
+1605293213541729906,card,cardCreate,"{""listId"":""1605293211973060150"",""cardName"":""Jak zmienić język?"",""listName"":""Ustawienia""}",1605293212417656392,895703383690707969
+1605293213910828668,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Powiadomienia"",""listName"":""Karty""}",1605293212451210837,895703383690707969
+1605293214279927432,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Etykiety"",""listName"":""Karty""}",1605293212451210833,895703383690707969
+1605293213172631142,card,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""Strona 4ga Boards"",""listName"":""Przydatne linki""}",1605293212400879165,895703383690707969
+1605293213541729907,card,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: Opis karty i komentarze"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212442822219,895703383690707969
+1605293214649026188,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Lista zadań"",""listName"":""Karty""}",1605293212451210838,895703383690707969
+1605293213575284341,card,cardCreate,"{""listId"":""1605293211973060152"",""cardName"":""Edytor tekstu: Opcje wyświetlania"",""listName"":""Opis/Komentarze: Edytor tekstu""}",1605293212451210831,895703383690707969
+1605293213977937539,card,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Zwijanie/rozwijanie list"",""listName"":""Podstawy""}",1605293212409267782,895703383690707969
+1605293213575284344,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Karta"",""listName"":""Karty""}",1605293212442822218,895703383690707969
+1605293213944383104,card,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""Dokumentacja"",""listName"":""Przydatne linki""}",1605293212409267776,895703383690707969
+1605293214313481866,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Załączniki"",""listName"":""Karty""}",1605293212451210839,895703383690707969
+1605293213172631141,card,cardCreate,"{""listId"":""1605293211973060146"",""cardName"":""GitHub"",""listName"":""Przydatne linki""}",1605293212409267777,895703383690707969

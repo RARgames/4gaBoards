@@ -1,33 +1,33 @@
-id,type,data,cardId,userId
-1605293050534299154,cardComment,"{""text"":""Sample comment with **Markdown syntax**."",""userId"":""895703383690707969"",""userName"":""RAR""}",1605293049242453477,895703383690707969
-1605293049661883893,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Navigating across the board"",""listName"":""Basics""}",1605293049166955994,895703383690707969
-1605293050030982655,cardCreate,"{""listId"":""1605293048764302799"",""cardName"":""You will see this card only after you expand the list"",""listName"":""Collapsed list""}",1605293049192121824,895703383690707969
-1605293050400081420,cardCreate,"{""listId"":""1605293048764302800"",""cardName"":""How to change language?"",""listName"":""Settings""}",1605293049208899042,895703383690707969
-1605293051507377702,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Tasks"",""listName"":""Cards""}",1605293049242453485,895703383690707969
-1605293049661883894,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Projects/boards filtering"",""listName"":""Basics""}",1605293049158567381,895703383690707969
-1605293051171833381,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Attachments"",""listName"":""Cards""}",1605293049242453487,895703383690707969
-1605293049695438328,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Board menu (filtering, members)"",""listName"":""Basics""}",1605293049166955997,895703383690707969
-1605293050802734619,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Collapse/Expand lists"",""listName"":""Basics""}",1605293049166955999,895703383690707969
-1605293051171833380,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""Enjoying 4ga Boards?"",""listName"":""Useful Links""}",1605293049166955996,895703383690707969
-1605293049779324410,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Getting Started"",""listName"":""Getting Started""}",1605293049166955990,895703383690707969
-1605293050500744721,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Notifications"",""listName"":""Cards""}",1605293049242453484,895703383690707969
-1605293050869843484,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Work efficiently"",""listName"":""Getting Started""}",1605293049166955993,895703383690707969
-1605293049804490236,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Different language of Getting Started?"",""listName"":""Getting Started""}",1605293049158567379,895703383690707969
-1605293050567853588,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Description: Local changes"",""listName"":""Description/Comments Text Editor""}",1605293049242453483,895703383690707969
-1605293050936952351,cardCreate,"{""listId"":""1605293048764302800"",""cardName"":""Too wide sidebar? Do you want to hide it?"",""listName"":""Settings""}",1605293049208899043,895703383690707969
-1605293049930319357,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Add users to the board"",""listName"":""Basics""}",1605293049166955998,895703383690707969
-1605293050702071318,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: Advanced features"",""listName"":""Description/Comments Text Editor""}",1605293049242453488,895703383690707969
-1605293051071170081,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Labels"",""listName"":""Cards""}",1605293049242453480,895703383690707969
-1605293049930319358,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""4ga Boards Website"",""listName"":""Useful Links""}",1605293049158567380,895703383690707969
-1605293050668516885,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: View options"",""listName"":""Description/Comments Text Editor""}",1605293049242453486,895703383690707969
-1605293051037615648,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Members"",""listName"":""Cards""}",1605293049242453479,895703383690707969
-1605293050039371264,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""GitHub"",""listName"":""Useful Links""}",1605293049166955995,895703383690707969
-1605293050467190288,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Due Date"",""listName"":""Cards""}",1605293049242453481,895703383690707969
-1605293050869843485,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""Documentation"",""listName"":""Useful Links""}",1605293049166955991,895703383690707969
-1605293050400081422,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Moving cards"",""listName"":""Cards""}",1605293049242453478,895703383690707969
-1605293050769180183,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Useful key combinations"",""listName"":""Getting Started""}",1605293049166955992,895703383690707969
-1605293051138278946,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: GitHub"",""listName"":""Description/Comments Text Editor""}",1605293049242453489,895703383690707969
-1605293050534299155,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: Description and Comments"",""listName"":""Description/Comments Text Editor""}",1605293049242453477,895703383690707969
-1605293050903397918,cardCreate,"{""listId"":""1605293048764302800"",""cardName"":""Go to Settings"",""listName"":""Settings""}",1605293049200510433,895703383690707969
-1605293050400081421,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Cards"",""listName"":""Cards""}",1605293049242453476,895703383690707969
-1605293050433635855,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Timer"",""listName"":""Cards""}",1605293049242453482,895703383690707969
+id,scope,type,data,cardId,userId
+1605293050534299154,card,cardComment,"{""text"":""Sample comment with **Markdown syntax**."",""userId"":""895703383690707969"",""userName"":""RAR""}",1605293049242453477,895703383690707969
+1605293049661883893,card,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Navigating across the board"",""listName"":""Basics""}",1605293049166955994,895703383690707969
+1605293050030982655,card,cardCreate,"{""listId"":""1605293048764302799"",""cardName"":""You will see this card only after you expand the list"",""listName"":""Collapsed list""}",1605293049192121824,895703383690707969
+1605293050400081420,card,cardCreate,"{""listId"":""1605293048764302800"",""cardName"":""How to change language?"",""listName"":""Settings""}",1605293049208899042,895703383690707969
+1605293051507377702,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Tasks"",""listName"":""Cards""}",1605293049242453485,895703383690707969
+1605293049661883894,card,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Projects/boards filtering"",""listName"":""Basics""}",1605293049158567381,895703383690707969
+1605293051171833381,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Attachments"",""listName"":""Cards""}",1605293049242453487,895703383690707969
+1605293049695438328,card,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Board menu (filtering, members)"",""listName"":""Basics""}",1605293049166955997,895703383690707969
+1605293050802734619,card,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Collapse/Expand lists"",""listName"":""Basics""}",1605293049166955999,895703383690707969
+1605293051171833380,card,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""Enjoying 4ga Boards?"",""listName"":""Useful Links""}",1605293049166955996,895703383690707969
+1605293049779324410,card,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Getting Started"",""listName"":""Getting Started""}",1605293049166955990,895703383690707969
+1605293050500744721,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Notifications"",""listName"":""Cards""}",1605293049242453484,895703383690707969
+1605293050869843484,card,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Work efficiently"",""listName"":""Getting Started""}",1605293049166955993,895703383690707969
+1605293049804490236,card,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Different language of Getting Started?"",""listName"":""Getting Started""}",1605293049158567379,895703383690707969
+1605293050567853588,card,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Description: Local changes"",""listName"":""Description/Comments Text Editor""}",1605293049242453483,895703383690707969
+1605293050936952351,card,cardCreate,"{""listId"":""1605293048764302800"",""cardName"":""Too wide sidebar? Do you want to hide it?"",""listName"":""Settings""}",1605293049208899043,895703383690707969
+1605293049930319357,card,cardCreate,"{""listId"":""1605293048764302797"",""cardName"":""Add users to the board"",""listName"":""Basics""}",1605293049166955998,895703383690707969
+1605293050702071318,card,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: Advanced features"",""listName"":""Description/Comments Text Editor""}",1605293049242453488,895703383690707969
+1605293051071170081,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Labels"",""listName"":""Cards""}",1605293049242453480,895703383690707969
+1605293049930319358,card,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""4ga Boards Website"",""listName"":""Useful Links""}",1605293049158567380,895703383690707969
+1605293050668516885,card,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: View options"",""listName"":""Description/Comments Text Editor""}",1605293049242453486,895703383690707969
+1605293051037615648,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Members"",""listName"":""Cards""}",1605293049242453479,895703383690707969
+1605293050039371264,card,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""GitHub"",""listName"":""Useful Links""}",1605293049166955995,895703383690707969
+1605293050467190288,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Due Date"",""listName"":""Cards""}",1605293049242453481,895703383690707969
+1605293050869843485,card,cardCreate,"{""listId"":""1605293048764302796"",""cardName"":""Documentation"",""listName"":""Useful Links""}",1605293049166955991,895703383690707969
+1605293050400081422,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Moving cards"",""listName"":""Cards""}",1605293049242453478,895703383690707969
+1605293050769180183,card,cardCreate,"{""listId"":""1605293048755914187"",""cardName"":""Useful key combinations"",""listName"":""Getting Started""}",1605293049166955992,895703383690707969
+1605293051138278946,card,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: GitHub"",""listName"":""Description/Comments Text Editor""}",1605293049242453489,895703383690707969
+1605293050534299155,card,cardCreate,"{""listId"":""1605293048764302802"",""cardName"":""Text editor: Description and Comments"",""listName"":""Description/Comments Text Editor""}",1605293049242453477,895703383690707969
+1605293050903397918,card,cardCreate,"{""listId"":""1605293048764302800"",""cardName"":""Go to Settings"",""listName"":""Settings""}",1605293049200510433,895703383690707969
+1605293050400081421,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Cards"",""listName"":""Cards""}",1605293049242453476,895703383690707969
+1605293050433635855,card,cardCreate,"{""listId"":""1605293048764302801"",""cardName"":""Timer"",""listName"":""Cards""}",1605293049242453482,895703383690707969
