@@ -207,6 +207,16 @@ module.exports = {
               .tolerate('E_UNIQUE')
               .fetch();
 
+            await sails.helpers.userProjects.createOne
+              .with({
+                values: {
+                  projectId: inputs.board.projectId,
+                  userId: allUsers[boardMembership.userId].id,
+                },
+                currentUser,
+              })
+              .tolerate('E_UNIQUE');
+
             if (newBoardMembership.userId !== currentUser.id) {
               sails.sockets.broadcast(
                 `user:${newBoardMembership.userId}`,
@@ -389,65 +399,49 @@ module.exports = {
     const importActions = async (newCard, card) => {
       const actionsToImport = getActionsOfCard(card.id);
 
-      const actionRecords = actionsToImport.map((action) => {
-        const newData = parseJSON(action.data);
-        if (newData) {
-          if (newData.listId) {
-            newData.listId = importedLists[newData.listId]?.id ?? null;
+      const actionRecords = actionsToImport
+        .map((action) => {
+          if (!Object.values(Action.Types).includes(action.type)) {
+            return null;
           }
-          if (newData.listFromId) {
-            newData.listFromId = importedLists[newData.listFromId]?.id ?? null;
-          }
-          if (newData.listToId) {
-            newData.listToId = importedLists[newData.listToId]?.id ?? null;
-          }
-          if (newData.cardPrevCoverAttachmentId) {
-            newData.cardPrevCoverAttachmentId = importedAttachments[newData.cardPrevCoverAttachmentId]?.id ?? null;
-          }
-          if (newData.cardCoverAttachmentId) {
-            newData.cardCoverAttachmentId = importedAttachments[newData.cardCoverAttachmentId]?.id ?? null;
-          }
-          if (newData.attachmentId) {
-            newData.attachmentId = importedAttachments[newData.attachmentId]?.id ?? null;
-          }
-          if (newData.labelId) {
-            newData.labelId = importedLabels[newData.labelId]?.id ?? null;
-          }
-          if (newData.cardLabelId) {
-            newData.cardLabelId = importedCardLabels[newData.cardLabelId]?.id ?? null;
-          }
-          if (newData.taskId) {
-            newData.taskId = importedTasks[newData.taskId]?.id ?? null;
-          }
-          if (newData.taskMembershipId) {
-            newData.taskMembershipId = importedTaskMemberships[newData.taskMembershipId]?.id ?? null;
-          }
-          if (newData.cardMembershipId) {
-            newData.cardMembershipId = importedCardMemberships[newData.cardMembershipId]?.id ?? null;
-          }
-          if (newData.userId) {
-            newData.userId = allUsers[newData.userId]?.id ?? null;
-          }
-          if (newData.text && !allUsers[action.userId]) {
-            newData.text = `${newData.text}\n\n---\n*Imported comment, original author: ${newData.userName ?? 'unknown'}*`;
-          }
-        }
-        const updatedAt = parseJSON(action.updatedAt);
 
-        return {
-          cardId: newCard.id,
-          boardId: newCard.boardId,
-          projectId: inputs.board.projectId,
-          userId: allUsers[action.userId]?.id ?? currentUser.id,
-          scope: action.scope,
-          type: action.type,
-          data: newData,
-          createdAt: parseJSON(action.createdAt),
-          createdById: allUsers[action.createdById]?.id ?? currentUser.id,
-          updatedAt,
-          updatedById: updatedAt && (allUsers[action.updatedById]?.id ?? currentUser.id),
-        };
-      });
+          const newData = parseJSON(action.data);
+          if (newData) {
+            if (newData.listId) newData.listId = importedLists[newData.listId]?.id ?? null;
+            if (newData.listFromId) newData.listFromId = importedLists[newData.listFromId]?.id ?? null;
+            if (newData.listToId) newData.listToId = importedLists[newData.listToId]?.id ?? null;
+            if (newData.cardPrevCoverAttachmentId) newData.cardPrevCoverAttachmentId = importedAttachments[newData.cardPrevCoverAttachmentId]?.id ?? null;
+            if (newData.cardCoverAttachmentId) newData.cardCoverAttachmentId = importedAttachments[newData.cardCoverAttachmentId]?.id ?? null;
+            if (newData.attachmentId) newData.attachmentId = importedAttachments[newData.attachmentId]?.id ?? null;
+            if (newData.labelId) newData.labelId = importedLabels[newData.labelId]?.id ?? null;
+            if (newData.cardLabelId) newData.cardLabelId = importedCardLabels[newData.cardLabelId]?.id ?? null;
+            if (newData.taskId) newData.taskId = importedTasks[newData.taskId]?.id ?? null;
+            if (newData.taskMembershipId) newData.taskMembershipId = importedTaskMemberships[newData.taskMembershipId]?.id ?? null;
+            if (newData.cardMembershipId) newData.cardMembershipId = importedCardMemberships[newData.cardMembershipId]?.id ?? null;
+            if (newData.userId) newData.userId = allUsers[newData.userId]?.id ?? null;
+            if (newData.text && !allUsers[action.userId]) {
+              newData.text = `${newData.text}\n\n---\n*Imported comment, original author: ${newData.userName ?? 'unknown'}*`;
+            }
+          }
+          const updatedAt = parseJSON(action.updatedAt);
+
+          return {
+            cardId: newCard.id,
+            boardId: newCard.boardId,
+            projectId: inputs.board.projectId,
+            userId: allUsers[action.userId]?.id ?? currentUser.id,
+            scope: action.scope,
+            type: action.type,
+            data: newData,
+            createdAt: parseJSON(action.createdAt),
+            createdById: allUsers[action.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[action.updatedById]?.id ?? currentUser.id),
+          };
+        })
+        .filter(Boolean);
+
+      if (!actionRecords.length) return;
 
       const insertedActions = await Action.createEach(actionRecords).fetch();
 

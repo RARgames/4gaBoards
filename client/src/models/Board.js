@@ -162,6 +162,10 @@ export default class extends BaseModel {
         Board.upsert(payload.board);
 
         break;
+      case ActionTypes.BOARD_CREATE__FAILURE:
+        Board.withId(payload.localId).delete();
+
+        break;
       case ActionTypes.BOARD_FETCH__SUCCESS:
         Board.upsert({
           ...payload.board,

@@ -48,26 +48,29 @@ module.exports = {
 
     // Delete userProject if the user is not a member of any board in the project and is not a project manager
     const userIds = boardMemberships.map((bm) => bm.userId);
-    userIds.forEach(async (userId) => {
-      const isUserProjectManager = await sails.helpers.users.isProjectManager(userId, board.projectId);
-      if (isUserProjectManager) {
-        return;
-      }
+    await Promise.all(
+      userIds.map(async (userId) => {
+        const isUserProjectManager = await sails.helpers.users.isProjectManager(userId, board.projectId);
+        if (isUserProjectManager) {
+          return;
+        }
 
-      const userBoardMemberships = await sails.helpers.boardMemberships.getMany({ userId });
-      const boardIds = userBoardMemberships.map((bm) => bm.boardId);
-      const projects = await sails.helpers.boards.getMany({ id: boardIds });
-      const projectIds = projects.map((p) => p.projectId);
-      if (!projectIds.includes(board.projectId)) {
-        const userProject = await sails.helpers.userProjects.getOne({ userId, projectId: board.projectId });
+        const userBoardMemberships = await sails.helpers.boardMemberships.getMany({ userId });
+        const boardIds = userBoardMemberships.map((bm) => bm.boardId);
+        const boards = await sails.helpers.boards.getMany({ id: boardIds });
+        const projectIds = sails.helpers.utils.mapRecords(boards, 'projectId', true);
 
-        await sails.helpers.userProjects.deleteOne.with({
-          record: userProject,
-          currentUser,
-          request: this.req,
-        });
-      }
-    });
+        if (!projectIds.includes(board.projectId)) {
+          const userProject = await sails.helpers.userProjects.getOne({ userId, projectId: board.projectId });
+
+          await sails.helpers.userProjects.deleteOne.with({
+            record: userProject,
+            currentUser,
+            request: this.req,
+          });
+        }
+      }),
+    );
 
     return {
       item: board,
