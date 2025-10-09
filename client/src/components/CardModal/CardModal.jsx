@@ -534,7 +534,7 @@ const CardModal = React.memo(
       </div>
     );
 
-    const closestDueDateNode = (
+    const closestDueDateNode = closestDueDate && (
       <div className={s.headerItems}>
         <div className={s.text}>{t('common.closestDueDate', { context: 'title' })}</div>
         <span className={s.headerItem}>
@@ -780,9 +780,9 @@ const CardModal = React.memo(
             {labelsNode}
             {dueDateNode}
             {timerNode}
+            {!hideClosestDueDate && closestDueDateNode}
             {!hideCardModalActivity && createdNode}
             {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
-            {!hideClosestDueDate && closestDueDateNode}
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>
