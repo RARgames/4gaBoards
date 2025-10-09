@@ -58,7 +58,7 @@ module.exports = {
       try {
         rimraf.sync(rootPath);
       } catch (error2) {
-        console.warn(error2.stack); // eslint-disable-line no-console
+        sails.log.warn(error2.stack);
       }
 
       throw 'fileIsNotImage';
@@ -67,7 +67,7 @@ module.exports = {
     try {
       rimraf.sync(inputs.file.fd);
     } catch (error) {
-      console.warn(error.stack); // eslint-disable-line no-console
+      sails.log.warn(error.stack);
     }
 
     return {

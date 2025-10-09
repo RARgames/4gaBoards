@@ -256,11 +256,6 @@ module.exports = {
 
     inspect: false,
     custom: customLogger,
-
-    /**
-     * Removes the Sail.js init success logs (ASCII ship art).
-     */
-
     noShip: true,
   },
 

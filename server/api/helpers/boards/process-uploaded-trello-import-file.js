@@ -24,7 +24,7 @@ module.exports = {
     try {
       rimraf.sync(inputs.file.fd);
     } catch (error) {
-      console.warn(error.stack); // eslint-disable-line no-console
+      sails.log.warn(error.stack);
     }
 
     return trelloBoard;

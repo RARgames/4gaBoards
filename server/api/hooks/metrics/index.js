@@ -24,17 +24,17 @@ module.exports = function defineMetricsHook(sails) {
       const server = http.createServer(async (req, res) => {
         if (req.url === '/metrics') {
           try {
-            const metricsJson = await register.getMetricsAsJSON();
-            res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(metricsJson, null, 2));
-          } catch {
+            res.setHeader('Content-Type', register.contentType);
+            res.end(await register.metrics());
+          } catch (error) {
             res.statusCode = 500;
-            res.end(JSON.stringify({ error: 'Failed to get metrics' }));
+            res.setHeader('Content-Type', 'text/plain');
+            res.end(`Error: Failed to get metrics\n${error.message}`);
           }
         } else {
           res.statusCode = 404;
-          res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ error: 'Not Found' }));
+          res.setHeader('Content-Type', 'text/plain');
+          res.end('Not Found');
         }
       });
 

@@ -86,7 +86,7 @@ module.exports = {
         try {
           rimraf.sync(thumbnailsPath);
         } catch (error2) {
-          console.warn(error2.stack); // eslint-disable-line no-console
+          sails.log.warn(error2.stack);
         }
       }
     }

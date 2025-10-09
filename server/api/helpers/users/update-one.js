@@ -99,7 +99,7 @@ module.exports = {
         try {
           rimraf.sync(path.join(sails.config.custom.userAvatarsPath, inputs.record.avatar.dirname));
         } catch (error) {
-          console.warn(error.stack); // eslint-disable-line no-console
+          sails.log.warn(error.stack);
         }
       }
 

@@ -533,7 +533,7 @@ module.exports = {
       await importLabels();
       await importLists();
     } catch (error) {
-      console.error('Import from board failed: ', error); // eslint-disable-line no-console
+      sails.log.error('Import from board failed: ', error);
       throw 'importFromBoardFailed';
     }
 

@@ -42,15 +42,6 @@ try {
   /* eslint-disable no-console */
   console.error("Encountered an error when attempting to require('sails'):");
   console.error(error.stack);
-  console.error('--');
-  console.error('To run an app using `node app.js`, you need to have Sails installed');
-  console.error("locally (`./node_modules/sails`).  To do that, just make sure you're");
-  console.error('in the same directory as your app and run `npm install`.');
-  console.error();
-  console.error('If Sails is installed globally (i.e. `npm install -g sails`) you can');
-  console.error('also run this app with `sails lift`.  Running with `sails lift` will');
-  console.error('not run this file (`app.js`), but it will do exactly the same thing.');
-  console.error("(It even uses your app directory's local Sails install, if possible.)");
   /* eslint-enable no-console */
 
   process.exit(1);
@@ -59,11 +50,9 @@ try {
 // Start server
 sails.lift(rc('sails'), (err) => {
   if (err) {
-    /* eslint-disable no-console */
-    console.error('Error lifting 4ga Boards:', err);
+    sails.log.error('Error lifting 4ga Boards:', err);
     process.exit(2);
   } else {
-    console.info('4ga Boards lifted successfully!');
-    /* eslint-enable no-console */
+    sails.log.info('4ga Boards lifted successfully!');
   }
 });

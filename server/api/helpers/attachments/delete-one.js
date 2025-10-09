@@ -53,7 +53,7 @@ module.exports = {
         try {
           rimraf.sync(path.join(sails.config.custom.attachmentsPath, attachment.dirname));
         } catch (error) {
-          console.warn(error.stack); // eslint-disable-line no-console
+          sails.log.warn(error.stack);
         }
       }
 

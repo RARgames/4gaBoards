@@ -29,7 +29,7 @@ module.exports = {
             .on('end', () => resolve(results))
             .on('error', reject);
         } catch (error) {
-          console.error(error); // eslint-disable-line no-console
+          sails.log.error(error);
           throw 'invalidFile';
         }
       });

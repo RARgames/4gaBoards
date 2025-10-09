@@ -76,7 +76,7 @@ module.exports = {
       try {
         rimraf.sync(file.fd);
       } catch (error) {
-        console.warn(error.stack); // eslint-disable-line no-console
+        sails.log.warn(error.stack);
       }
 
       return Errors.FILE_IS_NOT_IMAGE;

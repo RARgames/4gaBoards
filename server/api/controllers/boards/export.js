@@ -208,7 +208,7 @@ module.exports = {
       );
       fs.rmSync(tempDir, { recursive: true, force: true });
     } catch (error) {
-      console.error(error); // eslint-disable-line no-console
+      sails.log.error(error);
       throw Errors.EXPORT_ERROR;
     }
 

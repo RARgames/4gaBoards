@@ -10,6 +10,8 @@
  * https://sailsjs.com/docs/concepts/logging
  */
 
+const { customLogger } = require('../utils/logger');
+
 module.exports.log = {
   /**
    *
@@ -23,4 +25,6 @@ module.exports.log = {
    *
    */
   // level: 'info',
+  custom: customLogger,
+  noShip: true,
 };
