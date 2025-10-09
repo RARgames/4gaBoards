@@ -49,7 +49,8 @@ const mapStateToProps = (state) => {
   const comments = selectors.selectCommentsForCurrentCard(state);
   const activities = selectors.selectActivitiesByCardId(state, id);
   const user = selectors.selectCurrentUser(state);
-  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
+  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, hideClosestDueDate, preferredDetailsFont } =
+    selectors.selectCurrentUserPrefs(state);
   const userId = user.id;
 
   const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
@@ -91,6 +92,7 @@ const mapStateToProps = (state) => {
     attachmentsShown,
     commentsShown,
     hideCardModalActivity,
+    hideClosestDueDate,
     preferredDetailsFont,
     userId,
     isGithubConnected,

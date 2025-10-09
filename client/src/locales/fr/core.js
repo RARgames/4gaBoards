@@ -138,6 +138,7 @@ export default {
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
       descriptionHideCardModalActivity: 'Masquer les activités créées et mises à jour dans la fenêtre modale de la carte',
+      descriptionHideClosestDueDate: "Masquer la date d'échéance la plus proche dans le modal de la carte",
       descriptionLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionListViewStyle: 'Sélectionnez le style de la vue de liste.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
@@ -241,6 +242,7 @@ export default {
       hasDescription: 'Il a une description',
       hideBoards: 'Masquer les tableaux',
       hideCardModalActivity: 'Masquer l’activité de la fenêtre modale de la carte',
+      hideClosestDueDate: "Masquer la date d'échéance la plus proche",
       hideSidebar: 'Masquer la barre latérale',
       hideTasks: 'Masquer les tâches',
       hours: 'Les heures',
@@ -389,6 +391,7 @@ export default {
       toggleDescription: 'Basculer les pièces jointes',
       toggleFilter: 'Basculer le filtre : tableaux/projets [Tab]',
       toggleHideCardModalActivity: 'Basculer la visibilité des activités dans la fenêtre modale de la carte',
+      toggleHideClosestDueDate: "Basculer la visibilité de la date d'échéance la plus proche",
       toggleLocalUserRegistration: "Basculer l'enregistrement local de l'utilisateur",
       toggleProjectCreationAll: 'Activer/désactiver la création de projet pour tous les utilisateurs',
       toggleSettings: 'Basculer les paramètres',

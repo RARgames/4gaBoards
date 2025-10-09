@@ -57,6 +57,7 @@ const CardModal = React.memo(
     attachmentsShown,
     commentsShown,
     hideCardModalActivity,
+    hideClosestDueDate,
     preferredDetailsFont,
     userId,
     isGithubConnected,
@@ -781,7 +782,7 @@ const CardModal = React.memo(
             {timerNode}
             {!hideCardModalActivity && createdNode}
             {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
-            {closestDueDateNode}
+            {!hideClosestDueDate && closestDueDateNode}
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>
@@ -834,6 +835,7 @@ CardModal.propTypes = {
   attachmentsShown: PropTypes.bool.isRequired,
   commentsShown: PropTypes.bool.isRequired,
   hideCardModalActivity: PropTypes.bool.isRequired,
+  hideClosestDueDate: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,

@@ -174,6 +174,11 @@ module.exports = {
       defaultsTo: false,
       columnName: 'hide_card_modal_activity',
     },
+    hideClosestDueDate: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'hide_closest_due_date',
+    },
   },
 
   tableName: 'user_prefs',

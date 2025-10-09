@@ -99,6 +99,9 @@ module.exports = {
     hideCardModalActivity: {
       type: 'boolean',
     },
+    hideClosestDueDate: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -147,6 +150,7 @@ module.exports = {
         'usersSettingsItemsPerPage',
         'preferredDetailsFont',
         'hideCardModalActivity',
+        'hideClosestDueDate',
       ]),
     };
 
