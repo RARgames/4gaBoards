@@ -50,6 +50,7 @@ module.exports.custom = {
   },
 
   demoMode: process.env.DEMO_MODE === 'true',
+  metricsEnabled: process.env.METRICS_ENABLED === 'true',
 
   positionGap: 65535,
   requiredPasswordStrength: 2,

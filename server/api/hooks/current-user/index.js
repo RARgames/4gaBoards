@@ -9,39 +9,13 @@
 module.exports = function defineCurrentUserHook(sails) {
   const TOKEN_PATTERN = /^Bearer /;
 
-  const getUser = async (accessToken) => {
-    let payload;
-    try {
-      payload = sails.helpers.utils.verifyToken(accessToken);
-    } catch {
-      return null;
-    }
-
-    const session = await Session.findOne({
-      accessToken,
-      deletedAt: null,
-    });
-
-    if (!session) {
-      return null;
-    }
-
-    const user = await sails.helpers.users.getOne(payload.subject);
-
-    if (user && user.passwordChangedAt > payload.issuedAt) {
-      return null;
-    }
-
-    return user;
-  };
-
   return {
     /**
      * Runs when this Sails app loads/lifts.
      */
 
     async initialize() {
-      sails.log.info('Initializing custom hook (`current-user`)');
+      sails.log.info('Initializing custom hook: current-user');
     },
 
     routes: {
@@ -52,7 +26,7 @@ module.exports = function defineCurrentUserHook(sails) {
 
             if (authorizationHeader && TOKEN_PATTERN.test(authorizationHeader)) {
               const accessToken = authorizationHeader.replace(TOKEN_PATTERN, '');
-              const currentUser = await getUser(accessToken);
+              const currentUser = await sails.helpers.utils.getUser(accessToken);
 
               if (currentUser) {
                 Object.assign(req, {
@@ -74,7 +48,7 @@ module.exports = function defineCurrentUserHook(sails) {
             const { accessToken } = req.cookies;
 
             if (accessToken) {
-              const currentUser = await getUser(accessToken);
+              const currentUser = await sails.helpers.utils.getUser(accessToken);
 
               if (currentUser) {
                 Object.assign(req, {
@@ -92,7 +66,7 @@ module.exports = function defineCurrentUserHook(sails) {
             const { accessToken } = req.cookies;
 
             if (accessToken) {
-              const currentUser = await getUser(accessToken);
+              const currentUser = await sails.helpers.utils.getUser(accessToken);
 
               if (currentUser) {
                 Object.assign(req, {

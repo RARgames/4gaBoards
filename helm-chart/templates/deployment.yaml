@@ -84,6 +84,8 @@ spec:
             value: {{ .Values.env.optional.MICROSOFT_CLIENT_SECRET }}
           - name: DEMO_MODE
             value: {{ .Values.env.optional.DEMO_MODE }}
+          - name: METRICS_ENABLED
+            value: {{ .Values.env.optional.METRICS_ENABLED }}
           - name: LOG_LEVEL
             value: {{ .Values.env.optional.LOG_LEVEL }}
           - name: TRUST_PROXY
