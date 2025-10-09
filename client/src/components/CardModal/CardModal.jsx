@@ -72,6 +72,8 @@ const CardModal = React.memo(
     commentMode,
     commentCount,
     url,
+    closestTaskDueDate,
+    closestDueDate,
     createdAt,
     createdBy,
     updatedAt,
@@ -531,6 +533,15 @@ const CardModal = React.memo(
       </div>
     );
 
+    const closestDueDateNode = (
+      <div className={s.headerItems}>
+        <div className={s.text}>{t('common.closestDueDate', { context: 'title' })}</div>
+        <span className={s.headerItem}>
+          <DueDate value={closestDueDate} titlePrefix={t('common.cardDueDateSummary', { context: 'title' })} />
+        </span>
+      </div>
+    );
+
     const timerNode = (
       <div className={s.headerItems}>
         <div className={s.text}>
@@ -646,16 +657,15 @@ const CardModal = React.memo(
     );
 
     const completedTasks = tasks.filter((task) => task.isCompleted);
-    const closestNotCompletedTaslDueDate = tasks.filter((task) => !task.isCompleted && task.dueDate).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0];
 
     const tasksNode = (
       <div>
         <div className={s.moduleHeader}>
           <Icon type={IconType.Check} size={IconSize.Size20} className={s.moduleIcon} />
           {t('common.tasks')}
-          {tasks.length > 0 && closestNotCompletedTaslDueDate && (
+          {tasks.length > 0 && closestTaskDueDate && (
             <div className={s.taskDueDateSummaryWrapper}>
-              <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} />
+              <DueDate variant="tasksCard" value={closestTaskDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} />
             </div>
           )}
           {tasks.length > 0 && (
@@ -771,6 +781,7 @@ const CardModal = React.memo(
             {timerNode}
             {!hideCardModalActivity && createdNode}
             {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
+            {closestDueDateNode}
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>
@@ -838,6 +849,8 @@ CardModal.propTypes = {
   commentMode: PropTypes.string.isRequired,
   commentCount: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
+  closestTaskDueDate: PropTypes.instanceOf(Date),
+  closestDueDate: PropTypes.instanceOf(Date),
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -878,6 +891,8 @@ CardModal.defaultProps = {
   description: undefined,
   dueDate: undefined,
   timer: undefined,
+  closestTaskDueDate: undefined,
+  closestDueDate: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

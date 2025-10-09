@@ -51,6 +51,7 @@ const Card = React.memo(
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    closestDueDate,
     canEdit,
     createdAt,
     createdBy,
@@ -223,6 +224,7 @@ const Card = React.memo(
               isCardActive={isOpen}
               cardId={id}
               items={tasks}
+              closestDueDate={closestDueDate}
               canEdit={canEdit}
               allBoardMemberships={boardAndTaskMemberships}
               boardMemberships={boardMemberships}
@@ -413,6 +415,7 @@ Card.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  closestDueDate: PropTypes.instanceOf(Date),
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -446,6 +449,7 @@ Card.defaultProps = {
   timer: undefined,
   coverUrl: undefined,
   description: undefined,
+  closestDueDate: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

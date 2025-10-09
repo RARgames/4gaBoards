@@ -25,6 +25,7 @@ const DEFAULT_COLUMN_VISIBILITY = {
   attachmentsCount: true,
   commentCount: true,
   dueDate: true,
+  closestDueDate: true,
   timer: true,
   tasks: true,
   createdAt: false,
@@ -299,6 +300,15 @@ const ListView = React.memo(
           enableSorting: true,
           sortUndefined: 'last',
           meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedSize: 110 },
+        },
+        {
+          accessorKey: 'closestDueDate',
+          header: t('common.closestDueDate', { context: 'title' }),
+          cell: DueDateCellRenderer,
+          enableSorting: true,
+          sortUndefined: 'last',
+          meta: { headerTitle: t('common.closestDueDate', { context: 'title' }), suggestedSize: 110 },
+          cellProps: { isReadOnly: true, titlePrefix: t('common.cardDueDateSummary') },
         },
         {
           accessorKey: 'timer',

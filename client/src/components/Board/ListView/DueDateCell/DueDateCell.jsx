@@ -9,7 +9,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './DueDateCell.module.scss';
 
-const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, onUpdate }) => {
+const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, isReadOnly, titlePrefix, onUpdate }) => {
   const [t] = useTranslation();
 
   const handleDueDateUpdate = useCallback(
@@ -21,7 +21,7 @@ const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, onUpdate }) =
     [onUpdate],
   );
 
-  if (!dueDate) {
+  if (!dueDate && !isReadOnly) {
     if (canEdit) {
       return (
         <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} wrapperClassName={s.popupWrapper}>
@@ -37,8 +37,8 @@ const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, onUpdate }) =
 
   return (
     <div className={cellClassName}>
-      <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
-        <DueDate value={dueDate} isClickable={canEdit} />
+      <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit || isReadOnly} wrapperClassName={s.popupWrapper}>
+        <DueDate value={dueDate} isClickable={canEdit && !isReadOnly} titlePrefix={titlePrefix} />
       </DueDateEditPopup>
     </div>
   );
@@ -48,12 +48,16 @@ DueDateCell.propTypes = {
   dueDate: PropTypes.instanceOf(Date),
   cellClassName: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool,
+  titlePrefix: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
 };
 
 DueDateCell.defaultProps = {
   dueDate: undefined,
   cellClassName: '',
+  isReadOnly: false,
+  titlePrefix: undefined,
 };
 
 export default DueDateCell;

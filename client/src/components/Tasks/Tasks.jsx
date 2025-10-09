@@ -21,7 +21,25 @@ const VARIANTS = {
 
 const Tasks = React.forwardRef(
   (
-    { variant, isCardActive, cardId, items, canEdit, allBoardMemberships, boardMemberships, onCreate, onUpdate, onDuplicate, onMove, onDelete, onUserAdd, onUserRemove, onMouseEnterTasks, onMouseLeaveTasks },
+    {
+      variant,
+      isCardActive,
+      cardId,
+      items,
+      closestDueDate,
+      canEdit,
+      allBoardMemberships,
+      boardMemberships,
+      onCreate,
+      onUpdate,
+      onDuplicate,
+      onMove,
+      onDelete,
+      onUserAdd,
+      onUserRemove,
+      onMouseEnterTasks,
+      onMouseLeaveTasks,
+    },
     ref,
   ) => {
     const [t] = useTranslation();
@@ -83,7 +101,6 @@ const Tasks = React.forwardRef(
     );
 
     const completedItems = items.filter((item) => item.isCompleted);
-    const closestNotCompletedTaslDueDate = items.filter((item) => !item.isCompleted && item.dueDate).sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0];
 
     const tasksNode = (
       <Droppable droppableId="tasks" type={DroppableTypes.TASK}>
@@ -137,9 +154,7 @@ const Tasks = React.forwardRef(
             <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={clsx(variant === VARIANTS.CARDMODAL ? s.progress : s.progressCard)} />
             {variant !== VARIANTS.CARDMODAL && (
               <div className={s.progressItems}>
-                {closestNotCompletedTaslDueDate && (
-                  <DueDate variant="tasksCard" value={closestNotCompletedTaslDueDate.dueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} />
-                )}
+                {closestDueDate && <DueDate variant="tasksCard" value={closestDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} />}
                 <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton} data-prevent-card-switch>
                   {completedItems.length}/{items.length}
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
@@ -161,6 +176,7 @@ Tasks.propTypes = {
   isCardActive: PropTypes.bool,
   cardId: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  closestDueDate: PropTypes.instanceOf(Date),
   canEdit: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -177,6 +193,7 @@ Tasks.propTypes = {
 
 Tasks.defaultProps = {
   isCardActive: false,
+  closestDueDate: undefined,
   onMouseEnterTasks: () => {},
   onMouseLeaveTasks: () => {},
 };

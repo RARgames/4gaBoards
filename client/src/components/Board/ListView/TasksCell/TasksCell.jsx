@@ -10,7 +10,22 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
 import * as s from './TasksCell.module.scss';
 
 const TasksCell = React.memo(
-  ({ id, tasks, cellClassName, allBoardMemberships, boardMemberships, canEdit, onTaskUpdate, onTaskDuplicate, onTaskDelete, onUserToTaskAdd, onUserFromTaskRemove, onTaskCreate, onTaskMove }) => {
+  ({
+    id,
+    tasks,
+    cellClassName,
+    allBoardMemberships,
+    boardMemberships,
+    closestDueDate,
+    canEdit,
+    onTaskUpdate,
+    onTaskDuplicate,
+    onTaskDelete,
+    onUserToTaskAdd,
+    onUserFromTaskRemove,
+    onTaskCreate,
+    onTaskMove,
+  }) => {
     const [t] = useTranslation();
 
     if (tasks.length === 0) {
@@ -33,6 +48,7 @@ const TasksCell = React.memo(
           variant="listView"
           cardId={id}
           items={tasks}
+          closestDueDate={closestDueDate}
           canEdit={canEdit}
           allBoardMemberships={allBoardMemberships}
           boardMemberships={boardMemberships}
@@ -56,6 +72,7 @@ TasksCell.propTypes = {
   cellClassName: PropTypes.string,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  closestDueDate: PropTypes.instanceOf(Date),
   canEdit: PropTypes.bool.isRequired,
   onTaskUpdate: PropTypes.func.isRequired,
   onTaskDuplicate: PropTypes.func.isRequired,
@@ -68,6 +85,7 @@ TasksCell.propTypes = {
 
 TasksCell.defaultProps = {
   cellClassName: '',
+  closestDueDate: undefined,
 };
 
 export default TasksCell;

@@ -6,16 +6,22 @@ import { BoardMembershipRoles } from '../../constants/Enums';
 import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
-const mapStateToProps = (state, { id }) => {
-  const allBoardMemberships = selectors.selectBoardAndTaskMembershipsByCardId(state, id);
-  const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
-  const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
-  const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+const mapStateToProps = () => {
+  const selectClosestDueDateByCardId = selectors.makeSelectClosestTaskDueDateByCardId();
 
-  return {
-    allBoardMemberships,
-    boardMemberships,
-    canEdit: isCurrentUserEditor,
+  return (state, { id }) => {
+    const allBoardMemberships = selectors.selectBoardAndTaskMembershipsByCardId(state, id);
+    const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+    const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
+    const closestDueDate = selectClosestDueDateByCardId(state, id);
+    const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+
+    return {
+      allBoardMemberships,
+      boardMemberships,
+      closestDueDate,
+      canEdit: isCurrentUserEditor,
+    };
   };
 };
 

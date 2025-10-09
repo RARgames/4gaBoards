@@ -62,6 +62,8 @@ const mapStateToProps = (state) => {
     isCurrentUserEditorOrCanComment = isCurrentUserEditor || currentUserMembership.canComment;
   }
   const url = selectors.selectUrlForCard(state, id);
+  const closestTaskDueDate = selectors.selectClosestTaskDueDateByCardId(state, id);
+  const closestDueDate = selectors.selectClosestDueDateByCardId(state, id);
 
   return {
     name,
@@ -104,6 +106,8 @@ const mapStateToProps = (state) => {
     canEditAllCommentActivities: isCurrentUserManager,
     commentMode,
     url,
+    closestTaskDueDate,
+    closestDueDate,
     createdAt,
     createdBy,
     updatedAt,

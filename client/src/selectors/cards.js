@@ -93,6 +93,57 @@ export const makeSelectTasksByCardId = () =>
 
 export const selectTasksByCardId = makeSelectTasksByCardId();
 
+export const makeSelectClosestTaskDueDateByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Card }, id) => {
+      const cardModel = Card.withId(id);
+
+      if (!cardModel) {
+        return cardModel;
+      }
+
+      return (
+        cardModel
+          .getOrderedTasksQuerySet()
+          .toRefArray()
+          .filter((t) => !t.isCompleted && t.dueDate)
+          .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0]?.dueDate ?? undefined
+      );
+    },
+  );
+
+export const selectClosestTaskDueDateByCardId = makeSelectClosestTaskDueDateByCardId();
+
+export const makeSelectClosestDueDateByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Card }, id) => {
+      const cardModel = Card.withId(id);
+
+      if (!cardModel) {
+        return cardModel;
+      }
+
+      const cardDueTime = cardModel.dueDate ? new Date(cardModel.dueDate).getTime() : undefined;
+      const taskDueTimes = cardModel
+        .getOrderedTasksQuerySet()
+        .toRefArray()
+        .filter((t) => !t.isCompleted && t.dueDate)
+        .map((t) => new Date(t.dueDate).getTime());
+
+      const allDueTimes = cardDueTime !== undefined ? [cardDueTime, ...taskDueTimes] : taskDueTimes;
+
+      if (allDueTimes.length === 0) return undefined;
+
+      return new Date(Math.min(...allDueTimes));
+    },
+  );
+
+export const selectClosestDueDateByCardId = makeSelectClosestDueDateByCardId();
+
 export const makeSelectLastCommentActivityIdByCardId = () =>
   createSelector(
     orm,
@@ -496,6 +547,10 @@ export default {
   selectLabelsByCardId,
   makeSelectTasksByCardId,
   selectTasksByCardId,
+  makeSelectClosestTaskDueDateByCardId,
+  selectClosestTaskDueDateByCardId,
+  makeSelectClosestDueDateByCardId,
+  selectClosestDueDateByCardId,
   makeSelectLastCommentActivityIdByCardId,
   selectLastCommentActivityIdByCardId,
   makeSelectLastActivityIdByCardId,

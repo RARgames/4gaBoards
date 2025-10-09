@@ -100,6 +100,7 @@ module.exports = {
         attachmentsCount: true,
         commentCount: true,
         dueDate: true,
+        closestDueDate: true,
         timer: true,
         tasks: true,
         createdAt: false,
