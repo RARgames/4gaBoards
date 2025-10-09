@@ -41,6 +41,7 @@
     text-overflow: ellipsis;
     text-transform: uppercase;
     width: 100%;
+    cursor: pointer;
   }
 
   .name {
@@ -83,6 +84,7 @@
     top: 50%;
     width: 112px;
     overflow: hidden;
+    cursor: pointer;
   }
 
   .imageSelected {
