@@ -26,16 +26,8 @@ module.exports.http = {
      * (This Sails app's routes are handled by the "router" middleware below.)
      *
      */
-    // order: [
-    //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
-    //   'compress',
-    //   'poweredBy',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    // ],
+    order: ['cookieParser', 'session', 'bodyParser', 'compress', 'poweredBy', 'router', 'www', 'favicon'],
+
     /**
      *
      * The body parser that will handle incoming multipart HTTP requests.

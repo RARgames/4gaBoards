@@ -199,6 +199,12 @@ const Login = React.memo(
                       {t('common.continueWith', { provider: 'Microsoft' })}
                     </Button>
                   )}
+                  {ssoAvailable[SsoTypes.OIDC] && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'OIDC' })} onClick={() => onAuthenticateSso(SsoTypes.OIDC)} className={s.button}>
+                      <Icon type={IconType.Key} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'OIDC' })}
+                    </Button>
+                  )}
                 </div>
               </>
             )}
