@@ -44,8 +44,8 @@ const List = React.memo(
     const [headerNameElement, setHeaderNameElement] = useState();
     const [headerNameHeight] = useResizeObserverSize(headerNameElement, ResizeObserverSizeTypes.CLIENT_HEIGHT);
     const [listOuterWrapperElement, setListOuterWrapperElement] = useState();
-    const [listOuterWrapperScrollable] = useResizeObserverSize(listOuterWrapperElement, ResizeObserverSizeTypes.SCROLLABLE);
-
+    const [rawListOuterWrapperScrollable] = useResizeObserverSize(listOuterWrapperElement, ResizeObserverSizeTypes.SCROLLABLE);
+    const [listOuterWrapperScrollable, setListOuterWrapperScrollable] = useState(false);
     const nameEdit = useRef(null);
     const listWrapper = useRef(null);
 
@@ -118,6 +118,21 @@ const List = React.memo(
         listWrapper.current.style.maxHeight = `calc(100vh - ${wrapperOffset}px - (${headerOffset}px - ${styleVars.headerNameDefaultHeight}px)`;
       }
     }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpen, styleVars, isCollapsed]);
+
+    // FIXME: Temporary workaround for scrollbar flicker
+    useEffect(() => {
+      if (!listOuterWrapperElement) return;
+
+      const el = listOuterWrapperElement;
+      const { scrollHeight, clientHeight } = el;
+      const diff = scrollHeight - clientHeight;
+
+      setListOuterWrapperScrollable((prev) => {
+        if (diff > 15) return true;
+        if (diff < 5) return false;
+        return prev;
+      });
+    }, [rawListOuterWrapperScrollable, listOuterWrapperElement]);
 
     const cardsCountText = () => {
       return isFiltered ? `${filteredCardIds.length} ${t('common.ofCards', { count: cardIds.length })}` : `${t('common.cards', { count: cardIds.length })}`;

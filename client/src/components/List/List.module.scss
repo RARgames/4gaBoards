@@ -39,10 +39,12 @@
   .cardsInnerWrapper {
     padding-top: 3px;
     width: 272px;
+    overflow-y: hidden;
   }
 
   .cardsInnerWrapperScrollable {
     width: 269px;
+    overflow-y: auto;
   }
 
   .cardsOuterWrapper {
