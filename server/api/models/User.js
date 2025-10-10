@@ -86,6 +86,17 @@ module.exports = {
       columnName: 'sso_microsoft_email',
       allowNull: true,
     },
+    ssoOidcId: {
+      type: 'string',
+      columnName: 'sso_oidc_id',
+      allowNull: true,
+    },
+    ssoOidcEmail: {
+      type: 'string',
+      isEmail: true,
+      columnName: 'sso_oidc_email',
+      allowNull: true,
+    },
     lastLogin: {
       type: 'ref',
       columnName: 'last_login',

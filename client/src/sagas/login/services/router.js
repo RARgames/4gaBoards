@@ -50,6 +50,10 @@ export function* handleLocationChange() {
       yield call(authenticateSsoCallback, SsoTypes.MICROSOFT);
       break;
     }
+    case Paths.OIDC_CALLBACK: {
+      yield call(authenticateSsoCallback, SsoTypes.OIDC);
+      break;
+    }
     default:
   }
 }

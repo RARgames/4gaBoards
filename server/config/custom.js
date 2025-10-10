@@ -37,16 +37,19 @@ module.exports.custom = {
     google: `${process.env.BASE_URL}/auth/google`,
     github: `${process.env.BASE_URL}/auth/github`,
     microsoft: `${process.env.BASE_URL}/auth/microsoft`,
+    oidc: `${process.env.BASE_URL}/auth/oidc`,
   },
   ssoClientIds: {
     google: process.env.GOOGLE_CLIENT_ID,
     github: process.env.GITHUB_CLIENT_ID,
     microsoft: process.env.MICROSOFT_CLIENT_ID,
+    oidc: process.env.OIDC_CLIENT_ID,
   },
   ssoAvailable: {
     google: !!process.env.GOOGLE_CLIENT_ID,
     github: !!process.env.GITHUB_CLIENT_ID,
     microsoft: !!process.env.MICROSOFT_CLIENT_ID,
+    oidc: !!process.env.OIDC_CLIENT_ID,
   },
 
   demoMode: process.env.DEMO_MODE === 'true',
