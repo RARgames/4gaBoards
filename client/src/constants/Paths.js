@@ -6,6 +6,7 @@ const REGISTER = `${Config.BASE_PATH}/register`;
 const GOOGLE_CALLBACK = `${Config.BASE_PATH}/google-callback`;
 const GITHUB_CALLBACK = `${Config.BASE_PATH}/github-callback`;
 const MICROSOFT_CALLBACK = `${Config.BASE_PATH}/microsoft-callback`;
+const OIDC_CALLBACK = `${Config.BASE_PATH}/oidc-callback`;
 const PROJECTS = `${Config.BASE_PATH}/projects/:id`;
 const BOARDS = `${Config.BASE_PATH}/boards/:id`;
 const CARDS = `${Config.BASE_PATH}/cards/:id`;
@@ -26,6 +27,7 @@ export default {
   GOOGLE_CALLBACK,
   GITHUB_CALLBACK,
   MICROSOFT_CALLBACK,
+  OIDC_CALLBACK,
   PROJECTS,
   BOARDS,
   CARDS,

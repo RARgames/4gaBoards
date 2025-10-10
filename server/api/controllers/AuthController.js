@@ -78,4 +78,48 @@ module.exports = {
       }
     })(req, res, next);
   },
+
+  oidc(req, res, next) {
+    passport.authenticate('oidc')(req, res, next);
+  },
+
+  oidcCallback(req, res, next) {
+    passport.authenticate('oidc', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
+      if (err) {
+        sails.log.error('OIDC callback error:', err);
+        const errorCode = err.code || err.message || 'unknown';
+        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=${encodeURIComponent(errorCode)}`);
+        return;
+      }
+
+      if (!profile) {
+        sails.log.error('OIDC callback: No profile returned');
+        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=no_profile`);
+        return;
+      }
+
+      try {
+        sails.log.info('OIDC callback: Creating/getting user', {
+          profileId: profile.id,
+          email: profile.emails?.[0]?.value,
+          username: profile.username,
+          isAdmin: profile.isAdmin,
+        });
+        const user = await sails.helpers.users.getCreateOneForOidcSso.with({
+          id: profile.id,
+          email: profile.emails[0].value,
+          displayName: profile.displayName,
+          username: profile.username,
+          isAdmin: profile.isAdmin,
+        });
+        const accessToken = sails.helpers.utils.createToken(user.id);
+        await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
+        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?accessToken=${accessToken}`);
+      } catch (error) {
+        sails.log.error('OIDC callback: Error creating user or session', error);
+        const errorCode = error.code || error.message || 'unknown';
+        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=${encodeURIComponent(errorCode)}`);
+      }
+    })(req, res, next);
+  },
 };

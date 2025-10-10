@@ -15,6 +15,8 @@ module.exports.routes = {
   'GET /auth/github/callback': 'AuthController.githubCallback',
   'GET /auth/microsoft': 'AuthController.microsoft',
   'GET /auth/microsoft/callback': 'AuthController.microsoftCallback',
+  'GET /auth/oidc': 'AuthController.oidc',
+  'GET /auth/oidc/callback': 'AuthController.oidcCallback',
 
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
