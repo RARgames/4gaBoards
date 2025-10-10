@@ -75,6 +75,7 @@ export const SsoTypes = {
   GOOGLE: 'google',
   GITHUB: 'github',
   MICROSOFT: 'microsoft',
+  OIDC: 'oidc',
 };
 
 export const PreferredFonts = {
