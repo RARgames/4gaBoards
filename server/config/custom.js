@@ -46,10 +46,10 @@ module.exports.custom = {
     oidc: process.env.OIDC_CLIENT_ID,
   },
   ssoAvailable: {
-    google: !!process.env.GOOGLE_CLIENT_ID,
-    github: !!process.env.GITHUB_CLIENT_ID,
-    microsoft: !!process.env.MICROSOFT_CLIENT_ID,
-    oidc: !!process.env.OIDC_CLIENT_ID,
+    google: !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET,
+    github: !!process.env.GITHUB_CLIENT_ID && !!process.env.GITHUB_CLIENT_SECRET,
+    microsoft: !!process.env.MICROSOFT_CLIENT_ID && !!process.env.MICROSOFT_CLIENT_SECRET,
+    oidc: !!process.env.OIDC_CLIENT_ID && !!process.env.OIDC_CLIENT_SECRET && !!process.env.OIDC_AUTHORIZATION_URL && !!process.env.OIDC_TOKEN_URL && !!process.env.OIDC_USER_INFO_URL,
   },
 
   demoMode: process.env.DEMO_MODE === 'true',
