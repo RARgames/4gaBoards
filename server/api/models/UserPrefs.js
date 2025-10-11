@@ -142,6 +142,7 @@ module.exports = {
         ssoGoogleEmail: false,
         ssoGithubUsername: false,
         ssoMicrosoftEmail: false,
+        ssoOidcEmail: false,
         lastLogin: true,
         createdAt: false,
         createdBy: false,
