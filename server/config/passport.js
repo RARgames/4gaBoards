@@ -41,11 +41,13 @@ if (process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET) {
         callbackURL: `${process.env.BASE_URL}/auth/microsoft/callback`,
         scope: ['openid', 'profile', 'email'],
       },
-      (accessToken, refreshToken, profile, done) => done(null, profile),
+      (accessToken, refreshToken, profile, done) => {
+        done(null, profile);
+      },
     ),
   );
 }
-if (process.env.OIDC_CLIENT_ID && process.env.OIDC_CLIENT_SECRET && process.env.OIDC_AUTHORIZATION_URL) {
+if (process.env.OIDC_CLIENT_ID && process.env.OIDC_CLIENT_SECRET && process.env.OIDC_AUTHORIZATION_URL && process.env.OIDC_TOKEN_URL && process.env.OIDC_USER_INFO_URL) {
   passport.use(
     'oidc',
     new OIDCStrategy(
