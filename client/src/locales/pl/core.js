@@ -367,6 +367,7 @@ export default {
       ssoGithubUsername: 'Użytkownik GitHub',
       ssoGoogleEmail: 'Email Google',
       ssoMicrosoftEmail: 'Email Microsoft',
+      ssoOidcEmail: 'Email OIDC',
       startTimer: 'Włącz stoper',
       stopTimer: 'Wyłącz stoper',
       subscribed: 'Zasubskrybowano',
