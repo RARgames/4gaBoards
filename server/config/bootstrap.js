@@ -10,10 +10,6 @@
  */
 
 module.exports.bootstrap = async () => {
-  // Load passport strategies
-  // eslint-disable-next-line global-require
-  require('./passport');
-
   // By convention, this is a good place to set up fake data during development.
   //
   // For example:
