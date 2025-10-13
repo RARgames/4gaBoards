@@ -36,6 +36,11 @@ module.exports = {
       defaultsTo: false,
       columnName: 'sync_sso_data_on_auth',
     },
+    syncSsoAdminOnAuth: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'sync_sso_admin_on_auth',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

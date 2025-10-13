@@ -46,24 +46,27 @@ module.exports = {
     }
 
     const email = inputs.email.toLowerCase();
+    const name = inputs.displayName || email.split('@')[0];
     const isUsernameAvailable = inputs.username ? !(await sails.helpers.users.getOne({ username: inputs.username.toLowerCase() })) : false;
     let user = await sails.helpers.users.getOne({ ssoOidcId: inputs.id });
     // Default SSO login
     if (user) {
       if (core.syncSsoDataOnAuth) {
-        const updatedValues = {
-          ssoOidcId: inputs.id,
-          ssoOidcEmail: email,
-        };
+        const updatedValues = {};
+        if (email !== user.ssoOidcEmail) {
+          updatedValues.ssoOidcEmail = email;
+        }
         if (isUsernameAvailable && inputs.username !== user.username) {
           updatedValues.username = inputs.username;
         }
-        if (typeof inputs.isAdmin === 'boolean' && inputs.isAdmin !== user.isAdmin) {
+        if (user.name !== name) {
+          updatedValues.name = name;
+        }
+        if (core.syncSsoAdminOnAuth && typeof inputs.isAdmin === 'boolean' && inputs.isAdmin !== user.isAdmin) {
           updatedValues.isAdmin = inputs.isAdmin;
         }
-
-        if (Object.keys(updatedValues).length > 2) {
-          sails.log.info('OIDC: Updating existing user account', user.id, user.name);
+        if (Object.keys(updatedValues).length > 0) {
+          sails.log.info('OIDC SSO: Updating existing user account', { userId: user.id, values: updatedValues });
           user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
         }
       }
@@ -72,21 +75,23 @@ module.exports = {
     user = await sails.helpers.users.getOne({ email });
     // First time SSO login
     if (user) {
+      const updatedValues = {
+        ssoOidcId: inputs.id,
+        ssoOidcEmail: email,
+      };
       if (core.syncSsoDataOnAuth) {
-        const updatedValues = {
-          ssoOidcId: inputs.id,
-          ssoOidcEmail: email,
-        };
         if (isUsernameAvailable && inputs.username !== user.username) {
           updatedValues.username = inputs.username;
         }
-        if (typeof inputs.isAdmin === 'boolean' && inputs.isAdmin !== user.isAdmin) {
+        if (user.name !== name) {
+          updatedValues.name = name;
+        }
+        if (core.syncSsoAdminOnAuth && typeof inputs.isAdmin === 'boolean' && inputs.isAdmin !== user.isAdmin) {
           updatedValues.isAdmin = inputs.isAdmin;
         }
-
-        sails.log.info('OIDC: Linking existing user account', user.id, user.name);
-        user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
       }
+      sails.log.info('OIDC SSO: Linking existing user account', { userId: user.id, values: updatedValues });
+      user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
       return user;
     }
     // Register new user
@@ -101,12 +106,12 @@ module.exports = {
       email,
       ssoOidcId: inputs.id,
       ssoOidcEmail: email,
-      name: inputs.displayName || email.split('@')[0],
+      name,
       username: isUsernameAvailable ? inputs.username?.toLowerCase() : undefined,
-      isAdmin: core.syncSsoDataOnAuth && typeof inputs.isAdmin === 'boolean' ? inputs.isAdmin : false,
+      isAdmin: core.syncSsoAdminOnAuth && typeof inputs.isAdmin === 'boolean' ? inputs.isAdmin : false,
     };
     user = await sails.helpers.users.createOne.with({ values: newValues });
-    sails.log.info('OIDC: Created new user account', user.id, user.name);
+    sails.log.info('OIDC SSO: Created new user account', user.id, user.name);
 
     if (user) {
       return user;

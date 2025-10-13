@@ -13,6 +13,7 @@ export default class extends BaseModel {
     ssoRegistrationEnabled: attr(),
     projectCreationAllEnabled: attr(),
     syncSsoDataOnAuth: attr(),
+    syncSsoAdminOnAuth: attr(),
     demoMode: attr(),
     createdAt: attr(),
     createdById: fk({
