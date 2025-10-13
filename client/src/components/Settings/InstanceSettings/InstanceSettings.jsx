@@ -10,7 +10,7 @@ import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './InstanceSettings.module.scss';
 
-const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, demoMode, onCoreSettingsUpdate }) => {
+const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, demoMode, onCoreSettingsUpdate }) => {
   const [t] = useTranslation();
   const tableRef = useRef(null);
 
@@ -37,6 +37,12 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
       projectCreationAllEnabled: !projectCreationAllEnabled,
     });
   }, [onCoreSettingsUpdate, projectCreationAllEnabled]);
+
+  const handleSyncSsoDataOnAuthChange = useCallback(() => {
+    onCoreSettingsUpdate({
+      syncSsoDataOnAuth: !syncSsoDataOnAuth,
+    });
+  }, [onCoreSettingsUpdate, syncSsoDataOnAuth]);
 
   const data = useMemo(
     () => [
@@ -72,6 +78,14 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
         currentValue: projectCreationAllEnabled ? t('common.enabled') : t('common.disabled'),
         description: t('common.descriptionProjectCreationAll'),
       },
+      {
+        id: 'syncSsoDataOnAuth',
+        instanceSettings: t('common.syncSsoDataOnAuth'),
+        modifySettings: syncSsoDataOnAuth,
+        modifySettingsProps: { onChange: handleSyncSsoDataOnAuthChange, title: t('common.toggleSyncSsoDataOnAuth') },
+        currentValue: syncSsoDataOnAuth ? t('common.enabled') : t('common.disabled'),
+        description: t('common.descriptionSyncSsoDataOnAuth'),
+      },
     ],
     [
       demoMode,
@@ -79,10 +93,12 @@ const InstanceSettings = React.memo(({ registrationEnabled, localRegistrationEna
       handleProjectCreationAllEnabledChange,
       handleRegistrationEnabledChange,
       handleSsoRegistrationEnabledChange,
+      handleSyncSsoDataOnAuthChange,
       localRegistrationEnabled,
       projectCreationAllEnabled,
       registrationEnabled,
       ssoRegistrationEnabled,
+      syncSsoDataOnAuth,
       t,
     ],
   );
@@ -205,6 +221,7 @@ InstanceSettings.propTypes = {
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
   projectCreationAllEnabled: PropTypes.bool.isRequired,
+  syncSsoDataOnAuth: PropTypes.bool.isRequired,
   demoMode: PropTypes.bool.isRequired,
   onCoreSettingsUpdate: PropTypes.func.isRequired,
 };

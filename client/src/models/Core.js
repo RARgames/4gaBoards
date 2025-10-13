@@ -12,6 +12,7 @@ export default class extends BaseModel {
     localRegistrationEnabled: attr(),
     ssoRegistrationEnabled: attr(),
     projectCreationAllEnabled: attr(),
+    syncSsoDataOnAuth: attr(),
     demoMode: attr(),
     createdAt: attr(),
     createdById: fk({
