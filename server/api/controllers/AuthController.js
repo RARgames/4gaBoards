@@ -1,5 +1,3 @@
-const passport = require('passport');
-
 module.exports = {
   exits: {
     registrationDisabled: {
@@ -14,11 +12,11 @@ module.exports = {
   },
 
   google(req, res, next) {
-    passport.authenticate('google', { scope: ['email'], prompt: 'select_account' })(req, res, next);
+    sails.config.passport.authenticate('google', { scope: ['email'], prompt: 'select_account' })(req, res, next);
   },
 
   googleCallback(req, res, next) {
-    passport.authenticate('google', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
+    sails.config.passport.authenticate('google', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
       if (err) {
         res.redirect(`${sails.config.custom.clientUrl}/google-callback?error=${err.code}`);
         return;
@@ -36,11 +34,11 @@ module.exports = {
   },
 
   github(req, res, next) {
-    passport.authenticate('github', { prompt: 'select_account' })(req, res, next);
+    sails.config.passport.authenticate('github', { prompt: 'select_account' })(req, res, next);
   },
 
   githubCallback(req, res, next) {
-    passport.authenticate('github', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
+    sails.config.passport.authenticate('github', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
       if (err) {
         res.redirect(`${sails.config.custom.clientUrl}/github-callback?error=${err.code}`);
         return;
@@ -58,11 +56,11 @@ module.exports = {
   },
 
   microsoft(req, res, next) {
-    passport.authenticate('microsoft-msal', { prompt: 'login' })(req, res, next);
+    sails.config.passport.authenticate('microsoft-msal', { prompt: 'login' })(req, res, next);
   },
 
   microsoftCallback(req, res, next) {
-    passport.authenticate('microsoft-msal', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
+    sails.config.passport.authenticate('microsoft-msal', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
       if (err) {
         res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?error=${err.code}`);
         return;
@@ -80,11 +78,11 @@ module.exports = {
   },
 
   oidc(req, res, next) {
-    passport.authenticate('oidc')(req, res, next);
+    sails.config.passport.authenticate('oidc')(req, res, next);
   },
 
   oidcCallback(req, res, next) {
-    passport.authenticate('oidc', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
+    sails.config.passport.authenticate('oidc', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
       if (err) {
         sails.log.error('OIDC callback error:', err);
         const errorCode = err.code || err.message || 'unknown';
@@ -99,12 +97,7 @@ module.exports = {
       }
 
       try {
-        sails.log.info('OIDC callback: Creating/getting user', {
-          profileId: profile.id,
-          email: profile.emails?.[0]?.value,
-          username: profile.username,
-          isAdmin: profile.isAdmin,
-        });
+        sails.log.info('OIDC callback: Creating/getting user', { profileId: profile.id, email: profile.emails[0].value, username: profile.username, isAdmin: profile.isAdmin });
         const user = await sails.helpers.users.getCreateOneForOidcSso.with({
           id: profile.id,
           email: profile.emails[0].value,

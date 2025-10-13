@@ -50,6 +50,11 @@ const createMessage = (error) => {
         type: 'warning',
         content: 'common.serverConnectionFailed',
       };
+    case 'noOidcProfileFound':
+      return {
+        type: 'error',
+        content: 'errors.noOidcProfileFound',
+      };
     default:
       return {
         type: 'warning',

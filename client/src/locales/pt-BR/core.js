@@ -506,6 +506,10 @@ export default {
       delete: 'Excluir',
     },
 
+    errors: {
+      noOidcProfileFound: 'Nenhum perfil OIDC encontrado',
+    },
+
     action: {
       addCard_title: 'Adicionar Cartão',
       addCard: 'Adicionar cartão',
