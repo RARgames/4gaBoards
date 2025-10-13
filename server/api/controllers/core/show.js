@@ -24,6 +24,7 @@ module.exports = {
         registrationEnabled: core.registrationEnabled,
         projectCreationAllEnabled: core.projectCreationAllEnabled,
         syncSsoDataOnAuth: core.syncSsoDataOnAuth,
+        syncSsoAdminOnAuth: core.syncSsoAdminOnAuth,
         ssoUrls: sails.config.custom.ssoUrls,
         ssoAvailable: sails.config.custom.ssoAvailable,
         demoMode: sails.config.custom.demoMode,

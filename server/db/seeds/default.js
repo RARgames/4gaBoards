@@ -25,6 +25,7 @@ exports.seed = async (knex) => {
   const ssoRegistrationEnabled = process.env.DEFAULT_SSO_REGISTRATION_ENABLED !== 'false';
   const projectCreationAllEnabled = process.env.DEFAULT_PROJECT_CREATION_ALL !== 'false';
   const syncSsoDataOnAuth = process.env.DEFAULT_SYNC_SSO_DATA_ON_AUTH === 'true';
+  const syncSsoAdminOnAuth = process.env.DEFAULT_SYNC_SSO_ADMIN_ON_AUTH === 'true';
 
   await knex('core')
     .insert({
@@ -34,6 +35,7 @@ exports.seed = async (knex) => {
       ssoRegistrationEnabled,
       projectCreationAllEnabled,
       syncSsoDataOnAuth,
+      syncSsoAdminOnAuth,
       createdAt: date,
       createdById: adminUser.id,
     })
@@ -44,6 +46,7 @@ exports.seed = async (knex) => {
       ssoRegistrationEnabled,
       projectCreationAllEnabled,
       syncSsoDataOnAuth,
+      syncSsoAdminOnAuth,
       updatedAt: date,
       updatedById: adminUser.id,
     });
