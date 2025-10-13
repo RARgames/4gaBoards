@@ -31,6 +31,11 @@ module.exports = {
       defaultsTo: true,
       columnName: 'project_creation_all_enabled',
     },
+    syncSsoDataOnAuth: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'sync_sso_data_on_auth',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

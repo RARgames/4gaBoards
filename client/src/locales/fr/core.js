@@ -146,6 +146,7 @@ export default {
       descriptionProjectCreationAll: 'Activez ou désactivez la création de projets pour tous les utilisateurs. Si vous la désactivez, seuls les administrateurs pourront créer de nouveaux projets.',
       descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
       descriptionSubscribeToMyOwnCards: 'Être abonné à mes propres cartes',
+      descriptionSyncSsoDataOnAuth: "Activer ou désactiver la synchronisation des données utilisateur (y compris l'attribution de nouveaux administrateurs 4ga Boards) depuis le fournisseur SSO lors de l'authentification.", // eslint-disable-line prettier/prettier
       descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.", // eslint-disable-line prettier/prettier
       descriptionUsersSettingsStyle: 'Sélectionnez le style des paramètres des utilisateurs.',
       detailsAttachments_many: 'Cette carte a {{count}} pièces jointes',
@@ -377,6 +378,7 @@ export default {
       supportDevelopment: 'Supporter le développement de 4ga Boards',
       switchToBoardView: 'Passer à la vue du tableau',
       switchToListView: 'Passer à la vue de la liste',
+      syncSsoDataOnAuth: "Synchroniser les données SSO lors de l'authentification",
       taskActions_title: 'Actions de tâche',
       tasks: 'Tâches',
       template: 'Modèle',
@@ -398,6 +400,7 @@ export default {
       toggleSettings: 'Basculer les paramètres',
       toggleSsoUserRegistration: "Basculer l'enregistrement SSO de l'utilisateur",
       toggleSubscribeToMyOwnCards: "Basculer l'abonnement à mes propres cartes",
+      toggleSyncSsoDataOnAuth: "Activer/désactiver la synchronisation des données SSO lors de l'authentification",
       toggleTasks: 'Basculer les tâches',
       toggleUserRegistration: "Basculer l'enregistrement de l'utilisateur",
       toTest: 'À tester',

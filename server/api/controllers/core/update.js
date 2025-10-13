@@ -21,6 +21,9 @@ module.exports = {
     projectCreationAllEnabled: {
       type: 'boolean',
     },
+    syncSsoDataOnAuth: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -46,7 +49,7 @@ module.exports = {
     if (!core) {
       throw Errors.CORE_NOT_FOUND;
     }
-    const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled']);
+    const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled', 'syncSsoDataOnAuth']);
 
     core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values });
     const coreItem = {

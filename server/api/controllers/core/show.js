@@ -23,6 +23,7 @@ module.exports = {
         localRegistrationEnabled: core.localRegistrationEnabled,
         registrationEnabled: core.registrationEnabled,
         projectCreationAllEnabled: core.projectCreationAllEnabled,
+        syncSsoDataOnAuth: core.syncSsoDataOnAuth,
         ssoUrls: sails.config.custom.ssoUrls,
         ssoAvailable: sails.config.custom.ssoAvailable,
         demoMode: sails.config.custom.demoMode,

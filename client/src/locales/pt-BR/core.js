@@ -140,6 +140,7 @@ export default {
       descriptionProjectCreationAll: 'Ative ou desative a criação de projetos para todos os usuários. Se você desativar, apenas administradores poderão criar novos projetos.',
       descriptionSsoRegistration: 'Habilita ou desabilita o registro de usuários por SSO. Esse método de registro permite que usuários criem uma conta por meiode contas externas, por ex. Contas Google.',
       descriptionSubscribeToMyOwnCards: 'Automaticamente se inscrever para os cartões criados por mim.',
+      descriptionSyncSsoDataOnAuth: 'Ative ou desative a sincronização de dados do usuário (incluindo a atribuição de novos administradores do 4ga Boards) do provedor SSO durante a autenticação.',
       descriptionUserRegistration: 'Habilita ou desabilita todos os métodos de registro de usuário. Se você desabilitar todos os métodos de registro, apenas administradores serão capazes de criar novos usuários.', /* eslint-disable-line prettier/prettier */
       descriptionUsersSettingsStyle: 'Selecione o estilo dos parâmetros de usuários.',
       detailsAttachments_one: 'Este cartão tem {{count}} anexo',
@@ -361,6 +362,7 @@ export default {
       supportDevelopment: 'Apoiar o Desenvolvimento do 4ga Boards',
       switchToBoardView: 'Mudar para Visualização de Painel',
       switchToListView: 'Mudar para Visualização de Lista',
+      syncSsoDataOnAuth: 'Sincronizar dados SSO na autenticação',
       taskActions_title: 'Ações da Tarefa',
       tasks: 'Tarefas',
       template: 'Template',
@@ -382,6 +384,7 @@ export default {
       toggleSettings: 'Alternar Configurações',
       toggleSsoUserRegistration: 'Alternar Registro de Usuários por SSO',
       toggleSubscribeToMyOwnCards: 'Alternar inscrição para meus próprios cartões',
+      toggleSyncSsoDataOnAuth: 'Alternar sincronização de dados SSO na autenticação',
       toggleTasks: 'Alternar Tarefas',
       toggleUserRegistration: 'Alternar Registro de Usuários',
       toTest: 'Para Teste',
