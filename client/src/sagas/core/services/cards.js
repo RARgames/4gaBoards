@@ -15,12 +15,12 @@ export const registerDescriptionOpenHandler = (fn) => {
   descriptionOpenHandler = fn;
 };
 
-export function* createCard(listId, data, autoOpen) {
+export function* createCard(listId, data, autoOpen, index) {
   const { boardId } = yield select(selectors.selectListById, listId);
 
   const nextData = {
     ...data,
-    position: yield select(selectors.selectNextCardPosition, listId),
+    position: yield select(selectors.selectNextCardPosition, listId, index),
   };
 
   const localId = yield call(createLocalId);

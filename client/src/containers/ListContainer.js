@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
     {
       onUpdate: (data) => entryActions.updateList(id, data),
       onDelete: () => entryActions.deleteList(id),
-      onCardCreate: (data, autoOpen) => entryActions.createCard(id, data, autoOpen),
+      onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
     },
     dispatch,
   );

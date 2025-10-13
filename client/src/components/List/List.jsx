@@ -40,6 +40,7 @@ const List = React.memo(
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
+    const [addCardAtTop, setAddCardAtTop] = useState(false);
     const [nameEditHeight, setNameEditHeight] = useState(0);
     const [headerNameElement, setHeaderNameElement] = useState();
     const [headerNameHeight] = useResizeObserverSize(headerNameElement, ResizeObserverSizeTypes.CLIENT_HEIGHT);
@@ -81,11 +82,13 @@ const List = React.memo(
     );
 
     const handleAddCardClick = useCallback(() => {
+      setAddCardAtTop(false);
       setIsAddCardOpen(true);
     }, []);
 
     const handleAddCardClose = useCallback(() => {
       setIsAddCardOpen(false);
+      setAddCardAtTop(false);
     }, []);
 
     const handleNameEdit = useCallback(() => {
@@ -97,8 +100,20 @@ const List = React.memo(
     }, []);
 
     const handleCardAdd = useCallback(() => {
+      setAddCardAtTop(true);
       setIsAddCardOpen(true);
     }, []);
+
+    const handleCardCreate = useCallback(
+      (data, autoOpen) => {
+        if (addCardAtTop) {
+          onCardCreate(data, autoOpen, 0);
+        } else {
+          onCardCreate(data, autoOpen);
+        }
+      },
+      [onCardCreate, addCardAtTop],
+    );
 
     const handleNameEditHeightChange = useCallback((height) => {
       setNameEditHeight(height);
@@ -106,9 +121,13 @@ const List = React.memo(
 
     useEffect(() => {
       if (isAddCardOpen && listWrapper.current) {
-        listWrapper.current.scrollTop = listWrapper.current.scrollHeight;
+        if (addCardAtTop) {
+          listWrapper.current.scrollTop = 0;
+        } else {
+          listWrapper.current.scrollTop = listWrapper.current.scrollHeight;
+        }
       }
-    }, [filteredCardIds, isAddCardOpen]);
+    }, [filteredCardIds, isAddCardOpen, addCardAtTop]);
 
     useEffect(() => {
       if (listWrapper.current) {
@@ -128,11 +147,12 @@ const List = React.memo(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...droppableProps} ref={innerRef}>
             <div className={s.cards}>
+              {canEdit && addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
               {filteredCardIds.map((cardId, cardIndex) => (
                 <CardContainer key={cardId} id={cardId} index={cardIndex} />
               ))}
               {placeholder}
-              {canEdit && <CardAdd isOpen={isAddCardOpen} onCreate={onCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
+              {canEdit && !addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
             </div>
           </div>
         )}
