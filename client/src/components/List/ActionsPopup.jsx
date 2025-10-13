@@ -25,7 +25,8 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
 
   const handleAddCardClick = useCallback(() => {
     onCardAdd();
-  }, [onCardAdd]);
+    onClose();
+  }, [onCardAdd, onClose]);
 
   const handleDeleteClick = useCallback(() => {
     openStep(StepTypes.DELETE);
