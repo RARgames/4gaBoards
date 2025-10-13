@@ -504,6 +504,10 @@ export default {
       delete: 'Delete',
     },
 
+    errors: {
+      noOidcProfileFound: 'No OIDC profile found',
+    },
+
     action: {
       addCard_title: 'Add Card',
       addCard: 'Add card',

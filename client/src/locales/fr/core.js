@@ -522,6 +522,10 @@ export default {
       delete: 'Supprimer',
     },
 
+    errors: {
+      noOidcProfileFound: 'Aucun profil OIDC trouvé',
+    },
+
     action: {
       addCard_title: 'Ajouter une carte',
       addCard: 'Ajouter une carte',

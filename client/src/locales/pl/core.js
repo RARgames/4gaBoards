@@ -520,6 +520,10 @@ export default {
       delete: 'Usuń',
     },
 
+    errors: {
+      noOidcProfileFound: 'Nie znaleziono profilu OIDC',
+    },
+
     action: {
       addCard_title: 'Dodaj kartę',
       addCard: 'Dodaj kartę',

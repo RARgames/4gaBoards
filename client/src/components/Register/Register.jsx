@@ -63,6 +63,11 @@ const createMessage = (error) => {
         type: 'error',
         content: 'common.policyNotAccepted',
       };
+    case 'noOidcProfileFound':
+      return {
+        type: 'error',
+        content: 'errors.noOidcProfileFound',
+      };
     default:
       return {
         type: 'warning',
