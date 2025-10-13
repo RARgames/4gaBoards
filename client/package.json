@@ -91,7 +91,7 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.93.2",
     "sass-loader": "^16.0.5",
-    "semver": "^7.7.2",
+    "semver": "^7.7.3",
     "socket.io-client": "^4.8.1",
     "source-map-loader": "^5.0.0",
     "style-loader": "^4.0.0",
