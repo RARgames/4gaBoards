@@ -77,7 +77,7 @@
     "react-photoswipe-gallery": "^4.0.0",
     "react-redux": "^9.2.0",
     "react-refresh": "^0.18.0",
-    "react-router": "^7.9.3",
+    "react-router": "^7.9.4",
     "react-textarea-autosize": "^8.5.9",
     "redux": "^5.0.1",
     "redux-logger": "^3.0.6",
