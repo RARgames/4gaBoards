@@ -49,7 +49,13 @@ module.exports.custom = {
     google: !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET,
     github: !!process.env.GITHUB_CLIENT_ID && !!process.env.GITHUB_CLIENT_SECRET,
     microsoft: !!process.env.MICROSOFT_CLIENT_ID && !!process.env.MICROSOFT_CLIENT_SECRET,
-    oidc: !!process.env.OIDC_CLIENT_ID && !!process.env.OIDC_CLIENT_SECRET && !!process.env.OIDC_AUTHORIZATION_URL && !!process.env.OIDC_TOKEN_URL && !!process.env.OIDC_USER_INFO_URL,
+    oidc:
+      !!process.env.OIDC_CLIENT_ID &&
+      !!process.env.OIDC_CLIENT_SECRET &&
+      !!process.env.OIDC_AUTHORIZATION_URL &&
+      !!process.env.OIDC_TOKEN_URL &&
+      !!process.env.OIDC_USER_INFO_URL &&
+      !!process.env.OIDC_STATE_SECRET,
   },
 
   demoMode: process.env.DEMO_MODE === 'true',

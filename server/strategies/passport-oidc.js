@@ -1,11 +1,15 @@
-const { Strategy } = require('passport-strategy');
-
 /**
  * Custom OIDC (OpenID Connect) authentication strategy for Passport.js
  * Implements stateless OAuth2 authorization code flow compatible with JWT-based authentication.
  *
  * Supports any OIDC-compliant provider (Authentik, Keycloak, Auth0, Okta, etc.)
  */
+
+const { Strategy } = require('passport-strategy');
+const jwt = require('jsonwebtoken');
+const { checkOidcAdminStatus } = require('../utils/checkOidcAdminStatus');
+const { validateOidcUsername } = require('../utils/validateOidcUsername');
+
 class OIDCStrategy extends Strategy {
   /**
    * Creates a new OIDC strategy instance
@@ -37,13 +41,13 @@ class OIDCStrategy extends Strategy {
    * Determines whether to initiate auth flow or handle callback
    * @param {Object} req - Express request object
    */
-  authenticate(req) {
-    if (req.query.code) {
+  authenticate(req, res, next) {
+    if (req.query && req.query.code) {
       // Handle OAuth2 callback with authorization code
-      this.handleCallback(req);
+      this.handleCallback(req, res, next);
     } else {
       // Initiate OAuth2 authorization code flow
-      this.startAuth();
+      this.startAuth(req, res, next);
     }
   }
 
@@ -52,9 +56,17 @@ class OIDCStrategy extends Strategy {
    * Redirects user to OIDC provider's authorization endpoint
    */
   startAuth() {
-    const state = Math.random().toString(36).substring(2);
-    const authURL = `${this.authorizationURL}?client_id=${this.clientID}&redirect_uri=${encodeURIComponent(this.callbackURL)}&scope=${encodeURIComponent(this.scope.join(' '))}&response_type=code&state=${state}`;
-    this.redirect(authURL);
+    const state = jwt.sign({ nonce: crypto.randomUUID() }, process.env.OIDC_STATE_SECRET, { expiresIn: '5m' });
+    const authURL = new URL(this.authorizationURL);
+    authURL.search = new URLSearchParams({
+      client_id: this.clientID,
+      redirect_uri: this.callbackURL,
+      scope: this.scope.join(' '),
+      response_type: 'code',
+      state,
+    });
+
+    this.redirect(authURL.toString());
   }
 
   /**
@@ -64,6 +76,11 @@ class OIDCStrategy extends Strategy {
    */
   async handleCallback(req) {
     try {
+      // Verify state signature and nonce
+      if (!req.query.state) throw new Error('Missing state parameter');
+      const decoded = jwt.verify(req.query.state, process.env.OIDC_STATE_SECRET);
+      if (!decoded?.nonce) throw new Error('Missing nonce in state');
+
       // Exchange authorization code for access token
       const tokenResponse = await fetch(this.tokenURL, {
         method: 'POST',
@@ -78,9 +95,11 @@ class OIDCStrategy extends Strategy {
           client_secret: this.clientSecret,
         }),
       });
-
+      if (!tokenResponse.ok) {
+        sails.log.error('OIDC: Token endpoint error', await tokenResponse.text());
+        return this.fail({ message: 'Failed to fetch token' });
+      }
       const tokenData = await tokenResponse.json();
-
       if (!tokenData.access_token) {
         sails.log.error('OIDC: Failed to get access token', tokenData);
         return this.fail({ message: 'Failed to get access token' });
@@ -92,63 +111,22 @@ class OIDCStrategy extends Strategy {
           Authorization: `Bearer ${tokenData.access_token}`,
         },
       });
-
       const userinfo = await userResponse.json();
-      sails.log.info('OIDC: User info received (full data for debugging):', JSON.stringify(userinfo, null, 2));
-
-      /**
-       * Determines if user should have admin privileges
-       * Checks multiple OIDC provider patterns (case-insensitive):
-       * - Direct flags: is_admin, is_superuser
-       * - Groups array: any group containing "admin" or "superuser"
-       * - Roles array: any role containing "admin" or "superuser"
-       * @param {Object} user - User info from OIDC provider
-       * @returns {boolean} True if user should be admin
-       */
-      const checkAdminStatus = (user) => {
-        // Direct boolean flags
-        if (user.is_superuser || user.is_admin) return true;
-
-        // Check groups (case-insensitive, matches "admins", "Admins", "authentik Admins", etc.)
-        if (user.groups && Array.isArray(user.groups)) {
-          const hasAdminGroup = user.groups.some((group) => {
-            const groupLower = String(group).toLowerCase();
-            return groupLower.includes('admin') || groupLower.includes('superuser');
-          });
-          if (hasAdminGroup) return true;
-        }
-
-        // Check roles (case-insensitive)
-        if (user.roles && Array.isArray(user.roles)) {
-          const hasAdminRole = user.roles.some((role) => {
-            const roleLower = String(role).toLowerCase();
-            return roleLower.includes('admin') || roleLower.includes('superuser');
-          });
-          if (hasAdminRole) return true;
-        }
-
-        return false;
-      };
+      sails.log.info('OIDC: User info received:', JSON.stringify(userinfo, null, 2));
 
       // Convert to profile format expected by passport
       const profile = {
-        id: userinfo.sub || userinfo.id,
-        displayName: userinfo.name || userinfo.preferred_username || userinfo.email,
-        username: userinfo.preferred_username || userinfo.nickname || null,
+        id: userinfo.sub,
+        displayName: userinfo.name || userinfo.preferred_username,
+        username: validateOidcUsername(userinfo.preferred_username) || validateOidcUsername(userinfo.nickname) || null,
         emails: [{ value: userinfo.email }],
         name: {
           givenName: userinfo.given_name,
           familyName: userinfo.family_name,
         },
-        isAdmin: checkAdminStatus(userinfo),
+        isAdmin: checkOidcAdminStatus(userinfo),
       };
-
-      sails.log.info('OIDC: Profile created', {
-        id: profile.id,
-        username: profile.username,
-        isAdmin: profile.isAdmin,
-        detectedFromGroups: userinfo.groups,
-      });
+      sails.log.info('OIDC: Profile created', { id: profile.id, username: profile.username, isAdmin: profile.isAdmin, detectedFromGroups: userinfo.groups });
 
       // Call verify callback with profile
       this.verify(tokenData.access_token, tokenData.refresh_token, profile, (err, user) => {
