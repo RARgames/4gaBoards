@@ -129,9 +129,6 @@ module.exports = [
         },
       ],
 
-      // Deprecated in favor of react/jsx-sort-props
-      'react/jsx-sort-prop-types': 'off',
-
       // Enforce props alphabetical sorting
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md
       'react/jsx-sort-props': [
@@ -387,11 +384,6 @@ module.exports = [
           beforeClosing: 'never',
         },
       ],
-
-      // Enforce spaces before the closing bracket of self-closing JSX elements
-      // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-space-before-closing.md
-      // Deprecated in favor of jsx-tag-spacing
-      'react/jsx-space-before-closing': ['off', 'always'],
 
       // Prevent usage of Array index in keys
       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
