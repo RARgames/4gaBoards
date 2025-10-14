@@ -132,6 +132,14 @@
     cursor: pointer;
     display: block;
     margin-bottom: 8px;
+    container-type: inline-size;
+  }
+
+  // FIXME: Temporary workaround for scrollbar flicker
+  @container (max-width: 259px) {
+    .cover {
+      margin-bottom: 6.75px;
+    }
   }
 
   .user {
