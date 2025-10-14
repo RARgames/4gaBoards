@@ -99,7 +99,6 @@ async function setupOIDC() {
       ),
     );
     sails.config.custom.ssoAvailable.oidc = true;
-    sails.log.info('OIDC: Strategy configured successfully');
   }
   sails.config.passport = passport;
 }
