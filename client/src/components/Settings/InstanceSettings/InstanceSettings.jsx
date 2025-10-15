@@ -1,9 +1,11 @@
-import React, { useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
 import clsx from 'clsx';
+import uniq from 'lodash/uniq';
 import PropTypes from 'prop-types';
 
+import { useForm } from '../../../hooks';
 import { Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
@@ -11,9 +13,13 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './InstanceSettings.module.scss';
 
 const InstanceSettings = React.memo(
-  ({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, syncSsoAdminOnAuth, demoMode, onCoreSettingsUpdate }) => {
+  ({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, syncSsoAdminOnAuth, demoMode, allowedRegisterDomains, onCoreSettingsUpdate }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
+    const [allowedRegisterDomainsData, handleAllowedRegisterDomainsFieldChange] = useForm(() => ({
+      text: allowedRegisterDomains,
+    }));
+    const [isErrorAllowedRegisterDomains, setIsErrorAllowedRegisterDomains] = useState(false);
 
     const handleRegistrationEnabledChange = useCallback(() => {
       onCoreSettingsUpdate({
@@ -50,6 +56,36 @@ const InstanceSettings = React.memo(
         syncSsoAdminOnAuth: !syncSsoAdminOnAuth,
       });
     }, [onCoreSettingsUpdate, syncSsoAdminOnAuth]);
+
+    const handleAllowedRegisterDomainsSubmit = useCallback(
+      (e) => {
+        const allowedDomains = uniq(
+          e.target.value
+            .split(';')
+            .map((d) => d.trim())
+            .filter(Boolean),
+        );
+        const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i;
+        const isValid = allowedDomains.every((d) => domainRegex.test(d));
+
+        if (!isValid) {
+          setIsErrorAllowedRegisterDomains(true);
+          return;
+        }
+
+        onCoreSettingsUpdate({ allowedRegisterDomains: allowedDomains });
+        handleAllowedRegisterDomainsFieldChange({ target: { name: 'text', value: allowedDomains.join(';') } });
+      },
+      [handleAllowedRegisterDomainsFieldChange, onCoreSettingsUpdate],
+    );
+
+    const handleAllowedRegisterDomainsChange = useCallback(
+      (e) => {
+        setIsErrorAllowedRegisterDomains(false);
+        handleAllowedRegisterDomainsFieldChange(e);
+      },
+      [handleAllowedRegisterDomainsFieldChange],
+    );
 
     const data = useMemo(
       () => [
@@ -101,15 +137,36 @@ const InstanceSettings = React.memo(
           currentValue: syncSsoAdminOnAuth ? t('common.enabled') : t('common.disabled'),
           description: t('common.descriptionSyncSsoAdminOnAuth'),
         },
+        {
+          id: 'allowedRegisterDomains',
+          instanceSettings: t('common.allowedRegisterDomains'),
+          modifySettings: allowedRegisterDomainsData.text,
+          modifySettingsProps: {
+            name: 'text',
+            onSubmit: handleAllowedRegisterDomainsSubmit,
+            onChange: handleAllowedRegisterDomainsChange,
+            disabled: demoMode,
+            placeholder: t('common.allowedRegisterDomainsPlaceholder'),
+            title: t('common.editAllowedRegisterDomains'),
+            isError: isErrorAllowedRegisterDomains,
+          },
+          currentValue: allowedRegisterDomains.length > 0 ? allowedRegisterDomains.replace(/;/g, '\n') : t('common.anyDomain'),
+          description: t('common.descriptionAllowedRegisterDomains'),
+        },
       ],
       [
+        allowedRegisterDomains,
+        allowedRegisterDomainsData.text,
         demoMode,
+        handleAllowedRegisterDomainsChange,
+        handleAllowedRegisterDomainsSubmit,
         handleLocalRegistrationEnabledChange,
         handleProjectCreationAllEnabledChange,
         handleRegistrationEnabledChange,
         handleSsoRegistrationEnabledChange,
         handleSyncSsoAdminOnAuthChange,
         handleSyncSsoDataOnAuthChange,
+        isErrorAllowedRegisterDomains,
         localRegistrationEnabled,
         projectCreationAllEnabled,
         registrationEnabled,
@@ -168,8 +225,8 @@ const InstanceSettings = React.memo(
           header: t('common.currentValue'),
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: false,
-          meta: { headerTitle: t('common.currentValue') },
-          cellProps: { cellClassNameInner: s.cell },
+          meta: { headerTitle: t('common.currentValue'), suggestedSize: 110 },
+          cellProps: { cellClassNameInner: clsx(s.cell, s.currentValueCell) },
         },
         {
           accessorKey: 'description',
@@ -242,6 +299,7 @@ InstanceSettings.propTypes = {
   syncSsoDataOnAuth: PropTypes.bool.isRequired,
   syncSsoAdminOnAuth: PropTypes.bool.isRequired,
   demoMode: PropTypes.bool.isRequired,
+  allowedRegisterDomains: PropTypes.string.isRequired,
   onCoreSettingsUpdate: PropTypes.func.isRequired,
 };
 

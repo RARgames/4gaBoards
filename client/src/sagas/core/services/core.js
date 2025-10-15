@@ -96,10 +96,22 @@ export function* fetchCoreSettingsPublic() {
     projectCreationAllEnabled,
     syncSsoDataOnAuth,
     syncSsoAdminOnAuth,
+    allowedRegisterDomains,
     demoMode,
   } = yield call(api.getCoreSettingsPublic);
   yield put(
-    actions.fetchCoreSettingsPublic(ssoUrls, ssoAvailable, ssoRegistrationEnabled, registrationEnabled, localRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, syncSsoAdminOnAuth, demoMode),
+    actions.fetchCoreSettingsPublic(
+      ssoUrls,
+      ssoAvailable,
+      ssoRegistrationEnabled,
+      registrationEnabled,
+      localRegistrationEnabled,
+      projectCreationAllEnabled,
+      syncSsoDataOnAuth,
+      syncSsoAdminOnAuth,
+      allowedRegisterDomains,
+      demoMode,
+    ),
   );
 }
 

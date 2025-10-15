@@ -55,6 +55,11 @@ const createMessage = (error) => {
         type: 'error',
         content: 'errors.noOidcProfileFound',
       };
+    case 'domainNotAllowed':
+      return {
+        type: 'error',
+        content: 'errors.domainNotAllowed',
+      };
     default:
       return {
         type: 'warning',

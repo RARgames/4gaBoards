@@ -41,6 +41,11 @@ module.exports = {
       defaultsTo: false,
       columnName: 'sync_sso_admin_on_auth',
     },
+    allowedRegisterDomains: {
+      type: 'json',
+      defaultsTo: [],
+      columnName: 'allowed_register_domains',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

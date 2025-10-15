@@ -38,6 +38,9 @@ export default {
       addUser: 'Adicionar Usuário',
       administrator: 'Administrador',
       allChangesWillBeAutomaticallySaved: 'Todas as alterações serão salvas automaticamente assim que a conexão for restabelecida',
+      allowedRegisterDomains: 'Domínios de registro permitidos',
+      allowedRegisterDomainsPlaceholder: 'example.com;example.org',
+      anyDomain: 'Qualquer domínio',
       anyMatch: 'Qualquer Correspondência [Alt+V]',
       areYouSureYouWantToDeleteThisAttachment: 'Você tem certeza de que deseja excluir este anexo?',
       areYouSureYouWantToDeleteThisBoard: 'Você tem certeza de que deseja excluir este painel?',
@@ -129,6 +132,7 @@ export default {
       demoModeGithubExtra: 'Seu apoio acelera o desenvolvimento',
       demoModeGithubMain: 'Estrela 4ga Boards no GitHub!',
       description: 'Descrição',
+      descriptionAllowedRegisterDomains: 'Lista de domínios de email permitidos para registro de usuários, separados por ponto e vírgula. Deixe em branco para permitir qualquer domínio.',
       descriptionCompactSidebar: 'Esta opção faz a barra lateral mais compacta.',
       descriptionDefaultView: 'Selecione a visualização padrão ao abrir um painel.',
       descriptionHideCardModalActivity: 'Ocultar atividades criadas e atualizadas no modal do cartão',
@@ -159,6 +163,7 @@ export default {
       dueDate_title: 'Prazo',
       dueDateSummary: 'A data de prazo mais próxima para uma tarefa a fazer:',
       duplicateTask: 'Duplicar Tarefa',
+      editAllowedRegisterDomains: 'Editar domínios de registro permitidos',
       editAttachment_title: 'Editar Anexo',
       editAttachment: 'Editar Anexo',
       editAttachmentName: 'Editar Nome do Anexo',
@@ -271,7 +276,7 @@ export default {
       moveCard_title: 'Mover Cartão',
       moveCardToList: 'Mover Cartão Para Lista',
       name: 'Nome',
-      newEmail: 'Novo e-mail',
+      newEmail: 'Novo email',
       newPassword: 'Nova senha',
       newUsername: 'Novo nome de usuário',
       nextPage: 'Próxima Página',
@@ -514,6 +519,7 @@ export default {
 
     errors: {
       noOidcProfileFound: 'Nenhum perfil OIDC encontrado',
+      domainNotAllowed: 'Você não pode se registrar com um email deste domínio',
     },
 
     action: {

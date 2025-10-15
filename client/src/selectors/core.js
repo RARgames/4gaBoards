@@ -31,6 +31,7 @@ export const selectCoreSettings = createSelector(orm, ({ Core }) => {
       projectCreationAllEnabled: false,
       syncSsoDataOnAuth: false,
       syncSsoAdminOnAuth: false,
+      allowedRegisterDomains: [],
       ssoUrls,
       ssoAvailable,
       demoMode: false,

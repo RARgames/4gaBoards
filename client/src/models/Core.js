@@ -14,6 +14,7 @@ export default class extends BaseModel {
     projectCreationAllEnabled: attr(),
     syncSsoDataOnAuth: attr(),
     syncSsoAdminOnAuth: attr(),
+    allowedRegisterDomains: attr(),
     demoMode: attr(),
     createdAt: attr(),
     createdById: fk({

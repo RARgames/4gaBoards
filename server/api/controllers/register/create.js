@@ -19,6 +19,9 @@ const Errors = {
   LOCAL_REGISTRATION_DISABLED: {
     localRegistrationDisabled: 'localRegistrationDisabled',
   },
+  DOMAIN_NOT_ALLOWED: {
+    domainNotAllowed: 'domainNotAllowed',
+  },
 };
 
 module.exports = {
@@ -61,17 +64,14 @@ module.exports = {
     localRegistrationDisabled: {
       responseType: 'forbidden',
     },
+    domainNotAllowed: {
+      responseType: 'forbidden',
+    },
   },
 
   async fn(inputs) {
     const values = _.pick(inputs, ['email', 'password', 'name', 'policy']);
-
-    if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {
-      throw Errors.WEAK_PASSWORD;
-    }
-    if (!values.policy) {
-      throw Errors.POLICY_NOT_ACCEPTED;
-    }
+    values.email = values.email.toLowerCase();
 
     const core = await Core.findOne({ id: 0 });
     if (!core) {
@@ -82,6 +82,15 @@ module.exports = {
     }
     if (!core.localRegistrationEnabled) {
       throw Errors.LOCAL_REGISTRATION_DISABLED;
+    }
+    if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {
+      throw Errors.WEAK_PASSWORD;
+    }
+    if (!values.policy) {
+      throw Errors.POLICY_NOT_ACCEPTED;
+    }
+    if (core.allowedRegisterDomains.length > 0 && !core.allowedRegisterDomains.includes(values.email.split('@')[1])) {
+      throw Errors.DOMAIN_NOT_ALLOWED;
     }
 
     const user = await sails.helpers.users.createOne.with({ values, request: this.req }).intercept('emailAlreadyInUse', () => Errors.EMAIL_ALREADY_IN_USE);

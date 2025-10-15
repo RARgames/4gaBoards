@@ -27,6 +27,9 @@ module.exports = {
     syncSsoAdminOnAuth: {
       type: 'boolean',
     },
+    allowedRegisterDomains: {
+      type: 'json',
+    },
   },
 
   exits: {
@@ -54,9 +57,12 @@ module.exports = {
     }
     const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled', 'syncSsoDataOnAuth', 'syncSsoAdminOnAuth']);
 
-    core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values });
+    const allowedRegisterDomains = _.uniq(inputs.allowedRegisterDomains.map((d) => d.trim().toLowerCase()).filter(Boolean));
+
+    core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values, allowedRegisterDomains });
     const coreItem = {
       ...core,
+      allowedRegisterDomains: core.allowedRegisterDomains.join(';'),
       ssoUrls: sails.config.custom.ssoUrls,
       ssoAvailable: sails.config.custom.ssoAvailable,
       demoMode: sails.config.custom.demoMode,

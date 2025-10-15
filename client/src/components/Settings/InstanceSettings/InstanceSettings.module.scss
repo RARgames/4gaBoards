@@ -7,4 +7,9 @@
     -webkit-line-clamp: none;
     line-clamp: none;
   }
+
+  .currentValueCell {
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
 }

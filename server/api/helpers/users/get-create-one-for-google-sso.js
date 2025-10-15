@@ -18,6 +18,7 @@ module.exports = {
     ssoRegistrationDisabled: {},
     registrationDisabled: {},
     coreNotFound: {},
+    domainNotAllowed: {},
   },
 
   async fn(inputs) {
@@ -69,6 +70,9 @@ module.exports = {
     }
     if (!core.ssoRegistrationEnabled) {
       throw 'ssoRegistrationDisabled';
+    }
+    if (core.allowedRegisterDomains.length > 0 && !core.allowedRegisterDomains.includes(email.split('@')[1])) {
+      throw 'domainNotAllowed';
     }
 
     const newValues = {

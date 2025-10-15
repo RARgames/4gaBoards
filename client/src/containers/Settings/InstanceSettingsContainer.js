@@ -6,7 +6,8 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, syncSsoAdminOnAuth, demoMode } = selectors.selectCoreSettings(state);
+  const { registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, syncSsoAdminOnAuth, allowedRegisterDomains, demoMode } =
+    selectors.selectCoreSettings(state);
 
   return {
     registrationEnabled,
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => {
     syncSsoDataOnAuth,
     syncSsoAdminOnAuth,
     demoMode,
+    allowedRegisterDomains,
   };
 };
 

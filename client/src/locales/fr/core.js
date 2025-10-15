@@ -40,6 +40,9 @@ export default {
       addUser: 'Ajouter un utilisateur',
       administrator: 'Administrateur',
       allChangesWillBeAutomaticallySaved: 'Toutes les modifications seront automatiquement enregistrées dès que la connexion sera rétablie',
+      allowedRegisterDomains: "Domaines d'inscription autorisés",
+      allowedRegisterDomainsPlaceholder: 'example.com;example.org',
+      anyDomain: "N'importe quel domaine",
       anyMatch: "N'importe quel match [Alt+V]",
       areYouSureYouWantToDeleteThisAttachment: 'Voulez-vous vraiment supprimer cette pièce jointe?',
       areYouSureYouWantToDeleteThisBoard: 'Êtes-vous sûr de vouloir supprimer ce forum?',
@@ -135,6 +138,7 @@ export default {
       demoModeGithubExtra: 'Votre soutien accélère le développement',
       demoModeGithubMain: 'Étoile 4ga Boards sur GitHub!',
       description: 'Description',
+      descriptionAllowedRegisterDomains: "Liste des domaines email autorisés pour l'inscription des utilisateurs, séparés par des points-virgules. Laissez vide pour autoriser n'importe quel domaine.",
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
       descriptionHideCardModalActivity: 'Masquer les activités créées et mises à jour dans la fenêtre modale de la carte',
@@ -168,6 +172,7 @@ export default {
       dueDate_title: "Date d'échéance",
       dueDateSummary: "La date d'échéance la plus proche pour une tâche inachevée:",
       duplicateTask: 'Dupliquer une tâche',
+      editAllowedRegisterDomains: "Modifier les domaines d'inscription autorisés",
       editAttachment_title: 'Modifier la pièce jointe',
       editAttachment: 'Modifier la pièce jointe',
       editAttachmentName: 'Modifier le nom de la pièce jointe',
@@ -530,6 +535,7 @@ export default {
 
     errors: {
       noOidcProfileFound: 'Aucun profil OIDC trouvé',
+      domainNotAllowed: 'Vous ne pouvez pas vous inscrire avec une adresse email provenant de ce domaine',
     },
 
     action: {
@@ -566,7 +572,7 @@ export default {
       edit: 'Modifier',
       editDescription_title: 'Éditer la description',
       editDueDate_title: "Modifier la date d'échéance",
-      editEmail_title: "Modifier l'e-mail",
+      editEmail_title: "Modifier l'email",
       editInformation_title: 'Modifier les informations',
       editName_title: 'Modifier le nom',
       editPassword_title: 'Modifier le mot de passe',

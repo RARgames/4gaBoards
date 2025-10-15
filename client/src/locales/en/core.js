@@ -36,6 +36,9 @@ export default {
       addUser: 'Add User',
       administrator: 'Administrator',
       allChangesWillBeAutomaticallySaved: 'All changes will be saved automatically once the connection is restored',
+      allowedRegisterDomains: 'Allowed Registration Domains',
+      allowedRegisterDomainsPlaceholder: 'example.com;example.org',
+      anyDomain: 'Any Domain',
       anyMatch: 'Any Match [Alt+V]',
       areYouSureYouWantToDeleteThisAttachment: 'Are you sure you want to delete this attachment?',
       areYouSureYouWantToDeleteThisBoard: 'Are you sure you want to delete this board?',
@@ -127,6 +130,7 @@ export default {
       demoModeGithubExtra: 'Your support speeds up development',
       demoModeGithubMain: 'Star 4ga Boards on GitHub!',
       description: 'Description',
+      descriptionAllowedRegisterDomains: 'Semicolon separated list of allowed email domains for user registration. Leave empty to allow any domain.',
       descriptionCompactSidebar: 'This option makes the sidebar narrower.',
       descriptionDefaultView: 'Select the default view when opening the board.',
       descriptionHideCardModalActivity: 'Hide created and updated in card modal',
@@ -157,6 +161,7 @@ export default {
       dueDate_title: 'Due Date',
       dueDateSummary: 'Closest due date for unfinished task:',
       duplicateTask: 'Duplicate Task',
+      editAllowedRegisterDomains: 'Edit Allowed Registration Domains',
       editAttachment_title: 'Edit Attachment',
       editAttachment: 'Edit Attachment',
       editAttachmentName: 'Edit Attachment Name',
@@ -512,6 +517,7 @@ export default {
 
     errors: {
       noOidcProfileFound: 'No OIDC profile found',
+      domainNotAllowed: 'You cannot register with an email from this domain',
     },
 
     action: {
