@@ -61,6 +61,12 @@
       padding-bottom: 0;
     }
 
+    &:global(.theme-rounded) {
+      .w-md-editor {
+        border-radius: 12px;
+      }
+    }
+
     .w-md-editor-bar {
       color: var(--textColor0);
       width: 30px;
@@ -70,9 +76,21 @@
       background-color: var(--backgroundColorTmpDarkerField);
     }
 
+    &:global(.theme-rounded) {
+      .w-md-editor-toolbar {
+        border-radius: 12px 12px 0px 0px;
+      }
+    }
+
     .w-md-editor-area {
       background-color: var(--backgroundColorTmpDarkerField2);
       border-radius: 2px;
+    }
+
+    &:global(.theme-rounded) {
+      .w-md-editor-area {
+        border-radius: 0px 0px 12px 12px;
+      }
     }
 
     .w-md-editor-text {
@@ -101,6 +119,12 @@
       background-color: var(--backgroundColorTmpDarkerField2);
       font-family: unset;
       font-size: 14px;
+    }
+
+    &:global(.theme-rounded) {
+      .wmde-markdown {
+        border-radius: 8px;
+      }
     }
 
     .wmde-markdown > p {

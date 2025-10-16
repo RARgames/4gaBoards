@@ -6,4 +6,10 @@
     width: 272px;
     min-height: 88px;
   }
+
+  &:global(.theme-rounded) {
+    .wrapper {
+      border-radius: 8px;
+    }
+  }
 }

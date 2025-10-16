@@ -6,6 +6,12 @@
     border-radius: 3px 0 0 3px;
   }
 
+  &:global(.theme-rounded) {
+    .field {
+      border-radius: 8px 0 0 8px;
+    }
+  }
+
   .clearButton {
     margin-left: -24px;
 

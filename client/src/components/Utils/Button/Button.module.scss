@@ -36,6 +36,12 @@
     }
   }
 
+  &:global(.theme-rounded) {
+    .default {
+      border-radius: 8px;
+    }
+  }
+
   .defaultBorder {
     @extend .default;
     border: 1px solid var(--backgroundPopupSeparator);
@@ -69,6 +75,12 @@
       svg {
         fill: var(--textColor4);
       }
+    }
+  }
+
+  &:global(.theme-rounded) {
+    .noBackground {
+      border-radius: 8px;
     }
   }
 
@@ -114,6 +126,12 @@
     }
   }
 
+  &:global(.theme-rounded) {
+    .login {
+      border-radius: 8px;
+    }
+  }
+
   // TODO think about multiline buttons - word-wrap: break-word and min-height instead of white-space, text-overflow
   .controlButtons {
     color: var(--textColorWhite);
@@ -129,6 +147,12 @@
 
     &:disabled {
       cursor: not-allowed;
+    }
+  }
+
+  &:global(.theme-rounded) {
+    .controlButtons {
+      border-radius: 8px;
     }
   }
 
@@ -195,6 +219,12 @@
     //   outline: none;
     //   box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
     // }
+  }
+
+  &:global(.theme-rounded) {
+    .popup {
+      border-radius: 8px;
+    }
   }
 
   .popupContext {

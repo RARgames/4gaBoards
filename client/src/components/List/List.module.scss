@@ -173,4 +173,10 @@
     border-radius: 1px;
     overflow: hidden;
   }
+
+  &:global(.theme-rounded) {
+    .outerWrapper {
+      border-radius: 12px;
+    }
+  }
 }
