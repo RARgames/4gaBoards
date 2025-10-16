@@ -17,6 +17,12 @@
     }
   }
 
+  &:global(.theme-rounded) {
+    .input {
+      border-radius: 8px;
+    }
+  }
+
   .inputError {
     border: 1px solid var(--errorRed);
 

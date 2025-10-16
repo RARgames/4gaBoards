@@ -180,6 +180,12 @@
     overflow: hidden;
   }
 
+  &:global(.theme-rounded) {
+    .outerWrapper {
+      border-radius: 12px;
+    }
+  }
+
   .cardAddPopupWrapper {
     margin-top: auto;
     display: inline-block;

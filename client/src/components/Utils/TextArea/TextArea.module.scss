@@ -18,6 +18,12 @@
     }
   }
 
+  &:global(.theme-rounded) {
+    .textarea {
+      border-radius: 8px;
+    }
+  }
+
   .textareaError {
     border: 1px solid var(--errorRed);
 
