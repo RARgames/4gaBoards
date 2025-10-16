@@ -5,13 +5,13 @@
 
   .themeButtons {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(60px, 100px));
     gap: 12px;
     margin-top: 8px;
   }
 
   .themeButton {
-    padding: 16px;
+    padding: 12px;
     transition: all 0.2s ease;
     border: 2px solid var(--backgroundPopupSeparator);
     background: var(--backgroundList);
@@ -37,8 +37,8 @@
   }
 
   .previewBox {
-    width: 60px;
-    height: 40px;
+    width: 50px;
+    height: 35px;
     background: var(--backgroundColorTmpDarkerField2);
     border: 2px solid var(--textColor3);
     border-radius: 4px;
