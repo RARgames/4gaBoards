@@ -14,7 +14,7 @@ const DEFAULT_DATA = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, onClose }) => {
+const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListId, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
   const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
   const [focusNameFieldState, focusNameField] = useToggle();
@@ -45,13 +45,13 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
         return;
       }
 
-      if (selectedList === null) {
+      if (selectedList === null && !forcedDefaultListId) {
         listDropdownRef.current?.open(); // TODO with default first list (just add option to create new list)
         setIsDropdownError(true);
         return;
       }
 
-      onCreate(selectedList.id, cleanData, autoOpen);
+      onCreate(selectedList ? selectedList.id : forcedDefaultListId, cleanData, autoOpen);
       setData(DEFAULT_DATA);
 
       setIsError(false);
@@ -63,7 +63,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
         onClose();
       }
     },
-    [data, focusNameField, onClose, onCreate, selectedList, setData],
+    [data, focusNameField, forcedDefaultListId, onClose, onCreate, selectedList, setData],
   );
 
   const handleKeyDown = useCallback(
@@ -108,21 +108,23 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, onCreate, onBack, 
         <Form ref={formRef} tabIndex="0" onKeyDown={handleKeyDown}>
           <div className={s.text}>{t('common.name')}</div>
           <TextArea ref={nameField} style={TextAreaStyle.Default} name="name" value={data.name} placeholder={t('common.enterCardNameWithHint')} maxRows={3} onChange={handleFieldChange} isError={isError} />
-          <div className={s.text}>{t('common.list', { context: 'title' })}</div>
-          <Dropdown
-            ref={listDropdownRef}
-            style={DropdownStyle.Default}
-            options={lists}
-            placeholder={lists.length < 1 ? t('common.noLists') : selectedList ? selectedList.name : t('common.selectList')} // eslint-disable-line no-nested-ternary
-            defaultItem={selectedList}
-            isSearchable
-            isError={isDropdownError}
-            selectFirstOnSearch
-            onBlur={focusForm}
-            onChange={handleListChange}
-            onErrorClear={() => setIsDropdownError(false)}
-            dropdownMenuClassName={s.dropdownMenu}
-          />
+          {!forcedDefaultListId && <div className={s.text}>{t('common.list', { context: 'title' })}</div>}
+          {!forcedDefaultListId && (
+            <Dropdown
+              ref={listDropdownRef}
+              style={DropdownStyle.Default}
+              options={lists}
+              placeholder={lists.length < 1 ? t('common.noLists') : selectedList ? selectedList.name : t('common.selectList')} // eslint-disable-line no-nested-ternary
+              defaultItem={selectedList}
+              isSearchable
+              isError={isDropdownError}
+              selectFirstOnSearch
+              onBlur={focusForm}
+              onChange={handleListChange}
+              onErrorClear={() => setIsDropdownError(false)}
+              dropdownMenuClassName={s.dropdownMenu}
+            />
+          )}
           <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.addCard')} onClick={(e) => handleSubmit(e.ctrlKey, e.shiftKey)} />
           </div>
@@ -136,12 +138,14 @@ CardAddStep.propTypes = {
   lists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   labelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  forcedDefaultListId: PropTypes.string,
   onCreate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
 };
 
 CardAddStep.defaultProps = {
+  forcedDefaultListId: undefined,
   onBack: undefined,
 };
 

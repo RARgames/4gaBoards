@@ -8,6 +8,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import { ResizeObserverSizeTypes } from '../../constants/Enums';
 import CardContainer from '../../containers/CardContainer';
 import { useResizeObserverSize } from '../../hooks';
+import CardAddPopup from '../CardAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ActionsPopup from './ActionsPopup';
 import CardAdd from './CardAdd';
@@ -189,6 +190,20 @@ const List = React.memo(
               {name}
             </div>
             <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
+            <CardAddPopup
+              lists={[]}
+              labelIds={labelIds}
+              memberIds={memberIds}
+              forcedDefaultListId={id}
+              onCreate={(listId, data, autoOpen) => onCardCreate(data, autoOpen)}
+              offset={5}
+              position="top"
+              wrapperClassName={s.cardAddPopupWrapper}
+            >
+              <Button style={ButtonStyle.Icon} title={t('common.addCard', { context: 'title' })} className={s.collapsedListCardAddButton}>
+                <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.collapsedListCardAddButtonIcon} />
+              </Button>
+            </CardAddPopup>
           </div>
         )}
       </Droppable>

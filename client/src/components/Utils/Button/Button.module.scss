@@ -95,6 +95,13 @@
     height: 20px;
   }
 
+  .iconText {
+    @extend .iconBase;
+    padding: 0;
+    width: auto;
+    height: auto;
+  }
+
   .login {
     background: var(--loginBackground);
     color: var(--textColor0);

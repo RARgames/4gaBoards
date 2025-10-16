@@ -75,6 +75,12 @@
     height: inherit;
     display: flex;
     flex-direction: column;
+
+    &:hover {
+      .collapsedListCardAddButton {
+        opacity: 1;
+      }
+    }
   }
 
   .popupWrapper {
@@ -172,5 +178,30 @@
     background: var(--backgroundList);
     border-radius: 1px;
     overflow: hidden;
+  }
+
+  .cardAddPopupWrapper {
+    margin-top: auto;
+    display: inline-block;
+    position: relative;
+    height: auto;
+    width: auto;
+  }
+
+  .collapsedListCardAddButton {
+    opacity: 0;
+    margin: auto 0 0 0;
+    height: 30px;
+    width: 100%;
+
+    &:hover {
+      svg {
+        fill: var(--textColor4);
+      }
+    }
+  }
+
+  .collapsedListCardAddButtonIcon {
+    fill: var(--textColor3);
   }
 }
