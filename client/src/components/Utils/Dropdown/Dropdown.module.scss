@@ -31,6 +31,13 @@
     }
   }
 
+  &:global(.theme-rounded) {
+    .dropdownSearchInput {
+      padding: 3px 20px 3px 6px;
+      border-radius: 8px;
+    }
+  }
+
   .dropdownSearchInputError {
     border: 1px solid var(--errorRed) !important;
 
@@ -71,6 +78,12 @@
     border-radius: 3px;
   }
 
+  &:global(.theme-rounded) {
+    .dropdownMenuWithChildren {
+      border-radius: 8px;
+    }
+  }
+
   .dropdownItem {
     padding: 3px;
     cursor: pointer;
@@ -83,8 +96,20 @@
     }
   }
 
+  &:global(.theme-rounded) {
+    .dropdownItem {
+      border-radius: 8px;
+    }
+  }
+
   .dropdownItemSelected {
     background: var(--backgroundColorTmpHighlighted);
+  }
+
+  &:global(.theme-rounded) {
+    .dropdownItemSelected {
+      border-radius: 8px;
+    }
   }
 
   .dropdownItemDefault {
@@ -92,6 +117,11 @@
     font-weight: 900;
   }
 
+  &:global(.theme-rounded) {
+    .dropdownItemDefault {
+      border-radius: 8px;
+    }
+  }
   .icon {
     margin-right: 4px;
   }

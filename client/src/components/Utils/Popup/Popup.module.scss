@@ -19,4 +19,10 @@
       -1px -1px 3px var(--backgroundPopupShadow),
       1px 1px 3px var(--backgroundPopupShadow);
   }
+
+  &:global(.theme-rounded) {
+    .popup {
+      border-radius: 12px;
+    }
+  }
 }

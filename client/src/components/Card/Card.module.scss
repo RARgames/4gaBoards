@@ -56,11 +56,23 @@
     }
   }
 
+  &:global(.theme-rounded) {
+    .card {
+      border-radius: 8px;
+    }
+  }
+
   .cardOpen {
     box-shadow: 0 0 5px var(--borderOutline2);
     border-radius: 2px;
     border: 2px solid var(--borderOutline2);
     background: var(--backgroundCardOpened);
+  }
+
+  &:global(.theme-rounded) {
+    .cardOpen {
+      border-radius: 8px;
+    }
   }
 
   .content {
@@ -78,6 +90,12 @@
     padding: 0 2px;
     vertical-align: middle;
     width: 100%;
+  }
+
+  &:global(.theme-rounded) {
+    .cover {
+      border-radius: 8px;
+    }
   }
 
   .detailsTitle {
