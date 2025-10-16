@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 
@@ -16,7 +16,7 @@ const ThemeSelector = React.memo(() => {
   const [t] = useTranslation();
   const [setTheme, getTheme] = useLocalStorage('appTheme');
 
-  const currentTheme = getTheme() || THEMES.DEFAULT;
+  const [currentTheme, setCurrentTheme] = useState(() => getTheme() || THEMES.DEFAULT);
 
   const applyTheme = useCallback((theme) => {
     const body = document.getElementById('app');
@@ -31,6 +31,7 @@ const ThemeSelector = React.memo(() => {
   const handleThemeChange = useCallback(
     (theme) => {
       setTheme(theme);
+      setCurrentTheme(theme);
       applyTheme(theme);
     },
     [setTheme, applyTheme],
