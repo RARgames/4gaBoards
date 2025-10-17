@@ -63,7 +63,6 @@
 
     &:global([data-theme-shape='rounded']) .w-md-editor {
       border-radius: 12px;
-      background-color: var(--backgroundColorTmpBackground);
     }
 
     .w-md-editor-bar {
@@ -207,7 +206,7 @@
     }
 
     &:global([data-theme-shape='rounded']) .react-datepicker__day {
-      border-radius: 6px !important;
+      border-radius: 6px;
     }
 
     .react-datepicker__current-month,
