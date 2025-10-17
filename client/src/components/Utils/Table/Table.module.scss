@@ -31,6 +31,21 @@
     table-layout: fixed;
   }
 
+  &:global([data-theme-shape='rounded']) .headerRow {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  &:global([data-theme-shape='rounded']) .bodyRow:last-child {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  &:global([data-theme-shape='rounded']) .compactBody {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
   .header {
     display: block;
     position: sticky;
