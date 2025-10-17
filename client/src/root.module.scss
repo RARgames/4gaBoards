@@ -88,6 +88,18 @@
       border-radius: 0px 0px 12px 12px;
     }
 
+    &:global([data-theme-shape='rounded']) .w-md-editor-show-live {
+      .w-md-editor-area {
+        border-radius: 0px 0px 0px 12px;
+      }
+    }
+
+    &:global([data-theme-shape='rounded']) .w-md-editor-show-live {
+      .w-md-editor-preview {
+        border-radius: 0px 0px 12px 0px;
+      }
+    }
+
     .w-md-editor-text {
       min-height: 100% !important;
     }
@@ -186,8 +198,16 @@
       padding-bottom: 8px;
     }
 
+    &:global([data-theme-shape='rounded']) .react-datepicker {
+      border-radius: 8px;
+    }
+
     .react-datepicker__month-container {
       width: 100%;
+    }
+
+    &:global([data-theme-shape='rounded']) .react-datepicker__day {
+      border-radius: 6px !important;
     }
 
     .react-datepicker__current-month,
@@ -204,6 +224,10 @@
       background: var(--backgroundList);
       border: 0;
       padding: 0;
+    }
+
+    &:global([data-theme-shape='rounded']) .react-datepicker__header {
+      border-radius: 8px;
     }
 
     .react-datepicker__day {
