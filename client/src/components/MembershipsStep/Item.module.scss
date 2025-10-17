@@ -17,9 +17,6 @@
 
   &:global([data-theme-shape='rounded']) .menuItem {
     border-radius: 8px;
-    &:hover {
-      border-radius: 8px;
-    }
   }
 
   .menuItemText {

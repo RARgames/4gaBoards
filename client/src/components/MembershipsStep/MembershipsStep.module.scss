@@ -3,8 +3,4 @@
     margin: 8px auto 0;
     width: 100%;
   }
-
-  &:global([data-theme-shape='rounded']) .menu {
-    border-radius: 8px;
-  }
 }
