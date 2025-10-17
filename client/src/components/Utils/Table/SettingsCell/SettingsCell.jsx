@@ -5,16 +5,19 @@ import { Dropdown, DropdownStyle } from '../../Dropdown';
 import { Input, InputStyle } from '../../Input';
 import { Radio, RadioSize } from '../../Radio';
 
-const SettingsCell = React.memo(({ value, cellClassName, title, ariaLabel, options, placeholder, onChange, onSubmit, ...props }) => {
+const SettingsCell = React.memo(({ value, cellClassName, title, ariaLabel, options, placeholder, isCustomComponent, CustomComponent, onChange, onSubmit, ...props }) => {
   return (
     <div className={cellClassName} aria-label={ariaLabel}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       {typeof value === 'boolean' && <Radio size={RadioSize.Size12} checked={value} onChange={onChange} title={title} {...props} />}
-      {typeof value === 'object' && (
+      {typeof value === 'object' && !isCustomComponent && (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <Dropdown style={DropdownStyle.FullWidth} options={options} placeholder={placeholder} defaultItem={value} onChange={onChange} {...props} />
       )}
-      {}
+      {typeof value === 'object' && isCustomComponent && (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <CustomComponent value={value} title={title} ariaLabel={ariaLabel} options={options} placeholder={placeholder} onChange={onChange} onSubmit={onSubmit} {...props} />
+      )}
       {typeof value === 'string' && (
         <Input
           style={InputStyle.FullWidth}
@@ -39,6 +42,8 @@ SettingsCell.propTypes = {
   ariaLabel: PropTypes.string,
   options: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   placeholder: PropTypes.string,
+  isCustomComponent: PropTypes.bool,
+  CustomComponent: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
 };
@@ -50,6 +55,8 @@ SettingsCell.defaultProps = {
   ariaLabel: '',
   options: [],
   placeholder: '',
+  isCustomComponent: false,
+  CustomComponent: undefined,
   onChange: () => {},
   onSubmit: () => {},
 };

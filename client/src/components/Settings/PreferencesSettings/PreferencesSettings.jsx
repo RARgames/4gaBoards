@@ -4,8 +4,10 @@ import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-tabl
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import { ThemeShapes } from '../../../constants/Enums';
 import locales from '../../../locales';
 import { Table } from '../../Utils';
+import ThemeShapeSelector from './ThemeShapeSelector';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
@@ -84,11 +86,11 @@ const PreferencesSettings = React.memo(
     const themeShapes = useMemo(
       () => [
         {
-          id: 'default',
+          id: ThemeShapes.DEFAULT,
           name: t('common.themeShapeDefault'),
         },
         {
-          id: 'rounded',
+          id: ThemeShapes.ROUNDED,
           name: t('common.themeShapeRounded'),
         },
       ],
@@ -253,7 +255,12 @@ const PreferencesSettings = React.memo(
           id: 'themeShape',
           preferences: t('common.themeShape'),
           modifySettings: selectedThemeShape,
-          modifySettingsProps: { onChange: handleThemeShapeChange, options: themeShapes, placeholder: selectedThemeShape.name, isSearchable: true, selectFirstOnSearch: true },
+          modifySettingsProps: {
+            isCustomComponent: true,
+            CustomComponent: ThemeShapeSelector,
+            onChange: handleThemeShapeChange,
+            options: themeShapes,
+          },
           currentValue: selectedThemeShape.name,
           description: t('common.descriptionThemeShape'),
         },
