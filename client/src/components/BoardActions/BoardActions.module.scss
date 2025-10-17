@@ -66,15 +66,13 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .switchViewButton {
-      &:first-child {
-        border-radius: 8px 0 0 8px;
-      }
+  &:global([data-theme-shape='rounded']) .switchViewButton {
+    &:first-child {
+      border-radius: 8px 0 0 8px;
+    }
 
-      &:last-child {
-        border-radius: 0 8px 8px 0;
-      }
+    &:last-child {
+      border-radius: 0 8px 8px 0;
     }
   }
 

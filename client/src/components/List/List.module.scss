@@ -180,10 +180,8 @@
     overflow: hidden;
   }
 
-  &:global(.theme-rounded) {
-    .outerWrapper {
-      border-radius: 12px;
-    }
+  &:global([data-theme-shape='rounded']) .outerWrapper {
+    border-radius: 12px;
   }
 
   .cardAddPopupWrapper {

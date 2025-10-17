@@ -12,7 +12,7 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
 const PreferencesSettings = React.memo(
-  ({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, onUpdate }) => {
+  ({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, themeShape, onUpdate }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
 
@@ -81,6 +81,22 @@ const PreferencesSettings = React.memo(
 
     const selectedPreferredDetailsFont = useMemo(() => preferredFonts.find((style) => style.id === preferredDetailsFont), [preferredDetailsFont, preferredFonts]);
 
+    const themeShapes = useMemo(
+      () => [
+        {
+          id: 'default',
+          name: t('common.themeShapeDefault'),
+        },
+        {
+          id: 'rounded',
+          name: t('common.themeShapeRounded'),
+        },
+      ],
+      [t],
+    );
+
+    const selectedThemeShape = useMemo(() => themeShapes.find((shape) => shape.id === themeShape), [themeShapes, themeShape]);
+
     const handleSubscribeToOwnCardsChange = useCallback(() => {
       onUpdate({
         subscribeToOwnCards: !subscribeToOwnCards,
@@ -136,6 +152,13 @@ const PreferencesSettings = React.memo(
     const handleLanguageChange = useCallback(
       (value) => {
         onUpdate({ language: value.id === 'auto' ? null : value.id }); // FIXME: hack
+      },
+      [onUpdate],
+    );
+
+    const handleThemeShapeChange = useCallback(
+      (value) => {
+        onUpdate({ themeShape: value.id });
       },
       [onUpdate],
     );
@@ -226,6 +249,14 @@ const PreferencesSettings = React.memo(
           currentValue: selectedLanguage.name,
           description: t('common.descriptionLanguage'),
         },
+        {
+          id: 'themeShape',
+          preferences: t('common.themeShape'),
+          modifySettings: selectedThemeShape,
+          modifySettingsProps: { onChange: handleThemeShapeChange, options: themeShapes, placeholder: selectedThemeShape.name, isSearchable: true, selectFirstOnSearch: true },
+          currentValue: selectedThemeShape.name,
+          description: t('common.descriptionThemeShape'),
+        },
       ],
       [
         t,
@@ -251,6 +282,9 @@ const PreferencesSettings = React.memo(
         selectedLanguage,
         handleLanguageChange,
         languages,
+        selectedThemeShape,
+        handleThemeShapeChange,
+        themeShapes,
       ],
     );
 
@@ -375,6 +409,7 @@ PreferencesSettings.propTypes = {
   preferredDetailsFont: PropTypes.string.isRequired,
   hideCardModalActivity: PropTypes.bool.isRequired,
   hideClosestDueDate: PropTypes.bool.isRequired,
+  themeShape: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

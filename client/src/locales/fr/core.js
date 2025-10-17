@@ -141,8 +141,8 @@ export default {
       descriptionAllowedRegisterDomains: "Liste des domaines email autorisés pour l'inscription des utilisateurs, séparés par des points-virgules. Laissez vide pour autoriser n'importe quel domaine.",
       descriptionCompactSidebar: 'Cette option rend la barre latérale plus étroite.',
       descriptionDefaultView: 'Sélectionnez la vue par défaut pour les tableaux et les projets.',
-      descriptionHideCardModalActivity: 'Masquer les activités créées et mises à jour dans la fenêtre modale de la carte',
-      descriptionHideClosestDueDate: "Masquer la date d'échéance la plus proche dans le modal de la carte",
+      descriptionHideCardModalActivity: 'Masquer les activités créées et mises à jour dans la fenêtre modale de la carte.',
+      descriptionHideClosestDueDate: "Masquer la date d'échéance la plus proche dans le modal de la carte.",
       descriptionLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionListViewStyle: 'Sélectionnez le style de la vue de liste.',
       descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
@@ -152,6 +152,7 @@ export default {
       descriptionSubscribeToMyOwnCards: 'Être abonné à mes propres cartes',
       descriptionSyncSsoAdminOnAuth: "Activer ou désactiver la synchronisation de l'administrateur depuis le fournisseur SSO lors de l'authentification. L'activation de cette option peut automatiquement accorder ou révoquer les droits d'administrateur selon les données SSO.", // eslint-disable-line prettier/prettier
       descriptionSyncSsoDataOnAuth: "Activer ou désactiver la synchronisation des données utilisateur depuis le fournisseur SSO lors de l'authentification.",
+      descriptionThemeShape: "Sélectionnez la forme du thème de l'application.",
       descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.", // eslint-disable-line prettier/prettier
       descriptionUsersSettingsStyle: 'Sélectionnez le style des paramètres des utilisateurs.',
       detailsAttachments_many: 'Cette carte a {{count}} pièces jointes',
@@ -389,6 +390,9 @@ export default {
       taskActions_title: 'Actions de tâche',
       tasks: 'Tâches',
       template: 'Modèle',
+      themeShape: 'Forme du thème',
+      themeShapeDefault: 'Par défaut',
+      themeShapeRounded: 'Arrondi',
       thereIsNoPreviewAvailableForThisAttachment: 'Aucun aperçu disponible pour cette pièce jointe',
       time: 'Temps',
       timer: 'Minuteur',

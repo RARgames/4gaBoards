@@ -26,11 +26,9 @@
     flex-direction: column;
   }
 
-  &:global(.theme-rounded) {
-    .sidebar {
-      padding-top: 4px;
-      border-radius: 12px;
-    }
+  &:global([data-theme-shape='rounded']) .sidebar {
+    padding-top: 4px;
+    border-radius: 0 12px 0 0;
   }
 
   .sidebarCompact {

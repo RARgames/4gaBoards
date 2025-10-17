@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router';
 import PropTypes from 'prop-types';
@@ -19,24 +19,6 @@ import '../backgrounds.module.scss';
 import '../root.module.scss';
 
 function Root({ store, history }) {
-  useEffect(() => {
-    // Apply saved theme on app mount
-    const savedTheme = localStorage.getItem('appTheme');
-    if (savedTheme) {
-      const theme = JSON.parse(savedTheme);
-      const body = document.getElementById('app');
-      if (body) {
-        body.classList.add(`theme-${theme}`);
-      }
-    } else {
-      // Apply default theme
-      const body = document.getElementById('app');
-      if (body) {
-        body.classList.add('theme-default');
-      }
-    }
-  }, []);
-
   return (
     <Provider store={store}>
       <ReduxRouter history={history}>

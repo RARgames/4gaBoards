@@ -56,10 +56,8 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .card {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .card {
+    border-radius: 8px;
   }
 
   .cardOpen {
@@ -69,10 +67,8 @@
     background: var(--backgroundCardOpened);
   }
 
-  &:global(.theme-rounded) {
-    .cardOpen {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .cardOpen {
+    border-radius: 8px;
   }
 
   .content {
@@ -92,10 +88,8 @@
     width: 100%;
   }
 
-  &:global(.theme-rounded) {
-    .cover {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .cover {
+    border-radius: 8px;
   }
 
   .detailsTitle {
