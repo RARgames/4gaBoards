@@ -43,10 +43,8 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .addListButton {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .addListButton {
+    border-radius: 8px;
   }
 
   .addListButtonIcon {

@@ -18,10 +18,8 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .textarea {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .textarea {
+    border-radius: 8px;
   }
 
   .textareaError {

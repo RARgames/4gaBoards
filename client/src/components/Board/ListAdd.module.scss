@@ -7,9 +7,7 @@
     min-height: 88px;
   }
 
-  &:global(.theme-rounded) {
-    .wrapper {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .wrapper {
+    border-radius: 8px;
   }
 }

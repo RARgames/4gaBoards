@@ -79,13 +79,6 @@
     width: 100%;
   }
 
-  &:global(.theme-rounded) {
-    .mainContainer {
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-    }
-  }
-
   .flexContainer {
     height: 100%;
     display: flex;
@@ -105,11 +98,8 @@
     padding: 15px 15px 12px 15px;
   }
 
-  &:global(.theme-rounded) {
-    .header {
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-    }
+  &:global([data-theme-shape='rounded']) .header {
+    border-top-left-radius: 12px;
   }
 
   .headerFirstLine {

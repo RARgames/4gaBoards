@@ -10,6 +10,7 @@ const VIEW_MODES = ['board', 'list'];
 const LIST_STYLES = ['default', 'compact'];
 const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 const PREFERRED_FONTS = ['default', 'monospace'];
+const THEME_SHAPES = ['default', 'rounded'];
 
 module.exports = {
   DESCRIPTION_MODES,
@@ -17,6 +18,7 @@ module.exports = {
   LIST_STYLES,
   LIST_ITEMS_PER_PAGE,
   PREFERRED_FONTS,
+  THEME_SHAPES,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -179,6 +181,13 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
       columnName: 'hide_closest_due_date',
+    },
+    themeShape: {
+      type: 'string',
+      isIn: THEME_SHAPES,
+      isNotEmptyString: true,
+      columnName: 'theme_shape',
+      defaultsTo: 'default',
     },
   },
 

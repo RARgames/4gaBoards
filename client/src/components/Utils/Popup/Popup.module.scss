@@ -20,9 +20,7 @@
       1px 1px 3px var(--backgroundPopupShadow);
   }
 
-  &:global(.theme-rounded) {
-    .popup {
-      border-radius: 12px;
-    }
+  &:global([data-theme-shape='rounded']) .popup {
+    border-radius: 12px;
   }
 }

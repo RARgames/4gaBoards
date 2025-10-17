@@ -3,17 +3,16 @@
     background: var(--backgroundColorTmpDarkerField2);
     border: solid var(--backgroundPopupSeparator);
     border-width: 1px 1px 1px 0;
+    overflow: hidden;
 
     &:last-child {
       border-radius: 0 3px 3px 0;
     }
   }
 
-  &:global(.theme-rounded) {
-    .filter {
-      &:last-child {
-        border-radius: 0 8px 8px 0;
-      }
+  &:global([data-theme-shape='rounded']) .filter {
+    &:last-child {
+      border-radius: 0 8px 8px 0;
     }
   }
 

@@ -135,8 +135,8 @@ export default {
       descriptionAllowedRegisterDomains: 'Lista de domínios de email permitidos para registro de usuários, separados por ponto e vírgula. Deixe em branco para permitir qualquer domínio.',
       descriptionCompactSidebar: 'Esta opção faz a barra lateral mais compacta.',
       descriptionDefaultView: 'Selecione a visualização padrão ao abrir um painel.',
-      descriptionHideCardModalActivity: 'Ocultar atividades criadas e atualizadas no modal do cartão',
-      descriptionHideClosestDueDate: 'Ocultar a data de vencimento mais próxima no modal do cartão',
+      descriptionHideCardModalActivity: 'Ocultar atividades criadas e atualizadas no modal do cartão.',
+      descriptionHideClosestDueDate: 'Ocultar a data de vencimento mais próxima no modal do cartão.',
       descriptionLanguage: 'Escolha o idioma que você deseja usar no 4ga Boards.',
       descriptionListViewStyle: 'Selecione o estilo da visualização de lista.',
       descriptionLocalRegistration: 'Habilita ou desabilita o registro de usuários locais. Esse método de registro permite que usuários criem uma conta com nome de usuário e senha.',
@@ -146,6 +146,7 @@ export default {
       descriptionSubscribeToMyOwnCards: 'Automaticamente se inscrever para os cartões criados por mim.',
       descriptionSyncSsoAdminOnAuth: 'Ative ou desative a sincronização do administrador a partir do provedor SSO durante a autenticação. Habilitar esta opção pode conceder ou revogar automaticamente direitos de administrador com base nos dados do SSO.', // eslint-disable-line prettier/prettier
       descriptionSyncSsoDataOnAuth: 'Ative ou desative a sincronização de dados do usuário do provedor SSO durante a autenticação.',
+      descriptionThemeShape: 'Selecione a forma do tema da aplicação.',
       descriptionUserRegistration: 'Habilita ou desabilita todos os métodos de registro de usuário. Se você desabilitar todos os métodos de registro, apenas administradores serão capazes de criar novos usuários.', /* eslint-disable-line prettier/prettier */
       descriptionUsersSettingsStyle: 'Selecione o estilo dos parâmetros de usuários.',
       detailsAttachments_one: 'Este cartão tem {{count}} anexo',
@@ -373,6 +374,9 @@ export default {
       taskActions_title: 'Ações da Tarefa',
       tasks: 'Tarefas',
       template: 'Template',
+      themeShape: 'Tema Forma',
+      themeShapeDefault: 'Padrão',
+      themeShapeRounded: 'Arredondado',
       thereIsNoPreviewAvailableForThisAttachment: 'Sem pré-visualização disponível para este anexo',
       time: 'Tempo',
       timer: 'Timer',

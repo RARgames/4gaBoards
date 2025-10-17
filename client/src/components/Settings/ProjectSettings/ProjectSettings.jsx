@@ -9,7 +9,6 @@ import Memberships from '../../Memberships';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 import BackgroundPane from './BackgroundPane';
 import InformationEdit from './InformationEdit';
-import ThemeSelector from './ThemeSelector';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
@@ -86,10 +85,6 @@ const ProjectSettings = React.memo(
                 }}
                 onImageDelete={handleBackgroundImageDelete}
               />
-            </div>
-            <div className={s.action}>
-              <div className={s.text}>{t('common.theme', { defaultValue: 'Theme' })}</div>
-              <ThemeSelector />
             </div>
             <div className={s.action}>
               <h4 className={s.dangerZone}>{t('common.dangerZone', { context: 'title' })}</h4>

@@ -36,10 +36,8 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .default {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .default {
+    border-radius: 8px;
   }
 
   .defaultBorder {
@@ -78,10 +76,8 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .noBackground {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .noBackground {
+    border-radius: 8px;
   }
 
   .iconBase {
@@ -133,10 +129,8 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .login {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .login {
+    border-radius: 8px;
   }
 
   // TODO think about multiline buttons - word-wrap: break-word and min-height instead of white-space, text-overflow
@@ -157,10 +151,8 @@
     }
   }
 
-  &:global(.theme-rounded) {
-    .controlButtons {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .controlButtons {
+    border-radius: 8px;
   }
 
   .submit {
@@ -228,10 +220,8 @@
     // }
   }
 
-  &:global(.theme-rounded) {
-    .popup {
-      border-radius: 8px;
-    }
+  &:global([data-theme-shape='rounded']) .popup {
+    border-radius: 8px;
   }
 
   .popupContext {

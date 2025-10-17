@@ -29,6 +29,7 @@ export default class extends BaseModel {
     preferredDetailsFont: attr(),
     hideCardModalActivity: attr(),
     hideClosestDueDate: attr(),
+    themeShape: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {
