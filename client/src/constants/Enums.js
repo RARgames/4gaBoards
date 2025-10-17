@@ -82,3 +82,8 @@ export const PreferredFonts = {
   DEFAULT: 'default',
   MONOSPACE: 'monospace',
 };
+
+export const ThemeShapes = {
+  DEFAULT: 'default',
+  ROUNDED: 'rounded',
+};
