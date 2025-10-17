@@ -93,11 +93,11 @@
   }
 
   .detailsTitle {
-    padding: 4px 8px 0 4px;
+    padding: 4px 8px 4px 4px;
   }
 
   .details {
-    padding: 4px 6px 0 4px;
+    padding: 8px 6px 0 4px;
   }
 
   .labels {
@@ -114,7 +114,6 @@
     color: var(--textColor1);
     font-size: 14px;
     line-height: 18px;
-    padding-bottom: 6px;
     word-wrap: break-word;
     overflow: hidden;
     display: -webkit-box;

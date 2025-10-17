@@ -195,113 +195,115 @@ const Card = React.memo(
           {notificationsTotal > 9 && <span className={clsx(s.notification, s.notificationFull)}>9+</span>}
         </div>
         {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
-        <div className={s.details}>
-          {labels.length > 0 && (
-            <span className={s.labels}>
-              {labels.map((label) => (
-                <LabelsPopup
-                  key={label.id}
-                  items={allLabels}
-                  currentIds={labelIds}
-                  onSelect={onLabelAdd}
-                  onDeselect={onLabelRemove}
-                  onCreate={onLabelCreate}
-                  onUpdate={onLabelUpdate}
-                  onDelete={onLabelDelete}
-                  canEdit={canEdit}
-                  offset={0}
-                  wrapperClassName={clsx(s.attachment, s.attachmentLeft)}
-                  disabled={!canEdit}
-                >
-                  <Label name={label.name} color={label.color} variant="card" isClickable={canEdit} />
-                </LabelsPopup>
-              ))}
-            </span>
-          )}
-          {tasks.length > 0 && (
-            <Tasks
-              variant="card"
-              isCardActive={isOpen}
-              cardId={id}
-              items={tasks}
-              closestDueDate={closestDueDate}
-              canEdit={canEdit}
-              allBoardMemberships={boardAndTaskMemberships}
-              boardMemberships={boardMemberships}
-              onCreate={onTaskCreate}
-              onUpdate={onTaskUpdate}
-              onMove={onTaskMove}
-              onDuplicate={onTaskDuplicate}
-              onDelete={onTaskDelete}
-              onUserAdd={onUserToTaskAdd}
-              onUserRemove={onUserFromTaskRemove}
-              onMouseEnterTasks={handleTasksMouseEnter}
-              onMouseLeaveTasks={handleTasksMouseOut}
-            />
-          )}
-          {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
-            <span className={s.attachments}>
-              {description && (
-                <span className={clsx(s.attachment, s.attachmentLeft)}>
-                  <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsDescription')} />
-                </span>
-              )}
-              {attachmentsCount > 0 && (
-                <span className={clsx(s.attachment, s.attachmentLeft)}>
-                  <Icon type={IconType.Attach} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsAttachments', { count: attachmentsCount })} />
-                </span>
-              )}
-              {commentCount > 0 && (
-                <span className={clsx(s.attachment, s.attachmentLeft)}>
-                  <Icon type={IconType.Comment} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsComments', { count: commentCount })} />
-                </span>
-              )}
-              {dueDate && (
-                <span className={clsx(s.attachment, s.attachmentLeft)}>
-                  <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
-                    <DueDate value={dueDate} variant="card" isClickable={canEdit} />
-                  </DueDateEditPopup>
-                </span>
-              )}
-              {timer && (
-                <span className={clsx(s.attachment, s.attachmentLeft)} data-prevent-card-switch>
-                  <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
-                </span>
-              )}
-            </span>
-          )}
-          {users.length > 0 && (
-            <span className={clsx(s.attachments, s.attachmentsRight, s.users)}>
-              <div className={s.popupWrapper2}>
-                <MembershipsPopup
-                  items={boardAndCardMemberships}
-                  currentUserIds={users.map((user) => user.id)}
-                  memberships={boardMemberships}
-                  onUserSelect={(userId) => onUserAdd(userId, id)}
-                  onUserDeselect={(userId) => onUserRemove(userId, id)}
-                  offset={0}
-                >
-                  {users.slice(0, visibleMembersCount).map((user) => (
-                    <span key={user.id} className={clsx(s.attachment, s.user)}>
-                      <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
-                    </span>
-                  ))}
-                  {users.length > visibleMembersCount && (
-                    <span
-                      className={clsx(s.attachment, s.user, s.moreUsers)}
-                      title={users
-                        .slice(visibleMembersCount)
-                        .map((user) => user.name)
-                        .join(',\n')}
-                    >
-                      +{users.length - visibleMembersCount}
-                    </span>
-                  )}
-                </MembershipsPopup>
-              </div>
-            </span>
-          )}
-        </div>
+        {(labels.length > 0 || tasks.length > 0 || description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer || users.length > 0) && (
+          <div className={s.details}>
+            {labels.length > 0 && (
+              <span className={s.labels}>
+                {labels.map((label) => (
+                  <LabelsPopup
+                    key={label.id}
+                    items={allLabels}
+                    currentIds={labelIds}
+                    onSelect={onLabelAdd}
+                    onDeselect={onLabelRemove}
+                    onCreate={onLabelCreate}
+                    onUpdate={onLabelUpdate}
+                    onDelete={onLabelDelete}
+                    canEdit={canEdit}
+                    offset={0}
+                    wrapperClassName={clsx(s.attachment, s.attachmentLeft)}
+                    disabled={!canEdit}
+                  >
+                    <Label name={label.name} color={label.color} variant="card" isClickable={canEdit} />
+                  </LabelsPopup>
+                ))}
+              </span>
+            )}
+            {tasks.length > 0 && (
+              <Tasks
+                variant="card"
+                isCardActive={isOpen}
+                cardId={id}
+                items={tasks}
+                closestDueDate={closestDueDate}
+                canEdit={canEdit}
+                allBoardMemberships={boardAndTaskMemberships}
+                boardMemberships={boardMemberships}
+                onCreate={onTaskCreate}
+                onUpdate={onTaskUpdate}
+                onMove={onTaskMove}
+                onDuplicate={onTaskDuplicate}
+                onDelete={onTaskDelete}
+                onUserAdd={onUserToTaskAdd}
+                onUserRemove={onUserFromTaskRemove}
+                onMouseEnterTasks={handleTasksMouseEnter}
+                onMouseLeaveTasks={handleTasksMouseOut}
+              />
+            )}
+            {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
+              <span className={s.attachments}>
+                {description && (
+                  <span className={clsx(s.attachment, s.attachmentLeft)}>
+                    <Icon type={IconType.BarsStaggered} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsDescription')} />
+                  </span>
+                )}
+                {attachmentsCount > 0 && (
+                  <span className={clsx(s.attachment, s.attachmentLeft)}>
+                    <Icon type={IconType.Attach} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsAttachments', { count: attachmentsCount })} />
+                  </span>
+                )}
+                {commentCount > 0 && (
+                  <span className={clsx(s.attachment, s.attachmentLeft)}>
+                    <Icon type={IconType.Comment} size={IconSize.Size14} className={s.detailsIcon} title={t('common.detailsComments', { count: commentCount })} />
+                  </span>
+                )}
+                {dueDate && (
+                  <span className={clsx(s.attachment, s.attachmentLeft)}>
+                    <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
+                      <DueDate value={dueDate} variant="card" isClickable={canEdit} />
+                    </DueDateEditPopup>
+                  </span>
+                )}
+                {timer && (
+                  <span className={clsx(s.attachment, s.attachmentLeft)} data-prevent-card-switch>
+                    <Timer as="span" startedAt={timer.startedAt} total={timer.total} variant="card" onClick={canEdit ? handleToggleTimerClick : undefined} />
+                  </span>
+                )}
+              </span>
+            )}
+            {users.length > 0 && (
+              <span className={clsx(s.attachments, s.attachmentsRight, s.users)}>
+                <div className={s.popupWrapper2}>
+                  <MembershipsPopup
+                    items={boardAndCardMemberships}
+                    currentUserIds={users.map((user) => user.id)}
+                    memberships={boardMemberships}
+                    onUserSelect={(userId) => onUserAdd(userId, id)}
+                    onUserDeselect={(userId) => onUserRemove(userId, id)}
+                    offset={0}
+                  >
+                    {users.slice(0, visibleMembersCount).map((user) => (
+                      <span key={user.id} className={clsx(s.attachment, s.user)}>
+                        <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
+                      </span>
+                    ))}
+                    {users.length > visibleMembersCount && (
+                      <span
+                        className={clsx(s.attachment, s.user, s.moreUsers)}
+                        title={users
+                          .slice(visibleMembersCount)
+                          .map((user) => user.name)
+                          .join(',\n')}
+                      >
+                        +{users.length - visibleMembersCount}
+                      </span>
+                    )}
+                  </MembershipsPopup>
+                </div>
+              </span>
+            )}
+          </div>
+        )}
       </>
     );
 
