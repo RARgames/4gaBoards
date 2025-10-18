@@ -10,7 +10,7 @@ import { Loader, LoaderSize, Button, ButtonStyle, Icon, IconType, IconSize } fro
 
 import * as s from './Core.module.scss';
 
-const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard, themeShape, colorSchema }) => {
+const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard, theme, themeShape }) => {
   const [t] = useTranslation();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showDisconnected, setShowDisconnected] = useState(false);
@@ -33,16 +33,16 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
   useEffect(() => {
     const body = document.getElementById('app');
     if (body) {
-      body.setAttribute('data-theme-shape', themeShape);
+      body.setAttribute('data-theme', theme);
     }
-  }, [themeShape]);
+  }, [theme]);
 
   useEffect(() => {
     const body = document.getElementById('app');
     if (body) {
-      body.setAttribute('data-color-schema', colorSchema);
+      body.setAttribute('data-theme-shape', themeShape);
     }
-  }, [colorSchema]);
+  }, [themeShape]);
 
   const handleToggleCollapse = useCallback(() => {
     setIsCollapsed(!isCollapsed);
@@ -94,16 +94,16 @@ Core.propTypes = {
   currentProject: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   currentBoard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   currentCard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  theme: PropTypes.string,
   themeShape: PropTypes.string,
-  colorSchema: PropTypes.string,
 };
 
 Core.defaultProps = {
   currentProject: undefined,
   currentBoard: undefined,
   currentCard: undefined,
+  theme: 'default',
   themeShape: 'default',
-  colorSchema: 'default',
 };
 
 export default Core;

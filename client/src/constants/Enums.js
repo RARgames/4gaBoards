@@ -83,12 +83,12 @@ export const PreferredFonts = {
   MONOSPACE: 'monospace',
 };
 
+export const Themes = {
+  DEFAULT: 'default',
+  GITHUB_DARK: 'github-dark',
+};
+
 export const ThemeShapes = {
   DEFAULT: 'default',
   ROUNDED: 'rounded',
-};
-
-export const ColorSchemas = {
-  DEFAULT: 'default',
-  GITHUB_DARK: 'github-dark',
 };

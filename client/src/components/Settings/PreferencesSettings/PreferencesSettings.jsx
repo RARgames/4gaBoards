@@ -4,7 +4,7 @@ import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-tabl
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { ThemeShapes, ColorSchemas } from '../../../constants/Enums';
+import { ThemeShapes, Themes } from '../../../constants/Enums';
 import locales from '../../../locales';
 import { Table } from '../../Utils';
 import ThemeShapeSelector from './ThemeShapeSelector';
@@ -14,7 +14,7 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
 const PreferencesSettings = React.memo(
-  ({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, themeShape, colorSchema, onUpdate }) => {
+  ({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, theme, themeShape, onUpdate }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
 
@@ -83,6 +83,23 @@ const PreferencesSettings = React.memo(
 
     const selectedPreferredDetailsFont = useMemo(() => preferredFonts.find((style) => style.id === preferredDetailsFont), [preferredDetailsFont, preferredFonts]);
 
+    const themes = useMemo(
+      () => [
+        {
+          id: Themes.DEFAULT,
+          name: t('common.themeDefault'),
+        },
+        {
+          id: Themes.GITHUB_DARK,
+          name: t('common.themeGithubDark'),
+          badge: t('common.beta'),
+        },
+      ],
+      [t],
+    );
+
+    const selectedTheme = useMemo(() => themes.find((th) => th.id === theme), [themes, theme]);
+
     const themeShapes = useMemo(
       () => [
         {
@@ -98,23 +115,6 @@ const PreferencesSettings = React.memo(
     );
 
     const selectedThemeShape = useMemo(() => themeShapes.find((shape) => shape.id === themeShape), [themeShapes, themeShape]);
-
-    const colorSchemas = useMemo(
-      () => [
-        {
-          id: ColorSchemas.DEFAULT,
-          name: t('common.colorSchemaDefault'),
-        },
-        {
-          id: ColorSchemas.GITHUB_DARK,
-          name: t('common.colorSchemaGithubDark'),
-          badge: 'Beta',
-        },
-      ],
-      [t],
-    );
-
-    const selectedColorSchema = useMemo(() => colorSchemas.find((schema) => schema.id === colorSchema), [colorSchemas, colorSchema]);
 
     const handleSubscribeToOwnCardsChange = useCallback(() => {
       onUpdate({
@@ -175,16 +175,16 @@ const PreferencesSettings = React.memo(
       [onUpdate],
     );
 
-    const handleThemeShapeChange = useCallback(
+    const handleThemeChange = useCallback(
       (value) => {
-        onUpdate({ themeShape: value.id });
+        onUpdate({ theme: value.id });
       },
       [onUpdate],
     );
 
-    const handleColorSchemaChange = useCallback(
+    const handleThemeShapeChange = useCallback(
       (value) => {
-        onUpdate({ colorSchema: value.id });
+        onUpdate({ themeShape: value.id });
       },
       [onUpdate],
     );
@@ -276,6 +276,20 @@ const PreferencesSettings = React.memo(
           description: t('common.descriptionLanguage'),
         },
         {
+          id: 'theme',
+          preferences: t('common.theme'),
+          modifySettings: selectedTheme,
+          modifySettingsProps: {
+            onChange: handleThemeChange,
+            options: themes,
+            placeholder: selectedTheme.name,
+            isSearchable: true,
+            selectFirstOnSearch: true,
+          },
+          currentValue: selectedTheme.name,
+          description: t('common.descriptionTheme'),
+        },
+        {
           id: 'themeShape',
           preferences: t('common.themeShape'),
           modifySettings: selectedThemeShape,
@@ -287,20 +301,6 @@ const PreferencesSettings = React.memo(
           },
           currentValue: selectedThemeShape.name,
           description: t('common.descriptionThemeShape'),
-        },
-        {
-          id: 'colorSchema',
-          preferences: t('common.colorSchema'),
-          modifySettings: selectedColorSchema,
-          modifySettingsProps: {
-            onChange: handleColorSchemaChange,
-            options: colorSchemas,
-            placeholder: selectedColorSchema.name,
-            isSearchable: true,
-            selectFirstOnSearch: true,
-          },
-          currentValue: selectedColorSchema.name,
-          description: t('common.descriptionColorSchema'),
         },
       ],
       [
@@ -330,9 +330,9 @@ const PreferencesSettings = React.memo(
         selectedThemeShape,
         handleThemeShapeChange,
         themeShapes,
-        selectedColorSchema,
-        handleColorSchemaChange,
-        colorSchemas,
+        selectedTheme,
+        handleThemeChange,
+        themes,
       ],
     );
 
@@ -457,8 +457,8 @@ PreferencesSettings.propTypes = {
   preferredDetailsFont: PropTypes.string.isRequired,
   hideCardModalActivity: PropTypes.bool.isRequired,
   hideClosestDueDate: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired,
   themeShape: PropTypes.string.isRequired,
-  colorSchema: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

@@ -19,8 +19,8 @@ const mapStateToProps = (state) => {
     currentBoard,
     currentCard,
     isInitializing: isCoreInitializing,
+    theme: userPrefs?.theme,
     themeShape: userPrefs?.themeShape,
-    colorSchema: userPrefs?.colorSchema,
   };
 };
 

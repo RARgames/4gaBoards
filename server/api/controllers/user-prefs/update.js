@@ -102,14 +102,14 @@ module.exports = {
     hideClosestDueDate: {
       type: 'boolean',
     },
+    theme: {
+      type: 'string',
+      isIn: UserPrefs.THEMES,
+      isNotEmptyString: true,
+    },
     themeShape: {
       type: 'string',
       isIn: UserPrefs.THEME_SHAPES,
-      isNotEmptyString: true,
-    },
-    colorSchema: {
-      type: 'string',
-      isIn: UserPrefs.COLOR_SCHEMAS,
       isNotEmptyString: true,
     },
   },
@@ -161,8 +161,8 @@ module.exports = {
         'preferredDetailsFont',
         'hideCardModalActivity',
         'hideClosestDueDate',
+        'theme',
         'themeShape',
-        'colorSchema',
       ]),
     };
 
