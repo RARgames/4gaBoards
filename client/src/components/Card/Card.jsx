@@ -370,7 +370,7 @@ const Card = React.memo(
                           offset={0}
                           hideCloseButton
                         >
-                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={clsx(s.editCardButton, s.target)}>
+                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={s.editCardButton}>
                             <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                           </Button>
                         </ActionsPopup>
