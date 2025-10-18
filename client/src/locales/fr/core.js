@@ -153,6 +153,7 @@ export default {
       descriptionSyncSsoAdminOnAuth: "Activer ou désactiver la synchronisation de l'administrateur depuis le fournisseur SSO lors de l'authentification. L'activation de cette option peut automatiquement accorder ou révoquer les droits d'administrateur selon les données SSO.", // eslint-disable-line prettier/prettier
       descriptionSyncSsoDataOnAuth: "Activer ou désactiver la synchronisation des données utilisateur depuis le fournisseur SSO lors de l'authentification.",
       descriptionThemeShape: "Sélectionnez la forme du thème de l'application.",
+      descriptionColorSchema: "Sélectionnez le thème de couleur de l'application.",
       descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.", // eslint-disable-line prettier/prettier
       descriptionUsersSettingsStyle: 'Sélectionnez le style des paramètres des utilisateurs.',
       detailsAttachments_many: 'Cette carte a {{count}} pièces jointes',
@@ -393,6 +394,9 @@ export default {
       themeShape: 'Forme du thème',
       themeShapeDefault: 'Par défaut',
       themeShapeRounded: 'Arrondi',
+      colorSchema: 'Schéma de couleurs',
+      colorSchemaGithubDark: 'GitHub Sombre',
+      colorSchemaDefault: 'Par défaut',
       thereIsNoPreviewAvailableForThisAttachment: 'Aucun aperçu disponible pour cette pièce jointe',
       time: 'Temps',
       timer: 'Minuteur',

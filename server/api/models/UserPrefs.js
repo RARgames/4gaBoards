@@ -11,6 +11,7 @@ const LIST_STYLES = ['default', 'compact'];
 const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 const PREFERRED_FONTS = ['default', 'monospace'];
 const THEME_SHAPES = ['default', 'rounded'];
+const COLOR_SCHEMAS = ['default', 'github-dark'];
 
 module.exports = {
   DESCRIPTION_MODES,
@@ -19,6 +20,7 @@ module.exports = {
   LIST_ITEMS_PER_PAGE,
   PREFERRED_FONTS,
   THEME_SHAPES,
+  COLOR_SCHEMAS,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -187,6 +189,13 @@ module.exports = {
       isIn: THEME_SHAPES,
       isNotEmptyString: true,
       columnName: 'theme_shape',
+      defaultsTo: 'default',
+    },
+    colorSchema: {
+      type: 'string',
+      isIn: COLOR_SCHEMAS,
+      isNotEmptyString: true,
+      columnName: 'color_schema',
       defaultsTo: 'default',
     },
   },

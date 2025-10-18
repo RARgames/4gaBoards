@@ -107,6 +107,11 @@ module.exports = {
       isIn: UserPrefs.THEME_SHAPES,
       isNotEmptyString: true,
     },
+    colorSchema: {
+      type: 'string',
+      isIn: UserPrefs.COLOR_SCHEMAS,
+      isNotEmptyString: true,
+    },
   },
 
   exits: {
@@ -157,6 +162,7 @@ module.exports = {
         'hideCardModalActivity',
         'hideClosestDueDate',
         'themeShape',
+        'colorSchema',
       ]),
     };
 

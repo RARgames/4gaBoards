@@ -6,7 +6,7 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { language, subscribeToOwnCards, sidebarCompact, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, themeShape } =
+  const { language, subscribeToOwnCards, sidebarCompact, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, themeShape, colorSchema } =
     selectors.selectCurrentUserPrefs(state);
 
   return {
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
     hideCardModalActivity,
     hideClosestDueDate,
     themeShape,
+    colorSchema,
   };
 };
 

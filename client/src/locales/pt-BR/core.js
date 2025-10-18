@@ -147,6 +147,7 @@ export default {
       descriptionSyncSsoAdminOnAuth: 'Ative ou desative a sincronização do administrador a partir do provedor SSO durante a autenticação. Habilitar esta opção pode conceder ou revogar automaticamente direitos de administrador com base nos dados do SSO.', // eslint-disable-line prettier/prettier
       descriptionSyncSsoDataOnAuth: 'Ative ou desative a sincronização de dados do usuário do provedor SSO durante a autenticação.',
       descriptionThemeShape: 'Selecione a forma do tema da aplicação.',
+      descriptionColorSchema: 'Selecione o tema de cores do aplicativo.',
       descriptionUserRegistration: 'Habilita ou desabilita todos os métodos de registro de usuário. Se você desabilitar todos os métodos de registro, apenas administradores serão capazes de criar novos usuários.', /* eslint-disable-line prettier/prettier */
       descriptionUsersSettingsStyle: 'Selecione o estilo dos parâmetros de usuários.',
       detailsAttachments_one: 'Este cartão tem {{count}} anexo',
@@ -377,6 +378,9 @@ export default {
       themeShape: 'Tema Forma',
       themeShapeDefault: 'Padrão',
       themeShapeRounded: 'Arredondado',
+      colorSchema: 'Esquema de Cores',
+      colorSchemaGithubDark: 'GitHub Escuro',
+      colorSchemaDefault: 'Padrão',
       thereIsNoPreviewAvailableForThisAttachment: 'Sem pré-visualização disponível para este anexo',
       time: 'Tempo',
       timer: 'Timer',
