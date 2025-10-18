@@ -13,12 +13,17 @@ module.exports = {
       type: 'string',
       allowNull: true,
     },
+    email: {
+      type: 'string',
+      allowNull: true,
+    },
   },
 
   exits: {
     ssoRegistrationDisabled: {},
     registrationDisabled: {},
     coreNotFound: {},
+    domainNotAllowed: {},
   },
 
   async fn(inputs) {
@@ -27,6 +32,7 @@ module.exports = {
       throw 'coreNotFound';
     }
 
+    const email = inputs.email?.toLowerCase() || `${inputs.username}@github-sso-4ga-boards.com`;
     const name = inputs.displayName || inputs.username;
     const isUsernameAvailable = !(await sails.helpers.users.getOne({ username: inputs.username.toLowerCase() }));
     let user = await sails.helpers.users.getOne({ ssoGithubId: inputs.id });
@@ -36,6 +42,9 @@ module.exports = {
         const updatedValues = {};
         if (inputs.username !== user.ssoGithubUsername) {
           updatedValues.ssoGithubUsername = inputs.username;
+        }
+        if (email !== user.ssoGithubEmail) {
+          updatedValues.ssoGithubEmail = email;
         }
         if (isUsernameAvailable && inputs.username !== user.username) {
           updatedValues.username = inputs.username;
@@ -50,6 +59,25 @@ module.exports = {
       }
       return user;
     }
+    user = await sails.helpers.users.getOne({ email });
+    // First time SSO login
+    if (user) {
+      const updatedValues = {
+        ssoGithubId: inputs.id,
+        ssoGithubEmail: email,
+      };
+      if (core.syncSsoDataOnAuth) {
+        if (isUsernameAvailable && inputs.username !== user.username) {
+          updatedValues.username = inputs.username;
+        }
+        if (user.name !== name) {
+          updatedValues.name = name;
+        }
+      }
+      sails.log.info('Google SSO: Linking existing user account', { userId: user.id, values: updatedValues });
+      user = await sails.helpers.users.updateOne.with({ values: updatedValues, record: user, currentUser: user });
+      return user;
+    }
     // Register new user
     if (!core.registrationEnabled) {
       throw 'registrationDisabled';
@@ -57,11 +85,15 @@ module.exports = {
     if (!core.ssoRegistrationEnabled) {
       throw 'ssoRegistrationDisabled';
     }
+    if (core.allowedRegisterDomains.length > 0 && !core.allowedRegisterDomains.includes(email.split('@')[1])) {
+      throw 'domainNotAllowed';
+    }
 
     const newValues = {
-      email: `${inputs.username}@github-sso-4ga-boards.com`,
+      email,
       ssoGithubId: inputs.id,
       ssoGithubUsername: inputs.username,
+      ssoGithubEmail: email,
       name,
       username: isUsernameAvailable ? inputs.username.toLowerCase() : undefined,
     };

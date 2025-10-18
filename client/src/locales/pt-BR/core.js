@@ -360,6 +360,7 @@ export default {
       showTasks: 'Exibir Tarefas',
       sidebarCompact: 'Barra Lateral Compacta',
       simple: 'Simples',
+      ssoGithubEmail: 'GitHub Email',
       ssoGithubUsername: 'GitHub Nome de Usuário',
       ssoGoogleEmail: 'Google Mail',
       ssoMicrosoftEmail: 'Microsoft Email',

@@ -57,6 +57,11 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
+    ssoGithubEmail: {
+      type: 'string',
+      isEmail: true,
+      allowNull: true,
+    },
     ssoMicrosoftId: {
       type: 'string',
       isNotEmptyString: true,
@@ -122,6 +127,7 @@ module.exports = {
         'ssoGoogleEmail',
         'ssoGithubId',
         'ssoGithubUsername',
+        'ssoGithubEmail',
         'ssoMicrosoftId',
         'ssoMicrosoftEmail',
         'ssoOidcId',

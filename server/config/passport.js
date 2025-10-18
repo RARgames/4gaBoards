@@ -1,6 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
-const GitHubStrategy = require('passport-github');
+const GitHubStrategy = require('@rargames/passport-github');
 const MicrosoftMSALStrategy = require('../strategies/passport-microsoft-msal');
 const OIDCStrategy = require('../strategies/passport-oidc');
 const { fetchRetry } = require('../utils/fetchRetry');
@@ -26,6 +26,7 @@ if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: `${process.env.BASE_URL}/auth/github/callback`,
+        scope: ['user:email'],
       },
       (accessToken, refreshToken, profile, done) => {
         return done(null, profile);

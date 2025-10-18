@@ -374,6 +374,7 @@ export default {
       showTasks: 'Pokaż zadania',
       sidebarCompact: 'Kompaktowy panel boczny',
       simple: 'Prosty',
+      ssoGithubEmail: 'Email GitHub',
       ssoGithubUsername: 'Użytkownik GitHub',
       ssoGoogleEmail: 'Email Google',
       ssoMicrosoftEmail: 'Email Microsoft',

@@ -358,6 +358,7 @@ export default {
       showTasks: 'Show Tasks',
       sidebarCompact: 'Compact Sidebar',
       simple: 'Simple',
+      ssoGithubEmail: 'GitHub Email',
       ssoGithubUsername: 'GitHub Username',
       ssoGoogleEmail: 'Google Email',
       ssoMicrosoftEmail: 'Microsoft Email',

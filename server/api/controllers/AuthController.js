@@ -45,7 +45,8 @@ module.exports = {
       }
 
       try {
-        const user = await sails.helpers.users.getCreateOneForGithubSso.with({ id: profile.id, username: profile.username, displayName: profile.displayName });
+        const email = profile.emails?.find((e) => e.primary && e.verified)?.value || profile.emails?.find((e) => e.verified)?.value || null;
+        const user = await sails.helpers.users.getCreateOneForGithubSso.with({ id: profile.id, username: profile.username, displayName: profile.displayName, email });
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/github-callback?accessToken=${accessToken}`);

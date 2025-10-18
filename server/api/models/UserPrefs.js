@@ -145,6 +145,7 @@ module.exports = {
         administrator: true,
         ssoGoogleEmail: false,
         ssoGithubUsername: false,
+        ssoGithubEmail: false,
         ssoMicrosoftEmail: false,
         ssoOidcEmail: false,
         lastLogin: true,

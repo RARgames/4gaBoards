@@ -44,6 +44,7 @@ export default class extends BaseModel {
     isPasswordAuthenticated: attr(),
     ssoGoogleEmail: attr(),
     ssoGithubUsername: attr(),
+    ssoGithubEmail: attr(),
     ssoMicrosoftEmail: attr(),
     ssoOidcEmail: attr(),
     lastLogin: attr(),
