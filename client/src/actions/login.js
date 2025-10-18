@@ -26,10 +26,11 @@ const clearAuthenticateError = () => ({
   payload: {},
 });
 
-const authenticateSso = (provider) => ({
+const authenticateSso = (provider, method) => ({
   type: ActionTypes.AUTHENTICATE_SSO,
   payload: {
     provider,
+    method,
   },
 });
 

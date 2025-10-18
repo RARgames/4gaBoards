@@ -90,6 +90,7 @@ export function* fetchCoreSettingsPublic() {
   const {
     item: ssoUrls,
     ssoAvailable,
+    oidcEnabledMethods,
     ssoRegistrationEnabled,
     registrationEnabled,
     localRegistrationEnabled,
@@ -103,6 +104,7 @@ export function* fetchCoreSettingsPublic() {
     actions.fetchCoreSettingsPublic(
       ssoUrls,
       ssoAvailable,
+      oidcEnabledMethods,
       ssoRegistrationEnabled,
       registrationEnabled,
       localRegistrationEnabled,

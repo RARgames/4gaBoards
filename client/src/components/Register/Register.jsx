@@ -82,7 +82,20 @@ const createMessage = (error) => {
 };
 
 const Register = React.memo(
-  ({ defaultData, isSubmitting, error, ssoAvailable, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, onRegister, onAuthenticateSso, onMessageDismiss, onLoginOpen }) => {
+  ({
+    defaultData,
+    isSubmitting,
+    error,
+    ssoAvailable,
+    oidcEnabledMethods,
+    registrationEnabled,
+    localRegistrationEnabled,
+    ssoRegistrationEnabled,
+    onRegister,
+    onAuthenticateSso,
+    onMessageDismiss,
+    onLoginOpen,
+  }) => {
     const [t] = useTranslation();
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
@@ -246,7 +259,7 @@ const Register = React.memo(
                   )}
                   {ssoAvailable[SsoTypes.GITHUB] && registrationEnabled && ssoRegistrationEnabled && (
                     <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={() => onAuthenticateSso(SsoTypes.GITHUB)} className={s.button}>
-                      <Icon type={IconType.Github} size={IconSize.Size20} className={s.ssoIcon} />
+                      <Icon type={IconType.GitHub} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'GitHub' })}
                     </Button>
                   )}
@@ -256,12 +269,22 @@ const Register = React.memo(
                       {t('common.continueWith', { provider: 'Microsoft' })}
                     </Button>
                   )}
-                  {ssoAvailable[SsoTypes.OIDC] && registrationEnabled && ssoRegistrationEnabled && (
+                  {ssoAvailable[SsoTypes.OIDC] && oidcEnabledMethods.length === 0 && registrationEnabled && ssoRegistrationEnabled && (
                     <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'OIDC' })} onClick={() => onAuthenticateSso(SsoTypes.OIDC)} className={s.button}>
                       <Icon type={IconType.Key} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'OIDC' })}
                     </Button>
                   )}
+                  {ssoAvailable[SsoTypes.OIDC] &&
+                    oidcEnabledMethods.length > 0 &&
+                    registrationEnabled &&
+                    ssoRegistrationEnabled &&
+                    oidcEnabledMethods.map((method) => (
+                      <Button key={method} style={ButtonStyle.Login} title={t('common.continueWith', { provider: method })} onClick={() => onAuthenticateSso(SsoTypes.OIDC, method)} className={s.button}>
+                        <Icon type={IconType[method] || IconType.Key} size={IconSize.Size20} className={s.ssoIcon} />
+                        {t('common.continueWith', { provider: method })}
+                      </Button>
+                    ))}
                 </div>
               </>
             )}
@@ -281,6 +304,7 @@ Register.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   ssoAvailable: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  oidcEnabledMethods: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,

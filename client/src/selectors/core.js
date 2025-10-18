@@ -34,6 +34,7 @@ export const selectCoreSettings = createSelector(orm, ({ Core }) => {
       allowedRegisterDomains: [],
       ssoUrls,
       ssoAvailable,
+      oidcEnabledMethods: [],
       demoMode: false,
     };
     return coreModel;

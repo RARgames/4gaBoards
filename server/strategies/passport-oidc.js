@@ -55,7 +55,7 @@ class OIDCStrategy extends Strategy {
    * Initiates OAuth2 authorization code flow
    * Redirects user to OIDC provider's authorization endpoint
    */
-  startAuth() {
+  startAuth(req) {
     const state = jwt.sign({ nonce: crypto.randomUUID() }, process.env.OIDC_STATE_SECRET, { expiresIn: '5m' });
     const authURL = new URL(this.authorizationURL);
     authURL.search = new URLSearchParams({
@@ -64,6 +64,7 @@ class OIDCStrategy extends Strategy {
       scope: this.scope.join(' '),
       response_type: 'code',
       state,
+      kc_idp_hint: req?.query?.kc_idp_hint,
     });
 
     this.redirect(authURL.toString());

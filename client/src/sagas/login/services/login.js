@@ -26,14 +26,20 @@ export function* clearAuthenticateError() {
   yield put(actions.clearAuthenticateError());
 }
 
-export function* authenticateSso(provider) {
-  yield put(actions.authenticateSso(provider));
+export function* authenticateSso(provider, method) {
+  yield put(actions.authenticateSso(provider, method));
   const { ssoUrls } = yield select(selectors.selectCoreSettings);
-  const ssoUrl = ssoUrls[provider];
+  let ssoUrl = ssoUrls[provider];
   if (!ssoUrl) {
     yield put(actions.authenticateSso.failure(provider, { code: 'E_NOT_FOUND', message: 'SSO URL not found' }));
     return;
   }
+  if (method) {
+    const url = new URL(ssoUrl);
+    url.searchParams.set('kc_idp_hint', method);
+    ssoUrl = url.toString();
+  }
+
   window.location.replace(ssoUrl);
 }
 

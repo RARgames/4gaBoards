@@ -60,7 +60,7 @@ const AboutSettings = React.memo(({ demoMode, onGettingStartedProjectImport }) =
           </ExternalLink>
           <div className={s.link}>
             <ExternalLink href="https://github.com/RARgames/4gaBoards">
-              <Icon type={IconType.Github} size={IconSize.Size13} className={s.icon} />
+              <Icon type={IconType.GitHub} size={IconSize.Size13} className={s.icon} />
               {t('common.github')}
             </ExternalLink>
           </div>

@@ -61,7 +61,7 @@ const BoardActions = React.memo(
         <div className={s.githubAction}>
           <ConnectionsPopup defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
             <Icon
-              type={IconType.Github}
+              type={IconType.GitHub}
               size={IconSize.Size14}
               className={clsx(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
               title={boardData.isGithubConnected ? t('common.connectedToGithub', { repo: boardData.githubRepo }) : t('common.notConnectedToGithub')}

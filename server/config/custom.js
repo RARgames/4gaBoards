@@ -58,6 +58,11 @@ module.exports.custom = {
       !!process.env.OIDC_STATE_SECRET,
   },
 
+  oidcEnabledMethods: (process.env.OIDC_ENABLED_METHODS || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0),
+
   demoMode: process.env.DEMO_MODE === 'true',
   metricsEnabled: process.env.METRICS_ENABLED === 'true',
 

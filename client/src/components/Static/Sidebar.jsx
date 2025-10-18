@@ -172,7 +172,7 @@ const Sidebar = React.memo(
                                   (isProjectManager ? (
                                     <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
                                       <Icon
-                                        type={IconType.Github}
+                                        type={IconType.GitHub}
                                         size={IconSize.Size13}
                                         className={clsx(s.githubGreen, board.notificationsTotal > 0 && s.githubNotifications)}
                                         title={t('common.connectedToGithub', { repo: board.githubRepo })}
@@ -181,7 +181,7 @@ const Sidebar = React.memo(
                                   ) : (
                                     <div>
                                       <Icon
-                                        type={IconType.Github}
+                                        type={IconType.GitHub}
                                         size={IconSize.Size13}
                                         className={clsx(s.githubGreen, s.githubCannotManage, board.notificationsTotal > 0 && s.githubNotificationsCannotManage)}
                                         title={t('common.connectedToGithub', { repo: board.githubRepo })}

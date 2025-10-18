@@ -81,7 +81,7 @@ const BoardActionsStep = React.memo(({ defaultDataRename, defaultDataGithub, cre
         {t('common.renameBoard', { context: 'title' })}
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
-        <Icon type={IconType.Github} size={IconSize.Size13} className={s.icon} />
+        <Icon type={IconType.GitHub} size={IconSize.Size13} className={s.icon} />
         {t('common.connections', { context: 'title' })}
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={handleExportClick}>

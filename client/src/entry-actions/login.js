@@ -7,10 +7,11 @@ const authenticate = (data) => ({
   },
 });
 
-const authenticateSso = (provider) => ({
+const authenticateSso = (provider, method) => ({
   type: EntryActionTypes.AUTHENTICATE_SSO,
   payload: {
     provider,
+    method,
   },
 });
 

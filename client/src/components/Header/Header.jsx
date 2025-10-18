@@ -56,7 +56,7 @@ const Header = React.memo(({ path, project, user, notifications, notificationCou
       {demoMode && (
         <div className={s.demoMode}>
           <ExternalLink href="https://github.com/RARgames/4gaBoards" className={clsx(s.demoModeNotice, s.hideOnSmallGithub)}>
-            <Icon type={IconType.Github} size={IconSize.Size20} />
+            <Icon type={IconType.GitHub} size={IconSize.Size20} />
             <div className={s.demoModeNoticeTexts}>
               <span className={s.demoModeNoticeTextMain}>{t('common.demoModeGithubMain')}</span>
               <span className={s.demoModeNoticeTextExtra}>{t('common.demoModeGithubExtra')}</span>

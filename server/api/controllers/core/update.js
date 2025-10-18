@@ -65,6 +65,7 @@ module.exports = {
       allowedRegisterDomains: core.allowedRegisterDomains.join(';'),
       ssoUrls: sails.config.custom.ssoUrls,
       ssoAvailable: sails.config.custom.ssoAvailable,
+      oidcEnabledMethods: sails.config.custom.oidcEnabledMethods,
       demoMode: sails.config.custom.demoMode,
     };
 
