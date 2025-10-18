@@ -3,11 +3,11 @@
     box-sizing: content-box;
     display: inline-block;
     min-height: auto;
-    padding: 4px;
+    padding: 3px;
     position: absolute;
-    right: 5px;
-    top: 2px;
-    width: 10px;
+    right: -5px;
+    top: 0;
+    width: 20px;
   }
 
   .popupWrapper2 {
@@ -50,7 +50,7 @@
     &:hover {
       background: var(--backgroundCardSelected);
 
-      .target {
+      .editCardButton {
         opacity: 1;
       }
     }
@@ -97,7 +97,7 @@
   }
 
   .details {
-    padding: 8px 6px 0 4px;
+    padding: 6px 6px 0 4px;
   }
 
   .labels {
