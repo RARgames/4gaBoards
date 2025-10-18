@@ -117,6 +117,24 @@
     margin-right: 4px;
   }
 
+  .badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    background-color: #dc3545;
+    border-radius: 3px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  &:global([data-theme-shape='rounded']) .badge {
+    border-radius: 6px;
+  }
+
   .fullWidth {
     width: 100%;
   }

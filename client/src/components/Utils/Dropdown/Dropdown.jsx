@@ -345,6 +345,7 @@ const Dropdown = React.forwardRef(
                     {item.flags && item.flags.map((flag) => <Icon key={flag} type={FlagType[flag]} size={IconSize.Size14} className={s.icon} />)}
                     {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={s.icon} />}
                     {item.name}
+                    {item.badge && <span className={s.badge}>{item.badge}</span>}
                   </div>
                 ))}
               </div>

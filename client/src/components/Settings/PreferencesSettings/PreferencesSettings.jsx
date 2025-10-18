@@ -108,6 +108,7 @@ const PreferencesSettings = React.memo(
         {
           id: ColorSchemas.GITHUB_DARK,
           name: t('common.colorSchemaGithubDark'),
+          badge: 'Beta',
         },
       ],
       [t],
