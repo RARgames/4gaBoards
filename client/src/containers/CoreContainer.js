@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
     currentCard,
     isInitializing: isCoreInitializing,
     themeShape: userPrefs?.themeShape,
+    colorSchema: userPrefs?.colorSchema,
   };
 };
 

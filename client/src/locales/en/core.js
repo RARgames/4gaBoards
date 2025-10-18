@@ -145,6 +145,7 @@ export default {
       descriptionSyncSsoAdminOnAuth: 'Enable or disable synchronization of admin from the SSO provider during authentication. Enabling this option can automatically grant or revoke admin rights based on the SSO data.', // eslint-disable-line prettier/prettier
       descriptionSyncSsoDataOnAuth: 'Enable or disable synchronization of user data from the SSO provider during authentication.',
       descriptionThemeShape: 'Select the shape of the application theme.',
+      descriptionColorSchema: 'Select the color theme of the application.',
       descriptionUserRegistration: 'Enable or disable all user registration methods. If you disable all registration methods, only administrators will be able to create new users.',
       descriptionUsersSettingsStyle: 'Select the style of the users settings.',
       detailsAttachments_one: 'This card has {{count}} attachment',
@@ -375,6 +376,9 @@ export default {
       themeShape: 'Theme Shape',
       themeShapeDefault: 'Default',
       themeShapeRounded: 'Rounded',
+      colorSchema: 'Color Schema',
+      colorSchemaGithubDark: 'GitHub Dark',
+      colorSchemaDefault: 'Default',
       thereIsNoPreviewAvailableForThisAttachment: 'There is no preview available for this attachment',
       time: 'Time',
       timer: 'Timer',

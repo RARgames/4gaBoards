@@ -10,7 +10,7 @@ import { Loader, LoaderSize, Button, ButtonStyle, Icon, IconType, IconSize } fro
 
 import * as s from './Core.module.scss';
 
-const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard, themeShape }) => {
+const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard, themeShape, colorSchema }) => {
   const [t] = useTranslation();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showDisconnected, setShowDisconnected] = useState(false);
@@ -36,6 +36,13 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
       body.setAttribute('data-theme-shape', themeShape);
     }
   }, [themeShape]);
+
+  useEffect(() => {
+    const body = document.getElementById('app');
+    if (body) {
+      body.setAttribute('data-color-schema', colorSchema);
+    }
+  }, [colorSchema]);
 
   const handleToggleCollapse = useCallback(() => {
     setIsCollapsed(!isCollapsed);
@@ -88,6 +95,7 @@ Core.propTypes = {
   currentBoard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   currentCard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   themeShape: PropTypes.string,
+  colorSchema: PropTypes.string,
 };
 
 Core.defaultProps = {
@@ -95,6 +103,7 @@ Core.defaultProps = {
   currentBoard: undefined,
   currentCard: undefined,
   themeShape: 'default',
+  colorSchema: 'default',
 };
 
 export default Core;

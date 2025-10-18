@@ -153,6 +153,7 @@ export default {
       descriptionSyncSsoAdminOnAuth: 'Włącz lub wyłącz synchronizację administratora z dostawcą SSO podczas uwierzytelniania. Włączenie tej opcji może automatycznie przyznawać lub odbierać prawa administratora na podstawie danych SSO.', // eslint-disable-line prettier/prettier
       descriptionSyncSsoDataOnAuth: 'Włącz lub wyłącz synchronizację danych użytkownika z dostawcą SSO podczas uwierzytelniania.',
       descriptionThemeShape: 'Wybierz kształt motywu aplikacji.',
+      descriptionColorSchema: 'Wybierz motyw kolorystyczny aplikacji.',
       descriptionUserRegistration: 'Włącz lub wyłącz wszystkie metody rejestracji użytkowników. Jeśli wyłączysz wszystkie metody rejestracji, tylko administratorzy będą mogli tworzyć nowych użytkowników.',
       descriptionUsersSettingsStyle: 'Wybierz styl ustawień użytkowników.',
       detailsAttachments_few: 'Ta karta ma {{count}} załączniki',
@@ -391,6 +392,9 @@ export default {
       themeShape: 'Kształt motywu',
       themeShapeDefault: 'Domyślny',
       themeShapeRounded: 'Zaokrąglony',
+      colorSchema: 'Schemat kolorów',
+      colorSchemaGithubDark: 'GitHub Ciemny',
+      colorSchemaDefault: 'Domyślny',
       thereIsNoPreviewAvailableForThisAttachment: 'Nie można wyświetlić podglądu załącznika',
       time: 'Czas',
       timer: 'Stoper',

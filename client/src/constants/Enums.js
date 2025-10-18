@@ -87,3 +87,8 @@ export const ThemeShapes = {
   DEFAULT: 'default',
   ROUNDED: 'rounded',
 };
+
+export const ColorSchemas = {
+  DEFAULT: 'default',
+  GITHUB_DARK: 'github-dark',
+};
