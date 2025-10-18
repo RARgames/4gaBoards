@@ -139,7 +139,7 @@
 }
 
 /* Github Dark Color Schema */
-[data-color-schema='github-dark'] {
+[data-theme='github-dark'] {
   --backgroundColor: #0d1117; /* Override loading.css */
   --backgroundColor0: #010409;
   --backgroundColor1: #0d1117;
