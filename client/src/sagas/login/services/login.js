@@ -36,7 +36,7 @@ export function* authenticateSso(provider, method) {
   }
   if (method) {
     const url = new URL(ssoUrl);
-    url.searchParams.set('kc_idp_hint', method);
+    url.searchParams.set('kc_idp_hint', method.toLowerCase());
     ssoUrl = url.toString();
   }
 

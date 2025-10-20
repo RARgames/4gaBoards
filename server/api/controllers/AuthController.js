@@ -90,7 +90,6 @@ module.exports = {
         res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=${encodeURIComponent(errorCode)}`);
         return;
       }
-
       if (!profile) {
         sails.log.error('OIDC callback: No profile returned');
         res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=no_profile`);
