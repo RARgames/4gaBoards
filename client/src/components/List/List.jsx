@@ -271,6 +271,7 @@ const List = React.memo(
                       onDelete={onDelete}
                       onActivitiesFetch={onActivitiesFetch}
                       onMailCreate={onMailCreate}
+                      onDelete={onDelete}
                       position="left-start"
                       offset={0}
                       hideCloseButton

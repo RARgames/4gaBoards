@@ -26,5 +26,4 @@ module.exports.policies = {
   'auth/*': true,
   'register/create': true,
   'mails/create-card': 'is-api-client',
-
 };

@@ -50,14 +50,13 @@ module.exports = {
     const { currentUser } = this.req;
 
     let list = null;
-    let board, project;
+    let board;
+    let project;
 
     if (inputs.listId) {
-      ({ list, board, project } = await sails.helpers.lists.getProjectPath(inputs.listId)
-        .intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
+      ({ list, board, project } = await sails.helpers.lists.getProjectPath(inputs.listId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
     } else if (inputs.boardId) {
-      ({ board, project } = await sails.helpers.boards.getProjectPath(inputs.boardId)
-        .intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
+      ({ board, project } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
     } else {
       throw Errors.MISSING_RELATIONS;
     }

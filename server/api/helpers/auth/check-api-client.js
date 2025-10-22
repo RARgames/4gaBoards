@@ -2,15 +2,15 @@ module.exports = {
   inputs: {
     clientId: {
       type: 'string',
-      required: true
+      required: true,
     },
     clientSecret: {
       type: 'string',
-      required: true
+      required: true,
     },
     requiredPermission: {
+      required: true,
       type: 'string',
-      required: true
     },
   },
 

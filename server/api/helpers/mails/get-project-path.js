@@ -20,13 +20,12 @@ module.exports = {
     let path = {};
 
     if (mail.listId) {
-      path = await sails.helpers.lists.getProjectPath(mail.listId)
-        .intercept('pathNotFound', (nodes) => ({
-          pathNotFound: {
-            mail,
-            ...nodes,
-          },
-        }));
+      path = await sails.helpers.lists.getProjectPath(mail.listId).intercept('pathNotFound', (nodes) => ({
+        pathNotFound: {
+          mail,
+          ...nodes,
+        },
+      }));
     } else if (mail.boardId) {
       const board = await Board.findOne({ id: mail.boardId });
       if (!board) {
