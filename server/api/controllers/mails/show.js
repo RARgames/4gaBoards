@@ -21,8 +21,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const { mail, board, project } = await sails.helpers.mails.getProjectPath(inputs.mailId)
-      .intercept('pathNotFound', () => Errors.MAIL_NOT_FOUND);
+    const { mail, board, project } = await sails.helpers.mails.getProjectPath(inputs.mailId).intercept('pathNotFound', () => Errors.MAIL_NOT_FOUND);
 
     const isBoardMember = await sails.helpers.users.isBoardMember(currentUser.id, board.id);
 
