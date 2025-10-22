@@ -18,7 +18,7 @@ const Errors = {
   },
   BOARD_HAS_NO_LISTS: {
     boardHasNoLists: 'Board has no lists',
-  }
+  },
 };
 
 const dueDateValidator = (value) => moment(value, moment.ISO_8601, true).isValid();
@@ -43,68 +43,67 @@ module.exports = {
   inputs: {
     mailId: {
       type: 'string',
-      required: true
+      required: true,
     },
     position: {
-      type: 'number'
+      type: 'number',
     },
     name: {
       type: 'string',
-      required: true
+      required: true,
     },
     description: {
       type: 'string',
       isNotEmptyString: true,
-      allowNull: true
+      allowNull: true,
     },
     dueDate: {
       type: 'string',
-      custom: dueDateValidator
+      custom: dueDateValidator,
     },
     timer: {
       type: 'json',
-      custom: timerValidator
+      custom: timerValidator,
     },
   },
 
   exits: {
     userNotFound: {
-      responseType: 'notFound'
+      responseType: 'notFound',
     },
     listNotFound: {
-      responseType: 'notFound'
+      responseType: 'notFound',
     },
     notEnoughRights: {
-      responseType: 'forbidden'
+      responseType: 'forbidden',
     },
     positionMustBePresent: {
-      responseType: 'unprocessableEntity'
+      responseType: 'unprocessableEntity',
     },
     mailPathInvalid: {
-      responseType: 'notFound'
+      responseType: 'notFound',
     },
     boardHasNoLists: {
-      responseType: 'notFound'
-    }
+      responseType: 'notFound',
+    },
   },
 
   async fn(inputs) {
-    const { mail, list, board } = await sails.helpers.mails.getProjectPath(inputs.mailId)
-      .intercept('pathNotFound', () => Errors.MAIL_PATH_INVALID);
+    const { mail, list, board } = await sails.helpers.mails.getProjectPath(inputs.mailId).intercept('pathNotFound', () => Errors.MAIL_PATH_INVALID);
 
     let targetList = list;
     if (!targetList && board) {
       const lists = await List.find({
-      where: { boardId: board.id },
-      sort: 'position ASC',
-      limit: 1
+        where: { boardId: board.id },
+        sort: 'position ASC',
+        limit: 1,
       });
 
       if (!lists.length) {
         throw Errors.BOARD_HAS_NO_LISTS;
       }
 
-      targetList = lists[0];
+      [targetList] = lists;
     }
 
     const currentUser = await User.findOne({ id: mail.userId });
@@ -137,7 +136,7 @@ module.exports = {
       .intercept('positionMustBeInValues', () => Errors.POSITION_MUST_BE_PRESENT);
 
     return {
-      item: card
+      item: card,
     };
   },
 };
