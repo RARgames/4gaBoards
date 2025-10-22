@@ -259,8 +259,8 @@ const List = React.memo(
                       boardMemberships={boardMemberships}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
-                      onDelete={onDelete}
                       onMailCreate={onMailCreate}
+                      onDelete={onDelete}
                       position="left-start"
                       offset={0}
                       hideCloseButton

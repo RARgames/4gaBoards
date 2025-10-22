@@ -14,7 +14,7 @@ module.exports = async function isApiClient(req, res, proceed) {
     });
 
     return proceed();
-  } catch (err) {
+  } catch {
     return res.unauthorized('Invalid client credentials or missing permission');
   }
 };

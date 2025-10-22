@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux'; // test mail button
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
+import selectors from '../../selectors'; // test mail button
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
@@ -15,9 +17,22 @@ const StepTypes = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose, onMailCreate }) => {
+const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onMailCreate, onDelete, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
+
+  /* test mail button */
+  const listId = '1626398009086444718';
+
+  const testMail = useSelector((state) => {
+    try {
+      return selectors.selectMailForCurrentUserByListId(state, listId);
+    } catch (e) {
+      console.warn('Mail selector error:', e);
+      return null;
+    }
+  });
+  /* test mail button */
 
   const handleEditNameClick = useCallback(() => {
     onNameEdit();
@@ -91,6 +106,17 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
       <Button style={ButtonStyle.PopupContext} title={t('action.generateMailId', { context: 'title' })} onClick={handleMailClick}>
         {t('action.generateMailId', { context: 'title' })}
       </Button>
+      {/* test mail button */}
+      <Button
+        style={ButtonStyle.PopupContext}
+        title="Test Mail Selector"
+        onClick={() => {
+          console.log('Test mail selector for listId', listId, ':', testMail);
+        }}
+      >
+        Test Mail
+      </Button>
+      {/* test mail button */}
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
         <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -109,9 +135,9 @@ ActionsStep.propTypes = {
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  onMailCreate: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {
