@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux'; // test mail button
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
-import selectors from '../../selectors'; // test mail button
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
+import MailStep from '../Mail/MailStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
@@ -14,6 +13,7 @@ import * as s from './ActionsPopup.module.scss';
 const StepTypes = {
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
+  MAIL: 'MAIL',
 };
 
 const ActionsStep = React.memo(
@@ -28,29 +28,17 @@ const ActionsStep = React.memo(
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    mailId,
     onNameEdit,
     onCardAdd,
     onDelete,
     onActivitiesFetch,
     onMailCreate,
+    onMailUpdate,
     onClose,
-    onMailCreate
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
-
-  /* test mail button */
-  const listId = '1626398009086444718';
-
-  const testMail = useSelector((state) => {
-    try {
-      return selectors.selectMailForCurrentUserByListId(state, listId);
-    } catch (e) {
-      console.warn('Mail selector error:', e);
-      return null;
-    }
-  });
-  /* test mail button */
 
   const handleEditNameClick = useCallback(() => {
     onNameEdit();
@@ -69,9 +57,9 @@ const ActionsStep = React.memo(
       openStep(StepTypes.ACTIVITY);
     }, [openStep]);
 
-  const handleMailClick = useCallback(() => {
-    onMailCreate();
-  }, [onMailCreate]);
+  const handleMailOptionsClick = useCallback(() => {
+    openStep(StepTypes.MAIL);
+  }, [openStep]);
 
     if (step) {
       switch (step.type) {
@@ -105,7 +93,19 @@ const ActionsStep = React.memo(
               onClose={onClose}
             />
           );
-        default:
+      case StepTypes.MAIL:
+        return (
+          <MailStep
+            title={t('common.mailSettings', { context: 'title' })}
+            mailId={mailId}
+            onGenerate={onMailCreate}
+            onReset={onMailUpdate}
+            onCopy={() => console.log('Copy mailId', mailId)} // will add it later
+            onDelete={() => console.log('Delete mailId', mailId)} // will add it later
+            onBack={handleBack}
+          />
+        );
+      default:
       }
     }
 
@@ -123,20 +123,9 @@ const ActionsStep = React.memo(
           <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
           {t('action.addCard', { context: 'title' })}
         </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('action.generateMailId', { context: 'title' })} onClick={handleMailClick}>
-        {t('action.generateMailId', { context: 'title' })}
+      <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={handleMailOptionsClick}>
+        {t('common.mailSettings', { context: 'title' })}
       </Button>
-      {/* test mail button */}
-      <Button
-        style={ButtonStyle.PopupContext}
-        title="Test Mail Selector"
-        onClick={() => {
-          console.log('Test mail selector for listId', listId, ':', testMail);
-        }}
-      >
-        Test Mail
-      </Button>
-      {/* test mail button */}
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -158,9 +147,11 @@ ActionsStep.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  mailId: PropTypes.string,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -172,6 +163,7 @@ ActionsStep.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
+  mailId: null,
 };
 
 export default withPopup(ActionsStep);
