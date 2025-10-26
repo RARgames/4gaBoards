@@ -9,14 +9,8 @@ const createMail = (listId, headers) =>
     item: transformMail(body.item),
   }));
 
-const showMail = (mailId, headers) =>
-  socket.get(`/mails/${mailId}`, {}, headers).then((body) => ({
-    ...body,
-    item: transformMail(body.item),
-  }));
-
-const updateMail = (mailId, headers) =>
-  socket.post(`/mails/${mailId}/update`, {}, headers).then((body) => ({
+const updateMail = (listId, headers) =>
+  socket.patch(`/mails/${listId}/update`, {}, headers).then((body) => ({
     ...body,
     item: transformMail(body.item),
   }));
@@ -30,9 +24,11 @@ const makeHandleMailCreate = (next) => (body) => {
   });
 };
 
+const makeHandleMailUpdate = makeHandleMailCreate;
+
 export default {
   createMail,
-  showMail,
   updateMail,
   makeHandleMailCreate,
+  makeHandleMailUpdate,
 };

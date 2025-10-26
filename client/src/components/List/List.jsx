@@ -35,10 +35,12 @@ const List = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    mailId,
     onUpdate,
     onDelete,
     onCardCreate,
     onMailCreate,
+    onMailUpdate,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -257,9 +259,11 @@ const List = React.memo(
                       updatedAt={updatedAt}
                       updatedBy={updatedBy}
                       boardMemberships={boardMemberships}
+                      mailId={mailId}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onMailCreate={onMailCreate}
+                      onMailUpdate={onMailUpdate}
                       onDelete={onDelete}
                       position="left-start"
                       offset={0}
@@ -304,10 +308,12 @@ List.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailId: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {
@@ -315,6 +321,7 @@ List.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  mailId: null,
 };
 
 export default List;
