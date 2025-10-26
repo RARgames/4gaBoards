@@ -29,6 +29,7 @@ export default class extends BaseModel {
   static reducer({ type, payload }, Mail) {
     switch (type) {
       case ActionTypes.CORE_INITIALIZE:
+      case ActionTypes.LOCATION_CHANGE_HANDLE:
       case ActionTypes.BOARD_FETCH__SUCCESS:
       case ActionTypes.BOARD_UPDATE__SUCCESS:
       case ActionTypes.BOARD_UPDATE_HANDLE:
@@ -39,6 +40,13 @@ export default class extends BaseModel {
             Mail.upsert(mail);
           });
         }
+        break;
+
+      case ActionTypes.MAIL_CREATE__SUCCESS:
+      case ActionTypes.MAIL_UPDATE__SUCCESS:
+      case ActionTypes.MAIL_CREATE_HANDLE:
+      case ActionTypes.MAIL_UPDATE_HANDLE:
+        Mail.upsert(payload.mail);
         break;
       default:
     }
