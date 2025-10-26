@@ -22,7 +22,27 @@ export function* handleMailCreate(mail) {
   yield put(actions.handleMailCreate(mail));
 }
 
+export function* updateMail(listId) {
+  yield put(actions.updateMail(listId));
+
+  let mail;
+  try {
+    ({ item: mail } = yield call(request, api.updateMail, listId));
+  } catch (error) {
+    yield put(actions.updateMail.failure(listId, error));
+    return;
+  }
+
+  yield put(actions.updateMail.success(listId, mail));
+}
+
+export function* handleMailUpdate(mail) {
+  yield put(actions.handleMailUpdate(mail));
+}
+
 export default {
   createMail,
   handleMailCreate,
+  updateMail,
+  handleMailUpdate,
 };

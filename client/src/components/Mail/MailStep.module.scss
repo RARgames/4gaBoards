@@ -1,0 +1,20 @@
+:global(#app) {
+  .content {
+    padding: 0;
+    width: 100%;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 6px 0;
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .buttons button {
+    width: 100%;
+    text-align: left;
+  }
+}

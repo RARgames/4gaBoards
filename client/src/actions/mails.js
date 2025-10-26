@@ -30,7 +30,39 @@ const handleMailCreate = (mail) => ({
   },
 });
 
+const updateMail = (listId) => ({
+  type: ActionTypes.MAIL_UPDATE,
+  payload: {
+    listId,
+  },
+});
+
+updateMail.success = (listId, mail) => ({
+  type: ActionTypes.MAIL_UPDATE__SUCCESS,
+  payload: {
+    listId,
+    mail,
+  },
+});
+
+updateMail.failure = (listId, error) => ({
+  type: ActionTypes.MAIL_UPDATE__FAILURE,
+  payload: {
+    listId,
+    error,
+  },
+});
+
+const handleMailUpdate = (mail) => ({
+  type: ActionTypes.MAIL_UPDATE_HANDLE,
+  payload: {
+    mail,
+  },
+});
+
 export default {
   createMail,
   handleMailCreate,
+  updateMail,
+  handleMailUpdate,
 };

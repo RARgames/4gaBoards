@@ -1,6 +1,16 @@
-const crypto = require('crypto');
-
 const Errors = {
+  MISSING_RELATIONS: {
+    missingRelations: 'Missing required related entities',
+  },
+  NOT_ENOUGH_RIGHTS: {
+    notEnoughRights: 'Not enough rights',
+  },
+  LIST_NOT_FOUND: {
+    listNotFound: 'List not found',
+  },
+  BOARD_NOT_FOUND: {
+    boardNotFound: 'Board not found',
+  },
   MAIL_NOT_FOUND: {
     mailNotFound: 'Mail not found',
   },
@@ -11,11 +21,26 @@ module.exports = {
     listId: {
       type: 'string',
       regex: /^[0-9]+$/,
-      required: true,
+    },
+    boardId: {
+      type: 'string',
+      regex: /^[0-9]+$/,
     },
   },
 
   exits: {
+    missingRelations: {
+      responseType: 'badRequest',
+    },
+    notEnoughRights: {
+      responseType: 'forbidden',
+    },
+    listNotFound: {
+      responseType: 'notFound',
+    },
+    boardNotFound: {
+      responseType: 'notFound',
+    },
     mailNotFound: {
       responseType: 'notFound',
     },
@@ -23,24 +48,40 @@ module.exports = {
 
   async fn(inputs) {
     const { currentUser } = this.req;
+    let list = null;
+    let board;
 
-    const mail = await Mail.findOne({
+    if (inputs.listId) {
+      ({ list, board } = await sails.helpers.lists.getProjectPath(inputs.listId).intercept('pathNotFound', () => Errors.LIST_NOT_FOUND));
+    } else if (inputs.boardId) {
+      ({ board } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND));
+    } else {
+      throw Errors.LIST_NOT_FOUND;
+    }
+
+    const membership = await BoardMembership.findOne({
+      boardId: board.id,
       userId: currentUser.id,
-      listId: inputs.listId,
     });
 
-    if (!mail) {
+    if (!membership) {
+      throw list ? Errors.LIST_NOT_FOUND : Errors.BOARD_NOT_FOUND;
+    }
+
+    if (membership.role !== BoardMembership.Roles.EDITOR) {
+      throw Errors.NOT_ENOUGH_RIGHTS;
+    }
+
+    const updated = await sails.helpers.mails.updateOne.with({
+      currentUser,
+      listId: list ? list.id : null,
+      boardId: board.id,
+    });
+
+    if (!updated) {
       throw Errors.MAIL_NOT_FOUND;
     }
 
-    const newMailId = crypto.randomBytes(8).toString('hex');
-
-    const updated = await Mail.updateOne({ id: mail.id }).set({
-      mailId: newMailId,
-    });
-
-    return {
-      item: updated,
-    };
+    return { item: updated };
   },
 };

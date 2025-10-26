@@ -39,11 +39,13 @@ const List = React.memo(
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    mailId,
     onUpdate,
     onDelete,
     onCardCreate,
     onActivitiesFetch,
     onMailCreate,
+    onMailUpdate,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -266,11 +268,13 @@ const List = React.memo(
                       isActivitiesFetching={isActivitiesFetching}
                       isAllActivitiesFetched={isAllActivitiesFetched}
                       lastActivityId={lastActivityId}
+                      mailId={mailId}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onDelete={onDelete}
                       onActivitiesFetch={onActivitiesFetch}
                       onMailCreate={onMailCreate}
+                      onMailUpdate={onMailUpdate}
                       onDelete={onDelete}
                       position="left-start"
                       offset={0}
@@ -319,11 +323,13 @@ List.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  mailId: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {
@@ -332,6 +338,7 @@ List.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
+  mailId: null,
 };
 
 export default List;
