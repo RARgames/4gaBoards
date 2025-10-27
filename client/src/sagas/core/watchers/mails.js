@@ -9,5 +9,7 @@ export default function* mailsWatchers() {
     takeEvery(EntryActionTypes.MAIL_CREATE_HANDLE, ({ payload: { mail } }) => services.handleMailCreate(mail)),
     takeEvery(EntryActionTypes.MAIL_UPDATE, ({ payload: { listId } }) => services.updateMail(listId)),
     takeEvery(EntryActionTypes.MAIL_UPDATE_HANDLE, ({ payload: { mail } }) => services.handleMailUpdate(mail)),
+    takeEvery(EntryActionTypes.MAIL_DELETE, ({ payload: { listId } }) => services.deleteMail(listId)),
+    takeEvery(EntryActionTypes.MAIL_DELETE_HANDLE, ({ payload: { mail } }) => services.handleMailDelete(mail)),
   ]);
 }
