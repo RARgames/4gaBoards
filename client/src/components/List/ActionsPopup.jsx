@@ -17,6 +17,7 @@ const StepTypes = {
 };
 
 const ActionsStep = React.memo(
+  // eslint-disable-next-line no-unused-vars
   ({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, mailId, onNameEdit, onCardAdd, onMailCreate, onMailUpdate, onMailCopy, onMailDelete, onDelete, onClose }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
