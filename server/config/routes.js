@@ -88,6 +88,8 @@ module.exports.routes = {
   'GET /api/mails/:mailId': 'mails/show',
   'PATCH /api/mails/:listId/update': 'mails/update',
   'PATCH /api/mails/:boardId/update': 'mails/update',
+  'DELETE /api/lists/:listId/mails': 'mails/delete',
+  'DELETE /api/boards/:boardId/mails': 'mails/delete',
 
   'POST /api/cards/:cardId/tasks': 'tasks/create',
   'PATCH /api/tasks/:id': 'tasks/update',
