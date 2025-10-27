@@ -1,4 +1,5 @@
 import EntryActionTypes from '../constants/EntryActionTypes';
+import { handleMailUpdate } from '../sagas/core/services/mails';
 
 const createMail = (listId) => ({
   type: EntryActionTypes.MAIL_CREATE,
@@ -28,9 +29,25 @@ const handleUpdateMail = (mail) => ({
   },
 });
 
+const deleteMail = (listId) => ({
+  type: EntryActionTypes.MAIL_DELETE,
+  payload: {
+    listId,
+  },
+});
+
+const handleMailDelete = (mail) => ({
+  type: EntryActionTypes.MAIL_DELETE_HANDLE,
+  payload: {
+    mail,
+  },
+});
+
 export default {
   createMail,
   handleMailCreate,
   updateMail,
   handleUpdateMail,
+  deleteMail,
+  handleMailDelete,
 };

@@ -15,6 +15,12 @@ const updateMail = (listId, headers) =>
     item: transformMail(body.item),
   }));
 
+const deleteMail = (listId, headers) =>
+  socket.delete(`/lists/${listId}/mails`, undefined, headers).then((body) => ({
+    ...body,
+    item: transformMail(body.item),
+  }));
+
 /* Event handlers */
 
 const makeHandleMailCreate = (next) => (body) => {
@@ -26,9 +32,13 @@ const makeHandleMailCreate = (next) => (body) => {
 
 const makeHandleMailUpdate = makeHandleMailCreate;
 
+const makeHandleMailDelete = makeHandleMailCreate;
+
 export default {
   createMail,
   updateMail,
+  deleteMail,
   makeHandleMailCreate,
   makeHandleMailUpdate,
+  makeHandleMailDelete,
 };

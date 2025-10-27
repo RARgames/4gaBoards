@@ -73,18 +73,26 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const mail = await sails.helpers.mails.updateOne.with({
-      currentUser,
-      listId: list ? list.id : null,
-      boardId: board.id,
-    });
+    const criteria = { userId: currentUser.id };
+    if (list) {
+      criteria.listId = list.id;
+    } else {
+      criteria.boardId = board.id;
+      criteria.listId = null;
+    }
 
+    const mail = await Mail.findOne(criteria);
     if (!mail) {
       throw Errors.MAIL_NOT_FOUND;
     }
 
+    const deleted = await sails.helpers.mails.deleteOne.with({
+      record: mail,
+      request: this.req,
+    });
+
     return {
-      item: mail,
+      item: deleted,
     };
   },
 };
