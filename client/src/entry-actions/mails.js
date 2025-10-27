@@ -1,5 +1,4 @@
 import EntryActionTypes from '../constants/EntryActionTypes';
-import { handleMailUpdate } from '../sagas/core/services/mails';
 
 const createMail = (listId) => ({
   type: EntryActionTypes.MAIL_CREATE,
