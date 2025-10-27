@@ -48,6 +48,11 @@ export default class extends BaseModel {
       case ActionTypes.MAIL_UPDATE_HANDLE:
         Mail.upsert(payload.mail);
         break;
+      case ActionTypes.MAIL_DELETE__SUCCESS:
+      case ActionTypes.MAIL_DELETE_HANDLE:
+        Mail.withId(payload.mail.id)?.delete();
+        break;
+
       default:
     }
   }

@@ -40,9 +40,29 @@ export function* handleMailUpdate(mail) {
   yield put(actions.handleMailUpdate(mail));
 }
 
+export function* deleteMail(listId) {
+  yield put(actions.deleteMail(listId));
+
+  let mail;
+  try {
+    ({ item: mail } = yield call(request, api.deleteMail, listId));
+  } catch (error) {
+    yield put(actions.deleteMail.failure(listId, error));
+    return;
+  }
+
+  yield put(actions.deleteMail.success(listId, mail));
+}
+
+export function* handleMailDelete(mail) {
+  yield put(actions.handleMailDelete(mail));
+}
+
 export default {
   createMail,
   handleMailCreate,
   updateMail,
   handleMailUpdate,
+  deleteMail,
+  handleMailDelete,
 };

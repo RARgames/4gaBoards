@@ -24,25 +24,27 @@ const ActionsStep = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    mailId,
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
-    mailId,
     onNameEdit,
     onCardAdd,
-    onDelete,
     onActivitiesFetch,
     onMailCreate,
     onMailUpdate,
+    onMailCopy,
+    onMailDelete,
+    onDelete,
     onClose,
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
 
-  const handleEditNameClick = useCallback(() => {
-    onNameEdit();
-  }, [onNameEdit]);
+    const handleEditNameClick = useCallback(() => {
+      onNameEdit();
+    }, [onNameEdit]);
 
     const handleAddCardClick = useCallback(() => {
       onCardAdd();
@@ -57,9 +59,9 @@ const ActionsStep = React.memo(
       openStep(StepTypes.ACTIVITY);
     }, [openStep]);
 
-  const handleMailOptionsClick = useCallback(() => {
-    openStep(StepTypes.MAIL);
-  }, [openStep]);
+    const handleMailOptionsClick = useCallback(() => {
+      openStep(StepTypes.MAIL);
+    }, [openStep]);
 
     if (step) {
       switch (step.type) {
@@ -93,19 +95,11 @@ const ActionsStep = React.memo(
               onClose={onClose}
             />
           );
-      case StepTypes.MAIL:
-        return (
-          <MailStep
-            title={t('common.mailSettings', { context: 'title' })}
-            mailId={mailId}
-            onGenerate={onMailCreate}
-            onReset={onMailUpdate}
-            onCopy={() => console.log('Copy mailId', mailId)} // will add it later
-            onDelete={() => console.log('Delete mailId', mailId)} // will add it later
-            onBack={handleBack}
-          />
-        );
-      default:
+        case StepTypes.MAIL:
+          return (
+            <MailStep title={t('common.mailSettings', { context: 'title' })} mailId={mailId} onGenerate={onMailCreate} onReset={onMailUpdate} onCopy={onMailCopy} onDelete={onMailDelete} onBack={handleBack} />
+          );
+        default:
       }
     }
 
@@ -152,6 +146,8 @@ ActionsStep.propTypes = {
   onCardAdd: PropTypes.func.isRequired,
   onMailCreate: PropTypes.func.isRequired,
   onMailUpdate: PropTypes.func.isRequired,
+  onMailCopy: PropTypes.func.isRequired,
+  onMailDelete: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

@@ -63,6 +63,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onActivitiesFetch: () => entryActions.fetchListActivities(id),
       onMailCreate: () => entryActions.createMail(id),
       onMailUpdate: () => entryActions.updateMail(id),
+      onMailDelete: () => entryActions.deleteMail(id),
     },
     dispatch,
   );

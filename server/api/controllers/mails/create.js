@@ -67,10 +67,7 @@ module.exports = {
     });
 
     if (!boardMembership) {
-      if (list) {
-        throw Errors.LIST_NOT_FOUND; // Forbidden
-      }
-      throw Errors.BOARD_NOT_FOUND; // Forbidden
+      throw list ? Errors.LIST_NOT_FOUND : Errors.BOARD_NOT_FOUND; // Forbidden
     }
 
     if (boardMembership.role !== BoardMembership.Roles.EDITOR) {

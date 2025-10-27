@@ -60,9 +60,41 @@ const handleMailUpdate = (mail) => ({
   },
 });
 
+const deleteMail = (listId) => ({
+  type: ActionTypes.MAIL_DELETE,
+  payload: {
+    listId,
+  },
+});
+
+deleteMail.success = (listId, mail) => ({
+  type: ActionTypes.MAIL_DELETE__SUCCESS,
+  payload: {
+    listId,
+    mail,
+  },
+});
+
+deleteMail.failure = (listId, error) => ({
+  type: ActionTypes.MAIL_DELETE__FAILURE,
+  payload: {
+    listId,
+    error,
+  },
+});
+
+const handleMailDelete = (mail) => ({
+  type: ActionTypes.MAIL_DELETE_HANDLE,
+  payload: {
+    mail,
+  },
+});
+
 export default {
   createMail,
   handleMailCreate,
   updateMail,
   handleMailUpdate,
+  deleteMail,
+  handleMailDelete,
 };
