@@ -1,11 +1,12 @@
 :global(#app) {
   .wrapper {
-    margin: 0 -12px;
+    margin: 0 -12px -12px -12px;
     max-width: max(274px, 35vw);
   }
 
   .item {
     padding: 4px 8px 12px 8px;
+    border-bottom: 1px solid var(--nodeOutline);
 
     &:hover {
       background: var(--backgroundPopupHover);

@@ -10,8 +10,9 @@
 
   .content {
     display: inline-block;
-    margin-bottom: 16px;
     vertical-align: top;
+    padding: 6px 12px 10px 12px;
+    border-bottom: 1px solid var(--nodeOutline);
   }
 
   .date {
@@ -21,12 +22,7 @@
     line-height: 20px;
   }
 
-  .text {
-    line-height: 20px;
-  }
-
   .contentText {
-    background: var(--backgroundColorTmpDarkerField);
     color: var(--textColor2);
   }
 

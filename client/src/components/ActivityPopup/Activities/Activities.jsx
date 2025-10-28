@@ -41,7 +41,7 @@ const Activities = React.memo(({ card, items, isFetching, isAllFetched, boardMem
 
   return (
     <div>
-      <div className={clsx(s.comments, gs.scrollableY)}>
+      <div className={clsx(s.wrapper, gs.scrollableY)}>
         {items.map((item) => (
           <Item key={item.id} card={card} scope={item.scope} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} boardMemberships={boardMemberships} />
         ))}
