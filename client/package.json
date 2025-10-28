@@ -97,7 +97,7 @@
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.14",
     "unist-util-visit": "^5.0.0",
-    "validator": "^13.15.15",
+    "validator": "^13.15.20",
     "webpack": "^5.102.1",
     "webpack-dev-server": "^5.2.2",
     "webpack-manifest-plugin": "^5.0.1",
