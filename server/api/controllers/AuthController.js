@@ -97,10 +97,18 @@ module.exports = {
       }
 
       try {
-        sails.log.info('OIDC callback: Creating/getting user', { profileId: profile.id, email: profile.emails[0].value, username: profile.username, isAdmin: profile.isAdmin });
+        sails.log.info('OIDC callback: Creating/getting user', {
+          profileId: profile.id,
+          email: profile.email,
+          displayName: profile.displayName,
+          username: profile.username,
+          isAdmin: profile.isAdmin,
+          emails: profile.emails,
+        });
+        const email = profile.email ? profile.email : profile.emails?.find((e) => e.primary && e.verified)?.email || profile.emails?.find((e) => e.verified)?.email || `${profile.id}@oidc-sso-4ga-boards.com`;
         const user = await sails.helpers.users.getCreateOneForOidcSso.with({
           id: profile.id,
-          email: profile.emails[0].value,
+          email,
           displayName: profile.displayName,
           username: profile.username,
           isAdmin: profile.isAdmin,

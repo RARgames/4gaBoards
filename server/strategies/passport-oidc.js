@@ -30,6 +30,7 @@ class OIDCStrategy extends Strategy {
     this.options = options;
     this.authorizationURL = options.authorizationURL;
     this.tokenURL = options.tokenURL;
+    this.userInfoURL = options.userInfoURL;
     this.clientID = options.clientID;
     this.clientSecret = options.clientSecret;
     this.callbackURL = options.callbackURL;
@@ -118,14 +119,11 @@ class OIDCStrategy extends Strategy {
       // Convert to profile format expected by passport
       const profile = {
         id: userinfo.sub,
+        email: userinfo.email,
         displayName: userinfo.name || userinfo.preferred_username,
         username: validateOidcUsername(userinfo.preferred_username) || validateOidcUsername(userinfo.nickname) || null,
-        emails: [{ value: userinfo.email }],
-        name: {
-          givenName: userinfo.given_name,
-          familyName: userinfo.family_name,
-        },
         isAdmin: checkOidcAdminStatus(userinfo),
+        emails: userinfo.emails,
       };
       sails.log.info('OIDC: Profile created', { id: profile.id, username: profile.username, isAdmin: profile.isAdmin, detectedFromGroups: userinfo.groups });
 
