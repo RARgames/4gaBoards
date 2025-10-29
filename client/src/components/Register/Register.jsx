@@ -257,16 +257,16 @@ const Register = React.memo(
                       {t('common.continueWith', { provider: 'Google' })}
                     </Button>
                   )}
-                  {ssoAvailable[SsoTypes.GITHUB] && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={() => onAuthenticateSso(SsoTypes.GITHUB)} className={s.button}>
-                      <Icon type={IconType.GitHub} size={IconSize.Size20} className={s.ssoIcon} />
-                      {t('common.continueWith', { provider: 'GitHub' })}
-                    </Button>
-                  )}
                   {ssoAvailable[SsoTypes.MICROSOFT] && registrationEnabled && ssoRegistrationEnabled && (
                     <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={() => onAuthenticateSso(SsoTypes.MICROSOFT)} className={s.button}>
                       <Icon type={IconType.Microsoft} size={IconSize.Size20} className={s.ssoIcon} />
                       {t('common.continueWith', { provider: 'Microsoft' })}
+                    </Button>
+                  )}
+                  {ssoAvailable[SsoTypes.GITHUB] && registrationEnabled && ssoRegistrationEnabled && (
+                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={() => onAuthenticateSso(SsoTypes.GITHUB)} className={s.button}>
+                      <Icon type={IconType.GitHub} size={IconSize.Size20} className={s.ssoIcon} />
+                      {t('common.continueWith', { provider: 'GitHub' })}
                     </Button>
                   )}
                   {ssoAvailable[SsoTypes.OIDC] && oidcEnabledMethods.length === 0 && registrationEnabled && ssoRegistrationEnabled && (
