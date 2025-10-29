@@ -11,5 +11,5 @@
 const { setupOIDC } = require('./passport');
 
 module.exports.bootstrap = async () => {
-  await setupOIDC();
+  setupOIDC();
 };

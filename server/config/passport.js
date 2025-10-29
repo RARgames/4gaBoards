@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20');
 const GitHubStrategy = require('@rargames/passport-github');
 const MicrosoftMSALStrategy = require('../strategies/passport-microsoft-msal');
 const OIDCStrategy = require('../strategies/passport-oidc');
-const { fetchRetry } = require('../utils/fetchRetry');
+const { fetchRetryUntilAvailable } = require('../utils/fetchRetry');
 
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   passport.use(
@@ -69,7 +69,7 @@ async function setupOIDC() {
     const wellKnownUrl = `${issuerBase.replace(/\/$/, '')}/.well-known/openid-configuration`;
     try {
       sails.log.info(`OIDC: Fetching OpenID configuration from ${wellKnownUrl}`);
-      const res = await fetchRetry(wellKnownUrl, {}, 3, 2000);
+      const res = await fetchRetryUntilAvailable(wellKnownUrl, {}, 4000);
       const config = await res.json();
 
       sails.log.info(`OIDC: OpenID configuration fetched successfully: authorizationURL: ${config.authorization_endpoint}, tokenURL: ${config.token_endpoint}, userInfoURL: ${config.userinfo_endpoint}`);
