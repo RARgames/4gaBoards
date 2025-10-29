@@ -57,7 +57,9 @@ class OIDCStrategy extends Strategy {
    * Redirects user to OIDC provider's authorization endpoint
    */
   startAuth(req) {
-    const state = jwt.sign({ nonce: crypto.randomUUID() }, process.env.OIDC_STATE_SECRET, { expiresIn: '5m' });
+    const nonce = crypto.randomUUID();
+    const state = jwt.sign({ nonce }, process.env.OIDC_STATE_SECRET, { expiresIn: '5m' });
+    const hint = req?.query?.kc_idp_hint;
     const authURL = new URL(this.authorizationURL);
     authURL.search = new URLSearchParams({
       client_id: this.clientID,
@@ -65,9 +67,11 @@ class OIDCStrategy extends Strategy {
       scope: this.scope.join(' '),
       response_type: 'code',
       state,
-      kc_idp_hint: req?.query?.kc_idp_hint,
+      ...(hint && { kc_idp_hint: hint }),
+      ...(hint === 'google' && !process.env.OIDC_SKIP_ACCOUNT_SELECTION && { prompt: 'select_account' }),
+      ...(hint === 'microsoft' && !process.env.OIDC_SKIP_ACCOUNT_SELECTION && { prompt: 'login' }),
+      ...(hint === 'github' && !process.env.OIDC_SKIP_ACCOUNT_SELECTION && { prompt: 'select_account' }),
     });
-
     this.redirect(authURL.toString());
   }
 
@@ -82,6 +86,7 @@ class OIDCStrategy extends Strategy {
       if (!req.query.state) throw new Error('Missing state parameter');
       const decoded = jwt.verify(req.query.state, process.env.OIDC_STATE_SECRET);
       if (!decoded?.nonce) throw new Error('Missing nonce in state');
+      // FUTURE verify nonce
 
       // Exchange authorization code for access token
       const tokenResponse = await fetch(this.tokenURL, {
