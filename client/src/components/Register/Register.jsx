@@ -8,7 +8,7 @@ import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox, Loader, LoaderSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Register.module.scss';
@@ -81,6 +81,13 @@ const createMessage = (error) => {
   }
 };
 
+const SSO_PROVIDERS = [
+  { type: SsoTypes.GOOGLE, label: 'Google', icon: IconType.Google },
+  { type: SsoTypes.MICROSOFT, label: 'Microsoft', icon: IconType.Microsoft },
+  { type: SsoTypes.GITHUB, label: 'GitHub', icon: IconType.GitHub },
+  { type: SsoTypes.OIDC, label: 'OIDC', icon: IconType.Key },
+];
+
 const Register = React.memo(
   ({
     defaultData,
@@ -100,6 +107,7 @@ const Register = React.memo(
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
     const [isCheckboxError, setIsCheckboxError] = useState(false);
+    const [loadingProvider, setLoadingProvider] = useState(null);
     const wasSubmitting = usePrevious(isSubmitting);
     const [data, handleFieldChange, setData] = useForm(() => ({
       email: '',
@@ -149,8 +157,24 @@ const Register = React.memo(
         return;
       }
 
+      setLoadingProvider('local');
       onRegister(cleanData);
     }, [onRegister, data]);
+
+    useEffect(() => {
+      if (error) {
+        setLoadingProvider(null);
+      }
+    }, [error]);
+
+    const handleSsoClick = useCallback(
+      async (provider, method = null) => {
+        const id = method ? `${provider}:${method}` : provider;
+        setLoadingProvider(id);
+        onAuthenticateSso(provider, method);
+      },
+      [onAuthenticateSso],
+    );
 
     useEffect(() => {
       emailField.current?.focus();
@@ -235,8 +259,14 @@ const Register = React.memo(
                     <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} isError={isCheckboxError} />
                   </div>
                   <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
-                    {t('common.register')}
-                    <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
+                    {loadingProvider === 'local' ? (
+                      <Loader size={LoaderSize.Small} />
+                    ) : (
+                      <>
+                        {t('common.register')}
+                        <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
+                      </>
+                    )}
                   </Button>
                 </>
               )}
@@ -251,40 +281,35 @@ const Register = React.memo(
                   </div>
                 )}
                 <div className={s.otherOptions}>
-                  {ssoAvailable[SsoTypes.GOOGLE] && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Google' })} onClick={() => onAuthenticateSso(SsoTypes.GOOGLE)} className={s.button}>
-                      <Icon type={IconType.Google} size={IconSize.Size20} className={s.ssoIcon} />
-                      {t('common.continueWith', { provider: 'Google' })}
+                  {SSO_PROVIDERS.filter((p) => ssoAvailable[p.type] && (p.type !== SsoTypes.OIDC || oidcEnabledMethods.length === 0)).map((p) => (
+                    <Button key={p.type} style={ButtonStyle.Login} title={t('common.continueWith', { provider: p.label })} onClick={() => handleSsoClick(p.type)} className={s.button}>
+                      {loadingProvider === p.type ? (
+                        <Loader size={LoaderSize.Small} />
+                      ) : (
+                        <>
+                          <Icon type={p.icon} size={IconSize.Size20} className={s.ssoIcon} />
+                          {t('common.continueWith', { provider: p.label })}
+                        </>
+                      )}
                     </Button>
-                  )}
-                  {ssoAvailable[SsoTypes.MICROSOFT] && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'Microsoft' })} onClick={() => onAuthenticateSso(SsoTypes.MICROSOFT)} className={s.button}>
-                      <Icon type={IconType.Microsoft} size={IconSize.Size20} className={s.ssoIcon} />
-                      {t('common.continueWith', { provider: 'Microsoft' })}
-                    </Button>
-                  )}
-                  {ssoAvailable[SsoTypes.GITHUB] && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'GitHub' })} onClick={() => onAuthenticateSso(SsoTypes.GITHUB)} className={s.button}>
-                      <Icon type={IconType.GitHub} size={IconSize.Size20} className={s.ssoIcon} />
-                      {t('common.continueWith', { provider: 'GitHub' })}
-                    </Button>
-                  )}
-                  {ssoAvailable[SsoTypes.OIDC] && oidcEnabledMethods.length === 0 && registrationEnabled && ssoRegistrationEnabled && (
-                    <Button style={ButtonStyle.Login} title={t('common.continueWith', { provider: 'OIDC' })} onClick={() => onAuthenticateSso(SsoTypes.OIDC)} className={s.button}>
-                      <Icon type={IconType.Key} size={IconSize.Size20} className={s.ssoIcon} />
-                      {t('common.continueWith', { provider: 'OIDC' })}
-                    </Button>
-                  )}
+                  ))}
                   {ssoAvailable[SsoTypes.OIDC] &&
                     oidcEnabledMethods.length > 0 &&
-                    registrationEnabled &&
-                    ssoRegistrationEnabled &&
-                    oidcEnabledMethods.map((method) => (
-                      <Button key={method} style={ButtonStyle.Login} title={t('common.continueWith', { provider: method })} onClick={() => onAuthenticateSso(SsoTypes.OIDC, method)} className={s.button}>
-                        <Icon type={IconType[method] || IconType.Key} size={IconSize.Size20} className={s.ssoIcon} />
-                        {t('common.continueWith', { provider: method })}
-                      </Button>
-                    ))}
+                    oidcEnabledMethods.map((method) => {
+                      const id = `${SsoTypes.OIDC}:${method}`;
+                      return (
+                        <Button key={id} style={ButtonStyle.Login} title={t('common.continueWith', { provider: method })} onClick={() => handleSsoClick(SsoTypes.OIDC, method)} className={s.button}>
+                          {loadingProvider === id ? (
+                            <Loader size={LoaderSize.Small} />
+                          ) : (
+                            <>
+                              <Icon type={IconType[method] || IconType.Key} size={IconSize.Size20} className={s.ssoIcon} />
+                              {t('common.continueWith', { provider: method })}
+                            </>
+                          )}
+                        </Button>
+                      );
+                    })}
                 </div>
               </>
             )}

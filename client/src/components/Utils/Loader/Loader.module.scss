@@ -1,5 +1,4 @@
 :global(#app) {
-
   .loaderWrapper {
     display: flex;
     align-items: center;
@@ -26,6 +25,11 @@
   }
 
   // Sizes
+
+  .small {
+    width: 24px;
+    height: 24px;
+  }
 
   .normal {
     width: 32px;
