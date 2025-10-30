@@ -55,9 +55,9 @@ async function setupOIDC() {
   }
 
   // Try to read OpenID config from .well-known/openid-configuration if not all URLs are provided
-  let authorizationURL = process.env.OIDC_AUTHORIZATION_URL;
+  let authorizationURL = process.env.OIDC_AUTH_URL;
   let tokenURL = process.env.OIDC_TOKEN_URL;
-  let userInfoURL = process.env.OIDC_USER_INFO_URL;
+  let userInfoURL = process.env.OIDC_USERINFO_URL;
 
   if (!authorizationURL || !tokenURL || !userInfoURL) {
     const issuerBase = process.env.OIDC_ISSUER_URL;
