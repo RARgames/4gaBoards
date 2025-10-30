@@ -57,7 +57,7 @@ module.exports = {
     }
     const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled', 'syncSsoDataOnAuth', 'syncSsoAdminOnAuth']);
 
-    const allowedRegisterDomains = _.uniq(inputs.allowedRegisterDomains.map((d) => d.trim().toLowerCase()).filter(Boolean));
+    const allowedRegisterDomains = _.uniq(inputs.allowedRegisterDomains?.map((d) => d.trim().toLowerCase()).filter(Boolean));
 
     core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values, allowedRegisterDomains });
     const coreItem = {
