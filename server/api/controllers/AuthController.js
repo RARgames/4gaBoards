@@ -34,7 +34,7 @@ module.exports = {
   },
 
   github(req, res, next) {
-    sails.config.passport.authenticate('github', { prompt: 'select_account' })(req, res, next);
+    sails.config.passport.authenticate('github')(req, res, next);
   },
 
   githubCallback(req, res, next) {
