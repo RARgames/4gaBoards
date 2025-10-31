@@ -119,7 +119,7 @@ class OIDCStrategy extends Strategy {
         },
       });
       const userinfo = await userResponse.json();
-      sails.log.info('OIDC: User info received:', JSON.stringify(userinfo, null, 2));
+      sails.log.verbose('OIDC: User info received:', JSON.stringify(userinfo, null, 2));
 
       // Convert to profile format expected by passport
       const profile = {
@@ -130,7 +130,7 @@ class OIDCStrategy extends Strategy {
         isAdmin: checkOidcAdminStatus(userinfo),
         emails: userinfo.emails,
       };
-      sails.log.info('OIDC: Profile created', { id: profile.id, username: profile.username, isAdmin: profile.isAdmin, detectedFromGroups: userinfo.groups });
+      sails.log.verbose('OIDC: Profile created', { id: profile.id, username: profile.username, isAdmin: profile.isAdmin, detectedFromGroups: userinfo.groups });
 
       // Call verify callback with profile
       this.verify(tokenData.access_token, tokenData.refresh_token, profile, (err, user) => {
@@ -138,7 +138,7 @@ class OIDCStrategy extends Strategy {
           sails.log.error('OIDC: Verify callback error', err);
           return this.fail(err);
         }
-        sails.log.info('OIDC: Authentication successful', { userId: user?.id });
+        sails.log.verbose('OIDC: Authentication successful', { userId: user?.id });
         this.success(user);
         return null;
       });

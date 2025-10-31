@@ -27,6 +27,7 @@ module.exports = {
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/google-callback?accessToken=${accessToken}`);
+        sails.log.info('Google SSO: User authentication successful:', user.id, user.email, user.name, user.ssoGoogleId);
       } catch (error) {
         res.redirect(`${sails.config.custom.clientUrl}/google-callback?error=${error.code}`);
       }
@@ -50,6 +51,7 @@ module.exports = {
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/github-callback?accessToken=${accessToken}`);
+        sails.log.info('Github SSO: User authentication successful:', user.id, user.email, user.name, user.ssoGithubId, user.ssoGithubUsername);
       } catch (error) {
         res.redirect(`${sails.config.custom.clientUrl}/github-callback?error=${error.code}`);
       }
@@ -72,6 +74,7 @@ module.exports = {
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?accessToken=${accessToken}`);
+        sails.log.info('Microsoft SSO: User authentication successful:', user.id, user.email, user.name, user.ssoMicrosoftId);
       } catch (error) {
         res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?error=${error.code}`);
       }
@@ -97,7 +100,7 @@ module.exports = {
       }
 
       try {
-        sails.log.info('OIDC callback: Creating/getting user', {
+        sails.log.verbose('OIDC callback: Creating/getting user', {
           profileId: profile.id,
           email: profile.email,
           displayName: profile.displayName,
@@ -116,6 +119,7 @@ module.exports = {
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
         res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?accessToken=${accessToken}`);
+        sails.log.info('OIDC SSO: User authentication successful:', user.id, user.email, user.name, user.ssoOidcId);
       } catch (error) {
         sails.log.error('OIDC callback: Error creating user or session', error);
         const errorCode = error.code || error.message || 'unknown';
