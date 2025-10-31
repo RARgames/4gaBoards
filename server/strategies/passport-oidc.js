@@ -106,7 +106,16 @@ class OIDCStrategy extends Strategy {
         sails.log.error('OIDC: Token endpoint error', await tokenResponse.text());
         return this.fail({ message: 'Failed to fetch token' });
       }
-      const tokenData = await tokenResponse.json();
+      let tokenData;
+      const contentType = tokenResponse.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        tokenData = await tokenResponse.json();
+      } else if (contentType.includes('application/x-www-form-urlencoded')) {
+        const body = await tokenResponse.text();
+        tokenData = Object.fromEntries(new URLSearchParams(body));
+      } else {
+        throw new Error(`Unexpected content-type: ${contentType}`);
+      }
       if (!tokenData.access_token) {
         sails.log.error('OIDC: Failed to get access token', tokenData);
         return this.fail({ message: 'Failed to get access token' });
@@ -123,7 +132,7 @@ class OIDCStrategy extends Strategy {
 
       // Convert to profile format expected by passport
       const profile = {
-        id: userinfo.sub,
+        id: userinfo.sub || userinfo.id,
         email: userinfo.email,
         displayName: userinfo.name || userinfo.preferred_username,
         username: validateOidcUsername(userinfo.preferred_username) || validateOidcUsername(userinfo.nickname) || null,
