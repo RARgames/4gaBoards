@@ -68,9 +68,9 @@ class OIDCStrategy extends Strategy {
       response_type: 'code',
       state,
       ...(hint && { kc_idp_hint: hint }),
-      ...(hint === 'google' && !process.env.OIDC_SKIP_ACCOUNT_SELECTION && { prompt: 'select_account' }),
-      ...(hint === 'microsoft' && !process.env.OIDC_SKIP_ACCOUNT_SELECTION && { prompt: 'login' }),
-      ...(hint === 'github' && !process.env.OIDC_SKIP_ACCOUNT_SELECTION && { prompt: 'select_account' }),
+      ...(hint === 'google' && !(process.env.OIDC_SKIP_ACCOUNT_SELECTION === 'true' || process.env[`OIDC_SKIP_ACCOUNT_SELECTION_HINT_${hint.toUpperCase()}`] === 'true') && { prompt: 'select_account' }),
+      ...(hint === 'microsoft' && !(process.env.OIDC_SKIP_ACCOUNT_SELECTION === 'true' || process.env[`OIDC_SKIP_ACCOUNT_SELECTION_HINT_${hint.toUpperCase()}`] === 'true') && { prompt: 'login' }),
+      ...(hint === 'github' && !(process.env.OIDC_SKIP_ACCOUNT_SELECTION === 'true' || process.env[`OIDC_SKIP_ACCOUNT_SELECTION_HINT_${hint.toUpperCase()}`] === 'true') && { prompt: 'select_account' }),
     });
     this.redirect(authURL.toString());
   }
