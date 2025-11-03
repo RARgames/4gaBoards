@@ -82,7 +82,7 @@ module.exports = {
   },
 
   oidc(req, res, next) {
-    sails.config.passport.authenticate('oidc')(req, res, next);
+    sails.config.passport.authenticate('oidc', { failureRedirect: '/login' })(req, res, next);
   },
 
   oidcCallback(req, res, next) {

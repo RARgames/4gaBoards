@@ -55,7 +55,8 @@ module.exports.custom = {
   oidcEnabledMethods: (process.env.OIDC_ENABLED_METHODS || '')
     .split(',')
     .map((s) => s.trim())
-    .filter((s) => s.length > 0),
+    .filter((s) => s.length > 0)
+    .filter((s) => s && process.env[`OIDC_DISABLE_HINT_${s.toUpperCase()}`] !== 'true'),
 
   demoMode: process.env.DEMO_MODE === 'true',
   metricsEnabled: process.env.METRICS_ENABLED === 'true',

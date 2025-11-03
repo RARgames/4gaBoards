@@ -57,9 +57,16 @@ class OIDCStrategy extends Strategy {
    * Redirects user to OIDC provider's authorization endpoint
    */
   startAuth(req) {
+    const hint = req?.query?.kc_idp_hint;
+    if (hint) {
+      const disabledEnvVar = `OIDC_DISABLE_HINT_${hint.toUpperCase()}`;
+      if (process.env[disabledEnvVar] === 'true') {
+        return this.fail({ message: `${hint} login is disabled` });
+      }
+    }
+
     const nonce = crypto.randomUUID();
     const state = jwt.sign({ nonce }, process.env.OIDC_STATE_SECRET, { expiresIn: '5m' });
-    const hint = req?.query?.kc_idp_hint;
     const authURL = new URL(this.authorizationURL);
     authURL.search = new URLSearchParams({
       client_id: this.clientID,
@@ -72,7 +79,7 @@ class OIDCStrategy extends Strategy {
       ...(hint === 'microsoft' && !(process.env.OIDC_SKIP_ACCOUNT_SELECTION === 'true' || process.env[`OIDC_SKIP_ACCOUNT_SELECTION_HINT_${hint.toUpperCase()}`] === 'true') && { prompt: 'login' }),
       ...(hint === 'github' && !(process.env.OIDC_SKIP_ACCOUNT_SELECTION === 'true' || process.env[`OIDC_SKIP_ACCOUNT_SELECTION_HINT_${hint.toUpperCase()}`] === 'true') && { prompt: 'select_account' }),
     });
-    this.redirect(authURL.toString());
+    return this.redirect(authURL.toString());
   }
 
   /**
@@ -148,14 +155,12 @@ class OIDCStrategy extends Strategy {
           return this.fail(err);
         }
         sails.log.verbose('OIDC: Authentication successful', { userId: user?.id });
-        this.success(user);
-        return null;
+        return this.success(user);
       });
       return null;
     } catch (error) {
       sails.log.error('OIDC: Authentication error', error);
-      this.fail({ message: error.message || 'Authentication failed' });
-      return null;
+      return this.fail({ message: error.message || 'Authentication failed' });
     }
   }
 }
