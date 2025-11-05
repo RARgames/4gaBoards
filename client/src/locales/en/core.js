@@ -32,7 +32,7 @@ export default {
       addMember: 'Add Member',
       addMembers: 'Add Members',
       addProject: 'Add Project',
-      needInvite: 'No Projects Available - You Need to Be Invited',
+      needInvite: 'No Projects Available - Ask for an invitation.',
       addTask: 'Add Task',
       addUser: 'Add User',
       administrator: 'Administrator',

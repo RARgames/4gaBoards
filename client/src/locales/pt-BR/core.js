@@ -34,7 +34,7 @@ export default {
       addMember: 'Adicionar Membro',
       addMembers: 'Adicionar Membros',
       addProject: 'Adicionar Projeto',
-      needInvite: 'Nenhum projeto disponível - Você precisa ser convidado',
+      needInvite: 'Nenhum projeto disponível - Peça um convite.',
       addTask: 'Adicionar Tarefa',
       addUser: 'Adicionar Usuário',
       administrator: 'Administrador',
