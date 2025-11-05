@@ -36,6 +36,7 @@ export default {
       addMember: 'Ajouter un membre',
       addMembers: 'Ajouter des membres',
       addProject: 'Ajouter un projet',
+      needInvite: 'Aucun projet disponible - Vous devez être invité',
       addTask: 'Ajouter une tâche',
       addUser: 'Ajouter un utilisateur',
       administrator: 'Administrateur',

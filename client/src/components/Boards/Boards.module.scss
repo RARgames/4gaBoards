@@ -61,6 +61,10 @@
     }
   }
 
+  .boardsWrapperEmpty {
+    display: flex;
+  }
+
   .boardWrapper {
     position: relative;
     background-color: var(--backgroundProject);
@@ -113,5 +117,12 @@
     outline: none;
     text-align: left;
     transition: background 0.3s ease;
+  }
+
+  .info {
+    color: var(--textColor3);
+    font-size: 20px;
+    margin: 0 auto;
+    align-self: center;
   }
 }

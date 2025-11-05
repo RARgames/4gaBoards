@@ -70,7 +70,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
           </div>
         </div>
       </div>
-      <div className={clsx(s.boardsWrapper, gs.scrollableY)}>
+      <div className={clsx(s.boardsWrapper, gs.scrollableY, currentProject?.boards.length === 0 && s.boardsWrapperEmpty)}>
         {currentFilteredProject?.boards.map((item) => (
           <div key={item.id} className={clsx(s.boardWrapper)}>
             {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
@@ -83,6 +83,16 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
             </Link>
           </div>
         ))}
+        {currentProject?.boards.length === 0 && isProjectManager && (
+          <div className={s.info}>
+            <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onCreate} offset={16} position="bottom">
+              <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.addButton}>
+                <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
+                {t('common.addBoard')}
+              </Button>
+            </BoardAddPopup>
+          </div>
+        )}
       </div>
     </div>
   );

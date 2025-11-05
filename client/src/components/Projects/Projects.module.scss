@@ -61,6 +61,10 @@
     }
   }
 
+  .projectsWrapperEmpty {
+    display: flex;
+  }
+
   .projectWrapper {
     position: relative;
     background-color: var(--backgroundProject);
@@ -133,5 +137,12 @@
     display: block;
     margin: 0 auto 12px;
     width: 36px;
+  }
+
+  .info {
+    color: var(--textColor3);
+    font-size: 20px;
+    margin: 0 auto;
+    align-self: center;
   }
 }
