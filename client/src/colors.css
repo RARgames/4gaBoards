@@ -20,6 +20,7 @@
   --backgroundColorTmpDarkerField2: #17232c;
   --backgroundColorTmpSeparatorLight: #263443;
   --backgroundColorTmpHighlighted: #2d3b4b;
+  --backgroundHeaderHover: #2a2c31;
   --nodeOutline: rgba(54, 75, 97, 0.5);
   --borderOutline: #5ba4cf;
   --borderOutline2: #34b7cd;
@@ -71,7 +72,7 @@
   --textColorErrorHover: #be4e4e;
   --textColorWarning: #ffa600;
   --textColorWarningHover: #c57600;
-  --headerButtonHover: #121316;
+  /* --headerButtonHover: #121316; */
   --backgroundHeader: #1a1c20;
   --backgroundTabActive: #16181b;
   --textShadow: #000000;
@@ -212,7 +213,7 @@
   --textColorErrorHover: #ff7b72;
   --textColorWarning: #d29922;
   --textColorWarningHover: #e3b341;
-  --headerButtonHover: #1c2128;
+  /* --headerButtonHover: #1c2128; */
   --backgroundHeader: #010409;
   --backgroundTabActive: #0d1117;
   --textShadow: #000000;

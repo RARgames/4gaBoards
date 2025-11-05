@@ -8,12 +8,17 @@
 
   .logo {
     display: inline-block;
-    margin: 0 12px 0 30px;
+    margin: 8px 0 8px 30px;
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--backgroundHeaderHover);
+    }
   }
 
   .logoIcon {
-    margin-top: 4px;
-    height: 40px;
+    margin-top: 1px;
+    height: 32px;
   }
 
   .title {

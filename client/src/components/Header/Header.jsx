@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import logo from '../../assets/images/4gaboardsLogo128w-white.png';
+import logo from '../../assets/images/4gaLogo512w.png';
 import Paths from '../../constants/Paths';
 import User from '../User';
 import UserPopup from '../UserPopup';
