@@ -22,7 +22,31 @@ export const makeSelectMailForCurrentUserByListId = () =>
   );
 export const selectMailForCurrentUserByListId = makeSelectMailForCurrentUserByListId();
 
+export const makeSelectMailsByListId = () =>
+  createSelector(
+    orm,
+    (_, listId) => listId,
+    (session, listId) => {
+      if (!listId) return [];
+
+      const { Mail } = session;
+      if (!Mail) return [];
+
+      const mailModels = Mail.all().filter({ listId }).toModelArray();
+
+      return mailModels.map((mailModel) => ({
+        ...mailModel.ref,
+        ...getMeta(mailModel),
+        user: mailModel.user?.ref || null,
+      }));
+    },
+  );
+
+export const selectMailsByListId = makeSelectMailsByListId();
+
 export default {
   makeSelectMailForCurrentUserByListId,
   selectMailForCurrentUserByListId,
+  makeSelectMailsByListId,
+  selectMailsByListId,
 };
