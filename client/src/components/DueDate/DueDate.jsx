@@ -117,7 +117,7 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
 
   if (value) {
     const preFormattedValue = t(variant === VARIANTS.LIST_VIEW || variant === VARIANTS.CARDMODAL_ACTIVITY ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' });
-    const formattedValue = showRelative ? formatDistanceToNowStrict(value, { locale, addSuffix: true }) : preFormattedValue;
+    const formattedValue = showRelative ? formatDistanceToNowStrict(new Date(value), { locale, addSuffix: true }) : preFormattedValue;
     return (
       <div className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)} title={`${titlePrefixString}${preFormattedValue}`}>
         {variant === VARIANTS.TASKS_CARD ? <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} /> : formattedValue}
