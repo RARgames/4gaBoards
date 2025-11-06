@@ -40,6 +40,7 @@ const List = React.memo(
     isAllActivitiesFetched,
     lastActivityId,
     mailId,
+    mailsForList,
     onUpdate,
     onDelete,
     onCardCreate,
@@ -276,6 +277,7 @@ const List = React.memo(
                       isAllActivitiesFetched={isAllActivitiesFetched}
                       lastActivityId={lastActivityId}
                       mailId={mailId}
+                      mailsForList={mailsForList}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onDelete={onDelete}
@@ -333,6 +335,7 @@ List.propTypes = {
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
   mailId: PropTypes.string,
+  mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
