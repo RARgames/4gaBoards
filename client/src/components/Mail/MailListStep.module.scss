@@ -1,0 +1,84 @@
+.mails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mailItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  background: var(--popup-bg);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.15s ease;
+  overflow: hidden;
+  gap: 0.5rem;
+
+  &:hover {
+     background: var(--backgroundListButton);
+  }
+}
+
+.mailId {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--textColor2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+
+.deleteBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    transition: transform 0.15s, opacity 0.15s;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--textColor2);
+  }
+}
+
+.noMailId {
+  text-align: center;
+  color: var(--textColor2);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.userName {
+  font-weight: 500;
+  color: var(--textColor0);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trashIcon {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
