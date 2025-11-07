@@ -22,12 +22,15 @@ const handleNotificationUpdate = (notification) => ({
   },
 });
 
-const markAllNotificationsAsRead = () => ({
-  type: EntryActionTypes.NOTIFICATION_MARK_ALL_AS_READ,
+const markAllNotificationsAs = (data) => ({
+  type: EntryActionTypes.NOTIFICATION_MARK_ALL_AS,
+  payload: {
+    data,
+  },
 });
 
-const handleMarkAllNotificationsAsRead = (notifications) => ({
-  type: EntryActionTypes.NOTIFICATION_MARK_ALL_AS_READ_HANDLE,
+const handleMarkAllNotificationsAs = (notifications) => ({
+  type: EntryActionTypes.NOTIFICATION_MARK_ALL_AS_HANDLE,
   payload: {
     notifications,
   },
@@ -62,8 +65,8 @@ export default {
   handleNotificationCreate,
   updateNotification,
   handleNotificationUpdate,
-  markAllNotificationsAsRead,
-  handleMarkAllNotificationsAsRead,
+  markAllNotificationsAs,
+  handleMarkAllNotificationsAs,
   deleteNotification,
   handleNotificationDelete,
   deleteAllNotifications,

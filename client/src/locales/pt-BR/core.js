@@ -271,6 +271,7 @@ export default {
       listViewStyle: 'Estilo da Visualização de Lista',
       managers: 'Gestores',
       markAllAsRead: 'Marcar todos como lidos',
+      markAllAsUnread: 'Marcar todos como não lidos',
       markAsCompleted: 'Marcar tarefa como completa',
       markAsUncompleted: 'Marcar tarefa como incompleta',
       matchCase: 'Corresponder Maiúsculas/Minúsculas [Alt+C]',

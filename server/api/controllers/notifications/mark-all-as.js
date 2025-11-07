@@ -21,7 +21,7 @@ module.exports = {
 
     sails.sockets.broadcast(
       `user:${currentUser.id}`,
-      'notificationMarkAllAsRead',
+      'notificationMarkAllAs',
       {
         item: notifications,
       },

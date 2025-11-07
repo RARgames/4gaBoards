@@ -12,7 +12,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from 
 import * as gs from '../../global.module.scss';
 import * as s from './NotificationsPopup.module.scss';
 
-const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAsRead, onDelete, onDeleteAll, onClose }) => {
+const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onClose }) => {
   const [t] = useTranslation();
   const truncateLength = 30;
 
@@ -34,7 +34,7 @@ const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAsRead, onDele
     <>
       <Popup.Header>
         {t('common.notifications', { context: 'title' })}
-        <NotificationActionsPopup wrapperClassName={s.actions} onMarkAllAsRead={onMarkAllAsRead} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
+        <NotificationActionsPopup wrapperClassName={s.actions} onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
           <Button style={ButtonStyle.Icon} title={t('common.notificationActions')}>
             <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
           </Button>
@@ -92,7 +92,7 @@ const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAsRead, onDele
 NotificationsStep.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
-  onMarkAllAsRead: PropTypes.func.isRequired,
+  onMarkAllAs: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onDeleteAll: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

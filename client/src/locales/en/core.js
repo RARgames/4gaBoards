@@ -269,6 +269,7 @@ export default {
       listViewStyle: 'List View Style',
       managers: 'Managers',
       markAllAsRead: 'Mark All as Read',
+      markAllAsUnread: 'Mark All as Unread',
       markAsCompleted: 'Mark task as completed',
       markAsUncompleted: 'Mark task as uncompleted',
       matchCase: 'Match Case [Alt+C]',

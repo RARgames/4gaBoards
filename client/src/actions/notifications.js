@@ -40,26 +40,29 @@ const handleNotificationUpdate = (notification) => ({
   },
 });
 
-const markAllNotificationsAsRead = () => ({
-  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ,
+const markAllNotificationsAs = (data) => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS,
+  payload: {
+    data,
+  },
 });
 
-markAllNotificationsAsRead.success = (notifications) => ({
-  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ__SUCCESS,
+markAllNotificationsAs.success = (notifications) => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS__SUCCESS,
   payload: {
     notifications,
   },
 });
 
-markAllNotificationsAsRead.failure = (error) => ({
-  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ__FAILURE,
+markAllNotificationsAs.failure = (error) => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS__FAILURE,
   payload: {
     error,
   },
 });
 
-const handleMarkAllNotificationsAsRead = (notifications) => ({
-  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ_HANDLE,
+const handleMarkAllNotificationsAs = (notifications) => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_HANDLE,
   payload: {
     notifications,
   },
@@ -125,8 +128,8 @@ export default {
   handleNotificationUpdate,
   deleteNotification,
   handleNotificationDelete,
-  markAllNotificationsAsRead,
-  handleMarkAllNotificationsAsRead,
+  markAllNotificationsAs,
+  handleMarkAllNotificationsAs,
   deleteAllNotifications,
   handleDeleteAllNotifications,
 };

@@ -81,7 +81,7 @@ export default class extends BaseModel {
         Notification.upsert(payload.notification);
 
         break;
-      case ActionTypes.NOTIFICATION_MARK_ALL_AS_READ:
+      case ActionTypes.NOTIFICATION_MARK_ALL_AS:
         Notification.all()
           .toModelArray()
           .forEach((notification) => {
@@ -89,8 +89,8 @@ export default class extends BaseModel {
           });
 
         break;
-      case ActionTypes.NOTIFICATION_MARK_ALL_AS_READ__SUCCESS:
-      case ActionTypes.NOTIFICATION_MARK_ALL_AS_READ_HANDLE:
+      case ActionTypes.NOTIFICATION_MARK_ALL_AS__SUCCESS:
+      case ActionTypes.NOTIFICATION_MARK_ALL_AS_HANDLE:
         if (payload.notifications) {
           payload.notifications.forEach((notification) => {
             const n = Notification.withId(notification.id);

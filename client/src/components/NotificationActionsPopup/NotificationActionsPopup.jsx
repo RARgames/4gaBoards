@@ -4,13 +4,18 @@ import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle, withPopup } from '../Utils';
 
-const NotificationActionsStep = React.memo(({ onMarkAllAsRead, onDeleteAll, onClose }) => {
+const NotificationActionsStep = React.memo(({ onMarkAllAs, onDeleteAll, onClose }) => {
   const [t] = useTranslation();
 
   const handleMarkAllAsRead = useCallback(() => {
-    onMarkAllAsRead();
+    onMarkAllAs({ isRead: true });
     onClose();
-  }, [onClose, onMarkAllAsRead]);
+  }, [onClose, onMarkAllAs]);
+
+  const handleMarkAllAsUnread = useCallback(() => {
+    onMarkAllAs({ isRead: false });
+    onClose();
+  }, [onClose, onMarkAllAs]);
 
   const handleDeleteAll = useCallback(() => {
     onDeleteAll();
@@ -22,6 +27,9 @@ const NotificationActionsStep = React.memo(({ onMarkAllAsRead, onDeleteAll, onCl
       <Button style={ButtonStyle.PopupContext} title={t('common.markAllAsRead')} onClick={handleMarkAllAsRead}>
         {t('common.markAllAsRead')}
       </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.markAllAsUnread')} onClick={handleMarkAllAsUnread}>
+        {t('common.markAllAsUnread')}
+      </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.deleteAll')} onClick={handleDeleteAll}>
         {t('common.deleteAll')}
       </Button>
@@ -30,7 +38,7 @@ const NotificationActionsStep = React.memo(({ onMarkAllAsRead, onDeleteAll, onCl
 });
 
 NotificationActionsStep.propTypes = {
-  onMarkAllAsRead: PropTypes.func.isRequired,
+  onMarkAllAs: PropTypes.func.isRequired,
   onDeleteAll: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

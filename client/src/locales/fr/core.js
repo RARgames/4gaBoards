@@ -282,6 +282,7 @@ export default {
       listViewStyle: 'Style de la vue de la liste',
       managers: 'Gestionnaires',
       markAllAsRead: 'Marquer tout comme lu',
+      markAllAsUnread: 'Marquer tout comme non lu',
       markAsCompleted: 'Marquer la tâche comme terminée',
       markAsUncompleted: 'Marquer la tâche comme non terminée',
       matchCase: 'Respecter la casse [Alt+C]',

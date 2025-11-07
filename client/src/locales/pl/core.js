@@ -280,6 +280,7 @@ export default {
       listViewStyle: 'Styl widoku listy',
       managers: 'Moderatorzy',
       markAllAsRead: 'Oznacz wszystkie jako przeczytane',
+      markAllAsUnread: 'Oznacz wszystkie jako nieprzeczytane',
       markAsCompleted: 'Oznacz zadanie jako zakończone',
       markAsUncompleted: 'Oznacz zadanie jako niezakończone',
       matchCase: 'Uwzględnij wielkość liter [Alt+C]',

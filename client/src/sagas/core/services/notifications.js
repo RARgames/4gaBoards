@@ -51,22 +51,22 @@ export function* handleNotificationUpdate(notification) {
   yield put(actions.handleNotificationUpdate(notification));
 }
 
-export function* markAllNotificationsAsRead() {
-  yield put(actions.markAllNotificationsAsRead());
+export function* markAllNotificationsAs(data) {
+  yield put(actions.markAllNotificationsAs(data));
 
   let notifications;
   try {
-    ({ items: notifications } = yield call(request, api.markAllNotificationsAsRead));
+    ({ items: notifications } = yield call(request, api.markAllNotificationsAs, data));
   } catch (error) {
-    yield put(actions.markAllNotificationsAsRead.failure(error));
+    yield put(actions.markAllNotificationsAs.failure(error));
     return;
   }
 
-  yield put(actions.markAllNotificationsAsRead.success(notifications));
+  yield put(actions.markAllNotificationsAs.success(notifications));
 }
 
-export function* handleMarkAllNotificationsAsRead(notifications) {
-  yield put(actions.handleMarkAllNotificationsAsRead(notifications));
+export function* handleMarkAllNotificationsAs(notifications) {
+  yield put(actions.handleMarkAllNotificationsAs(notifications));
 }
 
 export function* deleteNotification(id) {
@@ -109,8 +109,8 @@ export default {
   handleNotificationCreate,
   updateNotification,
   handleNotificationUpdate,
-  markAllNotificationsAsRead,
-  handleMarkAllNotificationsAsRead,
+  markAllNotificationsAs,
+  handleMarkAllNotificationsAs,
   deleteNotification,
   handleNotificationDelete,
   deleteAllNotifications,

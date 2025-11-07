@@ -102,7 +102,7 @@ module.exports.routes = {
   'GET /api/notifications': 'notifications/index',
   'GET /api/notifications/:id': 'notifications/show',
   'PATCH /api/notifications/:ids': 'notifications/update',
-  'PATCH /api/notifications': 'notifications/mark-all-as-read',
+  'PATCH /api/notifications': 'notifications/mark-all-as',
   'DELETE /api/notifications/:ids': 'notifications/delete',
   'DELETE /api/notifications': 'notifications/delete-all',
 

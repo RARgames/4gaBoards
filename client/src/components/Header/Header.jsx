@@ -25,7 +25,7 @@ const Header = React.memo(
     isAdmin,
     demoMode,
     onNotificationUpdate,
-    onNotificationMarkAllAsRead,
+    onNotificationMarkAllAs,
     onNotificationDelete,
     onNotificationDeleteAll,
     onLogout,
@@ -101,14 +101,7 @@ const Header = React.memo(
               </Button>
             </Link>
           )}
-          <NotificationsPopup
-            items={notifications}
-            onUpdate={onNotificationUpdate}
-            onMarkAllAsRead={onNotificationMarkAllAsRead}
-            onDelete={onNotificationDelete}
-            onDeleteAll={onNotificationDeleteAll}
-            hideCloseButton
-          >
+          <NotificationsPopup items={notifications} onUpdate={onNotificationUpdate} onMarkAllAs={onNotificationMarkAllAs} onDelete={onNotificationDelete} onDeleteAll={onNotificationDeleteAll} hideCloseButton>
             <Button style={ButtonStyle.Header} title={t('common.notifications')}>
               <Icon type={IconType.Bell} size={IconSize.Size18} />
               {notificationCount > 0 && <span className={s.notification}>{notificationCount}</span>}
@@ -136,7 +129,7 @@ Header.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   demoMode: PropTypes.bool.isRequired,
   onNotificationUpdate: PropTypes.func.isRequired,
-  onNotificationMarkAllAsRead: PropTypes.func.isRequired,
+  onNotificationMarkAllAs: PropTypes.func.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
   onNotificationDeleteAll: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,

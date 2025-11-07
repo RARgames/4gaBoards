@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onNotificationUpdate: entryActions.updateNotification,
-      onNotificationMarkAllAsRead: entryActions.markAllNotificationsAsRead,
+      onNotificationMarkAllAs: entryActions.markAllNotificationsAs,
       onNotificationDelete: entryActions.deleteNotification,
       onNotificationDeleteAll: entryActions.deleteAllNotifications,
       onLogout: entryActions.logout,
