@@ -117,6 +117,7 @@ export default {
       default: 'Default',
       defaultView: 'Default View',
       deleteAll: 'Delete All',
+      deleteAllRead: 'Delete All Read',
       deleteAttachment_title: 'Delete Attachment',
       deleteBoard_title: 'Delete Board',
       deleteCard_title: 'Delete Card',

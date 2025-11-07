@@ -22,6 +22,11 @@ const NotificationActionsStep = React.memo(({ onMarkAllAs, onDeleteAll, onClose 
     onClose();
   }, [onClose, onDeleteAll]);
 
+  const handleDeleteAllRead = useCallback(() => {
+    onDeleteAll({ deleteIsReadOnly: true });
+    onClose();
+  }, [onClose, onDeleteAll]);
+
   return (
     <>
       <Button style={ButtonStyle.PopupContext} title={t('common.markAllAsRead')} onClick={handleMarkAllAsRead}>
@@ -32,6 +37,9 @@ const NotificationActionsStep = React.memo(({ onMarkAllAs, onDeleteAll, onClose 
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.deleteAll')} onClick={handleDeleteAll}>
         {t('common.deleteAll')}
+      </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.deleteAllRead')} onClick={handleDeleteAllRead}>
+        {t('common.deleteAllRead')}
       </Button>
     </>
   );

@@ -87,12 +87,12 @@ export function* handleNotificationDelete(notification) {
   yield put(actions.handleNotificationDelete(notification));
 }
 
-export function* deleteAllNotifications() {
-  yield put(actions.deleteAllNotifications());
+export function* deleteAllNotifications(data) {
+  yield put(actions.deleteAllNotifications(data));
 
   let notifications;
   try {
-    ({ items: notifications } = yield call(request, api.deleteAllNotifications));
+    ({ items: notifications } = yield call(request, api.deleteAllNotifications, data));
   } catch (error) {
     yield put(actions.deleteAllNotifications.failure(error));
     return;

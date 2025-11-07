@@ -118,11 +118,21 @@ export default class extends BaseModel {
         break;
       }
       case ActionTypes.NOTIFICATION_DELETE_ALL:
-        Notification.all()
-          .toModelArray()
-          .forEach((notification) => {
-            notification.deleteWithRelated();
-          });
+        if (payload.data && payload.data.deleteIsReadOnly) {
+          Notification.all()
+            .toModelArray()
+            .forEach((notification) => {
+              if (notification.isRead) {
+                notification.deleteWithRelated();
+              }
+            });
+        } else {
+          Notification.all()
+            .toModelArray()
+            .forEach((notification) => {
+              notification.deleteWithRelated();
+            });
+        }
         break;
       case ActionTypes.NOTIFICATION_DELETE_ALL__SUCCESS:
       case ActionTypes.NOTIFICATION_DELETE_ALL_HANDLE:

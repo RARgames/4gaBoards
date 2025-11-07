@@ -125,6 +125,7 @@ export default {
       default: 'Défaut',
       defaultView: 'Vue par défaut',
       deleteAll: 'Supprimer tout',
+      deleteAllRead: 'Supprimer tous les lus',
       deleteAttachment_title: 'Supprimer la pièce jointe',
       deleteBoard_title: 'Supprimer le tableau',
       deleteCard_title: 'Supprimer la carte',

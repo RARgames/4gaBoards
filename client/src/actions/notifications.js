@@ -97,8 +97,11 @@ const handleNotificationDelete = (notification) => ({
   },
 });
 
-const deleteAllNotifications = () => ({
+const deleteAllNotifications = (data) => ({
   type: ActionTypes.NOTIFICATION_DELETE_ALL,
+  payload: {
+    data,
+  },
 });
 
 deleteAllNotifications.success = (notifications) => ({

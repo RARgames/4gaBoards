@@ -125,6 +125,7 @@ export default {
       default: 'Domyślny',
       defaultView: 'Domyślny widok',
       deleteAll: 'Usuń wszystkie',
+      deleteAllRead: 'Usuń wszystkie przeczytane',
       deleteAttachment_title: 'Usuń załącznik',
       deleteBoard_title: 'Usuń tablicę',
       deleteCard_title: 'Usuń kartę',

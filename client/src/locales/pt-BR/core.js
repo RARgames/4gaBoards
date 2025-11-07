@@ -119,6 +119,7 @@ export default {
       default: 'Padrão',
       defaultView: 'Visualização Padrão',
       deleteAll: 'Excluir todos',
+      deleteAllRead: 'Excluir todos os lidos',
       deleteAttachment_title: 'Excluir Anexo',
       deleteBoard_title: 'Excluir Painel',
       deleteCard_title: 'Excluir Cartão',

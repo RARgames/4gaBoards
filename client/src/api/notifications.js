@@ -41,7 +41,7 @@ const deleteNotifications = (ids, headers) =>
     items: body.items.map(transformNotification),
   }));
 
-const deleteAllNotifications = (headers) => socket.delete('/notifications', undefined, headers);
+const deleteAllNotifications = (data, headers) => socket.delete('/notifications', data, headers);
 
 /* Event handlers */
 

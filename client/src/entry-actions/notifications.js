@@ -50,8 +50,11 @@ const handleNotificationDelete = (notification) => ({
   },
 });
 
-const deleteAllNotifications = () => ({
+const deleteAllNotifications = (data) => ({
   type: EntryActionTypes.NOTIFICATION_DELETE_ALL,
+  payload: {
+    data,
+  },
 });
 
 const handleDeleteAllNotifications = (notifications) => ({
