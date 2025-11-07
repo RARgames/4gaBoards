@@ -15,13 +15,17 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    skipBroadcast: {
+      type: 'boolean',
+      defaultsTo: false,
+    },
     request: {
       type: 'ref',
     },
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, skipBroadcast } = inputs;
 
     const criteria = {};
 
@@ -37,16 +41,18 @@ module.exports = {
       .set({ ...values })
       .fetch();
 
-    notifications.forEach((notification) => {
-      sails.sockets.broadcast(
-        `user:${notification.userId}`,
-        'notificationUpdate',
-        {
-          item: notification,
-        },
-        inputs.request,
-      );
-    });
+    if (!skipBroadcast) {
+      notifications.forEach((notification) => {
+        sails.sockets.broadcast(
+          `user:${notification.userId}`,
+          'notificationUpdate',
+          {
+            item: notification,
+          },
+          inputs.request,
+        );
+      });
+    }
 
     return notifications;
   },

@@ -196,8 +196,16 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleNotificationUpdate(item));
     });
 
+    const handleMarkAllNotificationsAsRead = api.makeHandleMarkAllNotificationsAsRead(({ item }) => {
+      emit(entryActions.handleMarkAllNotificationsAsRead(item));
+    });
+
     const handleNotificationDelete = api.makeHandleNotificationDelete(({ item }) => {
       emit(entryActions.handleNotificationDelete(item));
+    });
+
+    const handleDeleteAllNotifications = api.makeHandleDeleteAllNotifications(({ item }) => {
+      emit(entryActions.handleDeleteAllNotifications(item));
     });
 
     socket.on('disconnect', handleDisconnect);
@@ -265,7 +273,9 @@ const createSocketEventsChannel = () =>
 
     socket.on('notificationCreate', handleNotificationCreate);
     socket.on('notificationUpdate', handleNotificationUpdate);
+    socket.on('notificationMarkAllAsRead', handleMarkAllNotificationsAsRead);
     socket.on('notificationDelete', handleNotificationDelete);
+    socket.on('notificationDeleteAll', handleDeleteAllNotifications);
 
     return () => {
       socket.off('disconnect', handleDisconnect);
@@ -333,7 +343,9 @@ const createSocketEventsChannel = () =>
 
       socket.off('notificationCreate', handleNotificationCreate);
       socket.off('notificationUpdate', handleNotificationUpdate);
+      socket.off('notificationMarkAllAsRead', handleMarkAllNotificationsAsRead);
       socket.off('notificationDelete', handleNotificationDelete);
+      socket.off('notificationDeleteAll', handleDeleteAllNotifications);
     };
   });
 

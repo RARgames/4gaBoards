@@ -47,6 +47,28 @@ export function* updateNotification(id, data) {
   yield put(actions.updateNotification.success(notifications[0]));
 }
 
+export function* handleNotificationUpdate(notification) {
+  yield put(actions.handleNotificationUpdate(notification));
+}
+
+export function* markAllNotificationsAsRead() {
+  yield put(actions.markAllNotificationsAsRead());
+
+  let notifications;
+  try {
+    ({ items: notifications } = yield call(request, api.markAllNotificationsAsRead));
+  } catch (error) {
+    yield put(actions.markAllNotificationsAsRead.failure(error));
+    return;
+  }
+
+  yield put(actions.markAllNotificationsAsRead.success(notifications));
+}
+
+export function* handleMarkAllNotificationsAsRead(notifications) {
+  yield put(actions.handleMarkAllNotificationsAsRead(notifications));
+}
+
 export function* deleteNotification(id) {
   yield put(actions.deleteNotification(id));
 
@@ -61,18 +83,36 @@ export function* deleteNotification(id) {
   yield put(actions.deleteNotification.success(notifications[0]));
 }
 
-export function* handleNotificationUpdate(notification) {
-  yield put(actions.handleNotificationUpdate(notification));
-}
-
 export function* handleNotificationDelete(notification) {
   yield put(actions.handleNotificationDelete(notification));
+}
+
+export function* deleteAllNotifications() {
+  yield put(actions.deleteAllNotifications());
+
+  let notifications;
+  try {
+    ({ items: notifications } = yield call(request, api.deleteAllNotifications));
+  } catch (error) {
+    yield put(actions.deleteAllNotifications.failure(error));
+    return;
+  }
+
+  yield put(actions.deleteAllNotifications.success(notifications));
+}
+
+export function* handleDeleteAllNotifications(notifications) {
+  yield put(actions.handleDeleteAllNotifications(notifications));
 }
 
 export default {
   handleNotificationCreate,
   updateNotification,
-  deleteNotification,
   handleNotificationUpdate,
+  markAllNotificationsAsRead,
+  handleMarkAllNotificationsAsRead,
+  deleteNotification,
   handleNotificationDelete,
+  deleteAllNotifications,
+  handleDeleteAllNotifications,
 };

@@ -33,11 +33,15 @@ const updateNotifications = (ids, data, headers) =>
     items: body.items.map(transformNotification),
   }));
 
+const markAllNotificationsAsRead = (headers) => socket.patch('/notifications', { isRead: true }, headers);
+
 const deleteNotifications = (ids, headers) =>
   socket.delete(`/notifications/${ids.join(',')}`, undefined, headers).then((body) => ({
     ...body,
     items: body.items.map(transformNotification),
   }));
+
+const deleteAllNotifications = (headers) => socket.delete('/notifications', undefined, headers);
 
 /* Event handlers */
 
@@ -48,15 +52,27 @@ const makeHandleNotificationCreate = (next) => (body) => {
   });
 };
 
+const makeHandleMarkAllNotificationsAsRead = (next) => (body) => {
+  next({
+    ...body,
+    item: body.item.map(transformNotification),
+  });
+};
+
 const makeHandleNotificationUpdate = makeHandleNotificationCreate;
 const makeHandleNotificationDelete = makeHandleNotificationCreate;
+const makeHandleDeleteAllNotifications = makeHandleMarkAllNotificationsAsRead;
 
 export default {
   getNotifications,
   getNotification,
   updateNotifications,
+  markAllNotificationsAsRead,
   deleteNotifications,
+  deleteAllNotifications,
   makeHandleNotificationCreate,
   makeHandleNotificationUpdate,
+  makeHandleMarkAllNotificationsAsRead,
   makeHandleNotificationDelete,
+  makeHandleDeleteAllNotifications,
 };

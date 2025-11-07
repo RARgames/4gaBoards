@@ -5,13 +5,14 @@ import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
 
 import ActivityMessage from '../ActivityMessage';
+import NotificationActionsPopup from '../NotificationActionsPopup';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './NotificationsPopup.module.scss';
 
-const NotificationsStep = React.memo(({ items, onUpdate, onDelete, onClose }) => {
+const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAsRead, onDelete, onDeleteAll, onClose }) => {
   const [t] = useTranslation();
   const truncateLength = 30;
 
@@ -31,7 +32,14 @@ const NotificationsStep = React.memo(({ items, onUpdate, onDelete, onClose }) =>
 
   return (
     <>
-      <Popup.Header>{t('common.notifications', { context: 'title' })}</Popup.Header>
+      <Popup.Header>
+        {t('common.notifications', { context: 'title' })}
+        <NotificationActionsPopup wrapperClassName={s.actions} onMarkAllAsRead={onMarkAllAsRead} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
+          <Button style={ButtonStyle.Icon} title={t('common.notificationActions')}>
+            <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
+          </Button>
+        </NotificationActionsPopup>
+      </Popup.Header>
       <Popup.Content>
         {items.length > 0 ? (
           <div className={clsx(s.wrapper, gs.scrollableY)}>
@@ -84,7 +92,9 @@ const NotificationsStep = React.memo(({ items, onUpdate, onDelete, onClose }) =>
 NotificationsStep.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
+  onMarkAllAsRead: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onDeleteAll: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

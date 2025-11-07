@@ -15,17 +15,28 @@ const updateNotification = (id, data) => ({
   },
 });
 
-const deleteNotification = (id) => ({
-  type: EntryActionTypes.NOTIFICATION_DELETE,
-  payload: {
-    id,
-  },
-});
-
 const handleNotificationUpdate = (notification) => ({
   type: EntryActionTypes.NOTIFICATION_UPDATE_HANDLE,
   payload: {
     notification,
+  },
+});
+
+const markAllNotificationsAsRead = () => ({
+  type: EntryActionTypes.NOTIFICATION_MARK_ALL_AS_READ,
+});
+
+const handleMarkAllNotificationsAsRead = (notifications) => ({
+  type: EntryActionTypes.NOTIFICATION_MARK_ALL_AS_READ_HANDLE,
+  payload: {
+    notifications,
+  },
+});
+
+const deleteNotification = (id) => ({
+  type: EntryActionTypes.NOTIFICATION_DELETE,
+  payload: {
+    id,
   },
 });
 
@@ -36,10 +47,25 @@ const handleNotificationDelete = (notification) => ({
   },
 });
 
+const deleteAllNotifications = () => ({
+  type: EntryActionTypes.NOTIFICATION_DELETE_ALL,
+});
+
+const handleDeleteAllNotifications = (notifications) => ({
+  type: EntryActionTypes.NOTIFICATION_DELETE_ALL_HANDLE,
+  payload: {
+    notifications,
+  },
+});
+
 export default {
   handleNotificationCreate,
   updateNotification,
-  deleteNotification,
   handleNotificationUpdate,
+  markAllNotificationsAsRead,
+  handleMarkAllNotificationsAsRead,
+  deleteNotification,
   handleNotificationDelete,
+  deleteAllNotifications,
+  handleDeleteAllNotifications,
 };

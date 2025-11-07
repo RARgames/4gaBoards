@@ -1,4 +1,10 @@
 :global(#app) {
+  .actions {
+    display: inline-flex;
+    position: absolute;
+    right: 8px;
+  }
+
   .wrapper {
     margin: 0 -12px -12px -12px;
     max-width: max(274px, 35vw);

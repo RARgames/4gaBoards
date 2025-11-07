@@ -33,6 +33,38 @@ updateNotification.failure = (id, error) => ({
   },
 });
 
+const handleNotificationUpdate = (notification) => ({
+  type: ActionTypes.NOTIFICATION_UPDATE_HANDLE,
+  payload: {
+    notification,
+  },
+});
+
+const markAllNotificationsAsRead = () => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ,
+});
+
+markAllNotificationsAsRead.success = (notifications) => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ__SUCCESS,
+  payload: {
+    notifications,
+  },
+});
+
+markAllNotificationsAsRead.failure = (error) => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ__FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const handleMarkAllNotificationsAsRead = (notifications) => ({
+  type: ActionTypes.NOTIFICATION_MARK_ALL_AS_READ_HANDLE,
+  payload: {
+    notifications,
+  },
+});
+
 const deleteNotification = (id) => ({
   type: ActionTypes.NOTIFICATION_DELETE,
   payload: {
@@ -55,13 +87,6 @@ deleteNotification.failure = (id, error) => ({
   },
 });
 
-const handleNotificationUpdate = (notification) => ({
-  type: ActionTypes.NOTIFICATION_UPDATE_HANDLE,
-  payload: {
-    notification,
-  },
-});
-
 const handleNotificationDelete = (notification) => ({
   type: ActionTypes.NOTIFICATION_DELETE_HANDLE,
   payload: {
@@ -69,10 +94,39 @@ const handleNotificationDelete = (notification) => ({
   },
 });
 
+const deleteAllNotifications = () => ({
+  type: ActionTypes.NOTIFICATION_DELETE_ALL,
+});
+
+deleteAllNotifications.success = (notifications) => ({
+  type: ActionTypes.NOTIFICATION_DELETE_ALL__SUCCESS,
+  payload: {
+    notifications,
+  },
+});
+
+deleteAllNotifications.failure = (error) => ({
+  type: ActionTypes.NOTIFICATION_DELETE_ALL__FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const handleDeleteAllNotifications = (notifications) => ({
+  type: ActionTypes.NOTIFICATION_DELETE_ALL_HANDLE,
+  payload: {
+    notifications,
+  },
+});
+
 export default {
   handleNotificationCreate,
   updateNotification,
-  deleteNotification,
   handleNotificationUpdate,
+  deleteNotification,
   handleNotificationDelete,
+  markAllNotificationsAsRead,
+  handleMarkAllNotificationsAsRead,
+  deleteAllNotifications,
+  handleDeleteAllNotifications,
 };
