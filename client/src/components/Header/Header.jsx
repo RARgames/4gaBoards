@@ -54,6 +54,8 @@ const Header = React.memo(
           return t('common.settingsUsers');
         case Paths.SETTINGS_PROJECT:
           return t('common.settingsProject');
+        case Paths.NOTIFICATIONS:
+          return t('common.notifications');
         default:
           return project ? project.name : null;
       }

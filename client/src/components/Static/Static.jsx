@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Paths from '../../constants/Paths';
 import BoardContainer from '../../containers/BoardContainer';
 import BoardsContainer from '../../containers/BoardsContainer';
+import NotificationsContainer from '../../containers/NotificationsContainer';
 import ProjectsContainer from '../../containers/ProjectsContainer';
 import SettingsContainer from '../../containers/Settings/SettingsContainer';
 import SidebarContainer from '../../containers/SidebarContainer';
@@ -31,6 +32,16 @@ function Static({ path, projectId, cardId, board }) {
       <div className={s.wrapper}>
         <SidebarContainer settingsOnly={path !== Paths.SETTINGS_PROJECT}>
           <SettingsContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.NOTIFICATIONS) {
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <NotificationsContainer isFullScreen onClose={() => {}} />
         </SidebarContainer>
       </div>
     );

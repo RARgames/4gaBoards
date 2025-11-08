@@ -303,6 +303,7 @@ export default {
       ofProjects_one: 'of {{count}} project',
       ofProjects_other: 'of {{count}} projects',
       openDropdown: 'Open dropdown',
+      openNotifications: 'Open Notifications',
       optional_inline: 'optional',
       or: 'or',
       organization: 'Organization',

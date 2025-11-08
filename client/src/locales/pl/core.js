@@ -317,6 +317,7 @@ export default {
       ofProjects_many: 'z {{count}} projektów',
       ofProjects_one: 'z {{count}} projektu',
       openDropdown: 'Rozwiń menu',
+      openNotifications: 'Otwórz powiadomienia',
       optional_inline: 'opcjonalny',
       or: 'lub',
       organization: 'Organizacja',

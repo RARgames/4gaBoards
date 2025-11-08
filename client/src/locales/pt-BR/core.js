@@ -305,6 +305,7 @@ export default {
       ofProjects_one: 'de {{count}} projeto',
       ofProjects_other: 'de {{count}} projetos',
       openDropdown: 'Abrir lista suspensa',
+      openNotifications: 'Abrir Notificações',
       optional_inline: 'opcional',
       or: 'ou',
       organization: 'Organização',

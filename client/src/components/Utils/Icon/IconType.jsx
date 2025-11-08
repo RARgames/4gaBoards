@@ -21,6 +21,7 @@ import { ReactComponent as Eye } from '../../../assets/icons/Eye.svg';
 import { ReactComponent as EyeSlash } from '../../../assets/icons/EyeSlash.svg';
 import { ReactComponent as Facebook } from '../../../assets/icons/Facebook.svg';
 import { ReactComponent as FillDrip } from '../../../assets/icons/FillDrip.svg';
+import { ReactComponent as FullScreen } from '../../../assets/icons/FullScreen.svg';
 import { ReactComponent as GitHub } from '../../../assets/icons/GitHub.svg';
 import { ReactComponent as Google } from '../../../assets/icons/Google.svg';
 import { ReactComponent as Hide } from '../../../assets/icons/Hide.svg';
@@ -85,6 +86,7 @@ const IconType = {
   EyeSlash,
   Facebook,
   FillDrip,
+  FullScreen,
   GitHub,
   Google,
   Hide,

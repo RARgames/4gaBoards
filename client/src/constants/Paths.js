@@ -19,6 +19,7 @@ const SETTINGS_ABOUT = `${Config.BASE_PATH}/settings/about`;
 const SETTINGS_INSTANCE = `${Config.BASE_PATH}/settings/instance`;
 const SETTINGS_USERS = `${Config.BASE_PATH}/settings/users`;
 const SETTINGS_PROJECT = `${Config.BASE_PATH}/projects/:id/settings`;
+const NOTIFICATIONS = `${Config.BASE_PATH}/notifications`;
 
 export default {
   ROOT,
@@ -40,4 +41,5 @@ export default {
   SETTINGS_INSTANCE,
   SETTINGS_USERS,
   SETTINGS_PROJECT,
+  NOTIFICATIONS,
 };

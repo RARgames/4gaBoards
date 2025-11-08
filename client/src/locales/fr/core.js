@@ -319,6 +319,7 @@ export default {
       ofProjects_one: 'de {{count}} projet',
       ofProjects_other: 'de {{count}} projets',
       openDropdown: 'Ouvrir le menu déroulant',
+      openNotifications: 'uvrir les notifications',
       optional_inline: 'optionnel',
       or: 'ou',
       organization: 'Organisation',
