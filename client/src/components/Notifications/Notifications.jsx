@@ -69,7 +69,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
     );
   });
 
-  if (items.length <= 0) return t('common.noUnreadNotifications');
+  if (items.length <= 0) return <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>;
 
   return isFullScreen ? (
     <div className={s.wrapperFullScreen}>

@@ -1,4 +1,10 @@
 :global(#app) {
+  .noUnread {
+    color: var(--textColor2);
+    padding: 20px;
+    text-align: center;
+  }
+
   .wrapper {
     margin: 0 -12px -12px -12px;
     max-width: max(274px, 35vw);
