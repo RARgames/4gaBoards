@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import clsx from 'clsx';
 import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
@@ -14,6 +14,8 @@ import * as s from './Notifications.module.scss';
 const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
   const truncateLength = 30;
+  const unreadCount = items.filter((item) => !item.isRead).length;
+  const totalCount = items.length;
 
   const handleUpdate = useCallback(
     (id, data) => {
@@ -69,7 +71,21 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
 
   if (items.length <= 0) return t('common.noUnreadNotifications');
 
-  return isFullScreen ? <div className={clsx(s.wrapperFullScreen)}>{notificationsNode}</div> : <div className={clsx(s.wrapper, gs.scrollableY)}>{notificationsNode}</div>;
+  return isFullScreen ? (
+    <div className={s.wrapperFullScreen}>
+      <div className={s.header}>
+        {totalCount > 0 && (
+          <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
+            <span className={s.notificationCount} />
+          </Trans>
+        )}
+        {totalCount === 0 && t('common.notifications')}
+      </div>
+      <div className={clsx(s.content, gs.scrollableY)}>{notificationsNode}</div>
+    </div>
+  ) : (
+    <div className={clsx(s.wrapper, gs.scrollableY)}>{notificationsNode}</div>
+  );
 });
 
 Notifications.propTypes = {

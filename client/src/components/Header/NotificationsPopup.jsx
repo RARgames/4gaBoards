@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
@@ -13,10 +13,18 @@ import * as s from './NotificationsPopup.module.scss';
 const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onClose }) => {
   const [t] = useTranslation();
 
+  const unreadCount = items.filter((item) => !item.isRead).length;
+  const totalCount = items.length;
+
   return (
     <>
       <Popup.Header>
-        {t('common.notifications', { context: 'title' })}
+        {totalCount > 0 && (
+          <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
+            <span className={s.notificationCount} />
+          </Trans>
+        )}
+        {totalCount === 0 && t('common.notifications')}
         <div className={s.actionsWrapper}>
           <Link to={Paths.NOTIFICATIONS}>
             <Button style={ButtonStyle.Icon} title={t('common.openNotifications')} onClick={onClose}>

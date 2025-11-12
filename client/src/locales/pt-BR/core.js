@@ -297,6 +297,7 @@ export default {
       notConnectedToGithub: 'Sem conexão com o GitHub',
       notificationActions: 'Ações de Notificação',
       notifications: 'Notificações',
+      notificationsWithCount: 'Notificações <0>({{unread}}/{{total}})</0>',
       noUnreadNotifications: 'Sem notificações não lidas',
       ofBoards_one: 'de {{count}} painel',
       ofBoards_other: 'de {{count}} painéis',

@@ -295,6 +295,7 @@ export default {
       notConnectedToGithub: 'Not connected to GitHub',
       notificationActions: 'Notification Actions',
       notifications: 'Notifications',
+      notificationsWithCount: 'Notifications <0>({{unread}}/{{total}})</0>',
       noUnreadNotifications: 'No unread notifications',
       ofBoards_one: 'of {{count}} board',
       ofBoards_other: 'of {{count}} boards',

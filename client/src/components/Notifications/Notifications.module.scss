@@ -4,15 +4,6 @@
     max-width: max(274px, 35vw);
   }
 
-  .wrapperFullScreen {
-    height: 100%;
-    width: 100%;
-    padding: 20px 20px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-  }
-
   .item {
     padding: 4px 8px 12px 8px;
     border-bottom: 1px solid var(--nodeOutline);
@@ -110,5 +101,27 @@
     padding: 0 2px;
     word-break: break-word;
     color: var(--textColor2);
+  }
+
+  .wrapperFullScreen {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .content {
+    padding: 0 min(20px, 1vw) 20px min(20px, 1vw);
+  }
+
+  .notificationCount {
+    color: var(--textColor3);
+    margin-left: 4px;
   }
 }
