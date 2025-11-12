@@ -1,7 +1,7 @@
 import omit from 'lodash/omit';
 
 import socket from './socket';
-import { transformActivity, transformCard, transformNotification } from './transformers';
+import { transformActivity, transformCard, transformNotification, transformUser } from './transformers';
 
 /* Actions */
 
@@ -13,6 +13,7 @@ const getNotifications = (headers) =>
       ...omit(body.included, 'actions'),
       cards: body.included.cards.map(transformCard),
       activities: body.included.actions.map(transformActivity),
+      users: body.included.users.map(transformUser),
     },
   }));
 
