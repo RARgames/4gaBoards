@@ -200,7 +200,7 @@
     display: inline-flex;
     align-items: center;
     width: 100%;
-    padding: 4px 26px 4px 26px;
+    padding: 4px min(26px, 1vw) 4px min(26px, 1vw);
     overflow-x: auto;
   }
 
