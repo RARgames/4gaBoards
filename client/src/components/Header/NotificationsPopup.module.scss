@@ -1,4 +1,8 @@
 :global(#app) {
+  .header {
+    padding: 12px 32px 8px;
+  }
+
   .actionsWrapper {
     position: absolute;
     right: 8px;

@@ -103,6 +103,13 @@
     height: 20px;
   }
 
+  .iconCentered {
+    @extend .icon;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .iconText {
     @extend .iconBase;
     padding: 0;

@@ -117,9 +117,12 @@
   }
 
   .header {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
+    text-align: center;
+    margin: 0 min(20px, 1vw);
+    padding: 20px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .content {
@@ -129,5 +132,11 @@
   .notificationCount {
     color: var(--textColor3);
     margin-left: 4px;
+  }
+
+  .actionsWrapper {
+    display: inline-flex;
+    position: absolute;
+    right: 8px;
   }
 }

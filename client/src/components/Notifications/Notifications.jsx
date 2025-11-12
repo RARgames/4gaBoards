@@ -5,13 +5,14 @@ import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
 
 import ActivityMessage from '../ActivityMessage';
+import NotificationActionsPopup from '../NotificationActionsPopup';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Notifications.module.scss';
 
-const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onClose }) => {
+const Notifications = React.memo(({ items, isFullScreen, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onClose }) => {
   const [t] = useTranslation();
   const truncateLength = 30;
   const unreadCount = items.filter((item) => !item.isRead).length;
@@ -80,6 +81,13 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
           </Trans>
         )}
         {totalCount === 0 && t('common.notifications')}
+        <div className={s.actionsWrapper}>
+          <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
+            <Button style={ButtonStyle.IconCentered} title={t('common.notificationActions')}>
+              <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
+            </Button>
+          </NotificationActionsPopup>
+        </div>
       </div>
       <div className={clsx(s.content, gs.scrollableY)}>{notificationsNode}</div>
     </div>
@@ -92,7 +100,9 @@ Notifications.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFullScreen: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onMarkAllAs: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onDeleteAll: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

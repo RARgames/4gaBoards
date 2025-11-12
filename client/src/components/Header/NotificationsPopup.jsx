@@ -18,7 +18,7 @@ const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAs, onDelete, 
 
   return (
     <>
-      <Popup.Header>
+      <Popup.Header contentClassName={s.header}>
         {totalCount > 0 && (
           <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
             <span className={s.notificationCount} />
@@ -39,7 +39,7 @@ const NotificationsStep = React.memo(({ items, onUpdate, onMarkAllAs, onDelete, 
         </div>
       </Popup.Header>
       <Popup.Content>
-        <Notifications items={items} isFullScreen={false} onUpdate={onUpdate} onDelete={onDelete} onClose={onClose} />
+        <Notifications items={items} isFullScreen={false} onUpdate={onUpdate} onMarkAllAs={onMarkAllAs} onDelete={onDelete} onDeleteAll={onDeleteAll} onClose={onClose} />
       </Popup.Content>
     </>
   );
