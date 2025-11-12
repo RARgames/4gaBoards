@@ -38,7 +38,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onMarkAllAs, 
     const boardName = truncate(item.activity.board?.name, { length: truncateLength });
 
     return (
-      <div key={item.id} className={clsx(s.item, item.isRead && s.itemRead)}>
+      <div key={item.id} className={clsx(s.item, item.isRead && s.itemRead, isFullScreen && s.itemFullScreen)}>
         <div className={s.itemHeader}>
           <span className={s.user}>
             <User name={item.activity.user.name} avatarUrl={item.activity.user.avatarUrl} size="tiny" />
@@ -70,30 +70,30 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onMarkAllAs, 
     );
   });
 
-  if (items.length <= 0) return <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>;
-
-  return isFullScreen ? (
-    <div className={s.wrapperFullScreen}>
-      <div className={s.header}>
-        {totalCount > 0 && (
-          <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
-            <span className={s.notificationCount} />
-          </Trans>
-        )}
-        {totalCount === 0 && t('common.notifications')}
-        <div className={s.actionsWrapper}>
-          <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
-            <Button style={ButtonStyle.IconCentered} title={t('common.notificationActions')}>
-              <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
-            </Button>
-          </NotificationActionsPopup>
+  if (isFullScreen) {
+    return (
+      <div className={s.wrapperFullScreen}>
+        <div className={s.header}>
+          {totalCount > 0 && (
+            <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
+              <span className={s.notificationCount} />
+            </Trans>
+          )}
+          {totalCount === 0 && t('common.notifications')}
+          <div className={s.actionsWrapper}>
+            <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
+              <Button style={ButtonStyle.IconCentered} title={t('common.notificationActions')}>
+                <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
+              </Button>
+            </NotificationActionsPopup>
+          </div>
         </div>
+        {totalCount > 0 ? <div className={clsx(s.content, gs.scrollableY)}>{notificationsNode}</div> : <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>}
       </div>
-      <div className={clsx(s.content, gs.scrollableY)}>{notificationsNode}</div>
-    </div>
-  ) : (
-    <div className={clsx(s.wrapper, gs.scrollableY)}>{notificationsNode}</div>
-  );
+    );
+  }
+
+  return totalCount > 0 ? <div className={clsx(s.wrapper, gs.scrollableY)}>{notificationsNode}</div> : <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>;
 });
 
 Notifications.propTypes = {

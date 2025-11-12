@@ -19,6 +19,12 @@
     }
   }
 
+  .itemFullScreen {
+    &:hover {
+      background: var(--backgroundNotificationHover);
+    }
+  }
+
   .itemRead {
     opacity: 0.5;
   }
