@@ -100,7 +100,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
         const boardsCount = filteredProjects.reduce((sum, project) => sum + (project.boards ? project.boards.length : 0), 0);
         return `${t('common.boards', { count: boardsCount })} (${filteredProjects.length}/${t('common.projects', { count: projects.length })})`;
       }
-      return `${filteredProjects.length} ${t('common.ofProjects', { count: projects.length })}`;
+      return t('common.ofProjects', { filteredCount: filteredProjects.length, count: projects.length });
     }
     return '';
   };

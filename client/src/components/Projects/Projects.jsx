@@ -24,7 +24,7 @@ const Projects = React.memo(({ projects, filteredProjects, isFiltered, canAdd, d
     if (!isFiltered) {
       return `${t('common.showing')} ${t('common.projects', { count: projects.length, context: 'title' })}`;
     }
-    return `${t('common.showing')} ${filteredProjects.length} ${t('common.ofProjects', { count: projects.length, context: 'title' })} `;
+    return `${t('common.showing')} ${t('common.ofProjects', { filteredCount: filteredProjects.length, count: projects.length, context: 'title' })}`;
   };
 
   const getBoardsText = () => {

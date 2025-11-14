@@ -25,7 +25,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
     if (!isFiltered) {
       return `${t('common.showing')} ${t('common.boards', { count: boardsCount, context: 'title' })}`;
     }
-    return `${t('common.showing')} ${boardsCount} ${t('common.ofBoards', { count: totalBoardsCount, context: 'title' })}`;
+    return `${t('common.showing')} ${t('common.ofBoards', { filteredCount: boardsCount, count: totalBoardsCount, context: 'title' })}`;
   };
 
   useEffect(() => {

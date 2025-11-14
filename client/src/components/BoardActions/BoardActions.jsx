@@ -71,7 +71,7 @@ const BoardActions = React.memo(
         <div title={boardData.name} className={clsx(s.title, s.action)}>
           {boardData.name}
         </div>
-        <div className={clsx(s.cardsCount, s.action)}>{isFiltered ? `${filteredCardCount} ${t('common.ofCards', { count: cardCount })}` : `${t('common.cards', { count: cardCount })}`}</div>
+        <div className={clsx(s.cardsCount, s.action)}>{isFiltered ? t('common.ofCards', { filteredCount: filteredCardCount, count: cardCount }) : t('common.cards', { count: cardCount })}</div>
         <div className={s.action}>
           <Memberships
             items={memberships}

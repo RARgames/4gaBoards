@@ -139,7 +139,7 @@ const List = React.memo(
     }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpen, styleVars, isCollapsed]);
 
     const cardsCountText = () => {
-      return isFiltered ? `${filteredCardIds.length} ${t('common.ofCards', { count: cardIds.length })}` : `${t('common.cards', { count: cardIds.length })}`;
+      return isFiltered ? t('common.ofCards', { filteredCount: filteredCardIds.length, count: cardIds.length }) : t('common.cards', { count: cardIds.length });
     };
 
     const cardsNode = (
