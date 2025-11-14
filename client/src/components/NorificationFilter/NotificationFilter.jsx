@@ -7,7 +7,7 @@ import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../U
 
 import * as s from './NotificationFilter.module.scss';
 
-const NotificationFilter = React.memo(({ defaultValue, items, filteredItems, onChangeFilterQuery, onFilterQueryClear }) => {
+const NotificationFilter = React.memo(({ defaultValue, items, filteredItems, className, onChangeFilterQuery, onFilterQueryClear }) => {
   const [t] = useTranslation();
   const field = useRef(null);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
@@ -80,7 +80,7 @@ const NotificationFilter = React.memo(({ defaultValue, items, filteredItems, onC
   const upperCasedTarget = target.charAt(0).toUpperCase() + target.slice(1);
 
   return (
-    <div>
+    <div className={className}>
       <Form className={s.form} onKeyDown={handleKeyDown}>
         <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t(`common.filterBy${upperCasedTarget}`)} onFocus={handleFocus} />
         <Button style={ButtonStyle.Icon} title={t('common.toggleNotificationFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
@@ -103,12 +103,14 @@ NotificationFilter.propTypes = {
   defaultValue: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredItems: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  className: PropTypes.string,
   onChangeFilterQuery: PropTypes.func.isRequired,
   onFilterQueryClear: PropTypes.func,
 };
 
 NotificationFilter.defaultProps = {
   onFilterQueryClear: () => {},
+  className: undefined,
 };
 
 export default NotificationFilter;

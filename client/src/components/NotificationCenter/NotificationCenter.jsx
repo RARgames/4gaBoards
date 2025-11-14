@@ -19,18 +19,20 @@ const NotificationCenter = React.memo(({ items, filteredItems, onUpdate, onMarkA
   return (
     <div className={s.wrapperFullScreen}>
       <div className={s.header}>
-        {totalCount > 0 && (
-          <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
-            <span className={s.notificationCount} />
-          </Trans>
-        )}
-        {totalCount === 0 && t('common.notifications')}
-        <div className={s.actionsWrapper}>
-          <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
-            <Button style={ButtonStyle.IconCentered} title={t('common.notificationActions')}>
-              <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
-            </Button>
-          </NotificationActionsPopup>
+        <div className={s.title}>
+          {totalCount > 0 && (
+            <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
+              <span className={s.notificationCount} />
+            </Trans>
+          )}
+          {totalCount === 0 && t('common.notifications')}
+          <div className={s.actionsWrapper}>
+            <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
+              <Button style={ButtonStyle.IconCentered} title={t('common.notificationActions')}>
+                <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
+              </Button>
+            </NotificationActionsPopup>
+          </div>
         </div>
         <NotificationFilter defaultValue="" items={items} filteredItems={filteredItems} onChangeFilterQuery={onChangeFilterQuery} />
       </div>

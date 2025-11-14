@@ -19,6 +19,7 @@ const Header = React.memo(
     project,
     user,
     notifications,
+    filteredNotifications,
     notificationCount,
     isLogouting,
     canEditProject,
@@ -28,6 +29,7 @@ const Header = React.memo(
     onNotificationMarkAllAs,
     onNotificationDelete,
     onNotificationDeleteAll,
+    onNotificationChangeFilterQuery,
     onLogout,
   }) => {
     const [t] = useTranslation();
@@ -103,7 +105,16 @@ const Header = React.memo(
               </Button>
             </Link>
           )}
-          <NotificationsPopup items={notifications} onUpdate={onNotificationUpdate} onMarkAllAs={onNotificationMarkAllAs} onDelete={onNotificationDelete} onDeleteAll={onNotificationDeleteAll} hideCloseButton>
+          <NotificationsPopup
+            items={notifications}
+            filteredItems={filteredNotifications}
+            onUpdate={onNotificationUpdate}
+            onMarkAllAs={onNotificationMarkAllAs}
+            onDelete={onNotificationDelete}
+            onDeleteAll={onNotificationDeleteAll}
+            onChangeFilterQuery={onNotificationChangeFilterQuery}
+            hideCloseButton
+          >
             <Button style={ButtonStyle.Header} title={t('common.notifications')}>
               <Icon type={IconType.Bell} size={IconSize.Size18} />
               {notificationCount > 0 && <span className={s.notification}>{notificationCount}</span>}
@@ -125,6 +136,7 @@ Header.propTypes = {
   project: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   notifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  filteredNotifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   notificationCount: PropTypes.number.isRequired,
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
@@ -134,6 +146,7 @@ Header.propTypes = {
   onNotificationMarkAllAs: PropTypes.func.isRequired,
   onNotificationDelete: PropTypes.func.isRequired,
   onNotificationDeleteAll: PropTypes.func.isRequired,
+  onNotificationChangeFilterQuery: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
 

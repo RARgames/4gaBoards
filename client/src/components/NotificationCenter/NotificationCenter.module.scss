@@ -1,10 +1,4 @@
 :global(#app) {
-  .noUnread {
-    color: var(--textColor2);
-    padding: min(20px, 1vw);
-    text-align: center;
-  }
-
   .wrapperFullScreen {
     height: 100%;
     width: 100%;
@@ -22,6 +16,10 @@
     flex-shrink: 0;
   }
 
+  .title {
+    padding: 0 0 6px 0;
+  }
+
   .content {
     padding: 0 min(20px, 1vw) 20px min(20px, 1vw);
   }
@@ -35,5 +33,11 @@
     display: inline-flex;
     position: absolute;
     right: calc(12px + min(20px, 1vw));
+  }
+
+  .noUnread {
+    color: var(--textColor2);
+    padding: min(20px, 1vw);
+    text-align: center;
   }
 }

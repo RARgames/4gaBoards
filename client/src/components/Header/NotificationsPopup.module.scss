@@ -1,6 +1,17 @@
 :global(#app) {
+  .headerWrapper {
+    height: auto;
+  }
+
   .header {
-    padding: 12px 32px 8px;
+    padding: 0;
+  }
+
+  .title {
+    padding: 12px 32px 8px 32px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .actionsWrapper {
@@ -15,12 +26,16 @@
 
   .wrapper {
     margin: 0 -12px -12px -12px;
-    max-width: max(274px, 35vw);
+    max-width: max(400px, 35vw);
   }
 
   .noUnread {
     color: var(--textColor2);
     padding: 20px;
     text-align: center;
+  }
+
+  .filter {
+    padding: 0 0 6px 0;
   }
 }
