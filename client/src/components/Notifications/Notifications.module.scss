@@ -1,15 +1,4 @@
 :global(#app) {
-  .noUnread {
-    color: var(--textColor2);
-    padding: 20px;
-    text-align: center;
-  }
-
-  .wrapper {
-    margin: 0 -12px -12px -12px;
-    max-width: max(274px, 35vw);
-  }
-
   .item {
     padding: 4px 8px 12px 8px;
     border-bottom: 1px solid var(--nodeOutline);
@@ -113,36 +102,5 @@
     padding: 0 2px;
     word-break: break-word;
     color: var(--textColor2);
-  }
-
-  .wrapperFullScreen {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .header {
-    text-align: center;
-    margin: 0 min(20px, 1vw);
-    padding: 20px;
-    text-wrap: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .content {
-    padding: 0 min(20px, 1vw) 20px min(20px, 1vw);
-  }
-
-  .notificationCount {
-    color: var(--textColor3);
-    margin-left: 4px;
-  }
-
-  .actionsWrapper {
-    display: inline-flex;
-    position: absolute;
-    right: 8px;
   }
 }

@@ -351,12 +351,19 @@ const removeUserFromBoardFilter = (id, boardId) => ({
   },
 });
 
-const updateUserFilterQuery = (id, data, isCurrent) => ({
+const updateUserFilterQuery = (id, data) => ({
   type: ActionTypes.USER_FILTER_QUERY_UPDATE,
   payload: {
     id,
     data,
-    isCurrent,
+  },
+});
+
+const updateUserNotificationFilterQuery = (id, data) => ({
+  type: ActionTypes.USER_NOTIFICATION_FILTER_QUERY_UPDATE,
+  payload: {
+    id,
+    data,
   },
 });
 
@@ -386,4 +393,5 @@ export default {
   addUserToBoardFilter,
   removeUserFromBoardFilter,
   updateUserFilterQuery,
+  updateUserNotificationFilterQuery,
 };

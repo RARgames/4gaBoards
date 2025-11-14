@@ -39,5 +39,6 @@ export default function* usersWatchers() {
     takeEvery(EntryActionTypes.USER_TO_FILTER_IN_CURRENT_BOARD_ADD, ({ payload: { id } }) => services.addUserToFilterInCurrentBoard(id)),
     takeEvery(EntryActionTypes.USER_FROM_FILTER_IN_CURRENT_BOARD_REMOVE, ({ payload: { id } }) => services.removeUserFromFilterInCurrentBoard(id)),
     takeEvery(EntryActionTypes.CURRENT_USER_FILTER_QUERY_UPDATE, ({ payload: { data } }) => services.updateCurrentUserFilterQuery(data)),
+    takeEvery(EntryActionTypes.CURRENT_USER_NOTIFICATION_FILTER_QUERY_UPDATE, ({ payload: { data } }) => services.updateCurrentUserNotificationFilterQuery(data)),
   ]);
 }

@@ -1,22 +1,18 @@
 import React, { useCallback } from 'react';
-import { useTranslation, Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
 
 import ActivityMessage from '../ActivityMessage';
-import NotificationActionsPopup from '../NotificationActionsPopup';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as gs from '../../global.module.scss';
 import * as s from './Notifications.module.scss';
 
-const Notifications = React.memo(({ items, isFullScreen, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onClose }) => {
+const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
   const truncateLength = 30;
-  const unreadCount = items.filter((item) => !item.isRead).length;
-  const totalCount = items.length;
 
   const handleUpdate = useCallback(
     (id, data) => {
@@ -32,7 +28,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onMarkAllAs, 
     [onDelete],
   );
 
-  const notificationsNode = items.map((item) => {
+  return items.map((item) => {
     if (!item.activity) return null;
     const projectName = truncate(item.activity.project?.name, { length: truncateLength });
     const boardName = truncate(item.activity.board?.name, { length: truncateLength });
@@ -69,40 +65,13 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onMarkAllAs, 
       </div>
     );
   });
-
-  if (isFullScreen) {
-    return (
-      <div className={s.wrapperFullScreen}>
-        <div className={s.header}>
-          {totalCount > 0 && (
-            <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
-              <span className={s.notificationCount} />
-            </Trans>
-          )}
-          {totalCount === 0 && t('common.notifications')}
-          <div className={s.actionsWrapper}>
-            <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
-              <Button style={ButtonStyle.IconCentered} title={t('common.notificationActions')}>
-                <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
-              </Button>
-            </NotificationActionsPopup>
-          </div>
-        </div>
-        {totalCount > 0 ? <div className={clsx(s.content, gs.scrollableY)}>{notificationsNode}</div> : <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>}
-      </div>
-    );
-  }
-
-  return totalCount > 0 ? <div className={clsx(s.wrapper, gs.scrollableY)}>{notificationsNode}</div> : <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>;
 });
 
 Notifications.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFullScreen: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  onMarkAllAs: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onDeleteAll: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

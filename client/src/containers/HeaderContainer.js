@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
   const isLogouting = selectors.selectIsLogouting(state);
   const currentUser = selectors.selectCurrentUser(state);
   const currentProject = selectors.selectCurrentProject(state);
-  const notifications = selectors.selectNotificationsForCurrentUser(state);
+  const { notifications } = selectors.selectNotificationsForCurrentUser(state);
   const notificationCount = notifications.filter((n) => !n.isRead).length;
   const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
   const { demoMode } = selectors.selectCoreSettings(state);

@@ -239,6 +239,13 @@ const updateCurrentUserFilterQuery = (data) => ({
   },
 });
 
+const updateCurrentUserNotificationFilterQuery = (data) => ({
+  type: EntryActionTypes.CURRENT_USER_NOTIFICATION_FILTER_QUERY_UPDATE,
+  payload: {
+    data,
+  },
+});
+
 export default {
   createUser,
   handleUserCreate,
@@ -274,4 +281,5 @@ export default {
   addUserToFilterInCurrentBoard,
   removeUserFromFilterInCurrentBoard,
   updateCurrentUserFilterQuery,
+  updateCurrentUserNotificationFilterQuery,
 };

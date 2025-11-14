@@ -318,7 +318,12 @@ export function* removeUserFromFilterInCurrentBoard(id) {
 
 export function* updateCurrentUserFilterQuery(data) {
   const id = yield select(selectors.selectCurrentUserId);
-  yield put(actions.updateUserFilterQuery(id, data, true));
+  yield put(actions.updateUserFilterQuery(id, data));
+}
+
+export function* updateCurrentUserNotificationFilterQuery(data) {
+  const id = yield select(selectors.selectCurrentUserId);
+  yield put(actions.updateUserNotificationFilterQuery(id, data));
 }
 
 export default {
@@ -359,4 +364,5 @@ export default {
   removeUserFromBoardFilter,
   removeUserFromFilterInCurrentBoard,
   updateCurrentUserFilterQuery,
+  updateCurrentUserNotificationFilterQuery,
 };

@@ -210,7 +210,7 @@ export const selectNotificationsForCurrentUser = createSelector(
       return userModel;
     }
 
-    return userModel
+    const notifications = userModel
       .getOrderedUnreadNotificationsQuerySet()
       .toModelArray()
       .map((notificationModel) => ({
@@ -223,6 +223,50 @@ export const selectNotificationsForCurrentUser = createSelector(
         },
         card: notificationModel.card && notificationModel.card.ref,
       }));
+
+    let filteredNotifications = notifications;
+    if (userModel.notificationFilter) {
+      const query = userModel.notificationFilter.query.toLowerCase();
+      switch (userModel.notificationFilter.target) {
+        case 'project':
+          filteredNotifications = notifications.filter((notification) => notification.activity?.project?.name?.toLowerCase().includes(query));
+          break;
+        case 'board':
+          filteredNotifications = notifications.filter((notification) => notification.activity?.board?.name?.toLowerCase().includes(query));
+          break;
+        case 'user':
+          filteredNotifications = notifications.filter((notification) => {
+            const user = notification.activity?.user;
+            if (!user) return false;
+            return user.name?.toLowerCase().includes(query) || user.username?.toLowerCase().includes(query) || user.email?.toLowerCase().includes(query);
+          });
+          break;
+        case 'card':
+          filteredNotifications = notifications.filter((notification) => (notification.card?.name ?? notification.activity?.data?.cardName)?.toLowerCase().includes(query));
+          break;
+        case 'text':
+          filteredNotifications = notifications.filter((notification) => {
+            const { activity } = notification;
+            return activity && (activity.type.toLowerCase().includes(query) || (activity.data && Object.values(activity.data).some((val) => String(val).toLowerCase().includes(query))));
+          });
+          break;
+        case 'aggregated':
+          filteredNotifications = notifications.filter((notification) => {
+            const { activity } = notification;
+            const inProject = activity?.project?.name?.toLowerCase().includes(query);
+            const inBoard = activity?.board?.name?.toLowerCase().includes(query);
+            const inUser = activity?.user && (activity.user.name?.toLowerCase().includes(query) || activity.user.username?.toLowerCase().includes(query) || activity.user.email?.toLowerCase().includes(query));
+            const inCard = (notification.card?.name ?? notification.activity?.data?.cardName)?.toLowerCase().includes(query);
+            const inTypeOrData = activity && (activity.type.toLowerCase().includes(query) || (activity.data && Object.values(activity.data).some((val) => String(val).toLowerCase().includes(query))));
+            return inCard || inBoard || inProject || inUser || inTypeOrData;
+          });
+          break;
+        default:
+          break;
+      }
+    }
+
+    return { notifications, filteredNotifications };
   },
 );
 

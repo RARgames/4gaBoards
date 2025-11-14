@@ -64,6 +64,7 @@ export default class extends BaseModel {
       getDefault: () => DEFAULT_USERNAME_UPDATE_FORM,
     }),
     filter: attr(), // TODO move to userPrefs?
+    notificationFilter: attr(), // TODO move to userPrefs?
     createdAt: attr(),
     createdById: fk({
       to: 'User',
@@ -330,6 +331,18 @@ export default class extends BaseModel {
         } else {
           User.withId(payload.id).update({
             filter: { query: payload.data.query, target: payload.data.target },
+          });
+        }
+
+        break;
+      case ActionTypes.USER_NOTIFICATION_FILTER_QUERY_UPDATE:
+        if (payload.data.query === '') {
+          User.withId(payload.id).update({
+            notificationFilter: undefined,
+          });
+        } else {
+          User.withId(payload.id).update({
+            notificationFilter: { query: payload.data.query, target: payload.data.target },
           });
         }
 

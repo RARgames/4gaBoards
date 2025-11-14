@@ -12,4 +12,15 @@
   .notificationCount {
     color: var(--textColor3);
   }
+
+  .wrapper {
+    margin: 0 -12px -12px -12px;
+    max-width: max(274px, 35vw);
+  }
+
+  .noUnread {
+    color: var(--textColor2);
+    padding: 20px;
+    text-align: center;
+  }
 }
