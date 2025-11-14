@@ -49,8 +49,9 @@
   }
 
   .clearButton {
-    margin-right: 1px;
-
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     svg {
       fill: var(--textColorCounter);
       vertical-align: middle;
