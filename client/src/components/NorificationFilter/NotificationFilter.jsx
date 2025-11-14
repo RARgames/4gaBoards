@@ -84,7 +84,7 @@ const NotificationFilter = React.memo(({ defaultValue, items, filteredItems, onC
       <Form className={s.form} onKeyDown={handleKeyDown}>
         <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t(`common.filterBy${upperCasedTarget}`)} onFocus={handleFocus} />
         <Button style={ButtonStyle.Icon} title={t('common.toggleNotificationFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
-          <div className={s.inputButtonText}>{t(`common.filter${upperCasedTarget}`)[0].toUpperCase()}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
+          <div className={s.inputButtonText}>{t(`common.filterId${upperCasedTarget}`)[0].toUpperCase()}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
         </Button>
       </Form>
       <div className={s.controls}>
