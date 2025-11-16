@@ -23,6 +23,7 @@ const makeMapStateToProps = () => {
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const activities = selectors.selectListActivitiesById(state, id);
+    const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
@@ -51,6 +52,7 @@ const makeMapStateToProps = () => {
       isActivitiesFetching,
       isAllActivitiesFetched,
       lastActivityId,
+      isManager,
       mailId,
       mailsForList,
     };
@@ -64,9 +66,9 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onDelete: () => entryActions.deleteList(id),
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
       onActivitiesFetch: () => entryActions.fetchListActivities(id),
-      onMailCreate: () => entryActions.createMail(id),
-      onMailUpdate: () => entryActions.updateMail(id),
-      onMailDelete: () => entryActions.deleteMail(id),
+      onMailCreate: () => entryActions.createMail({ listId: id }),
+      onMailUpdate: () => entryActions.updateMail({ listId: id }),
+      onMailDelete: (mailId) => entryActions.deleteMail(mailId),
     },
     dispatch,
   );
