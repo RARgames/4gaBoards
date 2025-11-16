@@ -26,6 +26,7 @@ const ActionsStep = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    isManager,
     mailId,
     mailsForList,
     activities,
@@ -104,10 +105,10 @@ const ActionsStep = React.memo(
           );
         case StepTypes.MAIL:
           return (
-            <MailStep title={t('common.mailSettings', { context: 'title' })} mailId={mailId} onGenerate={onMailCreate} onReset={onMailUpdate} onCopy={onMailCopy} onDelete={onMailDelete} onBack={handleBack} />
+            <MailStep mailId={mailId} totalMails={mailsForList.length} contextType="list" onGenerate={onMailCreate} onReset={onMailUpdate} onCopy={onMailCopy} onDelete={onMailDelete} onBack={handleBack} />
           );
         case StepTypes.MAIL_LIST:
-          return <MailListStep title={t('common.mailIds', { context: 'title' })} mails={mailsForList} onMailDelete={onMailDelete} onBack={handleBack} />;
+          return <MailListStep title={t('common.mailIds', { context: 'title' })} mails={mailsForList} contextType="list" onDelete={onMailDelete} onBack={handleBack} />;
         default:
       }
     }
@@ -129,9 +130,11 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={handleMailOptionsClick}>
           {t('common.mailSettings', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={handleMailListOptionsClick}>
-          {t('common.mailIds')}
-        </Button>
+        {isManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={handleMailListOptionsClick}>
+            {t('common.mailIds')}
+          </Button>
+        )}
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -153,6 +156,7 @@ ActionsStep.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  isManager: PropTypes.bool.isRequired,
   mailId: PropTypes.string,
   mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onNameEdit: PropTypes.func.isRequired,
