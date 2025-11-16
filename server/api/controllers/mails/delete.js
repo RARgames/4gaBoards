@@ -5,11 +5,8 @@ const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
   },
-  LIST_NOT_FOUND: {
-    listNotFound: 'List not found',
-  },
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
+  PROJECT_NOT_FOUND: {
+    projectNotFound: 'Project not found',
   },
   MAIL_NOT_FOUND: {
     mailNotFound: 'Mail not found',
@@ -18,13 +15,9 @@ const Errors = {
 
 module.exports = {
   inputs: {
-    listId: {
+    mailId: {
       type: 'string',
-      regex: /^[0-9]+$/,
-    },
-    boardId: {
-      type: 'string',
-      regex: /^[0-9]+$/,
+      required: true,
     },
   },
 
@@ -35,10 +28,7 @@ module.exports = {
     notEnoughRights: {
       responseType: 'forbidden',
     },
-    listNotFound: {
-      responseType: 'notFound',
-    },
-    boardNotFound: {
+    projectNotFound: {
       responseType: 'notFound',
     },
     mailNotFound: {
@@ -49,41 +39,24 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    let list = null;
-    let board;
-
-    if (inputs.listId) {
-      ({ list, board } = await sails.helpers.lists.getProjectPath(inputs.listId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
-    } else if (inputs.boardId) {
-      ({ board } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
-    } else {
-      throw Errors.MISSING_RELATIONS;
-    }
-
-    const boardMembership = await BoardMembership.findOne({
-      boardId: board.id,
-      userId: currentUser.id,
-    });
-
-    if (!boardMembership) {
-      throw list ? Errors.LIST_NOT_FOUND : Errors.BOARD_NOT_FOUND; // Forbidden
-    }
-
-    if (boardMembership.role !== BoardMembership.Roles.EDITOR) {
-      throw Errors.NOT_ENOUGH_RIGHTS;
-    }
-
-    const criteria = { userId: currentUser.id };
-    if (list) {
-      criteria.listId = list.id;
-    } else {
-      criteria.boardId = board.id;
-      criteria.listId = null;
-    }
-
-    const mail = await Mail.findOne(criteria);
+    const mail = await Mail.findOne({ mailId: inputs.mailId });
     if (!mail) {
       throw Errors.MAIL_NOT_FOUND;
+    }
+
+    const { board } = await sails.helpers.boards.getProjectPath(mail.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS);
+
+    const project = await Project.findOne({ id: board.projectId });
+    if (!project) {
+      throw Errors.PROJECT_NOT_FOUND;
+    }
+
+    const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
+
+    const isOwner = mail.userId === currentUser.id;
+
+    if (!isOwner && !isProjectManager) {
+      throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
     const deleted = await sails.helpers.mails.deleteOne.with({

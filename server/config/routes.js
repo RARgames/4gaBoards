@@ -86,10 +86,9 @@ module.exports.routes = {
   'POST /api/boards/:boardId/mails': 'mails/create',
   'POST /api/mails/:mailId/cards': 'mails/create-card',
   'GET /api/mails/:mailId': 'mails/show',
-  'PATCH /api/mails/:listId/update': 'mails/update',
-  'PATCH /api/mails/:boardId/update': 'mails/update',
-  'DELETE /api/lists/:listId/mails': 'mails/delete',
-  'DELETE /api/boards/:boardId/mails': 'mails/delete',
+  'PATCH /api/lists/:listId/mails/update': 'mails/update',
+  'PATCH /api/boards/:boardId/mails/update': 'mails/update',
+  'DELETE /api/mails/:mailId': 'mails/delete',
 
   'POST /api/cards/:cardId/tasks': 'tasks/create',
   'PATCH /api/tasks/:id': 'tasks/update',

@@ -1,41 +1,89 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import { useSteps } from '../../hooks';
+import DeleteStep from '../DeleteStep';
 import { Button, ButtonStyle, Popup } from '../Utils';
 
 import * as s from './MailStep.module.scss';
 
-const MailStep = React.memo(({ title, mailId, onGenerate, onReset, onDelete, onCopy, onBack }) => {
+const StepTypes = {
+  DELETE: 'DELETE',
+};
+
+const MailStep = React.memo(({ mailId, totalMails, contextType, contextId, onGenerate, onReset, onDelete, onCopy, onBack }) => {
+  const [step, openStep, handleBack] = useSteps();
   const [t] = useTranslation();
+
+  const handleGenerateMail = useCallback(() => {
+    if (contextType === 'list') {
+      onGenerate();
+    } else if (contextType === 'board') {
+      onGenerate(contextId);
+    }
+  }, [contextType, contextId, onGenerate]);
+
+  const handleResetMail = useCallback(() => {
+    if (contextType === 'list') {
+      onReset();
+    } else if (contextType === 'board') {
+      onReset(contextId);
+    }
+  }, [contextType, contextId, onReset]);
+
+  const handleDeleteClick = useCallback(() => {
+    openStep(StepTypes.DELETE, { mailId });
+  }, [mailId, openStep]);
+
+  if (step) {
+    switch (step.type) {
+      case StepTypes.DELETE:
+        return (
+          <DeleteStep
+            title={t('common.deleteMailId_title', { context: 'title' })}
+            content={t('common.areYouSureYouWantToDeleteThisMailId')}
+            buttonContent={t('action.delete')}
+            onConfirm={() => {
+              onDelete(step.params.mailId);
+              handleBack();
+            }}
+            onBack={handleBack}
+          />
+        );
+      default:
+    }
+  }
 
   return (
     <>
-      <Popup.Header onBack={onBack}>{title}</Popup.Header>
+      <Popup.Header onBack={onBack}>
+        {t('common.mailIdCount')} : {totalMails}{' '}
+      </Popup.Header>
       <Popup.Content className={s.content}>
-        <div className={s.buttons}>
-          {mailId && (
-            <Button style={ButtonStyle.PopupContext} onClick={onCopy}>
-              {t('action.copyMailId')}
-            </Button>
-          )}
-          <Button style={ButtonStyle.PopupContext} onClick={mailId ? onReset : onGenerate}>
-            {t(mailId ? 'action.resetMailId' : 'action.generateMailId')}
+        {mailId && (
+          <Button style={ButtonStyle.PopupContext} onClick={onCopy}>
+            {t('action.copyMailId')}
           </Button>
-          {mailId && (
-            <Button style={ButtonStyle.PopupContext} onClick={onDelete}>
-              {t('action.deleteMailId')}
-            </Button>
-          )}
-        </div>
+        )}
+        <Button style={ButtonStyle.PopupContext} onClick={mailId ? () => handleResetMail() : () => handleGenerateMail()}>
+          {t(mailId ? 'action.resetMailId' : 'action.generateMailId')}
+        </Button>
+        {mailId && (
+          <Button style={ButtonStyle.PopupContext} onClick={() => handleDeleteClick()}>
+            {t('action.deleteMailId')}
+          </Button>
+        )}
       </Popup.Content>
     </>
   );
 });
 
 MailStep.propTypes = {
-  title: PropTypes.string.isRequired,
   mailId: PropTypes.string,
+  totalMails: PropTypes.number.isRequired,
+  contextType: PropTypes.oneOf(['list', 'board']).isRequired,
+  contextId: PropTypes.string,
   onGenerate: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
@@ -45,6 +93,7 @@ MailStep.propTypes = {
 
 MailStep.defaultProps = {
   mailId: undefined,
+  contextId: undefined,
   onBack: undefined,
 };
 

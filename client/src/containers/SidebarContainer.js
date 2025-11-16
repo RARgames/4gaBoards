@@ -35,6 +35,12 @@ const makeMapStateToProps = () => {
     } = state;
     const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
+  const selectMailCountForBoardId = selectors.makeSelectMailCountForBoardId();
+  const selectMailsByBoardId = selectors.makeSelectMailsByBoardId();
+  const mail = selectors.selectMailForCurrentUserByBoardId(state, boardId);
+  const mailId = mail?.mailId ?? null;
+  const mailCountForBoardId = selectMailCountForBoardId(state, boardId);
+  const mailsForBoard = selectMailsByBoardId(state, boardId);
 
     return {
       path,
@@ -52,6 +58,9 @@ const makeMapStateToProps = () => {
       sidebarCompact,
       instanceNotificationCount,
       usersNotificationCount,
+    mailId,
+    mailCountForBoardId,
+    mailsForBoard,
     };
   };
 };
@@ -70,6 +79,10 @@ const mapDispatchToProps = (dispatch) =>
       onProjectMembershipUpdate: entryActions.updateProjectMembership,
       onActivitiesProjectFetch: entryActions.fetchProjectActivities,
       onActivitiesBoardFetch: entryActions.fetchBoardActivities,
+      onUserProjectUpdate: entryActions.updateUserProject,
+      onMailCreate: (boardId) => entryActions.createMail({ boardId }),
+      onMailUpdate: (boardId) => entryActions.updateMail({ boardId }),
+      onMailDelete: (mailId) => entryActions.deleteMail(mailId),
     },
     dispatch,
   );

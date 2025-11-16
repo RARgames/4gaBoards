@@ -1,24 +1,27 @@
 import ActionTypes from '../constants/ActionTypes';
 
-const createMail = (listId) => ({
+const createMail = ({ listId, boardId }) => ({
   type: ActionTypes.MAIL_CREATE,
   payload: {
     listId,
+    boardId,
   },
 });
 
-createMail.success = (listId, mail) => ({
+createMail.success = ({ listId, boardId }, mail) => ({
   type: ActionTypes.MAIL_CREATE__SUCCESS,
   payload: {
     listId,
+    boardId,
     mail,
   },
 });
 
-createMail.failure = (listId, error) => ({
+createMail.failure = ({ listId, boardId }, error) => ({
   type: ActionTypes.MAIL_CREATE__FAILURE,
   payload: {
     listId,
+    boardId,
     error,
   },
 });
@@ -30,25 +33,28 @@ const handleMailCreate = (mail) => ({
   },
 });
 
-const updateMail = (listId) => ({
+const updateMail = ({ listId, boardId }) => ({
   type: ActionTypes.MAIL_UPDATE,
   payload: {
     listId,
+    boardId,
   },
 });
 
-updateMail.success = (listId, mail) => ({
+updateMail.success = ({ listId, boardId }, mail) => ({
   type: ActionTypes.MAIL_UPDATE__SUCCESS,
   payload: {
     listId,
+    boardId,
     mail,
   },
 });
 
-updateMail.failure = (listId, error) => ({
+updateMail.failure = ({ listId, boardId }, error) => ({
   type: ActionTypes.MAIL_UPDATE__FAILURE,
   payload: {
     listId,
+    boardId,
     error,
   },
 });
@@ -60,25 +66,25 @@ const handleMailUpdate = (mail) => ({
   },
 });
 
-const deleteMail = (listId) => ({
+const deleteMail = (mailId) => ({
   type: ActionTypes.MAIL_DELETE,
   payload: {
-    listId,
+    mailId,
   },
 });
 
-deleteMail.success = (listId, mail) => ({
+deleteMail.success = (mailId, mail) => ({
   type: ActionTypes.MAIL_DELETE__SUCCESS,
   payload: {
-    listId,
+    mailId,
     mail,
   },
 });
 
-deleteMail.failure = (listId, error) => ({
+deleteMail.failure = (mailId, error) => ({
   type: ActionTypes.MAIL_DELETE__FAILURE,
   payload: {
-    listId,
+    mailId,
     error,
   },
 });

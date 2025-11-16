@@ -1,24 +1,32 @@
-.mails {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+:global(#app) {
+  .mails {
+    max-height: calc(50vh - 120px);
+  }
 }
 
 .mailItem {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  background: var(--popup-bg);
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  box-shadow: var(--shadow-sm);
-  transition: background 0.15s ease;
-  overflow: hidden;
   gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  background: var(--popup-bg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
 
   &:hover {
-     background: var(--backgroundListButton);
+    background: var(--backgroundListButton);
   }
+}
+
+.mailIdAndContext {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.25rem;
+  min-width: 0;
 }
 
 .mailId {
@@ -28,9 +36,13 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-align: right;
 }
 
+.contextLabel {
+  font-size: 0.7rem;
+  color: var(--textColor2);
+  white-space: nowrap;
+}
 
 .deleteBtn {
   background: transparent;

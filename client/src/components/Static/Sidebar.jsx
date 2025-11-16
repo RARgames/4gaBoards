@@ -39,6 +39,9 @@ const Sidebar = React.memo(
     sidebarCompact,
     instanceNotificationCount,
     usersNotificationCount,
+    mailId,
+    mailCountForBoardId,
+    mailsForBoard,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -50,6 +53,10 @@ const Sidebar = React.memo(
     onProjectMembershipUpdate,
     onActivitiesProjectFetch,
     onActivitiesBoardFetch,
+    onMailCreate,
+    onMailUpdate,
+    onMailDelete,
+    onUserProjectUpdate,
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
@@ -96,6 +103,12 @@ const Sidebar = React.memo(
       }, 0);
       return () => clearTimeout(timeout);
     }, [currBoardId, currProjectId, scrollItemIntoView]);
+
+    const handleMailCopy = useCallback(() => {
+      if (mailId) {
+        navigator.clipboard.writeText(mailId);
+      }
+    }, [mailId]);
 
     useEffect(() => {
       if (currBoardId) {
@@ -214,6 +227,10 @@ const Sidebar = React.memo(
                                   onExport={(data) => onBoardExport(board.id, data)}
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
+                                    onMailCreate={onMailCreate}
+                                    onMailUpdate={onMailUpdate}
+                                    onMailCopy={handleMailCopy}
+                                    onMailDelete={onMailDelete}
                                   position="right-start"
                                   offset={10}
                                   hideCloseButton
@@ -377,6 +394,9 @@ Sidebar.propTypes = {
   sidebarCompact: PropTypes.bool.isRequired,
   instanceNotificationCount: PropTypes.number.isRequired,
   usersNotificationCount: PropTypes.number.isRequired,
+  mailId: PropTypes.string,
+  mailCountForBoardId: PropTypes.number.isRequired,
+  mailsForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -388,6 +408,10 @@ Sidebar.propTypes = {
   onProjectMembershipUpdate: PropTypes.func.isRequired,
   onActivitiesProjectFetch: PropTypes.func.isRequired,
   onActivitiesBoardFetch: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
+  onMailDelete: PropTypes.func.isRequired,
+  onUserProjectUpdate: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
@@ -396,6 +420,7 @@ Sidebar.defaultProps = {
   currBoardId: undefined,
   filterQuery: undefined,
   filterTarget: undefined,
+  mailId: null,
 };
 
 export default Sidebar;
