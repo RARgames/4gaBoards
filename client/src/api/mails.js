@@ -3,20 +3,26 @@ import { transformMail } from './transformers';
 
 /* Actions */
 
-const createMail = (listId, headers) =>
-  socket.post(`/lists/${listId}/mails`, {}, headers).then((body) => ({
+const createMail = ({ listId, boardId }, headers) => {
+  const url = listId ? `/lists/${listId}/mails` : `/boards/${boardId}/mails`;
+
+  return socket.post(url, {}, headers).then((body) => ({
     ...body,
     item: transformMail(body.item),
   }));
+};
 
-const updateMail = (listId, headers) =>
-  socket.patch(`/mails/${listId}/update`, {}, headers).then((body) => ({
+const updateMail = ({ listId, boardId }, headers) => {
+  const url = listId ? `/lists/${listId}/mails/update` : `/boards/${boardId}/mails/update`;
+
+  return socket.patch(url, {}, headers).then((body) => ({
     ...body,
     item: transformMail(body.item),
   }));
+};
 
-const deleteMail = (listId, headers) =>
-  socket.delete(`/lists/${listId}/mails`, undefined, headers).then((body) => ({
+const deleteMail = (mailId, headers) =>
+  socket.delete(`/mails/${mailId}`, undefined, headers).then((body) => ({
     ...body,
     item: transformMail(body.item),
   }));
