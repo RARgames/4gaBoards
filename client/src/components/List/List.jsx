@@ -39,6 +39,7 @@ const List = React.memo(
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    isManager,
     mailId,
     mailsForList,
     onUpdate,
@@ -276,6 +277,7 @@ const List = React.memo(
                       isActivitiesFetching={isActivitiesFetching}
                       isAllActivitiesFetched={isAllActivitiesFetched}
                       lastActivityId={lastActivityId}
+                      isManager={isManager}
                       mailId={mailId}
                       mailsForList={mailsForList}
                       onNameEdit={handleNameEdit}
@@ -334,6 +336,7 @@ List.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  isManager: PropTypes.bool.isRequired,
   mailId: PropTypes.string,
   mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,

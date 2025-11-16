@@ -16,7 +16,7 @@ const StepTypes = {
   DELETE: 'DELETE',
 };
 
-const MailListStep = React.memo(({ mails, title, onMailDelete, onBack }) => {
+const MailListStep = React.memo(({ mails, title, contextType, onDelete, onBack }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
   const [search, handleSearchChange] = useField('');
@@ -35,7 +35,6 @@ const MailListStep = React.memo(({ mails, title, onMailDelete, onBack }) => {
     searchField.current?.focus({ preventScroll: true });
   }, []);
 
-  // will change it later
   const handleDeleteClick = useCallback(
     (mailId) => {
       openStep(StepTypes.DELETE, { mailId });
@@ -52,7 +51,7 @@ const MailListStep = React.memo(({ mails, title, onMailDelete, onBack }) => {
             content={t('common.areYouSureYouWantToDeleteThisMailId')}
             buttonContent={t('action.delete')}
             onConfirm={() => {
-              onMailDelete(step.params.mailId); // will change it later
+              onDelete(step.params.mailId);
               handleBack();
             }}
             onBack={handleBack}
@@ -76,7 +75,12 @@ const MailListStep = React.memo(({ mails, title, onMailDelete, onBack }) => {
                   <span className={s.userName}>{mail.user?.name || '—'}</span>
                 </div>
 
-                <div className={s.mailId}>{mail.mailId}</div>
+                <div className={s.mailIdAndContext}>
+                  <span className={s.mailId}>{mail.mailId}</span>
+                  {contextType === 'board' && (
+                    <span className={s.contextLabel}>{mail.contextType === 'board' ? `${t('common.board_title')}: ${mail.contextName}` : `${t('common.list')}: ${mail.contextName}`}</span>
+                  )}
+                </div>
 
                 <button type="button" className={s.deleteBtn} title={t('action.delete')} onClick={() => handleDeleteClick(mail.mailId)}>
                   <img src={trashIcon} alt="Delete" className={s.trashIcon} />
@@ -100,10 +104,13 @@ MailListStep.propTypes = {
         name: PropTypes.string,
         avatarUrl: PropTypes.string,
       }),
+      contextType: PropTypes.string,
+      contextName: PropTypes.string,
     }),
   ).isRequired,
   title: PropTypes.string,
-  onMailDelete: PropTypes.func.isRequired,
+  contextType: PropTypes.oneOf(['list', 'board']).isRequired,
+  onDelete: PropTypes.func.isRequired,
   onBack: PropTypes.func,
 };
 
