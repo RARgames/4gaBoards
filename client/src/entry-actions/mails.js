@@ -1,9 +1,10 @@
 import EntryActionTypes from '../constants/EntryActionTypes';
 
-const createMail = (listId) => ({
+const createMail = ({ listId, boardId }) => ({
   type: EntryActionTypes.MAIL_CREATE,
   payload: {
     listId,
+    boardId,
   },
 });
 
@@ -14,10 +15,11 @@ const handleMailCreate = (mail) => ({
   },
 });
 
-const updateMail = (listId) => ({
+const updateMail = ({ listId, boardId }) => ({
   type: EntryActionTypes.MAIL_UPDATE,
   payload: {
     listId,
+    boardId,
   },
 });
 
@@ -28,10 +30,10 @@ const handleUpdateMail = (mail) => ({
   },
 });
 
-const deleteMail = (listId) => ({
+const deleteMail = (mailId) => ({
   type: EntryActionTypes.MAIL_DELETE,
   payload: {
-    listId,
+    mailId,
   },
 });
 

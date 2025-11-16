@@ -35,6 +35,7 @@ const List = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    isManager,
     mailId,
     mailsForList,
     onUpdate,
@@ -267,6 +268,7 @@ const List = React.memo(
                       updatedAt={updatedAt}
                       updatedBy={updatedBy}
                       boardMemberships={boardMemberships}
+                      isManager={isManager}
                       mailId={mailId}
                       mailsForList={mailsForList}
                       onNameEdit={handleNameEdit}
@@ -319,6 +321,7 @@ List.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isManager: PropTypes.bool.isRequired,
   mailId: PropTypes.string,
   mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
