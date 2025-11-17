@@ -16,7 +16,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.8.1",
+    "@azure/msal-node": "^3.8.2",
     "bcrypt": "^6.0.0",
     "cookie": "^1.0.2",
     "dotenv": "^17.2.3",
@@ -46,12 +46,12 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "chai": "^6.2.0",
+    "chai": "^6.2.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "mocha": "^11.7.5",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.11"
   },
   "engines": {
     "node": "^22.14"
