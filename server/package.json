@@ -46,7 +46,7 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "chai": "^6.2.0",
+    "chai": "^6.2.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
