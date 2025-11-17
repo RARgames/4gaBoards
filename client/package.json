@@ -119,6 +119,9 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1"
   },
+  "engines": {
+    "node": "^24.11"
+  },
   "jest": {
     "roots": [
       "<rootDir>/src"
