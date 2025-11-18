@@ -13,14 +13,15 @@ process.on('unhandledRejection', (err) => {
 // Ensure environment variables are read.
 require('../config/env');
 
-const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-const chalk = require('react-dev-utils/chalk');
-const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
-const printBuildError = require('react-dev-utils/printBuildError');
-const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const bfj = require('bfj');
+
+const { checkBrowsers } = require('../utils/browsersHelper');
+const checkRequiredFiles = require('../utils/checkRequiredFiles');
+const FileSizeReporter = require('../utils/FileSizeReporter');
+const formatWebpackMessages = require('../utils/formatWebpackMessages');
+const printBuildError = require('../utils/printBuildError');
+const printHostingInstructions = require('../utils/printHostingInstructions');
+const chalk = require('chalk').default;
 const fs = require('fs-extra');
 const path = require('path');
 const webpack = require('webpack');

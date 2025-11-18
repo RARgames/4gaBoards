@@ -1,9 +1,9 @@
-const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
-const ignoredFiles = require('react-dev-utils/ignoredFiles');
-const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
-const redirectServedPath = require('react-dev-utils/redirectServedPathMiddleware');
 const fs = require('fs');
 
+const evalSourceMapMiddleware = require('../utils/evalSourceMapMiddleware');
+const ignoredFiles = require('../utils/ignoredFiles');
+const noopServiceWorkerMiddleware = require('../utils/noopServiceWorkerMiddleware');
+const redirectServedPath = require('../utils/redirectServedPathMiddleware');
 const getHttpsConfig = require('./getHttpsConfig');
 const paths = require('./paths');
 

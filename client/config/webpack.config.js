@@ -1,8 +1,3 @@
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
-const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -17,11 +12,16 @@ const webpack = require('webpack');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
+const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdent');
+const InlineChunkHtmlPlugin = require('../utils/InlineChunkHtmlPlugin');
+const InterpolateHtmlPlugin = require('../utils/InterpolateHtmlPlugin');
+const ModuleNotFoundPlugin = require('../utils/ModuleNotFoundPlugin');
+const ModuleScopePlugin = require('../utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const modules = require('./modules');
 const paths = require('./paths');
 const UrlReplaceWebpackPlugin = require('./UrlReplaceWebpackPlugin');
-const ForkTsCheckerWebpackPlugin = process.env.TSC_COMPILE_ON_ERROR === 'true' ? require('react-dev-utils/ForkTsCheckerWarningWebpackPlugin') : require('react-dev-utils/ForkTsCheckerWebpackPlugin');
+const ForkTsCheckerWebpackPlugin = process.env.TSC_COMPILE_ON_ERROR === 'true' ? require('../utils/ForkTsCheckerWarningWebpackPlugin') : require('../utils/ForkTsCheckerWebpackPlugin');
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
@@ -638,7 +638,7 @@ module.exports = function (webpackEnv) {
         new ESLintPlugin({
           // Plugin options
           extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
-          formatter: require.resolve('react-dev-utils/eslintFormatter'),
+          formatter: require.resolve('../utils/eslintFormatter'),
           eslintPath: require.resolve('eslint'),
           failOnError: !(isEnvDevelopment && emitErrorsAsWarnings),
           context: paths.appSrc,

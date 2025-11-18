@@ -1,4 +1,4 @@
-const chalk = require('react-dev-utils/chalk');
+const chalk = require('chalk').default;
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
