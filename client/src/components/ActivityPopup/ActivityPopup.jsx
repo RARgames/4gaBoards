@@ -9,7 +9,7 @@ import Activities from './Activities';
 
 import * as s from './ActivityPopup.module.scss';
 
-const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, memberships, isNotMemberTitle, card, activities, isFetching, isAllFetched, onFetch, onBack }) => {
+const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, memberships, isNotMemberTitle, cardId, cardName, activities, isFetching, isAllFetched, onFetch, onBack }) => {
   const [t] = useTranslation();
 
   return (
@@ -52,7 +52,7 @@ const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updat
             </div>
           )}
         </div>
-        <Activities card={card} items={activities} isFetching={isFetching} isAllFetched={isAllFetched} boardMemberships={memberships ?? []} onFetch={onFetch} />
+        <Activities cardId={cardId} cardName={cardName} items={activities} isFetching={isFetching} isAllFetched={isAllFetched} boardMemberships={memberships ?? []} onFetch={onFetch} />
       </Popup.Content>
     </>
   );
@@ -66,7 +66,8 @@ ActivityStep.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isNotMemberTitle: PropTypes.string,
-  card: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  cardId: PropTypes.string,
+  cardName: PropTypes.string,
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
@@ -81,7 +82,8 @@ ActivityStep.defaultProps = {
   updatedBy: undefined,
   memberships: undefined,
   isNotMemberTitle: '',
-  card: undefined,
+  cardId: undefined,
+  cardName: undefined,
   onBack: undefined,
 };
 

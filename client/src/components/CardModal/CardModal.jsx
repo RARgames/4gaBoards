@@ -354,6 +354,7 @@ const CardModal = React.memo(
           {canEdit && (
             <ActionsPopup
               card={{
+                id,
                 name,
                 dueDate,
                 timer,
@@ -687,16 +688,9 @@ const CardModal = React.memo(
           {taskShown && (
             <Tasks
               ref={tasksRef}
-              card={{
-                name,
-                dueDate,
-                timer,
-                boardId,
-                listId,
-                projectId,
-              }}
               variant="cardModal"
               cardId={id}
+              cardName={name}
               items={tasks}
               canEdit={canEdit}
               allBoardMemberships={boardAndTaskMemberships}

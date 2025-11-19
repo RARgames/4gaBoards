@@ -11,8 +11,8 @@ import * as s from './TasksCell.module.scss';
 
 const TasksCell = React.memo(
   ({
-    card,
     id,
+    cardName,
     tasks,
     cellClassName,
     allBoardMemberships,
@@ -49,9 +49,9 @@ const TasksCell = React.memo(
     return (
       <div className={cellClassName}>
         <Tasks
-          card={card}
           variant="listView"
           cardId={id}
+          cardName={cardName}
           items={tasks}
           closestDueDate={closestDueDate}
           canEdit={canEdit}
@@ -75,8 +75,8 @@ const TasksCell = React.memo(
 );
 
 TasksCell.propTypes = {
-  card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   id: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   tasks: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   cellClassName: PropTypes.string,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

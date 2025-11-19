@@ -221,17 +221,10 @@ const Card = React.memo(
             )}
             {tasks.length > 0 && (
               <Tasks
-                card={{
-                  name,
-                  dueDate,
-                  timer,
-                  boardId,
-                  listId,
-                  projectId,
-                }}
                 variant="card"
                 isCardActive={isOpen}
                 cardId={id}
+                cardName={name}
                 items={tasks}
                 closestDueDate={closestDueDate}
                 canEdit={canEdit}
@@ -340,6 +333,7 @@ const Card = React.memo(
                       <div className={s.popupWrapper}>
                         <ActionsPopup
                           card={{
+                            id,
                             name,
                             dueDate,
                             timer,

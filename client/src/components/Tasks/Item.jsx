@@ -24,7 +24,8 @@ const VARIANTS = {
 
 const Item = React.memo(
   ({
-    card,
+    cardId,
+    cardName,
     variant,
     id,
     index,
@@ -181,7 +182,8 @@ const Item = React.memo(
                 )}
                 {isPersisted && canEdit && (
                   <ActionsPopup
-                    card={card}
+                    cardId={cardId}
+                    cardName={cardName}
                     name={name}
                     dueDate={dueDate}
                     allBoardMemberships={allBoardMemberships}
@@ -222,7 +224,8 @@ const Item = React.memo(
 );
 
 Item.propTypes = {
-  card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  cardId: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(Object.values(VARIANTS)).isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,

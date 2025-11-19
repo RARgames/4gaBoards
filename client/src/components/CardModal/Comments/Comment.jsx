@@ -65,6 +65,8 @@ const Comment = React.memo(
                   memberships={boardMemberships}
                   isNotMemberTitle={t('common.noLongerBoardMember')}
                   // TODO replace with actual activities
+                  cardId=""
+                  cardName=""
                   activities={[]}
                   isFetching={false}
                   isAllFetched

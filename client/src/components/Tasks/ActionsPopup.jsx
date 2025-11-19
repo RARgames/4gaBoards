@@ -20,7 +20,8 @@ const StepTypes = {
 
 const ActionsStep = React.memo(
   ({
-    card,
+    cardId,
+    cardName,
     name,
     dueDate,
     allBoardMemberships,
@@ -104,7 +105,8 @@ const ActionsStep = React.memo(
               updatedBy={updatedBy}
               memberships={boardMemberships}
               isNotMemberTitle={t('common.noLongerBoardMember')}
-              card={card}
+              cardId={cardId}
+              cardName={cardName}
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
@@ -149,7 +151,8 @@ const ActionsStep = React.memo(
 );
 
 ActionsStep.propTypes = {
-  card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  cardId: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

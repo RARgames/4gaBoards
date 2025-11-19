@@ -8,7 +8,7 @@ import Item from './Item';
 import * as gs from '../../../global.module.scss';
 import * as s from './Activities.module.scss';
 
-const Activities = React.memo(({ card, items, isFetching, isAllFetched, boardMemberships, onFetch }) => {
+const Activities = React.memo(({ cardId, cardName, items, isFetching, isAllFetched, boardMemberships, onFetch }) => {
   const visibilityRef = useRef(null);
 
   const handleVisibilityChange = useCallback(
@@ -43,7 +43,7 @@ const Activities = React.memo(({ card, items, isFetching, isAllFetched, boardMem
     <div>
       <div className={clsx(s.wrapper, gs.scrollableY)}>
         {items.map((item) => (
-          <Item key={item.id} card={card} scope={item.scope} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} boardMemberships={boardMemberships} />
+          <Item key={item.id} cardId={cardId} cardName={cardName} scope={item.scope} type={item.type} data={item.data} user={item.user} createdAt={item.createdAt} boardMemberships={boardMemberships} />
         ))}
         {isFetching ? <Loader size={LoaderSize.Normal} /> : !isAllFetched && <div ref={visibilityRef} />}
       </div>
@@ -52,7 +52,8 @@ const Activities = React.memo(({ card, items, isFetching, isAllFetched, boardMem
 });
 
 Activities.propTypes = {
-  card: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  cardId: PropTypes.string,
+  cardName: PropTypes.string,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
@@ -61,7 +62,8 @@ Activities.propTypes = {
 };
 
 Activities.defaultProps = {
-  card: undefined,
+  cardId: undefined,
+  cardName: undefined,
 };
 
 export default Activities;

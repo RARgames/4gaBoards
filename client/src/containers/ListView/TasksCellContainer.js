@@ -15,14 +15,10 @@ const mapStateToProps = () => {
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const closestDueDate = selectClosestDueDateByCardId(state, id);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
-
-    const { projectId } = selectors.selectPath(state);
-    const { name, dueDate, timer, isActivitiesFetching, isAllActivitiesFetched, boardId, listId } = selectors.selectCardById(state, id);
-
-    const card = { id, name, dueDate, timer, boardId, listId, projectId };
+    const { name: cardName, isActivitiesFetching, isAllActivitiesFetched } = selectors.selectCardById(state, id);
 
     return {
-      card,
+      cardName,
       allBoardMemberships,
       boardMemberships,
       isActivitiesFetching,

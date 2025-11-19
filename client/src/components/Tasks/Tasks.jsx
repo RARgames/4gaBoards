@@ -22,10 +22,10 @@ const VARIANTS = {
 const Tasks = React.forwardRef(
   (
     {
-      card,
+      cardId,
+      cardName,
       variant,
       isCardActive,
-      cardId,
       items,
       isActivitiesFetching,
       isAllActivitiesFetched,
@@ -113,7 +113,8 @@ const Tasks = React.forwardRef(
           <div {...droppableProps} ref={innerRef} onMouseEnter={onMouseEnterTasks} onMouseLeave={onMouseLeaveTasks} data-prevent-card-switch>
             {items.map((item, index) => (
               <Item
-                card={card}
+                cardId={cardId}
+                cardName={cardName}
                 variant={variant}
                 key={item.id}
                 id={item.id}
@@ -181,10 +182,10 @@ const Tasks = React.forwardRef(
 );
 
 Tasks.propTypes = {
-  card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  cardId: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(Object.values(VARIANTS)).isRequired,
   isCardActive: PropTypes.bool,
-  cardId: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   closestDueDate: PropTypes.instanceOf(Date),
   canEdit: PropTypes.bool.isRequired,

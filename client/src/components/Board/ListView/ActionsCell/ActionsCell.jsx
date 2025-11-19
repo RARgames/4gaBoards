@@ -58,6 +58,7 @@ const ActionsCell = React.memo(
       return (
         <ActionsPopup
           card={{
+            id,
             name,
             dueDate,
             timer,

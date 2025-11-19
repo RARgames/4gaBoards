@@ -8,7 +8,7 @@ import User from '../../User';
 
 import * as s from './Item.module.scss';
 
-const Item = React.memo(({ card, scope, type, data, user, createdAt, boardMemberships }) => {
+const Item = React.memo(({ cardId, cardName, scope, type, data, user, createdAt, boardMemberships }) => {
   const [t] = useTranslation();
 
   return (
@@ -19,14 +19,15 @@ const Item = React.memo(({ card, scope, type, data, user, createdAt, boardMember
       <span className={s.author}>{user.name}</span>
       {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
       <div className={s.contentText}>
-        <ActivityMessage activity={{ scope, type, data, user, userId: user?.id }} card={card} />
+        <ActivityMessage activity={{ scope, type, data, user, userId: user?.id }} card={{ id: cardId, name: cardName }} />
       </div>
     </div>
   );
 });
 
 Item.propTypes = {
-  card: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  cardId: PropTypes.string,
+  cardName: PropTypes.string,
   scope: PropTypes.oneOf(Object.values(ActivityScopes)).isRequired,
   type: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -36,7 +37,8 @@ Item.propTypes = {
 };
 
 Item.defaultProps = {
-  card: undefined,
+  cardId: undefined,
+  cardName: undefined,
   createdAt: undefined,
 };
 
