@@ -12,7 +12,18 @@ const globalModules = require('global-modules');
 const url = require('url');
 
 function printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder, useYarn) {
-  if (publicUrl && publicUrl.includes('.github.io/')) {
+  let isGitHubPages = false;
+  if (publicUrl) {
+    try {
+      const parsed = url.parse(publicUrl);
+      if (parsed.hostname && (parsed.hostname === 'github.io' || parsed.hostname.endsWith('.github.io'))) {
+        isGitHubPages = true;
+      }
+    } catch {
+      /* empty */
+    }
+  }
+  if (isGitHubPages) {
     // "homepage": "http://user.github.io/project"
     const publicPathname = url.parse(publicPath).pathname;
     const hasDeployScript = typeof appPackage.scripts !== 'undefined' && typeof appPackage.scripts.deploy !== 'undefined';
