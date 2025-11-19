@@ -73,10 +73,24 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
+    const criteria = { userId: currentUser.id };
+    if (list) {
+      criteria.listId = list.id;
+    } else {
+      criteria.boardId = board.id;
+      criteria.listId = null;
+    }
+
+    const existing = await Mail.findOne(criteria);
+    if (!existing) {
+      throw Errors.MAIL_NOT_FOUND;
+    }
+
     const mail = await sails.helpers.mails.updateOne.with({
-      currentUser,
-      listId: list ? list.id : null,
-      boardId: board.id,
+      values: {
+        id: existing.id,
+      },
+      request: this.req,
     });
 
     if (!mail) {

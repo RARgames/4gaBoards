@@ -23,7 +23,7 @@ const updateMail = ({ listId, boardId }) => ({
   },
 });
 
-const handleUpdateMail = (mail) => ({
+const handleMailUpdate = (mail) => ({
   type: EntryActionTypes.MAIL_UPDATE_HANDLE,
   payload: {
     mail,
@@ -48,7 +48,7 @@ export default {
   createMail,
   handleMailCreate,
   updateMail,
-  handleUpdateMail,
+  handleMailUpdate,
   deleteMail,
   handleMailDelete,
 };

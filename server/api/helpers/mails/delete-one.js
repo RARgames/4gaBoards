@@ -15,6 +15,17 @@ module.exports = {
 
     await Mail.destroyOne({ id: record.id });
 
+    if (mailCopy) {
+      sails.sockets.broadcast(
+        `board:${mailCopy.boardId}`,
+        'mailDelete',
+        {
+          item: mailCopy,
+        },
+        inputs.request,
+      );
+    }
+
     return mailCopy;
   },
 };

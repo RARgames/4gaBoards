@@ -12,7 +12,7 @@ const Errors = {
     boardNotFound: 'Board not found',
   },
   MAIL_ALREADY_EXISTS: {
-    mailAlreadyExists: 'Mail already exists for this user and list',
+    mailAlreadyExists: 'Mail ID already exists for this user',
   },
 };
 

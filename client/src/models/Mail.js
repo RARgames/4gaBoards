@@ -40,8 +40,18 @@ export default class extends BaseModel {
             Mail.upsert(mail);
           });
         }
-        break;
 
+        break;
+      case ActionTypes.SOCKET_RECONNECT_HANDLE:
+        Mail.all().delete();
+
+        if (payload.mails) {
+          payload.mails.forEach((mail) => {
+            Mail.upsert(mail);
+          });
+        }
+
+        break;
       case ActionTypes.MAIL_CREATE__SUCCESS:
       case ActionTypes.MAIL_UPDATE__SUCCESS:
       case ActionTypes.MAIL_CREATE_HANDLE:
