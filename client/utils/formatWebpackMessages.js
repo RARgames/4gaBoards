@@ -30,7 +30,7 @@ function formatMessage(message) {
 
   // Strip webpack-added headers off errors/warnings
   // https://github.com/webpack/webpack/blob/master/lib/ModuleError.js
-  lines = lines.filter((line) => !/Module [A-z ]+\(from/.test(line));
+  lines = lines.filter((line) => !/Module [A-Za-z0-9@._\-\\/?:= ]+\(from/.test(line));
 
   // Transform parsing error into syntax error
   // TODO: move this to our ESLint formatter?
