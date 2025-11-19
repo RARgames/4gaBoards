@@ -31,6 +31,17 @@ module.exports = {
       mailId,
     }).fetch();
 
+    if (newMail) {
+      sails.sockets.broadcast(
+        `board:${newMail.boardId}`,
+        'mailCreate',
+        {
+          item: newMail,
+        },
+        inputs.request,
+      );
+    }
+
     return newMail;
   },
 };
