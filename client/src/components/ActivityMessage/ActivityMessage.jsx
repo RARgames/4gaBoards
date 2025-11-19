@@ -24,7 +24,7 @@ const isDescriptionTruncated = true;
 const ActivityMessage = React.memo(({ activity, card, isTruncated, isCardLinked, onClose }) => {
   const [t] = useTranslation();
 
-  if (activity.scope === ActivityScopes.CARD) {
+  if (activity.scope === ActivityScopes.CARD || activity.scope === ActivityScopes.TASK || activity.scope === ActivityScopes.ATTACHMENT || activity.scope === ActivityScopes.COMMENT) {
     const cardName = isTruncated ? truncate(card?.name || activity.data?.cardName, { length: cardNameTruncateLength }) : card?.name || activity.data?.cardName;
     const cardNode = card ? (
       <Link to={Paths.CARDS.replace(':id', card?.id)} className={s.linked} title={cardName} onClick={onClose} />

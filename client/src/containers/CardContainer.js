@@ -34,9 +34,11 @@ const makeMapStateToProps = () => {
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
+    const taskActivities = selectors.selectTaskActivitiesByCardId(state, id);
     const tasks = selectTasksByCardId(state, id).map((task) => ({
       ...task,
       users: selectors.selectUsersForTaskById(state, task.id),
+      activities: taskActivities[task.id] || [],
     }));
     const notificationsTotal = selectNotificationsTotalByCardId(state, id);
     const attachmentsCount = selectAttachmentsCountByCardId(state, id);

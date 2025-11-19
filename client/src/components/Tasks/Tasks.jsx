@@ -22,10 +22,13 @@ const VARIANTS = {
 const Tasks = React.forwardRef(
   (
     {
+      card,
       variant,
       isCardActive,
       cardId,
       items,
+      isActivitiesFetching,
+      isAllActivitiesFetched,
       closestDueDate,
       canEdit,
       allBoardMemberships,
@@ -39,6 +42,7 @@ const Tasks = React.forwardRef(
       onUserRemove,
       onMouseEnterTasks,
       onMouseLeaveTasks,
+      onActivitiesFetch,
     },
     ref,
   ) => {
@@ -109,6 +113,7 @@ const Tasks = React.forwardRef(
           <div {...droppableProps} ref={innerRef} onMouseEnter={onMouseEnterTasks} onMouseLeave={onMouseLeaveTasks} data-prevent-card-switch>
             {items.map((item, index) => (
               <Item
+                card={card}
                 variant={variant}
                 key={item.id}
                 id={item.id}
@@ -118,6 +123,9 @@ const Tasks = React.forwardRef(
                 allBoardMemberships={allBoardMemberships}
                 boardMemberships={boardMemberships}
                 users={item.users}
+                activities={item.activities}
+                isActivitiesFetching={isActivitiesFetching}
+                isAllActivitiesFetched={isAllActivitiesFetched}
                 isCompleted={item.isCompleted}
                 isPersisted={item.isPersisted}
                 canEdit={canEdit}
@@ -130,6 +138,7 @@ const Tasks = React.forwardRef(
                 onDelete={() => handleDelete(item.id)}
                 onUserAdd={(userId) => handleUserAdd(item.id, userId)}
                 onUserRemove={(userId) => handleUserRemove(item.id, userId)}
+                onActivitiesFetch={onActivitiesFetch}
               />
             ))}
             {placeholder}
@@ -172,6 +181,7 @@ const Tasks = React.forwardRef(
 );
 
 Tasks.propTypes = {
+  card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   variant: PropTypes.oneOf(Object.values(VARIANTS)).isRequired,
   isCardActive: PropTypes.bool,
   cardId: PropTypes.string.isRequired,
@@ -180,6 +190,8 @@ Tasks.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,
@@ -189,6 +201,7 @@ Tasks.propTypes = {
   onUserRemove: PropTypes.func.isRequired,
   onMouseEnterTasks: PropTypes.func,
   onMouseLeaveTasks: PropTypes.func,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 Tasks.defaultProps = {

@@ -687,12 +687,22 @@ const CardModal = React.memo(
           {taskShown && (
             <Tasks
               ref={tasksRef}
+              card={{
+                name,
+                dueDate,
+                timer,
+                boardId,
+                listId,
+                projectId,
+              }}
               variant="cardModal"
               cardId={id}
               items={tasks}
               canEdit={canEdit}
               allBoardMemberships={boardAndTaskMemberships}
               boardMemberships={boardMemberships}
+              isActivitiesFetching={isActivitiesFetching}
+              isAllActivitiesFetched={isAllActivitiesFetched}
               onCreate={onTaskCreate}
               onUpdate={onTaskUpdate}
               onMove={onTaskMove}
@@ -700,6 +710,7 @@ const CardModal = React.memo(
               onDelete={onTaskDelete}
               onUserAdd={onUserToTaskAdd}
               onUserRemove={onUserFromTaskRemove}
+              onActivitiesFetch={onActivitiesFetch}
             />
           )}
         </div>

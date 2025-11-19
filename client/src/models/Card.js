@@ -2,7 +2,7 @@ import { attr, fk, many, oneToOne } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import Config from '../constants/Config';
-import { ActivityTypes } from '../constants/Enums';
+import { ActivityTypes, ActivityScopes } from '../constants/Enums';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -279,6 +279,18 @@ export default class extends BaseModel {
 
   getOrderedCardActivitiesQuerySet() {
     return this.activities.filter((activity) => activity.type !== ActivityTypes.CARD_COMMENT).orderBy('createdAt', false);
+  }
+
+  getOrderedTaskActivitiesQuerySet() {
+    return this.activities.filter((activity) => activity.scope === ActivityScopes.TASK).orderBy('createdAt', false);
+  }
+
+  getOrderedAttachmentActivitiesQuerySet() {
+    return this.activities.filter((activity) => activity.scope === ActivityScopes.ATTACHMENT).orderBy('createdAt', false);
+  }
+
+  getOrderedCommentActivitiesQuerySet() {
+    return this.activities.filter((activity) => activity.scope === ActivityScopes.COMMENT).orderBy('createdAt', false);
   }
 
   getOrderedCardActivitiesFullQuerySet() {

@@ -86,7 +86,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card: values.card,
-            scope: Action.Scopes.CARD,
+            scope: Action.Scopes.TASK,
             type: inputs.duplicate ? Action.Types.CARD_TASK_DUPLICATE : Action.Types.CARD_TASK_CREATE,
             data: {
               taskId: task.id,

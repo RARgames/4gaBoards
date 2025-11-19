@@ -11,11 +11,14 @@ import * as s from './TasksCell.module.scss';
 
 const TasksCell = React.memo(
   ({
+    card,
     id,
     tasks,
     cellClassName,
     allBoardMemberships,
     boardMemberships,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
     closestDueDate,
     canEdit,
     onTaskUpdate,
@@ -25,6 +28,7 @@ const TasksCell = React.memo(
     onUserFromTaskRemove,
     onTaskCreate,
     onTaskMove,
+    onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
 
@@ -45,6 +49,7 @@ const TasksCell = React.memo(
     return (
       <div className={cellClassName}>
         <Tasks
+          card={card}
           variant="listView"
           cardId={id}
           items={tasks}
@@ -52,6 +57,8 @@ const TasksCell = React.memo(
           canEdit={canEdit}
           allBoardMemberships={allBoardMemberships}
           boardMemberships={boardMemberships}
+          isActivitiesFetching={isActivitiesFetching}
+          isAllActivitiesFetched={isAllActivitiesFetched}
           onCreate={onTaskCreate}
           onUpdate={onTaskUpdate}
           onMove={onTaskMove}
@@ -60,6 +67,7 @@ const TasksCell = React.memo(
           onUserAdd={onUserToTaskAdd}
           onUserRemove={onUserFromTaskRemove}
           cellClassName={cellClassName}
+          onActivitiesFetch={onActivitiesFetch}
         />
       </div>
     );
@@ -67,11 +75,14 @@ const TasksCell = React.memo(
 );
 
 TasksCell.propTypes = {
+  card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   id: PropTypes.string.isRequired,
   tasks: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   cellClassName: PropTypes.string,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   closestDueDate: PropTypes.instanceOf(Date),
   canEdit: PropTypes.bool.isRequired,
   onTaskUpdate: PropTypes.func.isRequired,
@@ -81,6 +92,7 @@ TasksCell.propTypes = {
   onUserFromTaskRemove: PropTypes.func.isRequired,
   onTaskCreate: PropTypes.func.isRequired,
   onTaskMove: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 TasksCell.defaultProps = {

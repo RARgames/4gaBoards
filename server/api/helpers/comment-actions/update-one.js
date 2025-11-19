@@ -37,7 +37,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
-            scope: Action.Scopes.CARD,
+            scope: Action.Scopes.COMMENT,
             type: Action.Types.CARD_COMMENT_UPDATE,
             data: {
               commentActionId: action.id,

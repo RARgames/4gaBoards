@@ -44,7 +44,7 @@ module.exports = {
     const action = await sails.helpers.actions.createOne.with({
       values: {
         ...values,
-        scope: Action.Scopes.CARD,
+        scope: Action.Scopes.COMMENT,
       },
       currentUser,
       skipNotifications: true,
@@ -68,7 +68,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card: values.card,
-            scope: Action.Scopes.CARD,
+            scope: Action.Scopes.COMMENT,
             type: Action.Types.CARD_COMMENT_CREATE,
             data: {
               commentActionId: action.id,

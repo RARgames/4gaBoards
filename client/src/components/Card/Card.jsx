@@ -221,6 +221,14 @@ const Card = React.memo(
             )}
             {tasks.length > 0 && (
               <Tasks
+                card={{
+                  name,
+                  dueDate,
+                  timer,
+                  boardId,
+                  listId,
+                  projectId,
+                }}
                 variant="card"
                 isCardActive={isOpen}
                 cardId={id}
@@ -229,6 +237,8 @@ const Card = React.memo(
                 canEdit={canEdit}
                 allBoardMemberships={boardAndTaskMemberships}
                 boardMemberships={boardMemberships}
+                isActivitiesFetching={isActivitiesFetching}
+                isAllActivitiesFetched={isAllActivitiesFetched}
                 onCreate={onTaskCreate}
                 onUpdate={onTaskUpdate}
                 onMove={onTaskMove}
@@ -238,6 +248,7 @@ const Card = React.memo(
                 onUserRemove={onUserFromTaskRemove}
                 onMouseEnterTasks={handleTasksMouseEnter}
                 onMouseLeaveTasks={handleTasksMouseOut}
+                onActivitiesFetch={onActivitiesFetch}
               />
             )}
             {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
