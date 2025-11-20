@@ -12,6 +12,8 @@ import * as s from './Comment.module.scss';
 
 const Comment = React.memo(
   ({
+    cardId,
+    cardName,
     data,
     isPersisted,
     user,
@@ -20,6 +22,9 @@ const Comment = React.memo(
     isGithubConnected,
     githubRepo,
     preferredDetailsFont,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
     createdAt,
     createdBy,
     updatedAt,
@@ -28,6 +33,7 @@ const Comment = React.memo(
     onUpdate,
     onDelete,
     onUserPrefsUpdate,
+    onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
 
@@ -64,13 +70,12 @@ const Comment = React.memo(
                   updatedBy={updatedBy}
                   memberships={boardMemberships}
                   isNotMemberTitle={t('common.noLongerBoardMember')}
-                  // TODO replace with actual activities
-                  cardId=""
-                  cardName=""
-                  activities={[]}
-                  isFetching={false}
-                  isAllFetched
-                  onFetch={() => {}}
+                  cardId={cardId}
+                  cardName={cardName}
+                  activities={activities}
+                  isFetching={isActivitiesFetching}
+                  isAllFetched={isAllActivitiesFetched}
+                  onFetch={onActivitiesFetch}
                   position="left-start"
                   offset={0}
                 >
@@ -115,6 +120,8 @@ const Comment = React.memo(
 );
 
 Comment.propTypes = {
+  cardId: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isPersisted: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -123,6 +130,9 @@ Comment.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -131,6 +141,7 @@ Comment.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 Comment.defaultProps = {

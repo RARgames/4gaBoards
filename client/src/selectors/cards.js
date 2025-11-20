@@ -307,6 +307,88 @@ export const makeSelectTaskActivitiesByCardId = () =>
 
 export const selectTaskActivitiesByCardId = makeSelectTaskActivitiesByCardId();
 
+export const makeSelectAttachmentActivitiesByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Card }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const cardModel = Card.withId(id);
+
+      if (!cardModel) {
+        return cardModel;
+      }
+
+      const activities = cardModel
+        .getOrderedAttachmentActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...activityModel.ref,
+          ...getMeta(activityModel),
+          isPersisted: !isLocalId(activityModel.id),
+          user: {
+            ...activityModel.user.ref,
+          },
+        }));
+
+      const attachmentActivitiesByAttachmentId = activities.reduce((acc, act) => {
+        const tid = act.data?.attachmentId;
+        if (tid == null) return acc;
+        if (!acc[tid]) acc[tid] = [];
+        acc[tid].push(act);
+        return acc;
+      }, {});
+
+      return attachmentActivitiesByAttachmentId;
+    },
+  );
+
+export const selectAttachmentActivitiesByCardId = makeSelectAttachmentActivitiesByCardId();
+
+export const makeSelectCommentActivitiesByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Card }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const cardModel = Card.withId(id);
+
+      if (!cardModel) {
+        return cardModel;
+      }
+
+      const activities = cardModel
+        .getOrderedCommentActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...activityModel.ref,
+          ...getMeta(activityModel),
+          isPersisted: !isLocalId(activityModel.id),
+          user: {
+            ...activityModel.user.ref,
+          },
+        }));
+
+      const commentActivitiesByCommentId = activities.reduce((acc, act) => {
+        const tid = act.data?.commentActionId;
+        if (tid == null) return acc;
+        if (!acc[tid]) acc[tid] = [];
+        acc[tid].push(act);
+        return acc;
+      }, {});
+
+      return commentActivitiesByCommentId;
+    },
+  );
+
+export const selectCommentActivitiesByCardId = makeSelectCommentActivitiesByCardId();
+
 export const selectCurrentCard = createSelector(
   orm,
   (state) => selectPath(state).cardId,
@@ -606,6 +688,10 @@ export default {
   selectActivitiesByCardId,
   makeSelectTaskActivitiesByCardId,
   selectTaskActivitiesByCardId,
+  makeSelectAttachmentActivitiesByCardId,
+  selectAttachmentActivitiesByCardId,
+  makeSelectCommentActivitiesByCardId,
+  selectCommentActivitiesByCardId,
   selectCurrentCard,
   selectUsersForCurrentCard,
   selectLabelsForCurrentCard,

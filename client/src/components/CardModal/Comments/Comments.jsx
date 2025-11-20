@@ -11,9 +11,13 @@ import * as s from './Comments.module.scss';
 
 const Comments = React.memo(
   ({
+    cardId,
+    cardName,
     items,
-    isFetching,
-    isAllFetched,
+    isCommentsFetching,
+    isAllCommentsFetched,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
     canEdit,
     canEditAllComments,
     commentMode,
@@ -22,7 +26,8 @@ const Comments = React.memo(
     commentCount,
     preferredDetailsFont,
     boardMemberships,
-    onFetch,
+    onCommentsFetch,
+    onActivitiesFetch,
     onCommentCreate,
     onCommentUpdate,
     onCommentDelete,
@@ -56,11 +61,11 @@ const Comments = React.memo(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            onFetch();
+            onCommentsFetch();
           }
         });
       },
-      [onFetch],
+      [onCommentsFetch],
     );
 
     useEffect(() => {
@@ -78,7 +83,7 @@ const Comments = React.memo(
       return () => {
         observer.disconnect();
       };
-    }, [handleVisibilityChange, onFetch, items]);
+    }, [handleVisibilityChange, onCommentsFetch, items]);
 
     return (
       <div>
@@ -117,6 +122,8 @@ const Comments = React.memo(
                 {items.map((item) => (
                   <Comment
                     key={item.id}
+                    cardId={cardId}
+                    cardName={cardName}
                     data={item.data}
                     isPersisted={item.isPersisted}
                     user={item.user}
@@ -124,6 +131,9 @@ const Comments = React.memo(
                     commentMode={commentMode}
                     isGithubConnected={isGithubConnected}
                     githubRepo={githubRepo}
+                    activities={item.activities}
+                    isActivitiesFetching={isActivitiesFetching}
+                    isAllActivitiesFetched={isAllActivitiesFetched}
                     createdAt={item.createdAt}
                     createdBy={item.createdBy}
                     updatedAt={item.updatedAt}
@@ -133,12 +143,13 @@ const Comments = React.memo(
                     onUpdate={(data) => handleCommentUpdate(item.id, data)}
                     onDelete={() => handleCommentDelete(item.id)}
                     onUserPrefsUpdate={onUserPrefsUpdate}
+                    onActivitiesFetch={onActivitiesFetch}
                   />
                 ))}
               </div>
             </>
           )}
-          {isFetching ? commShown && <Loader size={LoaderSize.Normal} /> : !isAllFetched && <div ref={visibilityRef} />}
+          {isCommentsFetching ? commShown && <Loader size={LoaderSize.Normal} /> : !isAllCommentsFetched && <div ref={visibilityRef} />}
         </div>
       </div>
     );
@@ -146,9 +157,13 @@ const Comments = React.memo(
 );
 
 Comments.propTypes = {
+  cardId: PropTypes.string.isRequired,
+  cardName: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  isFetching: PropTypes.bool.isRequired,
-  isAllFetched: PropTypes.bool.isRequired,
+  isCommentsFetching: PropTypes.bool.isRequired,
+  isAllCommentsFetched: PropTypes.bool.isRequired,
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   canEditAllComments: PropTypes.bool.isRequired,
   commentMode: PropTypes.string.isRequired,
@@ -157,7 +172,8 @@ Comments.propTypes = {
   commentCount: PropTypes.number.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  onFetch: PropTypes.func.isRequired,
+  onCommentsFetch: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,
   onCommentUpdate: PropTypes.func.isRequired,
   onCommentDelete: PropTypes.func.isRequired,

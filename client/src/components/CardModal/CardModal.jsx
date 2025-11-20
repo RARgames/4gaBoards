@@ -755,9 +755,13 @@ const CardModal = React.memo(
 
     const commentsNode = (
       <Comments
+        cardId={id}
+        cardName={name}
         items={comments}
-        isFetching={isCommentsFetching}
-        isAllFetched={isAllCommentsFetched}
+        isCommentsFetching={isCommentsFetching}
+        isAllCommentsFetched={isAllCommentsFetched}
+        isActivitiesFetching={isActivitiesFetching}
+        isAllActivitiesFetched={isAllActivitiesFetched}
         canEdit={canEditCommentActivities}
         canEditAllComments={canEditAllCommentActivities}
         commentMode={commentMode}
@@ -766,7 +770,8 @@ const CardModal = React.memo(
         commentCount={commentCount}
         preferredDetailsFont={preferredDetailsFont}
         boardMemberships={boardMemberships}
-        onFetch={onCommentsFetch}
+        onCommentsFetch={onCommentsFetch}
+        onActivitiesFetch={onActivitiesFetch}
         onCommentCreate={onCommentActivityCreate}
         onCommentUpdate={onCommentActivityUpdate}
         onCommentDelete={onCommentActivityDelete}

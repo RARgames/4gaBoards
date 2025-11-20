@@ -48,7 +48,11 @@ const mapStateToProps = (state) => {
     activities: taskActivities[task.id] || [],
   }));
   const attachments = selectors.selectAttachmentsForCurrentCard(state);
-  const comments = selectors.selectCommentsForCurrentCard(state);
+  const commentActivities = selectors.selectCommentActivitiesByCardId(state, id);
+  const comments = selectors.selectCommentsForCurrentCard(state).map((comment) => ({
+    ...comment,
+    activities: commentActivities[comment.id] || [],
+  }));
   const activities = selectors.selectActivitiesByCardId(state, id);
   const user = selectors.selectCurrentUser(state);
   const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, hideClosestDueDate, preferredDetailsFont } =
