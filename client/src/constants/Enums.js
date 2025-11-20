@@ -17,6 +17,7 @@ export const ActivityScopes = {
   CARD: 'card',
   TASK: 'task',
   COMMENT: 'comment',
+  ATTACHMENT: 'attachment',
 };
 
 export const ActivityTypes = {

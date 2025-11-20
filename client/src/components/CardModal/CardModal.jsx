@@ -732,13 +732,19 @@ const CardModal = React.memo(
           {attacShown && (
             <>
               <Attachments
+                cardId={id}
+                cardName={name}
                 items={attachments}
                 canEdit={canEdit}
+                isActivitiesFetching={isActivitiesFetching}
+                isAllActivitiesFetched={isAllActivitiesFetched}
+                boardMemberships={boardMemberships}
                 onUpdate={onAttachmentUpdate}
                 onDelete={onAttachmentDelete}
                 onCoverUpdate={handleCoverUpdate}
                 onGalleryOpen={handleGalleryOpen}
                 onGalleryClose={handleGalleryClose}
+                onActivitiesFetch={onActivitiesFetch}
               />
               {canEdit && (
                 <AttachmentAdd onCreate={onAttachmentCreate}>

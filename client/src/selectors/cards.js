@@ -492,11 +492,12 @@ export const selectAttachmentsForCurrentCard = createSelector(
 
     return cardModel
       .getOrderedAttachmentsQuerySet()
-      .toRefArray()
-      .map((attachment) => ({
-        ...attachment,
-        isCover: attachment.id === cardModel.coverAttachmentId,
-        isPersisted: !isLocalId(attachment.id),
+      .toModelArray()
+      .map((attachmentModel) => ({
+        ...attachmentModel.ref,
+        ...getMeta(attachmentModel),
+        isCover: attachmentModel.id === cardModel.coverAttachmentId,
+        isPersisted: !isLocalId(attachmentModel.id),
       }));
   },
 );

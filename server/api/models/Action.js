@@ -14,6 +14,7 @@ const Scopes = {
   CARD: 'card',
   TASK: 'task',
   COMMENT: 'comment',
+  ATTACHMENT: 'attachment',
 };
 
 const Types = {

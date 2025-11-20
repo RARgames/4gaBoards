@@ -47,7 +47,11 @@ const mapStateToProps = (state) => {
     users: selectors.selectUsersForTaskById(state, task.id),
     activities: taskActivities[task.id] || [],
   }));
-  const attachments = selectors.selectAttachmentsForCurrentCard(state);
+  const attachmentActivities = selectors.selectAttachmentActivitiesByCardId(state, id);
+  const attachments = selectors.selectAttachmentsForCurrentCard(state).map((attachment) => ({
+    ...attachment,
+    activities: attachmentActivities[attachment.id] || [],
+  }));
   const commentActivities = selectors.selectCommentActivitiesByCardId(state, id);
   const comments = selectors.selectCommentsForCurrentCard(state).map((comment) => ({
     ...comment,
