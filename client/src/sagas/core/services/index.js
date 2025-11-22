@@ -7,6 +7,7 @@ import commentActivities from './comment-activities';
 import core from './core';
 import labels from './labels';
 import lists from './lists';
+import mails from './mails';
 import modals from './modals';
 import notifications from './notifications';
 import projectManagers from './project-managers';
@@ -28,6 +29,7 @@ export default {
   ...core,
   ...labels,
   ...lists,
+  ...mails,
   ...modals,
   ...notifications,
   ...projectManagers,

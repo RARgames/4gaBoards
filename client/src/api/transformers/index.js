@@ -3,6 +3,7 @@ export * from './attachments';
 export * from './boards';
 export * from './cards';
 export * from './lists';
+export * from './mails';
 export * from './notifications';
 export * from './projects';
 export * from './tasks';

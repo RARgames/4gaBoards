@@ -29,6 +29,8 @@ module.exports = {
     const board = await Board.archiveOne(inputs.record.id);
 
     if (board) {
+      await Mail.destroy({ boardId: board.id });
+
       sails.sockets.removeRoomMembersFromRooms(`board:${board.id}`, `board:${board.id}`);
 
       const projectManagerUserIds = await sails.helpers.projects.getManagerUserIds(board.projectId);

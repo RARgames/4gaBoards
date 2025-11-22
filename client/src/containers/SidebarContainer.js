@@ -22,6 +22,13 @@ const mapStateToProps = (state) => {
     },
   } = state;
 
+  const selectMailCountForBoardId = selectors.makeSelectMailCountForBoardId();
+  const selectMailsByBoardId = selectors.makeSelectMailsByBoardId();
+  const mail = selectors.selectMailForCurrentUserByBoardId(state, boardId);
+  const mailId = mail?.mailId ?? null;
+  const mailCountForBoardId = selectMailCountForBoardId(state, boardId);
+  const mailsForBoard = selectMailsByBoardId(state, boardId);
+
   return {
     path,
     projects,
@@ -36,6 +43,9 @@ const mapStateToProps = (state) => {
     filterQuery,
     filterTarget,
     sidebarCompact,
+    mailId,
+    mailCountForBoardId,
+    mailsForBoard,
   };
 };
 
@@ -51,6 +61,9 @@ const mapDispatchToProps = (dispatch) =>
       onBoardExport: entryActions.exportBoard,
       onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onUserProjectUpdate: entryActions.updateUserProject,
+      onMailCreate: (boardId) => entryActions.createMail({ boardId }),
+      onMailUpdate: (boardId) => entryActions.updateMail({ boardId }),
+      onMailDelete: (mailId) => entryActions.deleteMail(mailId),
     },
     dispatch,
   );

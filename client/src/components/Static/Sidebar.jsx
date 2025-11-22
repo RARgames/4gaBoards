@@ -37,6 +37,9 @@ const Sidebar = React.memo(
     filterQuery,
     filterTarget,
     sidebarCompact,
+    mailId,
+    mailCountForBoardId,
+    mailsForBoard,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -45,6 +48,9 @@ const Sidebar = React.memo(
     onBoardDelete,
     onBoardExport,
     onChangeFilterQuery,
+    onMailCreate,
+    onMailUpdate,
+    onMailDelete,
     onUserProjectUpdate,
   }) => {
     const [t] = useTranslation();
@@ -92,6 +98,12 @@ const Sidebar = React.memo(
       }, 0);
       return () => clearTimeout(timeout);
     }, [currBoardId, currProjectId, scrollItemIntoView]);
+
+    const handleMailCopy = useCallback(() => {
+      if (mailId) {
+        navigator.clipboard.writeText(mailId);
+      }
+    }, [mailId]);
 
     useEffect(() => {
       if (currBoardId) {
@@ -198,9 +210,17 @@ const Sidebar = React.memo(
                                     updatedAt={board.updatedAt}
                                     updatedBy={board.updatedBy}
                                     memberships={board.memberships}
+                                    boardId={board.id}
+                                    mailId={mailId}
+                                    mailCountForBoardId={mailCountForBoardId}
+                                    mailsForBoard={mailsForBoard}
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
                                     onExport={(data) => onBoardExport(board.id, data)}
                                     onDelete={() => onBoardDelete(board.id)}
+                                    onMailCreate={onMailCreate}
+                                    onMailUpdate={onMailUpdate}
+                                    onMailCopy={handleMailCopy}
+                                    onMailDelete={onMailDelete}
                                     position="right-start"
                                     offset={10}
                                     hideCloseButton
@@ -361,6 +381,9 @@ Sidebar.propTypes = {
   filterQuery: PropTypes.string,
   filterTarget: PropTypes.string,
   sidebarCompact: PropTypes.bool.isRequired,
+  mailId: PropTypes.string,
+  mailCountForBoardId: PropTypes.number.isRequired,
+  mailsForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -369,6 +392,9 @@ Sidebar.propTypes = {
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
+  onMailDelete: PropTypes.func.isRequired,
   onUserProjectUpdate: PropTypes.func.isRequired,
 };
 
@@ -378,6 +404,7 @@ Sidebar.defaultProps = {
   currBoardId: undefined,
   filterQuery: undefined,
   filterTarget: undefined,
+  mailId: null,
 };
 
 export default Sidebar;

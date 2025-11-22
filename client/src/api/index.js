@@ -11,6 +11,7 @@ import core from './core';
 import http from './http';
 import labels from './labels';
 import lists from './lists';
+import mails from './mails';
 import notifications from './notifications';
 import projectManagers from './project-managers';
 import projects from './projects';
@@ -37,6 +38,7 @@ export default {
   ...core,
   ...labels,
   ...lists,
+  ...mails,
   ...notifications,
   ...projectManagers,
   ...projects,
