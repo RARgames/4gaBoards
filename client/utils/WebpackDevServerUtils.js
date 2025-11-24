@@ -199,7 +199,7 @@ function createCompiler({ appName, config, urls, useYarn, useTypeScript, webpack
 }
 
 function resolveLoopback(proxy) {
-  const o = url.parse(proxy);
+  const o = new URL(proxy);
   o.host = undefined;
   if (o.hostname !== 'localhost') {
     return proxy;

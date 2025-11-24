@@ -15,7 +15,7 @@ function printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder
   let isGitHubPages = false;
   if (publicUrl) {
     try {
-      const parsed = url.parse(publicUrl);
+      const parsed = new URL(publicUrl);
       if (parsed.hostname && (parsed.hostname === 'github.io' || parsed.hostname.endsWith('.github.io'))) {
         isGitHubPages = true;
       }
@@ -25,7 +25,7 @@ function printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder
   }
   if (isGitHubPages) {
     // "homepage": "http://user.github.io/project"
-    const publicPathname = url.parse(publicPath).pathname;
+    const publicPathname = new URL(publicPath).pathname;
     const hasDeployScript = typeof appPackage.scripts !== 'undefined' && typeof appPackage.scripts.deploy !== 'undefined';
     // eslint-disable-next-line no-use-before-define
     printBaseMessage(buildFolder, publicPathname);
