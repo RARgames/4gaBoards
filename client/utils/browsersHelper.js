@@ -9,7 +9,7 @@ const browserslist = require('browserslist');
 const chalk = require('chalk').default;
 const fs = require('fs');
 const os = require('os');
-const { pkgUp } = require('pkg-up');
+const { packageUp } = require('package-up');
 const prompts = require('prompts');
 
 const defaultBrowsers = {
@@ -51,7 +51,7 @@ function checkBrowsers(dir, isInteractive, retry = true) {
     }
 
     return (
-      pkgUp({ cwd: dir })
+      packageUp({ cwd: dir })
         // eslint-disable-next-line consistent-return
         .then((filePath) => {
           if (filePath == null) {
