@@ -92,6 +92,8 @@ const BoardActions = React.memo(
             boardMemberships={memberships}
             allLabels={labels}
             canEdit={canEdit}
+            dueDate={boardSearchParams.dueDate}
+            justSelectedDay={boardSearchParams.justSelectedDay}
             onUserAdd={onUserToFilterAdd}
             onUserRemove={onUserFromFilterRemove}
             onLabelAdd={onLabelToFilterAdd}
@@ -99,6 +101,7 @@ const BoardActions = React.memo(
             onLabelCreate={onLabelCreate}
             onLabelUpdate={onLabelUpdate}
             onLabelDelete={onLabelDelete}
+            onBoardSearchParamsUpdate={onBoardSearchParamsUpdate}
           />
         </div>
         <div className={s.action}>

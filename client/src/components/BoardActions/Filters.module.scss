@@ -28,6 +28,10 @@
     }
   }
 
+  .filterButtonDueDateIsFiltered {
+    padding-right: 4px;
+  }
+
   .filterItem {
     background: var(--backgroundColorTmpDarkerField2);
     display: inline-block;
@@ -40,6 +44,10 @@
 
   .lastFilterItem {
     margin-right: 0;
+  }
+
+  .filterItemDueDate {
+    background: none;
   }
 
   .filterTitle {
@@ -66,5 +74,9 @@
         fill: var(--textColor4);
       }
     }
+  }
+
+  .clearButtonDueDate {
+    margin-left: -4px;
   }
 }

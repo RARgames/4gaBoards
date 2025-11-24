@@ -103,7 +103,8 @@ export default class extends BaseModel {
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
     const { searchParams } = this.board;
-    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchParams.query !== '';
+    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchParams.query !== '' || searchParams.dueDate !== null;
+    // TODO merge with IsFilteredForBoard
   }
 
   getFilteredOrderedCardsModelArray() {
@@ -155,6 +156,17 @@ export default class extends BaseModel {
           }
         }
         return matchesLabels && matchesUsers && matchesSearch;
+      });
+    }
+    if (searchParams.dueDate) {
+      cardModels = cardModels.filter((cardModel) => {
+        if (!cardModel.dueDate) return false;
+        if (searchParams.justSelectedDay) {
+          const due = cardModel.dueDate;
+          const filterDue = searchParams.dueDate;
+          return due.getFullYear() === filterDue.getFullYear() && due.getMonth() === filterDue.getMonth() && due.getDate() === filterDue.getDate();
+        }
+        return cardModel.dueDate <= searchParams.dueDate;
       });
     }
     return cardModels;

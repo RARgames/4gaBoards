@@ -266,7 +266,7 @@ export const selectIsFilteredForCurrentBoard = createSelector(
     const filterLabelsArray = boardModel.filterLabels.toRefArray();
     const { searchParams } = boardModel;
 
-    return filterUsersArray.length !== 0 || filterLabelsArray.length !== 0 || searchParams.query !== '';
+    return filterUsersArray.length !== 0 || filterLabelsArray.length !== 0 || searchParams.query !== '' || searchParams.dueDate !== null;
   },
 );
 
