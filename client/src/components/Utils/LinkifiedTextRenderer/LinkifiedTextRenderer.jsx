@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { isLink, normalizeLink } from '../../../utils/url';
+import { isLink, normalizeLink, beautifyLink } from '../../../utils/url';
 import ExternalLink from '../ExternalLink';
 import { Icon, IconType, IconSize } from '../Icon';
 
@@ -17,14 +17,13 @@ const LinkifiedTextRenderer = React.memo(({ text, wrapperClassName, linkClassNam
 
       if (normalized) {
         const key = `${part}-${i}`;
-        const displayText = part.replace(/^https?:\/\//i, '');
 
         return (
           <span key={key} className={clsx(s.wrapper, wrapperClassName)}>
             <ExternalLink href={normalized.href} className={linkClassName} data-prevent-card-switch>
               <Icon type={IconType.Link} size={IconSize.Size13} className={clsx(s.icon, iconClassName)} />
             </ExternalLink>
-            {displayText}
+            {beautifyLink(part)}
           </span>
         );
       }

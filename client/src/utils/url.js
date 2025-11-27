@@ -14,3 +14,7 @@ export const normalizeLink = (string) => {
   };
   return tryNormalize(string) || tryNormalize(`https://${string}`);
 };
+
+export const beautifyLink = (string) => {
+  return string.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+};
