@@ -289,13 +289,8 @@
     cursor: pointer;
   }
 
-  .link {
-    margin-right: 2px;
+  .linkIcon {
     vertical-align: 0%;
-
-    &:hover {
-      fill: var(--textColor3);
-    }
   }
 
   .activity {

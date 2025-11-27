@@ -6,6 +6,7 @@ import FilePicker from './FilePicker';
 import Form from './Form';
 import { Icon, IconType, IconSize } from './Icon';
 import { Input, InputStyle } from './Input';
+import LinkifiedTextRenderer from './LinkifiedTextRenderer';
 import { Loader, LoaderSize } from './Loader';
 import { MDEditor, MDPreview } from './Markdown';
 import { Message, MessageStyle } from './Message';
@@ -32,6 +33,7 @@ export {
   IconSize,
   Input,
   InputStyle,
+  LinkifiedTextRenderer,
   Loader,
   LoaderSize,
   MDEditor,

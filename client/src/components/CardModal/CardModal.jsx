@@ -7,7 +7,6 @@ import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
-import { extractFirstLikelyUrl } from '../../utils/url';
 import ActionsPopup from '../Card/ActionsPopup';
 import DeletePopup from '../DeletePopup';
 import DueDate from '../DueDate';
@@ -19,7 +18,7 @@ import Tasks from '../Tasks';
 import Timer from '../Timer';
 import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, ExternalLink, MDPreview } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview, LinkifiedTextRenderer } from '../Utils';
 import AttachmentAdd from './AttachmentAdd';
 import AttachmentAddZone from './AttachmentAddZone';
 import Attachments from './Attachments';
@@ -315,8 +314,6 @@ const CardModal = React.memo(
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
-    const link = extractFirstLikelyUrl(name);
-    const isLink = !!link;
 
     const headerNode = (
       <div className={s.header}>
@@ -328,12 +325,7 @@ const CardModal = React.memo(
             <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
               {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <div className={clsx(s.headerTitle, canEdit && gs.cursorPointer)} onClick={handleNameEdit} title={name}>
-                {isLink && (
-                  <ExternalLink href={link}>
-                    <Icon type={IconType.Link} size={IconSize.Size13} className={s.link} />
-                  </ExternalLink>
-                )}
-                {name}
+                <LinkifiedTextRenderer text={name} iconClassName={s.linkIcon} />
               </div>
             </NameField>
           </div>

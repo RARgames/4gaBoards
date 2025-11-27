@@ -4,8 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../../../hooks';
-import { extractFirstLikelyUrl } from '../../../../utils/url';
-import { TextArea, ExternalLink, Icon, IconType, IconSize } from '../../../Utils';
+import { TextArea, LinkifiedTextRenderer } from '../../../Utils';
 
 import * as gs from '../../../../global.module.scss';
 import * as s from './NameCell.module.scss';
@@ -75,9 +74,6 @@ const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, o
     submit();
   }, [submit]);
 
-  const link = extractFirstLikelyUrl(defaultValue);
-  const isLink = !!link;
-
   useEffect(() => {
     if (isOpen) {
       field.current?.focus();
@@ -88,12 +84,7 @@ const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, o
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div className={clsx(cellClassName, s.nameCell, canEdit && gs.cursorPointer)} onClick={open} title={defaultValue} data-prevent-card-switch>
-        {isLink && (
-          <ExternalLink href={link}>
-            <Icon type={IconType.Link} size={IconSize.Size13} className={s.link} />
-          </ExternalLink>
-        )}
-        {defaultValue}
+        <LinkifiedTextRenderer text={defaultValue} />
       </div>
     );
   }

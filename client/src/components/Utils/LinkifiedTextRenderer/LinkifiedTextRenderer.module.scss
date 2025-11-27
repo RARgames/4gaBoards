@@ -1,0 +1,13 @@
+:global(#app) {
+  .wrapper {
+    display: inline-block;
+  }
+
+  .icon {
+    margin-right: 1px;
+
+    &:hover {
+      fill: var(--textColor3);
+    }
+  }
+}

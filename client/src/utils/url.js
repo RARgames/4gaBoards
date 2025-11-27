@@ -1,30 +1,16 @@
-export const isUrl = (string) => {
-  try {
-    const url = new URL(string);
-    return ['http:', 'https:'].includes(url.protocol);
-  } catch {
-    return false;
-  }
+import { isURL, isIP } from 'validator';
+
+export const isLink = (string) => {
+  return isURL(string) || isIP(String(string), 4);
 };
 
-export const normalizeToUrl = (string) => {
-  try {
-    return new URL(string);
-  } catch {
+export const normalizeLink = (string) => {
+  const tryNormalize = (value) => {
     try {
-      return new URL(`https://${string}`);
+      return new URL(value);
     } catch {
       return null;
     }
-  }
-};
-
-export const extractFirstLikelyUrl = (string) => {
-  const match = string.match(/\b[^\s.]+(?:\.[^\s.,]+)+\b/);
-  return match ? normalizeToUrl(match[0]) : null;
-};
-
-export const isLikelyUrl = (string) => {
-  const url = extractFirstLikelyUrl(string);
-  return !!url;
+  };
+  return tryNormalize(string) || tryNormalize(`https://${string}`);
 };
