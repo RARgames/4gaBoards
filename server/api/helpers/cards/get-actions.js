@@ -1,5 +1,3 @@
-const LIMIT = 50;
-
 const idOrIdsValidator = (value) => _.isString(value) || _.every(value, _.isString);
 
 module.exports = {
@@ -40,6 +38,6 @@ module.exports = {
       };
     }
 
-    return sails.helpers.actions.getMany(criteria, LIMIT);
+    return sails.helpers.actions.getMany(criteria, sails.config.custom.actionsLimit);
   },
 };

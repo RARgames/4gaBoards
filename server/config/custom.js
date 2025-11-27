@@ -64,4 +64,5 @@ module.exports.custom = {
   positionGap: 65535,
   requiredPasswordStrength: 2,
   cacheMaxAge: 900,
+  actionsLimit: 50,
 };
