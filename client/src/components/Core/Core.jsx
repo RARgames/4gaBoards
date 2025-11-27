@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import HeaderContainer from '../../containers/HeaderContainer';
 import StaticContainer from '../../containers/StaticContainer';
+import { beautifyLink } from '../../utils/url';
 import Background from '../Background';
 import { Loader, LoaderSize, Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
@@ -23,7 +24,9 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
       if (currentBoard) {
         title = `${currentBoard.name} · ${currentProject.name} | ${mainTitle}`;
         if (currentCard) {
-          title = `${currentCard.name} - ${currentBoard.name} · ${currentProject.name} | ${mainTitle}`;
+          const parts = currentCard.name.split(/(\s+)/);
+          const cardName = parts.map((part) => beautifyLink(part)).join('');
+          title = `${cardName} - ${currentBoard.name} · ${currentProject.name} | ${mainTitle}`;
         }
       }
     }
