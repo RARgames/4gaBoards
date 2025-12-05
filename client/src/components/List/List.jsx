@@ -35,9 +35,15 @@ const List = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    isManager,
+    mailId,
+    mailsForList,
     onUpdate,
     onDelete,
     onCardCreate,
+    onMailCreate,
+    onMailUpdate,
+    onMailDelete,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -119,6 +125,12 @@ const List = React.memo(
     const handleNameEditHeightChange = useCallback((height) => {
       setNameEditHeight(height);
     }, []);
+
+    const handleMailCopy = useCallback(() => {
+      if (mailId) {
+        navigator.clipboard.writeText(mailId);
+      }
+    }, [mailId]);
 
     useEffect(() => {
       if (isAddCardOpen && listWrapper.current) {
@@ -256,8 +268,15 @@ const List = React.memo(
                       updatedAt={updatedAt}
                       updatedBy={updatedBy}
                       boardMemberships={boardMemberships}
+                      isManager={isManager}
+                      mailId={mailId}
+                      mailsForList={mailsForList}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
+                      onMailCreate={onMailCreate}
+                      onMailUpdate={onMailUpdate}
+                      onMailCopy={handleMailCopy}
+                      onMailDelete={onMailDelete}
                       onDelete={onDelete}
                       position="left-start"
                       offset={0}
@@ -302,9 +321,15 @@ List.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isManager: PropTypes.bool.isRequired,
+  mailId: PropTypes.string,
+  mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
+  onMailDelete: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {
@@ -312,6 +337,7 @@ List.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  mailId: null,
 };
 
 export default List;

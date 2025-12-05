@@ -21,6 +21,7 @@ export function* fetchCore() {
   let boardMemberships2;
   let labels;
   let lists;
+  let mails;
   let cards1;
   let cardMemberships;
   let cardLabels;
@@ -37,6 +38,7 @@ export function* fetchCore() {
       boardMemberships: boardMemberships2,
       labels,
       lists,
+      mails,
       cards: cards1,
       cardMemberships,
       cardLabels,
@@ -75,6 +77,7 @@ export function* fetchCore() {
     boards,
     labels,
     lists,
+    mails,
     cardMemberships,
     cardLabels,
     tasks,
