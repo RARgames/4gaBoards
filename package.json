@@ -53,11 +53,11 @@
   },
   "devDependencies": {
     "confusing-browser-globals": "^1.0.11",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
-    "prettier": "^3.7.3"
+    "prettier": "^3.7.4"
   },
   "engines": {
     "node": "^24.11"
