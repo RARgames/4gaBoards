@@ -97,6 +97,24 @@ module.exports = {
           inputs.request,
         );
       });
+
+      await sails.helpers.actions.createOne.with({
+        values: {
+          project,
+          scope: Action.Scopes.PROJECT,
+          type: Action.Types.PROJECT_UPDATE,
+          data: {
+            projectId: project.id,
+            projectPrevName: values.name && inputs.record.name,
+            projectName: project.name,
+            projectPrevBackground: values.background !== undefined ? inputs.record.background : undefined,
+            projectBackground: values.background !== undefined ? project.background : undefined,
+            projectPrevBackgroundImage: values.backgroundImage !== undefined ? inputs.record.backgroundImage : undefined,
+            projectBackgroundImage: values.backgroundImage !== undefined ? project.backgroundImage : undefined,
+          },
+        },
+        currentUser,
+      });
     }
 
     return project;

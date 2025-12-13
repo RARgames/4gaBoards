@@ -33,6 +33,19 @@ module.exports = {
         inputs.request,
       );
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          list,
+          scope: Action.Scopes.LIST,
+          type: Action.Types.LIST_DELETE,
+          data: {
+            listId: list.id,
+            listName: list.name,
+          },
+        },
+        currentUser,
+      });
+
       await sails.helpers.boards.updateMeta.with({ id: list.boardId, currentUser, skipMetaUpdate });
     }
 

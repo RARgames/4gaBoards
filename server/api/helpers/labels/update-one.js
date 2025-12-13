@@ -59,6 +59,25 @@ module.exports = {
         inputs.request,
       );
 
+      const board = await Board.findOne(label.boardId);
+      if (board) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            board,
+            scope: Action.Scopes.BOARD,
+            type: Action.Types.LABEL_UPDATE,
+            data: {
+              labelId: label.id,
+              labelPrevName: values.name && inputs.record.name,
+              labelName: label.name,
+              labelPrevColor: values.color && inputs.record.color,
+              labelColor: label.color,
+            },
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.boards.updateMeta.with({ id: label.boardId, currentUser, skipMetaUpdate });
     }
 

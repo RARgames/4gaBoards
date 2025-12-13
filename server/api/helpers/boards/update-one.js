@@ -82,6 +82,28 @@ module.exports = {
         );
       });
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          board,
+          scope: Action.Scopes.BOARD,
+          type: Action.Types.BOARD_UPDATE,
+          data: {
+            boardId: board.id,
+            boardPrevName: values.name && inputs.record.name,
+            boardName: board.name,
+            prevIsGithubConnected: values.isGithubConnected !== undefined ? inputs.record.isGithubConnected : undefined,
+            isGithubConnected: board.isGithubConnected,
+            prevGithubRepo: values.githubRepo !== undefined ? inputs.record.githubRepo : undefined,
+            githubRepo: board.githubRepo,
+            prevIsImportedBoard: values.isImportedBoard !== undefined ? inputs.record.isImportedBoard : undefined,
+            isImportedBoard: board.isImportedBoard,
+            prevPosition: values.position ? inputs.record.position : undefined,
+            position: values.position && board.position,
+          },
+        },
+        currentUser,
+      });
+
       await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser, skipMetaUpdate });
     }
 

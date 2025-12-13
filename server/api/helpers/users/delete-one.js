@@ -66,6 +66,19 @@ module.exports = {
           inputs.request,
         );
       });
+
+      await sails.helpers.actions.createOne.with({
+        values: {
+          userAccount: user,
+          scope: Action.Scopes.USER,
+          type: Action.Types.USER_DELETE,
+          data: {
+            userId: user.id,
+            userName: user.name,
+          },
+        },
+        currentUser,
+      });
     }
 
     return user;

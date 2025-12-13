@@ -46,6 +46,22 @@ module.exports = {
         );
       });
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          board,
+          scope: Action.Scopes.BOARD,
+          type: Action.Types.BOARD_DELETE,
+          data: {
+            boardId: board.id,
+            boardName: board.name,
+            isGithubConnected: board.isGithubConnected,
+            githubRepo: board.githubRepo,
+            isImportedBoard: board.isImportedBoard,
+          },
+        },
+        currentUser,
+      });
+
       await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser, skipMetaUpdate });
     }
 

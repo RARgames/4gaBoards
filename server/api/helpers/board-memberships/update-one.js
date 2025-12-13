@@ -47,6 +47,29 @@ module.exports = {
         inputs.request,
       );
 
+      const board = await Board.findOne(boardMembership.boardId);
+      const user = await User.findOne(boardMembership.userId);
+      if (board && user) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            board,
+            scope: Action.Scopes.BOARD,
+            type: Action.Types.BOARD_USER_UPDATE,
+            data: {
+              boardMembershipId: boardMembership.id,
+              userId: boardMembership.userId,
+              boardId: boardMembership.boardId,
+              userName: user.name,
+              prevRole: values.role !== undefined ? inputs.record.role : undefined,
+              role: values.role && boardMembership.role,
+              prevCanComment: values.canComment !== undefined ? inputs.record.canComment : undefined,
+              canComment: values.canComment && boardMembership.canComment,
+            },
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser, skipMetaUpdate });
     }
 

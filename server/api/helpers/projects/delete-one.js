@@ -45,6 +45,19 @@ module.exports = {
           inputs.request,
         );
       });
+
+      await sails.helpers.actions.createOne.with({
+        values: {
+          project,
+          scope: Action.Scopes.PROJECT,
+          type: Action.Types.PROJECT_DELETE,
+          data: {
+            projectId: project.id,
+            projectName: project.name,
+          },
+        },
+        currentUser,
+      });
     }
 
     return project;

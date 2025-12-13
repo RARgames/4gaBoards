@@ -36,6 +36,25 @@ module.exports = {
         );
       });
 
+      const project = await Project.findOne(projectManager.projectId);
+      const user = await User.findOne(projectManager.userId);
+      if (project && user) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            project,
+            scope: Action.Scopes.PROJECT,
+            type: Action.Types.PROJECT_MANAGER_REMOVE,
+            data: {
+              projectMembershipId: projectManager.id,
+              userId: projectManager.userId,
+              projectId: projectManager.projectId,
+              userName: user.name,
+            },
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.projects.updateMeta.with({ id: projectManager.projectId, currentUser, skipMetaUpdate });
     }
 

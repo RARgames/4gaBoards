@@ -27,7 +27,7 @@ const valuesValidator = (value) => {
   if (value.scope === Action.Scopes.PROJECT && !_.isPlainObject(value.project)) {
     return false;
   }
-  if (value.scope === Action.Scopes.USER && !_.isPlainObject(value.user)) {
+  if (value.scope === Action.Scopes.USER && !_.isPlainObject(value.userAccount)) {
     return false;
   }
 
@@ -110,6 +110,198 @@ module.exports = {
             ),
           );
         }
+      }
+    } else if (values.scope === Action.Scopes.LIST) {
+      const board = await Board.findOne(values.list.boardId);
+      if (!board) {
+        throw 'boardNotFound';
+      }
+
+      action = await Action.create({
+        ...values,
+        listId: values.list.id,
+        boardId: board.id,
+        projectId: board.projectId,
+        userId: actionUser.id,
+        createdById: currentUser.id,
+        data: {
+          ...values.data,
+          ...(!values.data?.boardName ? { boardName: board.name } : {}),
+        },
+      }).fetch();
+
+      if (action) {
+        sails.sockets.broadcast(
+          `board:${board.id}`,
+          'actionCreate',
+          {
+            item: action,
+          },
+          inputs.request,
+        );
+
+        // TODO make subscriptions work for board actions
+        // if (!inputs.skipNotifications) {
+        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
+        //   await Promise.all(
+        //     subscriptionUserIds.map(async (userId) =>
+        //       sails.helpers.notifications.createOne.with({
+        //         values: {
+        //           userId,
+        //           action,
+        //         },
+        //         currentUser,
+        //       }),
+        //     ),
+        //   );
+        // }
+      }
+    } else if (values.scope === Action.Scopes.BOARD) {
+      action = await Action.create({
+        ...values,
+        boardId: values.board.id,
+        projectId: values.board.projectId,
+        userId: actionUser.id,
+        createdById: currentUser.id,
+        data: {
+          ...values.data,
+          ...(!values.data?.boardName ? { boardName: values.board.name } : {}),
+        },
+      }).fetch();
+
+      if (action) {
+        sails.sockets.broadcast(
+          `board:${values.board.id}`,
+          'actionCreate',
+          {
+            item: action,
+          },
+          inputs.request,
+        );
+
+        // TODO make subscriptions work for board actions
+        // if (!inputs.skipNotifications) {
+        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
+        //   await Promise.all(
+        //     subscriptionUserIds.map(async (userId) =>
+        //       sails.helpers.notifications.createOne.with({
+        //         values: {
+        //           userId,
+        //           action,
+        //         },
+        //         currentUser,
+        //       }),
+        //     ),
+        //   );
+        // }
+      }
+    } else if (values.scope === Action.Scopes.PROJECT) {
+      action = await Action.create({
+        ...values,
+        projectId: values.project.id,
+        userId: actionUser.id,
+        createdById: currentUser.id,
+        data: {
+          ...values.data,
+          ...(!values.data?.projectName ? { projectName: values.project.name } : {}),
+        },
+      }).fetch();
+
+      if (action) {
+        // TODO will not work
+        // sails.sockets.broadcast(
+        //   `board:${values.board.id}`,
+        //   'actionCreate',
+        //   {
+        //     item: action,
+        //   },
+        //   inputs.request,
+        // );
+        // TODO make subscriptions work for board actions
+        // if (!inputs.skipNotifications) {
+        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
+        //   await Promise.all(
+        //     subscriptionUserIds.map(async (userId) =>
+        //       sails.helpers.notifications.createOne.with({
+        //         values: {
+        //           userId,
+        //           action,
+        //         },
+        //         currentUser,
+        //       }),
+        //     ),
+        //   );
+        // }
+      }
+    } else if (values.scope === Action.Scopes.USER) {
+      action = await Action.create({
+        ...values,
+        userAccountId: values.userAccount.id,
+        userId: actionUser.id,
+        createdById: currentUser.id,
+      }).fetch();
+
+      if (action) {
+        // TODO will not work
+        // sails.sockets.broadcast(
+        //   `board:${values.board.id}`,
+        //   'actionCreate',
+        //   {
+        //     item: action,
+        //   },
+        //   inputs.request,
+        // );
+        // TODO make subscriptions work for board actions
+        // if (!inputs.skipNotifications) {
+        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
+        //   await Promise.all(
+        //     subscriptionUserIds.map(async (userId) =>
+        //       sails.helpers.notifications.createOne.with({
+        //         values: {
+        //           userId,
+        //           action,
+        //         },
+        //         currentUser,
+        //       }),
+        //     ),
+        //   );
+        // }
+      }
+    } else if (values.scope === Action.Scopes.INSTANCE) {
+      action = await Action.create({
+        ...values,
+        userId: actionUser.id,
+        createdById: currentUser.id,
+        data: {
+          ...values.data,
+        },
+      }).fetch();
+
+      if (action) {
+        // TODO will not work
+        // sails.sockets.broadcast(
+        //   `board:${values.board.id}`,
+        //   'actionCreate',
+        //   {
+        //     item: action,
+        //   },
+        //   inputs.request,
+        // );
+        // TODO make subscriptions work for board actions
+        // if (!inputs.skipNotifications) {
+        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
+        //   await Promise.all(
+        //     subscriptionUserIds.map(async (userId) =>
+        //       sails.helpers.notifications.createOne.with({
+        //         values: {
+        //           userId,
+        //           action,
+        //         },
+        //         currentUser,
+        //       }),
+        //     ),
+        //   );
+        // }
       }
     }
 

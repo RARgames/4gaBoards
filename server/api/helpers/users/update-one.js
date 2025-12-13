@@ -149,6 +149,47 @@ module.exports = {
           );
         });
       }
+
+      const valueKeys = Object.keys(values);
+      const isOnlyLastLogin = valueKeys.length === 1 && Object.prototype.hasOwnProperty.call(values, 'lastLogin');
+
+      if (!isOnlyLastLogin) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            userAccount: user,
+            scope: Action.Scopes.USER,
+            type: Action.Types.USER_UPDATE,
+            data: {
+              userId: user.id,
+              prevUserName: values.name !== undefined ? inputs.record.name : undefined,
+              userName: values.name !== undefined ? user.name : undefined,
+              prevUserEmail: values.email !== undefined ? inputs.record.email : undefined,
+              userEmail: values.email !== undefined ? user.email : undefined,
+              prevUserUsername: values.username !== undefined ? inputs.record.username : undefined,
+              userUsername: values.username !== undefined ? user.username : undefined,
+              prevUserIsAdmin: values.isAdmin !== undefined ? inputs.record.isAdmin : undefined,
+              userIsAdmin: values.isAdmin !== undefined ? user.isAdmin : undefined,
+              prevUserPhone: values.phone !== undefined ? inputs.record.phone : undefined,
+              userPhone: values.phone !== undefined ? user.phone : undefined,
+              prevUserOrganization: values.organization !== undefined ? inputs.record.organization : undefined,
+              userOrganization: values.organization !== undefined ? user.organization : undefined,
+              prevUserAvatar: values.avatar !== undefined ? inputs.record.avatar : undefined,
+              userAvatar: values.avatar !== undefined ? user.avatar : undefined,
+              prevSsoGoogleEmail: values.ssoGoogleEmail !== undefined ? inputs.record.ssoGoogleEmail : undefined,
+              ssoGoogleEmail: values.ssoGoogleEmail !== undefined ? user.ssoGoogleEmail : undefined,
+              prevSsoGithubEmail: values.ssoGithubEmail !== undefined ? inputs.record.ssoGithubEmail : undefined,
+              ssoGithubEmail: values.ssoGithubEmail !== undefined ? user.ssoGithubEmail : undefined,
+              prevSsoGithubUsername: values.ssoGithubUsername !== undefined ? inputs.record.ssoGithubUsername : undefined,
+              ssoGithubUsername: values.ssoGithubUsername !== undefined ? user.ssoGithubUsername : undefined,
+              prevSsoMicrosoftEmail: values.ssoMicrosoftEmail !== undefined ? inputs.record.ssoMicrosoftEmail : undefined,
+              ssoMicrosoftEmail: values.ssoMicrosoftEmail !== undefined ? user.ssoMicrosoftEmail : undefined,
+              prevSsoOidcEmail: values.ssoOidcEmail !== undefined ? inputs.record.ssoOidcEmail : undefined,
+              ssoOidcEmail: values.ssoOidcEmail !== undefined ? user.ssoOidcEmail : undefined,
+            },
+          },
+          currentUser,
+        });
+      }
     }
 
     return user;

@@ -63,6 +63,21 @@ module.exports = {
         );
       });
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          project: values.project,
+          scope: Action.Scopes.PROJECT,
+          type: Action.Types.PROJECT_MANAGER_ADD,
+          data: {
+            projectMembershipId: projectManager.id,
+            userId: projectManager.userId,
+            projectId: projectManager.projectId,
+            userName: values.user.name,
+          },
+        },
+        currentUser,
+      });
+
       await sails.helpers.projects.updateMeta.with({ id: projectManager.projectId, currentUser, skipMetaUpdate });
     }
 

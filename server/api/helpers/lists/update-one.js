@@ -73,6 +73,24 @@ module.exports = {
         inputs.request,
       );
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          list,
+          scope: Action.Scopes.LIST,
+          type: Action.Types.LIST_UPDATE,
+          data: {
+            listId: list.id,
+            listPrevName: values.name && inputs.record.name,
+            listName: list.name,
+            prevIsCollapsed: values.isCollapsed !== undefined ? inputs.record.isCollapsed : undefined,
+            isCollapsed: values.isCollapsed && list.isCollapsed,
+            listPrevPosition: values.position ? inputs.record.position : undefined,
+            listPosition: values.position && list.position,
+          },
+        },
+        currentUser,
+      });
+
       await sails.helpers.boards.updateMeta.with({ id: list.boardId, currentUser, skipMetaUpdate });
     }
 

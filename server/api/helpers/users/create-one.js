@@ -95,6 +95,32 @@ module.exports = {
       );
     });
 
+    if (user) {
+      await sails.helpers.actions.createOne.with({
+        values: {
+          userAccount: user,
+          scope: Action.Scopes.USER,
+          type: currentUser ? Action.Types.USER_CREATE : Action.Types.USER_REGISTER,
+          data: {
+            userId: user.id,
+            userName: user.name,
+            userEmail: user.email,
+            userUsername: user.username,
+            userIsAdmin: user.isAdmin,
+            userPhone: user.phone,
+            userOrganization: user.organization,
+            userAvatar: user.avatar,
+            ssoGoogleEmail: user.ssoGoogleEmail,
+            ssoGithubEmail: user.ssoGithubEmail,
+            ssoGithubUsername: user.ssoGithubUsername,
+            ssoMicrosoftEmail: user.ssoMicrosoftEmail,
+            ssoOidcEmail: user.ssoOidcEmail,
+          },
+        },
+        currentUser: currentUser || user,
+      });
+    }
+
     return user;
   },
 };

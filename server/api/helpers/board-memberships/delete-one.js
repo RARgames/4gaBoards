@@ -55,6 +55,25 @@ module.exports = {
 
       notify(`user:${boardMembership.userId}`);
 
+      const board = await Board.findOne(boardMembership.boardId);
+      const user = await User.findOne(boardMembership.userId);
+      if (board && user) {
+        await sails.helpers.actions.createOne.with({
+          values: {
+            board,
+            scope: Action.Scopes.BOARD,
+            type: Action.Types.BOARD_USER_REMOVE,
+            data: {
+              boardMembershipId: boardMembership.id,
+              userId: boardMembership.userId,
+              boardId: boardMembership.boardId,
+              userName: user.name,
+            },
+          },
+          currentUser,
+        });
+      }
+
       await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser, skipMetaUpdate });
     }
 

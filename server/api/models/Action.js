@@ -32,10 +32,19 @@ const Types = {
   PROJECT_UPDATE: 'projectUpdate',
   PROJECT_DELETE: 'projectDelete',
 
+  /* PROJECT Manager Activities */
+  PROJECT_MANAGER_ADD: 'projectManagerAdd',
+  PROJECT_MANAGER_REMOVE: 'projectManagerRemove',
+
   /* BOARD Activities */
   BOARD_CREATE: 'boardCreate',
   BOARD_UPDATE: 'boardUpdate',
   BOARD_DELETE: 'boardDelete',
+
+  /* BOARD User Activities */
+  BOARD_USER_ADD: 'boardUserAdd',
+  BOARD_USER_UPDATE: 'boardUserUpdate',
+  BOARD_USER_REMOVE: 'boardUserRemove',
 
   /* LABEL Activities */
   LABEL_CREATE: 'labelCreate',
@@ -45,7 +54,6 @@ const Types = {
   /* LIST Activities */
   LIST_CREATE: 'listCreate',
   LIST_UPDATE: 'listUpdate',
-  LIST_MOVE: 'listMove',
   LIST_DELETE: 'listDelete',
 
   /* CARD Activities */

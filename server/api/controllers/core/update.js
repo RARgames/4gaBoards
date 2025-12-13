@@ -59,6 +59,7 @@ module.exports = {
 
     const allowedRegisterDomains = _.uniq(inputs.allowedRegisterDomains?.map((d) => d.trim().toLowerCase()).filter(Boolean));
 
+    const prevCore = { ...core };
     core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values, allowedRegisterDomains });
     const coreItem = {
       ...core,
@@ -80,6 +81,30 @@ module.exports = {
         },
         this.req,
       );
+    });
+
+    await sails.helpers.actions.createOne.with({
+      values: {
+        scope: Action.Scopes.INSTANCE,
+        type: Action.Types.INSTANCE_UPDATE,
+        data: {
+          prevRegistrationEnabled: values.registrationEnabled !== undefined ? prevCore.registrationEnabled : undefined,
+          registrationEnabled: values.registrationEnabled !== undefined ? core.registrationEnabled : undefined,
+          prevLocalRegistrationEnabled: values.localRegistrationEnabled !== undefined ? prevCore.localRegistrationEnabled : undefined,
+          localRegistrationEnabled: values.localRegistrationEnabled !== undefined ? core.localRegistrationEnabled : undefined,
+          prevSsoRegistrationEnabled: values.ssoRegistrationEnabled !== undefined ? prevCore.ssoRegistrationEnabled : undefined,
+          ssoRegistrationEnabled: values.ssoRegistrationEnabled !== undefined ? core.ssoRegistrationEnabled : undefined,
+          prevProjectCreationAllEnabled: values.projectCreationAllEnabled !== undefined ? prevCore.projectCreationAllEnabled : undefined,
+          projectCreationAllEnabled: values.projectCreationAllEnabled !== undefined ? core.projectCreationAllEnabled : undefined,
+          prevSyncSsoDataOnAuth: values.syncSsoDataOnAuth !== undefined ? prevCore.syncSsoDataOnAuth : undefined,
+          syncSsoDataOnAuth: values.syncSsoDataOnAuth !== undefined ? core.syncSsoDataOnAuth : undefined,
+          prevSyncSsoAdminOnAuth: values.syncSsoAdminOnAuth !== undefined ? prevCore.syncSsoAdminOnAuth : undefined,
+          syncSsoAdminOnAuth: values.syncSsoAdminOnAuth !== undefined ? core.syncSsoAdminOnAuth : undefined,
+          prevAllowedRegisterDomains: inputs.allowedRegisterDomains !== undefined ? prevCore.allowedRegisterDomains : undefined,
+          allowedRegisterDomains: inputs.allowedRegisterDomains !== undefined ? core.allowedRegisterDomains : undefined,
+        },
+      },
+      currentUser,
     });
 
     return {

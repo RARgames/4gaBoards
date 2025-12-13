@@ -77,6 +77,23 @@ module.exports = {
         inputs.request,
       );
 
+      await sails.helpers.actions.createOne.with({
+        values: {
+          board: values.board,
+          scope: Action.Scopes.BOARD,
+          type: Action.Types.BOARD_USER_ADD,
+          data: {
+            boardMembershipId: boardMembership.id,
+            userId: boardMembership.userId,
+            boardId: boardMembership.boardId,
+            userName: values.user.name,
+            role: boardMembership.role,
+            canComment: boardMembership.canComment,
+          },
+        },
+        currentUser,
+      });
+
       await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser, skipMetaUpdate });
     }
 
