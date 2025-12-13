@@ -37,7 +37,14 @@ module.exports = {
     const notification = await Notification.create({
       ...values,
       actionId: values.action.id,
+      attachmentId: values.action.attachmentId,
+      taskId: values.action.taskId,
+      commentId: values.action.commentId,
       cardId: values.action.cardId,
+      listId: values.action.listId,
+      boardId: values.action.boardId,
+      projectId: values.action.projectId,
+      userAccountId: values.action.userAccountId,
     }).fetch();
 
     sails.sockets.broadcast(`user:${notification.userId}`, 'notificationCreate', {
