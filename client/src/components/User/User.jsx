@@ -19,7 +19,7 @@ const SIZES = {
   CARD_TASKS: 'cardTasks',
 };
 
-const COLORS = ['emerald', 'peter-river', 'wisteria', 'carrot', 'alizarin', 'turquoise', 'midnight-blue'];
+const COLORS = ['emerald', 'peter-river', 'wisteria', 'carrot', 'alizarin', 'turquoise'];
 
 const getColor = (name) => {
   let sum = 0;
