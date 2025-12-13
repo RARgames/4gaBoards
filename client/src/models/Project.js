@@ -236,6 +236,13 @@ export default class extends BaseModel {
     return this.activities.orderBy('createdAt', false);
   }
 
+  getUnreadNotificationsQuerySet() {
+    return this.notifications.filter({
+      isRead: false,
+      deletedAt: null,
+    });
+  }
+
   hasManagerForUser(userId) {
     return this.managers
       .filter({

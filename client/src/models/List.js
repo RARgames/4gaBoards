@@ -198,6 +198,13 @@ export default class extends BaseModel {
     return this.activities.orderBy('createdAt', false);
   }
 
+  getUnreadNotificationsQuerySet() {
+    return this.notifications.filter({
+      isRead: false,
+      deletedAt: null,
+    });
+  }
+
   deleteRelated() {
     this.cards.toModelArray().forEach((cardModel) => {
       cardModel.deleteWithRelated();
