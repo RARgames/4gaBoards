@@ -1,6 +1,7 @@
 import { attr, fk, many } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -35,6 +36,12 @@ export default class extends BaseModel {
         dueDate: null,
         justSelectedDay: false,
       }),
+    }),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
     }),
     createdAt: attr(),
     createdById: fk({
@@ -215,6 +222,19 @@ export default class extends BaseModel {
           window.open(payload.downloadUrl, '_blank');
         }
         break;
+      case ActionTypes.ACTIVITIES_BOARD_FETCH:
+        Board.withId(payload.boardId).update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS:
+        Board.withId(payload.boardId).update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+        });
+
+        break;
       default:
     }
   }
@@ -229,6 +249,10 @@ export default class extends BaseModel {
 
   getOrderedListsQuerySet() {
     return this.lists.orderBy('position');
+  }
+
+  getOrderedBoardActivitiesQuerySet() {
+    return this.activities.orderBy('createdAt', false);
   }
 
   getMembershipModelForUser(userId) {

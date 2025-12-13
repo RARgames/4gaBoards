@@ -14,9 +14,24 @@ export default class extends BaseModel {
     isInCard: attr({
       getDefault: () => true,
     }),
+    attachmentId: fk({
+      to: 'Attachment',
+      as: 'attachment',
+      relatedName: 'activities',
+    }),
+    taskId: fk({
+      to: 'Task',
+      as: 'task',
+      relatedName: 'activities',
+    }),
     cardId: fk({
       to: 'Card',
       as: 'card',
+      relatedName: 'activities',
+    }),
+    listId: fk({
+      to: 'List',
+      as: 'list',
       relatedName: 'activities',
     }),
     boardId: fk({
@@ -73,6 +88,9 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.ACTIVITIES_CARD_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS:
       case ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.activities.forEach((activity) => {

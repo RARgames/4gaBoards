@@ -293,10 +293,6 @@ export default class extends BaseModel {
     return this.activities.filter((activity) => activity.scope === ActivityScopes.COMMENT).orderBy('createdAt', false);
   }
 
-  getOrderedCardActivitiesFullQuerySet() {
-    return this.activities.orderBy('createdAt', false);
-  }
-
   getUnreadNotificationsQuerySet() {
     return this.notifications.filter({
       isRead: false,

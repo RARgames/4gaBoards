@@ -35,9 +35,13 @@ const List = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
     onUpdate,
     onDelete,
     onCardCreate,
+    onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -256,9 +260,13 @@ const List = React.memo(
                       updatedAt={updatedAt}
                       updatedBy={updatedBy}
                       boardMemberships={boardMemberships}
+                      activities={activities}
+                      isActivitiesFetching={isActivitiesFetching}
+                      isAllActivitiesFetched={isAllActivitiesFetched}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onDelete={onDelete}
+                      onActivitiesFetch={onActivitiesFetch}
                       position="left-start"
                       offset={0}
                       hideCloseButton
@@ -302,9 +310,13 @@ List.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {

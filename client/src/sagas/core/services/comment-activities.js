@@ -19,7 +19,7 @@ export function* fetchCommentActivitiesInCard(cardId) {
     ({
       items: activities,
       included: { users },
-    } = yield call(request, api.getActivities, cardId, {
+    } = yield call(request, api.getCardActivities, cardId, {
       beforeId: lastId,
       onlyComments: true,
     }));

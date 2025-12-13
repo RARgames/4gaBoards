@@ -1,6 +1,7 @@
 import { attr, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -16,11 +17,19 @@ export default class extends BaseModel {
       as: 'board',
       relatedName: 'lists',
     }),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
+    }),
+    createdAt: attr(),
     createdById: fk({
       to: 'User',
       as: 'createdBy',
       relatedName: 'createdLists',
     }),
+    updatedAt: attr(),
     updatedById: fk({
       to: 'User',
       as: 'updatedBy',
@@ -87,6 +96,19 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.ACTIVITIES_LIST_FETCH:
+        List.withId(payload.listId).update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
+        List.withId(payload.listId).update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+        });
+
+        break;
       default:
     }
   }
@@ -170,6 +192,10 @@ export default class extends BaseModel {
       });
     }
     return cardModels;
+  }
+
+  getOrderedListActivitiesQuerySet() {
+    return this.activities.orderBy('createdAt', false);
   }
 
   deleteRelated() {

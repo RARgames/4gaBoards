@@ -1,6 +1,7 @@
 import { attr, many, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
 import { ProjectBackgroundTypes } from '../constants/Enums';
 import BaseModel from './BaseModel';
 
@@ -20,6 +21,12 @@ export default class extends BaseModel {
       to: 'User',
       through: 'ProjectManager',
       relatedName: 'projects',
+    }),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
     }),
     createdAt: attr(),
     createdById: fk({
@@ -186,6 +193,19 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.ACTIVITIES_PROJECT_FETCH:
+        Project.withId(payload.projectId).update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS:
+        Project.withId(payload.projectId).update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+        });
+
+        break;
       default:
     }
   }
@@ -210,6 +230,10 @@ export default class extends BaseModel {
     }
 
     return this.getOrderedBoardsModelArrayForUser(userId);
+  }
+
+  getOrderedProjectActivitiesQuerySet() {
+    return this.activities.orderBy('createdAt', false);
   }
 
   hasManagerForUser(userId) {

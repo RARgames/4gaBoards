@@ -13,7 +13,7 @@ const makeMapStateToProps = () => {
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
 
   return (state, { id, index }) => {
-    const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy } = selectListById(state, id);
+    const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched } = selectListById(state, id);
     const cardIds = selectCardIdsByListId(state, id);
     const isFiltered = selectIsFilteredByListId(state, id);
     const filteredCardIds = selectFilteredCardIdsByListId(state, id);
@@ -21,6 +21,7 @@ const makeMapStateToProps = () => {
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+    const activities = selectors.selectActivitiesByListId(state, id);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
@@ -41,6 +42,9 @@ const makeMapStateToProps = () => {
       updatedAt,
       updatedBy,
       boardMemberships,
+      activities,
+      isActivitiesFetching,
+      isAllActivitiesFetched,
     };
   };
 };
@@ -51,6 +55,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onUpdate: (data) => entryActions.updateList(id, data),
       onDelete: () => entryActions.deleteList(id),
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
+      onActivitiesFetch: () => entryActions.fetchActivitiesInList(id),
     },
     dispatch,
   );

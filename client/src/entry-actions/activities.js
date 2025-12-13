@@ -12,6 +12,27 @@ const fetchActivitiesInCard = (cardId) => ({
   },
 });
 
+const fetchActivitiesInList = (listId) => ({
+  type: EntryActionTypes.ACTIVITIES_LIST_FETCH,
+  payload: {
+    listId,
+  },
+});
+
+const fetchActivitiesInBoard = (boardId) => ({
+  type: EntryActionTypes.ACTIVITIES_BOARD_FETCH,
+  payload: {
+    boardId,
+  },
+});
+
+const fetchActivitiesInProject = (projectId) => ({
+  type: EntryActionTypes.ACTIVITIES_PROJECT_FETCH,
+  payload: {
+    projectId,
+  },
+});
+
 const handleActivityCreate = (activity) => ({
   type: EntryActionTypes.ACTIVITY_CREATE_HANDLE,
   payload: {
@@ -36,6 +57,9 @@ const handleActivityDelete = (activity) => ({
 export default {
   fetchActivitiesInCurrentCard,
   fetchActivitiesInCard,
+  fetchActivitiesInList,
+  fetchActivitiesInBoard,
+  fetchActivitiesInProject,
   handleActivityCreate,
   handleActivityUpdate,
   handleActivityDelete,
