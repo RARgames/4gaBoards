@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import getActivityDetails from '../utils/get-activity-details';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 
@@ -215,13 +216,7 @@ export const selectNotificationsForCurrentUser = createSelector(
       .toModelArray()
       .map((notificationModel) => ({
         ...notificationModel.ref,
-        activity: notificationModel.activity && {
-          ...notificationModel.activity.ref,
-          user: notificationModel.activity.user.ref,
-          board: notificationModel.activity.board && notificationModel.activity.board.ref,
-          project: notificationModel.activity.project && notificationModel.activity.project.ref,
-        },
-        card: notificationModel.card && notificationModel.card.ref,
+        activity: notificationModel.activity ? getActivityDetails(notificationModel.activity, id) : undefined,
       }));
 
     let filteredNotifications = notifications;
@@ -242,7 +237,7 @@ export const selectNotificationsForCurrentUser = createSelector(
           });
           break;
         case 'card':
-          filteredNotifications = notifications.filter((notification) => (notification.card?.name ?? notification.activity?.data?.cardName)?.toLowerCase().includes(query));
+          filteredNotifications = notifications.filter((notification) => (notification.activity?.card?.name ?? notification.activity?.data?.cardName)?.toLowerCase().includes(query));
           break;
         case 'text':
           filteredNotifications = notifications.filter((notification) => {
@@ -256,7 +251,7 @@ export const selectNotificationsForCurrentUser = createSelector(
             const inProject = activity?.project?.name?.toLowerCase().includes(query);
             const inBoard = activity?.board?.name?.toLowerCase().includes(query);
             const inUser = activity?.user && (activity.user.name?.toLowerCase().includes(query) || activity.user.username?.toLowerCase().includes(query) || activity.user.email?.toLowerCase().includes(query));
-            const inCard = (notification.card?.name ?? notification.activity?.data?.cardName)?.toLowerCase().includes(query);
+            const inCard = (notification.activity?.card?.name ?? notification.activity?.data?.cardName)?.toLowerCase().includes(query);
             const inTypeOrData = activity && (activity.type.toLowerCase().includes(query) || (activity.data && Object.values(activity.data).some((val) => String(val).toLowerCase().includes(query))));
             return inCard || inBoard || inProject || inUser || inTypeOrData;
           });

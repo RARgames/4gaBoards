@@ -2,6 +2,7 @@ import { createSelector } from 'redux-orm';
 
 import Paths from '../constants/Paths';
 import orm from '../orm';
+import getActivityDetails from '../utils/get-activity-details';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { sortByCurrentUserAndName, addBoardMemberships, addCardMemberships, addTaskMemberships } from '../utils/membership-helpers';
@@ -253,13 +254,7 @@ export const makeSelectActivitiesByCardId = () =>
         .getOrderedCardActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
-          ...activityModel.ref,
-          ...getMeta(activityModel),
-          isPersisted: !isLocalId(activityModel.id),
-          user: {
-            ...activityModel.user.ref,
-            isCurrent: activityModel.user.id === currentUserId,
-          },
+          ...getActivityDetails(activityModel, currentUserId),
         }));
     },
   );
@@ -270,7 +265,8 @@ export const makeSelectTaskActivitiesByCardId = () =>
   createSelector(
     orm,
     (_, id) => id,
-    ({ Card }, id) => {
+    (state) => selectCurrentUserId(state),
+    ({ Card }, id, currentUserId) => {
       if (!id) {
         return id;
       }
@@ -285,12 +281,7 @@ export const makeSelectTaskActivitiesByCardId = () =>
         .getOrderedTaskActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
-          ...activityModel.ref,
-          ...getMeta(activityModel),
-          isPersisted: !isLocalId(activityModel.id),
-          user: {
-            ...activityModel.user.ref,
-          },
+          ...getActivityDetails(activityModel, currentUserId),
         }));
 
       const taskActivitiesByTaskId = activities.reduce((acc, act) => {
@@ -311,7 +302,8 @@ export const makeSelectAttachmentActivitiesByCardId = () =>
   createSelector(
     orm,
     (_, id) => id,
-    ({ Card }, id) => {
+    (state) => selectCurrentUserId(state),
+    ({ Card }, id, currentUserId) => {
       if (!id) {
         return id;
       }
@@ -326,12 +318,7 @@ export const makeSelectAttachmentActivitiesByCardId = () =>
         .getOrderedAttachmentActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
-          ...activityModel.ref,
-          ...getMeta(activityModel),
-          isPersisted: !isLocalId(activityModel.id),
-          user: {
-            ...activityModel.user.ref,
-          },
+          ...getActivityDetails(activityModel, currentUserId),
         }));
 
       const attachmentActivitiesByAttachmentId = activities.reduce((acc, act) => {
@@ -352,7 +339,8 @@ export const makeSelectCommentActivitiesByCardId = () =>
   createSelector(
     orm,
     (_, id) => id,
-    ({ Card }, id) => {
+    (state) => selectCurrentUserId(state),
+    ({ Card }, id, currentUserId) => {
       if (!id) {
         return id;
       }
@@ -367,12 +355,7 @@ export const makeSelectCommentActivitiesByCardId = () =>
         .getOrderedCommentActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
-          ...activityModel.ref,
-          ...getMeta(activityModel),
-          isPersisted: !isLocalId(activityModel.id),
-          user: {
-            ...activityModel.user.ref,
-          },
+          ...getActivityDetails(activityModel, currentUserId),
         }));
 
       const commentActivitiesByCommentId = activities.reduce((acc, act) => {
@@ -521,13 +504,7 @@ export const selectCommentsForCurrentCard = createSelector(
       .getOrderedCardCommentsQuerySet()
       .toModelArray()
       .map((activityModel) => ({
-        ...activityModel.ref,
-        ...getMeta(activityModel),
-        isPersisted: !isLocalId(activityModel.id),
-        user: {
-          ...activityModel.user.ref,
-          isCurrent: activityModel.user.id === currentUserId,
-        },
+        ...getActivityDetails(activityModel, currentUserId),
       }));
   },
 );

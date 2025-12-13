@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import getActivityDetails from '../utils/get-activity-details';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { sortByCurrentUserAndName } from '../utils/membership-helpers';
@@ -126,10 +127,110 @@ export const selectIsCurrentUserManagerForCurrentProject = createSelector(
   },
 );
 
+export const makeSelectActivitiesByProjectId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ Project }, id, currentUserId) => {
+      if (!id) {
+        return id;
+      }
+
+      const projectModel = Project.withId(id);
+
+      if (!projectModel) {
+        return projectModel;
+      }
+
+      return projectModel
+        .getOrderedProjectActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...getActivityDetails(activityModel, currentUserId),
+        }));
+    },
+  );
+
+export const selectActivitiesByProjectId = makeSelectActivitiesByProjectId();
+
+export const makeSelectLastActivityIdByProjectId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Project }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const projectModel = Project.withId(id);
+
+      if (!projectModel) {
+        return projectModel;
+      }
+
+      const lastActivityModel = projectModel.getOrderedProjectActivitiesQuerySet().last();
+
+      return lastActivityModel && lastActivityModel.id;
+    },
+  );
+
+export const selectLastActivityIdByProjectId = makeSelectLastActivityIdByProjectId();
+
+export const makeSelectNotificationsByProjectId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Project }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const projectModel = Project.withId(id);
+
+      if (!projectModel) {
+        return projectModel;
+      }
+
+      return projectModel.getUnreadNotificationsQuerySet().toRefArray();
+    },
+  );
+
+export const selectNotificationsByProjectId = makeSelectNotificationsByProjectId();
+
+export const makeSelectNotificationsTotalByProjectId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Project }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const projectModel = Project.withId(id);
+
+      if (!projectModel) {
+        return projectModel;
+      }
+
+      return projectModel.getUnreadNotificationsQuerySet().count();
+    },
+  );
+
+export const selectNotificationsTotalByProjectId = makeSelectNotificationsTotalByProjectId();
+
 export default {
   selectProject,
   selectCurrentProject,
   selectManagersForProject,
   selectBoardsForCurrentProject,
   selectIsCurrentUserManagerForCurrentProject,
+  makeSelectActivitiesByProjectId,
+  selectActivitiesByProjectId,
+  makeSelectLastActivityIdByProjectId,
+  selectLastActivityIdByProjectId,
+  makeSelectNotificationsByProjectId,
+  selectNotificationsByProjectId,
+  makeSelectNotificationsTotalByProjectId,
+  selectNotificationsTotalByProjectId,
 };
