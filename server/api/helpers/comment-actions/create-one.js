@@ -67,6 +67,7 @@ module.exports = {
       if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
+            comment: action,
             card: values.card,
             scope: Action.Scopes.COMMENT,
             type: Action.Types.CARD_COMMENT_CREATE,

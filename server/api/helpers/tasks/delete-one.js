@@ -41,6 +41,7 @@ module.exports = {
       if (card) {
         await sails.helpers.actions.createOne.with({
           values: {
+            task,
             card,
             scope: Action.Scopes.TASK,
             type: Action.Types.CARD_TASK_DELETE,

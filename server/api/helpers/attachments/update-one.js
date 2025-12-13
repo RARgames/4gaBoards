@@ -44,6 +44,7 @@ module.exports = {
       if (card) {
         await sails.helpers.actions.createOne.with({
           values: {
+            attachment,
             card,
             scope: Action.Scopes.ATTACHMENT,
             type: Action.Types.CARD_ATTACHMENT_UPDATE,

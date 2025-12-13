@@ -81,6 +81,7 @@ module.exports = {
       if (card) {
         await sails.helpers.actions.createOne.with({
           values: {
+            task,
             card,
             scope: Action.Scopes.TASK,
             type: values.position ? Action.Types.CARD_TASK_MOVE : Action.Types.CARD_TASK_UPDATE,

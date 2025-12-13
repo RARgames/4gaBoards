@@ -43,6 +43,7 @@ module.exports = {
         if (user) {
           await sails.helpers.actions.createOne.with({
             values: {
+              comment: action,
               card,
               scope: Action.Scopes.COMMENT,
               type: Action.Types.CARD_COMMENT_DELETE,

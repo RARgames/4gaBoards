@@ -106,6 +106,7 @@ module.exports = {
         if (user && task) {
           await sails.helpers.actions.createOne.with({
             values: {
+              task,
               card: values.card,
               scope: Action.Scopes.TASK,
               type: Action.Types.CARD_TASK_USER_ADD,
