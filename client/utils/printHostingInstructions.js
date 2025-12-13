@@ -9,7 +9,6 @@
 const chalk = require('chalk').default;
 const fs = require('fs');
 const globalModules = require('global-modules');
-const url = require('url');
 
 function printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder, useYarn) {
   let isGitHubPages = false;
