@@ -18,7 +18,35 @@ const Scopes = {
 };
 
 const Types = {
-  // TODO Add all activity types
+  /* INSTANCE Activities */
+  INSTANCE_UPDATE: 'instanceUpdate',
+
+  /* USER Activities */
+  USER_CREATE: 'userCreate',
+  USER_REGISTER: 'userRegister',
+  USER_UPDATE: 'userUpdate',
+  USER_DELETE: 'userDelete',
+
+  /* PROJECT Activities */
+  PROJECT_CREATE: 'projectCreate',
+  PROJECT_UPDATE: 'projectUpdate',
+  PROJECT_DELETE: 'projectDelete',
+
+  /* BOARD Activities */
+  BOARD_CREATE: 'boardCreate',
+  BOARD_UPDATE: 'boardUpdate',
+  BOARD_DELETE: 'boardDelete',
+
+  /* LABEL Activities */
+  LABEL_CREATE: 'labelCreate',
+  LABEL_UPDATE: 'labelUpdate',
+  LABEL_DELETE: 'labelDelete',
+
+  /* LIST Activities */
+  LIST_CREATE: 'listCreate',
+  LIST_UPDATE: 'listUpdate',
+  LIST_MOVE: 'listMove',
+  LIST_DELETE: 'listDelete',
 
   /* CARD Activities */
   CARD_CREATE: 'cardCreate',
