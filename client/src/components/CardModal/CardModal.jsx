@@ -724,8 +724,6 @@ const CardModal = React.memo(
           {attacShown && (
             <>
               <Attachments
-                cardId={id}
-                cardName={name}
                 items={attachments}
                 canEdit={canEdit}
                 isActivitiesFetching={isActivitiesFetching}
@@ -753,8 +751,6 @@ const CardModal = React.memo(
 
     const commentsNode = (
       <Comments
-        cardId={id}
-        cardName={name}
         items={comments}
         isCommentsFetching={isCommentsFetching}
         isAllCommentsFetched={isAllCommentsFetched}

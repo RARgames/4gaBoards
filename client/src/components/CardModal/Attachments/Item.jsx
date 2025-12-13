@@ -13,8 +13,6 @@ import * as s from './Item.module.scss';
 const Item = React.forwardRef(
   (
     {
-      cardId,
-      cardName,
       name,
       url,
       coverUrl,
@@ -106,8 +104,6 @@ const Item = React.forwardRef(
               updatedBy={updatedBy}
               memberships={boardMemberships}
               isNotMemberTitle={t('common.noLongerBoardMember')}
-              cardId={cardId}
-              cardName={cardName}
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
@@ -144,8 +140,6 @@ const Item = React.forwardRef(
 );
 
 Item.propTypes = {
-  cardId: PropTypes.string.isRequired,
-  cardName: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string,
   coverUrl: PropTypes.string,

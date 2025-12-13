@@ -11,8 +11,6 @@ import * as s from './Comments.module.scss';
 
 const Comments = React.memo(
   ({
-    cardId,
-    cardName,
     items,
     isCommentsFetching,
     isAllCommentsFetched,
@@ -122,8 +120,6 @@ const Comments = React.memo(
                 {items.map((item) => (
                   <Comment
                     key={item.id}
-                    cardId={cardId}
-                    cardName={cardName}
                     data={item.data}
                     isPersisted={item.isPersisted}
                     user={item.user}
@@ -157,8 +153,6 @@ const Comments = React.memo(
 );
 
 Comments.propTypes = {
-  cardId: PropTypes.string.isRequired,
-  cardName: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isCommentsFetching: PropTypes.bool.isRequired,
   isAllCommentsFetched: PropTypes.bool.isRequired,

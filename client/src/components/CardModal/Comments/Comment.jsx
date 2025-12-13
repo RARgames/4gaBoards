@@ -12,8 +12,6 @@ import * as s from './Comment.module.scss';
 
 const Comment = React.memo(
   ({
-    cardId,
-    cardName,
     data,
     isPersisted,
     user,
@@ -70,8 +68,6 @@ const Comment = React.memo(
                   updatedBy={updatedBy}
                   memberships={boardMemberships}
                   isNotMemberTitle={t('common.noLongerBoardMember')}
-                  cardId={cardId}
-                  cardName={cardName}
                   activities={activities}
                   isFetching={isActivitiesFetching}
                   isAllFetched={isAllActivitiesFetched}
@@ -120,8 +116,6 @@ const Comment = React.memo(
 );
 
 Comment.propTypes = {
-  cardId: PropTypes.string.isRequired,
-  cardName: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isPersisted: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

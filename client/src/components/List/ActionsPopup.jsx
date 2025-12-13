@@ -14,83 +14,85 @@ const StepTypes = {
   ACTIVITY: 'ACTIVITY',
 };
 
-const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose }) => {
-  const [t] = useTranslation();
-  const [step, openStep, handleBack] = useSteps();
+const ActionsStep = React.memo(
+  ({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, activities, isActivitiesFetching, isAllActivitiesFetched, onNameEdit, onCardAdd, onDelete, onActivitiesFetch, onClose }) => {
+    const [t] = useTranslation();
+    const [step, openStep, handleBack] = useSteps();
 
-  const handleEditNameClick = useCallback(() => {
-    onNameEdit();
-  }, [onNameEdit]);
+    const handleEditNameClick = useCallback(() => {
+      onNameEdit();
+    }, [onNameEdit]);
 
-  const handleAddCardClick = useCallback(() => {
-    onCardAdd();
-    onClose();
-  }, [onCardAdd, onClose]);
+    const handleAddCardClick = useCallback(() => {
+      onCardAdd();
+      onClose();
+    }, [onCardAdd, onClose]);
 
-  const handleDeleteClick = useCallback(() => {
-    openStep(StepTypes.DELETE);
-  }, [openStep]);
+    const handleDeleteClick = useCallback(() => {
+      openStep(StepTypes.DELETE);
+    }, [openStep]);
 
-  const handleActivityClick = useCallback(() => {
-    openStep(StepTypes.ACTIVITY);
-  }, [openStep]);
+    const handleActivityClick = useCallback(() => {
+      openStep(StepTypes.ACTIVITY);
+    }, [openStep]);
 
-  if (step) {
-    switch (step.type) {
-      case StepTypes.DELETE:
-        return (
-          <DeleteStep
-            title={t('common.deleteList', { context: 'title' })}
-            content={t('common.areYouSureYouWantToDeleteThisList')}
-            buttonContent={t('action.deleteList')}
-            onConfirm={onDelete}
-            onBack={handleBack}
-          />
-        );
-      case StepTypes.ACTIVITY:
-        return (
-          <ActivityStep
-            title={t('common.activityFor', { name })}
-            createdAt={createdAt}
-            createdBy={createdBy}
-            updatedAt={updatedAt}
-            updatedBy={updatedBy}
-            memberships={boardMemberships}
-            isNotMemberTitle={t('common.noLongerBoardMember')}
-            // TODO replace with actual activities
-            activities={[]}
-            isFetching={false}
-            isAllFetched
-            onFetch={() => {}}
-            onBack={handleBack}
-          />
-        );
-      default:
+    if (step) {
+      switch (step.type) {
+        case StepTypes.DELETE:
+          return (
+            <DeleteStep
+              title={t('common.deleteList', { context: 'title' })}
+              content={t('common.areYouSureYouWantToDeleteThisList')}
+              buttonContent={t('action.deleteList')}
+              onConfirm={onDelete}
+              onBack={handleBack}
+            />
+          );
+        case StepTypes.ACTIVITY:
+          return (
+            <ActivityStep
+              title={t('common.activityFor', { name })}
+              createdAt={createdAt}
+              createdBy={createdBy}
+              updatedAt={updatedAt}
+              updatedBy={updatedBy}
+              memberships={boardMemberships}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+              activities={activities}
+              isFetching={isActivitiesFetching}
+              isAllFetched={isAllActivitiesFetched}
+              showCardDetails
+              onFetch={onActivitiesFetch}
+              onBack={handleBack}
+            />
+          );
+        default:
+      }
     }
-  }
 
-  return (
-    <>
-      <Button style={ButtonStyle.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
-        <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-        {t('action.editName', { context: 'title' })}
-      </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
-        <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
-        {t('common.checkActivity', { context: 'title' })}
-      </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
-        <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
-        {t('action.addCard', { context: 'title' })}
-      </Button>
-      <Popup.Separator />
-      <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
-        <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-        {t('action.deleteList', { context: 'title' })}
-      </Button>
-    </>
-  );
-});
+    return (
+      <>
+        <Button style={ButtonStyle.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
+          <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+          {t('action.editName', { context: 'title' })}
+        </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
+          <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+          {t('common.checkActivity', { context: 'title' })}
+        </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
+          <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
+          {t('action.addCard', { context: 'title' })}
+        </Button>
+        <Popup.Separator />
+        <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
+          <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
+          {t('action.deleteList', { context: 'title' })}
+        </Button>
+      </>
+    );
+  },
+);
 
 ActionsStep.propTypes = {
   name: PropTypes.string.isRequired,
@@ -99,9 +101,13 @@ ActionsStep.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
