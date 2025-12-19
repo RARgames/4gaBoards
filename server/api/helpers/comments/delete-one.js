@@ -24,7 +24,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser, skipMetaUpdate } = inputs;
 
-    const comment = await Comment.updateOne(inputs.record.id).set({ deletedAt: new Date(), deletedById: currentUser.id });
+    const comment = await Comment.updateOne(inputs.record.id).set({ deletedAt: new Date().toUTCString(), deletedById: currentUser.id });
 
     if (comment) {
       sails.sockets.broadcast(
