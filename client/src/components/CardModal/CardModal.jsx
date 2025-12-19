@@ -104,9 +104,9 @@ const CardModal = React.memo(
     onAttachmentDelete,
     onActivitiesFetch,
     onCommentsFetch,
-    onCommentActivityCreate,
-    onCommentActivityUpdate,
-    onCommentActivityDelete,
+    onCommentCreate,
+    onCommentUpdate,
+    onCommentDelete,
     onClose,
   }) => {
     const [t] = useTranslation();
@@ -766,9 +766,9 @@ const CardModal = React.memo(
         boardMemberships={boardMemberships}
         onCommentsFetch={onCommentsFetch}
         onActivitiesFetch={onActivitiesFetch}
-        onCommentCreate={onCommentActivityCreate}
-        onCommentUpdate={onCommentActivityUpdate}
-        onCommentDelete={onCommentActivityDelete}
+        onCommentCreate={onCommentCreate}
+        onCommentUpdate={onCommentUpdate}
+        onCommentDelete={onCommentDelete}
         toggleCommShown={handleToggleCommShown}
         commShown={commShown}
         onUserPrefsUpdate={onUserPrefsUpdate}
@@ -887,9 +887,9 @@ CardModal.propTypes = {
   onAttachmentDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onCommentsFetch: PropTypes.func.isRequired,
-  onCommentActivityCreate: PropTypes.func.isRequired,
-  onCommentActivityUpdate: PropTypes.func.isRequired,
-  onCommentActivityDelete: PropTypes.func.isRequired,
+  onCommentCreate: PropTypes.func.isRequired,
+  onCommentUpdate: PropTypes.func.isRequired,
+  onCommentDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

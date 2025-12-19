@@ -2,7 +2,7 @@ import { attr, fk, many, oneToOne } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import Config from '../constants/Config';
-import { ActivityTypes, ActivityScopes } from '../constants/Enums';
+import { ActivityScopes } from '../constants/Enums';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -225,16 +225,16 @@ export default class extends BaseModel {
 
         break;
       }
-      case ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH:
+      case ActionTypes.COMMENTS_IN_CARD_FETCH:
         Card.withId(payload.cardId).update({
           isCommentsFetching: true,
         });
 
         break;
-      case ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH__SUCCESS:
+      case ActionTypes.COMMENTS_IN_CARD_FETCH__SUCCESS:
         Card.withId(payload.cardId).update({
           isCommentsFetching: false,
-          isAllCommentsFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+          isAllCommentsFetched: payload.comments.length < Config.COMMENTS_LIMIT,
         });
 
         break;
@@ -273,12 +273,12 @@ export default class extends BaseModel {
     return this.attachments.count();
   }
 
-  getOrderedCardCommentsQuerySet() {
-    return this.activities.filter({ type: ActivityTypes.CARD_COMMENT }).orderBy('createdAt', false);
+  getOrderedCommentsQuerySet() {
+    return this.comments.orderBy('createdAt', false);
   }
 
   getOrderedCardActivitiesQuerySet() {
-    return this.activities.filter((activity) => activity.type !== ActivityTypes.CARD_COMMENT).orderBy('createdAt', false);
+    return this.activities.orderBy('createdAt', false);
   }
 
   getOrderedTaskActivitiesQuerySet() {

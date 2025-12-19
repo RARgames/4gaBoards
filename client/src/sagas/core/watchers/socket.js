@@ -188,6 +188,18 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleActivityDelete(item));
     });
 
+    const handleCommentCreate = api.makeHandleCommentCreate(({ item }) => {
+      emit(entryActions.handleCommentCreate(item));
+    });
+
+    const handleCommentUpdate = api.makeHandleCommentUpdate(({ item }) => {
+      emit(entryActions.handleCommentUpdate(item));
+    });
+
+    const handleCommentDelete = api.makeHandleCommentDelete(({ item }) => {
+      emit(entryActions.handleCommentDelete(item));
+    });
+
     const handleNotificationCreate = api.makeHandleNotificationCreate(({ item }) => {
       emit(entryActions.handleNotificationCreate(item));
     });
@@ -271,6 +283,10 @@ const createSocketEventsChannel = () =>
     socket.on('actionUpdate', handleActivityUpdate);
     socket.on('actionDelete', handleActivityDelete);
 
+    socket.on('commentCreate', handleCommentCreate);
+    socket.on('commentUpdate', handleCommentUpdate);
+    socket.on('commentDelete', handleCommentDelete);
+
     socket.on('notificationCreate', handleNotificationCreate);
     socket.on('notificationUpdate', handleNotificationUpdate);
     socket.on('notificationMarkAllAs', handleMarkAllNotificationsAs);
@@ -340,6 +356,10 @@ const createSocketEventsChannel = () =>
       socket.off('actionCreate', handleActivityCreate);
       socket.off('actionUpdate', handleActivityUpdate);
       socket.off('actionDelete', handleActivityDelete);
+
+      socket.off('commentCreate', handleCommentCreate);
+      socket.off('commentUpdate', handleCommentUpdate);
+      socket.off('commentDelete', handleCommentDelete);
 
       socket.off('notificationCreate', handleNotificationCreate);
       socket.off('notificationUpdate', handleNotificationUpdate);

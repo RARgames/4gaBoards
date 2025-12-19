@@ -6,7 +6,7 @@ import boards from './boards';
 import cardLabels from './card-labels';
 import cardMemberships from './card-memberships';
 import cards from './cards';
-import commentActivities from './comment-activities';
+import comments from './comments';
 import core from './core';
 import http from './http';
 import labels from './labels';
@@ -33,7 +33,7 @@ export default {
   ...cardLabels,
   ...cardMemberships,
   ...cards,
-  ...commentActivities,
+  ...comments,
   ...core,
   ...labels,
   ...lists,

@@ -304,7 +304,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, on
       }
 
       case ActivityTypes.CARD_COMMENT_CREATE: {
-        const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
+        const cardComment = isTruncated ? truncate(activity.data.commentText, { length: commentTruncateLength }) : activity.data.commentText;
 
         return (
           <Trans
@@ -321,8 +321,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, on
       }
 
       case ActivityTypes.CARD_COMMENT_UPDATE: {
-        const prevCardComment = isTruncated ? truncate(activity.data.commentActionPrevText, { length: commentTruncateLength }) : activity.data.commentActionPrevText;
-        const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
+        const prevCardComment = isTruncated ? truncate(activity.data.commentPrevText, { length: commentTruncateLength }) : activity.data.commentPrevText;
+        const cardComment = isTruncated ? truncate(activity.data.commentText, { length: commentTruncateLength }) : activity.data.commentText;
         const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
         let key;
@@ -351,7 +351,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, on
       }
 
       case ActivityTypes.CARD_COMMENT_DELETE: {
-        const cardComment = isTruncated ? truncate(activity.data.commentActionText, { length: commentTruncateLength }) : activity.data.commentActionText;
+        const cardComment = isTruncated ? truncate(activity.data.commentText, { length: commentTruncateLength }) : activity.data.commentText;
         const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
 
         return (

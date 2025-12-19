@@ -3,7 +3,7 @@ import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
 import cards from './cards';
-import commentActivities from './comment-activities';
+import comments from './comments';
 import core from './core';
 import labels from './labels';
 import lists from './lists';
@@ -24,7 +24,7 @@ export default {
   ...boardMemberships,
   ...boards,
   ...cards,
-  ...commentActivities,
+  ...comments,
   ...core,
   ...labels,
   ...lists,

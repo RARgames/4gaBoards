@@ -92,7 +92,6 @@ export const ActivityTypes = {
   CARD_LABEL_REMOVE: 'cardLabelRemove',
 
   /* CARD Comment Activities */
-  CARD_COMMENT: 'cardComment',
   CARD_COMMENT_CREATE: 'cardCommentCreate',
   CARD_COMMENT_UPDATE: 'cardCommentUpdate',
   CARD_COMMENT_DELETE: 'cardCommentDelete',

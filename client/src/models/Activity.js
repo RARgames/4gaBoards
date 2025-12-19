@@ -58,11 +58,6 @@ export default class extends BaseModel {
       relatedName: 'createdActivities',
     }),
     updatedAt: attr(),
-    updatedById: fk({
-      to: 'User',
-      as: 'updatedBy',
-      relatedName: 'updatedActivities',
-    }),
   };
 
   static reducer({ type, payload }, Activity) {
@@ -91,7 +86,6 @@ export default class extends BaseModel {
       case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS:
-      case ActionTypes.COMMENT_ACTIVITIES_CARD_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.activities.forEach((activity) => {
           Activity.upsert(activity);
@@ -100,13 +94,10 @@ export default class extends BaseModel {
         break;
       case ActionTypes.ACTIVITY_CREATE_HANDLE:
       case ActionTypes.ACTIVITY_UPDATE_HANDLE:
-      case ActionTypes.COMMENT_ACTIVITY_CREATE:
-      case ActionTypes.COMMENT_ACTIVITY_UPDATE__SUCCESS:
         Activity.upsert(payload.activity);
 
         break;
-      case ActionTypes.ACTIVITY_DELETE_HANDLE:
-      case ActionTypes.COMMENT_ACTIVITY_DELETE__SUCCESS: {
+      case ActionTypes.ACTIVITY_DELETE_HANDLE: {
         const activityModel = Activity.withId(payload.activity.id);
 
         if (activityModel) {
@@ -115,21 +106,6 @@ export default class extends BaseModel {
 
         break;
       }
-      case ActionTypes.COMMENT_ACTIVITY_CREATE__SUCCESS:
-        Activity.withId(payload.localId).delete();
-        Activity.upsert(payload.activity);
-
-        break;
-      case ActionTypes.COMMENT_ACTIVITY_UPDATE:
-        Activity.withId(payload.id).update({
-          data: payload.data,
-        });
-
-        break;
-      case ActionTypes.COMMENT_ACTIVITY_DELETE:
-        Activity.withId(payload.id).delete();
-
-        break;
       default:
     }
   }

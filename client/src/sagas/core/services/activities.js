@@ -17,10 +17,7 @@ export function* fetchActivitiesInCard(cardId) {
     ({
       items: activities,
       included: { users },
-    } = yield call(request, api.getCardActivities, cardId, {
-      beforeId: lastId,
-      exceptComments: true,
-    }));
+    } = yield call(request, api.getCardActivities, cardId, { beforeId: lastId }));
   } catch (error) {
     yield put(actions.fetchCardActivities.failure(cardId, error));
     return;
