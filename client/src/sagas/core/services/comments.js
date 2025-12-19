@@ -64,12 +64,14 @@ export function* createCommentInCurrentCard(data) {
 }
 
 export function* updateComment(id, data) {
+  const originalComment = yield select(selectors.selectCommentById, id);
+
   yield put(actions.updateComment(id, data));
   let comment;
   try {
     ({ item: comment } = yield call(request, api.updateComment, id, data));
   } catch (error) {
-    yield put(actions.updateComment.failure(id, error));
+    yield put(actions.updateComment.failure(id, error, originalComment));
     return;
   }
 
@@ -77,12 +79,14 @@ export function* updateComment(id, data) {
 }
 
 export function* deleteComment(id) {
+  const originalComment = yield select(selectors.selectCommentById, id);
+
   yield put(actions.deleteComment(id));
   let comment;
   try {
     ({ item: comment } = yield call(request, api.deleteComment, id));
   } catch (error) {
-    yield put(actions.deleteComment.failure(id, error));
+    yield put(actions.deleteComment.failure(id, error, originalComment));
     return;
   }
 

@@ -37,7 +37,6 @@ export default class extends BaseModel {
 
   static reducer({ type, payload }, Comment) {
     switch (type) {
-      // TODO recheck actions
       // TODO add support for SOCKET_RECONNECT_HANDLE, CORE_INITIALIZE
       case ActionTypes.SOCKET_RECONNECT_HANDLE:
         Comment.all().delete();
@@ -61,40 +60,33 @@ export default class extends BaseModel {
         break;
       case ActionTypes.COMMENT_CREATE:
       case ActionTypes.COMMENT_UPDATE__SUCCESS:
+      case ActionTypes.COMMENT_CREATE_HANDLE:
+      case ActionTypes.COMMENT_UPDATE_HANDLE:
+      case ActionTypes.COMMENT_DELETE__FAILURE:
+      case ActionTypes.COMMENT_UPDATE__FAILURE:
         Comment.upsert(payload.comment);
 
         break;
-      case ActionTypes.COMMENT_DELETE__SUCCESS: {
-        const commentModel = Comment.withId(payload.comment.id);
-        if (commentModel) {
-          commentModel.delete();
-        }
-
-        break;
-      }
       case ActionTypes.COMMENT_CREATE__SUCCESS:
         Comment.withId(payload.localId).delete();
         Comment.upsert(payload.comment);
 
         break;
+      case ActionTypes.COMMENT_CREATE__FAILURE:
+        Comment.withId(payload.localId).delete();
+
+        break;
       case ActionTypes.COMMENT_UPDATE:
-        Comment.withId(payload.id).update({
-          data: payload.data,
-        });
+        Comment.withId(payload.id).update({ data: payload.data });
 
         break;
       case ActionTypes.COMMENT_DELETE:
         Comment.withId(payload.id).delete();
 
         break;
-      case ActionTypes.COMMENT_CREATE_HANDLE:
-      case ActionTypes.COMMENT_UPDATE_HANDLE:
-        Comment.upsert(payload.comment);
-
-        break;
+      case ActionTypes.COMMENT_DELETE__SUCCESS:
       case ActionTypes.COMMENT_DELETE_HANDLE: {
         const commentModel = Comment.withId(payload.comment.id);
-
         if (commentModel) {
           commentModel.delete();
         }

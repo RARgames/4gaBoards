@@ -62,11 +62,12 @@ updateComment.success = (comment) => ({
   },
 });
 
-updateComment.failure = (id, error) => ({
+updateComment.failure = (id, error, comment) => ({
   type: ActionTypes.COMMENT_UPDATE__FAILURE,
   payload: {
     id,
     error,
+    comment,
   },
 });
 
@@ -84,11 +85,12 @@ deleteComment.success = (comment) => ({
   },
 });
 
-deleteComment.failure = (id, error) => ({
+deleteComment.failure = (id, error, comment) => ({
   type: ActionTypes.COMMENT_DELETE__FAILURE,
   payload: {
     id,
     error,
+    comment,
   },
 });
 
