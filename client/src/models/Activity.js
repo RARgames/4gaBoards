@@ -19,6 +19,11 @@ export default class extends BaseModel {
       as: 'attachment',
       relatedName: 'activities',
     }),
+    commentId: fk({
+      to: 'Comment',
+      as: 'comment',
+      relatedName: 'activities',
+    }),
     taskId: fk({
       to: 'Task',
       as: 'task',
@@ -43,6 +48,11 @@ export default class extends BaseModel {
       to: 'Project',
       as: 'project',
       relatedName: 'activities',
+    }),
+    userAccountId: fk({
+      to: 'User',
+      as: 'userAccount',
+      relatedName: 'userAccountActivities',
     }),
     userId: fk({
       to: 'User',
