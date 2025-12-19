@@ -11,7 +11,7 @@ module.exports = {
 
     const notificationsToDelete = await Notification.find({ userId: currentUser.id, deletedAt: null, ...(inputs.deleteIsReadOnly ? { isRead: true } : {}) });
     const notifications = await sails.helpers.notifications.updateMany.with({
-      values: { deletedAt: new Date() },
+      values: { deletedAt: new Date().toUTCString() },
       recordsOrIds: notificationsToDelete.map((n) => n.id),
       currentUser,
       skipBroadcast: true,
