@@ -88,6 +88,11 @@ module.exports.models = {
     proceed();
   },
   beforeUpdate(valuesToSet, proceed) {
+    if (Object.prototype.hasOwnProperty.call(valuesToSet, 'deletedAt')) {
+      proceed();
+      return;
+    }
+
     if (!Object.prototype.hasOwnProperty.call(valuesToSet, 'updatedAt')) {
       valuesToSet.updatedAt = new Date().toUTCString(); // eslint-disable-line no-param-reassign
     } else if (valuesToSet.updatedAt === null) {
