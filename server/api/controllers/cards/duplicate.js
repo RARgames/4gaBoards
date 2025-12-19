@@ -94,9 +94,9 @@ module.exports = {
     const taskIds = sails.helpers.utils.mapRecords(tasks);
     const taskMemberships = await sails.helpers.cards.getTaskMemberships(taskIds);
     const attachments = await Attachment.find({ cardId: card.id });
-    const actions = await Action.find({ cardId: card.id });
-    const actionUserIds = sails.helpers.utils.mapRecords(actions, 'userId');
-    const actionUsers = await User.find({ id: actionUserIds });
+    const comments = await Comment.find({ cardId: card.id });
+    const commentUserIds = sails.helpers.utils.mapRecords(comments, 'userId');
+    const commentUsers = await User.find({ id: commentUserIds });
     const coverAttachment = attachments.find((attachment) => attachment.id === card.coverAttachmentId);
     const coverAttachmentDirname = coverAttachment != null ? coverAttachment.dirname : undefined;
 
@@ -178,22 +178,20 @@ module.exports = {
           request: this.req,
         });
       }),
-      ...actions
-        .filter((action) => action.type === Action.Types.CARD_COMMENT)
-        .map((action) => {
-          return sails.helpers.commentActions.createOne.with({
-            values: {
-              ..._.omit(action, ['id']),
-              duplicate: true,
-              card: copiedCard,
-              user: actionUsers.find((user) => user.id === action.userId),
-            },
-            currentUser,
-            skipMetaUpdate: true,
-            skipActions: true,
-            request: this.req,
-          });
-        }),
+      ...comments.map((comment) => {
+        return sails.helpers.comments.createOne.with({
+          values: {
+            ..._.omit(comment, ['id']),
+            duplicate: true,
+            card: copiedCard,
+            user: commentUsers.find((user) => user.id === comment.userId),
+          },
+          currentUser,
+          skipMetaUpdate: true,
+          skipActions: true,
+          request: this.req,
+        });
+      }),
     ];
 
     await Promise.all(copiedItemsPromises);
@@ -203,7 +201,7 @@ module.exports = {
     const createdTasks = await sails.helpers.cards.getTasks(copiedCard.id);
     const createdTaskIds = sails.helpers.utils.mapRecords(createdTasks);
     const createdTaskMemberships = await sails.helpers.cards.getTaskMemberships(createdTaskIds);
-    const createdActions = await sails.helpers.cards.getActions(copiedCard.id);
+    const createdComments = await sails.helpers.cards.getComments(copiedCard.id);
     const createdAttachments = await sails.helpers.cards.getAttachments(copiedCard.id);
     const createdCoverAttachment = createdAttachments.find((attachment) => attachment.dirname === coverAttachmentDirname);
     const createdCoverAttachmentId = createdCoverAttachment != null ? createdCoverAttachment.id : undefined;
@@ -219,7 +217,7 @@ module.exports = {
         tasks: createdTasks,
         taskMemberships: createdTaskMemberships,
         attachments: createdAttachments,
-        actions: createdActions,
+        comments: createdComments,
         coverAttachmentId: createdCoverAttachmentId,
       },
     };

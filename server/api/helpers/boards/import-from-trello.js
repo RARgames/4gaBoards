@@ -78,10 +78,9 @@ module.exports = {
 
       return Promise.all(
         trelloComments.map(async (trelloComment) => {
-          return Action.create({
+          return Comment.create({
             cardId: boardsCard.id,
             userId: currentUser.id,
-            type: Action.Types.CARD_COMMENT,
             data: {
               text:
                 `${trelloComment.data.text}\n\n---\n*Note: imported comment, originally posted by ` +
@@ -111,7 +110,7 @@ module.exports = {
           await importTasks(boardsCard, trelloCard);
           await importComments(boardsCard, trelloCard);
 
-          const commentCount = await Action.count({ cardId: boardsCard.id, type: Action.Types.CARD_COMMENT });
+          const commentCount = await sails.helpers.cards.getCommentCount.with({ idOrIds: boardsCard.id });
           await Card.update({ id: boardsCard.id }).set({ commentCount });
 
           return boardsCard;

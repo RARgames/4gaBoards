@@ -145,7 +145,7 @@ export const makeSelectClosestDueDateByCardId = () =>
 
 export const selectClosestDueDateByCardId = makeSelectClosestDueDateByCardId();
 
-export const makeSelectLastCommentActivityIdByCardId = () =>
+export const makeSelectLastCommentIdByCardId = () =>
   createSelector(
     orm,
     (_, id) => id,
@@ -156,13 +156,13 @@ export const makeSelectLastCommentActivityIdByCardId = () =>
         return cardModel;
       }
 
-      const lastActivityModel = cardModel.getOrderedCardCommentsQuerySet().last();
+      const lastCommentModel = cardModel.getOrderedCommentsQuerySet().last();
 
-      return lastActivityModel && lastActivityModel.id;
+      return lastCommentModel && lastCommentModel.id;
     },
   );
 
-export const selectLastCommentActivityIdByCardId = makeSelectLastCommentActivityIdByCardId();
+export const selectLastCommentIdByCardId = makeSelectLastCommentIdByCardId();
 
 export const makeSelectLastActivityIdByCardId = () =>
   createSelector(
@@ -359,7 +359,7 @@ export const makeSelectCommentActivitiesByCardId = () =>
         }));
 
       const commentActivitiesByCommentId = activities.reduce((acc, act) => {
-        const tid = act.data?.commentActionId;
+        const tid = act.data?.commentId;
         if (tid == null) return acc;
         if (!acc[tid]) acc[tid] = [];
         acc[tid].push(act);
@@ -501,10 +501,19 @@ export const selectCommentsForCurrentCard = createSelector(
     }
 
     return cardModel
-      .getOrderedCardCommentsQuerySet()
+      .getOrderedCommentsQuerySet()
       .toModelArray()
-      .map((activityModel) => ({
-        ...getActivityDetails(activityModel, currentUserId),
+      .map((commentModel) => ({
+        ...commentModel.ref,
+        ...getMeta(commentModel),
+        isPersisted: !isLocalId(commentModel.id),
+        user: commentModel.user
+          ? {
+              ...commentModel.user.ref,
+              isCurrent: commentModel.user.id === currentUserId,
+            }
+          : undefined,
+        card: commentModel.card ? { ...commentModel.card.ref } : undefined,
       }));
   },
 );
@@ -652,8 +661,8 @@ export default {
   selectClosestTaskDueDateByCardId,
   makeSelectClosestDueDateByCardId,
   selectClosestDueDateByCardId,
-  makeSelectLastCommentActivityIdByCardId,
-  selectLastCommentActivityIdByCardId,
+  makeSelectLastCommentIdByCardId,
+  selectLastCommentIdByCardId,
   makeSelectLastActivityIdByCardId,
   selectLastActivityIdByCardId,
   makeSelectNotificationsByCardId,

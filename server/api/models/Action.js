@@ -89,7 +89,6 @@ const Types = {
   CARD_LABEL_REMOVE: 'cardLabelRemove',
 
   /* CARD Comment Activities */
-  CARD_COMMENT: 'cardComment',
   CARD_COMMENT_CREATE: 'cardCommentCreate',
   CARD_COMMENT_UPDATE: 'cardCommentUpdate',
   CARD_COMMENT_DELETE: 'cardCommentDelete',
@@ -190,10 +189,6 @@ module.exports = {
       model: 'User',
       required: true,
       columnName: 'created_by_id',
-    },
-    updatedById: {
-      model: 'User',
-      columnName: 'updated_by_id',
     },
   },
 

@@ -38,13 +38,13 @@ module.exports = {
       }
     }
 
-    const actions = await sails.helpers.cards.getActions(card.id, inputs.beforeId);
+    const comments = await sails.helpers.cards.getComments(card.id, inputs.beforeId);
 
-    const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
+    const userIds = sails.helpers.utils.mapRecords(comments, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
 
     return {
-      items: actions,
+      items: comments,
       included: {
         users,
       },

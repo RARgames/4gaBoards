@@ -65,4 +65,5 @@ module.exports.custom = {
   requiredPasswordStrength: 2,
   cacheMaxAge: 900,
   actionsLimit: 50,
+  commentsLimit: 50,
 };

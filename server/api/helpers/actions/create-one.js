@@ -82,7 +82,7 @@ module.exports = {
         createdById: currentUser.id,
         data: {
           ...values.data,
-          ...(!values.data?.cardName && values.type !== Action.Types.CARD_COMMENT ? { cardName: values.card.name } : {}),
+          ...(!values.data?.cardName ? { cardName: values.card.name } : {}),
         },
       }).fetch();
 

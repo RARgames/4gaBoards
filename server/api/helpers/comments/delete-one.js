@@ -24,33 +24,42 @@ module.exports = {
   async fn(inputs) {
     const { currentUser, skipMetaUpdate } = inputs;
 
-    const action = await sails.helpers.actions.deleteOne.with({ record: inputs.record, board: inputs.board, currentUser, skipMetaUpdate, request: inputs.request });
+    const comment = await Comment.updateOne(inputs.record.id).set({ deletedAt: new Date(), deletedById: currentUser.id });
 
-    if (action) {
-      const card = await Card.findOne(action.cardId);
+    if (comment) {
+      sails.sockets.broadcast(
+        `board:${inputs.board.id}`,
+        'commentDelete',
+        {
+          item: comment,
+        },
+        inputs.request,
+      );
+
+      const card = await Card.findOne(comment.cardId);
       if (card) {
-        const commentActions = await sails.helpers.cards.getActions.with({ idOrIds: card.id, onlyComments: true });
+        const commentCount = await sails.helpers.cards.getCommentCount.with({ idOrIds: card.id });
 
         await sails.helpers.cards.updateOne.with({
           record: card,
           values: {
-            commentCount: commentActions.length,
+            commentCount,
           },
           currentUser,
         });
 
-        const user = await User.findOne(action.userId);
+        const user = await User.findOne(comment.userId);
         if (user) {
           await sails.helpers.actions.createOne.with({
             values: {
-              comment: action,
+              comment,
               card,
               scope: Action.Scopes.COMMENT,
               type: Action.Types.CARD_COMMENT_DELETE,
               data: {
-                commentActionId: action.id,
-                userId: action.userId,
-                commentActionText: action.data.text,
+                commentId: comment.id,
+                userId: comment.userId,
+                commentText: comment.data.text,
                 userName: user.name,
               },
             },
@@ -59,9 +68,9 @@ module.exports = {
         }
       }
 
-      await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
+      await sails.helpers.cards.updateMeta.with({ id: comment.cardId, currentUser, skipMetaUpdate });
     }
 
-    return action;
+    return comment;
   },
 };

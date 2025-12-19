@@ -98,9 +98,10 @@ module.exports.routes = {
   'GET /api/boards/:boardId/actions': 'actions/index-board-actions',
   'GET /api/projects/:projectId/actions': 'actions/index-project-actions',
 
-  'POST /api/cards/:cardId/comment-actions': 'comment-actions/create',
-  'PATCH /api/comment-actions/:id': 'comment-actions/update',
-  'DELETE /api/comment-actions/:id': 'comment-actions/delete',
+  'GET /api/cards/:cardId/comments': 'comments/index',
+  'POST /api/cards/:cardId/comments': 'comments/create',
+  'PATCH /api/comments/:id': 'comments/update',
+  'DELETE /api/comments/:id': 'comments/delete',
 
   'GET /api/notifications': 'notifications/index',
   'GET /api/notifications/:id': 'notifications/show',

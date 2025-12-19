@@ -38,27 +38,43 @@ module.exports = {
     },
   },
 
+  exits: {
+    boardNotFound: {},
+  },
+
   async fn(inputs) {
     const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
+    const actionUser = values.user || currentUser;
 
-    const action = await sails.helpers.actions.createOne.with({
-      values: {
-        ...values,
-        scope: Action.Scopes.COMMENT,
-      },
-      currentUser,
-      skipNotifications: true,
-      request: inputs.request,
-    });
+    const board = await Board.findOne(values.card.boardId);
+    if (!board) {
+      throw 'boardNotFound';
+    }
 
-    if (action) {
+    const comment = await Comment.create({
+      ...values,
+      cardId: values.card.id,
+      userId: actionUser.id,
+      createdById: currentUser.id,
+    }).fetch();
+
+    if (comment) {
+      sails.sockets.broadcast(
+        `board:${values.card.boardId}`,
+        'commentCreate',
+        {
+          item: comment,
+        },
+        inputs.request,
+      );
+
       if (!values.duplicate) {
-        const commentActions = await sails.helpers.cards.getActions.with({ idOrIds: values.card.id, onlyComments: true });
+        const commentCount = await sails.helpers.cards.getCommentCount.with({ idOrIds: values.card.id });
 
         await sails.helpers.cards.updateOne.with({
           record: values.card,
           values: {
-            commentCount: commentActions.length,
+            commentCount,
           },
           currentUser,
         });
@@ -67,22 +83,22 @@ module.exports = {
       if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
-            comment: action,
+            comment,
             card: values.card,
             scope: Action.Scopes.COMMENT,
             type: Action.Types.CARD_COMMENT_CREATE,
             data: {
-              commentActionId: action.id,
-              commentActionText: action.data.text,
+              commentId: comment.id,
+              commentText: comment.data.text,
             },
           },
           currentUser,
         });
       }
 
-      await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
+      await sails.helpers.cards.updateMeta.with({ id: comment.cardId, currentUser, skipMetaUpdate });
     }
 
-    return action;
+    return comment;
   },
 };

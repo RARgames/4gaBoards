@@ -15,6 +15,7 @@ module.exports = {
   async fn(inputs) {
     const criteria = {
       cardId: inputs.idOrIds,
+      deletedAt: null,
     };
 
     if (!_.isUndefined(inputs.beforeId)) {
@@ -23,6 +24,6 @@ module.exports = {
       };
     }
 
-    return sails.helpers.actions.getMany(criteria, sails.config.custom.actionsLimit);
+    return sails.helpers.comments.getMany(criteria, sails.config.custom.commentsLimit);
   },
 };

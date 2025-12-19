@@ -452,7 +452,7 @@ module.exports = {
       const insertedActionToUpdate = insertedActions.filter((action) => [Action.Types.CARD_COMMENT_CREATE, Action.Types.CARD_COMMENT_UPDATE, Action.Types.CARD_COMMENT_DELETE].includes(action.type));
 
       const updatedActions = insertedActionToUpdate.map((action) => {
-        const updatedData = { ...action.data, commentActionId: importedActions[action.data.commentActionId]?.id ?? null };
+        const updatedData = { ...action.data, commentId: importedActions[action.data.commentId]?.id ?? null };
         return { ...action, data: updatedData };
       });
 

@@ -28,23 +28,32 @@ module.exports = {
   async fn(inputs) {
     const { values, currentUser, skipMetaUpdate } = inputs;
 
-    const action = await sails.helpers.actions.updateOne.with({ record: inputs.record, values, board: inputs.board, currentUser, skipMetaUpdate, request: inputs.request });
+    const comment = await Comment.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
-    if (action) {
-      const card = await Card.findOne(action.cardId);
-      const user = await User.findOne(action.userId);
+    if (comment) {
+      sails.sockets.broadcast(
+        `board:${inputs.board.id}`,
+        'commentUpdate',
+        {
+          item: comment,
+        },
+        inputs.request,
+      );
+
+      const card = await Card.findOne(comment.cardId);
+      const user = await User.findOne(comment.userId);
       if (card && user) {
         await sails.helpers.actions.createOne.with({
           values: {
-            comment: action,
+            comment,
             card,
             scope: Action.Scopes.COMMENT,
             type: Action.Types.CARD_COMMENT_UPDATE,
             data: {
-              commentActionId: action.id,
-              commentActionPrevText: inputs.record.data.text,
-              commentActionText: action.data.text,
-              userId: action.userId,
+              commentId: comment.id,
+              commentPrevText: inputs.record.data.text,
+              commentText: comment.data.text,
+              userId: comment.userId,
               userName: user.name,
             },
           },
@@ -52,9 +61,9 @@ module.exports = {
         });
       }
 
-      await sails.helpers.cards.updateMeta.with({ id: action.cardId, currentUser, skipMetaUpdate });
+      await sails.helpers.cards.updateMeta.with({ id: comment.cardId, currentUser, skipMetaUpdate });
     }
 
-    return action;
+    return comment;
   },
 };
