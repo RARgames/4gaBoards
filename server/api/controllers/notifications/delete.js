@@ -30,8 +30,9 @@ module.exports = {
       }
     });
 
+    const deletedAt = new Date().toUTCString();
     const notifications = await sails.helpers.notifications.updateMany.with({
-      values: { deletedAt: new Date().toUTCString() },
+      values: { deletedAt },
       recordsOrIds: ids,
       currentUser,
       request: this.req,
