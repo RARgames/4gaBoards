@@ -99,14 +99,6 @@ export function* handleActivityCreate(activity) {
   yield put(actions.handleActivityCreate(activity));
 }
 
-export function* handleActivityUpdate(activity) {
-  yield put(actions.handleActivityUpdate(activity));
-}
-
-export function* handleActivityDelete(activity) {
-  yield put(actions.handleActivityDelete(activity));
-}
-
 export default {
   fetchActivitiesInCard,
   fetchActivitiesInCurrentCard,
@@ -114,6 +106,4 @@ export default {
   fetchActivitiesInBoard,
   fetchActivitiesInProject,
   handleActivityCreate,
-  handleActivityUpdate,
-  handleActivityDelete,
 };

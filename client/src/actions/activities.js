@@ -103,26 +103,10 @@ const handleActivityCreate = (activity) => ({
   },
 });
 
-const handleActivityUpdate = (activity) => ({
-  type: ActionTypes.ACTIVITY_UPDATE_HANDLE,
-  payload: {
-    activity,
-  },
-});
-
-const handleActivityDelete = (activity) => ({
-  type: ActionTypes.ACTIVITY_DELETE_HANDLE,
-  payload: {
-    activity,
-  },
-});
-
 export default {
   fetchCardActivities,
   fetchListActivities,
   fetchBoardActivities,
   fetchProjectActivities,
   handleActivityCreate,
-  handleActivityUpdate,
-  handleActivityDelete,
 };

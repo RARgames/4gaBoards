@@ -11,7 +11,5 @@ export default function* activitiesWatchers() {
     takeEvery(EntryActionTypes.ACTIVITIES_BOARD_FETCH, ({ payload: { boardId } }) => services.fetchActivitiesInBoard(boardId)),
     takeEvery(EntryActionTypes.ACTIVITIES_PROJECT_FETCH, ({ payload: { projectId } }) => services.fetchActivitiesInProject(projectId)),
     takeEvery(EntryActionTypes.ACTIVITY_CREATE_HANDLE, ({ payload: { activity } }) => services.handleActivityCreate(activity)),
-    takeEvery(EntryActionTypes.ACTIVITY_UPDATE_HANDLE, ({ payload: { activity } }) => services.handleActivityUpdate(activity)),
-    takeEvery(EntryActionTypes.ACTIVITY_DELETE_HANDLE, ({ payload: { activity } }) => services.handleActivityDelete(activity)),
   ]);
 }

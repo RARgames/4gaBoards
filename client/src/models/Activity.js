@@ -93,19 +93,9 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.ACTIVITY_CREATE_HANDLE:
-      case ActionTypes.ACTIVITY_UPDATE_HANDLE:
         Activity.upsert(payload.activity);
 
         break;
-      case ActionTypes.ACTIVITY_DELETE_HANDLE: {
-        const activityModel = Activity.withId(payload.activity.id);
-
-        if (activityModel) {
-          activityModel.delete();
-        }
-
-        break;
-      }
       default:
     }
   }

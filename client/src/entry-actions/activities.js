@@ -40,20 +40,6 @@ const handleActivityCreate = (activity) => ({
   },
 });
 
-const handleActivityUpdate = (activity) => ({
-  type: EntryActionTypes.ACTIVITY_UPDATE_HANDLE,
-  payload: {
-    activity,
-  },
-});
-
-const handleActivityDelete = (activity) => ({
-  type: EntryActionTypes.ACTIVITY_DELETE_HANDLE,
-  payload: {
-    activity,
-  },
-});
-
 export default {
   fetchActivitiesInCurrentCard,
   fetchActivitiesInCard,
@@ -61,6 +47,4 @@ export default {
   fetchActivitiesInBoard,
   fetchActivitiesInProject,
   handleActivityCreate,
-  handleActivityUpdate,
-  handleActivityDelete,
 };

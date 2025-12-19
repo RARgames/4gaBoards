@@ -36,16 +36,10 @@ const makeHandleActivityCreate = (next) => (body) => {
   });
 };
 
-const makeHandleActivityUpdate = makeHandleActivityCreate;
-
-const makeHandleActivityDelete = makeHandleActivityCreate;
-
 export default {
   getCardActivities,
   getListActivities,
   getBoardActivities,
   getProjectActivities,
   makeHandleActivityCreate,
-  makeHandleActivityUpdate,
-  makeHandleActivityDelete,
 };

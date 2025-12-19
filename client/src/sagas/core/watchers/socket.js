@@ -180,14 +180,6 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleActivityCreate(item));
     });
 
-    const handleActivityUpdate = api.makeHandleActivityUpdate(({ item }) => {
-      emit(entryActions.handleActivityUpdate(item));
-    });
-
-    const handleActivityDelete = api.makeHandleActivityDelete(({ item }) => {
-      emit(entryActions.handleActivityDelete(item));
-    });
-
     const handleCommentCreate = api.makeHandleCommentCreate(({ item }) => {
       emit(entryActions.handleCommentCreate(item));
     });
@@ -280,8 +272,6 @@ const createSocketEventsChannel = () =>
     socket.on('attachmentDelete', handleAttachmentDelete);
 
     socket.on('actionCreate', handleActivityCreate);
-    socket.on('actionUpdate', handleActivityUpdate);
-    socket.on('actionDelete', handleActivityDelete);
 
     socket.on('commentCreate', handleCommentCreate);
     socket.on('commentUpdate', handleCommentUpdate);
@@ -354,8 +344,6 @@ const createSocketEventsChannel = () =>
       socket.off('attachmentDelete', handleAttachmentDelete);
 
       socket.off('actionCreate', handleActivityCreate);
-      socket.off('actionUpdate', handleActivityUpdate);
-      socket.off('actionDelete', handleActivityDelete);
 
       socket.off('commentCreate', handleCommentCreate);
       socket.off('commentUpdate', handleCommentUpdate);
