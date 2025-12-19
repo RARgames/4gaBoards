@@ -38,7 +38,7 @@ module.exports = {
 
       const card = await Card.findOne(comment.cardId);
       if (card) {
-        const commentCount = await sails.helpers.cards.getCommentCount.with({ idOrIds: card.id });
+        const commentCount = await sails.helpers.cards.getCommentCount(card.id);
 
         await sails.helpers.cards.updateOne.with({
           record: card,

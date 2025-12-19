@@ -69,7 +69,7 @@ module.exports = {
       );
 
       if (!values.duplicate) {
-        const commentCount = await sails.helpers.cards.getCommentCount.with({ idOrIds: values.card.id });
+        const commentCount = await sails.helpers.cards.getCommentCount(values.card.id);
 
         await sails.helpers.cards.updateOne.with({
           record: values.card,

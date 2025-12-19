@@ -110,7 +110,7 @@ module.exports = {
           await importTasks(boardsCard, trelloCard);
           await importComments(boardsCard, trelloCard);
 
-          const commentCount = await sails.helpers.cards.getCommentCount.with({ idOrIds: boardsCard.id });
+          const commentCount = await sails.helpers.cards.getCommentCount(boardsCard.id);
           await Card.update({ id: boardsCard.id }).set({ commentCount });
 
           return boardsCard;
