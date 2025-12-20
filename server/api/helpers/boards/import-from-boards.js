@@ -86,6 +86,15 @@ module.exports = {
           }
         }
       });
+      comments.forEach((comment) => {
+        comment.userId = currentUser.id; // eslint-disable-line no-param-reassign
+        const data = parseJSON(comment.data);
+        if (data) {
+          data.userId = currentUser.id;
+          data.userName = currentUser.name;
+          comment.data = JSON.stringify(data); // eslint-disable-line no-param-reassign
+        }
+      });
       cardSubscriptions.forEach((cardSubscription) => {
         cardSubscription.userId = currentUser.id; // eslint-disable-line no-param-reassign
       });
