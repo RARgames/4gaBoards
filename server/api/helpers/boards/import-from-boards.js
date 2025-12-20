@@ -49,10 +49,24 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = inputs;
 
-    const { projectManagers, boardMemberships, lists, cards, cardMemberships, actions, attachments, cardLabels, cardSubscriptions, labels, tasks, taskMemberships, users } = await sails.helpers.utils.loadCsvs(
-      inputs.importTempDir,
-      ['projectManagers', 'boardMemberships', 'lists', 'cards', 'cardMemberships', 'actions', 'attachments', 'cardLabels', 'cardSubscriptions', 'labels', 'tasks', 'taskMemberships', 'users'],
-    );
+    const { projectManagers, boardMemberships, lists, cards, comments, cardMemberships, actions, attachments, cardLabels, cardSubscriptions, labels, tasks, taskMemberships, users, boards } =
+      await sails.helpers.utils.loadCsvs(inputs.importTempDir, [
+        'projectManagers',
+        'boardMemberships',
+        'lists',
+        'cards',
+        'comments',
+        'cardMemberships',
+        'actions',
+        'attachments',
+        'cardLabels',
+        'cardSubscriptions',
+        'labels',
+        'tasks',
+        'taskMemberships',
+        'users',
+        'boards',
+      ]);
 
     if (inputs.importGettingStartedProject) {
       boardMemberships.forEach((boardMembership) => {
@@ -90,6 +104,9 @@ module.exports = {
     const importedCardMemberships = {};
     const importedTasks = {};
     const importedTaskMemberships = {};
+    const importedComments = {};
+    const importedBoardMemberships = {};
+    const importedProjectManagers = {};
     const importedActions = {};
     const allUsers = {};
 
@@ -100,7 +117,10 @@ module.exports = {
     const getCardLabelsOfCard = (cardId) => cardLabels.filter((cardLabel) => cardLabel.cardId === cardId);
     const getTasksOfCard = (cardId) => tasks.filter((task) => task.cardId === cardId);
     const getTaskMembershipsOfTask = (taskId) => taskMemberships.filter((taskMembership) => taskMembership.taskId === taskId);
+    const getCommentsOfCard = (cardId) => comments.filter((comment) => comment.cardId === cardId);
     const getActionsOfCard = (cardId) => actions.filter((action) => action.cardId === cardId);
+    const getActionsOfList = (listId) => actions.filter((action) => action.listId === listId && !action.cardId);
+    const getActionsOfBoard = (boardId) => actions.filter((action) => action.boardId === boardId && !action.listId && !action.cardId);
 
     const getLabelColor = (labelColor) => Label.COLORS.find((color) => color.indexOf(labelColor) !== -1) || 'desert-sand';
 
@@ -183,6 +203,8 @@ module.exports = {
                   inputs.request,
                 );
               });
+
+              importedProjectManagers[projectManager.id] = newProjectManager;
             }
           }
         }),
@@ -207,25 +229,29 @@ module.exports = {
               .tolerate('E_UNIQUE')
               .fetch();
 
-            await sails.helpers.userProjects.createOne
-              .with({
-                values: {
-                  projectId: inputs.board.projectId,
-                  userId: allUsers[boardMembership.userId].id,
-                },
-                currentUser,
-              })
-              .tolerate('E_UNIQUE');
+            if (newBoardMembership) {
+              await sails.helpers.userProjects.createOne
+                .with({
+                  values: {
+                    projectId: inputs.board.projectId,
+                    userId: allUsers[boardMembership.userId].id,
+                  },
+                  currentUser,
+                })
+                .tolerate('E_UNIQUE');
 
-            if (newBoardMembership.userId !== currentUser.id) {
-              sails.sockets.broadcast(
-                `user:${newBoardMembership.userId}`,
-                'boardMembershipCreate',
-                {
-                  item: newBoardMembership,
-                },
-                inputs.request,
-              );
+              if (newBoardMembership.userId !== currentUser.id) {
+                sails.sockets.broadcast(
+                  `user:${newBoardMembership.userId}`,
+                  'boardMembershipCreate',
+                  {
+                    item: newBoardMembership,
+                  },
+                  inputs.request,
+                );
+              }
+
+              importedBoardMemberships[boardMembership.id] = newBoardMembership;
             }
           }
         }),
@@ -396,9 +422,37 @@ module.exports = {
       );
     };
 
-    const importActions = async (newCard, card) => {
-      const actionsToImport = getActionsOfCard(card.id);
+    const importComments = async (newCard, card) => {
+      const commentsToImport = getCommentsOfCard(card.id);
 
+      const commentRecords = commentsToImport.map((comment) => {
+        const updatedAt = parseJSON(comment.updatedAt);
+        const newData = parseJSON(comment.data);
+        if (newData) {
+          if (newData.userId) newData.userId = allUsers[newData.userId]?.id ?? null;
+          if (newData.text && !allUsers[comment.userId]) {
+            newData.text = `${newData.text}\n\n---\n*Imported comment, original author: ${newData.userName ?? 'unknown'}*`;
+          }
+        }
+        return {
+          cardId: newCard.id,
+          userId: allUsers[comment.userId]?.id ?? currentUser.id,
+          data: newData,
+          createdAt: parseJSON(comment.createdAt),
+          createdById: allUsers[comment.createdById]?.id ?? currentUser.id,
+          updatedAt,
+          updatedById: updatedAt && (allUsers[comment.updatedById]?.id ?? currentUser.id),
+        };
+      });
+
+      const insertedComments = await Comment.createEach(commentRecords).fetch();
+
+      commentsToImport.forEach((comment, i) => {
+        importedComments[comment.id] = insertedComments[i];
+      });
+    };
+
+    const importActions = async (actionsToImport, newIds = {}) => {
       const actionRecords = actionsToImport
         .map((action) => {
           if (!Object.values(Action.Types).includes(action.type)) {
@@ -419,16 +473,22 @@ module.exports = {
             if (newData.taskMembershipId) newData.taskMembershipId = importedTaskMemberships[newData.taskMembershipId]?.id ?? null;
             if (newData.cardMembershipId) newData.cardMembershipId = importedCardMemberships[newData.cardMembershipId]?.id ?? null;
             if (newData.userId) newData.userId = allUsers[newData.userId]?.id ?? null;
-            if (newData.text && !allUsers[action.userId]) {
-              newData.text = `${newData.text}\n\n---\n*Imported comment, original author: ${newData.userName ?? 'unknown'}*`;
-            }
+            if (newData.commentId) newData.commentId = importedComments[newData.commentId]?.id ?? null;
+            if (newData.boardMembershipId) newData.boardMembershipId = importedBoardMemberships[newData.boardMembershipId]?.id ?? null;
+            if (newData.projectManagerId) newData.projectManagerId = importedProjectManagers[newData.projectManagerId]?.id ?? null;
+            if (newData.boardId) newData.boardId = newIds?.boardId ?? null;
+            if (newData.projectId) newData.projectId = newIds?.projectId ?? null;
           }
           const updatedAt = parseJSON(action.updatedAt);
 
           return {
-            cardId: newCard.id,
-            boardId: newCard.boardId,
-            projectId: inputs.board.projectId,
+            attachmentId: importedAttachments[action.attachmentId]?.id ?? null,
+            taskId: importedTasks[action.taskId]?.id ?? null,
+            commentId: importedComments[action.commentId]?.id ?? null,
+            cardId: newIds?.cardId ?? null,
+            listId: newIds?.listId ?? null,
+            boardId: newIds?.boardId ?? null,
+            projectId: newIds?.projectId ?? null,
             userId: allUsers[action.userId]?.id ?? currentUser.id,
             scope: action.scope,
             type: action.type,
@@ -444,21 +504,10 @@ module.exports = {
       if (!actionRecords.length) return;
 
       const insertedActions = await Action.createEach(actionRecords).fetch();
-
+      // TODO remove in next commit
       actionsToImport.forEach((action, i) => {
         importedActions[action.id] = insertedActions[i];
       });
-
-      const insertedActionToUpdate = insertedActions.filter((action) => [Action.Types.CARD_COMMENT_CREATE, Action.Types.CARD_COMMENT_UPDATE, Action.Types.CARD_COMMENT_DELETE].includes(action.type));
-
-      const updatedActions = insertedActionToUpdate.map((action) => {
-        const updatedData = { ...action.data, commentId: importedActions[action.data.commentId]?.id ?? null };
-        return { ...action, data: updatedData };
-      });
-
-      if (updatedActions.length) {
-        await Promise.all(updatedActions.map((action) => Action.updateOne({ id: action.id }).set({ data: action.data })));
-      }
     };
 
     const importCards = async (newList, list) => {
@@ -488,8 +537,16 @@ module.exports = {
       await Promise.all(
         cardsToImport.map(async (card, i) => {
           const newCard = insertedCards[i];
-          await Promise.all([importAttachments(newCard, card), importCardMemberships(newCard, card), importCardSubscriptions(newCard, card), importCardLabels(newCard, card), importTasks(newCard, card)]);
-          await importActions(newCard, card);
+          await Promise.all([
+            importAttachments(newCard, card),
+            importCardMemberships(newCard, card),
+            importCardSubscriptions(newCard, card),
+            importCardLabels(newCard, card),
+            importTasks(newCard, card),
+            importComments(newCard, card),
+          ]);
+          const actionsToImport = getActionsOfCard(card.id);
+          await importActions(actionsToImport, { cardId: newCard.id, listId: newCard.listId, boardId: newCard.boardId, projectId: inputs.board.projectId });
 
           const coverAttachmentId = importedAttachments[card.coverAttachmentId]?.id ?? null;
           if (coverAttachmentId) {
@@ -517,8 +574,10 @@ module.exports = {
       const insertedLists = await List.createEach(listRecords).fetch();
 
       await Promise.all(
-        lists.map((list, i) => {
+        lists.map(async (list, i) => {
           importedLists[list.id] = insertedLists[i];
+          const actionsToImport = getActionsOfList(list.id);
+          await importActions(actionsToImport, { boardId: inputs.board.id, projectId: inputs.board.projectId, listId: insertedLists[i].id });
           return importCards(insertedLists[i], list);
         }),
       );
@@ -532,6 +591,8 @@ module.exports = {
       await importBoardMemberships();
       await importLabels();
       await importLists();
+      const boardActions = getActionsOfBoard(boards[0].id);
+      await importActions(boardActions, { boardId: inputs.board.id, projectId: inputs.board.projectId });
     } catch (error) {
       sails.log.error('Import from board failed: ', error);
       throw 'importFromBoardFailed';
