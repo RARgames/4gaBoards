@@ -1,5 +1,4 @@
 id,scope,type,data,cardId,userId
-1605293213541729908,card,cardComment,"{""text"":""Przykładowy komentarz ze **składnią Markdown**."",""userId"":""895703383690707969"",""userName"":""RAR""}",1605293212442822219,895703383690707969
 1605293212769977945,card,cardCreate,"{""listId"":""1605293211973060149"",""cardName"":""Tą kartę zobaczysz dopiero jak rozwiniesz listę"",""listName"":""Zwinięta lista z kartami""}",1605293212400879166,895703383690707969
 1605293213139076708,card,cardCreate,"{""listId"":""1605293211973060147"",""cardName"":""Dodaj członka do tablicy"",""listName"":""Podstawy""}",1605293212409267781,895703383690707969
 1605293213877274235,card,cardCreate,"{""listId"":""1605293211973060151"",""cardName"":""Stoper"",""listName"":""Karty""}",1605293212451210836,895703383690707969
