@@ -73,7 +73,7 @@ module.exports = {
     const cardIds = sails.helpers.utils.mapRecords(cards);
     const comments = await sails.helpers.cards.getComments(cardIds);
     const cardMemberships = await sails.helpers.cards.getCardMemberships(cardIds);
-    let actions = await Action.find({ cardId: cardIds });
+    let actions = await Action.find({ boardId: board.id });
     if (inputs.skipActions) {
       actions = actions.filter((action) => action.type === Action.Types.CARD_CREATE || action.type === Action.Types.CARD_DUPLICATE);
     }
