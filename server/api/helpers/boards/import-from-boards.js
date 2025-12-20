@@ -50,23 +50,27 @@ module.exports = {
     const { currentUser } = inputs;
 
     const { projectManagers, boardMemberships, lists, cards, comments, cardMemberships, actions, attachments, cardLabels, cardSubscriptions, labels, tasks, taskMemberships, users, boards } =
-      await sails.helpers.utils.loadCsvs(inputs.importTempDir, [
-        'projectManagers',
-        'boardMemberships',
-        'lists',
-        'cards',
-        'comments',
-        'cardMemberships',
-        'actions',
-        'attachments',
-        'cardLabels',
-        'cardSubscriptions',
-        'labels',
-        'tasks',
-        'taskMemberships',
-        'users',
-        'boards',
-      ]);
+      await sails.helpers.utils.loadCsvs.with({
+        loadDir: inputs.importTempDir,
+        filesToLoad: [
+          'projectManagers',
+          'boardMemberships',
+          'lists',
+          'cards',
+          'comments',
+          'cardMemberships',
+          'actions',
+          'attachments',
+          'cardLabels',
+          'cardSubscriptions',
+          'labels',
+          'tasks',
+          'taskMemberships',
+          'users',
+          'boards',
+        ],
+        optionalFiles: ['comments'],
+      });
 
     if (inputs.importGettingStartedProject) {
       boardMemberships.forEach((boardMembership) => {

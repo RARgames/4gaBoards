@@ -12,6 +12,10 @@ module.exports = {
       type: 'ref',
       required: true,
     },
+    optionalFiles: {
+      type: 'ref',
+      defaultsTo: [],
+    },
   },
 
   exits: {
@@ -19,23 +23,32 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const optional = new Set(inputs.optionalFiles);
+
     const loadCSV = (filename) =>
       new Promise((resolve, reject) => {
-        try {
-          const results = [];
-          fs.createReadStream(path.join(inputs.loadDir, `${filename}.csv`))
-            .pipe(fastcsv.parse({ headers: true }))
-            .on('data', (row) => results.push(row))
-            .on('end', () => resolve(results))
-            .on('error', reject);
-        } catch (error) {
-          sails.log.error(error);
-          throw 'invalidFile';
+        const results = [];
+
+        const filePath = path.join(inputs.loadDir, `${filename}.csv`);
+        if (!fs.existsSync(filePath)) {
+          if (optional.has(filename)) {
+            resolve([]);
+          }
         }
+        fs.createReadStream(filePath)
+          .on('error', reject)
+          .pipe(fastcsv.parse({ headers: true }))
+          .on('data', (row) => results.push(row))
+          .on('end', () => resolve(results));
       });
 
-    const data = Promise.all(inputs.filesToLoad.map((file) => loadCSV(file).then((fileData) => ({ [file]: fileData })))).then((results) => results.reduce((acc, result) => Object.assign(acc, result), {}));
+    try {
+      const data = await Promise.all(inputs.filesToLoad.map((file) => loadCSV(file).then((fileData) => ({ [file]: fileData }))));
 
-    return data;
+      return data.reduce((acc, result) => Object.assign(acc, result), {});
+    } catch (err) {
+      sails.log.error(err);
+      throw 'invalidFile';
+    }
   },
 };
