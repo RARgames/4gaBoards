@@ -17,11 +17,13 @@ export function* fetchCore() {
   let board;
   let card;
   let users2;
+  let users4;
   let projects2;
   let boardMemberships2;
   let labels;
   let lists;
   let cards1;
+  let comments = [];
   let cardMemberships;
   let cardLabels;
   let tasks;
@@ -62,6 +64,11 @@ export function* fetchCore() {
         isRead: true,
       });
     }
+
+    ({
+      items: comments,
+      included: { users: users4 },
+    } = yield call(request, api.getCardComments, card.id, {}));
   }
 
   const core = yield call(request, api.getCoreSettingsPublic);
@@ -82,10 +89,11 @@ export function* fetchCore() {
     attachments,
     activities,
     notifications,
-    users: mergeRecords(users1, users2, users3),
+    users: mergeRecords(users1, users2, users3, users4),
     projects: mergeRecords(projects1, projects2),
     boardMemberships: mergeRecords(boardMemberships1, boardMemberships2),
     cards: mergeRecords(cards1, cards2),
+    comments,
     core,
     userProjects,
     userPrefs,

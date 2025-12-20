@@ -37,17 +37,16 @@ export default class extends BaseModel {
 
   static reducer({ type, payload }, Comment) {
     switch (type) {
-      // TODO add support for SOCKET_RECONNECT_HANDLE, CORE_INITIALIZE
       case ActionTypes.SOCKET_RECONNECT_HANDLE:
         Comment.all().delete();
 
-        payload.comments?.forEach((comment) => {
+        payload.comments.forEach((comment) => {
           Comment.upsert(comment);
         });
 
         break;
       case ActionTypes.CORE_INITIALIZE:
-        payload.comments?.forEach((comment) => {
+        payload.comments.forEach((comment) => {
           Comment.upsert(comment);
         });
 
