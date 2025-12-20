@@ -41,7 +41,7 @@ module.exports = {
         .map((checklist) => checklist.checkItems)
         .flat();
 
-    const getTrelloCommentsOfCard = (cardId) => inputs.trelloBoard.actions.filter((action) => action.type === Action.Types.CARD_COMMENT && action.data && action.data.card && action.data.card.id === cardId);
+    const getTrelloCommentsOfCard = (cardId) => inputs.trelloBoard.actions.filter((action) => action.type === 'commentCard' && action.data && action.data.card && action.data.card.id === cardId);
 
     const get4gaBoardsLabelColor = (trelloLabelColor) => Label.COLORS.find((color) => color.indexOf(trelloLabelColor) !== -1) || 'desert-sand';
 
