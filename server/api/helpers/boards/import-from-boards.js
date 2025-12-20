@@ -107,7 +107,6 @@ module.exports = {
     const importedComments = {};
     const importedBoardMemberships = {};
     const importedProjectManagers = {};
-    const importedActions = {};
     const allUsers = {};
 
     const getCardsOfList = (listId) => cards.filter((card) => card.listId === listId);
@@ -503,11 +502,7 @@ module.exports = {
 
       if (!actionRecords.length) return;
 
-      const insertedActions = await Action.createEach(actionRecords).fetch();
-      // TODO remove in next commit
-      actionsToImport.forEach((action, i) => {
-        importedActions[action.id] = insertedActions[i];
-      });
+      await Action.createEach(actionRecords).fetch();
     };
 
     const importCards = async (newList, list) => {
