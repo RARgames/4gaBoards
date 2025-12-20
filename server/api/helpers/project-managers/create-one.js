@@ -69,7 +69,7 @@ module.exports = {
           scope: Action.Scopes.PROJECT,
           type: Action.Types.PROJECT_MANAGER_ADD,
           data: {
-            projectMembershipId: projectManager.id,
+            projectManagerId: projectManager.id,
             userId: projectManager.userId,
             projectId: projectManager.projectId,
             userName: values.user.name,

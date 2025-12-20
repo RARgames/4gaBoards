@@ -45,7 +45,7 @@ module.exports = {
             scope: Action.Scopes.PROJECT,
             type: Action.Types.PROJECT_MANAGER_REMOVE,
             data: {
-              projectMembershipId: projectManager.id,
+              projectManagerId: projectManager.id,
               userId: projectManager.userId,
               projectId: projectManager.projectId,
               userName: user.name,
