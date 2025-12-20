@@ -71,6 +71,7 @@ module.exports = {
     const lists = await sails.helpers.boards.getLists(board.id);
     const cards = await sails.helpers.boards.getCards(board.id);
     const cardIds = sails.helpers.utils.mapRecords(cards);
+    const comments = await sails.helpers.cards.getComments(cardIds);
     const cardMemberships = await sails.helpers.cards.getCardMemberships(cardIds);
     let actions = await Action.find({ cardId: cardIds });
     if (inputs.skipActions) {
@@ -116,6 +117,7 @@ module.exports = {
       boardMemberships,
       lists,
       cards,
+      comments,
       cardMemberships,
       actions,
       attachments,
