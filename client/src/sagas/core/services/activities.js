@@ -5,6 +5,27 @@ import api from '../../../api';
 import selectors from '../../../selectors';
 import request from '../request';
 
+export function* fetchAttachmentActivities(attachmentId) {
+  const lastId = yield select(selectors.selectLastActivityIdByAttachmentId, attachmentId);
+
+  yield put(actions.fetchAttachmentActivities(attachmentId));
+
+  let activities;
+  let users;
+
+  try {
+    ({
+      items: activities,
+      included: { users },
+    } = yield call(request, api.getAttachmentActivities, attachmentId, { beforeId: lastId }));
+  } catch (error) {
+    yield put(actions.fetchAttachmentActivities.failure(attachmentId, error));
+    return;
+  }
+
+  yield put(actions.fetchAttachmentActivities.success(attachmentId, activities, users));
+}
+
 export function* fetchActivitiesInCard(cardId) {
   const lastId = yield select(selectors.selectLastActivityIdByCardId, cardId);
 
@@ -100,6 +121,7 @@ export function* handleActivityCreate(activity) {
 }
 
 export default {
+  fetchAttachmentActivities,
   fetchActivitiesInCard,
   fetchActivitiesInCurrentCard,
   fetchActivitiesInList,

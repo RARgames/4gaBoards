@@ -3,6 +3,12 @@ import { transformActivity } from './transformers';
 
 /* Actions */
 
+const getAttachmentActivities = (attachmentId, data, headers) =>
+  socket.get(`/attachments/${attachmentId}/actions`, data, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformActivity),
+  }));
+
 const getCardActivities = (cardId, data, headers) =>
   socket.get(`/cards/${cardId}/actions`, data, headers).then((body) => ({
     ...body,
@@ -37,6 +43,7 @@ const makeHandleActivityCreate = (next) => (body) => {
 };
 
 export default {
+  getAttachmentActivities,
   getCardActivities,
   getListActivities,
   getBoardActivities,

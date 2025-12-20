@@ -9,6 +9,7 @@ import selectors from '../selectors';
 const makeMapStateToProps = () => {
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
   const selectClosestDueDateByCardId = selectors.makeSelectClosestDueDateByCardId();
+  const selectUsersForTaskById = selectors.makeSelectUsersForTaskById();
 
   return (state) => {
     const listIds = selectors.selectListIdsForCurrentBoard(state);
@@ -27,7 +28,7 @@ const makeMapStateToProps = () => {
       const taskActivities = selectors.selectTaskActivitiesByCardId(state, cardId);
       const tasks = selectors.selectTasksByCardId(state, cardId).map((task) => ({
         ...task,
-        users: selectors.selectUsersForTaskById(state, task.id),
+        users: selectUsersForTaskById(state, task.id),
         activities: taskActivities[task.id] || [],
       }));
       const notificationsCount = selectors.selectNotificationsTotalByCardId(state, cardId);

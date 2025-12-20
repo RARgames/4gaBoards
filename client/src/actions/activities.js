@@ -1,5 +1,29 @@
 import ActionTypes from '../constants/ActionTypes';
 
+const fetchAttachmentActivities = (attachmentId) => ({
+  type: ActionTypes.ACTIVITIES_ATTACHMENT_FETCH,
+  payload: {
+    attachmentId,
+  },
+});
+
+fetchAttachmentActivities.success = (attachmentId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_ATTACHMENT_FETCH__SUCCESS,
+  payload: {
+    attachmentId,
+    activities,
+    users,
+  },
+});
+
+fetchAttachmentActivities.failure = (attachmentId, error) => ({
+  type: ActionTypes.ACTIVITIES_ATTACHMENT_FETCH__FAILURE,
+  payload: {
+    attachmentId,
+    error,
+  },
+});
+
 const fetchCardActivities = (cardId) => ({
   type: ActionTypes.ACTIVITIES_CARD_FETCH,
   payload: {
@@ -104,6 +128,7 @@ const handleActivityCreate = (activity) => ({
 });
 
 export default {
+  fetchAttachmentActivities,
   fetchCardActivities,
   fetchListActivities,
   fetchBoardActivities,

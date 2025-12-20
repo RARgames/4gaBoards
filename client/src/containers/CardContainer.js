@@ -14,6 +14,7 @@ const makeMapStateToProps = () => {
   const selectNotificationsTotalByCardId = selectors.makeSelectNotificationsTotalByCardId();
   const selectAttachmentsCountByCardId = selectors.makeSelectAttachmentsCountByCardId();
   const selectClosestDueDateByCardId = selectors.makeSelectClosestTaskDueDateByCardId();
+  const selectUsersForTaskById = selectors.makeSelectUsersForTaskById();
 
   return (state, { id, index }) => {
     const currentCardId = selectors.selectPath(state).cardId;
@@ -37,7 +38,7 @@ const makeMapStateToProps = () => {
     const taskActivities = selectors.selectTaskActivitiesByCardId(state, id);
     const tasks = selectTasksByCardId(state, id).map((task) => ({
       ...task,
-      users: selectors.selectUsersForTaskById(state, task.id),
+      users: selectUsersForTaskById(state, task.id),
       activities: taskActivities[task.id] || [],
     }));
     const notificationsTotal = selectNotificationsTotalByCardId(state, id);

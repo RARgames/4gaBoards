@@ -93,6 +93,7 @@ module.exports.routes = {
   'PATCH /api/attachments/:id': 'attachments/update',
   'DELETE /api/attachments/:id': 'attachments/delete',
 
+  'GET /api/attachments/:attachmentId/actions': 'actions/index-attachment-actions',
   'GET /api/cards/:cardId/actions': 'actions/index-card-actions',
   'GET /api/lists/:listId/actions': 'actions/index-list-actions',
   'GET /api/boards/:boardId/actions': 'actions/index-board-actions',

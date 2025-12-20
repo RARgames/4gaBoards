@@ -9,121 +9,125 @@ import entryActions from '../entry-actions';
 import { push } from '../lib/redux-router';
 import selectors from '../selectors';
 
-const mapStateToProps = (state) => {
-  const { projectId } = selectors.selectPath(state);
-  const allProjectsToLists = selectors.selectProjectsToListsForCurrentUser(state);
-  const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
-  const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
-  const boardAndCardMemberships = selectors.selectBoardAndCardMembershipsForCurrentCard(state);
-  const boardAndTaskMemberships = selectors.selectBoardAndTaskMembershipsForCurrentCard(state);
-  const allLabels = selectors.selectLabelsForCurrentBoard(state);
-  const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
+const makeMapStateToProps = () => {
+  const selectAttachmentActivitiesById = selectors.makeSelectAttachmentActivitiesById();
+  const selectUsersForTaskById = selectors.makeSelectUsersForTaskById();
 
-  const {
-    name,
-    description,
-    dueDate,
-    timer,
-    isSubscribed,
-    isActivitiesFetching,
-    isAllActivitiesFetched,
-    isCommentsFetching,
-    isAllCommentsFetched,
-    boardId,
-    listId,
-    id,
-    commentCount,
-    createdAt,
-    createdBy,
-    updatedAt,
-    updatedBy,
-  } = selectors.selectCurrentCard(state);
+  return (state) => {
+    const { projectId } = selectors.selectPath(state);
+    const allProjectsToLists = selectors.selectProjectsToListsForCurrentUser(state);
+    const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
+    const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+    const boardAndCardMemberships = selectors.selectBoardAndCardMembershipsForCurrentCard(state);
+    const boardAndTaskMemberships = selectors.selectBoardAndTaskMembershipsForCurrentCard(state);
+    const allLabels = selectors.selectLabelsForCurrentBoard(state);
+    const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-  const users = selectors.selectUsersForCurrentCard(state);
-  const labels = selectors.selectLabelsForCurrentCard(state);
-  const taskActivities = selectors.selectTaskActivitiesByCardId(state, id);
-  const tasks = selectors.selectTasksForCurrentCard(state).map((task) => ({
-    ...task,
-    users: selectors.selectUsersForTaskById(state, task.id),
-    activities: taskActivities[task.id] || [],
-  }));
-  const attachmentActivities = selectors.selectAttachmentActivitiesByCardId(state, id);
-  const attachments = selectors.selectAttachmentsForCurrentCard(state).map((attachment) => ({
-    ...attachment,
-    activities: attachmentActivities[attachment.id] || [],
-  }));
-  const commentActivities = selectors.selectCommentActivitiesByCardId(state, id);
-  const comments = selectors.selectCommentsForCurrentCard(state).map((comment) => ({
-    ...comment,
-    activities: commentActivities[comment.id] || [],
-  }));
-  const activities = selectors.selectActivitiesByCardId(state, id);
-  const user = selectors.selectCurrentUser(state);
-  const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, hideClosestDueDate, preferredDetailsFont } =
-    selectors.selectCurrentUserPrefs(state);
-  const userId = user.id;
+    const {
+      name,
+      description,
+      dueDate,
+      timer,
+      isSubscribed,
+      isActivitiesFetching,
+      isAllActivitiesFetched,
+      isCommentsFetching,
+      isAllCommentsFetched,
+      boardId,
+      listId,
+      id,
+      commentCount,
+      createdAt,
+      createdBy,
+      updatedAt,
+      updatedBy,
+    } = selectors.selectCurrentCard(state);
 
-  const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
+    const users = selectors.selectUsersForCurrentCard(state);
+    const labels = selectors.selectLabelsForCurrentCard(state);
+    const taskActivities = selectors.selectTaskActivitiesByCardId(state, id);
+    const tasks = selectors.selectTasksForCurrentCard(state).map((task) => ({
+      ...task,
+      users: selectUsersForTaskById(state, task.id),
+      activities: taskActivities[task.id] || [],
+    }));
+    const attachments = selectors.selectAttachmentsForCurrentCard(state).map((attachment) => ({
+      ...attachment,
+      activities: selectAttachmentActivitiesById(state, attachment.id),
+    }));
+    const commentActivities = selectors.selectCommentActivitiesByCardId(state, id);
+    const comments = selectors.selectCommentsForCurrentCard(state).map((comment) => ({
+      ...comment,
+      activities: commentActivities[comment.id] || [],
+    }));
+    const activities = selectors.selectActivitiesByCardId(state, id);
+    const user = selectors.selectCurrentUser(state);
+    const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, hideClosestDueDate, preferredDetailsFont } =
+      selectors.selectCurrentUserPrefs(state);
+    const userId = user.id;
 
-  let isCurrentUserEditor = false;
-  let isCurrentUserEditorOrCanComment = false;
+    const { isGithubConnected, githubRepo } = selectors.selectCurrentBoard(state);
 
-  if (currentUserMembership) {
-    isCurrentUserEditor = currentUserMembership.role === BoardMembershipRoles.EDITOR;
-    isCurrentUserEditorOrCanComment = isCurrentUserEditor || currentUserMembership.canComment;
-  }
-  const url = selectors.selectUrlForCard(state, id);
-  const closestTaskDueDate = selectors.selectClosestTaskDueDateByCardId(state, id);
-  const closestDueDate = selectors.selectClosestDueDateByCardId(state, id);
+    let isCurrentUserEditor = false;
+    let isCurrentUserEditorOrCanComment = false;
 
-  return {
-    name,
-    id,
-    description,
-    dueDate,
-    timer,
-    isSubscribed,
-    isActivitiesFetching,
-    isAllActivitiesFetched,
-    isCommentsFetching,
-    isAllCommentsFetched,
-    listId,
-    boardId,
-    projectId,
-    users,
-    labels,
-    tasks,
-    attachments,
-    comments,
-    activities,
-    descriptionMode,
-    descriptionShown,
-    tasksShown,
-    attachmentsShown,
-    commentsShown,
-    hideCardModalActivity,
-    hideClosestDueDate,
-    preferredDetailsFont,
-    userId,
-    isGithubConnected,
-    githubRepo,
-    allProjectsToLists,
-    boardMemberships,
-    boardAndCardMemberships,
-    boardAndTaskMemberships,
-    allLabels,
-    commentCount,
-    canEdit: isCurrentUserEditor,
-    canEditCommentActivities: isCurrentUserEditorOrCanComment,
-    canEditAllCommentActivities: isCurrentUserManager,
-    commentMode,
-    url,
-    closestTaskDueDate,
-    closestDueDate,
-    createdAt,
-    createdBy,
-    updatedAt,
-    updatedBy,
+    if (currentUserMembership) {
+      isCurrentUserEditor = currentUserMembership.role === BoardMembershipRoles.EDITOR;
+      isCurrentUserEditorOrCanComment = isCurrentUserEditor || currentUserMembership.canComment;
+    }
+    const url = selectors.selectUrlForCard(state, id);
+    const closestTaskDueDate = selectors.selectClosestTaskDueDateByCardId(state, id);
+    const closestDueDate = selectors.selectClosestDueDateByCardId(state, id);
+
+    return {
+      name,
+      id,
+      description,
+      dueDate,
+      timer,
+      isSubscribed,
+      isActivitiesFetching,
+      isAllActivitiesFetched,
+      isCommentsFetching,
+      isAllCommentsFetched,
+      listId,
+      boardId,
+      projectId,
+      users,
+      labels,
+      tasks,
+      attachments,
+      comments,
+      activities,
+      descriptionMode,
+      descriptionShown,
+      tasksShown,
+      attachmentsShown,
+      commentsShown,
+      hideCardModalActivity,
+      hideClosestDueDate,
+      preferredDetailsFont,
+      userId,
+      isGithubConnected,
+      githubRepo,
+      allProjectsToLists,
+      boardMemberships,
+      boardAndCardMemberships,
+      boardAndTaskMemberships,
+      allLabels,
+      commentCount,
+      canEdit: isCurrentUserEditor,
+      canEditCommentActivities: isCurrentUserEditorOrCanComment,
+      canEditAllCommentActivities: isCurrentUserManager,
+      commentMode,
+      url,
+      closestTaskDueDate,
+      closestDueDate,
+      createdAt,
+      createdBy,
+      updatedAt,
+      updatedBy,
+    };
   };
 };
 
@@ -155,6 +159,7 @@ const mapDispatchToProps = (dispatch) =>
       onAttachmentUpdate: entryActions.updateAttachment,
       onAttachmentDelete: entryActions.deleteAttachment,
       onActivitiesFetch: entryActions.fetchActivitiesInCurrentCard,
+      onAttachmentActivitiesFetch: (attachmentId) => entryActions.fetchAttachmentActivities(attachmentId),
       onCommentsFetch: entryActions.fetchCommentsInCurrentCard,
       onCommentCreate: entryActions.createCommentInCurrentCard,
       onCommentUpdate: entryActions.updateComment,
@@ -170,4 +175,4 @@ const mergeProps = (stateProps, dispatchProps) => ({
   onClose: () => dispatchProps.push(Paths.BOARDS.replace(':id', stateProps.boardId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(CardModal);
+export default connect(makeMapStateToProps, mapDispatchToProps, mergeProps)(CardModal);

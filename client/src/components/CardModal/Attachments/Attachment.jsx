@@ -8,11 +8,12 @@ import DeletePopup from '../../DeletePopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import EditPopup from './EditPopup';
 
-import * as s from './Item.module.scss';
+import * as s from './Attachment.module.scss';
 
-const Item = React.forwardRef(
+const Attachment = React.forwardRef(
   (
     {
+      id,
       name,
       url,
       coverUrl,
@@ -107,7 +108,7 @@ const Item = React.forwardRef(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
-              onFetch={onActivitiesFetch}
+              onFetch={() => onActivitiesFetch(id)}
               position="left-start"
               offset={0}
             >
@@ -139,7 +140,8 @@ const Item = React.forwardRef(
   },
 );
 
-Item.propTypes = {
+Attachment.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string,
   coverUrl: PropTypes.string,
@@ -162,7 +164,7 @@ Item.propTypes = {
   onActivitiesFetch: PropTypes.func.isRequired,
 };
 
-Item.defaultProps = {
+Attachment.defaultProps = {
   url: undefined,
   coverUrl: undefined,
   createdAt: undefined,
@@ -172,4 +174,4 @@ Item.defaultProps = {
   onClick: undefined,
 };
 
-export default React.memo(Item);
+export default React.memo(Attachment);

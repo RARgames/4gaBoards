@@ -1,5 +1,12 @@
 import EntryActionTypes from '../constants/EntryActionTypes';
 
+const fetchAttachmentActivities = (attachmentId) => ({
+  type: EntryActionTypes.ACTIVITIES_ATTACHMENT_FETCH,
+  payload: {
+    attachmentId,
+  },
+});
+
 const fetchActivitiesInCurrentCard = () => ({
   type: EntryActionTypes.ACTIVITIES_IN_CURRENT_CARD_FETCH,
   payload: {},
@@ -41,6 +48,7 @@ const handleActivityCreate = (activity) => ({
 });
 
 export default {
+  fetchAttachmentActivities,
   fetchActivitiesInCurrentCard,
   fetchActivitiesInCard,
   fetchActivitiesInList,

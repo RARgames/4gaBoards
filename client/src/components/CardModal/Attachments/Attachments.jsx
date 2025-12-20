@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 
 import { useToggle } from '../../../lib/hooks';
 import { Button, ButtonStyle } from '../../Utils';
-import Item from './Item';
+import Attachment from './Attachment';
 
 import * as s from './Attachments.module.scss';
 
 const INITIALLY_VISIBLE = 4;
 
-const Attachments = React.memo(({ items, canEdit, isActivitiesFetching, isAllActivitiesFetched, boardMemberships, onUpdate, onDelete, onCoverUpdate, onGalleryOpen, onGalleryClose, onActivitiesFetch }) => {
+const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, onDelete, onCoverUpdate, onGalleryOpen, onGalleryClose, onActivitiesFetch }) => {
   const [t] = useTranslation();
   const [isAllVisible, toggleAllVisible] = useToggle();
 
@@ -84,8 +84,9 @@ const Attachments = React.memo(({ items, canEdit, isActivitiesFetching, isAllAct
       >
         {({ ref, open }) =>
           isVisible ? (
-            <Item
+            <Attachment
               ref={ref}
+              id={item.id}
               name={item.name}
               url={item.url}
               coverUrl={item.coverUrl}
@@ -93,8 +94,8 @@ const Attachments = React.memo(({ items, canEdit, isActivitiesFetching, isAllAct
               isPersisted={item.isPersisted}
               canEdit={canEdit}
               activities={item.activities}
-              isActivitiesFetching={isActivitiesFetching}
-              isAllActivitiesFetched={isAllActivitiesFetched}
+              isActivitiesFetching={item.isActivitiesFetching}
+              isAllActivitiesFetched={item.isAllActivitiesFetched}
               createdAt={item.createdAt}
               createdBy={item.createdBy}
               updatedAt={item.updatedAt}
@@ -148,8 +149,6 @@ const Attachments = React.memo(({ items, canEdit, isActivitiesFetching, isAllAct
 Attachments.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
-  isActivitiesFetching: PropTypes.bool.isRequired,
-  isAllActivitiesFetched: PropTypes.bool.isRequired,
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

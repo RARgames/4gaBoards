@@ -103,6 +103,7 @@ const CardModal = React.memo(
     onAttachmentUpdate,
     onAttachmentDelete,
     onActivitiesFetch,
+    onAttachmentActivitiesFetch,
     onCommentsFetch,
     onCommentCreate,
     onCommentUpdate,
@@ -726,15 +727,13 @@ const CardModal = React.memo(
               <Attachments
                 items={attachments}
                 canEdit={canEdit}
-                isActivitiesFetching={isActivitiesFetching}
-                isAllActivitiesFetched={isAllActivitiesFetched}
                 boardMemberships={boardMemberships}
                 onUpdate={onAttachmentUpdate}
                 onDelete={onAttachmentDelete}
                 onCoverUpdate={handleCoverUpdate}
                 onGalleryOpen={handleGalleryOpen}
                 onGalleryClose={handleGalleryClose}
-                onActivitiesFetch={onActivitiesFetch}
+                onActivitiesFetch={onAttachmentActivitiesFetch}
               />
               {canEdit && (
                 <AttachmentAdd onCreate={onAttachmentCreate}>
@@ -886,6 +885,7 @@ CardModal.propTypes = {
   onAttachmentUpdate: PropTypes.func.isRequired,
   onAttachmentDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onAttachmentActivitiesFetch: PropTypes.func.isRequired,
   onCommentsFetch: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,
   onCommentUpdate: PropTypes.func.isRequired,

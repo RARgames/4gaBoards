@@ -1,3 +1,4 @@
+import activities from './activities';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
@@ -16,6 +17,7 @@ import userPrefs from './user-prefs';
 import users from './users';
 
 export default {
+  ...activities,
   ...attachments,
   ...boardMemberships,
   ...boards,
