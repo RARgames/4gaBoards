@@ -24,27 +24,31 @@ export const makeSelectTaskById = () =>
 
 export const selectTaskById = makeSelectTaskById();
 
-export const selectUsersForTaskById = createSelector(
-  orm,
-  (_, id) => id,
-  (state) => selectCurrentUserId(state),
-  ({ Task }, id, currentUserId) => {
-    const taskModel = Task.withId(id);
+export const makeSelectUsersForTaskById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ Task }, id, currentUserId) => {
+      const taskModel = Task.withId(id);
 
-    if (!taskModel) {
-      return taskModel;
-    }
+      if (!taskModel) {
+        return taskModel;
+      }
 
-    return taskModel.users.toRefArray().sort((a, b) => {
-      if (a.id === currentUserId) return -1;
-      if (b.id === currentUserId) return 1;
-      return a.name.localeCompare(b.name);
-    });
-  },
-);
+      return taskModel.users.toRefArray().sort((a, b) => {
+        if (a.id === currentUserId) return -1;
+        if (b.id === currentUserId) return 1;
+        return a.name.localeCompare(b.name);
+      });
+    },
+  );
+
+export const selectUsersForTaskById = makeSelectUsersForTaskById();
 
 export default {
   makeSelectTaskById,
   selectTaskById,
+  makeSelectUsersForTaskById,
   selectUsersForTaskById,
 };
