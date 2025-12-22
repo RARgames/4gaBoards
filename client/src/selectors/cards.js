@@ -298,43 +298,6 @@ export const makeSelectTaskActivitiesByCardId = () =>
 
 export const selectTaskActivitiesByCardId = makeSelectTaskActivitiesByCardId();
 
-export const makeSelectCommentActivitiesByCardId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    (state) => selectCurrentUserId(state),
-    ({ Card }, id, currentUserId) => {
-      if (!id) {
-        return id;
-      }
-
-      const cardModel = Card.withId(id);
-
-      if (!cardModel) {
-        return cardModel;
-      }
-
-      const activities = cardModel
-        .getOrderedCommentActivitiesQuerySet()
-        .toModelArray()
-        .map((activityModel) => ({
-          ...getActivityDetails(activityModel, currentUserId),
-        }));
-
-      const commentActivitiesByCommentId = activities.reduce((acc, act) => {
-        const tid = act.data?.commentId;
-        if (tid == null) return acc;
-        if (!acc[tid]) acc[tid] = [];
-        acc[tid].push(act);
-        return acc;
-      }, {});
-
-      return commentActivitiesByCommentId;
-    },
-  );
-
-export const selectCommentActivitiesByCardId = makeSelectCommentActivitiesByCardId();
-
 export const selectCurrentCard = createSelector(
   orm,
   (state) => selectPath(state).cardId,
@@ -638,8 +601,6 @@ export default {
   selectActivitiesByCardId,
   makeSelectTaskActivitiesByCardId,
   selectTaskActivitiesByCardId,
-  makeSelectCommentActivitiesByCardId,
-  selectCommentActivitiesByCardId,
   selectCurrentCard,
   selectUsersForCurrentCard,
   selectLabelsForCurrentCard,

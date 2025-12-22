@@ -14,8 +14,6 @@ const Comments = React.memo(
     items,
     isCommentsFetching,
     isAllCommentsFetched,
-    isActivitiesFetching,
-    isAllActivitiesFetched,
     canEdit,
     canEditAllComments,
     commentMode,
@@ -128,8 +126,8 @@ const Comments = React.memo(
                     isGithubConnected={isGithubConnected}
                     githubRepo={githubRepo}
                     activities={item.activities}
-                    isActivitiesFetching={isActivitiesFetching}
-                    isAllActivitiesFetched={isAllActivitiesFetched}
+                    isActivitiesFetching={item.isActivitiesFetching}
+                    isAllActivitiesFetched={item.isAllActivitiesFetched}
                     createdAt={item.createdAt}
                     createdBy={item.createdBy}
                     updatedAt={item.updatedAt}
@@ -139,7 +137,7 @@ const Comments = React.memo(
                     onUpdate={(data) => handleCommentUpdate(item.id, data)}
                     onDelete={() => handleCommentDelete(item.id)}
                     onUserPrefsUpdate={onUserPrefsUpdate}
-                    onActivitiesFetch={onActivitiesFetch}
+                    onActivitiesFetch={() => onActivitiesFetch(item.id)}
                   />
                 ))}
               </div>
@@ -156,8 +154,6 @@ Comments.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isCommentsFetching: PropTypes.bool.isRequired,
   isAllCommentsFetched: PropTypes.bool.isRequired,
-  isActivitiesFetching: PropTypes.bool.isRequired,
-  isAllActivitiesFetched: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   canEditAllComments: PropTypes.bool.isRequired,
   commentMode: PropTypes.string.isRequired,

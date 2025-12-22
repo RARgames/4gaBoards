@@ -24,6 +24,30 @@ fetchAttachmentActivities.failure = (attachmentId, error) => ({
   },
 });
 
+const fetchCommentActivities = (commentId) => ({
+  type: ActionTypes.ACTIVITIES_COMMENT_FETCH,
+  payload: {
+    commentId,
+  },
+});
+
+fetchCommentActivities.success = (commentId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_COMMENT_FETCH__SUCCESS,
+  payload: {
+    commentId,
+    activities,
+    users,
+  },
+});
+
+fetchCommentActivities.failure = (commentId, error) => ({
+  type: ActionTypes.ACTIVITIES_COMMENT_FETCH__FAILURE,
+  payload: {
+    commentId,
+    error,
+  },
+});
+
 const fetchCardActivities = (cardId) => ({
   type: ActionTypes.ACTIVITIES_CARD_FETCH,
   payload: {
@@ -129,6 +153,7 @@ const handleActivityCreate = (activity) => ({
 
 export default {
   fetchAttachmentActivities,
+  fetchCommentActivities,
   fetchCardActivities,
   fetchListActivities,
   fetchBoardActivities,

@@ -52,9 +52,61 @@ export const makeSelectAttachmentActivitiesById = () =>
 
 export const selectAttachmentActivitiesById = makeSelectAttachmentActivitiesById();
 
+export const makeSelectLastActivityIdByCommentId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Comment }, id) => {
+      const commentModel = Comment.withId(id);
+
+      if (!commentModel) {
+        return commentModel;
+      }
+
+      const lastActivityModel = commentModel.getOrderedActivitiesQuerySet().last();
+
+      return lastActivityModel && lastActivityModel.id;
+    },
+  );
+
+export const selectLastActivityIdByCommentId = makeSelectLastActivityIdByCommentId();
+
+export const makeSelectCommentActivitiesById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ Comment }, id, currentUserId) => {
+      if (!id) {
+        return id;
+      }
+
+      const commentModel = Comment.withId(id);
+
+      if (!commentModel) {
+        return commentModel;
+      }
+
+      const activities = commentModel
+        .getOrderedActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...getActivityDetails(activityModel, currentUserId),
+        }));
+
+      return activities;
+    },
+  );
+
+export const selectCommentActivitiesById = makeSelectCommentActivitiesById();
+
 export default {
   makeSelectLastActivityIdByAttachmentId,
   selectLastActivityIdByAttachmentId,
   makeSelectAttachmentActivitiesById,
   selectAttachmentActivitiesById,
+  makeSelectLastActivityIdByCommentId,
+  selectLastActivityIdByCommentId,
+  makeSelectCommentActivitiesById,
+  selectCommentActivitiesById,
 };

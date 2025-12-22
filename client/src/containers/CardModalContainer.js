@@ -11,6 +11,7 @@ import selectors from '../selectors';
 
 const makeMapStateToProps = () => {
   const selectAttachmentActivitiesById = selectors.makeSelectAttachmentActivitiesById();
+  const selectCommentActivitiesById = selectors.makeSelectCommentActivitiesById();
   const selectUsersForTaskById = selectors.makeSelectUsersForTaskById();
 
   return (state) => {
@@ -55,10 +56,9 @@ const makeMapStateToProps = () => {
       ...attachment,
       activities: selectAttachmentActivitiesById(state, attachment.id),
     }));
-    const commentActivities = selectors.selectCommentActivitiesByCardId(state, id);
     const comments = selectors.selectCommentsForCurrentCard(state).map((comment) => ({
       ...comment,
-      activities: commentActivities[comment.id] || [],
+      activities: selectCommentActivitiesById(state, comment.id),
     }));
     const activities = selectors.selectActivitiesByCardId(state, id);
     const user = selectors.selectCurrentUser(state);
@@ -160,6 +160,7 @@ const mapDispatchToProps = (dispatch) =>
       onAttachmentDelete: entryActions.deleteAttachment,
       onActivitiesFetch: entryActions.fetchActivitiesInCurrentCard,
       onAttachmentActivitiesFetch: (attachmentId) => entryActions.fetchAttachmentActivities(attachmentId),
+      onCommentActivitiesFetch: (commentId) => entryActions.fetchCommentActivities(commentId),
       onCommentsFetch: entryActions.fetchCommentsInCurrentCard,
       onCommentCreate: entryActions.createCommentInCurrentCard,
       onCommentUpdate: entryActions.updateComment,

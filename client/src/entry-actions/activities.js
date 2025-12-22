@@ -7,6 +7,13 @@ const fetchAttachmentActivities = (attachmentId) => ({
   },
 });
 
+const fetchCommentActivities = (commentId) => ({
+  type: EntryActionTypes.ACTIVITIES_COMMENT_FETCH,
+  payload: {
+    commentId,
+  },
+});
+
 const fetchActivitiesInCurrentCard = () => ({
   type: EntryActionTypes.ACTIVITIES_IN_CURRENT_CARD_FETCH,
   payload: {},
@@ -49,6 +56,7 @@ const handleActivityCreate = (activity) => ({
 
 export default {
   fetchAttachmentActivities,
+  fetchCommentActivities,
   fetchActivitiesInCurrentCard,
   fetchActivitiesInCard,
   fetchActivitiesInList,

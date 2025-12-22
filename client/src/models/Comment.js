@@ -1,6 +1,7 @@
 import { attr, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -18,6 +19,12 @@ export default class extends BaseModel {
       to: 'User',
       as: 'user',
       relatedName: 'comments',
+    }),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
     }),
     createdAt: attr({
       getDefault: () => new Date(),
@@ -92,7 +99,24 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.ACTIVITIES_COMMENT_FETCH:
+        Comment.withId(payload.commentId).update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_COMMENT_FETCH__SUCCESS:
+        Comment.withId(payload.commentId).update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+        });
+
+        break;
       default:
     }
+  }
+
+  getOrderedActivitiesQuerySet() {
+    return this.activities.orderBy('createdAt', false);
   }
 }

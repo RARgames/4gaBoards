@@ -93,6 +93,7 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.ACTIVITIES_ATTACHMENT_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_COMMENT_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_CARD_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS:
