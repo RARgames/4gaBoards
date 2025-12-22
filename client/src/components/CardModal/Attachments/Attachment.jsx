@@ -13,7 +13,6 @@ import * as s from './Attachment.module.scss';
 const Attachment = React.forwardRef(
   (
     {
-      id,
       name,
       url,
       coverUrl,
@@ -108,7 +107,7 @@ const Attachment = React.forwardRef(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
-              onFetch={() => onActivitiesFetch(id)}
+              onFetch={onActivitiesFetch}
               position="left-start"
               offset={0}
             >
@@ -141,7 +140,6 @@ const Attachment = React.forwardRef(
 );
 
 Attachment.propTypes = {
-  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string,
   coverUrl: PropTypes.string,

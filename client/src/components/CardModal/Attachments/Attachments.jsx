@@ -86,7 +86,6 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
           isVisible ? (
             <Attachment
               ref={ref}
-              id={item.id}
               name={item.name}
               url={item.url}
               coverUrl={item.coverUrl}
@@ -106,7 +105,7 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
               onCoverDeselect={handleCoverDeselect}
               onUpdate={(data) => handleUpdate(item.id, data)}
               onDelete={() => handleDelete(item.id)}
-              onActivitiesFetch={onActivitiesFetch}
+              onActivitiesFetch={() => onActivitiesFetch(item.id)}
             />
           ) : (
             <span ref={ref} />
