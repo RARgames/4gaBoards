@@ -100,6 +100,54 @@ export const makeSelectCommentActivitiesById = () =>
 
 export const selectCommentActivitiesById = makeSelectCommentActivitiesById();
 
+export const makeSelectLastActivityIdByTaskId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Task }, id) => {
+      const taskModel = Task.withId(id);
+
+      if (!taskModel) {
+        return taskModel;
+      }
+
+      const lastActivityModel = taskModel.getOrderedActivitiesQuerySet().last();
+
+      return lastActivityModel && lastActivityModel.id;
+    },
+  );
+
+export const selectLastActivityIdByTaskId = makeSelectLastActivityIdByTaskId();
+
+export const makeSelectTaskActivitiesById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ Task }, id, currentUserId) => {
+      if (!id) {
+        return id;
+      }
+
+      const taskModel = Task.withId(id);
+
+      if (!taskModel) {
+        return taskModel;
+      }
+
+      const activities = taskModel
+        .getOrderedActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...getActivityDetails(activityModel, currentUserId),
+        }));
+
+      return activities;
+    },
+  );
+
+export const selectTaskActivitiesById = makeSelectTaskActivitiesById();
+
 export default {
   makeSelectLastActivityIdByAttachmentId,
   selectLastActivityIdByAttachmentId,
@@ -109,4 +157,8 @@ export default {
   selectLastActivityIdByCommentId,
   makeSelectCommentActivitiesById,
   selectCommentActivitiesById,
+  makeSelectLastActivityIdByTaskId,
+  selectLastActivityIdByTaskId,
+  makeSelectTaskActivitiesById,
+  selectTaskActivitiesById,
 };

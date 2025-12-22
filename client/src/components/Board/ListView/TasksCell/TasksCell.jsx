@@ -17,8 +17,6 @@ const TasksCell = React.memo(
     cellClassName,
     allBoardMemberships,
     boardMemberships,
-    isActivitiesFetching,
-    isAllActivitiesFetched,
     closestDueDate,
     canEdit,
     onTaskUpdate,
@@ -57,8 +55,6 @@ const TasksCell = React.memo(
           canEdit={canEdit}
           allBoardMemberships={allBoardMemberships}
           boardMemberships={boardMemberships}
-          isActivitiesFetching={isActivitiesFetching}
-          isAllActivitiesFetched={isAllActivitiesFetched}
           onCreate={onTaskCreate}
           onUpdate={onTaskUpdate}
           onMove={onTaskMove}
@@ -81,8 +77,6 @@ TasksCell.propTypes = {
   cellClassName: PropTypes.string,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  isActivitiesFetching: PropTypes.bool.isRequired,
-  isAllActivitiesFetched: PropTypes.bool.isRequired,
   closestDueDate: PropTypes.instanceOf(Date),
   canEdit: PropTypes.bool.isRequired,
   onTaskUpdate: PropTypes.func.isRequired,

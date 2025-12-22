@@ -15,14 +15,12 @@ const mapStateToProps = () => {
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const closestDueDate = selectClosestDueDateByCardId(state, id);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
-    const { name: cardName, isActivitiesFetching, isAllActivitiesFetched } = selectors.selectCardById(state, id);
+    const { name: cardName } = selectors.selectCardById(state, id);
 
     return {
       cardName,
       allBoardMemberships,
       boardMemberships,
-      isActivitiesFetching,
-      isAllActivitiesFetched,
       closestDueDate,
       canEdit: isCurrentUserEditor,
     };
@@ -39,7 +37,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onUserFromTaskRemove: (userId, taskId) => entryActions.removeUserFromTask(userId, taskId),
       onTaskCreate: (data) => entryActions.createTask(id, data),
       onTaskMove: (taskId, index) => entryActions.moveTask(taskId, index),
-      onActivitiesFetch: () => entryActions.fetchActivitiesInCard(id),
+      onActivitiesFetch: (taskId) => entryActions.fetchTaskActivities(taskId),
     },
     dispatch,
   );

@@ -1,6 +1,7 @@
 import { attr, fk, many } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -20,6 +21,12 @@ export default class extends BaseModel {
       relatedName: 'tasks',
     }),
     users: many('User', 'tasks'),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
+    }),
     createdAt: attr(),
     createdById: fk({
       to: 'User',
@@ -173,8 +180,25 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.ACTIVITIES_TASK_FETCH:
+        Task.withId(payload.taskId).update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_TASK_FETCH__SUCCESS:
+        Task.withId(payload.taskId).update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+        });
+
+        break;
       default:
     }
+  }
+
+  getOrderedActivitiesQuerySet() {
+    return this.activities.orderBy('createdAt', false);
   }
 
   deleteUsers() {

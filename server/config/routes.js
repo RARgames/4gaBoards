@@ -95,6 +95,7 @@ module.exports.routes = {
 
   'GET /api/attachments/:attachmentId/actions': 'actions/index-attachment-actions',
   'GET /api/comments/:commentId/actions': 'actions/index-comment-actions',
+  'GET /api/tasks/:taskId/actions': 'actions/index-task-actions',
   'GET /api/cards/:cardId/actions': 'actions/index-card-actions',
   'GET /api/lists/:listId/actions': 'actions/index-list-actions',
   'GET /api/boards/:boardId/actions': 'actions/index-board-actions',

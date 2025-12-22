@@ -8,7 +8,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import { useToggle } from '../../lib/hooks';
 import DueDate from '../DueDate';
 import { Button, ButtonStyle, ProgressBar, ProgressBarSize, Icon, IconType, IconSize } from '../Utils';
-import Item from './Item';
+import Task from './Task';
 import TaskAdd from './TaskAdd';
 
 import * as s from './Tasks.module.scss';
@@ -27,8 +27,6 @@ const Tasks = React.forwardRef(
       variant,
       isCardActive,
       items,
-      isActivitiesFetching,
-      isAllActivitiesFetched,
       closestDueDate,
       canEdit,
       allBoardMemberships,
@@ -112,7 +110,7 @@ const Tasks = React.forwardRef(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...droppableProps} ref={innerRef} onMouseEnter={onMouseEnterTasks} onMouseLeave={onMouseLeaveTasks} data-prevent-card-switch>
             {items.map((item, index) => (
-              <Item
+              <Task
                 cardId={cardId}
                 cardName={cardName}
                 variant={variant}
@@ -125,8 +123,8 @@ const Tasks = React.forwardRef(
                 boardMemberships={boardMemberships}
                 users={item.users}
                 activities={item.activities}
-                isActivitiesFetching={isActivitiesFetching}
-                isAllActivitiesFetched={isAllActivitiesFetched}
+                isActivitiesFetching={item.isActivitiesFetching}
+                isAllActivitiesFetched={item.isAllActivitiesFetched}
                 isCompleted={item.isCompleted}
                 isPersisted={item.isPersisted}
                 canEdit={canEdit}
@@ -139,7 +137,7 @@ const Tasks = React.forwardRef(
                 onDelete={() => handleDelete(item.id)}
                 onUserAdd={(userId) => handleUserAdd(item.id, userId)}
                 onUserRemove={(userId) => handleUserRemove(item.id, userId)}
-                onActivitiesFetch={onActivitiesFetch}
+                onActivitiesFetch={() => onActivitiesFetch(item.id)}
               />
             ))}
             {placeholder}
@@ -191,8 +189,6 @@ Tasks.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  isActivitiesFetching: PropTypes.bool.isRequired,
-  isAllActivitiesFetched: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,

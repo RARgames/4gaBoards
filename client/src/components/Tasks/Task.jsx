@@ -14,7 +14,7 @@ import ActionsPopup from './ActionsPopup';
 import TaskEdit from './TaskEdit';
 
 import * as gs from '../../global.module.scss';
-import * as s from './Item.module.scss';
+import * as s from './Task.module.scss';
 
 const VARIANTS = {
   CARD: 'card',
@@ -22,7 +22,7 @@ const VARIANTS = {
   LISTVIEW: 'listView',
 };
 
-const Item = React.memo(
+const Task = React.memo(
   ({
     cardId,
     cardName,
@@ -223,7 +223,7 @@ const Item = React.memo(
   },
 );
 
-Item.propTypes = {
+Task.propTypes = {
   cardId: PropTypes.string.isRequired,
   cardName: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(Object.values(VARIANTS)).isRequired,
@@ -252,7 +252,7 @@ Item.propTypes = {
   onActivitiesFetch: PropTypes.func.isRequired,
 };
 
-Item.defaultProps = {
+Task.defaultProps = {
   dueDate: undefined,
   createdAt: undefined,
   createdBy: undefined,
@@ -260,4 +260,4 @@ Item.defaultProps = {
   updatedBy: undefined,
 };
 
-export default Item;
+export default Task;

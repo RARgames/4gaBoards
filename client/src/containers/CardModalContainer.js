@@ -12,6 +12,7 @@ import selectors from '../selectors';
 const makeMapStateToProps = () => {
   const selectAttachmentActivitiesById = selectors.makeSelectAttachmentActivitiesById();
   const selectCommentActivitiesById = selectors.makeSelectCommentActivitiesById();
+  const selectTaskActivitiesById = selectors.makeSelectTaskActivitiesById();
   const selectUsersForTaskById = selectors.makeSelectUsersForTaskById();
 
   return (state) => {
@@ -46,11 +47,10 @@ const makeMapStateToProps = () => {
 
     const users = selectors.selectUsersForCurrentCard(state);
     const labels = selectors.selectLabelsForCurrentCard(state);
-    const taskActivities = selectors.selectTaskActivitiesByCardId(state, id);
     const tasks = selectors.selectTasksForCurrentCard(state).map((task) => ({
       ...task,
       users: selectUsersForTaskById(state, task.id),
-      activities: taskActivities[task.id] || [],
+      activities: selectTaskActivitiesById(state, task.id),
     }));
     const attachments = selectors.selectAttachmentsForCurrentCard(state).map((attachment) => ({
       ...attachment,
@@ -161,6 +161,7 @@ const mapDispatchToProps = (dispatch) =>
       onActivitiesFetch: entryActions.fetchActivitiesInCurrentCard,
       onAttachmentActivitiesFetch: (attachmentId) => entryActions.fetchAttachmentActivities(attachmentId),
       onCommentActivitiesFetch: (commentId) => entryActions.fetchCommentActivities(commentId),
+      onTaskActivitiesFetch: (taskId) => entryActions.fetchTaskActivities(taskId),
       onCommentsFetch: entryActions.fetchCommentsInCurrentCard,
       onCommentCreate: entryActions.createCommentInCurrentCard,
       onCommentUpdate: entryActions.updateComment,

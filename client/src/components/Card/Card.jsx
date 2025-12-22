@@ -77,6 +77,7 @@ const Card = React.memo(
     onTaskCreate,
     onTaskMove,
     onActivitiesFetch,
+    onTaskActivitiesFetch,
   }) => {
     const [t] = useTranslation();
     const nameEdit = useRef(null);
@@ -222,8 +223,6 @@ const Card = React.memo(
                 canEdit={canEdit}
                 allBoardMemberships={boardAndTaskMemberships}
                 boardMemberships={boardMemberships}
-                isActivitiesFetching={isActivitiesFetching}
-                isAllActivitiesFetched={isAllActivitiesFetched}
                 onCreate={onTaskCreate}
                 onUpdate={onTaskUpdate}
                 onMove={onTaskMove}
@@ -233,7 +232,7 @@ const Card = React.memo(
                 onUserRemove={onUserFromTaskRemove}
                 onMouseEnterTasks={handleTasksMouseEnter}
                 onMouseLeaveTasks={handleTasksMouseOut}
-                onActivitiesFetch={onActivitiesFetch}
+                onActivitiesFetch={onTaskActivitiesFetch}
               />
             )}
             {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
@@ -441,6 +440,7 @@ Card.propTypes = {
   onTaskCreate: PropTypes.func.isRequired,
   onTaskMove: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onTaskActivitiesFetch: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {

@@ -15,6 +15,12 @@ const getCommentActivities = (commentId, data, headers) =>
     items: body.items.map(transformActivity),
   }));
 
+const getTaskActivities = (taskId, data, headers) =>
+  socket.get(`/tasks/${taskId}/actions`, data, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformActivity),
+  }));
+
 const getCardActivities = (cardId, data, headers) =>
   socket.get(`/cards/${cardId}/actions`, data, headers).then((body) => ({
     ...body,
@@ -51,6 +57,7 @@ const makeHandleActivityCreate = (next) => (body) => {
 export default {
   getAttachmentActivities,
   getCommentActivities,
+  getTaskActivities,
   getCardActivities,
   getListActivities,
   getBoardActivities,

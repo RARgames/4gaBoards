@@ -105,6 +105,7 @@ const CardModal = React.memo(
     onActivitiesFetch,
     onAttachmentActivitiesFetch,
     onCommentActivitiesFetch,
+    onTaskActivitiesFetch,
     onCommentsFetch,
     onCommentCreate,
     onCommentUpdate,
@@ -689,8 +690,6 @@ const CardModal = React.memo(
               canEdit={canEdit}
               allBoardMemberships={boardAndTaskMemberships}
               boardMemberships={boardMemberships}
-              isActivitiesFetching={isActivitiesFetching}
-              isAllActivitiesFetched={isAllActivitiesFetched}
               onCreate={onTaskCreate}
               onUpdate={onTaskUpdate}
               onMove={onTaskMove}
@@ -698,7 +697,7 @@ const CardModal = React.memo(
               onDelete={onTaskDelete}
               onUserAdd={onUserToTaskAdd}
               onUserRemove={onUserFromTaskRemove}
-              onActivitiesFetch={onActivitiesFetch}
+              onActivitiesFetch={onTaskActivitiesFetch}
             />
           )}
         </div>
@@ -886,6 +885,7 @@ CardModal.propTypes = {
   onActivitiesFetch: PropTypes.func.isRequired,
   onAttachmentActivitiesFetch: PropTypes.func.isRequired,
   onCommentActivitiesFetch: PropTypes.func.isRequired,
+  onTaskActivitiesFetch: PropTypes.func.isRequired,
   onCommentsFetch: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,
   onCommentUpdate: PropTypes.func.isRequired,

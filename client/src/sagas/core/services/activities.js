@@ -47,6 +47,27 @@ export function* fetchCommentActivities(commentId) {
   yield put(actions.fetchCommentActivities.success(commentId, activities, users));
 }
 
+export function* fetchTaskActivities(taskId) {
+  const lastId = yield select(selectors.selectLastActivityIdByTaskId, taskId);
+
+  yield put(actions.fetchTaskActivities(taskId));
+
+  let activities;
+  let users;
+
+  try {
+    ({
+      items: activities,
+      included: { users },
+    } = yield call(request, api.getTaskActivities, taskId, { beforeId: lastId }));
+  } catch (error) {
+    yield put(actions.fetchTaskActivities.failure(taskId, error));
+    return;
+  }
+
+  yield put(actions.fetchTaskActivities.success(taskId, activities, users));
+}
+
 export function* fetchActivitiesInCard(cardId) {
   const lastId = yield select(selectors.selectLastActivityIdByCardId, cardId);
 
@@ -144,6 +165,7 @@ export function* handleActivityCreate(activity) {
 export default {
   fetchAttachmentActivities,
   fetchCommentActivities,
+  fetchTaskActivities,
   fetchActivitiesInCard,
   fetchActivitiesInCurrentCard,
   fetchActivitiesInList,

@@ -10,6 +10,7 @@ const makeMapStateToProps = () => {
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
   const selectClosestDueDateByCardId = selectors.makeSelectClosestDueDateByCardId();
   const selectUsersForTaskById = selectors.makeSelectUsersForTaskById();
+  const selectTaskActivitiesById = selectors.makeSelectTaskActivitiesById();
 
   return (state) => {
     const listIds = selectors.selectListIdsForCurrentBoard(state);
@@ -25,11 +26,10 @@ const makeMapStateToProps = () => {
       const users = selectors.selectUsersByCardId(state, cardId);
       const labels = selectors.selectLabelsByCardId(state, cardId);
       const attachmentsCount = selectors.selectAttachmentsCountByCardId(state, cardId);
-      const taskActivities = selectors.selectTaskActivitiesByCardId(state, cardId);
       const tasks = selectors.selectTasksByCardId(state, cardId).map((task) => ({
         ...task,
         users: selectUsersForTaskById(state, task.id),
-        activities: taskActivities[task.id] || [],
+        activities: selectTaskActivitiesById(state, task.id),
       }));
       const notificationsCount = selectors.selectNotificationsTotalByCardId(state, cardId);
       const closestDueDate = selectClosestDueDateByCardId(state, cardId);

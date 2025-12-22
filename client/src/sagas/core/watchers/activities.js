@@ -7,6 +7,7 @@ export default function* activitiesWatchers() {
   yield all([
     takeEvery(EntryActionTypes.ACTIVITIES_ATTACHMENT_FETCH, ({ payload: { attachmentId } }) => services.fetchAttachmentActivities(attachmentId)),
     takeEvery(EntryActionTypes.ACTIVITIES_COMMENT_FETCH, ({ payload: { commentId } }) => services.fetchCommentActivities(commentId)),
+    takeEvery(EntryActionTypes.ACTIVITIES_TASK_FETCH, ({ payload: { taskId } }) => services.fetchTaskActivities(taskId)),
     takeEvery(EntryActionTypes.ACTIVITIES_IN_CURRENT_CARD_FETCH, () => services.fetchActivitiesInCurrentCard()),
     takeEvery(EntryActionTypes.ACTIVITIES_CARD_FETCH, ({ payload: { cardId } }) => services.fetchActivitiesInCard(cardId)),
     takeEvery(EntryActionTypes.ACTIVITIES_LIST_FETCH, ({ payload: { listId } }) => services.fetchActivitiesInList(listId)),

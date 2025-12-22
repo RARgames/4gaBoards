@@ -15,6 +15,7 @@ const makeMapStateToProps = () => {
   const selectAttachmentsCountByCardId = selectors.makeSelectAttachmentsCountByCardId();
   const selectClosestDueDateByCardId = selectors.makeSelectClosestTaskDueDateByCardId();
   const selectUsersForTaskById = selectors.makeSelectUsersForTaskById();
+  const selectTaskActivitiesById = selectors.makeSelectTaskActivitiesById();
 
   return (state, { id, index }) => {
     const currentCardId = selectors.selectPath(state).cardId;
@@ -35,11 +36,10 @@ const makeMapStateToProps = () => {
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
-    const taskActivities = selectors.selectTaskActivitiesByCardId(state, id);
     const tasks = selectTasksByCardId(state, id).map((task) => ({
       ...task,
       users: selectUsersForTaskById(state, task.id),
-      activities: taskActivities[task.id] || [],
+      activities: selectTaskActivitiesById(state, task.id),
     }));
     const notificationsTotal = selectNotificationsTotalByCardId(state, id);
     const attachmentsCount = selectAttachmentsCountByCardId(state, id);
@@ -111,6 +111,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onTaskCreate: (data) => entryActions.createTask(id, data),
       onTaskMove: (taskId, index) => entryActions.moveTask(taskId, index),
       onActivitiesFetch: () => entryActions.fetchActivitiesInCard(id),
+      onTaskActivitiesFetch: (taskId) => entryActions.fetchTaskActivities(taskId),
     },
     dispatch,
   );
