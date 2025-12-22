@@ -164,25 +164,6 @@ export const makeSelectLastCommentIdByCardId = () =>
 
 export const selectLastCommentIdByCardId = makeSelectLastCommentIdByCardId();
 
-export const makeSelectLastActivityIdByCardId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    ({ Card }, id) => {
-      const cardModel = Card.withId(id);
-
-      if (!cardModel) {
-        return cardModel;
-      }
-
-      const lastActivityModel = cardModel.getOrderedCardActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
-    },
-  );
-
-export const selectLastActivityIdByCardId = makeSelectLastActivityIdByCardId();
-
 export const makeSelectNotificationsByCardId = () =>
   createSelector(
     orm,
@@ -233,33 +214,6 @@ export const makeSelectAttachmentsCountByCardId = () =>
   );
 
 export const selectAttachmentsCountByCardId = makeSelectAttachmentsCountByCardId();
-
-export const makeSelectActivitiesByCardId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    (state) => selectCurrentUserId(state),
-    ({ Card }, id, currentUserId) => {
-      if (!id) {
-        return id;
-      }
-
-      const cardModel = Card.withId(id);
-
-      if (!cardModel) {
-        return cardModel;
-      }
-
-      return cardModel
-        .getOrderedCardActivitiesQuerySet()
-        .toModelArray()
-        .map((activityModel) => ({
-          ...getActivityDetails(activityModel, currentUserId),
-        }));
-    },
-  );
-
-export const selectActivitiesByCardId = makeSelectActivitiesByCardId();
 
 export const selectCurrentCard = createSelector(
   orm,
@@ -552,16 +506,12 @@ export default {
   selectClosestDueDateByCardId,
   makeSelectLastCommentIdByCardId,
   selectLastCommentIdByCardId,
-  makeSelectLastActivityIdByCardId,
-  selectLastActivityIdByCardId,
   makeSelectNotificationsByCardId,
   selectNotificationsByCardId,
   makeSelectNotificationsTotalByCardId,
   selectNotificationsTotalByCardId,
   makeSelectAttachmentsCountByCardId,
   selectAttachmentsCountByCardId,
-  makeSelectActivitiesByCardId,
-  selectActivitiesByCardId,
   selectCurrentCard,
   selectUsersForCurrentCard,
   selectLabelsForCurrentCard,

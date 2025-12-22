@@ -60,7 +60,7 @@ const makeMapStateToProps = () => {
       ...comment,
       activities: selectCommentActivitiesById(state, comment.id),
     }));
-    const activities = selectors.selectActivitiesByCardId(state, id);
+    const activities = selectors.selectCardActivitiesById(state, id);
     const user = selectors.selectCurrentUser(state);
     const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, hideClosestDueDate, preferredDetailsFont } =
       selectors.selectCurrentUserPrefs(state);

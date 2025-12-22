@@ -47,7 +47,7 @@ const makeMapStateToProps = () => {
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const url = selectors.selectUrlForCard(state, id);
-    const activities = selectors.selectActivitiesByCardId(state, id);
+    const activities = selectors.selectCardActivitiesById(state, id);
 
     return {
       id,

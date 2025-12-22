@@ -6,7 +6,7 @@ import selectors from '../../../selectors';
 import request from '../request';
 
 export function* fetchAttachmentActivities(attachmentId) {
-  const lastId = yield select(selectors.selectLastActivityIdByAttachmentId, attachmentId);
+  const lastId = yield select(selectors.selectLastAttachmentActivityIdById, attachmentId);
 
   yield put(actions.fetchAttachmentActivities(attachmentId));
 
@@ -27,7 +27,7 @@ export function* fetchAttachmentActivities(attachmentId) {
 }
 
 export function* fetchCommentActivities(commentId) {
-  const lastId = yield select(selectors.selectLastActivityIdByCommentId, commentId);
+  const lastId = yield select(selectors.selectLastCommentActivityIdById, commentId);
 
   yield put(actions.fetchCommentActivities(commentId));
 
@@ -48,7 +48,7 @@ export function* fetchCommentActivities(commentId) {
 }
 
 export function* fetchTaskActivities(taskId) {
-  const lastId = yield select(selectors.selectLastActivityIdByTaskId, taskId);
+  const lastId = yield select(selectors.selectLastTaskActivityIdById, taskId);
 
   yield put(actions.fetchTaskActivities(taskId));
 
@@ -69,7 +69,7 @@ export function* fetchTaskActivities(taskId) {
 }
 
 export function* fetchActivitiesInCard(cardId) {
-  const lastId = yield select(selectors.selectLastActivityIdByCardId, cardId);
+  const lastId = yield select(selectors.selectLastCardActivityIdById, cardId);
 
   yield put(actions.fetchCardActivities(cardId));
 
@@ -96,7 +96,7 @@ export function* fetchActivitiesInCurrentCard() {
 }
 
 export function* fetchActivitiesInList(listId) {
-  const lastId = yield select(selectors.selectLastActivityIdByListId, listId);
+  const lastId = yield select(selectors.selectLastListActivityIdById, listId);
 
   yield put(actions.fetchListActivities(listId));
 
@@ -117,7 +117,7 @@ export function* fetchActivitiesInList(listId) {
 }
 
 export function* fetchActivitiesInBoard(boardId) {
-  const lastId = yield select(selectors.selectLastActivityIdByBoardId, boardId);
+  const lastId = yield select(selectors.selectLastBoardActivityIdById, boardId);
 
   yield put(actions.fetchBoardActivities(boardId));
 
@@ -138,7 +138,7 @@ export function* fetchActivitiesInBoard(boardId) {
 }
 
 export function* fetchActivitiesInProject(projectId) {
-  const lastId = yield select(selectors.selectLastActivityIdByProjectId, projectId);
+  const lastId = yield select(selectors.selectLastProjectActivityIdById, projectId);
 
   yield put(actions.fetchProjectActivities(projectId));
 

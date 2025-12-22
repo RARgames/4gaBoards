@@ -127,56 +127,6 @@ export const selectIsCurrentUserManagerForCurrentProject = createSelector(
   },
 );
 
-export const makeSelectActivitiesByProjectId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    (state) => selectCurrentUserId(state),
-    ({ Project }, id, currentUserId) => {
-      if (!id) {
-        return id;
-      }
-
-      const projectModel = Project.withId(id);
-
-      if (!projectModel) {
-        return projectModel;
-      }
-
-      return projectModel
-        .getOrderedProjectActivitiesQuerySet()
-        .toModelArray()
-        .map((activityModel) => ({
-          ...getActivityDetails(activityModel, currentUserId),
-        }));
-    },
-  );
-
-export const selectActivitiesByProjectId = makeSelectActivitiesByProjectId();
-
-export const makeSelectLastActivityIdByProjectId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    ({ Project }, id) => {
-      if (!id) {
-        return id;
-      }
-
-      const projectModel = Project.withId(id);
-
-      if (!projectModel) {
-        return projectModel;
-      }
-
-      const lastActivityModel = projectModel.getOrderedProjectActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
-    },
-  );
-
-export const selectLastActivityIdByProjectId = makeSelectLastActivityIdByProjectId();
-
 export const makeSelectNotificationsByProjectId = () =>
   createSelector(
     orm,
@@ -225,10 +175,6 @@ export default {
   selectManagersForProject,
   selectBoardsForCurrentProject,
   selectIsCurrentUserManagerForCurrentProject,
-  makeSelectActivitiesByProjectId,
-  selectActivitiesByProjectId,
-  makeSelectLastActivityIdByProjectId,
-  selectLastActivityIdByProjectId,
   makeSelectNotificationsByProjectId,
   selectNotificationsByProjectId,
   makeSelectNotificationsTotalByProjectId,

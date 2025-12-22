@@ -21,7 +21,7 @@ const makeMapStateToProps = () => {
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
-    const activities = selectors.selectActivitiesByListId(state, id);
+    const activities = selectors.selectListActivitiesById(state, id);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 

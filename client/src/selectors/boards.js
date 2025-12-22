@@ -338,56 +338,6 @@ export const selectFilteredCardsCountForCurrentBoard = createSelector(
   },
 );
 
-export const makeSelectActivitiesByBoardId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    (state) => selectCurrentUserId(state),
-    ({ Board }, id, currentUserId) => {
-      if (!id) {
-        return id;
-      }
-
-      const boardModel = Board.withId(id);
-
-      if (!boardModel) {
-        return boardModel;
-      }
-
-      return boardModel
-        .getOrderedBoardActivitiesQuerySet()
-        .toModelArray()
-        .map((activityModel) => ({
-          ...getActivityDetails(activityModel, currentUserId),
-        }));
-    },
-  );
-
-export const selectActivitiesByBoardId = makeSelectActivitiesByBoardId();
-
-export const makeSelectLastActivityIdByBoardId = () =>
-  createSelector(
-    orm,
-    (_, id) => id,
-    ({ Board }, id) => {
-      if (!id) {
-        return id;
-      }
-
-      const boardModel = Board.withId(id);
-
-      if (!boardModel) {
-        return boardModel;
-      }
-
-      const lastActivityModel = boardModel.getOrderedBoardActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
-    },
-  );
-
-export const selectLastActivityIdByBoardId = makeSelectLastActivityIdByBoardId();
-
 export const makeSelectNotificationsByBoardId = () =>
   createSelector(
     orm,
@@ -446,10 +396,6 @@ export default {
   selectIsBoardWithIdExists,
   selectCardsCountForCurrentBoard,
   selectFilteredCardsCountForCurrentBoard,
-  makeSelectActivitiesByBoardId,
-  selectActivitiesByBoardId,
-  makeSelectLastActivityIdByBoardId,
-  selectLastActivityIdByBoardId,
   makeSelectNotificationsByBoardId,
   selectNotificationsByBoardId,
   makeSelectNotificationsTotalByBoardId,
