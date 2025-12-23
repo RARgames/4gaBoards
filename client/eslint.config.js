@@ -100,15 +100,22 @@ module.exports = [
       'perfectionist/sort-imports': [
         'warn',
         {
-          newlinesBetween: 'always',
-          groups: ['react', { newlinesBetween: 'never' }, ['builtin', 'external', 'internal'], ['parent', 'sibling', 'index'], 'unknown', 'css', { newlinesBetween: 'never' }, 'moduleCss'],
-          customGroups: {
-            value: {
-              react: ['^react$', '^react-.+'],
-              css: ['^.*(?<!\\.module)\\.(css|scss)$'],
-              moduleCss: ['^.*\\.module\\.scss$'],
+          newlinesBetween: 1,
+          groups: ['react', { newlinesBetween: 0 }, ['builtin', 'external', 'internal'], ['parent', 'sibling', 'index'], 'unknown', 'css', { newlinesBetween: 0 }, 'moduleCss'],
+          customGroups: [
+            {
+              groupName: 'react',
+              elementNamePattern: ['^react$', '^react-.+'],
             },
-          },
+            {
+              groupName: 'css',
+              elementNamePattern: ['^.*(?<!\\.module)\\.(css|scss)$'],
+            },
+            {
+              groupName: 'moduleCss',
+              elementNamePattern: ['^.*\\.module\\.scss$'],
+            },
+          ],
           type: 'natural',
           order: 'asc',
           ignoreCase: true,
