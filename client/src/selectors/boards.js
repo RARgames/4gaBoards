@@ -1,7 +1,6 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
-import getActivityDetails from '../utils/get-activity-details';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { sortByCurrentUserAndName } from '../utils/membership-helpers';

@@ -2,7 +2,6 @@ import { createSelector } from 'redux-orm';
 
 import Paths from '../constants/Paths';
 import orm from '../orm';
-import getActivityDetails from '../utils/get-activity-details';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { sortByCurrentUserAndName, addBoardMemberships, addCardMemberships, addTaskMemberships } from '../utils/membership-helpers';
