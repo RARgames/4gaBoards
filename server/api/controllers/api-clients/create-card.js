@@ -122,7 +122,22 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'description', 'dueDate', 'timer']);
+    let { position } = inputs;
+
+    if (_.isUndefined(position)) {
+      const lastCard = await Card.find({
+        where: { listId: targetList.id },
+        sort: 'position DESC',
+        limit: 1,
+      });
+
+      position = lastCard.length ? lastCard[0].position + 1 : 0;
+    }
+
+    const values = {
+      ..._.pick(inputs, ['name', 'description', 'dueDate', 'timer']),
+      position,
+    };
 
     const card = await sails.helpers.cards.createOne
       .with({
