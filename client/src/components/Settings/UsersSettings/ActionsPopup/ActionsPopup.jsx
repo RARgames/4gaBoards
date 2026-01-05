@@ -18,7 +18,8 @@ const StepTypes = {
   EDIT_EMAIL: 'EDIT_EMAIL',
   EDIT_PASSWORD: 'EDIT_PASSWORD',
   DELETE: 'DELETE',
-  ACTIVITY: 'ACTIVITY',
+  USER_ACTIVITY: 'USER_ACTIVITY',
+  USER_ACCOUNT_ACTIVITY: 'USER_ACCOUNT_ACTIVITY',
 };
 
 const ActionsStep = React.memo(
@@ -37,6 +38,8 @@ const ActionsStep = React.memo(
     onPasswordUpdate,
     onPasswordUpdateMessageDismiss,
     onDelete,
+    onUserActivitiesFetch,
+    onUserAccountActivitiesFetch,
     onClose,
   }) => {
     const [t] = useTranslation();
@@ -62,8 +65,12 @@ const ActionsStep = React.memo(
       openStep(StepTypes.DELETE);
     }, [openStep]);
 
-    const handleActivityClick = useCallback(() => {
-      openStep(StepTypes.ACTIVITY);
+    const handleUserActivityClick = useCallback(() => {
+      openStep(StepTypes.USER_ACTIVITY);
+    }, [openStep]);
+
+    const handleUserAccountActivityClick = useCallback(() => {
+      openStep(StepTypes.USER_ACCOUNT_ACTIVITY);
     }, [openStep]);
 
     const handleDelete = useCallback(() => {
@@ -126,7 +133,22 @@ const ActionsStep = React.memo(
               onBack={handleBack}
             />
           );
-        case StepTypes.ACTIVITY:
+        case StepTypes.USER_ACTIVITY:
+          return (
+            <ActivityStep
+              title={t('common.activityBy', { name: user.name })}
+              createdAt={createdAt}
+              createdBy={createdBy}
+              updatedAt={updatedAt}
+              updatedBy={updatedBy}
+              activities={user.activities}
+              isFetching={user.isUserActivitiesFetching}
+              isAllFetched={user.isAllUserActivitiesFetched}
+              onFetch={() => onUserActivitiesFetch(user.id)}
+              onBack={handleBack}
+            />
+          );
+        case StepTypes.USER_ACCOUNT_ACTIVITY:
           return (
             <ActivityStep
               title={t('common.activityFor', { name: user.name })}
@@ -134,11 +156,10 @@ const ActionsStep = React.memo(
               createdBy={createdBy}
               updatedAt={updatedAt}
               updatedBy={updatedBy}
-              // TODO replace with actual activities
-              activities={[]}
-              isFetching={false}
-              isAllFetched
-              onFetch={() => {}}
+              activities={user.userAccountActivities}
+              isFetching={user.isUserAccountActivitiesFetching}
+              isAllFetched={user.isAllUserAccountActivitiesFetched}
+              onFetch={() => onUserAccountActivitiesFetch(user.id)}
               onBack={handleBack}
             />
           );
@@ -152,7 +173,8 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
         <Button style={ButtonStyle.PopupContext} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleUserActivityClick} />
+        <Button style={ButtonStyle.PopupContext} content={t('common.checkUserAccountActivity', { context: 'title' })} onClick={handleUserAccountActivityClick} />
         {!isCurrentUser && <Popup.Separator />}
         {!isCurrentUser && <Button style={ButtonStyle.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />}
       </>
@@ -175,6 +197,8 @@ ActionsStep.propTypes = {
   onPasswordUpdate: PropTypes.func.isRequired,
   onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onUserActivitiesFetch: PropTypes.func.isRequired,
+  onUserAccountActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

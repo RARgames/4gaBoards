@@ -100,6 +100,8 @@ module.exports.routes = {
   'GET /api/lists/:listId/actions': 'actions/index-list-actions',
   'GET /api/boards/:boardId/actions': 'actions/index-board-actions',
   'GET /api/projects/:projectId/actions': 'actions/index-project-actions',
+  'GET /api/users/:userId/actions': 'actions/index-user-actions',
+  'GET /api/users/:userAccountId/account-actions': 'actions/index-user-account-actions',
 
   'GET /api/cards/:cardId/comments': 'comments/index',
   'POST /api/cards/:cardId/comments': 'comments/create',

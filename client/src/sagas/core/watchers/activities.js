@@ -13,6 +13,8 @@ export default function* activitiesWatchers() {
     takeEvery(EntryActionTypes.ACTIVITIES_LIST_FETCH, ({ payload: { listId } }) => services.fetchActivitiesInList(listId)),
     takeEvery(EntryActionTypes.ACTIVITIES_BOARD_FETCH, ({ payload: { boardId } }) => services.fetchActivitiesInBoard(boardId)),
     takeEvery(EntryActionTypes.ACTIVITIES_PROJECT_FETCH, ({ payload: { projectId } }) => services.fetchActivitiesInProject(projectId)),
+    takeEvery(EntryActionTypes.ACTIVITIES_USER_FETCH, ({ payload: { userId } }) => services.fetchUserActivities(userId)),
+    takeEvery(EntryActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH, ({ payload: { userAccountId } }) => services.fetchUserAccountActivities(userAccountId)),
     takeEvery(EntryActionTypes.ACTIVITY_CREATE_HANDLE, ({ payload: { activity } }) => services.handleActivityCreate(activity)),
   ]);
 }

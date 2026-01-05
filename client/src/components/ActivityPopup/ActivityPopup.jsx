@@ -52,7 +52,7 @@ const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updat
             </div>
           )}
         </div>
-        <Activities items={activities} isFetching={isFetching} isAllFetched={isAllFetched} boardMemberships={memberships ?? []} showCardDetails={showCardDetails} onFetch={onFetch} />
+        <Activities items={activities} isFetching={isFetching} isAllFetched={isAllFetched} memberships={memberships} showCardDetails={showCardDetails} onFetch={onFetch} />
       </Popup.Content>
     </>
   );

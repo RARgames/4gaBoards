@@ -168,6 +168,54 @@ fetchProjectActivities.failure = (projectId, error) => ({
   },
 });
 
+const fetchUserActivities = (userId) => ({
+  type: ActionTypes.ACTIVITIES_USER_FETCH,
+  payload: {
+    userId,
+  },
+});
+
+fetchUserActivities.success = (userId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_USER_FETCH__SUCCESS,
+  payload: {
+    userId,
+    activities,
+    users,
+  },
+});
+
+fetchUserActivities.failure = (userId, error) => ({
+  type: ActionTypes.ACTIVITIES_USER_FETCH__FAILURE,
+  payload: {
+    userId,
+    error,
+  },
+});
+
+const fetchUserAccountActivities = (userAccountId) => ({
+  type: ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH,
+  payload: {
+    userAccountId,
+  },
+});
+
+fetchUserAccountActivities.success = (userAccountId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH__SUCCESS,
+  payload: {
+    userAccountId,
+    activities,
+    users,
+  },
+});
+
+fetchUserAccountActivities.failure = (userAccountId, error) => ({
+  type: ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH__FAILURE,
+  payload: {
+    userAccountId,
+    error,
+  },
+});
+
 const handleActivityCreate = (activity) => ({
   type: ActionTypes.ACTIVITY_CREATE_HANDLE,
   payload: {
@@ -183,5 +231,7 @@ export default {
   fetchListActivities,
   fetchBoardActivities,
   fetchProjectActivities,
+  fetchUserActivities,
+  fetchUserAccountActivities,
   handleActivityCreate,
 };

@@ -20,6 +20,12 @@ const ActionsCell = React.memo(
     createdBy,
     updatedAt,
     updatedBy,
+    activities,
+    isUserActivitiesFetching,
+    isAllUserActivitiesFetched,
+    userAccountActivities,
+    isUserAccountActivitiesFetching,
+    isAllUserAccountActivitiesFetched,
     emailUpdateForm,
     passwordUpdateForm,
     usernameUpdateForm,
@@ -31,6 +37,8 @@ const ActionsCell = React.memo(
     onPasswordUpdate,
     onPasswordUpdateMessageDismiss,
     onDelete,
+    onUserActivitiesFetch,
+    onUserAccountActivitiesFetch,
   }) => {
     const [t] = useTranslation();
 
@@ -47,6 +55,12 @@ const ActionsCell = React.memo(
           emailUpdateForm,
           passwordUpdateForm,
           usernameUpdateForm,
+          activities,
+          isUserActivitiesFetching,
+          isAllUserActivitiesFetched,
+          userAccountActivities,
+          isUserAccountActivitiesFetching,
+          isAllUserAccountActivitiesFetched,
         }}
         createdAt={createdAt}
         createdBy={createdBy}
@@ -60,6 +74,8 @@ const ActionsCell = React.memo(
         onPasswordUpdate={onPasswordUpdate}
         onPasswordUpdateMessageDismiss={onPasswordUpdateMessageDismiss}
         onDelete={onDelete}
+        onUserActivitiesFetch={onUserActivitiesFetch}
+        onUserAccountActivitiesFetch={onUserAccountActivitiesFetch}
         aria-label={t('common.editUser')}
         position="left-start"
         offset={0}
@@ -86,6 +102,12 @@ ActionsCell.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isUserActivitiesFetching: PropTypes.bool.isRequired,
+  isAllUserActivitiesFetched: PropTypes.bool.isRequired,
+  userAccountActivities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isUserAccountActivitiesFetching: PropTypes.bool.isRequired,
+  isAllUserAccountActivitiesFetched: PropTypes.bool.isRequired,
   emailUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   passwordUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   usernameUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -97,6 +119,8 @@ ActionsCell.propTypes = {
   onPasswordUpdate: PropTypes.func.isRequired,
   onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onUserActivitiesFetch: PropTypes.func.isRequired,
+  onUserAccountActivitiesFetch: PropTypes.func.isRequired,
 };
 
 ActionsCell.defaultProps = {

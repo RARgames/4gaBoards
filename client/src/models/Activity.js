@@ -99,6 +99,8 @@ export default class extends BaseModel {
       case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_USER_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.activities.forEach((activity) => {
           Activity.upsert(activity);

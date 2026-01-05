@@ -1,12 +1,12 @@
 const Errors = {
-  PROJECT_NOT_FOUND: {
-    projectNotFound: 'Project not found',
+  USER_NOT_FOUND: {
+    userNotFound: 'User not found',
   },
 };
 
 module.exports = {
   inputs: {
-    projectId: {
+    userId: {
       type: 'string',
       regex: /^[0-9]+$/,
       required: true,
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   exits: {
-    projectNotFound: {
+    userNotFound: {
       responseType: 'notFound',
     },
   },
@@ -26,13 +26,11 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, inputs.projectId);
-
-    if (!isProjectManager) {
-      throw Errors.PROJECT_NOT_FOUND; // Forbidden
+    if (!currentUser.isAdmin) {
+      throw Errors.USER_NOT_FOUND; // Forbidden
     }
 
-    const actions = await sails.helpers.projects.getActions(inputs.projectId, inputs.beforeId);
+    const actions = await sails.helpers.users.getUserActions(inputs.userId, inputs.beforeId);
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
 

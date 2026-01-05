@@ -1,6 +1,7 @@
 import { attr, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
 import BaseModel from './BaseModel';
 
 const DEFAULT_EMAIL_UPDATE_FORM = {
@@ -65,6 +66,20 @@ export default class extends BaseModel {
     }),
     filter: attr(), // TODO move to userPrefs?
     notificationFilter: attr(), // TODO move to userPrefs?
+    isUserActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllUserActivitiesFetched: attr({
+      getDefault: () => false,
+    }),
+    lastUserActivityId: attr(),
+    isUserAccountActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllUserAccountActivitiesFetched: attr({
+      getDefault: () => false,
+    }),
+    lastUserAccountActivityId: attr(),
     createdAt: attr(),
     createdById: fk({
       to: 'User',
@@ -319,8 +334,47 @@ export default class extends BaseModel {
       case ActionTypes.ACTIVITIES_COMMENT_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_TASK_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_CARD_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS:
       case ActionTypes.COMMENTS_IN_CARD_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
+        payload.users.forEach((user) => {
+          User.upsert(user);
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_USER_FETCH:
+        User.withId(payload.userId).update({
+          isUserActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_USER_FETCH__SUCCESS:
+        User.withId(payload.userId).update({
+          isUserActivitiesFetching: false,
+          isAllUserActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+          lastUserActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : User.withId(payload.userId).lastUserActivityId,
+        });
+
+        payload.users.forEach((user) => {
+          User.upsert(user);
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH:
+        User.withId(payload.userAccountId).update({
+          isUserAccountActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH__SUCCESS:
+        User.withId(payload.userAccountId).update({
+          isUserAccountActivitiesFetching: false,
+          isAllUserAccountActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+          lastUserAccountActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : User.withId(payload.userAccountId).lastUserAccountActivityId,
+        });
+
         payload.users.forEach((user) => {
           User.upsert(user);
         });
@@ -358,6 +412,14 @@ export default class extends BaseModel {
     return this.filter({
       deletedAt: null,
     }).orderBy('id');
+  }
+
+  getOrderedUserActivitiesQuerySet() {
+    return this.activities.orderBy('createdAt', false);
+  }
+
+  getOrderedUserAccountActivitiesQuerySet() {
+    return this.userAccountActivities.orderBy('createdAt', false);
   }
 
   getOrderedProjectManagersQuerySet() {

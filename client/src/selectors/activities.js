@@ -322,6 +322,102 @@ export const makeSelectProjectActivitiesById = () =>
 
 export const selectProjectActivitiesById = makeSelectProjectActivitiesById();
 
+export const makeSelectLastUserActivityIdById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ User }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const userModel = User.withId(id);
+
+      if (!userModel) {
+        return userModel;
+      }
+
+      return userModel.lastUserActivityId;
+    },
+  );
+
+export const selectLastUserActivityIdById = makeSelectLastUserActivityIdById();
+
+export const makeSelectUserActivitiesById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ User }, id, currentUserId) => {
+      if (!id) {
+        return id;
+      }
+
+      const userModel = User.withId(id);
+
+      if (!userModel) {
+        return userModel;
+      }
+
+      return userModel
+        .getOrderedUserActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...getActivityDetails(activityModel, currentUserId),
+        }));
+    },
+  );
+
+export const selectUserActivitiesById = makeSelectUserActivitiesById();
+
+export const makeSelectLastUserAccountActivityIdById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ User }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const userModel = User.withId(id);
+
+      if (!userModel) {
+        return userModel;
+      }
+
+      return userModel.lastUserAccountActivityId;
+    },
+  );
+
+export const selectLastUserAccountActivityIdById = makeSelectLastUserAccountActivityIdById();
+
+export const makeSelectUserAccountActivitiesById = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ User }, id, currentUserId) => {
+      if (!id) {
+        return id;
+      }
+
+      const userModel = User.withId(id);
+
+      if (!userModel) {
+        return userModel;
+      }
+
+      return userModel
+        .getOrderedUserAccountActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...getActivityDetails(activityModel, currentUserId),
+        }));
+    },
+  );
+
+export const selectUserAccountActivitiesById = makeSelectUserAccountActivitiesById();
+
 export default {
   makeSelectLastAttachmentActivityIdById,
   selectLastAttachmentActivityIdById,
@@ -351,4 +447,12 @@ export default {
   selectLastProjectActivityIdById,
   makeSelectProjectActivitiesById,
   selectProjectActivitiesById,
+  makeSelectLastUserActivityIdById,
+  selectLastUserActivityIdById,
+  makeSelectUserActivitiesById,
+  selectUserActivitiesById,
+  makeSelectLastUserAccountActivityIdById,
+  selectLastUserAccountActivityIdById,
+  makeSelectUserAccountActivitiesById,
+  selectUserAccountActivitiesById,
 };

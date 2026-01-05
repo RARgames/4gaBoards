@@ -7,7 +7,7 @@ import User from '../../User';
 
 import * as s from './Activity.module.scss';
 
-const Activity = React.memo(({ activity, createdAt, boardMemberships, showCardDetails }) => {
+const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails }) => {
   const [t] = useTranslation();
 
   return (
@@ -17,7 +17,7 @@ const Activity = React.memo(({ activity, createdAt, boardMemberships, showCardDe
           name={activity.user.name}
           avatarUrl={activity.user.avatarUrl}
           size="tiny"
-          isMember={boardMemberships.some((m) => m.user?.id === activity.user.id)}
+          isMember={memberships ? memberships.some((m) => m.user?.id === activity.user.id) : true}
           isNotMemberTitle={t('common.noLongerBoardMember')}
         />
       </span>
@@ -33,12 +33,13 @@ const Activity = React.memo(({ activity, createdAt, boardMemberships, showCardDe
 Activity.propTypes = {
   activity: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   createdAt: PropTypes.instanceOf(Date),
-  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   showCardDetails: PropTypes.bool.isRequired,
 };
 
 Activity.defaultProps = {
   createdAt: undefined,
+  memberships: undefined,
 };
 
 export default Activity;

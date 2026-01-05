@@ -39,7 +39,6 @@ module.exports = {
     }
 
     const actions = await sails.helpers.boards.getActions(board.id, inputs.beforeId);
-
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
 

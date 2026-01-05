@@ -45,6 +45,18 @@ const getProjectActivities = (projectId, data, headers) =>
     items: body.items.map(transformActivity),
   }));
 
+const getUserActivities = (userId, data, headers) =>
+  socket.get(`/users/${userId}/actions`, data, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformActivity),
+  }));
+
+const getUserAccountActivities = (userAccountId, data, headers) =>
+  socket.get(`/users/${userAccountId}/account-actions`, data, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformActivity),
+  }));
+
 /* Event handlers */
 
 const makeHandleActivityCreate = (next) => (body) => {
@@ -62,5 +74,7 @@ export default {
   getListActivities,
   getBoardActivities,
   getProjectActivities,
+  getUserActivities,
+  getUserAccountActivities,
   makeHandleActivityCreate,
 };

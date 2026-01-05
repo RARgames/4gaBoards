@@ -54,6 +54,20 @@ const fetchActivitiesInProject = (projectId) => ({
   },
 });
 
+const fetchUserActivities = (userId) => ({
+  type: EntryActionTypes.ACTIVITIES_USER_FETCH,
+  payload: {
+    userId,
+  },
+});
+
+const fetchUserAccountActivities = (userAccountId) => ({
+  type: EntryActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH,
+  payload: {
+    userAccountId,
+  },
+});
+
 const handleActivityCreate = (activity) => ({
   type: EntryActionTypes.ACTIVITY_CREATE_HANDLE,
   payload: {
@@ -70,5 +84,7 @@ export default {
   fetchActivitiesInList,
   fetchActivitiesInBoard,
   fetchActivitiesInProject,
+  fetchUserActivities,
+  fetchUserAccountActivities,
   handleActivityCreate,
 };

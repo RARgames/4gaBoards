@@ -8,7 +8,7 @@ import Activity from './Activity';
 import * as gs from '../../../global.module.scss';
 import * as s from './Activities.module.scss';
 
-const Activities = React.memo(({ items, isFetching, isAllFetched, boardMemberships, showCardDetails, onFetch }) => {
+const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, showCardDetails, onFetch }) => {
   const visibilityRef = useRef(null);
 
   const handleVisibilityChange = useCallback(
@@ -43,7 +43,7 @@ const Activities = React.memo(({ items, isFetching, isAllFetched, boardMembershi
     <div>
       <div className={clsx(s.wrapper, gs.scrollableY)}>
         {items.map((item) => (
-          <Activity key={item.id} activity={item} createdAt={item.createdAt} boardMemberships={boardMemberships} showCardDetails={showCardDetails} />
+          <Activity key={item.id} activity={item} createdAt={item.createdAt} memberships={memberships} showCardDetails={showCardDetails} />
         ))}
         {isFetching ? <Loader size={LoaderSize.Normal} /> : !isAllFetched && <div ref={visibilityRef} />}
       </div>
@@ -55,9 +55,13 @@ Activities.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
-  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   showCardDetails: PropTypes.bool.isRequired,
   onFetch: PropTypes.func.isRequired,
+};
+
+Activities.defaultProps = {
+  memberships: undefined,
 };
 
 export default Activities;
