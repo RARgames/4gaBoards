@@ -15,9 +15,7 @@ export const makeSelectLastAttachmentActivityIdById = () =>
         return attachmentModel;
       }
 
-      const lastActivityModel = attachmentModel.getOrderedActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
+      return attachmentModel.lastActivityId;
     },
   );
 
@@ -63,9 +61,7 @@ export const makeSelectLastCommentActivityIdById = () =>
         return commentModel;
       }
 
-      const lastActivityModel = commentModel.getOrderedActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
+      return commentModel.lastActivityId;
     },
   );
 
@@ -111,9 +107,7 @@ export const makeSelectLastTaskActivityIdById = () =>
         return taskModel;
       }
 
-      const lastActivityModel = taskModel.getOrderedActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
+      return taskModel.lastActivityId;
     },
   );
 
@@ -159,9 +153,7 @@ export const makeSelectLastCardActivityIdById = () =>
         return cardModel;
       }
 
-      const lastActivityModel = cardModel.getOrderedCardActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
+      return cardModel.lastActivityId;
     },
   );
 
@@ -205,9 +197,7 @@ export const makeSelectLastListActivityIdById = () =>
         return listModel;
       }
 
-      const lastActivityModel = listModel.getOrderedListActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
+      return listModel.lastActivityId;
     },
   );
 
@@ -251,9 +241,7 @@ export const makeSelectLastBoardActivityIdById = () =>
         return boardModel;
       }
 
-      const lastActivityModel = boardModel.getOrderedBoardActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
+      return boardModel.lastActivityId;
     },
   );
 
@@ -301,9 +289,7 @@ export const makeSelectLastProjectActivityIdById = () =>
         return projectModel;
       }
 
-      const lastActivityModel = projectModel.getOrderedProjectActivitiesQuerySet().last();
-
-      return lastActivityModel && lastActivityModel.id;
+      return projectModel.lastActivityId;
     },
   );
 
