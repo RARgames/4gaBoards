@@ -6,6 +6,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import BoardActionsPopup from '../BoardActionsPopup';
 import CardSearch from '../CardSearch';
 import ConnectionsPopup from '../ConnectionsPopup';
 import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';
@@ -30,7 +31,7 @@ const BoardActions = React.memo(
     allUsers,
     canEdit,
     isProjectManager,
-    boardData,
+    board,
     boardSearchParams,
     viewMode,
     onViewModeChange,
@@ -45,31 +46,34 @@ const BoardActions = React.memo(
     onLabelUpdate,
     onLabelDelete,
     onBoardUpdate,
+    onBoardDelete,
+    onBoardExport,
     onBoardSearchParamsUpdate,
+    onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
 
     const handleConnectionsUpdate = useCallback(
       (data) => {
-        onBoardUpdate(boardData.id, data);
+        onBoardUpdate(board.id, data);
       },
-      [boardData.id, onBoardUpdate],
+      [board.id, onBoardUpdate],
     );
 
     return (
       <div className={clsx(s.wrapper, gs.scrollableX)}>
         <div className={s.githubAction}>
-          <ConnectionsPopup defaultData={pick(boardData, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
+          <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
             <Icon
               type={IconType.GitHub}
               size={IconSize.Size14}
-              className={clsx(boardData.isGithubConnected ? s.githubGreen : s.githubGrey)}
-              title={boardData.isGithubConnected ? t('common.connectedToGithub', { repo: boardData.githubRepo }) : t('common.notConnectedToGithub')}
+              className={clsx(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
+              title={board.isGithubConnected ? t('common.connectedToGithub', { repo: board.githubRepo }) : t('common.notConnectedToGithub')}
             />
           </ConnectionsPopup>
         </div>
-        <div title={boardData.name} className={clsx(s.title, s.action)}>
-          {boardData.name}
+        <div title={board.name} className={clsx(s.title, s.action)}>
+          {board.name}
         </div>
         <div className={clsx(s.cardsCount, s.action)}>{isFiltered ? t('common.ofCards', { filteredCount: filteredCardCount, count: cardCount }) : t('common.cards', { count: cardCount })}</div>
         <div className={s.action}>
@@ -121,6 +125,33 @@ const BoardActions = React.memo(
             </Link>
           </div>
         )}
+        {isProjectManager && (
+          <div className={clsx(s.action)}>
+            <BoardActionsPopup
+              activities={board.activities}
+              isActivitiesFetching={board.isActivitiesFetching}
+              isAllActivitiesFetched={board.isAllActivitiesFetched}
+              defaultDataRename={pick(board, 'name')}
+              defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
+              createdAt={board.createdAt}
+              createdBy={board.createdBy}
+              updatedAt={board.updatedAt}
+              updatedBy={board.updatedBy}
+              memberships={board.memberships}
+              onUpdate={(data) => onBoardUpdate(board.id, data)}
+              onExport={(data) => onBoardExport(board.id, data)}
+              onDelete={() => onBoardDelete(board.id)}
+              onActivitiesFetch={onActivitiesFetch}
+              position="right-start"
+              offset={10}
+              hideCloseButton
+            >
+              <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })}>
+                <Icon type={IconType.EllipsisVertical} size={IconSize.Size18} />
+              </Button>
+            </BoardActionsPopup>
+          </div>
+        )}
         <div className={clsx(s.action, s.actionRightLast, !isProjectManager && s.actionRightFirst)}>
           <Link to={Paths.PROJECTS.replace(':id', projectId)}>
             <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
@@ -146,7 +177,7 @@ BoardActions.propTypes = {
   allUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   isProjectManager: PropTypes.bool.isRequired,
-  boardData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  board: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardSearchParams: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   viewMode: PropTypes.string.isRequired,
   onViewModeChange: PropTypes.func.isRequired,
@@ -161,7 +192,10 @@ BoardActions.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
+  onBoardDelete: PropTypes.func.isRequired,
+  onBoardExport: PropTypes.func.isRequired,
   onBoardSearchParamsUpdate: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
 };
 
 export default BoardActions;

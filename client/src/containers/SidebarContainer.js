@@ -5,37 +5,50 @@ import Sidebar from '../components/Static/Sidebar';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
-const mapStateToProps = (state) => {
-  const path = selectors.selectPathConstant(state);
-  const { isAdmin } = selectors.selectCurrentUser(state);
-  const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
-  const { sidebarCompact } = selectors.selectCurrentUserPrefs(state);
-  const { projects, filteredProjects } = selectors.selectProjectsForCurrentUser(state);
-  const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
-  const { projectId, boardId } = selectors.selectPath(state);
-  const filter = selectors.selectFilterForCurrentUser(state);
-  const filterQuery = filter?.query;
-  const filterTarget = filter?.target;
-  const {
-    ui: {
-      projectCreateForm: { data: defaultData, isSubmitting },
-    },
-  } = state;
+const makeMapStateToProps = () => {
+  const selectProjectActivitiesById = selectors.makeSelectProjectActivitiesById();
+  const selectBoardActivitiesById = selectors.makeSelectBoardActivitiesById();
 
-  return {
-    path,
-    projects,
-    filteredProjects,
-    managedProjects,
-    currProjectId: projectId,
-    currBoardId: boardId,
-    isAdmin,
-    canAddProject: projectCreationAllEnabled || isAdmin,
-    defaultData,
-    isSubmitting,
-    filterQuery,
-    filterTarget,
-    sidebarCompact,
+  return (state) => {
+    const path = selectors.selectPathConstant(state);
+    const { isAdmin } = selectors.selectCurrentUser(state);
+    const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
+    const { sidebarCompact } = selectors.selectCurrentUserPrefs(state);
+    const { projects, filteredProjects: _filteredProjects } = selectors.selectProjectsForCurrentUser(state);
+    const filteredProjects = _filteredProjects.map((project) => ({
+      ...project,
+      activities: selectProjectActivitiesById(state, project.id),
+      boards: project.boards.map((board) => ({
+        ...board,
+        activities: selectBoardActivitiesById(state, board.id),
+      })),
+    }));
+    const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
+    const { projectId, boardId } = selectors.selectPath(state);
+    const filter = selectors.selectFilterForCurrentUser(state);
+    const filterQuery = filter?.query;
+    const filterTarget = filter?.target;
+    const {
+      ui: {
+        projectCreateForm: { data: defaultData, isSubmitting },
+      },
+    } = state;
+
+    return {
+      path,
+      projects,
+      filteredProjects,
+      managedProjects,
+      currProjectId: projectId,
+      currBoardId: boardId,
+      isAdmin,
+      canAddProject: projectCreationAllEnabled || isAdmin,
+      defaultData,
+      isSubmitting,
+      filterQuery,
+      filterTarget,
+      sidebarCompact,
+    };
   };
 };
 
@@ -51,8 +64,10 @@ const mapDispatchToProps = (dispatch) =>
       onBoardExport: entryActions.exportBoard,
       onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onUserProjectUpdate: entryActions.updateUserProject,
+      onActivitiesProjectFetch: entryActions.fetchActivitiesInProject,
+      onActivitiesBoardFetch: entryActions.fetchActivitiesInBoard,
     },
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(makeMapStateToProps, mapDispatchToProps)(Sidebar);

@@ -20,7 +20,12 @@ const mapStateToProps = (state) => {
   const filterLabels = selectors.selectFilterLabelsForCurrentBoard(state);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
-  const boardData = selectors.selectCurrentBoard(state);
+  const currentBoard = selectors.selectCurrentBoard(state);
+  const board = {
+    ...currentBoard,
+    activities: selectors.selectBoardActivitiesById(state, currentBoard.id),
+    memberships: selectors.selectMembershipsForCurrentBoard(state),
+  };
   const boardSearchParams = selectors.selectBoardSearchParamsForCurrentBoard(state);
 
   return {
@@ -36,7 +41,7 @@ const mapStateToProps = (state) => {
     allUsers,
     canEdit: isCurrentUserEditor,
     isProjectManager,
-    boardData,
+    board,
     boardSearchParams,
   };
 };
@@ -55,7 +60,10 @@ const mapDispatchToProps = (dispatch, ownProps) =>
       onLabelUpdate: entryActions.updateLabel,
       onLabelDelete: entryActions.deleteLabel,
       onBoardUpdate: entryActions.updateBoard,
+      onBoardDelete: entryActions.deleteBoard,
+      onBoardExport: entryActions.exportBoard,
       onBoardSearchParamsUpdate: (searchParams) => entryActions.updateBoardSearchParams(ownProps.boardId, searchParams),
+      onActivitiesFetch: () => entryActions.fetchActivitiesInBoard(ownProps.boardId),
     },
     dispatch,
   );

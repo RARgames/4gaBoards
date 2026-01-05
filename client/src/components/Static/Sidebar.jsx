@@ -46,6 +46,8 @@ const Sidebar = React.memo(
     onBoardExport,
     onChangeFilterQuery,
     onUserProjectUpdate,
+    onActivitiesProjectFetch,
+    onActivitiesBoardFetch,
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
@@ -116,6 +118,9 @@ const Sidebar = React.memo(
             {project.notificationsTotal > 0 && <span className={clsx(s.notification, !isProjectManager && s.notificationNonManager)}>{project.notificationsTotal}</span>}
             {isProjectManager && (
               <ProjectActionsPopup
+                activities={project.activities}
+                isActivitiesFetching={project.isActivitiesFetching}
+                isAllActivitiesFetched={project.isAllActivitiesFetched}
                 name={project.name}
                 projectId={project.id}
                 managedProjects={managedProjects}
@@ -128,6 +133,7 @@ const Sidebar = React.memo(
                 memberships={project.memberships}
                 onUpdate={(data) => onProjectUpdate(project.id, data)}
                 onBoardCreate={onBoardCreate}
+                onActivitiesFetch={() => onActivitiesProjectFetch(project.id)}
                 position="right-start"
                 offset={10}
                 hideCloseButton
@@ -191,6 +197,9 @@ const Sidebar = React.memo(
                                 {board.notificationsTotal > 0 && <span className={clsx(s.notification, !isProjectManager && s.notificationNonManager)}>{board.notificationsTotal}</span>}
                                 {isProjectManager && (
                                   <BoardActionsPopup
+                                    activities={board.activities}
+                                    isActivitiesFetching={board.isActivitiesFetching}
+                                    isAllActivitiesFetched={board.isAllActivitiesFetched}
                                     defaultDataRename={pick(board, 'name')}
                                     defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
                                     createdAt={board.createdAt}
@@ -201,6 +210,7 @@ const Sidebar = React.memo(
                                     onUpdate={(data) => onBoardUpdate(board.id, data)}
                                     onExport={(data) => onBoardExport(board.id, data)}
                                     onDelete={() => onBoardDelete(board.id)}
+                                    onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
                                     position="right-start"
                                     offset={10}
                                     hideCloseButton
@@ -370,6 +380,8 @@ Sidebar.propTypes = {
   onBoardExport: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
   onUserProjectUpdate: PropTypes.func.isRequired,
+  onActivitiesProjectFetch: PropTypes.func.isRequired,
+  onActivitiesBoardFetch: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
