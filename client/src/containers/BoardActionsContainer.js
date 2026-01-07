@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch, ownProps) =>
       onBoardDelete: entryActions.deleteBoard,
       onBoardExport: entryActions.exportBoard,
       onBoardSearchParamsUpdate: (searchParams) => entryActions.updateBoardSearchParams(ownProps.boardId, searchParams),
-      onActivitiesFetch: () => entryActions.fetchActivitiesInBoard(ownProps.boardId),
+      onActivitiesFetch: () => entryActions.fetchBoardActivities(ownProps.boardId),
     },
     dispatch,
   );

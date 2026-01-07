@@ -110,7 +110,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onUserFromTaskRemove: (userId, taskId) => entryActions.removeUserFromTask(userId, taskId),
       onTaskCreate: (data) => entryActions.createTask(id, data),
       onTaskMove: (taskId, index) => entryActions.moveTask(taskId, index),
-      onActivitiesFetch: () => entryActions.fetchActivitiesInCard(id),
+      onActivitiesFetch: () => entryActions.fetchCardActivities(id),
       onTaskActivitiesFetch: (taskId) => entryActions.fetchTaskActivities(taskId),
     },
     dispatch,

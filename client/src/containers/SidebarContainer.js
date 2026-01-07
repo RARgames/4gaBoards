@@ -64,8 +64,8 @@ const mapDispatchToProps = (dispatch) =>
       onBoardExport: entryActions.exportBoard,
       onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onUserProjectUpdate: entryActions.updateUserProject,
-      onActivitiesProjectFetch: entryActions.fetchActivitiesInProject,
-      onActivitiesBoardFetch: entryActions.fetchActivitiesInBoard,
+      onActivitiesProjectFetch: entryActions.fetchProjectActivities,
+      onActivitiesBoardFetch: entryActions.fetchBoardActivities,
     },
     dispatch,
   );

@@ -26,28 +26,28 @@ const fetchActivitiesInCurrentCard = () => ({
   payload: {},
 });
 
-const fetchActivitiesInCard = (cardId) => ({
+const fetchCardActivities = (cardId) => ({
   type: EntryActionTypes.ACTIVITIES_CARD_FETCH,
   payload: {
     cardId,
   },
 });
 
-const fetchActivitiesInList = (listId) => ({
+const fetchListActivities = (listId) => ({
   type: EntryActionTypes.ACTIVITIES_LIST_FETCH,
   payload: {
     listId,
   },
 });
 
-const fetchActivitiesInBoard = (boardId) => ({
+const fetchBoardActivities = (boardId) => ({
   type: EntryActionTypes.ACTIVITIES_BOARD_FETCH,
   payload: {
     boardId,
   },
 });
 
-const fetchActivitiesInProject = (projectId) => ({
+const fetchProjectActivities = (projectId) => ({
   type: EntryActionTypes.ACTIVITIES_PROJECT_FETCH,
   payload: {
     projectId,
@@ -85,10 +85,10 @@ export default {
   fetchCommentActivities,
   fetchTaskActivities,
   fetchActivitiesInCurrentCard,
-  fetchActivitiesInCard,
-  fetchActivitiesInList,
-  fetchActivitiesInBoard,
-  fetchActivitiesInProject,
+  fetchCardActivities,
+  fetchListActivities,
+  fetchBoardActivities,
+  fetchProjectActivities,
   fetchUserActivities,
   fetchUserAccountActivities,
   fetchInstanceActivities,

@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onLabelCreate: (data) => entryActions.createLabelInCurrentBoard(data),
       onLabelUpdate: (labelId, data) => entryActions.updateLabel(labelId, data),
       onLabelDelete: (labelId) => entryActions.deleteLabel(labelId),
-      onActivitiesFetch: () => entryActions.fetchActivitiesInCard(id),
+      onActivitiesFetch: () => entryActions.fetchCardActivities(id),
     },
     dispatch,
   );

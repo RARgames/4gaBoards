@@ -68,7 +68,7 @@ export function* fetchTaskActivities(taskId) {
   yield put(actions.fetchTaskActivities.success(taskId, activities, users));
 }
 
-export function* fetchActivitiesInCard(cardId) {
+export function* fetchCardActivities(cardId) {
   const lastId = yield select(selectors.selectLastCardActivityIdById, cardId);
 
   yield put(actions.fetchCardActivities(cardId));
@@ -92,10 +92,10 @@ export function* fetchActivitiesInCard(cardId) {
 export function* fetchActivitiesInCurrentCard() {
   const { cardId } = yield select(selectors.selectPath);
 
-  yield call(fetchActivitiesInCard, cardId);
+  yield call(fetchCardActivities, cardId);
 }
 
-export function* fetchActivitiesInList(listId) {
+export function* fetchListActivities(listId) {
   const lastId = yield select(selectors.selectLastListActivityIdById, listId);
 
   yield put(actions.fetchListActivities(listId));
@@ -116,7 +116,7 @@ export function* fetchActivitiesInList(listId) {
   yield put(actions.fetchListActivities.success(listId, activities, users));
 }
 
-export function* fetchActivitiesInBoard(boardId) {
+export function* fetchBoardActivities(boardId) {
   const lastId = yield select(selectors.selectLastBoardActivityIdById, boardId);
 
   yield put(actions.fetchBoardActivities(boardId));
@@ -137,7 +137,7 @@ export function* fetchActivitiesInBoard(boardId) {
   yield put(actions.fetchBoardActivities.success(boardId, activities, users));
 }
 
-export function* fetchActivitiesInProject(projectId) {
+export function* fetchProjectActivities(projectId) {
   const lastId = yield select(selectors.selectLastProjectActivityIdById, projectId);
 
   yield put(actions.fetchProjectActivities(projectId));
@@ -229,11 +229,11 @@ export default {
   fetchAttachmentActivities,
   fetchCommentActivities,
   fetchTaskActivities,
-  fetchActivitiesInCard,
+  fetchCardActivities,
   fetchActivitiesInCurrentCard,
-  fetchActivitiesInList,
-  fetchActivitiesInBoard,
-  fetchActivitiesInProject,
+  fetchListActivities,
+  fetchBoardActivities,
+  fetchProjectActivities,
   fetchUserActivities,
   fetchUserAccountActivities,
   fetchInstanceActivities,
