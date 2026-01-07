@@ -72,6 +72,9 @@
 
     &:hover {
       color: var(--textColor3);
+      .iconLink {
+        fill: var(--textColor3);
+      }
     }
   }
 
@@ -84,6 +87,9 @@
 
     &:hover {
       color: var(--textColor3);
+      .iconLink {
+        fill: var(--textColor3);
+      }
     }
 
     &::before {
@@ -101,6 +107,18 @@
       color: var(--linkedCardDeleted);
       font-style: italic;
     }
+
+    &:hover {
+      color: var(--textColor2);
+      .iconLink {
+        fill: var(--textColor2);
+      }
+    }
+  }
+
+  .iconLink {
+    fill: var(--textColor2);
+    margin-right: 2px;
   }
 
   .itemContent {

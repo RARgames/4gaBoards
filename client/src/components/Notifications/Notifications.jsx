@@ -44,6 +44,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
           <span className={s.author}>{item.activity.user.name}</span>
           {item.activity.createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: item.activity.createdAt })} </span>}
           <Link to={Paths.BOARDS.replace(':id', item.activity.board?.id)} className={clsx(s.board, !boardName && s.empty)} title={boardName || t('activity.noBoardAvailable')} onClick={onClose}>
+            <Icon type={IconType.Board} size={IconSize.Size13} className={s.iconLink} />
             {boardName}
           </Link>
           <Link to={Paths.PROJECTS.replace(':id', item.activity.project?.id)} className={clsx(s.project, !projectName && s.empty)} title={projectName || t('activity.noProjectAvailable')} onClick={onClose}>
