@@ -6,8 +6,23 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, syncSsoAdminOnAuth, allowedRegisterDomains, demoMode } =
-    selectors.selectCoreSettings(state);
+  const {
+    registrationEnabled,
+    localRegistrationEnabled,
+    ssoRegistrationEnabled,
+    projectCreationAllEnabled,
+    syncSsoDataOnAuth,
+    syncSsoAdminOnAuth,
+    allowedRegisterDomains,
+    demoMode,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
+  } = selectors.selectCoreSettings(state);
+  const activities = selectors.selectInstanceActivities(state);
 
   return {
     registrationEnabled,
@@ -18,6 +33,13 @@ const mapStateToProps = (state) => {
     syncSsoAdminOnAuth,
     demoMode,
     allowedRegisterDomains,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
   };
 };
 
@@ -25,6 +47,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onCoreSettingsUpdate: entryActions.updateCoreSettings,
+      onActivitiesFetch: entryActions.fetchInstanceActivities,
     },
     dispatch,
   );

@@ -1,6 +1,7 @@
 import { attr, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -28,6 +29,13 @@ export default class extends BaseModel {
       as: 'updatedBy',
       relatedName: 'updatedCoreSettings',
     }),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
+    }),
+    lastActivityId: attr(),
   };
 
   static reducer({ type, payload }, Core) {
@@ -45,7 +53,25 @@ export default class extends BaseModel {
       case ActionTypes.CORE_SETTINGS_UPDATE_HANDLE:
         Core.upsert(payload.data);
         break;
+      case ActionTypes.ACTIVITIES_INSTANCE_FETCH:
+        Core.withId('0').update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_INSTANCE_FETCH__SUCCESS:
+        Core.withId('0').update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+          lastActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : Core.withId('0').lastActivityId,
+        });
+
+        break;
       default:
     }
+  }
+
+  getOrderedActivitiesQuerySet() {
+    return this.activities.orderBy('createdAt', false);
   }
 }

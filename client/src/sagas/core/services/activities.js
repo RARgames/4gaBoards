@@ -200,6 +200,27 @@ export function* fetchUserAccountActivities(userAccountId) {
   yield put(actions.fetchUserAccountActivities.success(userAccountId, activities, users));
 }
 
+export function* fetchInstanceActivities() {
+  const lastId = yield select(selectors.selectLastInstanceActivityId);
+
+  yield put(actions.fetchInstanceActivities());
+
+  let activities;
+  let users;
+
+  try {
+    ({
+      items: activities,
+      included: { users },
+    } = yield call(request, api.getInstanceActivities, { beforeId: lastId }));
+  } catch (error) {
+    yield put(actions.fetchInstanceActivities.failure(error));
+    return;
+  }
+
+  yield put(actions.fetchInstanceActivities.success(activities, users));
+}
+
 export function* handleActivityCreate(activity) {
   yield put(actions.handleActivityCreate(activity));
 }
@@ -215,5 +236,6 @@ export default {
   fetchActivitiesInProject,
   fetchUserActivities,
   fetchUserAccountActivities,
+  fetchInstanceActivities,
   handleActivityCreate,
 };

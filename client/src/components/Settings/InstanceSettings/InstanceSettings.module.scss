@@ -12,4 +12,17 @@
     word-break: break-word;
     white-space: pre-wrap;
   }
+
+  .activityButtonWrapper {
+    display: inline;
+
+    button {
+      margin-left: 4px;
+      height: 100%;
+
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
 }

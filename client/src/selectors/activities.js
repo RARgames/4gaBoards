@@ -418,6 +418,41 @@ export const makeSelectUserAccountActivitiesById = () =>
 
 export const selectUserAccountActivitiesById = makeSelectUserAccountActivitiesById();
 
+export const makeSelectLastInstanceActivityId = () =>
+  createSelector(orm, ({ Core }) => {
+    const instanceModel = Core.withId(0);
+
+    if (!instanceModel) {
+      return instanceModel;
+    }
+
+    return instanceModel.lastActivityId;
+  });
+
+export const selectLastInstanceActivityId = makeSelectLastInstanceActivityId();
+
+export const makeSelectInstanceActivities = () =>
+  createSelector(
+    orm,
+    (state) => selectCurrentUserId(state),
+    ({ Core }, currentUserId) => {
+      const instanceModel = Core.withId(0);
+
+      if (!instanceModel) {
+        return instanceModel;
+      }
+
+      return instanceModel
+        .getOrderedActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => ({
+          ...getActivityDetails(activityModel, currentUserId),
+        }));
+    },
+  );
+
+export const selectInstanceActivities = makeSelectInstanceActivities();
+
 export default {
   makeSelectLastAttachmentActivityIdById,
   selectLastAttachmentActivityIdById,
@@ -455,4 +490,8 @@ export default {
   selectLastUserAccountActivityIdById,
   makeSelectUserAccountActivitiesById,
   selectUserAccountActivitiesById,
+  makeSelectLastInstanceActivityId,
+  selectLastInstanceActivityId,
+  makeSelectInstanceActivities,
+  selectInstanceActivities,
 };

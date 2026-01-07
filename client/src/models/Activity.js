@@ -59,6 +59,11 @@ export default class extends BaseModel {
       as: 'user',
       relatedName: 'activities',
     }),
+    instanceId: fk({
+      to: 'Core',
+      as: 'core',
+      relatedName: 'activities',
+    }),
     createdAt: attr({
       getDefault: () => new Date(),
     }),
@@ -101,6 +106,7 @@ export default class extends BaseModel {
       case ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_USER_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_INSTANCE_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.activities.forEach((activity) => {
           Activity.upsert(activity);

@@ -337,6 +337,7 @@ export default class extends BaseModel {
       case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS:
       case ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS:
+      case ActionTypes.ACTIVITIES_INSTANCE_FETCH__SUCCESS:
       case ActionTypes.COMMENTS_IN_CARD_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.users.forEach((user) => {

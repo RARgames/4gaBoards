@@ -12,6 +12,8 @@ module.exports = {
   },
 
   async fn() {
+    const { currentUser } = this.req; // Might not be available at this time for some requests
+
     const core = await Core.findOne({ id: 0 });
     if (!core) {
       throw Errors.CORE_NOT_FOUND;
@@ -32,6 +34,10 @@ module.exports = {
         ssoAvailable: sails.config.custom.ssoAvailable,
         oidcEnabledMethods: sails.config.custom.oidcEnabledMethods,
         demoMode: sails.config.custom.demoMode,
+        createdAt: currentUser?.isAdmin ? core.createdAt : undefined,
+        createdById: currentUser?.isAdmin ? core.createdById : undefined,
+        updatedAt: currentUser?.isAdmin ? core.updatedAt : undefined,
+        updatedById: currentUser?.isAdmin ? core.updatedById : undefined,
       },
     };
   },

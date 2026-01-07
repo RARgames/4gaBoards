@@ -4,6 +4,7 @@ import { createSelector } from 'redux-orm';
 import Config from '../constants/Config';
 import { SsoTypes } from '../constants/Enums';
 import orm from '../orm';
+import getMeta from '../utils/get-meta';
 
 export const selectAccessToken = ({ auth: { accessToken } }) => accessToken;
 
@@ -40,7 +41,10 @@ export const selectCoreSettings = createSelector(orm, ({ Core }) => {
     return coreModel;
   }
 
-  return coreModel.ref;
+  return {
+    ...coreModel.ref,
+    ...getMeta(coreModel),
+  };
 });
 
 const nextPosition = (items, index, excludedId) => {

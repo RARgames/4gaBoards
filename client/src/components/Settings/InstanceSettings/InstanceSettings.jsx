@@ -6,14 +6,33 @@ import uniq from 'lodash/uniq';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Table } from '../../Utils';
+import ActivityPopup from '../../ActivityPopup';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './InstanceSettings.module.scss';
 
 const InstanceSettings = React.memo(
-  ({ registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, projectCreationAllEnabled, syncSsoDataOnAuth, syncSsoAdminOnAuth, demoMode, allowedRegisterDomains, onCoreSettingsUpdate }) => {
+  ({
+    registrationEnabled,
+    localRegistrationEnabled,
+    ssoRegistrationEnabled,
+    projectCreationAllEnabled,
+    syncSsoDataOnAuth,
+    syncSsoAdminOnAuth,
+    demoMode,
+    allowedRegisterDomains,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
+    onCoreSettingsUpdate,
+    onActivitiesFetch,
+  }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
     const [allowedRegisterDomainsData, handleAllowedRegisterDomainsFieldChange] = useForm(() => ({
@@ -246,7 +265,27 @@ const InstanceSettings = React.memo(
       <div className={sShared.wrapper}>
         <div className={sShared.header}>
           <div className={sShared.headerFlex}>
-            <h2 className={sShared.headerText}>{t('common.settings')}</h2>
+            <h2 className={sShared.headerText}>
+              {t('common.settings')}
+              <ActivityPopup
+                title={t('common.activityFor', { name: t('common.instanceSettings') })}
+                createdAt={createdAt}
+                createdBy={createdBy}
+                updatedAt={updatedAt}
+                updatedBy={updatedBy}
+                activities={activities}
+                isFetching={isActivitiesFetching}
+                isAllFetched={isAllActivitiesFetched}
+                onFetch={onActivitiesFetch}
+                position="bottom"
+                offset={0}
+                wrapperClassName={s.activityButtonWrapper}
+              >
+                <Button style={ButtonStyle.Icon} title={t('common.checkActivity')}>
+                  <Icon type={IconType.Activity} size={IconSize.Size10} />
+                </Button>
+              </ActivityPopup>
+            </h2>
           </div>
           {demoMode && <p className={sShared.demoMode}>{t('common.demoModeExplanation')}</p>}
         </div>
@@ -300,7 +339,22 @@ InstanceSettings.propTypes = {
   syncSsoAdminOnAuth: PropTypes.bool.isRequired,
   demoMode: PropTypes.bool.isRequired,
   allowedRegisterDomains: PropTypes.string.isRequired,
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
   onCoreSettingsUpdate: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
+};
+
+InstanceSettings.defaultProps = {
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
 };
 
 export default InstanceSettings;

@@ -68,6 +68,11 @@ const fetchUserAccountActivities = (userAccountId) => ({
   },
 });
 
+const fetchInstanceActivities = () => ({
+  type: EntryActionTypes.ACTIVITIES_INSTANCE_FETCH,
+  payload: {},
+});
+
 const handleActivityCreate = (activity) => ({
   type: EntryActionTypes.ACTIVITY_CREATE_HANDLE,
   payload: {
@@ -86,5 +91,6 @@ export default {
   fetchActivitiesInProject,
   fetchUserActivities,
   fetchUserAccountActivities,
+  fetchInstanceActivities,
   handleActivityCreate,
 };

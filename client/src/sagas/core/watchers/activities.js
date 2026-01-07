@@ -15,6 +15,7 @@ export default function* activitiesWatchers() {
     takeEvery(EntryActionTypes.ACTIVITIES_PROJECT_FETCH, ({ payload: { projectId } }) => services.fetchActivitiesInProject(projectId)),
     takeEvery(EntryActionTypes.ACTIVITIES_USER_FETCH, ({ payload: { userId } }) => services.fetchUserActivities(userId)),
     takeEvery(EntryActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH, ({ payload: { userAccountId } }) => services.fetchUserAccountActivities(userAccountId)),
+    takeEvery(EntryActionTypes.ACTIVITIES_INSTANCE_FETCH, () => services.fetchInstanceActivities()),
     takeEvery(EntryActionTypes.ACTIVITY_CREATE_HANDLE, ({ payload: { activity } }) => services.handleActivityCreate(activity)),
   ]);
 }

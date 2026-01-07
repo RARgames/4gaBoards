@@ -216,6 +216,26 @@ fetchUserAccountActivities.failure = (userAccountId, error) => ({
   },
 });
 
+const fetchInstanceActivities = () => ({
+  type: ActionTypes.ACTIVITIES_INSTANCE_FETCH,
+  payload: {},
+});
+
+fetchInstanceActivities.success = (activities, users) => ({
+  type: ActionTypes.ACTIVITIES_INSTANCE_FETCH__SUCCESS,
+  payload: {
+    activities,
+    users,
+  },
+});
+
+fetchInstanceActivities.failure = (error) => ({
+  type: ActionTypes.ACTIVITIES_INSTANCE_FETCH__FAILURE,
+  payload: {
+    error,
+  },
+});
+
 const handleActivityCreate = (activity) => ({
   type: ActionTypes.ACTIVITY_CREATE_HANDLE,
   payload: {
@@ -233,5 +253,6 @@ export default {
   fetchProjectActivities,
   fetchUserActivities,
   fetchUserAccountActivities,
+  fetchInstanceActivities,
   handleActivityCreate,
 };

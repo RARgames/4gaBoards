@@ -57,6 +57,12 @@ const getUserAccountActivities = (userAccountId, data, headers) =>
     items: body.items.map(transformActivity),
   }));
 
+const getInstanceActivities = (data, headers) =>
+  socket.get(`/instance/actions`, data, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformActivity),
+  }));
+
 /* Event handlers */
 
 const makeHandleActivityCreate = (next) => (body) => {
@@ -76,5 +82,6 @@ export default {
   getProjectActivities,
   getUserActivities,
   getUserAccountActivities,
+  getInstanceActivities,
   makeHandleActivityCreate,
 };
