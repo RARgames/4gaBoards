@@ -69,6 +69,10 @@
     line-height: 20px;
     padding-left: 12px;
     margin-left: auto;
+
+    &:hover {
+      color: var(--textColor3);
+    }
   }
 
   .project {
@@ -77,6 +81,10 @@
     font-size: 12px;
     line-height: 20px;
     margin: 0 12px 0 4px;
+
+    &:hover {
+      color: var(--textColor3);
+    }
 
     &::before {
       content: '•';

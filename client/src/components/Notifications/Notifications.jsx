@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import clsx from 'clsx';
 import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
 
+import Paths from '../../constants/Paths';
 import ActivityMessage from '../ActivityMessage';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
@@ -41,12 +43,12 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
           </span>
           <span className={s.author}>{item.activity.user.name}</span>
           {item.activity.createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: item.activity.createdAt })} </span>}
-          <span className={clsx(s.board, !boardName && s.empty)} title={boardName || t('activity.noBoardAvailable')}>
+          <Link to={Paths.BOARDS.replace(':id', item.activity.board?.id)} className={clsx(s.board, !boardName && s.empty)} title={boardName || t('activity.noBoardAvailable')} onClick={onClose}>
             {boardName}
-          </span>
-          <span className={clsx(s.project, !projectName && s.empty)} title={projectName || t('activity.noProjectAvailable')}>
+          </Link>
+          <Link to={Paths.PROJECTS.replace(':id', item.activity.project?.id)} className={clsx(s.project, !projectName && s.empty)} title={projectName || t('activity.noProjectAvailable')} onClick={onClose}>
             {projectName}
-          </span>
+          </Link>
           <Button
             style={ButtonStyle.Icon}
             onClick={() => handleUpdate(item.id, { isRead: !item.isRead })}
@@ -60,7 +62,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
           </Button>
         </div>
         <span className={s.itemContent}>
-          <ActivityMessage activity={item.activity} isTruncated showCardDetails onClose={onClose} />
+          <ActivityMessage activity={item.activity} isTruncated showCardDetails showListDetails showBoardDetails showProjectDetails onClose={onClose} />
         </span>
       </div>
     );
