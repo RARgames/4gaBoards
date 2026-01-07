@@ -22,7 +22,7 @@ const descriptionTruncateLength = 100;
 const defaultTruncateLength = 30;
 const isDescriptionTruncated = true;
 
-const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, showListDetails, showBoardDetails, showProjectDetails, onClose }) => {
+const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onClose }) => {
   const [t] = useTranslation();
 
   if (activity.scope === ActivityScopes.CARD || activity.scope === ActivityScopes.TASK || activity.scope === ActivityScopes.ATTACHMENT || activity.scope === ActivityScopes.COMMENT) {
@@ -672,7 +672,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         return null;
       }
     }
-  } else if ([ActivityScopes.PROJECT, ActivityScopes.BOARD, ActivityScopes.LABEL, ActivityScopes.LIST].includes(activity.scope)) {
+  } else if ([ActivityScopes.PROJECT, ActivityScopes.BOARD, ActivityScopes.LIST].includes(activity.scope)) {
     const boardName = isTruncated ? truncate(activity.board?.name || activity.data?.boardName, { length: boardNameTruncateLength }) : activity.board?.name || activity.data?.boardName;
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
@@ -772,6 +772,86 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         default:
           return null;
       }
+    } else if (activity.scope === ActivityScopes.BOARD) {
+      switch (activity.type) {
+        case ActivityTypes.LABEL_CREATE: {
+          const labelName = isTruncated ? truncate(activity.data.labelName, { length: defaultTruncateLength }) : activity.data.labelName;
+
+          return (
+            <Trans
+              i18nKey={showLabelDetails ? 'activity.labelCreate' : 'activity.labelCreateShort'}
+              values={{
+                label: labelName,
+                board: boardName,
+              }}
+            >
+              <span className={s.data} title={labelName} />
+              {boardNode}
+            </Trans>
+          );
+        }
+
+        case ActivityTypes.LABEL_UPDATE: {
+          const labelName = isTruncated ? truncate(activity.data.labelName, { length: defaultTruncateLength }) : activity.data.labelName;
+
+          if (activity.data.labelColor) {
+            const labelColorName = activity.data.labelColor;
+
+            return (
+              <Trans
+                i18nKey={showLabelDetails ? 'activity.labelUpdateColor' : 'activity.labelUpdateColorShort'}
+                values={{
+                  label: labelName,
+                  color: labelColorName,
+                  board: boardName,
+                }}
+              >
+                <span className={s.data} title={labelName} />
+                <span className={s.data} title={labelColorName} />
+                {boardNode}
+              </Trans>
+            );
+          }
+          if (activity.data.labelPrevName) {
+            const prevLabelName = isTruncated ? truncate(activity.data.labelPrevName, { length: defaultTruncateLength }) : activity.data.labelPrevName;
+
+            return (
+              <Trans
+                i18nKey={showLabelDetails ? 'activity.labelUpdateName' : 'activity.labelUpdateNameShort'}
+                values={{
+                  prevLabel: prevLabelName,
+                  label: labelName,
+                  board: boardName,
+                }}
+              >
+                <span className={s.data} title={prevLabelName} />
+                <span className={s.data} title={labelName} />
+                {boardNode}
+              </Trans>
+            );
+          }
+          return null;
+        }
+
+        case ActivityTypes.LABEL_DELETE: {
+          const labelName = isTruncated ? truncate(activity.data.labelName, { length: defaultTruncateLength }) : activity.data.labelName;
+
+          return (
+            <Trans
+              i18nKey={showLabelDetails ? 'activity.labelDelete' : 'activity.labelDeleteShort'}
+              values={{
+                label: labelName,
+                board: boardName,
+              }}
+            >
+              <span className={s.data} title={labelName} />
+              {boardNode}
+            </Trans>
+          );
+        }
+        default:
+          return null;
+      }
     }
   }
   return null;
@@ -782,6 +862,7 @@ ActivityMessage.propTypes = {
   isTruncated: PropTypes.bool,
   showCardDetails: PropTypes.bool,
   showListDetails: PropTypes.bool,
+  showLabelDetails: PropTypes.bool,
   showBoardDetails: PropTypes.bool,
   showProjectDetails: PropTypes.bool,
   onClose: PropTypes.func,
@@ -791,6 +872,7 @@ ActivityMessage.defaultProps = {
   isTruncated: false,
   showCardDetails: false,
   showListDetails: false,
+  showLabelDetails: false,
   showBoardDetails: false,
   showProjectDetails: false,
   onClose: () => {},

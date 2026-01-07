@@ -8,7 +8,7 @@ import Activity from './Activity';
 import * as gs from '../../../global.module.scss';
 import * as s from './Activities.module.scss';
 
-const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, showCardDetails, showListDetails, showBoardDetails, showProjectDetails, onFetch, onClose }) => {
+const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onFetch, onClose }) => {
   const visibilityRef = useRef(null);
 
   const handleVisibilityChange = useCallback(
@@ -50,6 +50,7 @@ const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, s
             memberships={memberships}
             showCardDetails={showCardDetails}
             showListDetails={showListDetails}
+            showLabelDetails={showLabelDetails}
             showBoardDetails={showBoardDetails}
             showProjectDetails={showProjectDetails}
             onClose={onClose}
@@ -68,6 +69,7 @@ Activities.propTypes = {
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   showCardDetails: PropTypes.bool.isRequired,
   showListDetails: PropTypes.bool.isRequired,
+  showLabelDetails: PropTypes.bool.isRequired,
   showBoardDetails: PropTypes.bool.isRequired,
   showProjectDetails: PropTypes.bool.isRequired,
   onFetch: PropTypes.func.isRequired,

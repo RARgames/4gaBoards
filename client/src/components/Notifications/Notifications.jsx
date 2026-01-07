@@ -63,7 +63,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
           </Button>
         </div>
         <span className={s.itemContent}>
-          <ActivityMessage activity={item.activity} isTruncated showCardDetails showListDetails showBoardDetails showProjectDetails onClose={onClose} />
+          <ActivityMessage activity={item.activity} isTruncated showCardDetails showListDetails showLabelDetails showBoardDetails showProjectDetails onClose={onClose} />
         </span>
       </div>
     );

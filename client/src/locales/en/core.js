@@ -454,6 +454,14 @@ export default {
     },
 
     activity: {
+      labelCreate: 'Created label <0>{{label}}</0> in <1>{{board}}</1>',
+      labelCreateShort: 'Created this label in <1>{{board}}</1>',
+      labelUpdateName: 'Updated label <1>{{prevLabel}}</1> to <0>{{label}}</0>',
+      labelUpdateNameShort: 'Updated label <1>{{prevLabel}}</1> to <0>{{label}}</0>',
+      labelUpdateColor: 'Updated label <0>{{label}}</0> color to <1>{{color}}</1>',
+      labelUpdateColorShort: 'Updated this label color to <1>{{color}}</1>',
+      labelDelete: 'Deleted label <0>{{label}}</0> from <1>{{board}}</1>',
+      labelDeleteShort: 'Deleted label from <1>{{board}}</1>',
       listCreate: 'Created <0>{{list}}</0> in <1>{{board}}</1>',
       listCreateShort: 'Created this list in <1>{{board}}</1>',
       listUpdateName: 'Updated <1>{{prevList}}</1> to <0>{{list}}</0>',

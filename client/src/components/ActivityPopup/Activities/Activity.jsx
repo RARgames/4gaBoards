@@ -11,7 +11,7 @@ import { Icon, IconType, IconSize } from '../../Utils';
 
 import * as s from './Activity.module.scss';
 
-const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails, showListDetails, showBoardDetails, showProjectDetails, onClose }) => {
+const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onClose }) => {
   const [t] = useTranslation();
 
   return (
@@ -39,7 +39,14 @@ const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails
         </Link>
       )}
       <div className={s.contentText}>
-        <ActivityMessage activity={activity} showCardDetails={showCardDetails} showListDetails={showListDetails} showBoardDetails={showBoardDetails} showProjectDetails={showProjectDetails} />
+        <ActivityMessage
+          activity={activity}
+          showCardDetails={showCardDetails}
+          showListDetails={showListDetails}
+          showLabelDetails={showLabelDetails}
+          showBoardDetails={showBoardDetails}
+          showProjectDetails={showProjectDetails}
+        />
       </div>
     </div>
   );
@@ -51,6 +58,7 @@ Activity.propTypes = {
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   showCardDetails: PropTypes.bool.isRequired,
   showListDetails: PropTypes.bool.isRequired,
+  showLabelDetails: PropTypes.bool.isRequired,
   showBoardDetails: PropTypes.bool.isRequired,
   showProjectDetails: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

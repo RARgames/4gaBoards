@@ -23,6 +23,7 @@ const ActivityStep = React.memo(
     isAllFetched,
     showCardDetails,
     showListDetails,
+    showLabelDetails,
     showBoardDetails,
     showProjectDetails,
     onFetch,
@@ -78,6 +79,7 @@ const ActivityStep = React.memo(
             memberships={memberships}
             showCardDetails={showCardDetails}
             showListDetails={showListDetails}
+            showLabelDetails={showLabelDetails}
             showBoardDetails={showBoardDetails}
             showProjectDetails={showProjectDetails}
             onFetch={onFetch}
@@ -102,6 +104,7 @@ ActivityStep.propTypes = {
   isAllFetched: PropTypes.bool.isRequired,
   showCardDetails: PropTypes.bool,
   showListDetails: PropTypes.bool,
+  showLabelDetails: PropTypes.bool,
   showBoardDetails: PropTypes.bool,
   showProjectDetails: PropTypes.bool,
   onFetch: PropTypes.func.isRequired,
@@ -118,6 +121,7 @@ ActivityStep.defaultProps = {
   isNotMemberTitle: '',
   showCardDetails: false,
   showListDetails: false,
+  showLabelDetails: false,
   showBoardDetails: false,
   showProjectDetails: false,
   onBack: undefined,
