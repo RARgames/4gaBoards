@@ -146,6 +146,7 @@ const ActionsStep = React.memo(
               isAllFetched={user.isAllUserActivitiesFetched}
               onFetch={() => onUserActivitiesFetch(user.id)}
               onBack={handleBack}
+              onClose={onClose}
             />
           );
         case StepTypes.USER_ACCOUNT_ACTIVITY:
@@ -161,6 +162,7 @@ const ActionsStep = React.memo(
               isAllFetched={user.isAllUserAccountActivitiesFetched}
               onFetch={() => onUserAccountActivitiesFetch(user.id)}
               onBack={handleBack}
+              onClose={onClose}
             />
           );
         default:

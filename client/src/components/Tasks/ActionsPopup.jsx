@@ -108,6 +108,7 @@ const ActionsStep = React.memo(
               isAllFetched={isAllActivitiesFetched}
               onFetch={onActivitiesFetch}
               onBack={handleBack}
+              onClose={onClose}
             />
           );
         default:

@@ -64,6 +64,7 @@ const ActionsStep = React.memo(
               showCardDetails
               onFetch={onActivitiesFetch}
               onBack={handleBack}
+              onClose={onClose}
             />
           );
         default:

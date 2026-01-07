@@ -109,7 +109,7 @@ ActivityStep.propTypes = {
   showProjectDetails: PropTypes.bool,
   onFetch: PropTypes.func.isRequired,
   onBack: PropTypes.func,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 };
 
 ActivityStep.defaultProps = {
@@ -125,6 +125,7 @@ ActivityStep.defaultProps = {
   showBoardDetails: false,
   showProjectDetails: false,
   onBack: undefined,
+  onClose: () => {},
 };
 
 export default withPopup(ActivityStep);
