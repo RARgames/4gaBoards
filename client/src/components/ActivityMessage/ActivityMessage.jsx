@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import clsx from 'clsx';
 import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
 
@@ -21,7 +22,7 @@ const descriptionTruncateLength = 100;
 const defaultTruncateLength = 30;
 const isDescriptionTruncated = true;
 
-const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, onClose }) => {
+const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, showListDetails, showBoardDetails, showProjectDetails, onClose }) => {
   const [t] = useTranslation();
 
   if (activity.scope === ActivityScopes.CARD || activity.scope === ActivityScopes.TASK || activity.scope === ActivityScopes.ATTACHMENT || activity.scope === ActivityScopes.COMMENT) {
@@ -671,7 +672,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, on
         return null;
       }
     }
-  } else if ([ActivityScopes.PROJECT, ActivityScopes.BOARD, ActivityScopes.LIST].includes(activity.scope)) {
+  } else if ([ActivityScopes.PROJECT, ActivityScopes.BOARD, ActivityScopes.LABEL, ActivityScopes.LIST].includes(activity.scope)) {
     const boardName = isTruncated ? truncate(activity.board?.name || activity.data?.boardName, { length: boardNameTruncateLength }) : activity.board?.name || activity.data?.boardName;
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
@@ -679,25 +680,98 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, on
       <span className={s.linkedDeleted} title={t('activity.deletedBoard', { board: boardName })} />
     );
 
-    switch (activity.type) {
-      case ActivityTypes.LIST_CREATE: {
-        const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
+    if (activity.scope === ActivityScopes.LIST) {
+      const listName = isTruncated ? truncate(activity.list?.name || activity.data?.listName, { length: listNameTruncateLength }) : activity.list?.name || activity.data?.listName;
 
-        return (
-          <Trans
-            i18nKey={activity.board ? 'activity.listCreate' : 'activity.listCreateShort'}
-            values={{
-              list: listName,
-              board: boardName,
-            }}
-          >
-            {boardNode}
-            <span className={s.data} title={listName} />
-          </Trans>
-        );
+      switch (activity.type) {
+        case ActivityTypes.LIST_CREATE: {
+          return (
+            <Trans
+              i18nKey={showListDetails ? 'activity.listCreate' : 'activity.listCreateShort'}
+              values={{
+                list: listName,
+                board: boardName,
+              }}
+            >
+              <span className={s.data} title={listName} />
+              {boardNode}
+            </Trans>
+          );
+        }
+
+        case ActivityTypes.LIST_UPDATE: {
+          if (activity.data.listPrevName) {
+            const prevListName = isTruncated ? truncate(activity.data.listPrevName, { length: listNameTruncateLength }) : activity.data.listPrevName;
+
+            return (
+              <Trans
+                i18nKey={showListDetails ? 'activity.listUpdateName' : 'activity.listUpdateNameShort'}
+                values={{
+                  prevList: prevListName,
+                  list: activity.data.listName,
+                }}
+              >
+                <span className={s.data} title={prevListName} />
+                <span className={s.data} title={listName} />
+              </Trans>
+            );
+          }
+          if (activity.data.listPosition !== undefined) {
+            return (
+              <Trans
+                i18nKey={showListDetails ? 'activity.listUpdatePosition' : 'activity.listUpdatePositionShort'}
+                values={{
+                  list: listName,
+                  board: boardName,
+                }}
+              >
+                <span className={s.data} title={listName} />
+                {boardNode}
+              </Trans>
+            );
+          }
+          if (activity.data.listIsCollapsed !== undefined) {
+            const { listIsCollapsed } = activity.data;
+            let key;
+            if (listIsCollapsed === true) {
+              key = showListDetails ? 'activity.listCollapse' : 'activity.listCollapseShort';
+            } else {
+              key = showListDetails ? 'activity.listExpand' : 'activity.listExpandShort';
+            }
+
+            return (
+              <Trans
+                i18nKey={key}
+                values={{
+                  list: listName,
+                }}
+              >
+                <span className={s.data} title={listName} />
+              </Trans>
+            );
+          }
+
+          return null;
+        }
+
+        case ActivityTypes.LIST_DELETE: {
+          return (
+            <Trans
+              i18nKey={showListDetails ? 'activity.listDelete' : 'activity.listDeleteShort'}
+              values={{
+                list: listName,
+                board: boardName,
+              }}
+            >
+              <span className={s.data} title={listName} />
+              {boardNode}
+            </Trans>
+          );
+        }
+
+        default:
+          return null;
       }
-      default:
-        return null;
     }
   }
   return null;
@@ -707,12 +781,18 @@ ActivityMessage.propTypes = {
   activity: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isTruncated: PropTypes.bool,
   showCardDetails: PropTypes.bool,
+  showListDetails: PropTypes.bool,
+  showBoardDetails: PropTypes.bool,
+  showProjectDetails: PropTypes.bool,
   onClose: PropTypes.func,
 };
 
 ActivityMessage.defaultProps = {
   isTruncated: false,
   showCardDetails: false,
+  showListDetails: false,
+  showBoardDetails: false,
+  showProjectDetails: false,
   onClose: () => {},
 };
 

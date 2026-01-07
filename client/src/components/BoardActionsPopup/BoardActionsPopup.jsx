@@ -89,8 +89,10 @@ const BoardActionsStep = React.memo(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
+              showListDetails
               onFetch={onActivitiesFetch}
               onBack={handleBack}
+              onClose={onClose}
             />
           );
         default:

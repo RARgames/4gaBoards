@@ -13,6 +13,7 @@ export const ActivityScopes = {
   USER: 'user',
   PROJECT: 'project',
   BOARD: 'board',
+  LABEL: 'label',
   LIST: 'list',
   CARD: 'card',
   TASK: 'task',

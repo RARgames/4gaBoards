@@ -9,54 +9,85 @@ import Activities from './Activities';
 
 import * as s from './ActivityPopup.module.scss';
 
-const ActivityStep = React.memo(({ title, createdAt, createdBy, updatedAt, updatedBy, memberships, isNotMemberTitle, activities, isFetching, isAllFetched, showCardDetails, onFetch, onBack }) => {
-  const [t] = useTranslation();
+const ActivityStep = React.memo(
+  ({
+    title,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    memberships,
+    isNotMemberTitle,
+    activities,
+    isFetching,
+    isAllFetched,
+    showCardDetails,
+    showListDetails,
+    showBoardDetails,
+    showProjectDetails,
+    onFetch,
+    onBack,
+    onClose,
+  }) => {
+    const [t] = useTranslation();
 
-  return (
-    <>
-      <Popup.Header onBack={onBack} title={title} className={s.header}>
-        {title}
-      </Popup.Header>
-      <Popup.Content className={s.content}>
-        <div className={s.wrapper}>
-          {(createdAt || createdBy) && (
-            <div className={s.meta}>
-              {t('common.activityCreated')}
-              {createdBy && (
-                <User
-                  name={createdBy.name}
-                  avatarUrl={createdBy.avatarUrl}
-                  size="small"
-                  isMember={memberships ? memberships.some((m) => m.user?.id === createdBy.id) : true}
-                  isNotMemberTitle={isNotMemberTitle}
-                  className={s.metaUser}
-                />
-              )}
-              {createdAt && <DueDate value={createdAt} variant="listView" />}
-            </div>
-          )}
-          {(updatedAt || updatedBy) && (
-            <div className={s.meta}>
-              {t('common.activityUpdated')}
-              {updatedBy && (
-                <User
-                  name={updatedBy.name}
-                  avatarUrl={updatedBy.avatarUrl}
-                  size="small"
-                  isMember={memberships ? memberships.some((m) => m.user?.id === updatedBy.id) : true}
-                  isNotMemberTitle={isNotMemberTitle}
-                  className={s.metaUser}
-                />
-              )}
-              {updatedAt && <DueDate value={updatedAt} variant="listView" />}
-            </div>
-          )}
-        </div>
-        <Activities items={activities} isFetching={isFetching} isAllFetched={isAllFetched} memberships={memberships} showCardDetails={showCardDetails} onFetch={onFetch} />
-      </Popup.Content>
-    </>
-  );
-});
+    return (
+      <>
+        <Popup.Header onBack={onBack} title={title} className={s.header}>
+          {title}
+        </Popup.Header>
+        <Popup.Content className={s.content}>
+          <div className={s.wrapper}>
+            {(createdAt || createdBy) && (
+              <div className={s.meta}>
+                {t('common.activityCreated')}
+                {createdBy && (
+                  <User
+                    name={createdBy.name}
+                    avatarUrl={createdBy.avatarUrl}
+                    size="small"
+                    isMember={memberships ? memberships.some((m) => m.user?.id === createdBy.id) : true}
+                    isNotMemberTitle={isNotMemberTitle}
+                    className={s.metaUser}
+                  />
+                )}
+                {createdAt && <DueDate value={createdAt} variant="listView" />}
+              </div>
+            )}
+            {(updatedAt || updatedBy) && (
+              <div className={s.meta}>
+                {t('common.activityUpdated')}
+                {updatedBy && (
+                  <User
+                    name={updatedBy.name}
+                    avatarUrl={updatedBy.avatarUrl}
+                    size="small"
+                    isMember={memberships ? memberships.some((m) => m.user?.id === updatedBy.id) : true}
+                    isNotMemberTitle={isNotMemberTitle}
+                    className={s.metaUser}
+                  />
+                )}
+                {updatedAt && <DueDate value={updatedAt} variant="listView" />}
+              </div>
+            )}
+          </div>
+          <Activities
+            items={activities}
+            isFetching={isFetching}
+            isAllFetched={isAllFetched}
+            memberships={memberships}
+            showCardDetails={showCardDetails}
+            showListDetails={showListDetails}
+            showBoardDetails={showBoardDetails}
+            showProjectDetails={showProjectDetails}
+            onFetch={onFetch}
+            onClose={onClose}
+          />
+        </Popup.Content>
+      </>
+    );
+  },
+);
 
 ActivityStep.propTypes = {
   title: PropTypes.string.isRequired,
@@ -70,8 +101,12 @@ ActivityStep.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
   showCardDetails: PropTypes.bool,
+  showListDetails: PropTypes.bool,
+  showBoardDetails: PropTypes.bool,
+  showProjectDetails: PropTypes.bool,
   onFetch: PropTypes.func.isRequired,
   onBack: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 ActivityStep.defaultProps = {
@@ -82,6 +117,9 @@ ActivityStep.defaultProps = {
   memberships: undefined,
   isNotMemberTitle: '',
   showCardDetails: false,
+  showListDetails: false,
+  showBoardDetails: false,
+  showProjectDetails: false,
   onBack: undefined,
 };
 

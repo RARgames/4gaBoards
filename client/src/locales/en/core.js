@@ -454,6 +454,18 @@ export default {
     },
 
     activity: {
+      listCreate: 'Created <0>{{list}}</0> in <1>{{board}}</1>',
+      listCreateShort: 'Created this list in <1>{{board}}</1>',
+      listUpdateName: 'Updated <1>{{prevList}}</1> to <0>{{list}}</0>',
+      listUpdateNameShort: 'Updated <1>{{prevList}}</1> to <0>{{list}}</0>',
+      listCollapse: 'Collapsed <0>{{list}}</0>',
+      listCollapseShort: 'Collapsed this list',
+      listExpand: 'Expanded <0>{{list}}</0>',
+      listExpandShort: 'Expanded this list',
+      listUpdatePosition: 'Updated <0>{{list}}</0> position in <1>{{board}}</1>',
+      listUpdatePositionShort: 'Updated list position in <1>{{board}}</1>',
+      listDelete: 'Deleted <0>{{list}}</0> from <1>{{board}}</1>',
+      listDeleteShort: 'Deleted list from <1>{{board}}</1>',
       cardCreate: 'Created <0>{{card}}</0> in <1>{{list}}</1>',
       cardCreateShort: 'Created this card in <1>{{list}}</1>',
       cardDuplicate: 'Duplicated <0>{{card}}</0> in <1>{{list}}</1>',

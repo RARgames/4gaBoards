@@ -31,4 +31,63 @@
     padding: 4px 8px 0 0;
     vertical-align: top;
   }
+
+  .board {
+    color: var(--textColor2);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    padding-left: 12px;
+    margin-left: auto;
+
+    &:hover {
+      color: var(--textColor3);
+      .iconLink {
+        fill: var(--textColor3);
+      }
+    }
+  }
+
+  .project {
+    color: var(--textColor2);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    margin: 0 12px 0 4px;
+
+    &:hover {
+      color: var(--textColor3);
+      .iconLink {
+        fill: var(--textColor3);
+      }
+    }
+
+    &::before {
+      content: '•';
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+      color: var(--textColor3);
+    }
+  }
+
+  .empty {
+    &::before {
+      content: 'N/A';
+      color: var(--linkedCardDeleted);
+      font-style: italic;
+    }
+
+    &:hover {
+      color: var(--textColor2);
+      .iconLink {
+        fill: var(--textColor2);
+      }
+    }
+  }
+
+  .iconLink {
+    fill: var(--textColor2);
+    margin-right: 2px;
+  }
 }
