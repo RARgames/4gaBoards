@@ -72,8 +72,9 @@
   }
 
   .empty {
-    &::before {
+    &::after {
       content: 'N/A';
+      margin-left: 2px;
       color: var(--linkedCardDeleted);
       font-style: italic;
     }

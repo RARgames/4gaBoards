@@ -95,8 +95,6 @@ module.exports = {
             isGithubConnected: board.isGithubConnected,
             prevGithubRepo: values.githubRepo !== undefined ? inputs.record.githubRepo : undefined,
             githubRepo: board.githubRepo,
-            prevIsImportedBoard: values.isImportedBoard !== undefined ? inputs.record.isImportedBoard : undefined,
-            isImportedBoard: board.isImportedBoard,
             prevPosition: values.position ? inputs.record.position : undefined,
             position: values.position && board.position,
           },
