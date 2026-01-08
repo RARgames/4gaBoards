@@ -43,8 +43,6 @@ module.exports = {
           data: {
             projectId: project.id,
             projectName: project.name,
-            projectBackground: project.background,
-            projectBackgroundImage: project.backgroundImage,
           },
         },
         currentUser,

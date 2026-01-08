@@ -1033,15 +1033,127 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         return null;
     }
   } else if (ActivityScopes.PROJECT === activity.scope) {
-    const projectName = isTruncated ? truncate(activity.project?.name || activity.data?.projectName, { length: projectNameTruncateLength }) : activity.project?.name || activity.data?.projectName;
+    let projectName = isTruncated ? truncate(activity.project?.name || activity.data?.projectName, { length: projectNameTruncateLength }) : activity.project?.name || activity.data?.projectName;
     const projectNode = activity.project ? (
       <Link to={Paths.PROJECTS.replace(':id', activity.project.id)} className={s.linked} title={projectName} onClick={onClose} />
     ) : (
       <span className={s.linkedDeleted} title={t('activity.deletedProject', { project: projectName })} />
     );
-    return null;
-  }
 
+    switch (activity.type) {
+      case ActivityTypes.PROJECT_CREATE: {
+        return (
+          <Trans
+            i18nKey={showProjectDetails ? 'activity.projectCreate' : 'activity.projectCreateShort'}
+            values={{
+              project: projectName,
+            }}
+          >
+            {projectNode}
+          </Trans>
+        );
+      }
+
+      case ActivityTypes.PROJECT_UPDATE: {
+        if (activity.data.projectPrevName) {
+          const prevProjectName = isTruncated ? truncate(activity.data.projectPrevName, { length: projectNameTruncateLength }) : activity.data.projectPrevName;
+          projectName = isTruncated ? truncate(activity.data.projectName, { length: projectNameTruncateLength }) : activity.data.projectName;
+
+          return (
+            <Trans
+              i18nKey={showProjectDetails ? 'activity.projectUpdateName' : 'activity.projectUpdateNameShort'}
+              values={{
+                prevProject: prevProjectName,
+                project: projectName,
+              }}
+            >
+              <span className={s.data} title={prevProjectName} />
+              {projectNode}
+            </Trans>
+          );
+        }
+        if (
+          activity.data.projectPrevBackground !== undefined ||
+          activity.data.projectBackground !== undefined ||
+          activity.data.projectPrevBackgroundImage !== undefined ||
+          activity.data.projectBackgroundImage !== undefined
+        ) {
+          const { projectPrevBackground, projectBackground, projectPrevBackgroundImage, projectBackgroundImage } = activity.data;
+          let key;
+          if ((projectPrevBackground === null && projectBackground !== null) || (projectPrevBackgroundImage === null && projectBackgroundImage !== null)) {
+            key = showProjectDetails ? 'activity.projectBackgroundAdd' : 'activity.projectBackgroundAddShort';
+          } else if ((projectPrevBackground !== null && projectBackground === null) || (projectPrevBackgroundImage !== null && projectBackgroundImage === null)) {
+            key = showProjectDetails ? 'activity.projectBackgroundRemove' : 'activity.projectBackgroundRemoveShort';
+          } else if ((projectPrevBackground !== null && projectBackground !== null) || (projectPrevBackgroundImage !== null && projectBackgroundImage !== null)) {
+            key = showProjectDetails ? 'activity.projectBackgroundUpdate' : 'activity.projectBackgroundUpdateShort';
+          }
+
+          return (
+            <Trans
+              i18nKey={key}
+              values={{
+                project: projectName,
+              }}
+            >
+              {projectNode}
+            </Trans>
+          );
+        }
+
+        return null;
+      }
+
+      case ActivityTypes.PROJECT_DELETE: {
+        return (
+          <Trans
+            i18nKey={showProjectDetails ? 'activity.projectDelete' : 'activity.projectDeleteShort'}
+            values={{
+              project: projectName,
+            }}
+          >
+            {projectNode}
+          </Trans>
+        );
+      }
+
+      case ActivityTypes.PROJECT_MANAGER_ADD: {
+        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+
+        return (
+          <Trans
+            i18nKey={showProjectDetails ? 'activity.projectManagerAdd' : 'activity.projectManagerAddShort'}
+            values={{
+              user: userName,
+              project: projectName,
+            }}
+          >
+            <span className={s.data} title={userName} />
+            {projectNode}
+          </Trans>
+        );
+      }
+
+      case ActivityTypes.PROJECT_MANAGER_REMOVE: {
+        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+
+        return (
+          <Trans
+            i18nKey={showProjectDetails ? 'activity.projectManagerRemove' : 'activity.projectManagerRemoveShort'}
+            values={{
+              user: userName,
+              project: projectName,
+            }}
+          >
+            <span className={s.data} title={userName} />
+            {projectNode}
+          </Trans>
+        );
+      }
+
+      default:
+        return null;
+    }
+  }
   return null;
 });
 
