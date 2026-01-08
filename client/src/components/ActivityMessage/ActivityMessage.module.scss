@@ -13,9 +13,5 @@
 
   .linkedDeleted {
     color: var(--linkedCardDeleted);
-
-    &:hover {
-      color: var(--linkedCardDeletedHover);
-    }
   }
 }
