@@ -14,8 +14,8 @@ import * as s from './Activity.module.scss';
 const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onClose }) => {
   const [t] = useTranslation();
 
-  const boardLinkVisible = showBoardDetails && activity.scope !== ActivityScopes.PROJECT && activity.scope !== ActivityScopes.USER;
-  const projectLinkVisible = showProjectDetails && activity.scope !== ActivityScopes.USER;
+  const boardLinkVisible = showBoardDetails && activity.scope !== ActivityScopes.PROJECT && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
+  const projectLinkVisible = showProjectDetails && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
 
   return (
     <div className={s.content}>

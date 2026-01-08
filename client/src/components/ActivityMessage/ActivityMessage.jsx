@@ -1386,6 +1386,24 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       default:
         return null;
     }
+  } else if (ActivityScopes.INSTANCE === activity.scope && ActivityTypes.INSTANCE_UPDATE === activity.type) {
+    const data = activity.data || {};
+
+    const settings = Object.entries(data)
+      .filter(([key, value]) => value !== undefined && !key.startsWith('prev'))
+      .map(([key, value]) => `${key}: ${String(value)}`)
+      .join(', ');
+
+    return (
+      <Trans
+        i18nKey="activity.instanceUpdateSettings"
+        values={{
+          settings,
+        }}
+      >
+        <span className={s.data} />
+      </Trans>
+    );
   }
   return null;
 });

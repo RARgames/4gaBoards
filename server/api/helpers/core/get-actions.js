@@ -16,6 +16,10 @@ module.exports = {
       };
     }
 
-    return sails.helpers.actions.getMany(criteria, sails.config.custom.actionsLimit);
+    const actions = await sails.helpers.actions.getMany(criteria, sails.config.custom.actionsLimit);
+    return actions.map((action) => ({
+      ...action,
+      coreId: 0,
+    }));
   },
 };

@@ -31,7 +31,7 @@ ActivityLink.propTypes = {
   activityTarget: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isVisible: PropTypes.bool.isRequired,
   to: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   titleNotAvailable: PropTypes.string,
   className: PropTypes.string,
   onClose: PropTypes.func.isRequired,

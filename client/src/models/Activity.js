@@ -59,7 +59,7 @@ export default class extends BaseModel {
       as: 'user',
       relatedName: 'activities',
     }),
-    instanceId: fk({
+    coreId: fk({
       to: 'Core',
       as: 'core',
       relatedName: 'activities',
