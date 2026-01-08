@@ -162,7 +162,7 @@ module.exports = {
             data: {
               userId: user.id,
               prevUserName: values.name !== undefined ? inputs.record.name : undefined,
-              userName: values.name !== undefined ? user.name : undefined,
+              userName: user.name,
               prevUserEmail: values.email !== undefined ? inputs.record.email : undefined,
               userEmail: values.email !== undefined ? user.email : undefined,
               prevUserUsername: values.username !== undefined ? inputs.record.username : undefined,
@@ -185,6 +185,7 @@ module.exports = {
               ssoMicrosoftEmail: values.ssoMicrosoftEmail !== undefined ? user.ssoMicrosoftEmail : undefined,
               prevSsoOidcEmail: values.ssoOidcEmail !== undefined ? inputs.record.ssoOidcEmail : undefined,
               ssoOidcEmail: values.ssoOidcEmail !== undefined ? user.ssoOidcEmail : undefined,
+              passwordChanged: !_.isUndefined(values.password),
             },
           },
           currentUser,

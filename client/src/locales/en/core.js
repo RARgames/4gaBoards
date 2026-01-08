@@ -454,6 +454,20 @@ export default {
     },
 
     activity: {
+      userCreate: 'Created user <0>{{userName}}</0> (<1>{{userEmail}}</1>) - admin: <2>{{isAdmin}}</2>',
+      userRegisterLocal: 'Registered local user <0>{{userName}}</0> (<1>{{userEmail}}</1>) - admin: <2>{{isAdmin}}</2>',
+      userRegisterOidc: 'Registered OIDC user <0>{{userName}}</0> (<1>{{userEmail}}</1>) - admin: <2>{{isAdmin}}</2>',
+      userUpdateName: 'Updated user <0>{{prevUserName}}</0> to <1>{{userName}}</1>',
+      userUpdateEmail: 'Updated user <0>{{userName}}</0> email from <1>{{prevUserEmail}}</1> to <2>{{userEmail}}</2>',
+      userUpdateUsername: 'Updated username <0>{{prevUsername}}</0> to <1>{{username}}</1>',
+      userUpdateIsAdmin: 'Updated user <0>{{userName}}</0> admin from <1>{{prevIsAdmin}}</1> to <2>{{isAdmin}}</2>',
+      userUpdateAvatar: 'Updated avatar for user <0>{{userName}}</0>',
+      userUpdateSsoGoogleEmail: 'Updated user <0>{{userName}}</0> Google SSO email from <1>{{prevSsoGoogleEmail}}</1> to <2>{{ssoGoogleEmail}}</2>',
+      userUpdateSsoGithubEmail: 'Updated user <0>{{userName}}</0> GitHub SSO email from <1>{{prevSsoGithubEmail}}</1> to <2>{{ssoGithubEmail}}</2>',
+      userUpdateSsoMicrosoftEmail: 'Updated user <0>{{userName}}</0> Microsoft SSO email from <1>{{prevSsoMicrosoftEmail}}</1> to <2>{{ssoMicrosoftEmail}}</2>',
+      userUpdateSsoOidcEmail: 'Updated user <0>{{userName}}</0> OIDC SSO email from <1>{{prevSsoOidcEmail}}</1> to <2>{{ssoOidcEmail}}</2>',
+      userUpdatePasswordChanged: 'Changed password for user <0>{{userName}}</0>',
+      userDelete: 'Deleted user <0>{{userName}}</0> (<1>{{userEmail}}</1>)',
       projectCreate: 'Created project <0>{{project}}</0>',
       projectCreateShort: 'Created this project',
       projectUpdateName: 'Updated project <0>{{prevProject}}</0> to <1>{{project}}</1>',
@@ -612,6 +626,7 @@ export default {
       delete: 'Delete',
       yes: 'yes',
       no: 'no',
+      none: 'none',
     },
 
     errors: {

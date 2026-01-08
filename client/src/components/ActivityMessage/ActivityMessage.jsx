@@ -1153,6 +1153,239 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       default:
         return null;
     }
+  } else if (ActivityScopes.USER === activity.scope) {
+    const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+
+    switch (activity.type) {
+      case ActivityTypes.USER_CREATE: {
+        return (
+          <Trans
+            i18nKey="activity.userCreate"
+            values={{
+              userName,
+              userEmail: activity.data.userEmail,
+              isAdmin: activity.data.isAdmin ? t('activity.yes') : t('activity.no'),
+            }}
+          >
+            <span className={s.data} title={userName} />
+            <span className={s.data} title={activity.data.userEmail} />
+            <span className={s.data} title={activity.data.isAdmin ? t('activity.yes') : t('activity.no')} />
+          </Trans>
+        );
+      }
+
+      case ActivityTypes.USER_REGISTER: {
+        const isLocalRegistration = activity.data.ssoOidcEmail === null && activity.data.ssoGoogleEmail === null && activity.data.ssoGithubEmail === null && activity.data.ssoMicrosoftEmail === null;
+
+        return (
+          <Trans
+            i18nKey={isLocalRegistration ? 'activity.userRegisterLocal' : 'activity.userRegisterOidc'}
+            values={{
+              userName,
+              userEmail: activity.data.userEmail,
+              isAdmin: activity.data.isAdmin ? t('activity.yes') : t('activity.no'),
+            }}
+          >
+            <span className={s.data} title={userName} />
+            <span className={s.data} title={activity.data.userEmail} />
+            <span className={s.data} title={activity.data.isAdmin ? t('activity.yes') : t('activity.no')} />
+          </Trans>
+        );
+      }
+
+      case ActivityTypes.USER_UPDATE: {
+        if (activity.data.prevUserName) {
+          const userPrevName = isTruncated ? truncate(activity.data.prevUserName, { length: userNameTruncateLength }) : activity.data.prevUserName;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateName"
+              values={{
+                prevUserName: userPrevName,
+                userName,
+              }}
+            >
+              <span className={s.data} title={userPrevName} />
+              <span className={s.data} title={userName} />
+            </Trans>
+          );
+        }
+        if (activity.data.userUsername) {
+          const { prevUserUsername, userUsername } = activity.data;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateUsername"
+              values={{
+                prevUsername: prevUserUsername || t('activity.none'),
+                username: userUsername,
+              }}
+            >
+              <span className={s.data} title={prevUserUsername} />
+              <span className={s.data} title={userUsername} />
+            </Trans>
+          );
+        }
+        if (activity.data.userEmail) {
+          const userPrevEmail = activity.data.prevUserEmail;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateEmail"
+              values={{
+                userName,
+                prevUserEmail: userPrevEmail,
+                userEmail: activity.data.userEmail,
+              }}
+            >
+              <span className={s.data} title={userName} />
+              <span className={s.data} title={userPrevEmail} />
+              <span className={s.data} title={activity.data.userEmail} />
+            </Trans>
+          );
+        }
+        if (activity.data.userIsAdmin !== undefined) {
+          const { prevUserIsAdmin, userIsAdmin } = activity.data;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateIsAdmin"
+              values={{
+                userName,
+                prevIsAdmin: prevUserIsAdmin ? t('activity.yes') : t('activity.no'),
+                isAdmin: userIsAdmin ? t('activity.yes') : t('activity.no'),
+              }}
+            >
+              <span className={s.data} title={userName} />
+              <span className={s.data} title={prevUserIsAdmin ? t('activity.yes') : t('activity.no')} />
+              <span className={s.data} title={userIsAdmin ? t('activity.yes') : t('activity.no')} />
+            </Trans>
+          );
+        }
+        if (activity.data.userAvatar !== undefined) {
+          const { prevUserAvatar, userAvatar } = activity.data;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateAvatar"
+              values={{
+                userName,
+                prevUserAvatar: prevUserAvatar ? t('activity.yes') : t('activity.no'),
+                userAvatar: userAvatar ? t('activity.yes') : t('activity.no'),
+              }}
+            >
+              <span className={s.data} title={userName} />
+              <span className={s.data} title={prevUserAvatar ? t('activity.yes') : t('activity.no')} />
+              <span className={s.data} title={userAvatar ? t('activity.yes') : t('activity.no')} />
+            </Trans>
+          );
+        }
+        if (activity.data.ssoGoogleEmail !== undefined) {
+          const { prevSsoGoogleEmail, ssoGoogleEmail } = activity.data;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateSsoGoogleEmail"
+              values={{
+                userName,
+                prevSsoGoogleEmail: prevSsoGoogleEmail || t('activity.none'),
+                ssoGoogleEmail: ssoGoogleEmail || t('activity.none'),
+              }}
+            >
+              <span className={s.data} title={userName} />
+              <span className={s.data} title={prevSsoGoogleEmail || t('activity.none')} />
+              <span className={s.data} title={ssoGoogleEmail || t('activity.none')} />
+            </Trans>
+          );
+        }
+        if (activity.data.ssoGithubEmail !== undefined) {
+          const { prevSsoGithubEmail, ssoGithubEmail } = activity.data;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateSsoGithubEmail"
+              values={{
+                userName,
+                prevSsoGithubEmail: prevSsoGithubEmail || t('activity.none'),
+                ssoGithubEmail: ssoGithubEmail || t('activity.none'),
+              }}
+            >
+              <span className={s.data} title={userName} />
+              <span className={s.data} title={prevSsoGithubEmail || t('activity.none')} />
+              <span className={s.data} title={ssoGithubEmail || t('activity.none')} />
+            </Trans>
+          );
+        }
+        if (activity.data.ssoMicrosoftEmail !== undefined) {
+          const { prevSsoMicrosoftEmail, ssoMicrosoftEmail } = activity.data;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateSsoMicrosoftEmail"
+              values={{
+                userName,
+                prevSsoMicrosoftEmail: prevSsoMicrosoftEmail || t('activity.none'),
+                ssoMicrosoftEmail: ssoMicrosoftEmail || t('activity.none'),
+              }}
+            >
+              <span className={s.data} title={userName} />
+              <span className={s.data} title={prevSsoMicrosoftEmail || t('activity.none')} />
+              <span className={s.data} title={ssoMicrosoftEmail || t('activity.none')} />
+            </Trans>
+          );
+        }
+        if (activity.data.ssoOidcEmail !== undefined) {
+          const { prevSsoOidcEmail, ssoOidcEmail } = activity.data;
+
+          return (
+            <Trans
+              i18nKey="activity.userUpdateSsoOidcEmail"
+              values={{
+                userName,
+                prevSsoOidcEmail: prevSsoOidcEmail || t('activity.none'),
+                ssoOidcEmail: ssoOidcEmail || t('activity.none'),
+              }}
+            >
+              <span className={s.data} title={userName} />
+              <span className={s.data} title={prevSsoOidcEmail || t('activity.none')} />
+              <span className={s.data} title={ssoOidcEmail || t('activity.none')} />
+            </Trans>
+          );
+        }
+        if (activity.data.passwordChanged !== undefined) {
+          return (
+            <Trans
+              i18nKey="activity.userUpdatePasswordChanged"
+              values={{
+                userName,
+              }}
+            >
+              <span className={s.data} title={userName} />
+            </Trans>
+          );
+        }
+
+        return null;
+      }
+
+      case ActivityTypes.USER_DELETE: {
+        return (
+          <Trans
+            i18nKey="activity.userDelete"
+            values={{
+              user: userName,
+              userEmail: activity.data.userEmail,
+            }}
+          >
+            <span className={s.data} title={userName} />
+            <span className={s.data} title={activity.data.userEmail} />
+          </Trans>
+        );
+      }
+
+      default:
+        return null;
+    }
   }
   return null;
 });
