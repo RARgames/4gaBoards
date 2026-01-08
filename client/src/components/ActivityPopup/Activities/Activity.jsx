@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import { ActivityScopes } from '../../../constants/Enums';
 import Paths from '../../../constants/Paths';
 import ActivityMessage from '../../ActivityMessage';
 import User from '../../User';
@@ -27,7 +28,7 @@ const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails
       </span>
       <span className={s.author}>{activity.user.name}</span>
       {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
-      {showBoardDetails && (
+      {showBoardDetails && activity.scope !== ActivityScopes.PROJECT && (
         <Link to={Paths.BOARDS.replace(':id', activity.board?.id)} className={clsx(s.board, !activity.board?.name && s.empty)} title={activity.board?.name} onClick={onClose}>
           <Icon type={IconType.Board} size={IconSize.Size13} className={s.iconLink} />
           {activity.board?.name}

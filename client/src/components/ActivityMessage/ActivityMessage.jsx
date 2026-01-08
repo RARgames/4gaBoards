@@ -25,7 +25,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
   const [t] = useTranslation();
 
   if ([ActivityScopes.CARD, ActivityScopes.TASK, ActivityScopes.ATTACHMENT, ActivityScopes.COMMENT].includes(activity.scope)) {
-    const cardName = isTruncated ? truncate(activity.card?.name || activity.data?.cardName, { length: cardNameTruncateLength }) : activity.card?.name || activity.data?.cardName;
+    let cardName = isTruncated ? truncate(activity.card?.name || activity.data?.cardName, { length: cardNameTruncateLength }) : activity.card?.name || activity.data?.cardName;
     const cardNode = activity.card ? (
       <Link to={Paths.CARDS.replace(':id', activity.card.id)} className={s.linked} title={cardName} onClick={onClose} />
     ) : (
@@ -70,6 +70,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       case ActivityTypes.CARD_UPDATE: {
         if (activity.data.cardPrevName) {
           const prevCardName = isTruncated ? truncate(activity.data.cardPrevName, { length: cardNameTruncateLength }) : activity.data.cardPrevName;
+          cardName = isTruncated ? truncate(activity.data.cardName, { length: cardNameTruncateLength }) : activity.data.cardName;
           return (
             <Trans
               i18nKey={showCardDetails ? 'activity.cardUpdateName' : 'activity.cardUpdateNameShort'}
@@ -770,7 +771,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         return null;
     }
   } else if (ActivityScopes.BOARD === activity.scope) {
-    const boardName = isTruncated ? truncate(activity.board?.name || activity.data?.boardName, { length: boardNameTruncateLength }) : activity.board?.name || activity.data?.boardName;
+    let boardName = isTruncated ? truncate(activity.board?.name || activity.data?.boardName, { length: boardNameTruncateLength }) : activity.board?.name || activity.data?.boardName;
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
     ) : (
@@ -954,6 +955,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       case ActivityTypes.BOARD_UPDATE: {
         if (activity.data.boardPrevName) {
           const prevBoardName = isTruncated ? truncate(activity.data.boardPrevName, { length: boardNameTruncateLength }) : activity.data.boardPrevName;
+          boardName = isTruncated ? truncate(activity.data.boardName, { length: boardNameTruncateLength }) : activity.data.boardName;
 
           return (
             <Trans
