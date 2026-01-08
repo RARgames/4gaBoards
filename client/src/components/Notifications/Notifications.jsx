@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
 import clsx from 'clsx';
-import truncate from 'lodash/truncate';
 import PropTypes from 'prop-types';
 
+import { ActivityScopes } from '../../constants/Enums';
 import Paths from '../../constants/Paths';
+import ActivityLink from '../ActivityLink';
 import ActivityMessage from '../ActivityMessage';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
@@ -14,7 +14,6 @@ import * as s from './Notifications.module.scss';
 
 const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
-  const truncateLength = 30;
 
   const handleUpdate = useCallback(
     (id, data) => {
@@ -32,9 +31,8 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
 
   return items.map((item) => {
     if (!item.activity) return null;
-    const projectName = truncate(item.activity.project?.name, { length: truncateLength });
-    const boardName = truncate(item.activity.board?.name, { length: truncateLength });
-
+    const boardLinkVisible = item.activity.scope !== ActivityScopes.PROJECT && item.activity.scope !== ActivityScopes.USER;
+    const projectLinkVisible = item.activity.scope !== ActivityScopes.USER;
     return (
       <div key={item.id} className={clsx(s.item, item.isRead && s.itemRead, isFullScreen && s.itemFullScreen)}>
         <div className={s.itemHeader}>
@@ -43,13 +41,24 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
           </span>
           <span className={s.author}>{item.activity.user.name}</span>
           {item.activity.createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: item.activity.createdAt })} </span>}
-          <Link to={Paths.BOARDS.replace(':id', item.activity.board?.id)} className={clsx(s.board, !boardName && s.empty)} title={boardName || t('activity.noBoardAvailable')} onClick={onClose}>
-            <Icon type={IconType.Board} size={IconSize.Size13} className={s.iconLink} />
-            {boardName}
-          </Link>
-          <Link to={Paths.PROJECTS.replace(':id', item.activity.project?.id)} className={clsx(s.project, !projectName && s.empty)} title={projectName || t('activity.noProjectAvailable')} onClick={onClose}>
-            {projectName}
-          </Link>
+          <ActivityLink
+            activityTarget={item.activity.board}
+            isVisible={boardLinkVisible}
+            to={Paths.BOARDS.replace(':id', item.activity.board?.id)}
+            icon={IconType.Board}
+            titleNotAvailable={t('activity.noBoardAvailable')}
+            className={s.board}
+            onClose={onClose}
+          />
+          <ActivityLink
+            activityTarget={item.activity.project}
+            isVisible={projectLinkVisible}
+            to={Paths.PROJECTS.replace(':id', item.activity.project?.id)}
+            icon={IconType.Project}
+            titleNotAvailable={t('activity.noProjectAvailable')}
+            className={s.project}
+            onClose={onClose}
+          />
           <Button
             style={ButtonStyle.Icon}
             onClick={() => handleUpdate(item.id, { isRead: !item.isRead })}

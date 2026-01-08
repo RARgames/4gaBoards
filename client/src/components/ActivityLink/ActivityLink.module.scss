@@ -1,0 +1,36 @@
+:global(#app) {
+  .link {
+    color: var(--textColor2);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+
+    &:hover {
+      color: var(--textColor3);
+      .iconLink {
+        fill: var(--textColor3);
+      }
+    }
+  }
+
+  .empty {
+    &::after {
+      content: 'N/A';
+      margin-left: 2px;
+      color: var(--linkedCardDeleted);
+      font-style: italic;
+    }
+
+    &:hover {
+      color: var(--textColor2);
+      .iconLink {
+        fill: var(--textColor2);
+      }
+    }
+  }
+
+  .iconLink {
+    fill: var(--textColor2);
+    margin-right: 2px;
+  }
+}

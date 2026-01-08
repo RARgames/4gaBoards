@@ -1,19 +1,21 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { ActivityScopes } from '../../../constants/Enums';
 import Paths from '../../../constants/Paths';
+import ActivityLink from '../../ActivityLink';
 import ActivityMessage from '../../ActivityMessage';
 import User from '../../User';
-import { Icon, IconType, IconSize } from '../../Utils';
+import { IconType } from '../../Utils';
 
 import * as s from './Activity.module.scss';
 
 const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onClose }) => {
   const [t] = useTranslation();
+
+  const boardLinkVisible = showBoardDetails && activity.scope !== ActivityScopes.PROJECT && activity.scope !== ActivityScopes.USER;
+  const projectLinkVisible = showProjectDetails && activity.scope !== ActivityScopes.USER;
 
   return (
     <div className={s.content}>
@@ -28,17 +30,24 @@ const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails
       </span>
       <span className={s.author}>{activity.user.name}</span>
       {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
-      {showBoardDetails && activity.scope !== ActivityScopes.PROJECT && (
-        <Link to={Paths.BOARDS.replace(':id', activity.board?.id)} className={clsx(s.board, !activity.board?.name && s.empty)} title={activity.board?.name} onClick={onClose}>
-          <Icon type={IconType.Board} size={IconSize.Size13} className={s.iconLink} />
-          {activity.board?.name}
-        </Link>
-      )}
-      {showProjectDetails && (
-        <Link to={Paths.PROJECTS.replace(':id', activity.project?.id)} className={clsx(s.project, !activity.project?.name && s.empty)} title={activity.project?.name} onClick={onClose}>
-          {activity.project?.name}
-        </Link>
-      )}
+      <ActivityLink
+        activityTarget={activity.board}
+        isVisible={boardLinkVisible}
+        to={Paths.BOARDS.replace(':id', activity.board?.id)}
+        icon={IconType.Board}
+        titleNotAvailable={t('activity.noBoardAvailable')}
+        className={s.board}
+        onClose={onClose}
+      />
+      <ActivityLink
+        activityTarget={activity.project}
+        isVisible={projectLinkVisible}
+        to={Paths.PROJECTS.replace(':id', activity.project?.id)}
+        icon={IconType.Project}
+        titleNotAvailable={t('activity.noProjectAvailable')}
+        className={s.project}
+        onClose={onClose}
+      />
       <div className={s.contentText}>
         <ActivityMessage
           activity={activity}

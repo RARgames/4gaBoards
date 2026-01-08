@@ -147,6 +147,10 @@ const ActionsStep = React.memo(
               onFetch={() => onUserActivitiesFetch(user.id)}
               onBack={handleBack}
               onClose={onClose}
+              showCardDetails
+              showListDetails
+              showBoardDetails
+              showProjectDetails
             />
           );
         case StepTypes.USER_ACCOUNT_ACTIVITY:

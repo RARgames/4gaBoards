@@ -63,34 +63,12 @@
   }
 
   .board {
-    color: var(--textColor2);
-    display: inline-block;
-    font-size: 12px;
-    line-height: 20px;
     padding-left: 12px;
     margin-left: auto;
-
-    &:hover {
-      color: var(--textColor3);
-      .iconLink {
-        fill: var(--textColor3);
-      }
-    }
   }
 
   .project {
-    color: var(--textColor2);
-    display: inline-block;
-    font-size: 12px;
-    line-height: 20px;
     margin: 0 12px 0 4px;
-
-    &:hover {
-      color: var(--textColor3);
-      .iconLink {
-        fill: var(--textColor3);
-      }
-    }
 
     &::before {
       content: '•';
@@ -99,27 +77,6 @@
       vertical-align: middle;
       color: var(--textColor3);
     }
-  }
-
-  .empty {
-    &::after {
-      content: 'N/A';
-      margin-left: 2px;
-      color: var(--linkedCardDeleted);
-      font-style: italic;
-    }
-
-    &:hover {
-      color: var(--textColor2);
-      .iconLink {
-        fill: var(--textColor2);
-      }
-    }
-  }
-
-  .iconLink {
-    fill: var(--textColor2);
-    margin-right: 2px;
   }
 
   .itemContent {
