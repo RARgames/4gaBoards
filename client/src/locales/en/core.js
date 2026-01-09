@@ -454,7 +454,7 @@ export default {
     },
 
     activity: {
-      instanceUpdateSettings: 'Updated instance settings: {{settings}}',
+      instanceUpdateSettings: 'Updated instance settings: <0>{{settings}}</0>',
       userCreate: 'Created user <0>{{userName}}</0> (<1>{{userEmail}}</1>) - admin: <2>{{isAdmin}}</2>',
       userRegisterLocal: 'Registered local user <0>{{userName}}</0> (<1>{{userEmail}}</1>) - admin: <2>{{isAdmin}}</2>',
       userRegisterOidc: 'Registered OIDC user <0>{{userName}}</0> (<1>{{userEmail}}</1>) - admin: <2>{{isAdmin}}</2>',
