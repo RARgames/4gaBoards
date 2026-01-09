@@ -72,6 +72,6 @@ export default class extends BaseModel {
   }
 
   getOrderedActivitiesQuerySet() {
-    return this.activities.orderBy('createdAt', false);
+    return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
   }
 }

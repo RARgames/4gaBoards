@@ -279,20 +279,8 @@ export default class extends BaseModel {
     return this.comments.orderBy('createdAt', false);
   }
 
-  getOrderedCardActivitiesQuerySet() {
-    return this.activities.orderBy('createdAt', false);
-  }
-
-  getOrderedTaskActivitiesQuerySet() {
-    return this.activities.filter((activity) => activity.scope === ActivityScopes.TASK).orderBy('createdAt', false);
-  }
-
-  getOrderedAttachmentActivitiesQuerySet() {
-    return this.activities.filter((activity) => activity.scope === ActivityScopes.ATTACHMENT).orderBy('createdAt', false);
-  }
-
-  getOrderedCommentActivitiesQuerySet() {
-    return this.activities.filter((activity) => activity.scope === ActivityScopes.COMMENT).orderBy('createdAt', false);
+  getOrderedActivitiesQuerySet() {
+    return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
   }
 
   getUnreadNotificationsQuerySet() {

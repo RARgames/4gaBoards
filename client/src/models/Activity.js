@@ -11,6 +11,9 @@ export default class extends BaseModel {
     type: attr(),
     scope: attr(),
     data: attr(),
+    notificationOnly: attr({
+      getDefault: () => false,
+    }),
     isInCard: attr({
       getDefault: () => true,
     }),

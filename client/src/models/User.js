@@ -416,11 +416,11 @@ export default class extends BaseModel {
   }
 
   getOrderedUserActivitiesQuerySet() {
-    return this.activities.orderBy('createdAt', false);
+    return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
   }
 
   getOrderedUserAccountActivitiesQuerySet() {
-    return this.userAccountActivities.orderBy('createdAt', false);
+    return this.userAccountActivities.filter({ notificationOnly: false }).orderBy('createdAt', false);
   }
 
   getOrderedProjectManagersQuerySet() {

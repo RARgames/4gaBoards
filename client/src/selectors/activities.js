@@ -176,7 +176,7 @@ export const makeSelectCardActivitiesById = () =>
       }
 
       return cardModel
-        .getOrderedCardActivitiesQuerySet()
+        .getOrderedActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
           ...getActivityDetails(activityModel, currentUserId),
@@ -216,7 +216,7 @@ export const makeSelectListActivitiesById = () =>
       }
 
       return listModel
-        .getOrderedListActivitiesQuerySet()
+        .getOrderedActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
           ...getActivityDetails(activityModel, currentUserId),
@@ -264,7 +264,7 @@ export const makeSelectBoardActivitiesById = () =>
       }
 
       return boardModel
-        .getOrderedBoardActivitiesQuerySet()
+        .getOrderedActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
           ...getActivityDetails(activityModel, currentUserId),
@@ -312,7 +312,7 @@ export const makeSelectProjectActivitiesById = () =>
       }
 
       return projectModel
-        .getOrderedProjectActivitiesQuerySet()
+        .getOrderedActivitiesQuerySet()
         .toModelArray()
         .map((activityModel) => ({
           ...getActivityDetails(activityModel, currentUserId),

@@ -41,7 +41,7 @@ module.exports = {
       included: {
         users: [user],
         cards: [card],
-        actions: [action],
+        actions: [{ ...action, notificationOnly: true }],
       },
     };
   },
