@@ -15,7 +15,8 @@ export const makeSelectLastAttachmentActivityIdById = () =>
         return attachmentModel;
       }
 
-      return attachmentModel.lastActivityId;
+      const lastActivityModel = attachmentModel.getOrderedActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -61,7 +62,8 @@ export const makeSelectLastCommentActivityIdById = () =>
         return commentModel;
       }
 
-      return commentModel.lastActivityId;
+      const lastActivityModel = commentModel.getOrderedActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -107,7 +109,8 @@ export const makeSelectLastTaskActivityIdById = () =>
         return taskModel;
       }
 
-      return taskModel.lastActivityId;
+      const lastActivityModel = taskModel.getOrderedActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -153,7 +156,8 @@ export const makeSelectLastCardActivityIdById = () =>
         return cardModel;
       }
 
-      return cardModel.lastActivityId;
+      const lastActivityModel = cardModel.getOrderedActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -197,7 +201,8 @@ export const makeSelectLastListActivityIdById = () =>
         return listModel;
       }
 
-      return listModel.lastActivityId;
+      const lastActivityModel = listModel.getOrderedActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -241,7 +246,8 @@ export const makeSelectLastBoardActivityIdById = () =>
         return boardModel;
       }
 
-      return boardModel.lastActivityId;
+      const lastActivityModel = boardModel.getOrderedActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -289,7 +295,8 @@ export const makeSelectLastProjectActivityIdById = () =>
         return projectModel;
       }
 
-      return projectModel.lastActivityId;
+      const lastActivityModel = projectModel.getOrderedActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -337,7 +344,8 @@ export const makeSelectLastUserActivityIdById = () =>
         return userModel;
       }
 
-      return userModel.lastUserActivityId;
+      const lastActivityModel = userModel.getOrderedUserActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -385,7 +393,8 @@ export const makeSelectLastUserAccountActivityIdById = () =>
         return userModel;
       }
 
-      return userModel.lastUserAccountActivityId;
+      const lastActivityModel = userModel.getOrderedUserAccountActivitiesQuerySet().last();
+      return lastActivityModel && lastActivityModel.id;
     },
   );
 
@@ -426,7 +435,8 @@ export const makeSelectLastInstanceActivityId = () =>
       return instanceModel;
     }
 
-    return instanceModel.lastActivityId;
+    const lastActivityModel = instanceModel.getOrderedUserAccountActivitiesQuerySet().last();
+    return lastActivityModel && lastActivityModel.id;
   });
 
 export const selectLastInstanceActivityId = makeSelectLastInstanceActivityId();

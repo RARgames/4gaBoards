@@ -33,7 +33,6 @@ export default class extends BaseModel {
     isAllActivitiesFetched: attr({
       getDefault: () => false,
     }),
-    lastActivityId: attr(),
     boardId: fk({
       to: 'Board',
       as: 'board',
@@ -249,7 +248,6 @@ export default class extends BaseModel {
         Card.withId(payload.cardId).update({
           isActivitiesFetching: false,
           isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
-          lastActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : Card.withId(payload.cardId).lastActivityId,
         });
 
         break;

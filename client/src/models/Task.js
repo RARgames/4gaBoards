@@ -27,7 +27,6 @@ export default class extends BaseModel {
     isAllActivitiesFetched: attr({
       getDefault: () => false,
     }),
-    lastActivityId: attr(),
     createdAt: attr(),
     createdById: fk({
       to: 'User',
@@ -191,7 +190,6 @@ export default class extends BaseModel {
         Task.withId(payload.taskId).update({
           isActivitiesFetching: false,
           isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
-          lastActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : Task.withId(payload.taskId).lastActivityId,
         });
 
         break;

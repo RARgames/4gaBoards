@@ -35,7 +35,6 @@ export default class extends BaseModel {
     isAllActivitiesFetched: attr({
       getDefault: () => false,
     }),
-    lastActivityId: attr(),
   };
 
   static reducer({ type, payload }, Core) {
@@ -63,7 +62,6 @@ export default class extends BaseModel {
         Core.withId('0').update({
           isActivitiesFetching: false,
           isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
-          lastActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : Core.withId('0').lastActivityId,
         });
 
         break;
