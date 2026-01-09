@@ -8,7 +8,7 @@ import Activity from './Activity';
 import * as gs from '../../../global.module.scss';
 import * as s from './Activities.module.scss';
 
-const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onFetch, onClose }) => {
+const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, hideCardDetails, hideListDetails, hideLabelDetails, hideBoardDetails, hideProjectDetails, onFetch, onClose }) => {
   const visibilityRef = useRef(null);
 
   const handleVisibilityChange = useCallback(
@@ -48,11 +48,11 @@ const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, s
             activity={item}
             createdAt={item.createdAt}
             memberships={memberships}
-            showCardDetails={showCardDetails}
-            showListDetails={showListDetails}
-            showLabelDetails={showLabelDetails}
-            showBoardDetails={showBoardDetails}
-            showProjectDetails={showProjectDetails}
+            hideCardDetails={hideCardDetails}
+            hideListDetails={hideListDetails}
+            hideLabelDetails={hideLabelDetails}
+            hideBoardDetails={hideBoardDetails}
+            hideProjectDetails={hideProjectDetails}
             onClose={onClose}
           />
         ))}
@@ -67,11 +67,11 @@ Activities.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  showCardDetails: PropTypes.bool.isRequired,
-  showListDetails: PropTypes.bool.isRequired,
-  showLabelDetails: PropTypes.bool.isRequired,
-  showBoardDetails: PropTypes.bool.isRequired,
-  showProjectDetails: PropTypes.bool.isRequired,
+  hideCardDetails: PropTypes.bool.isRequired,
+  hideListDetails: PropTypes.bool.isRequired,
+  hideLabelDetails: PropTypes.bool.isRequired,
+  hideBoardDetails: PropTypes.bool.isRequired,
+  hideProjectDetails: PropTypes.bool.isRequired,
   onFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

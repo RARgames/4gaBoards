@@ -21,7 +21,7 @@ const descriptionTruncateLength = 100;
 const defaultTruncateLength = 30;
 const isDescriptionTruncated = true;
 
-const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onClose }) => {
+const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hideListDetails, hideLabelDetails, hideBoardDetails, hideProjectDetails, onClose }) => {
   const [t] = useTranslation();
 
   if ([ActivityScopes.CARD, ActivityScopes.TASK, ActivityScopes.ATTACHMENT, ActivityScopes.COMMENT].includes(activity.scope)) {
@@ -38,7 +38,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardCreate' : 'activity.cardCreateShort'}
+            i18nKey={hideCardDetails ? 'activity.cardCreateShort' : 'activity.cardCreate'}
             values={{
               card: cardName,
               list: listName,
@@ -55,7 +55,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardDuplicate' : 'activity.cardDuplicateShort'}
+            i18nKey={hideCardDetails ? 'activity.cardDuplicateShort' : 'activity.cardDuplicate'}
             values={{
               card: cardName,
               list: listName,
@@ -73,7 +73,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           cardName = isTruncated ? truncate(activity.data.cardName, { length: cardNameTruncateLength }) : activity.data.cardName;
           return (
             <Trans
-              i18nKey={showCardDetails ? 'activity.cardUpdateName' : 'activity.cardUpdateNameShort'}
+              i18nKey={hideCardDetails ? 'activity.cardUpdateNameShort' : 'activity.cardUpdateName'}
               values={{
                 prevCard: prevCardName,
                 card: cardName,
@@ -91,11 +91,11 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           let key;
           if (cardPrevDescription !== null && cardDescription !== null) {
-            key = showCardDetails ? 'activity.cardUpdateDescription' : 'activity.cardUpdateDescriptionShort';
+            key = hideCardDetails ? 'activity.cardUpdateDescriptionShort' : 'activity.cardUpdateDescription';
           } else if (cardPrevDescription === null && cardDescription !== null) {
-            key = showCardDetails ? 'activity.cardUpdateDescriptionAdd' : 'activity.cardUpdateDescriptionAddShort';
+            key = hideCardDetails ? 'activity.cardUpdateDescriptionAddShort' : 'activity.cardUpdateDescriptionAdd';
           } else if (cardPrevDescription !== null && cardDescription === null) {
-            key = showCardDetails ? 'activity.cardUpdateDescriptionRemove' : 'activity.cardUpdateDescriptionRemoveShort';
+            key = hideCardDetails ? 'activity.cardUpdateDescriptionRemoveShort' : 'activity.cardUpdateDescriptionRemove';
           }
 
           return (
@@ -117,11 +117,11 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           const { cardPrevDueDate, cardDueDate } = activity.data;
           let key;
           if (cardPrevDueDate !== null && cardDueDate !== null) {
-            key = showCardDetails ? 'activity.cardUpdateDueDate' : 'activity.cardUpdateDueDateShort';
+            key = hideCardDetails ? 'activity.cardUpdateDueDateShort' : 'activity.cardUpdateDueDate';
           } else if (cardPrevDueDate === null && cardDueDate !== null) {
-            key = showCardDetails ? 'activity.cardUpdateDueDateAdd' : 'activity.cardUpdateDueDateAddShort';
+            key = hideCardDetails ? 'activity.cardUpdateDueDateAddShort' : 'activity.cardUpdateDueDateAdd';
           } else if (cardPrevDueDate !== null && cardDueDate === null) {
-            key = showCardDetails ? 'activity.cardUpdateDueDateRemove' : 'activity.cardUpdateDueDateRemoveShort';
+            key = hideCardDetails ? 'activity.cardUpdateDueDateRemoveShort' : 'activity.cardUpdateDueDateRemove';
           }
 
           return (
@@ -145,19 +145,19 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           let key;
           switch (state) {
             case 'start':
-              key = showCardDetails ? 'activity.cardUpdateTimerStart' : 'activity.cardUpdateTimerStartShort';
+              key = hideCardDetails ? 'activity.cardUpdateTimerStartShort' : 'activity.cardUpdateTimerStart';
               break;
             case 'stop':
-              key = showCardDetails ? 'activity.cardUpdateTimerStop' : 'activity.cardUpdateTimerStopShort';
+              key = hideCardDetails ? 'activity.cardUpdateTimerStopShort' : 'activity.cardUpdateTimerStop';
               break;
             case 'edit':
-              key = showCardDetails ? 'activity.cardUpdateTimerEdit' : 'activity.cardUpdateTimerEditShort';
+              key = hideCardDetails ? 'activity.cardUpdateTimerEditShort' : 'activity.cardUpdateTimerEdit';
               break;
             case 'add':
-              key = showCardDetails ? 'activity.cardUpdateTimerAdd' : 'activity.cardUpdateTimerAddShort';
+              key = hideCardDetails ? 'activity.cardUpdateTimerAddShort' : 'activity.cardUpdateTimerAdd';
               break;
             case 'remove':
-              key = showCardDetails ? 'activity.cardUpdateTimerRemove' : 'activity.cardUpdateTimerRemoveShort';
+              key = hideCardDetails ? 'activity.cardUpdateTimerRemoveShort' : 'activity.cardUpdateTimerRemove';
               break;
             default:
               key = '';
@@ -185,11 +185,11 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           let key;
           if (cardPrevCoverAttachmentName !== null && cardCoverAttachmentName !== null) {
-            key = showCardDetails ? 'activity.cardUpdateCoverAttachment' : 'activity.cardUpdateCoverAttachmentShort';
+            key = hideCardDetails ? 'activity.cardUpdateCoverAttachmentShort' : 'activity.cardUpdateCoverAttachment';
           } else if (cardPrevCoverAttachmentName === null && cardCoverAttachmentName !== null) {
-            key = showCardDetails ? 'activity.cardUpdateCoverAttachmentAdd' : 'activity.cardUpdateCoverAttachmentAddShort';
+            key = hideCardDetails ? 'activity.cardUpdateCoverAttachmentAddShort' : 'activity.cardUpdateCoverAttachmentAdd';
           } else if (cardPrevCoverAttachmentName !== null && cardCoverAttachmentName === null) {
-            key = showCardDetails ? 'activity.cardUpdateCoverAttachmentRemove' : 'activity.cardUpdateCoverAttachmentRemoveShort';
+            key = hideCardDetails ? 'activity.cardUpdateCoverAttachmentRemoveShort' : 'activity.cardUpdateCoverAttachmentRemove';
           }
 
           return (
@@ -212,7 +212,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           return (
             <Trans
-              i18nKey={showCardDetails ? 'activity.cardUpdatePosition' : 'activity.cardUpdatePositionShort'}
+              i18nKey={hideCardDetails ? 'activity.cardUpdatePositionShort' : 'activity.cardUpdatePosition'}
               values={{
                 card: cardName,
                 list: listName,
@@ -233,7 +233,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardMove' : 'activity.cardMoveShort'}
+            i18nKey={hideCardDetails ? 'activity.cardMoveShort' : 'activity.cardMove'}
             values={{
               card: cardName,
               fromList: fromListName,
@@ -258,9 +258,9 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         let key;
 
         if (activity.data.projectFromId !== activity.data.projectToId) {
-          key = showCardDetails ? 'activity.cardTransferProject' : 'activity.cardTransferProjectShort';
+          key = hideCardDetails ? 'activity.cardTransferProjectShort' : 'activity.cardTransferProject';
         } else {
-          key = showCardDetails ? 'activity.cardTransferBoard' : 'activity.cardTransferBoardShort';
+          key = hideCardDetails ? 'activity.cardTransferBoardShort' : 'activity.cardTransferBoard';
         }
 
         return (
@@ -292,7 +292,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardDelete' : 'activity.cardDeleteShort'}
+            i18nKey={hideCardDetails ? 'activity.cardDeleteShort' : 'activity.cardDelete'}
             values={{
               card: cardName,
               list: listName,
@@ -309,7 +309,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardCommentCreate' : 'activity.cardCommentCreateShort'}
+            i18nKey={hideCardDetails ? 'activity.cardCommentCreateShort' : 'activity.cardCommentCreate'}
             values={{
               comment: cardComment,
               card: cardName,
@@ -328,9 +328,9 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         let key;
         if (activity.userId === activity.data.userId) {
-          key = showCardDetails ? 'activity.cardCommentUpdateOwn' : 'activity.cardCommentUpdateOwnShort';
+          key = hideCardDetails ? 'activity.cardCommentUpdateOwnShort' : 'activity.cardCommentUpdateOwn';
         } else {
-          key = showCardDetails ? 'activity.cardCommentUpdate' : 'activity.cardCommentUpdateShort';
+          key = hideCardDetails ? 'activity.cardCommentUpdateShort' : 'activity.cardCommentUpdate';
         }
 
         return (
@@ -357,7 +357,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardCommentDelete' : 'activity.cardCommentDeleteShort'}
+            i18nKey={hideCardDetails ? 'activity.cardCommentDeleteShort' : 'activity.cardCommentDelete'}
             values={{
               comment: cardComment,
               card: cardName,
@@ -376,7 +376,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardUserAdd' : 'activity.cardUserAddShort'}
+            i18nKey={hideCardDetails ? 'activity.cardUserAddShort' : 'activity.cardUserAdd'}
             values={{
               user: userName,
               card: cardName,
@@ -393,7 +393,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardUserRemove' : 'activity.cardUserRemoveShort'}
+            i18nKey={hideCardDetails ? 'activity.cardUserRemoveShort' : 'activity.cardUserRemove'}
             values={{
               user: userName,
               card: cardName,
@@ -410,7 +410,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardTaskCreate' : 'activity.cardTaskCreateShort'}
+            i18nKey={hideCardDetails ? 'activity.cardTaskCreateShort' : 'activity.cardTaskCreate'}
             values={{
               task: taskName,
               card: cardName,
@@ -429,7 +429,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           const taskPrevName = isTruncated ? truncate(activity.data.taskPrevName, { length: taskNameTruncateLength }) : activity.data.taskPrevName;
           return (
             <Trans
-              i18nKey={showCardDetails ? 'activity.cardTaskUpdateName' : 'activity.cardTaskUpdateNameShort'}
+              i18nKey={hideCardDetails ? 'activity.cardTaskUpdateNameShort' : 'activity.cardTaskUpdateName'}
               values={{
                 task: taskName,
                 prevTask: taskPrevName,
@@ -445,7 +445,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         if (activity.data.taskIsCompleted !== undefined) {
           return (
             <Trans
-              i18nKey={showCardDetails ? 'activity.cardTaskUpdateIsCompleted' : 'activity.cardTaskUpdateIsCompletedShort'}
+              i18nKey={hideCardDetails ? 'activity.cardTaskUpdateIsCompletedShort' : 'activity.cardTaskUpdateIsCompleted'}
               values={{
                 task: taskName,
                 card: cardName,
@@ -462,11 +462,11 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           const { taskPrevDueDate, taskDueDate } = activity.data;
           let key;
           if (taskPrevDueDate !== null && taskDueDate !== null) {
-            key = showCardDetails ? 'activity.cardTaskUpdateDueDate' : 'activity.cardTaskUpdateDueDateShort';
+            key = hideCardDetails ? 'activity.cardTaskUpdateDueDateShort' : 'activity.cardTaskUpdateDueDate';
           } else if (taskPrevDueDate === null && taskDueDate !== null) {
-            key = showCardDetails ? 'activity.cardTaskUpdateDueDateAdd' : 'activity.cardTaskUpdateDueDateAddShort';
+            key = hideCardDetails ? 'activity.cardTaskUpdateDueDateAddShort' : 'activity.cardTaskUpdateDueDateAdd';
           } else if (taskPrevDueDate !== null && taskDueDate === null) {
-            key = showCardDetails ? 'activity.cardTaskUpdateDueDateRemove' : 'activity.cardTaskUpdateDueDateRemoveShort';
+            key = hideCardDetails ? 'activity.cardTaskUpdateDueDateRemoveShort' : 'activity.cardTaskUpdateDueDateRemove';
           }
 
           return (
@@ -494,7 +494,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardTaskDuplicate' : 'activity.cardTaskDuplicateShort'}
+            i18nKey={hideCardDetails ? 'activity.cardTaskDuplicateShort' : 'activity.cardTaskDuplicate'}
             values={{
               task: taskName,
               card: cardName,
@@ -511,7 +511,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardTaskMove' : 'activity.cardTaskMoveShort'}
+            i18nKey={hideCardDetails ? 'activity.cardTaskMoveShort' : 'activity.cardTaskMove'}
             values={{
               task: taskName,
               card: cardName,
@@ -528,7 +528,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardTaskDelete' : 'activity.cardTaskDeleteShort'}
+            i18nKey={hideCardDetails ? 'activity.cardTaskDeleteShort' : 'activity.cardTaskDelete'}
             values={{
               task: taskName,
               card: cardName,
@@ -546,7 +546,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardTaskUserAdd' : 'activity.cardTaskUserAddShort'}
+            i18nKey={hideCardDetails ? 'activity.cardTaskUserAddShort' : 'activity.cardTaskUserAdd'}
             values={{
               user: userName,
               task: taskName,
@@ -566,7 +566,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardTaskUserRemove' : 'activity.cardTaskUserRemoveShort'}
+            i18nKey={hideCardDetails ? 'activity.cardTaskUserRemoveShort' : 'activity.cardTaskUserRemove'}
             values={{
               user: userName,
               task: taskName,
@@ -585,7 +585,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardAttachmentCreate' : 'activity.cardAttachmentCreateShort'}
+            i18nKey={hideCardDetails ? 'activity.cardAttachmentCreateShort' : 'activity.cardAttachmentCreate'}
             values={{
               attachment: attachmentName,
               card: cardName,
@@ -603,7 +603,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardAttachmentUpdate' : 'activity.cardAttachmentUpdateShort'}
+            i18nKey={hideCardDetails ? 'activity.cardAttachmentUpdateShort' : 'activity.cardAttachmentUpdate'}
             values={{
               prevAttachment: attachmentPrevName,
               attachment: attachmentName,
@@ -622,7 +622,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardAttachmentDelete' : 'activity.cardAttachmentDeleteShort'}
+            i18nKey={hideCardDetails ? 'activity.cardAttachmentDeleteShort' : 'activity.cardAttachmentDelete'}
             values={{
               attachment: attachmentName,
               card: cardName,
@@ -639,7 +639,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardLabelAdd' : 'activity.cardLabelAddShort'}
+            i18nKey={hideCardDetails ? 'activity.cardLabelAddShort' : 'activity.cardLabelAdd'}
             values={{
               label: labelName,
               card: cardName,
@@ -656,7 +656,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showCardDetails ? 'activity.cardLabelRemove' : 'activity.cardLabelRemoveShort'}
+            i18nKey={hideCardDetails ? 'activity.cardLabelRemoveShort' : 'activity.cardLabelRemove'}
             values={{
               label: labelName,
               card: cardName,
@@ -685,7 +685,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       case ActivityTypes.LIST_CREATE: {
         return (
           <Trans
-            i18nKey={showListDetails ? 'activity.listCreate' : 'activity.listCreateShort'}
+            i18nKey={hideListDetails ? 'activity.listCreateShort' : 'activity.listCreate'}
             values={{
               list: listName,
               board: boardName,
@@ -703,7 +703,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           return (
             <Trans
-              i18nKey={showListDetails ? 'activity.listUpdateName' : 'activity.listUpdateNameShort'}
+              i18nKey={hideListDetails ? 'activity.listUpdateNameShort' : 'activity.listUpdateName'}
               values={{
                 prevList: prevListName,
                 list: activity.data.listName,
@@ -717,7 +717,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         if (activity.data.listPosition !== undefined) {
           return (
             <Trans
-              i18nKey={showListDetails ? 'activity.listUpdatePosition' : 'activity.listUpdatePositionShort'}
+              i18nKey={hideListDetails ? 'activity.listUpdatePositionShort' : 'activity.listUpdatePosition'}
               values={{
                 list: listName,
                 board: boardName,
@@ -732,9 +732,9 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           const { listIsCollapsed } = activity.data;
           let key;
           if (listIsCollapsed === true) {
-            key = showListDetails ? 'activity.listCollapse' : 'activity.listCollapseShort';
+            key = hideListDetails ? 'activity.listCollapseShort' : 'activity.listCollapse';
           } else {
-            key = showListDetails ? 'activity.listExpand' : 'activity.listExpandShort';
+            key = hideListDetails ? 'activity.listExpandShort' : 'activity.listExpand';
           }
 
           return (
@@ -755,7 +755,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       case ActivityTypes.LIST_DELETE: {
         return (
           <Trans
-            i18nKey={showListDetails ? 'activity.listDelete' : 'activity.listDeleteShort'}
+            i18nKey={hideListDetails ? 'activity.listDeleteShort' : 'activity.listDelete'}
             values={{
               list: listName,
               board: boardName,
@@ -790,7 +790,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showLabelDetails ? 'activity.labelCreate' : 'activity.labelCreateShort'}
+            i18nKey={hideLabelDetails ? 'activity.labelCreateShort' : 'activity.labelCreate'}
             values={{
               label: labelName,
               board: boardName,
@@ -810,7 +810,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           return (
             <Trans
-              i18nKey={showLabelDetails ? 'activity.labelUpdateColor' : 'activity.labelUpdateColorShort'}
+              i18nKey={hideLabelDetails ? 'activity.labelUpdateColorShort' : 'activity.labelUpdateColor'}
               values={{
                 label: labelName,
                 color: labelColorName,
@@ -828,7 +828,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           return (
             <Trans
-              i18nKey={showLabelDetails ? 'activity.labelUpdateName' : 'activity.labelUpdateNameShort'}
+              i18nKey={hideLabelDetails ? 'activity.labelUpdateNameShort' : 'activity.labelUpdateName'}
               values={{
                 prevLabel: prevLabelName,
                 label: labelName,
@@ -849,7 +849,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showLabelDetails ? 'activity.labelDelete' : 'activity.labelDeleteShort'}
+            i18nKey={hideLabelDetails ? 'activity.labelDeleteShort' : 'activity.labelDelete'}
             values={{
               label: labelName,
               board: boardName,
@@ -867,7 +867,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showBoardDetails ? 'activity.boardUserAdd' : 'activity.boardUserAddShort'}
+            i18nKey={hideBoardDetails ? 'activity.boardUserAddShort' : 'activity.boardUserAdd'}
             values={{
               user: userName,
               board: boardName,
@@ -893,7 +893,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           return (
             <Trans
-              i18nKey={showBoardDetails ? 'activity.boardUserUpdateRole' : 'activity.boardUserUpdateRoleShort'}
+              i18nKey={hideBoardDetails ? 'activity.boardUserUpdateRoleShort' : 'activity.boardUserUpdateRole'}
               values={{
                 user: userName,
                 prevRole,
@@ -921,7 +921,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showBoardDetails ? 'activity.boardUserRemove' : 'activity.boardUserRemoveShort'}
+            i18nKey={hideBoardDetails ? 'activity.boardUserRemoveShort' : 'activity.boardUserRemove'}
             values={{
               user: userName,
               board: boardName,
@@ -938,7 +938,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showBoardDetails ? 'activity.boardCreate' : 'activity.boardCreateShort'}
+            i18nKey={hideBoardDetails ? 'activity.boardCreateShort' : 'activity.boardCreate'}
             values={{
               board: boardName,
               project: projectName,
@@ -959,7 +959,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           return (
             <Trans
-              i18nKey={showBoardDetails ? 'activity.boardUpdateName' : 'activity.boardUpdateNameShort'}
+              i18nKey={hideBoardDetails ? 'activity.boardUpdateNameShort' : 'activity.boardUpdateName'}
               values={{
                 prevBoard: prevBoardName,
                 board: boardName,
@@ -974,11 +974,11 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           const { prevIsGithubConnected, isGithubConnected, prevGithubRepo, githubRepo } = activity.data;
           let key;
           if (prevIsGithubConnected === false && isGithubConnected === true) {
-            key = showBoardDetails ? 'activity.boardAddedGithubRepo' : 'activity.boardAddedGithubRepoShort';
+            key = hideBoardDetails ? 'activity.boardAddedGithubRepoShort' : 'activity.boardAddedGithubRepo';
           } else if (prevIsGithubConnected === true && isGithubConnected === false) {
-            key = showBoardDetails ? 'activity.boardRemovedGithubRepo' : 'activity.boardRemovedGithubRepoShort';
+            key = hideBoardDetails ? 'activity.boardRemovedGithubRepoShort' : 'activity.boardRemovedGithubRepo';
           } else {
-            key = showBoardDetails ? 'activity.boardUpdateGithubRepo' : 'activity.boardUpdateGithubRepoShort';
+            key = hideBoardDetails ? 'activity.boardUpdateGithubRepoShort' : 'activity.boardUpdateGithubRepo';
           }
 
           return (
@@ -999,7 +999,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
         if (activity.data.prevPosition !== undefined) {
           return (
             <Trans
-              i18nKey={showBoardDetails ? 'activity.boardUpdatePosition' : 'activity.boardUpdatePositionShort'}
+              i18nKey={hideBoardDetails ? 'activity.boardUpdatePositionShort' : 'activity.boardUpdatePosition'}
               values={{
                 board: boardName,
                 project: projectName,
@@ -1017,7 +1017,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       case ActivityTypes.BOARD_DELETE: {
         return (
           <Trans
-            i18nKey={showBoardDetails ? 'activity.boardDelete' : 'activity.boardDeleteShort'}
+            i18nKey={hideBoardDetails ? 'activity.boardDeleteShort' : 'activity.boardDelete'}
             values={{
               board: boardName,
               project: projectName,
@@ -1044,7 +1044,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       case ActivityTypes.PROJECT_CREATE: {
         return (
           <Trans
-            i18nKey={showProjectDetails ? 'activity.projectCreate' : 'activity.projectCreateShort'}
+            i18nKey={hideProjectDetails ? 'activity.projectCreateShort' : 'activity.projectCreate'}
             values={{
               project: projectName,
             }}
@@ -1061,7 +1061,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
           return (
             <Trans
-              i18nKey={showProjectDetails ? 'activity.projectUpdateName' : 'activity.projectUpdateNameShort'}
+              i18nKey={hideProjectDetails ? 'activity.projectUpdateNameShort' : 'activity.projectUpdateName'}
               values={{
                 prevProject: prevProjectName,
                 project: projectName,
@@ -1081,11 +1081,11 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
           const { projectPrevBackground, projectBackground, projectPrevBackgroundImage, projectBackgroundImage } = activity.data;
           let key;
           if ((projectPrevBackground === null && projectBackground !== null) || (projectPrevBackgroundImage === null && projectBackgroundImage !== null)) {
-            key = showProjectDetails ? 'activity.projectBackgroundAdd' : 'activity.projectBackgroundAddShort';
+            key = hideProjectDetails ? 'activity.projectBackgroundAddShort' : 'activity.projectBackgroundAdd';
           } else if ((projectPrevBackground !== null && projectBackground === null) || (projectPrevBackgroundImage !== null && projectBackgroundImage === null)) {
-            key = showProjectDetails ? 'activity.projectBackgroundRemove' : 'activity.projectBackgroundRemoveShort';
+            key = hideProjectDetails ? 'activity.projectBackgroundRemoveShort' : 'activity.projectBackgroundRemove';
           } else if ((projectPrevBackground !== null && projectBackground !== null) || (projectPrevBackgroundImage !== null && projectBackgroundImage !== null)) {
-            key = showProjectDetails ? 'activity.projectBackgroundUpdate' : 'activity.projectBackgroundUpdateShort';
+            key = hideProjectDetails ? 'activity.projectBackgroundUpdateShort' : 'activity.projectBackgroundUpdate';
           }
 
           return (
@@ -1106,7 +1106,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
       case ActivityTypes.PROJECT_DELETE: {
         return (
           <Trans
-            i18nKey={showProjectDetails ? 'activity.projectDelete' : 'activity.projectDeleteShort'}
+            i18nKey={hideProjectDetails ? 'activity.projectDeleteShort' : 'activity.projectDelete'}
             values={{
               project: projectName,
             }}
@@ -1121,7 +1121,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showProjectDetails ? 'activity.projectManagerAdd' : 'activity.projectManagerAddShort'}
+            i18nKey={hideProjectDetails ? 'activity.projectManagerAddShort' : 'activity.projectManagerAdd'}
             values={{
               user: userName,
               project: projectName,
@@ -1138,7 +1138,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 
         return (
           <Trans
-            i18nKey={showProjectDetails ? 'activity.projectManagerRemove' : 'activity.projectManagerRemoveShort'}
+            i18nKey={hideProjectDetails ? 'activity.projectManagerRemoveShort' : 'activity.projectManagerRemove'}
             values={{
               user: userName,
               project: projectName,
@@ -1411,21 +1411,21 @@ const ActivityMessage = React.memo(({ activity, isTruncated, showCardDetails, sh
 ActivityMessage.propTypes = {
   activity: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isTruncated: PropTypes.bool,
-  showCardDetails: PropTypes.bool,
-  showListDetails: PropTypes.bool,
-  showLabelDetails: PropTypes.bool,
-  showBoardDetails: PropTypes.bool,
-  showProjectDetails: PropTypes.bool,
+  hideCardDetails: PropTypes.bool,
+  hideListDetails: PropTypes.bool,
+  hideLabelDetails: PropTypes.bool,
+  hideBoardDetails: PropTypes.bool,
+  hideProjectDetails: PropTypes.bool,
   onClose: PropTypes.func,
 };
 
 ActivityMessage.defaultProps = {
   isTruncated: false,
-  showCardDetails: false,
-  showListDetails: false,
-  showLabelDetails: false,
-  showBoardDetails: false,
-  showProjectDetails: false,
+  hideCardDetails: false,
+  hideListDetails: false,
+  hideLabelDetails: false,
+  hideBoardDetails: false,
+  hideProjectDetails: false,
   onClose: () => {},
 };
 

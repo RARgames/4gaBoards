@@ -69,9 +69,7 @@ const ProjectActionsStep = React.memo(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
-              showListDetails
-              showLabelDetails
-              showBoardDetails
+              hideProjectDetails
               onFetch={onActivitiesFetch}
               onBack={handleBack}
               onClose={onClose}

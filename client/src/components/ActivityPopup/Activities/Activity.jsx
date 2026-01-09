@@ -11,11 +11,12 @@ import { IconType } from '../../Utils';
 
 import * as s from './Activity.module.scss';
 
-const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails, showListDetails, showLabelDetails, showBoardDetails, showProjectDetails, onClose }) => {
+const Activity = React.memo(({ activity, createdAt, memberships, hideCardDetails, hideListDetails, hideLabelDetails, hideBoardDetails, hideProjectDetails, onClose }) => {
   const [t] = useTranslation();
 
-  const boardLinkVisible = showBoardDetails && activity.scope !== ActivityScopes.PROJECT && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
-  const projectLinkVisible = showProjectDetails && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
+  const hideBoardDetailsWithChildren = hideCardDetails || hideListDetails || hideLabelDetails || hideBoardDetails;
+  const boardLinkVisible = !hideBoardDetailsWithChildren && activity.scope !== ActivityScopes.PROJECT && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
+  const projectLinkVisible = !hideProjectDetails && !hideBoardDetailsWithChildren && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
 
   return (
     <div className={s.content}>
@@ -51,11 +52,11 @@ const Activity = React.memo(({ activity, createdAt, memberships, showCardDetails
       <div className={s.contentText}>
         <ActivityMessage
           activity={activity}
-          showCardDetails={showCardDetails}
-          showListDetails={showListDetails}
-          showLabelDetails={showLabelDetails}
-          showBoardDetails={showBoardDetails}
-          showProjectDetails={showProjectDetails}
+          hideCardDetails={hideCardDetails}
+          hideListDetails={hideListDetails}
+          hideLabelDetails={hideLabelDetails}
+          hideBoardDetails={hideBoardDetails}
+          hideProjectDetails={hideProjectDetails}
         />
       </div>
     </div>
@@ -66,11 +67,11 @@ Activity.propTypes = {
   activity: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   createdAt: PropTypes.instanceOf(Date),
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  showCardDetails: PropTypes.bool.isRequired,
-  showListDetails: PropTypes.bool.isRequired,
-  showLabelDetails: PropTypes.bool.isRequired,
-  showBoardDetails: PropTypes.bool.isRequired,
-  showProjectDetails: PropTypes.bool.isRequired,
+  hideCardDetails: PropTypes.bool.isRequired,
+  hideListDetails: PropTypes.bool.isRequired,
+  hideLabelDetails: PropTypes.bool.isRequired,
+  hideBoardDetails: PropTypes.bool.isRequired,
+  hideProjectDetails: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

@@ -107,6 +107,7 @@ const Attachment = React.forwardRef(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
+              hideCardDetails
               onFetch={onActivitiesFetch}
               position="left-start"
               offset={0}

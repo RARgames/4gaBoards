@@ -21,11 +21,11 @@ const ActivityStep = React.memo(
     activities,
     isFetching,
     isAllFetched,
-    showCardDetails,
-    showListDetails,
-    showLabelDetails,
-    showBoardDetails,
-    showProjectDetails,
+    hideCardDetails,
+    hideListDetails,
+    hideLabelDetails,
+    hideBoardDetails,
+    hideProjectDetails,
     onFetch,
     onBack,
     onClose,
@@ -77,11 +77,11 @@ const ActivityStep = React.memo(
             isFetching={isFetching}
             isAllFetched={isAllFetched}
             memberships={memberships}
-            showCardDetails={showCardDetails}
-            showListDetails={showListDetails}
-            showLabelDetails={showLabelDetails}
-            showBoardDetails={showBoardDetails}
-            showProjectDetails={showProjectDetails}
+            hideCardDetails={hideCardDetails}
+            hideListDetails={hideListDetails}
+            hideLabelDetails={hideLabelDetails}
+            hideBoardDetails={hideBoardDetails}
+            hideProjectDetails={hideProjectDetails}
             onFetch={onFetch}
             onClose={onClose}
           />
@@ -102,11 +102,11 @@ ActivityStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
-  showCardDetails: PropTypes.bool,
-  showListDetails: PropTypes.bool,
-  showLabelDetails: PropTypes.bool,
-  showBoardDetails: PropTypes.bool,
-  showProjectDetails: PropTypes.bool,
+  hideCardDetails: PropTypes.bool,
+  hideListDetails: PropTypes.bool,
+  hideLabelDetails: PropTypes.bool,
+  hideBoardDetails: PropTypes.bool,
+  hideProjectDetails: PropTypes.bool,
   onFetch: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func,
@@ -119,11 +119,11 @@ ActivityStep.defaultProps = {
   updatedBy: undefined,
   memberships: undefined,
   isNotMemberTitle: '',
-  showCardDetails: false,
-  showListDetails: false,
-  showLabelDetails: false,
-  showBoardDetails: false,
-  showProjectDetails: false,
+  hideCardDetails: false,
+  hideListDetails: false,
+  hideLabelDetails: false,
+  hideBoardDetails: false,
+  hideProjectDetails: false,
   onBack: undefined,
   onClose: () => {},
 };

@@ -31,8 +31,8 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
 
   return items.map((item) => {
     if (!item.activity) return null;
-    const boardLinkVisible = item.activity.scope !== ActivityScopes.PROJECT && item.activity.scope !== ActivityScopes.USER;
-    const projectLinkVisible = item.activity.scope !== ActivityScopes.USER;
+    const boardLinkVisible = item.activity.scope !== ActivityScopes.PROJECT && item.activity.scope !== ActivityScopes.USER && item.activity.scope !== ActivityScopes.INSTANCE;
+    const projectLinkVisible = item.activity.scope !== ActivityScopes.USER && item.activity.scope !== ActivityScopes.INSTANCE;
     return (
       <div key={item.id} className={clsx(s.item, item.isRead && s.itemRead, isFullScreen && s.itemFullScreen)}>
         <div className={s.itemHeader}>
@@ -72,7 +72,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
           </Button>
         </div>
         <span className={s.itemContent}>
-          <ActivityMessage activity={item.activity} isTruncated showCardDetails showListDetails showLabelDetails showBoardDetails showProjectDetails onClose={onClose} />
+          <ActivityMessage activity={item.activity} isTruncated onClose={onClose} />
         </span>
       </div>
     );

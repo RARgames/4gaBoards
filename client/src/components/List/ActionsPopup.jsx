@@ -61,7 +61,7 @@ const ActionsStep = React.memo(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
-              showCardDetails
+              hideListDetails
               onFetch={onActivitiesFetch}
               onBack={handleBack}
               onClose={onClose}

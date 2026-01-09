@@ -109,6 +109,7 @@ const ActionsStep = React.memo(
               onFetch={onActivitiesFetch}
               onBack={handleBack}
               onClose={onClose}
+              hideCardDetails
             />
           );
         default:
