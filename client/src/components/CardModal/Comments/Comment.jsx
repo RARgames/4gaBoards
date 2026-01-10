@@ -23,6 +23,7 @@ const Comment = React.memo(
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
     createdAt,
     createdBy,
     updatedAt,
@@ -71,6 +72,7 @@ const Comment = React.memo(
                   activities={activities}
                   isFetching={isActivitiesFetching}
                   isAllFetched={isAllActivitiesFetched}
+                  lastActivityId={lastActivityId}
                   hideCardDetails
                   onFetch={onActivitiesFetch}
                   position="left-start"
@@ -128,6 +130,7 @@ Comment.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.string,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -140,6 +143,7 @@ Comment.propTypes = {
 };
 
 Comment.defaultProps = {
+  lastActivityId: undefined,
   createdAt: undefined,
   updatedAt: undefined,
   createdBy: undefined,

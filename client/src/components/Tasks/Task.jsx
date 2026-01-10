@@ -37,6 +37,7 @@ const Task = React.memo(
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
     isCompleted,
     isPersisted,
     canEdit,
@@ -192,6 +193,7 @@ const Task = React.memo(
                     activities={activities}
                     isActivitiesFetching={isActivitiesFetching}
                     isAllActivitiesFetched={isAllActivitiesFetched}
+                    lastActivityId={lastActivityId}
                     createdAt={createdAt}
                     createdBy={createdBy}
                     updatedAt={updatedAt}
@@ -237,6 +239,7 @@ Task.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.string,
   isCompleted: PropTypes.bool.isRequired,
   isPersisted: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
@@ -254,6 +257,7 @@ Task.propTypes = {
 
 Task.defaultProps = {
   dueDate: undefined,
+  lastActivityId: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

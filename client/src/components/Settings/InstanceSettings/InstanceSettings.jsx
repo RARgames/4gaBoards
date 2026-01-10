@@ -30,6 +30,7 @@ const InstanceSettings = React.memo(
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
     onCoreSettingsUpdate,
     onActivitiesFetch,
   }) => {
@@ -276,6 +277,7 @@ const InstanceSettings = React.memo(
                 activities={activities}
                 isFetching={isActivitiesFetching}
                 isAllFetched={isAllActivitiesFetched}
+                lastActivityId={lastActivityId}
                 onFetch={onActivitiesFetch}
                 position="bottom"
                 offset={0}
@@ -346,6 +348,7 @@ InstanceSettings.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.string,
   onCoreSettingsUpdate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
 };
@@ -355,6 +358,7 @@ InstanceSettings.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  lastActivityId: undefined,
 };
 
 export default InstanceSettings;

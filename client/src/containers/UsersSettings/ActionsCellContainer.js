@@ -27,8 +27,10 @@ const makeMapStateToProps = () => {
       updatedBy,
       isUserActivitiesFetching,
       isAllUserActivitiesFetched,
+      lastUserActivityId,
       isUserAccountActivitiesFetching,
       isAllUserAccountActivitiesFetched,
+      lastUserAccountActivityId,
     } = selectUserById(state, id);
     const userActivities = selectUserActivitiesById(state, id);
     const userAccountActivities = selectUserAccountActivitiesById(state, id);
@@ -53,9 +55,11 @@ const makeMapStateToProps = () => {
       activities: userActivities,
       isUserActivitiesFetching,
       isAllUserActivitiesFetched,
+      lastUserActivityId,
       userAccountActivities,
       isUserAccountActivitiesFetching,
       isAllUserAccountActivitiesFetched,
+      lastUserAccountActivityId,
     };
   };
 };

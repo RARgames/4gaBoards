@@ -27,6 +27,7 @@ const ActionsCell = React.memo(
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
     canEdit,
     createdAt,
     createdBy,
@@ -65,6 +66,7 @@ const ActionsCell = React.memo(
             boardId,
             listId,
             projectId,
+            lastActivityId,
           }}
           projectsToLists={allProjectsToLists}
           allBoardMemberships={allBoardMemberships}
@@ -131,6 +133,7 @@ ActionsCell.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -156,6 +159,7 @@ ActionsCell.propTypes = {
 ActionsCell.defaultProps = {
   dueDate: undefined,
   timer: undefined,
+  lastActivityId: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

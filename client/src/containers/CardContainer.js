@@ -29,10 +29,8 @@ const makeMapStateToProps = () => {
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
-    const { name, dueDate, timer, coverUrl, description, boardId, listId, isPersisted, commentCount, isActivitiesFetching, isAllActivitiesFetched, createdAt, createdBy, updatedAt, updatedBy } = selectCardById(
-      state,
-      id,
-    );
+    const { name, dueDate, timer, coverUrl, description, boardId, listId, isPersisted, commentCount, isActivitiesFetching, isAllActivitiesFetched, lastActivityId, createdAt, createdBy, updatedAt, updatedBy } =
+      selectCardById(state, id);
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
@@ -78,6 +76,7 @@ const makeMapStateToProps = () => {
       activities,
       isActivitiesFetching,
       isAllActivitiesFetched,
+      lastActivityId,
       createdAt,
       createdBy,
       updatedAt,

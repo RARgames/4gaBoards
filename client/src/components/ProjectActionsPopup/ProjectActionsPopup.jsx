@@ -23,6 +23,7 @@ const ProjectActionsStep = React.memo(
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
     name,
     projectId,
     managedProjects,
@@ -69,6 +70,7 @@ const ProjectActionsStep = React.memo(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
+              lastActivityId={lastActivityId}
               hideProjectDetails
               onFetch={onActivitiesFetch}
               onBack={handleBack}
@@ -108,6 +110,7 @@ ProjectActionsStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.number,
   name: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -125,6 +128,7 @@ ProjectActionsStep.propTypes = {
 };
 
 ProjectActionsStep.defaultProps = {
+  lastActivityId: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

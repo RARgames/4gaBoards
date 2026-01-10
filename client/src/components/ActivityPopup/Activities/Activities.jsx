@@ -8,7 +8,7 @@ import Activity from './Activity';
 import * as gs from '../../../global.module.scss';
 import * as s from './Activities.module.scss';
 
-const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, hideCardDetails, hideListDetails, hideLabelDetails, hideBoardDetails, hideProjectDetails, onFetch, onClose }) => {
+const Activities = React.memo(({ items, isFetching, isAllFetched, lastActivityId, memberships, hideCardDetails, hideListDetails, hideLabelDetails, hideBoardDetails, hideProjectDetails, onFetch, onClose }) => {
   const visibilityRef = useRef(null);
 
   const handleVisibilityChange = useCallback(
@@ -39,6 +39,12 @@ const Activities = React.memo(({ items, isFetching, isAllFetched, memberships, h
     };
   }, [handleVisibilityChange, onFetch, items]);
 
+  useEffect(() => {
+    if (lastActivityId === undefined && !isFetching && !isAllFetched) {
+      onFetch();
+    }
+  }, [lastActivityId, isFetching, isAllFetched, onFetch]);
+
   return (
     <div>
       <div className={clsx(s.wrapper, gs.scrollableY)}>
@@ -66,6 +72,7 @@ Activities.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.number,
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   hideCardDetails: PropTypes.bool.isRequired,
   hideListDetails: PropTypes.bool.isRequired,
@@ -77,6 +84,7 @@ Activities.propTypes = {
 };
 
 Activities.defaultProps = {
+  lastActivityId: undefined,
   memberships: undefined,
 };
 

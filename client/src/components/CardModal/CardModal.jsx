@@ -39,6 +39,7 @@ const CardModal = React.memo(
     isSubscribed,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
     isCommentsFetching,
     isAllCommentsFetched,
     listId,
@@ -356,6 +357,7 @@ const CardModal = React.memo(
                 boardId,
                 listId,
                 projectId,
+                lastActivityId,
               }}
               projectsToLists={allProjectsToLists}
               allBoardMemberships={boardAndCardMemberships}
@@ -819,6 +821,7 @@ CardModal.propTypes = {
   isSubscribed: PropTypes.bool.isRequired,
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.string,
   isCommentsFetching: PropTypes.bool.isRequired,
   isAllCommentsFetched: PropTypes.bool.isRequired,
   listId: PropTypes.string.isRequired,
@@ -897,6 +900,7 @@ CardModal.defaultProps = {
   description: undefined,
   dueDate: undefined,
   timer: undefined,
+  lastActivityId: undefined,
   closestTaskDueDate: undefined,
   closestDueDate: undefined,
   createdAt: undefined,

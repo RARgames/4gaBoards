@@ -125,6 +125,7 @@ const Tasks = React.forwardRef(
                 activities={item.activities}
                 isActivitiesFetching={item.isActivitiesFetching}
                 isAllActivitiesFetched={item.isAllActivitiesFetched}
+                lastActivityId={item.lastActivityId}
                 isCompleted={item.isCompleted}
                 isPersisted={item.isPersisted}
                 canEdit={canEdit}

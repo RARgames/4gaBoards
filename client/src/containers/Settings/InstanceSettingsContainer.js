@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
     updatedBy,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
   } = selectors.selectCoreSettings(state);
   const activities = selectors.selectInstanceActivities(state);
 
@@ -40,6 +41,7 @@ const mapStateToProps = (state) => {
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
   };
 };
 

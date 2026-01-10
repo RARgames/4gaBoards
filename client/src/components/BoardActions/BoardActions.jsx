@@ -131,6 +131,7 @@ const BoardActions = React.memo(
               activities={board.activities}
               isActivitiesFetching={board.isActivitiesFetching}
               isAllActivitiesFetched={board.isAllActivitiesFetched}
+              lastActivityId={board.lastActivityId}
               defaultDataRename={pick(board, 'name')}
               defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
               createdAt={board.createdAt}

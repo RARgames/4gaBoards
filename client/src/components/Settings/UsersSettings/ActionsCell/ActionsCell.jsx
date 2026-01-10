@@ -23,9 +23,11 @@ const ActionsCell = React.memo(
     activities,
     isUserActivitiesFetching,
     isAllUserActivitiesFetched,
+    lastUserActivityId,
     userAccountActivities,
     isUserAccountActivitiesFetching,
     isAllUserAccountActivitiesFetched,
+    lastUserAccountActivityId,
     emailUpdateForm,
     passwordUpdateForm,
     usernameUpdateForm,
@@ -58,9 +60,11 @@ const ActionsCell = React.memo(
           activities,
           isUserActivitiesFetching,
           isAllUserActivitiesFetched,
+          lastUserActivityId,
           userAccountActivities,
           isUserAccountActivitiesFetching,
           isAllUserAccountActivitiesFetched,
+          lastUserAccountActivityId,
         }}
         createdAt={createdAt}
         createdBy={createdBy}
@@ -105,9 +109,11 @@ ActionsCell.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isUserActivitiesFetching: PropTypes.bool.isRequired,
   isAllUserActivitiesFetched: PropTypes.bool.isRequired,
+  lastUserActivityId: PropTypes.number,
   userAccountActivities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isUserAccountActivitiesFetching: PropTypes.bool.isRequired,
   isAllUserAccountActivitiesFetched: PropTypes.bool.isRequired,
+  lastUserAccountActivityId: PropTypes.number,
   emailUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   passwordUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   usernameUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -131,6 +137,8 @@ ActionsCell.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  lastUserActivityId: undefined,
+  lastUserAccountActivityId: undefined,
 };
 
 export default ActionsCell;

@@ -25,6 +25,7 @@ const BoardActionsStep = React.memo(
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
+    lastActivityId,
     defaultDataRename,
     defaultDataGithub,
     createdAt,
@@ -89,6 +90,7 @@ const BoardActionsStep = React.memo(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
+              lastActivityId={lastActivityId}
               hideBoardDetails
               onFetch={onActivitiesFetch}
               onBack={handleBack}
@@ -131,6 +133,7 @@ BoardActionsStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.number,
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataGithub: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   createdAt: PropTypes.instanceOf(Date),
@@ -146,6 +149,7 @@ BoardActionsStep.propTypes = {
 };
 
 BoardActionsStep.defaultProps = {
+  lastActivityId: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

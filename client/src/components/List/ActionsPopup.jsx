@@ -15,7 +15,23 @@ const StepTypes = {
 };
 
 const ActionsStep = React.memo(
-  ({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, activities, isActivitiesFetching, isAllActivitiesFetched, onNameEdit, onCardAdd, onDelete, onActivitiesFetch, onClose }) => {
+  ({
+    name,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    boardMemberships,
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
+    lastActivityId,
+    onNameEdit,
+    onCardAdd,
+    onDelete,
+    onActivitiesFetch,
+    onClose,
+  }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
 
@@ -61,6 +77,7 @@ const ActionsStep = React.memo(
               activities={activities}
               isFetching={isActivitiesFetching}
               isAllFetched={isAllActivitiesFetched}
+              lastActivityId={lastActivityId}
               hideListDetails
               onFetch={onActivitiesFetch}
               onBack={handleBack}
@@ -105,6 +122,7 @@ ActionsStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.string,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
@@ -117,6 +135,7 @@ ActionsStep.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  lastActivityId: undefined,
 };
 
 export default withPopup(ActionsStep);

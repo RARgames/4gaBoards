@@ -95,6 +95,7 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
               activities={item.activities}
               isActivitiesFetching={item.isActivitiesFetching}
               isAllActivitiesFetched={item.isAllActivitiesFetched}
+              lastActivityId={item.lastActivityId}
               createdAt={item.createdAt}
               createdBy={item.createdBy}
               updatedAt={item.updatedAt}

@@ -13,7 +13,7 @@ const makeMapStateToProps = () => {
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
 
   return (state, { id, index }) => {
-    const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched } = selectListById(state, id);
+    const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched, lastActivityId } = selectListById(state, id);
     const cardIds = selectCardIdsByListId(state, id);
     const isFiltered = selectIsFilteredByListId(state, id);
     const filteredCardIds = selectFilteredCardIdsByListId(state, id);
@@ -45,6 +45,7 @@ const makeMapStateToProps = () => {
       activities,
       isActivitiesFetching,
       isAllActivitiesFetched,
+      lastActivityId,
     };
   };
 };

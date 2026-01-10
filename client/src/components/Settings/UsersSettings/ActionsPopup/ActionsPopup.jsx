@@ -144,6 +144,7 @@ const ActionsStep = React.memo(
               activities={user.activities}
               isFetching={user.isUserActivitiesFetching}
               isAllFetched={user.isAllUserActivitiesFetched}
+              lastActivityId={user.lastUserActivityId}
               onFetch={() => onUserActivitiesFetch(user.id)}
               onBack={handleBack}
               onClose={onClose}
@@ -160,6 +161,7 @@ const ActionsStep = React.memo(
               activities={user.userAccountActivities}
               isFetching={user.isUserAccountActivitiesFetching}
               isAllFetched={user.isAllUserAccountActivitiesFetched}
+              lastActivityId={user.lastUserAccountActivityId}
               onFetch={() => onUserAccountActivitiesFetch(user.id)}
               onBack={handleBack}
               onClose={onClose}

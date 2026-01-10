@@ -21,6 +21,7 @@ const ActivityStep = React.memo(
     activities,
     isFetching,
     isAllFetched,
+    lastActivityId,
     hideCardDetails,
     hideListDetails,
     hideLabelDetails,
@@ -76,6 +77,7 @@ const ActivityStep = React.memo(
             items={activities}
             isFetching={isFetching}
             isAllFetched={isAllFetched}
+            lastActivityId={lastActivityId}
             memberships={memberships}
             hideCardDetails={hideCardDetails}
             hideListDetails={hideListDetails}
@@ -102,6 +104,7 @@ ActivityStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.number,
   hideCardDetails: PropTypes.bool,
   hideListDetails: PropTypes.bool,
   hideLabelDetails: PropTypes.bool,
@@ -119,6 +122,7 @@ ActivityStep.defaultProps = {
   updatedBy: undefined,
   memberships: undefined,
   isNotMemberTitle: '',
+  lastActivityId: undefined,
   hideCardDetails: false,
   hideListDetails: false,
   hideLabelDetails: false,
