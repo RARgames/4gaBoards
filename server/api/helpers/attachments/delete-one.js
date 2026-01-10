@@ -78,6 +78,7 @@ module.exports = {
           },
         },
         currentUser,
+        request: inputs.request,
       });
 
       await sails.helpers.cards.updateMeta.with({ id: attachment.cardId, currentUser, skipMetaUpdate });

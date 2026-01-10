@@ -269,6 +269,7 @@ module.exports = {
             },
           },
           currentUser,
+          request: inputs.request,
         });
       } else if (!values.board && values.list) {
         await sails.helpers.actions.createOne.with({
@@ -284,6 +285,7 @@ module.exports = {
             },
           },
           currentUser,
+          request: inputs.request,
         });
         await sails.helpers.lists.updateMeta.with({ id: inputs.list.id, currentUser, skipMetaUpdate });
       } else {
@@ -319,6 +321,7 @@ module.exports = {
               data,
             },
             currentUser,
+            request: inputs.request,
           });
         }
       }

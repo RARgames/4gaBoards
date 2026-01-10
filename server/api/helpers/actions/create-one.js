@@ -95,6 +95,7 @@ module.exports = {
           },
           inputs.request,
         );
+        sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
           const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
@@ -139,6 +140,7 @@ module.exports = {
           },
           inputs.request,
         );
+        sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
         // TODO make subscriptions work for board actions
         // if (!inputs.skipNotifications) {
@@ -178,6 +180,7 @@ module.exports = {
           },
           inputs.request,
         );
+        sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
         // TODO make subscriptions work for board actions
         // if (!inputs.skipNotifications) {
@@ -216,6 +219,7 @@ module.exports = {
           },
           inputs.request,
         );
+        sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
         // TODO make subscriptions work for board actions
         // if (!inputs.skipNotifications) {
         //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
@@ -249,6 +253,7 @@ module.exports = {
           },
           inputs.request,
         );
+        sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
         // TODO make subscriptions work for board actions
         // if (!inputs.skipNotifications) {
         //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);

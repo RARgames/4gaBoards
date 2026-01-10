@@ -155,6 +155,7 @@ module.exports = {
         },
       },
       currentUser,
+      request: inputs.request,
     });
 
     await sails.helpers.projects.updateMeta.with({ id: board.projectId, currentUser, skipMetaUpdate });

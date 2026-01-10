@@ -92,6 +92,7 @@ module.exports = {
           },
         },
         currentUser,
+        request: inputs.request,
       });
 
       await sails.helpers.boards.updateMeta.with({ id: boardMembership.boardId, currentUser, skipMetaUpdate });

@@ -113,6 +113,7 @@ module.exports = {
           },
         },
         currentUser,
+        request: inputs.request,
       });
 
       await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser, skipMetaUpdate });

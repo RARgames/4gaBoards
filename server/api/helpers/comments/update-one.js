@@ -58,6 +58,7 @@ module.exports = {
             },
           },
           currentUser,
+          request: inputs.request,
         });
       }
 

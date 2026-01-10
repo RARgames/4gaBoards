@@ -118,6 +118,7 @@ module.exports = {
           },
         },
         currentUser: currentUser || user,
+        request: inputs.request,
       });
     }
 

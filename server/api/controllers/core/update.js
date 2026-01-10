@@ -105,6 +105,7 @@ module.exports = {
         },
       },
       currentUser,
+      request: this.req,
     });
 
     return {
