@@ -26,6 +26,7 @@ export default class extends BaseModel {
     isAllActivitiesFetched: attr({
       getDefault: () => false,
     }),
+    lastActivityId: attr(),
     createdAt: attr({
       getDefault: () => new Date(),
     }),
@@ -109,6 +110,7 @@ export default class extends BaseModel {
         Comment.withId(payload.commentId).update({
           isActivitiesFetching: false,
           isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+          lastActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : Comment.withId(payload.commentId).lastActivityId,
         });
 
         break;
