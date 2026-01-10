@@ -106,6 +106,16 @@
   --shadowBlack03: rgba(0, 0, 0, 0.3);
   --tableResize: #5f6064;
   --tableResizeHover: #4b4b4e;
+  /* Activities */
+  --instanceActivity: #c0392b;
+  --userActivity: #e57373;
+  --projectActivity: #f1c40f;
+  --boardActivity: #d4a017;
+  --listActivity: #7cb342;
+  --cardActivity: #26a69a;
+  --taskActivity: #4a95d3;
+  --attachmentActivity: #5c6bc0;
+  --commentActivity: #bb66d3;
   /* Colors (right now only ProgressBar) */
   --red: #db2828;
   --orange: #f2711c;

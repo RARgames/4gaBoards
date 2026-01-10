@@ -48,4 +48,40 @@
       color: var(--textColor3);
     }
   }
+
+  .instanceContent {
+    border-left: 2px solid var(--instanceActivity);
+  }
+
+  .userContent {
+    border-left: 2px solid var(--userActivity);
+  }
+
+  .projectContent {
+    border-left: 2px solid var(--projectActivity);
+  }
+
+  .boardContent {
+    border-left: 2px solid var(--boardActivity);
+  }
+
+  .listContent {
+    border-left: 2px solid var(--listActivity);
+  }
+
+  .cardContent {
+    border-left: 2px solid var(--cardActivity);
+  }
+
+  .taskContent {
+    border-left: 2px solid var(--taskActivity);
+  }
+
+  .attachmentContent {
+    border-left: 2px solid var(--attachmentActivity);
+  }
+
+  .commentContent {
+    border-left: 2px solid var(--commentActivity);
+  }
 }

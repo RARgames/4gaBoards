@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { ActivityScopes } from '../../../constants/Enums';
@@ -19,7 +20,7 @@ const Activity = React.memo(({ activity, createdAt, memberships, hideCardDetails
   const projectLinkVisible = !hideProjectDetails && !hideBoardDetailsWithChildren && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
 
   return (
-    <div className={s.content}>
+    <div className={clsx(s.content, activity.scope && s[`${activity.scope}Content`])}>
       <span className={s.user}>
         <User
           name={activity.user.name}
