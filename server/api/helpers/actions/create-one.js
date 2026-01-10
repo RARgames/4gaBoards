@@ -241,15 +241,14 @@ module.exports = {
       }).fetch();
 
       if (action) {
-        // TODO will not work
-        // sails.sockets.broadcast(
-        //   `board:${values.board.id}`,
-        //   'actionCreate',
-        //   {
-        //     item: action,
-        //   },
-        //   inputs.request,
-        // );
+        sails.sockets.broadcast(
+          `user:${values.userAccount.id}`,
+          'actionCreate',
+          {
+            item: action,
+          },
+          inputs.request,
+        );
         // TODO make subscriptions work for board actions
         // if (!inputs.skipNotifications) {
         //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
