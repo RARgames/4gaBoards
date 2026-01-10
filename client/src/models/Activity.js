@@ -3,6 +3,11 @@ import { attr, fk } from 'redux-orm';
 import ActionTypes from '../constants/ActionTypes';
 import BaseModel from './BaseModel';
 
+const normalizeActivity = (activity) => ({
+  notificationOnly: false,
+  ...activity,
+});
+
 export default class extends BaseModel {
   static modelName = 'Activity';
 
@@ -84,19 +89,23 @@ export default class extends BaseModel {
         Activity.all().delete();
 
         payload.activities.forEach((activity) => {
-          Activity.upsert({
-            ...activity,
-            isInCard: false,
-          });
+          Activity.upsert(
+            normalizeActivity({
+              ...activity,
+              isInCard: false,
+            }),
+          );
         });
 
         break;
       case ActionTypes.CORE_INITIALIZE:
         payload.activities.forEach((activity) => {
-          Activity.upsert({
-            ...activity,
-            isInCard: false,
-          });
+          Activity.upsert(
+            normalizeActivity({
+              ...activity,
+              isInCard: false,
+            }),
+          );
         });
 
         break;
@@ -112,12 +121,12 @@ export default class extends BaseModel {
       case ActionTypes.ACTIVITIES_INSTANCE_FETCH__SUCCESS:
       case ActionTypes.NOTIFICATION_CREATE_HANDLE:
         payload.activities.forEach((activity) => {
-          Activity.upsert(activity);
+          Activity.upsert(normalizeActivity(activity));
         });
 
         break;
       case ActionTypes.ACTIVITY_CREATE_HANDLE:
-        Activity.upsert(payload.activity);
+        Activity.upsert(normalizeActivity(payload.activity));
 
         break;
       default:
