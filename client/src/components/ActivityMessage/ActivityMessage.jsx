@@ -673,7 +673,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
     }
   } else if (ActivityScopes.LIST === activity.scope) {
-    const listName = isTruncated ? truncate(activity.list?.name || activity.data?.listName, { length: listNameTruncateLength }) : activity.list?.name || activity.data?.listName;
+    let listName = isTruncated ? truncate(activity.list?.name || activity.data?.listName, { length: listNameTruncateLength }) : activity.list?.name || activity.data?.listName;
     const boardName = isTruncated ? truncate(activity.board?.name || activity.data?.boardName, { length: boardNameTruncateLength }) : activity.board?.name || activity.data?.boardName;
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
@@ -700,13 +700,14 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       case ActivityTypes.LIST_UPDATE: {
         if (activity.data.listPrevName) {
           const prevListName = isTruncated ? truncate(activity.data.listPrevName, { length: listNameTruncateLength }) : activity.data.listPrevName;
+          listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
 
           return (
             <Trans
               i18nKey={hideListDetails ? 'activity.listUpdateNameShort' : 'activity.listUpdateName'}
               values={{
                 prevList: prevListName,
-                list: activity.data.listName,
+                list: listName,
               }}
             >
               <span className={s.data} title={prevListName} />
