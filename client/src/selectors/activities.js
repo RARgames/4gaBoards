@@ -435,7 +435,7 @@ export const makeSelectLastInstanceActivityId = () =>
       return instanceModel;
     }
 
-    const lastActivityModel = instanceModel.getOrderedUserAccountActivitiesQuerySet().last();
+    const lastActivityModel = instanceModel.getOrderedActivitiesQuerySet().last();
     return lastActivityModel && lastActivityModel.id;
   });
 

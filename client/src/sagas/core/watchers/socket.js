@@ -16,9 +16,9 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleSocketReconnect());
     };
 
-    const handleCoreSettingsUpdate = ({ item }) => {
+    const handleCoreSettingsUpdate = api.makeHandleCoreUpdate(({ item }) => {
       emit(entryActions.handleCoreSettingsUpdate(item));
-    };
+    });
 
     const handleUserCreate = api.makeHandleUserCreate(({ item }) => {
       emit(entryActions.handleUserCreate(item));

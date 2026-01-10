@@ -2,7 +2,6 @@ import { attr, fk, many, oneToOne } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import Config from '../constants/Config';
-import { ActivityScopes } from '../constants/Enums';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {

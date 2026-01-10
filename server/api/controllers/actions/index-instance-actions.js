@@ -29,6 +29,10 @@ module.exports = {
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
 
+    if (this.req.isSocket) {
+      sails.sockets.join(this.req, `instance`);
+    }
+
     return {
       items: actions,
       included: {

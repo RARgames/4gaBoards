@@ -16,7 +16,17 @@ const updateCoreSettings = (data, headers) =>
     item: transformCore(body.item),
   }));
 
+/* Event handlers */
+
+const makeHandleCoreUpdate = (next) => (body) => {
+  next({
+    ...body,
+    item: transformCore(body.item),
+  });
+};
+
 export default {
   getCoreSettingsPublic,
   updateCoreSettings,
+  makeHandleCoreUpdate,
 };
