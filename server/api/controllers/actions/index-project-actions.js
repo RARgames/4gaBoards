@@ -38,6 +38,11 @@ module.exports = {
 
     if (this.req.isSocket) {
       sails.sockets.join(this.req, `project:${inputs.projectId}`);
+
+      const boards = await sails.helpers.projects.getBoards(inputs.projectId);
+      boards.forEach((board) => {
+        sails.sockets.join(this.req, `board:${board.id}`);
+      });
     }
 
     return {
