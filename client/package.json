@@ -83,7 +83,7 @@
     "react": "^18.3.0",
     "react-app-polyfill": "^3.0.0",
     "react-beautiful-dnd": "^13.1.1",
-    "react-datepicker": "^8.10.0",
+    "react-datepicker": "^9.1.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",
     "react-i18next": "^16.5.1",
