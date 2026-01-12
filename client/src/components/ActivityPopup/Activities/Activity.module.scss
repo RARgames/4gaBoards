@@ -19,27 +19,6 @@
     width: 100%;
   }
 
-  .scope {
-    width: 10px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .scopeText {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%);
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    color: var(--backgroundPopup);
-    font-size: 8px;
-    font-family: 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', 'monospace';
-    font-weight: bold;
-    width: inherit;
-    -webkit-text-stroke: 0.3px currentColor;
-  }
-
   .date {
     color: var(--textColor3);
     display: inline-block;
@@ -72,41 +51,5 @@
       vertical-align: middle;
       color: var(--textColor3);
     }
-  }
-
-  .instanceContent {
-    background: var(--instanceActivity);
-  }
-
-  .userContent {
-    background: var(--userActivity);
-  }
-
-  .projectContent {
-    background: var(--projectActivity);
-  }
-
-  .boardContent {
-    background: var(--boardActivity);
-  }
-
-  .listContent {
-    background: var(--listActivity);
-  }
-
-  .cardContent {
-    background: var(--cardActivity);
-  }
-
-  .taskContent {
-    background: var(--taskActivity);
-  }
-
-  .attachmentContent {
-    background: var(--attachmentActivity);
-  }
-
-  .commentContent {
-    background: var(--commentActivity);
   }
 }

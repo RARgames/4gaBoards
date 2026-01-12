@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { ActivityScopes } from '../../../constants/Enums';
 import Paths from '../../../constants/Paths';
+import ActivityLabel from '../../ActivityLabel';
 import ActivityLink from '../../ActivityLink';
 import ActivityMessage from '../../ActivityMessage';
 import User from '../../User';
@@ -21,11 +21,7 @@ const Activity = React.memo(({ activity, createdAt, memberships, hideCardDetails
 
   return (
     <div className={s.content}>
-      {activity.scope && (
-        <div className={clsx(s.scope, s[`${activity.scope}Content`])}>
-          <div className={s.scopeText}>{t(`activity.${activity.scope}Short`).toUpperCase()}</div>
-        </div>
-      )}
+      <ActivityLabel scope={activity.scope} />
       <div className={s.wrapper}>
         <span className={s.user}>
           <User

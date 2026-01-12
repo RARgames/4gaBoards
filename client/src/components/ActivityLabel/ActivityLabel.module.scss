@@ -1,0 +1,59 @@
+:global(#app) {
+  .scope {
+    width: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scopeText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    color: var(--backgroundPopup);
+    font-size: 8px;
+    font-family: 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', 'monospace';
+    font-weight: bold;
+    width: inherit;
+    -webkit-text-stroke: 0.3px currentColor;
+    pointer-events: none;
+  }
+
+  .instanceScope {
+    background: var(--instanceActivity);
+  }
+
+  .userScope {
+    background: var(--userActivity);
+  }
+
+  .projectScope {
+    background: var(--projectActivity);
+  }
+
+  .boardScope {
+    background: var(--boardActivity);
+  }
+
+  .listScope {
+    background: var(--listActivity);
+  }
+
+  .cardScope {
+    background: var(--cardActivity);
+  }
+
+  .taskScope {
+    background: var(--taskActivity);
+  }
+
+  .attachmentScope {
+    background: var(--attachmentActivity);
+  }
+
+  .commentScope {
+    background: var(--commentActivity);
+  }
+}

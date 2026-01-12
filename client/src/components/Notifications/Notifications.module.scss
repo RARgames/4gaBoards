@@ -1,11 +1,16 @@
 :global(#app) {
   .item {
-    padding: 4px 8px 12px 8px;
+    display: flex;
     border-bottom: 1px solid var(--nodeOutline);
 
     &:hover {
       background: var(--backgroundPopupHover);
     }
+  }
+
+  .wrapper {
+    padding: 6px 12px 10px 8px;
+    flex: 1;
   }
 
   .itemFullScreen {
