@@ -155,9 +155,7 @@ export const makeSelectLastCommentIdByCardId = () =>
         return cardModel;
       }
 
-      const lastCommentModel = cardModel.getOrderedCommentsQuerySet().last();
-
-      return lastCommentModel && lastCommentModel.id;
+      return cardModel.lastCommentId;
     },
   );
 

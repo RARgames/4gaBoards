@@ -26,6 +26,7 @@ export default class extends BaseModel {
     isAllCommentsFetched: attr({
       getDefault: () => false,
     }),
+    lastCommentId: attr(),
     isActivitiesFetching: attr({
       getDefault: () => false,
     }),
@@ -235,6 +236,7 @@ export default class extends BaseModel {
         Card.withId(payload.cardId).update({
           isCommentsFetching: false,
           isAllCommentsFetched: payload.comments.length < Config.COMMENTS_LIMIT,
+          lastCommentId: payload.comments.length > 0 ? payload.comments[payload.comments.length - 1].id : Card.withId(payload.cardId).lastCommentId,
         });
 
         break;
