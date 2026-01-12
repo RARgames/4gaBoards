@@ -20,45 +20,52 @@ const Activity = React.memo(({ activity, createdAt, memberships, hideCardDetails
   const projectLinkVisible = !hideProjectDetails && !hideBoardDetailsWithChildren && activity.scope !== ActivityScopes.USER && activity.scope !== ActivityScopes.INSTANCE;
 
   return (
-    <div className={clsx(s.content, activity.scope && s[`${activity.scope}Content`])}>
-      <span className={s.user}>
-        <User
-          name={activity.user.name}
-          avatarUrl={activity.user.avatarUrl}
-          size="tiny"
-          isMember={memberships ? memberships.some((m) => m.user?.id === activity.user.id) : true}
-          isNotMemberTitle={t('common.noLongerBoardMember')}
+    <div className={s.content}>
+      {activity.scope && (
+        <div className={clsx(s.scope, s[`${activity.scope}Content`])}>
+          <div className={s.scopeText}>{t(`activity.${activity.scope}Short`).toUpperCase()}</div>
+        </div>
+      )}
+      <div className={s.wrapper}>
+        <span className={s.user}>
+          <User
+            name={activity.user.name}
+            avatarUrl={activity.user.avatarUrl}
+            size="tiny"
+            isMember={memberships ? memberships.some((m) => m.user?.id === activity.user.id) : true}
+            isNotMemberTitle={t('common.noLongerBoardMember')}
+          />
+        </span>
+        <span className={s.author}>{activity.user.name}</span>
+        {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
+        <ActivityLink
+          activityTarget={activity.board}
+          isVisible={boardLinkVisible}
+          to={Paths.BOARDS.replace(':id', activity.board?.id)}
+          icon={IconType.Board}
+          titleNotAvailable={t('activity.noBoardAvailable')}
+          className={s.board}
+          onClose={onClose}
         />
-      </span>
-      <span className={s.author}>{activity.user.name}</span>
-      {createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })} </span>}
-      <ActivityLink
-        activityTarget={activity.board}
-        isVisible={boardLinkVisible}
-        to={Paths.BOARDS.replace(':id', activity.board?.id)}
-        icon={IconType.Board}
-        titleNotAvailable={t('activity.noBoardAvailable')}
-        className={s.board}
-        onClose={onClose}
-      />
-      <ActivityLink
-        activityTarget={activity.project}
-        isVisible={projectLinkVisible}
-        to={Paths.PROJECTS.replace(':id', activity.project?.id)}
-        icon={IconType.Project}
-        titleNotAvailable={t('activity.noProjectAvailable')}
-        className={s.project}
-        onClose={onClose}
-      />
-      <div className={s.contentText}>
-        <ActivityMessage
-          activity={activity}
-          hideCardDetails={hideCardDetails}
-          hideListDetails={hideListDetails}
-          hideLabelDetails={hideLabelDetails}
-          hideBoardDetails={hideBoardDetails}
-          hideProjectDetails={hideProjectDetails}
+        <ActivityLink
+          activityTarget={activity.project}
+          isVisible={projectLinkVisible}
+          to={Paths.PROJECTS.replace(':id', activity.project?.id)}
+          icon={IconType.Project}
+          titleNotAvailable={t('activity.noProjectAvailable')}
+          className={s.project}
+          onClose={onClose}
         />
+        <div className={s.contentText}>
+          <ActivityMessage
+            activity={activity}
+            hideCardDetails={hideCardDetails}
+            hideListDetails={hideListDetails}
+            hideLabelDetails={hideLabelDetails}
+            hideBoardDetails={hideBoardDetails}
+            hideProjectDetails={hideProjectDetails}
+          />
+        </div>
       </div>
     </div>
   );

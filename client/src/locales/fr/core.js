@@ -648,6 +648,15 @@ export default {
       yes: 'Oui',
       no: 'Non',
       none: 'Aucun',
+      instanceShort: 'Instance',
+      userShort: 'Util.',
+      projectShort: 'Projet',
+      boardShort: 'Tableau',
+      listShort: 'Liste',
+      cardShort: 'Carte',
+      taskShort: 'Tâche',
+      commentShort: 'Comment.',
+      attachmentShort: 'PJ',
     },
 
     errors: {

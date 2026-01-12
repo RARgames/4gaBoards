@@ -628,6 +628,15 @@ export default {
       yes: 'yes',
       no: 'no',
       none: 'none',
+      instanceShort: 'Instance',
+      userShort: 'User',
+      projectShort: 'Project',
+      boardShort: 'Board',
+      listShort: 'List',
+      cardShort: 'Card',
+      taskShort: 'Task',
+      commentShort: 'Comment',
+      attachmentShort: 'Atch.',
     },
 
     errors: {

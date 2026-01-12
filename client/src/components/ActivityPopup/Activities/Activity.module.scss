@@ -9,10 +9,35 @@
   }
 
   .content {
-    display: inline-block;
-    vertical-align: top;
-    padding: 6px 12px 10px 12px;
+    display: inline-flex;
     border-bottom: 1px solid var(--nodeOutline);
+  }
+
+  .wrapper {
+    display: inline-block;
+    padding: 6px 12px 10px 8px;
+    width: 100%;
+  }
+
+  .scope {
+    width: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scopeText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    color: var(--backgroundPopup);
+    font-size: 8px;
+    font-family: 'ui-monospace', 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', 'monospace';
+    font-weight: bold;
+    width: inherit;
+    -webkit-text-stroke: 0.3px currentColor;
   }
 
   .date {
@@ -50,38 +75,38 @@
   }
 
   .instanceContent {
-    border-left: 2px solid var(--instanceActivity);
+    background: var(--instanceActivity);
   }
 
   .userContent {
-    border-left: 2px solid var(--userActivity);
+    background: var(--userActivity);
   }
 
   .projectContent {
-    border-left: 2px solid var(--projectActivity);
+    background: var(--projectActivity);
   }
 
   .boardContent {
-    border-left: 2px solid var(--boardActivity);
+    background: var(--boardActivity);
   }
 
   .listContent {
-    border-left: 2px solid var(--listActivity);
+    background: var(--listActivity);
   }
 
   .cardContent {
-    border-left: 2px solid var(--cardActivity);
+    background: var(--cardActivity);
   }
 
   .taskContent {
-    border-left: 2px solid var(--taskActivity);
+    background: var(--taskActivity);
   }
 
   .attachmentContent {
-    border-left: 2px solid var(--attachmentActivity);
+    background: var(--attachmentActivity);
   }
 
   .commentContent {
-    border-left: 2px solid var(--commentActivity);
+    background: var(--commentActivity);
   }
 }

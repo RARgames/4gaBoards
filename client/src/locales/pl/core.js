@@ -646,6 +646,15 @@ export default {
       yes: 'Tak',
       no: 'Nie',
       none: 'Brak',
+      instanceShort: 'Inst.',
+      userShort: 'Użytk.',
+      projectShort: 'Projekt',
+      boardShort: 'Tablica',
+      listShort: 'Lista',
+      cardShort: 'Karta',
+      taskShort: 'Zadanie',
+      commentShort: 'Koment.',
+      attachmentShort: 'Załącz.',
     },
 
     errors: {

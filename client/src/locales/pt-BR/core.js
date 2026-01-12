@@ -631,6 +631,15 @@ export default {
       yes: 'Sim',
       no: 'Não',
       none: 'Nenhum',
+      instanceShort: 'Inst.',
+      userShort: 'Usuário',
+      projectShort: 'Projeto',
+      boardShort: 'Quadro',
+      listShort: 'Lista',
+      cardShort: 'Cartão',
+      taskShort: 'Tarefa',
+      commentShort: 'Coment.',
+      attachmentShort: 'Anexo',
     },
 
     errors: {
