@@ -72,7 +72,7 @@ Activities.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
-  lastActivityId: PropTypes.number,
+  lastActivityId: PropTypes.string,
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   hideCardDetails: PropTypes.bool.isRequired,
   hideListDetails: PropTypes.bool.isRequired,

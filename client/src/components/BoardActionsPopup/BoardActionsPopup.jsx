@@ -133,7 +133,7 @@ BoardActionsStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
-  lastActivityId: PropTypes.number,
+  lastActivityId: PropTypes.string,
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataGithub: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   createdAt: PropTypes.instanceOf(Date),

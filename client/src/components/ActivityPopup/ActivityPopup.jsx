@@ -104,7 +104,7 @@ ActivityStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool.isRequired,
   isAllFetched: PropTypes.bool.isRequired,
-  lastActivityId: PropTypes.number,
+  lastActivityId: PropTypes.string,
   hideCardDetails: PropTypes.bool,
   hideListDetails: PropTypes.bool,
   hideLabelDetails: PropTypes.bool,

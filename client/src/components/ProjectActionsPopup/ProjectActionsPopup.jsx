@@ -110,7 +110,7 @@ ProjectActionsStep.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
-  lastActivityId: PropTypes.number,
+  lastActivityId: PropTypes.string,
   name: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
