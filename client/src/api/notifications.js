@@ -25,6 +25,7 @@ const getNotification = (id, headers) =>
       ...omit(body.included, 'actions'),
       cards: body.included.cards?.map(transformCard) ?? [],
       activities: body.included.actions.map(transformActivity),
+      users: body.included.users.map(transformUser),
     },
   }));
 
