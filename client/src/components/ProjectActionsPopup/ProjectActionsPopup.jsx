@@ -88,7 +88,7 @@ const ProjectActionsStep = React.memo(
           {t('common.renameProject', { context: 'title' })}
         </Button>
         <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-          <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })}>
+          <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })} onClick={onClose}>
             <Icon type={IconType.ProjectSettings} size={IconSize.Size13} className={s.icon} />
             {t('common.projectSettings', { context: 'title' })}
           </Button>
