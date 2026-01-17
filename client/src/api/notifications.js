@@ -11,7 +11,7 @@ const getNotifications = (headers) =>
     items: body.items.map(transformNotification),
     included: {
       ...omit(body.included, 'actions'),
-      cards: body.included.cards.map(transformCard),
+      cards: body.included.cards?.map(transformCard) ?? [],
       activities: body.included.actions.map(transformActivity),
       users: body.included.users.map(transformUser),
     },
@@ -23,7 +23,7 @@ const getNotification = (id, headers) =>
     item: transformNotification(body.item),
     included: {
       ...omit(body.included, 'actions'),
-      cards: body.included.cards.map(transformCard),
+      cards: body.included.cards?.map(transformCard) ?? [],
       activities: body.included.actions.map(transformActivity),
     },
   }));

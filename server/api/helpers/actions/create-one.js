@@ -254,7 +254,7 @@ module.exports = {
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
-          const subscriptionUserIds = await sails.helpers.usersPrefs.getUserSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
+          const subscriptionUserIds = await sails.helpers.userPrefs.getUserSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({

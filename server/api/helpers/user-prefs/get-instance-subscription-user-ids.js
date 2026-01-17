@@ -11,6 +11,6 @@ module.exports = {
   async fn(inputs) {
     const instanceSubscriptions = await sails.helpers.userPrefs.getInstanceSubscriptions.with({ exceptUserIdOrIds: inputs.exceptUserIdOrIds });
 
-    return sails.helpers.utils.mapRecords(instanceSubscriptions, 'userId');
+    return sails.helpers.utils.mapRecords(instanceSubscriptions, 'id');
   },
 };

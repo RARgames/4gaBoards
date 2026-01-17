@@ -109,11 +109,11 @@ ActionsCell.propTypes = {
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isUserActivitiesFetching: PropTypes.bool.isRequired,
   isAllUserActivitiesFetched: PropTypes.bool.isRequired,
-  lastUserActivityId: PropTypes.number,
+  lastUserActivityId: PropTypes.string,
   userAccountActivities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isUserAccountActivitiesFetching: PropTypes.bool.isRequired,
   isAllUserAccountActivitiesFetched: PropTypes.bool.isRequired,
-  lastUserAccountActivityId: PropTypes.number,
+  lastUserAccountActivityId: PropTypes.string,
   emailUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   passwordUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   usernameUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types

@@ -17,7 +17,7 @@ module.exports = {
       items: notifications,
       included: {
         users,
-        cards,
+        ...(cards?.length ? { cards } : {}),
         actions: actions.map((action) => ({ ...action, notificationOnly: true })),
       },
     };

@@ -40,7 +40,7 @@ module.exports = {
       item: notification,
       included: {
         users: [user],
-        cards: [card],
+        ...(card ? { cards: [card] } : {}),
         actions: [action],
       },
     };
