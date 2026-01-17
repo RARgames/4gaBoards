@@ -10,6 +10,7 @@ export default class extends BaseModel {
     id: attr(),
     role: attr(),
     canComment: attr(),
+    isSubscribed: attr(),
     boardId: fk({
       to: 'Board',
       as: 'board',

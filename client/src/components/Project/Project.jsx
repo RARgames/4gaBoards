@@ -1,32 +1,40 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import truncate from '../../utils/visual-truncate';
 import BoardAddPopup from '../BoardAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
-import * as s from './Boards.module.scss';
+import * as s from './Project.module.scss';
 
-const Boards = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, onCreate }) => {
+const Project = React.memo(({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, isSubscribed, onBoardCreate, onProjectMembershipUpdate }) => {
   const [t] = useTranslation();
   const headerButtonGroupRef = useRef(null);
   const headerButtonGroupOffsetRef = useRef(null);
   const currentFilteredProject = filteredProjects.find((project) => project.id === projectId);
   const currentProject = projects.find((project) => project.id === projectId);
   const isProjectManager = managedProjects.some((p) => p.id === projectId);
+  const projectNameTruncateLength = 20;
 
   const getBoardsText = () => {
     const boardsCount = currentFilteredProject?.boards.length || 0;
     const totalBoardsCount = currentProject?.boards.length || 0;
     if (!isFiltered) {
-      return `${t('common.showing')} ${t('common.boards', { count: boardsCount, context: 'title' })}`;
+      return `${t('common.boards', { count: boardsCount, context: 'title' })}`;
     }
-    return `${t('common.showing')} ${t('common.ofBoards', { filteredCount: boardsCount, count: totalBoardsCount, context: 'title' })}`;
+    return `${t('common.ofBoards', { filteredCount: boardsCount, count: totalBoardsCount, context: 'title' })}`;
   };
+
+  const handleToggleSubscriptionClick = useCallback(() => {
+    onProjectMembershipUpdate(projectId, {
+      isSubscribed: !isSubscribed,
+    });
+  }, [projectId, isSubscribed, onProjectMembershipUpdate]);
 
   useEffect(() => {
     if (headerButtonGroupRef.current) {
@@ -39,12 +47,18 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
       <div className={s.header}>
         <div ref={headerButtonGroupOffsetRef} />
         <div className={clsx(s.headerText)}>
-          <span>{getBoardsText()}</span> <span className={s.headerDetails}>[{t('common.selectedProject')}]</span>
+          <Button style={ButtonStyle.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick}>
+            <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
+          </Button>
+          <div title={currentProject?.name} className={s.title}>
+            {truncate(currentProject?.name, projectNameTruncateLength)}
+          </div>
+          <div className={s.headerDetails}>[{getBoardsText()}]</div>
         </div>
         <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
           {isProjectManager && (
             <div className={s.headerButton}>
-              <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onCreate} offset={16} position="bottom">
+              <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} offset={16} position="bottom">
                 <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.addButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
                   {t('common.addBoard')}
@@ -85,7 +99,7 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
         ))}
         {currentProject?.boards.length === 0 && isProjectManager && (
           <div className={s.info}>
-            <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onCreate} offset={16} position="bottom">
+            <BoardAddPopup projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} offset={16} position="bottom">
               <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.addButton}>
                 <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
                 {t('common.addBoard')}
@@ -98,14 +112,16 @@ const Boards = React.memo(({ projectId, projects, filteredProjects, managedProje
   );
 });
 
-Boards.propTypes = {
+Project.propTypes = {
   projectId: PropTypes.string.isRequired,
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFiltered: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,
-  onCreate: PropTypes.func.isRequired,
+  isSubscribed: PropTypes.bool.isRequired,
+  onBoardCreate: PropTypes.func.isRequired,
+  onProjectMembershipUpdate: PropTypes.func.isRequired,
 };
 
-export default Boards;
+export default Project;

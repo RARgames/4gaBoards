@@ -29,6 +29,7 @@ const handleBoardMembershipCreate = (
   board,
   users,
   projectManagers,
+  projectMembership,
   boards,
   boardMemberships,
   labels,
@@ -40,7 +41,6 @@ const handleBoardMembershipCreate = (
   taskMemberships,
   attachments,
   notifications,
-  userProject,
 ) => ({
   type: ActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE,
   payload: {
@@ -49,6 +49,7 @@ const handleBoardMembershipCreate = (
     board,
     users,
     projectManagers,
+    projectMembership,
     boards,
     boardMemberships,
     labels,
@@ -60,7 +61,6 @@ const handleBoardMembershipCreate = (
     taskMemberships,
     attachments,
     notifications,
-    userProject,
   },
 });
 

@@ -205,6 +205,18 @@ module.exports = {
             if (newProjectManager) {
               const projectRelatedUserIds = await sails.helpers.projects.getManagerAndBoardMemberUserIds(inputs.board.projectId);
 
+              const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: allUsers[projectManager.userId].id }, currentUser });
+              await sails.helpers.projectMemberships.createOne
+                .with({
+                  values: {
+                    projectId: inputs.board.projectId,
+                    userId: allUsers[projectManager.userId].id,
+                    isSubscribed: userPrefs?.subscribeToNewProjects || false,
+                  },
+                  currentUser,
+                })
+                .tolerate('E_UNIQUE');
+
               projectRelatedUserIds.forEach((userId) => {
                 sails.sockets.broadcast(
                   `user:${userId}`,
@@ -228,11 +240,13 @@ module.exports = {
         boardMemberships.map(async (boardMembership) => {
           if (allUsers[boardMembership.userId]) {
             const updatedAt = parseJSON(boardMembership.updatedAt);
+            const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: allUsers[boardMembership.userId].id }, currentUser });
             const newBoardMembership = await BoardMembership.create({
               boardId: inputs.board.id,
               userId: allUsers[boardMembership.userId].id,
               role: boardMembership.role,
               ...(boardMembership.canComment !== '' && { canComment: boardMembership.canComment }),
+              isSubscribed: userPrefs?.subscribeToNewBoards || false,
               createdAt: parseJSON(boardMembership.createdAt),
               createdById: allUsers[boardMembership.createdById]?.id ?? currentUser.id,
               updatedAt,
@@ -242,11 +256,12 @@ module.exports = {
               .fetch();
 
             if (newBoardMembership) {
-              await sails.helpers.userProjects.createOne
+              await sails.helpers.projectMemberships.createOne
                 .with({
                   values: {
                     projectId: inputs.board.projectId,
                     userId: allUsers[boardMembership.userId].id,
+                    isSubscribed: userPrefs?.subscribeToNewProjects || false,
                   },
                   currentUser,
                 })

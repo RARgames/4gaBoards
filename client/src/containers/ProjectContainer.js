@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Boards from '../components/Boards';
+import Project from '../components/Project';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
   const isFiltered = selectors.selectIsFilteredForCurrentUser(state);
   const { isAdmin } = selectors.selectCurrentUser(state);
+  const { isSubscribed } = selectors.selectProject(state, projectId);
 
   return {
     projectId,
@@ -19,15 +20,17 @@ const mapStateToProps = (state) => {
     managedProjects,
     isFiltered,
     isAdmin,
+    isSubscribed,
   };
 };
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      onCreate: entryActions.createBoard,
+      onBoardCreate: entryActions.createBoard,
+      onProjectMembershipUpdate: entryActions.updateProjectMembership,
     },
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Boards);
+export default connect(mapStateToProps, mapDispatchToProps)(Project);

@@ -49,14 +49,28 @@ module.exports = {
       }
     }
 
+    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: values.user.id }, currentUser });
     const boardMembership = await BoardMembership.create({
       ...values,
+      isSubscribed: userPrefs?.subscribeToNewBoards || false,
       boardId: values.board.id,
       userId: values.user.id,
       createdById: currentUser.id,
     })
       .intercept('E_UNIQUE', 'userAlreadyBoardMember')
       .fetch();
+
+    await sails.helpers.projectMemberships.createOne
+      .with({
+        values: {
+          projectId: values.board.projectId,
+          userId: values.user.id,
+          isSubscribed: userPrefs?.subscribeToNewProjects || false,
+        },
+        currentUser,
+        request: this.req,
+      })
+      .tolerate('E_UNIQUE');
 
     if (boardMembership) {
       sails.sockets.broadcast(

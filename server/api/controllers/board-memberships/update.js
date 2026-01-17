@@ -18,6 +18,9 @@ module.exports = {
     canComment: {
       type: 'boolean',
     },
+    isSubscribed: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -40,7 +43,7 @@ module.exports = {
       throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
     }
 
-    const values = _.pick(inputs, ['role', 'canComment']);
+    const values = _.pick(inputs, ['role', 'canComment', 'isSubscribed']);
 
     boardMembership = await sails.helpers.boardMemberships.updateOne.with({
       values,

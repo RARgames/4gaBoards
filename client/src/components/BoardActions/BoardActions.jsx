@@ -33,6 +33,8 @@ const BoardActions = React.memo(
     isProjectManager,
     board,
     boardSearchParams,
+    boardMembershipId,
+    isSubscribed,
     viewMode,
     onViewModeChange,
     onMembershipCreate,
@@ -60,8 +62,23 @@ const BoardActions = React.memo(
       [board.id, onBoardUpdate],
     );
 
+    const handleToggleSubscriptionClick = useCallback(() => {
+      onMembershipUpdate(boardMembershipId, {
+        isSubscribed: !isSubscribed,
+      });
+    }, [boardMembershipId, isSubscribed, onMembershipUpdate]);
+
     return (
       <div className={clsx(s.wrapper, gs.scrollableX)}>
+        <Button style={ButtonStyle.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={clsx(s.action, s.subscriptionButton)}>
+          <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
+        </Button>
+        <div title={board.name} className={clsx(s.title, s.action)}>
+          {board.name}
+        </div>
+        <div className={clsx(s.cardsCount, s.action, s.cardsCountAction)}>
+          {isFiltered ? t('common.ofCards', { filteredCount: filteredCardCount, count: cardCount }) : t('common.cards', { count: cardCount })}
+        </div>
         <div className={s.githubAction}>
           <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
             <Icon
@@ -72,10 +89,6 @@ const BoardActions = React.memo(
             />
           </ConnectionsPopup>
         </div>
-        <div title={board.name} className={clsx(s.title, s.action)}>
-          {board.name}
-        </div>
-        <div className={clsx(s.cardsCount, s.action)}>{isFiltered ? t('common.ofCards', { filteredCount: filteredCardCount, count: cardCount }) : t('common.cards', { count: cardCount })}</div>
         <div className={s.action}>
           <Memberships
             items={memberships}
@@ -180,6 +193,8 @@ BoardActions.propTypes = {
   isProjectManager: PropTypes.bool.isRequired,
   board: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardSearchParams: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMembershipId: PropTypes.string.isRequired,
+  isSubscribed: PropTypes.bool.isRequired,
   viewMode: PropTypes.string.isRequired,
   onViewModeChange: PropTypes.func.isRequired,
   onMembershipCreate: PropTypes.func.isRequired,

@@ -46,6 +46,7 @@ module.exports = {
       boardIds = sails.helpers.utils.mapRecords(boardMemberships, 'boardId');
       boards = boards.filter((board) => boardIds.includes(board.id));
     }
+    project.isSubscribed = await sails.helpers.users.isProjectSubscriber(currentUser.id, project.id);
 
     const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);
 

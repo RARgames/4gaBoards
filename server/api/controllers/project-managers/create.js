@@ -74,17 +74,6 @@ module.exports = {
       })
       .intercept('userAlreadyProjectManager', () => Errors.USER_ALREADY_PROJECT_MANAGER);
 
-    await sails.helpers.userProjects.createOne
-      .with({
-        values: {
-          projectId: project.id,
-          userId: user.id,
-        },
-        currentUser,
-        request: this.req,
-      })
-      .tolerate('E_UNIQUE');
-
     const boards = await sails.helpers.projects.getBoards(project.id);
     const boardMemberships = await Promise.all(
       boards.map(async (board) => {

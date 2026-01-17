@@ -72,7 +72,7 @@ export function* fetchCore() {
   }
 
   const core = yield call(request, api.getCoreSettingsPublic);
-  const { items: userProjects } = yield call(request, api.getUserProjects);
+  const { items: projectMemberships } = yield call(request, api.getProjectMemberships);
   const { item: userPrefs } = yield call(request, api.getUserPrefs, user.id);
 
   return {
@@ -95,7 +95,7 @@ export function* fetchCore() {
     cards: mergeRecords(cards1, cards2),
     comments,
     core,
-    userProjects,
+    projectMemberships,
     userPrefs,
   };
 }

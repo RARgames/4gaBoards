@@ -28,6 +28,11 @@ module.exports = {
       allowNull: true,
       columnName: 'can_comment',
     },
+    isSubscribed: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'is_subscribed',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

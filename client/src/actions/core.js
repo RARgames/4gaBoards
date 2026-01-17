@@ -6,6 +6,7 @@ const initializeCore = (
   users,
   projects,
   projectManagers,
+  projectMemberships,
   boards,
   boardMemberships,
   labels,
@@ -20,7 +21,6 @@ const initializeCore = (
   attachments,
   activities,
   notifications,
-  userProjects,
   userPrefs,
 ) => ({
   type: ActionTypes.CORE_INITIALIZE,
@@ -30,6 +30,7 @@ const initializeCore = (
     users,
     projects,
     projectManagers,
+    projectMemberships,
     boards,
     boardMemberships,
     labels,
@@ -44,7 +45,6 @@ const initializeCore = (
     attachments,
     activities,
     notifications,
-    userProjects,
     userPrefs,
   },
 });

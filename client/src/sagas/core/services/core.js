@@ -14,6 +14,7 @@ export function* initializeCore() {
     users,
     projects,
     projectManagers,
+    projectMemberships,
     boards,
     boardMemberships,
     labels,
@@ -28,7 +29,6 @@ export function* initializeCore() {
     attachments,
     activities,
     notifications,
-    userProjects,
     userPrefs,
   } = yield call(requests.fetchCore); // TODO: handle error
 
@@ -42,6 +42,7 @@ export function* initializeCore() {
       users,
       projects,
       projectManagers,
+      projectMemberships,
       boards,
       boardMemberships,
       labels,
@@ -56,7 +57,6 @@ export function* initializeCore() {
       attachments,
       activities,
       notifications,
-      userProjects,
       userPrefs,
     ),
   );

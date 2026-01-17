@@ -27,6 +27,18 @@ module.exports = {
     subscribeToOwnCards: {
       type: 'boolean',
     },
+    subscribeToNewBoards: {
+      type: 'boolean',
+    },
+    subscribeToNewProjects: {
+      type: 'boolean',
+    },
+    subscribeToUsers: {
+      type: 'boolean',
+    },
+    subscribeToInstance: {
+      type: 'boolean',
+    },
     descriptionMode: {
       type: 'string',
       isIn: UserPrefs.DESCRIPTION_MODES,
@@ -142,6 +154,10 @@ module.exports = {
       ..._.pick(inputs, [
         'language',
         'subscribeToOwnCards',
+        'subscribeToNewBoards',
+        'subscribeToNewProjects',
+        'subscribeToUsers',
+        'subscribeToInstance',
         'descriptionMode',
         'commentMode',
         'descriptionShown',

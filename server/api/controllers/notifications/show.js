@@ -34,7 +34,7 @@ module.exports = {
 
     const action = await Action.findOne(notification.actionId);
     const user = await sails.helpers.users.getOne(action.userId, true);
-    const card = await Card.findOne(notification.cardId);
+    const card = notification.cardId ? await Card.findOne(notification.cardId) : null;
 
     return {
       item: notification,

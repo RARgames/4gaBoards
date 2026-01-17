@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) =>
       onBoardDelete: entryActions.deleteBoard,
       onBoardExport: entryActions.exportBoard,
       onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
-      onUserProjectUpdate: entryActions.updateUserProject,
+      onProjectMembershipUpdate: entryActions.updateProjectMembership,
       onActivitiesProjectFetch: entryActions.fetchProjectActivities,
       onActivitiesBoardFetch: entryActions.fetchBoardActivities,
     },

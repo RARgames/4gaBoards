@@ -22,6 +22,9 @@ export default class extends BaseModel {
       through: 'ProjectManager',
       relatedName: 'projects',
     }),
+    isSubscribed: attr({
+      getDefault: () => false,
+    }),
     isActivitiesFetching: attr({
       getDefault: () => false,
     }),
@@ -60,10 +63,10 @@ export default class extends BaseModel {
           Project.upsert(project);
         });
 
-        payload.userProjects.forEach((userProject) => {
-          Project.withId(userProject.projectId)?.update({
+        payload.projectMemberships.forEach((projectMembership) => {
+          Project.withId(projectMembership.projectId)?.update({
             // TODO ? - hacky way to fix #311 - remove later
-            isCollapsed: userProject.isCollapsed,
+            isCollapsed: projectMembership.isCollapsed,
           });
         });
 
@@ -74,11 +77,11 @@ export default class extends BaseModel {
           Project.upsert(project);
         });
 
-        if (payload.userProjects) {
-          payload.userProjects.forEach((userProject) => {
-            Project.withId(userProject.projectId)?.update({
+        if (payload.projectMemberships) {
+          payload.projectMemberships.forEach((projectMembership) => {
+            Project.withId(projectMembership.projectId)?.update({
               // TODO ? - hacky way to fix #311 - remove later
-              isCollapsed: userProject.isCollapsed,
+              isCollapsed: projectMembership.isCollapsed,
             });
           });
         }
@@ -145,8 +148,8 @@ export default class extends BaseModel {
           }
 
           const { project } = payload;
-          if (payload.userProject) {
-            project.isCollapsed = payload.userProject.isCollapsed;
+          if (payload.projectMembership) {
+            project.isCollapsed = payload.projectMembership.isCollapsed;
           }
 
           Project.upsert(project);
@@ -172,23 +175,25 @@ export default class extends BaseModel {
         break;
       }
 
-      case ActionTypes.USER_PROJECT_UPDATE: {
+      case ActionTypes.PROJECT_MEMBERSHIP_UPDATE: {
         const projectModel = Project.withId(payload.id);
         if (projectModel) {
           projectModel.update({
-            isCollapsed: payload.data.isCollapsed,
+            ...(payload.data?.isCollapsed !== undefined && { isCollapsed: payload.data.isCollapsed }),
+            ...(payload.data?.isSubscribed !== undefined && { isSubscribed: payload.data.isSubscribed }),
           });
         }
 
         break;
       }
 
-      case ActionTypes.USER_PROJECT_UPDATE__SUCCESS:
-      case ActionTypes.USER_PROJECT_UPDATE_HANDLE: {
-        const projectModel = Project.withId(payload.userProject.projectId);
+      case ActionTypes.PROJECT_MEMBERSHIP_UPDATE__SUCCESS:
+      case ActionTypes.PROJECT_MEMBERSHIP_UPDATE_HANDLE: {
+        const projectModel = Project.withId(payload.projectMembership.projectId);
         if (projectModel) {
           projectModel.update({
-            isCollapsed: payload.userProject.isCollapsed,
+            ...(payload.projectMembership?.isCollapsed !== undefined && { isCollapsed: payload.projectMembership.isCollapsed }),
+            ...(payload.projectMembership?.isSubscribed !== undefined && { isSubscribed: payload.projectMembership.isSubscribed }),
           });
         }
 

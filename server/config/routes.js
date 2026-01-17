@@ -26,10 +26,6 @@ module.exports.routes = {
   'GET /api/core-settings-public': 'core/show',
   'POST /api/core-settings': 'core/update',
 
-  'GET /api/user-projects': 'user-projects/index',
-  'GET /api/user-projects/:projectId': 'user-projects/show',
-  'PATCH /api/user-projects/:projectId': 'user-projects/update',
-
   'GET /api/users': 'users/index',
   'POST /api/users': 'users/create',
   'GET /api/users/:id': 'users/show',
@@ -53,6 +49,10 @@ module.exports.routes = {
 
   'POST /api/projects/:projectId/managers': 'project-managers/create',
   'DELETE /api/project-managers/:id': 'project-managers/delete',
+
+  'GET /api/project-memberships': 'project-memberships/index',
+  'GET /api/project-memberships/:projectId': 'project-memberships/show',
+  'PATCH /api/project-memberships/:projectId': 'project-memberships/update',
 
   'POST /api/projects/:projectId/boards': 'boards/create',
   'GET /api/boards/:id': 'boards/show',

@@ -142,21 +142,20 @@ module.exports = {
         );
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
-        // TODO make subscriptions work for board actions
-        // if (!inputs.skipNotifications) {
-        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-        //   await Promise.all(
-        //     subscriptionUserIds.map(async (userId) =>
-        //       sails.helpers.notifications.createOne.with({
-        //         values: {
-        //           userId,
-        //           action,
-        //         },
-        //         currentUser,
-        //       }),
-        //     ),
-        //   );
-        // }
+        if (!inputs.skipNotifications) {
+          const subscriptionUserIds = await sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId);
+          await Promise.all(
+            subscriptionUserIds.map(async (userId) =>
+              sails.helpers.notifications.createOne.with({
+                values: {
+                  userId,
+                  action,
+                },
+                currentUser,
+              }),
+            ),
+          );
+        }
       }
     } else if (values.scope === Action.Scopes.BOARD) {
       action = await Action.create({
@@ -182,21 +181,20 @@ module.exports = {
         );
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
-        // TODO make subscriptions work for board actions
-        // if (!inputs.skipNotifications) {
-        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-        //   await Promise.all(
-        //     subscriptionUserIds.map(async (userId) =>
-        //       sails.helpers.notifications.createOne.with({
-        //         values: {
-        //           userId,
-        //           action,
-        //         },
-        //         currentUser,
-        //       }),
-        //     ),
-        //   );
-        // }
+        if (!inputs.skipNotifications) {
+          const subscriptionUserIds = await sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId);
+          await Promise.all(
+            subscriptionUserIds.map(async (userId) =>
+              sails.helpers.notifications.createOne.with({
+                values: {
+                  userId,
+                  action,
+                },
+                currentUser,
+              }),
+            ),
+          );
+        }
       }
     } else if (values.scope === Action.Scopes.PROJECT) {
       action = await Action.create({
@@ -220,21 +218,21 @@ module.exports = {
           inputs.request,
         );
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
-        // TODO make subscriptions work for board actions
-        // if (!inputs.skipNotifications) {
-        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-        //   await Promise.all(
-        //     subscriptionUserIds.map(async (userId) =>
-        //       sails.helpers.notifications.createOne.with({
-        //         values: {
-        //           userId,
-        //           action,
-        //         },
-        //         currentUser,
-        //       }),
-        //     ),
-        //   );
-        // }
+
+        if (!inputs.skipNotifications) {
+          const subscriptionUserIds = await sails.helpers.projects.getSubscriptionUserIds(action.projectId, action.userId);
+          await Promise.all(
+            subscriptionUserIds.map(async (userId) =>
+              sails.helpers.notifications.createOne.with({
+                values: {
+                  userId,
+                  action,
+                },
+                currentUser,
+              }),
+            ),
+          );
+        }
       }
     } else if (values.scope === Action.Scopes.USER) {
       action = await Action.create({
@@ -254,21 +252,21 @@ module.exports = {
           inputs.request,
         );
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
-        // TODO make subscriptions work for board actions
-        // if (!inputs.skipNotifications) {
-        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-        //   await Promise.all(
-        //     subscriptionUserIds.map(async (userId) =>
-        //       sails.helpers.notifications.createOne.with({
-        //         values: {
-        //           userId,
-        //           action,
-        //         },
-        //         currentUser,
-        //       }),
-        //     ),
-        //   );
-        // }
+
+        if (!inputs.skipNotifications) {
+          const subscriptionUserIds = await sails.helpers.usersPrefs.getUserSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
+          await Promise.all(
+            subscriptionUserIds.map(async (userId) =>
+              sails.helpers.notifications.createOne.with({
+                values: {
+                  userId,
+                  action,
+                },
+                currentUser,
+              }),
+            ),
+          );
+        }
       }
     } else if (values.scope === Action.Scopes.INSTANCE) {
       action = await Action.create({
@@ -289,21 +287,21 @@ module.exports = {
           },
           inputs.request,
         );
-        // TODO make subscriptions work for board actions
-        // if (!inputs.skipNotifications) {
-        //   const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
-        //   await Promise.all(
-        //     subscriptionUserIds.map(async (userId) =>
-        //       sails.helpers.notifications.createOne.with({
-        //         values: {
-        //           userId,
-        //           action,
-        //         },
-        //         currentUser,
-        //       }),
-        //     ),
-        //   );
-        // }
+
+        if (!inputs.skipNotifications) {
+          const subscriptionUserIds = await sails.helpers.userPrefs.getInstanceSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
+          await Promise.all(
+            subscriptionUserIds.map(async (userId) =>
+              sails.helpers.notifications.createOne.with({
+                values: {
+                  userId,
+                  action,
+                },
+                currentUser,
+              }),
+            ),
+          );
+        }
       }
     }
 

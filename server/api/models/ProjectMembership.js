@@ -1,5 +1,5 @@
 /**
- * UserProject.js
+ * ProjectMembership.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -15,6 +15,11 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
       columnName: 'is_collapsed',
+    },
+    isSubscribed: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'is_subscribed',
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
@@ -37,5 +42,5 @@ module.exports = {
     },
   },
 
-  tableName: 'user_project',
+  tableName: 'project_membership',
 };

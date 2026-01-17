@@ -14,10 +14,10 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const userProject = await UserProject.destroy({
+    const projectMembership = await ProjectMembership.destroy({
       id: inputs.record.id,
     });
 
-    return userProject;
+    return projectMembership;
   },
 };

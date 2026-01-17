@@ -43,15 +43,6 @@ module.exports = {
       request: this.req,
     });
 
-    await sails.helpers.userProjects.createOne.with({
-      values: {
-        projectId: project.id,
-        userId: currentUser.id,
-      },
-      currentUser,
-      request: this.req,
-    });
-
     return {
       item: project,
       included: {

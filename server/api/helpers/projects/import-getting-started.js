@@ -41,15 +41,6 @@ module.exports = {
       request: inputs.request,
     });
 
-    await sails.helpers.userProjects.createOne.with({
-      values: {
-        projectId: project.id,
-        userId: currentUser.id,
-      },
-      currentUser,
-      request: inputs.request,
-    });
-
     if (!project) {
       throw 'projectNotFound';
     }

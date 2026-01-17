@@ -20,17 +20,17 @@ module.exports = {
   async fn(inputs) {
     const { values } = inputs;
 
-    const userProject = await UserProject.updateOne(inputs.record.id).set({ ...values });
+    const projectMembership = await ProjectMembership.updateOne(inputs.record.id).set({ ...values });
 
     sails.sockets.broadcast(
       `user:${inputs.record.userId}`,
-      'userProjectUpdate',
+      'projectMembershipUpdate',
       {
-        item: userProject,
+        item: projectMembership,
       },
       inputs.request,
     );
 
-    return userProject;
+    return projectMembership;
   },
 };

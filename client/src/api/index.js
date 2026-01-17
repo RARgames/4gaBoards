@@ -13,13 +13,13 @@ import labels from './labels';
 import lists from './lists';
 import notifications from './notifications';
 import projectManagers from './project-managers';
+import projectMemberships from './project-memberships';
 import projects from './projects';
 import register from './register';
 import socket from './socket';
 import taskMemberships from './task-memberships';
 import tasks from './tasks';
 import userPrefs from './user-prefs';
-import userProjects from './user-projects';
 import users from './users';
 
 export { http, socket };
@@ -39,11 +39,11 @@ export default {
   ...lists,
   ...notifications,
   ...projectManagers,
+  ...projectMemberships,
   ...projects,
   ...register,
   ...taskMemberships,
   ...tasks,
   ...userPrefs,
-  ...userProjects,
   ...users,
 };

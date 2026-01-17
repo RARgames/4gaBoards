@@ -46,7 +46,7 @@ module.exports = {
       throw Errors.BOARD_NOT_FOUND;
     }
 
-    // Delete userProject if the user is not a member of any board in the project and is not a project manager
+    // Delete projectMembership if the user is not a member of any board in the project and is not a project manager
     const userIds = boardMemberships.map((bm) => bm.userId);
     await Promise.all(
       userIds.map(async (userId) => {
@@ -61,10 +61,10 @@ module.exports = {
         const projectIds = sails.helpers.utils.mapRecords(boards, 'projectId', true);
 
         if (!projectIds.includes(board.projectId)) {
-          const userProject = await sails.helpers.userProjects.getOne({ userId, projectId: board.projectId });
+          const projectMembership = await sails.helpers.projectMemberships.getOne({ userId, projectId: board.projectId });
 
-          await sails.helpers.userProjects.deleteOne.with({
-            record: userProject,
+          await sails.helpers.projectMemberships.deleteOne.with({
+            record: projectMembership,
             currentUser,
             request: this.req,
           });

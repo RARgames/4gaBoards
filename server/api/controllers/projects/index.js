@@ -23,6 +23,13 @@ module.exports = {
     const projectIds = [...managerProjectIds, ...membershipProjectIds];
     const projects = [...managerProjects, ...membershipProjects];
 
+    await Promise.all(
+      projects.map(async (project) => {
+        // eslint-disable-next-line no-param-reassign
+        project.isSubscribed = await sails.helpers.users.isProjectSubscriber(currentUser.id, project.id);
+      }),
+    );
+
     const projectManagers = await sails.helpers.projects.getProjectManagers(projectIds);
 
     const userIds = sails.helpers.utils.mapRecords(projectManagers, 'userId', true);

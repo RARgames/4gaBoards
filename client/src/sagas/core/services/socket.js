@@ -19,6 +19,7 @@ export function* handleSocketReconnect() {
     users,
     projects,
     projectManagers,
+    projectMemberships,
     boards,
     boardMemberships,
     labels,
@@ -33,7 +34,6 @@ export function* handleSocketReconnect() {
     attachments,
     activities,
     notifications,
-    userProjects,
     userPrefs,
   } = yield call(requests.fetchCore); // TODO: handle error
   yield put(
@@ -43,6 +43,7 @@ export function* handleSocketReconnect() {
       users,
       projects,
       projectManagers,
+      projectMemberships,
       boards,
       boardMemberships,
       labels,
@@ -57,7 +58,6 @@ export function* handleSocketReconnect() {
       attachments,
       activities,
       notifications,
-      userProjects,
       userPrefs,
     ),
   );

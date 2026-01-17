@@ -17,9 +17,18 @@
 
   .headerText {
     padding: 0 2px;
+    display: inline;
+  }
+
+  .title {
+    display: inline;
+    white-space: normal;
+    margin-right: 2px;
   }
 
   .headerDetails {
+    display: inline;
+    white-space: normal;
     font-weight: normal;
     color: var(--textColor3);
   }

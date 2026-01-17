@@ -119,10 +119,12 @@ module.exports = {
       await sails.helpers.boards.importFromTrello.with({ currentUser, board, trelloBoard: inputs.import.board });
     }
 
+    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
     await BoardMembership.create({
       boardId: board.id,
       userId: currentUser.id,
       role: BoardMembership.Roles.EDITOR,
+      isSubscribed: userPrefs?.subscribeToNewBoards || false,
       createdById: currentUser.id,
     })
       .tolerate('E_UNIQUE')

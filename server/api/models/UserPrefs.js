@@ -37,6 +37,26 @@ module.exports = {
       defaultsTo: false,
       columnName: 'subscribe_to_own_cards',
     },
+    subscribeToNewBoards: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'subscribe_to_new_boards',
+    },
+    subscribeToNewProjects: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'subscribe_to_new_projects',
+    },
+    subscribeToUsers: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'subscribe_to_users',
+    },
+    subscribeToInstance: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'subscribe_to_instance',
+    },
     descriptionMode: {
       type: 'string',
       isIn: DESCRIPTION_MODES,

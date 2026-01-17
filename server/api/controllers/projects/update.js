@@ -69,7 +69,7 @@ module.exports = {
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
 
     if (!isProjectManager) {
-      throw Errors.PROJECT_NOT_FOUND; // Forbidden
+      throw Errors.PROJECT_NOT_FOUND;
     }
 
     const values = _.pick(inputs, ['name', 'background', 'backgroundImage']);

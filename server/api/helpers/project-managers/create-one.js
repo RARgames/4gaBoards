@@ -63,6 +63,19 @@ module.exports = {
         );
       });
 
+      const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: values.user.id }, currentUser });
+      await sails.helpers.projectMemberships.createOne
+        .with({
+          values: {
+            projectId: values.project.id,
+            userId: values.user.id,
+            isSubscribed: userPrefs?.subscribeToNewProjects || false,
+          },
+          currentUser,
+          request: this.req,
+        })
+        .tolerate('E_UNIQUE');
+
       await sails.helpers.actions.createOne.with({
         values: {
           project: values.project,

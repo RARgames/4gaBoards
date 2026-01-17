@@ -18,6 +18,6 @@ module.exports = {
       Object.assign(criteria, inputs.criteria);
     }
 
-    return UserProject.findOne(criteria);
+    return ProjectMembership.findOne(criteria);
   },
 };

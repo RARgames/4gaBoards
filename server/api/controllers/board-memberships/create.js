@@ -75,17 +75,6 @@ module.exports = {
       })
       .intercept('userAlreadyBoardMember', () => Errors.USER_ALREADY_BOARD_MEMBER);
 
-    await sails.helpers.userProjects.createOne
-      .with({
-        values: {
-          projectId: board.projectId,
-          userId: user.id,
-        },
-        currentUser,
-        request: this.req,
-      })
-      .tolerate('E_UNIQUE');
-
     return {
       item: boardMembership,
     };

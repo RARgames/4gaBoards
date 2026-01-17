@@ -51,11 +51,11 @@ module.exports = {
       throw Errors.USER_NOT_FOUND;
     }
 
-    // Delete all userProjects associated with user
-    const userProjects = await sails.helpers.userProjects.getMany({ userId: user.id });
-    userProjects.forEach(async (userProject) => {
-      await sails.helpers.userProjects.deleteOne.with({
-        record: userProject,
+    // Delete all projectMemberships associated with user
+    const projectMemberships = await sails.helpers.projectMemberships.getMany({ userId: user.id });
+    projectMemberships.forEach(async (projectMembership) => {
+      await sails.helpers.projectMemberships.deleteOne.with({
+        record: projectMembership,
         currentUser,
         request: this.req,
       });

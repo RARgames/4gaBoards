@@ -11,6 +11,7 @@ const handleSocketReconnect = (
   users,
   projects,
   projectManagers,
+  projectMemberships,
   boards,
   boardMemberships,
   labels,
@@ -25,7 +26,6 @@ const handleSocketReconnect = (
   attachments,
   activities,
   notifications,
-  userProjects,
   userPrefs,
 ) => ({
   type: ActionTypes.SOCKET_RECONNECT_HANDLE,
@@ -35,6 +35,7 @@ const handleSocketReconnect = (
     users,
     projects,
     projectManagers,
+    projectMemberships,
     boards,
     boardMemberships,
     labels,
@@ -49,7 +50,6 @@ const handleSocketReconnect = (
     attachments,
     activities,
     notifications,
-    userProjects,
     userPrefs,
   },
 });

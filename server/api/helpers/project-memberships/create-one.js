@@ -16,10 +16,10 @@ module.exports = {
   async fn(inputs) {
     const { values } = inputs;
 
-    const userProject = await UserProject.create({ ...values }).fetch();
+    const projectMembership = await ProjectMembership.create({ ...values }).fetch();
 
     return {
-      userProject,
+      projectMembership,
     };
   },
 };

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, getGroupedRowModel, getExpandedRowModel, flexRender } from '@tanstack/react-table';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -14,9 +14,32 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
 const PreferencesSettings = React.memo(
-  ({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, theme, themeShape, onUpdate }) => {
+  ({
+    isAdmin,
+    subscribeToOwnCards,
+    subscribeToNewBoards,
+    subscribeToNewProjects,
+    subscribeToUsers,
+    subscribeToInstance,
+    sidebarCompact,
+    language,
+    defaultView,
+    listViewStyle,
+    usersSettingsStyle,
+    preferredDetailsFont,
+    hideCardModalActivity,
+    hideClosestDueDate,
+    theme,
+    themeShape,
+    onUpdate,
+  }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
+
+    const Groups = {
+      NOTIFICATIONS: 'notifications',
+      GENERAL: 'general',
+    };
 
     const languages = useMemo(
       () => [
@@ -122,6 +145,30 @@ const PreferencesSettings = React.memo(
       });
     }, [subscribeToOwnCards, onUpdate]);
 
+    const handleSubscribeToNewBoardsChange = useCallback(() => {
+      onUpdate({
+        subscribeToNewBoards: !subscribeToNewBoards,
+      });
+    }, [subscribeToNewBoards, onUpdate]);
+
+    const handleSubscribeToNewProjectsChange = useCallback(() => {
+      onUpdate({
+        subscribeToNewProjects: !subscribeToNewProjects,
+      });
+    }, [subscribeToNewProjects, onUpdate]);
+
+    const handleSubscribeToUsersChange = useCallback(() => {
+      onUpdate({
+        subscribeToUsers: !subscribeToUsers,
+      });
+    }, [subscribeToUsers, onUpdate]);
+
+    const handleSubscribeToInstanceChange = useCallback(() => {
+      onUpdate({
+        subscribeToInstance: !subscribeToInstance,
+      });
+    }, [subscribeToInstance, onUpdate]);
+
     const handleCompactSidebarChange = useCallback(() => {
       onUpdate({
         sidebarCompact: !sidebarCompact,
@@ -190,156 +237,221 @@ const PreferencesSettings = React.memo(
     );
 
     const data = useMemo(
-      () => [
-        {
-          id: 'subscribeToOwnCards',
-          preferences: t('common.subscribeToMyOwnCards'),
-          modifySettings: subscribeToOwnCards,
-          modifySettingsProps: { onChange: handleSubscribeToOwnCardsChange, title: t('common.toggleSubscribeToMyOwnCards') },
-          currentValue: subscribeToOwnCards ? t('common.enabled') : t('common.disabled'),
-          description: t('common.descriptionSubscribeToMyOwnCards'),
-        },
-        {
-          id: 'sidebarCompact',
-          preferences: t('common.sidebarCompact'),
-          modifySettings: sidebarCompact,
-          modifySettingsProps: { onChange: handleCompactSidebarChange, title: t('common.toggleCompactSidebar') },
-          currentValue: sidebarCompact ? t('common.enabled') : t('common.disabled'),
-          description: t('common.descriptionCompactSidebar'),
-        },
-        {
-          id: 'defaultView',
-          preferences: t('common.defaultView'),
-          modifySettings: selectedDefaultView,
-          modifySettingsProps: { onChange: handleDefaultViewChange, options: defaultViews, placeholder: selectedDefaultView.name, isSearchable: true, selectFirstOnSearch: true },
-          currentValue: selectedDefaultView.name,
-          description: t('common.descriptionDefaultView'),
-        },
-        {
-          id: 'listViewStyle',
-          preferences: t('common.listViewStyle'),
-          modifySettings: selectedListViewStyle,
-          modifySettingsProps: { onChange: handleListViewStyleChange, options: listStyles, placeholder: selectedListViewStyle.name, isSearchable: true, selectFirstOnSearch: true },
-          currentValue: selectedListViewStyle.name,
-          description: t('common.descriptionListViewStyle'),
-        },
-        {
-          id: 'usersSettingsStyle',
-          preferences: t('common.usersSettingsStyle'),
-          modifySettings: selectedUsersSettingsStyle,
-          modifySettingsProps: {
-            onChange: handleUsersSettingsStyleChange,
-            options: listStyles,
-            placeholder: selectedUsersSettingsStyle.name,
-            isSearchable: true,
-            selectFirstOnSearch: true,
+      () =>
+        [
+          {
+            id: 'language',
+            preferences: t('common.language', { context: 'title' }),
+            modifySettings: selectedLanguage,
+            modifySettingsProps: { onChange: handleLanguageChange, options: languages, placeholder: selectedLanguage.name, isSearchable: true, selectFirstOnSearch: true },
+            currentValue: selectedLanguage.name,
+            description: t('common.descriptionLanguage'),
+            group: Groups.GENERAL,
           },
-          currentValue: selectedUsersSettingsStyle.name,
-          description: t('common.descriptionUsersSettingsStyle'),
-        },
-        {
-          id: 'preferredDetailsFont',
-          preferences: t('common.preferredDetailsFont'),
-          modifySettings: selectedPreferredDetailsFont,
-          modifySettingsProps: {
-            onChange: handlePreferredDetailsFontChange,
-            options: preferredFonts,
-            placeholder: selectedPreferredDetailsFont.name,
-            isSearchable: true,
-            selectFirstOnSearch: true,
+          {
+            id: 'theme',
+            preferences: t('common.theme'),
+            modifySettings: selectedTheme,
+            modifySettingsProps: {
+              onChange: handleThemeChange,
+              options: themes,
+              placeholder: selectedTheme.name,
+              isSearchable: true,
+              selectFirstOnSearch: true,
+            },
+            currentValue: selectedTheme.name,
+            description: t('common.descriptionTheme'),
+            group: Groups.GENERAL,
           },
-          currentValue: selectedPreferredDetailsFont.name,
-          description: t('common.descriptionPreferredDetailsFont'),
-        },
-        {
-          id: 'hideCardModalActivity',
-          preferences: t('common.hideCardModalActivity'),
-          modifySettings: hideCardModalActivity,
-          modifySettingsProps: { onChange: handleHideCardModalActivityChange, title: t('common.toggleHideCardModalActivity') },
-          currentValue: hideCardModalActivity ? t('common.enabled') : t('common.disabled'),
-          description: t('common.descriptionHideCardModalActivity'),
-        },
-        {
-          id: 'hideClosestDueDate',
-          preferences: t('common.hideClosestDueDate'),
-          modifySettings: hideClosestDueDate,
-          modifySettingsProps: { onChange: handleHideClosestDueDateChange, title: t('common.toggleHideClosestDueDate') },
-          currentValue: hideClosestDueDate ? t('common.enabled') : t('common.disabled'),
-          description: t('common.descriptionHideClosestDueDate'),
-        },
-        {
-          id: 'language',
-          preferences: t('common.language', { context: 'title' }),
-          modifySettings: selectedLanguage,
-          modifySettingsProps: { onChange: handleLanguageChange, options: languages, placeholder: selectedLanguage.name, isSearchable: true, selectFirstOnSearch: true },
-          currentValue: selectedLanguage.name,
-          description: t('common.descriptionLanguage'),
-        },
-        {
-          id: 'theme',
-          preferences: t('common.theme'),
-          modifySettings: selectedTheme,
-          modifySettingsProps: {
-            onChange: handleThemeChange,
-            options: themes,
-            placeholder: selectedTheme.name,
-            isSearchable: true,
-            selectFirstOnSearch: true,
+          {
+            id: 'themeShape',
+            preferences: t('common.themeShape'),
+            modifySettings: selectedThemeShape,
+            modifySettingsProps: {
+              isCustomComponent: true,
+              CustomComponent: ThemeShapeSelector,
+              onChange: handleThemeShapeChange,
+              options: themeShapes,
+            },
+            currentValue: selectedThemeShape.name,
+            description: t('common.descriptionThemeShape'),
+            group: Groups.GENERAL,
           },
-          currentValue: selectedTheme.name,
-          description: t('common.descriptionTheme'),
-        },
-        {
-          id: 'themeShape',
-          preferences: t('common.themeShape'),
-          modifySettings: selectedThemeShape,
-          modifySettingsProps: {
-            isCustomComponent: true,
-            CustomComponent: ThemeShapeSelector,
-            onChange: handleThemeShapeChange,
-            options: themeShapes,
+          {
+            id: 'preferredDetailsFont',
+            preferences: t('common.preferredDetailsFont'),
+            modifySettings: selectedPreferredDetailsFont,
+            modifySettingsProps: {
+              onChange: handlePreferredDetailsFontChange,
+              options: preferredFonts,
+              placeholder: selectedPreferredDetailsFont.name,
+              isSearchable: true,
+              selectFirstOnSearch: true,
+            },
+            currentValue: selectedPreferredDetailsFont.name,
+            description: t('common.descriptionPreferredDetailsFont'),
+            group: Groups.GENERAL,
           },
-          currentValue: selectedThemeShape.name,
-          description: t('common.descriptionThemeShape'),
-        },
-      ],
+          {
+            id: 'defaultView',
+            preferences: t('common.defaultView'),
+            modifySettings: selectedDefaultView,
+            modifySettingsProps: { onChange: handleDefaultViewChange, options: defaultViews, placeholder: selectedDefaultView.name, isSearchable: true, selectFirstOnSearch: true },
+            currentValue: selectedDefaultView.name,
+            description: t('common.descriptionDefaultView'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'sidebarCompact',
+            preferences: t('common.sidebarCompact'),
+            modifySettings: sidebarCompact,
+            modifySettingsProps: { onChange: handleCompactSidebarChange, title: t('common.toggleCompactSidebar') },
+            currentValue: sidebarCompact ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionCompactSidebar'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'listViewStyle',
+            preferences: t('common.listViewStyle'),
+            modifySettings: selectedListViewStyle,
+            modifySettingsProps: { onChange: handleListViewStyleChange, options: listStyles, placeholder: selectedListViewStyle.name, isSearchable: true, selectFirstOnSearch: true },
+            currentValue: selectedListViewStyle.name,
+            description: t('common.descriptionListViewStyle'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'usersSettingsStyle',
+            preferences: t('common.usersSettingsStyle'),
+            modifySettings: selectedUsersSettingsStyle,
+            modifySettingsProps: {
+              onChange: handleUsersSettingsStyleChange,
+              options: listStyles,
+              placeholder: selectedUsersSettingsStyle.name,
+              isSearchable: true,
+              selectFirstOnSearch: true,
+            },
+            currentValue: selectedUsersSettingsStyle.name,
+            description: t('common.descriptionUsersSettingsStyle'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'hideCardModalActivity',
+            preferences: t('common.hideCardModalActivity'),
+            modifySettings: hideCardModalActivity,
+            modifySettingsProps: { onChange: handleHideCardModalActivityChange, title: t('common.toggleHideCardModalActivity') },
+            currentValue: hideCardModalActivity ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionHideCardModalActivity'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'hideClosestDueDate',
+            preferences: t('common.hideClosestDueDate'),
+            modifySettings: hideClosestDueDate,
+            modifySettingsProps: { onChange: handleHideClosestDueDateChange, title: t('common.toggleHideClosestDueDate') },
+            currentValue: hideClosestDueDate ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionHideClosestDueDate'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'subscribeToOwnCards',
+            preferences: t('common.subscribeToOwnCards'),
+            modifySettings: subscribeToOwnCards,
+            modifySettingsProps: { onChange: handleSubscribeToOwnCardsChange, title: t('common.toggleSubscribeToOwnCards') },
+            currentValue: subscribeToOwnCards ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionSubscribeToOwnCards'),
+            group: Groups.NOTIFICATIONS,
+          },
+          {
+            id: 'subscribeToNewBoards',
+            preferences: t('common.subscribeToNewBoards'),
+            modifySettings: subscribeToNewBoards,
+            modifySettingsProps: { onChange: handleSubscribeToNewBoardsChange, title: t('common.toggleSubscribeToNewBoards') },
+            currentValue: subscribeToNewBoards ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionSubscribeToNewBoards'),
+            group: Groups.NOTIFICATIONS,
+          },
+          {
+            id: 'subscribeToNewProjects',
+            preferences: t('common.subscribeToNewProjects'),
+            modifySettings: subscribeToNewProjects,
+            modifySettingsProps: { onChange: handleSubscribeToNewProjectsChange, title: t('common.toggleSubscribeToNewProjects') },
+            currentValue: subscribeToNewProjects ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionSubscribeToNewProjects'),
+            group: Groups.NOTIFICATIONS,
+          },
+          isAdmin && {
+            id: 'subscribeToUsers',
+            preferences: t('common.subscribeToUsers'),
+            modifySettings: subscribeToUsers,
+            modifySettingsProps: { onChange: handleSubscribeToUsersChange, title: t('common.toggleSubscribeToUsers') },
+            currentValue: subscribeToUsers ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionSubscribeToUsers'),
+            group: Groups.NOTIFICATIONS,
+          },
+          isAdmin && {
+            id: 'subscribeToInstance',
+            preferences: t('common.subscribeToInstance'),
+            modifySettings: subscribeToInstance,
+            modifySettingsProps: { onChange: handleSubscribeToInstanceChange, title: t('common.toggleSubscribeToInstance') },
+            currentValue: subscribeToInstance ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionSubscribeToInstance'),
+            group: Groups.NOTIFICATIONS,
+          },
+        ].filter(Boolean),
       [
         t,
-        subscribeToOwnCards,
-        handleSubscribeToOwnCardsChange,
-        sidebarCompact,
-        handleCompactSidebarChange,
+        selectedLanguage,
+        handleLanguageChange,
+        languages,
+        Groups.GENERAL,
+        Groups.NOTIFICATIONS,
+        selectedTheme,
+        handleThemeChange,
+        themes,
+        selectedThemeShape,
+        handleThemeShapeChange,
+        themeShapes,
+        selectedPreferredDetailsFont,
+        handlePreferredDetailsFontChange,
+        preferredFonts,
         selectedDefaultView,
         handleDefaultViewChange,
         defaultViews,
+        sidebarCompact,
+        handleCompactSidebarChange,
         selectedListViewStyle,
         handleListViewStyleChange,
         listStyles,
         selectedUsersSettingsStyle,
         handleUsersSettingsStyleChange,
-        selectedPreferredDetailsFont,
-        handlePreferredDetailsFontChange,
-        preferredFonts,
         hideCardModalActivity,
         handleHideCardModalActivityChange,
         hideClosestDueDate,
         handleHideClosestDueDateChange,
-        selectedLanguage,
-        handleLanguageChange,
-        languages,
-        selectedThemeShape,
-        handleThemeShapeChange,
-        themeShapes,
-        selectedTheme,
-        handleThemeChange,
-        themes,
+        subscribeToOwnCards,
+        handleSubscribeToOwnCardsChange,
+        subscribeToNewBoards,
+        handleSubscribeToNewBoardsChange,
+        subscribeToNewProjects,
+        handleSubscribeToNewProjectsChange,
+        isAdmin,
+        subscribeToUsers,
+        handleSubscribeToUsersChange,
+        subscribeToInstance,
+        handleSubscribeToInstanceChange,
       ],
     );
 
     const table = useReactTable({
       data,
       columns: [],
+      initialState: {
+        grouping: ['preferences'],
+        expanded: true,
+      },
       getCoreRowModel: getCoreRowModel(),
+      getGroupedRowModel: getGroupedRowModel(),
+      getExpandedRowModel: getExpandedRowModel(),
       style: Table.Style.Default,
     });
 
@@ -370,6 +482,7 @@ const PreferencesSettings = React.memo(
           enableSorting: false,
           meta: { headerTitle: t('common.preferences') },
           cellProps: { cellClassNameInner: s.cell },
+          getGroupingValue: (row) => row.group,
         },
         {
           accessorKey: 'modifySettings',
@@ -429,15 +542,26 @@ const PreferencesSettings = React.memo(
                 ))}
               </Table.Header>
               <Table.Body className={clsx(gs.scrollableY)} style={Table.Style.Default}>
-                {table.getRowModel().rows.map((row) => (
-                  <Table.Row key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </Table.Cell>
-                    ))}
-                  </Table.Row>
-                ))}
+                {table.getRowModel().rows.map((row) => {
+                  if (row.getIsGrouped()) {
+                    return (
+                      <Table.Row key={row.id} className={s.groupRow}>
+                        <Table.Cell colSpan={columns.length}>
+                          <strong>{row.groupingValue === 'notifications' ? t('common.notifications') : t('common.general')}</strong>
+                        </Table.Cell>
+                      </Table.Row>
+                    );
+                  }
+                  return (
+                    <Table.Row key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }}>
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </Table.Cell>
+                      ))}
+                    </Table.Row>
+                  );
+                })}
               </Table.Body>
             </Table>
           </Table.Wrapper>
@@ -448,7 +572,12 @@ const PreferencesSettings = React.memo(
 );
 
 PreferencesSettings.propTypes = {
+  isAdmin: PropTypes.bool.isRequired,
   subscribeToOwnCards: PropTypes.bool.isRequired,
+  subscribeToNewBoards: PropTypes.bool.isRequired,
+  subscribeToNewProjects: PropTypes.bool.isRequired,
+  subscribeToUsers: PropTypes.bool.isRequired,
+  subscribeToInstance: PropTypes.bool.isRequired,
   sidebarCompact: PropTypes.bool.isRequired,
   language: PropTypes.string,
   defaultView: PropTypes.string.isRequired,

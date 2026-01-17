@@ -35,6 +35,18 @@ module.exports = {
         inputs.request,
       );
 
+      const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
+      await sails.helpers.projectMemberships.createOne.with({
+        values: {
+          projectId: project.id,
+          userId: currentUser.id,
+          isSubscribed: userPrefs?.subscribeToNewProjects || false,
+        },
+        currentUser,
+        request: inputs.request,
+      });
+      project.isSubscribed = await sails.helpers.users.isProjectSubscriber(currentUser.id, project.id);
+
       await sails.helpers.actions.createOne.with({
         values: {
           project,

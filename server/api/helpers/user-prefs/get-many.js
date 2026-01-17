@@ -9,6 +9,6 @@ module.exports = {
   },
 
   async fn(inputs) {
-    return UserProject.find(inputs.criteria);
+    return UserPrefs.find(inputs.criteria).sort('id');
   },
 };

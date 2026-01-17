@@ -10,7 +10,7 @@ module.exports = {
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
 
-    const cardIds = sails.helpers.utils.mapRecords(notifications, 'cardId');
+    const cardIds = sails.helpers.utils.mapRecords(notifications, 'cardId').filter((id) => id != null);
     const cards = await sails.helpers.cards.getMany(cardIds);
 
     return {

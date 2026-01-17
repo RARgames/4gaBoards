@@ -59,7 +59,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
   let taskMemberships;
   let attachments;
   let notifications;
-  let userProject;
+  let projectMembership;
 
   if (isCurrentUser) {
     let board2;
@@ -94,9 +94,11 @@ export function* handleBoardMembershipCreate(boardMembership) {
         notifications = yield select(selectors.selectNotificationsByCardId, body.card.id);
       }
     }
-
-    userProject = yield call(request, api.getUserProject, board2.projectId);
-    userProject = userProject.item;
+    try {
+      ({ item: projectMembership } = yield call(request, api.getProjectMembership, board2.projectId));
+    } catch {
+      return;
+    }
   } else {
     try {
       ({ item: user } = yield call(request, api.getUser, boardMembership.userId));
@@ -123,7 +125,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
       taskMemberships,
       attachments,
       notifications,
-      userProject,
+      projectMembership,
     ),
   );
 }

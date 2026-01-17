@@ -45,7 +45,7 @@ const Sidebar = React.memo(
     onBoardDelete,
     onBoardExport,
     onChangeFilterQuery,
-    onUserProjectUpdate,
+    onProjectMembershipUpdate,
     onActivitiesProjectFetch,
     onActivitiesBoardFetch,
   }) => {
@@ -57,9 +57,9 @@ const Sidebar = React.memo(
 
     const handleToggleProjectCollapse = useCallback(
       (project) => {
-        onUserProjectUpdate(project.id, { isCollapsed: !project.isCollapsed });
+        onProjectMembershipUpdate(project.id, { isCollapsed: !project.isCollapsed });
       },
-      [onUserProjectUpdate],
+      [onProjectMembershipUpdate],
     );
 
     const handleDragEnd = useCallback(
@@ -381,7 +381,7 @@ Sidebar.propTypes = {
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
-  onUserProjectUpdate: PropTypes.func.isRequired,
+  onProjectMembershipUpdate: PropTypes.func.isRequired,
   onActivitiesProjectFetch: PropTypes.func.isRequired,
   onActivitiesBoardFetch: PropTypes.func.isRequired,
 };

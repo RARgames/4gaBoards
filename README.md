@@ -25,7 +25,7 @@
 - **Export/Import Boards**
 - **Web App Design** - realtime updates without reloading page
 - **Multitasking Capabilities** - simultaneously edit/review cards and filter/rearrange the board, while keeping local description changes
-- **Google/GitHub/Microsoft SSO Login/Register**
+- **Google/GitHub/Microsoft/OIDC SSO Login/Register**
 - **Simplistic Wide Screen Design** - minimal clutter and no wasted space
 - **Powerful Shortcuts**
 - **Multiple Language Support** _(EN, PL, FR, PT - 100%, other languages - partial support)_
