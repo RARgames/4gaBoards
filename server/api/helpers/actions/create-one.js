@@ -98,7 +98,11 @@ module.exports = {
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
-          const subscriptionUserIds = await sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId);
+          const [cardUserIds, boardUserIds] = await Promise.all([
+            sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId),
+            sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId),
+          ]);
+          const subscriptionUserIds = [...new Set([...cardUserIds, ...boardUserIds])];
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({
