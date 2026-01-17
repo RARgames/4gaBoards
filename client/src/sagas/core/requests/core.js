@@ -79,6 +79,7 @@ export function* fetchCore() {
     user,
     board,
     projectManagers,
+    projectMemberships,
     boards,
     labels,
     lists,
@@ -95,7 +96,6 @@ export function* fetchCore() {
     cards: mergeRecords(cards1, cards2),
     comments,
     core,
-    projectMemberships,
     userPrefs,
   };
 }

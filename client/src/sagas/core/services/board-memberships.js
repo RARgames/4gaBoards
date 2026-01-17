@@ -114,6 +114,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
       board1,
       isCurrentUser ? mergeRecords(users1, users2) : [user],
       projectManagers,
+      projectMembership,
       boards,
       mergeRecords(boardMemberships1, boardMemberships2),
       labels,
@@ -125,7 +126,6 @@ export function* handleBoardMembershipCreate(boardMembership) {
       taskMemberships,
       attachments,
       notifications,
-      projectMembership,
     ),
   );
 }
