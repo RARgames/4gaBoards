@@ -34,6 +34,8 @@ const valuesValidator = (value) => {
   return true;
 };
 
+const idsArrayValidator = (value) => Array.isArray(value) && _.every(value, _.isString);
+
 module.exports = {
   inputs: {
     values: {
@@ -49,6 +51,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
+    alreadyNotifiedUserIds: {
+      type: 'json',
+      custom: idsArrayValidator,
+    },
     request: {
       type: 'ref',
     },
@@ -59,7 +65,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser } = inputs;
+    const { values, currentUser, alreadyNotifiedUserIds } = inputs;
     const actionUser = values.user || currentUser;
 
     let action;
@@ -97,12 +103,13 @@ module.exports = {
         );
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
+        let subscriptionUserIds = [];
         if (!inputs.skipNotifications) {
           const [cardUserIds, boardUserIds] = await Promise.all([
             sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId),
             sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId),
           ]);
-          const subscriptionUserIds = [...new Set([...cardUserIds, ...boardUserIds])].filter(Boolean);
+          subscriptionUserIds = [...new Set([...cardUserIds, ...boardUserIds])].filter((userId) => userId && !alreadyNotifiedUserIds?.includes(userId));
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({
@@ -114,6 +121,20 @@ module.exports = {
               }),
             ),
           );
+        }
+
+        if (values.prevCard) {
+          await sails.helpers.actions.createOne.with({
+            values: {
+              ...values,
+              card: values.prevCard,
+              prevCard: undefined,
+              duplicateOfId: action.id,
+            },
+            currentUser: actionUser,
+            alreadyNotifiedUserIds: subscriptionUserIds,
+            request: inputs.request,
+          });
         }
       }
     } else if (values.scope === Action.Scopes.LIST) {

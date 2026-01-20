@@ -281,7 +281,7 @@ export default class extends BaseModel {
   }
 
   getOrderedActivitiesQuerySet() {
-    return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
+    return this.activities.filter({ notificationOnly: false, duplicateOfId: null }).orderBy('createdAt', false);
   }
 
   getUnreadNotificationsQuerySet() {

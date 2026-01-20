@@ -251,6 +251,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
+            prevCard,
             scope: Action.Scopes.CARD,
             type: Action.Types.CARD_TRANSFER,
             data: {
@@ -275,6 +276,7 @@ module.exports = {
         await sails.helpers.actions.createOne.with({
           values: {
             card,
+            prevCard,
             scope: Action.Scopes.CARD,
             type: Action.Types.CARD_MOVE,
             data: {

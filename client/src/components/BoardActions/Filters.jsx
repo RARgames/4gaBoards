@@ -150,7 +150,11 @@ const Filters = React.memo(
           )}
         </span>
         <span className={s.filter}>
-          <Button title={t('common.onlyWithNotifications')} className={clsx(s.filterButton, onlyWithNotificationsValue && s.filterButtonActive)} onClick={handleOnlyWithNotificationsChange}>
+          <Button
+            title={t('common.filterByNotifications', { context: 'title' })}
+            className={clsx(s.filterButton, onlyWithNotificationsValue && s.filterButtonActive)}
+            onClick={handleOnlyWithNotificationsChange}
+          >
             <span className={s.filterTitle}>
               <Icon type={IconType.Bell} size={IconSize.Size13} />
             </span>

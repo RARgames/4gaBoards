@@ -157,7 +157,7 @@ module.exports = {
       columnName: 'task_id',
     },
     commentId: {
-      model: 'Action',
+      model: 'Comment',
       columnName: 'comment_id',
     },
     cardId: {
@@ -193,6 +193,10 @@ module.exports = {
     coreId: {
       model: 'Core',
       columnName: 'core_id',
+    },
+    duplicateOfId: {
+      model: 'Action',
+      columnName: 'duplicate_of_id',
     },
   },
 

@@ -69,6 +69,11 @@ export default class extends BaseModel {
       as: 'core',
       relatedName: 'activities',
     }),
+    duplicateOfId: fk({
+      to: 'Activity',
+      as: 'duplicateOf',
+      relatedName: 'duplicates',
+    }),
     createdAt: attr({
       getDefault: () => new Date(),
     }),
