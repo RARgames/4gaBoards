@@ -102,7 +102,7 @@ module.exports = {
             sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId),
             sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId),
           ]);
-          const subscriptionUserIds = [...new Set([...cardUserIds, ...boardUserIds])];
+          const subscriptionUserIds = [...new Set([...cardUserIds, ...boardUserIds])].filter(Boolean);
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({
@@ -258,7 +258,8 @@ module.exports = {
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
-          const subscriptionUserIds = await sails.helpers.userPrefs.getUserSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
+          let subscriptionUserIds = await sails.helpers.userPrefs.getUserSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
+          subscriptionUserIds = [...new Set([...subscriptionUserIds, action.userAccountId].filter((userId) => userId && userId !== action.userId))];
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({
