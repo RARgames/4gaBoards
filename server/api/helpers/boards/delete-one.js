@@ -46,6 +46,7 @@ module.exports = {
         );
       });
 
+      const project = await Project.findOne(board.projectId);
       await sails.helpers.actions.createOne.with({
         values: {
           board,
@@ -54,12 +55,15 @@ module.exports = {
           data: {
             boardId: board.id,
             boardName: board.name,
+            projectId: board.projectId,
+            projectName: project?.name,
             isGithubConnected: board.isGithubConnected,
             githubRepo: board.githubRepo,
             isImportedBoard: board.isImportedBoard,
           },
         },
         currentUser,
+        notifyUserIds: boardMemberships.map((membership) => membership.userId),
         request: inputs.request,
       });
 

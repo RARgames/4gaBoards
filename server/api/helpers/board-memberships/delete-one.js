@@ -71,6 +71,7 @@ module.exports = {
             },
           },
           currentUser,
+          notifyUserIds: [boardMembership.userId],
           request: inputs.request,
         });
       }

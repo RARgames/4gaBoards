@@ -55,6 +55,11 @@ module.exports = {
       type: 'json',
       custom: idsArrayValidator,
     },
+    notifyUserIds: {
+      type: 'json',
+      custom: idsArrayValidator,
+      defaultsTo: [],
+    },
     request: {
       type: 'ref',
     },
@@ -65,7 +70,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { values, currentUser, alreadyNotifiedUserIds } = inputs;
+    const { values, currentUser, alreadyNotifiedUserIds, notifyUserIds } = inputs;
     const actionUser = values.user || currentUser;
 
     let action;
@@ -207,7 +212,8 @@ module.exports = {
         sails.sockets.broadcast(`user:${currentUser.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
-          const subscriptionUserIds = await sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId);
+          let subscriptionUserIds = await sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId);
+          subscriptionUserIds = [...new Set([...subscriptionUserIds, ...notifyUserIds])].filter(Boolean);
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({
