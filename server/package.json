@@ -16,7 +16,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.8.4",
+    "@azure/msal-node": "^3.8.6",
     "bcrypt": "^6.0.0",
     "cookie": "^1.1.1",
     "dotenv": "^17.2.3",
@@ -39,7 +39,7 @@
     "sails-hook-sockets": "^3.0.2",
     "sails-postgresql": "^5.0.1",
     "sharp": "^0.34.5",
-    "tar": "^7.5.3",
+    "tar": "^7.5.4",
     "uuid": "^11.1.0",
     "validator": "^13.15.26",
     "winston": "^3.19.0",
@@ -49,7 +49,7 @@
     "chai": "^6.2.2",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-prettier": "^5.5.5",
     "mocha": "^11.7.5",
     "nodemon": "^3.1.11"
   },
