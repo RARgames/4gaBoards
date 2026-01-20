@@ -16,9 +16,49 @@ export default class extends BaseModel {
       as: 'user',
       relatedName: 'notifications',
     }),
+    attachmentId: fk({
+      to: 'Attachment',
+      as: 'attachment',
+      relatedName: 'notifications',
+    }),
+    commentId: fk({
+      to: 'Comment',
+      as: 'comment',
+      relatedName: 'notifications',
+    }),
+    taskId: fk({
+      to: 'Task',
+      as: 'task',
+      relatedName: 'notifications',
+    }),
     cardId: fk({
       to: 'Card',
       as: 'card',
+      relatedName: 'notifications',
+    }),
+    listId: fk({
+      to: 'List',
+      as: 'list',
+      relatedName: 'notifications',
+    }),
+    boardId: fk({
+      to: 'Board',
+      as: 'board',
+      relatedName: 'notifications',
+    }),
+    projectId: fk({
+      to: 'Project',
+      as: 'project',
+      relatedName: 'notifications',
+    }),
+    userAccountId: fk({
+      to: 'User',
+      as: 'userAccount',
+      relatedName: 'userAccountNotifications',
+    }),
+    coreId: fk({
+      to: 'Core',
+      as: 'core',
       relatedName: 'notifications',
     }),
     activityId: oneToOne({

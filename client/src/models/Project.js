@@ -244,10 +244,7 @@ export default class extends BaseModel {
   }
 
   getUnreadNotificationsQuerySet() {
-    return this.notifications.filter({
-      isRead: false,
-      deletedAt: null,
-    });
+    return this.notifications.filter({ isRead: false, deletedAt: null });
   }
 
   hasManagerForUser(userId) {

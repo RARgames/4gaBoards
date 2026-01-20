@@ -95,14 +95,7 @@ export const selectProjectsForCurrentUser = createSelector(
         projectMemberships.set(user.id, { user });
       });
 
-      let notificationsTotal = 0;
       const boardsRefs = boardsModels.map((boardModel) => {
-        let notificationsBoardTotal = 0;
-        boardModel.cards.toModelArray().forEach((cardModel) => {
-          notificationsTotal += cardModel.getUnreadNotificationsQuerySet().count();
-          notificationsBoardTotal += cardModel.getUnreadNotificationsQuerySet().count();
-        });
-
         const boardMemberships = boardModel.memberUsers.toRefArray().map((user) => ({ user }));
         boardMemberships.forEach(({ user }) => {
           if (!projectMemberships.has(user.id)) {
@@ -114,7 +107,7 @@ export const selectProjectsForCurrentUser = createSelector(
           ...boardModel.ref,
           memberships: boardMemberships,
           ...getMeta(boardModel),
-          notificationsTotal: notificationsBoardTotal,
+          notificationsTotal: boardModel.getUnreadNotificationsQuerySet().count(),
           isPersisted: !isLocalId(boardModel.id),
         };
       });
@@ -122,7 +115,7 @@ export const selectProjectsForCurrentUser = createSelector(
       return {
         ...projectModel.ref,
         ...getMeta(projectModel),
-        notificationsTotal,
+        notificationsTotal: projectModel.getUnreadNotificationsQuerySet().count(),
         firstBoardId: boardsModels[0] && boardsModels[0].id,
         boards: boardsRefs,
         memberships: Array.from(projectMemberships.values()),
