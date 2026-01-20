@@ -33,6 +33,8 @@ const makeMapStateToProps = () => {
         projectCreateForm: { data: defaultData, isSubmitting },
       },
     } = state;
+    const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
+    const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
 
     return {
       path,
@@ -48,6 +50,8 @@ const makeMapStateToProps = () => {
       filterQuery,
       filterTarget,
       sidebarCompact,
+      instanceNotificationCount,
+      usersNotificationCount,
     };
   };
 };

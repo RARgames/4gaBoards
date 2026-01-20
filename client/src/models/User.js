@@ -439,6 +439,14 @@ export default class extends BaseModel {
       .orderBy('createdAt', false);
   }
 
+  getOrderedUnreadUserNotificationsQuerySet() {
+    return this.userAccountNotifications
+      .filter({
+        deletedAt: null,
+      })
+      .orderBy('createdAt', false);
+  }
+
   getOrderedAvailableProjectsModelArray() {
     const projectIds = [];
 

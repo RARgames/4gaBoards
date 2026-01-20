@@ -153,6 +153,30 @@ export const selectNextTaskPosition = createSelector(
   },
 );
 
+export const makeSelectInstanceNotificationsTotal = () =>
+  createSelector(orm, ({ Core }) => {
+    const coreModel = Core.withId(0);
+    if (!coreModel) {
+      return coreModel;
+    }
+
+    return coreModel.getUnreadInstanceNotificationsModelArray().length;
+  });
+
+export const selectInstanceNotificationsTotal = makeSelectInstanceNotificationsTotal();
+
+export const makeSelectUsersNotificationsTotal = () =>
+  createSelector(orm, ({ Core }) => {
+    const coreModel = Core.withId(0);
+    if (!coreModel) {
+      return coreModel;
+    }
+
+    return coreModel.getUnreadUsersNotificationsModelArray().length;
+  });
+
+export const selectUsersNotificationsTotal = makeSelectUsersNotificationsTotal();
+
 export default {
   selectAccessToken,
   selectIsCoreInitializing,
@@ -162,4 +186,8 @@ export default {
   selectNextListPosition,
   selectNextCardPosition,
   selectNextTaskPosition,
+  makeSelectInstanceNotificationsTotal,
+  selectInstanceNotificationsTotal,
+  makeSelectUsersNotificationsTotal,
+  selectUsersNotificationsTotal,
 };

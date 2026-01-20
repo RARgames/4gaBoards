@@ -26,6 +26,7 @@ const mapStateToProps = (state) => {
       createdBy,
       updatedAt: updatedAt || undefined, // undefined needed for TanStack Table sorting
       updatedBy: updatedBy || undefined, // undefined needed for TanStack Table sorting
+      notificationsTotal: selectors.selectUserNotificationsTotalByUserId(state, id),
     }),
   );
 

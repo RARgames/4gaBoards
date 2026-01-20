@@ -294,6 +294,27 @@ export const selectIsFilteredForCurrentUser = createSelector(
   },
 );
 
+export const makeSelectUserNotificationsTotalByUserId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ User }, id) => {
+      if (!id) {
+        return id;
+      }
+
+      const userModel = User.withId(id);
+
+      if (!userModel) {
+        return userModel;
+      }
+
+      return userModel.getOrderedUnreadUserNotificationsQuerySet().count();
+    },
+  );
+
+export const selectUserNotificationsTotalByUserId = makeSelectUserNotificationsTotalByUserId();
+
 export default {
   selectCurrentUserId,
   makeSelectUserById,
@@ -307,4 +328,6 @@ export default {
   selectNotificationsForCurrentUser,
   selectFilterForCurrentUser,
   selectIsFilteredForCurrentUser,
+  makeSelectUserNotificationsTotalByUserId,
+  selectUserNotificationsTotalByUserId,
 };

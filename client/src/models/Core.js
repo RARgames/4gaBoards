@@ -2,6 +2,7 @@ import { attr, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import Config from '../constants/Config';
+import { ActivityScopes } from '../constants/Enums';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -73,5 +74,32 @@ export default class extends BaseModel {
 
   getOrderedActivitiesQuerySet() {
     return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
+  }
+
+  getUnreadNotificationsQuerySet() {
+    return this.notifications.filter({
+      isRead: false,
+      deletedAt: null,
+    });
+  }
+
+  getUnreadInstanceNotificationsModelArray() {
+    return this.notifications
+      .filter({
+        isRead: false,
+        deletedAt: null,
+      })
+      .toModelArray()
+      .filter((n) => n.activity && n.activity.scope === ActivityScopes.INSTANCE);
+  }
+
+  getUnreadUsersNotificationsModelArray() {
+    return this.notifications
+      .filter({
+        isRead: false,
+        deletedAt: null,
+      })
+      .toModelArray()
+      .filter((n) => n.activity && n.activity.scope === ActivityScopes.USER);
   }
 }

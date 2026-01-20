@@ -288,7 +288,7 @@ module.exports = {
           `instance`,
           'actionCreate',
           {
-            item: { ...action, coreId: 0 },
+            item: action,
           },
           inputs.request,
         );

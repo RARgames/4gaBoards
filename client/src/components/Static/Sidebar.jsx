@@ -37,6 +37,8 @@ const Sidebar = React.memo(
     filterQuery,
     filterTarget,
     sidebarCompact,
+    instanceNotificationCount,
+    usersNotificationCount,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -309,6 +311,7 @@ const Sidebar = React.memo(
                     <Button style={ButtonStyle.NoBackground} title={t('common.users')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.Users} size={IconSize.Size14} className={s.icon} />
                       {t('common.users')}
+                      {usersNotificationCount > 0 && <span className={s.notification}>{usersNotificationCount}</span>}
                     </Button>
                   </Link>
                 </div>
@@ -317,6 +320,7 @@ const Sidebar = React.memo(
                     <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
                       <Icon type={IconType.Settings} size={IconSize.Size14} className={s.icon} />
                       {t('common.settings')}
+                      {instanceNotificationCount > 0 && <span className={s.notification}>{instanceNotificationCount}</span>}
                     </Button>
                   </Link>
                 </div>
@@ -373,6 +377,8 @@ Sidebar.propTypes = {
   filterQuery: PropTypes.string,
   filterTarget: PropTypes.string,
   sidebarCompact: PropTypes.bool.isRequired,
+  instanceNotificationCount: PropTypes.number.isRequired,
+  usersNotificationCount: PropTypes.number.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,

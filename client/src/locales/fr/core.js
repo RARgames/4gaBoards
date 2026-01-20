@@ -481,6 +481,7 @@ export default {
       x: 'X',
       you: '(vous)',
       youtube: 'YouTube',
+      userAccountNotifications: 'Notifications du compte utilisateur',
     },
 
     activity: {

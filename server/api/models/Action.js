@@ -190,10 +190,16 @@ module.exports = {
       required: true,
       columnName: 'created_by_id',
     },
+    coreId: {
+      model: 'Core',
+      columnName: 'core_id',
+    },
   },
 
   beforeCreate(record, proceed) {
     sails.config.models.beforeCreate(record, async () => {
+      // eslint-disable-next-line no-param-reassign
+      record.coreId = 0;
       await validateInputs(record, proceed);
     });
   },

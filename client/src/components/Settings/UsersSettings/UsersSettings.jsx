@@ -144,6 +144,13 @@ const UsersSettings = React.memo(
     const columns = useMemo(
       () => [
         {
+          accessorKey: 'notificationsTotal',
+          header: Table.Renderers.EmptyHeaderRenderer,
+          cell: Table.Renderers.NumberCellRenderer,
+          enableSorting: true,
+          meta: { headerAriaLabel: t('common.userAccountNotifications'), headerTitle: t('common.userAccountNotifications') },
+        },
+        {
           accessorKey: 'avatar',
           header: Table.Renderers.EmptyHeaderRenderer,
           cell: UserAvatarRenderer,

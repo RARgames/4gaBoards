@@ -21,6 +21,8 @@ const Header = React.memo(
     notifications,
     filteredNotifications,
     notificationCount,
+    instanceNotificationCount,
+    usersNotificationCount,
     isLogouting,
     canEditProject,
     isAdmin,
@@ -96,12 +98,14 @@ const Header = React.memo(
           <Link to={Paths.SETTINGS} className={s.hideOnSmall}>
             <Button style={ButtonStyle.Header} title={t('common.settings')}>
               <Icon type={IconType.Settings} size={IconSize.Size18} />
+              {instanceNotificationCount > 0 && <span className={s.notification}>{instanceNotificationCount}</span>}
             </Button>
           </Link>
           {isAdmin && (
             <Link to={Paths.SETTINGS_USERS} className={s.hideOnSmall}>
               <Button style={ButtonStyle.Header} title={t('common.settingsUsers')}>
                 <Icon type={IconType.Users} size={IconSize.Size18} />
+                {usersNotificationCount > 0 && <span className={s.notification}>{usersNotificationCount}</span>}
               </Button>
             </Link>
           )}
@@ -138,6 +142,8 @@ Header.propTypes = {
   notifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredNotifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   notificationCount: PropTypes.number.isRequired,
+  instanceNotificationCount: PropTypes.number.isRequired,
+  usersNotificationCount: PropTypes.number.isRequired,
   isLogouting: PropTypes.bool.isRequired,
   canEditProject: PropTypes.bool.isRequired,
   isAdmin: PropTypes.bool.isRequired,

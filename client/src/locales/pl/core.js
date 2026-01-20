@@ -479,6 +479,7 @@ export default {
       x: 'X',
       you: '(Ty)',
       youtube: 'YouTube',
+      userAccountNotifications: 'Powiadomienia konta użytkownika',
     },
 
     activity: {
