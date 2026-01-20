@@ -10,7 +10,15 @@ module.exports = {
 
   async fn(inputs) {
     const userSubscriptions = await sails.helpers.userPrefs.getUserSubscriptions.with({ exceptUserIdOrIds: inputs.exceptUserIdOrIds });
+    const usersSubscribersIds = sails.helpers.utils.mapRecords(userSubscriptions, 'id');
+    const adminUsersSubscribers = await sails.helpers.users.getMany.with({
+      criteria: {
+        id: usersSubscribersIds,
+        isAdmin: true,
+      },
+    });
+    const adminUsersSubscribersIds = sails.helpers.utils.mapRecords(adminUsersSubscribers, 'id');
 
-    return sails.helpers.utils.mapRecords(userSubscriptions, 'id');
+    return adminUsersSubscribersIds;
   },
 };
