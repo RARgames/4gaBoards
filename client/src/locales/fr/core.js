@@ -254,6 +254,7 @@ export default {
       filterByDueDate_title: "Filtrer par Date d'Échéance",
       filterByLabels_title: 'Filtrer par libellés',
       filterByMembers_title: 'Filtrer par membres',
+      filterByNotifications_title: 'Filtrer par notifications',
       filterByProject: 'Filtrer par Projet...',
       filterByText: "Filtrer par Texte/Type d'activité...",
       filterByUser: 'Filtrer par Utilisateur...',

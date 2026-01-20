@@ -252,6 +252,7 @@ export default {
       filterByDueDate_title: 'Filtruj według terminu',
       filterByLabels_title: 'Filtruj wg etykiet',
       filterByMembers_title: 'Filtruj wg członków',
+      filterByNotifications_title: 'Filtruj wg powiadomień',
       filterByProject: 'Filtruj według projektów...',
       filterByText: 'Filtruj według tekstu/typów aktywności...',
       filterByUser: 'Filtruj według użytkowników...',

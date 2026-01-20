@@ -23,6 +23,7 @@ const Filters = React.memo(
     canEdit,
     dueDate,
     justSelectedDay,
+    onlyWithNotifications,
     onUserAdd,
     onUserRemove,
     onLabelAdd,
@@ -35,6 +36,7 @@ const Filters = React.memo(
     const [t] = useTranslation();
     const [dueDateValue, setDueDateValue] = useState(dueDate);
     const [justSelectedDayValue, setJustSelectedDayValue] = useState(justSelectedDay);
+    const [onlyWithNotificationsValue, setOnlyWithNotificationsValue] = useState(onlyWithNotifications);
 
     const handleRemoveUserClick = useCallback(
       (id) => {
@@ -72,6 +74,11 @@ const Filters = React.memo(
       setJustSelectedDayValue(false);
       onBoardSearchParamsUpdate({ dueDate: null, justSelectedDay: false });
     }, [onBoardSearchParamsUpdate]);
+
+    const handleOnlyWithNotificationsChange = useCallback(() => {
+      setOnlyWithNotificationsValue(!onlyWithNotificationsValue);
+      onBoardSearchParamsUpdate({ onlyWithNotifications: !onlyWithNotificationsValue });
+    }, [onlyWithNotificationsValue, onBoardSearchParamsUpdate]);
 
     return (
       <>
@@ -143,6 +150,13 @@ const Filters = React.memo(
           )}
         </span>
         <span className={s.filter}>
+          <Button title={t('common.onlyWithNotifications')} className={clsx(s.filterButton, onlyWithNotificationsValue && s.filterButtonActive)} onClick={handleOnlyWithNotificationsChange}>
+            <span className={s.filterTitle}>
+              <Icon type={IconType.Bell} size={IconSize.Size13} />
+            </span>
+          </Button>
+        </span>
+        <span className={s.filter}>
           <FiltersDueDatePopup
             title={t('common.filterByDueDate', { context: 'title' })}
             defaultValue={dueDateValue}
@@ -182,6 +196,7 @@ Filters.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   justSelectedDay: PropTypes.bool,
+  onlyWithNotifications: PropTypes.bool,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
   onLabelAdd: PropTypes.func.isRequired,
@@ -195,6 +210,7 @@ Filters.propTypes = {
 Filters.defaultProps = {
   dueDate: undefined,
   justSelectedDay: false,
+  onlyWithNotifications: false,
 };
 
 export default Filters;

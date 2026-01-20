@@ -243,6 +243,7 @@ export default {
       filterByDueDate_title: 'Filtrar por Data de Vencimento',
       filterByLabels_title: 'Filtrar Por Rótulos',
       filterByMembers_title: 'Filtrar Por membros',
+      filterByNotifications_title: 'Filtrar por Notificações',
       filterByProject: 'Filtrar por Projeto...',
       filterByText: 'Filtrar por Texto/Tipo de Atividade...',
       filterByUser: 'Filtrar por Usuário...',

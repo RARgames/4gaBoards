@@ -127,7 +127,7 @@ export default class extends BaseModel {
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
     const { searchParams } = this.board;
-    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchParams.query !== '' || searchParams.dueDate !== null;
+    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchParams.query !== '' || searchParams.dueDate !== null || searchParams.onlyWithNotifications;
     // TODO merge with IsFilteredForBoard
   }
 
@@ -191,6 +191,12 @@ export default class extends BaseModel {
           return due.getFullYear() === filterDue.getFullYear() && due.getMonth() === filterDue.getMonth() && due.getDate() === filterDue.getDate();
         }
         return cardModel.dueDate <= searchParams.dueDate;
+      });
+    }
+    if (searchParams.onlyWithNotifications) {
+      cardModels = cardModels.filter((cardModel) => {
+        const unreadNotifications = cardModel.getUnreadNotificationsQuerySet();
+        return unreadNotifications.count() > 0;
       });
     }
     return cardModels;

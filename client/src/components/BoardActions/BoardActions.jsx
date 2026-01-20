@@ -111,6 +111,7 @@ const BoardActions = React.memo(
             canEdit={canEdit}
             dueDate={boardSearchParams.dueDate}
             justSelectedDay={boardSearchParams.justSelectedDay}
+            onlyWithNotifications={boardSearchParams.onlyWithNotifications}
             onUserAdd={onUserToFilterAdd}
             onUserRemove={onUserFromFilterRemove}
             onLabelAdd={onLabelToFilterAdd}

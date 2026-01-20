@@ -241,6 +241,7 @@ export default {
       filterByDueDate_title: 'Filter by Due Date',
       filterByLabels_title: 'Filter By Labels',
       filterByMembers_title: 'Filter By Members',
+      filterByNotifications_title: 'Filter by Notifications',
       filterByProject: 'Filter by Project...',
       filterByText: 'Filter by Text/Activity Type...',
       filterByUser: 'Filter by User...',
