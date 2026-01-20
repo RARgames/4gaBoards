@@ -152,8 +152,8 @@ export default class extends BaseModel {
   }
 
   deleteRelated() {
-    if (this.action && !this.action.isInCard) {
-      this.action.delete();
+    if (this.activity && this.activity.notificationOnly) {
+      this.activity.delete();
     }
   }
 

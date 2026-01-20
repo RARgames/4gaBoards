@@ -19,9 +19,6 @@ export default class extends BaseModel {
     notificationOnly: attr({
       getDefault: () => false,
     }),
-    isInCard: attr({
-      getDefault: () => true,
-    }),
     attachmentId: fk({
       to: 'Attachment',
       as: 'attachment',
@@ -89,23 +86,13 @@ export default class extends BaseModel {
         Activity.all().delete();
 
         payload.activities.forEach((activity) => {
-          Activity.upsert(
-            normalizeActivity({
-              ...activity,
-              isInCard: false,
-            }),
-          );
+          Activity.upsert(normalizeActivity(activity));
         });
 
         break;
       case ActionTypes.CORE_INITIALIZE:
         payload.activities.forEach((activity) => {
-          Activity.upsert(
-            normalizeActivity({
-              ...activity,
-              isInCard: false,
-            }),
-          );
+          Activity.upsert(normalizeActivity(activity));
         });
 
         break;

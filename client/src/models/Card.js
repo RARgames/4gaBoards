@@ -310,11 +310,7 @@ export default class extends BaseModel {
 
   deleteActivities() {
     this.activities.toModelArray().forEach((activityModel) => {
-      if (activityModel.notification) {
-        activityModel.update({
-          isInCard: false,
-        });
-      } else {
+      if (!activityModel.notification) {
         activityModel.delete();
       }
     });
