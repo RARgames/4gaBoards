@@ -29,7 +29,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
     const cardNode = activity.card ? (
       <Link to={Paths.CARDS.replace(':id', activity.card.id)} className={s.linked} title={cardName} onClick={onClose} />
     ) : (
-      <span className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} />
+      <Link to={Paths.CARDS.replace(':id', activity.cardId)} className={s.linkedDeleted} title={t('activity.deletedCard', { card: cardName })} onClick={onClose} />
     );
 
     switch (activity.type) {
@@ -678,7 +678,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
     ) : (
-      <span className={s.linkedDeleted} title={t('activity.deletedBoard', { board: boardName })} />
+      <Link to={Paths.BOARDS.replace(':id', activity.boardId)} className={s.linkedDeleted} title={t('activity.deletedBoard', { board: boardName })} onClick={onClose} />
     );
 
     switch (activity.type) {
@@ -776,13 +776,13 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
     ) : (
-      <span className={s.linkedDeleted} title={t('activity.deletedBoard', { board: boardName })} />
+      <Link to={Paths.BOARDS.replace(':id', activity.boardId)} className={s.linkedDeleted} title={t('activity.deletedBoard', { board: boardName })} onClick={onClose} />
     );
     const projectName = isTruncated ? truncate(activity.project?.name || activity.data?.projectName, { length: projectNameTruncateLength }) : activity.project?.name || activity.data?.projectName;
     const projectNode = activity.project ? (
       <Link to={Paths.PROJECTS.replace(':id', activity.project.id)} className={s.linked} title={projectName} onClick={onClose} />
     ) : (
-      <span className={s.linkedDeleted} title={t('activity.deletedProject', { project: projectName })} />
+      <Link to={Paths.PROJECTS.replace(':id', activity.projectId)} className={s.linkedDeleted} title={t('activity.deletedProject', { project: projectName })} onClick={onClose} />
     );
 
     switch (activity.type) {
@@ -1038,7 +1038,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
     const projectNode = activity.project ? (
       <Link to={Paths.PROJECTS.replace(':id', activity.project.id)} className={s.linked} title={projectName} onClick={onClose} />
     ) : (
-      <span className={s.linkedDeleted} title={t('activity.deletedProject', { project: projectName })} />
+      <Link to={Paths.PROJECTS.replace(':id', activity.projectId)} className={s.linkedDeleted} title={t('activity.deletedProject', { project: projectName })} onClick={onClose} />
     );
 
     switch (activity.type) {

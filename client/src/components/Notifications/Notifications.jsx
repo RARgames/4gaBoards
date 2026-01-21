@@ -47,7 +47,8 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
             <ActivityLink
               activityTarget={item.activity.board}
               isVisible={boardLinkVisible}
-              to={Paths.BOARDS.replace(':id', item.activity.board?.id)}
+              to={Paths.BOARDS.replace(':id', item.activity.board?.id || item.activity.boardId)}
+              toAvailable={Boolean(item.activity.board || item.activity.boardId)}
               icon={IconType.Board}
               titleNotAvailable={t('activity.noBoardAvailable')}
               className={s.board}
@@ -56,7 +57,8 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
             <ActivityLink
               activityTarget={item.activity.project}
               isVisible={projectLinkVisible}
-              to={Paths.PROJECTS.replace(':id', item.activity.project?.id)}
+              to={Paths.PROJECTS.replace(':id', item.activity.project?.id || item.activity.projectId)}
+              toAvailable={Boolean(item.activity.project || item.activity.projectId)}
               icon={IconType.Project}
               titleNotAvailable={t('activity.noProjectAvailable')}
               className={s.project}

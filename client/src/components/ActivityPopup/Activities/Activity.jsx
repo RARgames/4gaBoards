@@ -37,7 +37,8 @@ const Activity = React.memo(({ activity, createdAt, memberships, hideCardDetails
         <ActivityLink
           activityTarget={activity.board}
           isVisible={boardLinkVisible}
-          to={Paths.BOARDS.replace(':id', activity.board?.id)}
+          to={Paths.BOARDS.replace(':id', activity.board?.id || activity.boardId)}
+          toAvailable={Boolean(activity.board || activity.boardId)}
           icon={IconType.Board}
           titleNotAvailable={t('activity.noBoardAvailable')}
           className={s.board}
@@ -46,7 +47,8 @@ const Activity = React.memo(({ activity, createdAt, memberships, hideCardDetails
         <ActivityLink
           activityTarget={activity.project}
           isVisible={projectLinkVisible}
-          to={Paths.PROJECTS.replace(':id', activity.project?.id)}
+          to={Paths.PROJECTS.replace(':id', activity.project?.id || activity.projectId)}
+          toAvailable={Boolean(activity.project || activity.projectId)}
           icon={IconType.Project}
           titleNotAvailable={t('activity.noProjectAvailable')}
           className={s.project}

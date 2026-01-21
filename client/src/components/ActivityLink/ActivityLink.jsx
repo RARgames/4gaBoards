@@ -8,13 +8,13 @@ import { Icon, IconSize } from '../Utils';
 
 import * as s from './ActivityLink.module.scss';
 
-const ActivityLink = React.memo(({ activityTarget, isVisible, to, icon, titleNotAvailable, className, onClose }) => {
+const ActivityLink = React.memo(({ activityTarget, isVisible, to, toAvailable, icon, titleNotAvailable, className, onClose }) => {
   const truncateLength = 30;
 
   const linkName = truncate(activityTarget?.name, { length: truncateLength });
 
-  const linkNode = activityTarget ? (
-    <Link to={to} className={clsx(s.link, className)} title={activityTarget.name} onClick={onClose}>
+  const linkNode = toAvailable ? (
+    <Link to={to} className={clsx(s.link, className, !activityTarget && s.empty)} title={activityTarget?.name || titleNotAvailable} onClick={onClose}>
       {icon && <Icon type={icon} size={IconSize.Size13} className={s.iconLink} />}
       {linkName}
     </Link>
@@ -31,6 +31,7 @@ ActivityLink.propTypes = {
   activityTarget: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isVisible: PropTypes.bool.isRequired,
   to: PropTypes.string,
+  toAvailable: PropTypes.bool.isRequired,
   icon: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   titleNotAvailable: PropTypes.string,
   className: PropTypes.string,
