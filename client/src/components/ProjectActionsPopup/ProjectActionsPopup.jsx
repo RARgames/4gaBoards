@@ -29,6 +29,7 @@ const ProjectActionsStep = React.memo(
     managedProjects,
     defaultDataRename,
     isAdmin,
+    isProjectManager,
     createdAt,
     createdBy,
     updatedAt,
@@ -83,24 +84,30 @@ const ProjectActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.PopupContext} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
-          <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-          {t('common.renameProject', { context: 'title' })}
-        </Button>
-        <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-          <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })} onClick={onClose}>
-            <Icon type={IconType.ProjectSettings} size={IconSize.Size13} className={s.icon} />
-            {t('common.projectSettings', { context: 'title' })}
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+            <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+            {t('common.renameProject', { context: 'title' })}
           </Button>
-        </Link>
+        )}
+        {isProjectManager && (
+          <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
+            <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })} onClick={onClose}>
+              <Icon type={IconType.ProjectSettings} size={IconSize.Size13} className={s.icon} />
+              {t('common.projectSettings', { context: 'title' })}
+            </Button>
+          </Link>
+        )}
         <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
-          <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
-          {t('common.addBoard', { context: 'title' })}
-        </Button>
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
+            <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
+            {t('common.addBoard', { context: 'title' })}
+          </Button>
+        )}
       </>
     );
   },
@@ -121,6 +128,7 @@ ProjectActionsStep.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isProjectManager: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,

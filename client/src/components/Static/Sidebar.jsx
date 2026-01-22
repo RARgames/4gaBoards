@@ -117,35 +117,34 @@ const Sidebar = React.memo(
             <Link to={Paths.PROJECTS.replace(':id', project.id)} className={s.sidebarItemInner}>
               <Button style={ButtonStyle.NoBackground} content={project.name} className={clsx(s.sidebarButton, s.sidebarButtonPadding)} />
             </Link>
-            {project.notificationsTotal > 0 && <span className={clsx(s.notification, !isProjectManager && s.notificationNonManager)}>{project.notificationsTotal}</span>}
-            {isProjectManager && (
-              <ProjectActionsPopup
-                activities={project.activities}
-                isActivitiesFetching={project.isActivitiesFetching}
-                isAllActivitiesFetched={project.isAllActivitiesFetched}
-                lastActivityId={project.lastActivityId}
-                name={project.name}
-                projectId={project.id}
-                managedProjects={managedProjects}
-                defaultDataRename={pick(project, 'name')}
-                isAdmin={isAdmin}
-                createdAt={project.createdAt}
-                createdBy={project.createdBy}
-                updatedAt={project.updatedAt}
-                updatedBy={project.updatedBy}
-                memberships={project.memberships}
-                onUpdate={(data) => onProjectUpdate(project.id, data)}
-                onBoardCreate={onBoardCreate}
-                onActivitiesFetch={() => onActivitiesProjectFetch(project.id)}
-                position="right-start"
-                offset={10}
-                hideCloseButton
-              >
-                <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={clsx(s.sidebarButton, s.hoverButton)}>
-                  <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                </Button>
-              </ProjectActionsPopup>
-            )}
+            {project.notificationsTotal > 0 && <span className={s.notification}>{project.notificationsTotal}</span>}
+            <ProjectActionsPopup
+              activities={project.activities}
+              isActivitiesFetching={project.isActivitiesFetching}
+              isAllActivitiesFetched={project.isAllActivitiesFetched}
+              lastActivityId={project.lastActivityId}
+              name={project.name}
+              projectId={project.id}
+              managedProjects={managedProjects}
+              defaultDataRename={pick(project, 'name')}
+              isAdmin={isAdmin}
+              createdAt={project.createdAt}
+              createdBy={project.createdBy}
+              updatedAt={project.updatedAt}
+              updatedBy={project.updatedBy}
+              memberships={project.memberships}
+              isProjectManager={isProjectManager}
+              onUpdate={(data) => onProjectUpdate(project.id, data)}
+              onBoardCreate={onBoardCreate}
+              onActivitiesFetch={() => onActivitiesProjectFetch(project.id)}
+              position="right-start"
+              offset={10}
+              hideCloseButton
+            >
+              <Button style={ButtonStyle.Icon} title={t('common.editProject', { context: 'title' })} className={clsx(s.sidebarButton, s.hoverButton)}>
+                <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+              </Button>
+            </ProjectActionsPopup>
           </div>
           {(!project.isCollapsed || isFilteringBoards || currProjectId === project.id) && (
             <DragDropContext onDragEnd={handleDragEnd}>
@@ -192,38 +191,37 @@ const Sidebar = React.memo(
                                       <Icon
                                         type={IconType.GitHub}
                                         size={IconSize.Size13}
-                                        className={clsx(s.githubGreen, s.githubCannotManage, board.notificationsTotal > 0 && s.githubNotificationsCannotManage)}
+                                        className={clsx(s.githubGreen, board.notificationsTotal > 0 && s.githubNotifications)}
                                         title={t('common.connectedToGithub', { repo: board.githubRepo })}
                                       />
                                     </div>
                                   ))}
-                                {board.notificationsTotal > 0 && <span className={clsx(s.notification, !isProjectManager && s.notificationNonManager)}>{board.notificationsTotal}</span>}
-                                {isProjectManager && (
-                                  <BoardActionsPopup
-                                    activities={board.activities}
-                                    isActivitiesFetching={board.isActivitiesFetching}
-                                    isAllActivitiesFetched={board.isAllActivitiesFetched}
-                                    lastActivityId={board.lastActivityId}
-                                    defaultDataRename={pick(board, 'name')}
-                                    defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
-                                    createdAt={board.createdAt}
-                                    createdBy={board.createdBy}
-                                    updatedAt={board.updatedAt}
-                                    updatedBy={board.updatedBy}
-                                    memberships={board.memberships}
-                                    onUpdate={(data) => onBoardUpdate(board.id, data)}
-                                    onExport={(data) => onBoardExport(board.id, data)}
-                                    onDelete={() => onBoardDelete(board.id)}
-                                    onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
-                                    position="right-start"
-                                    offset={10}
-                                    hideCloseButton
-                                  >
-                                    <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={s.hoverButton}>
-                                      <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                                    </Button>
-                                  </BoardActionsPopup>
-                                )}
+                                {board.notificationsTotal > 0 && <span className={s.notification}>{board.notificationsTotal}</span>}
+                                <BoardActionsPopup
+                                  activities={board.activities}
+                                  isActivitiesFetching={board.isActivitiesFetching}
+                                  isAllActivitiesFetched={board.isAllActivitiesFetched}
+                                  lastActivityId={board.lastActivityId}
+                                  defaultDataRename={pick(board, 'name')}
+                                  defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
+                                  createdAt={board.createdAt}
+                                  createdBy={board.createdBy}
+                                  updatedAt={board.updatedAt}
+                                  updatedBy={board.updatedBy}
+                                  memberships={board.memberships}
+                                  isProjectManager={isProjectManager}
+                                  onUpdate={(data) => onBoardUpdate(board.id, data)}
+                                  onExport={(data) => onBoardExport(board.id, data)}
+                                  onDelete={() => onBoardDelete(board.id)}
+                                  onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
+                                  position="right-start"
+                                  offset={10}
+                                  hideCloseButton
+                                >
+                                  <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })} className={s.hoverButton}>
+                                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                                  </Button>
+                                </BoardActionsPopup>
                               </div>
                             )}
                           </div>

@@ -26,9 +26,9 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, inputs.projectId);
+    const isProjectMember = await sails.helpers.users.isProjectMember(currentUser.id, inputs.projectId);
 
-    if (!isProjectManager) {
+    if (!isProjectMember) {
       throw Errors.PROJECT_NOT_FOUND; // Forbidden
     }
 

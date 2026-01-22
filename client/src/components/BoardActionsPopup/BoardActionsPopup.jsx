@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -33,6 +33,7 @@ const BoardActionsStep = React.memo(
     updatedAt,
     updatedBy,
     memberships,
+    isProjectManager,
     onUpdate,
     onExport,
     onDelete,
@@ -41,14 +42,6 @@ const BoardActionsStep = React.memo(
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
-
-    const handleExportClick = useCallback(() => {
-      openStep(StepTypes.EXPORT);
-    }, [openStep]);
-
-    const handleActivityClick = useCallback(() => {
-      openStep(StepTypes.ACTIVITY);
-    }, [openStep]);
 
     if (step) {
       switch (step.type) {
@@ -103,27 +96,35 @@ const BoardActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.PopupContext} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
-          <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-          {t('common.renameBoard', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
-          <Icon type={IconType.GitHub} size={IconSize.Size13} className={s.icon} />
-          {t('common.connections', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={handleExportClick}>
-          <Icon type={IconType.Board} size={IconSize.Size13} className={s.icon} />
-          {t('common.exportBoard', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+            <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+            {t('common.renameBoard', { context: 'title' })}
+          </Button>
+        )}
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
+            <Icon type={IconType.GitHub} size={IconSize.Size13} className={s.icon} />
+            {t('common.connections', { context: 'title' })}
+          </Button>
+        )}
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={() => openStep(StepTypes.EXPORT)}>
+            <Icon type={IconType.Board} size={IconSize.Size13} className={s.icon} />
+            {t('common.exportBoard', { context: 'title' })}
+          </Button>
+        )}
+        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
-        <Popup.Separator />
-        <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
-          <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-          {t('common.deleteBoard', { context: 'title' })}
-        </Button>
+        {isProjectManager && <Popup.Separator />}
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
+            <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
+            {t('common.deleteBoard', { context: 'title' })}
+          </Button>
+        )}
       </>
     );
   },
@@ -141,6 +142,7 @@ BoardActionsStep.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isProjectManager: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

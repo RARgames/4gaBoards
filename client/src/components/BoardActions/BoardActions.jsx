@@ -139,35 +139,35 @@ const BoardActions = React.memo(
             </Link>
           </div>
         )}
-        {isProjectManager && (
-          <div className={clsx(s.action)}>
-            <BoardActionsPopup
-              activities={board.activities}
-              isActivitiesFetching={board.isActivitiesFetching}
-              isAllActivitiesFetched={board.isAllActivitiesFetched}
-              lastActivityId={board.lastActivityId}
-              defaultDataRename={pick(board, 'name')}
-              defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
-              createdAt={board.createdAt}
-              createdBy={board.createdBy}
-              updatedAt={board.updatedAt}
-              updatedBy={board.updatedBy}
-              memberships={board.memberships}
-              onUpdate={(data) => onBoardUpdate(board.id, data)}
-              onExport={(data) => onBoardExport(board.id, data)}
-              onDelete={() => onBoardDelete(board.id)}
-              onActivitiesFetch={onActivitiesFetch}
-              position="right-start"
-              offset={10}
-              hideCloseButton
-            >
-              <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })}>
-                <Icon type={IconType.EllipsisVertical} size={IconSize.Size18} />
-              </Button>
-            </BoardActionsPopup>
-          </div>
-        )}
-        <div className={clsx(s.action, s.actionRightLast, !isProjectManager && s.actionRightFirst)}>
+
+        <div className={clsx(s.action, !isProjectManager && s.actionRightFirst)}>
+          <BoardActionsPopup
+            activities={board.activities}
+            isActivitiesFetching={board.isActivitiesFetching}
+            isAllActivitiesFetched={board.isAllActivitiesFetched}
+            lastActivityId={board.lastActivityId}
+            defaultDataRename={pick(board, 'name')}
+            defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
+            createdAt={board.createdAt}
+            createdBy={board.createdBy}
+            updatedAt={board.updatedAt}
+            updatedBy={board.updatedBy}
+            memberships={board.memberships}
+            isProjectManager={isProjectManager}
+            onUpdate={(data) => onBoardUpdate(board.id, data)}
+            onExport={(data) => onBoardExport(board.id, data)}
+            onDelete={() => onBoardDelete(board.id)}
+            onActivitiesFetch={onActivitiesFetch}
+            position="right-start"
+            offset={10}
+            hideCloseButton
+          >
+            <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })}>
+              <Icon type={IconType.EllipsisVertical} size={IconSize.Size18} />
+            </Button>
+          </BoardActionsPopup>
+        </div>
+        <div className={clsx(s.action, s.actionRightLast)}>
           <Link to={Paths.PROJECTS.replace(':id', projectId)}>
             <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
               <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
