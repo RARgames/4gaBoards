@@ -108,8 +108,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
               }}
             >
               {cardNode}
-              <span className={s.data} title={descriptionTruncated} />
-              <span className={s.data} title={prevDescriptionTruncated} />
+              <span className={s.data} title={cardDescription} />
+              <span className={s.data} title={cardPrevDescription} />
             </Trans>
           );
         }

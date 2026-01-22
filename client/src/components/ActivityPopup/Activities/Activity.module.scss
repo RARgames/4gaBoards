@@ -16,7 +16,7 @@
   .wrapper {
     display: inline-block;
     padding: 10.75px 12px 14.75px 8px;
-    width: 100%;
+    width: calc(100% - 10px);
   }
 
   .date {
@@ -28,6 +28,8 @@
 
   .contentText {
     color: var(--textColor2);
+    word-wrap: break-word;
+    overflow: hidden;
   }
 
   .user {
