@@ -68,7 +68,7 @@
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
     "loader-utils": "^3.3.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "mini-css-extract-plugin": "^2.10.0",
     "open": "^11.0.0",
     "package-up": "^5.0.0",
