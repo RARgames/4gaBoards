@@ -25,7 +25,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
   const [t] = useTranslation();
 
   if ([ActivityScopes.CARD, ActivityScopes.TASK, ActivityScopes.ATTACHMENT, ActivityScopes.COMMENT].includes(activity.scope)) {
-    let cardName = isTruncated ? truncate(activity.card?.name || activity.data?.cardName, { length: cardNameTruncateLength }) : activity.card?.name || activity.data?.cardName;
+    let cardName = activity.card?.name || activity.data?.cardName;
+    let cardNameTruncated = isTruncated ? truncate(cardName, { length: cardNameTruncateLength }) : cardName;
     const cardNode = activity.card ? (
       <Link to={Paths.CARDS.replace(':id', activity.card.id)} className={s.linked} title={cardName} onClick={onClose} />
     ) : (
@@ -34,14 +35,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
     switch (activity.type) {
       case ActivityTypes.CARD_CREATE: {
-        const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
+        const { listName } = activity.data;
+        const listNameTruncated = isTruncated ? truncate(listName, { length: listNameTruncateLength }) : listName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardCreateShort' : 'activity.cardCreate'}
             values={{
-              card: cardName,
-              list: listName,
+              card: cardNameTruncated,
+              list: listNameTruncated,
             }}
           >
             {cardNode}
@@ -51,14 +53,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_DUPLICATE: {
-        const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
+        const { listName } = activity.data;
+        const listNameTruncated = isTruncated ? truncate(listName, { length: listNameTruncateLength }) : listName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardDuplicateShort' : 'activity.cardDuplicate'}
             values={{
-              card: cardName,
-              list: listName,
+              card: cardNameTruncated,
+              list: listNameTruncated,
             }}
           >
             {cardNode}
@@ -69,18 +72,20 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
       case ActivityTypes.CARD_UPDATE: {
         if (activity.data.cardPrevName) {
-          const prevCardName = isTruncated ? truncate(activity.data.cardPrevName, { length: cardNameTruncateLength }) : activity.data.cardPrevName;
-          cardName = isTruncated ? truncate(activity.data.cardName, { length: cardNameTruncateLength }) : activity.data.cardName;
+          const { cardPrevName } = activity.data;
+          const prevCardNameTruncated = isTruncated ? truncate(cardPrevName, { length: cardNameTruncateLength }) : cardPrevName;
+          cardName = activity.data.cardName;
+          cardNameTruncated = isTruncated ? truncate(cardName, { length: cardNameTruncateLength }) : cardName;
           return (
             <Trans
               i18nKey={hideCardDetails ? 'activity.cardUpdateNameShort' : 'activity.cardUpdateName'}
               values={{
-                prevCard: prevCardName,
-                card: cardName,
+                prevCard: prevCardNameTruncated,
+                card: cardNameTruncated,
               }}
             >
               {cardNode}
-              <span className={s.data} title={prevCardName} />
+              <span className={s.data} title={cardPrevName} />
             </Trans>
           );
         }
@@ -102,7 +107,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                card: cardName,
+                card: cardNameTruncated,
                 description: descriptionTruncated,
                 prevDescription: prevDescriptionTruncated,
               }}
@@ -128,7 +133,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                card: cardName,
+                card: cardNameTruncated,
                 dueDate: t(`format:date`, { value: cardDueDate, postProcess: 'formatDate' }),
                 prevDueDate: t(`format:date`, { value: cardPrevDueDate, postProcess: 'formatDate' }),
               }}
@@ -167,7 +172,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                card: cardName,
+                card: cardNameTruncated,
                 timer: formatTimerActivities({ startedAt: cardTimer?.startedAt, total: cardTimer?.total }),
                 prevTimer: formatTimerActivities({ startedAt: cardPrevTimer?.startedAt, total: cardPrevTimer?.total }),
               }}
@@ -196,26 +201,27 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                card: cardName,
+                card: cardNameTruncated,
                 coverAttachment: cardCoverAttachmentNameTruncated,
                 prevCoverAttachment: cardPrevCoverAttachmentNameTruncated,
               }}
             >
               {cardNode}
-              <span className={s.data} title={cardCoverAttachmentNameTruncated} />
-              <span className={s.data} title={cardPrevCoverAttachmentNameTruncated} />
+              <span className={s.data} title={cardCoverAttachmentName} />
+              <span className={s.data} title={cardPrevCoverAttachmentName} />
             </Trans>
           );
         }
         if (activity.data.cardPosition !== undefined) {
-          const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
+          const { listName } = activity.data;
+          const listNameTruncated = isTruncated ? truncate(listName, { length: listNameTruncateLength }) : listName;
 
           return (
             <Trans
               i18nKey={hideCardDetails ? 'activity.cardUpdatePositionShort' : 'activity.cardUpdatePosition'}
               values={{
-                card: cardName,
-                list: listName,
+                card: cardNameTruncated,
+                list: listNameTruncated,
               }}
             >
               {cardNode}
@@ -228,32 +234,34 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_MOVE: {
-        const fromListName = isTruncated ? truncate(activity.data.listFromName, { length: listNameTruncateLength }) : activity.data.listFromName;
-        const toListName = isTruncated ? truncate(activity.data.listToName, { length: listNameTruncateLength }) : activity.data.listToName;
+        const { listFromName, listToName } = activity.data;
+        const fromListNameTruncated = isTruncated ? truncate(listFromName, { length: listNameTruncateLength }) : listFromName;
+        const toListNameTruncated = isTruncated ? truncate(listToName, { length: listNameTruncateLength }) : listToName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardMoveShort' : 'activity.cardMove'}
             values={{
-              card: cardName,
-              fromList: fromListName,
-              toList: toListName,
+              card: cardNameTruncated,
+              fromList: fromListNameTruncated,
+              toList: toListNameTruncated,
             }}
           >
             {cardNode}
-            <span className={s.data} title={fromListName} />
-            <span className={s.data} title={toListName} />
+            <span className={s.data} title={listFromName} />
+            <span className={s.data} title={listToName} />
           </Trans>
         );
       }
 
       case ActivityTypes.CARD_TRANSFER: {
-        const fromListName = isTruncated ? truncate(activity.data.listFromName, { length: listNameTruncateLength }) : activity.data.listFromName;
-        const toListName = isTruncated ? truncate(activity.data.listToName, { length: listNameTruncateLength }) : activity.data.listToName;
-        const fromBoardName = isTruncated ? truncate(activity.data.boardFromName, { length: boardNameTruncateLength }) : activity.data.boardFromName;
-        const toBoardName = isTruncated ? truncate(activity.data.boardToName, { length: boardNameTruncateLength }) : activity.data.boardToName;
-        const fromProjectName = isTruncated ? truncate(activity.data.projectFromName, { length: projectNameTruncateLength }) : activity.data.projectFromName;
-        const toProjectName = isTruncated ? truncate(activity.data.projectToName, { length: projectNameTruncateLength }) : activity.data.projectToName;
+        const { listFromName, listToName, boardFromName, boardToName, projectFromName, projectToName } = activity.data;
+        const fromListNameTruncated = isTruncated ? truncate(listFromName, { length: listNameTruncateLength }) : listFromName;
+        const toListNameTruncated = isTruncated ? truncate(listToName, { length: listNameTruncateLength }) : listToName;
+        const fromBoardNameTruncated = isTruncated ? truncate(boardFromName, { length: boardNameTruncateLength }) : boardFromName;
+        const toBoardNameTruncated = isTruncated ? truncate(boardToName, { length: boardNameTruncateLength }) : boardToName;
+        const fromProjectNameTruncated = isTruncated ? truncate(projectFromName, { length: projectNameTruncateLength }) : projectFromName;
+        const toProjectNameTruncated = isTruncated ? truncate(projectToName, { length: projectNameTruncateLength }) : projectToName;
 
         let key;
 
@@ -267,35 +275,36 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={key}
             values={{
-              card: cardName,
-              fromList: fromListName,
-              fromBoard: fromBoardName,
-              toList: toListName,
-              toBoard: toBoardName,
-              fromProject: fromProjectName,
-              toProject: toProjectName,
+              card: cardNameTruncated,
+              fromList: fromListNameTruncated,
+              fromBoard: fromBoardNameTruncated,
+              toList: toListNameTruncated,
+              toBoard: toBoardNameTruncated,
+              fromProject: fromProjectNameTruncated,
+              toProject: toProjectNameTruncated,
             }}
           >
             {cardNode}
-            <span className={s.data} title={fromListName} />
-            <span className={s.data} title={fromBoardName} />
-            <span className={s.data} title={toListName} />
-            <span className={s.data} title={toBoardName} />
-            <span className={s.data} title={fromProjectName} />
-            <span className={s.data} title={toProjectName} />
+            <span className={s.data} title={listFromName} />
+            <span className={s.data} title={boardFromName} />
+            <span className={s.data} title={listToName} />
+            <span className={s.data} title={boardToName} />
+            <span className={s.data} title={projectFromName} />
+            <span className={s.data} title={projectToName} />
           </Trans>
         );
       }
 
       case ActivityTypes.CARD_DELETE: {
-        const listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
+        const { listName } = activity.data;
+        const listNameTruncated = isTruncated ? truncate(listName, { length: listNameTruncateLength }) : listName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardDeleteShort' : 'activity.cardDelete'}
             values={{
-              card: cardName,
-              list: listName,
+              card: cardNameTruncated,
+              list: listNameTruncated,
             }}
           >
             {cardNode}
@@ -305,14 +314,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_COMMENT_CREATE: {
-        const cardComment = isTruncated ? truncate(activity.data.commentText, { length: commentTruncateLength }) : activity.data.commentText;
+        const { cardComment } = activity.data;
+        const cardCommentTruncated = isTruncated ? truncate(cardComment, { length: commentTruncateLength }) : cardComment;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardCommentCreateShort' : 'activity.cardCommentCreate'}
             values={{
-              comment: cardComment,
-              card: cardName,
+              comment: cardCommentTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -322,9 +332,10 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_COMMENT_UPDATE: {
-        const prevCardComment = isTruncated ? truncate(activity.data.commentPrevText, { length: commentTruncateLength }) : activity.data.commentPrevText;
-        const cardComment = isTruncated ? truncate(activity.data.commentText, { length: commentTruncateLength }) : activity.data.commentText;
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { commentPrevText, commentText, userName } = activity.data;
+        const prevCardCommentTruncated = isTruncated ? truncate(commentPrevText, { length: commentTruncateLength }) : commentPrevText;
+        const cardCommentTruncated = isTruncated ? truncate(commentText, { length: commentTruncateLength }) : commentText;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
         let key;
         if (activity.userId === activity.data.userId) {
@@ -337,49 +348,51 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={key}
             values={{
-              prevComment: prevCardComment,
-              comment: cardComment,
-              card: cardName,
-              user: userName,
+              prevComment: prevCardCommentTruncated,
+              comment: cardCommentTruncated,
+              card: cardNameTruncated,
+              user: userNameTruncated,
             }}
           >
             {cardNode}
-            <span className={s.data} title={prevCardComment} />
-            <span className={s.data} title={cardComment} />
+            <span className={s.data} title={commentPrevText} />
+            <span className={s.data} title={commentText} />
             <span className={s.data} title={userName} />
           </Trans>
         );
       }
 
       case ActivityTypes.CARD_COMMENT_DELETE: {
-        const cardComment = isTruncated ? truncate(activity.data.commentText, { length: commentTruncateLength }) : activity.data.commentText;
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { commentText, userName } = activity.data;
+        const cardCommentTruncated = isTruncated ? truncate(commentText, { length: commentTruncateLength }) : commentText;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardCommentDeleteShort' : 'activity.cardCommentDelete'}
             values={{
-              comment: cardComment,
-              card: cardName,
-              user: userName,
+              comment: cardCommentTruncated,
+              card: cardNameTruncated,
+              user: userNameTruncated,
             }}
           >
             {cardNode}
-            <span className={s.data} title={cardComment} />
+            <span className={s.data} title={commentText} />
             <span className={s.data} title={userName} />
           </Trans>
         );
       }
 
       case ActivityTypes.CARD_USER_ADD: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { userName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardUserAddShort' : 'activity.cardUserAdd'}
             values={{
-              user: userName,
-              card: cardName,
+              user: userNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -389,14 +402,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_USER_REMOVE: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { userName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardUserRemoveShort' : 'activity.cardUserRemove'}
             values={{
-              user: userName,
-              card: cardName,
+              user: userNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -406,14 +420,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_TASK_CREATE: {
-        const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+        const { taskName } = activity.data;
+        const taskNameTruncated = isTruncated ? truncate(taskName, { length: taskNameTruncateLength }) : taskName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardTaskCreateShort' : 'activity.cardTaskCreate'}
             values={{
-              task: taskName,
-              card: cardName,
+              task: taskNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -423,17 +438,19 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_TASK_UPDATE: {
-        const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+        const { taskName } = activity.data;
+        const taskNameTruncated = isTruncated ? truncate(taskName, { length: taskNameTruncateLength }) : taskName;
 
         if (activity.data.taskPrevName) {
-          const taskPrevName = isTruncated ? truncate(activity.data.taskPrevName, { length: taskNameTruncateLength }) : activity.data.taskPrevName;
+          const { taskPrevName } = activity.data;
+          const taskPrevNameTruncated = isTruncated ? truncate(taskPrevName, { length: taskNameTruncateLength }) : taskPrevName;
           return (
             <Trans
               i18nKey={hideCardDetails ? 'activity.cardTaskUpdateNameShort' : 'activity.cardTaskUpdateName'}
               values={{
-                task: taskName,
-                prevTask: taskPrevName,
-                card: cardName,
+                task: taskNameTruncated,
+                prevTask: taskPrevNameTruncated,
+                card: cardNameTruncated,
               }}
             >
               {cardNode}
@@ -447,8 +464,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={hideCardDetails ? 'activity.cardTaskUpdateIsCompletedShort' : 'activity.cardTaskUpdateIsCompleted'}
               values={{
-                task: taskName,
-                card: cardName,
+                task: taskNameTruncated,
+                card: cardNameTruncated,
                 isCompleted: activity.data.taskIsCompleted ? t('activity.cardTaskCompleted') : t('activity.cardTaskUncompleted'),
               }}
             >
@@ -473,8 +490,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                task: taskName,
-                card: cardName,
+                task: taskNameTruncated,
+                card: cardNameTruncated,
                 dueDate: t(`format:date`, { value: taskDueDate, postProcess: 'formatDate' }),
                 prevDueDate: t(`format:date`, { value: taskPrevDueDate, postProcess: 'formatDate' }),
               }}
@@ -490,14 +507,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_TASK_DUPLICATE: {
-        const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+        const { taskName } = activity.data;
+        const taskNameTruncated = isTruncated ? truncate(taskName, { length: taskNameTruncateLength }) : taskName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardTaskDuplicateShort' : 'activity.cardTaskDuplicate'}
             values={{
-              task: taskName,
-              card: cardName,
+              task: taskNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -507,14 +525,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_TASK_MOVE: {
-        const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+        const { taskName } = activity.data;
+        const taskNameTruncated = isTruncated ? truncate(taskName, { length: taskNameTruncateLength }) : taskName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardTaskMoveShort' : 'activity.cardTaskMove'}
             values={{
-              task: taskName,
-              card: cardName,
+              task: taskNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -524,14 +543,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_TASK_DELETE: {
-        const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+        const { taskName } = activity.data;
+        const taskNameTruncated = isTruncated ? truncate(taskName, { length: taskNameTruncateLength }) : taskName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardTaskDeleteShort' : 'activity.cardTaskDelete'}
             values={{
-              task: taskName,
-              card: cardName,
+              task: taskNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -541,16 +561,17 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_TASK_USER_ADD: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
-        const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+        const { userName, taskName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
+        const taskNameTruncated = isTruncated ? truncate(taskName, { length: taskNameTruncateLength }) : taskName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardTaskUserAddShort' : 'activity.cardTaskUserAdd'}
             values={{
-              user: userName,
-              task: taskName,
-              card: cardName,
+              user: userNameTruncated,
+              task: taskNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -561,16 +582,17 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_TASK_USER_REMOVE: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
-        const taskName = isTruncated ? truncate(activity.data.taskName, { length: taskNameTruncateLength }) : activity.data.taskName;
+        const { userName, taskName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
+        const taskNameTruncated = isTruncated ? truncate(taskName, { length: taskNameTruncateLength }) : taskName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardTaskUserRemoveShort' : 'activity.cardTaskUserRemove'}
             values={{
-              user: userName,
-              task: taskName,
-              card: cardName,
+              user: userNameTruncated,
+              task: taskNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -581,14 +603,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_ATTACHMENT_CREATE: {
-        const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
+        const { attachmentName } = activity.data;
+        const attachmentNameTruncated = isTruncated ? truncate(attachmentName, { length: commentTruncateLength }) : attachmentName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardAttachmentCreateShort' : 'activity.cardAttachmentCreate'}
             values={{
-              attachment: attachmentName,
-              card: cardName,
+              attachment: attachmentNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -598,16 +621,17 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_ATTACHMENT_UPDATE: {
-        const attachmentPrevName = isTruncated ? truncate(activity.data.attachmentPrevName, { length: commentTruncateLength }) : activity.data.attachmentPrevName;
-        const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
+        const { attachmentPrevName, attachmentName } = activity.data;
+        const attachmentPrevNameTruncated = isTruncated ? truncate(attachmentPrevName, { length: commentTruncateLength }) : attachmentPrevName;
+        const attachmentNameTruncated = isTruncated ? truncate(attachmentName, { length: commentTruncateLength }) : attachmentName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardAttachmentUpdateShort' : 'activity.cardAttachmentUpdate'}
             values={{
-              prevAttachment: attachmentPrevName,
-              attachment: attachmentName,
-              card: cardName,
+              prevAttachment: attachmentPrevNameTruncated,
+              attachment: attachmentNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -618,14 +642,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_ATTACHMENT_DELETE: {
-        const attachmentName = isTruncated ? truncate(activity.data.attachmentName, { length: commentTruncateLength }) : activity.data.attachmentName;
+        const { attachmentName } = activity.data;
+        const attachmentNameTruncated = isTruncated ? truncate(attachmentName, { length: commentTruncateLength }) : attachmentName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardAttachmentDeleteShort' : 'activity.cardAttachmentDelete'}
             values={{
-              attachment: attachmentName,
-              card: cardName,
+              attachment: attachmentNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -635,14 +660,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_LABEL_ADD: {
-        const labelName = isTruncated ? truncate(activity.data.labelName, { length: commentTruncateLength }) : activity.data.labelName;
+        const { labelName } = activity.data;
+        const labelNameTruncated = isTruncated ? truncate(labelName, { length: commentTruncateLength }) : labelName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardLabelAddShort' : 'activity.cardLabelAdd'}
             values={{
-              label: labelName,
-              card: cardName,
+              label: labelNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -652,14 +678,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_LABEL_REMOVE: {
-        const labelName = isTruncated ? truncate(activity.data.labelName, { length: commentTruncateLength }) : activity.data.labelName;
+        const { labelName } = activity.data;
+        const labelNameTruncated = isTruncated ? truncate(labelName, { length: commentTruncateLength }) : labelName;
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardLabelRemoveShort' : 'activity.cardLabelRemove'}
             values={{
-              label: labelName,
-              card: cardName,
+              label: labelNameTruncated,
+              card: cardNameTruncated,
             }}
           >
             {cardNode}
@@ -673,8 +700,10 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
     }
   } else if (ActivityScopes.LIST === activity.scope) {
-    let listName = isTruncated ? truncate(activity.list?.name || activity.data?.listName, { length: listNameTruncateLength }) : activity.list?.name || activity.data?.listName;
-    const boardName = isTruncated ? truncate(activity.board?.name || activity.data?.boardName, { length: boardNameTruncateLength }) : activity.board?.name || activity.data?.boardName;
+    let listName = activity.list?.name || activity.data?.listName;
+    let listNameTruncated = isTruncated ? truncate(listName, { length: listNameTruncateLength }) : listName;
+    const boardName = activity.board?.name || activity.data?.boardName;
+    const boardNameTruncated = isTruncated ? truncate(boardName, { length: boardNameTruncateLength }) : boardName;
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
     ) : (
@@ -687,8 +716,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={hideListDetails ? 'activity.listCreateShort' : 'activity.listCreate'}
             values={{
-              list: listName,
-              board: boardName,
+              list: listNameTruncated,
+              board: boardNameTruncated,
             }}
           >
             <span className={s.data} title={listName} />
@@ -699,18 +728,20 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
       case ActivityTypes.LIST_UPDATE: {
         if (activity.data.listPrevName) {
-          const prevListName = isTruncated ? truncate(activity.data.listPrevName, { length: listNameTruncateLength }) : activity.data.listPrevName;
-          listName = isTruncated ? truncate(activity.data.listName, { length: listNameTruncateLength }) : activity.data.listName;
+          const { listPrevName } = activity.data;
+          const prevListNameTruncated = isTruncated ? truncate(listPrevName, { length: listNameTruncateLength }) : listPrevName;
+          listName = activity.data.listName;
+          listNameTruncated = isTruncated ? truncate(listName, { length: listNameTruncateLength }) : listName;
 
           return (
             <Trans
               i18nKey={hideListDetails ? 'activity.listUpdateNameShort' : 'activity.listUpdateName'}
               values={{
-                prevList: prevListName,
-                list: listName,
+                prevList: prevListNameTruncated,
+                list: listNameTruncated,
               }}
             >
-              <span className={s.data} title={prevListName} />
+              <span className={s.data} title={listPrevName} />
               <span className={s.data} title={listName} />
             </Trans>
           );
@@ -720,8 +751,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={hideListDetails ? 'activity.listUpdatePositionShort' : 'activity.listUpdatePosition'}
               values={{
-                list: listName,
-                board: boardName,
+                list: listNameTruncated,
+                board: boardNameTruncated,
               }}
             >
               <span className={s.data} title={listName} />
@@ -742,7 +773,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                list: listName,
+                list: listNameTruncated,
               }}
             >
               <span className={s.data} title={listName} />
@@ -758,8 +789,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={hideListDetails ? 'activity.listDeleteShort' : 'activity.listDelete'}
             values={{
-              list: listName,
-              board: boardName,
+              list: listNameTruncated,
+              board: boardNameTruncated,
             }}
           >
             <span className={s.data} title={listName} />
@@ -772,13 +803,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
         return null;
     }
   } else if (ActivityScopes.BOARD === activity.scope) {
-    let boardName = isTruncated ? truncate(activity.board?.name || activity.data?.boardName, { length: boardNameTruncateLength }) : activity.board?.name || activity.data?.boardName;
+    let boardName = activity.board?.name || activity.data?.boardName;
+    let boardNameTruncated = isTruncated ? truncate(boardName, { length: boardNameTruncateLength }) : boardName;
     const boardNode = activity.board ? (
       <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={boardName} onClick={onClose} />
     ) : (
       <Link to={Paths.BOARDS.replace(':id', activity.boardId)} className={s.linkedDeleted} title={t('activity.deletedBoard', { board: boardName })} onClick={onClose} />
     );
-    const projectName = isTruncated ? truncate(activity.project?.name || activity.data?.projectName, { length: projectNameTruncateLength }) : activity.project?.name || activity.data?.projectName;
+    const projectName = activity.project?.name || activity.data?.projectName;
+    const projectNameTruncated = isTruncated ? truncate(projectName, { length: projectNameTruncateLength }) : projectName;
     const projectNode = activity.project ? (
       <Link to={Paths.PROJECTS.replace(':id', activity.project.id)} className={s.linked} title={projectName} onClick={onClose} />
     ) : (
@@ -787,14 +820,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
     switch (activity.type) {
       case ActivityTypes.LABEL_CREATE: {
-        const labelName = isTruncated ? truncate(activity.data.labelName, { length: defaultTruncateLength }) : activity.data.labelName;
+        const { labelName } = activity.data;
+        const labelNameTruncated = isTruncated ? truncate(labelName, { length: defaultTruncateLength }) : labelName;
 
         return (
           <Trans
             i18nKey={hideLabelDetails ? 'activity.labelCreateShort' : 'activity.labelCreate'}
             values={{
-              label: labelName,
-              board: boardName,
+              label: labelNameTruncated,
+              board: boardNameTruncated,
             }}
           >
             <span className={s.data} title={labelName} />
@@ -804,7 +838,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.LABEL_UPDATE: {
-        const labelName = isTruncated ? truncate(activity.data.labelName, { length: defaultTruncateLength }) : activity.data.labelName;
+        const { labelName } = activity.data;
+        const labelNameTruncated = isTruncated ? truncate(labelName, { length: defaultTruncateLength }) : labelName;
 
         if (activity.data.labelColor) {
           const labelColorName = activity.data.labelColor;
@@ -813,9 +848,9 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={hideLabelDetails ? 'activity.labelUpdateColorShort' : 'activity.labelUpdateColor'}
               values={{
-                label: labelName,
+                label: labelNameTruncated,
                 color: labelColorName,
-                board: boardName,
+                board: boardNameTruncated,
               }}
             >
               <span className={s.data} title={labelName} />
@@ -825,18 +860,19 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           );
         }
         if (activity.data.labelPrevName) {
-          const prevLabelName = isTruncated ? truncate(activity.data.labelPrevName, { length: defaultTruncateLength }) : activity.data.labelPrevName;
+          const { labelPrevName } = activity.data;
+          const prevLabelNameTruncated = isTruncated ? truncate(labelPrevName, { length: defaultTruncateLength }) : labelPrevName;
 
           return (
             <Trans
               i18nKey={hideLabelDetails ? 'activity.labelUpdateNameShort' : 'activity.labelUpdateName'}
               values={{
-                prevLabel: prevLabelName,
-                label: labelName,
-                board: boardName,
+                prevLabel: prevLabelNameTruncated,
+                label: labelNameTruncated,
+                board: boardNameTruncated,
               }}
             >
-              <span className={s.data} title={prevLabelName} />
+              <span className={s.data} title={labelPrevName} />
               <span className={s.data} title={labelName} />
               {boardNode}
             </Trans>
@@ -846,14 +882,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.LABEL_DELETE: {
-        const labelName = isTruncated ? truncate(activity.data.labelName, { length: defaultTruncateLength }) : activity.data.labelName;
+        const { labelName } = activity.data;
+        const labelNameTruncated = isTruncated ? truncate(labelName, { length: defaultTruncateLength }) : labelName;
 
         return (
           <Trans
             i18nKey={hideLabelDetails ? 'activity.labelDeleteShort' : 'activity.labelDelete'}
             values={{
-              label: labelName,
-              board: boardName,
+              label: labelNameTruncated,
+              board: boardNameTruncated,
             }}
           >
             <span className={s.data} title={labelName} />
@@ -863,15 +900,16 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.BOARD_USER_ADD: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { userName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
         const canComment = activity.data.canComment === null || activity.data.canComment === true ? t('activity.yes') : t('activity.no');
 
         return (
           <Trans
             i18nKey={hideBoardDetails ? 'activity.boardUserAddShort' : 'activity.boardUserAdd'}
             values={{
-              user: userName,
-              board: boardName,
+              user: userNameTruncated,
+              board: boardNameTruncated,
               role: activity.data.role,
               canComment,
             }}
@@ -885,7 +923,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.BOARD_USER_UPDATE: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { userName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
         const canComment = activity.data.canComment === null || activity.data.canComment === true ? t('activity.yes') : t('activity.no');
         const prevCanComment = activity.data.prevCanComment === null || activity.data.prevCanComment === true ? t('activity.yes') : t('activity.no');
 
@@ -896,12 +935,12 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={hideBoardDetails ? 'activity.boardUserUpdateRoleShort' : 'activity.boardUserUpdateRole'}
               values={{
-                user: userName,
+                user: userNameTruncated,
                 prevRole,
                 prevCanComment,
                 role,
                 canComment,
-                board: boardName,
+                board: boardNameTruncated,
               }}
             >
               <span className={s.data} title={userName} />
@@ -918,14 +957,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.BOARD_USER_REMOVE: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { userName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
         return (
           <Trans
             i18nKey={hideBoardDetails ? 'activity.boardUserRemoveShort' : 'activity.boardUserRemove'}
             values={{
-              user: userName,
-              board: boardName,
+              user: userNameTruncated,
+              board: boardNameTruncated,
             }}
           >
             <span className={s.data} title={userName} />
@@ -941,8 +981,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={hideBoardDetails ? 'activity.boardCreateShort' : 'activity.boardCreate'}
             values={{
-              board: boardName,
-              project: projectName,
+              board: boardNameTruncated,
+              project: projectNameTruncated,
               isImportedBoard,
             }}
           >
@@ -955,18 +995,20 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
       case ActivityTypes.BOARD_UPDATE: {
         if (activity.data.boardPrevName) {
-          const prevBoardName = isTruncated ? truncate(activity.data.boardPrevName, { length: boardNameTruncateLength }) : activity.data.boardPrevName;
-          boardName = isTruncated ? truncate(activity.data.boardName, { length: boardNameTruncateLength }) : activity.data.boardName;
+          const { boardPrevName } = activity.data;
+          const prevBoardNameTruncated = isTruncated ? truncate(boardPrevName, { length: boardNameTruncateLength }) : boardPrevName;
+          boardName = activity.data.boardName;
+          boardNameTruncated = isTruncated ? truncate(boardName, { length: boardNameTruncateLength }) : boardName;
 
           return (
             <Trans
               i18nKey={hideBoardDetails ? 'activity.boardUpdateNameShort' : 'activity.boardUpdateName'}
               values={{
-                prevBoard: prevBoardName,
-                board: boardName,
+                prevBoard: prevBoardNameTruncated,
+                board: boardNameTruncated,
               }}
             >
-              <span className={s.data} title={prevBoardName} />
+              <span className={s.data} title={boardPrevName} />
               {boardNode}
             </Trans>
           );
@@ -986,7 +1028,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                board: boardName,
+                board: boardNameTruncated,
                 prevGithubRepo,
                 githubRepo,
               }}
@@ -1002,8 +1044,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={hideBoardDetails ? 'activity.boardUpdatePositionShort' : 'activity.boardUpdatePosition'}
               values={{
-                board: boardName,
-                project: projectName,
+                board: boardNameTruncated,
+                project: projectNameTruncated,
               }}
             >
               {boardNode}
@@ -1020,8 +1062,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={hideBoardDetails ? 'activity.boardDeleteShort' : 'activity.boardDelete'}
             values={{
-              board: boardName,
-              project: projectName,
+              board: boardNameTruncated,
+              project: projectNameTruncated,
             }}
           >
             {boardNode}
@@ -1034,7 +1076,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
         return null;
     }
   } else if (ActivityScopes.PROJECT === activity.scope) {
-    let projectName = isTruncated ? truncate(activity.project?.name || activity.data?.projectName, { length: projectNameTruncateLength }) : activity.project?.name || activity.data?.projectName;
+    let projectName = activity.project?.name || activity.data?.projectName;
+    let projectNameTruncated = isTruncated ? truncate(projectName, { length: projectNameTruncateLength }) : projectName;
     const projectNode = activity.project ? (
       <Link to={Paths.PROJECTS.replace(':id', activity.project.id)} className={s.linked} title={projectName} onClick={onClose} />
     ) : (
@@ -1047,7 +1090,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={hideProjectDetails ? 'activity.projectCreateShort' : 'activity.projectCreate'}
             values={{
-              project: projectName,
+              project: projectNameTruncated,
             }}
           >
             {projectNode}
@@ -1057,18 +1100,20 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
       case ActivityTypes.PROJECT_UPDATE: {
         if (activity.data.projectPrevName) {
-          const prevProjectName = isTruncated ? truncate(activity.data.projectPrevName, { length: projectNameTruncateLength }) : activity.data.projectPrevName;
-          projectName = isTruncated ? truncate(activity.data.projectName, { length: projectNameTruncateLength }) : activity.data.projectName;
+          const { projectPrevName } = activity.data;
+          const prevProjectNameTruncated = isTruncated ? truncate(projectPrevName, { length: projectNameTruncateLength }) : projectPrevName;
+          projectName = activity.data.projectName;
+          projectNameTruncated = isTruncated ? truncate(projectName, { length: projectNameTruncateLength }) : projectName;
 
           return (
             <Trans
               i18nKey={hideProjectDetails ? 'activity.projectUpdateNameShort' : 'activity.projectUpdateName'}
               values={{
-                prevProject: prevProjectName,
-                project: projectName,
+                prevProject: prevProjectNameTruncated,
+                project: projectNameTruncated,
               }}
             >
-              <span className={s.data} title={prevProjectName} />
+              <span className={s.data} title={projectPrevName} />
               {projectNode}
             </Trans>
           );
@@ -1093,7 +1138,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             <Trans
               i18nKey={key}
               values={{
-                project: projectName,
+                project: projectNameTruncated,
               }}
             >
               {projectNode}
@@ -1109,7 +1154,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={hideProjectDetails ? 'activity.projectDeleteShort' : 'activity.projectDelete'}
             values={{
-              project: projectName,
+              project: projectNameTruncated,
             }}
           >
             {projectNode}
@@ -1118,14 +1163,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.PROJECT_MANAGER_ADD: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { userName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
         return (
           <Trans
             i18nKey={hideProjectDetails ? 'activity.projectManagerAddShort' : 'activity.projectManagerAdd'}
             values={{
-              user: userName,
-              project: projectName,
+              user: userNameTruncated,
+              project: projectNameTruncated,
             }}
           >
             <span className={s.data} title={userName} />
@@ -1135,14 +1181,15 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.PROJECT_MANAGER_REMOVE: {
-        const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+        const { userName } = activity.data;
+        const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
         return (
           <Trans
             i18nKey={hideProjectDetails ? 'activity.projectManagerRemoveShort' : 'activity.projectManagerRemove'}
             values={{
-              user: userName,
-              project: projectName,
+              user: userNameTruncated,
+              project: projectNameTruncated,
             }}
           >
             <span className={s.data} title={userName} />
@@ -1155,7 +1202,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
         return null;
     }
   } else if (ActivityScopes.USER === activity.scope) {
-    const userName = isTruncated ? truncate(activity.data.userName, { length: userNameTruncateLength }) : activity.data.userName;
+    const { userName } = activity.data;
+    const userNameTruncated = isTruncated ? truncate(userName, { length: userNameTruncateLength }) : userName;
 
     switch (activity.type) {
       case ActivityTypes.USER_CREATE: {
@@ -1163,7 +1211,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey="activity.userCreate"
             values={{
-              userName,
+              userName: userNameTruncated,
               userEmail: activity.data.userEmail,
               isAdmin: activity.data.isAdmin ? t('activity.yes') : t('activity.no'),
             }}
@@ -1182,7 +1230,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
           <Trans
             i18nKey={isLocalRegistration ? 'activity.userRegisterLocal' : 'activity.userRegisterOidc'}
             values={{
-              userName,
+              userName: userNameTruncated,
               userEmail: activity.data.userEmail,
               isAdmin: activity.data.isAdmin ? t('activity.yes') : t('activity.no'),
             }}
@@ -1196,17 +1244,18 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
       case ActivityTypes.USER_UPDATE: {
         if (activity.data.prevUserName) {
-          const userPrevName = isTruncated ? truncate(activity.data.prevUserName, { length: userNameTruncateLength }) : activity.data.prevUserName;
+          const { prevUserName } = activity.data;
+          const userPrevNameTruncated = isTruncated ? truncate(prevUserName, { length: userNameTruncateLength }) : prevUserName;
 
           return (
             <Trans
               i18nKey="activity.userUpdateName"
               values={{
-                prevUserName: userPrevName,
-                userName,
+                prevUserName: userPrevNameTruncated,
+                userName: userNameTruncated,
               }}
             >
-              <span className={s.data} title={userPrevName} />
+              <span className={s.data} title={prevUserName} />
               <span className={s.data} title={userName} />
             </Trans>
           );
