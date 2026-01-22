@@ -213,10 +213,19 @@ export default class extends BaseModel {
     });
   }
 
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
   deleteRelated() {
     this.cards.toModelArray().forEach((cardModel) => {
       cardModel.deleteWithRelated();
     });
+    this.deleteActivities();
   }
 
   deleteWithRelated() {

@@ -283,6 +283,14 @@ export default class extends BaseModel {
     return this.project && (this.project.hasManagerForUser(userId) || this.hasMembershipForUser(userId));
   }
 
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
   deleteRelated(exceptMemberUserId) {
     this.memberships.toModelArray().forEach((boardMembershipModel) => {
       if (boardMembershipModel.userId !== exceptMemberUserId) {
@@ -295,6 +303,7 @@ export default class extends BaseModel {
     this.lists.toModelArray().forEach((listModel) => {
       listModel.deleteWithRelated();
     });
+    this.deleteActivities();
   }
 
   deleteWithRelated() {

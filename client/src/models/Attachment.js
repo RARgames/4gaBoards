@@ -61,7 +61,7 @@ export default class extends BaseModel {
             .toModelArray()
             .forEach((attachmentModel) => {
               if (!attachmentIds.includes(attachmentModel.id)) {
-                attachmentModel.delete();
+                attachmentModel.deleteWithRelated();
               }
             });
 
@@ -69,7 +69,11 @@ export default class extends BaseModel {
             Attachment.upsert(attachment);
           });
         } else {
-          Attachment.all().delete();
+          Attachment.all()
+            .toModelArray()
+            .forEach((attachmentModel) => {
+              attachmentModel.deleteWithRelated();
+            });
         }
 
         break;
@@ -97,7 +101,7 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.ATTACHMENT_DELETE:
-        Attachment.withId(payload.id).delete();
+        Attachment.withId(payload.id).deleteWithRelated();
 
         break;
       case ActionTypes.ATTACHMENT_DELETE__SUCCESS:
@@ -105,7 +109,7 @@ export default class extends BaseModel {
         const attachmentModel = Attachment.withId(payload.attachment.id);
 
         if (attachmentModel) {
-          attachmentModel.delete();
+          attachmentModel.deleteWithRelated();
         }
 
         break;
@@ -130,5 +134,22 @@ export default class extends BaseModel {
 
   getOrderedActivitiesQuerySet() {
     return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
+  }
+
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
+  deleteRelated() {
+    this.deleteActivities();
+  }
+
+  deleteWithRelated() {
+    this.deleteRelated();
+    this.delete();
   }
 }

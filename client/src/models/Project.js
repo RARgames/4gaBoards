@@ -263,12 +263,21 @@ export default class extends BaseModel {
     return this.hasManagerForUser(userId) || this.hasMembershipInAnyBoardForUser(userId);
   }
 
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
   deleteRelated() {
     this.managers.delete();
 
     this.boards.toModelArray().forEach((boardModel) => {
       boardModel.deleteWithRelated();
     });
+    this.deleteActivities();
   }
 
   deleteWithRelated() {

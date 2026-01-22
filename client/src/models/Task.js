@@ -70,7 +70,7 @@ export default class extends BaseModel {
         Task.all()
           .toModelArray()
           .forEach((taskModel) => {
-            taskModel.deleteWithClearable();
+            taskModel.deleteWithRelated();
           });
 
         if (payload.tasks) {
@@ -168,7 +168,7 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.TASK_DELETE:
-        Task.withId(payload.id).deleteWithClearable();
+        Task.withId(payload.id).deleteWithRelated();
 
         break;
       case ActionTypes.TASK_DELETE__SUCCESS:
@@ -176,7 +176,7 @@ export default class extends BaseModel {
         const taskModel = Task.withId(payload.task.id);
 
         if (taskModel) {
-          taskModel.deleteWithClearable();
+          taskModel.deleteWithRelated();
         }
 
         break;
@@ -203,6 +203,14 @@ export default class extends BaseModel {
     return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
   }
 
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
   deleteUsers() {
     this.users.clear();
   }
@@ -211,8 +219,13 @@ export default class extends BaseModel {
     this.deleteUsers();
   }
 
-  deleteWithClearable() {
+  deleteRelated() {
+    this.deleteActivities();
+  }
+
+  deleteWithRelated() {
     this.deleteClearable();
+    this.deleteRelated();
     this.delete();
   }
 }

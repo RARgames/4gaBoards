@@ -320,6 +320,7 @@ export default class extends BaseModel {
     this.deleteClearable();
     this.tasks.delete();
     this.attachments.delete();
+    this.comments.delete();
     this.deleteActivities();
   }
 

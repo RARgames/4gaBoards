@@ -46,7 +46,11 @@ export default class extends BaseModel {
   static reducer({ type, payload }, Comment) {
     switch (type) {
       case ActionTypes.SOCKET_RECONNECT_HANDLE:
-        Comment.all().delete();
+        Comment.all()
+          .toModelArray()
+          .forEach((commentModel) => {
+            commentModel.deleteWithRelated();
+          });
 
         payload.comments.forEach((comment) => {
           Comment.upsert(comment);
@@ -88,14 +92,14 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.COMMENT_DELETE:
-        Comment.withId(payload.id).delete();
+        Comment.withId(payload.id).deleteWithRelated();
 
         break;
       case ActionTypes.COMMENT_DELETE__SUCCESS:
       case ActionTypes.COMMENT_DELETE_HANDLE: {
         const commentModel = Comment.withId(payload.comment.id);
         if (commentModel) {
-          commentModel.delete();
+          commentModel.deleteWithRelated();
         }
 
         break;
@@ -120,5 +124,22 @@ export default class extends BaseModel {
 
   getOrderedActivitiesQuerySet() {
     return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
+  }
+
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
+  deleteRelated() {
+    this.deleteActivities();
+  }
+
+  deleteWithRelated() {
+    this.deleteRelated();
+    this.delete();
   }
 }
