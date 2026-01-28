@@ -35,12 +35,12 @@ const makeMapStateToProps = () => {
     } = state;
     const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
-  const selectMailCountForBoardId = selectors.makeSelectMailCountForBoardId();
-  const selectMailsByBoardId = selectors.makeSelectMailsByBoardId();
-  const mail = selectors.selectMailForCurrentUserByBoardId(state, boardId);
-  const mailId = mail?.mailId ?? null;
-  const mailCountForBoardId = selectMailCountForBoardId(state, boardId);
-  const mailsForBoard = selectMailsByBoardId(state, boardId);
+    const selectMailCountForBoardId = selectors.makeSelectMailCountForBoardId();
+    const selectMailsByBoardId = selectors.makeSelectMailsByBoardId();
+    const mail = selectors.selectMailForCurrentUserByBoardId(state, boardId);
+    const mailId = mail?.mailId ?? null;
+    const mailCountForBoardId = selectMailCountForBoardId(state, boardId);
+    const mailsForBoard = selectMailsByBoardId(state, boardId);
 
     return {
       path,
@@ -58,9 +58,9 @@ const makeMapStateToProps = () => {
       sidebarCompact,
       instanceNotificationCount,
       usersNotificationCount,
-    mailId,
-    mailCountForBoardId,
-    mailsForBoard,
+      mailId,
+      mailCountForBoardId,
+      mailsForBoard,
     };
   };
 };

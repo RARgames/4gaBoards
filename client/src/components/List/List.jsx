@@ -282,7 +282,6 @@ const List = React.memo(
                       mailsForList={mailsForList}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
-                      onDelete={onDelete}
                       onActivitiesFetch={onActivitiesFetch}
                       onMailCreate={onMailCreate}
                       onMailUpdate={onMailUpdate}
