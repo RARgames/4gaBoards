@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
+import MailListStep from '../Mail/MailListStep';
+import MailStep from '../Mail/MailStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
@@ -12,6 +14,8 @@ import * as s from './ActionsPopup.module.scss';
 const StepTypes = {
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
+  MAIL: 'MAIL',
+  MAIL_LIST: 'MAIL_LIST',
 };
 
 const ActionsStep = React.memo(
@@ -22,14 +26,21 @@ const ActionsStep = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    isManager,
+    mailId,
+    mailsForList,
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
     onNameEdit,
     onCardAdd,
-    onDelete,
     onActivitiesFetch,
+    onMailCreate,
+    onMailUpdate,
+    onMailCopy,
+    onMailDelete,
+    onDelete,
     onClose,
   }) => {
     const [t] = useTranslation();
@@ -50,6 +61,14 @@ const ActionsStep = React.memo(
 
     const handleActivityClick = useCallback(() => {
       openStep(StepTypes.ACTIVITY);
+    }, [openStep]);
+
+    const handleMailOptionsClick = useCallback(() => {
+      openStep(StepTypes.MAIL);
+    }, [openStep]);
+
+    const handleMailListOptionsClick = useCallback(() => {
+      openStep(StepTypes.MAIL_LIST);
     }, [openStep]);
 
     if (step) {
@@ -84,6 +103,12 @@ const ActionsStep = React.memo(
               onClose={onClose}
             />
           );
+        case StepTypes.MAIL:
+          return (
+            <MailStep mailId={mailId} totalMails={mailsForList.length} contextType="list" onGenerate={onMailCreate} onReset={onMailUpdate} onCopy={onMailCopy} onDelete={onMailDelete} onBack={handleBack} />
+          );
+        case StepTypes.MAIL_LIST:
+          return <MailListStep title={t('common.mailIds', { context: 'title' })} mails={mailsForList} contextType="list" onDelete={onMailDelete} onBack={handleBack} />;
         default:
       }
     }
@@ -102,6 +127,14 @@ const ActionsStep = React.memo(
           <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
           {t('action.addCard', { context: 'title' })}
         </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={handleMailOptionsClick}>
+          {t('common.mailSettings', { context: 'title' })}
+        </Button>
+        {isManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={handleMailListOptionsClick}>
+            {t('common.mailIds')}
+          </Button>
+        )}
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -123,8 +156,15 @@ ActionsStep.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  isManager: PropTypes.bool.isRequired,
+  mailId: PropTypes.string,
+  mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
+  onMailCopy: PropTypes.func.isRequired,
+  onMailDelete: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -136,6 +176,7 @@ ActionsStep.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
+  mailId: null,
 };
 
 export default withPopup(ActionsStep);

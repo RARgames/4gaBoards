@@ -1,6 +1,6 @@
 import ActionTypes from '../constants/ActionTypes';
 
-const handleLocationChange = (board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, notifications) => ({
+const handleLocationChange = (board, users, projects, boardMemberships, labels, lists, mails, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, notifications) => ({
   type: ActionTypes.LOCATION_CHANGE_HANDLE,
   payload: {
     board,
@@ -9,6 +9,7 @@ const handleLocationChange = (board, users, projects, boardMemberships, labels, 
     boardMemberships,
     labels,
     lists,
+    mails,
     cards,
     cardMemberships,
     cardLabels,
