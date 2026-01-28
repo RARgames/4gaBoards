@@ -110,7 +110,14 @@ export default class extends BaseModel {
           notification.update(payload.data);
 
           // TODO hacky way to trigger re-render so the notification is counted as unread
-          Notification.upsert({ id: 'local:notification_reload', cardId: notification.cardId, userId: notification.userId });
+          Notification.upsert({
+            id: 'local:notification_reload',
+            cardId: notification.cardId,
+            listId: notification.listId,
+            boardId: notification.boardId,
+            projectId: notification.projectId,
+            userId: notification.userId,
+          });
           Notification.withId('local:notification_reload').delete();
         }
 
