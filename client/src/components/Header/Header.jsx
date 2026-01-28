@@ -20,6 +20,7 @@ const Header = React.memo(
     user,
     notifications,
     filteredNotifications,
+    notificationFilter,
     notificationCount,
     instanceNotificationCount,
     usersNotificationCount,
@@ -112,6 +113,7 @@ const Header = React.memo(
           <NotificationsPopup
             items={notifications}
             filteredItems={filteredNotifications}
+            filter={notificationFilter}
             onUpdate={onNotificationUpdate}
             onMarkAllAs={onNotificationMarkAllAs}
             onDelete={onNotificationDelete}
@@ -141,6 +143,7 @@ Header.propTypes = {
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   notifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredNotifications: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  notificationFilter: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   notificationCount: PropTypes.number.isRequired,
   instanceNotificationCount: PropTypes.number.isRequired,
   usersNotificationCount: PropTypes.number.isRequired,

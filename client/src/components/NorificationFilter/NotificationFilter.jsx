@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useRef, useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -13,6 +13,10 @@ const NotificationFilter = React.memo(({ defaultValue, items, filteredItems, cla
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
   const targets = useMemo(() => ['aggregated', 'project', 'board', 'user', 'card', 'text'], []);
   const [target, setTarget] = useState('aggregated');
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue, setValue]);
 
   const submit = useCallback(
     (val, overrideTarget) => {

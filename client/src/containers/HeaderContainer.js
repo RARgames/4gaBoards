@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
   const currentUser = selectors.selectCurrentUser(state);
   const currentProject = selectors.selectCurrentProject(state);
   const { notifications, filteredNotifications } = selectors.selectNotificationsForCurrentUser(state);
+  const notificationFilter = selectors.selectNotificationFilterForCurrentUser(state);
   const notificationCount = notifications.filter((n) => !n.isRead).length;
   const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
   const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
@@ -21,6 +22,7 @@ const mapStateToProps = (state) => {
     path,
     notifications,
     filteredNotifications,
+    notificationFilter,
     notificationCount,
     instanceNotificationCount,
     usersNotificationCount,

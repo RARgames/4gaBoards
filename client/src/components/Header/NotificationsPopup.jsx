@@ -13,7 +13,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from 
 import * as gs from '../../global.module.scss';
 import * as s from './NotificationsPopup.module.scss';
 
-const NotificationsStep = React.memo(({ items, filteredItems, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onChangeFilterQuery, onClose }) => {
+const NotificationsStep = React.memo(({ items, filteredItems, filter, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onChangeFilterQuery, onClose }) => {
   const [t] = useTranslation();
 
   const unreadCount = items.filter((item) => !item.isRead).length;
@@ -42,7 +42,7 @@ const NotificationsStep = React.memo(({ items, filteredItems, onUpdate, onMarkAl
             </NotificationActionsPopup>
           </div>
         </div>
-        {totalCount > 0 && <NotificationFilter defaultValue="" items={items} filteredItems={filteredItems} onChangeFilterQuery={onChangeFilterQuery} className={s.filter} />}
+        {totalCount > 0 && <NotificationFilter defaultValue={filter?.query || ''} items={items} filteredItems={filteredItems} onChangeFilterQuery={onChangeFilterQuery} className={s.filter} />}
       </Popup.Header>
       <Popup.Content>
         {totalCount > 0 ? (
@@ -60,6 +60,7 @@ const NotificationsStep = React.memo(({ items, filteredItems, onUpdate, onMarkAl
 NotificationsStep.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filteredItems: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  filter: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onMarkAllAs: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

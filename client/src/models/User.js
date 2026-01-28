@@ -65,7 +65,12 @@ export default class extends BaseModel {
       getDefault: () => DEFAULT_USERNAME_UPDATE_FORM,
     }),
     filter: attr(), // TODO move to userPrefs?
-    notificationFilter: attr(), // TODO move to userPrefs?
+    notificationFilter: attr({
+      getDefault: () => ({
+        query: '',
+        target: 'aggregated',
+      }),
+    }), // TODO move to userPrefs?
     isUserActivitiesFetching: attr({
       getDefault: () => false,
     }),
@@ -396,7 +401,7 @@ export default class extends BaseModel {
       case ActionTypes.USER_NOTIFICATION_FILTER_QUERY_UPDATE:
         if (payload.data.query === '') {
           User.withId(payload.id).update({
-            notificationFilter: undefined,
+            notificationFilter: { query: '' },
           });
         } else {
           User.withId(payload.id).update({

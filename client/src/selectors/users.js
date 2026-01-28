@@ -315,6 +315,24 @@ export const makeSelectUserNotificationsTotalByUserId = () =>
 
 export const selectUserNotificationsTotalByUserId = makeSelectUserNotificationsTotalByUserId();
 
+export const selectNotificationFilterForCurrentUser = createSelector(
+  orm,
+  (state) => selectCurrentUserId(state),
+  ({ User }, id) => {
+    if (!id) {
+      return id;
+    }
+
+    const userModel = User.withId(id);
+
+    if (!userModel) {
+      return userModel;
+    }
+
+    return userModel.notificationFilter;
+  },
+);
+
 export default {
   selectCurrentUserId,
   makeSelectUserById,
@@ -330,4 +348,5 @@ export default {
   selectIsFilteredForCurrentUser,
   makeSelectUserNotificationsTotalByUserId,
   selectUserNotificationsTotalByUserId,
+  selectNotificationFilterForCurrentUser,
 };

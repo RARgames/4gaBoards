@@ -7,10 +7,12 @@ import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
   const { notifications: items, filteredNotifications: filteredItems } = selectors.selectNotificationsForCurrentUser(state);
+  const filter = selectors.selectNotificationFilterForCurrentUser(state);
 
   return {
     items,
     filteredItems,
+    filter,
   };
 };
 
