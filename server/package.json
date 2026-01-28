@@ -16,7 +16,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^3.8.6",
+    "@azure/msal-node": "^5.0.2",
     "bcrypt": "^6.0.0",
     "cookie": "^1.1.1",
     "dotenv": "^17.2.3",
@@ -27,7 +27,7 @@
     "knex": "^3.1.0",
     "lodash": "^4.17.23",
     "moment": "^2.30.1",
-    "move-file": "^3.1.0",
+    "move-file": "^4.1.0",
     "passport": "^0.7.0",
     "@rargames/passport-github": "^1.1.2",
     "passport-google-oauth20": "^2.0.0",
@@ -39,7 +39,7 @@
     "sails-hook-sockets": "^3.0.2",
     "sails-postgresql": "^5.0.1",
     "sharp": "^0.34.5",
-    "tar": "^7.5.4",
+    "tar": "^7.5.7",
     "uuid": "^11.1.0",
     "validator": "^13.15.26",
     "winston": "^3.19.0",
