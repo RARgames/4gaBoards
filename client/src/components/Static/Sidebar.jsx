@@ -227,10 +227,10 @@ const Sidebar = React.memo(
                                   onExport={(data) => onBoardExport(board.id, data)}
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
-                                    onMailCreate={onMailCreate}
-                                    onMailUpdate={onMailUpdate}
-                                    onMailCopy={handleMailCopy}
-                                    onMailDelete={onMailDelete}
+                                  onMailCreate={onMailCreate}
+                                  onMailUpdate={onMailUpdate}
+                                  onMailCopy={handleMailCopy}
+                                  onMailDelete={onMailDelete}
                                   position="right-start"
                                   offset={10}
                                   hideCloseButton
