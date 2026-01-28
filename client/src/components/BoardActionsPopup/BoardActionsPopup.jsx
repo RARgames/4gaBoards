@@ -146,10 +146,10 @@ const BoardActionsStep = React.memo(
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={handleMailOptionsClick}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={() => openStep(StepTypes.MAIL)}>
           {t('common.mailSettings', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={handleMailListOptionsClick}>
+        <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={() => openStep(StepTypes.MAIL_LIST)}>
           {t('common.mailIds')}
         </Button>
         {isProjectManager && <Popup.Separator />}
