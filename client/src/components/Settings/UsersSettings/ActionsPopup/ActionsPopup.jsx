@@ -136,7 +136,7 @@ const ActionsStep = React.memo(
         case StepTypes.USER_ACTIVITY:
           return (
             <ActivityStep
-              title={t('common.activityBy', { name: user.name })}
+              title={`${t('common.activityBy', { name: user.name })} ${t('common.excludingNonMembershipProjects')}`}
               createdAt={createdAt}
               createdBy={createdBy}
               updatedAt={updatedAt}

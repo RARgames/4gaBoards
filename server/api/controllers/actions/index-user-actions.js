@@ -31,7 +31,16 @@ module.exports = {
     }
 
     const actions = await sails.helpers.users.getUserActions(inputs.userId, inputs.beforeId);
-    const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
+
+    const memberProjectIds = await sails.helpers.users.getMembershipProjectIds(currentUser.id);
+    const filteredActions = actions.filter((action) => {
+      if (!action.projectId) {
+        return true;
+      }
+      return memberProjectIds.includes(action.projectId);
+    });
+
+    const userIds = sails.helpers.utils.mapRecords(filteredActions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
 
     if (this.req.isSocket) {
@@ -39,7 +48,7 @@ module.exports = {
     }
 
     return {
-      items: actions,
+      items: filteredActions,
       included: {
         users,
       },
