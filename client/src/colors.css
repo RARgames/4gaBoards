@@ -314,7 +314,7 @@
   --backgroundColor0: #f8f8f8;
   --backgroundColor1: #f2f2f2;
   --backgroundColor2: #eaeaea;
-  --backgroundList: #f7f9fb;
+  --backgroundList: #cfd7e2;
   --backgroundListButton: #edf2f7;
   --backgroundCardSelected: #e0f3ff;
   --backgroundCardOpened: #d0e8ff;
@@ -387,7 +387,7 @@
   --textColorWarningHover: #ff8f00;
   --backgroundHeader: #f2f4f6;
   --backgroundTabActive: #ffffff;
-  --textShadow: #ffffff;
+  --textShadow: #000000;
   --attachmentDate: #777777;
   --attachmentExtension: #555555;
   --attachmentButton: #555555;
