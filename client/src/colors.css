@@ -65,6 +65,7 @@
   --backgroundSidebarItemActive: #0c5064;
   --backgroundNotificationHover: #1d2024;
   --radioBlue: #2196f3;
+  --radioBlack: #ebebec;
   --backgroundRadio: #5b647e;
   --textColorLink: #2196f3;
   --textColorLinkHover: #1e88e5;
@@ -221,6 +222,7 @@
   --backgroundSidebarItemActive: #1e3a5f;
   --backgroundNotificationHover: #1d2024;
   --radioBlue: #58a6ff;
+  --radioBlack: #ebebec;
   --backgroundRadio: #30363d;
   --textColorLink: #58a6ff;
   --textColorLinkHover: #79c0ff;
@@ -367,8 +369,8 @@
   --backgroundGreenHover: #519839;
   --backgroundRed: #cf513d;
   --backgroundRedHover: #b04632;
-  --backgroundSubmitDisabled: #e0e0e0;
-  --backgroundCancelDisabled: #f5f5f5;
+  --backgroundSubmitDisabled: #89be7c;
+  --backgroundCancelDisabled: #d9abab;
   --backgroundSidebar: #f7f9fb;
   --backgroundSidebarItem: #ffffff;
   --backgroundSidebarItemNone: #f0f0f0;
@@ -376,7 +378,8 @@
   --backgroundSidebarItem3: #e8ebf0;
   --backgroundSidebarItemActive: #cce4ff;
   --backgroundNotificationHover: #dad9d9;
-  --radioBlue: #2196f3;
+  --radioBlue: #9dcdf5;
+  --radioBlack: #555555;
   --backgroundRadio: #e0e6ef;
   --textColorLink: #2196f3;
   --textColorLinkHover: #1a73e8;

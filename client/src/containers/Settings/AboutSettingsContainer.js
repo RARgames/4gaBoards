@@ -7,9 +7,11 @@ import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
   const { demoMode } = selectors.selectCoreSettings(state);
+  const { theme } = selectors.selectCurrentUserPrefs(state);
 
   return {
     demoMode,
+    theme,
   };
 };
 
