@@ -119,6 +119,11 @@ const PreferencesSettings = React.memo(
           badge: t('common.beta'),
         },
         {
+          id: Themes.LIGHT,
+          name: t('common.themeLight'),
+          badge: t('common.beta'),
+        },
+        {
           id: Themes.CUSTOM,
           name: t('common.themeCustom'),
           badge: t('common.beta'),

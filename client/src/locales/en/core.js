@@ -423,6 +423,7 @@ export default {
       themeDefault: 'Default',
       themeEditor: 'Theme Editor',
       themeGithubDark: 'GitHub Dark',
+      themeLight: 'Light',
       themeShape: 'Theme Shape',
       themeShapeDefault: 'Default',
       themeShapeRounded: 'Rounded',

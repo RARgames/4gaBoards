@@ -11,7 +11,7 @@ const LIST_STYLES = ['default', 'compact'];
 const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 const PREFERRED_FONTS = ['default', 'monospace'];
 const THEME_SHAPES = ['default', 'rounded'];
-const THEMES = ['default', 'github-dark', 'custom'];
+const THEMES = ['default', 'github-dark', 'light', 'custom'];
 
 module.exports = {
   DESCRIPTION_MODES,

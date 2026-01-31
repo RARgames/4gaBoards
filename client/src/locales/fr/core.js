@@ -441,6 +441,7 @@ export default {
       themeDefault: 'Par défaut',
       themeEditor: 'Éditeur de thème',
       themeGithubDark: 'GitHub Sombre',
+      themeLight: 'Clair',
       themeShape: 'Forme du thème',
       themeShapeDefault: 'Par défaut',
       themeShapeRounded: 'Arrondi',

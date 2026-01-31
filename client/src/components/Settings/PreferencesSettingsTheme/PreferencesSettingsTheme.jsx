@@ -28,6 +28,11 @@ const PreferencesSettingsTheme = React.memo(({ themeCustomColors, onUpdate }) =>
         name: t('common.themeGithubDark'),
         badge: t('common.beta'),
       },
+      {
+        id: Themes.LIGHT,
+        name: t('common.themeLight'),
+        badge: t('common.beta'),
+      },
     ],
     [t],
   );

@@ -439,6 +439,7 @@ export default {
       themeDefault: 'Domyślny',
       themeEditor: 'Edytor motywów',
       themeGithubDark: 'GitHub Ciemny',
+      themeLight: 'Jasny',
       themeShape: 'Kształt motywu',
       themeShapeDefault: 'Domyślny',
       themeShapeRounded: 'Zaokrąglony',

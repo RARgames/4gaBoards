@@ -1,3 +1,4 @@
+/* Default Theme */
 :root {
   --backgroundColor: #22252a; /* Override loading.css */
   --backgroundColor0: #1e1e1e;
@@ -32,6 +33,7 @@
   --loginBackground: #2185d0;
   --loginBackgroundDark: #2075b6;
   --textColorWhite: #ffffff;
+  --textColor00: #ffffff;
   --textColor0: #ebebec;
   --textColor1: #d3d3d3;
   --textColor2: #c2c2c2;
@@ -115,13 +117,13 @@
   --taskActivity: #4a95d3;
   --attachmentActivity: #5c6bc0;
   --commentActivity: #bb66d3;
-  /* Colors (right now only ProgressBar) */
+  /* Progress Bar */
   --red: #db2828;
   --orange: #f2711c;
   --yellow: #fbbd08;
   --olive: #b5cc18;
   --green: #21ba45;
-  /* Colors (right now only UserAvatar) */
+  /* User Avatar */
   --emerald: #2ecc71;
   --peterRiver: #3498db;
   --wisteria: #8e44ad;
@@ -129,11 +131,11 @@
   --alizarin: #e74c3c;
   --turquoise: #1abc9c;
   --midnightBlue: #2c3e50;
-  /* Colors (right now for DueDate) */
+  /* Due Date */
   --dueDateNormal: #999999;
   --dueDateClose: #fdd41e;
   --dueDateOver: #ff3030;
-  /* Colors Markdown Editor */
+  /* Markdown Editor */
   --mdBlack: #000000;
   --mdGrey: #d3d3d3;
   --mdWhite: #ffffff;
@@ -147,13 +149,13 @@
   --mdBlue: #006eff;
   --mdCyan: #00ffff;
   --mdOrange: #ffa500;
-  /* ColorPicker */
+  /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
 }
 
-/* Github Dark Color Schema */
+/* Github Dark Theme */
 [data-theme='github-dark'] {
-  --backgroundColor: #0d1117; /* Override loading.css */
+  --backgroundColor: #0d1117 !important; /* Override loading.css */
   --backgroundColor0: #010409;
   --backgroundColor1: #0d1117;
   --backgroundColor2: #161b22;
@@ -174,6 +176,7 @@
   --backgroundColorTmpDarkerField2: #161b22;
   --backgroundColorTmpSeparatorLight: #21262d;
   --backgroundColorTmpHighlighted: #1f2937;
+  --backgroundHeaderHover: #2a2c31;
   --nodeOutline: rgba(88, 166, 255, 0.4);
   --borderOutline: #58a6ff;
   --borderOutline2: #1f6feb;
@@ -185,6 +188,7 @@
   --loginBackground: #1f6feb;
   --loginBackgroundDark: #0969da;
   --textColorWhite: #ffffff;
+  --textColor00: #ffffff;
   --textColor0: #f0f6fc;
   --textColor1: #e6edf3;
   --textColor2: #c9d1d9;
@@ -213,6 +217,7 @@
   --backgroundSidebarItem2: #1c2128;
   --backgroundSidebarItem3: #21262d;
   --backgroundSidebarItemActive: #1e3a5f;
+  --backgroundNotificationHover: #1d2024;
   --radioBlue: #58a6ff;
   --backgroundRadio: #30363d;
   --textColorLink: #58a6ff;
@@ -257,13 +262,23 @@
   --shadowBlack03: rgba(1, 4, 9, 0.4);
   --tableResize: #30363d;
   --tableResizeHover: #484f58;
-  /* Colors (right now only ProgressBar) */
+  /* Activities */
+  --instanceActivity: #c0392b;
+  --userActivity: #e57373;
+  --projectActivity: #f1c40f;
+  --boardActivity: #d4a017;
+  --listActivity: #7cb342;
+  --cardActivity: #26a69a;
+  --taskActivity: #4a95d3;
+  --attachmentActivity: #5c6bc0;
+  --commentActivity: #bb66d3;
+  /* Progress Bar */
   --red: #f85149;
   --orange: #fb8500;
   --yellow: #e3b341;
   --olive: #a2d729;
   --green: #3fb950;
-  /* Colors (right now only UserAvatar) */
+  /* User Avatar */
   --emerald: #3fb950;
   --peterRiver: #58a6ff;
   --wisteria: #bc8cff;
@@ -271,11 +286,11 @@
   --alizarin: #f85149;
   --turquoise: #56d4dd;
   --midnightBlue: #1f6feb;
-  /* Colors (right now for DueDate) */
+  /* Due Date */
   --dueDateNormal: #8b949e;
   --dueDateClose: #d29922;
   --dueDateOver: #f85149;
-  /* Colors Markdown Editor */
+  /* Markdown Editor */
   --mdBlack: #0d1117;
   --mdGrey: #8b949e;
   --mdWhite: #f0f6fc;
@@ -289,6 +304,161 @@
   --mdBlue: #58a6ff;
   --mdCyan: #56d4dd;
   --mdOrange: #fb8500;
-  /* ColorPicker */
+  /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
+}
+
+/* Light Theme */
+[data-theme='light'] {
+  --backgroundColor: #ffffff !important; /* Override loading.css */
+  --backgroundColor0: #f8f8f8;
+  --backgroundColor1: #f2f2f2;
+  --backgroundColor2: #eaeaea;
+  --backgroundList: #f7f9fb;
+  --backgroundListButton: #edf2f7;
+  --backgroundCardSelected: #e0f3ff;
+  --backgroundCardOpened: #d0e8ff;
+  --backgroundColorTmp0: #f5f5f5;
+  --backgroundColorTmp1: #f0f0f0;
+  --backgroundColorTmp2: #f2f6fa;
+  --backgroundColorTmp3: #e8edf2;
+  --backgroundColorTmpHeader: #f0f4f8;
+  --backgroundColorTmpBackground: #ffffff;
+  --backgroundColorTmpBackgroundTasks: #f9fafd;
+  --backgroundColorTmpBackgroundHover: #e6f0ff;
+  --backgroundColorTmpDarkerField: #e0e6ef;
+  --backgroundColorTmpDarkerField1: #d9dfe9;
+  --backgroundColorTmpDarkerField2: #cfd7e2;
+  --backgroundColorTmpSeparatorLight: #d1d9e0;
+  --backgroundColorTmpHighlighted: #cce4ff;
+  --backgroundHeaderHover: #f2f4f6;
+  --nodeOutline: rgba(54, 75, 97, 0.3);
+  --borderOutline: #2196f3;
+  --borderOutline2: #0d6efd;
+  --linkedCard: #2196f3;
+  --linkedCardHover: #1a73e8;
+  --linkedCardDeleted: #ff4d4d;
+  --linkedCardDeletedHover: #e64545;
+  --selectionBackground: #2196f3;
+  --loginBackground: #2196f3;
+  --loginBackgroundDark: #1a73e8;
+  --textColorWhite: #ffffff;
+  --textColor00: #000000;
+  --textColor0: #222222;
+  --textColor1: #444444;
+  --textColor2: #555555;
+  --textColor3: #777777;
+  --textColor4: #999999;
+  --textColor5: #bbbbbb;
+  --textColorCalendar: #666666;
+  --backgroundProject: #f0f0f0;
+  --textColorGreen: #0b8f44;
+  --textColorYellow: #d4a200;
+  --textColorGold: #bfa000;
+  --textColorGoldHover: #a58f00;
+  --textColorRed: #d32f2f;
+  --notificationRed: #e53935;
+  --timerGreen: #43a047;
+  --timerGreenHover: #388e3c;
+  --backgroundGreen: #c8e6c9;
+  --backgroundGreenHover: #a5d6a7;
+  --backgroundRed: #ffcdd2;
+  --backgroundRedHover: #ef9a9a;
+  --backgroundSubmitDisabled: #e0e0e0;
+  --backgroundCancelDisabled: #f5f5f5;
+  --backgroundSidebar: #f7f9fb;
+  --backgroundSidebarItem: #ffffff;
+  --backgroundSidebarItemNone: #f0f0f0;
+  --backgroundSidebarItem2: #edf2f7;
+  --backgroundSidebarItem3: #e8ebf0;
+  --backgroundSidebarItemActive: #cce4ff;
+  --backgroundNotificationHover: #dad9d9;
+  --radioBlue: #2196f3;
+  --backgroundRadio: #e0e6ef;
+  --textColorLink: #2196f3;
+  --textColorLinkHover: #1a73e8;
+  --backgroundPopup: #f7f9fb;
+  --backgroundPopupHover: #edf2f7;
+  --backgroundPopupShadow: rgba(0, 0, 0, 0.1);
+  --backgroundPopupSeparator: #d1d9e0;
+  --textColorError: #d32f2f;
+  --textColorErrorHover: #b71c1c;
+  --textColorWarning: #ffa000;
+  --textColorWarningHover: #ff8f00;
+  --backgroundHeader: #f2f4f6;
+  --backgroundTabActive: #ffffff;
+  --textShadow: #ffffff;
+  --attachmentDate: #777777;
+  --attachmentExtension: #555555;
+  --attachmentButton: #555555;
+  --attachmentButtonHover: #222222;
+  --attachmentThumbnail: #f2f4f6;
+  --modalOverlay: rgba(0, 0, 0, 0.2);
+  --userOverlay: rgba(0, 0, 0, 0.1);
+  --userOverlayIcon: rgba(0, 0, 0, 0.7);
+  --overlay: rgba(0, 0, 0, 0.3);
+  --grayOverlay: rgba(128, 128, 128, 0.25);
+  --backgroundDisabled: #f0f0f0;
+  --scrollbarThumb: #c1c1c1;
+  --scrollbarThumbHover: #a8a8a8;
+  --scrollbarThumbActive: #888888;
+  --scrollbarTrack: #f2f2f2;
+  --textColorCounter: #999999;
+  --mdEditorIcon: #555555;
+  --mdEditorIconHover: #2196f3;
+  --mdEditorIconDisabled: #cccccc;
+  --textColorCounterHover: #777777;
+  --cardShadow: rgba(0, 0, 0, 0.1);
+  --errorRed: #d32f2f;
+  --errorRedHover: #b71c1c;
+  --shadowBlack01: rgba(0, 0, 0, 0.05);
+  --shadowBlack015: rgba(0, 0, 0, 0.075);
+  --shadowBlack02: rgba(0, 0, 0, 0.1);
+  --shadowBlack03: rgba(0, 0, 0, 0.15);
+  --tableResize: #d1d9e0;
+  --tableResizeHover: #a8a8a8;
+  /* Activities */
+  --instanceActivity: #c0392b;
+  --userActivity: #e57373;
+  --projectActivity: #f1c40f;
+  --boardActivity: #d4a017;
+  --listActivity: #7cb342;
+  --cardActivity: #26a69a;
+  --taskActivity: #4a95d3;
+  --attachmentActivity: #5c6bc0;
+  --commentActivity: #bb66d3;
+  /* Progress Bar */
+  --red: #e53935;
+  --orange: #fb8c00;
+  --yellow: #ffa000;
+  --olive: #9ccc65;
+  --green: #43a047;
+  /* User Avatar */
+  --emerald: #43a047;
+  --peterRiver: #2196f3;
+  --wisteria: #9b59b6;
+  --carrot: #fb8c00;
+  --alizarin: #e53935;
+  --turquoise: #1abc9c;
+  --midnightBlue: #2196f3;
+  /* Due Date */
+  --dueDateNormal: #777777;
+  --dueDateClose: #ffa000;
+  --dueDateOver: #e53935;
+  /* Markdown Editor */
+  --mdBlack: #000000;
+  --mdGrey: #555555;
+  --mdWhite: #ffffff;
+  --mdBrown: #a65a2c;
+  --mdRed: #d32f2f;
+  --mdPurple: #9b59b6;
+  --mdPink: #ff69b4;
+  --mdGreen: #43a047;
+  --mdLime: #8bc34a;
+  --mdYellow: #ffd600;
+  --mdBlue: #2196f3;
+  --mdCyan: #00bcd4;
+  --mdOrange: #fb8c00;
+  /* Color Picker */
+  --colorPickerInputBoxShadow: #b0b0b0;
 }
