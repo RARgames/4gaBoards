@@ -111,6 +111,7 @@
 
     .w-md-editor-preview {
       background-color: var(--backgroundColorTmpDarkerField2);
+      box-shadow: inset 1px 0 0 0 var(--mdEditorPreviewBoxShadow);
       padding: 10px;
 
       .wmde-markdown {

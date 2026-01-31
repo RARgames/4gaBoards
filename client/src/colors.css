@@ -151,6 +151,7 @@
   --mdBlue: #006eff;
   --mdCyan: #00ffff;
   --mdOrange: #ffa500;
+  --mdEditorPreviewBoxShadow: #30363d;
   /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
 }
@@ -308,6 +309,7 @@
   --mdBlue: #58a6ff;
   --mdCyan: #56d4dd;
   --mdOrange: #fb8500;
+  --mdEditorPreviewBoxShadow: #30363d;
   /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
 }
@@ -465,6 +467,7 @@
   --mdBlue: #2196f3;
   --mdCyan: #00bcd4;
   --mdOrange: #fb8c00;
+  --mdEditorPreviewBoxShadow: #b0b0b0;
   /* Color Picker */
   --colorPickerInputBoxShadow: #b0b0b0;
 }
