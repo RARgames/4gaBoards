@@ -28,6 +28,7 @@
     "@react-hook/resize-observer": "^2.0.2",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-table": "^8.21.3",
+    "@uiw/react-color-sketch": "^2.9.3",
     "@uiw/react-md-editor": "^4.0.11",
     "address": "^2.0.3",
     "babel-jest": "^30.2.0",

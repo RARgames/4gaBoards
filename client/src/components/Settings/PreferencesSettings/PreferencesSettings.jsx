@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { ThemeShapes, Themes } from '../../../constants/Enums';
 import locales from '../../../locales';
 import { Table } from '../../Utils';
+import CustomThemeButton from './CustomThemeButton';
 import ThemeShapeSelector from './ThemeShapeSelector';
 
 import * as gs from '../../../global.module.scss';
@@ -115,6 +116,11 @@ const PreferencesSettings = React.memo(
         {
           id: Themes.GITHUB_DARK,
           name: t('common.themeGithubDark'),
+          badge: t('common.beta'),
+        },
+        {
+          id: Themes.CUSTOM,
+          name: t('common.themeCustom'),
           badge: t('common.beta'),
         },
       ],
@@ -263,6 +269,18 @@ const PreferencesSettings = React.memo(
             description: t('common.descriptionTheme'),
             group: Groups.GENERAL,
           },
+          theme === Themes.CUSTOM && {
+            id: 'customTheme',
+            preferences: t('common.customTheme'),
+            modifySettings: selectedTheme,
+            modifySettingsProps: {
+              isCustomComponent: true,
+              CustomComponent: CustomThemeButton,
+            },
+            currentValue: t('common.customized'),
+            description: t('common.descriptionCustomTheme'),
+            group: Groups.GENERAL,
+          },
           {
             id: 'themeShape',
             preferences: t('common.themeShape'),
@@ -408,6 +426,7 @@ const PreferencesSettings = React.memo(
         selectedTheme,
         handleThemeChange,
         themes,
+        theme,
         selectedThemeShape,
         handleThemeShapeChange,
         themeShapes,

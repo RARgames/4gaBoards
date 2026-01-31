@@ -8,6 +8,7 @@ import AccountSettingsContainer from '../../containers/Settings/AccountSettingsC
 import AuthenticationSettingsContainer from '../../containers/Settings/AuthenticationSettingsContainer';
 import InstanceSettingsContainer from '../../containers/Settings/InstanceSettingsContainer';
 import PreferencesSettingsContainer from '../../containers/Settings/PreferencesSettingsContainer';
+import PreferencesSettingsThemeContainer from '../../containers/Settings/PreferencesSettingsThemeContainer';
 import ProfileSettingsContainer from '../../containers/Settings/ProfileSettingsContainer';
 import ProjectSettingsContainer from '../../containers/Settings/ProjectSettingsContainer';
 import UsersSettingsContainer from '../../containers/Settings/UsersSettingsContainer';
@@ -26,6 +27,8 @@ const Settings = React.memo(({ path, isAdmin, isManager }) => {
         return `${t('common.settingsProfile')} | ${mainTitle}`;
       case Paths.SETTINGS_PREFERENCES:
         return `${t('common.settingsPreferences')} | ${mainTitle}`;
+      case Paths.SETTINGS_PREFERENCES_THEME:
+        return `${t('common.settingsPreferencesTheme')} | ${mainTitle}`;
       case Paths.SETTINGS_ACCOUNT:
         return `${t('common.settingsAccount')} | ${mainTitle}`;
       case Paths.SETTINGS_AUTHENTICATION:
@@ -52,6 +55,8 @@ const Settings = React.memo(({ path, isAdmin, isManager }) => {
       return <ProfileSettingsContainer />;
     case Paths.SETTINGS_PREFERENCES:
       return <PreferencesSettingsContainer />;
+    case Paths.SETTINGS_PREFERENCES_THEME:
+      return <PreferencesSettingsThemeContainer />;
     case Paths.SETTINGS_ACCOUNT:
       return <AccountSettingsContainer />;
     case Paths.SETTINGS_AUTHENTICATION:

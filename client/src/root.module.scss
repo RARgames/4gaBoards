@@ -313,5 +313,17 @@
     .pswp .pswp__img--placeholder {
       display: none !important;
     }
+
+    //ColorPicker
+    .w-color-sketch {
+      --sketch-background: var(--backgroundPopup) !important;
+      --sketch-box-shadow: none !important;
+    }
+
+    .w-color-editable-input {
+      --editable-input-label-color: var(--textColor3) !important;
+      --editable-input-box-shadow: var(--colorPickerInputBoxShadow) 0px 0px 0px 1px inset !important;
+      --editable-input-color: var(--textColor2) !important;
+    }
   }
 }

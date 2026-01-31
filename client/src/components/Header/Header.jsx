@@ -47,6 +47,8 @@ const Header = React.memo(
           return t('common.settingsProfile');
         case Paths.SETTINGS_PREFERENCES:
           return t('common.settingsPreferences');
+        case Paths.SETTINGS_PREFERENCES_THEME:
+          return t('common.settingsPreferencesTheme');
         case Paths.SETTINGS_ACCOUNT:
           return t('common.settingsAccount');
         case Paths.SETTINGS_AUTHENTICATION:

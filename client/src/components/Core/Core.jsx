@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import { Themes } from '../../constants/Enums';
 import HeaderContainer from '../../containers/HeaderContainer';
 import StaticContainer from '../../containers/StaticContainer';
 import { beautifyLink } from '../../utils/url';
@@ -11,7 +12,7 @@ import { Loader, LoaderSize, Button, ButtonStyle, Icon, IconType, IconSize } fro
 
 import * as s from './Core.module.scss';
 
-const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard, theme, themeShape }) => {
+const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject, currentBoard, currentCard, theme, themeShape, themeCustomColors }) => {
   const [t] = useTranslation();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showDisconnected, setShowDisconnected] = useState(false);
@@ -35,10 +36,15 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
 
   useEffect(() => {
     const body = document.getElementById('app');
-    if (body) {
-      body.setAttribute('data-theme', theme);
+    body?.setAttribute('data-theme', theme);
+    body?.removeAttribute('style');
+
+    if (theme === Themes.CUSTOM) {
+      Object.entries(themeCustomColors).forEach(([varName, value]) => {
+        body?.style.setProperty(varName, value);
+      });
     }
-  }, [theme]);
+  }, [theme, themeCustomColors]);
 
   useEffect(() => {
     const body = document.getElementById('app');
@@ -99,6 +105,7 @@ Core.propTypes = {
   currentCard: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   theme: PropTypes.string,
   themeShape: PropTypes.string,
+  themeCustomColors: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 Core.defaultProps = {
@@ -107,6 +114,7 @@ Core.defaultProps = {
   currentCard: undefined,
   theme: 'default',
   themeShape: 'default',
+  themeCustomColors: {},
 };
 
 export default Core;

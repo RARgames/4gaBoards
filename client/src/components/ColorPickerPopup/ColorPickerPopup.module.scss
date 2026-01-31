@@ -1,0 +1,22 @@
+:global(#app) {
+  .popupContent {
+    padding: 0;
+    background: var(--backgroundPopup);
+    min-width: 100px;
+    border-radius: 3px;
+  }
+
+  &:global([data-theme-shape='rounded']) .popupContent {
+    border-radius: 12px;
+  }
+
+  .controls {
+    padding: 0 10px 10px 10px;
+  }
+
+  .button {
+    height: 20px;
+    line-height: 10px;
+    font-size: 12px;
+  }
+}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import ActionsHeader from './ActionsHeader';
 import BoolCell from './BoolCell';
+import ColorCell from './ColorCell';
 import DateCell from './DateCell';
 import DefaultCell from './DefaultCell';
 import ImageCell from './ImageCell';
@@ -47,6 +48,11 @@ function BoolCellRenderer({ table, column, getValue }) {
 }
 BoolCellRenderer.propTypes = listPropTypes;
 
+function ColorCellRenderer({ column, cell, row }) {
+  return <ColorCell value={cell.getValue()} name={row.original.name} {...column.columnDef.cellProps} />;
+}
+ColorCellRenderer.propTypes = listPropTypes;
+
 function SettingsCellRenderer({ table, column, row, cell }) {
   const props = row.original?.[`${column.id}Props`];
   return <SettingsCell value={cell.getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} {...props} />;
@@ -83,4 +89,16 @@ function ActionsHeaderRenderer({ table, column }) {
 }
 ActionsHeaderRenderer.propTypes = listHeaderPropTypes;
 
-export { DefaultCellRenderer, NumberCellRenderer, BoolCellRenderer, SettingsCellRenderer, ImageCellRenderer, MarkdownCellRenderer, DateCellRenderer, UserCellRenderer, RadioCellRenderer, ActionsHeaderRenderer };
+export {
+  DefaultCellRenderer,
+  NumberCellRenderer,
+  BoolCellRenderer,
+  ColorCellRenderer,
+  SettingsCellRenderer,
+  ImageCellRenderer,
+  MarkdownCellRenderer,
+  DateCellRenderer,
+  UserCellRenderer,
+  RadioCellRenderer,
+  ActionsHeaderRenderer,
+};

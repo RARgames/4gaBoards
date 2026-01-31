@@ -73,7 +73,6 @@
   --textColorErrorHover: #be4e4e;
   --textColorWarning: #ffa600;
   --textColorWarningHover: #c57600;
-  /* --headerButtonHover: #121316; */
   --backgroundHeader: #1a1c20;
   --backgroundTabActive: #16181b;
   --textShadow: #000000;
@@ -148,6 +147,8 @@
   --mdBlue: #006eff;
   --mdCyan: #00ffff;
   --mdOrange: #ffa500;
+  /* ColorPicker */
+  --colorPickerInputBoxShadow: #616161;
 }
 
 /* Github Dark Color Schema */
@@ -224,7 +225,6 @@
   --textColorErrorHover: #ff7b72;
   --textColorWarning: #d29922;
   --textColorWarningHover: #e3b341;
-  /* --headerButtonHover: #1c2128; */
   --backgroundHeader: #010409;
   --backgroundTabActive: #0d1117;
   --textShadow: #000000;
@@ -289,4 +289,6 @@
   --mdBlue: #58a6ff;
   --mdCyan: #56d4dd;
   --mdOrange: #fb8500;
+  /* ColorPicker */
+  --colorPickerInputBoxShadow: #616161;
 }

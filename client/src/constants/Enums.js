@@ -122,6 +122,7 @@ export const PreferredFonts = {
 export const Themes = {
   DEFAULT: 'default',
   GITHUB_DARK: 'github-dark',
+  CUSTOM: 'custom',
 };
 
 export const ThemeShapes = {

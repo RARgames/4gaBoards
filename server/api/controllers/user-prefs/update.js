@@ -124,6 +124,9 @@ module.exports = {
       isIn: UserPrefs.THEME_SHAPES,
       isNotEmptyString: true,
     },
+    themeCustomColors: {
+      type: 'json',
+    },
   },
 
   exits: {
@@ -179,6 +182,7 @@ module.exports = {
         'hideClosestDueDate',
         'theme',
         'themeShape',
+        'themeCustomColors',
       ]),
     };
 

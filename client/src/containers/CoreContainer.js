@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
     isInitializing: isCoreInitializing,
     theme: userPrefs?.theme,
     themeShape: userPrefs?.themeShape,
+    themeCustomColors: userPrefs?.themeCustomColors,
   };
 };
 

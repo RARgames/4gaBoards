@@ -13,6 +13,7 @@ const CARDS = `${Config.BASE_PATH}/cards/:id`;
 const SETTINGS = `${Config.BASE_PATH}/settings`;
 const SETTINGS_PROFILE = `${Config.BASE_PATH}/settings/profile`;
 const SETTINGS_PREFERENCES = `${Config.BASE_PATH}/settings/preferences`;
+const SETTINGS_PREFERENCES_THEME = `${Config.BASE_PATH}/settings/preferences/theme`;
 const SETTINGS_ACCOUNT = `${Config.BASE_PATH}/settings/account`;
 const SETTINGS_AUTHENTICATION = `${Config.BASE_PATH}/settings/authentication`;
 const SETTINGS_ABOUT = `${Config.BASE_PATH}/settings/about`;
@@ -35,6 +36,7 @@ export default {
   SETTINGS,
   SETTINGS_PROFILE,
   SETTINGS_PREFERENCES,
+  SETTINGS_PREFERENCES_THEME,
   SETTINGS_ACCOUNT,
   SETTINGS_AUTHENTICATION,
   SETTINGS_ABOUT,

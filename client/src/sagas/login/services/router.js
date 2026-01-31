@@ -29,6 +29,7 @@ export function* handleLocationChange() {
     case Paths.SETTINGS:
     case Paths.SETTINGS_PROFILE:
     case Paths.SETTINGS_PREFERENCES:
+    case Paths.SETTINGS_PREFERENCES_THEME:
     case Paths.SETTINGS_ACCOUNT:
     case Paths.SETTINGS_AUTHENTICATION:
     case Paths.SETTINGS_ABOUT:

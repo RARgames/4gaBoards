@@ -1,0 +1,15 @@
+:global(#app) {
+  .wrapper {
+    padding: 2px 4px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cell {
+    border-radius: 3px;
+    width: 60px;
+    height: 20px;
+    cursor: pointer;
+  }
+}

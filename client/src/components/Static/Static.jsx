@@ -20,6 +20,7 @@ function Static({ path, projectId, cardId, board }) {
       Paths.SETTINGS,
       Paths.SETTINGS_PROFILE,
       Paths.SETTINGS_PREFERENCES,
+      Paths.SETTINGS_PREFERENCES_THEME,
       Paths.SETTINGS_ACCOUNT,
       Paths.SETTINGS_AUTHENTICATION,
       Paths.SETTINGS_ABOUT,
