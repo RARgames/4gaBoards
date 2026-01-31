@@ -48,6 +48,7 @@
   --textColorGoldHover: #e2aa00;
   --textColorRed: #ff0000;
   --notificationRed: #eb5a46;
+  --themeShapeBorder: #5f6064;
   --timerGreen: #21ba45;
   --timerGreenHover: #16ab39;
   --backgroundGreen: #5aac44;
@@ -203,6 +204,7 @@
   --textColorGoldHover: #d29922;
   --textColorRed: #f85149;
   --notificationRed: #da3633;
+  --themeShapeBorder: #5f6064;
   --timerGreen: #3fb950;
   --timerGreenHover: #2ea043;
   --backgroundGreen: #238636;
@@ -358,6 +360,7 @@
   --textColorGoldHover: #a58f00;
   --textColorRed: #d32f2f;
   --notificationRed: #e53935;
+  --themeShapeBorder: #999999;
   --timerGreen: #43a047;
   --timerGreenHover: #388e3c;
   --backgroundGreen: #5aac44;
