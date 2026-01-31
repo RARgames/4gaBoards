@@ -331,7 +331,7 @@
   --backgroundColorTmpDarkerField2: #cfd7e2;
   --backgroundColorTmpSeparatorLight: #d1d9e0;
   --backgroundColorTmpHighlighted: #cce4ff;
-  --backgroundHeaderHover: #f2f4f6;
+  --backgroundHeaderHover: #dbdbdb;
   --nodeOutline: rgba(54, 75, 97, 0.3);
   --borderOutline: #2196f3;
   --borderOutline2: #0d6efd;
@@ -360,10 +360,10 @@
   --notificationRed: #e53935;
   --timerGreen: #43a047;
   --timerGreenHover: #388e3c;
-  --backgroundGreen: #c8e6c9;
-  --backgroundGreenHover: #a5d6a7;
-  --backgroundRed: #ffcdd2;
-  --backgroundRedHover: #ef9a9a;
+  --backgroundGreen: #5aac44;
+  --backgroundGreenHover: #519839;
+  --backgroundRed: #cf513d;
+  --backgroundRedHover: #b04632;
   --backgroundSubmitDisabled: #e0e0e0;
   --backgroundCancelDisabled: #f5f5f5;
   --backgroundSidebar: #f7f9fb;
