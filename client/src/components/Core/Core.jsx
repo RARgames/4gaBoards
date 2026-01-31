@@ -39,6 +39,12 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
     body?.setAttribute('data-theme', theme);
     body?.removeAttribute('style');
 
+    if (theme === Themes.LIGHT) {
+      document.documentElement.setAttribute('data-color-mode', 'light');
+    } else {
+      document.documentElement.setAttribute('data-color-mode', 'dark');
+    }
+
     if (theme === Themes.CUSTOM) {
       Object.entries(themeCustomColors).forEach(([varName, value]) => {
         body?.style.setProperty(varName, value);
