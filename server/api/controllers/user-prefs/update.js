@@ -1,3 +1,5 @@
+const validator = require('validator');
+
 const Errors = {
   USER_PREFS_NOT_FOUND: {
     userPrefsNotFound: 'User prefs not found',
@@ -11,6 +13,12 @@ const Errors = {
 };
 
 const columnVisibilityValidator = (value) => _.isObject(value) && _.every(value, (v) => typeof v === 'boolean');
+
+const hexColorsValidator = (value) => {
+  if (!_.isObject(value)) return false;
+
+  return _.every(value, (v) => typeof v === 'string' && validator.isHexColor(v));
+};
 
 module.exports = {
   inputs: {
@@ -126,6 +134,7 @@ module.exports = {
     },
     themeCustomColors: {
       type: 'json',
+      custom: hexColorsValidator,
     },
   },
 
