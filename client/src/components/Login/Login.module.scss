@@ -20,14 +20,14 @@
     display: flex;
     flex-direction: column;
     height: inherit;
-    background: var(--backgroundColor0);
+    background: var(--backgroundAuth);
   }
 
   .loginWrapper {
     margin: auto;
     max-width: 440px;
     padding: 20px;
-    background: var(--backgroundColor0);
+    background: var(--backgroundAuth);
   }
 
   .inputLabel {

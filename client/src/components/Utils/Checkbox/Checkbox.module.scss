@@ -1,7 +1,7 @@
 :global(#app) {
   .checkbox {
     appearance: none;
-    background: var(--backgroundColo0);
+    background: transparent;
     border-radius: 3px;
     border: 1px solid var(--textColor3);
     display: flex;
@@ -21,7 +21,7 @@
     }
 
     &:hover {
-      background: var(--backgroundColor2);
+      background: var(--backgroundMiscButtons);
       cursor: pointer;
     }
 

@@ -1,9 +1,8 @@
 /* Default Theme */
 :root {
   --backgroundColor: #22252a; /* Override loading.css */
-  --backgroundColor0: #1e1e1e;
-  --backgroundColor1: #252526;
-  --backgroundColor2: #333333;
+  --backgroundAuth: #1e1e1e;
+  --backgroundMiscButtons: #2d2d30;
   --backgroundList: #1f2d3c;
   --backgroundListButton: #1b2835;
   --backgroundCardSelected: #1c3546;
@@ -159,9 +158,8 @@
 /* Github Dark Theme */
 [data-theme='github-dark'] {
   --backgroundColor: #0d1117 !important; /* Override loading.css */
-  --backgroundColor0: #010409;
-  --backgroundColor1: #0d1117;
-  --backgroundColor2: #161b22;
+  --backgroundAuth: #010409;
+  --backgroundMiscButtons: #161b22;
   --backgroundList: #161b22;
   --backgroundListButton: #1c2128;
   --backgroundCardSelected: #1f2937;
@@ -317,9 +315,8 @@
 /* Light Theme */
 [data-theme='light'] {
   --backgroundColor: #ffffff !important; /* Override loading.css */
-  --backgroundColor0: #f8f8f8;
-  --backgroundColor1: #f2f2f2;
-  --backgroundColor2: #eaeaea;
+  --backgroundAuth: #f8f8f8;
+  --backgroundMiscButtons: #eaeaea;
   --backgroundList: #cfd7e2;
   --backgroundListButton: #edf2f7;
   --backgroundCardSelected: #e0f3ff;
