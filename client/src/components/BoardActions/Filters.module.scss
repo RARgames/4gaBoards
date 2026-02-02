@@ -1,6 +1,6 @@
 :global(#app) {
   .filter {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundFilter);
     border: solid var(--backgroundPopupSeparator);
     border-width: 1px 1px 1px 0;
     overflow: hidden;
@@ -24,7 +24,7 @@
     padding: 0;
 
     &:hover {
-      background: var(--backgroundColorTmpBackgroundHover);
+      background: var(--backgroundFilterHover);
     }
   }
 
@@ -33,7 +33,7 @@
   }
 
   .filterItem {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundFilter);
     display: inline-block;
     font-size: 0;
     line-height: 0;
@@ -81,6 +81,6 @@
   }
 
   .filterButtonActive {
-    background: var(--backgroundColorTmpBackgroundHover);
+    background: var(--backgroundFilterSelected);
   }
 }

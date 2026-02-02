@@ -113,7 +113,7 @@
 
   .sidebarItemActive {
     background: var(--backgroundSidebarItemActive);
-    border-left: 2px solid var(--borderOutline2);
+    border-left: 2px solid var(--accentSelected);
 
     button {
       font-weight: bold;
@@ -128,7 +128,7 @@
     button {
       &:hover {
         svg {
-          fill: var(--borderOutline2) !important;
+          fill: var(--accentSelected) !important;
         }
       }
     }
@@ -136,7 +136,7 @@
 
   .sidebarActive {
     background: var(--backgroundSidebarItemActive);
-    border-left: 2px solid var(--borderOutline2);
+    border-left: 2px solid var(--accentSelected);
 
     button {
       font-weight: bold;
@@ -221,7 +221,7 @@
 
   .notification {
     background: var(--notificationRed);
-    color: var(--textColorWhite);
+    color: var(--textWhite);
     font-size: 12px;
     padding: 0px 4px;
     border-radius: 3px;

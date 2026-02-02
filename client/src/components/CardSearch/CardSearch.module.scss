@@ -30,7 +30,7 @@
   }
 
   .paramsButton {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundFilter);
     border: solid var(--backgroundPopupSeparator);
     border-width: 1px 1px 1px 0;
     color: var(--textColor0);
@@ -40,11 +40,11 @@
     padding: 7px 6px;
 
     &:hover {
-      background: var(--backgroundColorTmpBackgroundHover);
+      background: var(--backgroundFilterHover);
     }
   }
 
   .paramsButtonActive {
-    background: var(--backgroundColorTmpBackgroundHover);
+    background: var(--backgroundFilterSelected);
   }
 }

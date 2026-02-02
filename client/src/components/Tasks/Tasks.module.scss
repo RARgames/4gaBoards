@@ -20,12 +20,12 @@
 
   .progressCard {
     margin: 0;
-    background: var(--backgroundList);
+    background: var(--backgroundFillBase);
   }
 
   .progress {
     margin: 2px 1px 8px 1px;
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundFillBase2);
   }
 
   .progressItems {
@@ -70,14 +70,14 @@
   }
 
   .taskButtonCard {
-    background: var(--backgroundColorTmpDarkerField);
+    background: var(--backgroundButton);
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--textColor3);
     }
   }
 
   .taskButtonCardActive {
-    background: var(--backgroundColorTmpHeader);
+    background: var(--backgroundCard);
   }
 }

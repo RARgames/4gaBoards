@@ -35,7 +35,7 @@
   .paginationButton {
     display: inline-flex;
     white-space: nowrap;
-    background: var(--backgroundList);
+    background: var(--backgroundButton);
     color: var(--textColor2);
     line-height: 16px;
     font-size: 14px;
@@ -46,7 +46,7 @@
 
     &:hover {
       color: var(--textColor2);
-      background: var(--backgroundListButton);
+      background: var(--backgroundButtonHover);
 
       .paginationButtonIcon {
         fill: var(--textColor2);

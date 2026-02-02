@@ -1,7 +1,7 @@
 :global(#app) {
   .item {
     display: flex;
-    border-bottom: 1px solid var(--nodeOutline);
+    border-bottom: 1px solid var(--borderSubtle);
 
     &:hover {
       background: var(--backgroundPopupHover);

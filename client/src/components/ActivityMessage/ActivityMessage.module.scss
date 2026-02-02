@@ -4,14 +4,14 @@
   }
 
   .linked {
-    color: var(--linkedCard);
+    color: var(--activityLinked);
 
     &:hover {
-      color: var(--linkedCardHover);
+      color: var(--activityLinkedHover);
     }
   }
 
   .linkedDeleted {
-    color: var(--linkedCardDeleted);
+    color: var(--activityDeleted);
   }
 }

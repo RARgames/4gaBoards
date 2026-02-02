@@ -12,7 +12,7 @@
   }
 
   .contentHoverable:hover {
-    background: var(--backgroundColorTmpBackgroundTasks);
+    background: var(--backgroundTaskHover);
 
     .target {
       opacity: 1;
@@ -55,10 +55,10 @@
   }
 
   .checkbox {
-    background: var(--backgroundColorTmpBackground);
+    background: var(--backgroundCheckbox);
 
     &:hover {
-      background: var(--backgroundColorTmpBackgroundHover);
+      background: var(--backgroundCheckboxHover);
     }
   }
 

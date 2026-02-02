@@ -1,18 +1,18 @@
 :global(#app) {
   .input {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundInput);
     color: var(--textColor1);
     padding: 9.5px 8px;
     border: 1px solid var(--backgroundPopupSeparator);
     border-radius: 3px;
 
     &:focus {
-      border: 1px solid var(--borderOutline2);
+      border: 1px solid var(--accentSelected);
       outline: none;
     }
 
     &:disabled {
-      background: var(--backgroundColorTmpDarkerField);
+      background: var(--backgroundInputDisabled);
       color: var(--textColor4);
     }
   }

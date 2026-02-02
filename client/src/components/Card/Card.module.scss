@@ -41,14 +41,14 @@
   }
 
   .card {
-    background: var(--backgroundColorTmpHeader);
+    background: var(--backgroundCard);
     border-radius: 2px;
     box-shadow: var(--cardShadow) 0px 1px 4px;
     position: relative;
     border: 2px solid transparent;
 
     &:hover {
-      background: var(--backgroundCardSelected);
+      background: var(--backgroundCardHover);
 
       .editCardButton {
         opacity: 1;
@@ -61,10 +61,10 @@
   }
 
   .cardOpen {
-    box-shadow: 0 0 5px var(--borderOutline2);
+    box-shadow: 0 0 5px var(--accentSelected);
     border-radius: 2px;
-    border: 2px solid var(--borderOutline2);
-    background: var(--backgroundCardOpened);
+    border: 2px solid var(--accentSelected);
+    background: var(--backgroundCardSelected);
   }
 
   &:global([data-theme-shape='rounded']) .cardOpen {
@@ -125,7 +125,7 @@
 
   .notification {
     background: var(--notificationRed);
-    color: var(--textColorWhite);
+    color: var(--textWhite);
     font-size: 10px;
     line-height: 12px;
     padding: 0 2px 0 2px;

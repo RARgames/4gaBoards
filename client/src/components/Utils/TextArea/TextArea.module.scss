@@ -1,6 +1,6 @@
 :global(#app) {
   .textarea {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundInput);
     color: var(--textColor1);
     padding: 9px 8px;
     border: 1px solid var(--backgroundPopupSeparator);
@@ -14,7 +14,7 @@
     }
 
     &:focus {
-      border: 1px solid var(--borderOutline2);
+      border: 1px solid var(--accentSelected);
     }
   }
 

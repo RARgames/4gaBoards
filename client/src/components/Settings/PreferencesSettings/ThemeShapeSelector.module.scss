@@ -9,16 +9,16 @@
     padding: 8px;
     transition: all 0.2s ease;
     border: 1px solid var(--backgroundPopupSeparator);
-    background: var(--backgroundList);
+    background: var(--backgroundButton);
 
     &:hover {
-      background: var(--backgroundColorTmpDarkerField1);
+      background: var(--backgroundButtonHover);
     }
   }
 
   .themeButtonActive {
-    box-shadow: 0 0 5px var(--borderOutline2);
-    border-color: var(--borderOutline2);
+    box-shadow: 0 0 5px var(--accentSelected);
+    border-color: var(--accentSelected);
 
     .previewBox {
       border-color: var(--textColor3);
@@ -39,7 +39,7 @@
   .previewBox {
     width: min(50px, 100%);
     height: 30px;
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundFillBase2);
     border: 2px solid var(--themeShapeBorder);
     border-radius: 4px;
   }

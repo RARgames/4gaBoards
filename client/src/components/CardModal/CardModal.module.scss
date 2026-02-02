@@ -64,7 +64,7 @@
 
   .hr {
     border-width: 1px;
-    border-color: var(--nodeOutline);
+    border-color: var(--borderSubtle);
   }
 
   .buttonToggle {
@@ -72,7 +72,7 @@
   }
 
   .mainContainer {
-    background: var(--backgroundColorTmpBackground);
+    background: var(--backgroundCardModal);
     margin: 0;
     padding: 6px 0 0 0;
     height: 100%;
@@ -91,7 +91,7 @@
   }
 
   .header {
-    background: var(--backgroundColorTmpHeader);
+    background: var(--backgroundCardModalHeader);
     position: sticky;
     top: 0;
     z-index: 2;
@@ -223,7 +223,7 @@
   }
 
   .descriptionButton {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundFillBase2);
     border: none;
     border-radius: 3px;
     display: block;

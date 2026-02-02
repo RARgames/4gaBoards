@@ -71,7 +71,7 @@
     }
 
     .w-md-editor-toolbar {
-      background-color: var(--backgroundColorTmpDarkerField);
+      background-color: var(--backgroundMdEditorToolbar);
     }
 
     &:global([data-theme-shape='rounded']) .w-md-editor-toolbar {
@@ -79,7 +79,7 @@
     }
 
     .w-md-editor-area {
-      background-color: var(--backgroundColorTmpDarkerField2);
+      background-color: var(--backgroundMdEditor);
       border-radius: 2px;
     }
 
@@ -110,7 +110,7 @@
     }
 
     .w-md-editor-preview {
-      background-color: var(--backgroundColorTmpDarkerField2);
+      background-color: var(--backgroundMdEditor);
       box-shadow: inset 1px 0 0 0 var(--mdEditorPreviewBoxShadow);
       padding: 10px;
 
@@ -127,7 +127,7 @@
     .wmde-markdown {
       padding: 10px;
       border-radius: 2px;
-      background-color: var(--backgroundColorTmpDarkerField2);
+      background-color: var(--backgroundMdEditor);
       font-family: unset;
       font-size: 14px;
     }
@@ -189,7 +189,7 @@
 
     //Datepicker
     .react-datepicker {
-      background: var(--backgroundList);
+      background: var(--backgroundDate);
       border: 0;
       font-size: 14px;
       font-family: 'Museo Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -221,7 +221,7 @@
     }
 
     .react-datepicker__header {
-      background: var(--backgroundList);
+      background: var(--backgroundDate);
       border: 0;
       padding: 0;
     }
@@ -253,8 +253,8 @@
     .react-datepicker__day--in-selecting-range,
     .react-datepicker__day--in-range {
       border-radius: 0;
-      background: var(--backgroundCardOpened);
-      color: var(--textColorWhite);
+      background: var(--backgroundDateSelected);
+      color: var(--textDateSelected);
       font-weight: bold;
     }
 
@@ -267,13 +267,13 @@
     }
 
     .react-datepicker__day-names {
-      background: var(--backgroundList);
+      background: var(--backgroundDate);
       border: 0;
     }
 
     .react-datepicker__day--outside-month {
       color: var(--textColor4);
-      background: var(--backgroundColorTmpSeparatorLight);
+      background: var(--backgroundDateOutside);
     }
 
     .react-datepicker__month {

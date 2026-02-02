@@ -164,7 +164,7 @@ body {
   font-family: 'Museo Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.4285em;
-  color: var(--textColorWhite);
+  color: var(--textWhite);
 }
 
 /* Headings */
@@ -244,8 +244,8 @@ a:hover {
 
 /* Selection */
 ::selection {
-  color: var(--textColorWhite);
-  background: var(--selectionBackground);
+  color: var(--textSelection);
+  background: var(--backgroundSelection);
 }
 
 /* Scrollbars */

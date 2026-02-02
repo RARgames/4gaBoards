@@ -12,7 +12,7 @@
     background: var(--textColor3);
     border: none;
     border-radius: 3px;
-    color: var(--backgroundList);
+    color: var(--backgroundFillBase);
     display: inline-block;
     font-variant-numeric: tabular-nums;
     outline: none;
@@ -23,11 +23,6 @@
 
   .wrapperActive {
     background: var(--timerGreen);
-    color: var(--textColorWhite);
-
-    .timerIcon {
-      fill: var(--textColorWhite);
-    }
 
     &.wrapperHoverable:hover {
       background: var(--timerGreenHover);
@@ -39,7 +34,7 @@
   }
 
   .timerIcon {
-    fill: var(--backgroundList);
+    fill: var(--backgroundFillBase);
   }
 
   /* Variants */

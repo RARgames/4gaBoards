@@ -4,7 +4,7 @@
   --headerNameDefaultHeight: 20;
 
   .addCardButton {
-    background: var(--backgroundList);
+    background: var(--backgroundButton);
     color: var(--textColor3);
     cursor: pointer;
     display: block;
@@ -15,7 +15,7 @@
     width: 272px;
 
     &:hover {
-      background: var(--backgroundListButton);
+      background: var(--backgroundButtonHover);
     }
   }
 

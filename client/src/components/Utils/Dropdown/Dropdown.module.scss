@@ -7,7 +7,7 @@
   .dropdownSearchInput {
     width: 100%;
     padding: 3px 20px 3px 3px;
-    background: var(--backgroundColorTmpDarkerField);
+    background: var(--backgroundDropdown);
     color: var(--textColor1);
     outline: none;
     border-radius: 3px;
@@ -22,12 +22,12 @@
     }
 
     &:disabled {
-      background: var(--backgroundColorTmpDarkerField);
+      background: var(--backgroundDropdown);
       color: var(--textColor3);
     }
 
     &:focus {
-      border: 1px solid var(--borderOutline2);
+      border: 1px solid var(--accentSelected);
     }
   }
 
@@ -67,12 +67,12 @@
   .dropdownMenu {
     position: absolute;
     max-height: calc(100vh / 3);
-    background: var(--backgroundColorTmpDarkerField);
+    background: var(--backgroundDropdown);
     color: var(--textColor1);
   }
 
   .dropdownMenuWithChildren {
-    border: 1px solid var(--borderOutline);
+    border: 1px solid var(--accentSelectedDark);
     border-radius: 3px;
   }
 
@@ -88,7 +88,7 @@
     white-space: nowrap;
 
     &:hover {
-      background: var(--backgroundColorTmpHighlighted);
+      background: var(--backgroundDropdownHover);
     }
   }
 
@@ -97,7 +97,7 @@
   }
 
   .dropdownItemSelected {
-    background: var(--backgroundColorTmpHighlighted);
+    background: var(--backgroundDropdownSelected);
   }
 
   &:global([data-theme-shape='rounded']) .dropdownItemSelected {
@@ -105,7 +105,7 @@
   }
 
   .dropdownItemDefault {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundDropdownDefault);
     font-weight: 900;
   }
 
@@ -124,7 +124,7 @@
     font-size: 10px;
     font-weight: 600;
     line-height: 1;
-    color: var(--textColorWhite);
+    color: var(--textWhite);
     background-color: var(--backgroundRed);
     border-radius: 3px;
     text-transform: uppercase;

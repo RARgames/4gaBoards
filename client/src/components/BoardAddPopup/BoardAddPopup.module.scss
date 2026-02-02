@@ -40,10 +40,10 @@
   }
 
   .checkbox {
-    background: var(--backgroundColorTmpBackground);
+    background: var(--backgroundCheckbox);
 
     &:hover {
-      background: var(--backgroundColorTmpBackgroundHover);
+      background: var(--backgroundCheckboxHover);
     }
   }
 

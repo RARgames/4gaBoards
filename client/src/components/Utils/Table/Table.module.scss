@@ -52,7 +52,7 @@
     width: 100%;
     height: 100%;
     background: var(--backgroundSidebar);
-    color: var(--textColorWhite);
+    color: var(--textWhite);
     font-weight: bold;
   }
 
@@ -170,8 +170,8 @@
   }
 
   .bodyRowSelected {
-    border: 1px solid var(--borderOutline2);
-    background: var(--backgroundCardOpened) !important;
+    border: 1px solid var(--accentSelected);
+    background: var(--backgroundCardSelected) !important;
   }
 
   .bodyCell {

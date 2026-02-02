@@ -6,7 +6,7 @@
   }
 
   .default {
-    background: var(--backgroundColorTmpDarkerField2);
+    background: var(--backgroundButtonDefault);
     color: var(--textColor1);
     overflow: hidden;
     padding: 8px;
@@ -118,7 +118,7 @@
   }
 
   .login {
-    background: var(--loginBackground);
+    background: var(--backgroundButtonAuth);
     color: var(--textColor0);
     border-radius: 3px;
     padding: 8px 12px;
@@ -132,7 +132,7 @@
     }
 
     &:hover {
-      background: var(--loginBackgroundDark);
+      background: var(--backgroundButtonAuthHover);
     }
   }
 
@@ -142,7 +142,7 @@
 
   // TODO think about multiline buttons - word-wrap: break-word and min-height instead of white-space, text-overflow
   .controlButtons {
-    color: var(--textColorWhite);
+    color: var(--textWhite);
     border-radius: 3px;
     height: 32px;
     width: auto;
@@ -223,7 +223,7 @@
     // TODO temp disabled - until the popup button focus is handled correctly
     // &:focus {
     //   outline: none;
-    //   box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
+    //   box-shadow: inset 0px 0px 0px 1px var(--accentSelected);
     // }
   }
 

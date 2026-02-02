@@ -2,10 +2,10 @@
   .checkbox {
     display: inline-flex;
     margin-right: 4px;
-    background: var(--backgroundColorTmpBackground);
+    background: var(--backgroundCheckbox);
 
     &:hover {
-      background: var(--backgroundColorTmpBackgroundHover);
+      background: var(--backgroundCheckboxHover);
     }
   }
 
