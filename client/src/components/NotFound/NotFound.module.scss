@@ -6,10 +6,10 @@
   }
 
   .message {
-    background: var(--notificationRed);
+    background: var(--backgroundNotifications);
+    box-shadow: var(--backgroundNotifications) 0 1px 0;
     border-radius: 4px;
     bottom: 20px;
-    box-shadow: var(--backgroundRedHover) 0 1px 0;
     padding: 12px 18px;
     position: fixed;
     right: 20px;

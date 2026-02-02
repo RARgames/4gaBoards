@@ -164,28 +164,28 @@
 
   .submit {
     @extend .controlButtons;
-    background: var(--backgroundGreen);
+    background: var(--backgroundButtonSubmit);
     margin-left: 6px;
 
     &:hover {
-      background: var(--backgroundGreenHover);
+      background: var(--backgroundButtonSubmitHover);
     }
 
     &:disabled {
-      background: var(--backgroundSubmitDisabled);
+      background: var(--backgroundButtonSubmitDisabled);
     }
   }
 
   .cancel {
     @extend .controlButtons;
-    background: var(--backgroundRed);
+    background: var(--backgroundButtonCancel);
 
     &:hover {
-      background: var(--backgroundRedHover);
+      background: var(--backgroundButtonCancelHover);
     }
 
     &:disabled {
-      background: var(--backgroundCancelDisabled);
+      background: var(--backgroundButtonCancelDisabled);
     }
   }
 

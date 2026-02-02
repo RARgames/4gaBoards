@@ -87,7 +87,7 @@
   }
 
   .sidebarItemProject {
-    background: var(--backgroundSidebarItem3);
+    background: var(--backgroundSidebarItemCategory);
     border-top: 1px solid var(--backgroundPopupSeparator);
     display: flex;
     align-items: center;
@@ -112,7 +112,7 @@
   }
 
   .sidebarItemActive {
-    background: var(--backgroundSidebarItemActive);
+    background: var(--backgroundSidebarItemSelected);
     border-left: 2px solid var(--accentSelected);
 
     button {
@@ -135,7 +135,7 @@
   }
 
   .sidebarActive {
-    background: var(--backgroundSidebarItemActive);
+    background: var(--backgroundSidebarItemSelected);
     border-left: 2px solid var(--accentSelected);
 
     button {
@@ -220,7 +220,7 @@
   }
 
   .notification {
-    background: var(--notificationRed);
+    background: var(--backgroundNotifications);
     color: var(--textWhite);
     font-size: 12px;
     padding: 0px 4px;

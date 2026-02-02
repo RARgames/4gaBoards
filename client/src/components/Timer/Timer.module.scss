@@ -22,10 +22,10 @@
   }
 
   .wrapperActive {
-    background: var(--timerGreen);
+    background: var(--backgroundTimer);
 
     &.wrapperHoverable:hover {
-      background: var(--timerGreenHover);
+      background: var(--backgroundTimerHover);
     }
   }
 

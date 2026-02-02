@@ -76,7 +76,7 @@
 
   .boardWrapper {
     position: relative;
-    background-color: var(--backgroundProject);
+    background-color: var(--backgroundDashboardTile);
     border-radius: 5px;
     font-size: 20px;
     box-shadow:
@@ -115,7 +115,7 @@
   }
 
   .notification {
-    background: var(--notificationRed);
+    background: var(--backgroundNotifications);
     color: var(--textWhite);
     float: right;
     font-size: 12px;
