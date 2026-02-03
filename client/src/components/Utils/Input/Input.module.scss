@@ -3,7 +3,7 @@
     background: var(--backgroundInput);
     color: var(--text1);
     padding: 9.5px 8px;
-    border: 1px solid var(--backgroundPopupSeparator);
+    border: 1px solid var(--borderVivid);
     border-radius: 3px;
 
     &:focus {
@@ -13,7 +13,7 @@
 
     &:disabled {
       background: var(--backgroundInputDisabled);
-      color: var(--textColor4);
+      color: var(--text4);
     }
   }
 
@@ -22,14 +22,14 @@
   }
 
   .inputError {
-    border: 1px solid var(--errorRed);
+    border: 1px solid var(--textError);
 
     &:focus {
-      border: 1px solid var(--errorRed);
+      border: 1px solid var(--textError);
     }
 
     &::placeholder {
-      color: var(--errorRed);
+      color: var(--textError);
     }
   }
 

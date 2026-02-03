@@ -21,12 +21,12 @@
   }
 
   .dangerZone {
-    color: var(--textColorError);
+    color: var(--textRed);
     font-weight: bold;
     text-align: center;
     padding-top: 8px;
     margin-top: 4px;
-    border-top: 1px solid var(--backgroundPopupSeparator);
+    border-top: 1px solid var(--borderVivid);
   }
 
   .text {

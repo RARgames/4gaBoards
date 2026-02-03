@@ -8,7 +8,7 @@
   }
 
   .cardsCount {
-    color: var(--textColorCounter);
+    color: var(--textCounter);
     font-size: 12px;
   }
 
@@ -53,15 +53,15 @@
   }
 
   .githubGreen {
-    fill: var(--textColorGreen);
+    fill: var(--iconGithubActive);
   }
 
   .githubGrey {
-    fill: var(--textColor4);
+    fill: var(--text4);
   }
 
   .switchViewButton {
-    border: 1px solid var(--backgroundPopupSeparator);
+    border: 1px solid var(--borderVivid);
     padding: 8px 6px;
 
     &:first-child {

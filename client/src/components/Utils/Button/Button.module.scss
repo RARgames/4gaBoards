@@ -19,19 +19,19 @@
     height: 100%;
 
     &:hover {
-      color: var(--textColor3);
+      color: var(--text3);
 
       svg {
-        fill: var(--textColor3);
+        fill: var(--text3);
       }
     }
 
     &:disabled {
       cursor: not-allowed;
-      color: var(--textColor4);
+      color: var(--text4);
 
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
   }
@@ -42,7 +42,7 @@
 
   .defaultBorder {
     @extend .default;
-    border: 1px solid var(--backgroundPopupSeparator);
+    border: 1px solid var(--borderVivid);
     text-wrap: wrap;
   }
 
@@ -59,19 +59,19 @@
     height: fit-content;
 
     &:hover {
-      color: var(--textColor3);
+      color: var(--text3);
 
       svg {
-        fill: var(--textColor3);
+        fill: var(--text3);
       }
     }
 
     &:disabled {
       cursor: not-allowed;
-      color: var(--textColor4);
+      color: var(--text4);
 
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
   }
@@ -83,7 +83,7 @@
   .iconBase {
     &:hover {
       svg {
-        fill: var(--textColor3);
+        fill: var(--text3);
       }
     }
 
@@ -91,7 +91,7 @@
       cursor: not-allowed;
 
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
   }
@@ -213,10 +213,10 @@
 
     &:disabled {
       cursor: not-allowed;
-      color: var(--textColor4);
+      color: var(--text4);
 
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
 

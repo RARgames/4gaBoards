@@ -15,12 +15,12 @@
 
     svg {
       vertical-align: middle;
-      fill: var(--textColor3);
+      fill: var(--text3);
     }
 
     &:hover {
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
   }
@@ -31,7 +31,7 @@
 
   .paramsButton {
     background: var(--backgroundFilter);
-    border: solid var(--backgroundPopupSeparator);
+    border: solid var(--borderVivid);
     border-width: 1px 1px 1px 0;
     display: inline-block;
     font-size: 12px;

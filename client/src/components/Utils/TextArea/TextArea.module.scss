@@ -3,14 +3,14 @@
     background: var(--backgroundInput);
     color: var(--text1);
     padding: 9px 8px;
-    border: 1px solid var(--backgroundPopupSeparator);
+    border: 1px solid var(--borderVivid);
     border-radius: 3px;
     resize: none;
     outline: 0;
     width: 100%;
 
     &::placeholder {
-      color: var(--textColor3);
+      color: var(--text3);
     }
 
     &:focus {
@@ -23,14 +23,14 @@
   }
 
   .textareaError {
-    border: 1px solid var(--errorRed);
+    border: 1px solid var(--textError);
 
     &:focus {
-      border: 1px solid var(--errorRed);
+      border: 1px solid var(--textError);
     }
 
     &::placeholder {
-      color: var(--errorRed);
+      color: var(--textError);
     }
   }
 

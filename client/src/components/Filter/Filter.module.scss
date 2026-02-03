@@ -14,17 +14,17 @@
     display: inline-flex;
     align-items: center;
 
-    color: var(--textColor3);
+    color: var(--text3);
 
     svg {
-      fill: var(--textColor3);
+      fill: var(--text3);
     }
 
     &:hover {
-      color: var(--textColor4);
+      color: var(--text4);
 
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
   }
@@ -38,7 +38,7 @@
   }
 
   .counterText {
-    color: var(--textColorCounter);
+    color: var(--textCounter);
     font-size: 12px;
     padding: 0 4px;
     text-align: center;
@@ -49,13 +49,13 @@
     margin-right: 1px;
 
     svg {
-      fill: var(--textColorCounter);
+      fill: var(--textCounter);
       vertical-align: middle;
     }
 
     &:hover {
       svg {
-        fill: var(--textColorCounterHover);
+        fill: var(--textCounterHover);
       }
     }
   }

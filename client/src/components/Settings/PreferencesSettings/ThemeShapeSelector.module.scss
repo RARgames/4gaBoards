@@ -8,7 +8,6 @@
   .themeButton {
     padding: 8px;
     transition: all 0.2s ease;
-    border: 1px solid var(--backgroundPopupSeparator);
     background: var(--backgroundButton);
 
     &:hover {
@@ -21,7 +20,7 @@
     border-color: var(--accentSelected);
 
     .previewBox {
-      border-color: var(--textColor3);
+      border-color: var(--text3);
     }
 
     .themeName {

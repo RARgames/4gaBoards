@@ -49,10 +49,10 @@
     margin-left: 4px;
 
     &:hover {
-      color: var(--textColor3);
+      color: var(--text3);
 
       .countToggleIcon {
-        fill: var(--textColor3);
+        fill: var(--text3);
       }
     }
   }
@@ -73,7 +73,7 @@
     background: var(--backgroundButton);
 
     &:hover {
-      color: var(--textColor3);
+      color: var(--text3);
     }
   }
 

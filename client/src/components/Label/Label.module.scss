@@ -30,7 +30,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--userOverlay);
+      background: var(--shadowBlack05);
     }
   }
 
@@ -39,7 +39,7 @@
       position: absolute;
       content: '×';
       font-weight: 100;
-      color: var(--userOverlayIcon);
+      color: var(--text0);
       display: flex;
       justify-content: center;
       font-size: 24px;

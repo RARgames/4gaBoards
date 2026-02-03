@@ -233,12 +233,12 @@ p:last-child {
 
 /* Links */
 a {
-  color: var(--textColorLink);
+  color: var(--textLink);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--textColorLinkHover);
+  color: var(--textLinkHover);
   text-decoration: none;
 }
 

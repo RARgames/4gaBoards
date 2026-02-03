@@ -35,12 +35,12 @@
 
   .itemButton {
     svg {
-      fill: var(--textColor3);
+      fill: var(--text3);
     }
 
     &:hover {
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
   }
@@ -61,7 +61,7 @@
   }
 
   .date {
-    color: var(--textColor3);
+    color: var(--text3);
     display: inline-block;
     font-size: 12px;
     line-height: 20px;
@@ -80,7 +80,7 @@
       display: inline-block;
       margin-right: 4px;
       vertical-align: middle;
-      color: var(--textColor3);
+      color: var(--text3);
     }
   }
 

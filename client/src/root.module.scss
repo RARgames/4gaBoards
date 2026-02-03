@@ -79,6 +79,18 @@
       border-radius: 12px 12px 0px 0px;
     }
 
+    .w-md-editor-toolbar button {
+      color: var(--mdEditorIcon);
+
+      &:hover {
+        color: var(--mdEditorIconHover);
+      }
+
+      &:disabled {
+        color: var(--mdEditorIconDisabled);
+      }
+    }
+
     .w-md-editor-area {
       background-color: var(--backgroundMdEditor);
       border-radius: 2px;
@@ -242,7 +254,7 @@
     .react-datepicker__day-name,
     .react-datepicker__day,
     .react-datepicker__time-name {
-      color: var(--text1);
+      color: var(--textDateMain);
       display: inline-block;
       width: 40px;
       font-weight: 500;
@@ -270,7 +282,7 @@
     }
 
     .react-datepicker__day--outside-month {
-      color: var(--textColor4);
+      color: var(--textDateOutside);
       background: var(--backgroundDateOutside);
     }
 
@@ -305,7 +317,7 @@
     }
 
     .react-datepicker__day--today {
-      color: var(--textColorGold);
+      color: var(--textDateToday);
     }
 
     //Photoswipe
@@ -320,7 +332,7 @@
     }
 
     .w-color-editable-input {
-      --editable-input-label-color: var(--textColor3) !important;
+      --editable-input-label-color: var(--text3) !important;
       --editable-input-box-shadow: var(--colorPickerInputBoxShadow) 0px 0px 0px 1px inset !important;
       --editable-input-color: var(--text1) !important;
     }

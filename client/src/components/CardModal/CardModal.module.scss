@@ -53,7 +53,7 @@
   .wrapper {
     width: 650px;
     z-index: 1;
-    box-shadow: -10px 0 10px -12px var(--overlay);
+    box-shadow: -10px 0 10px -12px var(--shadowBlack06);
   }
 
   @media (max-width: 800px) {
@@ -238,7 +238,7 @@
     width: 100%;
 
     &:hover {
-      color: var(--textColor3);
+      color: var(--text3);
     }
   }
 
@@ -261,7 +261,7 @@
   .localChangesLoaded {
     font-size: 12px;
     font-style: italic;
-    color: var(--textColorYellow);
+    color: var(--textLocalChanges);
   }
 
   .iconAddButton {
@@ -278,7 +278,7 @@
 
   .headerCount {
     display: inline-block;
-    color: var(--textColor3);
+    color: var(--text3);
     margin-left: 4px;
   }
 

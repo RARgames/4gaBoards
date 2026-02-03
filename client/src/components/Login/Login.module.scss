@@ -35,7 +35,7 @@
     font-weight: bold;
     line-height: 20px;
     margin-bottom: 4px;
-    color: var(--textColor3);
+    color: var(--text3);
     width: 100%;
   }
 
@@ -68,13 +68,13 @@
 
   .otherOptionsLine {
     height: 1px;
-    background: var(--textColor4);
+    background: var(--text4);
   }
 
   .otherOptionsText {
     margin: 0 1rem;
     text-transform: uppercase;
-    color: var(--textColor3);
+    color: var(--text3);
   }
 
   .otherOptions {
@@ -84,7 +84,7 @@
   }
 
   .alternateActionText {
-    color: var(--textColor3);
+    color: var(--text3);
     text-align: center;
     font-size: 16px;
     font-weight: bold;

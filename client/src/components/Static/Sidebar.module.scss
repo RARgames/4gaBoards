@@ -87,7 +87,7 @@
 
   .sidebarItemProject {
     background: var(--backgroundSidebarItemCategory);
-    border-top: 1px solid var(--backgroundPopupSeparator);
+    border-top: 1px solid var(--borderVivid);
     display: flex;
     align-items: center;
 
@@ -178,7 +178,7 @@
   }
 
   .github {
-    fill: var(--textColorGreen);
+    fill: var(--iconGithubActive);
     margin-left: 4px;
   }
 

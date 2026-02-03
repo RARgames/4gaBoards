@@ -81,18 +81,18 @@
   .demoModeNotice {
     display: inline-flex;
     align-items: center;
-    color: var(--textColorGold);
+    color: var(--textGold);
 
     path {
-      fill: var(--textColorGold);
+      fill: var(--textGold);
     }
     white-space: nowrap;
 
     &:hover {
-      color: var(--textColorGoldHover);
+      color: var(--textGoldHover);
 
       path {
-        fill: var(--textColorGoldHover);
+        fill: var(--textGoldHover);
       }
     }
   }
@@ -115,7 +115,7 @@
   .demoModeNoticeSeparator {
     width: 1px;
     height: 30px;
-    background: var(--textColor4);
+    background: var(--text4);
     margin: 0 10px;
   }
 }

@@ -3,7 +3,7 @@
     appearance: none;
     background: transparent;
     border-radius: 3px;
-    border: 1px solid var(--textColor3);
+    border: 1px solid var(--text3);
     display: flex;
     align-content: center;
     justify-content: center;
@@ -26,13 +26,13 @@
     }
 
     &:disabled {
-      border: 1px solid var(--backgroundPopupSeparator);
+      border: 1px solid var(--borderVivid);
       cursor: not-allowed;
     }
   }
 
   .checkboxError {
-    border: 1px solid var(--errorRed);
+    border: 1px solid var(--textError);
   }
 
   .size14 {

@@ -1,9 +1,9 @@
 :global(#app) {
   .link {
-    color: var(--textColorLink);
+    color: var(--textLink);
 
     &:hover {
-      color: var(--textColorLinkHover);
+      color: var(--textLinkHover);
     }
   }
 }

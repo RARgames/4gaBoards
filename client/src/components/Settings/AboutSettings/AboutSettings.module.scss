@@ -6,7 +6,7 @@
   }
 
   .demoMode {
-    color: var(--errorRed);
+    color: var(--textError);
     font-weight: bold;
     text-align: center;
   }
@@ -33,12 +33,12 @@
     margin-bottom: 5px;
 
     svg {
-      fill: var(--textColorLink);
+      fill: var(--textLink);
     }
 
     &:hover {
       svg {
-        fill: var(--textColorLinkHover);
+        fill: var(--textLinkHover);
       }
     }
   }
@@ -55,14 +55,14 @@
 
   .donateButton {
     border-color: var(--backgroundColor);
-    background: var(--textColorGold);
+    background: var(--textGold);
     color: var(--backgroundColor);
     width: fit-content;
     text-align: center;
     margin: 2px 0 4px 0;
 
     &:hover {
-      background: var(--textColorGoldHover);
+      background: var(--textGoldHover);
       color: var(--backgroundColor);
     }
   }

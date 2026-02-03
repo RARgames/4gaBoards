@@ -5,10 +5,10 @@
 
   .addCardButton {
     background: var(--backgroundButton);
-    color: var(--textColor3);
+    color: var(--text3);
     cursor: pointer;
     display: block;
-    fill: var(--textColor3);
+    fill: var(--text3);
     height: 36px;
     padding: 8px;
     text-align: left;
@@ -21,7 +21,7 @@
 
   .addCardButtonIcon {
     vertical-align: -25%;
-    fill: var(--textColor3);
+    fill: var(--text3);
   }
 
   .addCardButtonText {
@@ -147,14 +147,14 @@
   }
 
   .headerCardsCount {
-    color: var(--textColor3);
+    color: var(--text3);
     font-size: 12px;
     position: relative;
     float: left;
   }
 
   .headerCardsCountCollapsed {
-    color: var(--textColor3);
+    color: var(--text3);
     font-size: 12px;
     writing-mode: vertical-rl;
     padding: 5px 5px 10px 5px;
@@ -200,12 +200,12 @@
 
     &:hover {
       svg {
-        fill: var(--textColor4);
+        fill: var(--text4);
       }
     }
   }
 
   .collapsedListCardAddButtonIcon {
-    fill: var(--textColor3);
+    fill: var(--text3);
   }
 }

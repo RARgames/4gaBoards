@@ -12,30 +12,30 @@
   }
 
   .warning {
-    color: var(--textColorWarning);
-    border: 1px solid var(--textColorWarning);
+    color: var(--textWarning);
+    border: 1px solid var(--textWarning);
 
     .closeButton {
       svg {
-        fill: var(--textColorWarning);
+        fill: var(--textWarning);
 
         &:hover {
-          fill: var(--textColorWarningHover);
+          fill: var(--textWarningHover);
         }
       }
     }
   }
 
   .error {
-    color: var(--textColorError);
-    border: 1px solid var(--textColorError);
+    color: var(--textError);
+    border: 1px solid var(--textError);
 
     .closeButton {
       svg {
-        fill: var(--textColorError);
+        fill: var(--textError);
 
         &:hover {
-          fill: var(--textColorErrorHover);
+          fill: var(--textErrorHover);
         }
       }
     }

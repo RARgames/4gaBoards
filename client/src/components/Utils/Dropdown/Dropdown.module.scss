@@ -11,19 +11,19 @@
     color: var(--text1);
     outline: none;
     border-radius: 3px;
-    border: 1px solid var(--backgroundPopupSeparator);
+    border: 1px solid var(--borderVivid);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
     &::placeholder {
-      color: var(--textColor3);
+      color: var(--text3);
       opacity: 1;
     }
 
     &:disabled {
       background: var(--backgroundDropdown);
-      color: var(--textColor3);
+      color: var(--text3);
     }
 
     &:focus {
@@ -37,10 +37,10 @@
   }
 
   .dropdownSearchInputError {
-    border: 1px solid var(--errorRed) !important;
+    border: 1px solid var(--textError) !important;
 
     &::placeholder {
-      color: var(--errorRed);
+      color: var(--textError);
     }
   }
 
@@ -54,12 +54,12 @@
 
   .dropdownButtonError {
     svg {
-      fill: var(--errorRed);
+      fill: var(--textError);
     }
 
     &:hover {
       svg {
-        fill: var(--errorRedHover);
+        fill: var(--textErrorHover);
       }
     }
   }
