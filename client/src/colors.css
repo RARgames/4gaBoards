@@ -1,25 +1,12 @@
 /* Default Theme */
 :root {
-  --backgroundColor: #22252a; /* Override loading.css */
-  --backgroundAuth: #1e1e1e;
-  --backgroundMiscButtons: #2d2d30;
-  --backgroundList: #1f2d3c;
-  --backgroundListButton: #1b2835;
-  --backgroundCardSelected: #1c3546;
-  --backgroundCardOpened: #11576b;
-  --backgroundColorTmp0: #282c30;
-  --backgroundColorTmp1: #292d33;
-  --backgroundColorTmp2: #242d34;
-  --backgroundColorTmp3: #1b2126;
-  --backgroundColorTmpHeader: #2c3e51;
-  --backgroundColorTmpBackground: #223140;
-  --backgroundColorTmpBackgroundTasks: #1d2c3a;
-  --backgroundColorTmpBackgroundHover: #121920;
-:root {
   --backgroundColor: #22252a !important; /* Override loading.css */
+  --fakeColor: #000; /* FIXME: 1st color after !important does not show in custom theme editor */
+  --backgroundBase0: #1f2d3c;
+  --backgroundBase1: #17232c;
   --backgroundAuth: #1e1e1e;
-  --backgroundList: #1f2d3c;
-  --backgroundDate: #1f2d3c;
+  --backgroundList: var(--backgroundBase0);
+  --backgroundDate: var(--backgroundBase0);
   --backgroundDateSelected: #11576b;
   --backgroundDateOutside: #263443;
   --backgroundCard: #2c3e51;
@@ -33,20 +20,18 @@
   --backgroundTaskHover: #1d2c3a;
   --backgroundAttachment: #1e2a36;
   --backgroundAttachmentHover: #1d2c3a;
-  --backgroundFilter: #17232c;
+  --backgroundFilter: var(--backgroundBase1);
   --backgroundFilterHover: #121920;
   --backgroundFilterSelected: #121920;
-  --backgroundFillBase: #1f2d3c;
-  --backgroundFillBase2: #17232c;
-  --backgroundInput: #17232c;
+  --backgroundInput: var(--backgroundBase1);
   --backgroundInputDisabled: #1e2d39;
   --backgroundDropdown: #1e2d39;
-  --backgroundDropdownDefault: #17232c;
+  --backgroundDropdownDefault: var(--backgroundBase1);
   --backgroundDropdownHover: #2d3b4b;
   --backgroundDropdownSelected: #2d3b4b;
-  --backgroundButton: #1f2d3c;
+  --backgroundButton: var(--backgroundBase0);
   --backgroundButtonHover: #1b2835;
-  --backgroundButtonDefault: #17232c;
+  --backgroundButtonDefault: var(--backgroundBase1);
   --backgroundButtonMisc: #2d2d30;
   --backgroundButtonSwitchSelected: #0c5064;
   --backgroundButtonAttachment: #6b808c;
@@ -84,7 +69,7 @@
   --backgroundPopupShadow: #19232e;
   --borderSubtle: rgba(54, 75, 97, 0.5);
   --borderVivid: #5f6064;
-  --borderTableResize: #5f6064;
+  --borderTableResize: var(--borderVivid);
   --borderTableResizeHover: #4b4b4e;
   --accentSelected: #34b7cd;
   --accentSelectedDark: #5ba4cf;
@@ -93,8 +78,8 @@
   --activityDeleted: #f57272;
   --iconGithubActive: #0bff44;
   --iconGithubInactive: var(--text4);
-  --textDateSelected: #ffffff;
-  --textDateOutside: #6d6d6d;
+  --textDateSelected: var(--text0Strong);
+  --textDateOutside: var(--text4);
   --textDateMain: var(--text1);
   --textDateToday: var(--textGold);
   --textAttachmentDate: #6b808c;
@@ -198,6 +183,9 @@
 /* Github Dark Theme */
 [data-theme='github-dark'] {
   --backgroundColor: #0d1117 !important; /* Override loading.css */
+  --fakeColor: #000; /* FIXME: 1st color after !important does not show in custom theme editor */
+  --backgroundBase0: #161b22;
+  --backgroundBase1: #161b22;
   --backgroundAuth: #010409;
   --backgroundList: #161b22;
   --backgroundDate: #161b22;
@@ -217,8 +205,6 @@
   --backgroundFilter: #161b22;
   --backgroundFilterHover: #1c2128;
   --backgroundFilterSelected: #1c2128;
-  --backgroundFillBase: #161b22;
-  --backgroundFillBase2: #161b22;
   --backgroundInput: #161b22;
   --backgroundInputDisabled: #010409;
   --backgroundDropdown: #010409;
@@ -379,6 +365,9 @@
 /* Light Theme */
 [data-theme='light'] {
   --backgroundColor: #ffffff !important; /* Override loading.css */
+  --fakeColor: #000; /* FIXME: 1st color after !important does not show in custom theme editor */
+  --backgroundBase0: #ffffff;
+  --backgroundBase1: #cfd7e2;
   --backgroundAuth: #f8f8f8;
   --backgroundList: #cfd7e2;
   --backgroundDate: #cfd7e2;
@@ -398,8 +387,6 @@
   --backgroundFilter: #cfd7e2;
   --backgroundFilterHover: #e6f0ff;
   --backgroundFilterSelected: #e6f0ff;
-  --backgroundFillBase: #ffffff;
-  --backgroundFillBase2: #cfd7e2;
   --backgroundInput: #cfd7e2;
   --backgroundInputDisabled: #e0e6ef;
   --backgroundDropdown: #e0e6ef;
@@ -556,3 +543,13 @@
   /* Color Picker */
   --colorPickerInputBoxShadow: #b0b0b0;
 }
+
+/* TODO: Remove - old colors:
+  --backgroundColor1: #252526;
+  --backgroundColor2: #333333;
+  --backgroundColorTmp0: #282c30;
+  --backgroundColorTmp1: #292d33;
+  --backgroundColorTmp2: #242d34;
+  --backgroundColorTmp3: #1b2126;
+  --backgroundTabActive: #16181b;
+*/
