@@ -81,5 +81,9 @@
 
   .filterButtonActive {
     background: var(--backgroundFilterSelected);
+
+    &:hover {
+      background: var(--backgroundFilterSelectedHover);
+    }
   }
 }

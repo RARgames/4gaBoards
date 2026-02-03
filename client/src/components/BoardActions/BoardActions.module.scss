@@ -61,8 +61,21 @@
   }
 
   .switchViewButton {
+    background: var(--backgroundFilter);
     border: 1px solid var(--borderVivid);
     padding: 8px 6px;
+
+    svg {
+      fill: var(--text1);
+    }
+
+    &:hover {
+      background: var(--backgroundFilterHover);
+
+      svg {
+        fill: var(--text1);
+      }
+    }
 
     &:first-child {
       border-right: 0px;
@@ -85,6 +98,14 @@
   }
 
   .switchViewButton.active {
-    background: var(--backgroundButtonSwitchSelected);
+    background: var(--backgroundFilterSelected);
+
+    svg {
+      fill: var(--text1);
+    }
+
+    &:hover {
+      background: var(--backgroundFilterSelectedHover);
+    }
   }
 }

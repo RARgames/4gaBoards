@@ -44,6 +44,10 @@
   }
 
   .paramsButtonActive {
-    background: var(--backgroundButtonSwitchSelected);
+    background: var(--backgroundFilterSelected);
+
+    &:hover {
+      background: var(--backgroundFilterSelectedHover);
+    }
   }
 }

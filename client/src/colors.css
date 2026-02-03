@@ -22,7 +22,8 @@
   --backgroundAttachmentHover: #1d2c3a;
   --backgroundFilter: var(--backgroundBase1);
   --backgroundFilterHover: #121920;
-  --backgroundFilterSelected: #121920;
+  --backgroundFilterSelected: #0c5064;
+  --backgroundFilterSelectedHover: #18414e;
   --backgroundInput: var(--backgroundBase1);
   --backgroundInputDisabled: #1e2d39;
   --backgroundDropdown: #1e2d39;
@@ -33,7 +34,6 @@
   --backgroundButtonHover: #1b2835;
   --backgroundButtonDefault: var(--backgroundBase1);
   --backgroundButtonMisc: #2d2d30;
-  --backgroundButtonSwitchSelected: #0c5064;
   --backgroundButtonAttachment: #6b808c;
   --backgroundButtonAttachmentHover: #6b808ccc;
   --backgroundButtonSubmit: #5aac44;
@@ -205,6 +205,7 @@
   --backgroundFilter: #161b22;
   --backgroundFilterHover: #1c2128;
   --backgroundFilterSelected: #1c2128;
+  --backgroundFilterSelectedHover: #1d2024;
   --backgroundInput: #161b22;
   --backgroundInputDisabled: #010409;
   --backgroundDropdown: #010409;
@@ -215,7 +216,6 @@
   --backgroundButtonHover: #1c2128;
   --backgroundButtonDefault: #161b22;
   --backgroundButtonMisc: #161b22;
-  --backgroundButtonSwitchSelected: #1e3a5f;
   --backgroundButtonAttachment: #7d8590;
   --backgroundButtonAttachmentHover: #8b949e;
   --backgroundButtonSubmit: #238636;
@@ -387,6 +387,7 @@
   --backgroundFilter: #cfd7e2;
   --backgroundFilterHover: #e6f0ff;
   --backgroundFilterSelected: #e6f0ff;
+  --backgroundFilterSelectedHover: #d5deec;
   --backgroundInput: #cfd7e2;
   --backgroundInputDisabled: #e0e6ef;
   --backgroundDropdown: #e0e6ef;
@@ -397,7 +398,6 @@
   --backgroundButtonHover: #edf2f7;
   --backgroundButtonDefault: #cfd7e2;
   --backgroundButtonMisc: #eaeaea;
-  --backgroundButtonSwitchSelected: #cce4ff;
   --backgroundButtonAttachment: #555555;
   --backgroundButtonAttachmentHover: #222222;
   --backgroundButtonSubmit: #5aac44;
