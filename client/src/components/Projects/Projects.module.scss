@@ -8,7 +8,7 @@
 
   .header {
     font-weight: bold;
-    color: var(--textColor1);
+    color: var(--text1);
     padding: 10px 20px;
     text-align: center;
     display: flex;
@@ -87,7 +87,7 @@
   }
 
   .project {
-    color: var(--textColor0);
+    color: var(--text0);
     padding: 20px;
     width: 100%;
     height: 100%;
@@ -120,20 +120,20 @@
   }
 
   .add {
-    color: var(--textColor0);
+    color: var(--text0);
     text-align: center;
     width: 100%;
     height: 100%;
 
     &:hover {
       svg {
-        fill: var(--textColor0);
+        fill: var(--text0);
       }
     }
   }
 
   .addGridIcon {
-    fill: var(--textColor0);
+    fill: var(--text0);
     display: block;
     margin: 0 auto 12px;
     width: 36px;

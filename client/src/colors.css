@@ -95,11 +95,11 @@
   --textAttachmentExtension: #5e6c84;
   --textSelection: #ffffff;
   --textWhite: #ffffff;
-  --textPrimaryStrong: #ffffff;
+  --text0Strong: #ffffff;
+  --text0: #ebebec;
+  --text1: #d3d3d3;
+  --text2: #c2c2c2;
 
-  --textColor0: #ebebec;
-  --textColor1: #d3d3d3;
-  --textColor2: #c2c2c2;
   --textColor3: #999999;
   --textColor4: #6d6d6d;
   --textColor5: #363636;
@@ -268,11 +268,11 @@
   --textAttachmentExtension: #8b949e;
   --textSelection: #ffffff;
   --textWhite: #ffffff;
-  --textPrimaryStrong: #ffffff;
+  --text0Strong: #ffffff;
+  --text0: #f0f6fc;
+  --text1: #e6edf3;
+  --text2: #c9d1d9;
 
-  --textColor0: #f0f6fc;
-  --textColor1: #e6edf3;
-  --textColor2: #c9d1d9;
   --textColor3: #8b949e;
   --textColor4: #6e7681;
   --textColor5: #484f58;
@@ -441,11 +441,11 @@
   --textAttachmentExtension: #555555;
   --textSelection: #ffffff;
   --textWhite: #ffffff;
-  --textPrimaryStrong: #000000;
+  --text0Strong: #000000;
+  --text0: #222222;
+  --text1: #444444;
+  --text2: #555555;
 
-  --textColor0: #222222;
-  --textColor1: #444444;
-  --textColor2: #555555;
   --textColor3: #777777;
   --textColor4: #999999;
   --textColor5: #bbbbbb;

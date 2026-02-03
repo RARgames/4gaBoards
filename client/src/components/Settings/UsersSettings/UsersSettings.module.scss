@@ -36,7 +36,7 @@
     display: inline-flex;
     white-space: nowrap;
     background: var(--backgroundButton);
-    color: var(--textColor2);
+    color: var(--text2);
     line-height: 16px;
     font-size: 14px;
     padding: 0 6px;
@@ -45,17 +45,17 @@
     align-items: center;
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--text2);
       background: var(--backgroundButtonHover);
 
       .paginationButtonIcon {
-        fill: var(--textColor2);
+        fill: var(--text2);
       }
     }
   }
 
   .paginationButtonIcon {
-    fill: var(--textColor2);
+    fill: var(--text2);
   }
 
   .paginationButtonText {

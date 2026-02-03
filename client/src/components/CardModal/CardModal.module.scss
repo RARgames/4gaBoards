@@ -27,7 +27,7 @@
   }
 
   .moreUsers {
-    color: var(--textPrimaryStrong);
+    color: var(--text0Strong);
     background: var(--shadowBlack02);
     border-radius: 50%;
     text-align: center;
@@ -111,7 +111,7 @@
   }
 
   .headerTitle {
-    color: var(--textPrimaryStrong);
+    color: var(--text0Strong);
     font-size: 18px;
     font-weight: 700;
     line-height: 20px;
@@ -180,7 +180,7 @@
     white-space: nowrap;
     max-width: calc(100% - 60px);
     display: inline-block;
-    color: var(--textColor1);
+    color: var(--text1);
   }
 
   .headerListFieldIcon {
@@ -193,7 +193,7 @@
   }
 
   .text {
-    color: var(--textColor1);
+    color: var(--text1);
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 0.3px;
@@ -209,12 +209,12 @@
   }
 
   .moduleIcon {
-    color: var(--textColor1);
+    color: var(--text1);
     margin-right: 4px;
   }
 
   .moduleHeader {
-    color: var(--textColor1);
+    color: var(--text1);
     font-size: 16px;
     font-weight: bold;
     line-height: 20px;
@@ -227,7 +227,7 @@
     border: none;
     border-radius: 3px;
     display: block;
-    color: var(--textColor1);
+    color: var(--text1);
     cursor: pointer;
     min-height: 36px;
     outline: none;

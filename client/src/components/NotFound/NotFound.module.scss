@@ -1,7 +1,7 @@
 :global(#app) {
   .text {
     text-align: center;
-    color: var(--textColor0);
+    color: var(--text0);
     margin-top: 80px;
   }
 
@@ -25,7 +25,7 @@
   }
 
   .messageIcon {
-    color: var(--textColor0);
+    color: var(--text0);
     margin-right: 6px;
     flex-shrink: 0;
     align-self: center;
@@ -36,7 +36,7 @@
   }
 
   .messageTitle {
-    color: var(--textColor0);
+    color: var(--text0);
     font-size: 20px;
     font-weight: bold;
   }
@@ -46,11 +46,11 @@
   }
 
   .messageCloseIcon {
-    color: var(--textColor0);
+    color: var(--text0);
   }
 
   .messageContent {
-    color: var(--textColor0);
+    color: var(--text0);
     font-size: 14px;
     margin-top: 8px;
   }

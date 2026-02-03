@@ -1,6 +1,6 @@
 :global(#app) {
   .version {
-    color: var(--textColor0);
+    color: var(--text0);
     font-weight: bold;
     text-align: center;
   }
@@ -25,7 +25,6 @@
   }
 
   .links {
-    color: var(--textColor0);
     margin: 20px 0;
     text-align: center;
   }

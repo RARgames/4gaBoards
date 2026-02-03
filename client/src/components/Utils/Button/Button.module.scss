@@ -7,7 +7,7 @@
 
   .default {
     background: var(--backgroundButtonDefault);
-    color: var(--textColor1);
+    color: var(--text1);
     overflow: hidden;
     padding: 8px;
     text-align: left;
@@ -47,7 +47,7 @@
   }
 
   .noBackground {
-    color: var(--textColor1);
+    color: var(--text1);
     overflow: hidden;
     padding: 8px;
     text-align: left;
@@ -119,7 +119,7 @@
 
   .login {
     background: var(--backgroundButtonAuth);
-    color: var(--textColor0);
+    color: var(--text0);
     border-radius: 3px;
     padding: 8px 12px;
     width: auto;
@@ -128,7 +128,7 @@
     overflow: hidden;
 
     svg {
-      fill: var(--textColor0);
+      fill: var(--text0);
     }
 
     &:hover {
@@ -191,7 +191,7 @@
 
   .popup {
     background: var(--backgroundPopup);
-    color: var(--textColor1);
+    color: var(--text1);
     overflow: hidden;
     padding: 8px 16px;
     text-align: left;
@@ -204,10 +204,10 @@
 
     &:hover {
       background: var(--backgroundPopupHover);
-      color: var(--textColor0);
+      color: var(--text0);
 
       svg {
-        fill: var(--textColor0);
+        fill: var(--text0);
       }
     }
 

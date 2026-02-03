@@ -1,6 +1,6 @@
 :global(#app) {
   .link {
-    color: var(--textColor2);
+    color: var(--text2);
     display: inline-block;
     font-size: 12px;
     line-height: 20px;
@@ -22,15 +22,15 @@
     }
 
     &:hover {
-      color: var(--textColor2);
+      color: var(--text2);
       .iconLink {
-        fill: var(--textColor2);
+        fill: var(--text2);
       }
     }
   }
 
   .iconLink {
-    fill: var(--textColor2);
+    fill: var(--text2);
     margin-right: 2px;
   }
 }

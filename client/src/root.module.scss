@@ -2,6 +2,7 @@
   #app {
     //Root
     background: var(--backgroundColor);
+    color: var(--text0);
 
     //MD Editor - Color Classes
     .black {
@@ -9,7 +10,7 @@
     }
 
     .grey {
-      color: var(--textColor1);
+      color: var(--mdGrey);
     }
 
     .white {
@@ -66,7 +67,7 @@
     }
 
     .w-md-editor-bar {
-      color: var(--textColor0);
+      color: var(--text0);
       width: 30px;
     }
 
@@ -213,7 +214,7 @@
 
     .react-datepicker__current-month,
     .react-datepicker-time__header {
-      color: var(--textColor1);
+      color: var(--text1);
       font-weight: 500;
       font-size: 14px;
       line-height: 32px;
@@ -241,7 +242,7 @@
     .react-datepicker__day-name,
     .react-datepicker__day,
     .react-datepicker__time-name {
-      color: var(--textColor1);
+      color: var(--text1);
       display: inline-block;
       width: 40px;
       font-weight: 500;
@@ -321,7 +322,7 @@
     .w-color-editable-input {
       --editable-input-label-color: var(--textColor3) !important;
       --editable-input-box-shadow: var(--colorPickerInputBoxShadow) 0px 0px 0px 1px inset !important;
-      --editable-input-color: var(--textColor2) !important;
+      --editable-input-color: var(--text1) !important;
     }
   }
 }

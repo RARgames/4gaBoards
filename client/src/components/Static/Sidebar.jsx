@@ -182,7 +182,7 @@ const Sidebar = React.memo(
                                       <Icon
                                         type={IconType.GitHub}
                                         size={IconSize.Size13}
-                                        className={clsx(s.githubGreen, board.notificationsTotal > 0 && s.githubNotifications)}
+                                        className={clsx(s.github, board.notificationsTotal > 0 && s.githubNotifications)}
                                         title={t('common.connectedToGithub', { repo: board.githubRepo })}
                                       />
                                     </ConnectionsPopup>
@@ -191,7 +191,7 @@ const Sidebar = React.memo(
                                       <Icon
                                         type={IconType.GitHub}
                                         size={IconSize.Size13}
-                                        className={clsx(s.githubGreen, board.notificationsTotal > 0 && s.githubNotifications)}
+                                        className={clsx(s.github, board.notificationsTotal > 0 && s.githubNotifications)}
                                         title={t('common.connectedToGithub', { repo: board.githubRepo })}
                                       />
                                     </div>

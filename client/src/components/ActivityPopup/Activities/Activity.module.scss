@@ -1,6 +1,6 @@
 :global(#app) {
   .author {
-    color: var(--textColor0);
+    color: var(--text0);
     display: inline-block;
     font-weight: bold;
     line-height: 20px;
@@ -27,7 +27,7 @@
   }
 
   .contentText {
-    color: var(--textColor2);
+    color: var(--text2);
     word-wrap: break-word;
     overflow: hidden;
   }

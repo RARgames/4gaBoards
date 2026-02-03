@@ -7,7 +7,7 @@
   }
 
   .content {
-    color: var(--textColor0);
+    color: var(--text0);
     border-bottom: 1px solid var(--backgroundPopupSeparator);
     font-size: 14px;
     font-weight: normal;
@@ -28,7 +28,7 @@
 
   .headerIcon {
     margin-left: 4px;
-    fill: var(--textColor2);
+    fill: var(--text2);
     vertical-align: baseline;
   }
 }

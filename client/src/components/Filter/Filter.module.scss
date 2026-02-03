@@ -17,14 +17,14 @@
     color: var(--textColor3);
 
     svg {
-      fill: var(--textColor3)
+      fill: var(--textColor3);
     }
 
     &:hover {
       color: var(--textColor4);
 
       svg {
-        fill: var(--textColor4)
+        fill: var(--textColor4);
       }
     }
   }

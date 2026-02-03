@@ -1,6 +1,6 @@
 :global(#app) {
   .addUser {
-    color: var(--textColor1);
+    color: var(--text1);
     background: var(--shadowBlack02);
     border-radius: 50%;
     box-shadow: none;
@@ -12,7 +12,7 @@
       background: var(--shadowBlack03);
 
       svg {
-        fill: var(--textColor1);
+        fill: var(--text1);
       }
     }
   }

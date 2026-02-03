@@ -18,7 +18,7 @@
 
   .sidebar {
     background-color: var(--backgroundSidebar);
-    color: var(--textColor0);
+    color: var(--text0);
     width: 230px;
     height: 100%;
     box-shadow: 2px 0 5px var(--shadowBlack01);
@@ -56,7 +56,7 @@
   }
 
   .sidebarTitle {
-    color: var(--textPrimaryStrong);
+    color: var(--text0Strong);
     font-size: 16px;
     font-weight: bold;
     margin: 10px 0 10px 6px;
@@ -65,7 +65,7 @@
   .sidebarTitleIcon {
     margin-right: 6px;
     vertical-align: -10%;
-    fill: var(--textPrimaryStrong);
+    fill: var(--text0Strong);
   }
 
   .sidebarItem {
@@ -120,7 +120,7 @@
 
     &:hover {
       button {
-        color: var(--textColor0);
+        color: var(--text0);
       }
     }
 
@@ -143,47 +143,43 @@
 
     &:hover {
       button {
-        color: var(--textColor0);
+        color: var(--text0);
       }
 
       svg {
-        fill: var(--textColor0) !important;
+        fill: var(--text0) !important;
       }
     }
   }
 
   .sidebarButton {
-    color: var(--textColor0);
+    color: var(--text0);
 
     svg {
-      fill: var(--textColor0);
+      fill: var(--text0);
     }
 
     &:hover {
-      color: var(--textColor1);
+      color: var(--text1);
 
       svg {
-        fill: var(--textColor1);
+        fill: var(--text1);
       }
     }
   }
 
   .icon {
     margin-right: 4px;
-    fill: var(--textColor0);
+    fill: var(--text0);
   }
 
   .sidebarButtonPadding {
     padding: 8px 8px 8px 0px;
   }
 
-  .githubGreen {
+  .github {
     fill: var(--textColorGreen);
     margin-left: 4px;
-  }
-
-  .githubGrey {
-    fill: var(--textColor0);
   }
 
   .githubNotifications {
