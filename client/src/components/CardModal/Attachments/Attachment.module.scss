@@ -15,7 +15,7 @@
 
   .date {
     display: block;
-    color: var(--attachmentDate);
+    color: var(--textAttachmentDate);
     line-height: 20px;
     margin-bottom: 6px;
   }
@@ -28,7 +28,7 @@
   }
 
   .extension {
-    color: var(--attachmentExtension);
+    color: var(--textAttachmentExtension);
     display: block;
     font-size: 18px;
     font-weight: 700;
@@ -53,11 +53,11 @@
   }
 
   .optionButton {
-    color: var(--attachmentButton);
+    color: var(--backgroundButtonAttachment);
     padding: 0;
 
     &:hover {
-      color: var(--attachmentButtonHover);
+      color: var(--backgroundButtonAttachmentHover);
     }
   }
 
@@ -73,7 +73,7 @@
 
   .thumbnail {
     border-radius: 3px;
-    background: var(--attachmentThumbnail);
+    background: var(--backgroundAttachment);
     border-radius: 3px;
     height: 80px;
     left: 0;

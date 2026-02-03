@@ -105,7 +105,8 @@
 
     .w-md-editor-text-input {
       &::selection {
-        -webkit-text-fill-color: var(--textColor00);
+        -webkit-text-fill-color: var(--textSelection);
+        background: var(--backgroundSelection);
       }
     }
 

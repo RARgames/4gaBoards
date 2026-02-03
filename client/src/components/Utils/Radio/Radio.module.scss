@@ -20,7 +20,7 @@
     height: 0;
 
     &:checked + .switchRound {
-      background-color: var(--radioBlue);
+      background-color: var(--backgroundRadioEnabled);
     }
   }
 
@@ -30,7 +30,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--backgroundRadio);
+    background: var(--backgroundRadioDisabled);
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 17px;
@@ -43,7 +43,7 @@
     width: 13px;
     left: 2px;
     bottom: 2px;
-    background-color: var(--radioBlack);
+    background-color: var(--backgroundRadioHandle);
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;

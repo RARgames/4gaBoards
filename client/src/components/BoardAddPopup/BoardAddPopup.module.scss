@@ -45,6 +45,12 @@
     &:hover {
       background: var(--backgroundCheckboxHover);
     }
+
+    &:disabled {
+      &:hover {
+        background: inherit;
+      }
+    }
   }
 
   .checkboxText {

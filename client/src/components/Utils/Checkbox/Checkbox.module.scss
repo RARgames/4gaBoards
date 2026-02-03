@@ -26,7 +26,6 @@
     }
 
     &:disabled {
-      background: var(--backgroundDisabled);
       border: 1px solid var(--backgroundPopupSeparator);
       cursor: not-allowed;
     }

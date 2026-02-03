@@ -60,6 +60,12 @@
     &:hover {
       background: var(--backgroundCheckboxHover);
     }
+
+    &:disabled {
+      &:hover {
+        background: inherit;
+      }
+    }
   }
 
   .members {
@@ -75,7 +81,7 @@
   }
 
   .moreMembers {
-    color: var(--textColor00);
+    color: var(--textPrimaryStrong);
     background: var(--shadowBlack02);
     border-radius: 50%;
     text-align: center;

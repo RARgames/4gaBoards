@@ -53,11 +53,10 @@
     justify-content: center;
     top: -33px;
     left: 6px;
-    background-color: var(--backgroundHeader);
   }
 
   .sidebarTitle {
-    color: var(--textColor00);
+    color: var(--textPrimaryStrong);
     font-size: 16px;
     font-weight: bold;
     margin: 10px 0 10px 6px;
@@ -66,7 +65,7 @@
   .sidebarTitleIcon {
     margin-right: 6px;
     vertical-align: -10%;
-    fill: var(--textColor00);
+    fill: var(--textPrimaryStrong);
   }
 
   .sidebarItem {

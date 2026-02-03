@@ -109,7 +109,7 @@
 
     &:hover {
       &::before {
-        background: var(--tableResizeHover);
+        background: var(--borderTableResizeHover);
       }
     }
   }
@@ -121,7 +121,7 @@
     transform: translateX(-50%);
     height: 100%;
     width: 2px;
-    background: var(--tableResize);
+    background: var(--borderTableResize);
   }
 
   .sortingIndicator {
