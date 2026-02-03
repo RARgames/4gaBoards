@@ -38,11 +38,6 @@
   --backgroundFilterSelected: #121920;
   --backgroundFillBase: #1f2d3c;
   --backgroundFillBase2: #17232c;
-  --backgroundMdEditor: #17232c;
-  --backgroundMdEditorToolbar: #1e2d39;
-  --mdEditorIcon: var(--text3);
-  --mdEditorIconHover: #58a6ff;
-  --mdEditorIconDisabled: #30363d;
   --backgroundInput: #17232c;
   --backgroundInputDisabled: #1e2d39;
   --backgroundDropdown: #1e2d39;
@@ -152,24 +147,28 @@
   --taskActivity: #4a95d3;
   --attachmentActivity: #5c6bc0;
   --commentActivity: #bb66d3;
+
   /* Progress Bar */
-  --red: #db2828;
-  --orange: #f2711c;
-  --yellow: #fbbd08;
-  --olive: #b5cc18;
-  --green: #21ba45;
+  --backgroundProgressBarRed: #db2828;
+  --backgroundProgressBarOrange: #f2711c;
+  --backgroundProgressBarYellow: #fbbd08;
+  --backgroundProgressBarOlive: #b5cc18;
+  --backgroundProgressBarGreen: #21ba45;
+
   /* User Avatar */
-  --emerald: #2ecc71;
-  --peterRiver: #3498db;
-  --wisteria: #8e44ad;
-  --carrot: #e67e22;
-  --alizarin: #e74c3c;
-  --turquoise: #1abc9c;
-  --midnightBlue: #2c3e50;
+  --backgroundAvatarEmerald: #2ecc71;
+  --backgroundAvatarPeterRiver: #3498db;
+  --backgroundAvatarWisteria: #8e44ad;
+  --backgroundAvatarCarrot: #e67e22;
+  --backgroundAvatarAlizarin: #e74c3c;
+  --backgroundAvatarTurquoise: #1abc9c;
+  --backgroundAvatarMidnightBlue: #2c3e50;
+
   /* Due Date */
   --dueDateNormal: #999999;
   --dueDateClose: #fdd41e;
   --dueDateOver: #ff3030;
+
   /* Markdown Editor */
   --mdBlack: #000000;
   --mdGrey: #d3d3d3;
@@ -184,7 +183,14 @@
   --mdBlue: #006eff;
   --mdCyan: #00ffff;
   --mdOrange: #ffa500;
-  --mdEditorPreviewBoxShadow: #30363d;
+
+  --backgroundMdEditor: #17232c;
+  --backgroundMdEditorToolbar: #1e2d39;
+  --mdEditorIcon: var(--text3);
+  --mdEditorIconHover: #58a6ff;
+  --mdEditorIconDisabled: #30363d;
+  --mdEditorPreviewBoxSeparator: #30363d;
+
   /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
 }
@@ -213,11 +219,6 @@
   --backgroundFilterSelected: #1c2128;
   --backgroundFillBase: #161b22;
   --backgroundFillBase2: #161b22;
-  --backgroundMdEditor: #161b22;
-  --backgroundMdEditorToolbar: #010409;
-  --mdEditorIcon: var(--text3);
-  --mdEditorIconHover: #58a6ff;
-  --mdEditorIconDisabled: #30363d;
   --backgroundInput: #161b22;
   --backgroundInputDisabled: #010409;
   --backgroundDropdown: #010409;
@@ -327,24 +328,28 @@
   --taskActivity: #4a95d3;
   --attachmentActivity: #5c6bc0;
   --commentActivity: #bb66d3;
+
   /* Progress Bar */
-  --red: #f85149;
-  --orange: #fb8500;
-  --yellow: #e3b341;
-  --olive: #a2d729;
-  --green: #3fb950;
+  --backgroundProgressBarRed: #f85149;
+  --backgroundProgressBarOrange: #fb8500;
+  --backgroundProgressBarYellow: #e3b341;
+  --backgroundProgressBarOlive: #a2d729;
+  --backgroundProgressBarGreen: #3fb950;
+
   /* User Avatar */
-  --emerald: #3fb950;
-  --peterRiver: #58a6ff;
-  --wisteria: #bc8cff;
-  --carrot: #fb8500;
-  --alizarin: #f85149;
-  --turquoise: #56d4dd;
-  --midnightBlue: #1f6feb;
+  --backgroundAvatarEmerald: #3fb950;
+  --backgroundAvatarPeterRiver: #58a6ff;
+  --backgroundAvatarWisteria: #bc8cff;
+  --backgroundAvatarCarrot: #fb8500;
+  --backgroundAvatarAlizarin: #f85149;
+  --backgroundAvatarTurquoise: #56d4dd;
+  --backgroundAvatarMidnightBlue: #1f6feb;
+
   /* Due Date */
   --dueDateNormal: #8b949e;
   --dueDateClose: #d29922;
   --dueDateOver: #f85149;
+
   /* Markdown Editor */
   --mdBlack: #0d1117;
   --mdGrey: #8b949e;
@@ -359,7 +364,14 @@
   --mdBlue: #58a6ff;
   --mdCyan: #56d4dd;
   --mdOrange: #fb8500;
-  --mdEditorPreviewBoxShadow: #30363d;
+
+  --backgroundMdEditor: #161b22;
+  --backgroundMdEditorToolbar: #010409;
+  --mdEditorIcon: var(--text3);
+  --mdEditorIconHover: #58a6ff;
+  --mdEditorIconDisabled: #30363d;
+  --mdEditorPreviewBoxSeparator: #30363d;
+
   /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
 }
@@ -388,11 +400,6 @@
   --backgroundFilterSelected: #e6f0ff;
   --backgroundFillBase: #ffffff;
   --backgroundFillBase2: #cfd7e2;
-  --backgroundMdEditor: #cfd7e2;
-  --backgroundMdEditorToolbar: #e0e6ef;
-  --mdEditorIcon: var(--text3);
-  --mdEditorIconHover: #2196f3;
-  --mdEditorIconDisabled: #cccccc;
   --backgroundInput: #cfd7e2;
   --backgroundInputDisabled: #e0e6ef;
   --backgroundDropdown: #e0e6ef;
@@ -502,24 +509,28 @@
   --taskActivity: #4a95d3;
   --attachmentActivity: #5c6bc0;
   --commentActivity: #bb66d3;
+
   /* Progress Bar */
-  --red: #e53935;
-  --orange: #fb8c00;
-  --yellow: #ffa000;
-  --olive: #9ccc65;
-  --green: #43a047;
+  --backgroundProgressBarRed: #e53935;
+  --backgroundProgressBarOrange: #fb8c00;
+  --backgroundProgressBarYellow: #ffa000;
+  --backgroundProgressBarOlive: #9ccc65;
+  --backgroundProgressBarGreen: #43a047;
+
   /* User Avatar */
-  --emerald: #43a047;
-  --peterRiver: #2196f3;
-  --wisteria: #9b59b6;
-  --carrot: #fb8c00;
-  --alizarin: #e53935;
-  --turquoise: #1abc9c;
-  --midnightBlue: #2196f3;
+  --backgroundAvatarEmerald: #43a047;
+  --backgroundAvatarPeterRiver: #2196f3;
+  --backgroundAvatarWisteria: #9b59b6;
+  --backgroundAvatarCarrot: #fb8c00;
+  --backgroundAvatarAlizarin: #e53935;
+  --backgroundAvatarTurquoise: #1abc9c;
+  --backgroundAvatarMidnightBlue: #2196f3;
+
   /* Due Date */
   --dueDateNormal: #777777;
   --dueDateClose: #ffa000;
   --dueDateOver: #e53935;
+
   /* Markdown Editor */
   --mdBlack: #000000;
   --mdGrey: #555555;
@@ -534,7 +545,14 @@
   --mdBlue: #2196f3;
   --mdCyan: #00bcd4;
   --mdOrange: #fb8c00;
-  --mdEditorPreviewBoxShadow: #b0b0b0;
+
+  --backgroundMdEditor: #cfd7e2;
+  --backgroundMdEditorToolbar: #e0e6ef;
+  --mdEditorIcon: var(--text3);
+  --mdEditorIconHover: #2196f3;
+  --mdEditorIconDisabled: #cccccc;
+  --mdEditorPreviewBoxSeparator: #b0b0b0;
+
   /* Color Picker */
   --colorPickerInputBoxShadow: #b0b0b0;
 }
