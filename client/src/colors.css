@@ -69,6 +69,7 @@
   --backgroundPopupShadow: #19232e;
   --borderSubtle: rgba(54, 75, 97, 0.5);
   --borderVivid: #5f6064;
+  --borderSidebar: var(--borderVivid);
   --borderTableResize: var(--borderVivid);
   --borderTableResizeHover: #4b4b4e;
   --accentSelected: #34b7cd;
@@ -251,6 +252,7 @@
   --backgroundPopupShadow: #010409;
   --borderSubtle: rgba(88, 166, 255, 0.4);
   --borderVivid: #5f6064;
+  --borderSidebar: #5f6064;
   --borderTableResize: #30363d;
   --borderTableResizeHover: #484f58;
   --accentSelected: #1f6feb;
@@ -433,6 +435,7 @@
   --backgroundPopupShadow: rgba(0, 0, 0, 0.1);
   --borderSubtle: rgba(54, 75, 97, 0.3);
   --borderVivid: #999999;
+  --borderSidebar: #c2c2c2;
   --borderTableResize: #d1d9e0;
   --borderTableResizeHover: #a8a8a8;
   --accentSelected: #0d6efd;
