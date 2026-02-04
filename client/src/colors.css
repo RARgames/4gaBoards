@@ -182,7 +182,7 @@
 
 /* Github Dark Theme */
 [data-theme='github-dark'] {
-  --backgroundColor: #0d1117 !important; /* Override loading.css */
+  --backgroundColor: #22252a !important; /* Override loading.css */
   --fakeColor: #000; /* FIXME: 1st color after !important does not show in custom theme editor */
   --backgroundBase0: #161b22;
   --backgroundBase1: #161b22;
@@ -203,9 +203,9 @@
   --backgroundAttachment: #161b22;
   --backgroundAttachmentHover: #0d1117;
   --backgroundFilter: #161b22;
-  --backgroundFilterHover: #1c2128;
-  --backgroundFilterSelected: #1c2128;
-  --backgroundFilterSelectedHover: #1d2024;
+  --backgroundFilterHover: #232b35;
+  --backgroundFilterSelected: #232b35;
+  --backgroundFilterSelectedHover: #2f3844;
   --backgroundInput: #161b22;
   --backgroundInputDisabled: #010409;
   --backgroundDropdown: #010409;
