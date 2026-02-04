@@ -28,7 +28,7 @@
 - **Google/GitHub/Microsoft/OIDC SSO Login/Register**
 - **Simplistic Wide Screen Design** - minimal clutter and no wasted space
 - **Powerful Shortcuts**
-- **Multiple Language Support** _(EN, PL, FR, PT - 100%, other languages - partial support)_
+- **Multiple Language Support** _(EN, PL, FR, PT, ZH - 100%, other languages - partial support)_
 - **Collapsable Lists and Sidebar** - saves screen space and allows for easier navigation in complex projects
 - **Multi-level Hierarchy** - projects -> boards -> lists -> cards -> tasks
 - **Github 2-way sync** - Coming soon
@@ -212,4 +212,3 @@ Default password: `demo`
 
 [![RARgames](https://github.com/RARgames.png?size=100)](https://github.com/RARgames)
 [![wilkobyl](https://github.com/wilkobyl.png?size=100)](https://github.com/wilkobyl)
-
