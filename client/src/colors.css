@@ -1,3 +1,5 @@
+/* IMPORTANT: Only use hex/rgb/rgba/vars in colors */
+
 /* Default Theme */
 :root {
   --backgroundColor: #22252a !important; /* Override loading.css */

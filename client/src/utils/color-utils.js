@@ -1,4 +1,4 @@
-export const isColor = (v) => v.startsWith('#') || v.startsWith('rgb') || v.startsWith('hsl');
+export const isColor = (v) => v.startsWith('#') || v.startsWith('rgb');
 
 export const readCSSVars = (el) => {
   const styles = getComputedStyle(el);
