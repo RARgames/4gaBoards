@@ -56,7 +56,7 @@ const Sidebar = React.memo(
     onMailCreate,
     onMailUpdate,
     onMailDelete,
-    onUserProjectUpdate,
+    // onUserProjectUpdate,
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
@@ -227,6 +227,10 @@ const Sidebar = React.memo(
                                   onExport={(data) => onBoardExport(board.id, data)}
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
+                                  currBoardId={currBoardId}
+                                  mailId={mailId}
+                                  mailCountForBoardId={mailCountForBoardId}
+                                  mailsForBoard={mailsForBoard}
                                   onMailCreate={onMailCreate}
                                   onMailUpdate={onMailUpdate}
                                   onMailCopy={handleMailCopy}
@@ -411,7 +415,7 @@ Sidebar.propTypes = {
   onMailCreate: PropTypes.func.isRequired,
   onMailUpdate: PropTypes.func.isRequired,
   onMailDelete: PropTypes.func.isRequired,
-  onUserProjectUpdate: PropTypes.func.isRequired,
+  // onUserProjectUpdate: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
