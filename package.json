@@ -27,6 +27,8 @@
     "server:db:migration_make": "npm run db:migration_make --prefix server",
     "server:db:seed": "npm run db:seed --prefix server",
     "server:lint": "npm run lint --prefix server",
+    "server:notifications:bootstrap": "node server/notifications-bootstrap.js",
+    "server:notifications:configure": "node server/notifications-configure.js",
     "server:start": "npm start --prefix server",
     "server:start:prod": "npm run start:prod --prefix server",
     "server:test": "npm test --prefix server",
