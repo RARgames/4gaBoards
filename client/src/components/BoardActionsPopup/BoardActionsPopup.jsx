@@ -37,7 +37,7 @@ const BoardActionsStep = React.memo(
     updatedAt,
     updatedBy,
     memberships,
-    boardId,
+    currBoardId,
     mailId,
     mailCountForBoardId,
     mailsForBoard,
@@ -108,7 +108,7 @@ const BoardActionsStep = React.memo(
               mailId={mailId}
               totalMails={mailCountForBoardId}
               contextType="board"
-              contextId={boardId}
+              contextId={currBoardId}
               onGenerate={onMailCreate}
               onReset={onMailUpdate}
               onCopy={onMailCopy}
@@ -177,7 +177,7 @@ BoardActionsStep.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isProjectManager: PropTypes.bool.isRequired,
-  boardId: PropTypes.string.isRequired,
+  currBoardId: PropTypes.string.isRequired,
   mailId: PropTypes.string,
   mailCountForBoardId: PropTypes.number.isRequired,
   mailsForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
