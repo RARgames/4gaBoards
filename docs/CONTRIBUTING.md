@@ -38,3 +38,7 @@ Additional rules:
 #### JavaScript
 
 All JavaScript code should follow this [JavaScript style guide](https://github.com/airbnb/javascript). The pre-commit hook will help you find linting errors before committing.
+
+### Notice
+
+By contributing, you agree that your contributions will be licensed under the MIT License.
