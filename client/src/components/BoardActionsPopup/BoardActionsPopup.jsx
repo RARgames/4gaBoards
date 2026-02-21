@@ -7,6 +7,8 @@ import { ActivityStep } from '../ActivityPopup';
 import { ConnectionsStep } from '../ConnectionsPopup';
 import DeleteStep from '../DeleteStep';
 import ExportStep from '../ExportStep';
+import MailListStep from '../Mail/MailListStep';
+import MailStep from '../Mail/MailStep';
 import RenameStep from '../RenameStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
@@ -18,6 +20,8 @@ const StepTypes = {
   EXPORT: 'EXPORT',
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
+  MAIL: 'MAIL',
+  MAIL_LIST: 'MAIL_LIST',
 };
 
 const BoardActionsStep = React.memo(
@@ -33,11 +37,19 @@ const BoardActionsStep = React.memo(
     updatedAt,
     updatedBy,
     memberships,
+    currBoardId,
+    mailId,
+    mailCountForBoardId,
+    mailsForBoard,
     isProjectManager,
     onUpdate,
     onExport,
     onDelete,
     onActivitiesFetch,
+    onMailCreate,
+    onMailUpdate,
+    onMailCopy,
+    onMailDelete,
     onClose,
   }) => {
     const [t] = useTranslation();
@@ -90,6 +102,22 @@ const BoardActionsStep = React.memo(
               onClose={onClose}
             />
           );
+        case StepTypes.MAIL:
+          return (
+            <MailStep
+              mailId={mailId}
+              totalMails={mailCountForBoardId}
+              contextType="board"
+              contextId={currBoardId}
+              onGenerate={onMailCreate}
+              onReset={onMailUpdate}
+              onCopy={onMailCopy}
+              onDelete={onMailDelete}
+              onBack={handleBack}
+            />
+          );
+        case StepTypes.MAIL_LIST:
+          return <MailListStep title={t('common.mailIds', { context: 'title' })} mails={mailsForBoard} contextType="board" onDelete={onMailDelete} onBack={handleBack} />;
         default:
       }
     }
@@ -118,6 +146,12 @@ const BoardActionsStep = React.memo(
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={() => openStep(StepTypes.MAIL)}>
+          {t('common.mailSettings', { context: 'title' })}
+        </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={() => openStep(StepTypes.MAIL_LIST)}>
+          {t('common.mailIds')}
+        </Button>
         {isProjectManager && <Popup.Separator />}
         {isProjectManager && (
           <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
@@ -143,10 +177,18 @@ BoardActionsStep.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isProjectManager: PropTypes.bool.isRequired,
+  currBoardId: PropTypes.string.isRequired,
+  mailId: PropTypes.string,
+  mailCountForBoardId: PropTypes.number.isRequired,
+  mailsForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
+  onMailCopy: PropTypes.func.isRequired,
+  onMailDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
@@ -156,6 +198,7 @@ BoardActionsStep.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  mailId: null,
 };
 
 export default withPopup(BoardActionsStep);

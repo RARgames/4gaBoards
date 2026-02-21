@@ -9,7 +9,9 @@
  * https://sailsjs.com/config/bootstrap
  */
 const { setupOIDC } = require('./passport');
+const { setupNotifications } = require('./notifications');
 
 module.exports.bootstrap = async () => {
   setupOIDC();
+  setupNotifications();
 };

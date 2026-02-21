@@ -39,10 +39,16 @@ const List = React.memo(
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    isManager,
+    mailId,
+    mailsForList,
     onUpdate,
     onDelete,
     onCardCreate,
     onActivitiesFetch,
+    onMailCreate,
+    onMailUpdate,
+    onMailDelete,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -124,6 +130,12 @@ const List = React.memo(
     const handleNameEditHeightChange = useCallback((height) => {
       setNameEditHeight(height);
     }, []);
+
+    const handleMailCopy = useCallback(() => {
+      if (mailId) {
+        navigator.clipboard.writeText(mailId);
+      }
+    }, [mailId]);
 
     useEffect(() => {
       if (isAddCardOpen && listWrapper.current) {
@@ -265,10 +277,17 @@ const List = React.memo(
                       isActivitiesFetching={isActivitiesFetching}
                       isAllActivitiesFetched={isAllActivitiesFetched}
                       lastActivityId={lastActivityId}
+                      isManager={isManager}
+                      mailId={mailId}
+                      mailsForList={mailsForList}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
-                      onDelete={onDelete}
                       onActivitiesFetch={onActivitiesFetch}
+                      onMailCreate={onMailCreate}
+                      onMailUpdate={onMailUpdate}
+                      onMailCopy={handleMailCopy}
+                      onMailDelete={onMailDelete}
+                      onDelete={onDelete}
                       position="left-start"
                       offset={0}
                       hideCloseButton
@@ -316,10 +335,16 @@ List.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  isManager: PropTypes.bool.isRequired,
+  mailId: PropTypes.string,
+  mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onMailCreate: PropTypes.func.isRequired,
+  onMailUpdate: PropTypes.func.isRequired,
+  onMailDelete: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {
@@ -328,6 +353,7 @@ List.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
+  mailId: null,
 };
 
 export default List;

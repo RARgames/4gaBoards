@@ -11,6 +11,7 @@ const makeMapStateToProps = () => {
   const selectCardIdsByListId = selectors.makeSelectCardIdsByListId();
   const selectIsFilteredByListId = selectors.makeSelectIsFilteredByListId();
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
+  const selectMailsByListId = selectors.makeSelectMailsByListId();
 
   return (state, { id, index }) => {
     const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched, lastActivityId } = selectListById(state, id);
@@ -22,8 +23,13 @@ const makeMapStateToProps = () => {
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const activities = selectors.selectListActivitiesById(state, id);
+    const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+
+    const mail = selectors.selectMailForCurrentUserByListId(state, id);
+    const mailId = mail?.mailId ?? null;
+    const mailsForList = selectMailsByListId(state, id);
 
     return {
       id,
@@ -46,6 +52,9 @@ const makeMapStateToProps = () => {
       isActivitiesFetching,
       isAllActivitiesFetched,
       lastActivityId,
+      isManager,
+      mailId,
+      mailsForList,
     };
   };
 };
@@ -57,6 +66,9 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onDelete: () => entryActions.deleteList(id),
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
       onActivitiesFetch: () => entryActions.fetchListActivities(id),
+      onMailCreate: () => entryActions.createMail({ listId: id }),
+      onMailUpdate: () => entryActions.updateMail({ listId: id }),
+      onMailDelete: (mailId) => entryActions.deleteMail(mailId),
     },
     dispatch,
   );

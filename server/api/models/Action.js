@@ -21,6 +21,11 @@ const Types = {
   /* INSTANCE Activities */
   INSTANCE_UPDATE: 'instanceUpdate',
 
+  /* API KEY Activities (scopes: Instance, User) */
+  API_KEY_CREATE: 'apiKeyCreate',
+  API_KEY_UPDATE: 'apiKeyUpdate',
+  API_KEY_DELETE: 'apiKeyDelete',
+
   /* USER Activities */
   USER_CREATE: 'userCreate',
   USER_REGISTER: 'userRegister',
