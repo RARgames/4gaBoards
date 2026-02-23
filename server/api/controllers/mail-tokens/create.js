@@ -49,7 +49,6 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    let list = null;
     let board;
 
     if (inputs.listId) {
@@ -66,32 +65,19 @@ module.exports = {
     });
 
     if (!boardMembership) {
-      throw list ? Errors.LIST_NOT_FOUND : Errors.BOARD_NOT_FOUND; // Forbidden
+      throw Errors.BOARD_NOT_FOUND; // Forbidden
     }
 
     if (boardMembership.role !== BoardMembership.Roles.EDITOR) {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const criteria = { userId: currentUser.id };
-    if (list) {
-      criteria.listId = list.id;
-    } else {
-      criteria.boardId = board.id;
-      criteria.listId = null;
-    }
-
-    const existing = await MailToken.findOne(criteria);
-    if (existing) {
-      throw Errors.MAIL_TOKEN_ALREADY_EXISTS;
-    }
-
     const mailToken = await sails.helpers.mailTokens.createOne.with({
       values: {
-        userId: currentUser.id,
-        listId: list ? list.id : null,
-        boardId: board.id,
+        list: inputs.listId ? list : undefined,
+        board: inputs.boardId ? board : undefined,
       },
+      currentUser,
       request: this.req,
     });
 

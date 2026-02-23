@@ -51,8 +51,8 @@ const MailTokenListStep = React.memo(({ mailTokens, title, contextType, onDelete
       case StepTypes.DELETE:
         return (
           <DeleteStep
-            title={t('common.deleteMailId_title', { context: 'title' })}
-            content={t('common.areYouSureYouWantToDeleteThisMailId')}
+            title={t('common.deleteMailToken_title', { context: 'title' })}
+            content={t('common.areYouSureYouWantToDeleteThisMailToken')}
             buttonContent={t('action.delete')}
             onConfirm={() => {
               onDelete(step.params.mailId);
