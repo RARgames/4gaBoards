@@ -45,7 +45,7 @@ module.exports = {
     const labels = await sails.helpers.boards.getLabels(board.id);
     const lists = await sails.helpers.boards.getLists(board.id);
 
-    const mails = await sails.helpers.boards.getMails(board.id);
+    const mailTokens = await sails.helpers.boards.getMailTokens(board.id);
 
     const cards = await sails.helpers.boards.getCards(board.id);
     const cardIds = sails.helpers.utils.mapRecords(cards);
@@ -85,7 +85,7 @@ module.exports = {
         boardMemberships,
         labels,
         lists,
-        mails,
+        mailTokens,
         cards,
         cardMemberships,
         cardLabels,

@@ -7,7 +7,7 @@ import comments from './comments';
 import core from './core';
 import labels from './labels';
 import lists from './lists';
-import mails from './mails';
+import mailTokens from './mail-tokens';
 import modals from './modals';
 import projectManagers from './project-managers';
 import projects from './projects';
@@ -27,7 +27,7 @@ export default {
   ...core,
   ...labels,
   ...lists,
-  ...mails,
+  ...mailTokens,
   ...modals,
   ...projectManagers,
   ...projects,

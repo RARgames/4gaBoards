@@ -11,7 +11,7 @@ const makeMapStateToProps = () => {
   const selectCardIdsByListId = selectors.makeSelectCardIdsByListId();
   const selectIsFilteredByListId = selectors.makeSelectIsFilteredByListId();
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
-  const selectMailsByListId = selectors.makeSelectMailsByListId();
+  const selectMailTokensByListId = selectors.makeSelectMailTokensByListId();
 
   return (state, { id, index }) => {
     const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched, lastActivityId } = selectListById(state, id);
@@ -27,9 +27,9 @@ const makeMapStateToProps = () => {
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
-    const mail = selectors.selectMailForCurrentUserByListId(state, id);
-    const mailId = mail?.mailId ?? null;
-    const mailsForList = selectMailsByListId(state, id);
+    const mail = selectors.selectMailTokenForCurrentUserByListId(state, id);
+    const mailToken = mail?.mailToken ?? null;
+    const mailTokensForList = selectMailTokensByListId(state, id);
 
     return {
       id,
@@ -53,8 +53,8 @@ const makeMapStateToProps = () => {
       isAllActivitiesFetched,
       lastActivityId,
       isManager,
-      mailId,
-      mailsForList,
+      mailToken,
+      mailTokensForList,
     };
   };
 };
@@ -66,9 +66,9 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onDelete: () => entryActions.deleteList(id),
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
       onActivitiesFetch: () => entryActions.fetchListActivities(id),
-      onMailCreate: () => entryActions.createMail({ listId: id }),
-      onMailUpdate: () => entryActions.updateMail({ listId: id }),
-      onMailDelete: (mailId) => entryActions.deleteMail(mailId),
+      onMailTokenCreate: () => entryActions.createMailToken({ listId: id }),
+      onMailTokenUpdate: () => entryActions.updateMailToken({ listId: id }),
+      onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
     },
     dispatch,
   );

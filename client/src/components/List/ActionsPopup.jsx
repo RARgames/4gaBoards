@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
-import MailListStep from '../Mail/MailListStep';
-import MailStep from '../Mail/MailStep';
+import MailTokenListStep from '../MailToken/MailTokenListStep';
+import MailTokenStep from '../MailToken/MailTokenStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
@@ -27,8 +27,8 @@ const ActionsStep = React.memo(
     updatedBy,
     boardMemberships,
     isManager,
-    mailId,
-    mailsForList,
+    mailToken,
+    mailTokensForList,
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
@@ -36,10 +36,10 @@ const ActionsStep = React.memo(
     onNameEdit,
     onCardAdd,
     onActivitiesFetch,
-    onMailCreate,
-    onMailUpdate,
-    onMailCopy,
-    onMailDelete,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenCopy,
+    onMailTokenDelete,
     onDelete,
     onClose,
   }) => {
@@ -105,10 +105,19 @@ const ActionsStep = React.memo(
           );
         case StepTypes.MAIL:
           return (
-            <MailStep mailId={mailId} totalMails={mailsForList.length} contextType="list" onGenerate={onMailCreate} onReset={onMailUpdate} onCopy={onMailCopy} onDelete={onMailDelete} onBack={handleBack} />
+            <MailTokenStep
+              mailToken={mailToken}
+              totalMailTokens={mailTokensForList.length}
+              contextType="list"
+              onGenerate={onMailTokenCreate}
+              onReset={onMailTokenUpdate}
+              onCopy={onMailTokenCopy}
+              onDelete={onMailTokenDelete}
+              onBack={handleBack}
+            />
           );
         case StepTypes.MAIL_LIST:
-          return <MailListStep title={t('common.mailIds', { context: 'title' })} mails={mailsForList} contextType="list" onDelete={onMailDelete} onBack={handleBack} />;
+          return <MailTokenListStep title={t('common.mailTokens', { context: 'title' })} mailTokens={mailTokensForList} contextType="list" onDelete={onMailTokenDelete} onBack={handleBack} />;
         default:
       }
     }
@@ -157,14 +166,14 @@ ActionsStep.propTypes = {
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
   isManager: PropTypes.bool.isRequired,
-  mailId: PropTypes.string,
-  mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailToken: PropTypes.string,
+  mailTokensForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
-  onMailCreate: PropTypes.func.isRequired,
-  onMailUpdate: PropTypes.func.isRequired,
-  onMailCopy: PropTypes.func.isRequired,
-  onMailDelete: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenCopy: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -176,7 +185,7 @@ ActionsStep.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
-  mailId: null,
+  mailToken: null,
 };
 
 export default withPopup(ActionsStep);

@@ -17,24 +17,24 @@ module.exports = {
   },
 
   async fn(inputs) {
-    let mail;
-    let newMailId;
+    let mailToken;
+    let newMailTokenToken;
 
     do {
-      newMailId = crypto.randomBytes(8).toString('hex');
+      newMailTokenToken = crypto.randomBytes(8).toString('hex');
       /* eslint-disable-next-line no-await-in-loop */
-      mail = await Mail.findOne({ mailId: newMailId });
-    } while (mail);
+      mailToken = await MailToken.findOne({ token: newMailTokenToken });
+    } while (mailToken);
 
-    const updated = await Mail.updateOne({ id: inputs.values.id }).set({
-      mailId: newMailId,
+    const updated = await MailToken.updateOne({ id: inputs.values.id }).set({
+      token: newMailTokenToken,
       updatedAt: new Date().toUTCString(),
     });
 
     if (updated) {
       sails.sockets.broadcast(
         `board:${updated.boardId}`,
-        'mailUpdate',
+        'mailTokenUpdate',
         {
           item: updated,
         },

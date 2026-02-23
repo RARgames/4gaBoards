@@ -6,17 +6,17 @@ import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 import { Button, ButtonStyle, Popup } from '../Utils';
 
-import * as s from './MailStep.module.scss';
+import * as s from './MailTokenStep.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
 };
 
-const MailStep = React.memo(({ mailId, totalMails, contextType, contextId, onGenerate, onReset, onDelete, onCopy, onBack }) => {
+const MailTokenStep = React.memo(({ mailToken, totalMailTokens, contextType, contextId, onGenerate, onReset, onDelete, onCopy, onBack }) => {
   const [step, openStep, handleBack] = useSteps();
   const [t] = useTranslation();
 
-  const handleGenerateMail = useCallback(() => {
+  const handleGenerateMailToken = useCallback(() => {
     if (contextType === 'list') {
       onGenerate();
     } else if (contextType === 'board') {
@@ -24,7 +24,7 @@ const MailStep = React.memo(({ mailId, totalMails, contextType, contextId, onGen
     }
   }, [contextType, contextId, onGenerate]);
 
-  const handleResetMail = useCallback(() => {
+  const handleResetMailToken = useCallback(() => {
     if (contextType === 'list') {
       onReset();
     } else if (contextType === 'board') {
@@ -33,8 +33,8 @@ const MailStep = React.memo(({ mailId, totalMails, contextType, contextId, onGen
   }, [contextType, contextId, onReset]);
 
   const handleDeleteClick = useCallback(() => {
-    openStep(StepTypes.DELETE, { mailId });
-  }, [mailId, openStep]);
+    openStep(StepTypes.DELETE, { mailToken });
+  }, [mailToken, openStep]);
 
   if (step) {
     switch (step.type) {
@@ -58,20 +58,20 @@ const MailStep = React.memo(({ mailId, totalMails, contextType, contextId, onGen
   return (
     <>
       <Popup.Header onBack={onBack}>
-        {t('common.mailIdCount')} : {totalMails}{' '}
+        {t('common.mailTokenCount')} : {totalMailTokens}{' '}
       </Popup.Header>
       <Popup.Content className={s.content}>
-        {mailId && (
+        {mailToken && (
           <Button style={ButtonStyle.PopupContext} onClick={onCopy}>
-            {t('action.copyMailId')}
+            {t('action.copyMailToken')}
           </Button>
         )}
-        <Button style={ButtonStyle.PopupContext} onClick={mailId ? () => handleResetMail() : () => handleGenerateMail()}>
-          {t(mailId ? 'action.resetMailId' : 'action.generateMailId')}
+        <Button style={ButtonStyle.PopupContext} onClick={mailToken ? () => handleResetMailToken() : () => handleGenerateMailToken()}>
+          {t(mailToken ? 'action.resetMailToken' : 'action.generateMailToken')}
         </Button>
-        {mailId && (
+        {mailToken && (
           <Button style={ButtonStyle.PopupContext} onClick={() => handleDeleteClick()}>
-            {t('action.deleteMailId')}
+            {t('action.deleteMailToken')}
           </Button>
         )}
       </Popup.Content>
@@ -79,9 +79,9 @@ const MailStep = React.memo(({ mailId, totalMails, contextType, contextId, onGen
   );
 });
 
-MailStep.propTypes = {
-  mailId: PropTypes.string,
-  totalMails: PropTypes.number.isRequired,
+MailTokenStep.propTypes = {
+  mailToken: PropTypes.string,
+  totalMailTokens: PropTypes.number.isRequired,
   contextType: PropTypes.oneOf(['list', 'board']).isRequired,
   contextId: PropTypes.string,
   onGenerate: PropTypes.func.isRequired,
@@ -91,10 +91,10 @@ MailStep.propTypes = {
   onBack: PropTypes.func,
 };
 
-MailStep.defaultProps = {
-  mailId: undefined,
+MailTokenStep.defaultProps = {
+  mailToken: undefined,
   contextId: undefined,
   onBack: undefined,
 };
 
-export default MailStep;
+export default MailTokenStep;

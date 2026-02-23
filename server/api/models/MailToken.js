@@ -1,39 +1,32 @@
 /**
- * Mail.js
+ * MailToken.js
  *
- * @description :: Model for mail ID entries.
+ * @description :: Model for mail token entries.
  */
 
 module.exports = {
   attributes: {
-    mailId: {
+    token: {
       type: 'string',
       required: true,
       unique: true,
-      columnName: 'mail_id',
+      columnName: 'token',
     },
-
     userId: {
       model: 'User',
       required: true,
       columnName: 'user_id',
     },
-
-    projectId: {
-      model: 'Project',
-      required: true,
-      columnName: 'project_id',
-    },
-
     boardId: {
       model: 'Board',
       required: true,
       columnName: 'board_id',
     },
-
     listId: {
       model: 'List',
       columnName: 'list_id',
     },
   },
+
+  tableName: 'mail_token',
 };

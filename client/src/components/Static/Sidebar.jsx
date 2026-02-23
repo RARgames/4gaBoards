@@ -39,9 +39,9 @@ const Sidebar = React.memo(
     sidebarCompact,
     instanceNotificationCount,
     usersNotificationCount,
-    mailId,
-    mailCountForBoardId,
-    mailsForBoard,
+    mailToken,
+    mailTokenCountForBoardId,
+    mailTokensForBoard,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -53,10 +53,9 @@ const Sidebar = React.memo(
     onProjectMembershipUpdate,
     onActivitiesProjectFetch,
     onActivitiesBoardFetch,
-    onMailCreate,
-    onMailUpdate,
-    onMailDelete,
-    // onUserProjectUpdate,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
@@ -104,11 +103,11 @@ const Sidebar = React.memo(
       return () => clearTimeout(timeout);
     }, [currBoardId, currProjectId, scrollItemIntoView]);
 
-    const handleMailCopy = useCallback(() => {
-      if (mailId) {
-        navigator.clipboard.writeText(mailId);
+    const handleMailTokenCopy = useCallback(() => {
+      if (mailToken) {
+        navigator.clipboard.writeText(mailToken);
       }
-    }, [mailId]);
+    }, [mailToken]);
 
     useEffect(() => {
       if (currBoardId) {
@@ -228,13 +227,13 @@ const Sidebar = React.memo(
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
                                   currBoardId={currBoardId}
-                                  mailId={mailId}
-                                  mailCountForBoardId={mailCountForBoardId}
-                                  mailsForBoard={mailsForBoard}
-                                  onMailCreate={onMailCreate}
-                                  onMailUpdate={onMailUpdate}
-                                  onMailCopy={handleMailCopy}
-                                  onMailDelete={onMailDelete}
+                                  mailToken={mailToken}
+                                  mailTokenCountForBoardId={mailTokenCountForBoardId}
+                                  mailTokensForBoard={mailTokensForBoard}
+                                  onMailTokenCreate={onMailTokenCreate}
+                                  onMailTokenUpdate={onMailTokenUpdate}
+                                  onMailTokenCopy={handleMailTokenCopy}
+                                  onMailTokenDelete={onMailTokenDelete}
                                   position="right-start"
                                   offset={10}
                                   hideCloseButton
@@ -398,9 +397,9 @@ Sidebar.propTypes = {
   sidebarCompact: PropTypes.bool.isRequired,
   instanceNotificationCount: PropTypes.number.isRequired,
   usersNotificationCount: PropTypes.number.isRequired,
-  mailId: PropTypes.string,
-  mailCountForBoardId: PropTypes.number.isRequired,
-  mailsForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailToken: PropTypes.string,
+  mailTokenCountForBoardId: PropTypes.number.isRequired,
+  mailTokensForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -412,10 +411,9 @@ Sidebar.propTypes = {
   onProjectMembershipUpdate: PropTypes.func.isRequired,
   onActivitiesProjectFetch: PropTypes.func.isRequired,
   onActivitiesBoardFetch: PropTypes.func.isRequired,
-  onMailCreate: PropTypes.func.isRequired,
-  onMailUpdate: PropTypes.func.isRequired,
-  onMailDelete: PropTypes.func.isRequired,
-  // onUserProjectUpdate: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
@@ -424,7 +422,7 @@ Sidebar.defaultProps = {
   currBoardId: undefined,
   filterQuery: undefined,
   filterTarget: undefined,
-  mailId: null,
+  mailToken: null,
 };
 
 export default Sidebar;

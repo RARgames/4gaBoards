@@ -35,12 +35,12 @@ const makeMapStateToProps = () => {
     } = state;
     const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
-    const selectMailCountForBoardId = selectors.makeSelectMailCountForBoardId();
-    const selectMailsByBoardId = selectors.makeSelectMailsByBoardId();
-    const mail = selectors.selectMailForCurrentUserByBoardId(state, boardId);
-    const mailId = mail?.mailId ?? null;
-    const mailCountForBoardId = selectMailCountForBoardId(state, boardId);
-    const mailsForBoard = selectMailsByBoardId(state, boardId);
+    const selectMailTokenCountForBoardId = selectors.makeSelectMailTokenCountForBoardId();
+    const selectMailTokensByBoardId = selectors.makeSelectMailTokensByBoardId();
+    const mail = selectors.selectMailTokenForCurrentUserByBoardId(state, boardId);
+    const mailToken = mail?.mailToken ?? null;
+    const mailTokenCountForBoardId = selectMailTokenCountForBoardId(state, boardId);
+    const mailTokensForBoard = selectMailTokensByBoardId(state, boardId);
 
     return {
       path,
@@ -58,9 +58,9 @@ const makeMapStateToProps = () => {
       sidebarCompact,
       instanceNotificationCount,
       usersNotificationCount,
-      mailId,
-      mailCountForBoardId,
-      mailsForBoard,
+      mailToken,
+      mailTokenCountForBoardId,
+      mailTokensForBoard,
     };
   };
 };
@@ -79,10 +79,9 @@ const mapDispatchToProps = (dispatch) =>
       onProjectMembershipUpdate: entryActions.updateProjectMembership,
       onActivitiesProjectFetch: entryActions.fetchProjectActivities,
       onActivitiesBoardFetch: entryActions.fetchBoardActivities,
-      onUserProjectUpdate: entryActions.updateUserProject,
-      onMailCreate: (boardId) => entryActions.createMail({ boardId }),
-      onMailUpdate: (boardId) => entryActions.updateMail({ boardId }),
-      onMailDelete: (mailId) => entryActions.deleteMail(mailId),
+      onMailTokenCreate: (boardId) => entryActions.createMailToken({ boardId }),
+      onMailTokenUpdate: (boardId) => entryActions.updateMailToken({ boardId }),
+      onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
     },
     dispatch,
   );

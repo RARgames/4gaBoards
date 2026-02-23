@@ -11,21 +11,21 @@ module.exports = {
 
   async fn(inputs) {
     const { record } = inputs;
-    const mailCopy = { ...record };
+    const mailTokenCopy = { ...record };
 
-    await Mail.destroyOne({ id: record.id });
+    await MailToken.destroyOne({ id: record.id });
 
-    if (mailCopy) {
+    if (mailTokenCopy) {
       sails.sockets.broadcast(
-        `board:${mailCopy.boardId}`,
-        'mailDelete',
+        `board:${mailTokenCopy.boardId}`,
+        'mailTokenDelete',
         {
-          item: mailCopy,
+          item: mailTokenCopy,
         },
         inputs.request,
       );
     }
 
-    return mailCopy;
+    return mailTokenCopy;
   },
 };

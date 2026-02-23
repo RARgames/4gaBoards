@@ -1,13 +1,10 @@
 module.exports.up = (knex) =>
-  knex.schema.createTable('mail', (table) => {
+  knex.schema.createTable('mail_token', (table) => {
     /* Columns */
-
     table.bigInteger('id').primary().defaultTo(knex.raw('next_id()'));
 
-    table.text('mail_id').notNullable().unique(); // random ID (hex string)
-
+    table.text('token').notNullable().unique();
     table.bigInteger('user_id').notNullable();
-    table.bigInteger('project_id').notNullable();
     table.bigInteger('board_id').notNullable();
     table.bigInteger('list_id').nullable();
 
@@ -15,11 +12,9 @@ module.exports.up = (knex) =>
     table.timestamp('updated_at', true);
 
     /* Indexes */
-
     table.index('user_id');
-    table.index('project_id');
     table.index('board_id');
     table.index('list_id');
   });
 
-module.exports.down = (knex) => knex.schema.dropTable('mail');
+module.exports.down = (knex) => knex.schema.dropTable('mail_token');

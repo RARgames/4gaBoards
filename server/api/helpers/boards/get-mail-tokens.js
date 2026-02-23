@@ -7,7 +7,7 @@ module.exports = {
       custom: idOrIdsValidator,
       required: true,
     },
-    exceptMailIdOrIds: {
+    exceptMailTokenIdOrIds: {
       type: 'json',
       custom: idOrIdsValidator,
     },
@@ -18,12 +18,12 @@ module.exports = {
       boardId: inputs.idOrIds,
     };
 
-    if (!_.isUndefined(inputs.exceptMailIdOrIds)) {
+    if (!_.isUndefined(inputs.exceptMailTokenIdOrIds)) {
       criteria.id = {
-        '!=': inputs.exceptMailIdOrIds,
+        '!=': inputs.exceptMailTokenIdOrIds,
       };
     }
 
-    return Mail.find(criteria);
+    return MailToken.find(criteria);
   },
 };
