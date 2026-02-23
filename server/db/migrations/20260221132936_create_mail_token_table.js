@@ -5,7 +5,7 @@ module.exports.up = (knex) =>
 
     table.text('token').notNullable().unique();
     table.bigInteger('user_id').notNullable();
-    table.bigInteger('board_id').notNullable();
+    table.bigInteger('board_id').nullable();
     table.bigInteger('list_id').nullable();
 
     table.timestamp('created_at', true);
