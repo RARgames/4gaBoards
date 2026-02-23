@@ -22,6 +22,10 @@ const mapStateToProps = (state) => {
     hideClosestDueDate,
     theme,
     themeShape,
+    emailNotificationsEnabled,
+    enabledNotificationTypes,
+    notificationDeliveryMode,
+    notificationAggregationScope,
   } = selectors.selectCurrentUserPrefs(state);
   const { isAdmin } = selectors.selectCurrentUser(state);
 
@@ -42,6 +46,10 @@ const mapStateToProps = (state) => {
     hideClosestDueDate,
     theme,
     themeShape,
+    emailNotificationsEnabled,
+    enabledNotificationTypes,
+    notificationDeliveryMode,
+    notificationAggregationScope,
   };
 };
 

@@ -136,6 +136,23 @@ module.exports = {
       type: 'json',
       custom: hexColorsValidator,
     },
+    emailNotificationsEnabled: {
+      type: 'boolean',
+    },
+    enabledNotificationTypes: {
+      type: 'json',
+      custom: (value) => Array.isArray(value) && value.every((v) => UserPrefs.NOTIFICATIONS_TYPES.includes(v)),
+    },
+    notificationDeliveryMode: {
+      type: 'string',
+      isIn: UserPrefs.NOTIFICATIONS_DELIVERY_MODE,
+      isNotEmptyString: true,
+    },
+    notificationAggregationScope: {
+      type: 'string',
+      isIn: UserPrefs.NOTIFICATIONS_AGGREGATION_SCOPE,
+      isNotEmptyString: true,
+    },
   },
 
   exits: {
@@ -192,6 +209,10 @@ module.exports = {
         'theme',
         'themeShape',
         'themeCustomColors',
+        'emailNotificationsEnabled',
+        'enabledNotificationTypes',
+        'notificationDeliveryMode',
+        'notificationAggregationScope',
       ]),
     };
 

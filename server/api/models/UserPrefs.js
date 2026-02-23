@@ -12,6 +12,9 @@ const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 const PREFERRED_FONTS = ['default', 'monospace'];
 const THEME_SHAPES = ['default', 'rounded'];
 const THEMES = ['default', 'github-dark', 'light', 'custom'];
+const NOTIFICATIONS_TYPES = [`instance`, `user`, `project`, `board`, `list`, `card`, `task`, `attachment`, `comment`];
+const NOTIFICATIONS_DELIVERY_MODE = ['instant', 'batched', 'first_instant_then_batch'];
+const NOTIFICATIONS_AGGREGATION_SCOPE = ['card', 'board', 'list', 'project', 'user'];
 
 module.exports = {
   DESCRIPTION_MODES,
@@ -21,6 +24,9 @@ module.exports = {
   PREFERRED_FONTS,
   THEME_SHAPES,
   THEMES,
+  NOTIFICATIONS_TYPES,
+  NOTIFICATIONS_DELIVERY_MODE,
+  NOTIFICATIONS_AGGREGATION_SCOPE,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -223,6 +229,29 @@ module.exports = {
       type: 'json',
       columnName: 'theme_custom_colors',
       defaultsTo: {},
+    },
+    emailNotificationsEnabled: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'email_notifications_enabled',
+    },
+    enabledNotificationTypes: {
+      type: 'json',
+      defaultsTo: ['user', 'project'],
+      columnName: 'enabled_notification_types',
+      custom: (value) => Array.isArray(value) && value.every((v) => NOTIFICATIONS_TYPES.includes(v)),
+    },
+    notificationDeliveryMode: {
+      type: 'string',
+      isIn: NOTIFICATIONS_DELIVERY_MODE,
+      defaultsTo: 'first_instant_then_batch',
+      columnName: 'notification_delivery_mode',
+    },
+    notificationAggregationScope: {
+      type: 'string',
+      isIn: NOTIFICATIONS_AGGREGATION_SCOPE,
+      defaultsTo: 'card',
+      columnName: 'notification_aggregation_scope',
     },
   },
 
