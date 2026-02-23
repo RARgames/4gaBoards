@@ -4,18 +4,14 @@ import { transformMailToken } from './transformers';
 /* Actions */
 
 const createMailToken = (data, headers) => {
-  const url = data.listId ? `/lists/${data.listId}/mailTokens` : `/boards/${data.boardId}/mailTokens`;
-
-  return socket.post(url, {}, headers).then((body) => ({
+  return socket.post(`/mailTokens`, data, headers).then((body) => ({
     ...body,
     item: transformMailToken(body.item),
   }));
 };
 
 const updateMailToken = (id, data, headers) => {
-  const url = data.listId ? `/lists/${data.listId}/mailTokens/update` : `/boards/${data.boardId}/mailTokens/update`;
-
-  return socket.patch(url, {}, headers).then((body) => ({
+  return socket.patch(`mailTokens/${id}`, data, headers).then((body) => ({
     ...body,
     item: transformMailToken(body.item),
   }));

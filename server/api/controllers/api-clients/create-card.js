@@ -13,8 +13,8 @@ const Errors = {
   POSITION_MUST_BE_PRESENT: {
     positionMustBePresent: 'Position must be present',
   },
-  MAIL_PATH_INVALID: {
-    mailPathInvalid: 'Mail Path invalid',
+  MAIL_TOKEN_PATH_INVALID: {
+    mailTokenPathInvalid: 'Mail Token Path invalid',
   },
   BOARD_HAS_NO_LISTS: {
     boardHasNoLists: 'Board has no lists',
@@ -41,7 +41,7 @@ const timerValidator = (value) => {
 
 module.exports = {
   inputs: {
-    mailId: {
+    mailToken: {
       type: 'string',
       required: true,
     },
@@ -89,7 +89,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { mail, list, board } = await sails.helpers.mails.getProjectPath(inputs.mailId).intercept('pathNotFound', () => Errors.MAIL_PATH_INVALID);
+    const { mailToken, list, board } = await sails.helpers.mailTokens.getProjectPath(inputs.mailToken).intercept('pathNotFound', () => Errors.MAIL_TOKEN_PATH_INVALID);
 
     let targetList = list;
     if (!targetList && board) {
@@ -106,7 +106,7 @@ module.exports = {
       [targetList] = lists;
     }
 
-    const currentUser = await User.findOne({ id: mail.userId });
+    const currentUser = await User.findOne({ id: mailToken.userId });
     if (!currentUser) throw Errors.USER_NOT_FOUND;
 
     const boardMembership = await BoardMembership.findOne({
