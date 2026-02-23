@@ -10,26 +10,30 @@ import User from '../User';
 import { Popup, Input, InputStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
-import * as s from './MailListStep.module.scss';
+import * as s from './MailTokenListStep.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
 };
 
-const MailListStep = React.memo(({ mails, title, contextType, onDelete, onBack }) => {
+const MailTokenListStep = React.memo(({ mailTokens, title, contextType, onDelete, onBack }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
   const [search, handleSearchChange] = useField('');
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
-  const [sortedMails, setSortedMails] = useState([]);
+  const [sortedMailTokens, setSortedMailTokens] = useState([]);
 
   const searchField = useRef(null);
 
   useEffect(() => {
-    setSortedMails([...mails].sort((a, b) => a.user?.name?.localeCompare(b.user?.name || '') || 0));
-  }, [mails]);
+    setSortedMailTokens([...mailTokens].sort((a, b) => a.user?.name?.localeCompare(b.user?.name || '') || 0));
+  }, [mailTokens]);
 
-  const filteredMails = useMemo(() => sortedMails.filter((mail) => mail.id.toLowerCase().includes(cleanSearch) || mail.user?.name?.toLowerCase().includes(cleanSearch)), [sortedMails, cleanSearch]);
+  // TODO check later
+  const filteredMailTokens = useMemo(
+    () => sortedMailTokens.filter((mail) => mail.id.toLowerCase().includes(cleanSearch) || mail.user?.name?.toLowerCase().includes(cleanSearch)),
+    [sortedMailTokens, cleanSearch],
+  );
 
   useEffect(() => {
     searchField.current?.focus({ preventScroll: true });
@@ -66,23 +70,23 @@ const MailListStep = React.memo(({ mails, title, contextType, onDelete, onBack }
       <Popup.Header onBack={onBack}>{title}</Popup.Header>
       <Popup.Content>
         <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchUsers')} onChange={handleSearchChange} />
-        {filteredMails.length > 0 ? (
+        {filteredMailTokens.length > 0 ? (
           <div className={clsx(s.mails, gs.scrollableY)}>
-            {filteredMails.map((mail) => (
-              <div key={mail.mailId} className={s.mailItem}>
+            {filteredMailTokens.map((mailToken) => (
+              <div key={mailToken.id} className={s.mailItem}>
                 <div className={s.userSection}>
-                  <User name={mail.user?.name || 'Unknown'} avatarUrl={mail.user?.avatarUrl} size="small" />
-                  <span className={s.userName}>{mail.user?.name || '—'}</span>
+                  <User name={mailToken.user?.name || 'Unknown'} avatarUrl={mailToken.user?.avatarUrl} size="small" />
+                  <span className={s.userName}>{mailToken.user?.name || '—'}</span>
                 </div>
 
                 <div className={s.mailIdAndContext}>
-                  <span className={s.mailId}>{mail.mailId}</span>
+                  <span className={s.mailId}>{mailToken.mailId}</span>
                   {contextType === 'board' && (
-                    <span className={s.contextLabel}>{mail.contextType === 'board' ? `${t('common.board_title')}: ${mail.contextName}` : `${t('common.list')}: ${mail.contextName}`}</span>
+                    <span className={s.contextLabel}>{mailToken.contextType === 'board' ? `${t('common.board_title')}: ${mailToken.contextName}` : `${t('common.list')}: ${mailToken.contextName}`}</span>
                   )}
                 </div>
 
-                <button type="button" className={s.deleteBtn} title={t('action.delete')} onClick={() => handleDeleteClick(mail.mailId)}>
+                <button type="button" className={s.deleteBtn} title={t('action.delete')} onClick={() => handleDeleteClick(mailToken.id)}>
                   <img src={trashIcon} alt="Delete" className={s.trashIcon} />
                 </button>
               </div>
@@ -96,8 +100,8 @@ const MailListStep = React.memo(({ mails, title, contextType, onDelete, onBack }
   );
 });
 
-MailListStep.propTypes = {
-  mails: PropTypes.arrayOf(
+MailTokenListStep.propTypes = {
+  mailTokens: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       user: PropTypes.shape({
@@ -114,9 +118,9 @@ MailListStep.propTypes = {
   onBack: PropTypes.func,
 };
 
-MailListStep.defaultProps = {
-  title: 'common.mailIds',
+MailTokenListStep.defaultProps = {
+  title: 'common.mailTokens',
   onBack: undefined,
 };
 
-export default MailListStep;
+export default MailTokenListStep;

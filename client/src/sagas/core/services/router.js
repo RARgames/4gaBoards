@@ -66,7 +66,7 @@ export function* handleLocationChange() {
   let boardMemberships;
   let labels;
   let lists;
-  let mails;
+  let mailTokens;
   let cards;
   let cardMemberships;
   let cardLabels;
@@ -86,7 +86,7 @@ export function* handleLocationChange() {
         try {
           ({
             item: board,
-            included: { users, projects, boardMemberships, labels, lists, mails, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments },
+            included: { users, projects, boardMemberships, labels, lists, mailTokens, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments },
           } = yield call(request, api.getBoard, currentBoard.id, true));
         } catch {} // eslint-disable-line no-empty
       }
@@ -108,7 +108,7 @@ export function* handleLocationChange() {
     default:
   }
 
-  yield put(actions.handleLocationChange(board, users, projects, boardMemberships, labels, lists, mails, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, notifications));
+  yield put(actions.handleLocationChange(board, users, projects, boardMemberships, labels, lists, mailTokens, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, notifications));
 }
 
 export default {

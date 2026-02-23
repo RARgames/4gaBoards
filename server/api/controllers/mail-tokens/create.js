@@ -11,8 +11,8 @@ const Errors = {
   BOARD_NOT_FOUND: {
     boardNotFound: 'Board not found',
   },
-  MAIL_NOT_FOUND: {
-    mailNotFound: 'Mail not found',
+  MAIL_TOKEN_ALREADY_EXISTS: {
+    mailTokenAlreadyExists: 'Mail token already exists for this user',
   },
 };
 
@@ -41,8 +41,8 @@ module.exports = {
     boardNotFound: {
       responseType: 'notFound',
     },
-    mailNotFound: {
-      responseType: 'notFound',
+    mailTokenAlreadyExists: {
+      responseType: 'conflict',
     },
   },
 
@@ -81,24 +81,22 @@ module.exports = {
       criteria.listId = null;
     }
 
-    const existing = await Mail.findOne(criteria);
-    if (!existing) {
-      throw Errors.MAIL_NOT_FOUND;
+    const existing = await MailToken.findOne(criteria);
+    if (existing) {
+      throw Errors.MAIL_TOKEN_ALREADY_EXISTS;
     }
 
-    const mail = await sails.helpers.mails.updateOne.with({
+    const mailToken = await sails.helpers.mailTokens.createOne.with({
       values: {
-        id: existing.id,
+        userId: currentUser.id,
+        listId: list ? list.id : null,
+        boardId: board.id,
       },
       request: this.req,
     });
 
-    if (!mail) {
-      throw Errors.MAIL_NOT_FOUND;
-    }
-
     return {
-      item: mail,
+      item: mailToken,
     };
   },
 };

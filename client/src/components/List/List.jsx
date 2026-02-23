@@ -40,15 +40,15 @@ const List = React.memo(
     isAllActivitiesFetched,
     lastActivityId,
     isManager,
-    mailId,
-    mailsForList,
+    mailToken,
+    mailTokensForList,
     onUpdate,
     onDelete,
     onCardCreate,
     onActivitiesFetch,
-    onMailCreate,
-    onMailUpdate,
-    onMailDelete,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -131,11 +131,11 @@ const List = React.memo(
       setNameEditHeight(height);
     }, []);
 
-    const handleMailCopy = useCallback(() => {
-      if (mailId) {
-        navigator.clipboard.writeText(mailId);
+    const handleMailTokenCopy = useCallback(() => {
+      if (mailToken) {
+        navigator.clipboard.writeText(mailToken);
       }
-    }, [mailId]);
+    }, [mailToken]);
 
     useEffect(() => {
       if (isAddCardOpen && listWrapper.current) {
@@ -278,15 +278,15 @@ const List = React.memo(
                       isAllActivitiesFetched={isAllActivitiesFetched}
                       lastActivityId={lastActivityId}
                       isManager={isManager}
-                      mailId={mailId}
-                      mailsForList={mailsForList}
+                      mailToken={mailToken}
+                      mailTokensForList={mailTokensForList}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onActivitiesFetch={onActivitiesFetch}
-                      onMailCreate={onMailCreate}
-                      onMailUpdate={onMailUpdate}
-                      onMailCopy={handleMailCopy}
-                      onMailDelete={onMailDelete}
+                      onMailTokenCreate={onMailTokenCreate}
+                      onMailTokenUpdate={onMailTokenUpdate}
+                      onMailTokenCopy={handleMailTokenCopy}
+                      onMailTokenDelete={onMailTokenDelete}
                       onDelete={onDelete}
                       position="left-start"
                       offset={0}
@@ -336,15 +336,15 @@ List.propTypes = {
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
   isManager: PropTypes.bool.isRequired,
-  mailId: PropTypes.string,
-  mailsForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailToken: PropTypes.string,
+  mailTokensForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
-  onMailCreate: PropTypes.func.isRequired,
-  onMailUpdate: PropTypes.func.isRequired,
-  onMailDelete: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {
@@ -353,7 +353,7 @@ List.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
-  mailId: null,
+  mailToken: null,
 };
 
 export default List;

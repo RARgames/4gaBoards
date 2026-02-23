@@ -212,16 +212,16 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleDeleteAllNotifications(item));
     });
 
-    const handleMailCreate = ({ item }) => {
-      emit(entryActions.handleMailCreate(item));
+    const handleMailTokenCreate = ({ item }) => {
+      emit(entryActions.handleMailTokenCreate(item));
     };
 
-    const handleMailUpdate = ({ item }) => {
-      emit(entryActions.handleMailUpdate(item));
+    const handleMailTokenUpdate = ({ item }) => {
+      emit(entryActions.handleMailTokenUpdate(item));
     };
 
-    const handleMailDelete = ({ item }) => {
-      emit(entryActions.handleMailDelete(item));
+    const handleMailTokenDelete = ({ item }) => {
+      emit(entryActions.handleMailTokenDelete(item));
     };
 
     socket.on('disconnect', handleDisconnect);
@@ -295,9 +295,9 @@ const createSocketEventsChannel = () =>
     socket.on('notificationDelete', handleNotificationDelete);
     socket.on('notificationDeleteAll', handleDeleteAllNotifications);
 
-    socket.on('mailCreate', handleMailCreate);
-    socket.on('mailUpdate', handleMailUpdate);
-    socket.on('mailDelete', handleMailDelete);
+    socket.on('mailTokenCreate', handleMailTokenCreate);
+    socket.on('mailTokenUpdate', handleMailTokenUpdate);
+    socket.on('mailTokenDelete', handleMailTokenDelete);
 
     return () => {
       socket.off('disconnect', handleDisconnect);
@@ -371,9 +371,9 @@ const createSocketEventsChannel = () =>
       socket.off('notificationDelete', handleNotificationDelete);
       socket.off('notificationDeleteAll', handleDeleteAllNotifications);
 
-      socket.off('mailCreate', handleMailCreate);
-      socket.off('mailUpdate', handleMailUpdate);
-      socket.off('mailDelete', handleMailDelete);
+      socket.off('mailTokenCreate', handleMailTokenCreate);
+      socket.off('mailTokenUpdate', handleMailTokenUpdate);
+      socket.off('mailTokenDelete', handleMailTokenDelete);
     };
   });
 

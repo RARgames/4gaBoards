@@ -11,8 +11,8 @@ const Errors = {
   BOARD_NOT_FOUND: {
     boardNotFound: 'Board not found',
   },
-  MAIL_ALREADY_EXISTS: {
-    mailAlreadyExists: 'Mail ID already exists for this user',
+  MAIL_TOKEN_NOT_FOUND: {
+    mailTokenNotFound: 'Mail token not found',
   },
 };
 
@@ -41,8 +41,8 @@ module.exports = {
     boardNotFound: {
       responseType: 'notFound',
     },
-    mailAlreadyExists: {
-      responseType: 'conflict',
+    mailTokenNotFound: {
+      responseType: 'notFound',
     },
   },
 
@@ -51,12 +51,11 @@ module.exports = {
 
     let list = null;
     let board;
-    let project;
 
     if (inputs.listId) {
-      ({ list, board, project } = await sails.helpers.lists.getProjectPath(inputs.listId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
+      ({ list, board } = await sails.helpers.lists.getProjectPath(inputs.listId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
     } else if (inputs.boardId) {
-      ({ board, project } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
+      ({ board } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS));
     } else {
       throw Errors.MISSING_RELATIONS;
     }
@@ -82,23 +81,24 @@ module.exports = {
       criteria.listId = null;
     }
 
-    const existing = await Mail.findOne(criteria);
-    if (existing) {
-      throw Errors.MAIL_ALREADY_EXISTS;
+    const existing = await MailToken.findOne(criteria);
+    if (!existing) {
+      throw Errors.MAIL_TOKEN_NOT_FOUND;
     }
 
-    const mail = await sails.helpers.mails.createOne.with({
+    const mailToken = await sails.helpers.mailTokens.updateOne.with({
       values: {
-        userId: currentUser.id,
-        listId: list ? list.id : null,
-        boardId: board.id,
-        projectId: project.id,
+        id: existing.id,
       },
       request: this.req,
     });
 
+    if (!mailToken) {
+      throw Errors.MAIL_TOKEN_NOT_FOUND;
+    }
+
     return {
-      item: mail,
+      item: mailToken,
     };
   },
 };

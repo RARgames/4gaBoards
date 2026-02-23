@@ -1,6 +1,6 @@
 import http from './http';
 import socket from './socket';
-import { transformAttachment, transformBoard, transformProject, transformCard, transformList, transformMail, transformTask, transformUser } from './transformers';
+import { transformAttachment, transformBoard, transformProject, transformCard, transformList, transformMailToken, transformTask, transformUser } from './transformers';
 
 /* Actions */
 
@@ -27,7 +27,7 @@ const getBoard = (id, subscribe, headers) =>
       tasks: body.included.tasks.map(transformTask),
       users: body.included.users.map(transformUser),
       lists: body.included.lists.map(transformList),
-      mails: body.included.mails ? body.included.mails.map(transformMail) : [],
+      mailTokens: body.included.mailTokens ? body.included.mailTokens.map(transformMailToken) : [],
       projects: body.included.projects.map(transformProject),
     },
   }));

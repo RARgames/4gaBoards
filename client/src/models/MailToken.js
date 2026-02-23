@@ -4,29 +4,29 @@ import ActionTypes from '../constants/ActionTypes';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
-  static modelName = 'Mail';
+  static modelName = 'MailToken';
 
   static fields = {
     id: attr(),
-    mailId: attr(),
+    token: attr(),
     listId: fk({
       to: 'List',
       as: 'list',
-      relatedName: 'mails',
+      relatedName: 'mailTokens',
     }),
     boardId: fk({
       to: 'Board',
       as: 'board',
-      relatedName: 'mails',
+      relatedName: 'mailTokens',
     }),
     userId: fk({
       to: 'User',
       as: 'user',
-      relatedName: 'mails',
+      relatedName: 'mailTokens',
     }),
   };
 
-  static reducer({ type, payload }, Mail) {
+  static reducer({ type, payload }, MailToken) {
     switch (type) {
       case ActionTypes.CORE_INITIALIZE:
       case ActionTypes.LOCATION_CHANGE_HANDLE:
@@ -35,32 +35,32 @@ export default class extends BaseModel {
       case ActionTypes.BOARD_UPDATE_HANDLE:
       case ActionTypes.BOARD_DELETE__SUCCESS:
       case ActionTypes.BOARD_DELETE_HANDLE:
-        if (payload.mails) {
-          payload.mails.forEach((mail) => {
-            Mail.upsert(mail);
+        if (payload.mailTokens) {
+          payload.mailTokens.forEach((mailToken) => {
+            MailToken.upsert(mailToken);
           });
         }
 
         break;
       case ActionTypes.SOCKET_RECONNECT_HANDLE:
-        Mail.all().delete();
+        MailToken.all().delete();
 
-        if (payload.mails) {
-          payload.mails.forEach((mail) => {
-            Mail.upsert(mail);
+        if (payload.mailTokens) {
+          payload.mailTokens.forEach((mailToken) => {
+            MailToken.upsert(mailToken);
           });
         }
 
         break;
-      case ActionTypes.MAIL_CREATE__SUCCESS:
-      case ActionTypes.MAIL_UPDATE__SUCCESS:
-      case ActionTypes.MAIL_CREATE_HANDLE:
-      case ActionTypes.MAIL_UPDATE_HANDLE:
-        Mail.upsert(payload.mail);
+      case ActionTypes.MAIL_TOKEN_CREATE__SUCCESS:
+      case ActionTypes.MAIL_TOKEN_UPDATE__SUCCESS:
+      case ActionTypes.MAIL_TOKEN_CREATE_HANDLE:
+      case ActionTypes.MAIL_TOKEN_UPDATE_HANDLE:
+        MailToken.upsert(payload.mailToken);
         break;
-      case ActionTypes.MAIL_DELETE__SUCCESS:
-      case ActionTypes.MAIL_DELETE_HANDLE:
-        Mail.withId(payload.mail.id)?.delete();
+      case ActionTypes.MAIL_TOKEN_DELETE__SUCCESS:
+      case ActionTypes.MAIL_TOKEN_DELETE_HANDLE:
+        MailToken.withId(payload.mailToken.id)?.delete();
         break;
 
       default:

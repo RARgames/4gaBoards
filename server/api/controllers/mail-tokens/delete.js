@@ -8,14 +8,14 @@ const Errors = {
   PROJECT_NOT_FOUND: {
     projectNotFound: 'Project not found',
   },
-  MAIL_NOT_FOUND: {
-    mailNotFound: 'Mail not found',
+  MAIL_TOKEN_NOT_FOUND: {
+    mailTokenNotFound: 'Mail token not found',
   },
 };
 
 module.exports = {
   inputs: {
-    mailId: {
+    mailTokenId: {
       type: 'string',
       required: true,
     },
@@ -31,7 +31,7 @@ module.exports = {
     projectNotFound: {
       responseType: 'notFound',
     },
-    mailNotFound: {
+    mailTokenNotFound: {
       responseType: 'notFound',
     },
   },
@@ -39,12 +39,12 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const mail = await Mail.findOne({ mailId: inputs.mailId });
-    if (!mail) {
-      throw Errors.MAIL_NOT_FOUND;
+    const mailToken = await MailToken.findOne({ id: inputs.mailTokenId });
+    if (!mailToken) {
+      throw Errors.MAIL_TOKEN_NOT_FOUND;
     }
 
-    const { board } = await sails.helpers.boards.getProjectPath(mail.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS);
+    const { board } = await sails.helpers.boards.getProjectPath(mailToken.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS);
 
     const project = await Project.findOne({ id: board.projectId });
     if (!project) {
@@ -53,14 +53,14 @@ module.exports = {
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
 
-    const isOwner = mail.userId === currentUser.id;
+    const isOwner = mailToken.userId === currentUser.id;
 
     if (!isOwner && !isProjectManager) {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const deleted = await sails.helpers.mails.deleteOne.with({
-      record: mail,
+    const deleted = await sails.helpers.mailTokens.deleteOne.with({
+      record: mailToken,
       request: this.req,
     });
 

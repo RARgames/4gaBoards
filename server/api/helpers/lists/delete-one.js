@@ -24,7 +24,7 @@ module.exports = {
     const list = await List.archiveOne(inputs.record.id);
 
     if (list) {
-      await Mail.destroy({ listId: list.id });
+      await MailToken.destroy({ listId: list.id });
 
       sails.sockets.broadcast(
         `board:${list.boardId}`,
