@@ -36,6 +36,10 @@ export default class extends BaseModel {
     theme: attr(),
     themeShape: attr(),
     themeCustomColors: attr(),
+    emailNotificationsEnabled: attr(),
+    enabledNotificationTypes: attr(),
+    notificationDeliveryMode: attr(),
+    notificationAggregationScope: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

@@ -135,3 +135,17 @@ export const ThemeShapes = {
   DEFAULT: 'default',
   ROUNDED: 'rounded',
 };
+
+export const NotificationsDeliveryModes = {
+  INSTANT: 'instant',
+  BATCHED: 'batched',
+  FIRST_INSTANT_THEN_BATCH: 'first_instant_then_batch',
+};
+
+export const NotificationsAggregationScopes = {
+  CARD: 'card',
+  BOARD: 'board',
+  LIST: 'list',
+  PROJECT: 'project',
+  USER: 'user',
+};

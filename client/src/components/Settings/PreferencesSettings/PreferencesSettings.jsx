@@ -4,7 +4,7 @@ import { useReactTable, getCoreRowModel, getGroupedRowModel, getExpandedRowModel
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { ThemeShapes, Themes } from '../../../constants/Enums';
+import { ActivityScopes, ThemeShapes, Themes, NotificationsDeliveryModes, NotificationsAggregationScopes } from '../../../constants/Enums';
 import locales from '../../../locales';
 import { Table } from '../../Utils';
 import CustomThemeButton from './CustomThemeButton';
@@ -33,6 +33,10 @@ const PreferencesSettings = React.memo(
     theme,
     themeShape,
     onUpdate,
+    emailNotificationsEnabled,
+    enabledNotificationTypes,
+    notificationDeliveryMode,
+    notificationAggregationScope,
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
@@ -40,6 +44,7 @@ const PreferencesSettings = React.memo(
     const Groups = {
       NOTIFICATIONS: 'notifications',
       GENERAL: 'general',
+      API_CLIENT: 'apiClient',
     };
 
     const languages = useMemo(
@@ -150,6 +155,104 @@ const PreferencesSettings = React.memo(
 
     const selectedThemeShape = useMemo(() => themeShapes.find((shape) => shape.id === themeShape), [themeShapes, themeShape]);
 
+    const notificationTypeOptions = useMemo(
+      () => [
+        {
+          id: ActivityScopes.INSTANCE,
+          name: t('common.enabledNotificationTypeInstance'),
+        },
+        {
+          id: ActivityScopes.USER,
+          name: t('common.enabledNotificationTypeUser'),
+        },
+        {
+          id: ActivityScopes.PROJECT,
+          name: t('common.enabledNotificationTypeProject'),
+        },
+        {
+          id: ActivityScopes.BOARD,
+          name: t('common.enabledNotificationTypeBoard'),
+        },
+        {
+          id: ActivityScopes.LIST,
+          name: t('common.enabledNotificationTypeList'),
+        },
+        {
+          id: ActivityScopes.CARD,
+          name: t('common.enabledNotificationTypeCard'),
+        },
+        {
+          id: ActivityScopes.TASK,
+          name: t('common.enabledNotificationTypeTask'),
+        },
+        {
+          id: ActivityScopes.COMMENT,
+          name: t('common.enabledNotificationTypeComment'),
+        },
+        {
+          id: ActivityScopes.ATTACHMENT,
+          name: t('common.enabledNotificationTypeAttachment'),
+        },
+      ],
+      [t],
+    );
+
+    const selectedNotificationTypes = useMemo(() => notificationTypeOptions.filter((opt) => enabledNotificationTypes.includes(opt.id)), [notificationTypeOptions, enabledNotificationTypes]);
+
+    const notificationsDeliveryModes = useMemo(
+      () => [
+        {
+          id: NotificationsDeliveryModes.INSTANT,
+          name: t('common.notificationsDeliveryModeInstant'),
+        },
+        {
+          id: NotificationsDeliveryModes.BATCHED,
+          name: t('common.notificationsDeliveryModeBatched'),
+        },
+        {
+          id: NotificationsDeliveryModes.FIRST_INSTANT_THEN_BATCH,
+          name: t('common.notificationsDeliveryModeFirstInstantThenBatch'),
+        },
+      ],
+      [t],
+    );
+
+    const selectedNotificationsDeliveryMode = useMemo(
+      () => notificationsDeliveryModes.find((deliveryMode) => deliveryMode.id === notificationDeliveryMode),
+      [notificationsDeliveryModes, notificationDeliveryMode],
+    );
+
+    const notificationsAggregationScopes = useMemo(
+      () => [
+        {
+          id: NotificationsAggregationScopes.CARD,
+          name: t('common.notificationsAggregationScopeCard'),
+        },
+        {
+          id: NotificationsAggregationScopes.BOARD,
+          name: t('common.notificationsAggregationScopeBoard'),
+        },
+        {
+          id: NotificationsAggregationScopes.LIST,
+          name: t('common.notificationsAggregationScopeList'),
+        },
+        {
+          id: NotificationsAggregationScopes.PROJECT,
+          name: t('common.notificationsAggregationScopeProject'),
+        },
+        {
+          id: NotificationsAggregationScopes.USER,
+          name: t('common.notificationsAggregationScopeUser'),
+        },
+      ],
+      [t],
+    );
+
+    const selectedNotificationsAggregationScope = useMemo(
+      () => notificationsAggregationScopes.find((aggregationScope) => aggregationScope.id === notificationAggregationScope),
+      [notificationsAggregationScopes, notificationAggregationScope],
+    );
+
     const handleSubscribeToOwnCardsChange = useCallback(() => {
       onUpdate({
         subscribeToOwnCards: !subscribeToOwnCards,
@@ -243,6 +346,37 @@ const PreferencesSettings = React.memo(
     const handleThemeShapeChange = useCallback(
       (value) => {
         onUpdate({ themeShape: value.id });
+      },
+      [onUpdate],
+    );
+
+    const handleEmailNotificationsEnabledChange = useCallback(() => {
+      onUpdate({
+        emailNotificationsEnabled: !emailNotificationsEnabled,
+      });
+    }, [onUpdate, emailNotificationsEnabled]);
+
+    const handleNotificationTypesChange = useCallback(
+      (value) => {
+        const { id } = value;
+
+        const next = enabledNotificationTypes.includes(id) ? enabledNotificationTypes.filter((type) => type !== id) : [...enabledNotificationTypes, id];
+
+        onUpdate({ enabledNotificationTypes: next });
+      },
+      [onUpdate, enabledNotificationTypes],
+    );
+
+    const handleNotificationsDeliveryModeChange = useCallback(
+      (value) => {
+        onUpdate({ notificationDeliveryMode: value.id });
+      },
+      [onUpdate],
+    );
+
+    const handleNotificationsAggregationScopeChange = useCallback(
+      (value) => {
+        onUpdate({ notificationAggregationScope: value.id });
       },
       [onUpdate],
     );
@@ -420,6 +554,59 @@ const PreferencesSettings = React.memo(
             description: t('common.descriptionSubscribeToInstance'),
             group: Groups.NOTIFICATIONS,
           },
+          {
+            id: 'emailNotificationsEnabled',
+            preferences: t('common.emailNotificationsEnabled'),
+            modifySettings: emailNotificationsEnabled,
+            modifySettingsProps: { onChange: handleEmailNotificationsEnabledChange, title: t('common.toggleEmailNotificationsEnabled') },
+            currentValue: emailNotificationsEnabled ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionEmailNotificationsEnabled'),
+            group: Groups.API_CLIENT,
+          },
+          emailNotificationsEnabled && {
+            id: 'enabledNotificationTypes',
+            preferences: t('common.enabledNotificationTypes'),
+            modifySettings: selectedNotificationTypes,
+            modifySettingsProps: {
+              onChange: handleNotificationTypesChange,
+              options: notificationTypeOptions,
+              placeholder: t('common.selectNotificationTypes'),
+              isMulti: true,
+            },
+            currentValue: selectedNotificationTypes.map((v) => v.name).join(', '),
+            description: t('common.descriptionEnabledNotificationTypes'),
+            group: Groups.API_CLIENT,
+          },
+          emailNotificationsEnabled && {
+            id: 'notificationDeliveryMode',
+            preferences: t('common.notificationDeliveryMode'),
+            modifySettings: selectedNotificationsDeliveryMode,
+            modifySettingsProps: {
+              onChange: handleNotificationsDeliveryModeChange,
+              options: notificationsDeliveryModes,
+              placeholder: selectedNotificationsDeliveryMode.name,
+              isSearchable: true,
+              selectFirstOnSearch: true,
+            },
+            currentValue: selectedNotificationsDeliveryMode.name,
+            description: t('common.descriptionNotificationsDeliveryMode'),
+            group: Groups.API_CLIENT,
+          },
+          emailNotificationsEnabled && {
+            id: 'notificationAggregationScope',
+            preferences: t('common.notificationAggregationScope'),
+            modifySettings: selectedNotificationsAggregationScope,
+            modifySettingsProps: {
+              onChange: handleNotificationsAggregationScopeChange,
+              options: notificationsAggregationScopes,
+              placeholder: selectedNotificationsAggregationScope.name,
+              isSearchable: true,
+              selectFirstOnSearch: true,
+            },
+            currentValue: selectedNotificationsAggregationScope.name,
+            description: t('common.descriptionNotificationsAggregationScope'),
+            group: Groups.API_CLIENT,
+          },
         ].filter(Boolean),
       [
         t,
@@ -428,6 +615,7 @@ const PreferencesSettings = React.memo(
         languages,
         Groups.GENERAL,
         Groups.NOTIFICATIONS,
+        Groups.API_CLIENT,
         selectedTheme,
         handleThemeChange,
         themes,
@@ -463,6 +651,17 @@ const PreferencesSettings = React.memo(
         handleSubscribeToUsersChange,
         subscribeToInstance,
         handleSubscribeToInstanceChange,
+        emailNotificationsEnabled,
+        handleEmailNotificationsEnabledChange,
+        selectedNotificationTypes,
+        handleNotificationTypesChange,
+        notificationTypeOptions,
+        selectedNotificationsDeliveryMode,
+        handleNotificationsDeliveryModeChange,
+        notificationsDeliveryModes,
+        selectedNotificationsAggregationScope,
+        handleNotificationsAggregationScopeChange,
+        notificationsAggregationScopes,
       ],
     );
 
@@ -571,7 +770,8 @@ const PreferencesSettings = React.memo(
                     return (
                       <Table.Row key={row.id} className={s.groupRow}>
                         <Table.Cell colSpan={columns.length}>
-                          <strong>{row.groupingValue === 'notifications' ? t('common.notifications') : t('common.general')}</strong>
+                          {/* eslint-disable-next-line no-nested-ternary */}
+                          <strong>{row.groupingValue === 'notifications' ? t('common.notifications') : row.groupingValue === 'apiClient' ? t('common.apiClient') : t('common.general')}</strong>
                         </Table.Cell>
                       </Table.Row>
                     );
@@ -613,6 +813,10 @@ PreferencesSettings.propTypes = {
   theme: PropTypes.string.isRequired,
   themeShape: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  emailNotificationsEnabled: PropTypes.bool.isRequired,
+  enabledNotificationTypes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  notificationDeliveryMode: PropTypes.string.isRequired,
+  notificationAggregationScope: PropTypes.string.isRequired,
 };
 
 PreferencesSettings.defaultProps = {
