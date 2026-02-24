@@ -15,6 +15,7 @@ import { ReactComponent as Check } from '../../../assets/icons/Check.svg';
 import { ReactComponent as CircleQuestion } from '../../../assets/icons/CircleQuestion.svg';
 import { ReactComponent as Close } from '../../../assets/icons/Close.svg';
 import { ReactComponent as Comment } from '../../../assets/icons/Comment.svg';
+import { ReactComponent as Copy } from '../../../assets/icons/Copy.svg';
 import { ReactComponent as Duplicate } from '../../../assets/icons/Duplicate.svg';
 import { ReactComponent as EllipsisVertical } from '../../../assets/icons/EllipsisVertical.svg';
 import { ReactComponent as Envelope } from '../../../assets/icons/Envelope.svg';
@@ -45,6 +46,7 @@ import { ReactComponent as Play } from '../../../assets/icons/Play.svg';
 import { ReactComponent as Plus } from '../../../assets/icons/Plus.svg';
 import { ReactComponent as PlusMath } from '../../../assets/icons/PlusMath.svg';
 import { ReactComponent as ProjectSettings } from '../../../assets/icons/ProjectSettings.svg';
+import { ReactComponent as Reset } from '../../../assets/icons/Reset.svg';
 import { ReactComponent as Server } from '../../../assets/icons/Server.svg';
 import { ReactComponent as Settings } from '../../../assets/icons/Settings.svg';
 import { ReactComponent as Show } from '../../../assets/icons/Show.svg';
@@ -81,6 +83,7 @@ const IconType = {
   CircleQuestion,
   Close,
   Comment,
+  Copy,
   Duplicate,
   EllipsisVertical,
   Envelope,
@@ -111,6 +114,7 @@ const IconType = {
   Plus,
   PlusMath,
   ProjectSettings,
+  Reset,
   Server,
   Settings,
   Show,
