@@ -1,15 +1,31 @@
 const crypto = require('crypto');
 
 const valuesValidator = (value) => {
-  return _.isPlainObject(value) && typeof value.id === 'string';
+  if (!_.isPlainObject(value)) {
+    return false;
+  }
+
+  return true;
 };
 
 module.exports = {
   inputs: {
+    record: {
+      type: 'ref',
+      required: true,
+    },
     values: {
       type: 'ref',
       custom: valuesValidator,
       required: true,
+    },
+    currentUser: {
+      type: 'ref',
+      required: true,
+    },
+    skipMetaUpdate: {
+      type: 'boolean',
+      defaultsTo: false,
     },
     request: {
       type: 'ref',
@@ -17,31 +33,60 @@ module.exports = {
   },
 
   async fn(inputs) {
-    let mailToken;
-    let newMailTokenToken;
+    const { values, currentUser, skipMetaUpdate } = inputs;
+
+    let token;
+    let existingMailToken;
 
     do {
-      newMailTokenToken = crypto.randomBytes(8).toString('hex');
+      token = crypto.randomBytes(8).toString('hex');
       /* eslint-disable-next-line no-await-in-loop */
-      mailToken = await MailToken.findOne({ token: newMailTokenToken });
-    } while (mailToken);
+      existingMailToken = await MailToken.findOne({ token });
+    } while (existingMailToken);
 
-    const updated = await MailToken.updateOne({ id: inputs.values.id }).set({
-      token: newMailTokenToken,
-      updatedAt: new Date().toUTCString(),
+    const mailToken = await MailToken.updateOne({ id: inputs.record.id }).set({
+      ...values,
+      token,
     });
 
-    if (updated) {
+    if (mailToken) {
       sails.sockets.broadcast(
-        `board:${updated.boardId}`,
+        `board:${mailToken.boardId}`,
         'mailTokenUpdate',
         {
-          item: updated,
+          item: mailToken,
         },
         inputs.request,
       );
+
+      const user = await User.findOne(mailToken.userId);
+      const board = mailToken.boardId ? await Board.findOne(mailToken.boardId) : undefined;
+      const list = mailToken.listId ? await List.findOne(mailToken.listId) : undefined;
+      await sails.helpers.actions.createOne.with({
+        values: {
+          board,
+          list,
+          scope: list ? Action.Scopes.LIST : Action.Scopes.BOARD,
+          type: Action.Types.MAIL_TOKEN_UPDATE,
+          data: {
+            mailTokenId: mailToken.id,
+            userId: mailToken.userId,
+            userName: user?.name,
+            boardName: board ? board.name : undefined,
+            listName: list ? list.name : undefined,
+          },
+        },
+        currentUser,
+        request: inputs.request,
+      });
+
+      if (list) {
+        await sails.helpers.lists.updateMeta.with({ id: list.id, currentUser, skipMetaUpdate });
+      } else if (board) {
+        await sails.helpers.boards.updateMeta.with({ id: board.id, currentUser, skipMetaUpdate });
+      }
     }
 
-    return updated;
+    return mailToken;
   },
 };

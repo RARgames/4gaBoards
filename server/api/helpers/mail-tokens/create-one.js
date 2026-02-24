@@ -70,6 +70,7 @@ module.exports = {
       );
 
       if (!skipActions) {
+        const user = await User.findOne(mailToken.userId);
         await sails.helpers.actions.createOne.with({
           values: {
             board: values.board,
@@ -78,9 +79,10 @@ module.exports = {
             type: Action.Types.MAIL_TOKEN_CREATE,
             data: {
               mailTokenId: mailToken.id,
-              mailTokenToken: mailToken.token,
-              boardId: values.board?.id,
-              listId: values.list?.id,
+              userId: mailToken.userId,
+              userName: user?.name,
+              boardName: values.board?.name,
+              listName: values.list?.name,
             },
           },
           currentUser,
