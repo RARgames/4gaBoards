@@ -51,6 +51,11 @@ const Types = {
   BOARD_USER_UPDATE: 'boardUserUpdate',
   BOARD_USER_REMOVE: 'boardUserRemove',
 
+  /* Mail Token Activities */
+  MAIL_TOKEN_CREATE: 'mailTokenCreate',
+  MAIL_TOKEN_UPDATE: 'mailTokenUpdate',
+  MAIL_TOKEN_DELETE: 'mailTokenDelete',
+
   /* LABEL Activities */
   LABEL_CREATE: 'labelCreate',
   LABEL_UPDATE: 'labelUpdate',
