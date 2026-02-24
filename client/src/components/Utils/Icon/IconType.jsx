@@ -17,6 +17,7 @@ import { ReactComponent as Close } from '../../../assets/icons/Close.svg';
 import { ReactComponent as Comment } from '../../../assets/icons/Comment.svg';
 import { ReactComponent as Duplicate } from '../../../assets/icons/Duplicate.svg';
 import { ReactComponent as EllipsisVertical } from '../../../assets/icons/EllipsisVertical.svg';
+import { ReactComponent as Envelope } from '../../../assets/icons/Envelope.svg';
 import { ReactComponent as Eye } from '../../../assets/icons/Eye.svg';
 import { ReactComponent as EyeSlash } from '../../../assets/icons/EyeSlash.svg';
 import { ReactComponent as Facebook } from '../../../assets/icons/Facebook.svg';
@@ -82,6 +83,7 @@ const IconType = {
   Comment,
   Duplicate,
   EllipsisVertical,
+  Envelope,
   Eye,
   EyeSlash,
   Facebook,
