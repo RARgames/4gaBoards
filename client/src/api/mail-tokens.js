@@ -11,7 +11,7 @@ const createMailToken = (data, headers) => {
 };
 
 const updateMailToken = (id, data, headers) => {
-  return socket.patch(`mailTokens/${id}`, data, headers).then((body) => ({
+  return socket.patch(`/mailTokens/${id}`, data, headers).then((body) => ({
     ...body,
     item: transformMailToken(body.item),
   }));
