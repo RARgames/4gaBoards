@@ -1,7 +1,7 @@
 module.exports = {
   inputs: {
-    mailTokenId: {
-      type: 'string',
+    criteria: {
+      type: 'json',
       required: true,
     },
   },
@@ -11,7 +11,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const mailToken = await MailToken.findOne({ id: inputs.mailTokenId });
+    const mailToken = await MailToken.findOne(inputs.criteria);
 
     if (!mailToken) {
       throw 'pathNotFound';
@@ -27,11 +27,12 @@ module.exports = {
         },
       }));
     } else if (mailToken.boardId) {
-      const board = await Board.findOne({ id: mailToken.boardId });
-      if (!board) {
-        throw 'pathNotFound';
-      }
-      path = { board, list: null };
+      path = await sails.helpers.boards.getProjectPath(mailToken.boardId).intercept('pathNotFound', (nodes) => ({
+        pathNotFound: {
+          mailToken,
+          ...nodes,
+        },
+      }));
     } else {
       throw 'pathNotFound';
     }

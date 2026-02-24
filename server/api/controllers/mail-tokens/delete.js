@@ -15,8 +15,9 @@ const Errors = {
 
 module.exports = {
   inputs: {
-    mailTokenId: {
+    id: {
       type: 'string',
+      regex: /^[0-9]+$/,
       required: true,
     },
   },
@@ -39,14 +40,12 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const mailToken = await MailToken.findOne({ id: inputs.mailTokenId });
+    let mailToken = await MailToken.findOne({ id: inputs.id });
     if (!mailToken) {
       throw Errors.MAIL_TOKEN_NOT_FOUND;
     }
 
-    const { board } = await sails.helpers.boards.getProjectPath(mailToken.boardId).intercept('pathNotFound', () => Errors.MISSING_RELATIONS);
-
-    const project = await Project.findOne({ id: board.projectId });
+    const { project } = await sails.helpers.mailTokens.getProjectPath(mailToken.id).intercept('pathNotFound', () => Errors.MISSING_RELATIONS);
     if (!project) {
       throw Errors.PROJECT_NOT_FOUND;
     }
@@ -59,13 +58,14 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const deleted = await sails.helpers.mailTokens.deleteOne.with({
+    mailToken = await sails.helpers.mailTokens.deleteOne.with({
       record: mailToken,
+      currentUser,
       request: this.req,
     });
 
     return {
-      item: deleted,
+      item: mailToken,
     };
   },
 };

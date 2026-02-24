@@ -5,9 +5,6 @@ const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
   },
-  LIST_NOT_FOUND: {
-    listNotFound: 'List not found',
-  },
   BOARD_NOT_FOUND: {
     boardNotFound: 'Board not found',
   },
@@ -34,9 +31,6 @@ module.exports = {
     },
     notEnoughRights: {
       responseType: 'forbidden',
-    },
-    listNotFound: {
-      responseType: 'notFound',
     },
     boardNotFound: {
       responseType: 'notFound',

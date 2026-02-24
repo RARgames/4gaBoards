@@ -44,9 +44,4 @@ module.exports = {
       await validateInputs(record, proceed);
     });
   },
-  beforeUpdate(record, proceed) {
-    sails.config.models.beforeUpdate(record, async () => {
-      await validateInputs(record, proceed);
-    });
-  },
 };
