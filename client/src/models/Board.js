@@ -263,6 +263,14 @@ export default class extends BaseModel {
     return this.notifications?.filter({ isRead: false, deletedAt: null });
   }
 
+  getOrderedMailTokensQuerySet() {
+    return this.mailTokens.orderBy('createdAt', false);
+  }
+
+  getOrderedMailTokensModelArray() {
+    return this.getOrderedMailTokensQuerySet().toModelArray();
+  }
+
   getMembershipModelForUser(userId) {
     return this.memberships
       .filter({
