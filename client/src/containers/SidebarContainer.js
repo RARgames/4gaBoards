@@ -2,12 +2,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Sidebar from '../components/Static/Sidebar';
+import { BoardMembershipRoles } from '../constants/Enums';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
 const makeMapStateToProps = () => {
   const selectProjectActivitiesById = selectors.makeSelectProjectActivitiesById();
   const selectBoardActivitiesById = selectors.makeSelectBoardActivitiesById();
+  const selectCurrentUserMembershipByBoardId = selectors.makeSelectCurrentUserMembershipByBoardId();
 
   return (state) => {
     const path = selectors.selectPathConstant(state);
@@ -18,10 +20,16 @@ const makeMapStateToProps = () => {
     const filteredProjects = _filteredProjects.map((project) => ({
       ...project,
       activities: selectProjectActivitiesById(state, project.id),
-      boards: project.boards.map((board) => ({
-        ...board,
-        activities: selectBoardActivitiesById(state, board.id),
-      })),
+      boards: project.boards.map((board) => {
+        const membership = selectCurrentUserMembershipByBoardId(state, board.id);
+        const isCurrentUserEditor = !!membership && membership.role === BoardMembershipRoles.EDITOR;
+
+        return {
+          ...board,
+          activities: selectBoardActivitiesById(state, board.id),
+          canEdit: isCurrentUserEditor,
+        };
+      }),
     }));
     const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
     const { projectId, boardId } = selectors.selectPath(state);
@@ -37,6 +45,7 @@ const makeMapStateToProps = () => {
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
     const mailTokens = selectors.selectMailTokensByBoardId(state, boardId);
     const mailTokenCount = selectors.selectMailTokenCountByBoardId(state, boardId);
+    const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
 
     return {
       path,
@@ -56,6 +65,8 @@ const makeMapStateToProps = () => {
       usersNotificationCount,
       mailTokens,
       mailTokenCount,
+      mailServiceAvailable,
+      mailServiceInboundEmail,
     };
   };
 };

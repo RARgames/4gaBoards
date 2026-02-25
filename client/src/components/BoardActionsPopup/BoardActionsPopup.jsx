@@ -37,7 +37,10 @@ const BoardActionsStep = React.memo(
     memberships,
     mailTokens,
     mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     isProjectManager,
+    canEdit,
     onUpdate,
     onExport,
     onDelete,
@@ -111,6 +114,8 @@ const BoardActionsStep = React.memo(
                 </Trans>
               }
               mailTokens={mailTokens}
+              mailServiceInboundEmail={mailServiceInboundEmail}
+              canEdit={canEdit}
               onCreate={onMailTokenCreate}
               onUpdate={onMailTokenUpdate}
               onDelete={onMailTokenDelete}
@@ -145,7 +150,12 @@ const BoardActionsStep = React.memo(
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.emailCardToBoard')} onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}>
+        <Button
+          style={ButtonStyle.PopupContext}
+          title={mailServiceAvailable ? t('common.emailCardToBoard') : t('common.emailServiceUnavailable')}
+          onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}
+          disabled={!mailServiceAvailable}
+        >
           <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
           {t('common.emailCardToBoard')}
         </Button>
@@ -174,8 +184,11 @@ BoardActionsStep.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isProjectManager: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

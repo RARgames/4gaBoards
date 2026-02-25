@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
   const boardSearchParams = selectors.selectBoardSearchParamsForCurrentBoard(state);
   const mailTokens = selectors.selectMailTokensByBoardId(state, boardId);
   const mailTokenCount = selectors.selectMailTokenCountByBoardId(state, boardId);
+  const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
 
   return {
     projectId,
@@ -50,6 +51,8 @@ const mapStateToProps = (state) => {
     isSubscribed,
     mailTokens,
     mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
   };
 };
 

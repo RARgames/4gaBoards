@@ -34,6 +34,8 @@ module.exports = {
         ssoAvailable: sails.config.custom.ssoAvailable,
         oidcEnabledMethods: sails.config.custom.oidcEnabledMethods,
         demoMode: sails.config.custom.demoMode,
+        mailServiceAvailable: sails.config.custom.mailServiceAvailable,
+        mailServiceInboundEmail: sails.config.custom.mailServiceInboundEmail,
         createdAt: currentUser?.isAdmin ? core.createdAt : undefined,
         createdById: currentUser?.isAdmin ? core.createdById : undefined,
         updatedAt: currentUser?.isAdmin ? core.updatedAt : undefined,

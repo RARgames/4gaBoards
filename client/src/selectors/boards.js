@@ -141,6 +141,34 @@ export const selectBoardCardAndTaskMembershipsForCurrentBoard = createSelector(
   },
 );
 
+export const makeSelectCurrentUserMembershipByBoardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ Board }, id, currentUserId) => {
+      if (!id) {
+        return id;
+      }
+
+      const boardModel = Board.withId(id);
+
+      if (!boardModel) {
+        return boardModel;
+      }
+
+      const boardMembershipModel = boardModel.getMembershipModelForUser(currentUserId);
+
+      if (!boardMembershipModel) {
+        return boardMembershipModel;
+      }
+
+      return boardMembershipModel.ref;
+    },
+  );
+
+export const selectCurrentUserMembershipByBoardId = makeSelectCurrentUserMembershipByBoardId();
+
 export const selectCurrentUserMembershipForCurrentBoard = createSelector(
   orm,
   (state) => selectPath(state).boardId,
@@ -385,6 +413,8 @@ export default {
   selectCurrentBoard,
   selectMembershipsForCurrentBoard,
   selectBoardCardAndTaskMembershipsForCurrentBoard,
+  makeSelectCurrentUserMembershipByBoardId,
+  selectCurrentUserMembershipByBoardId,
   selectCurrentUserMembershipForCurrentBoard,
   selectLabelsForCurrentBoard,
   selectListIdsForCurrentBoard,

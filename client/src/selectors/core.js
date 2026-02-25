@@ -37,6 +37,8 @@ export const selectCoreSettings = createSelector(orm, ({ Core }) => {
       ssoAvailable,
       oidcEnabledMethods: [],
       demoMode: false,
+      mailServiceAvailable: false,
+      mailServiceInboundEmail: '',
     };
     return coreModel;
   }

@@ -37,6 +37,8 @@ const BoardActions = React.memo(
     isSubscribed,
     mailTokens,
     mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     viewMode,
     onViewModeChange,
     onMembershipCreate,
@@ -159,8 +161,11 @@ const BoardActions = React.memo(
             updatedBy={board.updatedBy}
             memberships={board.memberships}
             isProjectManager={isProjectManager}
+            canEdit={canEdit}
             mailTokens={mailTokens}
             mailTokenCount={mailTokenCount}
+            mailServiceAvailable={mailServiceAvailable}
+            mailServiceInboundEmail={mailServiceInboundEmail}
             onUpdate={(data) => onBoardUpdate(board.id, data)}
             onExport={(data) => onBoardExport(board.id, data)}
             onDelete={() => onBoardDelete(board.id)}
@@ -208,6 +213,8 @@ BoardActions.propTypes = {
   isSubscribed: PropTypes.bool.isRequired,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   viewMode: PropTypes.string.isRequired,
   onViewModeChange: PropTypes.func.isRequired,
   onMembershipCreate: PropTypes.func.isRequired,
