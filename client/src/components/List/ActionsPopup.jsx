@@ -30,6 +30,8 @@ const ActionsStep = React.memo(
     lastActivityId,
     mailTokens,
     mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     canEdit,
     onNameEdit,
     onCardAdd,
@@ -111,6 +113,7 @@ const ActionsStep = React.memo(
                 </Trans>
               }
               mailTokens={mailTokens}
+              mailServiceInboundEmail={mailServiceInboundEmail}
               canEdit={canEdit}
               onCreate={onMailTokenCreate}
               onUpdate={onMailTokenUpdate}
@@ -136,7 +139,12 @@ const ActionsStep = React.memo(
           <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
           {t('action.addCard', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.emailCardToList')} onClick={handleMailTokenListClick}>
+        <Button
+          style={ButtonStyle.PopupContext}
+          title={mailServiceAvailable ? t('common.emailCardToList') : t('common.emailServiceUnavailable')}
+          onClick={handleMailTokenListClick}
+          disabled={!mailServiceAvailable}
+        >
           <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
           {t('common.emailCardToList')}
         </Button>
@@ -163,6 +171,8 @@ ActionsStep.propTypes = {
   lastActivityId: PropTypes.string,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,

@@ -68,6 +68,8 @@ module.exports = {
       ssoAvailable: sails.config.custom.ssoAvailable,
       oidcEnabledMethods: sails.config.custom.oidcEnabledMethods,
       demoMode: sails.config.custom.demoMode,
+      mailServiceAvailable: sails.config.custom.mailServiceAvailable,
+      mailServiceInboundEmail: sails.config.custom.mailServiceInboundEmail,
     };
 
     const users = await sails.helpers.users.getMany();

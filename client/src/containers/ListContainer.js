@@ -26,6 +26,7 @@ const makeMapStateToProps = () => {
     const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
     const mailTokens = selectors.selectMailTokensByListId(state, id);
     const mailTokenCount = selectors.selectMailTokenCountByListId(state, id);
+    const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
 
     return {
       id,
@@ -51,6 +52,8 @@ const makeMapStateToProps = () => {
       isManager,
       mailTokens,
       mailTokenCount,
+      mailServiceAvailable,
+      mailServiceInboundEmail,
     };
   };
 };

@@ -42,6 +42,8 @@ const List = React.memo(
     isManager,
     mailTokens,
     mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     onUpdate,
     onDelete,
     onCardCreate,
@@ -274,6 +276,8 @@ const List = React.memo(
                       isManager={isManager}
                       mailTokens={mailTokens}
                       mailTokenCount={mailTokenCount}
+                      mailServiceAvailable={mailServiceAvailable}
+                      mailServiceInboundEmail={mailServiceInboundEmail}
                       canEdit={canEdit}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
@@ -332,6 +336,8 @@ List.propTypes = {
   isManager: PropTypes.bool.isRequired,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,

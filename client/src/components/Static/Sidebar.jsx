@@ -41,6 +41,8 @@ const Sidebar = React.memo(
     usersNotificationCount,
     mailTokens,
     mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -214,14 +216,16 @@ const Sidebar = React.memo(
                                   updatedAt={board.updatedAt}
                                   updatedBy={board.updatedBy}
                                   memberships={board.memberships}
+                                  mailTokens={mailTokens}
+                                  mailTokenCount={mailTokenCount}
+                                  mailServiceAvailable={mailServiceAvailable}
+                                  mailServiceInboundEmail={mailServiceInboundEmail}
                                   isProjectManager={isProjectManager}
+                                  canEdit={board.canEdit}
                                   onUpdate={(data) => onBoardUpdate(board.id, data)}
                                   onExport={(data) => onBoardExport(board.id, data)}
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
-                                  currBoardId={currBoardId}
-                                  mailTokens={mailTokens}
-                                  mailTokenCount={mailTokenCount}
                                   onMailTokenCreate={onMailTokenCreate}
                                   onMailTokenUpdate={onMailTokenUpdate}
                                   onMailTokenDelete={onMailTokenDelete}
@@ -390,6 +394,8 @@ Sidebar.propTypes = {
   usersNotificationCount: PropTypes.number.isRequired,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,

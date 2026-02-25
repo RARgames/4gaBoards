@@ -1,7 +1,7 @@
 const { fetchRetryUntilAvailable } = require('../utils/fetchRetry');
 
 async function setupNotifications() {
-  if (!process.env.NOTIFICATIONS_HOST_URL || !process.env.NOTIFICATIONS_CLIENT_ID || !process.env.NOTIFICATIONS_CLIENT_SECRET) {
+  if (!process.env.NOTIFICATIONS_HOST_URL || !process.env.NOTIFICATIONS_CLIENT_ID || !process.env.NOTIFICATIONS_CLIENT_SECRET || !process.env.MAIL_SERVICE_INBOUND_EMAIL) {
     return;
   }
 
@@ -51,7 +51,7 @@ async function setupNotifications() {
         4000,
       );
     }
-    sails.config.custom.emailNotificationsAvailable = true;
+    sails.config.custom.mailServiceAvailable = true;
     sails.log.info(`Notifications: Server is ready and client is configured successfully`);
   } catch (err) {
     sails.log.error('Notifications: Configuration failed:', err);

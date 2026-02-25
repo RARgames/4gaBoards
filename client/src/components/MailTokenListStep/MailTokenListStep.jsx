@@ -16,7 +16,7 @@ const StepTypes = {
   DELETE: 'DELETE',
 };
 
-const MailTokenListStep = React.memo(({ title, mailTokens, canEdit, onCreate, onUpdate, onDelete, onBack }) => {
+const MailTokenListStep = React.memo(({ title, mailTokens, mailServiceInboundEmail, canEdit, onCreate, onUpdate, onDelete, onBack }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
   const [search, handleSearchChange] = useField('');
@@ -47,9 +47,12 @@ const MailTokenListStep = React.memo(({ title, mailTokens, canEdit, onCreate, on
     [openStep],
   );
 
-  const handleCopyClick = useCallback((mailToken) => {
-    navigator.clipboard.writeText(mailToken);
-  }, []);
+  const handleCopyClick = useCallback(
+    (mailToken) => {
+      navigator.clipboard.writeText(`${mailToken}-${mailServiceInboundEmail}`);
+    },
+    [mailServiceInboundEmail],
+  );
 
   if (step) {
     switch (step.type) {
@@ -102,10 +105,10 @@ const MailTokenListStep = React.memo(({ title, mailTokens, canEdit, onCreate, on
                   </div>
                 </div>
                 <div className={s.itemContent}>
-                  <Button style={ButtonStyle.Icon} title={t('common.copyEmail')} onClick={() => handleCopyClick(mailToken.token)}>
+                  <Button style={ButtonStyle.Icon} title={t('common.copyEmail')} onClick={() => handleCopyClick(mailToken.token)} className={s.copyButton}>
                     <Icon type={IconType.Copy} size={IconSize.Size12} />
                   </Button>
-                  <span className={s.email}>{mailToken.token}</span>
+                  <span className={s.email}>{`${mailToken.token}-${mailServiceInboundEmail}`}</span>
                 </div>
               </div>
             ))}
@@ -121,6 +124,7 @@ const MailTokenListStep = React.memo(({ title, mailTokens, canEdit, onCreate, on
 MailTokenListStep.propTypes = {
   title: PropTypes.element.isRequired,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,

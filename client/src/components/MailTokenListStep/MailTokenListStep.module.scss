@@ -60,9 +60,21 @@
     align-items: center;
   }
 
+  .copyButton {
+    svg {
+      fill: var(--text2);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--text3);
+      }
+    }
+  }
+
   .email {
     font-family: monospace;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--text2);
     white-space: nowrap;
     overflow: hidden;
