@@ -145,12 +145,12 @@ module.exports = {
     },
     notificationDeliveryMode: {
       type: 'string',
-      isIn: UserPrefs.NOTIFICATIONS_DELIVERY_MODE,
+      isIn: UserPrefs.NOTIFICATIONS_DELIVERY_MODES,
       isNotEmptyString: true,
     },
     notificationAggregationScope: {
       type: 'string',
-      isIn: UserPrefs.NOTIFICATIONS_AGGREGATION_SCOPE,
+      isIn: UserPrefs.NOTIFICATIONS_AGGREGATION_SCOPES,
       isNotEmptyString: true,
     },
   },

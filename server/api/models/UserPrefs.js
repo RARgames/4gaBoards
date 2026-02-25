@@ -13,8 +13,8 @@ const PREFERRED_FONTS = ['default', 'monospace'];
 const THEME_SHAPES = ['default', 'rounded'];
 const THEMES = ['default', 'github-dark', 'light', 'custom'];
 const NOTIFICATIONS_TYPES = [`instance`, `user`, `project`, `board`, `list`, `card`, `task`, `attachment`, `comment`];
-const NOTIFICATIONS_DELIVERY_MODE = ['instant', 'batched', 'first_instant_then_batch'];
-const NOTIFICATIONS_AGGREGATION_SCOPE = ['card', 'board', 'list', 'project', 'user'];
+const NOTIFICATIONS_DELIVERY_MODES = ['instant', 'batched', 'first_instant_then_batch'];
+const NOTIFICATIONS_AGGREGATION_SCOPES = ['card', 'board', 'list', 'project', 'user'];
 
 module.exports = {
   DESCRIPTION_MODES,
@@ -25,8 +25,8 @@ module.exports = {
   THEME_SHAPES,
   THEMES,
   NOTIFICATIONS_TYPES,
-  NOTIFICATIONS_DELIVERY_MODE,
-  NOTIFICATIONS_AGGREGATION_SCOPE,
+  NOTIFICATIONS_DELIVERY_MODES,
+  NOTIFICATIONS_AGGREGATION_SCOPES,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -243,13 +243,13 @@ module.exports = {
     },
     notificationDeliveryMode: {
       type: 'string',
-      isIn: NOTIFICATIONS_DELIVERY_MODE,
+      isIn: NOTIFICATIONS_DELIVERY_MODES,
       defaultsTo: 'first_instant_then_batch',
       columnName: 'notification_delivery_mode',
     },
     notificationAggregationScope: {
       type: 'string',
-      isIn: NOTIFICATIONS_AGGREGATION_SCOPE,
+      isIn: NOTIFICATIONS_AGGREGATION_SCOPES,
       defaultsTo: 'card',
       columnName: 'notification_aggregation_scope',
     },
