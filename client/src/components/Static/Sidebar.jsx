@@ -39,9 +39,8 @@ const Sidebar = React.memo(
     sidebarCompact,
     instanceNotificationCount,
     usersNotificationCount,
-    mailToken,
-    mailTokenCountForBoardId,
-    mailTokensForBoard,
+    mailTokens,
+    mailTokenCount,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -102,12 +101,6 @@ const Sidebar = React.memo(
       }, 0);
       return () => clearTimeout(timeout);
     }, [currBoardId, currProjectId, scrollItemIntoView]);
-
-    const handleMailTokenCopy = useCallback(() => {
-      if (mailToken) {
-        navigator.clipboard.writeText(mailToken);
-      }
-    }, [mailToken]);
 
     useEffect(() => {
       if (currBoardId) {
@@ -227,12 +220,10 @@ const Sidebar = React.memo(
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
                                   currBoardId={currBoardId}
-                                  mailToken={mailToken}
-                                  mailTokenCountForBoardId={mailTokenCountForBoardId}
-                                  mailTokensForBoard={mailTokensForBoard}
+                                  mailTokens={mailTokens}
+                                  mailTokenCount={mailTokenCount}
                                   onMailTokenCreate={onMailTokenCreate}
                                   onMailTokenUpdate={onMailTokenUpdate}
-                                  onMailTokenCopy={handleMailTokenCopy}
                                   onMailTokenDelete={onMailTokenDelete}
                                   position="right-start"
                                   offset={10}
@@ -397,9 +388,8 @@ Sidebar.propTypes = {
   sidebarCompact: PropTypes.bool.isRequired,
   instanceNotificationCount: PropTypes.number.isRequired,
   usersNotificationCount: PropTypes.number.isRequired,
-  mailToken: PropTypes.string,
-  mailTokenCountForBoardId: PropTypes.number.isRequired,
-  mailTokensForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -422,7 +412,6 @@ Sidebar.defaultProps = {
   currBoardId: undefined,
   filterQuery: undefined,
   filterTarget: undefined,
-  mailToken: null,
 };
 
 export default Sidebar;

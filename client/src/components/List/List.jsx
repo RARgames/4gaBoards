@@ -40,8 +40,8 @@ const List = React.memo(
     isAllActivitiesFetched,
     lastActivityId,
     isManager,
-    mailToken,
-    mailTokensForList,
+    mailTokens,
+    mailTokenCount,
     onUpdate,
     onDelete,
     onCardCreate,
@@ -130,12 +130,6 @@ const List = React.memo(
     const handleNameEditHeightChange = useCallback((height) => {
       setNameEditHeight(height);
     }, []);
-
-    const handleMailTokenCopy = useCallback(() => {
-      if (mailToken) {
-        navigator.clipboard.writeText(mailToken);
-      }
-    }, [mailToken]);
 
     useEffect(() => {
       if (isAddCardOpen && listWrapper.current) {
@@ -278,14 +272,14 @@ const List = React.memo(
                       isAllActivitiesFetched={isAllActivitiesFetched}
                       lastActivityId={lastActivityId}
                       isManager={isManager}
-                      mailToken={mailToken}
-                      mailTokensForList={mailTokensForList}
+                      mailTokens={mailTokens}
+                      mailTokenCount={mailTokenCount}
+                      canEdit={canEdit}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onActivitiesFetch={onActivitiesFetch}
                       onMailTokenCreate={onMailTokenCreate}
                       onMailTokenUpdate={onMailTokenUpdate}
-                      onMailTokenCopy={handleMailTokenCopy}
                       onMailTokenDelete={onMailTokenDelete}
                       onDelete={onDelete}
                       position="left-start"
@@ -336,8 +330,8 @@ List.propTypes = {
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
   isManager: PropTypes.bool.isRequired,
-  mailToken: PropTypes.string,
-  mailTokensForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
@@ -353,7 +347,6 @@ List.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
-  mailToken: null,
 };
 
 export default List;

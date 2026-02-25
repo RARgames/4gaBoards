@@ -35,12 +35,8 @@ const makeMapStateToProps = () => {
     } = state;
     const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
-    const selectMailTokenCountForBoardId = selectors.makeSelectMailTokenCountForBoardId();
-    const selectMailTokensByBoardId = selectors.makeSelectMailTokensByBoardId();
-    const mail = selectors.selectMailTokenForCurrentUserByBoardId(state, boardId);
-    const mailToken = mail?.mailToken ?? null;
-    const mailTokenCountForBoardId = selectMailTokenCountForBoardId(state, boardId);
-    const mailTokensForBoard = selectMailTokensByBoardId(state, boardId);
+    const mailTokens = selectors.selectMailTokensByBoardId(state, boardId);
+    const mailTokenCount = selectors.selectMailTokenCountByBoardId(state, boardId);
 
     return {
       path,
@@ -58,9 +54,8 @@ const makeMapStateToProps = () => {
       sidebarCompact,
       instanceNotificationCount,
       usersNotificationCount,
-      mailToken,
-      mailTokenCountForBoardId,
-      mailTokensForBoard,
+      mailTokens,
+      mailTokenCount,
     };
   };
 };
@@ -80,7 +75,7 @@ const mapDispatchToProps = (dispatch) =>
       onActivitiesProjectFetch: entryActions.fetchProjectActivities,
       onActivitiesBoardFetch: entryActions.fetchBoardActivities,
       onMailTokenCreate: (boardId) => entryActions.createMailToken({ boardId }),
-      onMailTokenUpdate: (boardId) => entryActions.updateMailToken({ boardId }),
+      onMailTokenUpdate: (mailTokenId, boardId) => entryActions.updateMailToken(mailTokenId, { boardId }),
       onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
     },
     dispatch,

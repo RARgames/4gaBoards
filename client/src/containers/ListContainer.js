@@ -11,7 +11,6 @@ const makeMapStateToProps = () => {
   const selectCardIdsByListId = selectors.makeSelectCardIdsByListId();
   const selectIsFilteredByListId = selectors.makeSelectIsFilteredByListId();
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
-  const selectMailTokensByListId = selectors.makeSelectMailTokensByListId();
 
   return (state, { id, index }) => {
     const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched, lastActivityId } = selectListById(state, id);
@@ -21,15 +20,12 @@ const makeMapStateToProps = () => {
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
+    const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const activities = selectors.selectListActivitiesById(state, id);
     const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
-
-    const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
-
-    const mail = selectors.selectMailTokenForCurrentUserByListId(state, id);
-    const mailToken = mail?.mailToken ?? null;
-    const mailTokensForList = selectMailTokensByListId(state, id);
+    const mailTokens = selectors.selectMailTokensByListId(state, id);
+    const mailTokenCount = selectors.selectMailTokenCountByListId(state, id);
 
     return {
       id,
@@ -53,8 +49,8 @@ const makeMapStateToProps = () => {
       isAllActivitiesFetched,
       lastActivityId,
       isManager,
-      mailToken,
-      mailTokensForList,
+      mailTokens,
+      mailTokenCount,
     };
   };
 };
@@ -67,7 +63,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
       onActivitiesFetch: () => entryActions.fetchListActivities(id),
       onMailTokenCreate: () => entryActions.createMailToken({ listId: id }),
-      onMailTokenUpdate: () => entryActions.updateMailToken({ listId: id }),
+      onMailTokenUpdate: (mailTokenId) => entryActions.updateMailToken(mailTokenId, { listId: id }),
       onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
     },
     dispatch,

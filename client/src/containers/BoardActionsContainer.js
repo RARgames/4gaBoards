@@ -7,7 +7,7 @@ import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
-  const { projectId } = selectors.selectPath(state);
+  const { projectId, boardId } = selectors.selectPath(state);
   const cardCount = selectors.selectCardsCountForCurrentBoard(state);
   const isFiltered = selectors.selectIsFilteredForCurrentBoard(state);
   const filteredCardCount = selectors.selectFilteredCardsCountForCurrentBoard(state);
@@ -28,6 +28,8 @@ const mapStateToProps = (state) => {
     memberships: selectors.selectMembershipsForCurrentBoard(state),
   };
   const boardSearchParams = selectors.selectBoardSearchParamsForCurrentBoard(state);
+  const mailTokens = selectors.selectMailTokensByBoardId(state, boardId);
+  const mailTokenCount = selectors.selectMailTokenCountByBoardId(state, boardId);
 
   return {
     projectId,
@@ -46,6 +48,8 @@ const mapStateToProps = (state) => {
     boardSearchParams,
     boardMembershipId: id,
     isSubscribed,
+    mailTokens,
+    mailTokenCount,
   };
 };
 
@@ -67,6 +71,9 @@ const mapDispatchToProps = (dispatch, ownProps) =>
       onBoardExport: entryActions.exportBoard,
       onBoardSearchParamsUpdate: (searchParams) => entryActions.updateBoardSearchParams(ownProps.boardId, searchParams),
       onActivitiesFetch: () => entryActions.fetchBoardActivities(ownProps.boardId),
+      onMailTokenCreate: () => entryActions.createMailToken({ boardId: ownProps.boardId }),
+      onMailTokenUpdate: (mailTokenId) => entryActions.updateMailToken(mailTokenId, { boardId: ownProps.boardId }),
+      onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
     },
     dispatch,
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
@@ -7,8 +7,7 @@ import { ActivityStep } from '../ActivityPopup';
 import { ConnectionsStep } from '../ConnectionsPopup';
 import DeleteStep from '../DeleteStep';
 import ExportStep from '../ExportStep';
-import MailTokenListStep from '../MailToken/MailTokenListStep';
-import MailTokenStep from '../MailToken/MailTokenStep';
+import MailTokenListStep from '../MailTokenListStep';
 import RenameStep from '../RenameStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
@@ -20,8 +19,7 @@ const StepTypes = {
   EXPORT: 'EXPORT',
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
-  MAIL: 'MAIL',
-  MAIL_LIST: 'MAIL_LIST',
+  MAILTOKEN_LIST: 'MAILTOKEN_LIST',
 };
 
 const BoardActionsStep = React.memo(
@@ -37,10 +35,8 @@ const BoardActionsStep = React.memo(
     updatedAt,
     updatedBy,
     memberships,
-    currBoardId,
-    mailToken,
-    mailTokenCountForBoardId,
-    mailTokensForBoard,
+    mailTokens,
+    mailTokenCount,
     isProjectManager,
     onUpdate,
     onExport,
@@ -48,7 +44,6 @@ const BoardActionsStep = React.memo(
     onActivitiesFetch,
     onMailTokenCreate,
     onMailTokenUpdate,
-    onMailTokenCopy,
     onMailTokenDelete,
     onClose,
   }) => {
@@ -102,22 +97,26 @@ const BoardActionsStep = React.memo(
               onClose={onClose}
             />
           );
-        case StepTypes.MAIL:
+        case StepTypes.MAILTOKEN_LIST:
           return (
-            <MailTokenStep
-              mailToken={mailToken}
-              totalMailTokens={mailTokenCountForBoardId}
-              contextType="board"
-              contextId={currBoardId}
-              onGenerate={onMailTokenCreate}
-              onReset={onMailTokenUpdate}
-              onCopy={onMailTokenCopy}
+            <MailTokenListStep
+              title={
+                <Trans
+                  i18nKey="common.emailCardToBoard_withCount"
+                  values={{
+                    count: mailTokenCount,
+                  }}
+                >
+                  <span className={s.count} />
+                </Trans>
+              }
+              mailTokens={mailTokens}
+              onCreate={onMailTokenCreate}
+              onUpdate={onMailTokenUpdate}
               onDelete={onMailTokenDelete}
               onBack={handleBack}
             />
           );
-        case StepTypes.MAIL_LIST:
-          return <MailTokenListStep title={t('common.mailTokens', { context: 'title' })} mailTokens={mailTokensForBoard} contextType="board" onDelete={onMailTokenDelete} onBack={handleBack} />;
         default:
       }
     }
@@ -146,11 +145,9 @@ const BoardActionsStep = React.memo(
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={() => openStep(StepTypes.MAIL)}>
-          {t('common.mailSettings', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={() => openStep(StepTypes.MAIL_LIST)}>
-          {t('common.mailIds')}
+        <Button style={ButtonStyle.PopupContext} title={t('common.emailCardToBoard')} onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}>
+          <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
+          {t('common.emailCardToBoard')}
         </Button>
         {isProjectManager && <Popup.Separator />}
         {isProjectManager && (
@@ -177,17 +174,14 @@ BoardActionsStep.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isProjectManager: PropTypes.bool.isRequired,
-  currBoardId: PropTypes.string.isRequired,
-  mailToken: PropTypes.string,
-  mailTokenCountForBoardId: PropTypes.number.isRequired,
-  mailTokensForBoard: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onMailTokenCreate: PropTypes.func.isRequired,
   onMailTokenUpdate: PropTypes.func.isRequired,
-  onMailTokenCopy: PropTypes.func.isRequired,
   onMailTokenDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
@@ -198,7 +192,6 @@ BoardActionsStep.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
-  mailToken: null,
 };
 
 export default withPopup(BoardActionsStep);

@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
-import MailTokenListStep from '../MailToken/MailTokenListStep';
-import MailTokenStep from '../MailToken/MailTokenStep';
+import MailTokenListStep from '../MailTokenListStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
@@ -14,8 +13,7 @@ import * as s from './ActionsPopup.module.scss';
 const StepTypes = {
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
-  MAIL: 'MAIL',
-  MAIL_LIST: 'MAIL_LIST',
+  MAILTOKEN_LIST: 'MAILTOKEN_LIST',
 };
 
 const ActionsStep = React.memo(
@@ -26,19 +24,18 @@ const ActionsStep = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
-    isManager,
-    mailToken,
-    mailTokensForList,
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    mailTokens,
+    mailTokenCount,
+    canEdit,
     onNameEdit,
     onCardAdd,
     onActivitiesFetch,
     onMailTokenCreate,
     onMailTokenUpdate,
-    onMailTokenCopy,
     onMailTokenDelete,
     onDelete,
     onClose,
@@ -48,7 +45,8 @@ const ActionsStep = React.memo(
 
     const handleEditNameClick = useCallback(() => {
       onNameEdit();
-    }, [onNameEdit]);
+      onClose();
+    }, [onNameEdit, onClose]);
 
     const handleAddCardClick = useCallback(() => {
       onCardAdd();
@@ -63,12 +61,8 @@ const ActionsStep = React.memo(
       openStep(StepTypes.ACTIVITY);
     }, [openStep]);
 
-    const handleMailOptionsClick = useCallback(() => {
-      openStep(StepTypes.MAIL);
-    }, [openStep]);
-
-    const handleMailListOptionsClick = useCallback(() => {
-      openStep(StepTypes.MAIL_LIST);
+    const handleMailTokenListClick = useCallback(() => {
+      openStep(StepTypes.MAILTOKEN_LIST);
     }, [openStep]);
 
     if (step) {
@@ -103,21 +97,27 @@ const ActionsStep = React.memo(
               onClose={onClose}
             />
           );
-        case StepTypes.MAIL:
+        case StepTypes.MAILTOKEN_LIST:
           return (
-            <MailTokenStep
-              mailToken={mailToken}
-              totalMailTokens={mailTokensForList.length}
-              contextType="list"
-              onGenerate={onMailTokenCreate}
-              onReset={onMailTokenUpdate}
-              onCopy={onMailTokenCopy}
+            <MailTokenListStep
+              title={
+                <Trans
+                  i18nKey="common.emailCardToList_withCount"
+                  values={{
+                    count: mailTokenCount,
+                  }}
+                >
+                  <span className={s.count} />
+                </Trans>
+              }
+              mailTokens={mailTokens}
+              canEdit={canEdit}
+              onCreate={onMailTokenCreate}
+              onUpdate={onMailTokenUpdate}
               onDelete={onMailTokenDelete}
               onBack={handleBack}
             />
           );
-        case StepTypes.MAIL_LIST:
-          return <MailTokenListStep title={t('common.mailTokens', { context: 'title' })} mailTokens={mailTokensForList} contextType="list" onDelete={onMailTokenDelete} onBack={handleBack} />;
         default:
       }
     }
@@ -136,14 +136,10 @@ const ActionsStep = React.memo(
           <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
           {t('action.addCard', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.mailSettings', { context: 'title' })} onClick={handleMailOptionsClick}>
-          {t('common.mailSettings', { context: 'title' })}
+        <Button style={ButtonStyle.PopupContext} title={t('common.emailCardToList')} onClick={handleMailTokenListClick}>
+          <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
+          {t('common.emailCardToList')}
         </Button>
-        {isManager && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.mailIds')} onClick={handleMailListOptionsClick}>
-            {t('common.mailIds')}
-          </Button>
-        )}
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
@@ -165,14 +161,13 @@ ActionsStep.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
-  isManager: PropTypes.bool.isRequired,
-  mailToken: PropTypes.string,
-  mailTokensForList: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onMailTokenCreate: PropTypes.func.isRequired,
   onMailTokenUpdate: PropTypes.func.isRequired,
-  onMailTokenCopy: PropTypes.func.isRequired,
   onMailTokenDelete: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
@@ -185,7 +180,6 @@ ActionsStep.defaultProps = {
   updatedAt: undefined,
   updatedBy: undefined,
   lastActivityId: undefined,
-  mailToken: null,
 };
 
 export default withPopup(ActionsStep);

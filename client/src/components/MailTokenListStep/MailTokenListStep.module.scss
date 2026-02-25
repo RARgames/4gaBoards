@@ -1,0 +1,78 @@
+:global(#app) {
+  .inputWrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .createButton {
+    margin-left: 8px;
+  }
+
+  .items {
+    margin-top: 8px;
+    scrollbar-gutter: stable;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 12px 10px 8px;
+
+    &:hover {
+      background: var(--backgroundPopupHover);
+    }
+  }
+
+  .itemHeader {
+    display: flex;
+    margin-bottom: 4px;
+    align-items: center;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 8px;
+  }
+
+  .userName {
+    color: var(--text0);
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .createdAt {
+    font-size: 9px;
+    color: var(--text2);
+    white-space: nowrap;
+    padding-right: 8px;
+  }
+
+  .itemHeaderButtons {
+    margin-left: auto;
+  }
+
+  .itemContent {
+    display: flex;
+    align-items: center;
+  }
+
+  .email {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .noEmails {
+    text-align: center;
+    color: var(--text2);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+}
