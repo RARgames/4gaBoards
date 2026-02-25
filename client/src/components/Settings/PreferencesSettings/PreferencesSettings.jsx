@@ -8,6 +8,7 @@ import { ActivityScopes, ThemeShapes, Themes, NotificationsDeliveryModes, Notifi
 import locales from '../../../locales';
 import { Table } from '../../Utils';
 import CustomThemeButton from './CustomThemeButton';
+import NotificationTypesSelector from './NotificationTypesSelector';
 import ThemeShapeSelector from './ThemeShapeSelector';
 
 import * as gs from '../../../global.module.scss';
@@ -159,39 +160,39 @@ const PreferencesSettings = React.memo(
       () => [
         {
           id: ActivityScopes.INSTANCE,
-          name: t('common.enabledNotificationTypeInstance'),
+          name: t('activity.instanceShort'),
         },
         {
           id: ActivityScopes.USER,
-          name: t('common.enabledNotificationTypeUser'),
+          name: t('activity.userShort'),
         },
         {
           id: ActivityScopes.PROJECT,
-          name: t('common.enabledNotificationTypeProject'),
+          name: t('activity.projectShort'),
         },
         {
           id: ActivityScopes.BOARD,
-          name: t('common.enabledNotificationTypeBoard'),
+          name: t('activity.boardShort'),
         },
         {
           id: ActivityScopes.LIST,
-          name: t('common.enabledNotificationTypeList'),
+          name: t('activity.listShort'),
         },
         {
           id: ActivityScopes.CARD,
-          name: t('common.enabledNotificationTypeCard'),
+          name: t('activity.cardShort'),
         },
         {
           id: ActivityScopes.TASK,
-          name: t('common.enabledNotificationTypeTask'),
+          name: t('activity.taskShort'),
         },
         {
           id: ActivityScopes.COMMENT,
-          name: t('common.enabledNotificationTypeComment'),
+          name: t('activity.commentShort'),
         },
         {
           id: ActivityScopes.ATTACHMENT,
-          name: t('common.enabledNotificationTypeAttachment'),
+          name: t('activity.attachmentShort'),
         },
       ],
       [t],
@@ -566,12 +567,12 @@ const PreferencesSettings = React.memo(
           emailNotificationsEnabled && {
             id: 'enabledNotificationTypes',
             preferences: t('common.enabledNotificationTypes'),
-            modifySettings: selectedNotificationTypes,
+            modifySettings: enabledNotificationTypes,
             modifySettingsProps: {
-              onChange: handleNotificationTypesChange,
+              isCustomComponent: true,
+              CustomComponent: NotificationTypesSelector,
               options: notificationTypeOptions,
-              placeholder: t('common.selectNotificationTypes'),
-              isMulti: true,
+              onChange: handleNotificationTypesChange,
             },
             currentValue: selectedNotificationTypes.map((v) => v.name).join(', '),
             description: t('common.descriptionEnabledNotificationTypes'),
@@ -653,9 +654,10 @@ const PreferencesSettings = React.memo(
         handleSubscribeToInstanceChange,
         emailNotificationsEnabled,
         handleEmailNotificationsEnabledChange,
-        selectedNotificationTypes,
-        handleNotificationTypesChange,
+        enabledNotificationTypes,
         notificationTypeOptions,
+        handleNotificationTypesChange,
+        selectedNotificationTypes,
         selectedNotificationsDeliveryMode,
         handleNotificationsDeliveryModeChange,
         notificationsDeliveryModes,
