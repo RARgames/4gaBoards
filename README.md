@@ -15,7 +15,7 @@
   </br>
 </div>
 
-![4gaBoards_gif](https://github.com/user-attachments/assets/4724f221-9b07-4f01-9d7a-3348a11a029e)
+![4gaBoards_gif](https://github.com/user-attachments/assets/71a1f5e4-5eea-42f3-ba33-d61cd6917e93)
 
 ## Features
 
