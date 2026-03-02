@@ -157,11 +157,11 @@ export default {
       descriptionSubscribeToNewProjects: 'Automaticamente se inscrever para os projetos que eu participo.',
       descriptionSubscribeToOwnCards: 'Automaticamente se inscrever para os cartões criados por mim.',
       descriptionSubscribeToUsers: 'Automaticamente se inscrever para as notificações dos usuários.',
-      descriptionSyncSsoAdminOnAuth: 'Ative ou desative a sincronização do administrador a partir do provedor SSO durante a autenticação. Habilitar esta opção pode conceder ou revogar automaticamente direitos de administrador com base nos dados do SSO.', // eslint-disable-line prettier/prettier
+      descriptionSyncSsoAdminOnAuth: 'Ative ou desative a sincronização do administrador a partir do provedor SSO durante a autenticação. Habilitar esta opção pode conceder ou revogar automaticamente direitos de administrador com base nos dados do SSO.',
       descriptionSyncSsoDataOnAuth: 'Ative ou desative a sincronização de dados do usuário do provedor SSO durante a autenticação.',
       descriptionTheme: 'Selecione o tema de cores do aplicativo.',
       descriptionThemeShape: 'Selecione a forma do tema da aplicação.',
-      descriptionUserRegistration: 'Habilita ou desabilita todos os métodos de registro de usuário. Se você desabilitar todos os métodos de registro, apenas administradores serão capazes de criar novos usuários.', /* eslint-disable-line prettier/prettier */
+      descriptionUserRegistration: 'Habilita ou desabilita todos os métodos de registro de usuário. Se você desabilitar todos os métodos de registro, apenas administradores serão capazes de criar novos usuários.',
       descriptionUsersSettingsStyle: 'Selecione o estilo dos parâmetros de usuários.',
       detailsAttachments_one: 'Este cartão tem {{count}} anexo',
       detailsAttachments_other: 'Este cartão tem {{count}} anexos',
@@ -528,8 +528,7 @@ export default {
       boardDeleteShort: 'Este quadro foi excluído de <1>{{project}}</1>',
       boardUserAdd: '<0>{{user}}</0> adicionado ao quadro <1>{{board}}</1> como <2>{{role}}</2> (pode comentar: <3>{{canComment}}</3>)',
       boardUserAddShort: '<0>{{user}}</0> adicionado a este quadro como <2>{{role}}</2> (pode comentar: <3>{{canComment}}</3>)',
-      boardUserUpdateRole:
-        'Função de <0>{{user}}</0> alterada de <1>{{prevRole}}</1> (pode comentar: <2>{{prevCanComment}}</2>) para <3>{{role}}</3> (pode comentar: <4>{{canComment}}</4>) no quadro <5>{{board}}</5>',
+      boardUserUpdateRole: 'Função de <0>{{user}}</0> alterada de <1>{{prevRole}}</1> (pode comentar: <2>{{prevCanComment}}</2>) para <3>{{role}}</3> (pode comentar: <4>{{canComment}}</4>) no quadro <5>{{board}}</5>',
       boardUserUpdateRoleShort: 'Função de <0>{{user}}</0> alterada de <1>{{prevRole}}</1> (pode comentar: <2>{{prevCanComment}}</2>) para <3>{{role}}</3> (pode comentar: <4>{{canComment}}</4>) neste quadro',
       boardUserUpdateCanComment: 'Permissão para comentar de <0>{{user}}</0> alterada para <1>{{canComment}}</1> no quadro <2>{{board}}</2>',
       boardUserUpdateCanCommentShort: 'Permissão para comentar de <0>{{user}}</0> alterada para <1>{{canComment}}</1> neste quadro',
@@ -563,8 +562,8 @@ export default {
       cardMoveShort: 'Moveu este cartão de <1>{{fromList}}</1> para <2>{{toList}}</2>',
       cardTransferProject: 'Transferido <0>{{card}}</0> de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
       cardTransferProjectShort: 'Este cartão foi transferido de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
-      cardTransferBoard: 'Transferido <0>{{card}}</0> dentro do projeto de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
-      cardTransferBoardShort: 'Este cartão foi transferido dentro do projeto de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
+      cardTransferBoard: 'Transferido <0>{{card}}</0> dentro do projeto de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
+      cardTransferBoardShort: 'Este cartão foi transferido dentro do projeto de <1>{{fromList}}</1> em <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) para <3>{{toList}}</3> em <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
       cardDelete: 'Excluído <0>{{card}}</0> de <1>{{list}}</1>',
       cardDeleteShort: 'Este cartão foi excluído de <1>{{list}}</1>',
       cardUpdateName: 'Nome atualizado de <1>{{prevCard}}</1> para <0>{{card}}</0>',

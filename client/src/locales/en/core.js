@@ -156,7 +156,7 @@ export default {
       descriptionSubscribeToNewProjects: 'Automatically subscribe to projects I join.',
       descriptionSubscribeToOwnCards: 'Automatically subscribe to cards I create.',
       descriptionSubscribeToUsers: 'Automatically subscribe to users notifications.',
-      descriptionSyncSsoAdminOnAuth: 'Enable or disable synchronization of admin from the SSO provider during authentication. Enabling this option can automatically grant or revoke admin rights based on the SSO data.', // eslint-disable-line prettier/prettier
+      descriptionSyncSsoAdminOnAuth: 'Enable or disable synchronization of admin from the SSO provider during authentication. Enabling this option can automatically grant or revoke admin rights based on the SSO data.',
       descriptionSyncSsoDataOnAuth: 'Enable or disable synchronization of user data from the SSO provider during authentication.',
       descriptionTheme: 'Select the color theme of the application.',
       descriptionThemeShape: 'Select the shape of the application theme.',

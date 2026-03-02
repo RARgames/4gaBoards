@@ -154,20 +154,20 @@ export default {
       descriptionHideClosestDueDate: "Masquer la date d'échéance la plus proche dans le modal de la carte.",
       descriptionLanguage: 'Sélectionnez la langue que vous souhaitez utiliser dans 4ga Boards.',
       descriptionListViewStyle: 'Sélectionnez le style de la vue de liste.',
-      descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.", // eslint-disable-line prettier/prettier
+      descriptionLocalRegistration: "Activer ou désactiver l'enregistrement des utilisateurs locaux. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte avec un nom d'utilisateur et un mot de passe.",
       descriptionPreferredDetailsFont: 'Sélectionnez la police que vous souhaitez utiliser dans la description de la carte et les commentaires.',
       descriptionProjectCreationAll: 'Activez ou désactivez la création de projets pour tous les utilisateurs. Si vous la désactivez, seuls les administrateurs pourront créer de nouveaux projets.',
-      descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.", // eslint-disable-line prettier/prettier
+      descriptionSsoRegistration: "Activer ou désactiver l'enregistrement des utilisateurs SSO. Cette méthode d'enregistrement permet aux utilisateurs de créer un compte à l'aide d'un compte externe, par exemple un compte Google.",
       descriptionSubscribeToInstance: "S'abonner automatiquement aux notifications de l'instance.",
       descriptionSubscribeToNewBoards: "S'abonner automatiquement aux tableaux que je rejoins.",
       descriptionSubscribeToNewProjects: "S'abonner automatiquement aux projets que je rejoins.",
       descriptionSubscribeToOwnCards: 'Être abonné à mes propres cartes',
       descriptionSubscribeToUsers: "S'abonner automatiquement aux notifications des utilisateurs.",
-      descriptionSyncSsoAdminOnAuth: "Activer ou désactiver la synchronisation de l'administrateur depuis le fournisseur SSO lors de l'authentification. L'activation de cette option peut automatiquement accorder ou révoquer les droits d'administrateur selon les données SSO.", // eslint-disable-line prettier/prettier
+      descriptionSyncSsoAdminOnAuth: "Activer ou désactiver la synchronisation de l'administrateur depuis le fournisseur SSO lors de l'authentification. L'activation de cette option peut automatiquement accorder ou révoquer les droits d'administrateur selon les données SSO.",
       descriptionSyncSsoDataOnAuth: "Activer ou désactiver la synchronisation des données utilisateur depuis le fournisseur SSO lors de l'authentification.",
       descriptionTheme: "Sélectionnez le thème de couleur de l'application.",
       descriptionThemeShape: "Sélectionnez la forme du thème de l'application.",
-      descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.", // eslint-disable-line prettier/prettier
+      descriptionUserRegistration: "Activez ou désactivez toutes les méthodes d'enregistrement des utilisateurs. Si vous désactivez toutes les méthodes d'enregistrement, seuls les administrateurs pourront créer de nouveaux utilisateurs.",
       descriptionUsersSettingsStyle: 'Sélectionnez le style des paramètres des utilisateurs.',
       detailsAttachments_many: 'Cette carte a {{count}} pièces jointes',
       detailsAttachments_one: 'Cette carte a {{count}} pièce jointe',
@@ -545,8 +545,7 @@ export default {
       boardDeleteShort: 'Ce tableau a été supprimé de <1>{{project}}</1>',
       boardUserAdd: '<0>{{user}}</0> ajouté au tableau <1>{{board}}</1> en tant que <2>{{role}}</2> (peut commenter : <3>{{canComment}}</3>)',
       boardUserAddShort: '<0>{{user}}</0> ajouté à ce tableau en tant que <2>{{role}}</2> (peut commenter : <3>{{canComment}}</3>)',
-      boardUserUpdateRole:
-        'Rôle de <0>{{user}}</0> modifié de <1>{{prevRole}}</1> (peut commenter : <2>{{prevCanComment}}</2>) à <3>{{role}}</3> (peut commenter : <4>{{canComment}}</4>) dans le tableau <5>{{board}}</5>',
+      boardUserUpdateRole: 'Rôle de <0>{{user}}</0> modifié de <1>{{prevRole}}</1> (peut commenter : <2>{{prevCanComment}}</2>) à <3>{{role}}</3> (peut commenter : <4>{{canComment}}</4>) dans le tableau <5>{{board}}</5>',
       boardUserUpdateRoleShort: 'Rôle de <0>{{user}}</0> modifié de <1>{{prevRole}}</1> (peut commenter : <2>{{prevCanComment}}</2>) à <3>{{role}}</3> (peut commenter : <4>{{canComment}}</4>) dans ce tableau',
       boardUserUpdateCanComment: 'Permission de commenter de <0>{{user}}</0> modifiée à <1>{{canComment}}</1> dans le tableau <2>{{board}}</2>',
       boardUserUpdateCanCommentShort: 'Permission de commenter de <0>{{user}}</0> modifiée à <1>{{canComment}}</1> dans ce tableau',
@@ -580,8 +579,8 @@ export default {
       cardMoveShort: 'Déplacé cette carte de <1>{{fromList}}</1> vers <2>{{toList}}</2>',
       cardTransferProject: 'Carte <0>{{card}}</0> transférée de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
       cardTransferProjectShort: 'Cette carte a été transférée de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
-      cardTransferBoard: 'Carte <0>{{card}}</0> transférée dans le projet de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
-      cardTransferBoardShort: 'Cette carte a été transférée dans le projet de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)', // eslint-disable-line prettier/prettier
+      cardTransferBoard: 'Carte <0>{{card}}</0> transférée dans le projet de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
+      cardTransferBoardShort: 'Cette carte a été transférée dans le projet de <1>{{fromList}}</1> dans <2>{{fromBoard}}</2> (<5>{{fromProject}}</5>) vers <3>{{toList}}</3> dans <4>{{toBoard}}</4> (<6>{{toProject}}</6>)',
       cardDelete: 'Supprimé <0>{{card}}</0> de <1>{{list}}</1>',
       cardDeleteShort: 'Cette carte a été supprimée de <1>{{list}}</1>',
       cardUpdateName: 'Nom mis à jour de <1>{{prevCard}}</1> à <0>{{card}}</0>',

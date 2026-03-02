@@ -163,7 +163,7 @@ export default {
       descriptionSubscribeToNewProjects: 'Automatycznie subskrybuj projekty, do których dołączam.',
       descriptionSubscribeToOwnCards: 'Automatycznie subskrybuj karty po utworzeniu.',
       descriptionSubscribeToUsers: 'Automatycznie subskrybuj powiadomienia użytkowników.',
-      descriptionSyncSsoAdminOnAuth: 'Włącz lub wyłącz synchronizację administratora z dostawcą SSO podczas uwierzytelniania. Włączenie tej opcji może automatycznie przyznawać lub odbierać prawa administratora na podstawie danych SSO.', // eslint-disable-line prettier/prettier
+      descriptionSyncSsoAdminOnAuth: 'Włącz lub wyłącz synchronizację administratora z dostawcą SSO podczas uwierzytelniania. Włączenie tej opcji może automatycznie przyznawać lub odbierać prawa administratora na podstawie danych SSO.',
       descriptionSyncSsoDataOnAuth: 'Włącz lub wyłącz synchronizację danych użytkownika z dostawcą SSO podczas uwierzytelniania.',
       descriptionTheme: 'Wybierz motyw kolorystyczny aplikacji.',
       descriptionThemeShape: 'Wybierz kształt motywu aplikacji.',
@@ -543,8 +543,7 @@ export default {
       boardDeleteShort: 'Usunięto tę tablicę z <1>{{project}}</1>',
       boardUserAdd: 'Dodano <0>{{user}}</0> do tablicy <1>{{board}}</1> jako <2>{{role}}</2> (może komentować: <3>{{canComment}}</3>)',
       boardUserAddShort: 'Dodano <0>{{user}}</0> do tej tablicy jako <2>{{role}}</2> (może komentować: <3>{{canComment}}</3>)',
-      boardUserUpdateRole:
-        'Zmieniono rolę <0>{{user}}</0> z <1>{{prevRole}}</1> (może komentować: <2>{{prevCanComment}}</2>) na <3>{{role}}</3> (może komentować: <4>{{canComment}}</4>) w tablicy <5>{{board}}</5>',
+      boardUserUpdateRole: 'Zmieniono rolę <0>{{user}}</0> z <1>{{prevRole}}</1> (może komentować: <2>{{prevCanComment}}</2>) na <3>{{role}}</3> (może komentować: <4>{{canComment}}</4>) w tablicy <5>{{board}}</5>',
       boardUserUpdateRoleShort: 'Zmieniono rolę <0>{{user}}</0> z <1>{{prevRole}}</1> (może komentować: <2>{{prevCanComment}}</2>) na <3>{{role}}</3> (może komentować: <4>{{canComment}}</4>) w tej tablicy',
       boardUserUpdateCanComment: 'Zmieniono uprawnienie komentowania użytkownika <0>{{user}}</0> na <1>{{canComment}}</1> w tablicy <2>{{board}}</2>',
       boardUserUpdateCanCommentShort: 'Zmieniono uprawnienie komentowania użytkownika <0>{{user}}</0> na <1>{{canComment}}</1> w tej tablicy',

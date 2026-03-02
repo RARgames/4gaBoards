@@ -1,0 +1,13 @@
+{
+  "printWidth": 210,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "client/src/locales/**/{core,login}.js",
+      "options": {
+        "printWidth": 400
+      }
+    }
+  ]
+}
