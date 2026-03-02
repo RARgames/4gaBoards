@@ -136,7 +136,6 @@ module.exports = [
           ignoreCase: false,
           type: 'natural',
           sortBy: 'name',
-          partitionByComment: false,
           partitionByNewLine: true,
         },
       ],
