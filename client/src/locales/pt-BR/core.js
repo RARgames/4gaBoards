@@ -1,4 +1,8 @@
+import dateFns from 'date-fns/locale/pt-BR';
+
 export default {
+  dateFns,
+
   format: {
     date: 'd/MM/yyyy',
     dateTime: '$t(format:date) $t(format:time)',
