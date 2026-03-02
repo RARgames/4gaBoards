@@ -1,3 +1,5 @@
+// Translated by dacampsss
+
 import login from './login';
 
 export default {

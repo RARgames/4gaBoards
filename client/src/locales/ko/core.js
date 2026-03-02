@@ -1,14 +1,12 @@
 import dateFns from 'date-fns/locale/ko';
 
-/* Translated by Park Seok Ho */
-
 export default {
   dateFns,
 
   format: {
     date: 'd.MM.yyyy',
-    time: 'HH:mm',
     dateTime: '$t(format:date) $t(format:time)',
+    time: 'HH:mm',
   },
 
   translation: {
@@ -52,7 +50,6 @@ export default {
       currentPassword: '현재 비밀번호',
       dangerZone_title: 'Danger Zone',
       date: '날짜',
-      dueDate_title: '완료일',
       deleteAttachment_title: '첨부파일 삭제',
       deleteBoard_title: '보드 삭제',
       deleteCard_title: '항목 카드 삭제',
@@ -65,6 +62,7 @@ export default {
       description: '설명',
       detectAutomatically: '자동으로 감지',
       dropFileToUpload: '업로드 하기 위해서 파일을 Drop 하세요.',
+      dueDate_title: '완료일',
       editAttachment_title: '첨부 수정',
       editAvatar_title: '프로필사진 수정',
       editBoard_title: '보드 수정',
@@ -102,8 +100,8 @@ export default {
       newEmail: '새로운 메일',
       newPassword: '새로운 패스워드',
       newUsername: '새로운 사용자 이름',
-      noConnection: '서버에 연결되지 않음 - 탭을 새로 고치지 마세요!',
       noBoards: '보드가 존재하지 않습니다.',
+      noConnection: '서버에 연결되지 않음 - 탭을 새로 고치지 마세요!',
       noLists: '리스트가 존재하지 않습니다.',
       noProjects: '프로젝트가 존재하지 않습니다.',
       notifications: '알림',
@@ -140,8 +138,8 @@ export default {
       addCard: '항목카드 추가',
       addCard_title: '항목카드 추가',
       addComment: '댓글 추가',
-      addList: '리스트 추가',
       addDescription: '자세한 설명 추가',
+      addList: '리스트 추가',
       addTask: '태스트 추가',
       addUser: '사용자 추가',
       createBoard: '보드 생성',
@@ -166,8 +164,8 @@ export default {
       deleteTask_title: '태스트 삭제',
       deleteUser: '사용자 삭제',
       edit: '수정',
-      editDueDate_title: '완료일 수정',
       editDescription_title: '설명 수정',
+      editDueDate_title: '완료일 수정',
       editEmail_title: '메일 수정',
       editInformation_title: '정보 수정',
       editPassword_title: '패스워드 수정',

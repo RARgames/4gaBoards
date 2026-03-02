@@ -1,3 +1,5 @@
+// Translated by FANJT2024
+
 import login from './login';
 
 export default {

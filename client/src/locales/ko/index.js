@@ -1,3 +1,5 @@
+// Translated by Park Seok Ho
+
 import login from './login';
 
 export default {

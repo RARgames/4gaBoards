@@ -1,5 +1,3 @@
-/* Translated by Park Seok Ho */
-
 export default {
   translation: {
     common: {

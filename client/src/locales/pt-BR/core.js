@@ -1,5 +1,3 @@
-/* Translated by dacampsss */
-
 export default {
   format: {
     date: 'd/MM/yyyy',
