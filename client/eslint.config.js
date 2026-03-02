@@ -126,4 +126,20 @@ module.exports = [
       // endregion
     },
   },
+  {
+    files: ['src/locales/**/{core,login}.js'],
+    rules: {
+      'perfectionist/sort-objects': [
+        'warn',
+        {
+          order: 'asc',
+          ignoreCase: false,
+          type: 'natural',
+          sortBy: 'name',
+          partitionByComment: false,
+          partitionByNewLine: true,
+        },
+      ],
+    },
+  },
 ];
