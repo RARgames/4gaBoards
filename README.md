@@ -28,7 +28,7 @@
 - **Google/GitHub/Microsoft/OIDC SSO Login/Register**
 - **Simplistic Wide Screen Design** - minimal clutter and no wasted space
 - **Powerful Shortcuts**
-- **Multiple Language Support** _(EN, PL, FR, PT, ZH - 100%, other languages - partial support)_
+- **Multiple Language Support** _(CS, DA, DE, **EN**, ES, **FR**, IT, JA, KO, **PL**, **PT**, RU, SK, SV, UZ, ZH, UZ)_
 - **Collapsable Lists and Sidebar** - saves screen space and allows for easier navigation in complex projects
 - **Multi-level Hierarchy** - projects -> boards -> lists -> cards -> tasks
 - **Github 2-way sync** - Coming soon

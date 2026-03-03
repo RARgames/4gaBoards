@@ -45,6 +45,7 @@ export default {
       allowedRegisterDomainsPlaceholder: 'example.com;example.org',
       anyDomain: 'Qualquer domínio',
       anyMatch: 'Qualquer Correspondência [Alt+V]',
+      applyTheme: 'Substituir Tema Personalizado com o Tema {{theme}}',
       areYouSureYouWantToDeleteThisAttachment: 'Você tem certeza de que deseja excluir este anexo?',
       areYouSureYouWantToDeleteThisBoard: 'Você tem certeza de que deseja excluir este painel?',
       areYouSureYouWantToDeleteThisCard: 'Você tem certeza de que deseja excluir este cartão?',
