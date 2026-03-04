@@ -10,6 +10,8 @@ const makeMapStateToProps = () => {
   const selectProjectActivitiesById = selectors.makeSelectProjectActivitiesById();
   const selectBoardActivitiesById = selectors.makeSelectBoardActivitiesById();
   const selectCurrentUserMembershipByBoardId = selectors.makeSelectCurrentUserMembershipByBoardId();
+  const selectMailTokensByBoardId = selectors.makeSelectMailTokensByBoardId();
+  const selectMailTokenCountByBoardId = selectors.makeSelectMailTokenCountByBoardId();
 
   return (state) => {
     const path = selectors.selectPathConstant(state);
@@ -27,6 +29,8 @@ const makeMapStateToProps = () => {
         return {
           ...board,
           activities: selectBoardActivitiesById(state, board.id),
+          mailTokens: selectMailTokensByBoardId(state, board.id),
+          mailTokenCount: selectMailTokenCountByBoardId(state, board.id),
           canEdit: isCurrentUserEditor,
         };
       }),
@@ -43,8 +47,6 @@ const makeMapStateToProps = () => {
     } = state;
     const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
-    const mailTokens = selectors.selectMailTokensByBoardId(state, boardId);
-    const mailTokenCount = selectors.selectMailTokenCountByBoardId(state, boardId);
     const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
 
     return {
@@ -63,8 +65,6 @@ const makeMapStateToProps = () => {
       sidebarCompact,
       instanceNotificationCount,
       usersNotificationCount,
-      mailTokens,
-      mailTokenCount,
       mailServiceAvailable,
       mailServiceInboundEmail,
     };
@@ -81,6 +81,7 @@ const mapDispatchToProps = (dispatch) =>
       onBoardMove: entryActions.moveBoard,
       onBoardDelete: entryActions.deleteBoard,
       onBoardExport: entryActions.exportBoard,
+      onBoardFetch: entryActions.fetchBoard,
       onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onProjectMembershipUpdate: entryActions.updateProjectMembership,
       onActivitiesProjectFetch: entryActions.fetchProjectActivities,
