@@ -49,7 +49,6 @@ module.exports = {
           board,
           data: {
             mailTokenId: mailToken.id,
-            mailTokenToken: mailToken.token,
             userId: mailToken.userId,
             userName: user?.name,
             boardName: board ? board.name : undefined,
