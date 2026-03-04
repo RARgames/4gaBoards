@@ -54,7 +54,7 @@ module.exports = {
           await sails.helpers.actions.createOne.with({
             values: {
               scope: Action.Scopes.INSTANCE,
-              type: Action.Types.API_KEY_CREATE,
+              type: Action.Types.API_CLIENT_CREATE,
               data: {
                 apiClientId: apiClient.clientId,
                 apiClientName: apiClient.name,
