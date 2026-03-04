@@ -19,6 +19,11 @@ export default class extends BaseModel {
       as: 'board',
       relatedName: 'mailTokens',
     }),
+    projectId: fk({
+      to: 'Project',
+      as: 'project',
+      relatedName: 'mailTokens',
+    }),
     userId: fk({
       to: 'User',
       as: 'user',
@@ -35,6 +40,7 @@ export default class extends BaseModel {
       case ActionTypes.BOARD_UPDATE_HANDLE:
       case ActionTypes.BOARD_DELETE__SUCCESS:
       case ActionTypes.BOARD_DELETE_HANDLE:
+      case ActionTypes.PROJECT_MANAGER_CREATE_HANDLE:
         if (payload.mailTokens) {
           payload.mailTokens.forEach((mailToken) => {
             MailToken.upsert(mailToken);
@@ -42,6 +48,15 @@ export default class extends BaseModel {
         }
 
         break;
+      case ActionTypes.PROJECT_MANAGER_DELETE__SUCCESS:
+      case ActionTypes.PROJECT_MANAGER_DELETE_HANDLE: {
+        const { userId, projectId } = payload.projectManager;
+        MailToken.all()
+          .filter((mailToken) => mailToken.projectId === projectId && mailToken.userId !== userId)
+          .delete();
+
+        break;
+      }
       case ActionTypes.SOCKET_RECONNECT_HANDLE:
         MailToken.all().delete();
 

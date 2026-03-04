@@ -212,17 +212,17 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleDeleteAllNotifications(item));
     });
 
-    const handleMailTokenCreate = ({ item }) => {
+    const handleMailTokenCreate = api.makeHandleMailTokenCreate(({ item }) => {
       emit(entryActions.handleMailTokenCreate(item));
-    };
+    });
 
-    const handleMailTokenUpdate = ({ item }) => {
+    const handleMailTokenUpdate = api.makeHandleMailTokenUpdate(({ item }) => {
       emit(entryActions.handleMailTokenUpdate(item));
-    };
+    });
 
-    const handleMailTokenDelete = ({ item }) => {
+    const handleMailTokenDelete = api.makeHandleMailTokenDelete(({ item }) => {
       emit(entryActions.handleMailTokenDelete(item));
-    };
+    });
 
     socket.on('disconnect', handleDisconnect);
     socket.onManager('reconnect', handleReconnect);
