@@ -50,14 +50,20 @@ module.exports = {
     });
 
     if (mailToken) {
-      sails.sockets.broadcast(
-        `board:${mailToken.boardId}`,
-        'mailTokenUpdate',
-        {
-          item: mailToken,
-        },
-        inputs.request,
-      );
+      const { project } = await sails.helpers.mailTokens.getProjectPath(mailToken.id);
+      const projectManagersIds = await sails.helpers.projects.getManagerUserIds(project.id);
+      const projectRelatedUserIds = _.uniq([...projectManagersIds, mailToken.userId]);
+
+      projectRelatedUserIds.forEach((userId) => {
+        sails.sockets.broadcast(
+          `user:${userId}`,
+          'mailTokenUpdate',
+          {
+            item: mailToken,
+          },
+          inputs.request,
+        );
+      });
 
       const user = await User.findOne(mailToken.userId);
       const board = mailToken.boardId ? await Board.findOne(mailToken.boardId) : undefined;

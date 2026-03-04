@@ -20,17 +20,23 @@ module.exports = {
   async fn(inputs) {
     const { currentUser, skipMetaUpdate } = inputs;
 
+    const { project } = await sails.helpers.mailTokens.getProjectPath(inputs.record.id);
     const mailToken = await MailToken.destroyOne({ id: inputs.record.id });
 
     if (mailToken) {
-      sails.sockets.broadcast(
-        `board:${mailToken.boardId}`,
-        'mailTokenDelete',
-        {
-          item: mailToken,
-        },
-        inputs.request,
-      );
+      const projectManagersIds = await sails.helpers.projects.getManagerUserIds(project.id);
+      const projectRelatedUserIds = _.uniq([...projectManagersIds, mailToken.userId]);
+
+      projectRelatedUserIds.forEach((userId) => {
+        sails.sockets.broadcast(
+          `user:${userId}`,
+          'mailTokenDelete',
+          {
+            item: mailToken,
+          },
+          inputs.request,
+        );
+      });
 
       const user = await User.findOne(mailToken.userId);
       const board = mailToken.boardId ? await Board.findOne(mailToken.boardId) : undefined;
