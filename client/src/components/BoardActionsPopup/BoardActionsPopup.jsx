@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -41,8 +41,10 @@ const BoardActionsStep = React.memo(
     mailServiceInboundEmail,
     isProjectManager,
     canEdit,
+    isFetching,
     onUpdate,
     onExport,
+    onFetch,
     onDelete,
     onActivitiesFetch,
     onMailTokenCreate,
@@ -52,6 +54,12 @@ const BoardActionsStep = React.memo(
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
+
+    useEffect(() => {
+      if (isFetching === null) {
+        onFetch();
+      }
+    }, [isFetching, onFetch]);
 
     if (step) {
       switch (step.type) {
@@ -189,8 +197,10 @@ BoardActionsStep.propTypes = {
   mailTokenCount: PropTypes.number.isRequired,
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
+  onFetch: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onMailTokenCreate: PropTypes.func.isRequired,
@@ -205,6 +215,8 @@ BoardActionsStep.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  isFetching: false,
+  onFetch: () => {},
 };
 
 export default withPopup(BoardActionsStep);
