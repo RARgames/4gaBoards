@@ -1,12 +1,14 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import { selectCurrentUserId } from './users';
 
 export const makeSelectMailTokensByListId = () =>
   createSelector(
     orm,
     (_, listId) => listId,
-    ({ List }, listId) => {
+    (state) => selectCurrentUserId(state),
+    ({ List }, listId, currentUserId) => {
       if (!listId) {
         return listId;
       }
@@ -19,6 +21,7 @@ export const makeSelectMailTokensByListId = () =>
       const mailTokens = listModel.getOrderedMailTokensModelArray().map((mailTokenModel) => ({
         ...mailTokenModel.ref,
         user: mailTokenModel.user?.ref || null,
+        isCurrentUser: mailTokenModel.userId === currentUserId,
       }));
       return mailTokens;
     },
@@ -50,7 +53,8 @@ export const makeSelectMailTokensByBoardId = () =>
   createSelector(
     orm,
     (_, boardId) => boardId,
-    ({ Board }, boardId) => {
+    (state) => selectCurrentUserId(state),
+    ({ Board }, boardId, currentUserId) => {
       if (!boardId) {
         return boardId;
       }
@@ -63,6 +67,7 @@ export const makeSelectMailTokensByBoardId = () =>
       const mailTokens = boardModel.getOrderedMailTokensModelArray().map((mailTokenModel) => ({
         ...mailTokenModel.ref,
         user: mailTokenModel.user?.ref || null,
+        isCurrentUser: mailTokenModel.userId === currentUserId,
       }));
       return mailTokens;
     },
