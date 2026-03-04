@@ -51,6 +51,19 @@ module.exports = {
       item: notification,
     });
 
+    if (sails.config.custom.mailServiceAvailable) {
+      setImmediate(async () => {
+        try {
+          await sails.helpers.notifications.handleEmailNotification.with({
+            notification,
+            action: values.action,
+          });
+        } catch (e) {
+          sails.log.error('Email notification failed:', e);
+        }
+      });
+    }
+
     return notification;
   },
 };
