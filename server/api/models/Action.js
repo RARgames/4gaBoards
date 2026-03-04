@@ -21,10 +21,10 @@ const Types = {
   /* INSTANCE Activities */
   INSTANCE_UPDATE: 'instanceUpdate',
 
-  /* API KEY Activities (scopes: Instance, User) */
-  API_KEY_CREATE: 'apiKeyCreate',
-  API_KEY_UPDATE: 'apiKeyUpdate',
-  API_KEY_DELETE: 'apiKeyDelete',
+  /* API CLIENT Activities (scopes: Instance, User) */
+  API_CLIENT_CREATE: 'apiClientCreate',
+  API_CLIENT_UPDATE: 'apiClientUpdate',
+  API_CLIENT_DELETE: 'apiClientDelete',
 
   /* USER Activities */
   USER_CREATE: 'userCreate',
