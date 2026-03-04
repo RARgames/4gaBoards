@@ -96,9 +96,11 @@ const MailTokenListStep = React.memo(({ title, mailTokens, mailServiceInboundEma
                   </span>
                   <DateText value={mailToken.createdAt} showTime className={s.createdAt} />
                   <div className={s.itemHeaderButtons}>
-                    <Button style={ButtonStyle.Icon} title={t('common.resetEmail')} onClick={() => handleUpdateClick(mailToken.id)}>
-                      <Icon type={IconType.Reset} size={IconSize.Size12} />
-                    </Button>
+                    {mailToken.isCurrentUser && (
+                      <Button style={ButtonStyle.Icon} title={t('common.resetEmail')} onClick={() => handleUpdateClick(mailToken.id)}>
+                        <Icon type={IconType.Reset} size={IconSize.Size12} />
+                      </Button>
+                    )}
                     <Button style={ButtonStyle.Icon} title={t('common.deleteEmail')} onClick={() => handleDeleteClick(mailToken.id)}>
                       <Icon type={IconType.Trash} size={IconSize.Size12} />
                     </Button>
