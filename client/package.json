@@ -201,7 +201,8 @@
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",
-      "core-js-pure"
+      "core-js-pure",
+      "unrs-resolver"
     ]
   }
 }
