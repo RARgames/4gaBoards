@@ -1,5 +1,5 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
@@ -7,6 +7,7 @@ import { ActivityStep } from '../ActivityPopup';
 import { ConnectionsStep } from '../ConnectionsPopup';
 import DeleteStep from '../DeleteStep';
 import ExportStep from '../ExportStep';
+import MailTokenListStep from '../MailTokenListStep';
 import RenameStep from '../RenameStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
@@ -18,6 +19,7 @@ const StepTypes = {
   EXPORT: 'EXPORT',
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
+  MAILTOKEN_LIST: 'MAILTOKEN_LIST',
 };
 
 const BoardActionsStep = React.memo(
@@ -33,15 +35,31 @@ const BoardActionsStep = React.memo(
     updatedAt,
     updatedBy,
     memberships,
+    mailTokens,
+    mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     isProjectManager,
+    canEdit,
+    isFetching,
     onUpdate,
     onExport,
+    onFetch,
     onDelete,
     onActivitiesFetch,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
     onClose,
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
+
+    useEffect(() => {
+      if (isFetching === null) {
+        onFetch();
+      }
+    }, [isFetching, onFetch]);
 
     if (step) {
       switch (step.type) {
@@ -90,6 +108,28 @@ const BoardActionsStep = React.memo(
               onClose={onClose}
             />
           );
+        case StepTypes.MAILTOKEN_LIST:
+          return (
+            <MailTokenListStep
+              title={
+                <Trans
+                  i18nKey="common.emailCardToBoard_withCount"
+                  values={{
+                    count: mailTokenCount,
+                  }}
+                >
+                  <span className={s.count} />
+                </Trans>
+              }
+              mailTokens={mailTokens}
+              mailServiceInboundEmail={mailServiceInboundEmail}
+              canEdit={canEdit}
+              onCreate={onMailTokenCreate}
+              onUpdate={onMailTokenUpdate}
+              onDelete={onMailTokenDelete}
+              onBack={handleBack}
+            />
+          );
         default:
       }
     }
@@ -118,6 +158,15 @@ const BoardActionsStep = React.memo(
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
+        <Button
+          style={ButtonStyle.PopupContext}
+          title={mailServiceAvailable ? t('common.emailCardToBoard') : t('common.emailServiceUnavailable')}
+          onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}
+          disabled={!mailServiceAvailable}
+        >
+          <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
+          {t('common.emailCardToBoard')}
+        </Button>
         {isProjectManager && <Popup.Separator />}
         {isProjectManager && (
           <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
@@ -143,10 +192,20 @@ BoardActionsStep.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isProjectManager: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool.isRequired,
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
+  onFetch: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
@@ -156,6 +215,8 @@ BoardActionsStep.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  isFetching: false,
+  onFetch: () => {},
 };
 
 export default withPopup(BoardActionsStep);

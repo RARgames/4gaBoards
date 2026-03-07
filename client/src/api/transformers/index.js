@@ -4,6 +4,7 @@ export * from './attachments';
 export * from './boards';
 export * from './cards';
 export * from './lists';
+export * from './mail-tokens';
 export * from './notifications';
 export * from './projects';
 export * from './tasks';

@@ -39,10 +39,18 @@ const List = React.memo(
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    isManager,
+    mailTokens,
+    mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     onUpdate,
     onDelete,
     onCardCreate,
     onActivitiesFetch,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
   }) => {
     const [t] = useTranslation();
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
@@ -265,10 +273,19 @@ const List = React.memo(
                       isActivitiesFetching={isActivitiesFetching}
                       isAllActivitiesFetched={isAllActivitiesFetched}
                       lastActivityId={lastActivityId}
+                      isManager={isManager}
+                      mailTokens={mailTokens}
+                      mailTokenCount={mailTokenCount}
+                      mailServiceAvailable={mailServiceAvailable}
+                      mailServiceInboundEmail={mailServiceInboundEmail}
+                      canEdit={canEdit}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
-                      onDelete={onDelete}
                       onActivitiesFetch={onActivitiesFetch}
+                      onMailTokenCreate={onMailTokenCreate}
+                      onMailTokenUpdate={onMailTokenUpdate}
+                      onMailTokenDelete={onMailTokenDelete}
+                      onDelete={onDelete}
                       position="left-start"
                       offset={0}
                       hideCloseButton
@@ -316,10 +333,18 @@ List.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  isManager: PropTypes.bool.isRequired,
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
 };
 
 List.defaultProps = {

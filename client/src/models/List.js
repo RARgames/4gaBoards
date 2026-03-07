@@ -123,6 +123,14 @@ export default class extends BaseModel {
     return this.getOrderedCardsQuerySet().toModelArray();
   }
 
+  getOrderedMailTokensQuerySet() {
+    return this.mailTokens.orderBy('createdAt', false);
+  }
+
+  getOrderedMailTokensModelArray() {
+    return this.getOrderedMailTokensQuerySet().toModelArray();
+  }
+
   getIsFiltered() {
     const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
     const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);

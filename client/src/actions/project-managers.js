@@ -41,6 +41,7 @@ const handleProjectManagerCreate = (
   taskMembership,
   attachments,
   notifications,
+  mailTokens,
 ) => ({
   type: ActionTypes.PROJECT_MANAGER_CREATE_HANDLE,
   payload: {
@@ -60,6 +61,7 @@ const handleProjectManagerCreate = (
     taskMembership,
     attachments,
     notifications,
+    mailTokens,
   },
 });
 

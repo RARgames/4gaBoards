@@ -8,6 +8,7 @@ import core from './core';
 import labels from './labels';
 import lists from './lists';
 import login from './login';
+import mailTokens from './mail-tokens';
 import modals from './modals';
 import notifications from './notifications';
 import projectManagers from './project-managers';
@@ -30,6 +31,7 @@ export default {
   ...labels,
   ...lists,
   ...login,
+  ...mailTokens,
   ...modals,
   ...notifications,
   ...projectManagers,

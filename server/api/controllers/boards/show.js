@@ -28,13 +28,10 @@ module.exports = {
     const { board, project } = await sails.helpers.boards.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND);
 
     const isBoardMember = await sails.helpers.users.isBoardMember(currentUser.id, board.id);
+    const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
 
-    if (!isBoardMember) {
-      const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
-
-      if (!isProjectManager) {
-        throw Errors.BOARD_NOT_FOUND; // Forbidden
-      }
+    if (!isBoardMember && !isProjectManager) {
+      throw Errors.BOARD_NOT_FOUND; // Forbidden
     }
 
     const boardMemberships = await sails.helpers.boards.getBoardMemberships(board.id);
@@ -44,6 +41,14 @@ module.exports = {
 
     const labels = await sails.helpers.boards.getLabels(board.id);
     const lists = await sails.helpers.boards.getLists(board.id);
+    const listIds = sails.helpers.utils.mapRecords(lists);
+
+    const mailTokensBoard = await sails.helpers.mailTokens.getMany({ boardId: board.id, ...(!isProjectManager && { userId: currentUser.id }) });
+    const mailTokensLists = await sails.helpers.mailTokens.getMany({ listId: listIds, ...(!isProjectManager && { userId: currentUser.id }) });
+    const mailTokens = [...mailTokensBoard, ...mailTokensLists].map((mailToken) => ({
+      ...mailToken,
+      projectId: project.id,
+    }));
 
     const cards = await sails.helpers.boards.getCards(board.id);
     const cardIds = sails.helpers.utils.mapRecords(cards);
@@ -83,6 +88,7 @@ module.exports = {
         boardMemberships,
         labels,
         lists,
+        mailTokens,
         cards,
         cardMemberships,
         cardLabels,

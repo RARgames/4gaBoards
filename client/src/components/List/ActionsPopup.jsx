@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
+import MailTokenListStep from '../MailTokenListStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ActionsPopup.module.scss';
@@ -12,6 +13,7 @@ import * as s from './ActionsPopup.module.scss';
 const StepTypes = {
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
+  MAILTOKEN_LIST: 'MAILTOKEN_LIST',
 };
 
 const ActionsStep = React.memo(
@@ -26,10 +28,18 @@ const ActionsStep = React.memo(
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    mailTokens,
+    mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
+    canEdit,
     onNameEdit,
     onCardAdd,
-    onDelete,
     onActivitiesFetch,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
+    onDelete,
     onClose,
   }) => {
     const [t] = useTranslation();
@@ -37,7 +47,8 @@ const ActionsStep = React.memo(
 
     const handleEditNameClick = useCallback(() => {
       onNameEdit();
-    }, [onNameEdit]);
+      onClose();
+    }, [onNameEdit, onClose]);
 
     const handleAddCardClick = useCallback(() => {
       onCardAdd();
@@ -50,6 +61,10 @@ const ActionsStep = React.memo(
 
     const handleActivityClick = useCallback(() => {
       openStep(StepTypes.ACTIVITY);
+    }, [openStep]);
+
+    const handleMailTokenListClick = useCallback(() => {
+      openStep(StepTypes.MAILTOKEN_LIST);
     }, [openStep]);
 
     if (step) {
@@ -84,6 +99,28 @@ const ActionsStep = React.memo(
               onClose={onClose}
             />
           );
+        case StepTypes.MAILTOKEN_LIST:
+          return (
+            <MailTokenListStep
+              title={
+                <Trans
+                  i18nKey="common.emailCardToList_withCount"
+                  values={{
+                    count: mailTokenCount,
+                  }}
+                >
+                  <span className={s.count} />
+                </Trans>
+              }
+              mailTokens={mailTokens}
+              mailServiceInboundEmail={mailServiceInboundEmail}
+              canEdit={canEdit}
+              onCreate={onMailTokenCreate}
+              onUpdate={onMailTokenUpdate}
+              onDelete={onMailTokenDelete}
+              onBack={handleBack}
+            />
+          );
         default:
       }
     }
@@ -101,6 +138,15 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
           <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
           {t('action.addCard', { context: 'title' })}
+        </Button>
+        <Button
+          style={ButtonStyle.PopupContext}
+          title={mailServiceAvailable ? t('common.emailCardToList') : t('common.emailServiceUnavailable')}
+          onClick={handleMailTokenListClick}
+          disabled={!mailServiceAvailable}
+        >
+          <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
+          {t('common.emailCardToList')}
         </Button>
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
@@ -123,8 +169,16 @@ ActionsStep.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
+  canEdit: PropTypes.bool.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

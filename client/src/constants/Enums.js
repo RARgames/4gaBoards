@@ -24,6 +24,11 @@ export const ActivityTypes = {
   /* INSTANCE Activities */
   INSTANCE_UPDATE: 'instanceUpdate',
 
+  /* API CLIENT Activities (scopes: Instance, User) */
+  API_CLIENT_CREATE: 'apiClientCreate',
+  API_CLIENT_UPDATE: 'apiClientUpdate',
+  API_CLIENT_DELETE: 'apiClientDelete',
+
   /* USER Activities */
   USER_CREATE: 'userCreate',
   USER_REGISTER: 'userRegister',
@@ -48,6 +53,11 @@ export const ActivityTypes = {
   BOARD_USER_ADD: 'boardUserAdd',
   BOARD_USER_UPDATE: 'boardUserUpdate',
   BOARD_USER_REMOVE: 'boardUserRemove',
+
+  /* Mail Token Activities */
+  MAIL_TOKEN_CREATE: 'mailTokenCreate',
+  MAIL_TOKEN_UPDATE: 'mailTokenUpdate',
+  MAIL_TOKEN_DELETE: 'mailTokenDelete',
 
   /* LABEL Activities */
   LABEL_CREATE: 'labelCreate',
@@ -129,4 +139,18 @@ export const Themes = {
 export const ThemeShapes = {
   DEFAULT: 'default',
   ROUNDED: 'rounded',
+};
+
+export const NotificationsDeliveryModes = {
+  INSTANT: 'instant',
+  BATCHED: 'batched',
+  FIRST_INSTANT_THEN_BATCH: 'first_instant_then_batch',
+};
+
+export const NotificationsAggregationScopes = {
+  CARD: 'card',
+  BOARD: 'board',
+  LIST: 'list',
+  PROJECT: 'project',
+  USER: 'user',
 };

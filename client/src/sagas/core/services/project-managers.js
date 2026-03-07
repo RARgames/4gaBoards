@@ -62,6 +62,7 @@ export function* handleProjectManagerCreate(projectManager) {
   let taskMemberships;
   let attachments;
   let notifications;
+  let mailTokens;
 
   if (isCurrentUser) {
     const { boardId } = yield select(selectors.selectPath);
@@ -71,7 +72,7 @@ export function* handleProjectManagerCreate(projectManager) {
     try {
       ({
         item: project,
-        included: { users: users1, projectManagers, boards, boardMemberships: boardMemberships1 },
+        included: { users: users1, projectManagers, boards, boardMemberships: boardMemberships1, mailTokens },
       } = yield call(request, api.getProject, projectManager.projectId));
     } catch {
       return;
@@ -115,6 +116,7 @@ export function* handleProjectManagerCreate(projectManager) {
       taskMemberships,
       attachments,
       notifications,
+      mailTokens,
     ),
   );
 }

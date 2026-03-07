@@ -19,6 +19,7 @@ export function* initializeCore() {
     boardMemberships,
     labels,
     lists,
+    mailTokens,
     cards,
     comments,
     core,
@@ -47,6 +48,7 @@ export function* initializeCore() {
       boardMemberships,
       labels,
       lists,
+      mailTokens,
       cards,
       comments,
       core,
@@ -101,6 +103,8 @@ export function* fetchCoreSettingsPublic() {
     syncSsoAdminOnAuth,
     allowedRegisterDomains,
     demoMode,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
   } = yield call(api.getCoreSettingsPublic);
   yield put(
     actions.fetchCoreSettingsPublic(
@@ -115,6 +119,8 @@ export function* fetchCoreSettingsPublic() {
       syncSsoAdminOnAuth,
       allowedRegisterDomains,
       demoMode,
+      mailServiceAvailable,
+      mailServiceInboundEmail,
     ),
   );
 }
