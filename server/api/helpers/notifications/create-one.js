@@ -51,17 +51,65 @@ module.exports = {
       item: notification,
     });
 
-    if (sails.config.custom.mailServiceAvailable) {
-      setImmediate(async () => {
-        try {
-          await sails.helpers.notifications.handleEmailNotification.with({
-            notification,
-            action: values.action,
-          });
-        } catch (e) {
-          sails.log.error('Email notification failed:', e);
+    if (!sails.config.custom.mailServiceAvailable) return notification;
+
+    const userPrefs = await UserPrefs.findOne({ id: notification.userId });
+
+    if (!userPrefs?.emailNotificationsEnabled) return notification;
+
+    if (!userPrefs.enabledNotificationTypes?.includes(values.action.scope)) return notification;
+
+    const mode = userPrefs.notificationDeliveryMode || 'instant';
+    const now = new Date();
+    const TEN_MINUTES = 10 * 60 * 1000;
+
+    switch (mode) {
+      case 'instant':
+        await sails.helpers.notifications.handleEmailNotification.with({ notification, action: values.action });
+        break;
+
+      case 'batched':
+        await NotificationBatchQueue.create({
+          notificationId: notification.id,
+          userId: notification.userId,
+          type: values.action.type,
+          scope: values.action.scope,
+          sentAt: null,
+        }).fetch();
+        break;
+
+      case 'first_instant_then_batch': {
+        const lastSent = await NotificationBatchQueue.find({
+          userId: notification.userId,
+          scope: values.action.scope,
+          sentAt: { '!=': null },
+        })
+          .sort('sentAt DESC')
+          .limit(1);
+
+        if (!lastSent.length || now - new Date(lastSent[0].sentAt) >= TEN_MINUTES) {
+          await sails.helpers.notifications.handleEmailNotification.with({ notification, action: values.action });
+          await NotificationBatchQueue.create({
+            notificationId: notification.id,
+            userId: notification.userId,
+            type: values.action.type,
+            scope: values.action.scope,
+            sentAt: now,
+          }).fetch();
+        } else {
+          await NotificationBatchQueue.create({
+            notificationId: notification.id,
+            userId: notification.userId,
+            type: values.action.type,
+            scope: values.action.scope,
+            sentAt: null,
+          }).fetch();
         }
-      });
+        break;
+      }
+
+      default:
+        await sails.helpers.notifications.handleEmailNotification.with({ notification, action: values.action });
     }
 
     return notification;

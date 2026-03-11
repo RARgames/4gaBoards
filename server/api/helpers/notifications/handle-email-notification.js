@@ -14,20 +14,9 @@ module.exports = {
 
   async fn({ notification, action }) {
     const receiverUserId = notification.userId;
-
     const user = await User.findOne({ id: receiverUserId });
-    if (!user?.email) {
-      return;
-    }
 
-    const userPrefs = await UserPrefs.findOne({ id: receiverUserId });
-    if (!userPrefs?.emailNotificationsEnabled) {
-      return;
-    }
-
-    if (!userPrefs.enabledNotificationTypes?.includes(action.scope)) {
-      return;
-    }
+    if (!user?.email) return;
 
     const url = `${process.env.NOTIFICATIONS_HOST_URL}/api/notifications/email`;
 
@@ -43,7 +32,7 @@ module.exports = {
           notificationId: notification.id,
           receiverUserId,
           receiverEmail: user.email,
-          deliveryMode: userPrefs.notificationDeliveryMode,
+          deliveryMode: null,
           actorUserId: action.createdById,
           type: action.type,
           scope: action.scope,
