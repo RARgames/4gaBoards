@@ -24,6 +24,8 @@ export default function* usersWatchers() {
     takeEvery(EntryActionTypes.USER_USERNAME_UPDATE_ERROR_CLEAR, ({ payload: { id } }) => services.clearUserUsernameUpdateError(id)),
     takeEvery(EntryActionTypes.CURRENT_USER_USERNAME_UPDATE_ERROR_CLEAR, () => services.clearCurrentUserUsernameUpdateError()),
     takeEvery(EntryActionTypes.CURRENT_USER_AVATAR_UPDATE, ({ payload: { data } }) => services.updateCurrentUserAvatar(data)),
+    takeEvery(EntryActionTypes.CURRENT_USER_API_CLIENT_CREATE_ERROR_CLEAR, () => services.clearCurrentUserApiClientCreateError()),
+    takeEvery(EntryActionTypes.CURRENT_USER_API_CLIENT_UPDATE_ERROR_CLEAR, () => services.clearCurrentUserApiClientUpdateError()),
     takeEvery(EntryActionTypes.USER_DELETE, ({ payload: { id } }) => services.deleteUser(id)),
     takeEvery(EntryActionTypes.USER_DELETE_HANDLE, ({ payload: { user } }) => services.handleUserDelete(user)),
     takeEvery(EntryActionTypes.USER_TO_CARD_ADD, ({ payload: { id, cardId } }) => services.addUserToCard(id, cardId)),

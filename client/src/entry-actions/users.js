@@ -129,6 +129,16 @@ const updateCurrentUserAvatar = (data) => ({
   },
 });
 
+const clearCurrentUserApiClientCreateError = () => ({
+  type: EntryActionTypes.CURRENT_USER_API_CLIENT_CREATE_ERROR_CLEAR,
+  payload: {},
+});
+
+const clearCurrentUserApiClientUpdateError = () => ({
+  type: EntryActionTypes.CURRENT_USER_API_CLIENT_UPDATE_ERROR_CLEAR,
+  payload: {},
+});
+
 const deleteUser = (id) => ({
   type: EntryActionTypes.USER_DELETE,
   payload: {
@@ -266,6 +276,8 @@ export default {
   clearUserUsernameUpdateError,
   clearCurrentUserUsernameUpdateError,
   updateCurrentUserAvatar,
+  clearCurrentUserApiClientCreateError,
+  clearCurrentUserApiClientUpdateError,
   deleteUser,
   handleUserDelete,
   addUserToCard,

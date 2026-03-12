@@ -28,6 +28,7 @@ const handleSocketReconnect = (
   activities,
   notifications,
   userPrefs,
+  apiClients,
 ) => ({
   type: ActionTypes.SOCKET_RECONNECT_HANDLE,
   payload: {
@@ -53,6 +54,7 @@ const handleSocketReconnect = (
     activities,
     notifications,
     userPrefs,
+    apiClients,
   },
 });
 
