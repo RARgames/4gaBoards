@@ -39,15 +39,6 @@ module.exports = {
       type: 'ref',
       columnName: 'last_used_at',
     },
-    createdById: {
-      model: 'User',
-      required: true,
-      columnName: 'created_by_id',
-    },
-    updatedById: {
-      model: 'User',
-      columnName: 'updated_by_id',
-    },
     deletedAt: {
       type: 'ref',
       columnName: 'deleted_at',

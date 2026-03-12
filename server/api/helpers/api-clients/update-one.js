@@ -57,7 +57,6 @@ module.exports = {
             data: {
               apiClientId: apiClient.id,
               apiClientName: apiClient.name,
-              apiClientLabel: apiClient.label,
             },
           },
           currentUser,
