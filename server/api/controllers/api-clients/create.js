@@ -11,7 +11,6 @@ module.exports = {
     },
     permissions: {
       type: 'json',
-      defaultsTo: [],
     },
   },
 

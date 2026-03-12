@@ -31,16 +31,7 @@ const DEFAULT_USERNAME_UPDATE_FORM = {
   error: null,
 };
 
-const DEFAULT_API_CLIENT_CREATE_FORM = {
-  data: {
-    name: '',
-    permissions: [],
-  },
-  isSubmitting: false,
-  error: null,
-};
-
-const DEFAULT_API_CLIENT_UPDATE_FORM = {
+const DEFAULT_API_CLIENT_FORM = {
   data: {
     name: '',
     permissions: [],
@@ -82,11 +73,8 @@ export default class extends BaseModel {
     usernameUpdateForm: attr({
       getDefault: () => DEFAULT_USERNAME_UPDATE_FORM,
     }),
-    apiClientCreateForm: attr({
-      getDefault: () => DEFAULT_API_CLIENT_CREATE_FORM,
-    }),
-    apiClientUpdateForm: attr({
-      getDefault: () => DEFAULT_API_CLIENT_UPDATE_FORM,
+    apiClientForm: attr({
+      getDefault: () => DEFAULT_API_CLIENT_FORM,
     }),
     filter: attr(), // TODO move to userPrefs?
     notificationFilter: attr({
@@ -342,8 +330,8 @@ export default class extends BaseModel {
         const userModel = User.withId(payload.userId);
 
         userModel.update({
-          apiClientCreateForm: {
-            ...userModel.apiClientCreateForm,
+          apiClientForm: {
+            ...userModel.apiClientForm,
             data: payload.data,
             isSubmitting: true,
           },
@@ -353,7 +341,7 @@ export default class extends BaseModel {
       }
       case ActionTypes.API_CLIENT_CREATE__SUCCESS: {
         User.withId(payload.apiClient.userId).update({
-          apiClientCreateForm: DEFAULT_API_CLIENT_CREATE_FORM,
+          apiClientForm: DEFAULT_API_CLIENT_FORM,
         });
 
         break;
@@ -362,22 +350,10 @@ export default class extends BaseModel {
         const userModel = User.withId(payload.userId);
 
         userModel.update({
-          apiClientCreateForm: {
-            ...userModel.apiClientCreateForm,
+          apiClientForm: {
+            ...userModel.apiClientForm,
             isSubmitting: false,
             error: payload.error,
-          },
-        });
-
-        break;
-      }
-      case ActionTypes.USER_API_CLIENT_CREATE_ERROR_CLEAR: {
-        const userModel = User.withId(payload.id);
-
-        userModel.update({
-          apiClientCreateForm: {
-            ...userModel.apiClientCreateForm,
-            error: null,
           },
         });
 
@@ -387,8 +363,8 @@ export default class extends BaseModel {
         const userModel = User.withId(payload.userId);
 
         userModel.update({
-          apiClientUpdateForm: {
-            ...userModel.apiClientUpdateForm,
+          apiClientForm: {
+            ...userModel.apiClientForm,
             data: payload.data,
             isSubmitting: true,
           },
@@ -398,7 +374,7 @@ export default class extends BaseModel {
       }
       case ActionTypes.API_CLIENT_UPDATE__SUCCESS: {
         User.withId(payload.apiClient.userId).update({
-          apiClientUpdateForm: DEFAULT_API_CLIENT_UPDATE_FORM,
+          apiClientForm: DEFAULT_API_CLIENT_FORM,
         });
 
         break;
@@ -407,8 +383,8 @@ export default class extends BaseModel {
         const userModel = User.withId(payload.userId);
 
         userModel.update({
-          apiClientUpdateForm: {
-            ...userModel.apiClientUpdateForm,
+          apiClientForm: {
+            ...userModel.apiClientForm,
             isSubmitting: false,
             error: payload.error,
           },
@@ -416,12 +392,12 @@ export default class extends BaseModel {
 
         break;
       }
-      case ActionTypes.USER_API_CLIENT_UPDATE_ERROR_CLEAR: {
+      case ActionTypes.USER_API_CLIENT_ERROR_CLEAR: {
         const userModel = User.withId(payload.id);
 
         userModel.update({
-          apiClientUpdateForm: {
-            ...userModel.apiClientUpdateForm,
+          apiClientForm: {
+            ...userModel.apiClientForm,
             error: null,
           },
         });
