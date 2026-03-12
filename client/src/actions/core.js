@@ -23,6 +23,7 @@ const initializeCore = (
   activities,
   notifications,
   userPrefs,
+  apiClients,
 ) => ({
   type: ActionTypes.CORE_INITIALIZE,
   payload: {
@@ -48,6 +49,7 @@ const initializeCore = (
     activities,
     notifications,
     userPrefs,
+    apiClients,
   },
 });
 

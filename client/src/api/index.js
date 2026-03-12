@@ -1,5 +1,6 @@
 import accessTokens from './access-tokens';
 import activities from './activities';
+import apiClients from './api-clients';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
@@ -28,6 +29,7 @@ export { http, socket };
 export default {
   ...accessTokens,
   ...activities,
+  ...apiClients,
   ...attachments,
   ...boardMemberships,
   ...boards,

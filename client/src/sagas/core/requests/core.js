@@ -76,6 +76,7 @@ export function* fetchCore() {
   const core = yield call(request, api.getCoreSettingsPublic);
   const { items: projectMemberships } = yield call(request, api.getProjectMemberships);
   const { item: userPrefs } = yield call(request, api.getUserPrefs, user.id);
+  const { items: apiClients } = yield call(request, api.getApiClients);
 
   return {
     user,
@@ -100,6 +101,7 @@ export function* fetchCore() {
     comments,
     core,
     userPrefs,
+    apiClients,
   };
 }
 

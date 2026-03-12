@@ -11,4 +11,95 @@
     width: 100%;
     max-width: 750px;
   }
+
+  .apiClientsHeader {
+    display: flex;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text0);
+  }
+
+  .apiClientCount {
+    margin-left: 4px;
+    font-weight: normal;
+    color: var(--text3);
+  }
+
+  .items {
+    margin-top: 8px;
+    scrollbar-gutter: stable;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 12px 10px 8px;
+
+    &:hover {
+      background: var(--backgroundNotificationHover);
+    }
+  }
+
+  .itemHeader {
+    display: flex;
+    margin-bottom: 4px;
+    align-items: center;
+  }
+
+  .createdAt {
+    font-size: 10px;
+    color: var(--text2);
+    white-space: nowrap;
+    margin-left: 4px;
+  }
+
+  .itemHeaderButtons {
+    margin-left: auto;
+    display: flex;
+  }
+
+  .itemContent {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .copyButton {
+    margin-right: -2px;
+    svg {
+      fill: var(--text2);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--text3);
+      }
+    }
+  }
+
+  .dataWrapper {
+    color: var(--text1);
+  }
+
+  .data {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--text2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dataPermissions {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--text2);
+  }
+
+  .noApiClients {
+    text-align: center;
+    color: var(--text2);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
 }

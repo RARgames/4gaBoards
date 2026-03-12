@@ -1,4 +1,5 @@
 import activities from './activities';
+import apiClients from './api-clients';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
@@ -22,6 +23,7 @@ import users from './users';
 
 export default {
   ...activities,
+  ...apiClients,
   ...attachments,
   ...boardMemberships,
   ...boards,

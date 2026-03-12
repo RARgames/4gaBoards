@@ -20,6 +20,18 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleCoreSettingsUpdate(item));
     });
 
+    const handleApiClientCreate = api.makeHandleApiClientCreate(({ item }) => {
+      emit(entryActions.handleApiClientCreate(item));
+    });
+
+    const handleApiClientUpdate = api.makeHandleApiClientUpdate(({ item }) => {
+      emit(entryActions.handleApiClientUpdate(item));
+    });
+
+    const handleApiClientDelete = api.makeHandleApiClientDelete(({ item }) => {
+      emit(entryActions.handleApiClientDelete(item));
+    });
+
     const handleUserCreate = api.makeHandleUserCreate(({ item }) => {
       emit(entryActions.handleUserCreate(item));
     });
@@ -229,6 +241,10 @@ const createSocketEventsChannel = () =>
 
     socket.on('coreSettingsUpdate', handleCoreSettingsUpdate);
 
+    socket.on('apiClientCreate', handleApiClientCreate);
+    socket.on('apiClientUpdate', handleApiClientUpdate);
+    socket.on('apiClientDelete', handleApiClientDelete);
+
     socket.on('userCreate', handleUserCreate);
     socket.on('userUpdate', handleUserUpdate);
     socket.on('userDelete', handleUserDelete);
@@ -304,6 +320,10 @@ const createSocketEventsChannel = () =>
       socket.offManager('reconnect', handleReconnect);
 
       socket.off('coreSettingsUpdate', handleCoreSettingsUpdate);
+
+      socket.off('apiClientCreate', handleApiClientCreate);
+      socket.off('apiClientUpdate', handleApiClientUpdate);
+      socket.off('apiClientDelete', handleApiClientDelete);
 
       socket.off('userCreate', handleUserCreate);
       socket.off('userUpdate', handleUserUpdate);

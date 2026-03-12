@@ -1,4 +1,5 @@
 export * from './activities';
+export * from './api-clients';
 export * from './comments';
 export * from './attachments';
 export * from './boards';
