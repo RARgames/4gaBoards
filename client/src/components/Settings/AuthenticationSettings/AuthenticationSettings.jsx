@@ -91,6 +91,10 @@ const AuthenticationSettings = React.memo(
                           className={s.createdAt}
                           title={`${t('common.createdAt_withDate', { date: t(`format:dateTime`, { value: apiClient.createdAt, postProcess: 'formatDate' }) })}\n${apiClient.updatedAt ? t('common.updatedAt_withDate', { date: t(`format:dateTime`, { value: apiClient.updatedAt, postProcess: 'formatDate' }) }) : ''}`}
                         />
+                        <span className={s.lastUsed}>
+                          {t('common.lastUsed')} {!apiClient.lastUsedAt && t('common.never')}
+                        </span>
+                        <DateText value={apiClient.lastUsedAt} showTime className={s.createdAt} titlePrefix={t('common.lastUsed')} />
                         <div className={s.itemHeaderButtons}>
                           <ApiClientPopup
                             secret={apiClient.clientSecret || t('common.generatingApiClientSecret')}
