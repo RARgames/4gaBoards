@@ -115,6 +115,7 @@ export default {
       connectToGithub: 'Connect to GitHub',
       copyClientSecret: 'Copy Client Secret',
       copyEmail: 'Copy Email',
+      copySecret: 'Copy Secret',
       coverImage: 'Cover Image',
       created: 'Created',
       createdAt: 'Created At',
@@ -491,6 +492,7 @@ export default {
       toggleUserRegistration: 'Toggle User Registration',
       toTest: 'To Test',
       unableToFetch: 'Unable to fetch',
+      unnamed: 'Unnamed',
       unsavedChanges: 'Local changes',
       updated: 'Updated',
       updatedAt: 'Updated At',
@@ -516,6 +518,9 @@ export default {
     },
 
     activity: {
+      apiClientCreate: 'Created API client <0>{{name}}</0> with permissions: <1>{{permissions}}</1>',
+      apiClientDelete: 'Deleted API client <0>{{name}}</0>',
+      apiClientUpdate: 'Updated API client <0>{{prevName}}</0> -> <1>{{name}}</1>, new permissions <2>{{permissions}}</2>, regenerated secret: <3>{{regenerateSecret}}</3>',
       attachmentShort: 'Atch.',
       boardAddedGithubRepo: 'Added GitHub repository <2>{{githubRepo}}</2> to board <1>{{board}}</1>',
       boardAddedGithubRepoShort: 'Added GitHub repository <2>{{githubRepo}}</2> to this board',

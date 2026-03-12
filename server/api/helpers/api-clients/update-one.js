@@ -56,7 +56,11 @@ module.exports = {
             type: Action.Types.API_CLIENT_UPDATE,
             data: {
               apiClientId: apiClient.id,
-              apiClientName: apiClient.name,
+              prevName: inputs.record.name,
+              name: apiClient.name,
+              prevPermissions: inputs.record.permissions,
+              permissions: apiClient.permissions,
+              regenerateSecret,
             },
           },
           currentUser,
