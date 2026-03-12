@@ -20,17 +20,7 @@ export default class extends BaseModel {
     }),
     lastUsedAt: attr(),
     createdAt: attr(),
-    createdById: fk({
-      to: 'User',
-      as: 'createdBy',
-      relatedName: 'createdApiClients',
-    }),
     updatedAt: attr(),
-    updatedById: fk({
-      to: 'User',
-      as: 'updatedBy',
-      relatedName: 'updatedApiClients',
-    }),
     deletedAt: attr(),
   };
 

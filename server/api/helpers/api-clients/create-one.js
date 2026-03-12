@@ -39,7 +39,6 @@ module.exports = {
       clientId,
       clientSecret,
       userId: currentUser.id,
-      createdById: currentUser.id,
     }).fetch();
 
     if (apiClient) {
