@@ -129,13 +129,8 @@ const updateCurrentUserAvatar = (data) => ({
   },
 });
 
-const clearCurrentUserApiClientCreateError = () => ({
-  type: EntryActionTypes.CURRENT_USER_API_CLIENT_CREATE_ERROR_CLEAR,
-  payload: {},
-});
-
-const clearCurrentUserApiClientUpdateError = () => ({
-  type: EntryActionTypes.CURRENT_USER_API_CLIENT_UPDATE_ERROR_CLEAR,
+const clearCurrentUserApiClientError = () => ({
+  type: EntryActionTypes.CURRENT_USER_API_CLIENT_ERROR_CLEAR,
   payload: {},
 });
 
@@ -276,8 +271,7 @@ export default {
   clearUserUsernameUpdateError,
   clearCurrentUserUsernameUpdateError,
   updateCurrentUserAvatar,
-  clearCurrentUserApiClientCreateError,
-  clearCurrentUserApiClientUpdateError,
+  clearCurrentUserApiClientError,
   deleteUser,
   handleUserDelete,
   addUserToCard,

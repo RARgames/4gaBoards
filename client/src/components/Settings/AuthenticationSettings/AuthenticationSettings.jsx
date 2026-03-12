@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import ApiClientCreatePopup from '../../ApiClientCreatePopup';
+import ApiClientPopup from '../../ApiClientPopup';
 import DateText from '../../DateText';
 import DeletePopup from '../../DeletePopup';
 import ShowSecretPopup from '../../ShowSecretStep';
@@ -17,14 +17,12 @@ const AuthenticationSettings = React.memo(
   ({
     isPasswordAuthenticated,
     passwordUpdateForm,
-    apiClientCreateForm,
-    // apiClientUpdateForm,
+    apiClientForm,
     apiClients,
     apiClientCount,
     onPasswordUpdate,
     onPasswordUpdateMessageDismiss,
-    onApiClientCreateMessageDismiss,
-    // onApiClientUpdateMessageDismiss,
+    onApiClientMessageDismiss,
     onApiClientCreate,
     onApiClientUpdate,
     onApiClientDelete,
@@ -63,17 +61,18 @@ const AuthenticationSettings = React.memo(
               </UserPasswordEditPopup>
             </div>
             <div className={s.action}>
-              <ApiClientCreatePopup
+              <ApiClientPopup
                 secret={apiClients.length > 0 ? apiClients[apiClients.length - 1].clientSecret : null}
-                defaultData={apiClientCreateForm.data}
-                isSubmitting={apiClientCreateForm.isSubmitting}
-                error={apiClientCreateForm.error}
-                title={t('common.generateNewApiClient')}
-                onCreate={onApiClientCreate}
-                onMessageDismiss={onApiClientCreateMessageDismiss}
+                defaultData={apiClientForm.data}
+                isSubmitting={apiClientForm.isSubmitting}
+                error={apiClientForm.error}
+                title={t('common.generateApiClient')}
+                submitButtonText={t('common.generate')}
+                onSubmit={onApiClientCreate}
+                onMessageDismiss={onApiClientMessageDismiss}
               >
-                <Button style={ButtonStyle.DefaultBorder} content={t('common.generateNewApiClient')} />
-              </ApiClientCreatePopup>
+                <Button style={ButtonStyle.DefaultBorder} content={t('common.generateApiClient')} />
+              </ApiClientPopup>
             </div>
             <div className={clsx(s.action)}>
               <div className={s.apiClientsHeader}>
@@ -93,18 +92,21 @@ const AuthenticationSettings = React.memo(
                           title={`${t('common.createdAt_withDate', { date: t(`format:dateTime`, { value: apiClient.createdAt, postProcess: 'formatDate' }) })}\n${apiClient.updatedAt ? t('common.updatedAt_withDate', { date: t(`format:dateTime`, { value: apiClient.updatedAt, postProcess: 'formatDate' }) }) : ''}`}
                         />
                         <div className={s.itemHeaderButtons}>
-                          {/* TODO edit apiClient */}
-                          {/* <ApiClientUpdatePopup
+                          <ApiClientPopup
                             secret={apiClient.clientSecret || t('common.generatingApiClientSecret')}
-                            defaultData={apiClientCreateForm.data}
-                            isSubmitting={apiClientCreateForm.isSubmitting}
-                            error={apiClientCreateForm.error}
-                            title={t('common.generateNewApiClient')}
-                            onCreate={onApiClientCreate}
-                            onMessageDismiss={onApiClientCreateMessageDismiss}
+                            defaultData={{ name: apiClient.name, permissions: apiClient.permissions, regenerateSecret: false }}
+                            isSubmitting={apiClientForm.isSubmitting}
+                            error={apiClientForm.error}
+                            title={t('common.editApiClient')}
+                            submitButtonText={t('common.save')}
+                            isUpdate
+                            onSubmit={(data) => onApiClientUpdate(apiClient.id, data)}
+                            onMessageDismiss={onApiClientMessageDismiss}
                           >
-                            <Button style={ButtonStyle.DefaultBorder} content={t('common.generateNewApiClient')} />
-                          </ApiClientUpdatePopup> */}
+                            <Button style={ButtonStyle.Icon} title={t('common.editApiClient')}>
+                              <Icon type={IconType.Pencil} size={IconSize.Size12} />
+                            </Button>
+                          </ApiClientPopup>
                           <ShowSecretPopup secret={apiClient.clientSecret || t('common.generatingApiClientSecret')}>
                             <Button style={ButtonStyle.Icon} title={t('common.resetApiClient')} onClick={() => handleResetClick(apiClient.id)}>
                               <Icon type={IconType.Reset} size={IconSize.Size12} />
@@ -160,14 +162,12 @@ const AuthenticationSettings = React.memo(
 AuthenticationSettings.propTypes = {
   isPasswordAuthenticated: PropTypes.bool.isRequired,
   passwordUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  apiClientCreateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  // apiClientUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  apiClientForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   apiClients: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   apiClientCount: PropTypes.number.isRequired,
   onPasswordUpdate: PropTypes.func.isRequired,
   onPasswordUpdateMessageDismiss: PropTypes.func.isRequired,
-  onApiClientCreateMessageDismiss: PropTypes.func.isRequired,
-  // onApiClientUpdateMessageDismiss: PropTypes.func.isRequired,
+  onApiClientMessageDismiss: PropTypes.func.isRequired,
   onApiClientCreate: PropTypes.func.isRequired,
   onApiClientUpdate: PropTypes.func.isRequired,
   onApiClientDelete: PropTypes.func.isRequired,

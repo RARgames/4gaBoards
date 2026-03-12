@@ -5,6 +5,9 @@ const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
   },
+  INVALID_PERMISSIONS: {
+    invalidPermissions: 'Invalid permissions',
+  },
 };
 
 module.exports = {
@@ -15,7 +18,6 @@ module.exports = {
     },
     name: {
       type: 'string',
-      isNotEmptyString: true,
     },
     permissions: {
       type: 'json',
@@ -31,6 +33,9 @@ module.exports = {
     },
     notEnoughRights: {
       responseType: 'forbidden',
+    },
+    invalidPermissions: {
+      responseType: 'unprocessableEntity',
     },
   },
 
@@ -48,6 +53,10 @@ module.exports = {
     }
 
     const values = _.pick(inputs, ['name', 'permissions']);
+
+    if (values.permissions === null || (Array.isArray(values.permissions) && values.permissions.length === 0)) {
+      throw Errors.INVALID_PERMISSIONS;
+    }
 
     apiClient = await sails.helpers.apiClients.updateOne.with({
       values,
