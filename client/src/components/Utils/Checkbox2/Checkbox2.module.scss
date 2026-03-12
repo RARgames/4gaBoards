@@ -1,0 +1,70 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      .label {
+        color: var(--text2);
+      }
+    }
+  }
+
+  .label {
+    margin-left: 4px;
+    color: var(--text1);
+  }
+
+  .checkbox {
+    appearance: none;
+    background: transparent;
+    border-radius: 3px;
+    border: 1px solid var(--text3);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 1px;
+
+    &:before {
+      content: 'Г';
+      color: var(--text2);
+      transform: rotate(-135deg);
+      visibility: hidden;
+    }
+
+    &:checked:before {
+      visibility: visible;
+    }
+
+    &:hover {
+      background: var(--backgroundButtonMisc);
+      cursor: pointer;
+    }
+
+    &:disabled {
+      border: 1px solid var(--borderVivid);
+      cursor: not-allowed;
+    }
+  }
+
+  .checkboxError {
+    border: 1px solid var(--textError);
+  }
+
+  .size14 {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+    font-size: 11.2px;
+  }
+
+  .size20 {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 16px;
+  }
+}
