@@ -1548,27 +1548,96 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
         );
       }
 
+      case ActivityTypes.API_CLIENT_CREATE: {
+        const { name, permissions } = activity.data;
+        let nameTruncated = truncateIf(name, isTruncated, defaultTruncateLength);
+        nameTruncated = nameTruncated || t('common.unnamed');
+        const permissionsList = permissions === '*' ? t('common.all') : permissions.join(', ');
+
+        return (
+          <Trans
+            i18nKey="activity.apiClientCreate"
+            values={{
+              name: nameTruncated,
+              permissions: permissionsList,
+            }}
+          >
+            <span className={s.data} title={name} />
+            <span className={s.data} title={permissionsList} />
+          </Trans>
+        );
+      }
+
+      case ActivityTypes.API_CLIENT_UPDATE: {
+        const { prevName, name, permissions, regenerateSecret } = activity.data;
+        let nameTruncated = truncateIf(name, isTruncated, defaultTruncateLength);
+        nameTruncated = nameTruncated || t('common.unnamed');
+        let prevNameTruncated = truncateIf(prevName, isTruncated, defaultTruncateLength);
+        prevNameTruncated = prevNameTruncated || t('common.unnamed');
+        const permissionsList = permissions === '*' ? t('common.all') : permissions.join(', ');
+
+        return (
+          <Trans
+            i18nKey="activity.apiClientUpdate"
+            values={{
+              prevName: prevNameTruncated,
+              name: nameTruncated,
+              permissions: permissionsList,
+              regenerateSecret: regenerateSecret ? t('activity.yes') : t('activity.no'),
+            }}
+          >
+            <span className={s.data} title={prevName} />
+            <span className={s.data} title={name} />
+            <span className={s.data} title={permissionsList} />
+            <span className={s.data} title={regenerateSecret ? t('activity.yes') : t('activity.no')} />
+          </Trans>
+        );
+      }
+
+      case ActivityTypes.API_CLIENT_DELETE: {
+        const { name } = activity.data;
+        let nameTruncated = truncateIf(name, isTruncated, defaultTruncateLength);
+        nameTruncated = nameTruncated || t('common.unnamed');
+
+        return (
+          <Trans
+            i18nKey="activity.apiClientDelete"
+            values={{
+              name: nameTruncated,
+            }}
+          >
+            <span className={s.data} title={name} />
+          </Trans>
+        );
+      }
+
       default:
         return null;
     }
-  } else if (ActivityScopes.INSTANCE === activity.scope && ActivityTypes.INSTANCE_UPDATE === activity.type) {
-    const data = activity.data || {};
+  } else if (ActivityScopes.INSTANCE === activity.scope) {
+    switch (activity.type) {
+      case ActivityTypes.INSTANCE_UPDATE: {
+        const data = activity.data || {};
 
-    const settings = Object.entries(data)
-      .filter(([key, value]) => value !== undefined && !key.startsWith('prev'))
-      .map(([key, value]) => `${key}: ${String(value)}`)
-      .join(', ');
+        const settings = Object.entries(data)
+          .filter(([key, value]) => value !== undefined && !key.startsWith('prev'))
+          .map(([key, value]) => `${key}: ${String(value)}`)
+          .join(', ');
 
-    return (
-      <Trans
-        i18nKey="activity.instanceUpdateSettings"
-        values={{
-          settings,
-        }}
-      >
-        <span className={s.data} />
-      </Trans>
-    );
+        return (
+          <Trans
+            i18nKey="activity.instanceUpdateSettings"
+            values={{
+              settings,
+            }}
+          >
+            <span className={s.data} />
+          </Trans>
+        );
+      }
+      default:
+        return null;
+    }
   }
   return null;
 });

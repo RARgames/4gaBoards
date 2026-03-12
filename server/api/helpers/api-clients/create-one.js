@@ -59,7 +59,8 @@ module.exports = {
             type: Action.Types.API_CLIENT_CREATE,
             data: {
               apiClientId: apiClient.clientId,
-              apiClientName: apiClient.name,
+              name: apiClient.name,
+              permissions: apiClient.permissions,
             },
           },
           currentUser,
