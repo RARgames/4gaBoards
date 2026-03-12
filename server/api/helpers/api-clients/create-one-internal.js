@@ -22,10 +22,6 @@ module.exports = {
     },
   },
 
-  exits: {
-    coreNotFound: {},
-  },
-
   async fn(inputs) {
     const { values } = inputs;
 
@@ -47,14 +43,6 @@ module.exports = {
         label: notificationsLabel,
         name: version.toString(),
       }).fetch();
-
-      if (apiClient) {
-        let core = await Core.findOne({ id: 0 });
-        if (!core) {
-          throw 'coreNotFound';
-        }
-        core = await Core.updateOne({ id: 0 }).set({ updatedById: '0' });
-      }
 
       apiClient.clientSecret = clientSecret;
       return apiClient;
