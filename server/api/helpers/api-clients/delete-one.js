@@ -35,6 +35,7 @@ module.exports = {
       if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
+            userAccount: currentUser,
             scope: Action.Scopes.USER,
             type: Action.Types.API_CLIENT_DELETE,
             data: {

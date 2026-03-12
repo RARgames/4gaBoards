@@ -21,6 +21,11 @@ module.exports.routes = {
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
 
+  'GET /api/api-clients': 'api-clients/index',
+  'POST /api/api-clients': 'api-clients/create',
+  'PATCH /api/api-clients/:id': 'api-clients/update',
+  'DELETE /api/api-clients/:id': 'api-clients/delete',
+
   'POST /api/register': 'register/create',
 
   'GET /api/core-settings-public': 'core/show',
