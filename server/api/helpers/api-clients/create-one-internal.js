@@ -43,7 +43,7 @@ module.exports = {
       const apiClient = await ApiClient.create({
         clientId,
         clientSecret,
-        permissions: ['notifications:createCard'],
+        permissions: ['cards.create', 'tasks.create', 'attachments.create', 'card-labels.create', 'card-memberships.create'],
         label: notificationsLabel,
         name: version.toString(),
         createdById: '0',
