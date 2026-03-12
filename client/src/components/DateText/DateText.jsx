@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import * as s from './DateText.module.scss';
 
-const DateText = React.memo(({ value, titlePrefix, isClickable, showTime, showUndefined, showRelative, className }) => {
+const DateText = React.memo(({ value, title, titlePrefix, isClickable, showTime, showUndefined, showRelative, className }) => {
   const [t] = useTranslation();
   const { i18n } = useTranslation();
 
@@ -37,7 +37,7 @@ const DateText = React.memo(({ value, titlePrefix, isClickable, showTime, showUn
     const preFormattedValue = t(showTime ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' });
     const formattedValue = showRelative ? formatDistanceToNowStrict(new Date(value), { locale, addSuffix: true }) : preFormattedValue;
     return (
-      <span className={clsx(s.wrapper, isClickable && s.dateHoverable, className)} title={`${titlePrefixString}${preFormattedValue}`}>
+      <span className={clsx(s.wrapper, isClickable && s.dateHoverable, className)} title={title || `${titlePrefixString}${preFormattedValue}`}>
         <span>{formattedValue}</span>
       </span>
     );
@@ -48,6 +48,7 @@ const DateText = React.memo(({ value, titlePrefix, isClickable, showTime, showUn
 
 DateText.propTypes = {
   value: PropTypes.instanceOf(Date),
+  title: PropTypes.string,
   titlePrefix: PropTypes.string,
   isClickable: PropTypes.bool,
   showTime: PropTypes.bool,
@@ -58,6 +59,7 @@ DateText.propTypes = {
 
 DateText.defaultProps = {
   value: undefined,
+  title: undefined,
   titlePrefix: undefined,
   isClickable: false,
   showTime: false,
