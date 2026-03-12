@@ -32,7 +32,8 @@ async function setupNotifications() {
     );
     const getResponse = await getRes.json();
     if (!getResponse.ready) {
-      sails.log.info(`Notifications: Server is ready but client is not configured`);
+      sails.log.info(`Notifications: Server is ready but client is not configured, generating API client...`);
+      apiClient = await sails.helpers.apiClients.createOneInternal.with({ values: { label: notificationsLabel } });
       await fetchRetryUntilAvailable(
         notificationsSelfURL,
         {

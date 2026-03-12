@@ -31,10 +31,12 @@ module.exports = {
 
   async fn(inputs) {
     const { values, regenerateSecret, currentUser, skipActions } = inputs;
+    let clientSecret;
 
     const updateValues = { updatedById: currentUser.id, ...values };
     if (regenerateSecret) {
-      updateValues.clientSecret = crypto.randomBytes(32).toString('hex');
+      clientSecret = crypto.randomBytes(32).toString('hex');
+      updateValues.clientSecret = clientSecret;
     }
     if (inputs.record.label === notificationsLabel) {
       updateValues.name = String(Number(inputs.record.name) + 1);
@@ -55,6 +57,7 @@ module.exports = {
       if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
+            userAccount: currentUser,
             scope: Action.Scopes.USER,
             type: Action.Types.API_CLIENT_UPDATE,
             data: {
@@ -69,6 +72,7 @@ module.exports = {
       }
     }
 
+    apiClient.clientSecret = clientSecret;
     return apiClient;
   },
 };

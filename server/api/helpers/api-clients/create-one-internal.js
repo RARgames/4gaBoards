@@ -17,55 +17,39 @@ module.exports = {
       custom: valuesValidator,
       required: true,
     },
-    skipActions: {
-      type: 'boolean',
-      defaultsTo: false,
-    },
     request: {
       type: 'ref',
     },
   },
 
   exits: {
-    apiClientAlreadyExists: {},
     coreNotFound: {},
   },
 
   async fn(inputs) {
-    const { values, skipActions } = inputs;
+    const { values } = inputs;
+
+    const clientId = crypto.randomBytes(16).toString('hex');
+    const clientSecret = crypto.randomBytes(32).toString('hex');
 
     if (values.label && values.label === notificationsLabel) {
-      const client = await ApiClient.findOne({ label: notificationsLabel });
+      let version = 1;
+      let client = await ApiClient.findOne({ label: notificationsLabel });
       if (client) {
-        throw 'apiClientAlreadyExists';
+        client = await ApiClient.destroyOne(client.id);
+        version = Number(client.name) + 1;
       }
 
       const apiClient = await ApiClient.create({
-        clientId: crypto.randomBytes(16).toString('hex'),
-        clientSecret: crypto.randomBytes(32).toString('hex'),
+        clientId,
+        clientSecret,
         permissions: ['notifications:createCard'],
         label: notificationsLabel,
-        name: '1',
+        name: version.toString(),
         createdById: '0',
       }).fetch();
 
       if (apiClient) {
-        if (!skipActions) {
-          await sails.helpers.actions.createOne.with({
-            values: {
-              scope: Action.Scopes.INSTANCE,
-              type: Action.Types.API_CLIENT_CREATE,
-              data: {
-                apiClientId: apiClient.clientId,
-                apiClientName: apiClient.name,
-                apiClientLabel: apiClient.label,
-              },
-            },
-            currentUser: { id: '0' },
-            request: inputs.request,
-          });
-        }
-
         let core = await Core.findOne({ id: 0 });
         if (!core) {
           throw 'coreNotFound';
@@ -73,6 +57,7 @@ module.exports = {
         core = await Core.updateOne({ id: 0 }).set({ updatedById: '0' });
       }
 
+      apiClient.clientSecret = clientSecret;
       return apiClient;
     }
 

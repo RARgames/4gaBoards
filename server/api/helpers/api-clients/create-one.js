@@ -31,10 +31,13 @@ module.exports = {
   async fn(inputs) {
     const { values, currentUser, skipActions } = inputs;
 
+    const clientId = crypto.randomBytes(16).toString('hex');
+    const clientSecret = crypto.randomBytes(32).toString('hex');
+
     const apiClient = await ApiClient.create({
       ...values,
-      clientId: crypto.randomBytes(16).toString('hex'),
-      clientSecret: crypto.randomBytes(32).toString('hex'),
+      clientId,
+      clientSecret,
       userId: currentUser.id,
       createdById: currentUser.id,
     }).fetch();
@@ -52,6 +55,7 @@ module.exports = {
       if (!skipActions) {
         await sails.helpers.actions.createOne.with({
           values: {
+            userAccount: currentUser,
             scope: Action.Scopes.USER,
             type: Action.Types.API_CLIENT_CREATE,
             data: {
@@ -66,6 +70,7 @@ module.exports = {
       }
     }
 
+    apiClient.clientSecret = clientSecret;
     return apiClient;
   },
 };
