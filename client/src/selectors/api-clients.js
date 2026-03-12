@@ -1,7 +1,6 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
-import getMeta from '../utils/get-meta';
 import { selectCurrentUserId } from './users';
 
 export const makeSelectApiClientsForCurrentUser = () =>
@@ -23,7 +22,6 @@ export const makeSelectApiClientsForCurrentUser = () =>
         .toModelArray()
         .map((apiClientModel) => ({
           ...apiClientModel.ref,
-          ...getMeta(apiClientModel),
           user: apiClientModel.user.ref,
         }));
 

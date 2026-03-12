@@ -8,13 +8,14 @@ module.exports.up = (knex) =>
     table.text('client_secret').notNullable();
     table.jsonb('permissions').notNullable().defaultTo('[]');
     table.bigInteger('user_id');
-
     table.timestamp('last_used_at', true);
     table.timestamp('created_at', true);
-    table.bigInteger('created_by_id').notNullable();
     table.timestamp('updated_at', true);
-    table.bigInteger('updated_by_id');
     table.timestamp('deleted_at', true);
+
+    /* Indexes */
+    table.index('user_id');
+    table.index('client_id');
   });
 
 module.exports.down = (knex) => knex.schema.dropTable('api_client');

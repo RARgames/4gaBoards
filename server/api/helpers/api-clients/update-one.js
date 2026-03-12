@@ -1,7 +1,5 @@
 const crypto = require('crypto');
 
-const notificationsLabel = 'internal:4gaBoardsNotifications';
-
 module.exports = {
   inputs: {
     record: {
@@ -33,16 +31,12 @@ module.exports = {
     const { values, regenerateSecret, currentUser, skipActions } = inputs;
     let clientSecret;
 
-    const updateValues = { updatedById: currentUser.id, ...values };
     if (regenerateSecret) {
       clientSecret = crypto.randomBytes(32).toString('hex');
-      updateValues.clientSecret = clientSecret;
-    }
-    if (inputs.record.label === notificationsLabel) {
-      updateValues.name = String(Number(inputs.record.name) + 1);
+      values.clientSecret = clientSecret;
     }
 
-    const apiClient = await ApiClient.updateOne(inputs.record.id).set(updateValues);
+    const apiClient = await ApiClient.updateOne(inputs.record.id).set(values);
 
     if (apiClient) {
       sails.sockets.broadcast(
