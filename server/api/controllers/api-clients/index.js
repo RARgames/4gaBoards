@@ -4,6 +4,7 @@ module.exports = {
 
     const apiClients = await sails.helpers.apiClients.getMany({
       userId: currentUser.id,
+      deletedAt: null,
     });
 
     return {
