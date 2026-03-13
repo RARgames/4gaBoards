@@ -6,19 +6,14 @@
 
     &:hover {
       .label {
-        color: var(--text2);
+        color: var(--text3);
       }
     }
   }
 
-  .label {
-    margin-left: 4px;
-    color: var(--text1);
-  }
-
   .checkbox {
     appearance: none;
-    background: transparent;
+    background: var(--backgroundCheckbox);
     border-radius: 3px;
     border: 1px solid var(--text3);
     display: flex;
@@ -38,18 +33,32 @@
     }
 
     &:hover {
-      background: var(--backgroundButtonMisc);
+      background: var(--backgroundCheckboxHover);
       cursor: pointer;
     }
 
     &:disabled {
       border: 1px solid var(--borderVivid);
       cursor: not-allowed;
+
+      &:hover {
+        background: var(--backgroundCheckbox);
+      }
     }
   }
 
   .checkboxError {
     border: 1px solid var(--textError);
+  }
+
+  .label {
+    margin-left: 4px;
+    color: var(--text1);
+  }
+
+  .checkbox:disabled + .label {
+    cursor: not-allowed;
+    color: var(--text3);
   }
 
   .size14 {
