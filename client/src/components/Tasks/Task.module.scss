@@ -54,20 +54,6 @@
     align-items: center;
   }
 
-  .checkbox {
-    background: var(--backgroundCheckbox);
-
-    &:hover {
-      background: var(--backgroundCheckboxHover);
-    }
-
-    &:disabled {
-      &:hover {
-        background: inherit;
-      }
-    }
-  }
-
   .members {
     display: flex;
     margin-right: 4px;

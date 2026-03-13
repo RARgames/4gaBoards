@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle } from '../../Button';
-import { Checkbox, CheckboxSize } from '../../Checkbox';
+import { CheckboxSize } from '../../Checkbox';
+import Checkbox2 from '../../Checkbox2';
 import withPopup from '../../Popup';
 import Popup from '../../PopupElements';
 
@@ -78,16 +79,14 @@ const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColu
               return null;
             }
             return (
-              <div key={column.id}>
-                <Checkbox
-                  checked={visibilityState[column.id]}
-                  size={CheckboxSize.Size14}
-                  className={s.checkbox}
-                  onChange={() => handleColumnToggleVisibilityClick(column)}
-                  title={t('common.toggleColumnVisibility')}
-                />
-                <span>{column.columnDef.header !== column.columnDef.meta.headerTitle ? column.columnDef.meta.headerTitle : column.columnDef.header}</span>
-              </div>
+              <Checkbox2
+                key={column.id}
+                checked={visibilityState[column.id]}
+                size={CheckboxSize.Size14}
+                label={column.columnDef.header !== column.columnDef.meta.headerTitle ? column.columnDef.meta.headerTitle : column.columnDef.header}
+                onChange={() => handleColumnToggleVisibilityClick(column)}
+                title={t('common.toggleColumnVisibility')}
+              />
             );
           })}
           <Button style={ButtonStyle.NoBackground} title={t('common.selectDefault')} onClick={handleSelectDefaultClick} className={s.selectDefaultButton}>

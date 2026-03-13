@@ -1,14 +1,4 @@
 :global(#app) {
-  .checkbox {
-    display: inline-flex;
-    margin-right: 4px;
-    background: var(--backgroundCheckbox);
-
-    &:hover {
-      background: var(--backgroundCheckboxHover);
-    }
-  }
-
   .selectDefaultButton {
     margin-top: 6px;
   }

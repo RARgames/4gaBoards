@@ -107,6 +107,14 @@
     flex: 1;
   }
 
+  .checkbox {
+    background: transparent;
+
+    &:hover {
+      background: var(--backgroundButtonMisc);
+    }
+  }
+
   .registrationDisabledText {
     color: var(--text0);
     font-size: 16px;
