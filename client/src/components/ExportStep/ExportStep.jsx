@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Form, Checkbox2 } from '../Utils';
+import { Button, ButtonStyle, Popup, Form, Checkbox } from '../Utils';
 import ExportConfirmationStep from './ExportConfirmationStep';
 
 import * as gs from '../../global.module.scss';
@@ -60,11 +60,11 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
       <Popup.Content>
         <Form onKeyDown={handleFormKeyDown}>
           <div className={s.wrapper}>
-            <Checkbox2 checked={skipAttachments} label={t('common.exportSkipAttachments')} onChange={toggleSkipAttachments} wrapperClassName={s.checkboxWrapper} />
-            <Checkbox2 checked={skipUserAvatars} label={t('common.exportSkipUserAvatars')} onChange={toggleSkipUserAvatars} wrapperClassName={s.checkboxWrapper} />
-            <Checkbox2 checked={skipProjectBackgrounds} label={t('common.exportSkipProjectBackgrounds')} onChange={toggleSkipProjectBackgrounds} wrapperClassName={s.checkboxWrapper} />
-            <Checkbox2 checked={skipMetadata} label={t('common.exportSkipMetadata')} onChange={toggleSkipMetadata} wrapperClassName={s.checkboxWrapper} />
-            <Checkbox2 checked={skipActions} label={t('common.exportSkipActions')} onChange={toggleSkipActions} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipAttachments} label={t('common.exportSkipAttachments')} onChange={toggleSkipAttachments} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipUserAvatars} label={t('common.exportSkipUserAvatars')} onChange={toggleSkipUserAvatars} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipProjectBackgrounds} label={t('common.exportSkipProjectBackgrounds')} onChange={toggleSkipProjectBackgrounds} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipMetadata} label={t('common.exportSkipMetadata')} onChange={toggleSkipMetadata} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipActions} label={t('common.exportSkipActions')} onChange={toggleSkipActions} wrapperClassName={s.checkboxWrapper} />
           </div>
           <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.exportBoard', { context: 'title' })} className={s.submitButton} onClick={handleSubmit} />

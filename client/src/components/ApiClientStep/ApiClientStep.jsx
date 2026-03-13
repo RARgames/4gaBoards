@@ -7,7 +7,7 @@ import { Permissions } from '../../constants/Enums';
 import { useForm, useSteps } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { ShowSecretStep } from '../ShowSecretStep';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle, Checkbox2, CheckboxSize } from '../Utils';
+import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle, Checkbox, CheckboxSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './ApiClientStep.module.scss';
@@ -140,12 +140,12 @@ const ApiClientStep = React.memo(({ secret, defaultData, isSubmitting, error, is
           <div className={s.text}>{t('common.name')}</div>
           <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} onChange={handleFieldChange} />
           {isUpdate && <div className={s.text}>{t('common.regenerateSecret')}</div>}
-          {isUpdate && <Checkbox2 checked={regenerateSecret} label={t('common.regenerateSecret')} size={CheckboxSize.Size14} onChange={handleRegenerateSecretChange} wrapperClassName={s.checkbox} />}
+          {isUpdate && <Checkbox checked={regenerateSecret} label={t('common.regenerateSecret')} size={CheckboxSize.Size14} onChange={handleRegenerateSecretChange} wrapperClassName={s.checkbox} />}
           <div className={s.text}>{t('common.permissions')}</div>
           <div className={clsx(s.permissions, gs.scrollableY)}>
-            <Checkbox2 checked={isAllSelected} label={t('common.all').toLowerCase()} size={CheckboxSize.Size14} onChange={handleAllPermissionsChange} />
+            <Checkbox checked={isAllSelected} label={t('common.all').toLowerCase()} size={CheckboxSize.Size14} onChange={handleAllPermissionsChange} />
             {permissions.map(([permissionKey, permissionValue]) => (
-              <Checkbox2
+              <Checkbox
                 key={permissionValue}
                 checked={isAllSelected || selectedPermissions.includes(permissionValue)}
                 label={permissionKey.toLowerCase()}
