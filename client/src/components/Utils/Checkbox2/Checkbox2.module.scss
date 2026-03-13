@@ -17,19 +17,23 @@
     border-radius: 3px;
     border: 1px solid var(--text3);
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
-    padding: 1px;
 
     &:before {
-      content: 'Г';
-      color: var(--text2);
-      transform: rotate(-135deg);
-      visibility: hidden;
+      content: '';
+      display: block;
+      width: 0.4em;
+      height: 0.75em;
+      border: solid var(--text2);
+      border-width: 0 0.13em 0.13em 0;
+      transform: rotate(45deg);
+      margin-top: -0.1em;
+      opacity: 0;
     }
 
     &:checked:before {
-      visibility: visible;
+      opacity: 1;
     }
 
     &:hover {
@@ -54,6 +58,9 @@
   .label {
     margin-left: 4px;
     color: var(--text1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .checkbox:disabled + .label {
