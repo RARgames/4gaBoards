@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Checkbox, CheckboxSize } from '../../Utils';
+import { Checkbox2, CheckboxSize } from '../../Utils';
 
 import * as s from './NotificationTypesSelector.module.scss';
 
@@ -22,11 +22,15 @@ const NotificationTypesSelector = React.memo(({ value, options, onChange }) => {
         const active = isSelected(option.id);
 
         return (
-          // eslint-disable-next-line jsx-a11y/label-has-associated-control
-          <label key={option.id} className={clsx(s.item, active && s.itemActive)} title={option.name}>
-            <Checkbox size={CheckboxSize.Size14} checked={active} onChange={() => handleToggle(option)} />
-            <span className={s.label}>{option.name}</span>
-          </label>
+          <Checkbox2
+            key={option.id}
+            size={CheckboxSize.Size14}
+            checked={active}
+            label={option.name}
+            onChange={() => handleToggle(option)}
+            wrapperClassName={clsx(s.item, active && s.itemActive)}
+            labelClassName={clsx(s.label, active && s.labelActive)}
+          />
         );
       })}
     </div>
