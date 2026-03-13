@@ -29,34 +29,13 @@
   }
 
   .checkboxesWrapper {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-bottom: 6px;
   }
 
   .checkboxWrapper {
     margin: 6px 0 4px 0;
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .checkbox {
-    background: var(--backgroundCheckbox);
-
-    &:hover {
-      background: var(--backgroundCheckboxHover);
-    }
-
-    &:disabled {
-      &:hover {
-        background: inherit;
-      }
-    }
-  }
-
-  .checkboxText {
-    padding-left: 4px;
-    display: inline-block;
-    width: calc(100% - 20px);
-    vertical-align: middle;
   }
 }

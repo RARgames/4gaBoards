@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Config from '../../constants/Config';
 import { useForm, useSteps } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox2 } from '../Utils';
 import ImportStep from './ImportStep';
 
 import * as gs from '../../global.module.scss';
@@ -216,16 +216,14 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
           )}
           {data.import && data.import.type === '4gaBoards' && (
             <div className={s.checkboxesWrapper}>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={importProjectManagers} className={s.checkbox} onChange={toggleImportProjectManagers} />
-              </div>
-              <div className={s.checkboxText}>{t('common.importProjectManagers')}</div>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={importNonExistingUsers} disabled={!isAdmin} className={s.checkbox} onChange={toggleImportNonExistingUsers} />
-              </div>
-              <div className={s.checkboxText}>
-                {t('common.importNonExistingUsers')} {!isAdmin && t('common.requiresAdminRights')}
-              </div>
+              <Checkbox2 checked={importProjectManagers} label={t('common.importProjectManagers')} onChange={toggleImportProjectManagers} wrapperClassName={s.checkboxWrapper} />
+              <Checkbox2
+                checked={importNonExistingUsers}
+                disabled={!isAdmin}
+                label={`${t('common.importNonExistingUsers')}${!isAdmin ? ` ${t('common.requiresAdminRights')}` : ''}`}
+                onChange={toggleImportNonExistingUsers}
+                wrapperClassName={s.checkboxWrapper}
+              />
             </div>
           )}
           <div className={gs.controlsSpaceBetween}>
