@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Checkbox2, CheckboxSize } from '../../Utils';
+import { Checkbox, CheckboxSize } from '../../Utils';
 
 import * as s from './NotificationTypesSelector.module.scss';
 
@@ -22,7 +22,7 @@ const NotificationTypesSelector = React.memo(({ value, options, onChange }) => {
         const active = isSelected(option.id);
 
         return (
-          <Checkbox2
+          <Checkbox
             key={option.id}
             size={CheckboxSize.Size14}
             checked={active}

@@ -1,6 +1,5 @@
 import { Button, ButtonStyle } from './Button';
 import { Checkbox, CheckboxSize } from './Checkbox';
-import Checkbox2 from './Checkbox2';
 import { Dropdown, DropdownStyle } from './Dropdown';
 import ExternalLink from './ExternalLink';
 import FilePicker from './FilePicker';
@@ -24,7 +23,6 @@ export {
   ButtonStyle,
   Checkbox,
   CheckboxSize,
-  Checkbox2,
   Dropdown,
   DropdownStyle,
   ExternalLink,

@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { Button, ButtonStyle } from '../../Button';
-import { CheckboxSize } from '../../Checkbox';
-import Checkbox2 from '../../Checkbox2';
+import { Checkbox, CheckboxSize } from '../../Checkbox';
 import withPopup from '../../Popup';
 import Popup from '../../PopupElements';
 
@@ -79,7 +78,7 @@ const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColu
               return null;
             }
             return (
-              <Checkbox2
+              <Checkbox
                 key={column.id}
                 checked={visibilityState[column.id]}
                 size={CheckboxSize.Size14}
