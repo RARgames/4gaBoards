@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Input, InputStyle, Popup, Form, Checkbox } from '../Utils';
+import { Button, ButtonStyle, Input, InputStyle, Popup, Form, Checkbox2 } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './FiltersDueDateStep.module.scss';
@@ -111,12 +111,7 @@ const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultVal
         <Form onKeyDown={handleKeyDown}>
           <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
-          <div className={s.checkboxesWrapper}>
-            <div className={s.checkboxWrapper}>
-              <Checkbox checked={justSelectedDay} className={s.checkbox} onChange={toggleJustSelectedDay} />
-            </div>
-            <div className={s.checkboxText}>{t('common.justSelectedDay')}</div>
-          </div>
+          <Checkbox2 checked={justSelectedDay} label={t('common.justSelectedDay')} onChange={toggleJustSelectedDay} wrapperClassName={s.checkboxWrapper} />
           <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />

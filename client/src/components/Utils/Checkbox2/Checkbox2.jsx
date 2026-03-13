@@ -10,7 +10,7 @@ const Checkbox2 = React.forwardRef(({ size, wrapperClassName, checkboxClassName,
   const reactId = useId();
 
   return (
-    <label className={clsx(s.wrapper, wrapperClassName)} htmlFor={reactId}>
+    <label className={clsx(s.wrapper, wrapperClassName)} htmlFor={reactId} title={label}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input id={reactId} type="checkbox" ref={ref} className={clsx(s.checkbox, s[size], checkboxClassName, isError && s.checkboxError)} {...props} />
       {label && <span className={clsx(s.label, labelClassName)}>{label}</span>}
