@@ -20,7 +20,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser, skipActions } = inputs;
 
-    const apiClient = await ApiClient.destroyOne(inputs.record.id);
+    const apiClient = await ApiClient.updateOne(inputs.record.id).set({ deletedAt: new Date().toUTCString() });
 
     if (apiClient) {
       sails.sockets.broadcast(
