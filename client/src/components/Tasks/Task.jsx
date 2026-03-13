@@ -9,7 +9,7 @@ import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import MembershipsPopup from '../MembershipsPopup';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox2, CheckboxSize } from '../Utils';
 import ActionsPopup from './ActionsPopup';
 import TaskEdit from './TaskEdit';
 
@@ -147,11 +147,10 @@ const Task = React.memo(
           const contentNode = (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={clsx(s.wrapper, gs.scrollableX, canEdit && s.contentHoverable)}>
-              <Checkbox
+              <Checkbox2
                 checked={isCompleted}
                 size={checkboxSize}
                 disabled={!isPersisted || !canEdit}
-                className={s.checkbox}
                 onChange={handleToggleChange}
                 title={isCompleted ? t('common.markAsUncompleted') : t('common.markAsCompleted')}
               />

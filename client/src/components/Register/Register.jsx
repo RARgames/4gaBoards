@@ -8,7 +8,7 @@ import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox, Loader, LoaderSize } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox2, Loader, LoaderSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Register.module.scss';
@@ -256,7 +256,7 @@ const Register = React.memo(
                       {t('common.accept')} <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink> {t('common.and')}{' '}
                       <ExternalLink href="https://4gaboards.com/privacy-policy">{t('common.privacyPolicy')}</ExternalLink>
                     </div>
-                    <Checkbox ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} isError={isCheckboxError} />
+                    <Checkbox2 ref={policyCheckbox} name="policy" checked={data.policy} readOnly={isSubmitting} onChange={handlePolicyToggleChange} isError={isCheckboxError} checkboxClassName={s.checkbox} />
                   </div>
                   <Button style={ButtonStyle.Login} type="submit" title={t('common.register')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
                     {loadingProvider === 'local' ? (
