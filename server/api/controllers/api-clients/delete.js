@@ -28,7 +28,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    let apiClient = await ApiClient.findOne({ id: inputs.id });
+    let apiClient = await ApiClient.findOne({ id: inputs.id, deletedAt: null });
     if (!apiClient) {
       throw Errors.API_CLIENT_NOT_FOUND;
     }

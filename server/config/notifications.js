@@ -13,7 +13,7 @@ async function setupNotifications() {
 
   try {
     sails.log.info(`Notifications: Connecting to notifications server: ${notificationsHostURL} and validating client configuration...`);
-    let apiClient = await ApiClient.findOne({ label: notificationsLabel });
+    let apiClient = await ApiClient.findOne({ label: notificationsLabel, deletedAt: null });
     if (!apiClient) {
       sails.log.info(`Notifications: API client not found, creating...`);
       apiClient = await sails.helpers.apiClients.createOneInternal.with({ values: { label: notificationsLabel } });
