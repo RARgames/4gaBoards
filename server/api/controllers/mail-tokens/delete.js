@@ -51,7 +51,6 @@ module.exports = {
     }
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
-
     const isOwner = mailToken.userId === currentUser.id;
 
     if (!isOwner && !isProjectManager) {

@@ -30,7 +30,7 @@ module.exports = {
 
     if (values.label && values.label === notificationsLabel) {
       let version = 1;
-      let client = await ApiClient.findOne({ label: notificationsLabel });
+      let client = await ApiClient.findOne({ label: notificationsLabel, deletedAt: null });
       if (client) {
         client = await ApiClient.destroyOne(client.id);
         version = Number(client.name) + 1;
