@@ -46,7 +46,7 @@ const ApiClientStep = React.memo(({ secret, defaultData, isSubmitting, error, is
     ...(isUpdate && { regenerateSecret: false }),
     ...defaultData,
   });
-  const permissions = useMemo(() => Object.entries(Permissions), []);
+  const permissions = useMemo(() => [...Object.entries(Permissions)].sort(([a], [b]) => a.localeCompare(b)), []);
   const permissionValues = useMemo(() => Object.values(Permissions), []);
   const isAllSelected = data.permissions === '*';
   const [regenerateSecret, setRegenerateSecret] = useState(false);
