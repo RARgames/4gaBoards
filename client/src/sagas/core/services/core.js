@@ -19,6 +19,7 @@ export function* initializeCore() {
     boardMemberships,
     labels,
     lists,
+    mailTokens,
     cards,
     comments,
     core,
@@ -30,6 +31,7 @@ export function* initializeCore() {
     activities,
     notifications,
     userPrefs,
+    apiClients,
   } = yield call(requests.fetchCore); // TODO: handle error
 
   yield call(i18n.changeLanguage, userPrefs.language);
@@ -47,6 +49,7 @@ export function* initializeCore() {
       boardMemberships,
       labels,
       lists,
+      mailTokens,
       cards,
       comments,
       core,
@@ -58,6 +61,7 @@ export function* initializeCore() {
       activities,
       notifications,
       userPrefs,
+      apiClients,
     ),
   );
 }
@@ -101,6 +105,8 @@ export function* fetchCoreSettingsPublic() {
     syncSsoAdminOnAuth,
     allowedRegisterDomains,
     demoMode,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
   } = yield call(api.getCoreSettingsPublic);
   yield put(
     actions.fetchCoreSettingsPublic(
@@ -115,6 +121,8 @@ export function* fetchCoreSettingsPublic() {
       syncSsoAdminOnAuth,
       allowedRegisterDomains,
       demoMode,
+      mailServiceAvailable,
+      mailServiceInboundEmail,
     ),
   );
 }

@@ -77,12 +77,10 @@ const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumn
       <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnVisibility')} onClick={handleResetColumnVisibilityClick} />
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} title={t('common.resetColumnWidths')} onClick={() => handleResetColumnWidths(false)} className={s.buttonWithCheckbox}>
-        <Checkbox checked={!fitScreen} size={CheckboxSize.Size14} readOnly />
-        {t('common.resetColumnWidths')}
+        <Checkbox checked={!fitScreen} label={t('common.resetColumnWidths')} size={CheckboxSize.Size14} readOnly checkboxClassName={s.checkbox} labelClassName={s.label} />
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.resetColumnWidthsFitScreen')} onClick={() => handleResetColumnWidths(true)} className={s.buttonWithCheckbox}>
-        <Checkbox checked={fitScreen} size={CheckboxSize.Size14} readOnly />
-        {t('common.resetColumnWidthsFitScreen')}
+        <Checkbox checked={fitScreen} label={t('common.resetColumnWidthsFitScreen')} size={CheckboxSize.Size14} readOnly checkboxClassName={s.checkbox} labelClassName={s.label} />
       </Button>
       <Popup.Separator />
       <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnSorting')} onClick={handleResetColumnSorting} />

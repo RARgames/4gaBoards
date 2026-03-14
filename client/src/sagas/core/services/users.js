@@ -180,6 +180,11 @@ export function* updateCurrentUserAvatar(data) {
   yield call(updateUserAvatar, id, data);
 }
 
+export function* clearCurrentUserApiClientError() {
+  const id = yield select(selectors.selectCurrentUserId);
+  yield put(actions.clearUserApiClientError(id));
+}
+
 export function* deleteUser(id) {
   yield put(actions.deleteUser(id));
 
@@ -347,6 +352,7 @@ export default {
   clearCurrentUserUsernameUpdateError,
   updateUserAvatar,
   updateCurrentUserAvatar,
+  clearCurrentUserApiClientError,
   deleteUser,
   handleUserDelete,
   addUserToCard,

@@ -179,6 +179,13 @@ updateUserAvatar.failure = (id, error) => ({
   },
 });
 
+const clearUserApiClientError = (id) => ({
+  type: ActionTypes.USER_API_CLIENT_ERROR_CLEAR,
+  payload: {
+    id,
+  },
+});
+
 const deleteUser = (id) => ({
   type: ActionTypes.USER_DELETE,
   payload: {
@@ -380,6 +387,7 @@ export default {
   updateUserUsername,
   clearUserUsernameUpdateError,
   updateUserAvatar,
+  clearUserApiClientError,
   deleteUser,
   handleUserDelete,
   addUserToCard,

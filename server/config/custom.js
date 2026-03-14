@@ -58,6 +58,8 @@ module.exports.custom = {
     .filter((s) => s.length > 0)
     .filter((s) => s && process.env[`OIDC_DISABLE_HINT_${s.toUpperCase()}`] !== 'true'),
 
+  mailServiceAvailable: false,
+  mailServiceInboundEmail: process.env.MAIL_SERVICE_INBOUND_EMAIL,
   demoMode: process.env.DEMO_MODE === 'true',
   metricsEnabled: process.env.METRICS_ENABLED === 'true',
 

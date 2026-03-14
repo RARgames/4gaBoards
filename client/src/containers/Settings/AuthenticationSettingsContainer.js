@@ -6,11 +6,16 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { isPasswordAuthenticated, passwordUpdateForm } = selectors.selectCurrentUser(state);
+  const { isPasswordAuthenticated, passwordUpdateForm, apiClientForm } = selectors.selectCurrentUser(state);
+  const apiClients = selectors.selectApiClientsForCurrentUser(state);
+  const apiClientCount = selectors.selectApiClientCountForCurrentUser(state);
 
   return {
     isPasswordAuthenticated,
     passwordUpdateForm,
+    apiClientForm,
+    apiClients,
+    apiClientCount,
   };
 };
 
@@ -19,6 +24,10 @@ const mapDispatchToProps = (dispatch) =>
     {
       onPasswordUpdate: entryActions.updateCurrentUserPassword,
       onPasswordUpdateMessageDismiss: entryActions.clearCurrentUserPasswordUpdateError,
+      onApiClientMessageDismiss: entryActions.clearCurrentUserApiClientError,
+      onApiClientCreate: entryActions.createApiClient,
+      onApiClientUpdate: entryActions.updateApiClient,
+      onApiClientDelete: entryActions.deleteApiClient,
     },
     dispatch,
   );

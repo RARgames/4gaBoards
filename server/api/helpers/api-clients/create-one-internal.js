@@ -1,0 +1,53 @@
+const crypto = require('crypto');
+
+const valuesValidator = (value) => {
+  if (!_.isPlainObject(value)) {
+    return false;
+  }
+
+  return true;
+};
+
+const notificationsLabel = 'internal:4gaBoardsNotifications';
+
+module.exports = {
+  inputs: {
+    values: {
+      type: 'ref',
+      custom: valuesValidator,
+      required: true,
+    },
+    request: {
+      type: 'ref',
+    },
+  },
+
+  async fn(inputs) {
+    const { values } = inputs;
+
+    const clientId = crypto.randomBytes(16).toString('hex');
+    const clientSecret = crypto.randomBytes(32).toString('hex');
+
+    if (values.label && values.label === notificationsLabel) {
+      let version = 1;
+      let client = await ApiClient.findOne({ label: notificationsLabel, deletedAt: null });
+      if (client) {
+        client = await ApiClient.destroyOne(client.id);
+        version = Number(client.name) + 1;
+      }
+
+      const apiClient = await ApiClient.create({
+        clientId,
+        clientSecret,
+        permissions: ['mail-tokens.get-list-id', 'cards.create', 'tasks.create', 'attachments.create', 'card-labels.create', 'card-memberships.create'],
+        label: notificationsLabel,
+        name: version.toString(),
+      }).fetch();
+
+      apiClient.clientSecret = clientSecret;
+      return apiClient;
+    }
+
+    return null;
+  },
+};

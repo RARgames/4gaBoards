@@ -11,6 +11,7 @@ const initializeCore = (
   boardMemberships,
   labels,
   lists,
+  mailTokens,
   cards,
   comments,
   core,
@@ -22,6 +23,7 @@ const initializeCore = (
   activities,
   notifications,
   userPrefs,
+  apiClients,
 ) => ({
   type: ActionTypes.CORE_INITIALIZE,
   payload: {
@@ -35,6 +37,7 @@ const initializeCore = (
     boardMemberships,
     labels,
     lists,
+    mailTokens,
     cards,
     comments,
     core,
@@ -46,6 +49,7 @@ const initializeCore = (
     activities,
     notifications,
     userPrefs,
+    apiClients,
   },
 });
 

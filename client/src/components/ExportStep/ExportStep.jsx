@@ -19,8 +19,8 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
 
   const [skipAttachments, toggleSkipAttachments] = useToggle(false);
   const [skipUserAvatars, toggleSkipUserAvatars] = useToggle(false);
-  const [skipProjectBackgrounds, toggleSKipProjectBackgrounds] = useToggle(false);
-  const [skipMetadata, toggleSkipMetafata] = useToggle(false);
+  const [skipProjectBackgrounds, toggleSkipProjectBackgrounds] = useToggle(false);
+  const [skipMetadata, toggleSkipMetadata] = useToggle(false);
   const [skipActions, toggleSkipActions] = useToggle(true);
   const [step, openStep, handleBack] = useSteps();
 
@@ -60,36 +60,11 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
       <Popup.Content>
         <Form onKeyDown={handleFormKeyDown}>
           <div className={s.wrapper}>
-            <div>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={skipAttachments} className={s.checkbox} onChange={toggleSkipAttachments} />
-              </div>
-              <div className={s.checkboxText}>{t('common.exportSkipAttachments')}</div>
-            </div>
-            <div>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={skipUserAvatars} className={s.checkbox} onChange={toggleSkipUserAvatars} />
-              </div>
-              <div className={s.checkboxText}>{t('common.exportSkipUserAvatars')}</div>
-            </div>
-            <div>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={skipProjectBackgrounds} className={s.checkbox} onChange={toggleSKipProjectBackgrounds} />
-              </div>
-              <div className={s.checkboxText}>{t('common.exportSkipProjectBackgrounds')}</div>
-            </div>
-            <div>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={skipMetadata} className={s.checkbox} onChange={toggleSkipMetafata} />
-              </div>
-              <div className={s.checkboxText}>{t('common.exportSkipMetadata')}</div>
-            </div>
-            <div>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={skipActions} className={s.checkbox} onChange={toggleSkipActions} />
-              </div>
-              <div className={s.checkboxText}>{t('common.exportSkipActions')}</div>
-            </div>
+            <Checkbox checked={skipAttachments} label={t('common.exportSkipAttachments')} onChange={toggleSkipAttachments} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipUserAvatars} label={t('common.exportSkipUserAvatars')} onChange={toggleSkipUserAvatars} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipProjectBackgrounds} label={t('common.exportSkipProjectBackgrounds')} onChange={toggleSkipProjectBackgrounds} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipMetadata} label={t('common.exportSkipMetadata')} onChange={toggleSkipMetadata} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipActions} label={t('common.exportSkipActions')} onChange={toggleSkipActions} wrapperClassName={s.checkboxWrapper} />
           </div>
           <div className={gs.controls}>
             <Button style={ButtonStyle.Submit} content={t('common.exportBoard', { context: 'title' })} className={s.submitButton} onClick={handleSubmit} />

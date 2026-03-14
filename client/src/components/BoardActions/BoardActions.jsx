@@ -35,6 +35,10 @@ const BoardActions = React.memo(
     boardSearchParams,
     boardMembershipId,
     isSubscribed,
+    mailTokens,
+    mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     viewMode,
     onViewModeChange,
     onMembershipCreate,
@@ -52,6 +56,9 @@ const BoardActions = React.memo(
     onBoardExport,
     onBoardSearchParamsUpdate,
     onActivitiesFetch,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
   }) => {
     const [t] = useTranslation();
 
@@ -154,10 +161,18 @@ const BoardActions = React.memo(
             updatedBy={board.updatedBy}
             memberships={board.memberships}
             isProjectManager={isProjectManager}
+            canEdit={canEdit}
+            mailTokens={mailTokens}
+            mailTokenCount={mailTokenCount}
+            mailServiceAvailable={mailServiceAvailable}
+            mailServiceInboundEmail={mailServiceInboundEmail}
             onUpdate={(data) => onBoardUpdate(board.id, data)}
             onExport={(data) => onBoardExport(board.id, data)}
             onDelete={() => onBoardDelete(board.id)}
             onActivitiesFetch={onActivitiesFetch}
+            onMailTokenCreate={onMailTokenCreate}
+            onMailTokenUpdate={onMailTokenUpdate}
+            onMailTokenDelete={onMailTokenDelete}
             position="right-start"
             offset={10}
             hideCloseButton
@@ -196,6 +211,10 @@ BoardActions.propTypes = {
   boardSearchParams: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMembershipId: PropTypes.string.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   viewMode: PropTypes.string.isRequired,
   onViewModeChange: PropTypes.func.isRequired,
   onMembershipCreate: PropTypes.func.isRequired,
@@ -213,6 +232,9 @@ BoardActions.propTypes = {
   onBoardExport: PropTypes.func.isRequired,
   onBoardSearchParamsUpdate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
 };
 
 export default BoardActions;

@@ -3,7 +3,7 @@ const sails = require('sails');
 const rc = require('sails/accessible/rc');
 
 process.chdir(__dirname);
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const config = rc('sails');
 

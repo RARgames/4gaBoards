@@ -151,7 +151,6 @@ const Task = React.memo(
                 checked={isCompleted}
                 size={checkboxSize}
                 disabled={!isPersisted || !canEdit}
-                className={s.checkbox}
                 onChange={handleToggleChange}
                 title={isCompleted ? t('common.markAsUncompleted') : t('common.markAsCompleted')}
               />

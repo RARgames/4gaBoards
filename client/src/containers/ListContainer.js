@@ -20,10 +20,13 @@ const makeMapStateToProps = () => {
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
+    const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const activities = selectors.selectListActivitiesById(state, id);
-
-    const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+    const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
+    const mailTokens = selectors.selectMailTokensByListId(state, id);
+    const mailTokenCount = selectors.selectMailTokenCountByListId(state, id);
+    const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
 
     return {
       id,
@@ -46,6 +49,11 @@ const makeMapStateToProps = () => {
       isActivitiesFetching,
       isAllActivitiesFetched,
       lastActivityId,
+      isManager,
+      mailTokens,
+      mailTokenCount,
+      mailServiceAvailable,
+      mailServiceInboundEmail,
     };
   };
 };
@@ -57,6 +65,9 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onDelete: () => entryActions.deleteList(id),
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
       onActivitiesFetch: () => entryActions.fetchListActivities(id),
+      onMailTokenCreate: () => entryActions.createMailToken({ listId: id }),
+      onMailTokenUpdate: (mailTokenId) => entryActions.updateMailToken(mailTokenId, { listId: id }),
+      onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
     },
     dispatch,
   );

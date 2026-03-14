@@ -149,7 +149,7 @@ jobs:
 
       - name: Set release date
         id: release_date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%Y_%m_%d')" >> $GITHUB_OUTPUT
 
       - name: Release
         if: steps.increment_version.outputs.beta == 'false'

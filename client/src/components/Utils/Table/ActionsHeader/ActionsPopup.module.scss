@@ -3,5 +3,23 @@
     display: inline-flex;
     gap: 4px;
     align-items: center;
+
+    &:hover {
+      .label {
+        color: var(--text0);
+      }
+
+      .checkbox {
+        background: none;
+      }
+    }
+  }
+
+  .checkbox {
+    background: none;
+  }
+
+  .label {
+    color: var(--text1);
   }
 }

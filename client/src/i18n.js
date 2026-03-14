@@ -43,18 +43,9 @@ const formatDatePostProcessor = {
   },
 };
 
-const parseDatePostProcessor = {
-  type: 'postProcessor',
-  name: 'parseDate',
-  process(value, _, options) {
-    return i18n.dateFns.parse(options.value, value, new Date());
-  },
-};
-
 i18n
   .use(LanguageDetector)
   .use(formatDatePostProcessor)
-  .use(parseDatePostProcessor)
   .use(initReactI18next)
   .init({
     resources: embeddedLocales,
@@ -63,15 +54,6 @@ i18n
     load: 'currentOnly',
     interpolation: {
       escapeValue: false,
-      format(value, format, language) {
-        if (value instanceof Date) {
-          return i18n.dateFns.format(value, format, {
-            language,
-          });
-        }
-
-        return value;
-      },
     },
     react: {
       useSuspense: true,

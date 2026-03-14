@@ -216,16 +216,14 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
           )}
           {data.import && data.import.type === '4gaBoards' && (
             <div className={s.checkboxesWrapper}>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={importProjectManagers} className={s.checkbox} onChange={toggleImportProjectManagers} />
-              </div>
-              <div className={s.checkboxText}>{t('common.importProjectManagers')}</div>
-              <div className={s.checkboxWrapper}>
-                <Checkbox checked={importNonExistingUsers} disabled={!isAdmin} className={s.checkbox} onChange={toggleImportNonExistingUsers} />
-              </div>
-              <div className={s.checkboxText}>
-                {t('common.importNonExistingUsers')} {!isAdmin && t('common.requiresAdminRights')}
-              </div>
+              <Checkbox checked={importProjectManagers} label={t('common.importProjectManagers')} onChange={toggleImportProjectManagers} wrapperClassName={s.checkboxWrapper} />
+              <Checkbox
+                checked={importNonExistingUsers}
+                disabled={!isAdmin}
+                label={`${t('common.importNonExistingUsers')}${!isAdmin ? ` ${t('common.requiresAdminRights')}` : ''}`}
+                onChange={toggleImportNonExistingUsers}
+                wrapperClassName={s.checkboxWrapper}
+              />
             </div>
           )}
           <div className={gs.controlsSpaceBetween}>

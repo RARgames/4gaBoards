@@ -1,5 +1,6 @@
 import accessTokens from './access-tokens';
 import activities from './activities';
+import apiClients from './api-clients';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
@@ -11,6 +12,7 @@ import core from './core';
 import http from './http';
 import labels from './labels';
 import lists from './lists';
+import mailTokens from './mail-tokens';
 import notifications from './notifications';
 import projectManagers from './project-managers';
 import projectMemberships from './project-memberships';
@@ -27,6 +29,7 @@ export { http, socket };
 export default {
   ...accessTokens,
   ...activities,
+  ...apiClients,
   ...attachments,
   ...boardMemberships,
   ...boards,
@@ -37,6 +40,7 @@ export default {
   ...core,
   ...labels,
   ...lists,
+  ...mailTokens,
   ...notifications,
   ...projectManagers,
   ...projectMemberships,

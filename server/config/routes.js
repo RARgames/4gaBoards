@@ -21,6 +21,11 @@ module.exports.routes = {
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
 
+  'GET /api/api-clients': 'api-clients/index',
+  'POST /api/api-clients': 'api-clients/create',
+  'PATCH /api/api-clients/:id': 'api-clients/update',
+  'DELETE /api/api-clients/:id': 'api-clients/delete',
+
   'POST /api/register': 'register/create',
 
   'GET /api/core-settings-public': 'core/show',
@@ -81,6 +86,17 @@ module.exports.routes = {
   'DELETE /api/cards/:cardId/memberships': 'card-memberships/delete',
   'POST /api/cards/:cardId/labels': 'card-labels/create',
   'DELETE /api/cards/:cardId/labels/:labelId': 'card-labels/delete',
+
+  'GET /api/mailTokens/:token/lists': 'mail-tokens/get-list-id',
+  'POST /api/mailTokens': 'mail-tokens/create',
+  'PATCH /api/mailTokens/:id': 'mail-tokens/update',
+  'DELETE /api/mailTokens/:id': 'mail-tokens/delete',
+
+  'POST /api/api-clients/lists/:mailTokenId/cards': 'api-clients/create-card',
+  'POST /api/api-clients/cards/:cardId/labels': 'api-clients/add-label',
+  'POST /api/api-clients/cards/:cardId/memberships': 'api-clients/add-membership',
+  'POST /api/api-clients/cards/:cardId/tasks': 'api-clients/add-task',
+  'POST /api/api-clients/cards/:cardId/attachments': 'api-clients/add-attachment',
 
   'POST /api/cards/:cardId/tasks': 'tasks/create',
   'PATCH /api/tasks/:id': 'tasks/update',

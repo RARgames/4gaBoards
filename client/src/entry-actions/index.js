@@ -1,4 +1,5 @@
 import activities from './activities';
+import apiClients from './api-clients';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
@@ -8,6 +9,7 @@ import core from './core';
 import labels from './labels';
 import lists from './lists';
 import login from './login';
+import mailTokens from './mail-tokens';
 import modals from './modals';
 import notifications from './notifications';
 import projectManagers from './project-managers';
@@ -20,6 +22,7 @@ import users from './users';
 
 export default {
   ...activities,
+  ...apiClients,
   ...attachments,
   ...boardMemberships,
   ...boards,
@@ -29,6 +32,7 @@ export default {
   ...labels,
   ...lists,
   ...login,
+  ...mailTokens,
   ...modals,
   ...notifications,
   ...projectManagers,

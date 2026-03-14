@@ -31,6 +31,15 @@ const DEFAULT_USERNAME_UPDATE_FORM = {
   error: null,
 };
 
+const DEFAULT_API_CLIENT_FORM = {
+  data: {
+    name: '',
+    permissions: [],
+  },
+  isSubmitting: false,
+  error: null,
+};
+
 export default class extends BaseModel {
   static modelName = 'User';
 
@@ -63,6 +72,9 @@ export default class extends BaseModel {
     }),
     usernameUpdateForm: attr({
       getDefault: () => DEFAULT_USERNAME_UPDATE_FORM,
+    }),
+    apiClientForm: attr({
+      getDefault: () => DEFAULT_API_CLIENT_FORM,
     }),
     filter: attr(), // TODO move to userPrefs?
     notificationFilter: attr({
@@ -314,6 +326,84 @@ export default class extends BaseModel {
         });
 
         break;
+      case ActionTypes.API_CLIENT_CREATE: {
+        const userModel = User.withId(payload.userId);
+
+        userModel.update({
+          apiClientForm: {
+            ...userModel.apiClientForm,
+            data: payload.data,
+            isSubmitting: true,
+          },
+        });
+
+        break;
+      }
+      case ActionTypes.API_CLIENT_CREATE__SUCCESS: {
+        User.withId(payload.apiClient.userId).update({
+          apiClientForm: DEFAULT_API_CLIENT_FORM,
+        });
+
+        break;
+      }
+      case ActionTypes.API_CLIENT_CREATE__FAILURE: {
+        const userModel = User.withId(payload.userId);
+
+        userModel.update({
+          apiClientForm: {
+            ...userModel.apiClientForm,
+            isSubmitting: false,
+            error: payload.error,
+          },
+        });
+
+        break;
+      }
+      case ActionTypes.API_CLIENT_UPDATE: {
+        const userModel = User.withId(payload.userId);
+
+        userModel.update({
+          apiClientForm: {
+            ...userModel.apiClientForm,
+            data: payload.data,
+            isSubmitting: true,
+          },
+        });
+
+        break;
+      }
+      case ActionTypes.API_CLIENT_UPDATE__SUCCESS: {
+        User.withId(payload.apiClient.userId).update({
+          apiClientForm: DEFAULT_API_CLIENT_FORM,
+        });
+
+        break;
+      }
+      case ActionTypes.API_CLIENT_UPDATE__FAILURE: {
+        const userModel = User.withId(payload.userId);
+
+        userModel.update({
+          apiClientForm: {
+            ...userModel.apiClientForm,
+            isSubmitting: false,
+            error: payload.error,
+          },
+        });
+
+        break;
+      }
+      case ActionTypes.USER_API_CLIENT_ERROR_CLEAR: {
+        const userModel = User.withId(payload.id);
+
+        userModel.update({
+          apiClientForm: {
+            ...userModel.apiClientForm,
+            error: null,
+          },
+        });
+
+        break;
+      }
       case ActionTypes.USER_DELETE:
         User.withId(payload.id).update({
           deletedAt: new Date(),
@@ -475,6 +565,10 @@ export default class extends BaseModel {
       });
 
     return projectModels.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+  }
+
+  getOrderedApiClientsQuerySet() {
+    return this.apiClients.orderBy('id');
   }
 
   deleteRelated() {

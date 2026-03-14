@@ -39,6 +39,8 @@ const Sidebar = React.memo(
     sidebarCompact,
     instanceNotificationCount,
     usersNotificationCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -46,10 +48,14 @@ const Sidebar = React.memo(
     onBoardMove,
     onBoardDelete,
     onBoardExport,
+    onBoardFetch,
     onChangeFilterQuery,
     onProjectMembershipUpdate,
     onActivitiesProjectFetch,
     onActivitiesBoardFetch,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
@@ -209,11 +215,21 @@ const Sidebar = React.memo(
                                   updatedAt={board.updatedAt}
                                   updatedBy={board.updatedBy}
                                   memberships={board.memberships}
+                                  mailTokens={board.mailTokens}
+                                  mailTokenCount={board.mailTokenCount}
+                                  mailServiceAvailable={mailServiceAvailable}
+                                  mailServiceInboundEmail={mailServiceInboundEmail}
                                   isProjectManager={isProjectManager}
+                                  canEdit={board.canEdit}
+                                  isFetching={board.isFetching}
                                   onUpdate={(data) => onBoardUpdate(board.id, data)}
                                   onExport={(data) => onBoardExport(board.id, data)}
+                                  onFetch={() => onBoardFetch(board.id)}
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
+                                  onMailTokenCreate={onMailTokenCreate}
+                                  onMailTokenUpdate={onMailTokenUpdate}
+                                  onMailTokenDelete={onMailTokenDelete}
                                   position="right-start"
                                   offset={10}
                                   hideCloseButton
@@ -377,6 +393,8 @@ Sidebar.propTypes = {
   sidebarCompact: PropTypes.bool.isRequired,
   instanceNotificationCount: PropTypes.number.isRequired,
   usersNotificationCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -384,10 +402,14 @@ Sidebar.propTypes = {
   onBoardMove: PropTypes.func.isRequired,
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,
+  onBoardFetch: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
   onProjectMembershipUpdate: PropTypes.func.isRequired,
   onActivitiesProjectFetch: PropTypes.func.isRequired,
   onActivitiesBoardFetch: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {

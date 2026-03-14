@@ -53,6 +53,16 @@ module.exports = {
     const userIds = sails.helpers.utils.mapRecords(projectManagers, 'userId');
     const users = await sails.helpers.users.getMany(userIds);
 
+    const listsPerBoard = await Promise.all(boardIds.map((boardId) => sails.helpers.boards.getLists(boardId)));
+    const listIds = listsPerBoard.flatMap((lists) => sails.helpers.utils.mapRecords(lists));
+
+    const mailTokensBoard = await sails.helpers.mailTokens.getMany({ boardId: boardIds, ...(!isProjectManager && { userId: currentUser.id }) });
+    const mailTokensLists = await sails.helpers.mailTokens.getMany({ listId: listIds, ...(!isProjectManager && { userId: currentUser.id }) });
+    const mailTokens = [...mailTokensBoard, ...mailTokensLists].map((mailToken) => ({
+      ...mailToken,
+      projectId: project.id,
+    }));
+
     return {
       item: project,
       included: {
@@ -60,6 +70,7 @@ module.exports = {
         projectManagers,
         boards,
         boardMemberships,
+        mailTokens,
       },
     };
   },
