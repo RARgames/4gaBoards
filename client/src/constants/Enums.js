@@ -219,6 +219,7 @@ export const Permissions = {
   CARD_LABEL_CREATE: 'card-labels.create',
   CARD_LABEL_DELETE: 'card-labels.delete',
 
+  MAIL_TOKEN_LIST_ID: 'mail-tokens.get-list-id',
   MAIL_TOKEN_CREATE: 'mail-tokens.create',
   MAIL_TOKEN_UPDATE: 'mail-tokens.update',
   MAIL_TOKEN_DELETE: 'mail-tokens.delete',
