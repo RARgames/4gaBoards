@@ -148,7 +148,7 @@ const AuthenticationSettings = React.memo(
                           </span>
                         )}
                         <span className={s.dataWrapper}>
-                          {t('common.permissions')}: <span className={s.dataPermissions}>{apiClient.permissions === '*' ? t('common.all') : apiClient.permissions.join(', ')}</span>
+                          {t('common.permissions')}: <span className={s.dataPermissions}>{apiClient.permissions.includes('*') ? t('common.all') : apiClient.permissions.join(', ')}</span>
                         </span>
                       </div>
                     </div>

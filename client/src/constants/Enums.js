@@ -156,12 +156,12 @@ export const NotificationsAggregationScopes = {
 };
 
 export const Permissions = {
-  API_CLIENT_LIST: 'api-clients.index',
-  API_CLIENT_CREATE: 'api-clients.create',
-  API_CLIENT_UPDATE: 'api-clients.update',
-  API_CLIENT_DELETE: 'api-clients.delete',
+  APICLIENT_LIST: 'api-clients.index',
+  APICLIENT_CREATE: 'api-clients.create',
+  APICLIENT_UPDATE: 'api-clients.update',
+  APICLIENT_DELETE: 'api-clients.delete',
 
-  CORE_SETTINGS_UPDATE: 'core.update',
+  CORESETTINGS_UPDATE: 'core.update',
 
   USER_LIST: 'users.index',
   USER_CREATE: 'users.create',
@@ -173,8 +173,8 @@ export const Permissions = {
   USER_UPDATE_AVATAR: 'users.update-avatar',
   USER_DELETE: 'users.delete',
 
-  USER_PREFS_DETAILS: 'user-prefs.show',
-  USER_PREFS_UPDATE: 'user-prefs.update',
+  USERPREFS_DETAILS: 'user-prefs.show',
+  USERPREFS_UPDATE: 'user-prefs.update',
 
   PROJECT_LIST: 'projects.index',
   PROJECT_CREATE: 'projects.create',
@@ -184,12 +184,12 @@ export const Permissions = {
   PROJECT_DELETE: 'projects.delete',
   PROJECT_IMPORT_GETTING_STARTED: 'projects.import-getting-started',
 
-  PROJECT_MANAGER_CREATE: 'project-managers.create',
-  PROJECT_MANAGER_DELETE: 'project-managers.delete',
+  PROJECTMANAGER_CREATE: 'project-managers.create',
+  PROJECTMANAGER_DELETE: 'project-managers.delete',
 
-  PROJECT_MEMBERSHIP_LIST: 'project-memberships.index',
-  PROJECT_MEMBERSHIP_DETAILS: 'project-memberships.show',
-  PROJECT_MEMBERSHIP_UPDATE: 'project-memberships.update',
+  PROJECTMEMBERSHIP_LIST: 'project-memberships.index',
+  PROJECTMEMBERSHIP_DETAILS: 'project-memberships.show',
+  PROJECTMEMBERSHIP_UPDATE: 'project-memberships.update',
 
   BOARD_CREATE: 'boards.create',
   BOARD_DETAILS: 'boards.show',
@@ -197,9 +197,9 @@ export const Permissions = {
   BOARD_DELETE: 'boards.delete',
   BOARD_EXPORT: 'boards.export',
 
-  BOARD_MEMBERSHIP_CREATE: 'board-memberships.create',
-  BOARD_MEMBERSHIP_UPDATE: 'board-memberships.update',
-  BOARD_MEMBERSHIP_DELETE: 'board-memberships.delete',
+  BOARDMEMBERSHIP_CREATE: 'board-memberships.create',
+  BOARDMEMBERSHIP_UPDATE: 'board-memberships.update',
+  BOARDMEMBERSHIP_DELETE: 'board-memberships.delete',
 
   LABEL_CREATE: 'labels.create',
   LABEL_UPDATE: 'labels.update',
@@ -214,22 +214,25 @@ export const Permissions = {
   CARD_UPDATE: 'cards.update',
   CARD_DUPLICATE: 'cards.duplicate',
   CARD_DELETE: 'cards.delete',
-  CARD_MEMBERSHIP_CREATE: 'card-memberships.create',
-  CARD_MEMBERSHIP_DELETE: 'card-memberships.delete',
-  CARD_LABEL_CREATE: 'card-labels.create',
-  CARD_LABEL_DELETE: 'card-labels.delete',
 
-  MAIL_TOKEN_LIST_ID: 'mail-tokens.get-list-id',
-  MAIL_TOKEN_CREATE: 'mail-tokens.create',
-  MAIL_TOKEN_UPDATE: 'mail-tokens.update',
-  MAIL_TOKEN_DELETE: 'mail-tokens.delete',
+  CARDMEMBERSHIP_CREATE: 'card-memberships.create',
+  CARDMEMBERSHIP_DELETE: 'card-memberships.delete',
+
+  CARDLABEL_CREATE: 'card-labels.create',
+  CARDLABEL_DELETE: 'card-labels.delete',
+
+  MAILTOKEN_LIST_ID: 'mail-tokens.get-list-id',
+  MAILTOKEN_CREATE: 'mail-tokens.create',
+  MAILTOKEN_UPDATE: 'mail-tokens.update',
+  MAILTOKEN_DELETE: 'mail-tokens.delete',
 
   TASK_CREATE: 'tasks.create',
   TASK_UPDATE: 'tasks.update',
   TASK_DUPLICATE: 'tasks.duplicate',
   TASK_DELETE: 'tasks.delete',
-  TASK_MEMBERSHIP_CREATE: 'task-memberships.create',
-  TASK_MEMBERSHIP_DELETE: 'task-memberships.delete',
+
+  TASKMEMBERSHIP_CREATE: 'task-memberships.create',
+  TASKMEMBERSHIP_DELETE: 'task-memberships.delete',
 
   ATTACHMENT_CREATE: 'attachments.create',
   ATTACHMENT_UPDATE: 'attachments.update',
