@@ -46,10 +46,57 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
     ...(isUpdate && { regenerateSecret: false }),
     ...defaultData,
   });
-  const permissions = useMemo(() => [...Object.entries(Permissions)].sort(([a], [b]) => a.localeCompare(b)), []);
   const permissionValues = useMemo(() => Object.values(Permissions), []);
-  const isAllSelected = data.permissions === '*';
+  const groupedPermissions = useMemo(() => {
+    const groups = {};
+    Object.entries(Permissions).forEach(([key, value]) => {
+      const group = value.split('.')[0];
+      if (!groups[group]) groups[group] = [];
+      groups[group].push({
+        key,
+        value,
+      });
+    });
+
+    Object.values(groups).forEach((perms) => {
+      perms.sort((a, b) => a.key.localeCompare(b.key));
+    });
+    return Object.fromEntries(Object.entries(groups).sort(([a], [b]) => a.localeCompare(b)));
+  }, []);
+  const isAllSelected = data.permissions.includes('*');
   const [regenerateSecret, setRegenerateSecret] = useState(false);
+
+  const normalizePermissions = useCallback(
+    (perms) => {
+      const expanded = new Set();
+
+      perms.forEach((perm) => {
+        if (perm === '*') {
+          permissionValues.forEach((p) => expanded.add(p));
+        } else if (perm.endsWith('.*')) {
+          const group = perm.split('.')[0];
+          groupedPermissions[group].forEach((p) => expanded.add(p.value));
+        } else {
+          expanded.add(perm);
+        }
+      });
+
+      if (permissionValues.every((p) => expanded.has(p))) {
+        return ['*'];
+      }
+
+      const result = new Set(expanded);
+      Object.entries(groupedPermissions).forEach(([group, gPerms]) => {
+        const values = gPerms.map((p) => p.value);
+        if (values.every((p) => expanded.has(p))) {
+          values.forEach((p) => result.delete(p));
+          result.add(`${group}.*`);
+        }
+      });
+      return [...result];
+    },
+    [permissionValues, groupedPermissions],
+  );
 
   const handleSubmit = useCallback(() => {
     onSubmit(data);
@@ -57,9 +104,28 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
 
   const selectedPermissions = useMemo(() => {
     if (isAllSelected) return permissionValues;
-    if (Array.isArray(data.permissions)) return data.permissions;
-    return [];
-  }, [data.permissions, isAllSelected, permissionValues]);
+
+    const expanded = [];
+    data.permissions.forEach((perm) => {
+      if (perm.endsWith('.*')) {
+        const group = perm.split('.')[0];
+        groupedPermissions[group]?.forEach((p) => expanded.push(p.value));
+      } else {
+        expanded.push(perm);
+      }
+    });
+    return expanded;
+  }, [isAllSelected, permissionValues, data.permissions, groupedPermissions]);
+
+  const isGroupSelected = useCallback(
+    (group) => {
+      if (isAllSelected) return true;
+      if (data.permissions.includes(`${group}.*`)) return true;
+      const perms = groupedPermissions[group].map((p) => p.value);
+      return perms.every((p) => selectedPermissions.includes(p));
+    },
+    [isAllSelected, data.permissions, selectedPermissions, groupedPermissions],
+  );
 
   const handleAllPermissionsChange = useCallback(
     (event) => {
@@ -67,7 +133,7 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
 
       setData((prev) => ({
         ...prev,
-        permissions: checked ? '*' : [],
+        permissions: checked ? ['*'] : [],
       }));
     },
     [setData],
@@ -78,20 +144,43 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
       const { checked } = event.target;
 
       setData((prev) => {
-        const allPermissions = permissionValues;
-
-        // eslint-disable-next-line no-nested-ternary
-        const prevSelected = prev.permissions === '*' ? allPermissions : Array.isArray(prev.permissions) ? prev.permissions : [];
-
-        const nextSelected = checked ? [...new Set([...prevSelected, permission])] : prevSelected.filter((p) => p !== permission);
+        const expanded = new Set(selectedPermissions);
+        if (checked) {
+          expanded.add(permission);
+        } else {
+          expanded.delete(permission);
+        }
 
         return {
           ...prev,
-          permissions: nextSelected.length === allPermissions.length ? '*' : nextSelected,
+          permissions: normalizePermissions([...expanded]),
         };
       });
     },
-    [setData, permissionValues],
+    [setData, selectedPermissions, normalizePermissions],
+  );
+
+  const handleGroupPermissionChange = useCallback(
+    (group) => (event) => {
+      const { checked } = event.target;
+
+      const groupPerms = groupedPermissions[group].map((p) => p.value);
+
+      setData((prev) => {
+        const expanded = new Set(selectedPermissions);
+        if (checked) {
+          groupPerms.forEach((p) => expanded.add(p));
+        } else {
+          groupPerms.forEach((p) => expanded.delete(p));
+        }
+
+        return {
+          ...prev,
+          permissions: normalizePermissions([...expanded]),
+        };
+      });
+    },
+    [setData, groupedPermissions, selectedPermissions, normalizePermissions],
   );
 
   const handleRegenerateSecretChange = useCallback(
@@ -144,14 +233,23 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
           <div className={s.text}>{t('common.permissions')}</div>
           <div className={clsx(s.permissions, gs.scrollableY)}>
             <Checkbox checked={isAllSelected} label={t('common.all').toLowerCase()} size={CheckboxSize.Size14} onChange={handleAllPermissionsChange} />
-            {permissions.map(([permissionKey, permissionValue]) => (
-              <Checkbox
-                key={permissionValue}
-                checked={isAllSelected || selectedPermissions.includes(permissionValue)}
-                label={permissionKey.toLowerCase()}
-                size={CheckboxSize.Size14}
-                onChange={handlePermissionChange(permissionValue)}
-              />
+            {Object.entries(groupedPermissions).map(([group, perms]) => (
+              <div key={group} className={s.permissionGroup}>
+                <Checkbox checked={isGroupSelected(group)} label={group.replaceAll('-', ' ')} size={CheckboxSize.Size14} onChange={handleGroupPermissionChange(group)} />
+                {perms.map(({ key, value }) => (
+                  <Checkbox
+                    key={value}
+                    checked={selectedPermissions.includes(value)}
+                    label={key
+                      .substring(key.indexOf('_') + 1)
+                      .replaceAll('_', ' ')
+                      .toLowerCase()}
+                    size={CheckboxSize.Size14}
+                    onChange={handlePermissionChange(value)}
+                    wrapperClassName={s.permission}
+                  />
+                ))}
+              </div>
             ))}
           </div>
           <div className={gs.controls}>

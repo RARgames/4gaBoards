@@ -1552,7 +1552,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
         const { name, permissions } = activity.data;
         let nameTruncated = truncateIf(name, isTruncated, defaultTruncateLength);
         nameTruncated = nameTruncated || t('common.unnamed');
-        const permissionsList = permissions === '*' ? t('common.all') : permissions.join(', ');
+        const permissionsList = permissions.includes('*') ? t('common.all') : permissions.join(', ');
 
         return (
           <Trans
@@ -1574,7 +1574,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
         nameTruncated = nameTruncated || t('common.unnamed');
         let prevNameTruncated = truncateIf(prevName, isTruncated, defaultTruncateLength);
         prevNameTruncated = prevNameTruncated || t('common.unnamed');
-        const permissionsList = permissions === '*' ? t('common.all') : permissions.join(', ');
+        const permissionsList = permissions.includes('*') ? t('common.all') : permissions.join(', ');
 
         return (
           <Trans
