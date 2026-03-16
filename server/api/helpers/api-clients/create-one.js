@@ -5,6 +5,10 @@ const valuesValidator = (value) => {
     return false;
   }
 
+  if (!Array.isArray(value.permissions) || value.permissions.length === 0) {
+    return false;
+  }
+
   return true;
 };
 
