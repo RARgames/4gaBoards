@@ -25,5 +25,4 @@ module.exports.policies = {
   'core/show': true,
   'auth/*': true,
   'register/create': true,
-  'api-clients/*': 'is-api-client',
 };

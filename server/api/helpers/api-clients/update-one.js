@@ -48,7 +48,9 @@ module.exports = {
         inputs.request,
       );
 
-      if (!skipActions) {
+      const valueKeys = Object.keys(values);
+      const isOnlyLastUsedAt = valueKeys.length === 2 && Object.prototype.hasOwnProperty.call(values, 'last_used_at') && Object.prototype.hasOwnProperty.call(values, 'updated_at');
+      if (!skipActions && !isOnlyLastUsedAt) {
         await sails.helpers.actions.createOne.with({
           values: {
             userAccount: currentUser,

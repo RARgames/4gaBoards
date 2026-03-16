@@ -92,12 +92,6 @@ module.exports.routes = {
   'PATCH /api/mailTokens/:id': 'mail-tokens/update',
   'DELETE /api/mailTokens/:id': 'mail-tokens/delete',
 
-  'POST /api/api-clients/lists/:mailTokenId/cards': 'api-clients/create-card',
-  'POST /api/api-clients/cards/:cardId/labels': 'api-clients/add-label',
-  'POST /api/api-clients/cards/:cardId/memberships': 'api-clients/add-membership',
-  'POST /api/api-clients/cards/:cardId/tasks': 'api-clients/add-task',
-  'POST /api/api-clients/cards/:cardId/attachments': 'api-clients/add-attachment',
-
   'POST /api/cards/:cardId/tasks': 'tasks/create',
   'PATCH /api/tasks/:id': 'tasks/update',
   'POST /api/tasks/:id/duplicate': 'tasks/duplicate',
