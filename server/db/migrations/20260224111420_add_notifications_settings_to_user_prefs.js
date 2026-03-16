@@ -6,7 +6,6 @@ module.exports.up = async (knex) => {
       .notNullable()
       .defaultTo(JSON.stringify(['user', 'project']));
     table.string('notification_delivery_mode').notNullable().defaultTo('first_instant_then_batch');
-    table.string('notification_aggregation_scope').notNullable().defaultTo('card');
   });
 };
 
@@ -15,6 +14,5 @@ module.exports.down = async (knex) => {
     table.dropColumn('email_notifications_enabled');
     table.dropColumn('enabled_notification_types');
     table.dropColumn('notification_delivery_mode');
-    table.dropColumn('notification_aggregation_scope');
   });
 };
