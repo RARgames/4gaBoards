@@ -147,14 +147,6 @@ export const NotificationsDeliveryModes = {
   FIRST_INSTANT_THEN_BATCH: 'first_instant_then_batch',
 };
 
-export const NotificationsAggregationScopes = {
-  CARD: 'card',
-  BOARD: 'board',
-  LIST: 'list',
-  PROJECT: 'project',
-  USER: 'user',
-};
-
 export const Permissions = {
   APICLIENT_LIST: 'api-clients.index',
   APICLIENT_CREATE: 'api-clients.create',

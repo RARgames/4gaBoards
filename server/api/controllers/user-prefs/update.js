@@ -148,11 +148,6 @@ module.exports = {
       isIn: UserPrefs.NOTIFICATIONS_DELIVERY_MODES,
       isNotEmptyString: true,
     },
-    notificationAggregationScope: {
-      type: 'string',
-      isIn: UserPrefs.NOTIFICATIONS_AGGREGATION_SCOPES,
-      isNotEmptyString: true,
-    },
   },
 
   exits: {
@@ -212,7 +207,6 @@ module.exports = {
         'emailNotificationsEnabled',
         'enabledNotificationTypes',
         'notificationDeliveryMode',
-        'notificationAggregationScope',
       ]),
     };
 
