@@ -36,8 +36,8 @@ const AuthenticationSettings = React.memo(
       [onApiClientUpdate],
     );
 
-    const handleCopyClick = useCallback((apiClientSecret) => {
-      navigator.clipboard.writeText(apiClientSecret);
+    const handleCopyClick = useCallback((value) => {
+      navigator.clipboard.writeText(value);
     }, []);
 
     return (
@@ -134,7 +134,11 @@ const AuthenticationSettings = React.memo(
                       </div>
                       <div className={s.itemContent}>
                         <span className={s.dataWrapper}>
-                          {t('common.clientId')}: <span className={s.data}>{apiClient.clientId}</span>
+                          {t('common.clientId')}:
+                          <Button style={ButtonStyle.Icon} title={t('common.copyClientId')} onClick={() => handleCopyClick(apiClient.clientId)} className={s.copyButton}>
+                            <Icon type={IconType.Copy} size={IconSize.Size12} />
+                          </Button>
+                          <span className={s.data}>{apiClient.clientId}</span>
                         </span>
                         {apiClient.clientSecret && (
                           <span className={s.dataWrapper}>
