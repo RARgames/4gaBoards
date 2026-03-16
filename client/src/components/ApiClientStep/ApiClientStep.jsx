@@ -34,7 +34,7 @@ const StepTypes = {
   SHOW_SECRET: 'SHOW_SECRET',
 };
 
-const ApiClientStep = React.memo(({ secret, defaultData, isSubmitting, error, isUpdate, title, submitButtonText, onSubmit, onMessageDismiss, onBack, onClose }) => {
+const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error, isUpdate, title, submitButtonText, onSubmit, onMessageDismiss, onBack, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
   const wasSubmitting = usePrevious(isSubmitting);
@@ -128,7 +128,7 @@ const ApiClientStep = React.memo(({ secret, defaultData, isSubmitting, error, is
   }, [onMessageDismiss]);
 
   if (step && step.type === StepTypes.SHOW_SECRET) {
-    return <ShowSecretStep secret={secret} onBack={handleBack} onClose={onClose} />;
+    return <ShowSecretStep id={id} secret={secret} onBack={handleBack} onClose={onClose} />;
   }
 
   return (
@@ -164,6 +164,7 @@ const ApiClientStep = React.memo(({ secret, defaultData, isSubmitting, error, is
 });
 
 ApiClientStep.propTypes = {
+  id: PropTypes.string,
   secret: PropTypes.string,
   defaultData: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isSubmitting: PropTypes.bool.isRequired,
@@ -178,6 +179,7 @@ ApiClientStep.propTypes = {
 };
 
 ApiClientStep.defaultProps = {
+  id: null,
   secret: null,
   error: undefined,
   isUpdate: false,

@@ -62,6 +62,7 @@ const AuthenticationSettings = React.memo(
             </div>
             <div className={s.action}>
               <ApiClientPopup
+                id={apiClients.length > 0 ? apiClients[apiClients.length - 1].clientId : null}
                 secret={apiClients.length > 0 ? apiClients[apiClients.length - 1].clientSecret : null}
                 defaultData={apiClientForm.data}
                 isSubmitting={apiClientForm.isSubmitting}
@@ -97,7 +98,8 @@ const AuthenticationSettings = React.memo(
                         <DateText value={apiClient.lastUsedAt} showTime className={s.createdAt} titlePrefix={t('common.lastUsed')} />
                         <div className={s.itemHeaderButtons}>
                           <ApiClientPopup
-                            secret={apiClient.clientSecret || t('common.generatingApiClientSecret')}
+                            id={apiClient.clientId}
+                            secret={apiClient.clientSecret}
                             defaultData={{ name: apiClient.name, permissions: apiClient.permissions, regenerateSecret: false }}
                             isSubmitting={apiClientForm.isSubmitting}
                             error={apiClientForm.error}
@@ -111,7 +113,7 @@ const AuthenticationSettings = React.memo(
                               <Icon type={IconType.Pencil} size={IconSize.Size12} />
                             </Button>
                           </ApiClientPopup>
-                          <ShowSecretPopup secret={apiClient.clientSecret || t('common.generatingApiClientSecret')}>
+                          <ShowSecretPopup id={apiClient.clientId} secret={apiClient.clientSecret}>
                             <Button style={ButtonStyle.Icon} title={t('common.resetApiClient')} onClick={() => handleResetClick(apiClient.id)}>
                               <Icon type={IconType.Reset} size={IconSize.Size12} />
                             </Button>
