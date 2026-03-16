@@ -36,6 +36,12 @@ export default class extends BaseModel {
         }
 
         break;
+      case ActionTypes.API_CLIENT_UPDATE:
+        if (payload.data.regenerateSecret) {
+          ApiClient.withId(payload.id).update({ clientSecret: '' });
+        }
+
+        break;
       case ActionTypes.API_CLIENT_CREATE__SUCCESS:
       case ActionTypes.API_CLIENT_UPDATE__SUCCESS:
       case ActionTypes.API_CLIENT_CREATE_HANDLE:
