@@ -69,6 +69,10 @@ module.exports = {
 
   beforeUpdate(valuesToSet, proceed) {
     sails.config.models.beforeUpdate(valuesToSet, async () => {
+      if (valuesToSet.lastUsedAt) {
+        delete valuesToSet.updatedAt; // eslint-disable-line no-param-reassign
+      }
+
       try {
         if (valuesToSet.clientSecret) {
           const hash = await bcrypt.hash(valuesToSet.clientSecret, SALT_ROUNDS);

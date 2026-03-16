@@ -49,7 +49,7 @@ module.exports = {
       );
 
       const valueKeys = Object.keys(values);
-      const isOnlyLastUsedAt = valueKeys.length === 2 && Object.prototype.hasOwnProperty.call(values, 'last_used_at') && Object.prototype.hasOwnProperty.call(values, 'updated_at');
+      const isOnlyLastUsedAt = valueKeys.length === 1 && Object.prototype.hasOwnProperty.call(values, 'last_used_at');
       if (!skipActions && !isOnlyLastUsedAt) {
         await sails.helpers.actions.createOne.with({
           values: {
