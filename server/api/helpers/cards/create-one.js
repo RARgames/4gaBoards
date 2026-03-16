@@ -1,3 +1,5 @@
+const POSITION_GAP = 65535;
+
 const valuesValidator = (value) => {
   if (!_.isPlainObject(value)) {
     return false;
@@ -46,7 +48,8 @@ module.exports = {
     const { values, currentUser, skipMetaUpdate } = inputs;
 
     if (_.isUndefined(values.position)) {
-      throw 'positionMustBeInValues';
+      const [lastCard] = await Card.find({ listId: values.list.id }).sort('position DESC').limit(1);
+      values.position = (lastCard?.position || 0) + POSITION_GAP;
     }
 
     const cards = await sails.helpers.lists.getCards(values.list.id);
