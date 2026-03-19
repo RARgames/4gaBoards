@@ -14,7 +14,7 @@ const SettingsCell = React.memo(({ value, cellClassName, title, ariaLabel, optio
         // eslint-disable-next-line react/jsx-props-no-spreading
         <Dropdown style={DropdownStyle.FullWidth} options={options} placeholder={placeholder} defaultItem={value} onChange={onChange} {...props} />
       )}
-      {typeof value === 'object' && isCustomComponent && (
+      {(typeof value === 'object' || Array.isArray(value)) && isCustomComponent && (
         // eslint-disable-next-line react/jsx-props-no-spreading
         <CustomComponent value={value} title={title} ariaLabel={ariaLabel} options={options} placeholder={placeholder} onChange={onChange} onSubmit={onSubmit} {...props} />
       )}
@@ -36,7 +36,7 @@ const SettingsCell = React.memo(({ value, cellClassName, title, ariaLabel, optio
 });
 
 SettingsCell.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string]),
+  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.array, PropTypes.string]),
   cellClassName: PropTypes.string,
   title: PropTypes.string,
   ariaLabel: PropTypes.string,

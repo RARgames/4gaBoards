@@ -144,7 +144,7 @@ export const ThemeShapes = {
 export const NotificationsDeliveryModes = {
   INSTANT: 'instant',
   BATCHED: 'batched',
-  FIRST_INSTANT_THEN_BATCH: 'first_instant_then_batch',
+  INSTANT_THEN_BATCHED: 'instant_then_batched',
 };
 
 export const Permissions = {

@@ -139,13 +139,13 @@ module.exports = {
     emailNotificationsEnabled: {
       type: 'boolean',
     },
-    enabledNotificationTypes: {
+    emailNotificationsEnabledTypes: {
       type: 'json',
-      custom: (value) => Array.isArray(value) && value.every((v) => UserPrefs.NOTIFICATIONS_TYPES.includes(v)),
+      custom: (value) => Array.isArray(value) && value.every((v) => Object.values(Action.Scopes).includes(v)),
     },
-    notificationDeliveryMode: {
+    emailNotificationsDeliveryMode: {
       type: 'string',
-      isIn: UserPrefs.NOTIFICATIONS_DELIVERY_MODES,
+      isIn: Object.values(UserPrefs.EmailNotificationsDeliveryModes),
       isNotEmptyString: true,
     },
   },
@@ -205,14 +205,14 @@ module.exports = {
         'themeShape',
         'themeCustomColors',
         'emailNotificationsEnabled',
-        'enabledNotificationTypes',
-        'notificationDeliveryMode',
+        'emailNotificationsEnabledTypes',
+        'emailNotificationsDeliveryMode',
       ]),
     };
 
     userPrefs = await sails.helpers.userPrefs.updateOne.with({
       values,
-      record: currentUser,
+      record: userPrefs,
       currentUser,
       request: this.req,
     });

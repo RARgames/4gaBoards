@@ -35,8 +35,8 @@ const PreferencesSettings = React.memo(
     themeShape,
     onUpdate,
     emailNotificationsEnabled,
-    enabledNotificationTypes,
-    notificationDeliveryMode,
+    emailNotificationsEnabledTypes,
+    emailNotificationsDeliveryMode,
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
@@ -155,7 +155,7 @@ const PreferencesSettings = React.memo(
 
     const selectedThemeShape = useMemo(() => themeShapes.find((shape) => shape.id === themeShape), [themeShapes, themeShape]);
 
-    const notificationTypeOptions = useMemo(
+    const emailNotificationsEnabledTypesOptions = useMemo(
       () => [
         {
           id: ActivityScopes.INSTANCE,
@@ -197,27 +197,33 @@ const PreferencesSettings = React.memo(
       [t],
     );
 
-    const selectedNotificationTypes = useMemo(() => notificationTypeOptions.filter((opt) => enabledNotificationTypes.includes(opt.id)), [notificationTypeOptions, enabledNotificationTypes]);
+    const selectedEmailNotificationsEnabledTypes = useMemo(
+      () => emailNotificationsEnabledTypesOptions.filter((opt) => emailNotificationsEnabledTypes.includes(opt.id)),
+      [emailNotificationsEnabledTypesOptions, emailNotificationsEnabledTypes],
+    );
 
-    const notificationDeliveryModes = useMemo(
+    const emailNotificationsDeliveryModes = useMemo(
       () => [
         {
           id: NotificationsDeliveryModes.INSTANT,
-          name: t('common.notificationDeliveryModeInstant'),
+          name: t('common.emailNotificationsDeliveryModeInstant'),
         },
         {
           id: NotificationsDeliveryModes.BATCHED,
-          name: t('common.notificationDeliveryModeBatched'),
+          name: t('common.emailNotificationsDeliveryModeBatched'),
         },
         {
-          id: NotificationsDeliveryModes.FIRST_INSTANT_THEN_BATCH,
-          name: t('common.notificationDeliveryModeFirstInstantThenBatch'),
+          id: NotificationsDeliveryModes.INSTANT_THEN_BATCHED,
+          name: t('common.emailNotificationsDeliveryModeInstantThenBatched'),
         },
       ],
       [t],
     );
 
-    const selectedNotificationDeliveryMode = useMemo(() => notificationDeliveryModes.find((deliveryMode) => deliveryMode.id === notificationDeliveryMode), [notificationDeliveryModes, notificationDeliveryMode]);
+    const selectedEmailNotificationsDeliveryMode = useMemo(
+      () => emailNotificationsDeliveryModes.find((deliveryMode) => deliveryMode.id === emailNotificationsDeliveryMode),
+      [emailNotificationsDeliveryMode, emailNotificationsDeliveryModes],
+    );
 
     const handleSubscribeToOwnCardsChange = useCallback(() => {
       onUpdate({
@@ -322,20 +328,20 @@ const PreferencesSettings = React.memo(
       });
     }, [onUpdate, emailNotificationsEnabled]);
 
-    const handleNotificationTypesChange = useCallback(
+    const handleEmailNotificationsEnabledTypesChange = useCallback(
       (value) => {
         const { id } = value;
 
-        const next = enabledNotificationTypes.includes(id) ? enabledNotificationTypes.filter((type) => type !== id) : [...enabledNotificationTypes, id];
+        const next = emailNotificationsEnabledTypes.includes(id) ? emailNotificationsEnabledTypes.filter((type) => type !== id) : [...emailNotificationsEnabledTypes, id];
 
-        onUpdate({ enabledNotificationTypes: next });
+        onUpdate({ emailNotificationsEnabledTypes: next });
       },
-      [onUpdate, enabledNotificationTypes],
+      [onUpdate, emailNotificationsEnabledTypes],
     );
 
-    const handleNotificationDeliveryModeChange = useCallback(
+    const handleEmailNotificationsDeliveryModeChange = useCallback(
       (value) => {
-        onUpdate({ notificationDeliveryMode: value.id });
+        onUpdate({ emailNotificationsDeliveryMode: value.id });
       },
       [onUpdate],
     );
@@ -523,32 +529,32 @@ const PreferencesSettings = React.memo(
             group: Groups.EMAIL_NOTIFICATIONS,
           },
           emailNotificationsEnabled && {
-            id: 'enabledNotificationTypes',
-            preferences: t('common.enabledNotificationTypes'),
-            modifySettings: enabledNotificationTypes,
+            id: 'emailNotificationsEnabledTypes',
+            preferences: t('common.emailNotificationsEnabledTypes'),
+            modifySettings: selectedEmailNotificationsEnabledTypes,
             modifySettingsProps: {
               isCustomComponent: true,
               CustomComponent: NotificationTypesSelector,
-              options: notificationTypeOptions,
-              onChange: handleNotificationTypesChange,
+              onChange: handleEmailNotificationsEnabledTypesChange,
+              options: emailNotificationsEnabledTypesOptions,
             },
-            currentValue: selectedNotificationTypes.map((v) => v.name).join(', '),
+            currentValue: selectedEmailNotificationsEnabledTypes.map((v) => v.name).join(', '),
             description: t('common.descriptionEnabledNotificationTypes'),
             group: Groups.EMAIL_NOTIFICATIONS,
           },
           emailNotificationsEnabled && {
-            id: 'notificationDeliveryMode',
-            preferences: t('common.notificationDeliveryMode'),
-            modifySettings: selectedNotificationDeliveryMode,
+            id: 'emailNotificationsDeliveryMode',
+            preferences: t('common.emailNotificationsDeliveryMode'),
+            modifySettings: selectedEmailNotificationsDeliveryMode,
             modifySettingsProps: {
-              onChange: handleNotificationDeliveryModeChange,
-              options: notificationDeliveryModes,
-              placeholder: selectedNotificationDeliveryMode.name,
+              onChange: handleEmailNotificationsDeliveryModeChange,
+              options: emailNotificationsDeliveryModes,
+              placeholder: selectedEmailNotificationsDeliveryMode.name,
               isSearchable: true,
               selectFirstOnSearch: true,
             },
-            currentValue: selectedNotificationDeliveryMode.name,
-            description: t('common.descriptionNotificationDeliveryMode'),
+            currentValue: selectedEmailNotificationsDeliveryMode.name,
+            description: t('common.descriptionEmailNotificationsDeliveryMode'),
             group: Groups.EMAIL_NOTIFICATIONS,
           },
         ].filter(Boolean),
@@ -597,13 +603,12 @@ const PreferencesSettings = React.memo(
         handleSubscribeToInstanceChange,
         emailNotificationsEnabled,
         handleEmailNotificationsEnabledChange,
-        enabledNotificationTypes,
-        notificationTypeOptions,
-        handleNotificationTypesChange,
-        selectedNotificationTypes,
-        selectedNotificationDeliveryMode,
-        handleNotificationDeliveryModeChange,
-        notificationDeliveryModes,
+        emailNotificationsEnabledTypesOptions,
+        handleEmailNotificationsEnabledTypesChange,
+        selectedEmailNotificationsEnabledTypes,
+        selectedEmailNotificationsDeliveryMode,
+        handleEmailNotificationsDeliveryModeChange,
+        emailNotificationsDeliveryModes,
       ],
     );
 
@@ -756,8 +761,8 @@ PreferencesSettings.propTypes = {
   themeShape: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   emailNotificationsEnabled: PropTypes.bool.isRequired,
-  enabledNotificationTypes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  notificationDeliveryMode: PropTypes.string.isRequired,
+  emailNotificationsEnabledTypes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  emailNotificationsDeliveryMode: PropTypes.string.isRequired,
 };
 
 PreferencesSettings.defaultProps = {

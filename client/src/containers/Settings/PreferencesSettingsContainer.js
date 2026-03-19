@@ -23,8 +23,8 @@ const mapStateToProps = (state) => {
     theme,
     themeShape,
     emailNotificationsEnabled,
-    enabledNotificationTypes,
-    notificationDeliveryMode,
+    emailNotificationsEnabledTypes,
+    emailNotificationsDeliveryMode,
   } = selectors.selectCurrentUserPrefs(state);
   const { isAdmin } = selectors.selectCurrentUser(state);
 
@@ -46,8 +46,8 @@ const mapStateToProps = (state) => {
     theme,
     themeShape,
     emailNotificationsEnabled,
-    enabledNotificationTypes,
-    notificationDeliveryMode,
+    emailNotificationsEnabledTypes,
+    emailNotificationsDeliveryMode,
   };
 };
 
