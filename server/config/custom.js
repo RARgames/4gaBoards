@@ -14,6 +14,7 @@ const sails = require('sails');
 module.exports.custom = {
   baseUrl: process.env.BASE_URL,
   clientUrl: process.env.CLIENT_URL || (process.env.NODE_ENV === 'production' ? process.env.BASE_URL : 'http://localhost:3000'),
+  instanceName: process.env.INSTANCE_NAME || '4gaboards.com',
 
   tokenExpiresIn: parseInt(process.env.TOKEN_EXPIRES_IN, 10) || 365,
 
@@ -68,4 +69,5 @@ module.exports.custom = {
   cacheMaxAge: 900,
   actionsLimit: 50,
   commentsLimit: 50,
+  notificationsMailBatchIntervalMs: 10 * 60 * 1000,
 };

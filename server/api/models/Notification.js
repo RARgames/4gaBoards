@@ -1,3 +1,5 @@
+const { Scopes: ActionScopes } = require('./Action');
+
 /**
  * Notification.js
  *
@@ -16,9 +18,23 @@ module.exports = {
       defaultsTo: false,
       columnName: 'is_read',
     },
+    scope: {
+      type: 'string',
+      required: true,
+      isIn: Object.values(ActionScopes),
+    },
     deletedAt: {
       type: 'ref',
       columnName: 'deleted_at',
+    },
+    // Used for email notifications:
+    // - null - waiting to be sent
+    // - timestamp - it was sent
+    // - timestamp - user don't want email notifications (user prefs)
+    // - timestamp - in batch mode user already marked notification as read (user prefs)
+    deliveredAt: {
+      type: 'ref',
+      columnName: 'delivered_at',
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
