@@ -1,3 +1,8 @@
+const { Scopes: ActionScopes } = require('./Action');
+
+const actionScopes = Object.values(ActionScopes);
+const actionScopesSet = new Set(actionScopes);
+
 /**
  * UserPrefs.js
  *
@@ -12,8 +17,11 @@ const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 const PREFERRED_FONTS = ['default', 'monospace'];
 const THEME_SHAPES = ['default', 'rounded'];
 const THEMES = ['default', 'github-dark', 'light', 'custom'];
-const NOTIFICATIONS_TYPES = [`instance`, `user`, `project`, `board`, `list`, `card`, `task`, `attachment`, `comment`];
-const NOTIFICATIONS_DELIVERY_MODES = ['instant', 'batched', 'first_instant_then_batch'];
+const EmailNotificationsDeliveryModes = {
+  INSTANT: 'instant',
+  BATCHED: 'batched',
+  INSTANT_THEN_BATCHED: 'instant_then_batched',
+};
 
 module.exports = {
   DESCRIPTION_MODES,
@@ -23,8 +31,7 @@ module.exports = {
   PREFERRED_FONTS,
   THEME_SHAPES,
   THEMES,
-  NOTIFICATIONS_TYPES,
-  NOTIFICATIONS_DELIVERY_MODES,
+  EmailNotificationsDeliveryModes,
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -233,17 +240,17 @@ module.exports = {
       defaultsTo: true,
       columnName: 'email_notifications_enabled',
     },
-    enabledNotificationTypes: {
+    emailNotificationsEnabledTypes: {
       type: 'json',
-      defaultsTo: ['user', 'project'],
-      columnName: 'enabled_notification_types',
-      custom: (value) => Array.isArray(value) && value.every((v) => NOTIFICATIONS_TYPES.includes(v)),
+      defaultsTo: [...actionScopes],
+      columnName: 'email_notifications_enabled_types',
+      custom: (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => actionScopesSet.has(v)),
     },
-    notificationDeliveryMode: {
+    emailNotificationsDeliveryMode: {
       type: 'string',
-      isIn: NOTIFICATIONS_DELIVERY_MODES,
-      defaultsTo: 'first_instant_then_batch',
-      columnName: 'notification_delivery_mode',
+      isIn: Object.values(EmailNotificationsDeliveryModes),
+      defaultsTo: 'instant_then_batched',
+      columnName: 'email_notifications_delivery_mode',
     },
   },
 

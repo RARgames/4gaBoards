@@ -11,6 +11,10 @@ const valuesValidator = (value) => {
     return false;
   }
 
+  if (!_.isString(value.action.scope)) {
+    return false;
+  }
+
   return true;
 };
 
@@ -33,10 +37,14 @@ module.exports = {
     if (values.user) {
       values.userId = values.user.id;
     }
+    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: values.userId }, currentUser: { id: values.userId } });
+
+    const markAsDelivered = !sails.config.custom.mailServiceAvailable || !userPrefs.emailNotificationsEnabled || !userPrefs.emailNotificationsEnabledTypes.includes(values.action.scope);
 
     const notification = await Notification.create({
       ...values,
       actionId: values.action.id,
+      scope: values.action.scope,
       attachmentId: values.action.attachmentId,
       taskId: values.action.taskId,
       commentId: values.action.commentId,
@@ -45,6 +53,7 @@ module.exports = {
       boardId: values.action.boardId,
       projectId: values.action.projectId,
       userAccountId: values.action.userAccountId,
+      deliveredAt: markAsDelivered ? new Date().toUTCString() : null,
     }).fetch();
 
     sails.sockets.broadcast(`user:${notification.userId}`, 'notificationCreate', {
@@ -52,64 +61,30 @@ module.exports = {
     });
 
     if (!sails.config.custom.mailServiceAvailable) return notification;
+    if (!userPrefs.emailNotificationsEnabled) return notification;
+    if (!userPrefs.emailNotificationsEnabledTypes.includes(values.action.scope)) return notification;
 
-    const userPrefs = await UserPrefs.findOne({ id: notification.userId });
-
-    if (!userPrefs?.emailNotificationsEnabled) return notification;
-
-    if (!userPrefs.enabledNotificationTypes?.includes(values.action.scope)) return notification;
-
-    const mode = userPrefs.notificationDeliveryMode || 'instant';
-    const now = new Date();
-    const TEN_MINUTES = 10 * 60 * 1000;
-
-    switch (mode) {
-      case 'instant':
-        await sails.helpers.notifications.handleEmailNotification.with({ notification, action: values.action });
-        break;
-
-      case 'batched':
-        await NotificationBatchQueue.create({
-          notificationId: notification.id,
-          userId: notification.userId,
-          type: values.action.type,
-          scope: values.action.scope,
-          sentAt: null,
-        }).fetch();
-        break;
-
-      case 'first_instant_then_batch': {
-        const lastSent = await NotificationBatchQueue.find({
-          userId: notification.userId,
-          scope: values.action.scope,
-          sentAt: { '!=': null },
-        })
-          .sort('sentAt DESC')
-          .limit(1);
-
-        if (!lastSent.length || now - new Date(lastSent[0].sentAt) >= TEN_MINUTES) {
-          await sails.helpers.notifications.handleEmailNotification.with({ notification, action: values.action });
-          await NotificationBatchQueue.create({
-            notificationId: notification.id,
-            userId: notification.userId,
-            type: values.action.type,
-            scope: values.action.scope,
-            sentAt: now,
-          }).fetch();
-        } else {
-          await NotificationBatchQueue.create({
-            notificationId: notification.id,
-            userId: notification.userId,
-            type: values.action.type,
-            scope: values.action.scope,
-            sentAt: null,
-          }).fetch();
-        }
-        break;
+    const mode = userPrefs.emailNotificationsDeliveryMode;
+    if (mode === UserPrefs.EmailNotificationsDeliveryModes.INSTANT) {
+      await sails.helpers.notifications.handleEmailNotification.with({ notifications: [notification], actionsMap: { [values.action.id]: values.action } });
+    } else if (mode === UserPrefs.EmailNotificationsDeliveryModes.INSTANT_THEN_BATCHED) {
+      let scopeIdField = `${values.action.scope}Id`;
+      if ([Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(values.action.scope)) {
+        scopeIdField = 'cardId';
       }
+      const scopeIdValue = values.action[scopeIdField] || null;
 
-      default:
-        await sails.helpers.notifications.handleEmailNotification.with({ notification, action: values.action });
+      const lastSent = await sails.helpers.notifications.findLastSent.with({
+        criteria: {
+          userId: notification.userId,
+          [scopeIdField]: scopeIdValue,
+          deliveredAt: { '!=': null },
+        },
+      });
+
+      if (!lastSent.length || new Date() - new Date(lastSent[0].deliveredAt) >= sails.config.custom.notificationsMailBatchIntervalMs) {
+        await sails.helpers.notifications.handleEmailNotification.with({ notifications: [notification], actionsMap: { [values.action.id]: values.action } });
+      }
     }
 
     return notification;
