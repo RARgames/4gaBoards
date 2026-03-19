@@ -7,8 +7,7 @@ import { Checkbox, CheckboxSize } from '../../Utils';
 import * as s from './NotificationTypesSelector.module.scss';
 
 const NotificationTypesSelector = React.memo(({ value, options, onChange }) => {
-  const isSelected = useCallback((optionId) => value.includes(optionId), [value]);
-
+  const isSelected = useCallback((optionId) => value.some((v) => v.id === optionId), [value]);
   const handleToggle = useCallback(
     (option) => {
       onChange(option);
