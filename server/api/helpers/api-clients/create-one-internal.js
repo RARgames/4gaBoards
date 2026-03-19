@@ -39,7 +39,7 @@ module.exports = {
       const apiClient = await ApiClient.create({
         clientId,
         clientSecret,
-        permissions: ['mail-tokens.get-list-id', 'cards.create', 'tasks.create', 'attachments.create', 'card-labels.create', 'card-memberships.create', 'boards.label-by-name', 'boards.user-by-name'],
+        permissions: ['mail-tokens.get-list-id', 'cards.create', 'tasks.create', 'attachments.create', 'card-labels.create', 'card-memberships.create', 'boards.find-label-by-name', 'boards.find-user-by-name'],
         label: notificationsLabel,
         name: version.toString(),
       }).fetch();
