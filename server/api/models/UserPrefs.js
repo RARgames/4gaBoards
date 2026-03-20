@@ -252,6 +252,11 @@ module.exports = {
       defaultsTo: 'instant_then_batched',
       columnName: 'email_notifications_delivery_mode',
     },
+    emailNotificationsMarkReadAsDelivered: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'email_notifications_mark_read_as_delivered',
+    },
   },
 
   tableName: 'user_prefs',

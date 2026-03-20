@@ -35,6 +35,11 @@ module.exports = {
 
     const values = _.pick(inputs, ['isRead']);
 
+    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
+    if (userPrefs.emailNotificationsMarkReadAsDelivered && values.isRead) {
+      values.deliveredAt = new Date().toUTCString();
+    }
+
     const notifications = await sails.helpers.notifications.updateMany.with({
       values,
       recordsOrIds: ids,

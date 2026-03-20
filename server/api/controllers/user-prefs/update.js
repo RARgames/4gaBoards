@@ -148,6 +148,9 @@ module.exports = {
       isIn: Object.values(UserPrefs.EmailNotificationsDeliveryModes),
       isNotEmptyString: true,
     },
+    emailNotificationsMarkReadAsDelivered: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -207,6 +210,7 @@ module.exports = {
         'emailNotificationsEnabled',
         'emailNotificationsEnabledTypes',
         'emailNotificationsDeliveryMode',
+        'emailNotificationsMarkReadAsDelivered',
       ]),
     };
 
