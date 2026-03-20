@@ -60,9 +60,7 @@ module.exports = {
       item: notification,
     });
 
-    if (!sails.config.custom.mailServiceAvailable) return notification;
-    if (!userPrefs.emailNotificationsEnabled) return notification;
-    if (!userPrefs.emailNotificationsTypes.includes(values.action.scope)) return notification;
+    if (markAsDelivered) return notification;
 
     const mode = userPrefs.emailNotificationsDeliveryMode;
     if (mode === UserPrefs.EmailNotificationsDeliveryModes.INSTANT) {
