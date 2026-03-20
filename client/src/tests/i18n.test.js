@@ -6,6 +6,26 @@ const path = require('path');
 const LOCALES_DIR = path.resolve(__dirname, '../locales');
 const BASE_LANG = 'en';
 
+// list of plural forms
+const LANGUAGE_PLURALS = {
+  cs: ['one', 'few', 'other'],
+  da: ['one', 'other'],
+  de: ['one', 'other'],
+  en: ['one', 'other'],
+  es: ['one', 'other'],
+  fr: ['one', 'other'],
+  it: ['one', 'other'],
+  ja: ['other'],
+  ko: ['other'],
+  pl: ['one', 'few', 'many'], // TODO technically it should include 'other', but we don't use fractions
+  pt_br: ['one', 'other'],
+  ru: ['one', 'few', 'many', 'other'],
+  sk: ['one', 'few', 'other'],
+  sv: ['one', 'other'],
+  uz: ['one', 'other'],
+  zh: ['other'],
+};
+
 // helper: extract {{variables}}
 const extractVariables = (str) => {
   const regex = /{{\s*([^}]+)\s*}}/g;
@@ -26,13 +46,42 @@ const extractTags = (str) => {
   return tags.sort();
 };
 
+// helper: check if key is a plural key
+const isPluralKey = (key) => /_(zero|one|two|few|many|other)$/.test(key);
+
+// helper: get stem of plural key
+const getPluralStem = (key) => key.replace(/_(zero|one|two|few|many|other)$/, '');
+
 // eslint-disable-next-line default-param-last, no-shadow
-const compareTranslations = (baseObj, obj, path = [], stats) => {
-  // eslint-disable-next-line guard-for-in, no-restricted-syntax
-  for (const key in baseObj) {
+const compareTranslations = (baseObj, obj, path = [], stats, lang = 'en') => {
+  const baseKeys = Object.keys(baseObj);
+  const targetKeys = obj ? Object.keys(obj) : [];
+  const requiredPlurals = LANGUAGE_PLURALS[lang] || ['one', 'other'];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key of baseKeys) {
     const fullPath = [...path, key];
     const baseVal = baseObj[key];
-    const val = obj[key];
+    const val = obj ? obj[key] : undefined;
+
+    // handle plurals
+    if (isPluralKey(key)) {
+      const stem = getPluralStem(key);
+      const targetPluralKeys = targetKeys.filter((k) => getPluralStem(k) === stem);
+
+      // count only required plurals for the target language
+      const missingPlurals = requiredPlurals.filter((suf) => !targetPluralKeys.includes(`${stem}_${suf}`));
+
+      stats.total += requiredPlurals.length;
+      stats.translated += requiredPlurals.length - missingPlurals.length;
+
+      missingPlurals.forEach((suf) => {
+        stats.missing++;
+        stats.missingKeys.push([...path, `${stem}_${suf}`].join('.'));
+      });
+
+      continue;
+    }
 
     if (val === undefined) {
       if (typeof baseVal === 'string') {
@@ -70,7 +119,7 @@ const compareTranslations = (baseObj, obj, path = [], stats) => {
 
       stats.translated++;
     } else if (typeof baseVal === 'object' && baseVal !== null) {
-      compareTranslations(baseVal, val, fullPath, stats);
+      compareTranslations(baseVal, val, fullPath, stats, lang);
     } else {
       stats.total++;
       stats.translated++;
@@ -118,7 +167,7 @@ describe('i18n translations coverage', () => {
         const baseFile = baseTranslations[namespace];
         const targetFile = targetTranslations[namespace] || {};
 
-        compareTranslations(baseFile, targetFile, [], stats);
+        compareTranslations(baseFile, targetFile, [], stats, lang);
       });
 
       const coverage = stats.total ? ((stats.translated / stats.total) * 100).toFixed(2) : '0.00';
