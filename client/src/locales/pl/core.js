@@ -152,7 +152,7 @@ export default {
       descriptionDefaultView: 'Wybierz domyślny widok tablicy.',
       descriptionEmailNotificationsDeliveryMode: 'Wybierz tryb dostarczania powiadomień e-mail.',
       descriptionEmailNotificationsEnabled: 'Włącz lub wyłącz otrzymywanie powiadomień e-mail.',
-      descriptionEnabledNotificationTypes: 'Wybierz typy zdarzeń, dla których chcesz otrzymywać powiadomienia.',
+      descriptionEmailNotificationsTypes: 'Wybierz typy zdarzeń, dla których chcesz otrzymywać powiadomienia.',
       descriptionHideCardModalActivity: 'Ukryj pola stworzono i zaktualizowano w oknie karty.',
       descriptionHideClosestDueDate: 'Ukryj najbliższy termin w oknie karty.',
       descriptionLanguage: 'Wybierz język, którego chcesz używać w 4ga Boards.',
