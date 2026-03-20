@@ -6,6 +6,7 @@ module.exports = async function isAuthenticated(req, res, proceed) {
     return proceed();
   }
 
+  // API client authentication
   const clientIdHeader = req.get('X-Client-Id') || req.get('x-client-id');
   const clientSecretHeader = req.get('X-Client-Secret') || req.get('x-client-secret');
   const clientMailTokenHeader = req.get('X-Client-Mail-Token') || req.get('x-client-mail-token');
