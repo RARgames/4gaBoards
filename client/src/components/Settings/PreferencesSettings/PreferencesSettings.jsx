@@ -37,6 +37,7 @@ const PreferencesSettings = React.memo(
     emailNotificationsEnabled,
     emailNotificationsEnabledTypes,
     emailNotificationsDeliveryMode,
+    emailNotificationsMarkReadAsDelivered,
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
@@ -346,6 +347,12 @@ const PreferencesSettings = React.memo(
       [onUpdate],
     );
 
+    const handleEmailNotificationsMarkReadAsDeliveredChange = useCallback(() => {
+      onUpdate({
+        emailNotificationsMarkReadAsDelivered: !emailNotificationsMarkReadAsDelivered,
+      });
+    }, [onUpdate, emailNotificationsMarkReadAsDelivered]);
+
     const data = useMemo(
       () =>
         [
@@ -557,6 +564,15 @@ const PreferencesSettings = React.memo(
             description: t('common.descriptionEmailNotificationsDeliveryMode'),
             group: Groups.EMAIL_NOTIFICATIONS,
           },
+          emailNotificationsEnabled && {
+            id: 'emailNotificationsMarkReadAsDelivered',
+            preferences: t('common.emailNotificationsMarkReadAsDelivered'),
+            modifySettings: emailNotificationsMarkReadAsDelivered,
+            modifySettingsProps: { onChange: handleEmailNotificationsMarkReadAsDeliveredChange, title: t('common.toggleEmailNotificationsMarkReadAsDelivered') },
+            currentValue: emailNotificationsMarkReadAsDelivered ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionEmailNotificationsMarkReadAsDelivered'),
+            group: Groups.EMAIL_NOTIFICATIONS,
+          },
         ].filter(Boolean),
       [
         t,
@@ -603,12 +619,14 @@ const PreferencesSettings = React.memo(
         handleSubscribeToInstanceChange,
         emailNotificationsEnabled,
         handleEmailNotificationsEnabledChange,
-        emailNotificationsEnabledTypesOptions,
-        handleEmailNotificationsEnabledTypesChange,
         selectedEmailNotificationsEnabledTypes,
+        handleEmailNotificationsEnabledTypesChange,
+        emailNotificationsEnabledTypesOptions,
         selectedEmailNotificationsDeliveryMode,
         handleEmailNotificationsDeliveryModeChange,
         emailNotificationsDeliveryModes,
+        emailNotificationsMarkReadAsDelivered,
+        handleEmailNotificationsMarkReadAsDeliveredChange,
       ],
     );
 
@@ -763,6 +781,7 @@ PreferencesSettings.propTypes = {
   emailNotificationsEnabled: PropTypes.bool.isRequired,
   emailNotificationsEnabledTypes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   emailNotificationsDeliveryMode: PropTypes.string.isRequired,
+  emailNotificationsMarkReadAsDelivered: PropTypes.bool.isRequired,
 };
 
 PreferencesSettings.defaultProps = {
