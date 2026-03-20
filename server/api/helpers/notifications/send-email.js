@@ -13,8 +13,8 @@ module.exports = {
   },
 
   async fn({ notifications, actionsMap }) {
-    const now = new Date();
-    const beginningOfTime = new Date(0);
+    const now = new Date().toUTCString();
+    const beginningOfTime = new Date(0).toUTCString();
 
     let firstNotification;
     let firstAction;
