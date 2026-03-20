@@ -9,15 +9,12 @@
     display: flex;
     align-items: center;
     flex: 1 1 0;
-
     padding: 4px 6px;
     font-size: 12px;
-
     border: 1px solid var(--borderVivid);
     border-radius: 4px;
     background: var(--backgroundButton);
 
-    cursor: pointer;
     transition:
       background 0.15s ease,
       border-color 0.15s ease;
