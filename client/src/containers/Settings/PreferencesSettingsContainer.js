@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     theme,
     themeShape,
     emailNotificationsEnabled,
-    emailNotificationsEnabledTypes,
+    emailNotificationsTypes,
     emailNotificationsDeliveryMode,
     emailNotificationsMarkReadAsDelivered,
   } = selectors.selectCurrentUserPrefs(state);
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
     theme,
     themeShape,
     emailNotificationsEnabled,
-    emailNotificationsEnabledTypes,
+    emailNotificationsTypes,
     emailNotificationsDeliveryMode,
     emailNotificationsMarkReadAsDelivered,
   };

@@ -37,7 +37,7 @@ export default class extends BaseModel {
     themeShape: attr(),
     themeCustomColors: attr(),
     emailNotificationsEnabled: attr(),
-    emailNotificationsEnabledTypes: attr(),
+    emailNotificationsTypes: attr(),
     emailNotificationsDeliveryMode: attr(),
     emailNotificationsMarkReadAsDelivered: attr(),
   };
