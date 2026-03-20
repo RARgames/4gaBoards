@@ -43,9 +43,18 @@ const formatDatePostProcessor = {
   },
 };
 
+const parseDatePostProcessor = {
+  type: 'postProcessor',
+  name: 'parseDate',
+  process(value, _, options) {
+    return i18n.dateFns.parse(options.value, value, new Date());
+  },
+};
+
 i18n
   .use(LanguageDetector)
   .use(formatDatePostProcessor)
+  .use(parseDatePostProcessor)
   .use(initReactI18next)
   .init({
     resources: embeddedLocales,
