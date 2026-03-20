@@ -10,7 +10,7 @@ export default {
       createAccount: 'Créer un compte',
       createYourAccount: 'Créez votre compte',
       emailOrUsername: "Email ou nom d'utilisateur",
-      invalidUsernameOrPasswords: "Nom d'utilisateur ou mot de passe invalide",
+      invalidUsernameOrPassword: "Nom d'utilisateur ou mot de passe invalide",
       localRegistrationDisabled: "L'enregistrement local de l'utilisateur est désactivé par l'administrateur",
       login: 'Se connecter',
       logInToBoards: 'Se connecter',
