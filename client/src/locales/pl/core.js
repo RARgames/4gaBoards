@@ -227,7 +227,7 @@ export default {
       emailNotificationsDeliveryModeInstant: 'Natychmiast',
       emailNotificationsDeliveryModeInstantThenBatched: 'Pierwsze natychmiast, kolejne zbiorczo',
       emailNotificationsEnabled: 'Włącz powiadomienia e-mail',
-      emailNotificationsEnabledTypes: 'Włączone typy powiadomień',
+      emailNotificationsTypes: 'Włączone typy powiadomień',
       empty: 'Pusty',
       enabled: 'Włączono',
       enableLocalRegistration: 'Lokalna rejestracja użytkowników',

@@ -39,7 +39,7 @@ module.exports = {
     }
     const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: values.userId }, currentUser: { id: values.userId } });
 
-    const markAsDelivered = !sails.config.custom.mailServiceAvailable || !userPrefs.emailNotificationsEnabled || !userPrefs.emailNotificationsEnabledTypes.includes(values.action.scope);
+    const markAsDelivered = !sails.config.custom.mailServiceAvailable || !userPrefs.emailNotificationsEnabled || !userPrefs.emailNotificationsTypes.includes(values.action.scope);
 
     const notification = await Notification.create({
       ...values,
@@ -62,7 +62,7 @@ module.exports = {
 
     if (!sails.config.custom.mailServiceAvailable) return notification;
     if (!userPrefs.emailNotificationsEnabled) return notification;
-    if (!userPrefs.emailNotificationsEnabledTypes.includes(values.action.scope)) return notification;
+    if (!userPrefs.emailNotificationsTypes.includes(values.action.scope)) return notification;
 
     const mode = userPrefs.emailNotificationsDeliveryMode;
     if (mode === UserPrefs.EmailNotificationsDeliveryModes.INSTANT) {

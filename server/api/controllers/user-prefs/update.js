@@ -139,7 +139,7 @@ module.exports = {
     emailNotificationsEnabled: {
       type: 'boolean',
     },
-    emailNotificationsEnabledTypes: {
+    emailNotificationsTypes: {
       type: 'json',
       custom: (value) => Array.isArray(value) && value.every((v) => Object.values(Action.Scopes).includes(v)),
     },
@@ -208,7 +208,7 @@ module.exports = {
         'themeShape',
         'themeCustomColors',
         'emailNotificationsEnabled',
-        'emailNotificationsEnabledTypes',
+        'emailNotificationsTypes',
         'emailNotificationsDeliveryMode',
         'emailNotificationsMarkReadAsDelivered',
       ]),

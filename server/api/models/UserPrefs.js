@@ -240,10 +240,10 @@ module.exports = {
       defaultsTo: true,
       columnName: 'email_notifications_enabled',
     },
-    emailNotificationsEnabledTypes: {
+    emailNotificationsTypes: {
       type: 'json',
       defaultsTo: [...actionScopes],
-      columnName: 'email_notifications_enabled_types',
+      columnName: 'email_notifications_types',
       custom: (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => actionScopesSet.has(v)),
     },
     emailNotificationsDeliveryMode: {
