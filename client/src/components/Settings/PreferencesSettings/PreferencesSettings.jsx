@@ -543,7 +543,7 @@ const PreferencesSettings = React.memo(
               options: emailNotificationsTypesOptions,
             },
             currentValue: selectedEmailNotificationsTypes.map((v) => v.name).join(', '),
-            description: t('common.descriptionEnabledNotificationTypes'),
+            description: t('common.descriptionEmailNotificationsTypes'),
             group: Groups.EMAIL_NOTIFICATIONS,
           },
           emailNotificationsEnabled && {
