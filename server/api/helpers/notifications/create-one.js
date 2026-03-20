@@ -66,7 +66,7 @@ module.exports = {
 
     const mode = userPrefs.emailNotificationsDeliveryMode;
     if (mode === UserPrefs.EmailNotificationsDeliveryModes.INSTANT) {
-      await sails.helpers.notifications.handleEmailNotification.with({ notifications: [notification], actionsMap: { [values.action.id]: values.action } });
+      await sails.helpers.notifications.sendEmail.with({ notifications: [notification], actionsMap: { [values.action.id]: values.action } });
     } else if (mode === UserPrefs.EmailNotificationsDeliveryModes.INSTANT_THEN_BATCHED) {
       let scopeIdField = `${values.action.scope}Id`;
       if ([Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(values.action.scope)) {
@@ -83,7 +83,7 @@ module.exports = {
       });
 
       if (!lastSent.length || new Date() - new Date(lastSent[0].deliveredAt) >= sails.config.custom.notificationsMailBatchIntervalMs) {
-        await sails.helpers.notifications.handleEmailNotification.with({ notifications: [notification], actionsMap: { [values.action.id]: values.action } });
+        await sails.helpers.notifications.sendEmail.with({ notifications: [notification], actionsMap: { [values.action.id]: values.action } });
       }
     }
 

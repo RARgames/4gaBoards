@@ -45,7 +45,7 @@ module.exports = function defineCronNotificationsBatchingHook(sails) {
               const actions = await Action.find({ id: actionIds });
               const actionsMap = Object.fromEntries(actions.map((a) => [a.id, a]));
 
-              await sails.helpers.notifications.handleEmailNotification.with({
+              await sails.helpers.notifications.sendEmail.with({
                 notifications,
                 actionsMap,
               });
