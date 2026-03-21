@@ -51,10 +51,23 @@ const parseDatePostProcessor = {
   },
 };
 
+const lowercasePostProcessor = {
+  type: 'postProcessor',
+  name: 'lowercase',
+  process(value) {
+    if (typeof value !== 'string') {
+      return value;
+    }
+
+    return value.toLowerCase();
+  },
+};
+
 i18n
   .use(LanguageDetector)
   .use(formatDatePostProcessor)
   .use(parseDatePostProcessor)
+  .use(lowercasePostProcessor)
   .use(initReactI18next)
   .init({
     resources: embeddedLocales,
