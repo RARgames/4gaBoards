@@ -77,14 +77,15 @@ const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColu
             if (skipColumns.includes(column.id)) {
               return null;
             }
+            const label = column.columnDef.header !== column.columnDef.meta.headerTitle ? column.columnDef.meta.headerTitle : column.columnDef.header;
             return (
               <Checkbox
                 key={column.id}
                 checked={visibilityState[column.id]}
                 size={CheckboxSize.Size14}
-                label={column.columnDef.header !== column.columnDef.meta.headerTitle ? column.columnDef.meta.headerTitle : column.columnDef.header}
+                label={label}
                 onChange={() => handleColumnToggleVisibilityClick(column)}
-                title={t('common.toggleColumnVisibility')}
+                title={t('common.toggleItem', { item: label })}
               />
             );
           })}

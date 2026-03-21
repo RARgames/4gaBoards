@@ -85,14 +85,14 @@ const Comments = React.memo(
       <div>
         <div className={cStyles.moduleHeader}>
           <Icon type={IconType.Comment} size={IconSize.Size20} className={cStyles.moduleIcon} />
-          {t('common.actions')}
+          {t('common.comments')}
           {commentCount > 0 && <div className={cStyles.headerCount}>({commentCount})</div>}
           {canEdit && (
             <Button style={ButtonStyle.Icon} title={t('common.addComment')} onClick={openAddComment}>
               <Icon type={IconType.Plus} size={IconSize.Size10} className={cStyles.iconAddButton} />
             </Button>
           )}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleComments')} onClick={toggleCommShown} className={cStyles.buttonToggle}>
+          <Button style={ButtonStyle.Icon} title={t('common.toggleItem', { item: t('common.comments') })} onClick={toggleCommShown} className={cStyles.buttonToggle}>
             <Icon type={commShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={s.icon} />
           </Button>
         </div>

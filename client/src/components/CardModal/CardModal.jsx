@@ -640,7 +640,7 @@ const CardModal = React.memo(
             </Button>
           )}
           {canEdit && unsavedDesc && <span className={s.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleDescription')} onClick={handleToggleDescShown} className={s.buttonToggle}>
+          <Button style={ButtonStyle.Icon} title={t('common.toggleItem', { item: t('common.description') })} onClick={handleToggleDescShown} className={s.buttonToggle}>
             <Icon type={descShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
           </Button>
         </div>
@@ -677,7 +677,7 @@ const CardModal = React.memo(
               <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
             </Button>
           )}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleTasks')} onClick={handleToggleTasksShown} className={s.buttonToggle}>
+          <Button style={ButtonStyle.Icon} title={t('common.toggleItem', { item: t('common.tasks') })} onClick={handleToggleTasksShown} className={s.buttonToggle}>
             <Icon type={taskShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
           </Button>
         </div>
@@ -719,7 +719,7 @@ const CardModal = React.memo(
               </Button>
             </AttachmentAdd>
           )}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleAttachments')} onClick={handleToggleAttacShown} className={s.buttonToggle}>
+          <Button style={ButtonStyle.Icon} title={t('common.toggleItem', { item: t('common.attachments') })} onClick={handleToggleAttacShown} className={s.buttonToggle}>
             <Icon type={attacShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
           </Button>
         </div>

@@ -187,12 +187,17 @@ const UsersSettings = React.memo(
         },
         {
           accessorKey: 'administrator',
-          header: t('common.administrator'),
+          header: t('common.admin'),
           cell: Table.Renderers.RadioCellRenderer,
           enableSorting: true,
           sortDescFirst: true,
-          meta: { headerTitle: t('common.administrator') },
-          cellProps: { title: t('common.toggleAdmin'), ariaLabel: t('common.toggleAdmin'), onChange: handleIsAdminChange, getIsDisabled: (id) => id === currentUserId || demoMode },
+          meta: { headerTitle: t('common.admin') },
+          cellProps: {
+            title: t('common.toggleItem', { item: t('common.admin') }),
+            ariaLabel: t('common.toggleItem', { item: t('common.admin') }),
+            onChange: handleIsAdminChange,
+            getIsDisabled: (id) => id === currentUserId || demoMode,
+          },
         },
         {
           accessorKey: 'ssoGoogleEmail',

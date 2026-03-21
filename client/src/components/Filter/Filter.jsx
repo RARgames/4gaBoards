@@ -111,7 +111,7 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
     <div>
       <Form className={s.form} onKeyDown={handleKeyDown}>
         <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t(`common.filter${upperCasedTarget}s`)} onFocus={handleFocus} />
-        <Button style={ButtonStyle.Icon} title={t('common.toggleFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
+        <Button style={ButtonStyle.Icon} title={t('common.toggleSidebarFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
           <div className={s.inputButtonText}>{t(`common.filterId${upperCasedTarget}`)[0].toUpperCase()}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
         </Button>
       </Form>
