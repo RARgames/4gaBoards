@@ -3,7 +3,7 @@ const valuesValidator = (value) => {
     return false;
   }
 
-  if (!_.isFinite(value.position)) {
+  if (!_.isUndefined(value.position) && !_.isFinite(value.position)) {
     return false;
   }
 
@@ -44,6 +44,11 @@ module.exports = {
 
   async fn(inputs) {
     const { values, currentUser, skipMetaUpdate, skipActions } = inputs;
+
+    if (_.isUndefined(values.position)) {
+      const [lastTask] = await Task.find({ cardId: values.card.id }).sort('position DESC').limit(1);
+      values.position = (lastTask?.position || 0) + sails.config.custom.positionGap;
+    }
 
     const tasks = await sails.helpers.cards.getTasks(values.card.id);
 
