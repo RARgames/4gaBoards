@@ -32,6 +32,7 @@ module.exports = {
 
   async fn(inputs) {
     const { currentUser } = this.req;
+    const name = inputs.name.toLowerCase();
 
     const board = await Board.findOne({ id: inputs.boardId });
     if (!board) {
@@ -48,7 +49,7 @@ module.exports = {
     }
 
     const user = await User.findOne({
-      username: inputs.name,
+      username: name,
     });
 
     if (!user) {
