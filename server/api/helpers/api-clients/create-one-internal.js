@@ -48,7 +48,7 @@ module.exports = {
           'card-labels.create',
           'card-memberships.create',
           'boards.find-label-by-name',
-          'boards.find-user-by-name',
+          'boards.find-user-by-username',
         ],
         label: notificationsLabel,
         name: version.toString(),
