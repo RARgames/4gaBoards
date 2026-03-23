@@ -69,5 +69,5 @@ module.exports.custom = {
   cacheMaxAge: 900,
   actionsLimit: 50,
   commentsLimit: 50,
-  notificationsMailBatchIntervalMs: 10 * 60 * 1000,
+  notificationsMailBatchIntervalMs: process.env.NODE_ENV === 'production' ? 10 * 60 * 1000 : 1 * 60 * 1000,
 };
