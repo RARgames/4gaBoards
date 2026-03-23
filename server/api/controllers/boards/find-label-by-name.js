@@ -47,10 +47,15 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const label = await Label.findOne({
-      boardId: board.id,
-      name: inputs.name,
-    });
+    // FUTURE check for name without case sensitivity - improve
+    const rawResult = await sails.sendNativeQuery(
+      `SELECT id FROM label
+       WHERE "board_id" = $1
+       AND LOWER("name") = LOWER($2)
+       LIMIT 1`,
+      [board.id, inputs.name],
+    );
+    const label = rawResult.rows[0] || null;
 
     if (!label) {
       return {
