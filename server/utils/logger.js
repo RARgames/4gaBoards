@@ -1,4 +1,5 @@
 const winston = require('winston');
+const util = require('util');
 
 /**
  * The default timestamp used by the logger.
@@ -16,24 +17,47 @@ const logfile = `${process.cwd()}/logs/4gaBoards.log`;
  * for more information on Winston log levels.
  */
 const logLevel = process.env.NODE_ENV === 'production' ? process.env.LOG_LEVEL || 'warn' : process.env.LOG_LEVEL || 'info';
+winston.addColors({
+  error: 'red',
+  warn: 'yellow',
+  info: 'white',
+  verbose: 'gray',
+});
+
+const combineMessageAndSplat = () => {
+  return {
+    transform: (info) => {
+      // eslint-disable-next-line no-param-reassign
+      info.message = util.format(info.message, ...(info[Symbol.for('splat')] || []));
+      // eslint-disable-next-line no-param-reassign
+      info.message = info.message.replace(/^ (info|warn|error|verbose|debug):\s*/i, '');
+      return info;
+    },
+  };
+};
 
 const logFormatConsoleProd = winston.format.combine(
   winston.format.uncolorize(),
+  combineMessageAndSplat(),
   winston.format.timestamp({ format: timestampFormatProd }),
-  winston.format.printf((log) => `${log.timestamp} ${log.message}`),
+  winston.format.printf((log) => `${log.timestamp} [${log.level.toUpperCase()}] ${log.message}`),
 );
 
 const logFormatConsoleDev = winston.format.combine(
+  winston.format.uncolorize(),
+  combineMessageAndSplat(),
   winston.format.timestamp({ format: timestampFormatDev }),
-  winston.format.printf((log) => `${log.timestamp} ${log.message}`),
+  winston.format.printf((log) => `${log.timestamp} [${log.level.toUpperCase()}] ${log.message}`),
+  winston.format.colorize({ all: true }),
 );
 
-const logFormatFileProd = winston.format.combine(winston.format.uncolorize(), winston.format.timestamp({ format: timestampFormatProd }), winston.format.json());
+const logFormatFileProd = winston.format.combine(winston.format.uncolorize(), combineMessageAndSplat(), winston.format.timestamp({ format: timestampFormatProd }), winston.format.json());
 
 const logFormatFileDev = winston.format.combine(
   winston.format.uncolorize(),
+  combineMessageAndSplat(),
   winston.format.timestamp({ format: timestampFormatProd }),
-  winston.format.printf((log) => `${log.timestamp} ${log.message}`),
+  winston.format.printf((log) => `${log.timestamp} [${log.level.toUpperCase()}] ${log.message}`),
 );
 
 // eslint-disable-next-line new-cap
