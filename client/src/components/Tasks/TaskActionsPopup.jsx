@@ -9,7 +9,7 @@ import DueDateEditStep from '../DueDateEditStep';
 import MembershipsStep from '../MembershipsStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
-import * as s from './ActionsPopup.module.scss';
+import * as s from './TaskActionsPopup.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
@@ -18,7 +18,7 @@ const StepTypes = {
   ACTIVITY: 'ACTIVITY',
 };
 
-const ActionsStep = React.memo(
+const TaskActionsStep = React.memo(
   ({
     name,
     dueDate,
@@ -29,6 +29,7 @@ const ActionsStep = React.memo(
     isActivitiesFetching,
     isAllActivitiesFetched,
     lastActivityId,
+    canEdit,
     createdAt,
     createdBy,
     updatedAt,
@@ -120,37 +121,47 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.PopupContext} title={t('action.editDescription', { context: 'title' })} onClick={handleEditNameClick}>
-          <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-          {t('action.editDescription', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })} onClick={handleDueDateEditClick}>
-          <Icon type={IconType.Calendar} size={IconSize.Size13} className={s.icon} />
-          {t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t(users.length > 0 ? 'common.editMembers' : 'common.addMembers', { context: 'title' })} onClick={handleMembersEditClick}>
-          <Icon type={IconType.Users} size={IconSize.Size13} className={s.icon} />
-          {t(users.length > 0 ? 'common.editMembers' : 'common.addMembers', { context: 'title' })}
-        </Button>
-        <Button style={ButtonStyle.PopupContext} title={t('common.duplicateTask', { context: 'title' })} onClick={handleDuplicateClick}>
-          <Icon type={IconType.Duplicate} size={IconSize.Size13} className={s.icon} />
-          {t('common.duplicateTask', { context: 'title' })}
-        </Button>
+        {canEdit && (
+          <Button style={ButtonStyle.PopupContext} title={t('action.editDescription', { context: 'title' })} onClick={handleEditNameClick}>
+            <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+            {t('action.editDescription', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button style={ButtonStyle.PopupContext} title={t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })} onClick={handleDueDateEditClick}>
+            <Icon type={IconType.Calendar} size={IconSize.Size13} className={s.icon} />
+            {t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button style={ButtonStyle.PopupContext} title={t(users.length > 0 ? 'common.editMembers' : 'common.addMembers', { context: 'title' })} onClick={handleMembersEditClick}>
+            <Icon type={IconType.Users} size={IconSize.Size13} className={s.icon} />
+            {t(users.length > 0 ? 'common.editMembers' : 'common.addMembers', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.duplicateTask', { context: 'title' })} onClick={handleDuplicateClick}>
+            <Icon type={IconType.Duplicate} size={IconSize.Size13} className={s.icon} />
+            {t('common.duplicateTask', { context: 'title' })}
+          </Button>
+        )}
         <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
-        <Popup.Separator />
-        <Button style={ButtonStyle.PopupContext} title={t('action.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
-          <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-          {t('action.deleteTask', { context: 'title' })}
-        </Button>
+        {canEdit && <Popup.Separator />}
+        {canEdit && (
+          <Button style={ButtonStyle.PopupContext} title={t('action.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
+            <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
+            {t('action.deleteTask', { context: 'title' })}
+          </Button>
+        )}
       </>
     );
   },
 );
 
-ActionsStep.propTypes = {
+TaskActionsStep.propTypes = {
   name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -160,6 +171,7 @@ ActionsStep.propTypes = {
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
   lastActivityId: PropTypes.string,
+  canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -174,7 +186,7 @@ ActionsStep.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-ActionsStep.defaultProps = {
+TaskActionsStep.defaultProps = {
   dueDate: undefined,
   lastActivityId: undefined,
   createdAt: undefined,
@@ -183,4 +195,4 @@ ActionsStep.defaultProps = {
   updatedBy: undefined,
 };
 
-export default withPopup(ActionsStep);
+export default withPopup(TaskActionsStep);

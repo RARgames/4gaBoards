@@ -10,7 +10,7 @@ import DueDateEditPopup from '../DueDateEditPopup';
 import MembershipsPopup from '../MembershipsPopup';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize } from '../Utils';
-import ActionsPopup from './ActionsPopup';
+import TaskActionsPopup from './TaskActionsPopup';
 import TaskEdit from './TaskEdit';
 
 import * as gs from '../../global.module.scss';
@@ -146,7 +146,7 @@ const Task = React.memo(
         {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
           const contentNode = (
             // eslint-disable-next-line react/jsx-props-no-spreading
-            <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={clsx(s.wrapper, gs.scrollableX, canEdit && s.contentHoverable)}>
+            <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={clsx(s.wrapper, gs.scrollableX, s.contentHoverable)}>
               <Checkbox
                 checked={isCompleted}
                 size={checkboxSize}
@@ -180,8 +180,8 @@ const Task = React.memo(
                     </DueDateEditPopup>
                   </div>
                 )}
-                {isPersisted && canEdit && (
-                  <ActionsPopup
+                {isPersisted && (
+                  <TaskActionsPopup
                     cardId={cardId}
                     cardName={cardName}
                     name={name}
@@ -193,6 +193,7 @@ const Task = React.memo(
                     isActivitiesFetching={isActivitiesFetching}
                     isAllActivitiesFetched={isAllActivitiesFetched}
                     lastActivityId={lastActivityId}
+                    canEdit={canEdit}
                     createdAt={createdAt}
                     createdBy={createdBy}
                     updatedAt={updatedAt}
@@ -211,7 +212,7 @@ const Task = React.memo(
                     <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={clsx(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={s.icon} />
                     </Button>
-                  </ActionsPopup>
+                  </TaskActionsPopup>
                 )}
               </TaskEdit>
             </div>
