@@ -347,6 +347,8 @@ export default {
       listActions_title: 'Liste des actions',
       listView: 'La liste',
       listViewStyle: 'Style de la vue de la liste',
+      mailToCardSyntax:
+        "Pour ajouter une carte par e-mail, envoyez un e-mail à l'adresse générée\nL'objet de l'e-mail peut contenir :\n- nom de la carte (obligatoire)\n- nom d'utilisateur ex. @john\n- étiquette ex. #important\n- date d'échéance ex. !2027-12-31\n\nLe corps de l'e-mail peut contenir :\n- description\n- pièces jointes (fichiers collés/joints)\n- listes de tâches ex.\n - [ ] Tâche 1\n - [x] Tâche 2\nChaque tâche permet d'ajouter des membres et des dates d'échéance de la même manière que dans l'objet.",
       managers: 'Gestionnaires',
       markAllAsRead: 'Marquer tout comme lu',
       markAllAsUnread: 'Marquer tout comme non lu',

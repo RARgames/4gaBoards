@@ -345,6 +345,8 @@ export default {
       listActions_title: 'Akcie zoznamu',
       listView: 'Zoznam',
       listViewStyle: 'Štýl zobrazenia zoznamu',
+      mailToCardSyntax:
+        'Na pridanie karty e-mailom pošlite e-mail na vygenerovanú adresu\nPredmet e-mailu môže obsahovať:\n- názov karty (povinné)\n- používateľské meno napr. @john\n- štítok napr. #important\n- termín napr. !2027-12-31\n\nTelo e-mailu môže obsahovať:\n- popis\n- prílohy (vložené/priložené súbory)\n- zoznamy úloh napr.\n - [ ] Úloha 1\n - [x] Úloha 2\nKaždá úloha podporuje pridanie členov a termínov rovnakým spôsobom ako v predmete.',
       managers: 'Manažéri',
       markAllAsRead: 'Označiť všetko ako prečítané',
       markAllAsUnread: 'Označiť všetko ako neprečítané',

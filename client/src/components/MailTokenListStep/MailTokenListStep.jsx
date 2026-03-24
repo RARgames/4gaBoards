@@ -75,7 +75,9 @@ const MailTokenListStep = React.memo(({ title, mailTokens, mailServiceInboundEma
 
   return (
     <>
-      <Popup.Header onBack={onBack}>{title}</Popup.Header>
+      <Popup.Header onBack={onBack} tooltip={t('common.mailToCardSyntax')}>
+        {title}
+      </Popup.Header>
       <Popup.Content>
         <div className={s.inputWrapper}>
           <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.filterEmailsByUser')} onChange={handleSearchChange} />

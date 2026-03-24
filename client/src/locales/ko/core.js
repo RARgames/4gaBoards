@@ -331,6 +331,8 @@ export default {
       listActions_title: '리스트 작업',
       listView: '리스트',
       listViewStyle: '리스트 보기 스타일',
+      mailToCardSyntax:
+        '이메일로 카드를 추가하려면 생성된 이메일 주소로 이메일을 보내세요\n이메일 제목에는 다음을 포함할 수 있습니다:\n- 카드 이름 (필수)\n- 사용자 이름 예: @john\n- 라벨 예: #important\n- 마감일 예: !2027-12-31\n\n이메일 본문에는 다음을 포함할 수 있습니다:\n- 설명\n- 첨부파일 (붙여넣기/첨부 파일)\n- 작업 목록 예:\n - [ ] 작업 1\n - [x] 작업 2\n각 작업은 제목과 동일한 방식으로 멤버 및 마감일을 추가할 수 있습니다.',
       managers: '관리자',
       markAllAsRead: '모두 읽음 처리',
       markAllAsUnread: '모두 읽지 않음 처리',

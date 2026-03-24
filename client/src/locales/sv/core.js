@@ -338,6 +338,8 @@ export default {
       listActions_title: 'Lista åtgärder',
       listView: 'Lista',
       listViewStyle: 'Listvy-stil',
+      mailToCardSyntax:
+        'För att lägga till ett kort via e-post, skicka ett mejl till den genererade adressen\nMejlets ämne kan innehålla:\n- kortnamn (obligatoriskt)\n- användarnamn t.ex. @john\n- etikett t.ex. #important\n- förfallodatum t.ex. !2027-12-31\n\nMejlets innehåll kan innehålla:\n- beskrivning\n- bilagor (inklistrade/bifogade filer)\n- uppgiftslistor t.ex.\n - [ ] Uppgift 1\n - [x] Uppgift 2\nVarje uppgift stöder att lägga till medlemmar och förfallodatum på samma sätt som i ämnet.',
       managers: 'Ansvariga',
       markAllAsRead: 'Markera alla lästa',
       markAllAsUnread: 'Markera alla olästa',

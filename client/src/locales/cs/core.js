@@ -345,6 +345,8 @@ export default {
       listActions_title: 'Akce seznamu',
       listView: 'Seznam',
       listViewStyle: 'Styl zobrazení seznamu',
+      mailToCardSyntax:
+        'Pro přidání karty e-mailem pošlete e-mail na vygenerovanou adresu\nPředmět e-mailu může obsahovat:\n- název karty (povinné)\n- uživatelské jméno např. @john\n- štítek např. #important\n- datum splatnosti např. !2027-12-31\n\nTělo e-mailu může obsahovat:\n- popis\n- přílohy (vložené/připojené soubory)\n- seznam úkolů např.\n - [ ] Úkol 1\n - [x] Úkol 2\nKaždý úkol podporuje přidávání členů a termínů stejným způsobem jako v předmětu.',
       managers: 'Správci',
       markAllAsRead: 'Označit vše jako přečtené',
       markAllAsUnread: 'Označit vše jako nepřečtené',

@@ -338,6 +338,8 @@ export default {
       listActions_title: 'Azioni lista',
       listView: 'Elenco',
       listViewStyle: 'Stile vista elenco',
+      mailToCardSyntax:
+        "Per aggiungere una scheda via email, invia un'email all'indirizzo generato\nL'oggetto dell'email può contenere:\n- nome della scheda (obbligatorio)\n- nome utente es. @john\n- etichetta es. #important\n- data di scadenza es. !2027-12-31\n\nIl corpo dell'email può contenere:\n- descrizione\n- allegati (file incollati/allegati)\n- liste di attività es.\n - [ ] Attività 1\n - [x] Attività 2\nOgni attività supporta l'aggiunta di membri e date di scadenza allo stesso modo dell'oggetto.",
       managers: 'Manager',
       markAllAsRead: 'Segna tutti come letti',
       markAllAsUnread: 'Segna tutti come non letti',
