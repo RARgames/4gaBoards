@@ -227,9 +227,9 @@ const Sidebar = React.memo(
                                   onFetch={() => onBoardFetch(board.id)}
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
-                                  onMailTokenCreate={onMailTokenCreate}
-                                  onMailTokenUpdate={onMailTokenUpdate}
-                                  onMailTokenDelete={onMailTokenDelete}
+                                  onMailTokenCreate={() => onMailTokenCreate(board.id)}
+                                  onMailTokenUpdate={(mailTokenId) => onMailTokenUpdate(mailTokenId, { boardId: board.id })}
+                                  onMailTokenDelete={(mailTokenId) => onMailTokenDelete(mailTokenId)}
                                   position="right-start"
                                   offset={10}
                                   hideCloseButton
