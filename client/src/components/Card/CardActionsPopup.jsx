@@ -13,7 +13,7 @@ import MembershipsStep from '../MembershipsStep';
 import TimerEditStep from '../TimerEditStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
-import * as s from './ActionsPopup.module.scss';
+import * as s from './CardActionsPopup.module.scss';
 
 const StepTypes = {
   USERS: 'USERS',
@@ -25,7 +25,7 @@ const StepTypes = {
   ACTIVITY: 'ACTIVITY',
 };
 
-const ActionsStep = React.memo(
+const CardActionsStep = React.memo(
   ({
     card,
     projectsToLists,
@@ -198,26 +198,28 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.PopupContext} content={t('action.editName', { context: 'title' })} onClick={handleEditNameClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />
+        {canEdit && <Button style={ButtonStyle.PopupContext} content={t('action.editName', { context: 'title' })} onClick={handleEditNameClick} />}
+        {canEdit && <Button style={ButtonStyle.PopupContext} content={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick} />}
+        {canEdit && <Button style={ButtonStyle.PopupContext} content={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick} />}
+        {canEdit && <Button style={ButtonStyle.PopupContext} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />}
+        {canEdit && <Button style={ButtonStyle.PopupContext} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />}
+        {canEdit && <Button style={ButtonStyle.PopupContext} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />}
+        {canEdit && <Button style={ButtonStyle.PopupContext} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />}
         <Button style={ButtonStyle.PopupContext} content={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink} />
         <Button style={ButtonStyle.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick} />
-        <Popup.Separator />
-        <Button style={ButtonStyle.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
-          <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-          {t('action.deleteCard', { context: 'title' })}
-        </Button>
+        {canEdit && <Popup.Separator />}
+        {canEdit && (
+          <Button style={ButtonStyle.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
+            <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
+            {t('action.deleteCard', { context: 'title' })}
+          </Button>
+        )}
       </>
     );
   },
 );
 
-ActionsStep.propTypes = {
+CardActionsStep.propTypes = {
   card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   projectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -252,11 +254,11 @@ ActionsStep.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-ActionsStep.defaultProps = {
+CardActionsStep.defaultProps = {
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
 };
 
-export default withPopup(ActionsStep);
+export default withPopup(CardActionsStep);

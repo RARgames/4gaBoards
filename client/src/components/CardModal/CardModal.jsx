@@ -7,7 +7,7 @@ import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
 import { createTimer, startTimer, stopTimer } from '../../utils/timer';
-import ActionsPopup from '../Card/ActionsPopup';
+import CardActionsPopup from '../Card/CardActionsPopup';
 import DeletePopup from '../DeletePopup';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
@@ -347,57 +347,55 @@ const CardModal = React.memo(
               </Button>
             </DeletePopup>
           )}
-          {canEdit && (
-            <ActionsPopup
-              card={{
-                id,
-                name,
-                dueDate,
-                timer,
-                boardId,
-                listId,
-                projectId,
-                lastActivityId,
-              }}
-              projectsToLists={allProjectsToLists}
-              allBoardMemberships={boardAndCardMemberships}
-              boardMemberships={boardMemberships}
-              currentUserIds={users.map((user) => user.id)}
-              labels={allLabels}
-              currentLabelIds={labels.map((label) => label.id)}
-              url={url}
-              canEdit={canEdit}
-              createdAt={createdAt}
-              createdBy={createdBy}
-              updatedAt={updatedAt}
-              updatedBy={updatedBy}
-              activities={activities}
-              isActivitiesFetching={isActivitiesFetching}
-              isAllActivitiesFetched={isAllActivitiesFetched}
-              onActivitiesFetch={onActivitiesFetch}
-              onNameEdit={handleNameEdit}
-              onUpdate={onUpdate}
-              onMove={onMove}
-              onTransfer={onTransfer}
-              onDuplicate={onDuplicate}
-              onDelete={onDelete}
-              onUserAdd={onUserAdd}
-              onUserRemove={onUserRemove}
-              onBoardFetch={onBoardFetch}
-              onLabelAdd={onLabelAdd}
-              onLabelRemove={onLabelRemove}
-              onLabelCreate={onLabelCreate}
-              onLabelUpdate={onLabelUpdate}
-              onLabelDelete={onLabelDelete}
-              position="left-start"
-              offset={0}
-              hideCloseButton
-            >
-              <Button style={ButtonStyle.Icon} title={t('common.editCard')}>
-                <Icon type={IconType.EllipsisVertical} size={IconSize.Size14} />
-              </Button>
-            </ActionsPopup>
-          )}
+          <CardActionsPopup
+            card={{
+              id,
+              name,
+              dueDate,
+              timer,
+              boardId,
+              listId,
+              projectId,
+              lastActivityId,
+            }}
+            projectsToLists={allProjectsToLists}
+            allBoardMemberships={boardAndCardMemberships}
+            boardMemberships={boardMemberships}
+            currentUserIds={users.map((user) => user.id)}
+            labels={allLabels}
+            currentLabelIds={labels.map((label) => label.id)}
+            url={url}
+            canEdit={canEdit}
+            createdAt={createdAt}
+            createdBy={createdBy}
+            updatedAt={updatedAt}
+            updatedBy={updatedBy}
+            activities={activities}
+            isActivitiesFetching={isActivitiesFetching}
+            isAllActivitiesFetched={isAllActivitiesFetched}
+            onActivitiesFetch={onActivitiesFetch}
+            onNameEdit={handleNameEdit}
+            onUpdate={onUpdate}
+            onMove={onMove}
+            onTransfer={onTransfer}
+            onDuplicate={onDuplicate}
+            onDelete={onDelete}
+            onUserAdd={onUserAdd}
+            onUserRemove={onUserRemove}
+            onBoardFetch={onBoardFetch}
+            onLabelAdd={onLabelAdd}
+            onLabelRemove={onLabelRemove}
+            onLabelCreate={onLabelCreate}
+            onLabelUpdate={onLabelUpdate}
+            onLabelDelete={onLabelDelete}
+            position="left-start"
+            offset={0}
+            hideCloseButton
+          >
+            <Button style={ButtonStyle.Icon} title={t('common.editCard')}>
+              <Icon type={IconType.EllipsisVertical} size={IconSize.Size14} />
+            </Button>
+          </CardActionsPopup>
           <Button style={ButtonStyle.Icon} title={t('common.closeCard')} onClick={handleClose}>
             <Icon type={IconType.Close} size={IconSize.Size14} />
           </Button>

@@ -16,7 +16,7 @@ import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, LinkifiedTextRenderer } from '../Utils';
-import ActionsPopup from './ActionsPopup';
+import CardActionsPopup from './CardActionsPopup';
 import NameEdit from './NameEdit';
 
 import * as s from './Card.module.scss';
@@ -321,59 +321,57 @@ const Card = React.memo(
                     >
                       {contentNode}
                     </div>
-                    {canEdit && (
-                      <div className={s.popupWrapper}>
-                        <ActionsPopup
-                          card={{
-                            id,
-                            name,
-                            dueDate,
-                            timer,
-                            boardId,
-                            listId,
-                            projectId,
-                            lastActivityId,
-                          }}
-                          projectsToLists={allProjectsToLists}
-                          allBoardMemberships={boardAndCardMemberships}
-                          boardMemberships={boardMemberships}
-                          currentUserIds={users.map((user) => user.id)}
-                          labels={allLabels}
-                          currentLabelIds={labels.map((label) => label.id)}
-                          url={url}
-                          canEdit={canEdit}
-                          createdAt={createdAt}
-                          createdBy={createdBy}
-                          updatedAt={updatedAt}
-                          updatedBy={updatedBy}
-                          activities={activities}
-                          isActivitiesFetching={isActivitiesFetching}
-                          isAllActivitiesFetched={isAllActivitiesFetched}
-                          onActivitiesFetch={onActivitiesFetch}
-                          onNameEdit={handleNameEdit}
-                          onUpdate={onUpdate}
-                          onMove={onMove}
-                          onTransfer={onTransfer}
-                          onDuplicate={onDuplicate}
-                          onDelete={onDelete}
-                          onUserAdd={onUserAdd}
-                          onUserRemove={onUserRemove}
-                          onBoardFetch={onBoardFetch}
-                          onLabelAdd={onLabelAdd}
-                          onLabelRemove={onLabelRemove}
-                          onLabelCreate={onLabelCreate}
-                          onLabelUpdate={onLabelUpdate}
-                          onLabelDelete={onLabelDelete}
-                          position="left-start"
-                          offset={0}
-                          hideCloseButton
-                        >
-                          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={s.editCardButton}>
-                            <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                          </Button>
-                        </ActionsPopup>
-                      </div>
-                    )}
+                    <div className={s.popupWrapper}>
+                      <CardActionsPopup
+                        card={{
+                          id,
+                          name,
+                          dueDate,
+                          timer,
+                          boardId,
+                          listId,
+                          projectId,
+                          lastActivityId,
+                        }}
+                        projectsToLists={allProjectsToLists}
+                        allBoardMemberships={boardAndCardMemberships}
+                        boardMemberships={boardMemberships}
+                        currentUserIds={users.map((user) => user.id)}
+                        labels={allLabels}
+                        currentLabelIds={labels.map((label) => label.id)}
+                        url={url}
+                        canEdit={canEdit}
+                        createdAt={createdAt}
+                        createdBy={createdBy}
+                        updatedAt={updatedAt}
+                        updatedBy={updatedBy}
+                        activities={activities}
+                        isActivitiesFetching={isActivitiesFetching}
+                        isAllActivitiesFetched={isAllActivitiesFetched}
+                        onActivitiesFetch={onActivitiesFetch}
+                        onNameEdit={handleNameEdit}
+                        onUpdate={onUpdate}
+                        onMove={onMove}
+                        onTransfer={onTransfer}
+                        onDuplicate={onDuplicate}
+                        onDelete={onDelete}
+                        onUserAdd={onUserAdd}
+                        onUserRemove={onUserRemove}
+                        onBoardFetch={onBoardFetch}
+                        onLabelAdd={onLabelAdd}
+                        onLabelRemove={onLabelRemove}
+                        onLabelCreate={onLabelCreate}
+                        onLabelUpdate={onLabelUpdate}
+                        onLabelDelete={onLabelDelete}
+                        position="left-start"
+                        offset={0}
+                        hideCloseButton
+                      >
+                        <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={s.editCardButton}>
+                          <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                        </Button>
+                      </CardActionsPopup>
+                    </div>
                   </>
                 ) : (
                   <span className={s.content}>{contentNode}</span>

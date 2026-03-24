@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import ActionsPopup from '../../../Card/ActionsPopup';
+import CardActionsPopup from '../../../Card/CardActionsPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './ActionsCell.module.scss';
@@ -55,9 +55,9 @@ const ActionsCell = React.memo(
       onOpenNameEdit(id);
     }, [onOpenNameEdit, id]);
 
-    if (canEdit && isPersisted) {
+    if (isPersisted) {
       return (
-        <ActionsPopup
+        <CardActionsPopup
           card={{
             id,
             name,
@@ -106,7 +106,7 @@ const ActionsCell = React.memo(
           <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={s.editCardButton}>
             <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} className={s.iconEditCardButton} />
           </Button>
-        </ActionsPopup>
+        </CardActionsPopup>
       );
     }
 
