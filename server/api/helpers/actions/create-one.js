@@ -98,14 +98,7 @@ module.exports = {
       }).fetch();
 
       if (action) {
-        sails.sockets.broadcast(
-          `board:${values.card.boardId}`,
-          'actionCreate',
-          {
-            item: action,
-          },
-          inputs.request,
-        );
+        sails.sockets.broadcast(`board:${values.card.boardId}`, 'actionCreate', { item: action });
 
         let subscriptionUserIds = [];
         if (!inputs.skipNotifications) {
@@ -161,14 +154,7 @@ module.exports = {
       }).fetch();
 
       if (action) {
-        sails.sockets.broadcast(
-          `board:${board.id}`,
-          'actionCreate',
-          {
-            item: action,
-          },
-          inputs.request,
-        );
+        sails.sockets.broadcast(`board:${board.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
           const subscriptionUserIds = await sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId);
@@ -199,14 +185,7 @@ module.exports = {
       }).fetch();
 
       if (action) {
-        sails.sockets.broadcast(
-          `board:${values.board.id}`,
-          'actionCreate',
-          {
-            item: action,
-          },
-          inputs.request,
-        );
+        sails.sockets.broadcast(`board:${values.board.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
           let subscriptionUserIds = await sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId);
@@ -237,14 +216,7 @@ module.exports = {
       }).fetch();
 
       if (action) {
-        sails.sockets.broadcast(
-          `project:${values.project.id}`,
-          'actionCreate',
-          {
-            item: action,
-          },
-          inputs.request,
-        );
+        sails.sockets.broadcast(`project:${values.project.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
           const subscriptionUserIds = await sails.helpers.projects.getSubscriptionUserIds(action.projectId, action.userId);
@@ -270,14 +242,7 @@ module.exports = {
       }).fetch();
 
       if (action) {
-        sails.sockets.broadcast(
-          `user:${values.userAccount.id}`,
-          'actionCreate',
-          {
-            item: action,
-          },
-          inputs.request,
-        );
+        sails.sockets.broadcast(`user:${values.userAccount.id}`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
           let subscriptionUserIds = await sails.helpers.userPrefs.getUserSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
@@ -306,14 +271,7 @@ module.exports = {
       }).fetch();
 
       if (action) {
-        sails.sockets.broadcast(
-          `instance`,
-          'actionCreate',
-          {
-            item: action,
-          },
-          inputs.request,
-        );
+        sails.sockets.broadcast(`instance`, 'actionCreate', { item: action });
 
         if (!inputs.skipNotifications) {
           const subscriptionUserIds = await sails.helpers.userPrefs.getInstanceSubscriptionUserIds.with({ exceptUserIdOrIds: action.userId });
