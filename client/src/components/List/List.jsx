@@ -10,8 +10,8 @@ import CardContainer from '../../containers/CardContainer';
 import { useResizeObserverSize } from '../../hooks';
 import CardAddPopup from '../CardAddPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
-import ActionsPopup from './ActionsPopup';
 import CardAdd from './CardAdd';
+import ListActionsPopup from './ListActionsPopup';
 import NameEdit from './NameEdit';
 
 import * as gs from '../../global.module.scss';
@@ -260,9 +260,9 @@ const List = React.memo(
                     {name}
                   </div>
                 </NameEdit>
-                {isPersisted && canEdit && (
+                {isPersisted && (
                   <div className={s.popupWrapper}>
-                    <ActionsPopup
+                    <ListActionsPopup
                       name={name}
                       createdAt={createdAt}
                       createdBy={createdBy}
@@ -293,7 +293,7 @@ const List = React.memo(
                       <Button style={ButtonStyle.Icon} title={t('common.editList')} className={s.editListButton}>
                         <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                       </Button>
-                    </ActionsPopup>
+                    </ListActionsPopup>
                   </div>
                 )}
                 <div className={s.headerCardsCount}>{cardsCountText()}</div>
