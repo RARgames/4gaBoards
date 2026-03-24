@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
-import ActionsPopup from './ActionsPopup';
 import AddPopup from './AddPopup';
+import MembershipActionsStep from './MembershipActionsPopup';
 
 import * as s from './Memberships.module.scss';
 
@@ -37,7 +37,7 @@ const Memberships = React.memo(
       <div className={s.users}>
         {items.slice(0, visibleMembersCount).map((item) => (
           <span key={item.id} className={s.user}>
-            <ActionsPopup
+            <MembershipActionsStep
               membership={item}
               permissionsSelectStep={permissionsSelectStep}
               leaveButtonContent={leaveButtonContent}
@@ -54,7 +54,7 @@ const Memberships = React.memo(
               onDelete={() => onDelete(item.id)}
             >
               <User name={item.user.name} avatarUrl={item.user.avatarUrl} size="large" isDisabled={!item.isPersisted} />
-            </ActionsPopup>
+            </MembershipActionsStep>
           </span>
         ))}
         {!canEdit && items.length > visibleMembersCount && (

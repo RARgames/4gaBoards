@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useField, useSteps } from '../../../hooks';
 import { Popup, Input, InputStyle, withPopup } from '../../Utils';
-import ActionsStep from '../ActionsStep';
+import MembershipActionsStep from '../MembershipActionsStep';
 import UserItem from './UserItem';
 
 import * as gs from '../../../global.module.scss';
@@ -123,7 +123,7 @@ const AddStep = React.memo(
 
           if (currentUser && membership) {
             return (
-              <ActionsStep
+              <MembershipActionsStep
                 membership={membership}
                 permissionsSelectStep={permissionsSelectStep}
                 leaveButtonContent={leaveButtonContent}

@@ -8,14 +8,14 @@ import DeleteStep from '../DeleteStep';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
-import * as s from './ActionsStep.module.scss';
+import * as s from './MembershipActionsStep.module.scss';
 
 const StepTypes = {
   EDIT_PERMISSIONS: 'EDIT_PERMISSIONS',
   DELETE: 'DELETE',
 };
 
-const ActionsStep = React.memo(
+const MembershipActionsStep = React.memo(
   ({
     membership,
     permissionsSelectStep,
@@ -119,7 +119,7 @@ const ActionsStep = React.memo(
   },
 );
 
-ActionsStep.propTypes = {
+MembershipActionsStep.propTypes = {
   membership: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   permissionsSelectStep: PropTypes.elementType,
   leaveButtonContent: PropTypes.string,
@@ -138,7 +138,7 @@ ActionsStep.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-ActionsStep.defaultProps = {
+MembershipActionsStep.defaultProps = {
   permissionsSelectStep: undefined,
   leaveButtonContent: 'action.leaveBoard',
   leaveConfirmationTitle: 'common.leaveBoard',
@@ -152,4 +152,4 @@ ActionsStep.defaultProps = {
   onBack: undefined,
 };
 
-export default ActionsStep;
+export default MembershipActionsStep;
