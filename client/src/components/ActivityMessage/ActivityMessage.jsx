@@ -315,19 +315,19 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
 
       case ActivityTypes.CARD_COMMENT_CREATE: {
-        const { cardComment } = activity.data;
-        const cardCommentTruncated = truncateIf(cardComment, isTruncated, commentTruncateLength);
+        const { commentText } = activity.data;
+        const commentTextTruncated = truncateIf(commentText, isTruncated, commentTruncateLength);
 
         return (
           <Trans
             i18nKey={hideCardDetails ? 'activity.cardCommentCreateShort' : 'activity.cardCommentCreate'}
             values={{
-              comment: cardCommentTruncated,
+              comment: commentTextTruncated,
               card: cardNameTruncated,
             }}
           >
             {cardNode}
-            <span className={s.data} title={cardComment} />
+            <span className={s.data} title={commentText} />
           </Trans>
         );
       }
