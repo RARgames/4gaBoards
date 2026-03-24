@@ -95,34 +95,36 @@ const Attachment = React.forwardRef(
             </Button>
           )}
         </div>
-        {canEdit && (
-          <div className={s.buttons}>
-            <ActivityPopup
-              title={t('common.activityFor', { name })}
-              createdAt={createdAt}
-              createdBy={createdBy}
-              updatedAt={updatedAt}
-              updatedBy={updatedBy}
-              memberships={boardMemberships}
-              isNotMemberTitle={t('common.noLongerBoardMember')}
-              activities={activities}
-              isFetching={isActivitiesFetching}
-              isAllFetched={isAllActivitiesFetched}
-              lastActivityId={lastActivityId}
-              hideCardDetails
-              onFetch={onActivitiesFetch}
-              position="left-start"
-              offset={0}
-            >
-              <Button style={ButtonStyle.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.target}>
-                <Icon type={IconType.Activity} size={IconSize.Size10} />
-              </Button>
-            </ActivityPopup>
+        <div className={s.buttons}>
+          <ActivityPopup
+            title={t('common.activityFor', { name })}
+            createdAt={createdAt}
+            createdBy={createdBy}
+            updatedAt={updatedAt}
+            updatedBy={updatedBy}
+            memberships={boardMemberships}
+            isNotMemberTitle={t('common.noLongerBoardMember')}
+            activities={activities}
+            isFetching={isActivitiesFetching}
+            isAllFetched={isAllActivitiesFetched}
+            lastActivityId={lastActivityId}
+            hideCardDetails
+            onFetch={onActivitiesFetch}
+            position="left-start"
+            offset={0}
+          >
+            <Button style={ButtonStyle.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.target}>
+              <Icon type={IconType.Activity} size={IconSize.Size10} />
+            </Button>
+          </ActivityPopup>
+          {canEdit && (
             <EditPopup defaultData={{ name }} onUpdate={onUpdate} position="left-start" offset={0}>
               <Button style={ButtonStyle.Icon} title={t('common.editAttachmentName')} className={s.target}>
                 <Icon type={IconType.Pencil} size={IconSize.Size10} />
               </Button>
             </EditPopup>
+          )}
+          {canEdit && (
             <DeletePopup
               title={t('common.deleteAttachment', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisAttachment')}
@@ -135,8 +137,8 @@ const Attachment = React.forwardRef(
                 <Icon type={IconType.Trash} size={IconSize.Size10} />
               </Button>
             </DeletePopup>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     );
   },

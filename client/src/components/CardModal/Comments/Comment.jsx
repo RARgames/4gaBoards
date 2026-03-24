@@ -55,34 +55,36 @@ const Comment = React.memo(
               {t('common.edited')}
             </span>
           )}
-          {canEdit && (
-            <div className={s.buttons}>
+          <div className={s.buttons}>
+            {canEdit && (
               <Button style={ButtonStyle.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={s.button}>
                 <Icon type={IconType.Pencil} size={IconSize.Size10} className={s.buttonIcon} />
               </Button>
-              <div className={s.popupWrapper}>
-                <ActivityPopup
-                  title={t('common.activityForComment', { name: user.name })}
-                  createdAt={createdAt}
-                  createdBy={createdBy}
-                  updatedAt={updatedAt}
-                  updatedBy={updatedBy}
-                  memberships={boardMemberships}
-                  isNotMemberTitle={t('common.noLongerBoardMember')}
-                  activities={activities}
-                  isFetching={isActivitiesFetching}
-                  isAllFetched={isAllActivitiesFetched}
-                  lastActivityId={lastActivityId}
-                  hideCardDetails
-                  onFetch={onActivitiesFetch}
-                  position="left-start"
-                  offset={0}
-                >
-                  <Button style={ButtonStyle.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.button}>
-                    <Icon type={IconType.Activity} size={IconSize.Size10} className={s.buttonIcon} />
-                  </Button>
-                </ActivityPopup>
-              </div>
+            )}
+            <div className={s.popupWrapper}>
+              <ActivityPopup
+                title={t('common.activityForComment', { name: user.name })}
+                createdAt={createdAt}
+                createdBy={createdBy}
+                updatedAt={updatedAt}
+                updatedBy={updatedBy}
+                memberships={boardMemberships}
+                isNotMemberTitle={t('common.noLongerBoardMember')}
+                activities={activities}
+                isFetching={isActivitiesFetching}
+                isAllFetched={isAllActivitiesFetched}
+                lastActivityId={lastActivityId}
+                hideCardDetails
+                onFetch={onActivitiesFetch}
+                position="left-start"
+                offset={0}
+              >
+                <Button style={ButtonStyle.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.button}>
+                  <Icon type={IconType.Activity} size={IconSize.Size10} className={s.buttonIcon} />
+                </Button>
+              </ActivityPopup>
+            </div>
+            {canEdit && (
               <div className={s.popupWrapper}>
                 <DeletePopup
                   title={t('common.deleteComment', { context: 'title' })}
@@ -97,8 +99,8 @@ const Comment = React.memo(
                   </Button>
                 </DeletePopup>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <CommentEdit
           ref={commentEdit}
