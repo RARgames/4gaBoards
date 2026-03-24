@@ -158,15 +158,17 @@ const BoardActionsStep = React.memo(
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
-        <Button
-          style={ButtonStyle.PopupContext}
-          title={mailServiceAvailable ? t('common.emailCardToBoard') : t('common.emailServiceUnavailable')}
-          onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}
-          disabled={!mailServiceAvailable}
-        >
-          <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
-          {t('common.emailCardToBoard')}
-        </Button>
+        {canEdit && (
+          <Button
+            style={ButtonStyle.PopupContext}
+            title={mailServiceAvailable ? t('common.emailCardToBoard') : t('common.emailServiceUnavailable')}
+            onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}
+            disabled={!mailServiceAvailable}
+          >
+            <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
+            {t('common.emailCardToBoard')}
+          </Button>
+        )}
         {isProjectManager && <Popup.Separator />}
         {isProjectManager && (
           <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
