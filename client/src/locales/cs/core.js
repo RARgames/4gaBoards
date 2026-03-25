@@ -129,6 +129,7 @@ export default {
       createdAt: 'Vytvořeno dne',
       createdAt_withDate: 'Vytvořeno {{date}}',
       createdBy: 'Vytvořil',
+      createdViaApi: 'Vytvořeno přes API',
       createLabel_title: 'Vytvořit štítek',
       createTextFile_title: 'Vytvořit textový soubor',
       currentPassword: 'Aktuální heslo',
@@ -346,6 +347,7 @@ export default {
       listActions_title: 'Akce seznamu',
       listView: 'Seznam',
       listViewStyle: 'Styl zobrazení seznamu',
+      mailAuthor: 'Autor e-mailu',
       mailToCardSyntax:
         'Pro přidání karty e-mailem pošlete e-mail na vygenerovanou adresu\nPředmět e-mailu může obsahovat:\n- název karty (povinné)\n- uživatelské jméno např. @john\n- štítek např. #important\n- datum splatnosti např. !2027-12-31\n\nTělo e-mailu může obsahovat:\n- popis\n- přílohy (vložené/připojené soubory)\n- seznam úkolů např.\n - [ ] Úkol 1\n - [x] Úkol 2\nKaždý úkol podporuje přidávání členů a termínů stejným způsobem jako v předmětu.',
       managers: 'Správci',

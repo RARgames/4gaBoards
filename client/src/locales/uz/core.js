@@ -124,6 +124,7 @@ export default {
       createdAt: 'Yaratilgan vaqt',
       createdAt_withDate: '{{date}} da yaratildi',
       createdBy: 'Yaratgan',
+      createdViaApi: 'API orqali yaratilgan',
       createLabel_title: 'Yorliq yaratish',
       createTextFile_title: 'Matn fayl yaratish',
       currentPassword: 'Joriy parol',
@@ -338,6 +339,7 @@ export default {
       listActions_title: "Ro'yxat harakatlari",
       listView: "Ro'yxat",
       listViewStyle: "Ro'yxat ko'rinish uslubi",
+      mailAuthor: 'Elektron pochta muallifi',
       mailToCardSyntax:
         "Email orqali karta qo'shish uchun yaratilgan email manziliga xat yuboring\nEmail mavzusi quyidagilarni o'z ichiga olishi mumkin:\n- karta nomi (majburiy)\n- foydalanuvchi nomi masalan @john\n- yorliq masalan #important\n- muddat masalan !2027-12-31\n\nEmail matni quyidagilarni o'z ichiga olishi mumkin:\n- tavsif\n- biriktirmalar (joylangan/biriktirilgan fayllar)\n- vazifalar ro'yxati masalan:\n - [ ] Vazifa 1\n - [x] Vazifa 2\nHar bir vazifa a'zolar va muddatlarni mavzudagi kabi qo'shishni qo'llab-quvvatlaydi.",
       managers: 'Menejerlar',

@@ -57,6 +57,11 @@ module.exports = {
       type: 'json',
       custom: timerValidator,
     },
+    mailCreatorAddress: {
+      type: 'string',
+      isEmail: true,
+      allowNull: true,
+    },
   },
 
   exits: {
@@ -89,7 +94,7 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'description', 'dueDate', 'timer']);
+    const values = _.pick(inputs, ['position', 'name', 'description', 'dueDate', 'timer', 'mailCreatorAddress']);
 
     const card = await sails.helpers.cards.createOne
       .with({

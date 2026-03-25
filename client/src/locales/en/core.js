@@ -121,6 +121,7 @@ export default {
       createdAt: 'Created At',
       createdAt_withDate: 'Created at {{date}}',
       createdBy: 'Created By',
+      createdViaApi: 'Created via API',
       createLabel_title: 'Create Label',
       createTextFile_title: 'Create Text File',
       currentPassword: 'Current password',
@@ -335,6 +336,7 @@ export default {
       listActions_title: 'List Actions',
       listView: 'List',
       listViewStyle: 'List View Style',
+      mailAuthor: 'Mail Author',
       mailToCardSyntax:
         'To add a card via email, send an email to the generated email address\nEmail subject may contain:\n- card name (required)\n- username e.g. @john\n- label e.g. #important\n- due date e.g. !2027-12-31\n\nEmail body may contain:\n- description\n- attachments (pasted/attached files)\n- task lists e.g.\n - [ ] Task 1\n - [x] Task 2\nEach task supports adding members and due dates in the same way as in subject.',
       managers: 'Managers',

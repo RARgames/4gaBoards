@@ -121,6 +121,7 @@ export default {
       createdAt: '作成日時',
       createdAt_withDate: '{{date}} に作成',
       createdBy: '作成者',
+      createdViaApi: 'API経由で作成',
       createLabel_title: 'ラベルを作成',
       createTextFile_title: 'テキストファイルを作成',
       currentPassword: '現在のパスワード',
@@ -332,6 +333,7 @@ export default {
       listActions_title: 'リスト操作',
       listView: 'リスト',
       listViewStyle: 'リスト表示スタイル',
+      mailAuthor: 'メールの送信者',
       mailToCardSyntax:
         'メールでカードを追加するには、生成されたメールアドレスに送信してください\nメールの件名には以下を含めることができます:\n- カード名（必須）\n- ユーザー名 例: @john\n- ラベル 例: #important\n- 期限 例: !2027-12-31\n\nメール本文には以下を含めることができます:\n- 説明\n- 添付ファイル（貼り付け/添付ファイル）\n- タスクリスト 例:\n - [ ] タスク 1\n - [x] タスク 2\n各タスクは、件名と同じ方法でメンバーと期限を追加できます。',
       managers: 'マネージャー',

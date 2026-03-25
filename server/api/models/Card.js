@@ -36,6 +36,17 @@ module.exports = {
       required: true,
       columnName: 'comment_count',
     },
+    isCreatedViaApi: {
+      type: 'boolean',
+      required: true,
+      columnName: 'is_created_via_api',
+    },
+    mailCreatorAddress: {
+      type: 'string',
+      isEmail: true,
+      allowNull: true,
+      columnName: 'mail_creator_address',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

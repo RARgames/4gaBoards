@@ -76,6 +76,7 @@ module.exports = {
       boardId: values.list.boardId,
       listId: values.list.id,
       createdById: currentUser.id,
+      isCreatedViaApi: !!(inputs.request && inputs.request.apiClient),
     }).fetch();
 
     if (card) {

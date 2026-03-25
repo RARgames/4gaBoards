@@ -75,6 +75,8 @@ const CardModal = React.memo(
     url,
     closestTaskDueDate,
     closestDueDate,
+    isCreatedViaApi,
+    mailCreatorAddress,
     createdAt,
     createdBy,
     updatedAt,
@@ -561,7 +563,7 @@ const CardModal = React.memo(
 
     const createdNode = (
       <div className={s.headerItems}>
-        <div className={s.text}>{t('common.created')}</div>
+        <div className={s.text}>{isCreatedViaApi ? t('common.createdViaApi') : t('common.created')}</div>
         <span className={clsx(s.headerItem, s.activity)}>
           {createdBy && (
             <User
@@ -593,6 +595,17 @@ const CardModal = React.memo(
             />
           )}
           {updatedAt && <DueDate value={updatedAt} variant="cardModalActivity" showRelative />}
+        </span>
+      </div>
+    );
+
+    const mailCreatorNode = (
+      <div className={s.headerItems}>
+        <div className={s.text}>{t('common.mailAuthor')}</div>
+        <span className={clsx(s.headerItem, s.activity)}>
+          <div className={s.mailAuthor} title={mailCreatorAddress}>
+            {mailCreatorAddress}
+          </div>
         </span>
       </div>
     );
@@ -784,6 +797,7 @@ const CardModal = React.memo(
             {!hideClosestDueDate && closestDueDateNode}
             {!hideCardModalActivity && createdNode}
             {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
+            {mailCreatorAddress && mailCreatorNode}
             <hr className={s.hr} />
           </div>
           <div className={s.moduleContainer}>
@@ -855,6 +869,8 @@ CardModal.propTypes = {
   url: PropTypes.string.isRequired,
   closestTaskDueDate: PropTypes.instanceOf(Date),
   closestDueDate: PropTypes.instanceOf(Date),
+  isCreatedViaApi: PropTypes.bool.isRequired,
+  mailCreatorAddress: PropTypes.string,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -901,6 +917,7 @@ CardModal.defaultProps = {
   lastActivityId: undefined,
   closestTaskDueDate: undefined,
   closestDueDate: undefined,
+  mailCreatorAddress: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

@@ -34,6 +34,10 @@ export default class extends BaseModel {
       getDefault: () => false,
     }),
     lastActivityId: attr(),
+    isCreatedViaApi: attr({
+      getDefault: () => false,
+    }),
+    mailCreatorAddress: attr(),
     boardId: fk({
       to: 'Board',
       as: 'board',

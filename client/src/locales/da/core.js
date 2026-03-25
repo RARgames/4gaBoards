@@ -125,6 +125,7 @@ export default {
       createdAt: 'Oprettet den',
       createdAt_withDate: 'Oprettet den {{date}}',
       createdBy: 'Oprettet af',
+      createdViaApi: 'Oprettet via API',
       createLabel_title: 'Opret etiket',
       createTextFile_title: 'Opret tekstfil',
       currentPassword: 'Nuværende adgangskode',
@@ -339,6 +340,7 @@ export default {
       listActions_title: 'Liste-handlinger',
       listView: 'Liste',
       listViewStyle: 'Listevisningsstil',
+      mailAuthor: 'E-mail-afsender',
       mailToCardSyntax:
         'For at tilføje et kort via e-mail, send en e-mail til den genererede adresse\nE-mailens emne kan indeholde:\n- kortnavn (påkrævet)\n- brugernavn f.eks. @john\n- label f.eks. #important\n- forfaldsdato f.eks. !2027-12-31\n\nE-mailens brødtekst kan indeholde:\n- beskrivelse\n- vedhæftninger (indsatte/vedhæftede filer)\n- opgavelister f.eks.\n - [ ] Opgave 1\n - [x] Opgave 2\nHver opgave understøtter tilføjelse af medlemmer og forfaldsdatoer på samme måde som i emnet.',
       managers: 'Ansvarlige',

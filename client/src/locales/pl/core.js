@@ -129,6 +129,7 @@ export default {
       createdAt: 'Utworzono',
       createdAt_withDate: 'Utworzono {{date}}',
       createdBy: 'Utworzone przez',
+      createdViaApi: 'Utworzono przez API',
       createLabel_title: 'Stwórz etykietę',
       createTextFile_title: 'Stwórz plik tekstowy',
       currentPassword: 'Aktualne hasło',
@@ -346,6 +347,7 @@ export default {
       listActions_title: 'Edytuj listę',
       listView: 'Lista',
       listViewStyle: 'Styl widoku listy',
+      mailAuthor: 'Nadawca wiadomości',
       mailSettings: 'Twój Mail Token',
       mailToCardSyntax:
         'Aby dodać kartę przez e-mail, wyślij wiadomość na wygenerowany adres\nTemat wiadomości może zawierać:\n- nazwę karty (wymagane)\n- nazwę użytkownika np. @john\n- etykietę np. #important\n- termin np. !2027-12-31\n\nTreść wiadomości może zawierać:\n- opis\n- załączniki (wklejone/dołączone pliki)\n- listy zadań np.\n - [ ] Zadanie 1\n - [x] Zadanie 2\nKażde zadanie obsługuje dodawanie członków i terminów w taki sam sposób jak w temacie.',

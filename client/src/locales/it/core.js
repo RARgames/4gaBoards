@@ -125,6 +125,7 @@ export default {
       createdAt: 'Creato il',
       createdAt_withDate: 'Creato il {{date}}',
       createdBy: 'Creato da',
+      createdViaApi: 'Creato tramite API',
       createLabel_title: 'Crea etichetta',
       createTextFile_title: 'Crea file di testo',
       currentPassword: 'Password attuale',
@@ -339,6 +340,7 @@ export default {
       listActions_title: 'Azioni lista',
       listView: 'Elenco',
       listViewStyle: 'Stile vista elenco',
+      mailAuthor: 'Autore della mail',
       mailToCardSyntax:
         "Per aggiungere una scheda via email, invia un'email all'indirizzo generato\nL'oggetto dell'email può contenere:\n- nome della scheda (obbligatorio)\n- nome utente es. @john\n- etichetta es. #important\n- data di scadenza es. !2027-12-31\n\nIl corpo dell'email può contenere:\n- descrizione\n- allegati (file incollati/allegati)\n- liste di attività es.\n - [ ] Attività 1\n - [x] Attività 2\nOgni attività supporta l'aggiunta di membri e date di scadenza allo stesso modo dell'oggetto.",
       managers: 'Manager',

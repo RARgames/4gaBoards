@@ -125,6 +125,7 @@ export default {
       createdAt: 'Criado em',
       createdAt_withDate: 'Criado em {{date}}',
       createdBy: 'Criado por',
+      createdViaApi: 'Criado via API',
       createLabel_title: 'Criar Rótulo',
       createTextFile_title: 'Criar Arquivo de Texto',
       currentPassword: 'Senha atual',
@@ -339,6 +340,7 @@ export default {
       listActions_title: 'Ações de Lista',
       listView: 'Lista',
       listViewStyle: 'Estilo da Visualização de Lista',
+      mailAuthor: 'Remetente do e-mail',
       mailToCardSyntax:
         'Para adicionar um cartão por e-mail, envie um e-mail para o endereço gerado\nO assunto do e-mail pode conter:\n- nome do cartão (obrigatório)\n- nome de usuário ex.: @john\n- rótulo ex.: #important\n- data de vencimento ex.: !2027-12-31\n\nO corpo do e-mail pode conter:\n- descrição\n- anexos (arquivos colados/anexados)\n- listas de tarefas ex.:\n - [ ] Tarefa 1\n - [x] Tarefa 2\nCada tarefa suporta adicionar membros e datas de vencimento da mesma forma que no assunto.',
       managers: 'Gestores',
