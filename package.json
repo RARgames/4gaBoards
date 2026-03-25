@@ -14,6 +14,7 @@
     "client:lint": "npm run lint --prefix client",
     "client:start": "npm start --prefix client",
     "client:test": "npm test --prefix client",
+    "client:ci:test": "npm run ci:test --prefix client",
     "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
     "docker:build_local": "docker build -t rargames0/4gaboards:local -f Dockerfile . && docker push rargames0/4gaboards:local",
     "postinstall": "(cd server && npm i && cd ../client && npm i)",

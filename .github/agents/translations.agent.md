@@ -1,6 +1,6 @@
 ---
 name: translations
-description: This custom agent automatically translates missing localization keys from English (`dir client\src\locales\en all files except index.js`) into all target languages. Target languages are all directories in `client\src\locales` except `en`. It detects missing keys using `CI=true npm run client:test`, then generates consistent translations preserving formatting, syntax e.g. {{count}} should remain unchanged, <0>...</0> should remain unchanged, and escape sequences (`\n`). Use this agent whenever new keys are added or existing translations are incomplete.
+description: This custom agent automatically translates missing localization keys from English (`dir client\src\locales\en all files except index.js`) into all target languages. Target languages are all directories in `client\src\locales` except `en`. It detects missing keys using `npm run client:ci:test`, then generates consistent translations preserving formatting, syntax e.g. {{count}} should remain unchanged, <0>...</0> should remain unchanged, and escape sequences (`\n`). Use this agent whenever new keys are added or existing translations are incomplete.
 tools: ['execute', 'read', 'edit']
 ---
 
@@ -8,7 +8,7 @@ behavior:
 
 - Scan the source English locale files in `client\src\locales\en`, excluding `index.js`, to collect all keys.
 - Detect target language directories in `client\src\locales` (all directories except `en`).
-- Detect missing keys in each target language by running `CI=true npm run client:test`.
+- Detect missing keys in each target language by running `npm run client:ci:test`.
 - You exactly know what keys to modify when you analyze the output of the test command.
 - For each missing key, generate a translation using GPT-5-mini, following strict rules:
   - Preserve key names exactly.
