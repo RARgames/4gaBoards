@@ -146,13 +146,15 @@ const loadLanguage = (lang) => {
 };
 
 describe('i18n translations coverage', () => {
-  test('should calculate translation coverage', () => {
-    const languages = fs.readdirSync(LOCALES_DIR).filter((d) => fs.statSync(path.join(LOCALES_DIR, d)).isDirectory());
-    const baseTranslations = loadLanguage(BASE_LANG);
+  const languages = fs
+    .readdirSync(LOCALES_DIR)
+    .filter((d) => fs.statSync(path.join(LOCALES_DIR, d)).isDirectory())
+    .filter((lang) => lang !== BASE_LANG);
 
-    languages.forEach((lang) => {
-      if (lang === BASE_LANG) return;
+  const baseTranslations = loadLanguage(BASE_LANG);
 
+  languages.forEach((lang) => {
+    test(`translation coverage for "${lang}"`, () => {
       const targetTranslations = loadLanguage(lang);
       const stats = {
         total: 0,
@@ -166,7 +168,6 @@ describe('i18n translations coverage', () => {
       Object.keys(baseTranslations).forEach((namespace) => {
         const baseFile = baseTranslations[namespace];
         const targetFile = targetTranslations[namespace] || {};
-
         compareTranslations(baseFile, targetFile, [], stats, lang);
       });
 
