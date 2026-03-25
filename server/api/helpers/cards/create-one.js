@@ -44,6 +44,7 @@ module.exports = {
 
   async fn(inputs) {
     const { values, currentUser, skipMetaUpdate } = inputs;
+    const isCreatedViaApi = !!(inputs.request && inputs.request.apiClient);
 
     if (_.isUndefined(values.position)) {
       const [lastCard] = await Card.find({ listId: values.list.id }).sort('position DESC').limit(1);
@@ -76,7 +77,7 @@ module.exports = {
       boardId: values.list.boardId,
       listId: values.list.id,
       createdById: currentUser.id,
-      isCreatedViaApi: !!(inputs.request && inputs.request.apiClient),
+      isCreatedViaApi,
     }).fetch();
 
     if (card) {
@@ -112,6 +113,8 @@ module.exports = {
           data: {
             listId: values.list.id,
             listName: values.list.name,
+            isCreatedViaApi,
+            ...(values.mailCreatorAddress ? { mailCreatorAddress: values.mailCreatorAddress } : {}),
           },
         },
         currentUser,

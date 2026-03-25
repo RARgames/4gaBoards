@@ -36,8 +36,9 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
     switch (activity.type) {
       case ActivityTypes.CARD_CREATE: {
-        const { listName } = activity.data;
+        const { listName, isCreatedViaApi, mailCreatorAddress } = activity.data;
         const listNameTruncated = truncateIf(listName, isTruncated, listNameTruncateLength);
+        const mailCreatorAddressTruncated = truncateIf(mailCreatorAddress, isTruncated, defaultTruncateLength);
 
         return (
           <Trans
@@ -45,11 +46,14 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
             values={{
               card: cardNameTruncated,
               list: listNameTruncated,
+              viaApi: isCreatedViaApi && (mailCreatorAddress ? t('activity.viaApiWithEmail', { mail: mailCreatorAddressTruncated }) : t('activity.viaApi')),
             }}
-          >
-            {cardNode}
-            <span className={s.data} title={listName} />
-          </Trans>
+            components={{
+              card: cardNode,
+              list: <span className={s.data} title={listName} />,
+              mail: <span className={s.data} title={mailCreatorAddress} />,
+            }}
+          />
         );
       }
 

@@ -9,6 +9,7 @@ behavior:
 - Scan the source English locale files in `client\src\locales\en`, excluding `index.js`, to collect all keys.
 - Detect target language directories in `client\src\locales` (all directories except `en`).
 - Detect missing keys in each target language by running `CI=true npm run client:test`.
+- You exactly know what keys to modify when you analyze the output of the test command.
 - For each missing key, generate a translation using GPT-5-mini, following strict rules:
   - Preserve key names exactly.
   - Keep formatting and syntax intact:
@@ -19,4 +20,5 @@ behavior:
 - Merge the translated keys into the corresponding target locale files without overwriting existing translations.
 - Validate all merged files for JSON/YAML correctness.
 - Repeat the process for all target languages.
+- Make sure that translations are in the correct language and culturally appropriate.
 - Optionally generate a report of newly added keys and translations for review.

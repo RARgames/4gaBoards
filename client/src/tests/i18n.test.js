@@ -38,7 +38,7 @@ const extractVariables = (str) => {
 
 // helper: extract react-i18next tags <0>...</0>
 const extractTags = (str) => {
-  const regex = /<(\d+)>/g;
+  const regex = /<([a-zA-Z][a-zA-Z0-9]*)>/g;
   const tags = [];
   let match;
   // eslint-disable-next-line no-cond-assign
