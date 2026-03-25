@@ -39,6 +39,11 @@ module.exports = {
     }
     const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: values.userId }, currentUser: { id: values.userId } });
 
+    const deliverNotification = userPrefs.notificationTypes.includes(values.action.scope);
+    if (!deliverNotification) {
+      return null;
+    }
+
     const markAsDelivered = !sails.config.custom.mailServiceAvailable || !userPrefs.emailNotificationsEnabled || !userPrefs.emailNotificationsTypes.includes(values.action.scope);
 
     const notification = await Notification.create({

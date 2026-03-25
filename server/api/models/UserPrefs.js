@@ -242,7 +242,7 @@ module.exports = {
     },
     emailNotificationsTypes: {
       type: 'json',
-      defaultsTo: [...actionScopes],
+      defaultsTo: actionScopes.filter((s) => s !== ActionScopes.INSTANCE && s !== ActionScopes.USER),
       columnName: 'email_notifications_types',
       custom: (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => actionScopesSet.has(v)),
     },
@@ -256,6 +256,12 @@ module.exports = {
       type: 'boolean',
       defaultsTo: true,
       columnName: 'email_notifications_mark_read_as_delivered',
+    },
+    notificationTypes: {
+      type: 'json',
+      defaultsTo: actionScopes.filter((s) => s !== ActionScopes.INSTANCE && s !== ActionScopes.USER),
+      columnName: 'notification_types',
+      custom: (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => actionScopesSet.has(v)),
     },
   },
 

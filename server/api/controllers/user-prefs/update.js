@@ -151,6 +151,10 @@ module.exports = {
     emailNotificationsMarkReadAsDelivered: {
       type: 'boolean',
     },
+    notificationTypes: {
+      type: 'json',
+      custom: (value) => Array.isArray(value) && value.every((v) => Object.values(Action.Scopes).includes(v)),
+    },
   },
 
   exits: {
@@ -211,6 +215,7 @@ module.exports = {
         'emailNotificationsTypes',
         'emailNotificationsDeliveryMode',
         'emailNotificationsMarkReadAsDelivered',
+        'notificationTypes',
       ]),
     };
 

@@ -40,6 +40,7 @@ export default class extends BaseModel {
     emailNotificationsTypes: attr(),
     emailNotificationsDeliveryMode: attr(),
     emailNotificationsMarkReadAsDelivered: attr(),
+    notificationTypes: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {
