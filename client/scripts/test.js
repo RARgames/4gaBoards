@@ -14,6 +14,7 @@ process.on('unhandledRejection', (err) => {
 require('../config/env');
 
 const { execSync } = require('child_process');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const jest = require('jest');
 
 const argv = process.argv.slice(2);
