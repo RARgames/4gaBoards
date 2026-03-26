@@ -11,7 +11,7 @@
     "db:migration_make": "knex migrate:make new_migration --cwd db",
     "db:seed": "knex seed:run --cwd db",
     "lint": "eslint . --max-warnings=0 && echo '✔  Files lint completed successfully!'",
-    "start": "nodemon --exec \"node app.js || exit 1\"",
+    "start": "nodemon --ignore private/** --exec \"node app.js || exit 1\"",
     "start:prod": "node app.js --prod",
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
