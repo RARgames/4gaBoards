@@ -19,22 +19,22 @@ const createMessage = (error) => {
     case 'Email already in use':
       return {
         type: 'error',
-        content: 'common.emailAlreadyInUse',
+        content: 'error.emailAlreadyInUse',
       };
     case 'Invalid current password':
       return {
         type: 'error',
-        content: 'common.invalidCurrentPassword',
+        content: 'error.invalidCurrentPassword',
       };
     case 'Insufficient permissions':
       return {
         type: 'error',
-        content: 'common.insufficientPermissions',
+        content: 'error.insufficientPermissions',
       };
     default:
       return {
         type: 'warning',
-        content: 'common.unknownError',
+        content: 'error.unknownError',
       };
   }
 };

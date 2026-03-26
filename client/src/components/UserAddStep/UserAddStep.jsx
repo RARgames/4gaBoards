@@ -20,22 +20,22 @@ const createMessage = (error) => {
     case 'Email already in use':
       return {
         type: 'error',
-        content: 'common.emailAlreadyInUse',
+        content: 'error.emailAlreadyInUse',
       };
     case 'Username already in use':
       return {
         type: 'error',
-        content: 'common.usernameAlreadyInUse',
+        content: 'error.usernameAlreadyInUse',
       };
     case 'Weak password':
       return {
         type: 'error',
-        content: 'common.weakPassword',
+        content: 'error.weakPassword',
       };
     default:
       return {
         type: 'warning',
-        content: 'common.unknownError',
+        content: 'error.unknownError',
       };
   }
 };

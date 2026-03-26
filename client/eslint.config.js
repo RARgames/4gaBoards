@@ -127,7 +127,8 @@ module.exports = [
     },
   },
   {
-    files: ['src/locales/**/{core,login}.js'],
+    files: ['src/locales/**/*.js'],
+    ignores: ['src/locales/**/index.js'],
     rules: {
       'perfectionist/sort-objects': [
         'warn',

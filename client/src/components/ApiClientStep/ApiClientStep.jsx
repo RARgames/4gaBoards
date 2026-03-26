@@ -20,12 +20,12 @@ const createMessage = (error) => {
     case 'Invalid permissions':
       return {
         type: 'error',
-        content: 'errors.invalidPermissions',
+        content: 'error.invalidPermissions',
       };
     default:
       return {
         type: 'warning',
-        content: 'common.unknownError',
+        content: 'error.unknownError',
       };
   }
 };

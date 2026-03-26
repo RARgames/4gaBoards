@@ -23,47 +23,47 @@ const createMessage = (error) => {
     case 'Invalid username or password':
       return {
         type: 'error',
-        content: 'common.invalidUsernameOrPassword',
+        content: 'error.invalidUsernameOrPassword',
       };
     case 'registrationDisabled':
       return {
         type: 'error',
-        content: 'common.registrationDisabled',
+        content: 'error.registrationDisabled',
       };
     case 'ssoRegistrationDisabled':
       return {
         type: 'error',
-        content: 'common.ssoRegistrationDisabled',
+        content: 'error.ssoRegistrationDisabled',
       };
     case 'coreNotFound':
       return {
         type: 'error',
-        content: 'common.coreNotFound',
+        content: 'error.coreNotFound',
       };
     case 'Failed to fetch':
       return {
         type: 'warning',
-        content: 'common.noInternetConnection',
+        content: 'error.noInternetConnection',
       };
     case 'Network request failed':
       return {
         type: 'warning',
-        content: 'common.serverConnectionFailed',
+        content: 'error.serverConnectionFailed',
       };
     case 'noOidcProfileFound':
       return {
         type: 'error',
-        content: 'errors.noOidcProfileFound',
+        content: 'error.noOidcProfileFound',
       };
     case 'domainNotAllowed':
       return {
         type: 'error',
-        content: 'errors.domainNotAllowed',
+        content: 'error.domainNotAllowed',
       };
     default:
       return {
         type: 'warning',
-        content: 'common.unknownError',
+        content: 'error.unknownError',
       };
   }
 };

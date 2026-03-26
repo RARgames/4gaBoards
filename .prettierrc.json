@@ -4,9 +4,9 @@
   "trailingComma": "all",
   "overrides": [
     {
-      "files": "client/src/locales/**/{core,login}.js",
+      "files": "client/src/locales/**/*.js",
       "options": {
-        "printWidth": 400
+        "printWidth": 4000
       }
     }
   ]
