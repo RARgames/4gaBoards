@@ -1555,8 +1555,8 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       case ActivityTypes.API_CLIENT_CREATE: {
         const { name, permissions } = activity.data;
         let nameTruncated = truncateIf(name, isTruncated, defaultTruncateLength);
-        nameTruncated = nameTruncated || t('common.unnamed');
-        const permissionsList = permissions.includes('*') ? t('common.all') : permissions.join(', ');
+        nameTruncated = nameTruncated || t('activity.unnamed');
+        const permissionsList = permissions.includes('*') ? t('activity.all') : permissions.join(', ');
 
         return (
           <Trans
@@ -1575,10 +1575,10 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       case ActivityTypes.API_CLIENT_UPDATE: {
         const { prevName, name, permissions, regenerateSecret } = activity.data;
         let nameTruncated = truncateIf(name, isTruncated, defaultTruncateLength);
-        nameTruncated = nameTruncated || t('common.unnamed');
+        nameTruncated = nameTruncated || t('activity.unnamed');
         let prevNameTruncated = truncateIf(prevName, isTruncated, defaultTruncateLength);
-        prevNameTruncated = prevNameTruncated || t('common.unnamed');
-        const permissionsList = permissions.includes('*') ? t('common.all') : permissions.join(', ');
+        prevNameTruncated = prevNameTruncated || t('activity.unnamed');
+        const permissionsList = permissions.includes('*') ? t('activity.all') : permissions.join(', ');
 
         return (
           <Trans
@@ -1601,7 +1601,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       case ActivityTypes.API_CLIENT_DELETE: {
         const { name } = activity.data;
         let nameTruncated = truncateIf(name, isTruncated, defaultTruncateLength);
-        nameTruncated = nameTruncated || t('common.unnamed');
+        nameTruncated = nameTruncated || t('activity.unnamed');
 
         return (
           <Trans
