@@ -416,8 +416,8 @@ importers:
         specifier: ^9.0.3
         version: 9.0.3
       knex:
-        specifier: ^3.2.4
-        version: 3.2.6(pg@8.11.0)
+        specifier: ^3.2.7
+        version: 3.2.7(pg@8.11.0)
       lodash:
         specifier: ^4.17.23
         version: 4.17.23
@@ -5554,8 +5554,8 @@ packages:
       tedious:
         optional: true
 
-  knex@3.2.6:
-    resolution: {integrity: sha512-26I1Tvx0D9SOsFBF9jRWT/JdE3FPI52jAwYpXfREEtnoqgjGvAi8/ux8ktjaTC9IQcAVTCrREkOpa7lrjeAcow==}
+  knex@3.2.7:
+    resolution: {integrity: sha512-VxdDE72x7Tc08E5yCu8HqYoeOm0HOjAraOtYiGSAUJTYkydwfSGBOpQqYHrzM5vjLNzw2JDL2vDH8m7DjIjtgA==}
     engines: {node: '>=16'}
     hasBin: true
     peerDependencies:
@@ -14579,7 +14579,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  knex@3.2.6(pg@8.11.0):
+  knex@3.2.7(pg@8.11.0):
     dependencies:
       colorette: 2.0.19
       commander: 10.0.1
