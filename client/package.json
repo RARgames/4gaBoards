@@ -1,5 +1,5 @@
 {
-  "name": "4gaboards-client",
+  "name": "client",
   "private": true,
   "scripts": {
     "build": "node scripts/build.js",

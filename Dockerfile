@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY server/package.json server/package.json
-RUN pnpm install --frozen-lockfile --filter server... --prod
+RUN pnpm deploy --filter server... --prod --config.inject-workspace-packages=true output
 
 FROM base AS client
 
@@ -19,8 +19,8 @@ COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY client/package.json client/package.json
 RUN pnpm install --frozen-lockfile --filter client... --prod
 
-COPY client .
-RUN DISABLE_ESLINT_PLUGIN=true pnpm build
+COPY client ./client
+RUN DISABLE_ESLINT_PLUGIN=true pnpm client:build
 
 FROM node:24-alpine
 
@@ -35,10 +35,10 @@ COPY --chown=node:node server .
 
 RUN mv .env.sample .env
 
-COPY --from=server-dependencies --chown=node:node /app/node_modules node_modules
+COPY --from=server-dependencies --chown=node:node /app/output/node_modules node_modules
 
-COPY --from=client --chown=node:node /app/build public
-COPY --from=client --chown=node:node /app/build/index.html views/index.ejs
+COPY --from=client --chown=node:node /app/client/build public
+COPY --from=client --chown=node:node /app/client/build/index.html views/index.ejs
 
 VOLUME /app/public/user-avatars
 VOLUME /app/public/project-background-images

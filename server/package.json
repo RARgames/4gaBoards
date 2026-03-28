@@ -1,5 +1,5 @@
 {
-  "name": "4gaboards-server",
+  "name": "server",
   "private": true,
   "main": "app.js",
   "scripts": {
