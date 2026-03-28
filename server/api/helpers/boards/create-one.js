@@ -116,7 +116,7 @@ module.exports = {
         });
     }
     if (inputs.import && inputs.import.type === Board.ImportTypes.TRELLO) {
-      await sails.helpers.boards.importFromTrello.with({ currentUser, board, trelloBoard: inputs.import.board });
+      await sails.helpers.boards.importFromTrello.with({ currentUser, board, trelloBoard: inputs.import.board, request: inputs.request });
     }
 
     const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });

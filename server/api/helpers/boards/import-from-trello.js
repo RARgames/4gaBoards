@@ -12,6 +12,9 @@ module.exports = {
       type: 'json',
       required: true,
     },
+    request: {
+      type: 'ref',
+    },
   },
 
   async fn(inputs) {
@@ -104,6 +107,7 @@ module.exports = {
             description: trelloCard.desc || null,
             dueDate: trelloCard.due,
             commentCount: 0,
+            isCreatedViaApi: !!(inputs.request && inputs.request.apiClient),
           }).fetch();
 
           await importCardLabels(boardsCard, trelloCard);

@@ -547,6 +547,7 @@ module.exports = {
           dueDate: parseJSON(card.dueDate),
           commentCount: card.commentCount,
           timer: parseJSON(card.timer),
+          isCreatedViaApi: !!(inputs.request && inputs.request.apiClient),
           createdAt: parseJSON(card.createdAt),
           createdById: allUsers[card.createdById]?.id ?? currentUser.id,
           updatedAt,
