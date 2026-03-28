@@ -33,7 +33,7 @@ function getPackageNameInDirectory(directory) {
   const packagePath = path.join(directory.trim(), 'package.json');
 
   try {
-    // eslint-disable-next-line import/no-dynamic-require, global-require
+    // eslint-disable-next-line import-x/no-dynamic-require, global-require
     return require(packagePath).name;
   } catch {
     return null;

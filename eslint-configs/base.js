@@ -1,5 +1,5 @@
 const confusingBrowserGlobals = require('confusing-browser-globals');
-const importPlugin = require('eslint-plugin-import');
+const importXPlugin = require('eslint-plugin-import-x');
 
 module.exports = [
   {
@@ -7,20 +7,20 @@ module.exports = [
       react: {
         version: 'detect',
       },
-      'import/resolver': {
+      'import-x/resolver': {
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.mjs'],
         },
       },
-      'import/extensions': ['.js', '.jsx', '.ts', '.tsx', '.json', '.mjs'],
-      'import/core-modules': [],
-      'import/ignore': ['node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$'],
+      'import-x/extensions': ['.js', '.jsx', '.ts', '.tsx', '.json', '.mjs'],
+      'import-x/core-modules': [],
+      'import-x/ignore': ['node_modules', '\\.(coffee|scss|css|less|hbs|svg|json)$'],
     },
     linterOptions: {
       reportUnusedDisableDirectives: 'warn',
     },
     plugins: {
-      import: importPlugin,
+      'import-x': importXPlugin,
     },
     rules: {
       //region @eslint/js js.configs.recommended
@@ -87,15 +87,15 @@ module.exports = [
       'valid-typeof': ['error', { requireStringLiterals: true }], //Modified
       //endregion
 
-      //region eslint-plugin-import importPlugin.flatConfigs.recommended
-      'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }], //Modified
-      'import/named': 'error',
-      'import/namespace': 'error',
-      'import/default': 'error',
-      'import/export': 'error',
-      'import/no-named-as-default': 'error', //Modified
-      'import/no-named-as-default-member': 'error', //Modified
-      'import/no-duplicates': 'error', //Modified
+      //region eslint-plugin-import-x importXPlugin.flatConfigs.recommended
+      'import-x/no-unresolved': ['error', { commonjs: true, caseSensitive: true }], //Modified
+      'import-x/named': 'error',
+      'import-x/namespace': 'error',
+      'import-x/default': 'error',
+      'import-x/export': 'error',
+      'import-x/no-named-as-default': 'error', //Modified
+      'import-x/no-named-as-default-member': 'error', //Modified
+      'import-x/no-duplicates': 'error', //Modified
       //endregion
 
       //region best-practices
@@ -564,7 +564,7 @@ module.exports = [
 
       // disallow importing from the same path more than once
       // https://eslint.org/docs/rules/no-duplicate-imports
-      // replaced by https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-duplicates.md
+      // replaced by https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-duplicates.md
       'no-duplicate-imports': 'off',
 
       // disallow symbol constructor
@@ -715,33 +715,24 @@ module.exports = [
       //region imports
       // Helpful warnings:
 
-      // disallow use of jsdoc-marked-deprecated imports
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-deprecated.md
-      'import/no-deprecated': 'off',
-
       // Forbid mutable exports
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-mutable-exports.md
-      'import/no-mutable-exports': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-mutable-exports.md
+      'import-x/no-mutable-exports': 'error',
 
       // Module systems:
-
-      // disallow require()
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-commonjs.md
-      'import/no-commonjs': 'off',
-
       // disallow AMD require/define
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-amd.md
-      'import/no-amd': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-amd.md
+      'import-x/no-amd': 'error',
 
       // Style guide:
 
       // disallow non-import statements appearing before import statements
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md
-      'import/first': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/first.md
+      'import-x/first': 'error',
 
       // Ensure consistent use of file extension within the import path
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/extensions.md
-      'import/extensions': [
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/extensions.md
+      'import-x/extensions': [
         'error',
         'ignorePackages',
         {
@@ -752,115 +743,48 @@ module.exports = [
       ],
 
       // Require a newline after the last import/require in a group
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/newline-after-import.md
-      'import/newline-after-import': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/newline-after-import.md
+      'import-x/newline-after-import': 'error',
 
       // Require modules with a single export to use a default export
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md
-      'import/prefer-default-export': 'error',
-
-      // Restrict which files can be imported in a given folder
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-restricted-paths.md
-      'import/no-restricted-paths': 'off',
-
-      // Forbid modules to have too many dependencies
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/max-dependencies.md
-      'import/max-dependencies': ['off', { max: 10 }],
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/prefer-default-export.md
+      'import-x/prefer-default-export': 'error',
 
       // Forbid import of modules using absolute paths
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-absolute-path.md
-      'import/no-absolute-path': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-absolute-path.md
+      'import-x/no-absolute-path': 'error',
 
       // Forbid require() calls with expressions
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-dynamic-require.md
-      'import/no-dynamic-require': 'error',
-
-      // prevent importing the submodules of other modules
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-internal-modules.md
-      'import/no-internal-modules': [
-        'off',
-        {
-          allow: [],
-        },
-      ],
-
-      // Warn if a module could be mistakenly parsed as a script by a consumer
-      // leveraging Unambiguous JavaScript Grammar
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/unambiguous.md
-      // this should not be enabled until this proposal has at least been *presented* to TC39.
-      // At the moment, it's not a thing.
-      'import/unambiguous': 'off',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-dynamic-require.md
+      'import-x/no-dynamic-require': 'error',
 
       // Forbid Webpack loader syntax in imports
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-webpack-loader-syntax.md
-      'import/no-webpack-loader-syntax': 'error',
-
-      // Prevent unassigned imports
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-unassigned-import.md
-      // importing for side effects is perfectly acceptable, if you need side effects.
-      'import/no-unassigned-import': 'off',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-webpack-loader-syntax.md
+      'import-x/no-webpack-loader-syntax': 'error',
 
       // Prevent importing the default as if it were named
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-named-default.md
-      'import/no-named-default': 'error',
-
-      // Reports if a module's default export is unnamed
-      // https://github.com/benmosher/eslint-plugin-import/blob/d9b712ac7fd1fddc391f7b234827925c160d956f/docs/rules/no-anonymous-default-export.md
-      'import/no-anonymous-default-export': [
-        'off',
-        {
-          allowArray: false,
-          allowArrowFunction: false,
-          allowAnonymousClass: false,
-          allowAnonymousFunction: false,
-          allowLiteral: false,
-          allowObject: false,
-        },
-      ],
-
-      // This rule enforces that all exports are declared at the bottom of the file.
-      // https://github.com/benmosher/eslint-plugin-import/blob/98acd6afd04dcb6920b81330114e146dc8532ea4/docs/rules/exports-last.md
-      'import/exports-last': 'off',
-
-      // Reports when named exports are not grouped together in a single export declaration
-      // or when multiple assignments to CommonJS module.exports or exports object are present
-      // in a single file.
-      // https://github.com/benmosher/eslint-plugin-import/blob/44a038c06487964394b1e15b64f3bd34e5d40cde/docs/rules/group-exports.md
-      'import/group-exports': 'off',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-named-default.md
+      'import-x/no-named-default': 'error',
 
       // Forbid a module from importing itself
-      // https://github.com/benmosher/eslint-plugin-import/blob/44a038c06487964394b1e15b64f3bd34e5d40cde/docs/rules/no-self-import.md
-      'import/no-self-import': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/44a038c06487964394b1e15b64f3bd34e5d40cde/docs/rules/no-self-import.md
+      'import-x/no-self-import': 'error',
 
       // Forbid cyclical dependencies between modules
-      // https://github.com/benmosher/eslint-plugin-import/blob/d81f48a2506182738409805f5272eff4d77c9348/docs/rules/no-cycle.md
-      'import/no-cycle': ['error', { maxDepth: '∞' }],
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/d81f48a2506182738409805f5272eff4d77c9348/docs/rules/no-cycle.md
+      'import-x/no-cycle': ['error', { maxDepth: '∞' }],
 
       // Ensures that there are no useless path segments
-      // https://github.com/benmosher/eslint-plugin-import/blob/ebafcbf59ec9f653b2ac2a0156ca3bcba0a7cf57/docs/rules/no-useless-path-segments.md
-      'import/no-useless-path-segments': ['error', { commonjs: true }],
-
-      // dynamic imports require a leading comment with a webpackChunkName
-      // https://github.com/benmosher/eslint-plugin-import/blob/ebafcbf59ec9f653b2ac2a0156ca3bcba0a7cf57/docs/rules/dynamic-import-chunkname.md
-      'import/dynamic-import-chunkname': [
-        'off',
-        {
-          importFunctions: [],
-          webpackChunknameFormat: '[0-9a-zA-Z-_/.]+',
-        },
-      ],
-
-      // Use this rule to prevent imports to folders in relative parent paths.
-      // https://github.com/benmosher/eslint-plugin-import/blob/c34f14f67f077acd5a61b3da9c0b0de298d20059/docs/rules/no-relative-parent-imports.md
-      'import/no-relative-parent-imports': 'off',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/ebafcbf59ec9f653b2ac2a0156ca3bcba0a7cf57/docs/rules/no-useless-path-segments.md
+      'import-x/no-useless-path-segments': ['error', { commonjs: true }],
 
       // Reports modules without any exports, or with unused exports
-      // https://github.com/benmosher/eslint-plugin-import/blob/f63dd261809de6883b13b6b5b960e6d7f42a7813/docs/rules/no-unused-modules.md
-      'import/no-unused-modules': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/f63dd261809de6883b13b6b5b960e6d7f42a7813/docs/rules/no-unused-modules.md
+      'import-x/no-unused-modules': 'error',
 
       // Reports the use of import declarations with CommonJS exports in any module except for the main module.
-      // https://github.com/benmosher/eslint-plugin-import/blob/1012eb951767279ce3b540a4ec4f29236104bb5b/docs/rules/no-import-module-exports.md
-      'import/no-import-module-exports': [
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/1012eb951767279ce3b540a4ec4f29236104bb5b/docs/rules/no-import-module-exports.md
+      'import-x/no-import-module-exports': [
         'error',
         {
           exceptions: [],
@@ -868,8 +792,8 @@ module.exports = [
       ],
 
       // Use this rule to prevent importing packages through relative paths.
-      // https://github.com/benmosher/eslint-plugin-import/blob/1012eb951767279ce3b540a4ec4f29236104bb5b/docs/rules/no-relative-packages.md
-      'import/no-relative-packages': 'error',
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/1012eb951767279ce3b540a4ec4f29236104bb5b/docs/rules/no-relative-packages.md
+      'import-x/no-relative-packages': 'error',
       //endregion
 
       //region node
@@ -1513,8 +1437,8 @@ module.exports = [
 
       //region custom
       // Forbid the use of extraneous packages - paths are treated both as absolute paths, and relative to process.cwd()
-      // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
-      'import/no-extraneous-dependencies': [
+      // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-extraneous-dependencies.md
+      'import-x/no-extraneous-dependencies': [
         'error',
         {
           devDependencies: [

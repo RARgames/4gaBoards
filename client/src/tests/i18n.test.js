@@ -136,7 +136,7 @@ const loadLanguage = (lang) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const file of files) {
     const fullPath = path.join(langDir, file);
-    // eslint-disable-next-line import/no-dynamic-require, global-require
+    // eslint-disable-next-line import-x/no-dynamic-require, global-require
     const fileData = require(fullPath);
 
     data[file.replace('.js', '')] = fileData.default || fileData;

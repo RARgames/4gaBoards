@@ -32,7 +32,7 @@ module.exports = [
         },
         requireConfigFile: false,
       },
-      // Using only limited globals to avoid long import/no-cycle times - should be using full sets
+      // Using only limited globals to avoid long import-x/no-cycle times - should be using full sets
       globals: {
         // From ...globals.node, ...globals.es6, _: true, sails: true
         require: false,

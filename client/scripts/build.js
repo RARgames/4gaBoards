@@ -83,7 +83,7 @@ checkBrowsers(paths.appPath, isInteractive)
       printFileSizesAfterBuild(stats, previousFileSizes, paths.appBuild, WARN_AFTER_BUNDLE_GZIP_SIZE, WARN_AFTER_CHUNK_GZIP_SIZE);
       console.log();
 
-      // eslint-disable-next-line import/no-dynamic-require, global-require
+      // eslint-disable-next-line import-x/no-dynamic-require, global-require
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrlOrPath;
       const { publicPath } = config.output;
