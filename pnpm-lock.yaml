@@ -7,17 +7,10 @@ settings:
 importers:
 
   .:
-    dependencies:
+    devDependencies:
       concurrently:
         specifier: ^9.2.1
         version: 9.2.1
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      lint-staged:
-        specifier: ^16.4.0
-        version: 16.4.0
-    devDependencies:
       confusing-browser-globals:
         specifier: ^1.0.11
         version: 1.0.11
@@ -33,6 +26,12 @@ importers:
       eslint-plugin-prettier:
         specifier: ^5.5.5
         version: 5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.4(jiti@2.6.1)))(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.1)
+      husky:
+        specifier: ^9.1.7
+        version: 9.1.7
+      lint-staged:
+        specifier: ^16.4.0
+        version: 16.4.0
       prettier:
         specifier: ^3.8.1
         version: 3.8.1

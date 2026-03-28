@@ -41,17 +41,15 @@
       "pnpm -C server lint"
     ]
   },
-  "dependencies": {
-    "concurrently": "^9.2.1",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.4.0"
-  },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1"
   },
   "devEngines": {
