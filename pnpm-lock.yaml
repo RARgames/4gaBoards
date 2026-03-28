@@ -39,6 +39,9 @@ importers:
 
   client:
     dependencies:
+      '@4gaboards/locales':
+        specifier: workspace:*
+        version: link:../packages/locales
       '@babel/core':
         specifier: ^7.29.0
         version: 7.29.0
@@ -385,6 +388,15 @@ importers:
       jest-watch-typeahead:
         specifier: ^3.0.1
         version: 3.0.1(jest@30.3.0(@types/node@25.5.0)(babel-plugin-macros@3.1.0))
+
+  packages/locales:
+    dependencies:
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash:
+        specifier: ^4.17.23
+        version: 4.17.23
 
   server:
     dependencies:

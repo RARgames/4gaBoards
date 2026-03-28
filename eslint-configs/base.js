@@ -85,8 +85,6 @@ module.exports = [
       'require-yield': 'error',
       'use-isnan': 'error',
       'valid-typeof': ['error', { requireStringLiterals: true }], //Modified
-      'no-unassigned-vars': 'error',
-      'preserve-caught-error': 'error',
       //endregion
 
       //region eslint-plugin-import-x importXPlugin.flatConfigs.recommended

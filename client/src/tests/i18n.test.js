@@ -2,8 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// eslint-disable-next-line no-undef
-const LOCALES_DIR = path.resolve(__dirname, '../locales');
+const localesPackageJson = require.resolve('@4gaboards/locales');
+const LOCALES_DIR = path.dirname(localesPackageJson);
 const BASE_LANG = 'en';
 
 // list of plural forms
@@ -149,7 +149,7 @@ describe('i18n translations coverage', () => {
   const languages = fs
     .readdirSync(LOCALES_DIR)
     .filter((d) => fs.statSync(path.join(LOCALES_DIR, d)).isDirectory())
-    .filter((lang) => lang !== BASE_LANG);
+    .filter((lang) => lang !== BASE_LANG && lang !== 'node_modules');
 
   const baseTranslations = loadLanguage(BASE_LANG);
 

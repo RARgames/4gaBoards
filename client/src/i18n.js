@@ -1,11 +1,10 @@
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
 import { initReactI18next } from 'react-i18next';
+import { embeddedLocales, languages } from '@4gaboards/locales';
 import formatDate from 'date-fns/format';
 import parseDate from 'date-fns/parse';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-
-import { embeddedLocales, languages } from './locales';
 
 i18n.dateFns = {
   locales: {},
@@ -90,7 +89,7 @@ i18n.loadCoreLocale = async (language = i18n.resolvedLanguage) => {
 
   await Promise.all(
     ['action', 'activity', 'core'].map(async (ns) => {
-      const { default: locale } = await import(`./locales/${language}/${ns}`);
+      const { default: locale } = await import(`@4gaboards/locales/${language}/${ns}`);
 
       Object.keys(locale).forEach((namespace) => {
         if (namespace === 'dateFns') {
