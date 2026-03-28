@@ -77,9 +77,6 @@ jobs:
       - name: Update package.json version
         run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
 
-      - name: Update package-lock.json version
-        run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'" | .packages[""].version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package-lock.json > temp.json && mv temp.json package-lock.json
-
       - name: Update .env version
         run: sed "s/REACT_APP_VERSION=.*/REACT_APP_VERSION=${{ steps.increment_version.outputs.ghcr_tag }}/" client/.env > temp.env && mv temp.env client/.env
 
