@@ -7,3 +7,4 @@ test_docker
 
 # Prevent another lockfile than pnpm-lock.yaml (pnpm) from being created
 yarn.lock
+package-lock.json

@@ -1,27 +1,26 @@
-FROM node:24-alpine AS server-dependencies
+FROM node:24-alpine AS base
+
+RUN npm install npm@latest --global
+RUN npm install pnpm@latest --global
+
+FROM base AS server-dependencies
 
 WORKDIR /app
 
-COPY server/package.json server/package-lock.json ./
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+COPY server/package.json server/package.json
+RUN pnpm install --frozen-lockfile --filter server... --prod
 
-RUN npm install npm@latest --global
-RUN npm install pnpm --global
-RUN pnpm import
-RUN pnpm install --prod
-
-FROM node:24-alpine AS client
+FROM base AS client
 
 WORKDIR /app
 
-COPY client/package.json client/package-lock.json ./
-
-RUN npm install npm@latest --global
-RUN npm install pnpm --global
-RUN pnpm import
-RUN pnpm install --prod
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+COPY client/package.json client/package.json
+RUN pnpm install --frozen-lockfile --filter client... --prod
 
 COPY client .
-RUN DISABLE_ESLINT_PLUGIN=true npm run build
+RUN DISABLE_ESLINT_PLUGIN=true pnpm build
 
 FROM node:24-alpine
 
