@@ -55,7 +55,6 @@ function printBaseMessage(buildFolder, hostingLocation) {
     console.log();
     console.log(`  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green('"http://myname.github.io/myapp"')}${chalk.cyan(',')}`);
   }
-  console.log();
   console.log(`The ${chalk.cyan(buildFolder)} folder is ready to be deployed.`);
 }
 

@@ -22,6 +22,7 @@ function canReadAsset(asset) {
 function printFileSizesAfterBuild(webpackStats, previousSizeMap, buildFolder, maxBundleGzipSize, maxChunkGzipSize) {
   const { root } = previousSizeMap;
   const { sizes } = previousSizeMap;
+  let totalGzipSize = 0;
   const assets = (webpackStats.stats || [webpackStats])
     .map((stats) =>
       stats
@@ -30,6 +31,7 @@ function printFileSizesAfterBuild(webpackStats, previousSizeMap, buildFolder, ma
         .map((asset) => {
           const fileContents = fs.readFileSync(path.join(root, asset.name));
           const size = gzipSizeSync(fileContents);
+          totalGzipSize += size;
           // eslint-disable-next-line no-use-before-define
           const previousSize = sizes[removeFileNameHash(root, asset.name)];
           // eslint-disable-next-line no-use-before-define
@@ -64,11 +66,12 @@ function printFileSizesAfterBuild(webpackStats, previousSizeMap, buildFolder, ma
     }
     console.log(`  ${isLarge ? chalk.yellow(sizeLabel) : sizeLabel}  ${chalk.dim(asset.folder + path.sep)}${chalk.cyan(asset.name)}`);
   });
+  console.log();
+  console.log(chalk.bold(`Total (gzip): ${filesize(totalGzipSize)}`));
   if (suggestBundleSplitting) {
     console.log();
-    console.log(chalk.yellow('The bundle size is significantly larger than recommended.'));
-    console.log(chalk.yellow('Consider reducing it with code splitting: https://goo.gl/9VhYWB'));
-    console.log(chalk.yellow('You can also analyze the project dependencies: https://goo.gl/LeUzfb'));
+    console.log(chalk.yellow('The bundle size is significantly larger than recommended. Consider reducing it with code splitting.'));
+    console.log(chalk.yellow('You can also analyze the project dependencies using: `pnpm client:build --stats` and `pnpm dlx webpack-bundle-analyzer client/build/bundle-stats.json`'));
   }
 }
 
