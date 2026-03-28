@@ -50,39 +50,11 @@ config/local.js
 ################################################
 # Dependencies
 #
-#
-# When releasing a production app, you _could_
-# hypothetically include your node_modules folder
-# in your git repo, but during development, it
-# is always best to exclude it, since different
-# developers may be working on different kernels,
-# where dependencies would need to be recompiled
-# anyway.
-#
 # Most of the time, the node_modules folder can
 # be excluded from your code repository, even
 # in production, thanks to features like the
-# package-lock.json file / NPM shrinkwrap.
-#
-# But no matter what, since this is a Sails app,
-# you should always push up the package-lock.json
-# or shrinkwrap file to your repository, to avoid
-# accidentally pulling in upgraded dependencies
-# and breaking your code.
-#
-# That said, if you are having trouble with
-# dependencies, (particularly when using
-# `npm link`) this can be pretty discouraging.
-# But rather than just adding the lockfile to
-# your .gitignore, try this first:
-# ```
-#     rm -rf node_modules
-#     rm package-lock.json
-#     npm install
-# ```
-#
-# [?] For more tips/advice, come by and say hi
-#     over at https://sailsjs.com/support
+# package-lock.json. You shoul always push up
+# the package-lock.json to your repository.
 #
 ################################################
 

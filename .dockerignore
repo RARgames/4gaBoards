@@ -1,6 +1,7 @@
 *.md
 */.gitignore
 */node_modules
+.npmrc
 
 **/.DS_Store
 
@@ -9,7 +10,6 @@ server/**/.gitkeep
 server/.env
 server/.editorconfig
 server/.eslintignore
-server/.npmrc
 server/test
 server/logs
 server/.tmp

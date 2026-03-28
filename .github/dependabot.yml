@@ -5,15 +5,15 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: 'pnpm' # See documentation for possible values
+    directory: '/' # Location of package manifests
     schedule:
-      interval: "weekly"
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/client" # Location of package manifests
+      interval: 'weekly'
+  - package-ecosystem: 'pnpm' # See documentation for possible values
+    directory: '/client' # Location of package manifests
     schedule:
-      interval: "weekly"
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/server" # Location of package manifests
+      interval: 'weekly'
+  - package-ecosystem: 'pnpm' # See documentation for possible values
+    directory: '/server' # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: 'weekly'

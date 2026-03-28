@@ -56,11 +56,5 @@
   },
   "engines": {
     "node": "^24.11"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "bcrypt",
-      "sharp"
-    ]
   }
 }

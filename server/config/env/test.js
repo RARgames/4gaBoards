@@ -37,7 +37,7 @@ module.exports = {
      *    https://sailsjs.com/plugins/databases
      *
      * 2. Install it as a dependency of your Sails app.
-     *    (For example:  npm install sails-mysql --save)
+     *    (For example:  pnpm add sails-mysql --save)
      *
      * 3. Then set it here (`adapter`), along with a connection URL (`url`)
      *    and any other, adapter-specific customizations.

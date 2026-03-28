@@ -9,7 +9,7 @@
  *
  * For example:
  *   => `node app.js`
- *   => `npm start`
+ *   => `pnpm start`
  *   => `forever start app.js`
  *   => `node debug app.js`
  *

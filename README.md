@@ -128,7 +128,7 @@ git clone https://github.com/RARgames/4gaBoards.git .
 **Install dependencies**
 
 ```bash
-npm i
+pnpm i
 ```
 
 **Copy .env**
@@ -140,7 +140,7 @@ cp server/.env.sample server/.env
 _Optional: Build client, copy build to the `server` directory to suppress startup warnings_
 
 ```bash
-npm run client:build
+pnpm client:build
 ```
 
 ```bash
@@ -162,13 +162,13 @@ _If using your own database, edit `DATABASE_URL` in `server/.env`._
 **Initialize the database**
 
 ```bash
-npm run server:db:init
+pnpm server:db:init
 ```
 
 **Start the development server**
 
 ```bash
-npm start
+pnpm start
 ```
 
 Default 4ga Boards url: http://localhost:3000 \
@@ -212,4 +212,3 @@ Default password: `demo`
 
 [![RARgames](https://github.com/RARgames.png?size=100)](https://github.com/RARgames)
 [![wilkobyl](https://github.com/wilkobyl.png?size=100)](https://github.com/wilkobyl)
-

@@ -6,25 +6,14 @@
  */
 
 const chalk = require('chalk');
-const { findUpSync } = require('find-up');
 const path = require('path');
 
 class ModuleNotFoundPlugin {
-  constructor(appPath, yarnLockFile) {
+  constructor(appPath) {
     this.appPath = appPath;
-    this.yarnLockFile = yarnLockFile;
 
-    this.useYarnCommand = this.useYarnCommand.bind(this);
     this.getRelativePath = this.getRelativePath.bind(this);
     this.prettierError = this.prettierError.bind(this);
-  }
-
-  useYarnCommand() {
-    try {
-      return findUpSync('yarn.lock', { cwd: this.appPath }) != null;
-    } catch {
-      return false;
-    }
   }
 
   getRelativePath(_file) {
@@ -64,12 +53,7 @@ class ModuleNotFoundPlugin {
       let [, target, context] = request;
       context = this.getRelativePath(context);
       if (isModule) {
-        const isYarn = this.useYarnCommand();
-        details = [
-          `Cannot find module: '${target}'. Make sure this package is installed.`,
-          '',
-          `You can install this package by running: ${isYarn ? chalk.bold(`yarn add ${target}`) : chalk.bold(`npm install ${target}`)}.`,
-        ];
+        details = [`Cannot find module: '${target}'. Make sure this package is installed.`, `You can install this package by running: ${chalk.bold(`pnpm add ${target}`)}.`];
       } else if (isFile) {
         details = [`Cannot find file '${target}' in '${context}'.`];
       } else {

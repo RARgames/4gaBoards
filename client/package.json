@@ -125,6 +125,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "babel-jest": "^30.3.0",
     "chai": "^6.2.2",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -133,11 +134,10 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "babel-jest": "^30.3.0",
     "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
     "jest-resolve": "^30.3.0",
-    "jest-watch-typeahead": "^3.0.1",
-    "jest-environment-jsdom": "^30.3.0"
+    "jest-watch-typeahead": "^3.0.1"
   },
   "engines": {
     "node": "^24.11"
@@ -196,14 +196,6 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "core-js",
-      "core-js-pure",
-      "unrs-resolver"
     ]
   }
 }

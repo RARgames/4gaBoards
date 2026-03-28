@@ -74,7 +74,7 @@ function prepareUrls(protocol, host, port, pathname = '/') {
   };
 }
 
-function printInstructions(appName, urls, useYarn) {
+function printInstructions(appName, urls) {
   console.log();
   console.log(`You can now view ${chalk.bold(appName)} in the browser.`);
   console.log();
@@ -87,12 +87,11 @@ function printInstructions(appName, urls, useYarn) {
   }
 
   console.log();
-  console.log('Note that the development build is not optimized.');
-  console.log(`To create a production build, use ${chalk.cyan(`${useYarn ? 'yarn' : 'npm run'} build`)}.`);
+  console.log(`The development build is not optimized - use ${chalk.cyan('pnpm client:build')} to create a production build.`);
   console.log();
 }
 
-function createCompiler({ appName, config, urls, useYarn, useTypeScript, webpack }) {
+function createCompiler({ appName, config, urls, useTypeScript, webpack }) {
   // "Compiler" is a low-level interface to webpack.
   // It lets us listen to some events and provide our own custom messages.
   let compiler;
@@ -150,7 +149,7 @@ function createCompiler({ appName, config, urls, useYarn, useTypeScript, webpack
       console.log(chalk.green('Compiled successfully!'));
     }
     if (isSuccessful && (isInteractive || isFirstCompile)) {
-      printInstructions(appName, urls, useYarn);
+      printInstructions(appName, urls);
     }
     isFirstCompile = false;
 

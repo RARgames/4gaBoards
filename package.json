@@ -10,36 +10,35 @@
   "license": "MIT",
   "author": "RARgames",
   "scripts": {
-    "client:build": "npm run build --prefix client",
-    "client:lint": "npm run lint --prefix client",
-    "client:start": "npm start --prefix client",
-    "client:test": "npm test --prefix client",
-    "client:ci:test": "npm run ci:test --prefix client",
+    "client:build": "pnpm -C client build",
+    "client:lint": "pnpm -C client lint",
+    "client:start": "pnpm -C client start",
+    "client:test": "pnpm -C client test",
+    "client:ci:test": "pnpm -C client ci:test",
     "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
     "docker:build_local": "docker build -t rargames0/4gaboards:local -f Dockerfile . && docker push rargames0/4gaboards:local",
-    "postinstall": "(cd server && npm i && cd ../client && npm i)",
-    "lint": "npm run server:lint && npm run client:lint",
+    "lint": "pnpm -C server lint && pnpm -C client lint",
     "prepare": "husky",
-    "server:console": "npm run console --prefix server",
-    "server:db:init": "npm run db:init --prefix server",
-    "server:db:migrate": "npm run db:migrate --prefix server",
-    "server:db:rollback_one": "npm run db:rollback_one --prefix server",
-    "server:db:rollback": "npm run db:rollback --prefix server",
-    "server:db:migration_make": "npm run db:migration_make --prefix server",
-    "server:db:seed": "npm run db:seed --prefix server",
-    "server:lint": "npm run lint --prefix server",
-    "server:start": "npm start --prefix server",
-    "server:start:prod": "npm run start:prod --prefix server",
-    "server:test": "npm test --prefix server",
-    "start": "concurrently -n server,client \"npm run server:start\" \"npm run client:start\"",
-    "test": "npm run server:test && npm run client:test"
+    "server:console": "pnpm -C server console",
+    "server:db:init": "pnpm -C server db:init",
+    "server:db:migrate": "pnpm -C server db:migrate",
+    "server:db:rollback_one": "pnpm -C server db:rollback_one",
+    "server:db:rollback": "pnpm -C server db:rollback",
+    "server:db:migration_make": "pnpm -C server db:migration_make",
+    "server:db:seed": "pnpm -C server db:seed",
+    "server:lint": "pnpm -C server lint",
+    "server:start": "pnpm -C server start",
+    "server:start:prod": "pnpm -C server start:prod",
+    "server:test": "pnpm -C server test",
+    "start": "concurrently -n server,client \"pnpm -C server start\" \"pnpm -C client start\"",
+    "test": "pnpm -C server test && pnpm -C client test"
   },
   "lint-staged": {
     "client/**/*.{js,jsx}": [
-      "npm run client:lint"
+      "pnpm -C client lint"
     ],
     "server/**/*.js": [
-      "npm run server:lint"
+      "pnpm -C server lint"
     ]
   },
   "dependencies": {
@@ -55,7 +54,25 @@
     "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.8.1"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^10.13.0",
+      "onFail": "error"
+    }
+  },
   "engines": {
-    "node": "^24.11"
+    "node": "^24.11",
+    "pnpm": "^10.13.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "core-js-pure",
+      "unrs-resolver",
+      "bcrypt",
+      "sharp"
+    ]
   }
 }
