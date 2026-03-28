@@ -57,13 +57,13 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "^10.13.0",
+      "version": "10.33.0",
       "onFail": "error"
     }
   },
   "engines": {
     "node": "^24.11",
-    "pnpm": "^10.13.0"
+    "pnpm": "^10.33.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
