@@ -31,7 +31,7 @@
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-table": "^8.21.3",
     "@uiw/react-color-sketch": "^2.9.6",
-    "@uiw/react-md-editor": "^4.0.11",
+    "@uiw/react-md-editor": "^4.1.0",
     "address": "^2.0.3",
     "babel-loader": "^10.1.1",
     "babel-preset-react-app": "^10.1.0",

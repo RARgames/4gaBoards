@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import MDEditor from '@uiw/react-md-editor';
+import MDEditor from '@uiw/react-md-editor/common';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import remarkGithub from 'remark-github';
