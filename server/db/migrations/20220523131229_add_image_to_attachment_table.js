@@ -1,6 +1,6 @@
+const _ = require('lodash');
 const path = require('path');
 const sharp = require('sharp');
-const _ = require('lodash');
 
 const getConfig = require('../../get-config');
 

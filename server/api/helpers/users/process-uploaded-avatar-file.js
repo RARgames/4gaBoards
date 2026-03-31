@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
-const { v4: uuid } = require('uuid');
 const sharp = require('sharp');
+const { v4: uuid } = require('uuid');
 
 module.exports = {
   inputs: {

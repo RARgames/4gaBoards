@@ -1,5 +1,5 @@
-const { Strategy } = require('passport-strategy');
 const msal = require('@azure/msal-node');
+const { Strategy } = require('passport-strategy');
 
 class MicrosoftMSALStrategy extends Strategy {
   constructor(options, verify) {

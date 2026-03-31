@@ -5,8 +5,9 @@
  * Supports any OIDC-compliant provider (Authentik, Keycloak, Auth0, Okta, etc.)
  */
 
-const { Strategy } = require('passport-strategy');
 const jwt = require('jsonwebtoken');
+const { Strategy } = require('passport-strategy');
+
 const { checkOidcAdminStatus } = require('../utils/checkOidcAdminStatus');
 const { validateOidcUsername } = require('../utils/validateOidcUsername');
 

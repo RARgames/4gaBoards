@@ -1,5 +1,12 @@
-module.exports = [
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
+import reactPlugin from 'eslint-plugin-react';
+
+export default [
   {
+    plugins: {
+      'jsx-a11y': jsxA11yPlugin,
+      react: reactPlugin,
+    },
     rules: {
       // Specify whether double or single quotes should be used in JSX attributes
       // https://eslint.org/docs/rules/jsx-quotes

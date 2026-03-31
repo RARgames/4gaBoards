@@ -1,5 +1,5 @@
-const util = require('util');
 const rimraf = require('rimraf');
+const util = require('util');
 const { v4: uuid } = require('uuid');
 
 const Errors = {

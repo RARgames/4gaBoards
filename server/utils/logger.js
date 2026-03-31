@@ -1,5 +1,5 @@
-const winston = require('winston');
 const util = require('util');
+const winston = require('winston');
 
 /**
  * The default timestamp used by the logger.

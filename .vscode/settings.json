@@ -5,7 +5,7 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "eslint.format.enable": true,
-  "eslint.workingDirectories": ["./client", "./server"],
+  "eslint.workingDirectories": ["./client", "./server", "./packages/*"],
   "[javascript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },

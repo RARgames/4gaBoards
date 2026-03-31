@@ -1,6 +1,7 @@
+const GitHubStrategy = require('@rargames/passport-github');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
-const GitHubStrategy = require('@rargames/passport-github');
+
 const MicrosoftMSALStrategy = require('../strategies/passport-microsoft-msal');
 const OIDCStrategy = require('../strategies/passport-oidc');
 const { fetchRetryUntilAvailable } = require('../utils/fetchRetry');

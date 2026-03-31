@@ -1,7 +1,8 @@
+const fastcsv = require('fast-csv');
 const fs = require('fs');
 const path = require('path');
-const fastcsv = require('fast-csv');
 const tar = require('tar');
+
 const sanitizeItem = require('../../utils/sanitize-item');
 
 const Errors = {

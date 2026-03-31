@@ -1,6 +1,6 @@
 const fs = require('fs');
-const tar = require('tar');
 const path = require('path');
+const tar = require('tar');
 
 module.exports = {
   inputs: {

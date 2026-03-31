@@ -1,5 +1,5 @@
-const { v4: uuid } = require('uuid');
 const jwt = require('jsonwebtoken');
+const { v4: uuid } = require('uuid');
 
 module.exports = {
   sync: true,

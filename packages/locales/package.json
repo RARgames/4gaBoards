@@ -1,0 +1,13 @@
+{
+  "name": "@4gaboards/locales",
+  "version": "1.0.0",
+  "private": true,
+  "author": "RARgames",
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "lodash": "^4.17.23"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  }
+}

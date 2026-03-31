@@ -1,5 +1,5 @@
-const path = require('path');
 const bcrypt = require('bcrypt');
+const path = require('path');
 const rimraf = require('rimraf');
 const { v4: uuid } = require('uuid');
 

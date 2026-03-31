@@ -1,7 +1,7 @@
-const confusingBrowserGlobals = require('confusing-browser-globals');
-const importXPlugin = require('eslint-plugin-import-x');
+import confusingBrowserGlobals from 'confusing-browser-globals';
+import importXPlugin from 'eslint-plugin-import-x';
 
-module.exports = [
+export default ({ packageDir }) => [
   {
     settings: {
       react: {
@@ -1044,21 +1044,6 @@ module.exports = [
       // specify the maximum depth that blocks can be nested
       'max-depth': ['off', 4],
 
-      // specify the maximum length of a line in your program
-      // https://eslint.org/docs/rules/max-len
-      'max-len': [
-        'error',
-        100,
-        2,
-        {
-          ignoreUrls: true,
-          ignoreComments: false,
-          ignoreRegExpLiterals: true,
-          ignoreStrings: true,
-          ignoreTemplateLiterals: true,
-        },
-      ],
-
       // specify the max number of lines in a file
       // https://eslint.org/docs/rules/max-lines
       'max-lines': [
@@ -1441,6 +1426,7 @@ module.exports = [
       'import-x/no-extraneous-dependencies': [
         'error',
         {
+          packageDir,
           devDependencies: [
             'test/**', // tape, common npm pattern
             'tests/**', // also common npm pattern

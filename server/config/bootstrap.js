@@ -8,8 +8,8 @@
  * For more information on seeding your app with fake data, check out:
  * https://sailsjs.com/config/bootstrap
  */
-const { setupOIDC } = require('./passport');
 const { setupNotifications } = require('./notifications');
+const { setupOIDC } = require('./passport');
 
 module.exports.bootstrap = async () => {
   setupOIDC();

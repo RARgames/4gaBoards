@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
-const cron = require('node-cron');
 const _ = require('lodash');
+const cron = require('node-cron');
 
 module.exports = function defineCronNotificationsBatchingHook(sails) {
   return {

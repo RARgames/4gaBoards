@@ -4,7 +4,7 @@
   "trailingComma": "all",
   "overrides": [
     {
-      "files": "client/src/locales/**/*.js",
+      "files": "packages/locales/**/*.js",
       "options": {
         "printWidth": 4000
       }
