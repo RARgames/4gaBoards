@@ -1,7 +1,7 @@
 const { fetchRetryUntilAvailable } = require('../utils/fetchRetry');
 
 async function setupNotifications() {
-  if (!process.env.NOTIFICATIONS_HOST_URL || !process.env.NOTIFICATIONS_CLIENT_ID || !process.env.NOTIFICATIONS_CLIENT_SECRET || !process.env.MAIL_SERVICE_INBOUND_EMAIL) {
+  if (!process.env.NOTIFICATIONS_HOST_URL || !process.env.NOTIFICATIONS_CLIENT_ID || !process.env.NOTIFICATIONS_CLIENT_SECRET || !process.env.MAIL_SERVICE_INBOUND_EMAIL || process.env.NODE_ENV === 'test') {
     return;
   }
 

@@ -6,6 +6,7 @@ describe('User (model)', () => {
       email: 'test@test.test',
       password: 'test',
       name: 'test',
+      createdById: '0',
     });
   });
 
