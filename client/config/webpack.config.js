@@ -35,6 +35,15 @@ const babelRuntimeEntryHelpers = require.resolve('@babel/runtime/helpers/esm/ass
 const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
   paths: [babelRuntimeEntry],
 });
+const localesEsmPath = path.dirname(
+  resolve.sync('@4gaboards/locales', {
+    basedir: paths.appPath,
+    packageFilter: (pkg) => ({
+      ...pkg,
+      main: pkg.module || pkg.main,
+    }),
+  }),
+);
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
 // makes for a smoother build process.
@@ -267,6 +276,7 @@ module.exports = function (webpackEnv) {
       // for React Native Web.
       extensions: paths.moduleFileExtensions.map((ext) => `.${ext}`).filter((ext) => useTypeScript || !ext.includes('ts')),
       alias: {
+        '@4gaboards/locales': localesEsmPath,
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
