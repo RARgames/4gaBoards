@@ -16,6 +16,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
+    "@4gaboards/locales": "workspace:*",
     "@azure/msal-node": "^5.1.1",
     "@rargames/passport-github": "^1.1.2",
     "bcrypt": "^6.0.0",
@@ -24,6 +25,7 @@
     "dotenv-cli": "^11.0.0",
     "fast-csv": "^5.0.5",
     "filenamify": "^7.0.1",
+    "i18next": "^26.0.1",
     "jsonwebtoken": "^9.0.3",
     "knex": "^3.2.8",
     "lodash": "^4.17.23",
