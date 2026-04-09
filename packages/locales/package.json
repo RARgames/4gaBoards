@@ -3,11 +3,39 @@
   "version": "1.0.0",
   "private": true,
   "author": "RARgames",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./renderer": {
+      "import": "./dist/esm/renderer.js",
+      "require": "./dist/cjs/renderer.js"
+    },
+    "./*": {
+      "import": "./dist/esm/*.js",
+      "require": "./dist/cjs/*.js"
+    }
+  },
   "dependencies": {
     "date-fns": "^4.1.0",
     "lodash": "^4.17.23"
   },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "glob": "^13.0.6",
+    "rollup": "^4.25.1"
+  },
   "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepare": "pnpm build",
     "lint": "eslint ."
   }
 }
