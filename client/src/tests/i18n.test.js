@@ -149,7 +149,7 @@ describe('i18n translations coverage', () => {
   const languages = fs
     .readdirSync(LOCALES_DIR)
     .filter((d) => fs.statSync(path.join(LOCALES_DIR, d)).isDirectory())
-    .filter((lang) => lang !== BASE_LANG && lang !== 'node_modules');
+    .filter((lang) => lang !== BASE_LANG && lang !== 'node_modules' && lang !== '_virtual');
 
   const baseTranslations = loadLanguage(BASE_LANG);
 
