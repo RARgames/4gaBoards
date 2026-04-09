@@ -1,6 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import { glob } from 'glob';
+import dts from 'rollup-plugin-dts';
 
 const plugins = [resolve(), commonjs()];
 
@@ -33,5 +34,21 @@ export default [
     plugins,
     // keep node_modules external
     external: (id) => !id.startsWith('.') && !id.startsWith('/') && !id.includes('src'),
+  },
+  {
+    input: 'src/index.js',
+    output: {
+      file: 'dist/index.d.ts',
+      format: 'es',
+    },
+    plugins: [dts()],
+  },
+  {
+    input: 'src/renderer.js',
+    output: {
+      file: 'dist/renderer.d.ts',
+      format: 'es',
+    },
+    plugins: [dts()],
   },
 ];

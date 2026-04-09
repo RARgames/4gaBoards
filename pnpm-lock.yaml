@@ -401,6 +401,9 @@ importers:
       rollup:
         specifier: ^4.25.1
         version: 4.60.1
+      rollup-plugin-dts:
+        specifier: ^6.4.1
+        version: 6.4.1(rollup@4.60.1)(typescript@5.9.3)
 
   server:
     dependencies:
@@ -7474,6 +7477,13 @@ packages:
 
   rndm@1.2.0:
     resolution: {integrity: sha512-fJhQQI5tLrQvYIYFpOnFinzv9dwmR7hRnUz1XqP3OJ1jIweTNOd6aTO4jwQSgcBSFUB+/KHJxuGneime+FdzOw==}
+
+  rollup-plugin-dts@6.4.1:
+    resolution: {integrity: sha512-l//F3Zf7ID5GoOfLfD8kroBjQKEKpy1qfhtAdnpibFZMffPaylrg1CoDC2vGkPeTeyxUe4bVFCln2EFuL7IGGg==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      rollup: ^3.29.4 || ^4
+      typescript: ^4.5 || ^5.0 || ^6.0
 
   rollup@2.80.0:
     resolution: {integrity: sha512-cIFJOD1DESzpjOBl763Kp1AH7UE/0fcdHe6rZXUdQ9c50uvgigvW97u3IcSeBwOkgqL/PXPBktBCh0KEu5L8XQ==}
@@ -16989,6 +16999,17 @@ snapshots:
       package-json-from-dist: 1.0.1
 
   rndm@1.2.0: {}
+
+  rollup-plugin-dts@6.4.1(rollup@4.60.1)(typescript@5.9.3):
+    dependencies:
+      '@jridgewell/remapping': 2.3.5
+      '@jridgewell/sourcemap-codec': 1.5.5
+      convert-source-map: 2.0.0
+      magic-string: 0.30.21
+      rollup: 4.60.1
+      typescript: 5.9.3
+    optionalDependencies:
+      '@babel/code-frame': 7.29.0
 
   rollup@2.80.0:
     optionalDependencies:
