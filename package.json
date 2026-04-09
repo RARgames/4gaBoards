@@ -30,7 +30,7 @@
     "server:start": "pnpm -C server start",
     "server:start:prod": "pnpm -C server start:prod",
     "server:test": "pnpm -C server test",
-    "start": "concurrently -n server,client \"pnpm -C server start\" \"pnpm -C client start\"",
+    "start": "concurrently -n server,client,locales \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -C packages/locales build\"",
     "dev": "concurrently -n server,client,locales \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -C packages/locales dev\"",
     "test": "pnpm -C server test && pnpm -C client test",
     "packages:lint": "pnpm -C packages/locales lint",

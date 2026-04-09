@@ -13,7 +13,7 @@ server/.eslintignore
 server/test
 server/logs
 server/.tmp
-server/eslint.config.js
+server/eslint.config.mjs
 
 server/views/*
 
