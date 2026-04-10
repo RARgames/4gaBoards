@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '@4gaboards/utils';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { createTimer, getTimerParts, startTimer, stopTimer, updateTimer } from '../../utils/timer';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
 
 import * as gs from '../../global.module.scss';

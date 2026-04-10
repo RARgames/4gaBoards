@@ -2,11 +2,11 @@ import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { startTimer, stopTimer } from '@4gaboards/utils';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
-import { startTimer, stopTimer } from '../../utils/timer';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import Label from '../Label';

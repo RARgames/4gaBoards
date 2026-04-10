@@ -1,5 +1,5 @@
 {
-  "name": "@4gaboards/locales",
+  "name": "@4gaboards/utils",
   "version": "1.0.0",
   "private": true,
   "author": "RARgames",
@@ -15,20 +15,18 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js"
     },
-    "./renderer": {
-      "types": "./dist/renderer.d.ts",
-      "import": "./dist/esm/renderer.js",
-      "require": "./dist/cjs/renderer.js"
+    "./timer": {
+      "types": "./dist/timer.d.ts",
+      "import": "./dist/esm/timer.js",
+      "require": "./dist/cjs/timer.js"
     },
-    "./*": {
-      "import": "./dist/esm/*.js",
-      "require": "./dist/cjs/*.js"
+    "./truncate-if": {
+      "types": "./dist/truncate-if.d.ts",
+      "import": "./dist/esm/truncate-if.js",
+      "require": "./dist/cjs/truncate-if.js"
     }
   },
   "dependencies": {
-    "@4gaboards/enums": "workspace:*",
-    "@4gaboards/utils": "workspace:*",
-    "date-fns": "^4.1.0",
     "lodash": "^4.17.23"
   },
   "devDependencies": {

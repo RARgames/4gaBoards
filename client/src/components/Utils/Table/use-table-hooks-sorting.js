@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-
-import { getFullSeconds } from '../../../utils/timer';
+import { getFullSeconds } from '@4gaboards/utils';
 
 export default (table) => {
   return useMemo(() => {

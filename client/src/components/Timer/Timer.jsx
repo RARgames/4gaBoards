@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { formatTimer } from '@4gaboards/utils';
 import clsx from 'clsx';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
 import { useForceUpdate, usePrevious } from '../../lib/hooks';
-import { formatTimer } from '../../utils/timer';
 import { Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Timer.module.scss';

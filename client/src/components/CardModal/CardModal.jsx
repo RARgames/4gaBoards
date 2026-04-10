@@ -1,12 +1,12 @@
 import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { createTimer, startTimer, stopTimer } from '@4gaboards/utils';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
-import { createTimer, startTimer, stopTimer } from '../../utils/timer';
 import CardActionsPopup from '../Card/CardActionsPopup';
 import DeletePopup from '../DeletePopup';
 import DueDate from '../DueDate';

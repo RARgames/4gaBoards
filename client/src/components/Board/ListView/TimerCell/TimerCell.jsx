@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { startTimer, stopTimer } from '@4gaboards/utils';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { startTimer, stopTimer } from '../../../../utils/timer';
 import Timer from '../../../Timer';
 import TimerEditPopup from '../../../TimerEditPopup';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';

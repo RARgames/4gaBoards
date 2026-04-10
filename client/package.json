@@ -23,6 +23,7 @@
   "dependencies": {
     "@4gaboards/enums": "workspace:*",
     "@4gaboards/locales": "workspace:*",
+    "@4gaboards/utils": "workspace:*",
     "@babel/core": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
     "@babel/runtime": "^7.29.2",

@@ -45,9 +45,17 @@ export default [
     plugins: [dts()],
   },
   {
-    input: 'src/renderer.js',
+    input: 'src/timer.js',
     output: {
-      file: 'dist/renderer.d.ts',
+      file: 'dist/timer.d.ts',
+      format: 'es',
+    },
+    plugins: [dts()],
+  },
+  {
+    input: 'src/truncate-if.js',
+    output: {
+      file: 'dist/truncate-if.d.ts',
       format: 'es',
     },
     plugins: [dts()],
