@@ -51,4 +51,12 @@ export default [
     },
     plugins: [dts()],
   },
+  {
+    input: 'src/utils/truncate-if.js',
+    output: {
+      file: 'dist/utils/truncate-if.d.ts',
+      format: 'es',
+    },
+    plugins: [dts()],
+  },
 ];

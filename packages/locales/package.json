@@ -20,6 +20,11 @@
       "import": "./dist/esm/renderer.js",
       "require": "./dist/cjs/renderer.js"
     },
+    "./utils/truncate-if": {
+      "types": "./dist/utils/truncate-if.d.ts",
+      "import": "./dist/esm/utils/truncate-if.js",
+      "require": "./dist/cjs/utils/truncate-if.js"
+    },
     "./*": {
       "import": "./dist/esm/*.js",
       "require": "./dist/cjs/*.js"
