@@ -1,2 +1,2 @@
-export { default as ActivityScopes } from './NActivityScopes.js';
-export { default as ActivityTypes } from './NActivityTypes.js';
+export { default as ActivityScopes } from './activityScopes.js';
+export { default as ActivityTypes } from './activityTypes.js';
