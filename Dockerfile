@@ -9,7 +9,7 @@ WORKDIR /app
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY packages ./packages
-RUN pnpm install --frozen-lockfile --filter ./packages/locales...
+RUN pnpm install --frozen-lockfile --filter @4gaboards/*...
 RUN pnpm packages:build
 
 FROM base AS server-dependencies
@@ -18,8 +18,7 @@ WORKDIR /app
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY server/package.json server/package.json
-COPY --from=packages-build /app/packages/locales/package.json packages/locales/package.json
-COPY --from=packages-build /app/packages/locales/dist packages/locales/dist
+COPY --from=packages-build /app/packages ./packages
 RUN pnpm deploy --filter server --prod --config.inject-workspace-packages=true output
 
 FROM base AS client
@@ -28,8 +27,7 @@ WORKDIR /app
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY client/package.json client/package.json
-COPY --from=packages-build /app/packages/locales/package.json packages/locales/package.json
-COPY --from=packages-build /app/packages/locales/dist packages/locales/dist
+COPY --from=packages-build /app/packages ./packages
 RUN pnpm install --frozen-lockfile --filter client... --prod
 
 COPY client ./client

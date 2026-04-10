@@ -16,6 +16,7 @@
     "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
   },
   "dependencies": {
+    "@4gaboards/enums": "workspace:*",
     "@4gaboards/locales": "workspace:*",
     "@azure/msal-node": "^5.1.1",
     "@rargames/passport-github": "^1.1.2",

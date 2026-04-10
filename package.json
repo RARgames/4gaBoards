@@ -30,11 +30,11 @@
     "server:start": "pnpm -C server start",
     "server:start:prod": "pnpm -C server start:prod",
     "server:test": "pnpm -C server test",
-    "start": "concurrently -n server,client,locales \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -C packages/locales build\"",
-    "dev": "concurrently -n server,client,locales \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -C packages/locales dev\"",
+    "start": "concurrently -n server,client,packages \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -r --filter @4gaboards/* build\"",
+    "dev": "concurrently -n server,client,packages \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -r --filter @4gaboards/* dev\"",
     "test": "pnpm -C server test && pnpm -C client test",
-    "packages:lint": "pnpm -C packages/locales lint",
-    "packages:build": "pnpm -C packages/locales build"
+    "packages:lint": "pnpm -r --filter @4gaboards/* lint",
+    "packages:build": "pnpm -r --filter @4gaboards/* build"
   },
   "lint-staged": {
     "client/**/*.{js,jsx}": [
@@ -42,6 +42,9 @@
     ],
     "server/**/*.js": [
       "pnpm -C server lint"
+    ],
+    "packages/*/**/*.{js,jsx}": [
+      "pnpm -r --filter @4gaboards/* lint"
     ]
   },
   "dependencies": {
