@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActivityScopes } from '@4gaboards/enums';
 import locales from '@4gaboards/locales';
 import { useReactTable, getCoreRowModel, getGroupedRowModel, getExpandedRowModel, flexRender } from '@tanstack/react-table';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { ActivityScopes, ThemeShapes, Themes, NotificationsDeliveryModes } from '../../../constants/Enums';
+import { ThemeShapes, Themes, NotificationsDeliveryModes } from '../../../constants/Enums';
 import { Table } from '../../Utils';
 import CustomThemeButton from './CustomThemeButton';
 import NotificationTypesSelector from './NotificationTypesSelector';

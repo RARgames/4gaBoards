@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActivityScopes } from '@4gaboards/enums';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-
-import { ActivityScopes } from '../../constants/Enums';
 
 import * as s from './ActivityLabel.module.scss';
 

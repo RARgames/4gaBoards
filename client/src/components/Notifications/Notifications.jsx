@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActivityScopes } from '@4gaboards/enums';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { ActivityScopes } from '../../constants/Enums';
 import Paths from '../../constants/Paths';
 import ActivityLabel from '../ActivityLabel';
 import ActivityLink from '../ActivityLink';

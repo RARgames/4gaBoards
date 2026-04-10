@@ -1,9 +1,9 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import { ActivityScopes, ActivityTypes } from '@4gaboards/enums';
 import PropTypes from 'prop-types';
 
-import { ActivityTypes, ActivityScopes } from '../../constants/Enums';
 import Paths from '../../constants/Paths';
 import { formatTimerActivities, getTimerState } from '../../utils/timer';
 import truncateIf from '../../utils/truncate-if';
