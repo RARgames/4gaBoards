@@ -87,7 +87,7 @@
     "react-datepicker": "^8.10.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^15.0.0",
-    "react-i18next": "^17.0.1",
+    "react-i18next": "^17.0.2",
     "react-input-mask": "^2.0.4",
     "react-photoswipe-gallery": "^4.0.0",
     "react-redux": "^9.2.0",
