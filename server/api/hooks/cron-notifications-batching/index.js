@@ -15,7 +15,7 @@ module.exports = function defineCronNotificationsBatchingHook(sails) {
           const grouped = _.groupBy(pending, (p) => {
             const isChildScope = [Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(p.scope);
             const normalizedScope = isChildScope ? Action.Scopes.CARD : p.scope;
-            const id = isChildScope ? p.cardId : p[`${p.scope}Id`];
+            const id = isChildScope ? p.cardId : p[p.scope === Action.Scopes.USER ? 'userAccountId' : `${p.scope}Id`];
             return `${p.userId}-${normalizedScope}-${id}`;
           });
           const now = new Date();
@@ -26,6 +26,8 @@ module.exports = function defineCronNotificationsBatchingHook(sails) {
             let scopeIdField = `${scope}Id`;
             if ([Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(scope)) {
               scopeIdField = 'cardId';
+            } else if (scope === Action.Scopes.USER) {
+              scopeIdField = 'userAccountId';
             }
             const scopeIdValue = group[0][scopeIdField] || null;
 

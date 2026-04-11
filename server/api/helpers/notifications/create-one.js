@@ -74,6 +74,8 @@ module.exports = {
       let scopeIdField = `${values.action.scope}Id`;
       if ([Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(values.action.scope)) {
         scopeIdField = 'cardId';
+      } else if (values.action.scope === Action.Scopes.USER) {
+        scopeIdField = 'userAccountId';
       }
       const scopeIdValue = values.action[scopeIdField] || null;
 
