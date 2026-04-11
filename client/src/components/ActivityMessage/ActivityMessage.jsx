@@ -45,10 +45,9 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
     return null;
   }
 
-  const componentsByName = {};
-  const componentsByIndex = [];
+  const components = {};
 
-  (transProps.components || []).forEach(({ slot, title = '' }, index) => {
+  (transProps.components || []).forEach(({ slot, title = '' }) => {
     let node;
 
     if (slot === 'user') {
@@ -71,25 +70,22 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       } else {
         node = <Link to={Paths.BOARDS.replace(':id', activity.boardId)} className={s.linkedDeleted} title={t('activity.deletedBoard', { board: title })} onClick={onClose} />;
       }
-    } else if (slot === 'list') {
-      node = <span className={s.data} title={title} />;
-    } else if (slot === 'mail') {
-      node = <span className={s.data} title={title} />;
+    } else if (slot.toLowerCase().includes('mail')) {
+      if (title) {
+        node = <a href={`mailto:${title}`} className={s.linked} title={title} aria-label={title} />;
+      } else {
+        node = <span className={s.data} title={title} />;
+      }
     } else {
-      node = <span className={s.data} />;
+      node = <span className={s.data} title={title} />;
     }
-    // TODO remove special list handling, add special handling to mail - mailTo
 
     if (node) {
-      componentsByName[slot] = node;
-      componentsByIndex[index] = node;
+      components[slot] = node;
     }
   });
 
-  const template = t(transProps.i18nKey);
-  const usesNumericTags = /<\d+>/.test(template);
-
-  return <Trans i18nKey={transProps.i18nKey} values={transProps.values} components={usesNumericTags ? componentsByIndex : componentsByName} />;
+  return <Trans i18nKey={transProps.i18nKey} values={transProps.values} components={components} />;
 });
 
 ActivityMessage.propTypes = {
