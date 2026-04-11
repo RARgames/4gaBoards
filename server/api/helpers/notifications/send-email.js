@@ -61,7 +61,7 @@ module.exports = {
     const scopeNameField = `${scope}Name`;
     const scopeNameValue = firstAction.data[scopeNameField] || null;
     const localizedScope = t ? t(getActivityScopeLabelKey(scope, Action.Scopes)) : scope;
-    const subject = `[${localizedScope}]: ${scopeNameValue} | 4ga Boards Notifications (${sails.config.custom.instanceName})`;
+    const subject = `[${localizedScope.toUpperCase()}] ${scopeNameValue} | 4ga Boards Notifications (${sails.config.custom.instanceName})`;
 
     const baseClientUrl = sails.config.custom.clientUrl;
     const htmlBlocks = [];
