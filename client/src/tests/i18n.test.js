@@ -36,7 +36,7 @@ const extractVariables = (str) => {
   return vars.sort();
 };
 
-// helper: extract react-i18next tags <0>...</0>
+// helper: extract react-i18next tags <card>...</card>
 const extractTags = (str) => {
   const regex = /<([a-zA-Z][a-zA-Z0-9]*)>/g;
   const tags = [];

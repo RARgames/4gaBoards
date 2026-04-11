@@ -20,11 +20,7 @@ const NotificationCenter = React.memo(({ items, filteredItems, filter, onUpdate,
     <div className={s.wrapperFullScreen}>
       <div className={s.header}>
         <div className={s.title}>
-          {totalCount > 0 && (
-            <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
-              <span className={s.notificationCount} />
-            </Trans>
-          )}
+          {totalCount > 0 && <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }} components={{ count: <span className={s.notificationCount} /> }} />}
           {totalCount === 0 && t('common.notifications')}
           <div className={s.actionsWrapper}>
             <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>

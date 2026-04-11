@@ -117,9 +117,8 @@ const BoardActionsStep = React.memo(
                   values={{
                     count: mailTokenCount,
                   }}
-                >
-                  <span className={s.count} />
-                </Trans>
+                  components={{ count: <span className={s.count} /> }}
+                />
               }
               mailTokens={mailTokens}
               mailServiceInboundEmail={mailServiceInboundEmail}

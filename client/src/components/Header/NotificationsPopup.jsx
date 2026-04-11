@@ -23,11 +23,7 @@ const NotificationsStep = React.memo(({ items, filteredItems, filter, onUpdate, 
     <>
       <Popup.Header className={s.headerWrapper} contentClassName={s.header}>
         <div className={s.title}>
-          {totalCount > 0 && (
-            <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }}>
-              <span className={s.notificationCount} />
-            </Trans>
-          )}
+          {totalCount > 0 && <Trans i18nKey="common.notificationsWithCount" values={{ unread: unreadCount, total: totalCount }} components={{ count: <span className={s.notificationCount} /> }} />}
           {totalCount === 0 && t('common.notifications')}
           <div className={s.actionsWrapper}>
             <Link to={Paths.NOTIFICATIONS}>

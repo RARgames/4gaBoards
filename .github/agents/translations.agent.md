@@ -1,20 +1,20 @@
 ---
 name: translations
-description: This custom agent automatically translates missing localization keys from English (`dir packages\locales\en all files except index.js`) into all target languages. Target languages are all directories in `packages\locales` except `en`. It detects missing keys using `pnpm client:ci:test`, then generates consistent translations preserving formatting, syntax e.g. {{count}} should remain unchanged, <0>...</0> should remain unchanged, and escape sequences (`\n`). Use this agent whenever new keys are added or existing translations are incomplete.
+description: This custom agent automatically translates missing localization keys from English (`dir packages\locales\src\en all files except index.js`) into all target languages. Target languages are all directories in `packages\locales\src` except `en`. It detects missing keys using `pnpm client:ci:test`, then generates consistent translations preserving formatting, syntax e.g. {{count}} should remain unchanged, <card>...</card> should remain unchanged, and escape sequences (`\n`). Use this agent whenever new keys are added or existing translations are incomplete.
 tools: ['execute', 'read', 'edit']
 ---
 
 behavior:
 
-- Scan the source English locale files in `packages\locales\en`, excluding `index.js`, to collect all keys.
-- Detect target language directories in `packages\locales` (all directories except `en`).
+- Scan the source English locale files in `packages\locales\src\en`, excluding `index.js`, to collect all keys.
+- Detect target language directories in `packages\locales\src` (all directories except `en`).
 - Detect missing keys in each target language by running `pnpm client:ci:test`.
 - You exactly know what keys to modify when you analyze the output of the test command.
 - For each missing key, generate a translation using GPT-5-mini, following strict rules:
   - Preserve key names exactly.
   - Keep formatting and syntax intact:
     - Must not change placeholders like `{{count}}`.
-    - Must not alter HTML-like tags like `<0>...</0>`.
+    - Must not alter HTML-like tags like `<card>...</card>`.
   - Preserve escape sequences (`\n`) exactly.
   - Return valid JSON (or YAML if applicable), no extra text or explanations.
 - Merge the translated keys into the corresponding target locale files without overwriting existing translations.
