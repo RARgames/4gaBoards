@@ -168,7 +168,7 @@ pnpm server:db:init
 **Start the development server**
 
 ```bash
-pnpm start
+pnpm dev
 ```
 
 Default 4ga Boards url: http://localhost:3000 \
