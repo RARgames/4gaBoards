@@ -1,3 +1,7 @@
+const { getActivityTransProps } = require('@4gaboards/locales/renderer');
+
+const { getActivityScopeLabelKey, getI18nextTranslator, getLocaleByLanguage, loadRendererModules } = require('../../../utils/activity-i18n');
+const { buildFallbackActivityHtml, escapeHtml, renderLocalizedHtmlFromTransProps } = require('../../../utils/activity-rendering');
 const { fetchRetry } = require('../../../utils/fetchRetry');
 
 module.exports = {
@@ -34,6 +38,21 @@ module.exports = {
 
     const receiverUserId = firstNotification.userId;
     const user = await User.findOne({ id: receiverUserId });
+    const userPrefs = await UserPrefs.findOne({ id: receiverUserId });
+
+    let t = null;
+
+    try {
+      const rendererModules = await loadRendererModules();
+      const locale = getLocaleByLanguage(rendererModules.locales, userPrefs?.language || 'en');
+      const activityLocale = rendererModules.activityLocales[locale?.language] || rendererModules.activityLocales.en;
+
+      if (activityLocale && locale?.language) {
+        t = await getI18nextTranslator(locale.language, activityLocale);
+      }
+    } catch (error) {
+      sails.log.warn('Failed to load localized activity renderer for notification emails:', error);
+    }
 
     let { scope } = firstAction;
     if ([Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(scope)) {
@@ -41,9 +60,11 @@ module.exports = {
     }
     const scopeNameField = `${scope}Name`;
     const scopeNameValue = firstAction.data[scopeNameField] || null;
-    const subject = `[${scope}]: ${scopeNameValue} | 4ga Boards Notifications (${sails.config.custom.instanceName})`;
+    const localizedScope = t ? t(getActivityScopeLabelKey(scope, Action.Scopes)) : scope;
+    const subject = `[${localizedScope}]: ${scopeNameValue} | 4ga Boards Notifications (${sails.config.custom.instanceName})`;
 
-    const messageLines = [];
+    const baseClientUrl = sails.config.custom.clientUrl;
+    const htmlBlocks = [];
     // eslint-disable-next-line no-restricted-syntax
     for (const notification of notifications) {
       const action = actionsMap[notification.actionId];
@@ -52,19 +73,25 @@ module.exports = {
 
       // eslint-disable-next-line no-await-in-loop
       const actionUser = await User.findOne({ id: action.userId });
-      messageLines.push(`From: ${actionUser.username} (${actionUser.name})`);
-      const { type } = action;
-      const dataEntries = Object.entries(action.data || {});
-      if (!dataEntries.length) {
-        messageLines.push(`• ${type}`);
-        // eslint-disable-next-line no-continue
-        continue;
+      htmlBlocks.push(`<p>From: <strong>${escapeHtml(actionUser.name)}</strong> (${escapeHtml(actionUser.username)})</p>`);
+
+      if (t) {
+        const transProps = getActivityTransProps(t, action);
+
+        if (transProps) {
+          const localizedHtml = renderLocalizedHtmlFromTransProps(t, transProps, action, baseClientUrl);
+
+          if (localizedHtml) {
+            htmlBlocks.push(`<p>&bull; ${localizedHtml}</p>`);
+            // eslint-disable-next-line no-continue
+            continue;
+          }
+        }
       }
 
-      const changes = dataEntries.map(([key, value]) => `  - ${key}: ${value}`).join('\n');
-      messageLines.push(`• ${type}\n${changes}`);
+      htmlBlocks.push(buildFallbackActivityHtml(action));
     }
-    const message = messageLines.join('\n\n');
+    const htmlMessage = `<div>${htmlBlocks.join('\n')}</div>`;
 
     try {
       const url = `${process.env.NOTIFICATIONS_HOST_URL}/api/notifications/email`;
@@ -80,7 +107,7 @@ module.exports = {
             receiverUserId,
             receiverEmail: user.email,
             subject,
-            message,
+            message: htmlMessage,
           }),
         },
         3,
