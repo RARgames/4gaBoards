@@ -2,7 +2,7 @@ import { ActivityScopes, ActivityTypes } from '@4gaboards/enums';
 import { getTimerState, formatTimerActivities, truncateIf } from '@4gaboards/utils';
 
 function buildContext(t, activity, flags) {
-  const { boardNameTruncateLength, cardNameTruncateLength, commentTruncateLength, defaultTruncateLength, descriptionTruncateLength, hideBoardDetails, hideCardDetails, hideLabelDetails, hideListDetails, hideProjectDetails, isDescriptionTruncated, isTruncated, listNameTruncateLength, projectNameTruncateLength, taskNameTruncateLength, userNameTruncateLength } = flags;
+  const { boardNameTruncateLength = 30, cardNameTruncateLength = 30, commentTruncateLength = 30, defaultTruncateLength = 30, descriptionTruncateLength = 30, hideBoardDetails = false, hideCardDetails = false, hideLabelDetails = false, hideListDetails = false, hideProjectDetails = false, isDescriptionTruncated = false, isTruncated = false, listNameTruncateLength = 30, projectNameTruncateLength = 30, taskNameTruncateLength = 30, userNameTruncateLength = 30 } = flags;
 
   const cardName = activity.data?.cardName || activity.card?.name;
   const cardNameTruncated = truncateIf(cardName, isTruncated, cardNameTruncateLength);
@@ -1488,8 +1488,8 @@ export const activityRenderSpec = {
   },
 };
 
-export function getActivityTransProps(activity, flags) {
-  const ctx = buildContext(flags.t, activity, flags);
+export function getActivityTransProps(t, activity, flags = {}) {
+  const ctx = buildContext(t, activity, flags);
   const specFn = activityRenderSpec[activity.scope]?.[activity.type];
 
   if (!specFn) {
@@ -1505,9 +1505,9 @@ export function getActivityTransProps(activity, flags) {
   const { components = [], key, values } = spec;
 
   return {
-    components,
-    ctx,
     i18nKey: key,
     values,
+    components,
+    ctx,
   };
 }

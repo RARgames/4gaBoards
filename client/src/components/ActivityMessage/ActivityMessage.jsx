@@ -22,8 +22,7 @@ const isDescriptionTruncated = true;
 const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hideListDetails, hideLabelDetails, hideBoardDetails, hideProjectDetails, onClose }) => {
   const [t] = useTranslation();
 
-  const transProps = getActivityTransProps(activity, {
-    t,
+  const transProps = getActivityTransProps(t, activity, {
     boardNameTruncateLength,
     cardNameTruncateLength,
     commentTruncateLength,
