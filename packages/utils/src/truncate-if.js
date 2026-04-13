@@ -1,7 +1,8 @@
-import truncate from 'lodash/truncate';
-
 function truncateIf(value, condition, length) {
-  return condition ? truncate(value, { length }) : value;
+  if (!condition || typeof value !== 'string') return value;
+  if (value.length <= length) return value;
+
+  return `${value.slice(0, length).trimEnd()}...`;
 }
 
 export default truncateIf;
