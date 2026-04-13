@@ -32,10 +32,11 @@ const buildActionLinks = (action, baseClientUrl) => ({
   project: action.projectId ? buildClientRouteUrl(baseClientUrl, `/projects/${action.projectId}`) : null,
 });
 
-const buildTagRenderers = (links) => {
-  const renderStrong = (content) => `<strong>${escapeHtml(content)}</strong>`;
-  const renderLinkedStrong = (content, link) => (link ? `<a href="${escapeAttribute(link)}"><strong>${escapeHtml(content)}</strong></a>` : renderStrong(content));
+const renderStrong = (content) => `<strong>${escapeHtml(content)}</strong>`;
 
+const renderLinkedStrong = (content, link) => (link ? `<a href="${escapeAttribute(link)}">${renderStrong(content)}</a>` : renderStrong(content));
+
+const buildTagRenderers = (links) => {
   return {
     card: (content) => renderLinkedStrong(content, links.card),
     board: (content) => renderLinkedStrong(content, links.board),
@@ -80,8 +81,19 @@ const buildFallbackActivityHtml = (action) => {
   return `<p>&bull; <strong>${escapeHtml(action.type)}</strong></p><ul>${changesHtml}</ul>`;
 };
 
+const getNormalizedScope = (scope) => {
+  if ([Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(scope)) {
+    return Action.Scopes.CARD;
+  }
+
+  return scope;
+};
+
 module.exports = {
   escapeHtml,
-  buildFallbackActivityHtml,
+  renderLinkedStrong,
+  buildActionLinks,
   renderLocalizedHtmlFromTransProps,
+  buildFallbackActivityHtml,
+  getNormalizedScope,
 };

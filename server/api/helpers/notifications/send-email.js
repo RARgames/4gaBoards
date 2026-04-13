@@ -1,8 +1,41 @@
 const { getActivityTransProps } = require('@4gaboards/locales/renderer');
+const { format } = require('date-fns');
 
 const { getActivityScopeLabelKey, getI18nextTranslator, getLocaleByLanguage, loadRendererModules } = require('../../../utils/activity-i18n');
-const { buildFallbackActivityHtml, escapeHtml, renderLocalizedHtmlFromTransProps } = require('../../../utils/activity-rendering');
+const { buildActionLinks, buildFallbackActivityHtml, escapeHtml, getNormalizedScope, renderLinkedStrong, renderLocalizedHtmlFromTransProps } = require('../../../utils/activity-rendering');
 const { fetchRetry } = require('../../../utils/fetchRetry');
+
+const resolveRelatedData = async (action) => {
+  if (!action) {
+    return null;
+  }
+  const scope = getNormalizedScope(action.scope);
+  if (![Action.Scopes.CARD, Action.Scopes.LIST, Action.Scopes.BOARD].includes(scope)) {
+    return null;
+  }
+
+  let list = null;
+  let board = null;
+  let project = null;
+
+  if (scope === Action.Scopes.CARD && action.listId) {
+    list = await List.findOne({ id: action.listId });
+  }
+
+  if ([Action.Scopes.CARD, Action.Scopes.LIST].includes(scope) && action.boardId) {
+    board = await Board.findOne({ id: action.boardId });
+  }
+
+  if ([Action.Scopes.CARD, Action.Scopes.LIST, Action.Scopes.BOARD].includes(scope) && action.projectId) {
+    project = await Project.findOne({ id: action.projectId });
+  }
+
+  return {
+    listName: list?.name || null,
+    boardName: board?.name || null,
+    projectName: project?.name || null,
+  };
+};
 
 module.exports = {
   inputs: {
@@ -41,10 +74,11 @@ module.exports = {
     const userPrefs = await UserPrefs.findOne({ id: receiverUserId });
 
     let t = null;
+    let locale = null;
 
     try {
       const rendererModules = await loadRendererModules();
-      const locale = getLocaleByLanguage(rendererModules.locales, userPrefs?.language || 'en');
+      locale = getLocaleByLanguage(rendererModules.locales, userPrefs?.language || 'en');
       const activityLocale = rendererModules.activityLocales[locale?.language] || rendererModules.activityLocales.en;
 
       if (activityLocale && locale?.language) {
@@ -54,17 +88,48 @@ module.exports = {
       sails.log.warn('Failed to load localized activity renderer for notification emails:', error);
     }
 
-    let { scope } = firstAction;
-    if ([Action.Scopes.TASK, Action.Scopes.COMMENT, Action.Scopes.ATTACHMENT].includes(scope)) {
-      scope = Action.Scopes.CARD;
-    }
+    const resolvedRelatedData = await resolveRelatedData(firstAction);
+    const scope = getNormalizedScope(firstAction.scope);
+    const relatedData = resolvedRelatedData || {};
     const scopeNameField = `${scope}Name`;
     const scopeNameValue = firstAction.data[scopeNameField] || null;
     const localizedScope = t ? t(getActivityScopeLabelKey(scope, Action.Scopes)) : scope;
-    const subject = `[${localizedScope.toUpperCase()}] ${scopeNameValue} | 4ga Boards Notifications (${sails.config.custom.instanceName})`;
+    const relatedDataEntries = [
+      { key: 'listName', labelKey: 'activity.list' },
+      { key: 'boardName', labelKey: 'activity.board' },
+      { key: 'projectName', labelKey: 'activity.project' },
+    ]
+      .filter(({ key }) => relatedData[key] != null)
+      .map(({ key, labelKey }) => {
+        const label = t ? t(labelKey) : labelKey.split('.').pop();
+        return {
+          label,
+          value: relatedData[key],
+        };
+      });
+    const relatedDataSubject = relatedDataEntries.map(({ value }) => value).join(' | ') || '';
+    const subjectScope = `${localizedScope.toUpperCase()} ${relatedDataSubject}`.trim();
+    const subject = `${scopeNameValue} [${subjectScope}] 4ga Boards Notifications (${sails.config.custom.instanceName})`;
 
     const baseClientUrl = sails.config.custom.clientUrl;
+    const relatedDataLinks = buildActionLinks(firstAction, baseClientUrl);
     const htmlBlocks = [];
+    const relatedDataParts = relatedDataEntries.map(({ label, value }) => {
+      let renderedValue = renderLinkedStrong(value, null);
+
+      if (label === (t ? t('activity.board') : 'board')) {
+        renderedValue = renderLinkedStrong(value, relatedDataLinks.board);
+      } else if (label === (t ? t('activity.project') : 'project')) {
+        renderedValue = renderLinkedStrong(value, relatedDataLinks.project);
+      }
+
+      return `${escapeHtml(label)}: ${renderedValue}`;
+    });
+    const relatedDataHtml = relatedDataParts.length ? `<div>${relatedDataParts.join('<br>')}</div>` : null;
+    if (relatedDataHtml) {
+      htmlBlocks.push(relatedDataHtml);
+    }
+
     // eslint-disable-next-line no-restricted-syntax
     for (const notification of notifications) {
       const action = actionsMap[notification.actionId];
@@ -73,7 +138,21 @@ module.exports = {
 
       // eslint-disable-next-line no-await-in-loop
       const actionUser = await User.findOne({ id: action.userId });
-      htmlBlocks.push(`<p>From: <strong>${escapeHtml(actionUser.name)}</strong> (${escapeHtml(actionUser.username)})</p>`);
+      const createdAtDate = new Date(action.createdAt);
+      let createdAt;
+      if (Number.isNaN(createdAtDate.getTime())) {
+        createdAt = String(action.createdAt);
+      } else {
+        try {
+          createdAt = format(createdAtDate, 'dd.MM.yyyy HH:mm');
+        } catch {
+          createdAt = createdAtDate.toUTCString();
+        }
+      }
+
+      htmlBlocks.push(`<p>From: <strong>${escapeHtml(actionUser.name)}</strong> (${escapeHtml(actionUser.username)}) <small><i>${escapeHtml(createdAt)}</i></small></p>`);
+
+      let activityHtml = null;
 
       if (t) {
         const transProps = getActivityTransProps(t, action);
@@ -82,14 +161,12 @@ module.exports = {
           const localizedHtml = renderLocalizedHtmlFromTransProps(t, transProps, action, baseClientUrl);
 
           if (localizedHtml) {
-            htmlBlocks.push(`<p>&bull; ${localizedHtml}</p>`);
-            // eslint-disable-next-line no-continue
-            continue;
+            activityHtml = `<p>&bull; ${localizedHtml}</p>`;
           }
         }
       }
 
-      htmlBlocks.push(buildFallbackActivityHtml(action));
+      htmlBlocks.push(activityHtml || buildFallbackActivityHtml(action));
     }
     const htmlMessage = `<div>${htmlBlocks.join('\n')}</div>`;
 
