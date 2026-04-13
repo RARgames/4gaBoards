@@ -18,7 +18,7 @@ import Tasks from '../Tasks';
 import Timer from '../Timer';
 import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview, LinkifiedTextRenderer } from '../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview, LinkifiedTextRenderer, ExternalLink } from '../Utils';
 import AttachmentAdd from './AttachmentAdd';
 import AttachmentAddZone from './AttachmentAddZone';
 import Attachments from './Attachments';
@@ -604,6 +604,9 @@ const CardModal = React.memo(
         <div className={s.text}>{t('common.mailAuthor')}</div>
         <span className={clsx(s.headerItem, s.activity)}>
           <div className={s.mailAuthor} title={mailCreatorAddress}>
+            <ExternalLink href={`mailto:${mailCreatorAddress}`} title={mailCreatorAddress}>
+              <Icon type={IconType.Link} size={IconSize.Size14} />
+            </ExternalLink>
             {mailCreatorAddress}
           </div>
         </span>

@@ -5,6 +5,7 @@ import { getActivityTransProps } from '@4gaboards/locales/renderer';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import { ExternalLink } from '../Utils';
 
 import * as s from './ActivityMessage.module.scss';
 
@@ -71,7 +72,7 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
       }
     } else if (slot.toLowerCase().includes('mail')) {
       if (title) {
-        node = <a href={`mailto:${title}`} className={s.linked} title={title} aria-label={title} />;
+        node = <ExternalLink href={`mailto:${title}`} className={s.linked} title={title} />;
       } else {
         node = <span className={s.data} title={title} />;
       }
