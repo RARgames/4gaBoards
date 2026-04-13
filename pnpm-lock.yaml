@@ -244,8 +244,8 @@ importers:
         specifier: ^13.1.1
         version: 13.1.1(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
       react-datepicker:
-        specifier: ^8.10.0
-        version: 8.10.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        specifier: ^9.1.0
+        version: 9.1.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.3.1)
@@ -7198,11 +7198,15 @@ packages:
       react: ^16.8.5 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.5 || ^17.0.0 || ^18.0.0
 
-  react-datepicker@8.10.0:
-    resolution: {integrity: sha512-JIXuA+g+qP3c4MVJpx24o7n1gnv3WV/8A/D6964HucY1FlSEc30+ITPNUfbKZXYHl5rruCtxYCwi2lzn7gaz7g==}
+  react-datepicker@9.1.0:
+    resolution: {integrity: sha512-lOp+m5bc+ttgtB5MHEjwiVu4nlp4CvJLS/PG1OiOe5pmg9kV73pEqO8H0Geqvg2E8gjqTaL9eRhSe+ZpeKP3nA==}
     peerDependencies:
+      date-fns-tz: ^3.0.0
       react: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
       react-dom: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
+    peerDependenciesMeta:
+      date-fns-tz:
+        optional: true
 
   react-dom@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
@@ -16615,7 +16619,7 @@ snapshots:
     transitivePeerDependencies:
       - react-native
 
-  react-datepicker@8.10.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1):
+  react-datepicker@9.1.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1):
     dependencies:
       '@floating-ui/react': 0.27.19(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
