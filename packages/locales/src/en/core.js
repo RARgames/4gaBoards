@@ -408,6 +408,7 @@ export default {
       renameProject: 'Rename Project',
       reorderBoards: 'Reorder boards within the project',
       requiresAdminRights: '(requires admin rights)',
+      requiresEmailVerification: '(requires email verification)',
       resendVerificationEmail_title: 'Resend Verification Email',
       resetApiClient: 'Reset API Client',
       resetColumnFilters: 'Reset Column Filters',

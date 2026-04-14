@@ -11,4 +11,12 @@
   .groupRow {
     font-weight: bold;
   }
+
+  .groupDescription {
+    display: none;
+  }
+
+  .requiresVerifiedEmail {
+    color: var(--textWarning);
+  }
 }

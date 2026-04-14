@@ -28,10 +28,11 @@ const mapStateToProps = (state) => {
     emailNotificationsMarkReadAsDelivered,
     notificationTypes,
   } = selectors.selectCurrentUserPrefs(state);
-  const { isAdmin } = selectors.selectCurrentUser(state);
+  const { isAdmin, isVerified } = selectors.selectCurrentUser(state);
 
   return {
     isAdmin,
+    isVerified,
     language,
     subscribeToOwnCards,
     subscribeToNewBoards,

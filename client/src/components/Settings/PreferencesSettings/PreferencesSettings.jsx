@@ -19,6 +19,7 @@ import * as s from './PreferencesSettings.module.scss';
 const PreferencesSettings = React.memo(
   ({
     isAdmin,
+    isVerified,
     subscribeToOwnCards,
     subscribeToNewBoards,
     subscribeToNewProjects,
@@ -763,11 +764,27 @@ const PreferencesSettings = React.memo(
               <Table.Body className={clsx(gs.scrollableY)} style={Table.Style.Default}>
                 {table.getRowModel().rows.map((row) => {
                   if (row.getIsGrouped()) {
+                    let groupLabel = t('common.general');
+                    let groupDescription = '';
+                    let groupDescriptionStyle = s.groupDescription;
+
+                    if (row.groupingValue === 'notifications') {
+                      groupLabel = t('common.notifications');
+                    } else if (row.groupingValue === 'emailNotifications') {
+                      groupLabel = t('common.emailNotifications');
+                      if (!isVerified) {
+                        groupDescription = t('common.requiresEmailVerification');
+                        groupDescriptionStyle = s.requiresVerifiedEmail;
+                      }
+                    }
+
                     return (
                       <Table.Row key={row.id} className={s.groupRow}>
                         <Table.Cell colSpan={columns.length}>
-                          {/* eslint-disable-next-line no-nested-ternary */}
-                          <strong>{row.groupingValue === 'notifications' ? t('common.notifications') : row.groupingValue === 'emailNotifications' ? t('common.emailNotifications') : t('common.general')}</strong>
+                          <strong>
+                            {groupLabel}
+                            <span className={groupDescriptionStyle}> {groupDescription}</span>
+                          </strong>
                         </Table.Cell>
                       </Table.Row>
                     );
@@ -793,6 +810,7 @@ const PreferencesSettings = React.memo(
 
 PreferencesSettings.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
+  isVerified: PropTypes.bool.isRequired,
   subscribeToOwnCards: PropTypes.bool.isRequired,
   subscribeToNewBoards: PropTypes.bool.isRequired,
   subscribeToNewProjects: PropTypes.bool.isRequired,
