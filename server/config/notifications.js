@@ -49,7 +49,7 @@ async function setupNotifications() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            instance_url: 'http://localhost:1337',
+            instance_url: sails.config.custom.baseUrl,
             api_client_id: apiClient.clientId,
             api_client_secret: apiClient.clientSecret,
             version: apiClient.name,
