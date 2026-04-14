@@ -56,6 +56,11 @@ const updateCurrentUserEmail = (data) => ({
   },
 });
 
+const resendCurrentUserEmailVerification = () => ({
+  type: EntryActionTypes.CURRENT_USER_EMAIL_VERIFICATION_RESEND,
+  payload: {},
+});
+
 const clearUserEmailUpdateError = (id) => ({
   type: EntryActionTypes.USER_EMAIL_UPDATE_ERROR_CLEAR,
   payload: {
@@ -260,6 +265,7 @@ export default {
   handleUserUpdate,
   updateUserEmail,
   updateCurrentUserEmail,
+  resendCurrentUserEmailVerification,
   clearUserEmailUpdateError,
   clearCurrentUserEmailUpdateError,
   updateUserPassword,

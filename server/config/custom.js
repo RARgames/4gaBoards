@@ -61,6 +61,19 @@ module.exports.custom = {
 
   mailServiceAvailable: false,
   mailServiceInboundEmail: process.env.MAIL_SERVICE_INBOUND_EMAIL,
+  notificationsInternalApiClientLabel: 'internal:4gaBoardsNotifications',
+  notificationsInternalApiClientPermissions: [
+    'mail-tokens.get-list-id',
+    'cards.create',
+    'tasks.create',
+    'task-memberships.create',
+    'attachments.create',
+    'card-labels.create',
+    'card-memberships.create',
+    'boards.find-label-by-name',
+    'boards.find-user-by-username',
+    'users.update-email-verification',
+  ],
   demoMode: process.env.DEMO_MODE === 'true',
   metricsEnabled: process.env.METRICS_ENABLED === 'true',
 

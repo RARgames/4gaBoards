@@ -9,13 +9,19 @@ async function setupNotifications() {
   const notificationsSelfURL = `${notificationsHostURL}/api/clients/self`;
   const notificationsClientId = process.env.NOTIFICATIONS_CLIENT_ID;
   const notificationsClientSecret = process.env.NOTIFICATIONS_CLIENT_SECRET;
-  const notificationsLabel = 'internal:4gaBoardsNotifications';
+  const notificationsLabel = sails.config.custom.notificationsInternalApiClientLabel;
+  const requiredPermissions = sails.config.custom.notificationsInternalApiClientPermissions;
 
   try {
     sails.log.info(`Notifications: Connecting to notifications server: ${notificationsHostURL} and validating client configuration...`);
     let apiClient = await ApiClient.findOne({ label: notificationsLabel, deletedAt: null });
     if (!apiClient) {
       sails.log.info(`Notifications: API client not found, creating...`);
+      apiClient = await sails.helpers.apiClients.createOneInternal.with({ values: { label: notificationsLabel } });
+    }
+    const missingPermissions = requiredPermissions.filter((permission) => !apiClient.permissions?.includes(permission));
+    if (missingPermissions.length > 0) {
+      sails.log.info(`Notifications: Rotating internal API client to apply required permissions: ${missingPermissions.join(', ')}`);
       apiClient = await sails.helpers.apiClients.createOneInternal.with({ values: { label: notificationsLabel } });
     }
 

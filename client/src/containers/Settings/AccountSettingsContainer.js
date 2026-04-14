@@ -6,10 +6,11 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { email, username, isPasswordAuthenticated, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
+  const { email, isVerified, username, isPasswordAuthenticated, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
 
   return {
     email,
+    isVerified,
     username,
     isPasswordAuthenticated,
     emailUpdateForm,
@@ -24,6 +25,7 @@ const mapDispatchToProps = (dispatch) =>
       onUsernameUpdateMessageDismiss: entryActions.clearCurrentUserUsernameUpdateError,
       onEmailUpdate: entryActions.updateCurrentUserEmail,
       onEmailUpdateMessageDismiss: entryActions.clearCurrentUserEmailUpdateError,
+      onEmailVerificationResend: entryActions.resendCurrentUserEmailVerification,
     },
     dispatch,
   );

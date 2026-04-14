@@ -1390,6 +1390,25 @@ export const activityRenderSpec = {
         };
       }
 
+      if (ctx.activity.data.isVerified !== undefined) {
+        const { isVerified } = ctx.activity.data;
+
+        if (isVerified) {
+          return {
+            key: 'activity.userUpdateIsVerified',
+            values: {
+              userName: ctx.userNameTruncated,
+              userEmail: ctx.activity.data.userEmail,
+            },
+            components: [
+              { slot: 'userName', title: ctx.userName },
+              { slot: 'userEmail', title: ctx.activity.data.userEmail },
+            ],
+          };
+        }
+        return null;
+      }
+
       return null;
     },
 

@@ -55,8 +55,16 @@ module.exports = {
   async fn(inputs) {
     const { values, currentUser } = inputs;
 
+    const previousEmail = inputs.record.email;
+    let emailChanged = false;
+
     if (!_.isUndefined(values.email)) {
       values.email = values.email.toLowerCase();
+
+      emailChanged = values.email !== previousEmail;
+      if (emailChanged) {
+        values.isVerified = false;
+      }
     }
 
     let isOnlyPasswordChange = false;
@@ -164,7 +172,7 @@ module.exports = {
               prevUserName: values.name !== undefined ? inputs.record.name : undefined,
               userName: user.name,
               prevUserEmail: values.email !== undefined ? inputs.record.email : undefined,
-              userEmail: values.email !== undefined ? user.email : undefined,
+              userEmail: values.email !== undefined || values.isVerified !== undefined ? user.email : undefined,
               prevUserUsername: values.username !== undefined ? inputs.record.username : undefined,
               userUsername: values.username !== undefined ? user.username : undefined,
               prevUserIsAdmin: values.isAdmin !== undefined ? inputs.record.isAdmin : undefined,
@@ -186,7 +194,21 @@ module.exports = {
               prevSsoOidcEmail: values.ssoOidcEmail !== undefined ? inputs.record.ssoOidcEmail : undefined,
               ssoOidcEmail: values.ssoOidcEmail !== undefined ? user.ssoOidcEmail : undefined,
               passwordChanged: !_.isUndefined(values.password),
+              prevIsVerified: values.isVerified !== undefined ? inputs.record.isVerified : undefined,
+              isVerified: values.isVerified !== undefined ? values.isVerified : undefined,
             },
+          },
+          currentUser,
+          request: inputs.request,
+        });
+      }
+
+      if (emailChanged) {
+        await sails.helpers.notifications.requestEmailVerification.with({
+          values: {
+            user,
+            reason: 'user_update_email',
+            previousEmail,
           },
           currentUser,
           request: inputs.request,

@@ -40,6 +40,12 @@ const updateUserEmail = (id, data, headers) =>
     item: transformUser(body.item),
   }));
 
+const requestUserEmailVerification = (id, headers) =>
+  socket.post(`/users/${id}/email-verification/request`, undefined, headers).then((body) => ({
+    ...body,
+    item: transformUser(body.item),
+  }));
+
 const updateUserPassword = (id, data, headers) =>
   socket.patch(`/users/${id}/password`, transformUserData(data), headers).then((body) => ({
     ...body,
@@ -84,6 +90,7 @@ export default {
   getCurrentUser,
   updateUser,
   updateUserEmail,
+  requestUserEmailVerification,
   updateUserPassword,
   updateUserUsername,
   updateUserAvatar,

@@ -3,7 +3,7 @@ const valuesValidator = (value) => {
     return false;
   }
 
-  if (!_.isPlainObject(value.user) && !_.isString(value.userId)) {
+  if (!_.isString(value.userId)) {
     return false;
   }
 
@@ -34,9 +34,7 @@ module.exports = {
   async fn(inputs) {
     const { values } = inputs;
 
-    if (values.user) {
-      values.userId = values.user.id;
-    }
+    const user = await sails.helpers.users.getOne(values.userId);
     const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: values.userId }, currentUser: { id: values.userId } });
 
     const deliverNotification = userPrefs.notificationTypes.includes(values.action.scope);
@@ -44,7 +42,7 @@ module.exports = {
       return null;
     }
 
-    const markAsDelivered = !sails.config.custom.mailServiceAvailable || !userPrefs.emailNotificationsEnabled || !userPrefs.emailNotificationsTypes.includes(values.action.scope);
+    const markAsDelivered = !sails.config.custom.mailServiceAvailable || !user?.isVerified || !userPrefs.emailNotificationsEnabled || !userPrefs.emailNotificationsTypes.includes(values.action.scope);
 
     const notification = await Notification.create({
       ...values,

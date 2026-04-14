@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: '更新用户 <userName>{{userName}}</userName> 的头像',
       userUpdateEmail: '将用户 <userName>{{userName}}</userName> 的邮箱从 <prevUserEmail>{{prevUserEmail}}</prevUserEmail> 更新为 <userEmail>{{userEmail}}</userEmail>',
       userUpdateIsAdmin: '将用户 <userName>{{userName}}</userName> 的管理员权限从 <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> 更新为 <isAdmin>{{isAdmin}}</isAdmin>',
+      userUpdateIsVerified: '已验证用户 <userName>{{userName}}</userName>，邮箱为 <userEmail>{{userEmail}}</userEmail>',
       userUpdateName: '将用户 <prevUserName>{{prevUserName}}</prevUserName> 更新为 <userName>{{userName}}</userName>',
       userUpdatePasswordChanged: '更改用户 <userName>{{userName}}</userName> 的密码',
       userUpdateSsoGithubEmail: '将用户 <userName>{{userName}}</userName> 的 GitHub SSO 邮箱从 <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> 更新为 <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail>',

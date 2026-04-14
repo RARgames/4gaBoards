@@ -25,6 +25,11 @@ module.exports = {
       defaultsTo: false,
       columnName: 'is_admin',
     },
+    isVerified: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'is_verified',
+    },
     name: {
       type: 'string',
       required: true,

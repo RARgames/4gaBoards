@@ -1,4 +1,4 @@
-const notificationsLabel = 'internal:4gaBoardsNotifications';
+const notificationsActionsWithoutMailToken = ['users/update-email-verification'];
 
 module.exports = async function isAuthenticated(req, res, proceed) {
   // Builtin authentication
@@ -33,7 +33,12 @@ module.exports = async function isAuthenticated(req, res, proceed) {
     }
 
     // Notifications API client authentication with mail token
-    if (apiClient.label === notificationsLabel) {
+    if (apiClient.label === sails.config.custom.notificationsInternalApiClientLabel) {
+      if (req.options?.action && notificationsActionsWithoutMailToken.includes(req.options.action)) {
+        req.apiClient = apiClient;
+        return proceed();
+      }
+
       const mailToken = await MailToken.findOne({ token: clientMailTokenHeader });
       if (!mailToken) {
         return res.unauthorized('Invalid mail token');

@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: 'Actualizado avatar del usuario <userName>{{userName}}</userName>',
       userUpdateEmail: 'Actualizado correo del usuario <userName>{{userName}}</userName> de <prevUserEmail>{{prevUserEmail}}</prevUserEmail> a <userEmail>{{userEmail}}</userEmail>',
       userUpdateIsAdmin: 'Actualizado estado admin del usuario <userName>{{userName}}</userName> de <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> a <isAdmin>{{isAdmin}}</isAdmin>',
+      userUpdateIsVerified: 'Verificado usuario <userName>{{userName}}</userName> con correo <userEmail>{{userEmail}}</userEmail>',
       userUpdateName: 'Actualizado usuario <prevUserName>{{prevUserName}}</prevUserName> a <userName>{{userName}}</userName>',
       userUpdatePasswordChanged: 'Cambiada contraseña del usuario <userName>{{userName}}</userName>',
       userUpdateSsoGithubEmail: 'Actualizado correo GitHub SSO del usuario <userName>{{userName}}</userName> de <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> a <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail>',

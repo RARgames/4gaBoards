@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: 'ユーザー <userName>{{userName}}</userName> のアバターを更新',
       userUpdateEmail: 'ユーザー <userName>{{userName}}</userName> のメールを <prevUserEmail>{{prevUserEmail}}</prevUserEmail> から <userEmail>{{userEmail}}</userEmail> に更新',
       userUpdateIsAdmin: 'ユーザー <userName>{{userName}}</userName> の管理者権限を <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> から <isAdmin>{{isAdmin}}</isAdmin> に更新',
+      userUpdateIsVerified: 'ユーザー <userName>{{userName}}</userName> をメール <userEmail>{{userEmail}}</userEmail> で認証',
       userUpdateName: 'ユーザー <prevUserName>{{prevUserName}}</prevUserName> を <userName>{{userName}}</userName> に更新',
       userUpdatePasswordChanged: 'ユーザー <userName>{{userName}}</userName> のパスワードを変更',
       userUpdateSsoGithubEmail: 'ユーザー <userName>{{userName}}</userName> の GitHub SSO メールを <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> から <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail> に更新',

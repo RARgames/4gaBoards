@@ -10,7 +10,19 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './AccountSettings.module.scss';
 
 const AccountSettings = React.memo(
-  ({ email, username, isPasswordAuthenticated, usernameUpdateForm, emailUpdateForm, onUsernameUpdate, onUsernameUpdateMessageDismiss, onEmailUpdate, onEmailUpdateMessageDismiss }) => {
+  ({
+    email,
+    isVerified,
+    username,
+    isPasswordAuthenticated,
+    usernameUpdateForm,
+    emailUpdateForm,
+    onUsernameUpdate,
+    onUsernameUpdateMessageDismiss,
+    onEmailUpdate,
+    onEmailUpdateMessageDismiss,
+    onEmailVerificationResend,
+  }) => {
     const [t] = useTranslation();
 
     return (
@@ -46,6 +58,12 @@ const AccountSettings = React.memo(
                 <Button style={ButtonStyle.DefaultBorder} content={t('action.editEmail', { context: 'title' })} />
               </UserEmailEditPopup>
             </div>
+            <div className={s.action}>
+              <div className={s.verificationWrapper}>
+                <div className={s.verificationInfo}>{t('common.emailVerificationStatus', { status: isVerified ? t('common.verified') : t('common.notVerified') })}</div>
+                <Button style={ButtonStyle.DefaultBorder} content={t('common.resendVerificationEmail_title')} onClick={onEmailVerificationResend} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -55,6 +73,7 @@ const AccountSettings = React.memo(
 
 AccountSettings.propTypes = {
   email: PropTypes.string.isRequired,
+  isVerified: PropTypes.bool.isRequired,
   username: PropTypes.string,
   isPasswordAuthenticated: PropTypes.bool.isRequired,
   usernameUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -63,6 +82,7 @@ AccountSettings.propTypes = {
   onUsernameUpdateMessageDismiss: PropTypes.func.isRequired,
   onEmailUpdate: PropTypes.func.isRequired,
   onEmailUpdateMessageDismiss: PropTypes.func.isRequired,
+  onEmailVerificationResend: PropTypes.func.isRequired,
 };
 
 AccountSettings.defaultProps = {

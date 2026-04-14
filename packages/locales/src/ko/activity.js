@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: '<userName>{{userName}}</userName> 아바타 업데이트',
       userUpdateEmail: '<userName>{{userName}}</userName> 이메일 업데이트 from <prevUserEmail>{{prevUserEmail}}</prevUserEmail> to <userEmail>{{userEmail}}</userEmail>',
       userUpdateIsAdmin: '<userName>{{userName}}</userName> 관리자 권한 업데이트 from <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> to <isAdmin>{{isAdmin}}</isAdmin>',
+      userUpdateIsVerified: '이메일 <userEmail>{{userEmail}}</userEmail>로 사용자 <userName>{{userName}}</userName> 인증',
       userUpdateName: '<prevUserName>{{prevUserName}}</prevUserName> 사용자 이름 업데이트 to <userName>{{userName}}</userName>',
       userUpdatePasswordChanged: '<userName>{{userName}}</userName> 비밀번호 변경',
       userUpdateSsoGithubEmail: '<userName>{{userName}}</userName> GitHub SSO 이메일 업데이트 from <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> to <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail>',

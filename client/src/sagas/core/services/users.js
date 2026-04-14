@@ -82,6 +82,19 @@ export function* updateCurrentUserEmail(data) {
   yield call(updateUserEmail, id, data);
 }
 
+export function* resendCurrentUserEmailVerification() {
+  const id = yield select(selectors.selectCurrentUserId);
+
+  let user;
+  try {
+    ({ item: user } = yield call(request, api.requestUserEmailVerification, id));
+  } catch {
+    return;
+  }
+
+  yield put(actions.handleUserUpdate(user));
+}
+
 export function* clearUserEmailUpdateError(id) {
   yield put(actions.clearUserEmailUpdateError(id));
 }
@@ -340,6 +353,7 @@ export default {
   handleUserUpdate,
   updateUserEmail,
   updateCurrentUserEmail,
+  resendCurrentUserEmailVerification,
   clearUserEmailUpdateError,
   clearCurrentUserEmailUpdateError,
   updateUserPassword,

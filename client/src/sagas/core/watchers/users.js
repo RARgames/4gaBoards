@@ -13,6 +13,7 @@ export default function* usersWatchers() {
     takeEvery(EntryActionTypes.USER_UPDATE_HANDLE, ({ payload: { user } }) => services.handleUserUpdate(user)),
     takeEvery(EntryActionTypes.USER_EMAIL_UPDATE, ({ payload: { id, data } }) => services.updateUserEmail(id, data)),
     takeEvery(EntryActionTypes.CURRENT_USER_EMAIL_UPDATE, ({ payload: { data } }) => services.updateCurrentUserEmail(data)),
+    takeEvery(EntryActionTypes.CURRENT_USER_EMAIL_VERIFICATION_RESEND, () => services.resendCurrentUserEmailVerification()),
     takeEvery(EntryActionTypes.USER_EMAIL_UPDATE_ERROR_CLEAR, ({ payload: { id } }) => services.clearUserEmailUpdateError(id)),
     takeEvery(EntryActionTypes.CURRENT_USER_EMAIL_UPDATE_ERROR_CLEAR, () => services.clearCurrentUserEmailUpdateError()),
     takeEvery(EntryActionTypes.USER_PASSWORD_UPDATE, ({ payload: { id, data } }) => services.updateUserPassword(id, data)),

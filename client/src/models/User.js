@@ -46,6 +46,7 @@ export default class extends BaseModel {
   static fields = {
     id: attr(),
     email: attr(),
+    isVerified: attr(),
     username: attr(),
     name: attr(),
     avatarUrl: attr(),

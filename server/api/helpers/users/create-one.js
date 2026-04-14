@@ -120,6 +120,15 @@ module.exports = {
         currentUser: currentUser || user,
         request: inputs.request,
       });
+
+      await sails.helpers.notifications.requestEmailVerification.with({
+        values: {
+          user,
+          reason: currentUser ? 'user_create' : 'user_register',
+        },
+        currentUser: currentUser || user,
+        request: inputs.request,
+      });
     }
 
     return user;

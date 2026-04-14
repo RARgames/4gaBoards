@@ -11,4 +11,16 @@
     width: 100%;
     max-width: 750px;
   }
+
+  .verificationWrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .verificationInfo {
+    color: var(--color-text-primary);
+    font-size: 14px;
+  }
 }

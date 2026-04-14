@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: 'Uppdaterade profilbild för <userName>{{userName}}</userName>',
       userUpdateEmail: 'Uppdaterade e-post för <userName>{{userName}}</userName> från <prevUserEmail>{{prevUserEmail}}</prevUserEmail> till <userEmail>{{userEmail}}</userEmail>',
       userUpdateIsAdmin: 'Uppdaterade admin-status för <userName>{{userName}}</userName> från <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> till <isAdmin>{{isAdmin}}</isAdmin>',
+      userUpdateIsVerified: 'Verifierade användare <userName>{{userName}}</userName> med e-post <userEmail>{{userEmail}}</userEmail>',
       userUpdateName: 'Bytte namn från <prevUserName>{{prevUserName}}</prevUserName> till <userName>{{userName}}</userName>',
       userUpdatePasswordChanged: 'Bytte lösenord för <userName>{{userName}}</userName>',
       userUpdateSsoGithubEmail: 'Uppdaterade GitHub SSO-e-post för <userName>{{userName}}</userName> från <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> till <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail>',

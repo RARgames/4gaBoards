@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: 'Aktualizován avatar uživatele <userName>{{userName}}</userName>',
       userUpdateEmail: 'Aktualizován e-mail uživatele <userName>{{userName}}</userName> z <prevUserEmail>{{prevUserEmail}}</prevUserEmail> na <userEmail>{{userEmail}}</userEmail>',
       userUpdateIsAdmin: 'Aktualizován admin status uživatele <userName>{{userName}}</userName> z <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> na <isAdmin>{{isAdmin}}</isAdmin>',
+      userUpdateIsVerified: 'Ověřen uživatel <userName>{{userName}}</userName> s e-mailem <userEmail>{{userEmail}}</userEmail>',
       userUpdateName: 'Uživatel <prevUserName>{{prevUserName}}</prevUserName> aktualizován na <userName>{{userName}}</userName>',
       userUpdatePasswordChanged: 'Změněno heslo uživatele <userName>{{userName}}</userName>',
       userUpdateSsoGithubEmail: 'Aktualizován GitHub SSO e-mail uživatele <userName>{{userName}}</userName> z <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> na <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail>',

@@ -8,8 +8,6 @@ const valuesValidator = (value) => {
   return true;
 };
 
-const notificationsLabel = 'internal:4gaBoardsNotifications';
-
 module.exports = {
   inputs: {
     values: {
@@ -27,6 +25,7 @@ module.exports = {
 
     const clientId = crypto.randomBytes(16).toString('hex');
     const clientSecret = crypto.randomBytes(32).toString('hex');
+    const notificationsLabel = sails.config.custom.notificationsInternalApiClientLabel;
 
     if (values.label && values.label === notificationsLabel) {
       let version = 1;
@@ -39,17 +38,7 @@ module.exports = {
       const apiClient = await ApiClient.create({
         clientId,
         clientSecret,
-        permissions: [
-          'mail-tokens.get-list-id',
-          'cards.create',
-          'tasks.create',
-          'task-memberships.create',
-          'attachments.create',
-          'card-labels.create',
-          'card-memberships.create',
-          'boards.find-label-by-name',
-          'boards.find-user-by-username',
-        ],
+        permissions: sails.config.custom.notificationsInternalApiClientPermissions,
         label: notificationsLabel,
         name: version.toString(),
       }).fetch();

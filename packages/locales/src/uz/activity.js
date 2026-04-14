@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: '<userName>{{userName}}</userName> foydalanuvchining avatari yangilandi',
       userUpdateEmail: '<userName>{{userName}}</userName> foydalanuvchining emaili <prevUserEmail>{{prevUserEmail}}</prevUserEmail> dan <userEmail>{{userEmail}}</userEmail> ga yangilandi',
       userUpdateIsAdmin: '<userName>{{userName}}</userName> foydalanuvchining adminligi <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> dan <isAdmin>{{isAdmin}}</isAdmin> ga yangilandi',
+      userUpdateIsVerified: '<userName>{{userName}}</userName> foydalanuvchisi <userEmail>{{userEmail}}</userEmail> email bilan tasdiqlandi',
       userUpdateName: '<prevUserName>{{prevUserName}}</prevUserName> foydalanuvchi <userName>{{userName}}</userName> ga yangilandi',
       userUpdatePasswordChanged: "<userName>{{userName}}</userName> foydalanuvchining paroli o'zgartirildi",
       userUpdateSsoGithubEmail: '<userName>{{userName}}</userName> foydalanuvchining GitHub SSO emaili <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> dan <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail> ga yangilandi',

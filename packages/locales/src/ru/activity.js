@@ -206,6 +206,7 @@ export default {
       userUpdateAvatar: 'Изменён аватар пользователя <userName>{{userName}}</userName>',
       userUpdateEmail: 'Изменён email пользователя <userName>{{userName}}</userName> с <prevUserEmail>{{prevUserEmail}}</prevUserEmail> на <userEmail>{{userEmail}}</userEmail>',
       userUpdateIsAdmin: 'Изменён статус админа <userName>{{userName}}</userName> с <prevIsAdmin>{{prevIsAdmin}}</prevIsAdmin> на <isAdmin>{{isAdmin}}</isAdmin>',
+      userUpdateIsVerified: 'Подтверждён пользователь <userName>{{userName}}</userName> с email <userEmail>{{userEmail}}</userEmail>',
       userUpdateName: 'Переименован пользователь <prevUserName>{{prevUserName}}</prevUserName> → <userName>{{userName}}</userName>',
       userUpdatePasswordChanged: 'Изменён пароль пользователя <userName>{{userName}}</userName>',
       userUpdateSsoGithubEmail: 'Изменён GitHub SSO email <userName>{{userName}}</userName> с <prevSsoGithubEmail>{{prevSsoGithubEmail}}</prevSsoGithubEmail> на <ssoGithubEmail>{{ssoGithubEmail}}</ssoGithubEmail>',
