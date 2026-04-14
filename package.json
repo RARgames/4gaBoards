@@ -13,7 +13,9 @@
     "client:build": "pnpm -C client build",
     "client:lint": "pnpm -C client lint",
     "client:start": "pnpm -C client start",
+    "preclient:test": "pnpm packages:build",
     "client:test": "pnpm -C client test",
+    "preclient:ci:test": "pnpm packages:build",
     "client:ci:test": "pnpm -C client ci:test",
     "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
     "docker:build_local": "docker build -t rargames0/4gaboards:local -f Dockerfile . && docker push rargames0/4gaboards:local",
@@ -35,6 +37,7 @@
     "packages:build": "pnpm packages:clean && pnpm -r --filter @4gaboards/* build",
     "start": "pnpm packages:build && concurrently -n server,client \"pnpm -C server start\" \"pnpm -C client start\"",
     "dev": "pnpm packages:build && concurrently -n server,client,packages \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -r --parallel --filter @4gaboards/* dev\"",
+    "pretest": "pnpm packages:build",
     "test": "pnpm -C server test && pnpm -C client test"
   },
   "lint-staged": {
