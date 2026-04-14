@@ -50,6 +50,7 @@ async function setupNotifications() {
           },
           body: JSON.stringify({
             instance_url: sails.config.custom.baseUrl,
+            redirect_url: sails.config.custom.clientUrl,
             api_client_id: apiClient.clientId,
             api_client_secret: apiClient.clientSecret,
             version: apiClient.name,

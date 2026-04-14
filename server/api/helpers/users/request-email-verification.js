@@ -33,7 +33,7 @@ module.exports = {
   },
 
   async fn(inputs) {
-    const { user, reason, previousEmail } = inputs.values;
+    const { user, reason, prevUserEmail } = inputs.values;
 
     if (!sails.config.custom.mailServiceAvailable) {
       sails.log.warn(`Email verification request skipped for user ${user.id}: notifications server is not configured`);
@@ -58,7 +58,7 @@ module.exports = {
             userId: user.id,
             userEmail: user.email,
             reason,
-            previousEmail,
+            prevUserEmail,
           }),
         },
         3,

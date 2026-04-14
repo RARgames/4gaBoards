@@ -1254,7 +1254,7 @@ export const activityRenderSpec = {
         };
       }
 
-      if (ctx.activity.data.userEmail) {
+      if (ctx.activity.data.userEmail && ctx.activity.data.prevUserEmail) {
         const userPrevEmail = ctx.activity.data.prevUserEmail;
 
         return {
@@ -1380,7 +1380,7 @@ export const activityRenderSpec = {
         };
       }
 
-      if (ctx.activity.data.passwordChanged !== undefined) {
+      if (ctx.activity.data.passwordChanged !== undefined && ctx.activity.data.passwordChanged === true) {
         return {
           key: 'activity.userUpdatePasswordChanged',
           values: {

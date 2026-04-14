@@ -55,13 +55,13 @@ module.exports = {
   async fn(inputs) {
     const { values, currentUser } = inputs;
 
-    const previousEmail = inputs.record.email;
+    const prevUserEmail = inputs.record.email;
     let emailChanged = false;
 
     if (!_.isUndefined(values.email)) {
       values.email = values.email.toLowerCase();
 
-      emailChanged = values.email !== previousEmail;
+      emailChanged = values.email !== prevUserEmail;
       if (emailChanged) {
         values.isVerified = false;
       }
@@ -208,7 +208,7 @@ module.exports = {
           values: {
             user,
             reason: 'user_update_email',
-            previousEmail,
+            prevUserEmail,
           },
           currentUser,
           request: inputs.request,
