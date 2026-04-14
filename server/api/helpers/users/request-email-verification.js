@@ -45,6 +45,9 @@ module.exports = {
     const clientSecret = process.env.NOTIFICATIONS_CLIENT_SECRET;
     const url = `${hostUrl}/api/notifications/email-verification/request`;
 
+    const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: user.id }, currentUser: inputs.currentUser });
+    const language = userPrefs?.language || 'en';
+
     try {
       const response = await fetchRetry(
         url,
@@ -59,6 +62,7 @@ module.exports = {
             userEmail: user.email,
             reason,
             prevUserEmail,
+            language,
           }),
         },
         3,
