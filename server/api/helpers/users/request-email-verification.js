@@ -63,6 +63,7 @@ module.exports = {
             reason,
             prevUserEmail,
             language,
+            instanceName: sails.config.custom.instanceName,
           }),
         },
         3,
