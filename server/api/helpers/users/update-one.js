@@ -204,7 +204,7 @@ module.exports = {
       }
 
       if (emailChanged) {
-        await sails.helpers.notifications.requestEmailVerification.with({
+        await sails.helpers.users.requestEmailVerification.with({
           values: {
             user,
             reason: 'user_update_email',

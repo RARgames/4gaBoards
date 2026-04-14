@@ -121,7 +121,7 @@ module.exports = {
         request: inputs.request,
       });
 
-      await sails.helpers.notifications.requestEmailVerification.with({
+      await sails.helpers.users.requestEmailVerification.with({
         values: {
           user,
           reason: currentUser ? 'user_create' : 'user_register',

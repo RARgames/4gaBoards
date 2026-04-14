@@ -31,7 +31,7 @@ module.exports = {
       throw Errors.USER_NOT_FOUND;
     }
 
-    await sails.helpers.notifications.requestEmailVerification.with({
+    await sails.helpers.users.requestEmailVerification.with({
       values: {
         user,
         reason: 'manual',
