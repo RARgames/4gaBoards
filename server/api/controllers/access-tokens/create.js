@@ -34,8 +34,10 @@ module.exports = {
     const remoteAddress = getRemoteAddress(this.req);
 
     const user = await sails.helpers.users.getOneByEmailOrUsername(inputs.emailOrUsername);
+    const DUMMY_HASH = bcrypt.hashSync('dummy', 10);
 
     if (!user) {
+      bcrypt.compareSync(inputs.password, DUMMY_HASH);
       sails.log.warn(`Invalid email or username: "${inputs.emailOrUsername}"! (IP: ${remoteAddress})`);
       throw Errors.INVALID_USERNAME_PASSWORD;
     }
