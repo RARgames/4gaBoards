@@ -25,7 +25,6 @@ export default {
       deleteLabel: 'Usuń etykietę',
       deleteList: 'Usuń listę',
       deleteList_title: 'Usuń listę',
-      deleteMailToken: 'Usuń mail token',
       deleteProject: 'Usuń projekt',
       deleteProject_title: 'Usuń projekt',
       deleteTask: 'Usuń zadanie',

@@ -1,7 +1,8 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import EmailVerificationStatusPopup from '../../EmailVerificationStatusPopup';
 import UserEmailEditPopup from '../../UserEmailEditPopup';
 import UserUsernameEditPopup from '../../UserUsernameEditPopup';
 import { Button, ButtonStyle } from '../../Utils';
@@ -24,15 +25,46 @@ const AccountSettings = React.memo(
     onEmailVerificationResend,
   }) => {
     const [t] = useTranslation();
+    const [emailVerificationPopupStatus, setEmailVerificationPopupStatus] = useState(null);
+    const [emailVerificationPopupReason, setEmailVerificationPopupReason] = useState(null);
+
+    const handleEmailVerificationPopupClose = useCallback(() => {
+      setEmailVerificationPopupStatus(null);
+      setEmailVerificationPopupReason(null);
+    }, []);
+
+    useEffect(() => {
+      const url = new URL(window.location.href);
+      const verificationResult = url.searchParams.get('emailVerification');
+      const reason = url.searchParams.get('reason');
+
+      if (!verificationResult) return;
+
+      setEmailVerificationPopupStatus(verificationResult === 'success' ? 'success' : 'error');
+      setEmailVerificationPopupReason(reason);
+      url.searchParams.delete('emailVerification');
+      url.searchParams.delete('reason');
+      window.history.replaceState({}, document.title, url.toString());
+    }, []);
 
     return (
       <div className={sShared.wrapper}>
         <div className={sShared.header}>
           <h2 className={sShared.headerText}>{t('common.account')}</h2>
         </div>
+        <EmailVerificationStatusPopup
+          isOpen={Boolean(emailVerificationPopupStatus)}
+          variant={emailVerificationPopupStatus}
+          status={emailVerificationPopupStatus}
+          reason={emailVerificationPopupReason}
+          onClose={handleEmailVerificationPopupClose}
+        />
         <div>
           <div className={s.actionsWrapper}>
             <div className={s.action}>
+              <span className={s.label}>
+                <Trans i18nKey="common.currentUsername" values={{ username: username || t('common.notSet') }} components={{ username: <span className={s.usernameValue} /> }} />
+              </span>
               <UserUsernameEditPopup
                 usePasswordConfirmation={isPasswordAuthenticated}
                 defaultData={usernameUpdateForm.data}
@@ -46,6 +78,19 @@ const AccountSettings = React.memo(
               </UserUsernameEditPopup>
             </div>
             <div className={s.action}>
+              <span className={s.label}>
+                <Trans
+                  i18nKey="common.currentEmail"
+                  values={{
+                    email,
+                    status: isVerified ? t('common.verified') : t('common.notVerified'),
+                  }}
+                  components={{
+                    email: <span className={s.emailValue} />,
+                    status: <span className={isVerified ? s.statusVerified : s.statusNotVerified} />,
+                  }}
+                />
+              </span>
               <UserEmailEditPopup
                 usePasswordConfirmation={isPasswordAuthenticated}
                 defaultData={emailUpdateForm.data}
@@ -59,10 +104,7 @@ const AccountSettings = React.memo(
               </UserEmailEditPopup>
             </div>
             <div className={s.action}>
-              <div className={s.verificationWrapper}>
-                <div className={s.verificationInfo}>{t('common.emailVerificationStatus', { status: isVerified ? t('common.verified') : t('common.notVerified') })}</div>
-                <Button style={ButtonStyle.DefaultBorder} content={t('common.resendVerificationEmail_title')} onClick={onEmailVerificationResend} />
-              </div>
+              <Button style={ButtonStyle.DefaultBorder} content={t('common.resendVerificationEmail', { context: 'title' })} onClick={onEmailVerificationResend} />
             </div>
           </div>
         </div>

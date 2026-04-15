@@ -17,6 +17,7 @@ import { ProgressBar, ProgressBarSize } from './ProgressBar';
 import { Radio, RadioSize } from './Radio';
 import Table from './Table';
 import { TextArea, TextAreaStyle } from './TextArea';
+import withViewportPopup from './ViewportPopup';
 
 export {
   Button,
@@ -43,6 +44,7 @@ export {
   Popup,
   withModal,
   withPopup,
+  withViewportPopup,
   ProgressBar,
   ProgressBarSize,
   Radio,

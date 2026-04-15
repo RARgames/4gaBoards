@@ -69,6 +69,10 @@
   --backgroundPopup: #2a3d50;
   --backgroundPopupHover: #233444;
   --backgroundPopupShadow: #19232e;
+  --backgroundPopupSuccess: #1d4d33;
+  --backgroundPopupError: #5a2323;
+  --borderPopupSuccess: #36c275;
+  --borderPopupError: #ff6f61;
   --borderSubtle: rgba(54, 75, 97, 0.5);
   --borderVivid: #5f6064;
   --borderSidebar: var(--borderVivid);
@@ -107,6 +111,8 @@
   --textRedHover: #be4e4e;
   --textWarning: #ffa600;
   --textWarningHover: #c57600;
+  --textSuccess: #21ba45;
+  --textSuccessHover: #16ab39;
   --textError: #ff5740;
   --textErrorHover: #e64a33;
   --textCounter: #798d99;
@@ -252,6 +258,10 @@
   --backgroundPopup: #161b22;
   --backgroundPopupHover: #1c2128;
   --backgroundPopupShadow: #010409;
+  --backgroundPopupSuccess: #163222;
+  --backgroundPopupError: #3d1919;
+  --borderPopupSuccess: #3fb950;
+  --borderPopupError: #f85149;
   --borderSubtle: rgba(88, 166, 255, 0.4);
   --borderVivid: #5f6064;
   --borderSidebar: #5f6064;
@@ -290,6 +300,8 @@
   --textRedHover: #ff7b72;
   --textWarning: var(--textGold);
   --textWarningHover: var(--textGoldHover);
+  --textSuccess: #3fb950;
+  --textSuccessHover: #2ea043;
   --textError: var(--textRed);
   --textErrorHover: var(--textRedHover);
   --textCounter: #7d8590;
@@ -435,6 +447,10 @@
   --backgroundPopup: #f7f9fb;
   --backgroundPopupHover: #edf2f7;
   --backgroundPopupShadow: rgba(0, 0, 0, 0.1);
+  --backgroundPopupSuccess: #e7f7eb;
+  --backgroundPopupError: #fdecea;
+  --borderPopupSuccess: #43a047;
+  --borderPopupError: #e53935;
   --borderSubtle: rgba(54, 75, 97, 0.3);
   --borderVivid: #999999;
   --borderSidebar: #c2c2c2;
@@ -473,6 +489,8 @@
   --textRedHover: #b71c1c;
   --textWarning: var(--textGold);
   --textWarningHover: var(--textGoldHover);
+  --textSuccess: #43a047;
+  --textSuccessHover: #388e3c;
   --textError: var(--textRed);
   --textErrorHover: var(--textRedHover);
   --textCounter: #999999;
