@@ -2,6 +2,22 @@ const fs = require('fs');
 const path = require('path');
 const tar = require('tar');
 
+const ensureSafeArchiveEntry = (entry) => {
+  const normalizedPath = path.posix.normalize(entry.path || '');
+  const parts = normalizedPath.split('/').filter(Boolean);
+
+  if (!normalizedPath || normalizedPath === '.' || path.posix.isAbsolute(normalizedPath) || parts.includes('..') || entry.type === 'SymbolicLink' || entry.type === 'Link') {
+    throw 'invalidFile';
+  }
+};
+
+const validateArchive = async (filePath) => {
+  await tar.t({
+    file: filePath,
+    onentry: ensureSafeArchiveEntry,
+  });
+};
+
 module.exports = {
   inputs: {
     file: {
@@ -20,6 +36,7 @@ module.exports = {
     const importTempDir = path.join(importfileDir, `temp-${importFileName}`);
     try {
       fs.mkdirSync(importTempDir, { recursive: true });
+      await validateArchive(inputs.file.fd);
 
       await tar.extract({
         file: inputs.file.fd,
