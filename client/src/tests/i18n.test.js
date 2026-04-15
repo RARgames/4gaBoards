@@ -5,6 +5,7 @@ const path = require('path');
 const localesPackageJson = require.resolve('@4gaboards/locales');
 const LOCALES_DIR = path.dirname(localesPackageJson);
 const BASE_LANG = 'en';
+const IGNORED_EXTRA_KEY_PREFIXES = ['dateFns'];
 
 // list of plural forms
 const LANGUAGE_PLURALS = {
@@ -51,6 +52,48 @@ const isPluralKey = (key) => /_(zero|one|two|few|many|other)$/.test(key);
 
 // helper: get stem of plural key
 const getPluralStem = (key) => key.replace(/_(zero|one|two|few|many|other)$/, '');
+
+// eslint-disable-next-line default-param-last, no-shadow
+const collectExtraKeys = (baseObj, obj, path = [], stats, lang = 'en') => {
+  if (!obj || typeof obj !== 'object') {
+    return;
+  }
+
+  const baseKeys = Object.keys(baseObj || {});
+  const targetKeys = Object.keys(obj);
+  const requiredPlurals = LANGUAGE_PLURALS[lang] || ['one', 'other'];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key of targetKeys) {
+    const baseVal = baseObj ? baseObj[key] : undefined;
+    const val = obj[key];
+    const fullPath = [...path, key].join('.');
+
+    if (IGNORED_EXTRA_KEY_PREFIXES.some((prefix) => fullPath === prefix || fullPath.startsWith(`${prefix}.`))) {
+      continue;
+    }
+
+    if (baseVal === undefined) {
+      // Allow extra plural forms (e.g. _few/_many) only when the stem exists in base and the suffix is required for the target language.
+      if (isPluralKey(key)) {
+        const stem = getPluralStem(key);
+        const suffix = key.slice(stem.length + 1);
+        const baseHasPluralStem = baseKeys.some((baseKey) => isPluralKey(baseKey) && getPluralStem(baseKey) === stem);
+
+        if (baseHasPluralStem && requiredPlurals.includes(suffix)) {
+          continue;
+        }
+      }
+
+      stats.extraKeys.push(fullPath);
+      continue;
+    }
+
+    if (typeof baseVal === 'object' && baseVal !== null && typeof val === 'object' && val !== null) {
+      collectExtraKeys(baseVal, val, [...path, key], stats, lang);
+    }
+  }
+};
 
 // eslint-disable-next-line default-param-last, no-shadow
 const compareTranslations = (baseObj, obj, path = [], stats, lang = 'en') => {
@@ -161,6 +204,7 @@ describe('i18n translations coverage', () => {
         missing: 0,
         translated: 0,
         missingKeys: [],
+        extraKeys: [],
         variableMismatches: [],
         tagMismatches: [],
       };
@@ -169,16 +213,21 @@ describe('i18n translations coverage', () => {
         const baseFile = baseTranslations[namespace];
         const targetFile = targetTranslations[namespace] || {};
         compareTranslations(baseFile, targetFile, [], stats, lang);
+        collectExtraKeys(baseFile, targetFile, [], stats, lang);
       });
 
       const coverage = stats.total ? ((stats.translated / stats.total) * 100).toFixed(2) : '0.00';
       console.log(`\nLanguage "${lang}" coverage: ${coverage}% (${stats.translated}/${stats.total} translated)\n`);
 
-      if (stats.missingKeys.length || stats.variableMismatches.length || stats.tagMismatches.length) {
+      if (stats.missingKeys.length || stats.extraKeys.length || stats.variableMismatches.length || stats.tagMismatches.length) {
         const messages = [];
 
         if (stats.missingKeys.length) {
           messages.push(`Missing keys:\n${stats.missingKeys.join('\n')}`);
+        }
+
+        if (stats.extraKeys.length) {
+          messages.push(`Extra keys:\n${stats.extraKeys.join('\n')}`);
         }
 
         if (stats.variableMismatches.length) {
@@ -193,6 +242,7 @@ describe('i18n translations coverage', () => {
       }
 
       expect(stats.missing).toBe(0);
+      expect(stats.extraKeys.length).toBe(0);
       expect(stats.variableMismatches.length).toBe(0);
       expect(stats.tagMismatches.length).toBe(0);
     });
