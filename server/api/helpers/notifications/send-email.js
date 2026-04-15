@@ -3,7 +3,6 @@ const { format } = require('date-fns');
 
 const { getActivityScopeLabelKey, getI18nextTranslator, getLocaleByLanguage, loadRendererModules } = require('../../../utils/activity-i18n');
 const { buildActionLinks, buildFallbackActivityHtml, escapeHtml, getNormalizedScope, renderLinkedStrong, renderLocalizedHtmlFromTransProps } = require('../../../utils/activity-rendering');
-const { fetchRetry } = require('../../../utils/fetchRetry');
 
 const resolveRelatedData = async (action) => {
   if (!action) {
@@ -70,7 +69,7 @@ module.exports = {
     if (!firstAction) return;
 
     const receiverUserId = firstNotification.userId;
-    const user = await User.findOne({ id: receiverUserId });
+    let user = await User.findOne({ id: receiverUserId });
     const userPrefs = await UserPrefs.findOne({ id: receiverUserId });
 
     let t = null;
@@ -169,34 +168,46 @@ module.exports = {
       htmlBlocks.push(activityHtml || buildFallbackActivityHtml(action));
     }
     const htmlMessage = `<div>${htmlBlocks.join('\n')}</div>`;
+    const ids = notifications.map((n) => n.id);
 
     try {
       const url = `${process.env.NOTIFICATIONS_HOST_URL}/api/notifications/email`;
-      const response = await fetchRetry(
-        url,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${process.env.NOTIFICATIONS_CLIENT_ID}:${process.env.NOTIFICATIONS_CLIENT_SECRET}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            receiverUserId,
-            receiverEmail: user.email,
-            subject,
-            message: htmlMessage,
-          }),
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.NOTIFICATIONS_CLIENT_ID}:${process.env.NOTIFICATIONS_CLIENT_SECRET}`,
+          'Content-Type': 'application/json',
         },
-        3,
-        1000,
-      );
+        body: JSON.stringify({
+          receiverUserId,
+          receiverEmail: user.email,
+          subject,
+          message: htmlMessage,
+        }),
+      });
 
       const responseJson = await response.json();
       if (!response.ok || responseJson.status !== 'sent') {
         sails.log.error(`Failed to send notifications to user ${receiverUserId}:`, responseJson);
+
+        if (response.status === 403 && responseJson.status === 'email_not_verified') {
+          if (user?.isVerified) {
+            user = await User.updateOne({ id: receiverUserId }).set({ isVerified: false });
+            const adminIds = await sails.helpers.users.getAdminIds();
+            const userIds = _.union([user.id], adminIds);
+
+            userIds.forEach((userId) => {
+              sails.sockets.broadcast(`user:${userId}`, 'userUpdate', {
+                item: user,
+              });
+            });
+          }
+
+          await Notification.update({ id: ids }).set({ deliveredAt: now });
+          return;
+        }
       }
 
-      const ids = notifications.map((n) => n.id);
       await Notification.update({ id: ids }).set({ deliveredAt: now });
     } catch (err) {
       sails.log.error(`Failed to send notifications to user ${receiverUserId}:`, err);
