@@ -837,7 +837,7 @@ export const activityRenderSpec = {
       const { labelName } = ctx.activity.data;
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
 
-      if (ctx.activity.data.labelColor) {
+      if (ctx.activity.data.labelColor !== ctx.activity.data.labelPrevColor) {
         const labelColorName = ctx.activity.data.labelColor;
 
         return {
