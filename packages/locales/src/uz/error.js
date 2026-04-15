@@ -15,6 +15,7 @@ export default {
       registrationDisabled: "Foydalanuvchi ro'yxatdan o'tishi administrator tomonidan o'chirilgan",
       serverConnectionFailed: 'Serverga ulanish muvaffaqiyatsiz',
       ssoRegistrationDisabled: "SSO ro'yxatdan o'tish administrator tomonidan o'chirilgan",
+      tooManyFailedAttempts: "Juda ko'p muvaffaqiyatsiz urinishlar - keyinroq qayta urinib ko'ring",
       unknownError: "Noma'lum xato, keyinroq qayta urinib ko'ring",
       usernameAlreadyInUse: 'Bu foydalanuvchi nomi allaqachon band',
       weakPassword: 'Iltimos kuchliroq parol ishlating',

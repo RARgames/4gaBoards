@@ -15,6 +15,7 @@ export default {
       registrationDisabled: "Registrazione utenti disabilitata dall'amministratore",
       serverConnectionFailed: 'Connessione al server fallita',
       ssoRegistrationDisabled: "Registrazione SSO disabilitata dall'amministratore",
+      tooManyFailedAttempts: 'Troppi tentativi non riusciti - riprova più tardi',
       unknownError: 'Errore sconosciuto, riprova piu tardi',
       usernameAlreadyInUse: 'Username già in uso',
       weakPassword: 'Usa una password più forte',

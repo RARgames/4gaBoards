@@ -21,7 +21,7 @@ module.exports.policies = {
   'users/create': ['is-authenticated', 'is-admin'],
   'users/delete': ['is-authenticated', 'is-admin'],
 
-  'access-tokens/create': true,
+  'access-tokens/create': 'rate-limit-auth',
   'core/show': true,
   'auth/*': true,
   'register/create': true,

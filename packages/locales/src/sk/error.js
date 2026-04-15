@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'Registrácia používateľov je zakázaná administrátorom',
       serverConnectionFailed: 'Pripojenie k serveru zlyhalo',
       ssoRegistrationDisabled: 'SSO registrácia je zakázaná administrátorom',
+      tooManyFailedAttempts: 'Príliš veľa neúspešných pokusov - skúste to neskôr',
       unknownError: 'Neznáma chyba, skúste neskôr',
       usernameAlreadyInUse: 'Používateľské meno je už používané',
       weakPassword: 'Použite silnejšie heslo',

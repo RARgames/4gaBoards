@@ -15,6 +15,7 @@ export default {
       registrationDisabled: '사용자 등록이 관리자에 의해 비활성화됨',
       serverConnectionFailed: '서버 연결 실패',
       ssoRegistrationDisabled: 'SSO 등록이 관리자에 의해 비활성화됨',
+      tooManyFailedAttempts: '실패한 시도가 너무 많습니다 - 나중에 다시 시도하세요',
       unknownError: '알 수 없는 오류, 나중에 다시 시도하세요',
       usernameAlreadyInUse: '이미 사용 중인 이름',
       weakPassword: '더 강한 비밀번호 사용',

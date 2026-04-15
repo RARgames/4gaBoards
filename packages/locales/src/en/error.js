@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'All user registration is disabled by the administrator',
       serverConnectionFailed: 'Server connection failed',
       ssoRegistrationDisabled: 'User SSO registration is disabled by the administrator',
+      tooManyFailedAttempts: 'Too many failed attempts - Please try again later',
       unknownError: 'Unknown error, try again later',
       usernameAlreadyInUse: 'Username already in use',
       weakPassword: 'Please use stronger password',

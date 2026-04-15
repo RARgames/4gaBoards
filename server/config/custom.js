@@ -77,6 +77,12 @@ module.exports.custom = {
   demoMode: process.env.DEMO_MODE === 'true',
   metricsEnabled: process.env.METRICS_ENABLED === 'true',
 
+  authRateLimit: {
+    enabled: process.env.AUTH_RATE_LIMIT_ENABLED !== 'false',
+    maxAttempts: Math.max(parseInt(process.env.AUTH_RATE_LIMIT_MAX_ATTEMPTS, 10) || 5, 1),
+    windowMs: Math.max(parseInt(process.env.AUTH_RATE_LIMIT_WINDOW_MS, 10) || 60 * 1000, 60 * 1000),
+  },
+
   positionGap: 65535,
   requiredPasswordStrength: 2,
   cacheMaxAge: 900,

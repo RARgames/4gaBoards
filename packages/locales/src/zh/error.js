@@ -15,6 +15,7 @@ export default {
       registrationDisabled: '管理员已禁用所有用户注册',
       serverConnectionFailed: '服务器连接失败',
       ssoRegistrationDisabled: '管理员已禁用 SSO 注册',
+      tooManyFailedAttempts: '尝试失败次数过多 - 请稍后再试',
       unknownError: '未知错误，请稍后再试',
       usernameAlreadyInUse: '用户名已占用',
       weakPassword: '请使用更强的密码',

@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'Die Benutzerregistrierung wurde vom Administrator deaktiviert',
       serverConnectionFailed: 'Serververbindung fehlgeschlagen',
       ssoRegistrationDisabled: 'SSO-Registrierung wurde vom Administrator deaktiviert',
+      tooManyFailedAttempts: 'Zu viele fehlgeschlagene Versuche - bitte später erneut versuchen',
       unknownError: 'Unbekannter Fehler, bitte später erneut versuchen',
       usernameAlreadyInUse: 'Benutzername bereits vergeben',
       weakPassword: 'Bitte ein stärkeres Passwort verwenden',

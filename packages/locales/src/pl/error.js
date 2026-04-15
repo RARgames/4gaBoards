@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'Rejestracja użytkowników została wyłączona przez administratora',
       serverConnectionFailed: 'Błąd połączenia z serwerem',
       ssoRegistrationDisabled: 'Rejestracja przez SSO użytkownika została wyłączona przez administratora',
+      tooManyFailedAttempts: 'Zbyt wiele nieudanych prób - spróbuj ponownie później',
       unknownError: 'Nieznany błąd, spróbuj ponownie później',
       usernameAlreadyInUse: 'Nazwa użytkownika jest już używana',
       weakPassword: 'Użyj silniejszego hasła',

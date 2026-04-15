@@ -25,6 +25,11 @@ const createMessage = (error) => {
         type: 'error',
         content: 'error.invalidUsernameOrPassword',
       };
+    case 'tooManyFailedAttempts':
+      return {
+        type: 'error',
+        content: 'error.tooManyFailedAttempts',
+      };
     case 'registrationDisabled':
       return {
         type: 'error',

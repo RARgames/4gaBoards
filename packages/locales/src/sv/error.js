@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'Användarregistrering är inaktiverad av administratören',
       serverConnectionFailed: 'Anslutning till server misslyckades',
       ssoRegistrationDisabled: 'SSO-registrering är inaktiverad av administratören',
+      tooManyFailedAttempts: 'För många misslyckade försök - försök igen senare',
       unknownError: 'Okänt fel, försök igen senare',
       usernameAlreadyInUse: 'Användarnamn tas',
       weakPassword: 'Starkare lösenord krävs',

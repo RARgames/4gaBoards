@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'Registraciya polzovateley otklyuchena administratorom',
       serverConnectionFailed: 'Ne udalos podklyuchitsya k serveru',
       ssoRegistrationDisabled: 'SSO-registraciya otklyuchena administratorom',
+      tooManyFailedAttempts: 'Слишком много неудачных попыток - попробуйте позже',
       unknownError: 'Neznaya oshibka, poprobuyte pozzhe',
       usernameAlreadyInUse: 'Имя занято',
       weakPassword: 'Слабый пароль',

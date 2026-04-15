@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'El registro de usuarios está deshabilitado por el administrador',
       serverConnectionFailed: 'Error de conexión con el servidor',
       ssoRegistrationDisabled: 'El registro SSO de usuarios está deshabilitado por el administrador',
+      tooManyFailedAttempts: 'Demasiados intentos fallidos - inténtalo de nuevo más tarde',
       unknownError: 'Error desconocido, inténtalo de nuevo más tarde',
       usernameAlreadyInUse: 'El nombre de usuario ya está en uso',
       weakPassword: 'Por favor usa una contraseña más fuerte',

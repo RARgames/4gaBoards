@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'ユーザー登録は管理者によって無効化されています',
       serverConnectionFailed: 'サーバーへの接続に失敗しました',
       ssoRegistrationDisabled: 'SSO登録は管理者によって無効化されています',
+      tooManyFailedAttempts: '失敗した試行が多すぎます - 後でもう一度お試しください',
       unknownError: '不明なエラー、後でもう一度お試しください',
       usernameAlreadyInUse: 'このユーザー名は既に使用されています',
       weakPassword: 'より強いパスワードを使用してください',

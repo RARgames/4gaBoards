@@ -15,6 +15,7 @@ export default {
       registrationDisabled: 'Brugerregistrering er deaktiveret af administrator',
       serverConnectionFailed: 'Forbindelse til server mislykkedes',
       ssoRegistrationDisabled: 'SSO-registrering er deaktiveret af administrator',
+      tooManyFailedAttempts: 'For mange mislykkede forsøg - prøv igen senere',
       unknownError: 'Ukendt fejl, prøv igen senere',
       usernameAlreadyInUse: 'Brugernavn er allerede i brug',
       weakPassword: 'Brug venligst en stærkere adgangskode',
