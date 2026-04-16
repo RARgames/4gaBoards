@@ -247,6 +247,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'E-Mails für gelesene Benachrichtigungen überspringen',
       emailNotificationsTypes: 'Arten von E-Mail-Benachrichtigungen',
       emailServiceUnavailable: 'E-Mail-Dienst ist nicht verfügbar. Kontaktieren Sie den Administrator der 4ga Boards-Instanz.',
+      emailVerification: 'E-Mail-Bestätigung',
       emailVerificationFailure_title: 'E-Mail-Bestätigung fehlgeschlagen',
       emailVerificationSuccess_title: 'E-Mail erfolgreich bestätigt',
       empty: 'Leer',

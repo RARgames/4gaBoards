@@ -174,6 +174,7 @@ module.exports = {
         username: true,
         email: true,
         administrator: true,
+        emailVerification: true,
         ssoGoogleEmail: false,
         ssoGithubUsername: false,
         ssoGithubEmail: false,

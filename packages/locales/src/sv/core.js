@@ -247,6 +247,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'Hoppa över e-post för lästa meddelanden',
       emailNotificationsTypes: 'Typer av e-postmeddelanden',
       emailServiceUnavailable: 'E-posttjänsten är inte tillgänglig. Kontakta administratören för 4ga Boards-instansen.',
+      emailVerification: 'E-postverifiering',
       emailVerificationFailure_title: 'E-postverifiering misslyckades',
       emailVerificationSuccess_title: 'E-post verifierades',
       empty: 'Tom',

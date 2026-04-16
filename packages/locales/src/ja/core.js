@@ -240,6 +240,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: '既読通知のメールをスキップ',
       emailNotificationsTypes: 'メール通知の種類',
       emailServiceUnavailable: 'メールサービスが利用できません。4ga Boards インスタンス管理者に連絡してください。',
+      emailVerification: 'メール認証',
       emailVerificationFailure_title: 'メール認証に失敗しました',
       emailVerificationSuccess_title: 'メール認証に成功しました',
       empty: '空',

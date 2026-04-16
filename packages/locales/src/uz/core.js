@@ -246,6 +246,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: "O'qilgan bildirishnomalar uchun emailni o'tkazib yuborish",
       emailNotificationsTypes: 'Email bildirishnoma turlari',
       emailServiceUnavailable: 'Email xizmati mavjud emas. 4ga Boards administratoriga murojaat qiling.',
+      emailVerification: 'Elektron pochta tasdiqlash',
       emailVerificationFailure_title: 'Email tasdiqlash muvaffaqiyatsiz tugadi',
       emailVerificationSuccess_title: 'Email muvaffaqiyatli tasdiqlandi',
       empty: "Bo'sh",

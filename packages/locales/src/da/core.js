@@ -247,6 +247,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'Spring e-mails over for læste notifikationer',
       emailNotificationsTypes: 'Typer af e-mailnotifikationer',
       emailServiceUnavailable: 'E-mailtjenesten er utilgængelig. Kontakt administrator af 4ga Boards-instansen.',
+      emailVerification: 'E-mailbekræftelse',
       emailVerificationFailure_title: 'E-mailbekræftelse mislykkedes',
       emailVerificationSuccess_title: 'E-mail bekræftet',
       empty: 'Tom',

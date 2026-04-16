@@ -247,6 +247,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'Salta le email per notifiche già lette',
       emailNotificationsTypes: 'Tipi di notifiche email',
       emailServiceUnavailable: "Servizio email non disponibile. Contatta l'amministratore dell'istanza di 4ga Boards.",
+      emailVerification: 'Verifica e-mail',
       emailVerificationFailure_title: 'Verifica email non riuscita',
       emailVerificationSuccess_title: 'Email verificata con successo',
       empty: 'Vuoto',

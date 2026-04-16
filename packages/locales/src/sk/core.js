@@ -254,6 +254,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'Preskočiť e-maily pre prečítané oznámenia',
       emailNotificationsTypes: 'Typy e-mailových oznámení',
       emailServiceUnavailable: 'E-mailová služba nie je dostupná. Kontaktujte správcu inštancie 4ga Boards.',
+      emailVerification: 'Overenie e-mailu',
       emailVerificationFailure_title: 'Overenie e-mailu zlyhalo',
       emailVerificationSuccess_title: 'E-mail bol úspešne overený',
       empty: 'Prázdne',

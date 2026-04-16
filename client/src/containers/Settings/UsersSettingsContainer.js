@@ -9,13 +9,32 @@ const mapStateToProps = (state) => {
   const currentUser = selectors.selectCurrentUser(state);
   const rawUsers = selectors.selectUsers(state);
   const users = rawUsers.map(
-    ({ id, name, avatarUrl, username, email, isAdmin, ssoGoogleEmail, ssoGithubUsername, ssoGithubEmail, ssoMicrosoftEmail, ssoOidcEmail, lastLogin, createdAt, createdBy, updatedAt, updatedBy }) => ({
+    ({
+      id,
+      name,
+      avatarUrl,
+      username,
+      email,
+      isAdmin,
+      isVerified,
+      ssoGoogleEmail,
+      ssoGithubUsername,
+      ssoGithubEmail,
+      ssoMicrosoftEmail,
+      ssoOidcEmail,
+      lastLogin,
+      createdAt,
+      createdBy,
+      updatedAt,
+      updatedBy,
+    }) => ({
       id,
       avatar: avatarUrl || undefined, // undefined needed for TanStack Table sorting
       name,
       username: username || undefined, // undefined needed for TanStack Table sorting
       email,
       administrator: isAdmin,
+      emailVerification: isVerified,
       ssoGoogleEmail: ssoGoogleEmail || undefined, // undefined needed for TanStack Table sorting
       ssoGithubUsername: ssoGithubUsername || undefined, // undefined needed for TanStack Table sorting
       ssoGithubEmail: ssoGithubEmail || undefined, // undefined needed for TanStack Table sorting

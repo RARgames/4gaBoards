@@ -240,6 +240,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: '跳过已读通知的邮件',
       emailNotificationsTypes: '电子邮件通知类型',
       emailServiceUnavailable: '电子邮件服务不可用。请联系 4ga Boards 实例管理员。',
+      emailVerification: '邮箱验证',
       emailVerificationFailure_title: '邮箱验证失败',
       emailVerificationSuccess_title: '邮箱验证成功',
       empty: '空',

@@ -261,6 +261,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'Пропускать e-mail для прочитанных уведомлений',
       emailNotificationsTypes: 'Типы уведомлений по e-mail',
       emailServiceUnavailable: 'Сервис e-mail недоступен. Свяжитесь с администратором вашей инстанции 4ga Boards.',
+      emailVerification: 'Подтверждение электронной почты',
       emailVerificationFailure_title: 'Не удалось подтвердить эл. почту',
       emailVerificationSuccess_title: 'Эл. почта успешно подтверждена',
       empty: 'Пусто',

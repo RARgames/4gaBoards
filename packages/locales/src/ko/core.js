@@ -240,6 +240,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: '읽은 알림의 이메일 건너뛰기',
       emailNotificationsTypes: '이메일 알림 유형',
       emailServiceUnavailable: '이메일 서비스를 사용할 수 없습니다. 4ga Boards 인스턴스 관리자에게 문의하세요.',
+      emailVerification: '이메일 인증',
       emailVerificationFailure_title: '이메일 인증에 실패했습니다',
       emailVerificationSuccess_title: '이메일이 성공적으로 인증되었습니다',
       empty: '비어 있음',

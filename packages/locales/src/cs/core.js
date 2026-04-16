@@ -254,6 +254,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'Přeskočit emaily pro přečtené notifikace',
       emailNotificationsTypes: 'Typy emailových notifikací',
       emailServiceUnavailable: 'Emailová služba je nedostupná. Kontaktujte administrátora instance 4ga Boards.',
+      emailVerification: 'Ověření e-mailu',
       emailVerificationFailure_title: 'Ověření e-mailu selhalo',
       emailVerificationSuccess_title: 'E-mail byl úspěšně ověřen',
       empty: 'Prázdné',

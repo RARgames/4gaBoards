@@ -243,6 +243,7 @@ export default {
       emailNotificationsMarkReadAsDelivered: 'Skip Emails for Read Notifications',
       emailNotificationsTypes: 'Email Notifications Types',
       emailServiceUnavailable: 'Email service is unavailable. Contact 4ga Boards instance admin.',
+      emailVerification: 'Email Verification',
       emailVerificationFailure_title: 'Email Verification Failed',
       emailVerificationSuccess_title: 'Email Verified Successfully',
       empty: 'Empty',
