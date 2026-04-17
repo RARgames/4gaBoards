@@ -89,7 +89,7 @@
     font-size: 13px;
     overflow: hidden;
     padding: 0 2px;
-    word-break: break-word;
+    overflow-wrap: anywhere;
     color: var(--text2);
   }
 }

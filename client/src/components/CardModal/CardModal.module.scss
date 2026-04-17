@@ -118,7 +118,7 @@
     width: 100%;
     padding: 3px;
     margin-bottom: 1px;
-    word-break: break-word;
+    overflow-wrap: anywhere;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;

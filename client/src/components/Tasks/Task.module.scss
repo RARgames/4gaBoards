@@ -24,7 +24,7 @@
     width: 100%;
     min-width: 60px;
     margin-left: 4px;
-    word-break: break-word;
+    overflow-wrap: anywhere;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;

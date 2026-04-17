@@ -102,7 +102,7 @@
     line-clamp: 4;
     overflow: hidden;
     text-overflow: ellipsis;
-    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .notification {
