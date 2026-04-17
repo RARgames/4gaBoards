@@ -7,12 +7,14 @@ import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
   const { email, isVerified, username, isPasswordAuthenticated, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
+  const { mailServiceAvailable } = selectors.selectCoreSettings(state);
 
   return {
     email,
     isVerified,
     username,
     isPasswordAuthenticated,
+    mailServiceAvailable,
     emailUpdateForm,
     usernameUpdateForm,
   };
