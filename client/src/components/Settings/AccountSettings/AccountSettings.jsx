@@ -16,6 +16,7 @@ const AccountSettings = React.memo(
     isVerified,
     username,
     isPasswordAuthenticated,
+    mailServiceAvailable,
     usernameUpdateForm,
     emailUpdateForm,
     onUsernameUpdate,
@@ -103,9 +104,11 @@ const AccountSettings = React.memo(
                 <Button style={ButtonStyle.DefaultBorder} content={t('action.editEmail', { context: 'title' })} />
               </UserEmailEditPopup>
             </div>
-            <div className={s.action}>
-              <Button style={ButtonStyle.DefaultBorder} content={t('common.resendVerificationEmail', { context: 'title' })} onClick={onEmailVerificationResend} />
-            </div>
+            {mailServiceAvailable && (
+              <div className={s.action}>
+                <Button style={ButtonStyle.DefaultBorder} content={t('common.resendVerificationEmail', { context: 'title' })} onClick={onEmailVerificationResend} />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -118,6 +121,7 @@ AccountSettings.propTypes = {
   isVerified: PropTypes.bool.isRequired,
   username: PropTypes.string,
   isPasswordAuthenticated: PropTypes.bool.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
   usernameUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   emailUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUsernameUpdate: PropTypes.func.isRequired,
