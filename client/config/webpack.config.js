@@ -213,7 +213,14 @@ module.exports = function (webpackEnv) {
         runtimeChunk: 'single',
         splitChunks: {
           chunks: 'all',
-          maxSize: 200000,
+          cacheGroups: {
+            styles: {
+              name: 'styles',
+              type: 'css/mini-extract',
+              chunks: 'all',
+              enforce: true,
+            },
+          },
         },
       }),
       minimize: isEnvProduction,
