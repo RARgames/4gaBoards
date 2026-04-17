@@ -12,6 +12,8 @@
   "scripts": {
     "client:build": "pnpm -C client build",
     "client:lint": "pnpm -C client lint",
+    "client:lint:styles": "pnpm -C client lint:styles",
+    "client:lint:styles:fix": "pnpm -C client lint:styles:fix",
     "client:start": "pnpm -C client start",
     "preclient:test": "pnpm packages:build",
     "client:test": "pnpm -C client test",
@@ -42,7 +44,10 @@
   },
   "lint-staged": {
     "client/**/*.{js,jsx}": [
-      "pnpm -C client lint"
+      "pnpm -C client lint:js"
+    ],
+    "client/**/*.{css,scss}": [
+      "pnpm -C client lint:styles"
     ],
     "server/**/*.js": [
       "pnpm -C server lint"
@@ -67,7 +72,10 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "lint-staged": "^16.4.0",
-    "prettier": "^3.8.2"
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.8.2",
+    "stylelint": "^17.8.0",
+    "stylelint-config-recommended-scss": "^17.0.1"
   },
   "devEngines": {
     "packageManager": {

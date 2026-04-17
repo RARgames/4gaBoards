@@ -3,7 +3,10 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.js",
-    "lint": "eslint .",
+    "lint": "pnpm lint:js && pnpm lint:styles",
+    "lint:js": "eslint .",
+    "lint:styles": "stylelint 'src/**/*.{css,scss}' --allow-empty-input",
+    "lint:styles:fix": "stylelint 'src/**/*.{css,scss}' --fix --allow-empty-input",
     "start": "node scripts/start.js",
     "test": "node scripts/test.js",
     "ci:test": "node scripts/test.js --ci"

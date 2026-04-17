@@ -178,9 +178,8 @@
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: inline-block;
-    flex-shrink: 0;
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     color: var(--text1);
 
