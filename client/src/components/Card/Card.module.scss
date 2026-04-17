@@ -114,7 +114,7 @@
     color: var(--text1);
     font-size: 14px;
     line-height: 18px;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;

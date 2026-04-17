@@ -22,7 +22,7 @@
 
   .headerText {
     display: inline;
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     flex: 1 1 auto;
     margin: 0;
   }

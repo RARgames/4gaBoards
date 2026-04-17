@@ -28,7 +28,7 @@
 
   .contentText {
     color: var(--text2);
-    word-wrap: break-word;
+    overflow-wrap: break-word;
     overflow: hidden;
   }
 
