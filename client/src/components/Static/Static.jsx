@@ -75,7 +75,7 @@ function Static({ path, projectId, cardId, board }) {
       <div className={s.wrapper}>
         <SidebarContainer>
           <div className={s.message}>
-            <h1>{t('common.boardNotFound', { context: 'title' })}</h1>
+            <h1 data-testid="board-not-found-heading">{t('common.boardNotFound', { context: 'title' })}</h1>
           </div>
         </SidebarContainer>
       </div>
@@ -87,7 +87,7 @@ function Static({ path, projectId, cardId, board }) {
       <div className={s.wrapper}>
         <SidebarContainer>
           <div className={s.message}>
-            <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+            <h1 data-testid="project-not-found-heading">{t('common.projectNotFound', { context: 'title' })}</h1>
           </div>
         </SidebarContainer>
       </div>

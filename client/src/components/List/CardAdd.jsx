@@ -108,6 +108,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
     <Form className={clsx(s.wrapper, !isOpen && s.wrapperClosed)}>
       <TextArea
         ref={nameField}
+        data-testid="card-add-name-input"
         style={TextAreaStyle.Default}
         name="name"
         value={data.name}
@@ -120,7 +121,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
       />
       <div className={gs.controls}>
         <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button style={ButtonStyle.Submit} content={t('action.addCard')} onClick={handleSubmit} />
+        <Button data-testid="card-add-submit" style={ButtonStyle.Submit} content={t('action.addCard')} onClick={handleSubmit} />
       </div>
     </Form>
   );
