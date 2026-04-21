@@ -39,7 +39,7 @@ const Projects = React.memo(({ projects, filteredProjects, isFiltered, canAdd, d
   }, []);
 
   return (
-    <div className={s.wrapper}>
+    <div className={s.wrapper} data-testid="projects-dashboard">
       <div className={s.header}>
         <div ref={headerButtonGroupOffsetRef} />
         <div className={clsx(s.headerText)}>

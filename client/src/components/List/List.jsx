@@ -180,7 +180,7 @@ const List = React.memo(
           <div {...droppableProps} ref={innerRef}>
             {placeholder}
             {!isAddCardOpen && canEdit && (
-              <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
+              <Button data-testid="list-open-add-card" style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
                 <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
                 <span className={s.addCardButtonText}>{t('action.addCard')}</span>
               </Button>

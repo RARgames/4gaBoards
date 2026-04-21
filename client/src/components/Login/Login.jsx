@@ -196,11 +196,14 @@ const Login = React.memo(
           <img src={logo} className={s.logo} alt="4ga Boards" />
           <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
           <div>
-            {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
+            {message && (
+              <Message data-testid="login-message" style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />
+            )}
             <Form>
               <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
               <Input
                 ref={emailOrUsernameField}
+                data-testid="login-email-or-username"
                 style={InputStyle.LoginRegister}
                 name="emailOrUsername"
                 value={data.emailOrUsername}
@@ -212,6 +215,7 @@ const Login = React.memo(
               <div className={s.inputLabel}>{t('common.password')}</div>
               <Input.Password
                 ref={passwordField}
+                data-testid="login-password"
                 style={InputStyle.LoginRegister}
                 name="password"
                 value={data.password}
@@ -220,7 +224,7 @@ const Login = React.memo(
                 onChange={handleFieldChange}
                 isError={isPasswordError}
               />
-              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
+              <Button data-testid="login-submit" style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
                 {loadingProvider === 'local' ? (
                   <Loader size={LoaderSize.Small} />
                 ) : (
