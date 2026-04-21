@@ -3,18 +3,20 @@ import { expect } from '@playwright/test';
 
 import { LoginPage } from '../pageObject/LoginPage.js';
 
-const login = new LoginPage();
-
 Given('admin user has navigated to the login page', async function () {
-  await login.navigateToLoginPage();
-  expect(page.url()).toBe(`${login.baseUrl}login`);
+  const login_page = new LoginPage(this.page);
+  await login_page.navigateToLoginPage();
+  expect(this.page.url()).toBe(`${login_page.baseUrl}login`);
 });
 
 When('admin user logs in with following credentials', async function (dataTable) {
+  const login_page = new LoginPage(this.page);
   const loginCredentails = dataTable.hashes();
-  await login.login(loginCredentails);
+  await login_page.login_dashboard(loginCredentails);
 });
 
 Then('admin user should be navigated to admin panel dashboard', async function () {
-  await expect(page.locator(login.dashboardSelector)).toBeVisible();
+  const login_page = new LoginPage(this.page);
+
+  await expect(login_page.dashboardSelector).toBeVisible();
 });
