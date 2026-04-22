@@ -15,11 +15,11 @@ AfterAll(async function () {
 });
 
 Before(async function () {
-  global.context = await global.browser.newContext();
-  global.page = await global.context.newPage();
+  this.context = await global.browser.newContext();
+  this.page = await this.context.newPage();
 });
 
 After(async function () {
-  await global.page.close();
-  await global.context.close();
+  await this.page.close();
+  await this.context.close();
 });

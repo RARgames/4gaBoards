@@ -1,25 +1,22 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
-const { expect } = require('@playwright/test');
+import { Given, When, Then } from '@cucumber/cucumber';
+import { expect } from '@playwright/test';
 
-const baseUrl = 'http://localhost:3000/';
-const emailFieldSelector = 'input[name="emailOrUsername"]';
-const passwordFieldSelector = 'input[name="password"]';
-const loginBtnSelector = "button[title='Log in']";
-const dashboardSelector = "div[title='Dashboard']";
+import { LoginPage } from '../pageObject/LoginPage.js';
 
 Given('admin user has navigated to the login page', async function () {
-  await page.goto(`${baseUrl}login`);
-  expect(page.url()).toBe(`${baseUrl}login`);
+  const login_page = new LoginPage(this.page);
+  await login_page.navigateToLoginPage();
+  expect(this.page.url()).toBe(`${login_page.baseUrl}login`);
 });
 
 When('admin user logs in with following credentials', async function (dataTable) {
+  const login_page = new LoginPage(this.page);
   const loginCredentails = dataTable.hashes();
-  await page.locator(emailFieldSelector).fill(loginCredentails[0].email);
-  await page.locator(passwordFieldSelector).fill(loginCredentails[0].password);
-  await page.locator(loginBtnSelector).click();
+  await login_page.login_dashboard(loginCredentails);
 });
 
 Then('admin user should be navigated to admin panel dashboard', async function () {
-  expect(page.url()).toBe(baseUrl);
-  await expect(page.locator(dashboardSelector)).toBeVisible();
+  const login_page = new LoginPage(this.page);
+
+  await expect(login_page.dashboardSelector).toBeVisible();
 });
