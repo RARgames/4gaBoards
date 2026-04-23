@@ -75,7 +75,9 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.8.2",
     "stylelint": "^17.8.0",
-    "stylelint-config-recommended-scss": "^17.0.1"
+     "stylelint-config-recommended-scss": "^17.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   },
   "devEngines": {
     "packageManager": {
