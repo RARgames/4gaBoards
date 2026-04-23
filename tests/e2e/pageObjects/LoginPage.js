@@ -1,18 +1,23 @@
 class LoginPage {
   constructor() {
-    this.dashboardSelector = "div[title='Dashboard']";
-    this.emailSelector = "[name='emailOrUsername']";
-    this.paasswordSelector = "[name='password']";
-    this.loginUrl = 'http://localhost:3000/login';
+    this.page = page;
+
+    this.baseUrl = 'http://localhost:3000/';
+    this.emailFieldSelector = this.page.locator('input[name="emailOrUsername"]');
+    this.passwordFieldSelector = this.page.locator('input[name="emailOrUsername"]');
+    this.loginBtnSelector = this.page.locator("button[title='Log in']");
+    this.dashboardSelector = this.page.locator("div[title='Dashboard']");
   }
   async navigateToLoginPage() {
-    await page.goto(this.loginUrl);
+    await this.page.goto(`${this.baseUrl}login`);
   }
-  async login(loginCredentails) {
-    await page.locator(this.emailSelector).fill(loginCredentails[0].email);
 
-    await page.locator(this.paasswordSelector).fill(loginCredentails[0].password);
-    await page.getByRole('button', { name: 'Log in' }).click();
+  async login(dataTable) {
+    await this.page.fill(this.emailFieldSelector, dataTable[0].email);
+    await this.page.fill(this.passwordFieldSelector, dataTable[0].password);
+
+    1;
+    await this.page.click(this.loginBtnSelector);
   }
 }
-module.exports = { LoginPage };
+export { LoginPage };
