@@ -1,25 +1,35 @@
-const { Before, BeforeAll, AfterAll, After, setDefaultTimeout } = require('@cucumber/cucumber');
+const { BeforeAll, AfterAll, Before, After, setDefaultTimeout } = require('@cucumber/cucumber');
 const { chromium } = require('playwright');
 
 setDefaultTimeout(60000);
 
+let browser;
+
 BeforeAll(async function () {
-  global.browser = await chromium.launch({
+  browser = await chromium.launch({
     headless: true,
-    slowMo: 1000,
   });
 });
 
-AfterAll(async function () {
-  await global.browser.close();
-});
-
 Before(async function () {
-  this.context = await global.browser.newContext();
+  this.browser = browser;
+
+  this.context = await this.browser.newContext();
   this.page = await this.context.newPage();
 });
 
 After(async function () {
-  await this.page.close();
-  await this.context.close();
+  if (this.page) {
+    await this.page.close();
+  }
+
+  if (this.context) {
+    await this.context.close();
+  }
+});
+
+AfterAll(async function () {
+  if (browser) {
+    await browser.close();
+  }
 });
