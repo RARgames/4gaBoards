@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:e2e": "cucumber-js --require cucumber.conf.js --require e2e/stepDefinitions/**/*.js"
+    "test:e2e": "cucumber-js --require-module ts-node/register --require cucumber.conf.js --require e2e/stepDefinitions/*.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,9 @@
     "@cucumber/cucumber": "7.3.1",
     "@cucumber/pretty-formatter": "^3.2.0",
     "@playwright/test": "^1.59.1",
-    "playwright": "^1.59.1"
+    "@types/node": "^25.6.0",
+    "playwright": "^1.59.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   }
 }
