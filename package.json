@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.28.6",
+    "@types/node": "^25.6.0",
     "concurrently": "^9.2.1",
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^9.39.4",
@@ -75,7 +76,9 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.8.2",
     "stylelint": "^17.8.0",
-    "stylelint-config-recommended-scss": "^17.0.1"
+    "stylelint-config-recommended-scss": "^17.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   },
   "devEngines": {
     "packageManager": {
