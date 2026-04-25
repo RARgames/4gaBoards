@@ -317,6 +317,7 @@ export default {
       importGettingStartedProject: 'Getting Started プロジェクトをインポート',
       importNonExistingUsers: '存在しないユーザーのアカウントを作成',
       importProjectManagers: 'プロジェクトマネージャーを追加',
+      includeTaskDueDates: 'タスクの期限日を含める',
       inProgress: '進行中',
       instanceSettings: 'インスタンス設定',
       justSelectedDay: '選択した日のカードのみ表示',

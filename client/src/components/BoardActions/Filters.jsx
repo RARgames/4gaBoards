@@ -23,6 +23,7 @@ const Filters = React.memo(
     canEdit,
     dueDate,
     justSelectedDay,
+    includeTaskDueDates,
     onlyWithNotifications,
     onUserAdd,
     onUserRemove,
@@ -36,6 +37,7 @@ const Filters = React.memo(
     const [t] = useTranslation();
     const [dueDateValue, setDueDateValue] = useState(dueDate);
     const [justSelectedDayValue, setJustSelectedDayValue] = useState(justSelectedDay);
+    const [includeTaskDueDatesValue, setIncludeTaskDueDatesValue] = useState(includeTaskDueDates);
     const [onlyWithNotificationsValue, setOnlyWithNotificationsValue] = useState(onlyWithNotifications);
 
     const handleRemoveUserClick = useCallback(
@@ -61,10 +63,11 @@ const Filters = React.memo(
     }, [labels, onLabelRemove]);
 
     const handleFilterDueDateChange = useCallback(
-      (value, value2) => {
+      (value, value2, value3) => {
         setDueDateValue(value);
         setJustSelectedDayValue(value2);
-        onBoardSearchParamsUpdate({ dueDate: value, justSelectedDay: value2 });
+        setIncludeTaskDueDatesValue(value3);
+        onBoardSearchParamsUpdate({ dueDate: value, justSelectedDay: value2, includeTaskDueDates: value3 });
       },
       [onBoardSearchParamsUpdate],
     );
@@ -72,7 +75,8 @@ const Filters = React.memo(
     const handleRemoveDueDateClick = useCallback(() => {
       setDueDateValue(null);
       setJustSelectedDayValue(false);
-      onBoardSearchParamsUpdate({ dueDate: null, justSelectedDay: false });
+      setIncludeTaskDueDatesValue(false);
+      onBoardSearchParamsUpdate({ dueDate: null, justSelectedDay: false, includeTaskDueDates: false });
     }, [onBoardSearchParamsUpdate]);
 
     const handleOnlyWithNotificationsChange = useCallback(() => {
@@ -165,6 +169,7 @@ const Filters = React.memo(
             title={t('common.filterByDueDate', { context: 'title' })}
             defaultValue={dueDateValue}
             justSelectedDayDefaultValue={justSelectedDayValue}
+            includeTaskDueDatesDefaultValue={includeTaskDueDatesValue}
             onUpdate={handleFilterDueDateChange}
             offset={16}
             wrapperClassName={s.popupWrapper}
@@ -200,6 +205,7 @@ Filters.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   justSelectedDay: PropTypes.bool,
+  includeTaskDueDates: PropTypes.bool,
   onlyWithNotifications: PropTypes.bool,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
@@ -214,6 +220,7 @@ Filters.propTypes = {
 Filters.defaultProps = {
   dueDate: undefined,
   justSelectedDay: false,
+  includeTaskDueDates: false,
   onlyWithNotifications: false,
 };
 

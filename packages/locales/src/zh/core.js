@@ -317,6 +317,7 @@ export default {
       importGettingStartedProject: '导入入门项目',
       importNonExistingUsers: '为不存在的用户创建账户',
       importProjectManagers: '添加项目管理员',
+      includeTaskDueDates: '包含任务截止日期',
       inProgress: '进行中',
       instanceSettings: '系统设置',
       justSelectedDay: '仅显示选定日期的卡片',

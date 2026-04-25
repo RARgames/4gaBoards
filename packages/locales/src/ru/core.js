@@ -338,6 +338,7 @@ export default {
       importGettingStartedProject: 'Импорт «Начало работы»',
       importNonExistingUsers: 'Создать аккаунты для новых',
       importProjectManagers: 'Добавить руководителей',
+      includeTaskDueDates: 'Включать сроки выполнения задач',
       inProgress: 'В работе',
       instanceSettings: 'Настройки инстанса',
       justSelectedDay: 'Только выбранный день',

@@ -324,6 +324,7 @@ export default {
       importGettingStartedProject: 'Importera Kom igång-projekt',
       importNonExistingUsers: 'Skapa konton för nya användare',
       importProjectManagers: 'Lägg till projektansvariga',
+      includeTaskDueDates: 'Inkludera uppgifternas förfallodatum',
       inProgress: 'Pågående',
       instanceSettings: 'Instansinställningar',
       justSelectedDay: 'Visa kort endast för vald dag',
