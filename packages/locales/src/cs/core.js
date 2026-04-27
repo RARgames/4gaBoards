@@ -331,6 +331,7 @@ export default {
       importGettingStartedProject: 'Importovat projekt Začínáme',
       importNonExistingUsers: 'Vytvořit účty pro neexistující uživatele',
       importProjectManagers: 'Přidat správce projektu',
+      includeTaskDueDates: 'Zahrnout termíny úkolů',
       inProgress: 'Probíhá',
       instanceSettings: 'Nastavení instance',
       justSelectedDay: 'Zobrazit pouze karty vybraného dne',

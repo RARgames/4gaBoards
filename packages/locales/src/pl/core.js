@@ -331,6 +331,7 @@ export default {
       importGettingStartedProject: 'Zaimportuj projekt instruktażowy',
       importNonExistingUsers: 'Stwórz konta dla nieistniejących użytkowników',
       importProjectManagers: 'Dodaj moderatorów projektu',
+      includeTaskDueDates: 'Uwzględnij terminy zadań',
       inProgress: 'W trakcie',
       instanceSettings: 'Ustawienia instancji',
       justSelectedDay: 'Pokaż karty tylko dla wybranego dnia',

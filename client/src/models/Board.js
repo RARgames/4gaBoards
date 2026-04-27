@@ -35,6 +35,7 @@ export default class extends BaseModel {
         matchCase: false,
         dueDate: null,
         justSelectedDay: false,
+        includeTaskDueDates: false,
         onlyWithNotifications: false,
       }),
     }),
@@ -128,6 +129,7 @@ export default class extends BaseModel {
             matchCase: payload.searchParams.matchCase !== undefined ? payload.searchParams.matchCase : board.searchParams.matchCase,
             dueDate: payload.searchParams.dueDate !== undefined ? payload.searchParams.dueDate : board.searchParams.dueDate,
             justSelectedDay: payload.searchParams.justSelectedDay !== undefined ? payload.searchParams.justSelectedDay : board.searchParams.justSelectedDay,
+            includeTaskDueDates: payload.searchParams.includeTaskDueDates !== undefined ? payload.searchParams.includeTaskDueDates : board.searchParams.includeTaskDueDates,
             onlyWithNotifications: payload.searchParams.onlyWithNotifications !== undefined ? payload.searchParams.onlyWithNotifications : board.searchParams.onlyWithNotifications,
           },
         });

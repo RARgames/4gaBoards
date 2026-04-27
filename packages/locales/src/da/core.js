@@ -324,6 +324,7 @@ export default {
       importGettingStartedProject: 'Importér Kom godt i gang-projekt',
       importNonExistingUsers: 'Opret konti til ikke-eksisterende brugere',
       importProjectManagers: 'Tilføj projektansvarlige',
+      includeTaskDueDates: 'Inkluder opgavernes forfaldsdatoer',
       inProgress: 'I gang',
       instanceSettings: 'Instansindstillinger',
       justSelectedDay: 'Vis kun kort for valgt dag',

@@ -10,10 +10,11 @@ import { Button, ButtonStyle, Input, InputStyle, Popup, Form, Checkbox } from '.
 import * as gs from '../../global.module.scss';
 import * as s from './FiltersDueDateStep.module.scss';
 
-const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultValue, title, onUpdate, onBack, onClose }) => {
+const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultValue, includeTaskDueDatesDefaultValue, title, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
   const [isError, setIsError] = useState(false);
   const [justSelectedDay, toggleJustSelectedDay] = useToggle(justSelectedDayDefaultValue);
+  const [includeTaskDueDates, toggleIncludeTaskDueDates] = useToggle(includeTaskDueDatesDefaultValue);
 
   const [data, handleFieldChange, setData] = useForm(() => {
     const date = defaultValue || new Date().setHours(12, 0, 0, 0);
@@ -71,12 +72,12 @@ const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultVal
       value: `${data.date} ${data.time}`,
     });
 
-    if (!defaultValue || value.getTime() !== defaultValue.getTime() || justSelectedDay !== justSelectedDayDefaultValue) {
-      onUpdate(value, justSelectedDay);
+    if (!defaultValue || value.getTime() !== defaultValue.getTime() || justSelectedDay !== justSelectedDayDefaultValue || includeTaskDueDates !== includeTaskDueDatesDefaultValue) {
+      onUpdate(value, justSelectedDay, includeTaskDueDates);
     }
 
     onClose();
-  }, [nullableDate, t, data.date, data.time, defaultValue, justSelectedDay, justSelectedDayDefaultValue, onClose, onUpdate]);
+  }, [nullableDate, t, data.date, data.time, defaultValue, justSelectedDay, justSelectedDayDefaultValue, includeTaskDueDates, includeTaskDueDatesDefaultValue, onClose, onUpdate]);
 
   const handleClearClick = useCallback(() => {
     if (defaultValue) {
@@ -112,6 +113,7 @@ const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultVal
           <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <Checkbox checked={justSelectedDay} label={t('common.justSelectedDay')} onChange={toggleJustSelectedDay} wrapperClassName={s.checkboxWrapper} />
+          <Checkbox checked={includeTaskDueDates} label={t('common.includeTaskDueDates')} onChange={toggleIncludeTaskDueDates} wrapperClassName={s.checkboxWrapper} />
           <div className={gs.controlsSpaceBetween}>
             <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
@@ -125,6 +127,7 @@ const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultVal
 FiltersDueDateStep.propTypes = {
   defaultValue: PropTypes.instanceOf(Date),
   justSelectedDayDefaultValue: PropTypes.bool,
+  includeTaskDueDatesDefaultValue: PropTypes.bool,
   title: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
@@ -134,6 +137,7 @@ FiltersDueDateStep.propTypes = {
 FiltersDueDateStep.defaultProps = {
   defaultValue: undefined,
   justSelectedDayDefaultValue: false,
+  includeTaskDueDatesDefaultValue: false,
   title: 'common.dueDate_title',
   onBack: undefined,
 };

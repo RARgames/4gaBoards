@@ -317,6 +317,7 @@ export default {
       importGettingStartedProject: '시작하기 프로젝트 가져오기',
       importNonExistingUsers: '미존재 사용자 계정 생성',
       importProjectManagers: '프로젝트 관리자 추가',
+      includeTaskDueDates: '작업 마감일 포함',
       inProgress: '진행 중',
       instanceSettings: '인스턴스 설정',
       justSelectedDay: '선택 날짜 카드만 표시',

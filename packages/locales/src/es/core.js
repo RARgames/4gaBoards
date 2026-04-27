@@ -324,6 +324,7 @@ export default {
       importGettingStartedProject: 'Importar Proyecto de Inicio',
       importNonExistingUsers: 'Crear cuentas para usuarios no existentes',
       importProjectManagers: 'Añadir gestores de proyecto',
+      includeTaskDueDates: 'Incluir fechas de vencimiento de tareas',
       inProgress: 'En Progreso',
       instanceSettings: 'Configuración de Instancia',
       justSelectedDay: 'Mostrar solo tarjetas del día seleccionado',
