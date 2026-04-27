@@ -5,6 +5,9 @@ import Root from './components/Root';
 import history from './history';
 import store from './store';
 import './i18n';
+import { setupConsoleTracking } from './utils/hyperdx-tracking';
+
+setupConsoleTracking();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(React.createElement(Root, { store, history }));

@@ -95,6 +95,7 @@
       "core-js-pure",
       "unrs-resolver",
       "bcrypt",
+      "protobufjs",
       "sharp"
     ]
   }

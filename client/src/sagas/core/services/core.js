@@ -4,6 +4,7 @@ import actions from '../../../actions';
 import api from '../../../api';
 import i18n from '../../../i18n';
 import { removeAccessToken } from '../../../utils/access-token-storage';
+import { initializeHyperDX, setHyperDXUserInfo } from '../../../utils/hyperdx-init';
 import request from '../request';
 import requests from '../requests';
 
@@ -36,6 +37,8 @@ export function* initializeCore() {
 
   yield call(i18n.changeLanguage, userPrefs.language);
   yield call(i18n.loadCoreLocale);
+
+  setHyperDXUserInfo(user.id, user.email, user.username);
 
   yield put(
     actions.initializeCore(
@@ -93,38 +96,12 @@ export function* logout(invalidateAccessToken = true) {
 }
 
 export function* fetchCoreSettingsPublic() {
-  const {
-    item: ssoUrls,
-    ssoAvailable,
-    oidcEnabledMethods,
-    ssoRegistrationEnabled,
-    registrationEnabled,
-    localRegistrationEnabled,
-    projectCreationAllEnabled,
-    syncSsoDataOnAuth,
-    syncSsoAdminOnAuth,
-    allowedRegisterDomains,
-    demoMode,
-    mailServiceAvailable,
-    mailServiceInboundEmail,
-  } = yield call(api.getCoreSettingsPublic);
-  yield put(
-    actions.fetchCoreSettingsPublic(
-      ssoUrls,
-      ssoAvailable,
-      oidcEnabledMethods,
-      ssoRegistrationEnabled,
-      registrationEnabled,
-      localRegistrationEnabled,
-      projectCreationAllEnabled,
-      syncSsoDataOnAuth,
-      syncSsoAdminOnAuth,
-      allowedRegisterDomains,
-      demoMode,
-      mailServiceAvailable,
-      mailServiceInboundEmail,
-    ),
-  );
+  const { item: coreSettings } = yield call(api.getCoreSettingsPublic);
+
+  const { hyperdxEnabled, hyperdxApiKey, hyperdxInstanceName, hyperdxTracePropagationTargets, otelUrl, otelUrlFormat } = coreSettings;
+  initializeHyperDX(hyperdxEnabled, hyperdxApiKey, hyperdxInstanceName, hyperdxTracePropagationTargets, otelUrl, otelUrlFormat);
+
+  yield put(actions.fetchCoreSettingsPublic(coreSettings));
 }
 
 export function* updateCoreSettings(data) {

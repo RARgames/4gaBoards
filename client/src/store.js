@@ -6,10 +6,12 @@ import history from './history';
 import { createRouterMiddleware } from './lib/redux-router';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
+import createHyperDXMiddleware from './utils/hyperdx-redux-middleware';
 
 const sagaMiddleware = createSagaMiddleware();
+const hyperDXMiddleware = createHyperDXMiddleware();
 
-const middlewares = [sagaMiddleware, createRouterMiddleware(history)];
+const middlewares = [hyperDXMiddleware, sagaMiddleware, createRouterMiddleware(history)];
 
 let compose = reduxCompose;
 

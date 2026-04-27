@@ -75,7 +75,15 @@ module.exports.custom = {
     'users.update-email-verification',
   ],
   demoMode: process.env.DEMO_MODE === 'true',
+
   metricsEnabled: process.env.METRICS_ENABLED === 'true',
+
+  hyperdxEnabled: process.env.HYPERDX_ENABLED === 'true',
+  hyperdxApiKey: process.env.HYPERDX_API_KEY || null,
+  hyperdxInstanceName: process.env.HYPERDX_INSTANCE_NAME || process.env.INSTANCE_NAME || '4gaboards.com',
+  hyperdxTracePropagationTargets: process.env.HYPERDX_TRACE_PROPAGATION_TARGETS || null,
+  otelUrl: process.env.OTEL_URL || null,
+  otelUrlFormat: process.env.OTEL_URL_FORMAT || 'http/protobuf',
 
   authRateLimit: {
     enabled: process.env.AUTH_RATE_LIMIT_ENABLED !== 'false',
