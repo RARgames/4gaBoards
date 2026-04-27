@@ -91,7 +91,7 @@
     "react-app-polyfill": "^3.0.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-datepicker": "^8.10.0",
-    "react-dom": "18.2.0",
+    "react-dom": "19.2.5",
     "react-dropzone": "^15.0.0",
     "react-i18next": "^17.0.2",
     "react-input-mask": "^2.0.4",
