@@ -2,6 +2,9 @@ import { DataTable } from '@cucumber/cucumber';
 import { Locator, Page } from '@playwright/test';
 
 export class LoginPage {
+  dashboard(page: Page) {
+    throw new Error('Method not implemented.');
+  }
   private page: Page;
   public baseUrl: string;
 

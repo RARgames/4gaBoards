@@ -1,28 +1,20 @@
-import {
-  IWorldOptions,
-  setWorldConstructor,
-  World
-} from '@cucumber/cucumber';
+import { IWorldOptions, setWorldConstructor, World } from '@cucumber/cucumber';
 
-import {
-  Browser,
-  BrowserContext,
-  Page
-} from '@playwright/test';
+import { Browser, BrowserContext, Page } from '@playwright/test';
 
 import { LoginPage } from '../pages/LoginPage';
-
+import { ProjectPage } from '../pages/Projectpage';
 export class CustomWorld extends World {
   browser!: Browser;
   context!: BrowserContext;
   page!: Page;
 
   loginPage!: LoginPage;
+  projectPage!: ProjectPage;
 
   users: Record<string, unknown> = {};
   meetings: Record<string, unknown> = {};
   scenarioData: Record<string, unknown> = {};
-
 
   constructor(options: IWorldOptions) {
     super(options);
