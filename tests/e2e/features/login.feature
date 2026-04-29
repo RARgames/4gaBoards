@@ -1,4 +1,4 @@
-Feature: Admin login
+Feature:  Admin login
   As an admin
   I want to log in to the website admin panel
   So that I can manage my projects

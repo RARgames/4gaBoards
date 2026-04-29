@@ -191,14 +191,37 @@ export default class extends BaseModel {
       });
     }
     if (searchParams.dueDate) {
+      const isSameDay = (d0, d1) => d0.getFullYear() === d1.getFullYear() && d0.getMonth() === d1.getMonth() && d0.getDate() === d1.getDate();
+
       cardModels = cardModels.filter((cardModel) => {
-        if (!cardModel.dueDate) return false;
-        if (searchParams.justSelectedDay) {
-          const due = cardModel.dueDate;
-          const filterDue = searchParams.dueDate;
-          return due.getFullYear() === filterDue.getFullYear() && due.getMonth() === filterDue.getMonth() && due.getDate() === filterDue.getDate();
+        const filterDue = searchParams.dueDate;
+
+        const cardMatches = (() => {
+          if (!cardModel.dueDate) return false;
+
+          if (searchParams.justSelectedDay) {
+            return isSameDay(cardModel.dueDate, filterDue);
+          }
+
+          return cardModel.dueDate <= filterDue;
+        })();
+
+        if (cardMatches) return true;
+        if (!searchParams.includeTaskDueDates) {
+          return cardMatches;
         }
-        return cardModel.dueDate <= searchParams.dueDate;
+
+        const taskMatches = cardModel.tasks.toModelArray().some((task) => {
+          if (!task.dueDate) return false;
+
+          if (searchParams.justSelectedDay) {
+            return isSameDay(task.dueDate, filterDue);
+          }
+
+          return task.dueDate <= filterDue;
+        });
+
+        return taskMatches;
       });
     }
     if (searchParams.onlyWithNotifications) {

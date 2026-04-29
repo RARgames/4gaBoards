@@ -320,6 +320,7 @@ export default {
       importGettingStartedProject: 'Import Getting Started Project',
       importNonExistingUsers: 'Create accounts for non-existing users',
       importProjectManagers: 'Add project managers',
+      includeTaskDueDates: 'Include Task Due Dates',
       inProgress: 'In Progress',
       instanceSettings: 'Instance Settings',
       justSelectedDay: 'Show Cards Just For Selected Day',

@@ -324,6 +324,7 @@ export default {
       importGettingStartedProject: '„Erste Schritte“-Projekt importieren',
       importNonExistingUsers: 'Konten für nicht existierende Benutzer erstellen',
       importProjectManagers: 'Projekt-Manager hinzufügen',
+      includeTaskDueDates: 'Fälligkeitsdaten von Aufgaben einbeziehen',
       inProgress: 'In Bearbeitung',
       instanceSettings: 'Instanz-Einstellungen',
       justSelectedDay: 'Nur Karten des ausgewählten Tages anzeigen',

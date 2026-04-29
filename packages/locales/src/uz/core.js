@@ -323,6 +323,7 @@ export default {
       importGettingStartedProject: 'Boshlash loyihasini import qilish',
       importNonExistingUsers: "Mavjud bo'lmagan foydalanuvchilar uchun hisob yaratish",
       importProjectManagers: "Loyiha menejerlarini qo'shish",
+      includeTaskDueDates: "Vazifa muddatlarini qo'shish",
       inProgress: 'Jarayonda',
       instanceSettings: 'Instansiya sozlamalari',
       justSelectedDay: "Faqat tanlangan kun kartalarini ko'rsatish",

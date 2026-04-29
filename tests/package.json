@@ -4,16 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:e2e": "cucumber-js --require cucumber.conf.js --require e2e/stepDefinitions/*.js"
+    "test:e2e": "cucumber-js --require-module ts-node/register --require cucumber.conf.js --require e2e/stepDefinitions/*.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
   "devDependencies": {
-    "@cucumber/cucumber": "7.3.1",
-    "@cucumber/pretty-formatter": "^3.2.0",
-    "@playwright/test": "^1.59.1",
-    "playwright": "^1.59.1"
+    "@babel/eslint-parser": "^7.28.6",
+    "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1",
+    "confusing-browser-globals": "^1.0.11",
+    "eslint": "^9.39.4",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.8.2",
+    "stylelint": "^17.8.0",
+    "stylelint-config-recommended-scss": "^17.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   }
 }

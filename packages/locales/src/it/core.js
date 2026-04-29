@@ -324,6 +324,7 @@ export default {
       importGettingStartedProject: 'Importa progetto Inizia Qui',
       importNonExistingUsers: 'Crea account per utenti non esistenti',
       importProjectManagers: 'Aggiungi manager progetto',
+      includeTaskDueDates: 'Includi date di scadenza delle attività',
       inProgress: 'In corso',
       instanceSettings: 'Impostazioni istanza',
       justSelectedDay: 'Mostra solo card del giorno selezionato',

@@ -22,3 +22,4 @@ behavior:
 - Repeat the process for all target languages.
 - Make sure that translations are in the correct language and culturally appropriate.
 - Optionally generate a report of newly added keys and translations for review.
+- When translating French and other languages with ’ don't add it as \' or ’, instead use default ' and make whole value in "..." to avoid escaping issues. For example: `"I'l a une description"` instead of `'I’l a une description'` or `"I\'l a une description"`.
