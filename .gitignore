@@ -4,6 +4,7 @@ test_docker
 
 .idea
 .DS_Store
+.playwright-mcp
 
 # Prevent another lockfile than pnpm-lock.yaml (pnpm) from being created
 yarn.lock

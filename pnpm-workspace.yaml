@@ -2,3 +2,4 @@ packages:
   - 'client'
   - 'server'
   - 'packages/*'
+  - 'e2e-tests'
