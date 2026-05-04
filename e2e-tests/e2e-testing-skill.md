@@ -1,5 +1,7 @@
 # E2E Testing Patterns - 4ga Boards
 
+> **Navigation:** [Submission Overview](submission.md) · [Test Plan](tests/test-plan.plan.md) · [Playwright Config](playwright.config.ts)
+
 ## Project Structure
 - Tests live in: `e2e-tests/`
 - Page objects: `e2e-tests/pages/` (`BoardViewPage.ts`, `CardModalPage.ts`, `LoginPage.ts`)
