@@ -1,5 +1,7 @@
 # 4ga Boards E2E Test Plan
 
+> **Navigation:** [Submission Overview](../submission.md) · [AI Skill File](../e2e-testing-skill.md) · [Playwright Config](../playwright.config.ts)
+
 ## Application Overview
 
 4ga Boards is a Kanban-style project management application. Users can create projects containing boards, boards containing lists, and lists containing cards. Cards have properties including members, labels, due dates, timers, tasks, attachments, comments, and descriptions. The app supports filtering, searching, drag-and-drop card movement, collapsible lists, board/list view toggle, and role-based access (Admin vs regular user). Authentication is via username/password login.
@@ -235,6 +237,21 @@ All tests use **API-first fixtures** for setup and teardown. No tests depend on 
   3. Enter 'New Card {runId}' and submit
     - expect: The new card appears in the list
     - expect: The card count updates to 1
+
+#### 4.10. should drag a card to the next list using keyboard
+
+**File:** `tests/board-view/drag-card.spec.ts`
+**Fixtures:** `testBoard`, `testList`, `testCard`, `api`, `runId`
+**API Seed:** Create a second list 'Target List {runId}'
+
+**Steps:**
+  1. Navigate to the fixture board
+    - expect: The card is in the source list with count 1, target list has count 0
+  2. Focus the card element and press Space to grab
+  3. Press ArrowRight to move to the next list
+  4. Press Space to drop
+    - expect: The card appears in the target list
+    - expect: Target list card count is 1, source list card count is 0
 
 ### 5. CardModal
 

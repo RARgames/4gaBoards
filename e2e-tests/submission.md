@@ -1,5 +1,16 @@
 # E2E Test Suite — 4ga Boards
 
+## Quick Links
+
+| Deliverable | Path |
+|---|---|
+| Test Plan | [`tests/test-plan.plan.md`](tests/test-plan.plan.md) |
+| AI Skill File | [`e2e-testing-skill.md`](e2e-testing-skill.md) |
+| Playwright Tests | [`tests/`](tests/) |
+| Page Objects | [`pages/`](pages/) |
+| Fixtures & API Client | [`fixtures/`](fixtures/) · [`helpers/`](helpers/) |
+| Playwright Config | [`playwright.config.ts`](playwright.config.ts) |
+
 ## Features Under Test
 
 Two main features were selected for comprehensive E2E coverage:
@@ -66,7 +77,7 @@ The skill file was loaded automatically at the start of each Claude Code session
 | `boards/boards.spec.ts` | should create a new board within a project |
 | `boards/boards.spec.ts` | should subscribe and unsubscribe to a board |
 
-### Board View (9 tests)
+### Board View (10 tests)
 | File | Test |
 |---|---|
 | `board-view/board-view.spec.ts` | should display the board with a list |
@@ -78,6 +89,7 @@ The skill file was loaded automatically at the start of each Claude Code session
 | `board-view/board-view.spec.ts` | should collapse and expand a list |
 | `board-view/board-view.spec.ts` | should add a new list to the board |
 | `board-view/add-card.spec.ts` | should add a new card to a list |
+| `board-view/drag-card.spec.ts` | should drag a card to the next list using keyboard |
 
 ### Card Modal (12 tests)
 | File | Test |
@@ -121,11 +133,6 @@ The skill file was loaded automatically at the start of each Claude Code session
 | `api-client.smoke.spec.ts` | should create a comment on a card |
 | `api-client.smoke.spec.ts` | should create a user and add as board member |
 | `api-client.smoke.spec.ts` | should create a user and add as project manager |
-
-### Seed (1 test)
-| File | Test |
-|---|---|
-| `seed.spec.ts` | seed |
 
 ## Running the Tests
 
