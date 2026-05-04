@@ -421,6 +421,15 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(jest@30.5.2(@types/node@26.6.4)(babel-plugin-macros@3.1.0)(supports-color@10.2.2))
 
+  e2e-tests:
+    devDependencies:
+      '@playwright/test':
+        specifier: ^1.58.0
+        version: 1.59.1
+      dotenv:
+        specifier: ^16.5.0
+        version: 16.6.1
+
   packages/enums:
     devDependencies:
       '@rollup/plugin-commonjs':
@@ -5746,6 +5755,11 @@ packages:
 
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
+
+  fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
 
   fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
@@ -15811,6 +15825,9 @@ snapshots:
   fs-monkey@1.1.0: {}
 
   fs.realpath@1.0.0: {}
+
+  fsevents@2.3.2:
+    optional: true
 
   fsevents@2.3.3:
     optional: true

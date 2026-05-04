@@ -1,0 +1,16 @@
+{
+  "name": "e2e-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --headed --workers=1",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "dotenv": "^16.5.0"
+  }
+}
