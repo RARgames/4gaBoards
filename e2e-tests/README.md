@@ -6,33 +6,29 @@ End-to-end test suite using [Playwright](https://playwright.dev/) with an API-fi
 
 ## Prerequisites
 
-- Node.js 18+
-- A running 4ga Boards instance (default: `http://localhost:3000`)
-- An admin user account (default: `demo` / `demo`)
+- **Node.js** ≥ 18 (developed with v24.15.0)
+- **pnpm** — the workspace enforces pnpm as the package manager. Install with `npm install -g pnpm` if not already available.
+- A running **4ga Boards** instance (see the root [README](../README.md) for setup)
+- A `demo` / `demo` user account (created by default on first run)
 
 ## Setup
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Install Playwright browsers (first time only)
-npx playwright install chromium
+cd e2e-tests
+pnpm install                        # install dependencies
+pnpm exec playwright install        # download browser binaries (first time only)
+cp .env.example .env                # configure environment (see below)
 ```
 
 ## Configuration
 
 Copy `.env.example` to `.env` and update values for your environment:
 
-```bash
-cp .env.example .env
-```
-
 | Variable | Default | Description |
 |---|---|---|
-| `BASE_URL` | `http://localhost:1337` | URL of the 4ga Boards instance |
-| `ADMIN_EMAIL` | `admin@example.com` | Admin username or email for login |
-| `ADMIN_PASSWORD` | `password` | Admin password |
+| `BASE_URL` | `http://localhost:3000` | URL of the 4ga Boards instance |
+| `ADMIN_USER` | `demo` | Admin username or email for login |
+| `ADMIN_PASS` | `demo` | Admin password |
 
 ## Running Tests
 

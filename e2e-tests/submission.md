@@ -136,10 +136,28 @@ The skill file was loaded automatically at the start of each Claude Code session
 
 ## Running the Tests
 
+### Prerequisites
+
+- **Node.js** ≥ 18 (developed with v24.15.0)
+- **pnpm** — the workspace enforces pnpm as the package manager. Install with `npm install -g pnpm` if not already available.
+- **4ga Boards** running locally at `http://localhost:3000` (see the root [README](../README.md) for setup instructions)
+- A `demo` / `demo` user account (created by default on first run)
+
+### Run
+
 ```bash
 cd e2e-tests
+cp .env.example .env          # adjust BASE_URL if needed
 pnpm install
-npx playwright test
+pnpm exec playwright install   # download browser binaries (first time only)
+pnpm test
 ```
 
-Requires the 4ga Boards application running at `http://localhost:3000` (configurable via `BASE_URL` env var).
+### Other commands
+
+```bash
+pnpm test:ui       # interactive Playwright UI mode
+pnpm test:headed   # run with visible browser
+pnpm test:debug    # headed + single worker for debugging
+pnpm report        # open last HTML report
+```
