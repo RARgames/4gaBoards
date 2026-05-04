@@ -1,0 +1,7 @@
+node_modules/
+auth-state/
+test-results/
+playwright-report/
+.env
+.playwright-mcp/
+.claude/
