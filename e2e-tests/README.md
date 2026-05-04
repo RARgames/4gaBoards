@@ -128,6 +128,11 @@ e2e-tests/
   submission.md        # Assignment submission document
 ```
 
+## Test Suite Full Run 
+
+<img width="811" height="204" alt="image" src="https://github.com/user-attachments/assets/28ef14d2-a0dc-4a78-abe9-1afbb16cf031" />
+
+
 ## Tools and Technologies
 
 | Tool | Purpose |
