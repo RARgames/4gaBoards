@@ -1,0 +1,43 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install pnpm
+        run: npm install -g pnpm@10.33.0
+
+      - name: Start 4gaBoards Server
+        run: docker compose up -d
+
+      - name: Wait for development server
+        run: |
+          sudo apt-get install wait-for-it -y
+          wait-for-it -h localhost -p 3000 -t 10
+
+      - name: Install test dependencies
+        working-directory: tests
+        run: |
+          pnpm install --ignore-workspace
+          npx playwright install chromium
+
+      - name: Run e2e tests
+        working-directory: tests
+        run: pnpm run test:e2e e2e/features/
