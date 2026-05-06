@@ -83,7 +83,7 @@ importers:
         version: 7.29.2
       '@floating-ui/react':
         specifier: ^0.27.19
-        version: 0.27.19(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 0.27.19(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       '@hyperdx/browser':
         specifier: ^0.22.1
         version: 0.22.1(zone.js@0.14.10)
@@ -98,19 +98,19 @@ importers:
         version: 0.6.2(react-refresh@0.18.0)(type-fest@4.20.1)(webpack-dev-server@5.2.3(tslib@2.8.1)(webpack@5.106.2))(webpack@5.106.2)
       '@react-hook/resize-observer':
         specifier: ^2.0.2
-        version: 2.0.2(react@18.3.1)
+        version: 2.0.2(react@19.2.6)
       '@svgr/webpack':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.9.3)
       '@tanstack/react-table':
         specifier: ^8.21.3
-        version: 8.21.3(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 8.21.3(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       '@uiw/react-color-sketch':
         specifier: ^2.10.1
-        version: 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       '@uiw/react-md-editor':
         specifier: ^4.1.0
-        version: 4.1.0(@types/react@19.2.14)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 4.1.0(@types/react@19.2.14)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       address:
         specifier: ^2.0.3
         version: 2.0.3
@@ -253,44 +253,44 @@ importers:
         specifier: ^15.8.1
         version: 15.8.1
       react:
-        specifier: ^18.3.1
-        version: 18.3.1
+        specifier: ^19.2.6
+        version: 19.2.6
       react-app-polyfill:
         specifier: ^3.0.0
         version: 3.0.0
       react-beautiful-dnd:
         specifier: ^13.1.1
-        version: 13.1.1(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 13.1.1(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       react-datepicker:
         specifier: ^8.10.0
-        version: 8.10.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 8.10.0(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       react-dom:
         specifier: 18.2.0
-        version: 18.2.0(react@18.3.1)
+        version: 18.2.0(react@19.2.6)
       react-dropzone:
         specifier: ^15.0.0
-        version: 15.0.0(react@18.3.1)
+        version: 15.0.0(react@19.2.6)
       react-i18next:
         specifier: ^17.0.6
-        version: 17.0.6(i18next@26.0.9(typescript@5.9.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+        version: 17.0.6(i18next@26.0.9(typescript@5.9.3))(react-dom@18.2.0(react@19.2.6))(react@19.2.6)(typescript@5.9.3)
       react-input-mask:
         specifier: ^2.0.4
-        version: 2.0.4(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 2.0.4(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       react-photoswipe-gallery:
         specifier: ^4.0.0
-        version: 4.0.0(photoswipe@5.4.4)(prop-types@15.8.1)(react@18.3.1)
+        version: 4.0.0(photoswipe@5.4.4)(prop-types@15.8.1)(react@19.2.6)
       react-redux:
         specifier: ^9.2.0
-        version: 9.2.0(@types/react@19.2.14)(react@18.3.1)(redux@5.0.1)
+        version: 9.2.0(@types/react@19.2.14)(react@19.2.6)(redux@5.0.1)
       react-refresh:
         specifier: ^0.18.0
         version: 0.18.0
       react-router:
         specifier: ^7.15.0
-        version: 7.15.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 7.15.0(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       react-textarea-autosize:
         specifier: ^8.5.9
-        version: 8.5.9(@types/react@19.2.14)(react@18.3.1)
+        version: 8.5.9(@types/react@19.2.14)(react@19.2.6)
       recursive-readdir:
         specifier: ^2.2.3
         version: 2.2.3
@@ -381,7 +381,7 @@ importers:
         version: 6.9.1
       '@testing-library/react':
         specifier: ^16.3.2
-        version: 16.3.2(@testing-library/dom@10.4.1)(@types/react@19.2.14)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+        version: 16.3.2(@testing-library/dom@10.4.1)(@types/react@19.2.14)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       '@testing-library/user-event':
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
@@ -3255,6 +3255,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     resolution: {integrity: sha512-ppLRUgHVaGRWUx0R0Ut06Mjo9gBaBkg3v/8AxusGLhsIotbBLuRk51rAzqLC8gq6NyyAojEXglNjzf6R948DNw==}
@@ -5275,6 +5276,10 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  hasown@2.0.3:
+    resolution: {integrity: sha512-ej4AhfhfL2Q2zpMmLo7U1Uv9+PyhIZpgQLGT1F9miIGmiCJIoCgSmczFdrc97mWT4kVY72KA+WnnhJ5pghSvSg==}
+    engines: {node: '>= 0.4'}
+
   hast-util-from-html@2.0.3:
     resolution: {integrity: sha512-CUSRHXyKjzHov8yKsQjGOElXy/3EKpyX56ELnkHH34vDVw1N1XSQ1ZcAvTyAPtGqLTuKP/uxM+aLkSPqF/EtMw==}
 
@@ -5602,6 +5607,10 @@ packages:
 
   is-core-module@2.16.1:
     resolution: {integrity: sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==}
+    engines: {node: '>= 0.4'}
+
+  is-core-module@2.16.2:
+    resolution: {integrity: sha512-evOr8xfXKxE6qSR0hSXL2r3sd7ALj8+7jQEUvPYcm5sgZFdJ+AYzT6yNmJenvIYQBgIGwfwz08sL8zoL7yq2BA==}
     engines: {node: '>= 0.4'}
 
   is-data-view@1.0.2:
@@ -7682,8 +7691,8 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  react@18.3.1:
-    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+  react@19.2.6:
+    resolution: {integrity: sha512-sfWGGfavi0xr8Pg0sVsyHMAOziVYKgPLNrS7ig+ivMNb3wbCBw3KxtflsGBAwD3gYQlE/AEZsTLgToRrSCjb0Q==}
     engines: {node: '>=0.10.0'}
 
   read@1.0.7:
@@ -10691,18 +10700,18 @@ snapshots:
       '@floating-ui/core': 1.7.5
       '@floating-ui/utils': 0.2.11
 
-  '@floating-ui/react-dom@2.1.8(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react-dom@2.1.8(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@floating-ui/dom': 1.7.6
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@floating-ui/react@0.27.19(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react@0.27.19(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.8(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react-dom': 2.1.8(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       '@floating-ui/utils': 0.2.11
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
       tabbable: 6.4.0
 
   '@floating-ui/utils@0.2.11': {}
@@ -11629,19 +11638,19 @@ snapshots:
     dependencies:
       passport-oauth2: 1.8.0
 
-  '@react-hook/latest@1.0.3(react@18.3.1)':
+  '@react-hook/latest@1.0.3(react@19.2.6)':
     dependencies:
-      react: 18.3.1
+      react: 19.2.6
 
-  '@react-hook/passive-layout-effect@1.2.1(react@18.3.1)':
+  '@react-hook/passive-layout-effect@1.2.1(react@19.2.6)':
     dependencies:
-      react: 18.3.1
+      react: 19.2.6
 
-  '@react-hook/resize-observer@2.0.2(react@18.3.1)':
+  '@react-hook/resize-observer@2.0.2(react@19.2.6)':
     dependencies:
-      '@react-hook/latest': 1.0.3(react@18.3.1)
-      '@react-hook/passive-layout-effect': 1.2.1(react@18.3.1)
-      react: 18.3.1
+      '@react-hook/latest': 1.0.3(react@19.2.6)
+      '@react-hook/passive-layout-effect': 1.2.1(react@19.2.6)
+      react: 19.2.6
 
   '@redux-saga/core@1.4.2':
     dependencies:
@@ -11954,11 +11963,11 @@ snapshots:
       - supports-color
       - typescript
 
-  '@tanstack/react-table@8.21.3(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@tanstack/react-table@8.21.3(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@tanstack/table-core': 8.21.3
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
   '@tanstack/table-core@8.21.3': {}
 
@@ -11982,12 +11991,12 @@ snapshots:
       picocolors: 1.1.1
       redent: 3.0.0
 
-  '@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(@types/react@19.2.14)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(@types/react@19.2.14)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@testing-library/dom': 10.4.1
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
     optionalDependencies:
       '@types/react': 19.2.14
 
@@ -12268,77 +12277,77 @@ snapshots:
 
   '@uiw/copy-to-clipboard@1.0.20': {}
 
-  '@uiw/react-color-alpha@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-color-alpha@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@uiw/color-convert': 2.10.1(@babel/runtime@7.29.2)
-      '@uiw/react-drag-event-interactive': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      '@uiw/react-drag-event-interactive': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@uiw/react-color-editable-input-rgba@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-color-editable-input-rgba@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@uiw/color-convert': 2.10.1(@babel/runtime@7.29.2)
-      '@uiw/react-color-editable-input': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      '@uiw/react-color-editable-input': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@uiw/react-color-editable-input@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-color-editable-input@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@uiw/react-color-hue@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.29.2
-      '@uiw/color-convert': 2.10.1(@babel/runtime@7.29.2)
-      '@uiw/react-color-alpha': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
-
-  '@uiw/react-color-saturation@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-color-hue@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@uiw/color-convert': 2.10.1(@babel/runtime@7.29.2)
-      '@uiw/react-drag-event-interactive': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      '@uiw/react-color-alpha': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@uiw/react-color-sketch@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-color-saturation@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@uiw/color-convert': 2.10.1(@babel/runtime@7.29.2)
-      '@uiw/react-color-alpha': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      '@uiw/react-color-editable-input': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      '@uiw/react-color-editable-input-rgba': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      '@uiw/react-color-hue': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      '@uiw/react-color-saturation': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      '@uiw/react-color-swatch': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      '@uiw/react-drag-event-interactive': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@uiw/react-color-swatch@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-color-sketch@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@uiw/color-convert': 2.10.1(@babel/runtime@7.29.2)
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      '@uiw/react-color-alpha': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      '@uiw/react-color-editable-input': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      '@uiw/react-color-editable-input-rgba': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      '@uiw/react-color-hue': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      '@uiw/react-color-saturation': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      '@uiw/react-color-swatch': 2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@uiw/react-drag-event-interactive@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-color-swatch@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      '@uiw/color-convert': 2.10.1(@babel/runtime@7.29.2)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  '@uiw/react-markdown-preview@5.2.0(@types/react@19.2.14)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-drag-event-interactive@2.10.1(@babel/runtime@7.29.2)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
+    dependencies:
+      '@babel/runtime': 7.29.2
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
+
+  '@uiw/react-markdown-preview@5.2.0(@types/react@19.2.14)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
       '@uiw/copy-to-clipboard': 1.0.20
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
-      react-markdown: 10.1.0(@types/react@19.2.14)(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
+      react-markdown: 10.1.0(@types/react@19.2.14)(react@19.2.6)
       rehype-attr: 4.0.2
       rehype-autolink-headings: 7.1.0
       rehype-ignore: 2.0.3
@@ -12353,12 +12362,12 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@uiw/react-md-editor@4.1.0(@types/react@19.2.14)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)':
+  '@uiw/react-md-editor@4.1.0(@types/react@19.2.14)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@babel/runtime': 7.29.2
-      '@uiw/react-markdown-preview': 5.2.0(@types/react@19.2.14)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      '@uiw/react-markdown-preview': 5.2.0(@types/react@19.2.14)(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
       rehype: 13.0.2
       rehype-prism-plus: 2.0.2
     transitivePeerDependencies:
@@ -13856,7 +13865,7 @@ snapshots:
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7
-      is-core-module: 2.16.1
+      is-core-module: 2.16.2
       resolve: 1.22.12
     transitivePeerDependencies:
       - supports-color
@@ -14576,6 +14585,11 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  hasown@2.0.3:
+    dependencies:
+      function-bind: 1.1.2
+    optional: true
+
   hast-util-from-html@2.0.3:
     dependencies:
       '@types/hast': 3.0.4
@@ -15008,6 +15022,11 @@ snapshots:
   is-core-module@2.16.1:
     dependencies:
       hasown: 2.0.2
+
+  is-core-module@2.16.2:
+    dependencies:
+      hasown: 2.0.3
+    optional: true
 
   is-data-view@1.0.2:
     dependencies:
@@ -17440,57 +17459,57 @@ snapshots:
       regenerator-runtime: 0.13.11
       whatwg-fetch: 3.6.20
 
-  react-beautiful-dnd@13.1.1(react-dom@18.2.0(react@18.3.1))(react@18.3.1):
+  react-beautiful-dnd@13.1.1(react-dom@18.2.0(react@19.2.6))(react@19.2.6):
     dependencies:
       '@babel/runtime': 7.29.2
       css-box-model: 1.2.1
       memoize-one: 5.2.1
       raf-schd: 4.0.3
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
-      react-redux: 7.2.9(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
+      react-redux: 7.2.9(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       redux: 4.2.1
-      use-memo-one: 1.1.3(react@18.3.1)
+      use-memo-one: 1.1.3(react@19.2.6)
     transitivePeerDependencies:
       - react-native
 
-  react-datepicker@8.10.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1):
+  react-datepicker@8.10.0(react-dom@18.2.0(react@19.2.6))(react@19.2.6):
     dependencies:
-      '@floating-ui/react': 0.27.19(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react': 0.27.19(react-dom@18.2.0(react@19.2.6))(react@19.2.6)
       clsx: 2.1.1
       date-fns: 4.1.0
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
 
-  react-dom@18.2.0(react@18.3.1):
+  react-dom@18.2.0(react@19.2.6):
     dependencies:
       loose-envify: 1.4.0
-      react: 18.3.1
+      react: 19.2.6
       scheduler: 0.23.2
 
-  react-dropzone@15.0.0(react@18.3.1):
+  react-dropzone@15.0.0(react@19.2.6):
     dependencies:
       attr-accept: 2.2.5
       file-selector: 2.1.2
       prop-types: 15.8.1
-      react: 18.3.1
+      react: 19.2.6
 
-  react-i18next@17.0.6(i18next@26.0.9(typescript@5.9.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@5.9.3):
+  react-i18next@17.0.6(i18next@26.0.9(typescript@5.9.3))(react-dom@18.2.0(react@19.2.6))(react@19.2.6)(typescript@5.9.3):
     dependencies:
       '@babel/runtime': 7.29.2
       html-parse-stringify: 3.0.1
       i18next: 26.0.9(typescript@5.9.3)
-      react: 18.3.1
-      use-sync-external-store: 1.6.0(react@18.3.1)
+      react: 19.2.6
+      use-sync-external-store: 1.6.0(react@19.2.6)
     optionalDependencies:
-      react-dom: 18.2.0(react@18.3.1)
+      react-dom: 18.2.0(react@19.2.6)
       typescript: 5.9.3
 
-  react-input-mask@2.0.4(react-dom@18.2.0(react@18.3.1))(react@18.3.1):
+  react-input-mask@2.0.4(react-dom@18.2.0(react@19.2.6))(react@19.2.6):
     dependencies:
       invariant: 2.2.4
-      react: 18.3.1
-      react-dom: 18.2.0(react@18.3.1)
+      react: 19.2.6
+      react-dom: 18.2.0(react@19.2.6)
       warning: 4.0.3
 
   react-is@16.13.1: {}
@@ -17499,7 +17518,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-markdown@10.1.0(@types/react@19.2.14)(react@18.3.1):
+  react-markdown@10.1.0(@types/react@19.2.14)(react@19.2.6):
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
@@ -17508,7 +17527,7 @@ snapshots:
       hast-util-to-jsx-runtime: 2.3.6
       html-url-attributes: 3.0.1
       mdast-util-to-hast: 13.2.1
-      react: 18.3.1
+      react: 19.2.6
       remark-parse: 11.0.0
       remark-rehype: 11.1.2
       unified: 11.0.5
@@ -17517,55 +17536,53 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  react-photoswipe-gallery@4.0.0(photoswipe@5.4.4)(prop-types@15.8.1)(react@18.3.1):
+  react-photoswipe-gallery@4.0.0(photoswipe@5.4.4)(prop-types@15.8.1)(react@19.2.6):
     dependencies:
       photoswipe: 5.4.4
       prop-types: 15.8.1
-      react: 18.3.1
+      react: 19.2.6
 
-  react-redux@7.2.9(react-dom@18.2.0(react@18.3.1))(react@18.3.1):
+  react-redux@7.2.9(react-dom@18.2.0(react@19.2.6))(react@19.2.6):
     dependencies:
       '@babel/runtime': 7.29.2
       '@types/react-redux': 7.1.34
       hoist-non-react-statics: 3.3.2
       loose-envify: 1.4.0
       prop-types: 15.8.1
-      react: 18.3.1
+      react: 19.2.6
       react-is: 17.0.2
     optionalDependencies:
-      react-dom: 18.2.0(react@18.3.1)
+      react-dom: 18.2.0(react@19.2.6)
 
-  react-redux@9.2.0(@types/react@19.2.14)(react@18.3.1)(redux@5.0.1):
+  react-redux@9.2.0(@types/react@19.2.14)(react@19.2.6)(redux@5.0.1):
     dependencies:
       '@types/use-sync-external-store': 0.0.6
-      react: 18.3.1
-      use-sync-external-store: 1.6.0(react@18.3.1)
+      react: 19.2.6
+      use-sync-external-store: 1.6.0(react@19.2.6)
     optionalDependencies:
       '@types/react': 19.2.14
       redux: 5.0.1
 
   react-refresh@0.18.0: {}
 
-  react-router@7.15.0(react-dom@18.2.0(react@18.3.1))(react@18.3.1):
+  react-router@7.15.0(react-dom@18.2.0(react@19.2.6))(react@19.2.6):
     dependencies:
       cookie: 1.1.1
-      react: 18.3.1
+      react: 19.2.6
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 18.2.0(react@18.3.1)
+      react-dom: 18.2.0(react@19.2.6)
 
-  react-textarea-autosize@8.5.9(@types/react@19.2.14)(react@18.3.1):
+  react-textarea-autosize@8.5.9(@types/react@19.2.14)(react@19.2.6):
     dependencies:
       '@babel/runtime': 7.29.2
-      react: 18.3.1
-      use-composed-ref: 1.4.0(@types/react@19.2.14)(react@18.3.1)
-      use-latest: 1.3.0(@types/react@19.2.14)(react@18.3.1)
+      react: 19.2.6
+      use-composed-ref: 1.4.0(@types/react@19.2.14)(react@19.2.6)
+      use-latest: 1.3.0(@types/react@19.2.14)(react@19.2.6)
     transitivePeerDependencies:
       - '@types/react'
 
-  react@18.3.1:
-    dependencies:
-      loose-envify: 1.4.0
+  react@19.2.6: {}
 
   read@1.0.7:
     dependencies:
@@ -19155,32 +19172,32 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  use-composed-ref@1.4.0(@types/react@19.2.14)(react@18.3.1):
+  use-composed-ref@1.4.0(@types/react@19.2.14)(react@19.2.6):
     dependencies:
-      react: 18.3.1
+      react: 19.2.6
     optionalDependencies:
       '@types/react': 19.2.14
 
-  use-isomorphic-layout-effect@1.2.1(@types/react@19.2.14)(react@18.3.1):
+  use-isomorphic-layout-effect@1.2.1(@types/react@19.2.14)(react@19.2.6):
     dependencies:
-      react: 18.3.1
+      react: 19.2.6
     optionalDependencies:
       '@types/react': 19.2.14
 
-  use-latest@1.3.0(@types/react@19.2.14)(react@18.3.1):
+  use-latest@1.3.0(@types/react@19.2.14)(react@19.2.6):
     dependencies:
-      react: 18.3.1
-      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.14)(react@18.3.1)
+      react: 19.2.6
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.14)(react@19.2.6)
     optionalDependencies:
       '@types/react': 19.2.14
 
-  use-memo-one@1.1.3(react@18.3.1):
+  use-memo-one@1.1.3(react@19.2.6):
     dependencies:
-      react: 18.3.1
+      react: 19.2.6
 
-  use-sync-external-store@1.6.0(react@18.3.1):
+  use-sync-external-store@1.6.0(react@19.2.6):
     dependencies:
-      react: 18.3.1
+      react: 19.2.6
 
   util-deprecate@1.0.2: {}
 
