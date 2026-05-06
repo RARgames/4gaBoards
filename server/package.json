@@ -25,7 +25,7 @@
     "date-fns": "^4.1.0",
     "dotenv": "^17.4.2",
     "dotenv-cli": "^11.0.0",
-    "fast-csv": "^5.0.5",
+    "fast-csv": "^5.0.7",
     "filenamify": "^7.0.1",
     "i18next": "^26.0.9",
     "jsonwebtoken": "^9.0.3",
