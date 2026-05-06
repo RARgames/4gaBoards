@@ -71,7 +71,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "lint-staged": "^16.4.0",
+    "lint-staged": "^17.0.2",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.8.3",
     "stylelint": "^17.11.0",
