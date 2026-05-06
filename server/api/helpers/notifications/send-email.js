@@ -14,8 +14,13 @@ const resolveRelatedData = async (action) => {
   }
 
   let list = null;
+  let card = null;
   let board = null;
   let project = null;
+
+  if (scope === Action.Scopes.CARD && action.cardId) {
+    card = await Card.findOne({ id: action.cardId });
+  }
 
   if (scope === Action.Scopes.CARD && action.listId) {
     list = await List.findOne({ id: action.listId });
@@ -30,6 +35,7 @@ const resolveRelatedData = async (action) => {
   }
 
   return {
+    cardName: card?.name || null,
     listName: list?.name || null,
     boardName: board?.name || null,
     projectName: project?.name || null,
@@ -90,10 +96,9 @@ module.exports = {
     const resolvedRelatedData = await resolveRelatedData(firstAction);
     const scope = getNormalizedScope(firstAction.scope);
     const relatedData = resolvedRelatedData || {};
-    const scopeNameField = `${scope}Name`;
-    const scopeNameValue = firstAction.data[scopeNameField] || null;
     const localizedScope = t ? t(getActivityScopeLabelKey(scope, Action.Scopes)) : scope;
     const relatedDataEntries = [
+      { key: 'cardName', labelKey: 'activity.card' },
       { key: 'listName', labelKey: 'activity.list' },
       { key: 'boardName', labelKey: 'activity.board' },
       { key: 'projectName', labelKey: 'activity.project' },
@@ -102,23 +107,26 @@ module.exports = {
       .map(({ key, labelKey }) => {
         const label = t ? t(labelKey) : labelKey.split('.').pop();
         return {
+          key,
           label,
           value: relatedData[key],
         };
       });
     const relatedDataSubject = relatedDataEntries.map(({ value }) => value).join(' | ') || '';
-    const subjectScope = `${localizedScope.toUpperCase()} ${relatedDataSubject}`.trim();
-    const subject = `${scopeNameValue} [${subjectScope}] 4ga Boards Notifications (${sails.config.custom.instanceName})`;
+    const subjectScope = `[${localizedScope.toUpperCase()}] ${relatedDataSubject}`.trim();
+    const subject = `${subjectScope} - 4ga Boards Notifications (${sails.config.custom.instanceName})`;
 
     const baseClientUrl = sails.config.custom.clientUrl;
     const relatedDataLinks = buildActionLinks(firstAction, baseClientUrl);
     const htmlBlocks = [];
-    const relatedDataParts = relatedDataEntries.map(({ label, value }) => {
+    const relatedDataParts = relatedDataEntries.map(({ key, label, value }) => {
       let renderedValue = renderLinkedStrong(value, null);
 
-      if (label === (t ? t('activity.board') : 'board')) {
+      if (key === 'cardName') {
+        renderedValue = renderLinkedStrong(value, relatedDataLinks.card);
+      } else if (key === 'boardName') {
         renderedValue = renderLinkedStrong(value, relatedDataLinks.board);
-      } else if (label === (t ? t('activity.project') : 'project')) {
+      } else if (key === 'projectName') {
         renderedValue = renderLinkedStrong(value, relatedDataLinks.project);
       }
 
