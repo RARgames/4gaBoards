@@ -157,7 +157,8 @@ module.exports = {
         }
       }
 
-      htmlBlocks.push(`<p>From: <strong>${escapeHtml(actionUser.name)}</strong> (${escapeHtml(actionUser.username)}) <small><i>${escapeHtml(createdAt)}</i></small></p>`);
+      const username = actionUser.username ? `(${escapeHtml(actionUser.username)})` : '';
+      htmlBlocks.push(`<p>From: <strong>${escapeHtml(actionUser.name)}</strong> ${username} <small><i>${escapeHtml(createdAt)}</i></small></p>`);
 
       let activityHtml = null;
 
