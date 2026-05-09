@@ -2,3 +2,18 @@ packages:
   - 'client'
   - 'server'
   - 'packages/*'
+ignoreWorkspaceRootCheck: true
+allowBuilds:
+  '@parcel/watcher': true
+  bcrypt: true
+  core-js: true
+  core-js-pure: true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true
+overrides:
+  '@babel/runtime@<7.26.10': ^7.26.10
+  diff@>=6.0.0 <8.0.3: ^8.0.3
+  protobufjs@<7.5.5: ^7.5.5
+  serialize-javascript@<7.0.5: ^7.0.5
+  serialize-javascript@<=7.0.2: ^7.0.3
