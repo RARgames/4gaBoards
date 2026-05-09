@@ -98,7 +98,7 @@ jobs:
 
       - name: Build and push
         if: steps.increment_version.outputs.beta == 'false'
-        uses: docker/build-push-action@v7.0.0
+        uses: docker/build-push-action@v7.1.0
         with:
           context: .
           platforms: linux/amd64,linux/arm64
@@ -111,7 +111,7 @@ jobs:
 
       - name: Build and push beta
         if: steps.increment_version.outputs.beta == 'true'
-        uses: docker/build-push-action@v7.0.0
+        uses: docker/build-push-action@v7.1.0
         with:
           context: .
           platforms: linux/amd64,linux/arm64
