@@ -35,7 +35,7 @@
     "server:start:prod": "pnpm -C server start:prod",
     "server:test": "pnpm -C server test",
     "packages:lint": "pnpm -r --filter @4gaboards/* lint",
-    "packages:clean": "pnpm --filter @4gaboards/* clean",
+    "packages:clean": "pnpm --filter @4gaboards/* dist:clean",
     "packages:build": "pnpm packages:clean && pnpm -r --filter @4gaboards/* build",
     "start": "pnpm packages:build && concurrently -n server,client \"pnpm -C server start\" \"pnpm -C client start\"",
     "dev": "pnpm packages:build && concurrently -n server,client,packages \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -r --parallel --filter @4gaboards/* dev\"",

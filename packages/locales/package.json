@@ -40,7 +40,7 @@
     "rollup-plugin-dts": "^6.4.1"
   },
   "scripts": {
-    "clean": "rimraf dist",
+    "dist:clean": "rimraf dist",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "eslint ."
