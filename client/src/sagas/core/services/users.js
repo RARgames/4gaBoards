@@ -84,15 +84,17 @@ export function* updateCurrentUserEmail(data) {
 
 export function* resendCurrentUserEmailVerification() {
   const id = yield select(selectors.selectCurrentUserId);
+  yield put(actions.resendUserEmailVerification(id));
 
   let user;
   try {
     ({ item: user } = yield call(request, api.requestUserEmailVerification, id));
-  } catch {
+  } catch (error) {
+    yield put(actions.resendUserEmailVerification.failure(id, error));
     return;
   }
 
-  yield put(actions.handleUserUpdate(user));
+  yield put(actions.resendUserEmailVerification.success(user));
 }
 
 export function* clearUserEmailUpdateError(id) {

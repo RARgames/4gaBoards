@@ -96,6 +96,28 @@ const clearUserEmailUpdateError = (id) => ({
   },
 });
 
+const resendUserEmailVerification = (id) => ({
+  type: ActionTypes.USER_EMAIL_VERIFICATION_RESEND,
+  payload: {
+    id,
+  },
+});
+
+resendUserEmailVerification.success = (user) => ({
+  type: ActionTypes.USER_EMAIL_VERIFICATION_RESEND__SUCCESS,
+  payload: {
+    user,
+  },
+});
+
+resendUserEmailVerification.failure = (id, error) => ({
+  type: ActionTypes.USER_EMAIL_VERIFICATION_RESEND__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
 const updateUserPassword = (id, data) => ({
   type: ActionTypes.USER_PASSWORD_UPDATE,
   payload: {
@@ -382,6 +404,7 @@ export default {
   handleUserUpdate,
   updateUserEmail,
   clearUserEmailUpdateError,
+  resendUserEmailVerification,
   updateUserPassword,
   clearUserPasswordUpdateError,
   updateUserUsername,

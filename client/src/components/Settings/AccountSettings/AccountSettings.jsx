@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
+import { formatTime } from '@4gaboards/utils';
 import PropTypes from 'prop-types';
 
 import EmailVerificationStatusPopup from '../../EmailVerificationStatusPopup';
@@ -17,6 +18,7 @@ const AccountSettings = React.memo(
     username,
     isPasswordAuthenticated,
     mailServiceAvailable,
+    lastEmailVerificationRequestAt,
     usernameUpdateForm,
     emailUpdateForm,
     onUsernameUpdate,
@@ -28,11 +30,24 @@ const AccountSettings = React.memo(
     const [t] = useTranslation();
     const [emailVerificationPopupStatus, setEmailVerificationPopupStatus] = useState(null);
     const [emailVerificationPopupReason, setEmailVerificationPopupReason] = useState(null);
+    const [emailVerificationCooldownEndTime, setEmailVerificationCooldownEndTime] = useState(lastEmailVerificationRequestAt.getTime() + 60 * 1000);
+    const [emailVerificationRemainingSeconds, setEmailVerificationRemainingSeconds] = useState(0);
 
     const handleEmailVerificationPopupClose = useCallback(() => {
       setEmailVerificationPopupStatus(null);
       setEmailVerificationPopupReason(null);
     }, []);
+
+    const handleEmailVerificationResend = useCallback(() => {
+      if (emailVerificationCooldownEndTime && Date.now() < emailVerificationCooldownEndTime) {
+        return;
+      }
+
+      onEmailVerificationResend();
+
+      const newCooldownEndTime = Date.now() + 60 * 1000;
+      setEmailVerificationCooldownEndTime(newCooldownEndTime);
+    }, [emailVerificationCooldownEndTime, onEmailVerificationResend]);
 
     useEffect(() => {
       const url = new URL(window.location.href);
@@ -47,6 +62,28 @@ const AccountSettings = React.memo(
       url.searchParams.delete('reason');
       window.history.replaceState({}, document.title, url.toString());
     }, []);
+
+    useEffect(() => {
+      if (!emailVerificationCooldownEndTime) {
+        setEmailVerificationRemainingSeconds(0);
+        return undefined;
+      }
+
+      const updateCountdown = () => {
+        const now = Date.now();
+        const remaining = Math.max(0, Math.ceil((emailVerificationCooldownEndTime - now) / 1000));
+        setEmailVerificationRemainingSeconds(remaining);
+
+        if (remaining === 0) {
+          setEmailVerificationCooldownEndTime(null);
+        }
+      };
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 1000);
+
+      return () => clearInterval(interval);
+    }, [emailVerificationCooldownEndTime]);
 
     return (
       <div className={sShared.wrapper}>
@@ -106,7 +143,16 @@ const AccountSettings = React.memo(
             </div>
             {mailServiceAvailable && (
               <div className={s.action}>
-                <Button style={ButtonStyle.DefaultBorder} content={t('common.resendVerificationEmail', { context: 'title' })} onClick={onEmailVerificationResend} />
+                <Button
+                  style={ButtonStyle.DefaultBorder}
+                  content={
+                    emailVerificationRemainingSeconds > 0
+                      ? `${t('common.resendVerificationEmail', { context: 'title' })} (${formatTime(emailVerificationRemainingSeconds)})`
+                      : t('common.resendVerificationEmail', { context: 'title' })
+                  }
+                  onClick={handleEmailVerificationResend}
+                  disabled={emailVerificationRemainingSeconds > 0}
+                />
               </div>
             )}
           </div>
@@ -122,6 +168,7 @@ AccountSettings.propTypes = {
   username: PropTypes.string,
   isPasswordAuthenticated: PropTypes.bool.isRequired,
   mailServiceAvailable: PropTypes.bool.isRequired,
+  lastEmailVerificationRequestAt: PropTypes.instanceOf(Date),
   usernameUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   emailUpdateForm: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUsernameUpdate: PropTypes.func.isRequired,
@@ -133,6 +180,7 @@ AccountSettings.propTypes = {
 
 AccountSettings.defaultProps = {
   username: undefined,
+  lastEmailVerificationRequestAt: null,
 };
 
 export default AccountSettings;

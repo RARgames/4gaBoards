@@ -112,6 +112,10 @@ module.exports = {
       type: 'ref',
       columnName: 'last_login',
     },
+    lastEmailVerificationRequestAt: {
+      type: 'ref',
+      columnName: 'last_email_verification_request_at',
+    },
     deletedAt: {
       type: 'ref',
       columnName: 'deleted_at',

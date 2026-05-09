@@ -97,4 +97,5 @@ module.exports.custom = {
   actionsLimit: 50,
   commentsLimit: 50,
   notificationsMailBatchIntervalMs: process.env.NODE_ENV === 'production' ? 10 * 60 * 1000 : 1 * 60 * 1000,
+  emailVerificationCooldownMs: 60 * 1000,
 };

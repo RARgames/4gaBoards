@@ -6,7 +6,7 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { email, isVerified, username, isPasswordAuthenticated, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
+  const { email, isVerified, username, isPasswordAuthenticated, lastEmailVerificationRequestAt, emailUpdateForm, usernameUpdateForm } = selectors.selectCurrentUser(state);
   const { mailServiceAvailable } = selectors.selectCoreSettings(state);
 
   return {
@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     username,
     isPasswordAuthenticated,
     mailServiceAvailable,
+    lastEmailVerificationRequestAt,
     emailUpdateForm,
     usernameUpdateForm,
   };

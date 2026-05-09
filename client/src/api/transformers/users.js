@@ -9,6 +9,9 @@ export const transformUser = (user) => ({
   ...(user.lastLogin && {
     lastLogin: new Date(user.lastLogin),
   }),
+  ...(user.lastEmailVerificationRequestAt && {
+    lastEmailVerificationRequestAt: new Date(user.lastEmailVerificationRequestAt),
+  }),
 });
 
 export const transformUserData = (data) => ({
