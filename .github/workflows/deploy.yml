@@ -5,11 +5,14 @@ on:
       - '*'
 
 jobs:
-  release:
+  prepare:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      packages: write
+    outputs:
+      new_tag: ${{ steps.increment_version.outputs.new_tag }}
+      ghcr_tag: ${{ steps.increment_version.outputs.ghcr_tag }}
+      beta: ${{ steps.increment_version.outputs.beta }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6.0.2
@@ -74,17 +77,34 @@ jobs:
           echo "ghcr_tag=$ghcr_tag" >> $GITHUB_OUTPUT
           echo "beta=$beta" >> $GITHUB_OUTPUT
 
+  build:
+    needs: prepare
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            platform: linux/amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            platform: linux/arm64
+            runner: ubuntu-24.04-arm
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6.0.2
+
       - name: Update package.json version
-        run: jq '.version = "'${{ steps.increment_version.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
+        run: jq '.version = "'${{ needs.prepare.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
 
       - name: Update .env version
-        run: sed "s/REACT_APP_VERSION=.*/REACT_APP_VERSION=${{ steps.increment_version.outputs.ghcr_tag }}/" client/.env > temp.env && mv temp.env client/.env
+        run: sed "s/REACT_APP_VERSION=.*/REACT_APP_VERSION=${{ needs.prepare.outputs.ghcr_tag }}/" client/.env > temp.env && mv temp.env client/.env
 
       - name: Update helm-chart app version
-        run: awk '/appVersion:/ {$2="\"${{ steps.increment_version.outputs.ghcr_tag }}\""} 1' helm-chart/Chart.yaml > temp.yaml && mv temp.yaml helm-chart/Chart.yaml
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v4.0.0
+        run: awk '/appVersion:/ {$2="\"${{ needs.prepare.outputs.ghcr_tag }}\""} 1' helm-chart/Chart.yaml > temp.yaml && mv temp.yaml helm-chart/Chart.yaml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4.0.0
@@ -96,48 +116,118 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
-        if: steps.increment_version.outputs.beta == 'false'
-        uses: docker/build-push-action@v7.1.0
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ghcr.io/rargames/4gaboards:latest
-            ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}
-            ghcr.io/rargames/4gaboards:beta-latest
-          labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
+      - name: Build tags
+        id: build_tags
+        run: |
+          {
+            echo 'tags<<EOF'
 
-      - name: Build and push beta
-        if: steps.increment_version.outputs.beta == 'true'
+            if [[ "${{ needs.prepare.outputs.beta }}" == 'false' ]]; then
+              echo 'ghcr.io/rargames/4gaboards:${{ needs.prepare.outputs.ghcr_tag }}-${{ matrix.arch }}'
+              echo 'ghcr.io/rargames/4gaboards:latest-${{ matrix.arch }}'
+              echo 'ghcr.io/rargames/4gaboards:beta-latest-${{ matrix.arch }}'
+            else
+              echo 'ghcr.io/rargames/4gaboards:beta-latest-${{ matrix.arch }}'
+              echo 'ghcr.io/rargames/4gaboards:beta-${{ needs.prepare.outputs.ghcr_tag }}-${{ matrix.arch }}'
+            fi
+
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build and push
         uses: docker/build-push-action@v7.1.0
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platform }}
           push: true
-          tags: |
-            ghcr.io/rargames/4gaboards:beta-latest
-            ghcr.io/rargames/4gaboards:beta-${{ steps.increment_version.outputs.ghcr_tag }}
-          labels: version=${{ steps.increment_version.outputs.ghcr_tag }}
+          tags: ${{ steps.build_tags.outputs.tags }}
+          labels: version=${{ needs.prepare.outputs.ghcr_tag }}
+
+  publish-manifests:
+    needs:
+      - prepare
+      - build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4.0.0
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4.0.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish stable multi-arch tags
+        if: needs.prepare.outputs.beta == 'false'
+        run: |
+          docker buildx imagetools create \
+            -t ghcr.io/rargames/4gaboards:latest \
+            ghcr.io/rargames/4gaboards:latest-amd64 \
+            ghcr.io/rargames/4gaboards:latest-arm64
+
+          docker buildx imagetools create \
+            -t ghcr.io/rargames/4gaboards:${{ needs.prepare.outputs.ghcr_tag }} \
+            ghcr.io/rargames/4gaboards:${{ needs.prepare.outputs.ghcr_tag }}-amd64 \
+            ghcr.io/rargames/4gaboards:${{ needs.prepare.outputs.ghcr_tag }}-arm64
+
+          docker buildx imagetools create \
+            -t ghcr.io/rargames/4gaboards:beta-latest \
+            ghcr.io/rargames/4gaboards:beta-latest-amd64 \
+            ghcr.io/rargames/4gaboards:beta-latest-arm64
+
+      - name: Publish beta multi-arch tags
+        if: needs.prepare.outputs.beta == 'true'
+        run: |
+          docker buildx imagetools create \
+            -t ghcr.io/rargames/4gaboards:beta-latest \
+            ghcr.io/rargames/4gaboards:beta-latest-amd64 \
+            ghcr.io/rargames/4gaboards:beta-latest-arm64
+
+          docker buildx imagetools create \
+            -t ghcr.io/rargames/4gaboards:beta-${{ needs.prepare.outputs.ghcr_tag }} \
+            ghcr.io/rargames/4gaboards:beta-${{ needs.prepare.outputs.ghcr_tag }}-amd64 \
+            ghcr.io/rargames/4gaboards:beta-${{ needs.prepare.outputs.ghcr_tag }}-arm64
+
+  release:
+    if: needs.prepare.outputs.beta == 'false'
+    needs:
+      - prepare
+      - publish-manifests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6.0.2
+
+      - name: Update package.json version
+        run: jq '.version = "'${{ needs.prepare.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
+
+      - name: Update .env version
+        run: sed "s/REACT_APP_VERSION=.*/REACT_APP_VERSION=${{ needs.prepare.outputs.ghcr_tag }}/" client/.env > temp.env && mv temp.env client/.env
+
+      - name: Update helm-chart app version
+        run: awk '/appVersion:/ {$2="\"${{ needs.prepare.outputs.ghcr_tag }}\""} 1' helm-chart/Chart.yaml > temp.yaml && mv temp.yaml helm-chart/Chart.yaml
 
       - name: Push
-        if: steps.increment_version.outputs.beta == 'false'
         run: |
           git add .
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Release ${{ steps.increment_version.outputs.ghcr_tag }}"
+          git commit -m "Release ${{ needs.prepare.outputs.ghcr_tag }}"
           git push
 
       - name: Push-tag
-        if: steps.increment_version.outputs.beta == 'false'
         run: |
-          git tag ${{ steps.increment_version.outputs.new_tag }}
+          git tag ${{ needs.prepare.outputs.new_tag }}
           git push --tags
 
       - name: Changelog
-        if: steps.increment_version.outputs.beta == 'false'
         uses: jaywcjlove/changelog-generator@v2.4.0
         id: changelog
         with:
@@ -149,24 +239,22 @@ jobs:
         run: echo "date=$(date +'%Y_%m_%d')" >> $GITHUB_OUTPUT
 
       - name: Release
-        if: steps.increment_version.outputs.beta == 'false'
         id: create_release
         uses: softprops/action-gh-release@v2.6.1
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
-          tag_name: '${{ steps.increment_version.outputs.new_tag }}'
-          name: '4ga Boards ${{ steps.increment_version.outputs.ghcr_tag }}'
+          tag_name: '${{ needs.prepare.outputs.new_tag }}'
+          name: '4ga Boards ${{ needs.prepare.outputs.ghcr_tag }}'
           body: |
             Changes since last release:
             ${{ steps.changelog.outputs.changelog }}
 
-            Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ steps.increment_version.outputs.ghcr_tag }}`
-            View the changelog summary on the: [4ga Boards Blog](https://4gaboards.com/posts/${{ steps.release_date.outputs.date }}_4gaBoardsRelease_${{ steps.increment_version.outputs.ghcr_tag }})
+            Install this release using: `docker pull ghcr.io/rargames/4gaboards:${{ needs.prepare.outputs.ghcr_tag }}`
+            View the changelog summary on the: [4ga Boards Blog](https://4gaboards.com/posts/${{ steps.release_date.outputs.date }}_4gaBoardsRelease_${{ needs.prepare.outputs.ghcr_tag }})
           draft: false
           prerelease: false
 
       - name: Trigger 4ga Boards homepage update
-        if: steps.increment_version.outputs.beta == 'false'
         uses: peter-evans/repository-dispatch@v4.0.1
         with:
           token: ${{ secrets.HOMEPAGE_4GA_BOARDS_DEPLOY_TOKEN }}
