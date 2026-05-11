@@ -1,0 +1,47 @@
+:global(#app) {
+  .avatarEdit {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avatarText {
+    color: var(--text1);
+    margin-bottom: 4px;
+  }
+
+  .avatarImage {
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .editButton {
+    position: relative;
+    transform: translateY(-45px);
+    padding: 5px 6px 3px 6px;
+    background: var(--backgroundButtonMisc);
+    border-radius: 3px;
+    border: 1px solid var(--text4);
+    width: auto;
+    height: auto;
+  }
+
+  .iconEditButton {
+    margin-right: 4px;
+    vertical-align: 0%;
+  }
+
+  .actionsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .action {
+    width: 100%;
+    max-width: 750px;
+  }
+}

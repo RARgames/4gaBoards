@@ -1,0 +1,64 @@
+:global(#app) {
+  .button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+    padding: 0;
+  }
+
+  .wrapper {
+    background: var(--text3);
+    border: none;
+    border-radius: 3px;
+    color: var(--backgroundBase0);
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+  .wrapperActive {
+    background: var(--backgroundTimer);
+
+    &.wrapperHoverable:hover {
+      background: var(--backgroundTimerHover);
+    }
+  }
+
+  .wrapperHoverable:hover {
+    background: var(--text4);
+  }
+
+  .timerIcon {
+    fill: var(--backgroundBase0);
+  }
+
+  /* Variants */
+
+  .wrapperCard {
+    font-size: 12px;
+    line-height: 14px;
+    padding: 0 3px 0 1px;
+
+    .timerIcon {
+      margin: 0 2px;
+      vertical-align: 0%;
+    }
+  }
+
+  .wrapperCardModal {
+    font-size: 14px;
+    line-height: 28px;
+    padding: 0 4px 0 2px;
+    margin-top: -1px;
+
+    .timerIcon {
+      margin: 0 2px;
+      vertical-align: 5%;
+    }
+  }
+}

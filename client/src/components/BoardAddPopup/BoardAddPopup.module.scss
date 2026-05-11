@@ -1,0 +1,41 @@
+:global(#app) {
+  .field {
+    margin-bottom: 4px;
+    width: 100%;
+  }
+
+  .importButton {
+    width: auto;
+    overflow: hidden;
+    text-decoration: underline;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 25vw;
+  }
+
+  .dropdownMenu {
+    z-index: 2001;
+  }
+
+  .text {
+    color: var(--text1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .submitButton {
+    width: auto;
+  }
+
+  .checkboxesWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  .checkboxWrapper {
+    margin: 6px 0 4px 0;
+  }
+}

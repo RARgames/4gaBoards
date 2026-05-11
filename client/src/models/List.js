@@ -1,0 +1,266 @@
+import { attr, fk } from 'redux-orm';
+
+import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
+import BaseModel from './BaseModel';
+
+export default class extends BaseModel {
+  static modelName = 'List';
+
+  static fields = {
+    id: attr(),
+    position: attr(),
+    name: attr(),
+    isCollapsed: attr(),
+    boardId: fk({
+      to: 'Board',
+      as: 'board',
+      relatedName: 'lists',
+    }),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
+    }),
+    lastActivityId: attr(),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdLists',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedLists',
+    }),
+  };
+
+  static reducer({ type, payload }, List) {
+    switch (type) {
+      case ActionTypes.LOCATION_CHANGE_HANDLE:
+      case ActionTypes.CORE_INITIALIZE:
+      case ActionTypes.PROJECT_MANAGER_CREATE_HANDLE:
+      case ActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE:
+        if (payload.lists) {
+          payload.lists.forEach((list) => {
+            List.upsert(list);
+          });
+        }
+
+        break;
+      case ActionTypes.SOCKET_RECONNECT_HANDLE:
+        List.all().delete();
+
+        if (payload.lists) {
+          payload.lists.forEach((list) => {
+            List.upsert(list);
+          });
+        }
+
+        break;
+      case ActionTypes.BOARD_FETCH__SUCCESS:
+        payload.lists.forEach((list) => {
+          List.upsert(list);
+        });
+
+        break;
+      case ActionTypes.LIST_CREATE:
+      case ActionTypes.LIST_CREATE_HANDLE:
+      case ActionTypes.LIST_UPDATE__SUCCESS:
+      case ActionTypes.LIST_UPDATE_HANDLE:
+        List.upsert(payload.list);
+
+        break;
+      case ActionTypes.LIST_CREATE__SUCCESS:
+        List.withId(payload.localId).delete();
+        List.upsert(payload.list);
+
+        break;
+      case ActionTypes.LIST_UPDATE:
+        List.withId(payload.id).update(payload.data);
+
+        break;
+      case ActionTypes.LIST_DELETE:
+        List.withId(payload.id).deleteWithRelated();
+
+        break;
+      case ActionTypes.LIST_DELETE__SUCCESS:
+      case ActionTypes.LIST_DELETE_HANDLE: {
+        const listModel = List.withId(payload.list.id);
+
+        if (listModel) {
+          listModel.deleteWithRelated();
+        }
+
+        break;
+      }
+      case ActionTypes.ACTIVITIES_LIST_FETCH:
+        List.withId(payload.listId).update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS:
+        List.withId(payload.listId).update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+          lastActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : List.withId(payload.listId).lastActivityId,
+        });
+
+        break;
+      default:
+    }
+  }
+
+  getOrderedCardsQuerySet() {
+    return this.cards.orderBy('position');
+  }
+
+  getOrderedCardsModelArray() {
+    return this.getOrderedCardsQuerySet().toModelArray();
+  }
+
+  getOrderedMailTokensQuerySet() {
+    return this.mailTokens.orderBy('createdAt', false);
+  }
+
+  getOrderedMailTokensModelArray() {
+    return this.getOrderedMailTokensQuerySet().toModelArray();
+  }
+
+  getIsFiltered() {
+    const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
+    const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
+    const { searchParams } = this.board;
+    return filterUserIds.length > 0 || filterLabelIds.length > 0 || searchParams.query !== '' || searchParams.dueDate !== null || searchParams.onlyWithNotifications;
+    // TODO merge with IsFilteredForBoard
+  }
+
+  getFilteredOrderedCardsModelArray() {
+    let cardModels = this.getOrderedCardsQuerySet().toModelArray();
+    cardModels.forEach((cardModel) => {
+      // eslint-disable-next-line no-param-reassign
+      cardModel.tasksUsers = cardModel.tasks.toModelArray().flatMap((task) => task.users.toRefArray()); // TODO include tasksUsers in the model
+    });
+
+    const filterUserIds = this.board.filterUsers.toRefArray().map((user) => user.id);
+    const filterLabelIds = this.board.filterLabels.toRefArray().map((label) => label.id);
+    const { searchParams } = this.board;
+
+    if (searchParams.anyMatch) {
+      if (filterUserIds.length > 0) {
+        cardModels = cardModels.filter((cardModel) => {
+          const users = cardModel.users.toRefArray();
+          const taskUsers = cardModel.tasksUsers;
+          return users.some((user) => filterUserIds.includes(user.id)) || taskUsers.some((user) => filterUserIds.includes(user.id));
+        });
+      }
+      if (filterLabelIds.length > 0) {
+        cardModels = cardModels.filter((cardModel) => {
+          const labels = cardModel.labels.toRefArray();
+          return labels.some((label) => filterLabelIds.includes(label.id));
+        });
+      }
+      if (searchParams.query !== '') {
+        if (searchParams.matchCase) {
+          cardModels = cardModels.filter((cardModel) => cardModel.name.includes(searchParams.query));
+        } else {
+          cardModels = cardModels.filter((cardModel) => cardModel.name.toLowerCase().includes(searchParams.query.toLowerCase()));
+        }
+      }
+    } else {
+      cardModels = cardModels.filter((cardModel) => {
+        const cardUserIds = cardModel.users.toRefArray().map((user) => user.id);
+        const taskUserIds = cardModel.tasksUsers.map((user) => user.id);
+        const cardLabelIds = cardModel.labels.toRefArray().map((label) => label.id);
+
+        const matchesLabels = filterLabelIds.length === 0 || filterLabelIds.every((labelId) => cardLabelIds.includes(labelId));
+        const matchesUsers = filterUserIds.length === 0 || filterUserIds.every((userId) => cardUserIds.includes(userId) || taskUserIds.includes(userId));
+        let matchesSearch = true;
+        if (searchParams.query !== '') {
+          if (searchParams.matchCase) {
+            matchesSearch = cardModel.name.includes(searchParams.query);
+          } else {
+            matchesSearch = cardModel.name.toLowerCase().includes(searchParams.query.toLowerCase());
+          }
+        }
+        return matchesLabels && matchesUsers && matchesSearch;
+      });
+    }
+    if (searchParams.dueDate) {
+      const isSameDay = (d0, d1) => d0.getFullYear() === d1.getFullYear() && d0.getMonth() === d1.getMonth() && d0.getDate() === d1.getDate();
+
+      cardModels = cardModels.filter((cardModel) => {
+        const filterDue = searchParams.dueDate;
+
+        const cardMatches = (() => {
+          if (!cardModel.dueDate) return false;
+
+          if (searchParams.justSelectedDay) {
+            return isSameDay(cardModel.dueDate, filterDue);
+          }
+
+          return cardModel.dueDate <= filterDue;
+        })();
+
+        if (cardMatches) return true;
+        if (!searchParams.includeTaskDueDates) {
+          return cardMatches;
+        }
+
+        const taskMatches = cardModel.tasks.toModelArray().some((task) => {
+          if (!task.dueDate) return false;
+
+          if (searchParams.justSelectedDay) {
+            return isSameDay(task.dueDate, filterDue);
+          }
+
+          return task.dueDate <= filterDue;
+        });
+
+        return taskMatches;
+      });
+    }
+    if (searchParams.onlyWithNotifications) {
+      cardModels = cardModels.filter((cardModel) => {
+        const unreadNotifications = cardModel.getUnreadNotificationsQuerySet();
+        return unreadNotifications.count() > 0;
+      });
+    }
+    return cardModels;
+  }
+
+  getOrderedActivitiesQuerySet() {
+    return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
+  }
+
+  getUnreadNotificationsQuerySet() {
+    return this.notifications.filter({
+      isRead: false,
+      deletedAt: null,
+    });
+  }
+
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
+  deleteRelated() {
+    this.cards.toModelArray().forEach((cardModel) => {
+      cardModel.deleteWithRelated();
+    });
+    this.deleteActivities();
+  }
+
+  deleteWithRelated() {
+    this.deleteRelated();
+    this.delete();
+  }
+}

@@ -1,0 +1,69 @@
+:global(#app) {
+  .version {
+    color: var(--text0);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .demoMode {
+    color: var(--textError);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+  }
+
+  @media (max-width: 700px) {
+    .logo {
+      width: 100%;
+    }
+  }
+
+  .links {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .link {
+    margin-bottom: 5px;
+
+    svg {
+      fill: var(--textLink);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--textLinkHover);
+      }
+    }
+  }
+
+  .icon {
+    margin-right: 5px;
+    vertical-align: -5%;
+  }
+
+  .button {
+    width: fit-content;
+    text-align: center;
+  }
+
+  .donateButton {
+    border-color: var(--backgroundColor);
+    background: var(--textGold);
+    color: var(--backgroundColor);
+    width: fit-content;
+    text-align: center;
+    margin: 2px 0 4px 0;
+
+    &:hover {
+      background: var(--textGoldHover);
+      color: var(--backgroundColor);
+    }
+  }
+}

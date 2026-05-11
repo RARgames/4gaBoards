@@ -1,0 +1,258 @@
+import ActionTypes from '../constants/ActionTypes';
+
+const fetchAttachmentActivities = (attachmentId) => ({
+  type: ActionTypes.ACTIVITIES_ATTACHMENT_FETCH,
+  payload: {
+    attachmentId,
+  },
+});
+
+fetchAttachmentActivities.success = (attachmentId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_ATTACHMENT_FETCH__SUCCESS,
+  payload: {
+    attachmentId,
+    activities,
+    users,
+  },
+});
+
+fetchAttachmentActivities.failure = (attachmentId, error) => ({
+  type: ActionTypes.ACTIVITIES_ATTACHMENT_FETCH__FAILURE,
+  payload: {
+    attachmentId,
+    error,
+  },
+});
+
+const fetchCommentActivities = (commentId) => ({
+  type: ActionTypes.ACTIVITIES_COMMENT_FETCH,
+  payload: {
+    commentId,
+  },
+});
+
+fetchCommentActivities.success = (commentId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_COMMENT_FETCH__SUCCESS,
+  payload: {
+    commentId,
+    activities,
+    users,
+  },
+});
+
+fetchCommentActivities.failure = (commentId, error) => ({
+  type: ActionTypes.ACTIVITIES_COMMENT_FETCH__FAILURE,
+  payload: {
+    commentId,
+    error,
+  },
+});
+
+const fetchTaskActivities = (taskId) => ({
+  type: ActionTypes.ACTIVITIES_TASK_FETCH,
+  payload: {
+    taskId,
+  },
+});
+
+fetchTaskActivities.success = (taskId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_TASK_FETCH__SUCCESS,
+  payload: {
+    taskId,
+    activities,
+    users,
+  },
+});
+
+fetchTaskActivities.failure = (taskId, error) => ({
+  type: ActionTypes.ACTIVITIES_TASK_FETCH__FAILURE,
+  payload: {
+    taskId,
+    error,
+  },
+});
+
+const fetchCardActivities = (cardId) => ({
+  type: ActionTypes.ACTIVITIES_CARD_FETCH,
+  payload: {
+    cardId,
+  },
+});
+
+fetchCardActivities.success = (cardId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_CARD_FETCH__SUCCESS,
+  payload: {
+    cardId,
+    activities,
+    users,
+  },
+});
+
+fetchCardActivities.failure = (cardId, error) => ({
+  type: ActionTypes.ACTIVITIES_CARD_FETCH__FAILURE,
+  payload: {
+    cardId,
+    error,
+  },
+});
+
+const fetchListActivities = (listId) => ({
+  type: ActionTypes.ACTIVITIES_LIST_FETCH,
+  payload: {
+    listId,
+  },
+});
+
+fetchListActivities.success = (listId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_LIST_FETCH__SUCCESS,
+  payload: {
+    listId,
+    activities,
+    users,
+  },
+});
+
+fetchListActivities.failure = (listId, error) => ({
+  type: ActionTypes.ACTIVITIES_LIST_FETCH__FAILURE,
+  payload: {
+    listId,
+    error,
+  },
+});
+
+const fetchBoardActivities = (boardId) => ({
+  type: ActionTypes.ACTIVITIES_BOARD_FETCH,
+  payload: {
+    boardId,
+  },
+});
+
+fetchBoardActivities.success = (boardId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_BOARD_FETCH__SUCCESS,
+  payload: {
+    boardId,
+    activities,
+    users,
+  },
+});
+
+fetchBoardActivities.failure = (boardId, error) => ({
+  type: ActionTypes.ACTIVITIES_BOARD_FETCH__FAILURE,
+  payload: {
+    boardId,
+    error,
+  },
+});
+
+const fetchProjectActivities = (projectId) => ({
+  type: ActionTypes.ACTIVITIES_PROJECT_FETCH,
+  payload: {
+    projectId,
+  },
+});
+
+fetchProjectActivities.success = (projectId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_PROJECT_FETCH__SUCCESS,
+  payload: {
+    projectId,
+    activities,
+    users,
+  },
+});
+
+fetchProjectActivities.failure = (projectId, error) => ({
+  type: ActionTypes.ACTIVITIES_PROJECT_FETCH__FAILURE,
+  payload: {
+    projectId,
+    error,
+  },
+});
+
+const fetchUserActivities = (userId) => ({
+  type: ActionTypes.ACTIVITIES_USER_FETCH,
+  payload: {
+    userId,
+  },
+});
+
+fetchUserActivities.success = (userId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_USER_FETCH__SUCCESS,
+  payload: {
+    userId,
+    activities,
+    users,
+  },
+});
+
+fetchUserActivities.failure = (userId, error) => ({
+  type: ActionTypes.ACTIVITIES_USER_FETCH__FAILURE,
+  payload: {
+    userId,
+    error,
+  },
+});
+
+const fetchUserAccountActivities = (userAccountId) => ({
+  type: ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH,
+  payload: {
+    userAccountId,
+  },
+});
+
+fetchUserAccountActivities.success = (userAccountId, activities, users) => ({
+  type: ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH__SUCCESS,
+  payload: {
+    userAccountId,
+    activities,
+    users,
+  },
+});
+
+fetchUserAccountActivities.failure = (userAccountId, error) => ({
+  type: ActionTypes.ACTIVITIES_USER_ACCOUNT_FETCH__FAILURE,
+  payload: {
+    userAccountId,
+    error,
+  },
+});
+
+const fetchInstanceActivities = () => ({
+  type: ActionTypes.ACTIVITIES_INSTANCE_FETCH,
+  payload: {},
+});
+
+fetchInstanceActivities.success = (activities, users) => ({
+  type: ActionTypes.ACTIVITIES_INSTANCE_FETCH__SUCCESS,
+  payload: {
+    activities,
+    users,
+  },
+});
+
+fetchInstanceActivities.failure = (error) => ({
+  type: ActionTypes.ACTIVITIES_INSTANCE_FETCH__FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const handleActivityCreate = (activity) => ({
+  type: ActionTypes.ACTIVITY_CREATE_HANDLE,
+  payload: {
+    activity,
+  },
+});
+
+export default {
+  fetchAttachmentActivities,
+  fetchCommentActivities,
+  fetchTaskActivities,
+  fetchCardActivities,
+  fetchListActivities,
+  fetchBoardActivities,
+  fetchProjectActivities,
+  fetchUserActivities,
+  fetchUserAccountActivities,
+  fetchInstanceActivities,
+  handleActivityCreate,
+};

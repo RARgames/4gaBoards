@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA CI Triage"
+  short_description: "Triage failed E2E runs from logs and traces."
+  default_prompt: "Use this skill to summarize failed Playwright or CI runs and recommend targeted fixes."

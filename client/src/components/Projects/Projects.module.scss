@@ -1,0 +1,148 @@
+:global(#app) {
+  .wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    font-weight: bold;
+    color: var(--text1);
+    padding: 10px 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .headerText {
+    padding: 0 2px;
+  }
+
+  .headerDetails {
+    font-weight: normal;
+    color: var(--text3);
+  }
+
+  .headerButtonGroup {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .headerButton {
+    height: 20px;
+  }
+
+  .addButton {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .addButtonIcon {
+    margin-right: 4px;
+  }
+
+  .projectsWrapper {
+    flex: 1 1 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 120px;
+    gap: 20px;
+    padding: 10px 20px 20px 20px;
+
+    @media (max-width: 240px) {
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    }
+  }
+
+  .projectsWrapperEmpty {
+    display: flex;
+  }
+
+  .projectWrapper {
+    position: relative;
+    background-color: var(--backgroundDashboardTile);
+    border-radius: 5px;
+    font-size: 20px;
+    box-shadow:
+      0 3px 6px var(--shadowBlack01),
+      0 6px 12px var(--shadowBlack01);
+    transition:
+      transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+      box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 200ms ease;
+
+    &:hover {
+      box-shadow:
+        0 16px 32px var(--shadowBlack01),
+        0 32px 64px var(--shadowBlack01);
+      transform: translate(0, -2px);
+    }
+  }
+
+  .project {
+    color: var(--text0);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .projectTitle {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+  }
+
+  .notification {
+    background: var(--backgroundNotifications);
+    color: var(--textWhite);
+    float: right;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0px 6px;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    text-align: left;
+    transition: background 0.3s ease;
+  }
+
+  .add {
+    color: var(--text0);
+    text-align: center;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      svg {
+        fill: var(--text0);
+      }
+    }
+  }
+
+  .addGridIcon {
+    fill: var(--text0);
+    display: block;
+    margin: 0 auto 12px;
+    width: 36px;
+  }
+
+  .info {
+    color: var(--text3);
+    font-size: 20px;
+    margin: 0 auto;
+    align-self: center;
+  }
+}

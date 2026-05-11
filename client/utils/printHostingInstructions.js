@@ -1,0 +1,97 @@
+/* eslint-disable no-console */
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+const chalk = require('chalk').default;
+const fs = require('fs');
+const globalModules = require('global-modules');
+
+function printHostingInstructions(appPackage, publicUrl, publicPath, buildFolder) {
+  let isGitHubPages = false;
+  if (publicUrl) {
+    try {
+      const parsed = new URL(publicUrl);
+      if (parsed.hostname && (parsed.hostname === 'github.io' || parsed.hostname.endsWith('.github.io'))) {
+        isGitHubPages = true;
+      }
+    } catch {
+      /* empty */
+    }
+  }
+  if (isGitHubPages) {
+    // "homepage": "http://user.github.io/project"
+    const publicPathname = new URL(publicPath).pathname;
+    const hasDeployScript = typeof appPackage.scripts !== 'undefined' && typeof appPackage.scripts.deploy !== 'undefined';
+    // eslint-disable-next-line no-use-before-define
+    printBaseMessage(buildFolder, publicPathname);
+
+    // eslint-disable-next-line no-use-before-define
+    printDeployInstructions(publicUrl, hasDeployScript);
+  } else if (publicPath !== '/') {
+    // "homepage": "http://mywebsite.com/project"
+    // eslint-disable-next-line no-use-before-define
+    printBaseMessage(buildFolder, publicPath);
+  } else {
+    // "homepage": "http://mywebsite.com"
+    //   or no homepage
+    // eslint-disable-next-line no-use-before-define
+    printBaseMessage(buildFolder, publicUrl);
+
+    // eslint-disable-next-line no-use-before-define
+    printStaticServerInstructions(buildFolder);
+  }
+  console.log();
+}
+
+function printBaseMessage(buildFolder, hostingLocation) {
+  console.log(`The project was built assuming it is hosted at ${chalk.green(hostingLocation || 'the server root')}.`);
+
+  if (!hostingLocation) {
+    console.log('For example, add this to build it for GitHub Pages:');
+    console.log();
+    console.log(`  ${chalk.green('"homepage"')} ${chalk.cyan(':')} ${chalk.green('"http://myname.github.io/myapp"')}${chalk.cyan(',')}`);
+  }
+  console.log(`The ${chalk.cyan(buildFolder)} folder is ready to be deployed.`);
+}
+
+function printDeployInstructions(publicUrl, hasDeployScript) {
+  console.log(`To publish it at ${chalk.green(publicUrl)} , run:`);
+  console.log();
+
+  // If script deploy has been added to package.json, skip the instructions
+  if (!hasDeployScript) {
+    console.log(`  ${chalk.cyan('pnpm')} add --save-dev gh-pages`);
+    console.log();
+
+    console.log(`Add the following script in your ${chalk.cyan('package.json')}.`);
+    console.log();
+
+    console.log(`    ${chalk.dim('// ...')}`);
+    console.log(`    ${chalk.yellow('"scripts"')}: {`);
+    console.log(`      ${chalk.dim('// ...')}`);
+    console.log(`      ${chalk.yellow('"predeploy"')}: ${chalk.yellow(`pnpm build",`)}`);
+    console.log(`      ${chalk.yellow('"deploy"')}: ${chalk.yellow('"gh-pages -d build"')}`);
+    console.log('    }');
+    console.log();
+
+    console.log('Then run:');
+    console.log();
+  }
+  console.log(`  ${chalk.cyan('pnpm')} deploy`);
+}
+
+function printStaticServerInstructions(buildFolder) {
+  console.log('You may serve it with a static server:');
+  console.log();
+
+  if (!fs.existsSync(`${globalModules}/serve`)) {
+    console.log(`  ${chalk.cyan('pnpm')} add -g serve`);
+  }
+  console.log(`  ${chalk.cyan('serve')} -s ${buildFolder}`);
+}
+
+module.exports = printHostingInstructions;

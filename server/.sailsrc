@@ -1,0 +1,18 @@
+{
+  "generators": {
+    "modules": {}
+  },
+  "hooks": {
+    "blueprints": false,
+    "grunt": false,
+    "i18n": false,
+    "session": false
+  },
+  "paths": {
+    "public": "public"
+  },
+  "_generatedWith": {
+    "sails": "1.1.0",
+    "sails-generate": "1.16.4"
+  }
+}

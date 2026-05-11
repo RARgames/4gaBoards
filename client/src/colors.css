@@ -1,0 +1,578 @@
+/* IMPORTANT: Only use hex/rgb/rgba/vars in colors */
+
+/* Default Theme */
+:root {
+  --backgroundColor: #22252a !important; /* Override loading.css */
+  --fakeColor: #000; /* FIXME: 1st color after !important does not show in custom theme editor */
+  --backgroundBase0: #1f2d3c;
+  --backgroundBase1: #17232c;
+  --backgroundAuth: #1e1e1e;
+  --backgroundList: var(--backgroundBase0);
+  --backgroundDate: var(--backgroundBase0);
+  --backgroundDateSelected: #11576b;
+  --backgroundDateOutside: #263443;
+  --backgroundCard: #2c3e51;
+  --backgroundCardHover: #1c3546;
+  --backgroundCardSelected: #11576b;
+  --backgroundCardModal: #223140;
+  --backgroundCardModalHeader: #2c3e51;
+  --backgroundCheckbox: #223140;
+  --backgroundCheckboxHover: #121920;
+  --backgroundCheckboxDisabled: #201f1f;
+  --backgroundTaskHover: #1d2c3a;
+  --backgroundAttachment: #1e2a36;
+  --backgroundAttachmentHover: #1d2c3a;
+  --backgroundFilter: var(--backgroundBase1);
+  --backgroundFilterHover: #121920;
+  --backgroundFilterSelected: #0c5064;
+  --backgroundFilterSelectedHover: #18414e;
+  --backgroundInput: var(--backgroundBase1);
+  --backgroundInputDisabled: #1e2d39;
+  --backgroundDropdown: #1e2d39;
+  --backgroundDropdownDefault: var(--backgroundBase1);
+  --backgroundDropdownHover: #2d3b4b;
+  --backgroundDropdownSelected: #2d3b4b;
+  --backgroundButton: var(--backgroundBase0);
+  --backgroundButtonHover: #1b2835;
+  --backgroundButtonDefault: var(--backgroundBase1);
+  --backgroundButtonMisc: #2d2d30;
+  --backgroundButtonAttachment: #6b808c;
+  --backgroundButtonAttachmentHover: #6b808ccc;
+  --backgroundButtonSubmit: #5aac44;
+  --backgroundButtonSubmitHover: #519839;
+  --backgroundButtonSubmitDisabled: #89be7c;
+  --backgroundButtonCancel: #cf513d;
+  --backgroundButtonCancelHover: #b04632;
+  --backgroundButtonCancelDisabled: #d9abab;
+  --backgroundButtonAuth: #2185d0;
+  --backgroundButtonAuthHover: #2075b6;
+  --backgroundHeader: #1a1c20;
+  --backgroundHeaderHover: #2a2c31;
+  --backgroundSelection: #0664d4;
+  --backgroundDashboardTile: #3b3b3b;
+  --backgroundNotifications: #eb5a46;
+  --backgroundTimer: #21ba45;
+  --backgroundTimerHover: #16ab39;
+  --backgroundBadgeRed: #cf513d;
+  --backgroundSidebar: #20303f;
+  --backgroundSidebarItemCategory: #1c2935;
+  --backgroundSidebarItem: #162029;
+  --backgroundSidebarItemSelected: #0c5064;
+  --backgroundTableHeader: #20303f;
+  --backgroundTableBody: #151c22;
+  --backgroundTableRow: #162029;
+  --backgroundTableRowOdd: #242d35;
+  --backgroundNotificationHover: #1d2024;
+  --backgroundRadioEnabled: #2196f3;
+  --backgroundRadioHandle: #ebebec;
+  --backgroundRadioDisabled: #5b647e;
+  --backgroundPopup: #2a3d50;
+  --backgroundPopupHover: #233444;
+  --backgroundPopupShadow: #19232e;
+  --backgroundPopupSuccess: #1d4d33;
+  --backgroundPopupError: #5a2323;
+  --borderPopupSuccess: #36c275;
+  --borderPopupError: #ff6f61;
+  --borderSubtle: rgba(54, 75, 97, 0.5);
+  --borderVivid: #5f6064;
+  --borderSidebar: var(--borderVivid);
+  --borderTableResize: var(--borderVivid);
+  --borderTableResizeHover: #4b4b4e;
+  --accentSelected: #34b7cd;
+  --accentSelectedDark: #5ba4cf;
+  --activityLinked: #8deeff;
+  --activityLinkedHover: #77cfdf;
+  --activityDeleted: #f57272;
+  --iconGithubActive: #0bff44;
+  --iconGithubInactive: var(--text4);
+  --textDateSelected: var(--text0Strong);
+  --textDateOutside: var(--text4);
+  --textDateMain: var(--text1);
+  --textDateToday: var(--textGold);
+  --textAttachmentDate: #6b808c;
+  --textAttachmentExtension: #5e6c84;
+  --textLocalChanges: #fdd41e;
+  --textSelection: var(--textWhite);
+  --textWhite: #ffffff;
+  --text0Strong: #ffffff;
+  --text0: #ebebec;
+  --text1: #d3d3d3;
+  --text2: #c2c2c2;
+  --text3: #999999;
+  --text4: #6d6d6d;
+  --text5: #363636;
+  --textGold: #ffbd00;
+  --textGoldHover: #daa000;
+  --textBlue: #2196f3;
+  --textBlueHover: #1e88e5;
+  --textLink: var(--textBlue);
+  --textLinkHover: var(--textBlueHover);
+  --textRed: #ff6666;
+  --textRedHover: #be4e4e;
+  --textWarning: #ffa600;
+  --textWarningHover: #c57600;
+  --textSuccess: #21ba45;
+  --textSuccessHover: #16ab39;
+  --textError: #ff5740;
+  --textErrorHover: #e64a33;
+  --textCounter: #798d99;
+  --textCounterHover: #72848f;
+  --shadowBlack01: rgba(0, 0, 0, 0.1);
+  --shadowBlack015: rgba(0, 0, 0, 0.15);
+  --shadowBlack02: rgba(0, 0, 0, 0.2);
+  --shadowBlack03: rgba(0, 0, 0, 0.3);
+  --shadowBlack05: rgba(0, 0, 0, 0.5);
+  --shadowBlack06: rgba(0, 0, 0, 0.6);
+  --shadowBlack08: rgba(0, 0, 0, 0.8);
+  --shadowGray07: rgba(100, 100, 100, 0.7);
+  --shadowModal: var(--shadowBlack08);
+  --scrollbarThumb: #757a82;
+  --scrollbarThumbHover: #62676f;
+  --scrollbarThumbActive: #32373e;
+  --scrollbarTrack: #1c2532;
+
+  /* Activities */
+  --instanceActivity: #c0392b;
+  --userActivity: #e57373;
+  --projectActivity: #f1c40f;
+  --boardActivity: #d4a017;
+  --listActivity: #7cb342;
+  --cardActivity: #26a69a;
+  --taskActivity: #4a95d3;
+  --attachmentActivity: #5c6bc0;
+  --commentActivity: #bb66d3;
+
+  /* Progress Bar */
+  --backgroundProgressBarRed: #db2828;
+  --backgroundProgressBarOrange: #f2711c;
+  --backgroundProgressBarYellow: #fbbd08;
+  --backgroundProgressBarOlive: #b5cc18;
+  --backgroundProgressBarGreen: #21ba45;
+
+  /* User Avatar */
+  --backgroundAvatarEmerald: #2ecc71;
+  --backgroundAvatarPeterRiver: #3498db;
+  --backgroundAvatarWisteria: #8e44ad;
+  --backgroundAvatarCarrot: #e67e22;
+  --backgroundAvatarAlizarin: #e74c3c;
+  --backgroundAvatarTurquoise: #1abc9c;
+  --backgroundAvatarMidnightBlue: #2c3e50;
+
+  /* Due Date */
+  --dueDateNormal: #999999;
+  --dueDateClose: #fdd41e;
+  --dueDateOver: #ff3030;
+
+  /* Markdown Editor */
+  --mdBlack: #000000;
+  --mdGrey: #d3d3d3;
+  --mdWhite: #ffffff;
+  --mdBrown: #aa4e0c;
+  --mdRed: #ff0000;
+  --mdPurple: #9b0b9b;
+  --mdPink: #ff00ff;
+  --mdGreen: #088f08;
+  --mdLime: #00ff00;
+  --mdYellow: #ffff00;
+  --mdBlue: #006eff;
+  --mdCyan: #00ffff;
+  --mdOrange: #ffa500;
+
+  --backgroundMdEditor: #17232c;
+  --backgroundMdEditorToolbar: #1e2d39;
+  --mdEditorIcon: var(--text3);
+  --mdEditorIconHover: #58a6ff;
+  --mdEditorIconDisabled: #30363d;
+  --mdEditorPreviewBoxSeparator: #30363d;
+
+  /* Color Picker */
+  --colorPickerInputBoxShadow: #616161;
+}
+
+/* Github Dark Theme */
+[data-theme='github-dark'] {
+  --backgroundColor: #22252a !important; /* Override loading.css */
+  --fakeColor: #000; /* FIXME: 1st color after !important does not show in custom theme editor */
+  --backgroundBase0: #161b22;
+  --backgroundBase1: #161b22;
+  --backgroundAuth: #010409;
+  --backgroundList: #161b22;
+  --backgroundDate: #161b22;
+  --backgroundDateSelected: #1e3a5f;
+  --backgroundDateOutside: #21262d;
+  --backgroundCard: #1f2937;
+  --backgroundCardHover: #1f2937;
+  --backgroundCardSelected: #1e3a5f;
+  --backgroundCardModal: #161b22;
+  --backgroundCardModalHeader: #1f2937;
+  --backgroundCheckbox: #161b22;
+  --backgroundCheckboxHover: #1c2128;
+  --backgroundCheckboxDisabled: #21262d;
+  --backgroundTaskHover: #0d1117;
+  --backgroundAttachment: #161b22;
+  --backgroundAttachmentHover: #0d1117;
+  --backgroundFilter: #161b22;
+  --backgroundFilterHover: #232b35;
+  --backgroundFilterSelected: #232b35;
+  --backgroundFilterSelectedHover: #2f3844;
+  --backgroundInput: #161b22;
+  --backgroundInputDisabled: #010409;
+  --backgroundDropdown: #010409;
+  --backgroundDropdownDefault: #161b22;
+  --backgroundDropdownHover: #1f2937;
+  --backgroundDropdownSelected: #1f2937;
+  --backgroundButton: #161b22;
+  --backgroundButtonHover: #1c2128;
+  --backgroundButtonDefault: #161b22;
+  --backgroundButtonMisc: #161b22;
+  --backgroundButtonAttachment: #7d8590;
+  --backgroundButtonAttachmentHover: #8b949e;
+  --backgroundButtonSubmit: #238636;
+  --backgroundButtonSubmitHover: #2ea043;
+  --backgroundButtonSubmitDisabled: #1b4b2b;
+  --backgroundButtonCancel: #da3633;
+  --backgroundButtonCancelHover: #b62324;
+  --backgroundButtonCancelDisabled: #5a2828;
+  --backgroundButtonAuth: #1f6feb;
+  --backgroundButtonAuthHover: #0969da;
+  --backgroundHeader: #010409;
+  --backgroundHeaderHover: #2a2c31;
+  --backgroundSelection: #1f6feb;
+  --backgroundDashboardTile: #21262d;
+  --backgroundNotifications: #da3633;
+  --backgroundTimer: #3fb950;
+  --backgroundTimerHover: #2ea043;
+  --backgroundBadgeRed: #da3633;
+  --backgroundSidebar: #0d1117;
+  --backgroundSidebarItemCategory: #21262d;
+  --backgroundSidebarItem: #161b22;
+  --backgroundSidebarItemSelected: #1e3a5f;
+  --backgroundTableHeader: #0d1117;
+  --backgroundTableBody: #010409;
+  --backgroundTableRow: #161b22;
+  --backgroundTableRowOdd: #1c2128;
+  --backgroundNotificationHover: #1d2024;
+  --backgroundRadioEnabled: #58a6ff;
+  --backgroundRadioDisabled: #30363d;
+  --backgroundRadioHandle: #ebebec;
+  --backgroundPopup: #161b22;
+  --backgroundPopupHover: #1c2128;
+  --backgroundPopupShadow: #010409;
+  --backgroundPopupSuccess: #163222;
+  --backgroundPopupError: #3d1919;
+  --borderPopupSuccess: #3fb950;
+  --borderPopupError: #f85149;
+  --borderSubtle: rgba(88, 166, 255, 0.4);
+  --borderVivid: #5f6064;
+  --borderSidebar: #5f6064;
+  --borderTableResize: #30363d;
+  --borderTableResizeHover: #484f58;
+  --accentSelected: #1f6feb;
+  --accentSelectedDark: #58a6ff;
+  --activityLinked: #58a6ff;
+  --activityLinkedHover: #79c0ff;
+  --activityDeleted: #f85149;
+  --iconGithubActive: #3fb950;
+  --iconGithubInactive: var(--text4);
+  --textDateSelected: var(--textWhite);
+  --textDateOutside: #6e7681;
+  --textDateMain: var(--text1);
+  --textDateToday: var(--textGold);
+  --textAttachmentDate: #7d8590;
+  --textAttachmentExtension: #8b949e;
+  --textLocalChanges: #d29922;
+  --textSelection: var(--textWhite);
+  --textWhite: #ffffff;
+  --text0Strong: #ffffff;
+  --text0: #f0f6fc;
+  --text1: #e6edf3;
+  --text2: #c9d1d9;
+  --text3: #8b949e;
+  --text4: #6e7681;
+  --text5: #484f58;
+  --textGold: #d29922;
+  --textGoldHover: #e3b341;
+  --textBlue: #58a6ff;
+  --textBlueHover: #79c0ff;
+  --textLink: var(--textBlue);
+  --textLinkHover: var(--textBlueHover);
+  --textRed: #f85149;
+  --textRedHover: #ff7b72;
+  --textWarning: var(--textGold);
+  --textWarningHover: var(--textGoldHover);
+  --textSuccess: #3fb950;
+  --textSuccessHover: #2ea043;
+  --textError: var(--textRed);
+  --textErrorHover: var(--textRedHover);
+  --textCounter: #7d8590;
+  --textCounterHover: #8b949e;
+  --shadowBlack01: rgba(1, 4, 9, 0.2);
+  --shadowBlack015: rgba(1, 4, 9, 0.25);
+  --shadowBlack02: rgba(1, 4, 9, 0.3);
+  --shadowBlack03: rgba(1, 4, 9, 0.4);
+  --shadowBlack05: rgba(1, 4, 9, 0.6);
+  --shadowBlack06: rgba(1, 4, 9, 0.7);
+  --shadowBlack08: rgba(1, 4, 9, 0.9);
+  --shadowGray07: rgba(139, 148, 158, 0.7);
+  --shadowModal: var(--shadowBlack08);
+  --scrollbarThumb: #484f58;
+  --scrollbarThumbHover: #6e7681;
+  --scrollbarThumbActive: #30363d;
+  --scrollbarTrack: #0d1117;
+
+  /* Activities */
+  --instanceActivity: #c0392b;
+  --userActivity: #e57373;
+  --projectActivity: #f1c40f;
+  --boardActivity: #d4a017;
+  --listActivity: #7cb342;
+  --cardActivity: #26a69a;
+  --taskActivity: #4a95d3;
+  --attachmentActivity: #5c6bc0;
+  --commentActivity: #bb66d3;
+
+  /* Progress Bar */
+  --backgroundProgressBarRed: #f85149;
+  --backgroundProgressBarOrange: #fb8500;
+  --backgroundProgressBarYellow: #e3b341;
+  --backgroundProgressBarOlive: #a2d729;
+  --backgroundProgressBarGreen: #3fb950;
+
+  /* User Avatar */
+  --backgroundAvatarEmerald: #3fb950;
+  --backgroundAvatarPeterRiver: #58a6ff;
+  --backgroundAvatarWisteria: #bc8cff;
+  --backgroundAvatarCarrot: #fb8500;
+  --backgroundAvatarAlizarin: #f85149;
+  --backgroundAvatarTurquoise: #56d4dd;
+  --backgroundAvatarMidnightBlue: #1f6feb;
+
+  /* Due Date */
+  --dueDateNormal: #8b949e;
+  --dueDateClose: #d29922;
+  --dueDateOver: #f85149;
+
+  /* Markdown Editor */
+  --mdBlack: #0d1117;
+  --mdGrey: #8b949e;
+  --mdWhite: #f0f6fc;
+  --mdBrown: #d4a574;
+  --mdRed: #f85149;
+  --mdPurple: #bc8cff;
+  --mdPink: #ff9ff3;
+  --mdGreen: #3fb950;
+  --mdLime: #a2d729;
+  --mdYellow: #e3b341;
+  --mdBlue: #58a6ff;
+  --mdCyan: #56d4dd;
+  --mdOrange: #fb8500;
+
+  --backgroundMdEditor: #161b22;
+  --backgroundMdEditorToolbar: #010409;
+  --mdEditorIcon: var(--text3);
+  --mdEditorIconHover: #58a6ff;
+  --mdEditorIconDisabled: #30363d;
+  --mdEditorPreviewBoxSeparator: #30363d;
+
+  /* Color Picker */
+  --colorPickerInputBoxShadow: #616161;
+}
+
+/* Light Theme */
+[data-theme='light'] {
+  --backgroundColor: #ffffff !important; /* Override loading.css */
+  --fakeColor: #000; /* FIXME: 1st color after !important does not show in custom theme editor */
+  --backgroundBase0: #ffffff;
+  --backgroundBase1: #cfd7e2;
+  --backgroundAuth: #f8f8f8;
+  --backgroundList: #cfd7e2;
+  --backgroundDate: #cfd7e2;
+  --backgroundDateSelected: #d0e8ff;
+  --backgroundDateOutside: #d1d9e0;
+  --backgroundCard: #f0f4f8;
+  --backgroundCardHover: #e0f3ff;
+  --backgroundCardSelected: #d0e8ff;
+  --backgroundCardModal: #ffffff;
+  --backgroundCardModalHeader: #f0f4f8;
+  --backgroundCheckbox: #ffffff;
+  --backgroundCheckboxHover: #e6f0ff;
+  --backgroundCheckboxDisabled: #f0f0f0;
+  --backgroundTaskHover: #f9fafd;
+  --backgroundAttachment: #f2f4f6;
+  --backgroundAttachmentHover: #f9fafd;
+  --backgroundFilter: #cfd7e2;
+  --backgroundFilterHover: #e6f0ff;
+  --backgroundFilterSelected: #e6f0ff;
+  --backgroundFilterSelectedHover: #d5deec;
+  --backgroundInput: #cfd7e2;
+  --backgroundInputDisabled: #e0e6ef;
+  --backgroundDropdown: #e0e6ef;
+  --backgroundDropdownDefault: #cfd7e2;
+  --backgroundDropdownHover: #cce4ff;
+  --backgroundDropdownSelected: #cce4ff;
+  --backgroundButton: #cfd7e2;
+  --backgroundButtonHover: #edf2f7;
+  --backgroundButtonDefault: #cfd7e2;
+  --backgroundButtonMisc: #eaeaea;
+  --backgroundButtonAttachment: #555555;
+  --backgroundButtonAttachmentHover: #222222;
+  --backgroundButtonSubmit: #5aac44;
+  --backgroundButtonSubmitHover: #519839;
+  --backgroundButtonSubmitDisabled: #89be7c;
+  --backgroundButtonCancel: #cf513d;
+  --backgroundButtonCancelHover: #b04632;
+  --backgroundButtonCancelDisabled: #d9abab;
+  --backgroundButtonAuth: #2196f3;
+  --backgroundButtonAuthHover: #1a73e8;
+  --backgroundHeader: #f2f4f6;
+  --backgroundHeaderHover: #dbdbdb;
+  --backgroundSelection: #2196f3;
+  --backgroundDashboardTile: #f0f0f0;
+  --backgroundNotifications: #e53935;
+  --backgroundTimer: #43a047;
+  --backgroundTimerHover: #388e3c;
+  --backgroundBadgeRed: #cf513d;
+  --backgroundSidebar: #f7f9fb;
+  --backgroundTableHeader: #f7f9fb;
+  --backgroundSidebarItemCategory: #e8ebf0;
+  --backgroundSidebarItem: #ffffff;
+  --backgroundSidebarItemSelected: #cce4ff;
+  --backgroundTableBody: #f0f0f0;
+  --backgroundTableRow: #ffffff;
+  --backgroundTableRowOdd: #edf2f7;
+  --backgroundNotificationHover: #dad9d9;
+  --backgroundRadioEnabled: #9dcdf5;
+  --backgroundRadioDisabled: #e0e6ef;
+  --backgroundRadioHandle: #555555;
+  --backgroundPopup: #f7f9fb;
+  --backgroundPopupHover: #edf2f7;
+  --backgroundPopupShadow: rgba(0, 0, 0, 0.1);
+  --backgroundPopupSuccess: #e7f7eb;
+  --backgroundPopupError: #fdecea;
+  --borderPopupSuccess: #43a047;
+  --borderPopupError: #e53935;
+  --borderSubtle: rgba(54, 75, 97, 0.3);
+  --borderVivid: #999999;
+  --borderSidebar: #c2c2c2;
+  --borderTableResize: #d1d9e0;
+  --borderTableResizeHover: #a8a8a8;
+  --accentSelected: #0d6efd;
+  --accentSelectedDark: #2196f3;
+  --activityLinked: #2196f3;
+  --activityLinkedHover: #1a73e8;
+  --activityDeleted: #ff4d4d;
+  --iconGithubActive: #0b8f44;
+  --iconGithubInactive: var(--text4);
+  --textDateSelected: #000000;
+  --textDateOutside: #999999;
+  --textDateMain: var(--text1);
+  --textDateToday: var(--textGold);
+  --textAttachmentDate: #777777;
+  --textAttachmentExtension: #555555;
+  --textLocalChanges: #d4a200;
+  --textSelection: var(--textWhite);
+  --textWhite: #ffffff;
+  --text0Strong: #000000;
+  --text0: #222222;
+  --text1: #444444;
+  --text2: #555555;
+  --text3: #777777;
+  --text4: #999999;
+  --text5: #bbbbbb;
+  --textGold: #bfa000;
+  --textGoldHover: #a58f00;
+  --textBlue: #2196f3;
+  --textBlueHover: #1a73e8;
+  --textLink: var(--textBlue);
+  --textLinkHover: var(--textBlueHover);
+  --textRed: #d32f2f;
+  --textRedHover: #b71c1c;
+  --textWarning: var(--textGold);
+  --textWarningHover: var(--textGoldHover);
+  --textSuccess: #43a047;
+  --textSuccessHover: #388e3c;
+  --textError: var(--textRed);
+  --textErrorHover: var(--textRedHover);
+  --textCounter: #999999;
+  --textCounterHover: #777777;
+  --shadowBlack01: rgba(0, 0, 0, 0.1);
+  --shadowBlack015: rgba(0, 0, 0, 0.15);
+  --shadowBlack02: rgba(0, 0, 0, 0.2);
+  --shadowBlack03: rgba(0, 0, 0, 0.3);
+  --shadowBlack05: rgba(0, 0, 0, 0.5);
+  --shadowBlack06: rgba(0, 0, 0, 0.6);
+  --shadowBlack08: rgba(0, 0, 0, 0.8);
+  --shadowGray07: rgba(100, 100, 100, 0.3);
+  --shadowModal: var(--shadowBlack08);
+  --scrollbarThumb: #c1c1c1;
+  --scrollbarThumbHover: #a8a8a8;
+  --scrollbarThumbActive: #888888;
+  --scrollbarTrack: #f2f2f2;
+
+  /* Activities */
+  --instanceActivity: #c0392b;
+  --userActivity: #e57373;
+  --projectActivity: #f1c40f;
+  --boardActivity: #d4a017;
+  --listActivity: #7cb342;
+  --cardActivity: #26a69a;
+  --taskActivity: #4a95d3;
+  --attachmentActivity: #5c6bc0;
+  --commentActivity: #bb66d3;
+
+  /* Progress Bar */
+  --backgroundProgressBarRed: #e53935;
+  --backgroundProgressBarOrange: #fb8c00;
+  --backgroundProgressBarYellow: #ffa000;
+  --backgroundProgressBarOlive: #9ccc65;
+  --backgroundProgressBarGreen: #43a047;
+
+  /* User Avatar */
+  --backgroundAvatarEmerald: #43a047;
+  --backgroundAvatarPeterRiver: #2196f3;
+  --backgroundAvatarWisteria: #9b59b6;
+  --backgroundAvatarCarrot: #fb8c00;
+  --backgroundAvatarAlizarin: #e53935;
+  --backgroundAvatarTurquoise: #1abc9c;
+  --backgroundAvatarMidnightBlue: #2196f3;
+
+  /* Due Date */
+  --dueDateNormal: #777777;
+  --dueDateClose: #ffa000;
+  --dueDateOver: #e53935;
+
+  /* Markdown Editor */
+  --mdBlack: #000000;
+  --mdGrey: #555555;
+  --mdWhite: #ffffff;
+  --mdBrown: #a65a2c;
+  --mdRed: #d32f2f;
+  --mdPurple: #9b59b6;
+  --mdPink: #ff69b4;
+  --mdGreen: #43a047;
+  --mdLime: #8bc34a;
+  --mdYellow: #ffd600;
+  --mdBlue: #2196f3;
+  --mdCyan: #00bcd4;
+  --mdOrange: #fb8c00;
+
+  --backgroundMdEditor: #cfd7e2;
+  --backgroundMdEditorToolbar: #e0e6ef;
+  --mdEditorIcon: var(--text3);
+  --mdEditorIconHover: #2196f3;
+  --mdEditorIconDisabled: #cccccc;
+  --mdEditorPreviewBoxSeparator: #b0b0b0;
+
+  /* Color Picker */
+  --colorPickerInputBoxShadow: #b0b0b0;
+}
+
+/* TODO: Remove - old colors:
+  --backgroundColor1: #252526;
+  --backgroundColor2: #333333;
+  --backgroundColorTmp0: #282c30;
+  --backgroundColorTmp1: #292d33;
+  --backgroundColorTmp2: #242d34;
+  --backgroundColorTmp3: #1b2126;
+  --backgroundTabActive: #16181b;
+*/

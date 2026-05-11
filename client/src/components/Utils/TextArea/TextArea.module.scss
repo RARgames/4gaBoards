@@ -1,0 +1,45 @@
+:global(#app) {
+  .textarea {
+    background: var(--backgroundInput);
+    color: var(--text1);
+    padding: 9px 8px;
+    border: 1px solid var(--borderVivid);
+    border-radius: 3px;
+    resize: none;
+    outline: 0;
+    width: 100%;
+
+    &::placeholder {
+      color: var(--text3);
+    }
+
+    &:focus {
+      border: 1px solid var(--accentSelected);
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .textarea {
+    border-radius: 8px;
+  }
+
+  .textareaError {
+    border: 1px solid var(--textError);
+
+    &:focus {
+      border: 1px solid var(--textError);
+    }
+
+    &::placeholder {
+      color: var(--textError);
+    }
+  }
+
+  .fullWidth {
+    width: 100%;
+  }
+
+  .default {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+}

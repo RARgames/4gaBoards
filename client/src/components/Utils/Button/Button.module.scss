@@ -1,0 +1,255 @@
+/* stylelint-disable scss/at-extend-no-missing-placeholder */
+:global(#app) {
+  .button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .default {
+    background: var(--backgroundButtonDefault);
+    color: var(--text1);
+    overflow: hidden;
+    padding: 8px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 20px;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      color: var(--text3);
+
+      svg {
+        fill: var(--text3);
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--text4);
+
+      svg {
+        fill: var(--text4);
+      }
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .default {
+    border-radius: 8px;
+  }
+
+  .defaultBorder {
+    @extend .default;
+    border: 1px solid var(--borderVivid);
+    text-wrap: wrap;
+  }
+
+  .noBackground {
+    color: var(--text1);
+    overflow: hidden;
+    padding: 8px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 20px;
+    width: 100%;
+    height: fit-content;
+
+    &:hover {
+      color: var(--text3);
+
+      svg {
+        fill: var(--text3);
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--text4);
+
+      svg {
+        fill: var(--text4);
+      }
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .noBackground {
+    border-radius: 8px;
+  }
+
+  .iconBase {
+    &:hover {
+      svg {
+        fill: var(--text3);
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      svg {
+        fill: var(--text4);
+      }
+    }
+  }
+
+  .icon {
+    @extend .iconBase;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .iconCentered {
+    @extend .icon;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .iconText {
+    @extend .iconBase;
+    padding: 0;
+    width: auto;
+    height: auto;
+  }
+
+  .login {
+    background: var(--backgroundButtonAuth);
+    color: var(--text0);
+    border-radius: 3px;
+    padding: 8px 12px;
+    width: auto;
+    height: 45px;
+    font-weight: bold;
+    overflow: hidden;
+
+    svg {
+      fill: var(--text0);
+    }
+
+    &:hover {
+      background: var(--backgroundButtonAuthHover);
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .login {
+    border-radius: 8px;
+  }
+
+  // TODO think about multiline buttons - word-wrap: break-word and min-height instead of white-space, text-overflow
+  .controlButtons {
+    color: var(--textWhite);
+    border-radius: 3px;
+    height: 32px;
+    width: auto;
+    padding: 4px 6px 3px 6px;
+    line-height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .controlButtons {
+    border-radius: 8px;
+  }
+
+  .submit {
+    @extend .controlButtons;
+    background: var(--backgroundButtonSubmit);
+    margin-left: 6px;
+
+    &:hover {
+      background: var(--backgroundButtonSubmitHover);
+    }
+
+    &:disabled {
+      background: var(--backgroundButtonSubmitDisabled);
+    }
+  }
+
+  .cancel {
+    @extend .controlButtons;
+    background: var(--backgroundButtonCancel);
+
+    &:hover {
+      background: var(--backgroundButtonCancelHover);
+    }
+
+    &:disabled {
+      background: var(--backgroundButtonCancelDisabled);
+    }
+  }
+
+  .popup {
+    background: var(--backgroundPopup);
+    color: var(--text1);
+    overflow: hidden;
+    padding: 8px 16px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 3px;
+    line-height: 20px;
+    width: 100%;
+    height: fit-content;
+
+    &:hover {
+      background: var(--backgroundPopupHover);
+      color: var(--text0);
+
+      svg {
+        fill: var(--text0);
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--text4);
+
+      svg {
+        fill: var(--text4);
+      }
+    }
+
+    // TODO temp disabled - until the popup button focus is handled correctly
+    // &:focus {
+    //   outline: none;
+    //   box-shadow: inset 0px 0px 0px 1px var(--accentSelected);
+    // }
+  }
+
+  &:global([data-theme-shape='rounded']) .popup {
+    border-radius: 8px;
+  }
+
+  .popupContext {
+    @extend .popup;
+    padding: 8px 16px 8px 8px;
+  }
+
+  .header {
+    padding: 0;
+    width: 50px;
+    height: 50px;
+
+    &:hover {
+      background: var(--backgroundHeaderHover);
+    }
+  }
+
+  .headerLogo {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

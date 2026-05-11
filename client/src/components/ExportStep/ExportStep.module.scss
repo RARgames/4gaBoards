@@ -1,0 +1,15 @@
+:global(#app) {
+  .submitButton {
+    width: auto;
+  }
+
+  .wrapper {
+    margin-bottom: 6px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .checkboxWrapper {
+    margin: 6px 0 4px 0;
+  }
+}

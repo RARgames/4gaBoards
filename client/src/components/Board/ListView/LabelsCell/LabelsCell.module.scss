@@ -1,0 +1,30 @@
+:global(#app) {
+  .labelWrapper {
+    display: inline-flex;
+    margin: 3px 4px 3px 0;
+    max-width: 100%;
+  }
+
+  .popupWrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .addButton {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    &:hover {
+      .iconAddButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .iconAddButton {
+    opacity: 0;
+  }
+}

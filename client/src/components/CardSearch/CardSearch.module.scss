@@ -1,0 +1,53 @@
+:global(#app) {
+  .field {
+    width: 100%;
+    padding-right: 26px;
+    height: 36px;
+    border-radius: 3px 0 0 3px;
+  }
+
+  &:global([data-theme-shape='rounded']) .field {
+    border-radius: 8px 0 0 8px;
+  }
+
+  .clearButton {
+    margin-left: -24px;
+
+    svg {
+      vertical-align: middle;
+      fill: var(--text3);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--text4);
+      }
+    }
+  }
+
+  .paramsWrapper {
+    display: flex;
+  }
+
+  .paramsButton {
+    background: var(--backgroundFilter);
+    border: solid var(--borderVivid);
+    border-width: 1px 1px 1px 0;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 7px 6px;
+
+    &:hover {
+      background: var(--backgroundFilterHover);
+    }
+  }
+
+  .paramsButtonActive {
+    background: var(--backgroundFilterSelected);
+
+    &:hover {
+      background: var(--backgroundFilterSelectedHover);
+    }
+  }
+}

@@ -1,0 +1,61 @@
+:global(#app) {
+  .text {
+    text-align: center;
+    color: var(--text0);
+    margin-top: 80px;
+  }
+
+  .message {
+    background: var(--backgroundNotifications);
+    box-shadow: var(--backgroundNotifications) 0 1px 0;
+    border-radius: 4px;
+    bottom: 20px;
+    padding: 12px 18px;
+    position: fixed;
+    right: 20px;
+    z-index: 10001;
+  }
+
+  .messageCollapsed {
+    padding: 6px;
+  }
+
+  .messageHeader {
+    display: flex;
+  }
+
+  .messageIcon {
+    color: var(--text0);
+    margin-right: 6px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .messageIconCollapsed {
+    margin-right: 0;
+  }
+
+  .messageTitle {
+    color: var(--text0);
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .messageCloseButton {
+    margin: -8px -14px 0 auto;
+  }
+
+  .messageCloseIcon {
+    color: var(--text0);
+  }
+
+  .messageContent {
+    color: var(--text0);
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .collapsed {
+    display: none;
+  }
+}

@@ -1,0 +1,35 @@
+:global(#app) {
+  .wrapper {
+    height: 100%;
+    width: 100%;
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .header {
+    color: var(--text0);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .headerFlex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .headerText {
+    display: inline;
+    overflow-wrap: break-word;
+    flex: 1 1 auto;
+    margin: 0;
+  }
+
+  .demoMode {
+    color: var(--textError);
+    font-size: 14px;
+    margin: 10px 0 0 0;
+  }
+}

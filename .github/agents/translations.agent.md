@@ -1,0 +1,25 @@
+---
+name: translations
+description: This custom agent automatically translates missing localization keys from English (`dir packages\locales\src\en all files except index.js`) into all target languages. Target languages are all directories in `packages\locales\src` except `en`. It detects missing keys using `pnpm client:ci:test`, then generates consistent translations preserving formatting, syntax e.g. {{count}} should remain unchanged, <card>...</card> should remain unchanged, and escape sequences (`\n`). Use this agent whenever new keys are added or existing translations are incomplete.
+tools: ['execute', 'read', 'edit']
+---
+
+behavior:
+
+- Scan the source English locale files in `packages\locales\src\en`, excluding `index.js`, to collect all keys.
+- Detect target language directories in `packages\locales\src` (all directories except `en`).
+- Detect missing keys in each target language by running `pnpm client:ci:test`.
+- You exactly know what keys to modify when you analyze the output of the test command.
+- For each missing key, generate a translation using GPT-5-mini, following strict rules:
+  - Preserve key names exactly.
+  - Keep formatting and syntax intact:
+    - Must not change placeholders like `{{count}}`.
+    - Must not alter HTML-like tags like `<card>...</card>`.
+  - Preserve escape sequences (`\n`) exactly.
+  - Return valid JSON (or YAML if applicable), no extra text or explanations.
+- Merge the translated keys into the corresponding target locale files without overwriting existing translations.
+- Validate all merged files for JSON/YAML correctness.
+- Repeat the process for all target languages.
+- Make sure that translations are in the correct language and culturally appropriate.
+- Optionally generate a report of newly added keys and translations for review.
+- When translating French and other languages with ’ don't add it as \' or ’, instead use default ' and make whole value in "..." to avoid escaping issues. For example: `"I'l a une description"` instead of `'I’l a une description'` or `"I\'l a une description"`.

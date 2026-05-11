@@ -1,0 +1,89 @@
+:global(#app) {
+  .filter {
+    background: var(--backgroundFilter);
+    border: solid var(--borderVivid);
+    border-width: 1px 1px 1px 0;
+    overflow: hidden;
+
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .filter {
+    &:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+  }
+
+  .filterButton {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    outline: none;
+    padding: 0;
+
+    &:hover {
+      background: var(--backgroundFilterHover);
+    }
+  }
+
+  .filterButtonDueDateIsFiltered {
+    padding-right: 4px;
+  }
+
+  .filterItem {
+    background: var(--backgroundFilter);
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+    margin-right: 4px;
+    max-width: 190px;
+    vertical-align: middle;
+  }
+
+  .lastFilterItem {
+    margin-right: 0;
+  }
+
+  .filterItemDueDate {
+    background: none;
+  }
+
+  .filterTitle {
+    border-radius: 3px;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 7px 6px;
+  }
+
+  .popupWrapper {
+    display: inline-block;
+  }
+
+  .clearButton {
+    svg {
+      vertical-align: middle;
+      fill: var(--text3);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--text4);
+      }
+    }
+  }
+
+  .clearButtonDueDate {
+    margin-left: -4px;
+  }
+
+  .filterButtonActive {
+    background: var(--backgroundFilterSelected);
+
+    &:hover {
+      background: var(--backgroundFilterSelectedHover);
+    }
+  }
+}

@@ -1,0 +1,12 @@
+:global(#app) {
+  .content {
+    color: var(--text1);
+    text-align: center;
+    margin-bottom: 6px;
+    line-height: 20px;
+  }
+
+  .deleteButton {
+    max-width: 300px;
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "name": "server",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "console": "dotenv sails console",
+    "db:init": "node db/init.js",
+    "db:migrate": "knex migrate:latest --cwd db",
+    "db:rollback_one": "knex migrate:down --cwd db",
+    "db:rollback": "knex migrate:rollback --cwd db",
+    "db:migration_make": "knex migrate:make new_migration --cwd db",
+    "db:seed": "knex seed:run --cwd db",
+    "lint": "eslint . --max-warnings=0",
+    "start": "nodemon --ignore private/** --exec \"node app.js || exit 1\"",
+    "start:prod": "node app.js --prod",
+    "test": "mocha test/lifecycle.test.js test/integration/**/*.test.js test/utils/**/*.test.js"
+  },
+  "dependencies": {
+    "@4gaboards/enums": "workspace:*",
+    "@4gaboards/locales": "workspace:*",
+    "@azure/msal-node": "^5.1.2",
+    "@rargames/passport-github": "^1.1.2",
+    "bcrypt": "^6.0.0",
+    "cookie": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.4.2",
+    "dotenv-cli": "^11.0.0",
+    "fast-csv": "^5.0.5",
+    "filenamify": "^7.0.1",
+    "i18next": "^26.0.4",
+    "jsonwebtoken": "^9.0.3",
+    "knex": "^3.2.9",
+    "lodash": "^4.18.1",
+    "moment": "^2.30.1",
+    "move-file": "^4.1.0",
+    "node-cron": "^4.2.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-strategy": "^1.0.0",
+    "prom-client": "^15.1.3",
+    "rimraf": "^6.1.3",
+    "sails": "^1.5.17",
+    "sails-hook-orm": "^4.0.3",
+    "sails-hook-sockets": "^3.0.2",
+    "sails-postgresql": "^5.0.1",
+    "sharp": "^0.34.5",
+    "tar": "^7.5.13",
+    "uuid": "^11.1.0",
+    "validator": "^13.15.35",
+    "winston": "^3.19.0",
+    "zxcvbn": "^4.4.2"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "mocha": "^11.7.5",
+    "nodemon": "^3.1.14"
+  },
+  "engines": {
+    "node": "^24.11"
+  }
+}

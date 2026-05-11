@@ -1,0 +1,96 @@
+:global(#app) {
+  .button {
+    opacity: 0;
+  }
+
+  .buttonCard {
+    width: 14px;
+  }
+
+  .icon {
+    vertical-align: middle;
+  }
+
+  .contentHoverable:hover {
+    background: var(--backgroundTaskHover);
+
+    .target {
+      opacity: 1;
+    }
+  }
+
+  .task {
+    color: var(--text1);
+    width: 100%;
+    min-width: 60px;
+    margin-left: 4px;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+  }
+
+  .taskCompleted {
+    color: var(--text3);
+    text-decoration: line-through;
+  }
+
+  .itemCompleted {
+    filter: brightness(60%);
+  }
+
+  .taskEditable {
+    cursor: pointer;
+  }
+
+  .wrapper {
+    border-radius: 3px;
+    padding: 4px 2px;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+
+  .members {
+    display: flex;
+    margin-right: 4px;
+    margin-left: 4px;
+    align-items: center;
+  }
+
+  .member {
+    display: inline-block;
+    margin: 0 -4px 0 0;
+  }
+
+  .moreMembers {
+    color: var(--text0Strong);
+    background: var(--shadowBlack02);
+    border-radius: 50%;
+    text-align: center;
+    padding-right: 2px;
+    font-size: 12px;
+    line-height: 25px;
+    width: 26px;
+    height: 26px;
+    margin: 0 -4px 0 0;
+  }
+
+  .moreMembersCard {
+    font-size: 10px;
+    line-height: 21px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .dueDate {
+    margin-left: 6px;
+  }
+
+  .dueDateCard {
+    margin-left: 4px;
+  }
+}

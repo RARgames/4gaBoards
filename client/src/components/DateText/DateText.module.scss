@@ -1,0 +1,14 @@
+:global(#app) {
+  .wrapper {
+    display: inline-flex;
+    text-align: left;
+  }
+
+  .dateHoverable {
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(85%);
+    }
+  }
+}

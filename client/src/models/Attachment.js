@@ -1,0 +1,155 @@
+import { attr, fk } from 'redux-orm';
+
+import ActionTypes from '../constants/ActionTypes';
+import Config from '../constants/Config';
+import BaseModel from './BaseModel';
+
+export default class extends BaseModel {
+  static modelName = 'Attachment';
+
+  static fields = {
+    id: attr(),
+    url: attr(),
+    coverUrl: attr(),
+    image: attr(),
+    name: attr(),
+    cardId: fk({
+      to: 'Card',
+      as: 'card',
+      relatedName: 'attachments',
+    }),
+    isActivitiesFetching: attr({
+      getDefault: () => false,
+    }),
+    isAllActivitiesFetched: attr({
+      getDefault: () => false,
+    }),
+    lastActivityId: attr(),
+    createdAt: attr(),
+    createdById: fk({
+      to: 'User',
+      as: 'createdBy',
+      relatedName: 'createdAttachments',
+    }),
+    updatedAt: attr(),
+    updatedById: fk({
+      to: 'User',
+      as: 'updatedBy',
+      relatedName: 'updatedAttachments',
+    }),
+  };
+
+  static reducer({ type, payload }, Attachment) {
+    switch (type) {
+      case ActionTypes.LOCATION_CHANGE_HANDLE:
+      case ActionTypes.CORE_INITIALIZE:
+      case ActionTypes.PROJECT_MANAGER_CREATE_HANDLE:
+      case ActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE:
+        if (payload.attachments) {
+          payload.attachments.forEach((attachment) => {
+            Attachment.upsert(attachment);
+          });
+        }
+
+        break;
+      case ActionTypes.SOCKET_RECONNECT_HANDLE:
+        if (payload.attachments) {
+          // FIXME: bug with oneToOne relation in Redux-ORM
+          const attachmentIds = payload.attachments.map((attachment) => attachment.id);
+
+          Attachment.all()
+            .toModelArray()
+            .forEach((attachmentModel) => {
+              if (!attachmentIds.includes(attachmentModel.id)) {
+                attachmentModel.deleteWithRelated();
+              }
+            });
+
+          payload.attachments.forEach((attachment) => {
+            Attachment.upsert(attachment);
+          });
+        } else {
+          Attachment.all()
+            .toModelArray()
+            .forEach((attachmentModel) => {
+              attachmentModel.deleteWithRelated();
+            });
+        }
+
+        break;
+      case ActionTypes.BOARD_FETCH__SUCCESS:
+      case ActionTypes.CARD_DUPLICATE__SUCCESS:
+        payload.attachments.forEach((attachment) => {
+          Attachment.upsert(attachment);
+        });
+
+        break;
+      case ActionTypes.ATTACHMENT_CREATE:
+      case ActionTypes.ATTACHMENT_CREATE_HANDLE:
+      case ActionTypes.ATTACHMENT_UPDATE__SUCCESS:
+      case ActionTypes.ATTACHMENT_UPDATE_HANDLE:
+        Attachment.upsert(payload.attachment);
+
+        break;
+      case ActionTypes.ATTACHMENT_CREATE__SUCCESS:
+        Attachment.withId(payload.localId).delete();
+        Attachment.upsert(payload.attachment);
+
+        break;
+      case ActionTypes.ATTACHMENT_UPDATE:
+        Attachment.withId(payload.id).update(payload.data);
+
+        break;
+      case ActionTypes.ATTACHMENT_DELETE:
+        Attachment.withId(payload.id).deleteWithRelated();
+
+        break;
+      case ActionTypes.ATTACHMENT_DELETE__SUCCESS:
+      case ActionTypes.ATTACHMENT_DELETE_HANDLE: {
+        const attachmentModel = Attachment.withId(payload.attachment.id);
+
+        if (attachmentModel) {
+          attachmentModel.deleteWithRelated();
+        }
+
+        break;
+      }
+      case ActionTypes.ACTIVITIES_ATTACHMENT_FETCH:
+        Attachment.withId(payload.attachmentId).update({
+          isActivitiesFetching: true,
+        });
+
+        break;
+      case ActionTypes.ACTIVITIES_ATTACHMENT_FETCH__SUCCESS:
+        Attachment.withId(payload.attachmentId).update({
+          isActivitiesFetching: false,
+          isAllActivitiesFetched: payload.activities.length < Config.ACTIVITIES_LIMIT,
+          lastActivityId: payload.activities.length > 0 ? payload.activities[payload.activities.length - 1].id : Attachment.withId(payload.attachmentId).lastActivityId,
+        });
+
+        break;
+      default:
+    }
+  }
+
+  getOrderedActivitiesQuerySet() {
+    return this.activities.filter({ notificationOnly: false }).orderBy('createdAt', false);
+  }
+
+  deleteActivities() {
+    this.activities.toModelArray().forEach((activityModel) => {
+      if (!activityModel.notification) {
+        activityModel.delete();
+      }
+    });
+  }
+
+  deleteRelated() {
+    this.deleteActivities();
+  }
+
+  deleteWithRelated() {
+    this.deleteRelated();
+    this.delete();
+  }
+}

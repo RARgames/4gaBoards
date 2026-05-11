@@ -1,0 +1,24 @@
+{
+  "name": "4ga Boards",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "256x256 128x128 64x64 48x48 32x32 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "4gaboards192w.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "4gaboards512w.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#22252a",
+  "background_color": "#000000"
+}

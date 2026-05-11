@@ -1,0 +1,33 @@
+:global(#app) {
+  .form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .permissions {
+    padding-right: 8px;
+    scrollbar-gutter: stable;
+    margin-bottom: 4px;
+  }
+
+  .text {
+    color: var(--text1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .checkbox {
+    margin-bottom: 6px;
+  }
+
+  .permissionGroup {
+    margin-top: 4px;
+    padding-left: 14px;
+  }
+
+  .permission {
+    padding-left: 28px;
+  }
+}

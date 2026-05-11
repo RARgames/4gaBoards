@@ -1,0 +1,86 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      .label {
+        color: var(--text3);
+      }
+    }
+  }
+
+  .checkbox {
+    appearance: none;
+    background: var(--backgroundCheckbox);
+    border-radius: 3px;
+    border: 1px solid var(--text3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 0.4em;
+      height: 0.75em;
+      border: solid var(--text2);
+      border-width: 0 0.13em 0.13em 0;
+      transform: rotate(45deg);
+      margin-top: -0.1em;
+      opacity: 0;
+    }
+
+    &:checked:before {
+      opacity: 1;
+    }
+
+    &:hover {
+      background: var(--backgroundCheckboxHover);
+      cursor: pointer;
+    }
+
+    &:disabled {
+      border: 1px solid var(--borderVivid);
+      cursor: not-allowed;
+
+      &:hover {
+        background: var(--backgroundCheckbox);
+      }
+    }
+  }
+
+  .checkboxError {
+    border: 1px solid var(--textError);
+  }
+
+  .label {
+    margin-left: 4px;
+    color: var(--text1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .checkbox:disabled + .label {
+    cursor: not-allowed;
+    color: var(--text3);
+  }
+
+  .size14 {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+    font-size: 11.2px;
+  }
+
+  .size20 {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    font-size: 16px;
+  }
+}

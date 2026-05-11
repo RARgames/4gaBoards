@@ -1,0 +1,83 @@
+:global(#app) {
+  .wrapper {
+    padding: 0 0 8px 0;
+  }
+
+  .wrapperListView {
+    height: 100%;
+    width: 100%;
+  }
+
+  .progressWrapper {
+    display: flex;
+    line-height: 0;
+    align-items: center;
+  }
+
+  .progressWrapperOpen {
+    margin-bottom: 8px;
+  }
+
+  .progressCard {
+    margin: 0;
+    background: var(--backgroundBase0);
+  }
+
+  .progress {
+    margin: 2px 1px 8px 1px;
+    background: var(--backgroundBase1);
+  }
+
+  .progressItems {
+    display: flex;
+    align-items: center;
+  }
+
+  .dueDateSummary {
+    margin-left: 4px;
+    line-height: 11px;
+  }
+
+  .toggleTasksButton {
+    width: auto;
+    height: auto;
+    color: var(--text1);
+    font-size: 12px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+
+    &:hover {
+      color: var(--text3);
+
+      .countToggleIcon {
+        fill: var(--text3);
+      }
+    }
+  }
+
+  .countToggleIcon {
+    margin-left: 1px;
+  }
+
+  .countToggleIconOpened {
+    transform: rotate(-90deg);
+  }
+
+  .taskButton {
+    margin-top: 4px;
+  }
+
+  .taskButtonCard {
+    background: var(--backgroundButton);
+
+    &:hover {
+      color: var(--text3);
+    }
+  }
+
+  .taskButtonCardActive {
+    background: var(--backgroundCard);
+  }
+}

@@ -1,0 +1,18 @@
+:global(#app) {
+  .message {
+    align-content: space-between;
+    align-items: center;
+    color: var(--text0);
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 80px;
+  }
+
+  .wrapper {
+    display: flex;
+    height: calc(100vh - 50px);
+    background: var(--backgroundColor);
+  }
+}

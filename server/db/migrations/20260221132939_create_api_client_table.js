@@ -1,0 +1,21 @@
+module.exports.up = (knex) =>
+  knex.schema.createTable('api_client', (table) => {
+    table.bigInteger('id').primary().defaultTo(knex.raw('next_id()'));
+
+    table.text('name').notNullable();
+    table.text('label').notNullable();
+    table.text('client_id').notNullable().unique();
+    table.text('client_secret').notNullable();
+    table.jsonb('permissions').notNullable().defaultTo('[]');
+    table.bigInteger('user_id');
+    table.timestamp('last_used_at', true);
+    table.timestamp('created_at', true);
+    table.timestamp('updated_at', true);
+    table.timestamp('deleted_at', true);
+
+    /* Indexes */
+    table.index('user_id');
+    table.index('client_id');
+  });
+
+module.exports.down = (knex) => knex.schema.dropTable('api_client');

@@ -1,0 +1,58 @@
+:global(#app) {
+  .closeButton {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    z-index: 2000;
+  }
+
+  .popup {
+    background: var(--backgroundPopup);
+    color: var(--text1);
+    width: auto;
+    max-width: calc(100vw - 44px);
+    max-height: calc(100vh - 44px);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    text-align: left;
+    position: fixed;
+    z-index: 2000;
+    box-shadow:
+      -1px -1px 3px var(--backgroundPopupShadow),
+      1px 1px 3px var(--backgroundPopupShadow);
+  }
+
+  &:global([data-theme-shape='rounded']) .popup {
+    border-radius: 12px;
+  }
+
+  .bottomLeft {
+    right: 20px;
+    bottom: 20px;
+    left: auto;
+    top: auto;
+    transform: none;
+  }
+
+  .center {
+    left: 50%;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  .success {
+    background: var(--backgroundPopupSuccess);
+    color: var(--text0);
+    border: 1px solid var(--borderPopupSuccess);
+  }
+
+  .error {
+    background: var(--backgroundPopupError);
+    color: var(--text0);
+    border: 1px solid var(--borderPopupError);
+  }
+}

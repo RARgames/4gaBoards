@@ -1,0 +1,28 @@
+:global(#app) {
+  .container {
+    min-height: 0;
+  }
+
+  .cell {
+    -webkit-line-clamp: none;
+    line-clamp: none;
+  }
+
+  .currentValueCell {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .activityButtonWrapper {
+    display: inline;
+
+    button {
+      margin-left: 4px;
+      height: 100%;
+
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
+}

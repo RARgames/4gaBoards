@@ -1,0 +1,43 @@
+:global(#app) {
+  .message {
+    display: flex;
+    justify-content: space-between;
+    background: none;
+    color: var(--text1);
+    border: 1px solid var(--text1);
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .warning {
+    color: var(--textWarning);
+    border: 1px solid var(--textWarning);
+
+    .closeButton {
+      svg {
+        fill: var(--textWarning);
+
+        &:hover {
+          fill: var(--textWarningHover);
+        }
+      }
+    }
+  }
+
+  .error {
+    color: var(--textError);
+    border: 1px solid var(--textError);
+
+    .closeButton {
+      svg {
+        fill: var(--textError);
+
+        &:hover {
+          fill: var(--textErrorHover);
+        }
+      }
+    }
+  }
+}

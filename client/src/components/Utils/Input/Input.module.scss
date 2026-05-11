@@ -1,0 +1,49 @@
+:global(#app) {
+  .input {
+    background: var(--backgroundInput);
+    color: var(--text1);
+    padding: 9.5px 8px;
+    border: 1px solid var(--borderVivid);
+    border-radius: 3px;
+
+    &:focus {
+      border: 1px solid var(--accentSelected);
+      outline: none;
+    }
+
+    &:disabled {
+      background: var(--backgroundInputDisabled);
+      color: var(--text4);
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .input {
+    border-radius: 8px;
+  }
+
+  .inputError {
+    border: 1px solid var(--textError);
+
+    &:focus {
+      border: 1px solid var(--textError);
+    }
+
+    &::placeholder {
+      color: var(--textError);
+    }
+  }
+
+  .fullWidth {
+    width: 100%;
+  }
+
+  .loginRegister {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .default {
+    width: 100%;
+    margin-bottom: 6px;
+  }
+}

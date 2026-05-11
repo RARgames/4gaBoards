@@ -1,0 +1,27 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    justify-content: space-around;
+    color: var(--text1);
+    padding: 0 12px 12px 12px;
+  }
+
+  .header {
+    max-width: max(35vw, 274px);
+  }
+
+  .content {
+    padding: 0;
+    max-width: max(35vw, 274px);
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .metaUser {
+    margin: 2px 0;
+  }
+}

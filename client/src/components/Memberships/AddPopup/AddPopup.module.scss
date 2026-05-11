@@ -1,0 +1,6 @@
+:global(#app) {
+  .users {
+    max-height: calc(50vh - 120px);
+    scrollbar-gutter: stable;
+  }
+}

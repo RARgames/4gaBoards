@@ -1,0 +1,36 @@
+:global(#app) {
+  .link {
+    color: var(--text2);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+
+    &:hover {
+      color: var(--text3);
+      .iconLink {
+        fill: var(--text3);
+      }
+    }
+  }
+
+  .empty {
+    &::after {
+      content: 'N/A';
+      margin-left: 2px;
+      color: var(--activityDeleted);
+      font-style: italic;
+    }
+
+    &:hover {
+      color: var(--text2);
+      .iconLink {
+        fill: var(--text2);
+      }
+    }
+  }
+
+  .iconLink {
+    fill: var(--text2);
+    margin-right: 2px;
+  }
+}

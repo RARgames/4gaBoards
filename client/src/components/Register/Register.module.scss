@@ -1,0 +1,124 @@
+:global(#app) {
+  .formTitle {
+    font-size: 36px;
+    font-weight: normal;
+    margin-bottom: 32px;
+    color: var(--text0);
+    text-align: center;
+  }
+
+  .message {
+    margin-bottom: 8px;
+  }
+
+  .logo {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+    background: var(--backgroundAuth);
+  }
+
+  .loginWrapper {
+    margin: auto;
+    max-width: 440px;
+    padding: 20px;
+    background: var(--backgroundAuth);
+  }
+
+  .inputLabel {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    margin-bottom: 4px;
+    color: var(--text3);
+    width: 100%;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ssoIcon {
+    margin-right: 6px;
+  }
+
+  .submitButton {
+    width: 100%;
+  }
+
+  .submitButtonIcon {
+    transform: rotate(270deg);
+    vertical-align: text-bottom;
+    margin-left: 6px;
+  }
+
+  .otherOptionsTextWrapper {
+    margin: 20px 0 16px 0;
+    display: grid;
+    grid-template-columns: 1fr min-content 1fr;
+    align-items: center;
+  }
+
+  .otherOptionsLine {
+    height: 1px;
+    background: var(--text4);
+  }
+
+  .otherOptionsText {
+    margin: 0 1rem;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .otherOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .alternateActionText {
+    color: var(--text3);
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 20px 0 16px 0;
+  }
+
+  .alternateActionButtonContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .checkboxWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .checkboxLabel {
+    flex: 1;
+  }
+
+  .checkbox {
+    background: transparent;
+
+    &:hover {
+      background: var(--backgroundButtonMisc);
+    }
+  }
+
+  .registrationDisabledText {
+    color: var(--text0);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+  }
+}

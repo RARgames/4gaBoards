@@ -1,0 +1,107 @@
+:global(#app) {
+  .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(15vw);
+    color: var(--text0);
+  }
+
+  .cardsCount {
+    color: var(--textCounter);
+    font-size: 12px;
+  }
+
+  .action {
+    flex: 0 0 auto;
+    align-items: center;
+    margin-right: 20px;
+  }
+
+  .actionFlex {
+    display: flex;
+  }
+
+  .actionRightFirst {
+    margin-left: auto;
+  }
+
+  .actionRightLast {
+    margin-right: 0;
+  }
+
+  .wrapper {
+    height: 68px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    padding: 16px 20px;
+    background: var(--backgroundColor);
+  }
+
+  .subscriptionButton {
+    margin-right: 2px;
+  }
+
+  .cardsCountAction {
+    margin-right: 12px;
+  }
+
+  .githubAction {
+    flex: 0 0 auto;
+    margin-right: 6px;
+  }
+
+  .githubGreen {
+    fill: var(--iconGithubActive);
+  }
+
+  .githubGrey {
+    fill: var(--text4);
+  }
+
+  .switchViewButton {
+    background: var(--backgroundFilter);
+    border: 1px solid var(--borderVivid);
+    padding: 8px 6px;
+
+    svg {
+      fill: var(--text1);
+    }
+
+    &:hover {
+      background: var(--backgroundFilterHover);
+
+      svg {
+        fill: var(--text1);
+      }
+    }
+
+    &:first-child {
+      border-right: 0px;
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .switchViewButton {
+    &:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    &:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+  }
+
+  .switchViewButton.active {
+    background: var(--backgroundFilterSelected);
+
+    svg {
+      fill: var(--text1);
+    }
+  }
+}

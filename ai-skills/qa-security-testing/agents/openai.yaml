@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA Security Testing"
+  short_description: "Plan security-focused checks around auth and authorization."
+  default_prompt: "Use this skill to design pragmatic security checks for sessions, authorization, and input validation."

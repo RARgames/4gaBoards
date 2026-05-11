@@ -1,0 +1,16 @@
+:global(#app) {
+  .content {
+    min-width: 300px;
+  }
+
+  .dropdownMenu {
+    z-index: 2001;
+  }
+
+  .text {
+    color: var(--text1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+}

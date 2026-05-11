@@ -1,0 +1,44 @@
+:global(#app) {
+  .colorButton {
+    height: 30px;
+    margin: 4px;
+    position: relative;
+    width: 43px;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .colorButtonActive:before {
+    bottom: 3px;
+    color: var(--textWhite);
+    content: 'Г';
+    font-size: 18px;
+    line-height: 36px;
+    position: absolute;
+    right: 6px;
+    text-align: center;
+    text-shadow: 1px 1px 0 var(--shadowBlack08);
+    top: 0;
+    transform: rotate(-135deg);
+    width: 36px;
+  }
+
+  .colorButtons {
+    margin: 0 -3px 6px -3px;
+
+    &:after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+
+  .text {
+    color: var(--text1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+}

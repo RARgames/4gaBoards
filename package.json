@@ -1,0 +1,107 @@
+{
+  "name": "4gaboards",
+  "version": "3.3.6",
+  "private": true,
+  "homepage": "https://4gaboards.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RARgames/4gaBoards.git"
+  },
+  "license": "MIT",
+  "author": "RARgames",
+  "scripts": {
+    "client:build": "pnpm -C client build",
+    "client:lint": "pnpm -C client lint",
+    "client:lint:styles": "pnpm -C client lint:styles",
+    "client:lint:styles:fix": "pnpm -C client lint:styles:fix",
+    "client:start": "pnpm -C client start",
+    "preclient:test": "pnpm packages:build",
+    "client:test": "pnpm -C client test",
+    "preclient:ci:test": "pnpm packages:build",
+    "client:ci:test": "pnpm -C client ci:test",
+    "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
+    "docker:build_local": "docker build -t rargames0/4gaboards:local -f Dockerfile . && docker push rargames0/4gaboards:local",
+    "lint": "pnpm -r --parallel lint",
+    "prepare": "husky",
+    "server:console": "pnpm -C server console",
+    "server:db:init": "pnpm -C server db:init",
+    "server:db:migrate": "pnpm -C server db:migrate",
+    "server:db:rollback_one": "pnpm -C server db:rollback_one",
+    "server:db:rollback": "pnpm -C server db:rollback",
+    "server:db:migration_make": "pnpm -C server db:migration_make",
+    "server:db:seed": "pnpm -C server db:seed",
+    "server:lint": "pnpm -C server lint",
+    "server:start": "pnpm -C server start",
+    "server:start:prod": "pnpm -C server start:prod",
+    "server:test": "pnpm -C server test",
+    "packages:lint": "pnpm -r --filter @4gaboards/* lint",
+    "packages:clean": "pnpm --filter @4gaboards/* clean",
+    "packages:build": "pnpm packages:clean && pnpm -r --filter @4gaboards/* build",
+    "start": "pnpm packages:build && concurrently -n server,client \"pnpm -C server start\" \"pnpm -C client start\"",
+    "dev": "pnpm packages:build && concurrently -n server,client,packages \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -r --parallel --filter @4gaboards/* dev\"",
+    "pretest": "pnpm packages:build",
+    "test": "pnpm -C server test && pnpm -C client test",
+    "e2e:test": "playwright test",
+    "e2e:cleanup": "node tests/e2e/cleanup-e2e-data.js",
+    "e2e:ui": "playwright test --ui",
+    "e2e:install": "playwright install chromium"
+  },
+  "lint-staged": {
+    "client/**/*.{js,jsx}": [
+      "pnpm -C client lint:js"
+    ],
+    "client/**/*.{css,scss}": [
+      "pnpm -C client lint:styles"
+    ],
+    "server/**/*.js": [
+      "pnpm -C server lint"
+    ],
+    "packages/*/**/*.{js,jsx}": [
+      "pnpm -r --filter @4gaboards/* lint"
+    ]
+  },
+  "dependencies": {
+    "husky": "^9.1.7"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.28.6",
+    "@playwright/test": "^1.57.0",
+    "concurrently": "^9.2.1",
+    "confusing-browser-globals": "^1.0.11",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-perfectionist": "^5.8.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "lint-staged": "^16.4.0",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.8.2",
+    "stylelint": "^17.8.0",
+    "stylelint-config-recommended-scss": "^17.0.1"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "10.33.0",
+      "onFail": "error"
+    }
+  },
+  "engines": {
+    "node": "^24.11",
+    "pnpm": "^10.33.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "core-js-pure",
+      "unrs-resolver",
+      "bcrypt",
+      "protobufjs",
+      "sharp"
+    ]
+  }
+}

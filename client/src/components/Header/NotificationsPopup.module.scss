@@ -1,0 +1,41 @@
+:global(#app) {
+  .headerWrapper {
+    height: auto;
+  }
+
+  .header {
+    padding: 0;
+  }
+
+  .title {
+    padding: 12px 32px 8px 32px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .actionsWrapper {
+    position: absolute;
+    right: 8px;
+    display: inline-flex;
+  }
+
+  .notificationCount {
+    color: var(--text3);
+  }
+
+  .wrapper {
+    margin: 0 -12px -12px -12px;
+    max-width: max(400px, 35vw);
+  }
+
+  .noUnread {
+    color: var(--text2);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .filter {
+    padding: 0 0 6px 0;
+  }
+}

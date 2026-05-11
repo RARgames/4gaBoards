@@ -1,0 +1,12 @@
+:global(#app) {
+  .text {
+    color: var(--text1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .dropdownMenu {
+    z-index: 2001;
+  }
+}

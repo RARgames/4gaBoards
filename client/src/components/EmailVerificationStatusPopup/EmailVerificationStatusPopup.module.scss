@@ -1,0 +1,17 @@
+:global(#app) {
+  .content {
+    min-width: 280px;
+    max-width: 360px;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .title {
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .details {
+    color: var(--text2);
+  }
+}

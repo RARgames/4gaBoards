@@ -1,0 +1,32 @@
+:global(#app) {
+  .content {
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .contentPdf {
+    height: 100%;
+    width: 90%;
+  }
+
+  .contentError {
+    color: var(--text0);
+    font-size: 20px;
+    font-weight: 700;
+    height: 20px;
+    width: 470px;
+  }
+
+  .toggleButton {
+    color: var(--text3);
+    padding: 6px 4px;
+
+    &:hover {
+      color: var(--text4);
+    }
+  }
+}

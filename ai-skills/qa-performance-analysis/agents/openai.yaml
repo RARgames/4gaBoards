@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA Performance Analysis"
+  short_description: "Plan lightweight performance checks for E2E workflows."
+  default_prompt: "Use this skill to define practical performance checks, thresholds, and measurements for user workflows."

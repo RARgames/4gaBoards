@@ -1,0 +1,11 @@
+:global(#app) {
+  .themeButton {
+    transition: all 0.2s ease;
+    background: var(--backgroundButton);
+
+    &:hover {
+      background: var(--backgroundButtonHover);
+      color: var(--text1);
+    }
+  }
+}

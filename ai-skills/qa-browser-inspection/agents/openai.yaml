@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA Browser Inspection"
+  short_description: "Inspect web UI states for Playwright automation."
+  default_prompt: "Use this skill to inspect a local web app, identify stable locators, and debug Playwright failures."

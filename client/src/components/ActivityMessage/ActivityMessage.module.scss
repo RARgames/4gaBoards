@@ -1,0 +1,17 @@
+:global(#app) {
+  .data {
+    color: var(--text0);
+  }
+
+  .linked {
+    color: var(--activityLinked);
+
+    &:hover {
+      color: var(--activityLinkedHover);
+    }
+  }
+
+  .linkedDeleted {
+    color: var(--activityDeleted);
+  }
+}

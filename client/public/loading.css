@@ -1,0 +1,4 @@
+#app {
+  --backgroundColor: #22252a;
+  background: var(--backgroundColor);
+}

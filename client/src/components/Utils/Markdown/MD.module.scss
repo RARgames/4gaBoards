@@ -1,0 +1,33 @@
+:global(#app) {
+  .editor {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  .preview {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  .fontMonospace {
+    font-family: ui-monospace, 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', 'monospace' !important;
+    --md-editor-font-family: ui-monospace, 'SFMono-Regular', 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', 'monospace';
+  }
+
+  .coloredTextButton {
+    svg {
+      vertical-align: -5%;
+      fill: var(--mdEditorIcon);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--mdEditorIconHover);
+      }
+    }
+
+    &:disabled {
+      svg {
+        fill: var(--mdEditorIconDisabled);
+      }
+    }
+  }
+}

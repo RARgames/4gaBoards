@@ -1,0 +1,7 @@
+:global(#app) {
+  .form {
+    &:focus {
+      outline: none;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+:global(#app) {
+  .wrapper {
+    padding: 0 20px 0 20px;
+  }
+
+  .paginationButtonsWrapper {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+  }
+
+  .popupWrapper {
+    height: 20px;
+  }
+
+  .paginationButton {
+    display: inline-flex;
+    white-space: nowrap;
+    background: var(--backgroundButton);
+    color: var(--text2);
+    line-height: 16px;
+    font-size: 14px;
+    padding: 0 6px;
+    text-align: left;
+    width: fit-content;
+    align-items: center;
+
+    &:hover {
+      color: var(--text2);
+      background: var(--backgroundButtonHover);
+
+      .paginationButtonIcon {
+        fill: var(--text2);
+      }
+    }
+  }
+
+  .paginationButtonIcon {
+    fill: var(--text2);
+  }
+
+  .paginationButtonText {
+    display: inline-block;
+    margin-left: 2px;
+  }
+
+  .iconTableHeader {
+    fill: var(--text1);
+    flex-shrink: 0;
+  }
+}

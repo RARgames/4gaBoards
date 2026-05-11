@@ -1,0 +1,12 @@
+node_modules
+docker-compose.override.yml
+test_docker
+playwright-report
+test-results
+
+.idea
+.DS_Store
+
+# Prevent another lockfile than pnpm-lock.yaml (pnpm) from being created
+yarn.lock
+package-lock.json

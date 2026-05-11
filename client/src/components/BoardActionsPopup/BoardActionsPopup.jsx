@@ -1,0 +1,223 @@
+import React, { useEffect } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+
+import { useSteps } from '../../hooks';
+import { ActivityStep } from '../ActivityPopup';
+import { ConnectionsStep } from '../ConnectionsPopup';
+import DeleteStep from '../DeleteStep';
+import ExportStep from '../ExportStep';
+import MailTokenListStep from '../MailTokenListStep';
+import RenameStep from '../RenameStep';
+import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+
+import * as s from './BoardActionsPopup.module.scss';
+
+const StepTypes = {
+  RENAME: 'RENAME',
+  GITHUB: 'GITHUB',
+  EXPORT: 'EXPORT',
+  DELETE: 'DELETE',
+  ACTIVITY: 'ACTIVITY',
+  MAILTOKEN_LIST: 'MAILTOKEN_LIST',
+};
+
+const BoardActionsStep = React.memo(
+  ({
+    activities,
+    isActivitiesFetching,
+    isAllActivitiesFetched,
+    lastActivityId,
+    defaultDataRename,
+    defaultDataGithub,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    memberships,
+    mailTokens,
+    mailTokenCount,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
+    isProjectManager,
+    canEdit,
+    isFetching,
+    onUpdate,
+    onExport,
+    onFetch,
+    onDelete,
+    onActivitiesFetch,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
+    onClose,
+  }) => {
+    const [t] = useTranslation();
+    const [step, openStep, handleBack] = useSteps();
+
+    useEffect(() => {
+      if (isFetching === null) {
+        onFetch();
+      }
+    }, [isFetching, onFetch]);
+
+    if (step) {
+      switch (step.type) {
+        case StepTypes.RENAME:
+          return (
+            <RenameStep
+              title={t('common.renameBoard', { context: 'title' })}
+              defaultData={defaultDataRename}
+              placeholder={t('common.enterBoardName')}
+              onUpdate={onUpdate}
+              onBack={handleBack}
+              onClose={onClose}
+            />
+          );
+        case StepTypes.GITHUB:
+          return <ConnectionsStep defaultData={defaultDataGithub} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
+        case StepTypes.EXPORT:
+          return <ExportStep title={t('common.exportBoard', { context: 'title' })} onExport={onExport} onBack={handleBack} onClose={onClose} />;
+        case StepTypes.DELETE:
+          return (
+            <DeleteStep
+              title={t('common.deleteBoard', { context: 'title' })}
+              content={t('common.areYouSureYouWantToDeleteThisBoard')}
+              buttonContent={t('common.deleteBoard', { context: 'title' })}
+              onConfirm={onDelete}
+              onBack={handleBack}
+            />
+          );
+        case StepTypes.ACTIVITY:
+          return (
+            <ActivityStep
+              title={t('common.activityFor', { name: defaultDataRename.name })}
+              createdAt={createdAt}
+              createdBy={createdBy}
+              updatedAt={updatedAt}
+              updatedBy={updatedBy}
+              memberships={memberships}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+              activities={activities}
+              isFetching={isActivitiesFetching}
+              isAllFetched={isAllActivitiesFetched}
+              lastActivityId={lastActivityId}
+              hideBoardDetails
+              onFetch={onActivitiesFetch}
+              onBack={handleBack}
+              onClose={onClose}
+            />
+          );
+        case StepTypes.MAILTOKEN_LIST:
+          return (
+            <MailTokenListStep
+              title={
+                <Trans
+                  i18nKey="common.emailCardToBoard_withCount"
+                  values={{
+                    count: mailTokenCount,
+                  }}
+                  components={{ count: <span className={s.count} /> }}
+                />
+              }
+              mailTokens={mailTokens}
+              mailServiceInboundEmail={mailServiceInboundEmail}
+              canEdit={canEdit}
+              onCreate={onMailTokenCreate}
+              onUpdate={onMailTokenUpdate}
+              onDelete={onMailTokenDelete}
+              onBack={handleBack}
+            />
+          );
+        default:
+      }
+    }
+
+    return (
+      <>
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+            <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+            {t('common.renameBoard', { context: 'title' })}
+          </Button>
+        )}
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
+            <Icon type={IconType.GitHub} size={IconSize.Size13} className={s.icon} />
+            {t('common.connections', { context: 'title' })}
+          </Button>
+        )}
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={() => openStep(StepTypes.EXPORT)}>
+            <Icon type={IconType.Board} size={IconSize.Size13} className={s.icon} />
+            {t('common.exportBoard', { context: 'title' })}
+          </Button>
+        )}
+        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
+          <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+          {t('common.checkActivity', { context: 'title' })}
+        </Button>
+        {canEdit && (
+          <Button
+            style={ButtonStyle.PopupContext}
+            title={mailServiceAvailable ? t('common.emailCardToBoard') : t('common.emailServiceUnavailable')}
+            onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}
+            disabled={!mailServiceAvailable}
+          >
+            <Icon type={IconType.Envelope} size={IconSize.Size13} className={s.icon} />
+            {t('common.emailCardToBoard')}
+          </Button>
+        )}
+        {isProjectManager && <Popup.Separator />}
+        {isProjectManager && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
+            <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
+            {t('common.deleteBoard', { context: 'title' })}
+          </Button>
+        )}
+      </>
+    );
+  },
+);
+
+BoardActionsStep.propTypes = {
+  activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isActivitiesFetching: PropTypes.bool.isRequired,
+  isAllActivitiesFetched: PropTypes.bool.isRequired,
+  lastActivityId: PropTypes.string,
+  defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  defaultDataGithub: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  createdAt: PropTypes.instanceOf(Date),
+  createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  updatedAt: PropTypes.instanceOf(Date),
+  updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isProjectManager: PropTypes.bool.isRequired,
+  canEdit: PropTypes.bool.isRequired,
+  mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailTokenCount: PropTypes.number.isRequired,
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
+  isFetching: PropTypes.bool,
+  onUpdate: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
+  onFetch: PropTypes.func,
+  onDelete: PropTypes.func.isRequired,
+  onActivitiesFetch: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
+BoardActionsStep.defaultProps = {
+  lastActivityId: undefined,
+  createdAt: undefined,
+  createdBy: undefined,
+  updatedAt: undefined,
+  updatedBy: undefined,
+  isFetching: false,
+  onFetch: () => {},
+};
+
+export default withPopup(BoardActionsStep);

@@ -1,0 +1,66 @@
+const bcrypt = require('bcrypt');
+const validator = require('validator');
+
+const { getRemoteAddress } = require('../../../utils/remoteAddress');
+
+const Errors = {
+  INVALID_USERNAME_PASSWORD: {
+    invalidUsernamePassword: 'Invalid username or password',
+  },
+};
+
+const emailOrUsernameValidator = (value) => (value.includes('@') ? validator.isEmail(value) : value.length >= 3 && value.length <= 16 && /^[a-zA-Z0-9]+((_|\.)?[a-zA-Z0-9])*$/.test(value));
+
+module.exports = {
+  inputs: {
+    emailOrUsername: {
+      type: 'string',
+      custom: emailOrUsernameValidator,
+      required: true,
+    },
+    password: {
+      type: 'string',
+      required: true,
+    },
+  },
+
+  exits: {
+    invalidUsernamePassword: {
+      responseType: 'unauthorized',
+    },
+  },
+
+  async fn(inputs) {
+    const remoteAddress = getRemoteAddress(this.req);
+    const attemptedIdentifier = inputs.emailOrUsername.trim().toLowerCase();
+
+    const user = await sails.helpers.users.getOneByEmailOrUsername(inputs.emailOrUsername);
+    const DUMMY_HASH = bcrypt.hashSync('dummy', 10);
+
+    if (!user) {
+      bcrypt.compareSync(inputs.password, DUMMY_HASH);
+      await sails.helpers.failedAuths.createOne.with({ attemptedIdentifier, remoteAddress });
+      sails.log.warn(`Invalid email or username: "${inputs.emailOrUsername}"! (IP: ${remoteAddress})`);
+      throw Errors.INVALID_USERNAME_PASSWORD;
+    }
+
+    if (!bcrypt.compareSync(inputs.password, user.password)) {
+      await sails.helpers.failedAuths.createOne.with({ attemptedIdentifier, remoteAddress });
+      sails.log.warn(`Invalid password! (IP: ${remoteAddress})`);
+      throw Errors.INVALID_USERNAME_PASSWORD;
+    }
+
+    const accessToken = sails.helpers.utils.createToken(user.id);
+
+    await Session.create({
+      accessToken,
+      remoteAddress,
+      userId: user.id,
+      userAgent: this.req.headers['user-agent'],
+    });
+
+    return {
+      item: accessToken,
+    };
+  },
+};

@@ -1,0 +1,26 @@
+:global(#app) {
+  .closeButton {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    z-index: 2000;
+  }
+
+  .popup {
+    background: var(--backgroundPopup);
+    color: var(--text1);
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    text-align: left;
+    z-index: 2000;
+    box-shadow:
+      -1px -1px 3px var(--backgroundPopupShadow),
+      1px 1px 3px var(--backgroundPopupShadow);
+  }
+
+  &:global([data-theme-shape='rounded']) .popup {
+    border-radius: 12px;
+  }
+}

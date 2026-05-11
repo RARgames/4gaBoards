@@ -1,0 +1,20 @@
+:global(#app) {
+  .field {
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    line-height: 20px;
+    padding: 4px 8px;
+    width: 236px;
+
+    &::placeholder {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+
+  .wrapper {
+    width: 236px;
+    position: relative;
+    float: left;
+  }
+}

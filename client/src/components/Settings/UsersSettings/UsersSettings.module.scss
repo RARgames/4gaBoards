@@ -1,0 +1,65 @@
+:global(#app) {
+  .wrapper {
+    padding-bottom: 0;
+  }
+
+  .headerTextDetails {
+    color: var(--text3);
+    font-weight: normal;
+    font-size: 18px;
+  }
+
+  .container {
+    min-height: 0;
+  }
+
+  .cell {
+    -webkit-line-clamp: none;
+    line-clamp: none;
+  }
+
+  .dateCell {
+    font-size: 14px;
+  }
+
+  .paginationButtonsWrapper {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+  }
+
+  .popupWrapper {
+    height: 20px;
+  }
+
+  .paginationButton {
+    display: inline-flex;
+    white-space: nowrap;
+    background: var(--backgroundButton);
+    color: var(--text2);
+    line-height: 16px;
+    font-size: 14px;
+    padding: 0 6px;
+    text-align: left;
+    width: fit-content;
+    align-items: center;
+
+    &:hover {
+      color: var(--text2);
+      background: var(--backgroundButtonHover);
+
+      .paginationButtonIcon {
+        fill: var(--text2);
+      }
+    }
+  }
+
+  .paginationButtonIcon {
+    fill: var(--text2);
+  }
+
+  .paginationButtonText {
+    display: inline-block;
+    margin-left: 2px;
+  }
+}

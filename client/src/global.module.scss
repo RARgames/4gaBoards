@@ -1,0 +1,46 @@
+:global(#app) {
+  .controls {
+    display: flex;
+    justify-content: right;
+  }
+
+  .controlsSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .controlsCenter {
+    display: flex;
+    justify-content: center;
+  }
+
+  .scrollableXY {
+    overflow: auto;
+  }
+
+  .scrollableY {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .scrollableX {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .cursorDefault {
+    cursor: default;
+  }
+
+  .cursorPointer {
+    cursor: pointer;
+  }
+
+  .cursorGrab {
+    cursor: grab;
+  }
+
+  .cursorResize {
+    cursor: ew-resize;
+  }
+}

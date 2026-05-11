@@ -1,0 +1,202 @@
+{
+  "name": "client",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "lint": "pnpm lint:js && pnpm lint:styles",
+    "lint:js": "eslint .",
+    "lint:styles": "stylelint 'src/**/*.{css,scss}' --allow-empty-input",
+    "lint:styles:fix": "stylelint 'src/**/*.{css,scss}' --fix --allow-empty-input",
+    "start": "node scripts/start.js",
+    "test": "node scripts/test.js",
+    "ci:test": "node scripts/test.js --ci"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@4gaboards/enums": "workspace:*",
+    "@4gaboards/locales": "workspace:*",
+    "@4gaboards/utils": "workspace:*",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/runtime": "^7.29.2",
+    "@floating-ui/react": "^0.27.19",
+    "@hyperdx/browser": "^0.22.1",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/core": "^2.7.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.2",
+    "@react-hook/resize-observer": "^2.0.2",
+    "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-table": "^8.21.3",
+    "@uiw/react-color-sketch": "^2.10.1",
+    "@uiw/react-md-editor": "^4.1.0",
+    "address": "^2.0.3",
+    "babel-loader": "^10.1.1",
+    "babel-preset-react-app": "^10.1.0",
+    "bfj": "^9.1.3",
+    "browserslist": "^4.28.2",
+    "camelcase": "^9.0.0",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "chalk": "^5.6.2",
+    "clsx": "^2.1.1",
+    "cross-spawn": "^7.0.6",
+    "css-loader": "^7.1.4",
+    "css-minimizer-webpack-plugin": "^8.0.0",
+    "date-fns": "^4.1.0",
+    "dequal": "^2.0.3",
+    "detect-port-alt": "^1.1.6",
+    "dotenv": "^17.4.2",
+    "dotenv-expand": "^12.0.3",
+    "escape-string-regexp": "^5.0.0",
+    "eslint-webpack-plugin": "^5.0.3",
+    "file-loader": "^6.2.0",
+    "filesize": "^11.0.15",
+    "find-up": "^8.0.0",
+    "fork-ts-checker-webpack-plugin": "^9.1.0",
+    "fs-extra": "^11.3.4",
+    "global-modules": "^2.0.0",
+    "gzip-size": "^7.0.0",
+    "history": "^5.3.0",
+    "html-webpack-plugin": "^5.6.6",
+    "i18next": "^26.0.4",
+    "i18next-browser-languagedetector": "^8.2.1",
+    "identity-obj-proxy": "^3.0.0",
+    "is-root": "^3.0.0",
+    "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
+    "loader-utils": "^3.3.1",
+    "lodash": "^4.18.1",
+    "mini-css-extract-plugin": "^2.10.2",
+    "open": "^11.0.0",
+    "package-up": "^5.0.0",
+    "photoswipe": "^5.4.4",
+    "postcss": "^8.5.9",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^8.2.1",
+    "postcss-normalize": "^13.0.1",
+    "postcss-preset-env": "^11.2.0",
+    "prompts": "^2.4.2",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-app-polyfill": "^3.0.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-datepicker": "^8.10.0",
+    "react-dom": "18.2.0",
+    "react-dropzone": "^15.0.0",
+    "react-i18next": "^17.0.2",
+    "react-input-mask": "^2.0.4",
+    "react-photoswipe-gallery": "^4.0.0",
+    "react-redux": "^9.2.0",
+    "react-refresh": "^0.18.0",
+    "react-router": "^7.14.0",
+    "react-textarea-autosize": "^8.5.9",
+    "recursive-readdir": "^2.2.3",
+    "redux": "^5.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-orm": "^0.16.2",
+    "redux-saga": "^1.4.2",
+    "rehype-external-links": "^3.0.0",
+    "rehype-sanitize": "^6.0.0",
+    "remark-github": "^12.0.0",
+    "reselect": "^5.1.1",
+    "resolve": "^1.22.12",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.99.0",
+    "sass-loader": "^16.0.7",
+    "semver": "^7.7.4",
+    "socket.io-client": "^4.8.3",
+    "source-map-loader": "^5.0.0",
+    "strip-ansi": "^7.2.0",
+    "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.4.0",
+    "text-table": "^0.2.0",
+    "unist-util-visit": "^5.1.0",
+    "validator": "^13.15.35",
+    "webpack": "^5.106.1",
+    "webpack-dev-server": "^5.2.3",
+    "webpack-manifest-plugin": "^6.0.1",
+    "whatwg-fetch": "^3.6.20",
+    "workbox-webpack-plugin": "^7.4.0",
+    "zxcvbn": "^4.4.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "babel-jest": "^30.3.0",
+    "chai": "^6.2.2",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "jest-resolve": "^30.3.0",
+    "jest-watch-typeahead": "^3.0.1"
+  },
+  "engines": {
+    "node": "^24.11"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "resetMocks": true
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  }
+}

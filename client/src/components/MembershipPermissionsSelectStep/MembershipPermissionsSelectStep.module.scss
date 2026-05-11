@@ -1,0 +1,33 @@
+:global(#app) {
+  .menuItemDescription {
+    color: var(--text3);
+  }
+
+  .menuItemTitle {
+    margin-bottom: 8px;
+  }
+
+  .selected {
+    background: var(--backgroundPopupHover);
+  }
+
+  .last {
+    margin-bottom: 6px;
+  }
+
+  .commentSettings {
+    display: flex;
+    flex-direction: row;
+    margin: 16px 0 10px 0;
+  }
+
+  .commentSettingsRadio {
+    margin: 0 16px;
+  }
+
+  .commentSettingsText {
+    color: var(--text1);
+    font-size: 12px;
+    line-height: 18px;
+  }
+}

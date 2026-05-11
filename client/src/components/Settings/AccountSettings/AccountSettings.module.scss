@@ -1,0 +1,50 @@
+:global(#app) {
+  .actionsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .action {
+    width: 100%;
+    max-width: 750px;
+  }
+
+  .verificationWrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .verificationInfo {
+    color: var(--color-text-primary);
+    font-size: 14px;
+  }
+
+  .label {
+    color: var(--text2);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .usernameValue {
+    font-weight: 600;
+  }
+
+  .emailValue {
+    font-weight: 600;
+  }
+
+  .statusVerified {
+    color: var(--textSuccess);
+    font-weight: 700;
+  }
+
+  .statusNotVerified {
+    color: var(--textWarning);
+    font-weight: 700;
+  }
+}

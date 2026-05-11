@@ -1,0 +1,17 @@
+:global(#app) {
+  .wrapper {
+    padding: 0 12px 12px 12px;
+    min-width: 274px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .minContent {
+    max-width: min-content;
+  }
+
+  .limitedWidth {
+    max-width: 35vw;
+  }
+}

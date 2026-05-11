@@ -1,0 +1,78 @@
+:global(#app) {
+  .author {
+    color: var(--text0);
+    display: inline-block;
+    font-weight: bold;
+    line-height: 20px;
+    margin-right: 8px;
+    padding: 6px 0px 4px 0px;
+  }
+
+  .content {
+    display: inline-block;
+    margin-bottom: 16px;
+    vertical-align: top;
+    width: 100%;
+  }
+
+  .date {
+    color: var(--text3);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .edited {
+    color: var(--text3);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+    margin-left: 3px;
+    font-style: italic;
+
+    &:before {
+      content: '- ';
+    }
+  }
+
+  .preview {
+    border-radius: 3px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .title {
+    padding-bottom: 4px;
+  }
+
+  .user {
+    display: inline-block;
+    padding: 4px 8px 0 0;
+    vertical-align: top;
+  }
+
+  .buttons {
+    float: right;
+    padding: 8px 0 6px 6px;
+  }
+
+  .button {
+    svg {
+      fill: var(--text3);
+    }
+
+    &:hover {
+      svg {
+        fill: var(--text4);
+      }
+    }
+  }
+
+  .buttonIcon {
+    vertical-align: top;
+  }
+
+  .popupWrapper {
+    display: inline-block;
+  }
+}

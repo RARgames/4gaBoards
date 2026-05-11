@@ -1,0 +1,152 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "4ga-boards.fullname" . }}
+  labels:
+    {{- include "4ga-boards.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "4ga-boards.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "4ga-boards.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "4ga-boards.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: BASE_URL
+            value: {{ .Values.env.required.BASE_URL }}
+          - name: SECRET_KEY
+            value: {{ .Values.env.required.SECRET_KEY }}
+          - name: CLIENT_URL
+            value: {{ .Values.env.optional.CLIENT_URL }}
+          - name: DEFAULT_ADMIN_USERNAME
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_USERNAME }}
+          - name: DEFAULT_ADMIN_EMAIL
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_EMAIL }}
+          - name: DEFAULT_ADMIN_NAME
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_NAME }}
+          - name: DEFAULT_ADMIN_PASSWORD
+            value: {{ .Values.env.optional.DEFAULT_ADMIN_PASSWORD }}
+          - name: DEFAULT_PROJECT_CREATION_ALL
+            value: {{ .Values.env.optional.DEFAULT_PROJECT_CREATION_ALL }}
+          - name: DEFAULT_REGISTRATION_ENABLED
+            value: {{ .Values.env.optional.DEFAULT_REGISTRATION_ENABLED }}
+          - name: DEFAULT_LOCAL_REGISTRATION_ENABLED
+            value: {{ .Values.env.optional.DEFAULT_LOCAL_REGISTRATION_ENABLED }}
+          - name: DEFAULT_SSO_REGISTRATION_ENABLED
+            value: {{ .Values.env.optional.DEFAULT_SSO_REGISTRATION_ENABLED }}
+          - name: GOOGLE_CLIENT_ID
+            value: {{ .Values.env.optional.GOOGLE_CLIENT_ID }}
+          - name: GOOGLE_CLIENT_SECRET
+            value: {{ .Values.env.optional.GOOGLE_CLIENT_SECRET }}
+          - name: GITHUB_CLIENT_ID
+            value: {{ .Values.env.optional.GITHUB_CLIENT_ID }}
+          - name: GITHUB_CLIENT_SECRET
+            value: {{ .Values.env.optional.GITHUB_CLIENT_SECRET }}
+          - name: MICROSOFT_CLIENT_ID
+            value: {{ .Values.env.optional.MICROSOFT_CLIENT_ID }}
+          - name: MICROSOFT_CLIENT_SECRET
+            value: {{ .Values.env.optional.MICROSOFT_CLIENT_SECRET }}
+          - name: DEMO_MODE
+            value: {{ .Values.env.optional.DEMO_MODE }}
+          - name: METRICS_ENABLED
+            value: {{ .Values.env.optional.METRICS_ENABLED }}
+          - name: LOG_LEVEL
+            value: {{ .Values.env.optional.LOG_LEVEL }}
+          - name: TRUST_PROXY
+            value: {{ .Values.env.optional.TRUST_PROXY }}
+          - name: TOKEN_EXPIRES_IN
+            value: {{ .Values.env.optional.TOKEN_EXPIRES_IN }}
+          - name: DATABASE_URL
+            {{- if .Values.postgresql.enabled }}
+            value: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc/{{ .Values.postgresql.auth.database }}"
+            {{- end }}
+            {{- if not .Values.postgresql.enabled }}
+            value: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Values.postgresql.postgresUrl }}"
+            {{- end }}
+          - name: NODE_ENV
+            value: production
+          volumeMounts:
+            - name: user-avatars
+              mountPath: /app/public/user-avatars
+            - name: project-backgrount-images
+              mountPath: /app/public/project-background-images
+            - name: attachments
+              mountPath: /app/private/attachments
+      {{- if eq .Values.service.type "NodePort" }}
+      nodeName: {{ .Values.nodeName }}
+      {{- end }}
+      initContainers:
+        - name: db-init
+          image: postgres:latest
+          command: ['sh', '-c', 'until pg_isready -h $HOST -p $PORT -d $DATABASE; do echo waiting for database; sleep 1; done;']
+          env:
+            - name: HOST
+              value: "{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc"
+            - name: PORT
+              value: "5432"
+            - name: DATABASE
+              value: "{{ .Values.postgresql.auth.database }}"
+            - name: PGUSER
+              value: "{{ .Values.postgresql.auth.username }}"
+            - name: PGPASSWORD
+              value: "{{ .Values.postgresql.auth.password }}"
+      volumes:
+        - name: user-avatars
+          persistentVolumeClaim:
+            claimName: {{ .Values.pv.useravatars.pvcname }}
+        - name: project-backgrount-images
+          persistentVolumeClaim:
+            claimName: {{ .Values.pv.projectbackgroundimages.pvcname }}
+        - name: attachments
+          persistentVolumeClaim:
+            claimName: {{ .Values.pv.attachments.pvcname }}
+
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

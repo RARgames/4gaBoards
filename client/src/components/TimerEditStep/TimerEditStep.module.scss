@@ -1,0 +1,33 @@
+:global(#app) {
+  .fieldBox {
+    display: inline-block;
+    margin: 0 4px 0 4px;
+    width: calc(33.3333% - 22px);
+  }
+
+  .fieldWrapper {
+    margin: 0 -4px;
+  }
+
+  .iconButton {
+    margin: 0 4px 0 1px;
+    width: 36px;
+
+    svg {
+      vertical-align: 0%;
+    }
+  }
+
+  .startStopIcon {
+    fill: var(--textWhite);
+    vertical-align: 0%;
+    margin-right: 4px;
+  }
+
+  .text {
+    color: var(--text1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+}

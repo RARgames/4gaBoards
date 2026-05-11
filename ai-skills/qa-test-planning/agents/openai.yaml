@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA Test Planning"
+  short_description: "Turn product risk into concise E2E test plans."
+  default_prompt: "Use this skill to create or update a QA test plan for a feature or workflow."

@@ -1,0 +1,57 @@
+:global(#app) {
+  .author {
+    color: var(--text0);
+    display: inline-block;
+    font-weight: bold;
+    line-height: 20px;
+    margin-right: 8px;
+    padding: 6px 0px 4px 0px;
+  }
+
+  .content {
+    display: inline-flex;
+    border-bottom: 1px solid var(--borderSubtle);
+  }
+
+  .wrapper {
+    display: inline-block;
+    padding: 10.75px 12px 14.75px 8px;
+    width: calc(100% - 10px);
+  }
+
+  .date {
+    color: var(--text3);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .contentText {
+    color: var(--text2);
+    overflow-wrap: break-word;
+    overflow: hidden;
+  }
+
+  .user {
+    display: inline-block;
+    padding: 4px 8px 0 0;
+    vertical-align: top;
+  }
+
+  .board {
+    padding-left: 12px;
+    margin-left: auto;
+  }
+
+  .project {
+    margin: 0 12px 0 4px;
+
+    &::before {
+      content: '•';
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+      color: var(--text3);
+    }
+  }
+}

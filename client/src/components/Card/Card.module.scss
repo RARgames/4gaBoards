@@ -1,0 +1,179 @@
+:global(#app) {
+  .popupWrapper {
+    box-sizing: content-box;
+    display: inline-block;
+    min-height: auto;
+    padding: 3px;
+    position: absolute;
+    right: -5px;
+    top: 0;
+    width: 20px;
+  }
+
+  .popupWrapper2 {
+    display: inline-block;
+  }
+
+  .editCardButton {
+    opacity: 0;
+  }
+
+  .attachment {
+    display: inline-block;
+    line-height: 0;
+    margin: 0 0 6px 0;
+    max-width: 100%;
+    vertical-align: top;
+  }
+
+  .attachmentLeft {
+    margin-right: 4px;
+  }
+
+  .attachments {
+    display: inline-block;
+    padding-bottom: 2px;
+  }
+
+  .attachmentsRight {
+    float: right;
+    line-height: 0;
+  }
+
+  .card {
+    background: var(--backgroundCard);
+    border-radius: 2px;
+    box-shadow: var(--shadowBlack015) 0px 1px 4px;
+    position: relative;
+    border: 2px solid transparent;
+
+    &:hover {
+      background: var(--backgroundCardHover);
+
+      .editCardButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .card {
+    border-radius: 8px;
+  }
+
+  .cardOpen {
+    box-shadow: 0 0 5px var(--accentSelected);
+    border-radius: 2px;
+    border: 2px solid var(--accentSelected);
+    background: var(--backgroundCardSelected);
+  }
+
+  &:global([data-theme-shape='rounded']) .cardOpen {
+    border-radius: 8px;
+  }
+
+  .content {
+    display: block;
+
+    &:after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+
+  .cover {
+    border-radius: 2px;
+    padding: 0 2px;
+    vertical-align: middle;
+    width: 100%;
+  }
+
+  &:global([data-theme-shape='rounded']) .cover {
+    border-radius: 8px;
+  }
+
+  .detailsTitle {
+    padding: 4px 8px 4px 4px;
+  }
+
+  .details {
+    padding: 6px 6px 0 4px;
+  }
+
+  .labels {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .detailsNotification {
+    padding: 6px 0px 0;
+  }
+
+  .name {
+    color: var(--text1);
+    font-size: 14px;
+    line-height: 18px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+    max-height: 58px;
+  }
+
+  .notification {
+    background: var(--backgroundNotifications);
+    color: var(--textWhite);
+    font-size: 10px;
+    line-height: 12px;
+    padding: 0 2px 0 2px;
+    border-radius: 3px;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+  }
+
+  .notificationFull {
+    padding: 0 3px 0 2px;
+  }
+
+  .wrapper {
+    cursor: pointer;
+    display: block;
+    margin-bottom: 8px;
+    container-type: inline-size;
+  }
+
+  // FIXME: Temporary workaround for scrollbar flicker
+  @container (max-width: 259px) {
+    .cover {
+      margin-bottom: 6.75px;
+    }
+  }
+
+  .user {
+    margin-right: -8px;
+  }
+
+  .moreUsers {
+    color: var(--text0Strong);
+    background: var(--shadowBlack02);
+    border-radius: 50%;
+    text-align: center;
+    padding-right: 2px;
+    font-size: 12px;
+    line-height: 25px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .users {
+    margin-right: 10px;
+  }
+
+  .detailsIcon {
+    fill: var(--text3);
+  }
+}

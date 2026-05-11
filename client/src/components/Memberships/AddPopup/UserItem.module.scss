@@ -1,0 +1,28 @@
+:global(#app) {
+  .menuItem {
+    background: none;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    padding: 4px;
+    text-align: left;
+    width: 100%;
+
+    &:hover {
+      background: var(--backgroundPopupHover);
+    }
+  }
+
+  .menuItemText {
+    display: inline-block;
+    color: var(--text1);
+    margin-left: 8px;
+    width: calc(100% - 40px - 14px - 10px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+  }
+}

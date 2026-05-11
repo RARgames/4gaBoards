@@ -1,0 +1,312 @@
+:global(#app) {
+  .addAttachmentButton {
+    .hint {
+      visibility: hidden;
+    }
+
+    &:hover {
+      .hint {
+        visibility: visible;
+      }
+    }
+  }
+
+  .headerItem {
+    display: inline-block;
+    margin: 0 3px 4px 0;
+    max-width: 100%;
+    max-height: 28px;
+  }
+
+  .user {
+    margin-right: -8px;
+  }
+
+  .lastUser {
+    margin-right: 0;
+  }
+
+  .moreUsers {
+    color: var(--text0Strong);
+    background: var(--shadowBlack02);
+    border-radius: 50%;
+    text-align: center;
+    padding-right: 2px;
+    font-size: 14px;
+    line-height: 28px;
+    width: 28px;
+    height: 28px;
+    margin-right: 4px;
+  }
+
+  .headerItems {
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: top;
+    margin-right: 4px;
+  }
+
+  .cursorPointer {
+    cursor: pointer;
+  }
+
+  .wrapper {
+    width: 650px;
+    z-index: 1;
+    box-shadow: -10px 0 10px -12px var(--shadowBlack06);
+  }
+
+  @media (max-width: 800px) {
+    .wrapper {
+      width: 100%;
+    }
+  }
+
+  .hr {
+    border-width: 1px;
+    border-color: var(--borderSubtle);
+  }
+
+  .buttonToggle {
+    float: right;
+  }
+
+  .mainContainer {
+    background: var(--backgroundCardModal);
+    margin: 0;
+    padding: 6px 0 0 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .flexContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .moduleContainer {
+    position: relative;
+    padding: 0 15px 0 15px;
+  }
+
+  .header {
+    background: var(--backgroundCardModalHeader);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 15px 15px 12px 15px;
+  }
+
+  &:global([data-theme-shape='rounded']) .header {
+    border-top-left-radius: 12px;
+  }
+
+  .headerFirstLine {
+    display: flex;
+  }
+
+  .headerTitleWrapper {
+    flex: 1;
+  }
+
+  .headerTitle {
+    color: var(--text0Strong);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 20px;
+    width: 100%;
+    padding: 3px;
+    margin-bottom: 1px;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 3;
+  }
+
+  @media screen and (max-height: 400px) {
+    .headerTitle {
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+    }
+  }
+
+  @media screen and (min-height: 401px) and (max-height: 600px) {
+    .headerTitle {
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
+  }
+
+  @media screen and (min-height: 601px) and (max-height: 799px) {
+    .headerTitle {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+    }
+  }
+
+  @media screen and (min-height: 800px) and (max-height: 899px) {
+    .headerTitle {
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+    }
+  }
+
+  @media screen and (min-height: 900px) {
+    .headerTitle {
+      -webkit-line-clamp: 12;
+      line-clamp: 12;
+    }
+  }
+
+  .headerNotificationsButton {
+    align-self: center;
+  }
+
+  .headerNotificationsIcon {
+    margin: auto;
+  }
+
+  .headerListFieldWrapper {
+    padding: 3px;
+  }
+
+  .headerListField {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 60px);
+    display: inline-block;
+    color: var(--text1);
+  }
+
+  .headerListFieldIcon {
+    vertical-align: 25%;
+    margin-left: 4px;
+  }
+
+  .dropdownMenu {
+    margin-left: 2px;
+  }
+
+  .text {
+    color: var(--text1);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    line-height: 20px;
+    max-height: 20px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .alignCenter {
+    display: flex;
+    justify-content: center;
+  }
+
+  .moduleIcon {
+    color: var(--text1);
+    margin-right: 4px;
+  }
+
+  .moduleHeader {
+    color: var(--text1);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0 0 6px;
+    padding: 6px 0 0 0;
+  }
+
+  .descriptionButton {
+    background: var(--backgroundBase1);
+    border: none;
+    border-radius: 3px;
+    display: block;
+    color: var(--text1);
+    cursor: pointer;
+    min-height: 36px;
+    outline: none;
+    padding: 8px 10px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    width: 100%;
+
+    &:hover {
+      color: var(--text3);
+    }
+  }
+
+  .descriptionButtonText {
+    position: absolute;
+    top: 10px;
+  }
+
+  .descriptionText {
+    background: transparent;
+    border: none;
+    margin-bottom: 8px;
+    outline: none;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+
+  .localChangesLoaded {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--textLocalChanges);
+  }
+
+  .iconAddButton {
+    vertical-align: baseline;
+  }
+
+  .iconAddButton2 {
+    vertical-align: middle;
+  }
+
+  .popupWrapper {
+    display: inline-block;
+  }
+
+  .headerCount {
+    display: inline-block;
+    color: var(--text3);
+    margin-left: 4px;
+  }
+
+  .taskDueDateSummaryWrapper {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 4px;
+    cursor: pointer;
+  }
+
+  .linkIcon {
+    vertical-align: 0%;
+  }
+
+  .activity {
+    display: flex;
+    align-items: center;
+  }
+
+  .activityItem {
+    margin-right: 4px;
+  }
+
+  .mailAuthor {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text1);
+    line-height: 28px;
+  }
+}

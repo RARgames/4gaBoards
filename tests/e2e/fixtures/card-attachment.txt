@@ -1,0 +1,3 @@
+4ga Boards Playwright attachment fixture.
+
+This file is intentionally small and safe to upload during card modal E2E tests.

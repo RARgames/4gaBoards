@@ -1,0 +1,39 @@
+:global(#app) {
+  .progressContainer {
+    width: calc(100% - 2px);
+    margin: 2px 1px;
+    background: var(--backgroundBase1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progressBar {
+    transition: width 0.3s;
+  }
+
+  .red {
+    background: var(--backgroundProgressBarRed);
+  }
+
+  .orange {
+    background: var(--backgroundProgressBarOrange);
+  }
+
+  .yellow {
+    background: var(--backgroundProgressBarYellow);
+  }
+
+  .olive {
+    background: var(--backgroundProgressBarOlive);
+  }
+
+  .green {
+    background: var(--backgroundProgressBarGreen);
+  }
+
+  /* Size classes */
+
+  .tiny {
+    height: 5px;
+  }
+}

@@ -1,0 +1,13 @@
+:global(#app) {
+  .wrapper {
+    background: var(--backgroundList);
+    border-radius: 3px;
+    padding: 4px;
+    width: 272px;
+    min-height: 88px;
+  }
+
+  &:global([data-theme-shape='rounded']) .wrapper {
+    border-radius: 8px;
+  }
+}

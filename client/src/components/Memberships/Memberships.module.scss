@@ -1,0 +1,48 @@
+:global(#app) {
+  .addUser {
+    color: var(--text1);
+    background: var(--shadowBlack02);
+    border-radius: 50%;
+    box-shadow: none;
+    line-height: 40px;
+    width: 36px;
+    height: 36px;
+
+    &:hover {
+      background: var(--shadowBlack03);
+
+      svg {
+        fill: var(--text1);
+      }
+    }
+  }
+
+  .user {
+    display: inline-block;
+    margin: 0 -4px 0 0;
+    vertical-align: top;
+    line-height: 0;
+  }
+
+  .users {
+    display: flex;
+    margin-right: 4px;
+    margin-left: 4px;
+    align-items: center;
+  }
+
+  .moreMembersButton {
+    padding-right: 2px;
+    font-size: 14px;
+    line-height: 36px;
+    margin: 0 -6px 0 0;
+  }
+
+  .cannotEdit {
+    cursor: text;
+
+    &:hover {
+      background: var(--shadowBlack02);
+    }
+  }
+}

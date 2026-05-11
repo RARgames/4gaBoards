@@ -1,0 +1,121 @@
+:global(#app) {
+  .wrapper {
+    background: var(--backgroundHeader);
+    display: flex;
+    width: 100%;
+    height: 50px;
+  }
+
+  .logo {
+    display: inline-block;
+    margin: 8px 0 8px 30px;
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--backgroundHeaderHover);
+    }
+  }
+
+  .logoIcon {
+    margin-top: 1px;
+    height: 32px;
+  }
+
+  .title {
+    color: var(--text0);
+    font-size: 20px;
+    font-weight: bold;
+    padding: 14px 10px 14px 10px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: auto;
+  }
+
+  .menuRight {
+    display: flex;
+    margin-left: auto;
+  }
+
+  @media (max-width: 600px) {
+    .hideOnSmall {
+      display: none;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hideOnSmallGithub {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .hideOnSmallFeedback {
+      display: none !important;
+    }
+  }
+
+  .notification {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--backgroundNotifications);
+    color: var(--textWhite);
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 16px;
+    border-radius: 3px;
+    transform: translate(-8px, -6px);
+    padding: 0 2px;
+    min-width: 14px;
+  }
+
+  .demoMode {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .demoModeNotice {
+    display: inline-flex;
+    align-items: center;
+    color: var(--textGold);
+
+    path {
+      fill: var(--textGold);
+    }
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--textGoldHover);
+
+      path {
+        fill: var(--textGoldHover);
+      }
+    }
+  }
+
+  .demoModeNoticeTexts {
+    display: flex;
+    flex-direction: column;
+    margin-left: 6px;
+    align-items: center;
+  }
+
+  .demoModeNoticeTextMain {
+    font-size: 16px;
+  }
+
+  .demoModeNoticeTextExtra {
+    font-size: 10px;
+  }
+
+  .demoModeNoticeSeparator {
+    width: 1px;
+    height: 30px;
+    background: var(--text4);
+    margin: 0 10px;
+  }
+}

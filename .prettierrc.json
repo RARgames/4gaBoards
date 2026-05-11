@@ -1,0 +1,13 @@
+{
+  "printWidth": 210,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "packages/locales/**/*.js",
+      "options": {
+        "printWidth": 4000
+      }
+    }
+  ]
+}

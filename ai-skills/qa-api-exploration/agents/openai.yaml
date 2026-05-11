@@ -1,0 +1,4 @@
+interface:
+  display_name: "QA API Exploration"
+  short_description: "Discover APIs for reliable E2E setup and cleanup."
+  default_prompt: "Use this skill to inspect API routes and create safe setup and teardown helpers for E2E tests."

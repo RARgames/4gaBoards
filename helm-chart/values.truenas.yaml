@@ -1,0 +1,13 @@
+# https://docs.4gaboards.com/docs/dev/install/truenas-vars
+
+service:
+  type: NodePort
+  nodePort: 30001
+  port: 1337
+  deploymentPort: 30001
+nodeName: ix-truenas
+pv:
+  storageClass: openebs-zfspv-default
+env:
+  required:
+    BASE_URL: http://localhost:30001

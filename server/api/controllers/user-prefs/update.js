@@ -1,0 +1,237 @@
+const validator = require('validator');
+
+const Errors = {
+  USER_PREFS_NOT_FOUND: {
+    userPrefsNotFound: 'User prefs not found',
+  },
+  USER_NOT_FOUND: {
+    userNotFound: 'User not found',
+  },
+  INSUFFICIENT_PERMISSIONS: {
+    insufficientPermissions: 'Insufficient permissions',
+  },
+};
+
+const columnVisibilityValidator = (value) => _.isObject(value) && _.every(value, (v) => typeof v === 'boolean');
+
+const hexColorsValidator = (value) => {
+  if (!_.isObject(value)) return false;
+
+  return _.every(value, (v) => typeof v === 'string' && (validator.isHexColor(v) || validator.isRgbColor(v, { allowSpaces: true })));
+};
+
+module.exports = {
+  inputs: {
+    id: {
+      type: 'string',
+      regex: /^[0-9]+$/,
+      required: true,
+    },
+    language: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+    },
+    subscribeToOwnCards: {
+      type: 'boolean',
+    },
+    subscribeToNewBoards: {
+      type: 'boolean',
+    },
+    subscribeToNewProjects: {
+      type: 'boolean',
+    },
+    subscribeToUsers: {
+      type: 'boolean',
+    },
+    subscribeToInstance: {
+      type: 'boolean',
+    },
+    descriptionMode: {
+      type: 'string',
+      isIn: UserPrefs.DESCRIPTION_MODES,
+      isNotEmptyString: true,
+    },
+    commentMode: {
+      type: 'string',
+      isIn: UserPrefs.DESCRIPTION_MODES,
+      isNotEmptyString: true,
+    },
+    descriptionShown: {
+      type: 'boolean',
+    },
+    tasksShown: {
+      type: 'boolean',
+    },
+    attachmentsShown: {
+      type: 'boolean',
+    },
+    commentsShown: {
+      type: 'boolean',
+    },
+    sidebarCompact: {
+      type: 'boolean',
+    },
+    defaultView: {
+      type: 'string',
+      isIn: UserPrefs.VIEW_MODES,
+      isNotEmptyString: true,
+    },
+    listViewStyle: {
+      type: 'string',
+      isIn: UserPrefs.LIST_STYLES,
+      isNotEmptyString: true,
+    },
+    listViewColumnVisibility: {
+      type: 'json',
+      custom: columnVisibilityValidator,
+    },
+    listViewFitScreen: {
+      type: 'boolean',
+    },
+    listViewItemsPerPage: {
+      type: 'string',
+      isIn: UserPrefs.LIST_ITEMS_PER_PAGE,
+      isNotEmptyString: true,
+    },
+    usersSettingsStyle: {
+      type: 'string',
+      isIn: UserPrefs.LIST_STYLES,
+      isNotEmptyString: true,
+    },
+    usersSettingsColumnVisibility: {
+      type: 'json',
+      custom: columnVisibilityValidator,
+    },
+    usersSettingsFitScreen: {
+      type: 'boolean',
+    },
+    usersSettingsItemsPerPage: {
+      type: 'string',
+      isIn: UserPrefs.LIST_ITEMS_PER_PAGE,
+      isNotEmptyString: true,
+    },
+    preferredDetailsFont: {
+      type: 'string',
+      isIn: UserPrefs.PREFERRED_FONTS,
+      isNotEmptyString: true,
+    },
+    hideCardModalActivity: {
+      type: 'boolean',
+    },
+    hideClosestDueDate: {
+      type: 'boolean',
+    },
+    theme: {
+      type: 'string',
+      isIn: UserPrefs.THEMES,
+      isNotEmptyString: true,
+    },
+    themeShape: {
+      type: 'string',
+      isIn: UserPrefs.THEME_SHAPES,
+      isNotEmptyString: true,
+    },
+    themeCustomColors: {
+      type: 'json',
+      custom: hexColorsValidator,
+    },
+    emailNotificationsEnabled: {
+      type: 'boolean',
+    },
+    emailNotificationsTypes: {
+      type: 'json',
+      custom: (value) => Array.isArray(value) && value.every((v) => Object.values(Action.Scopes).includes(v)),
+    },
+    emailNotificationsDeliveryMode: {
+      type: 'string',
+      isIn: Object.values(UserPrefs.EmailNotificationsDeliveryModes),
+      isNotEmptyString: true,
+    },
+    emailNotificationsMarkReadAsDelivered: {
+      type: 'boolean',
+    },
+    notificationTypes: {
+      type: 'json',
+      custom: (value) => Array.isArray(value) && value.every((v) => Object.values(Action.Scopes).includes(v)),
+    },
+  },
+
+  exits: {
+    userPrefsNotFound: {
+      responseType: 'notFound',
+    },
+    userNotFound: {
+      responseType: 'notFound',
+    },
+    insufficientPermissions: {
+      responseType: 'forbidden',
+    },
+  },
+
+  async fn(inputs) {
+    const { currentUser } = this.req;
+
+    if (inputs.id !== currentUser.id) {
+      throw Errors.INSUFFICIENT_PERMISSIONS;
+    }
+
+    let userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
+    if (!userPrefs) {
+      throw Errors.USER_PREFS_NOT_FOUND;
+    }
+
+    const values = {
+      ..._.pick(inputs, [
+        'language',
+        'subscribeToOwnCards',
+        'subscribeToNewBoards',
+        'subscribeToNewProjects',
+        'subscribeToUsers',
+        'subscribeToInstance',
+        'descriptionMode',
+        'commentMode',
+        'descriptionShown',
+        'tasksShown',
+        'attachmentsShown',
+        'commentsShown',
+        'sidebarCompact',
+        'defaultView',
+        'listViewStyle',
+        'listViewColumnVisibility',
+        'listViewFitScreen',
+        'listViewItemsPerPage',
+        'usersSettingsStyle',
+        'usersSettingsColumnVisibility',
+        'usersSettingsFitScreen',
+        'usersSettingsItemsPerPage',
+        'preferredDetailsFont',
+        'hideCardModalActivity',
+        'hideClosestDueDate',
+        'theme',
+        'themeShape',
+        'themeCustomColors',
+        'emailNotificationsEnabled',
+        'emailNotificationsTypes',
+        'emailNotificationsDeliveryMode',
+        'emailNotificationsMarkReadAsDelivered',
+        'notificationTypes',
+      ]),
+    };
+
+    userPrefs = await sails.helpers.userPrefs.updateOne.with({
+      values,
+      record: userPrefs,
+      currentUser,
+      request: this.req,
+    });
+
+    if (!userPrefs) {
+      throw Errors.USER_PREFS_NOT_FOUND;
+    }
+
+    return {
+      item: userPrefs,
+    };
+  },
+};
