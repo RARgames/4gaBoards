@@ -59,6 +59,13 @@ module.exports = {
       userAgent: this.req.headers['user-agent'],
     });
 
+    this.res.cookie('accessToken', accessToken, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+      httpOnly: false,
+      sameSite: 'lax',
+      path: '/',
+    });
+
     return {
       item: accessToken,
     };
