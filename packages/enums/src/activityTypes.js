@@ -27,6 +27,11 @@ const ActivityTypes = {
   BOARD_UPDATE: 'boardUpdate',
   BOARD_DELETE: 'boardDelete',
 
+  /* BOARD TEMPLATE Activities (scopes: User, Instance) */
+  BOARD_TEMPLATE_CREATE: 'boardTemplateCreate',
+  BOARD_TEMPLATE_UPDATE: 'boardTemplateUpdate',
+  BOARD_TEMPLATE_DELETE: 'boardTemplateDelete',
+
   /* BOARD User Activities */
   BOARD_USER_ADD: 'boardUserAdd',
   BOARD_USER_UPDATE: 'boardUserUpdate',

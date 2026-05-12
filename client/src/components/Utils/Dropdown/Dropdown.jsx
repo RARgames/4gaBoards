@@ -36,6 +36,7 @@ const Dropdown = React.forwardRef(
       selectFirstOnSearch,
       returnOnChangeEvent,
       keepOnScroll,
+      translateI18nKeys,
       ...props
     },
     ref,
@@ -47,6 +48,19 @@ const Dropdown = React.forwardRef(
     const dropdown = useRef(null);
     const itemsRef = useRef([]);
     const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
+
+    const getItemLabel = useCallback(
+      (item) => {
+        const name = item?.name || '';
+
+        if (!translateI18nKeys || !name.startsWith('common.')) {
+          return name;
+        }
+
+        return t(name);
+      },
+      [t, translateI18nKeys],
+    );
 
     const open = useCallback(() => {
       setIsOpen(true);
@@ -82,8 +96,8 @@ const Dropdown = React.forwardRef(
       if (!searchValue) {
         return options;
       }
-      return options.filter((item) => item.name.toLowerCase().startsWith(searchValue.toLowerCase()));
-    }, [options, searchValue]);
+      return options.filter((item) => getItemLabel(item).toLowerCase().startsWith(searchValue.toLowerCase()));
+    }, [options, searchValue, getItemLabel]);
 
     useEffect(() => {
       if (selectFirstOnSearch && searchValue && searchValue.length > 0) {
@@ -183,13 +197,13 @@ const Dropdown = React.forwardRef(
 
     const getDisplay = useCallback(() => {
       if (isOpen && selectedItem) {
-        return selectedItem.name;
+        return getItemLabel(selectedItem);
       }
       if (defaultItem) {
-        return defaultItem.name;
+        return getItemLabel(defaultItem);
       }
       return placeholder;
-    }, [isOpen, placeholder, defaultItem, selectedItem]);
+    }, [isOpen, placeholder, defaultItem, selectedItem, getItemLabel]);
 
     const handleItemClick = useCallback(
       (item) => {
@@ -344,7 +358,7 @@ const Dropdown = React.forwardRef(
                   >
                     {item.flags && item.flags.map((flag) => <Icon key={flag} type={FlagType[flag]} size={IconSize.Size14} className={s.icon} />)}
                     {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={s.icon} />}
-                    {item.name}
+                    {getItemLabel(item)}
                     {item.badge && <span className={s.badge}>{item.badge}</span>}
                   </div>
                 ))}
@@ -380,6 +394,7 @@ Dropdown.propTypes = {
   selectFirstOnSearch: PropTypes.bool,
   returnOnChangeEvent: PropTypes.bool,
   keepOnScroll: PropTypes.bool,
+  translateI18nKeys: PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
@@ -403,6 +418,7 @@ Dropdown.defaultProps = {
   inputClassName: undefined,
   buttonClassName: undefined,
   keepOnScroll: false,
+  translateI18nKeys: false,
 };
 
 export default React.memo(Dropdown);

@@ -24,6 +24,7 @@ const BoardActions = React.memo(
     isFiltered,
     filteredCardCount,
     memberships,
+    boardTemplates,
     allBoardCardAndTaskMemberships,
     labels,
     filterUsers,
@@ -31,6 +32,7 @@ const BoardActions = React.memo(
     allUsers,
     canEdit,
     isProjectManager,
+    isAdmin,
     board,
     boardSearchParams,
     boardMembershipId,
@@ -42,6 +44,9 @@ const BoardActions = React.memo(
     viewMode,
     onViewModeChange,
     onMembershipCreate,
+    onBoardTemplateCreate,
+    onBoardTemplateUpdate,
+    onBoardTemplateDelete,
     onMembershipUpdate,
     onMembershipDelete,
     onUserToFilterAdd,
@@ -161,12 +166,15 @@ const BoardActions = React.memo(
             updatedAt={board.updatedAt}
             updatedBy={board.updatedBy}
             memberships={board.memberships}
+            templates={boardTemplates}
             isProjectManager={isProjectManager}
             canEdit={canEdit}
             mailTokens={mailTokens}
             mailTokenCount={mailTokenCount}
             mailServiceAvailable={mailServiceAvailable}
             mailServiceInboundEmail={mailServiceInboundEmail}
+            boardName={board.name}
+            isAdmin={isAdmin}
             onUpdate={(data) => onBoardUpdate(board.id, data)}
             onExport={(data) => onBoardExport(board.id, data)}
             onDelete={() => onBoardDelete(board.id)}
@@ -174,6 +182,9 @@ const BoardActions = React.memo(
             onMailTokenCreate={onMailTokenCreate}
             onMailTokenUpdate={onMailTokenUpdate}
             onMailTokenDelete={onMailTokenDelete}
+            onTemplateCreate={(data) => onBoardTemplateCreate(board.id, data)}
+            onTemplateUpdate={onBoardTemplateUpdate}
+            onTemplateDelete={onBoardTemplateDelete}
             position="right-start"
             offset={10}
             hideCloseButton
@@ -201,6 +212,7 @@ BoardActions.propTypes = {
   isFiltered: PropTypes.bool.isRequired,
   filteredCardCount: PropTypes.number.isRequired,
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardCardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   filterUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -208,6 +220,7 @@ BoardActions.propTypes = {
   allUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   isProjectManager: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   board: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardSearchParams: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMembershipId: PropTypes.string.isRequired,
@@ -219,6 +232,9 @@ BoardActions.propTypes = {
   viewMode: PropTypes.string.isRequired,
   onViewModeChange: PropTypes.func.isRequired,
   onMembershipCreate: PropTypes.func.isRequired,
+  onBoardTemplateCreate: PropTypes.func.isRequired,
+  onBoardTemplateUpdate: PropTypes.func.isRequired,
+  onBoardTemplateDelete: PropTypes.func.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,
   onMembershipDelete: PropTypes.func.isRequired,
   onUserToFilterAdd: PropTypes.func.isRequired,

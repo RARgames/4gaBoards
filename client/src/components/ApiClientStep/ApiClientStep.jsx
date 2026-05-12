@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Permissions } from '@4gaboards/enums';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Permissions } from '../../constants/Enums';
 import { useForm, useSteps } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { ShowSecretStep } from '../ShowSecretStep';

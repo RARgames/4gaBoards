@@ -1,0 +1,81 @@
+:global(#app) {
+  .content {
+    max-width: 500px;
+  }
+
+  .inputWrapper {
+    margin-bottom: 8px;
+  }
+
+  .items {
+    scrollbar-gutter: stable;
+  }
+
+  .item {
+    border-bottom: 1px solid var(--borderSubtle);
+    padding: 8px;
+    margin-bottom: 6px;
+  }
+
+  .itemHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    color: var(--text1);
+    min-width: 0;
+  }
+
+  .globalIcon {
+    flex-shrink: 0;
+  }
+
+  .nameText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .globalBadge {
+    font-size: 10px;
+    color: var(--text2);
+    text-transform: uppercase;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .actions {
+    display: flex;
+  }
+
+  .meta {
+    color: var(--text2);
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .metaDetails {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .noTemplates {
+    color: var(--text2);
+    font-size: 12px;
+    text-align: center;
+    padding: 16px 0;
+  }
+}

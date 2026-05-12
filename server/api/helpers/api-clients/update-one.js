@@ -36,7 +36,7 @@ module.exports = {
       values.clientSecret = clientSecret;
     }
 
-    const apiClient = await ApiClient.updateOne(inputs.record.id).set(values);
+    const apiClient = await ApiClient.updateOne(inputs.record.id).set({ ...values });
 
     if (apiClient) {
       sails.sockets.broadcast(

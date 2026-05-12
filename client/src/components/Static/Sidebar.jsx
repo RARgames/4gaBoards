@@ -39,6 +39,7 @@ const Sidebar = React.memo(
     sidebarCompact,
     instanceNotificationCount,
     usersNotificationCount,
+    boardTemplates,
     mailServiceAvailable,
     mailServiceInboundEmail,
     onProjectCreate,
@@ -49,6 +50,9 @@ const Sidebar = React.memo(
     onBoardDelete,
     onBoardExport,
     onBoardFetch,
+    onBoardTemplateCreate,
+    onBoardTemplateUpdate,
+    onBoardTemplateDelete,
     onChangeFilterQuery,
     onProjectMembershipUpdate,
     onActivitiesProjectFetch,
@@ -139,9 +143,12 @@ const Sidebar = React.memo(
               updatedAt={project.updatedAt}
               updatedBy={project.updatedBy}
               memberships={project.memberships}
+              templates={boardTemplates}
               isProjectManager={isProjectManager}
               onUpdate={(data) => onProjectUpdate(project.id, data)}
               onBoardCreate={onBoardCreate}
+              onTemplateUpdate={onBoardTemplateUpdate}
+              onTemplateDelete={onBoardTemplateDelete}
               onActivitiesFetch={() => onActivitiesProjectFetch(project.id)}
               position="right-start"
               offset={10}
@@ -215,6 +222,9 @@ const Sidebar = React.memo(
                                   updatedAt={board.updatedAt}
                                   updatedBy={board.updatedBy}
                                   memberships={board.memberships}
+                                  templates={boardTemplates}
+                                  boardName={board.name}
+                                  isAdmin={isAdmin}
                                   mailTokens={board.mailTokens}
                                   mailTokenCount={board.mailTokenCount}
                                   mailServiceAvailable={mailServiceAvailable}
@@ -228,8 +238,11 @@ const Sidebar = React.memo(
                                   onDelete={() => onBoardDelete(board.id)}
                                   onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
                                   onMailTokenCreate={() => onMailTokenCreate(board.id)}
-                                  onMailTokenUpdate={(mailTokenId) => onMailTokenUpdate(mailTokenId, { boardId: board.id })}
+                                  onMailTokenUpdate={(mailTokenId) => onMailTokenUpdate(mailTokenId, board.id)}
                                   onMailTokenDelete={(mailTokenId) => onMailTokenDelete(mailTokenId)}
+                                  onTemplateCreate={(data) => onBoardTemplateCreate(board.id, data)}
+                                  onTemplateUpdate={onBoardTemplateUpdate}
+                                  onTemplateDelete={onBoardTemplateDelete}
                                   position="right-start"
                                   offset={10}
                                   hideCloseButton
@@ -352,7 +365,17 @@ const Sidebar = React.memo(
               </ProjectAddPopup>
             )}
             {managedProjects.length > 0 && !settingsOnly && (
-              <BoardAddPopup projects={managedProjects} projectId={currProjectId} isAdmin={isAdmin} onCreate={onBoardCreate} offset={2} position="right">
+              <BoardAddPopup
+                projects={managedProjects}
+                projectId={currProjectId}
+                isAdmin={isAdmin}
+                templates={boardTemplates}
+                onCreate={onBoardCreate}
+                onTemplateUpdate={onBoardTemplateUpdate}
+                onTemplateDelete={onBoardTemplateDelete}
+                offset={2}
+                position="right"
+              >
                 <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.footerButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size13} className={s.footerButtonIcon} />
                   {t('common.addBoard')}
@@ -393,6 +416,7 @@ Sidebar.propTypes = {
   sidebarCompact: PropTypes.bool.isRequired,
   instanceNotificationCount: PropTypes.number.isRequired,
   usersNotificationCount: PropTypes.number.isRequired,
+  boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
@@ -403,6 +427,9 @@ Sidebar.propTypes = {
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,
+  onBoardTemplateCreate: PropTypes.func.isRequired,
+  onBoardTemplateUpdate: PropTypes.func.isRequired,
+  onBoardTemplateDelete: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
   onProjectMembershipUpdate: PropTypes.func.isRequired,
   onActivitiesProjectFetch: PropTypes.func.isRequired,

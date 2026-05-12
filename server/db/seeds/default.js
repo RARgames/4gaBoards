@@ -20,6 +20,8 @@ exports.seed = async (knex) => {
     .returning(['id']);
   await knex('user_account').where({ id: adminUser.id }).update({ createdById: adminUser.id });
 
+  await knex('board_template').where({ createdById: 0 }).update({ createdById: adminUser.id });
+
   const registrationEnabled = process.env.DEFAULT_REGISTRATION_ENABLED !== 'false';
   const localRegistrationEnabled = process.env.DEFAULT_LOCAL_REGISTRATION_ENABLED !== 'false';
   const ssoRegistrationEnabled = process.env.DEFAULT_SSO_REGISTRATION_ENABLED !== 'false';

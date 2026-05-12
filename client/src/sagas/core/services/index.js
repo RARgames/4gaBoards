@@ -2,6 +2,7 @@ import activities from './activities';
 import apiClients from './api-clients';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
+import boardTemplates from './board-templates';
 import boards from './boards';
 import cards from './cards';
 import comments from './comments';
@@ -24,6 +25,7 @@ export default {
   ...activities,
   ...apiClients,
   ...attachments,
+  ...boardTemplates,
   ...boardMemberships,
   ...boards,
   ...cards,

@@ -236,6 +236,18 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleMailTokenDelete(item));
     });
 
+    const handleBoardTemplateCreate = api.makeHandleBoardTemplateCreate(({ item }) => {
+      emit(entryActions.handleBoardTemplateCreate(item));
+    });
+
+    const handleBoardTemplateUpdate = api.makeHandleBoardTemplateUpdate(({ item }) => {
+      emit(entryActions.handleBoardTemplateUpdate(item));
+    });
+
+    const handleBoardTemplateDelete = api.makeHandleBoardTemplateDelete(({ item }) => {
+      emit(entryActions.handleBoardTemplateDelete(item));
+    });
+
     socket.on('disconnect', handleDisconnect);
     socket.onManager('reconnect', handleReconnect);
 
@@ -314,6 +326,10 @@ const createSocketEventsChannel = () =>
     socket.on('mailTokenCreate', handleMailTokenCreate);
     socket.on('mailTokenUpdate', handleMailTokenUpdate);
     socket.on('mailTokenDelete', handleMailTokenDelete);
+
+    socket.on('boardTemplateCreate', handleBoardTemplateCreate);
+    socket.on('boardTemplateUpdate', handleBoardTemplateUpdate);
+    socket.on('boardTemplateDelete', handleBoardTemplateDelete);
 
     return () => {
       socket.off('disconnect', handleDisconnect);
@@ -394,6 +410,10 @@ const createSocketEventsChannel = () =>
       socket.off('mailTokenCreate', handleMailTokenCreate);
       socket.off('mailTokenUpdate', handleMailTokenUpdate);
       socket.off('mailTokenDelete', handleMailTokenDelete);
+
+      socket.off('boardTemplateCreate', handleBoardTemplateCreate);
+      socket.off('boardTemplateUpdate', handleBoardTemplateUpdate);
+      socket.off('boardTemplateDelete', handleBoardTemplateDelete);
     };
   });
 

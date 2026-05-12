@@ -11,3 +11,4 @@ export * from './projects';
 export * from './tasks';
 export * from './users';
 export * from './core';
+export * from './board-templates';

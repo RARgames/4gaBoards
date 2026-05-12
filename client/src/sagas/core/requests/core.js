@@ -77,6 +77,7 @@ export function* fetchCore() {
   const { items: projectMemberships } = yield call(request, api.getProjectMemberships);
   const { item: userPrefs } = yield call(request, api.getUserPrefs, user.id);
   const { items: apiClients } = yield call(request, api.getApiClients);
+  const { items: boardTemplates } = yield call(request, api.getBoardTemplates);
 
   return {
     user,
@@ -102,6 +103,7 @@ export function* fetchCore() {
     core,
     userPrefs,
     apiClients,
+    boardTemplates,
   };
 }
 

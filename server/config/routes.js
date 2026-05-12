@@ -59,6 +59,11 @@ module.exports.routes = {
   'POST /api/boards/:boardId/labels/find-by-name': 'boards/find-label-by-name',
   'POST /api/boards/:boardId/users/find-by-username': 'boards/find-user-by-username',
 
+  'GET /api/board-templates': 'board-templates/index',
+  'POST /api/boards/:boardId/templates': 'board-templates/create',
+  'PATCH /api/board-templates/:id': 'board-templates/update',
+  'DELETE /api/board-templates/:id': 'board-templates/delete',
+
   'POST /api/boards/:boardId/memberships': 'board-memberships/create',
   'PATCH /api/board-memberships/:id': 'board-memberships/update',
   'DELETE /api/board-memberships/:id': 'board-memberships/delete',

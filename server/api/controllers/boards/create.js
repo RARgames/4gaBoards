@@ -55,6 +55,9 @@ module.exports = {
     lists: {
       type: 'json',
     },
+    labels: {
+      type: 'json',
+    },
     importNonExistingUsers: {
       type: 'boolean',
     },
@@ -150,18 +153,40 @@ module.exports = {
       .intercept('boardCreateFailed', () => Errors.BOARD_CREATE_FAILED)
       .intercept('importFromBoardFailed', () => Errors.IMPORT_FROM_BOARD_FAILED);
 
-    if (inputs.lists && !inputs.importType) {
-      inputs.lists.map(async (list) => {
-        const valuesList = _.pick(list, ['position', 'name', 'isCollapsed']);
-        await sails.helpers.lists.createOne.with({
-          values: {
-            ...valuesList,
-            board,
-          },
-          currentUser,
-          request: this.req,
-        });
-      });
+    if (!inputs.importType) {
+      if (inputs.lists) {
+        await Promise.all(
+          inputs.lists.map(async (list) => {
+            const valuesList = _.pick(list, ['position', 'name', 'isCollapsed']);
+
+            await sails.helpers.lists.createOne.with({
+              values: {
+                ...valuesList,
+                board,
+              },
+              currentUser,
+              request: this.req,
+            });
+          }),
+        );
+      }
+
+      if (inputs.labels) {
+        await Promise.all(
+          inputs.labels.map(async (label) => {
+            const valuesLabel = _.pick(label, ['name', 'color']);
+
+            await sails.helpers.labels.createOne.with({
+              values: {
+                ...valuesLabel,
+                board,
+              },
+              currentUser,
+              request: this.req,
+            });
+          }),
+        );
+      }
     }
 
     const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);

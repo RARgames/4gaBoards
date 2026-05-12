@@ -33,6 +33,7 @@ export function* initializeCore() {
     notifications,
     userPrefs,
     apiClients,
+    boardTemplates,
   } = yield call(requests.fetchCore); // TODO: handle error
 
   yield call(i18n.changeLanguage, userPrefs.language);
@@ -65,6 +66,7 @@ export function* initializeCore() {
       notifications,
       userPrefs,
       apiClients,
+      boardTemplates,
     ),
   );
 }

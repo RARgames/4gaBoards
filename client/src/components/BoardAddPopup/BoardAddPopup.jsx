@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import Config from '../../constants/Config';
 import { useForm, useSteps } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
+import BoardTemplateManagerStep from '../BoardTemplateManagerStep';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
 import ImportStep from './ImportStep';
 
@@ -13,9 +13,17 @@ import * as s from './BoardAddPopup.module.scss';
 
 const StepTypes = {
   IMPORT: 'IMPORT',
+  TEMPLATE_MANAGER: 'TEMPLATE_MANAGER',
 };
 
-const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, onCreate, onBack, onClose }) => {
+const BUILTIN_EMPTY_TEMPLATE = {
+  id: 'builtin-empty',
+  name: 'common.empty',
+  icon: 'Star',
+  data: { lists: [], labels: [] },
+};
+
+const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, templates, onCreate, onTemplateUpdate, onTemplateDelete, onBack, onClose }) => {
   const [t] = useTranslation();
 
   const [isDropdownError, setIsDropdownError] = useState(false);
@@ -33,10 +41,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
     return null;
   });
 
-  const [template, setTemplate] = useState({
-    id: 'empty',
-    name: t('common.empty'),
-  });
+  const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
   const [data, handleFieldChange, setData] = useForm({
     name: '',
@@ -54,39 +59,35 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
     setSelectedProject(value);
   }, []);
 
-  // TODO move to the templates file
-  const templates = useMemo(
+  const templateOptions = useMemo(
     () => [
-      {
-        id: 'empty',
-        name: t('common.empty'),
-      },
-      {
-        id: 'simple',
-        name: t('common.simple'),
-        lists: Array.from({ length: 4 }, (_, i) => ({
-          position: (i + 1) * Config.POSITION_GAP,
-          name: t(`common.${['ideas', 'todo', 'inProgress', 'done'][i]}`),
-          isCollapsed: false,
-        })),
-      },
-      {
-        id: 'kanban',
-        name: t('common.kanban'),
-        lists: Array.from({ length: 5 }, (_, i) => ({
-          position: (i + 1) * Config.POSITION_GAP,
-          name: t(`common.${['ideas', 'todo', 'inProgress', 'toTest', 'done'][i]}`),
-          isCollapsed: false,
-        })),
-      },
+      BUILTIN_EMPTY_TEMPLATE,
+      ...templates.map((template) => ({
+        ...template,
+        ...(template.isGlobal ? { icon: 'Star' } : {}),
+      })),
     ],
-    [t],
+    [templates],
   );
-  const selectedTemplate = useMemo(() => templates.find((temp) => temp.id === template.id), [templates, template]);
+  const selectedTemplate = useMemo(() => templateOptions.find((temp) => temp.id === selectedTemplateId) || BUILTIN_EMPTY_TEMPLATE, [templateOptions, selectedTemplateId]);
 
   const handleTemplateChange = useCallback((value) => {
-    setTemplate(value);
+    setSelectedTemplateId(value.id);
   }, []);
+
+  const handleTemplateUpdate = useCallback(
+    (id, nextData) => {
+      onTemplateUpdate(id, nextData);
+    },
+    [onTemplateUpdate],
+  );
+
+  const handleTemplateDelete = useCallback(
+    (id) => {
+      onTemplateDelete(id);
+    },
+    [onTemplateDelete],
+  );
 
   const handleImportSelect = useCallback(
     (nextImport) => {
@@ -106,10 +107,16 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   }, [handleBack]);
 
   const handleSubmit = useCallback(() => {
+    const mappedLists = (selectedTemplate.data?.lists || []).map((list) => ({
+      ...list,
+      name: list.name.startsWith('common.') ? t(list.name) : list.name,
+    }));
+
     const cleanData = {
       ...data,
       name: data.name.trim(),
-      lists: template.lists,
+      lists: mappedLists,
+      labels: selectedTemplate.data?.labels || [],
       importNonExistingUsers,
       importProjectManagers,
     };
@@ -127,7 +134,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
 
     onCreate(selectedProject.id, cleanData);
     onClose();
-  }, [data, template.lists, importNonExistingUsers, importProjectManagers, selectedProject, onCreate, onClose]);
+  }, [data, selectedTemplate, importNonExistingUsers, importProjectManagers, selectedProject, onCreate, onClose, t]);
 
   const handleImportClick = useCallback(() => {
     openStep(StepTypes.IMPORT);
@@ -160,6 +167,10 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
 
   if (step && step.type === StepTypes.IMPORT) {
     return <ImportStep onSelect={handleImportSelect} onBack={handleImportBack} />;
+  }
+
+  if (step && step.type === StepTypes.TEMPLATE_MANAGER) {
+    return <BoardTemplateManagerStep templates={templates} isAdmin={isAdmin} onUpdate={handleTemplateUpdate} onDelete={handleTemplateDelete} onBack={handleBack} />;
   }
 
   return (
@@ -199,14 +210,20 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
           )}
           {!data.import && (
             <div>
-              <div className={s.text}>{t('common.template')}</div>
+              <div className={s.templateLabelRow}>
+                <div className={s.text}>{t('common.template')}</div>
+                <Button style={ButtonStyle.Icon} title={t('common.manageTemplates')} className={s.manageTemplatesButton} onClick={() => openStep(StepTypes.TEMPLATE_MANAGER)}>
+                  <Icon type={IconType.Settings} size={IconSize.Size13} />
+                </Button>
+              </div>
               <Dropdown
                 ref={templateDropdownRef}
                 style={DropdownStyle.Default}
-                options={templates}
-                placeholder={selectedTemplate.name}
+                options={templateOptions}
+                placeholder={selectedTemplate?.name}
                 defaultItem={selectedTemplate}
                 isSearchable
+                translateI18nKeys
                 selectFirstOnSearch
                 onBlur={focusForm}
                 onChange={handleTemplateChange}
@@ -244,7 +261,10 @@ BoardAddStep.propTypes = {
   projectId: PropTypes.string,
   skipProjectDropdown: PropTypes.bool,
   isAdmin: PropTypes.bool.isRequired,
+  templates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onCreate: PropTypes.func.isRequired,
+  onTemplateUpdate: PropTypes.func.isRequired,
+  onTemplateDelete: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,
 };

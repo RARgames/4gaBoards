@@ -24,6 +24,20 @@
     margin-bottom: 4px;
   }
 
+  .templateLabelRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .manageTemplatesButton {
+    margin-bottom: 4px;
+
+    svg {
+      fill: var(--text2);
+    }
+  }
+
   .submitButton {
     width: auto;
   }

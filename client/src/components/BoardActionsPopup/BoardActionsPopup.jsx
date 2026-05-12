@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
+import BoardTemplateAddStep from '../BoardTemplateAddStep';
+import BoardTemplateManagerStep from '../BoardTemplateManagerStep';
 import { ConnectionsStep } from '../ConnectionsPopup';
 import DeleteStep from '../DeleteStep';
 import ExportStep from '../ExportStep';
@@ -20,6 +22,8 @@ const StepTypes = {
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
   MAILTOKEN_LIST: 'MAILTOKEN_LIST',
+  CREATE_TEMPLATE: 'CREATE_TEMPLATE',
+  TEMPLATE_MANAGER: 'TEMPLATE_MANAGER',
 };
 
 const BoardActionsStep = React.memo(
@@ -39,6 +43,9 @@ const BoardActionsStep = React.memo(
     mailTokenCount,
     mailServiceAvailable,
     mailServiceInboundEmail,
+    boardName,
+    templates,
+    isAdmin,
     isProjectManager,
     canEdit,
     isFetching,
@@ -50,16 +57,53 @@ const BoardActionsStep = React.memo(
     onMailTokenCreate,
     onMailTokenUpdate,
     onMailTokenDelete,
+    onTemplateCreate,
+    onTemplateUpdate,
+    onTemplateDelete,
     onClose,
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
+    const shouldOpenTemplateManagerRef = useRef(false);
 
     useEffect(() => {
       if (isFetching === null) {
         onFetch();
       }
     }, [isFetching, onFetch]);
+
+    const handleTemplateCreate = useCallback(
+      (data) => {
+        shouldOpenTemplateManagerRef.current = true;
+        onTemplateCreate(data);
+      },
+      [onTemplateCreate],
+    );
+
+    const handleTemplateCreateClose = useCallback(() => {
+      if (shouldOpenTemplateManagerRef.current) {
+        shouldOpenTemplateManagerRef.current = false;
+        openStep(StepTypes.TEMPLATE_MANAGER);
+
+        return;
+      }
+
+      onClose();
+    }, [onClose, openStep]);
+
+    const handleTemplateUpdate = useCallback(
+      (id, data) => {
+        onTemplateUpdate(id, data);
+      },
+      [onTemplateUpdate],
+    );
+
+    const handleTemplateDelete = useCallback(
+      (id) => {
+        onTemplateDelete(id);
+      },
+      [onTemplateDelete],
+    );
 
     if (step) {
       switch (step.type) {
@@ -129,6 +173,19 @@ const BoardActionsStep = React.memo(
               onBack={handleBack}
             />
           );
+        case StepTypes.CREATE_TEMPLATE:
+          return (
+            <BoardTemplateAddStep
+              title={t('common.convertToTemplate', { context: 'title' })}
+              defaultData={{ name: boardName }}
+              placeholder={t('common.enterTemplateName')}
+              onUpdate={handleTemplateCreate}
+              onBack={handleBack}
+              onClose={handleTemplateCreateClose}
+            />
+          );
+        case StepTypes.TEMPLATE_MANAGER:
+          return <BoardTemplateManagerStep templates={templates} isAdmin={isAdmin} onUpdate={handleTemplateUpdate} onDelete={handleTemplateDelete} onBack={handleBack} />;
         default:
       }
     }
@@ -168,6 +225,12 @@ const BoardActionsStep = React.memo(
             {t('common.emailCardToBoard')}
           </Button>
         )}
+        {(canEdit || isProjectManager) && (
+          <Button style={ButtonStyle.PopupContext} title={t('common.convertToTemplate', { context: 'title' })} onClick={() => openStep(StepTypes.CREATE_TEMPLATE)}>
+            <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
+            {t('common.convertToTemplate', { context: 'title' })}
+          </Button>
+        )}
         {isProjectManager && <Popup.Separator />}
         {isProjectManager && (
           <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
@@ -198,6 +261,9 @@ BoardActionsStep.propTypes = {
   mailTokenCount: PropTypes.number.isRequired,
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
+  boardName: PropTypes.string.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  templates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
@@ -207,6 +273,9 @@ BoardActionsStep.propTypes = {
   onMailTokenCreate: PropTypes.func.isRequired,
   onMailTokenUpdate: PropTypes.func.isRequired,
   onMailTokenDelete: PropTypes.func.isRequired,
+  onTemplateCreate: PropTypes.func.isRequired,
+  onTemplateUpdate: PropTypes.func.isRequired,
+  onTemplateDelete: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

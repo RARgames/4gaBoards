@@ -3,6 +3,7 @@ import activities from './activities';
 import apiClients from './api-clients';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
+import boardTemplates from './board-templates';
 import boards from './boards';
 import cardLabels from './card-labels';
 import cardMemberships from './card-memberships';
@@ -32,6 +33,7 @@ export default {
   ...apiClients,
   ...attachments,
   ...boardMemberships,
+  ...boardTemplates,
   ...boards,
   ...cardLabels,
   ...cardMemberships,

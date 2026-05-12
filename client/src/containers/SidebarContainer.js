@@ -36,6 +36,7 @@ const makeMapStateToProps = () => {
       }),
     }));
     const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
+    const boardTemplates = selectors.selectBoardTemplatesForCurrentUser(state);
     const { projectId, boardId } = selectors.selectPath(state);
     const filter = selectors.selectFilterForCurrentUser(state);
     const filterQuery = filter?.query;
@@ -65,6 +66,7 @@ const makeMapStateToProps = () => {
       sidebarCompact,
       instanceNotificationCount,
       usersNotificationCount,
+      boardTemplates,
       mailServiceAvailable,
       mailServiceInboundEmail,
     };
@@ -82,6 +84,9 @@ const mapDispatchToProps = (dispatch) =>
       onBoardDelete: entryActions.deleteBoard,
       onBoardExport: entryActions.exportBoard,
       onBoardFetch: entryActions.fetchBoard,
+      onBoardTemplateCreate: entryActions.createBoardTemplate,
+      onBoardTemplateUpdate: entryActions.updateBoardTemplate,
+      onBoardTemplateDelete: entryActions.deleteBoardTemplate,
       onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
       onProjectMembershipUpdate: entryActions.updateProjectMembership,
       onActivitiesProjectFetch: entryActions.fetchProjectActivities,

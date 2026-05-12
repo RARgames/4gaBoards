@@ -13,7 +13,9 @@ const mapStateToProps = (state) => {
   const filteredCardCount = selectors.selectFilteredCardsCountForCurrentBoard(state);
   const allUsers = selectors.selectUsers(state);
   const isProjectManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
+  const { isAdmin } = selectors.selectCurrentUser(state);
   const memberships = selectors.selectMembershipsForCurrentBoard(state);
+  const boardTemplates = selectors.selectBoardTemplatesForCurrentUser(state);
   const allBoardCardAndTaskMemberships = selectors.selectBoardCardAndTaskMembershipsForCurrentBoard(state);
   const labels = selectors.selectLabelsForCurrentBoard(state);
   const filterUsers = selectors.selectFilterUsersForCurrentBoard(state);
@@ -38,6 +40,7 @@ const mapStateToProps = (state) => {
     isFiltered,
     filteredCardCount,
     memberships,
+    boardTemplates,
     allBoardCardAndTaskMemberships,
     labels,
     filterUsers,
@@ -45,6 +48,7 @@ const mapStateToProps = (state) => {
     allUsers,
     canEdit: isCurrentUserEditor,
     isProjectManager,
+    isAdmin,
     board,
     boardSearchParams,
     boardMembershipId: id,
@@ -60,6 +64,9 @@ const mapDispatchToProps = (dispatch, ownProps) =>
   bindActionCreators(
     {
       onMembershipCreate: entryActions.createMembershipInCurrentBoard,
+      onBoardTemplateCreate: entryActions.createBoardTemplate,
+      onBoardTemplateUpdate: entryActions.updateBoardTemplate,
+      onBoardTemplateDelete: entryActions.deleteBoardTemplate,
       onMembershipUpdate: entryActions.updateBoardMembership,
       onMembershipDelete: entryActions.deleteBoardMembership,
       onUserToFilterAdd: entryActions.addUserToFilterInCurrentBoard,

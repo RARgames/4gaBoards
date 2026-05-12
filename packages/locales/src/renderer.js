@@ -1485,6 +1485,60 @@ export const activityRenderSpec = {
         components: [{ slot: 'name', title: name }],
       };
     },
+
+    [ActivityTypes.BOARD_TEMPLATE_CREATE]: (ctx) => {
+      const { name } = ctx.activity.data;
+      const nameTruncated = truncateIf(name, ctx.isTruncated, ctx.truncateLengths.default);
+
+      return {
+        key: 'activity.boardTemplateCreate',
+        values: {
+          name: nameTruncated,
+        },
+        components: [{ slot: 'name', title: name }],
+      };
+    },
+
+    [ActivityTypes.BOARD_TEMPLATE_UPDATE]: (ctx) => {
+      const { prevName, name, prevIsGlobal, isGlobal } = ctx.activity.data;
+      const nameTruncated = truncateIf(name, ctx.isTruncated, ctx.truncateLengths.default);
+      const prevNameTruncated = truncateIf(prevName, ctx.isTruncated, ctx.truncateLengths.default);
+
+      if (prevIsGlobal !== isGlobal) {
+        return {
+          key: isGlobal ? 'activity.boardTemplateUpdateToGlobal' : 'activity.boardTemplateUpdateToUser',
+          values: {
+            name: nameTruncated,
+          },
+          components: [{ slot: 'name', title: name }],
+        };
+      }
+
+      return {
+        key: 'activity.boardTemplateUpdate',
+        values: {
+          prevName: prevNameTruncated,
+          name: nameTruncated,
+        },
+        components: [
+          { slot: 'prevName', title: prevName },
+          { slot: 'name', title: name },
+        ],
+      };
+    },
+
+    [ActivityTypes.BOARD_TEMPLATE_DELETE]: (ctx) => {
+      const { name } = ctx.activity.data;
+      const nameTruncated = truncateIf(name, ctx.isTruncated, ctx.truncateLengths.default);
+
+      return {
+        key: 'activity.boardTemplateDelete',
+        values: {
+          name: nameTruncated,
+        },
+        components: [{ slot: 'name', title: name }],
+      };
+    },
   },
 
   [ActivityScopes.INSTANCE]: {
@@ -1502,6 +1556,60 @@ export const activityRenderSpec = {
           settings,
         },
         components: [{ slot: 'settings', title: settings }],
+      };
+    },
+
+    [ActivityTypes.BOARD_TEMPLATE_CREATE]: (ctx) => {
+      const { name } = ctx.activity.data;
+      const nameTruncated = truncateIf(name, ctx.isTruncated, ctx.truncateLengths.default);
+
+      return {
+        key: 'activity.boardTemplateCreateGlobal',
+        values: {
+          name: nameTruncated,
+        },
+        components: [{ slot: 'name', title: name }],
+      };
+    },
+
+    [ActivityTypes.BOARD_TEMPLATE_UPDATE]: (ctx) => {
+      const { prevName, name, prevIsGlobal, isGlobal } = ctx.activity.data;
+      const nameTruncated = truncateIf(name, ctx.isTruncated, ctx.truncateLengths.default);
+      const prevNameTruncated = truncateIf(prevName, ctx.isTruncated, ctx.truncateLengths.default);
+
+      if (prevIsGlobal !== isGlobal) {
+        return {
+          key: isGlobal ? 'activity.boardTemplateUpdateToGlobal' : 'activity.boardTemplateUpdateToUser',
+          values: {
+            name: nameTruncated,
+          },
+          components: [{ slot: 'name', title: name }],
+        };
+      }
+
+      return {
+        key: 'activity.boardTemplateUpdateGlobal',
+        values: {
+          prevName: prevNameTruncated,
+          name: nameTruncated,
+        },
+        components: [
+          { slot: 'prevName', title: prevName },
+          { slot: 'name', title: name },
+        ],
+      };
+    },
+
+    [ActivityTypes.BOARD_TEMPLATE_DELETE]: (ctx) => {
+      const { name } = ctx.activity.data;
+      const nameTruncated = truncateIf(name, ctx.isTruncated, ctx.truncateLengths.default);
+
+      return {
+        key: 'activity.boardTemplateDeleteGlobal',
+        values: {
+          name: nameTruncated,
+        },
+        components: [{ slot: 'name', title: name }],
       };
     },
   },

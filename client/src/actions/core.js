@@ -24,6 +24,7 @@ const initializeCore = (
   notifications,
   userPrefs,
   apiClients,
+  boardTemplates,
 ) => ({
   type: ActionTypes.CORE_INITIALIZE,
   payload: {
@@ -50,6 +51,7 @@ const initializeCore = (
     notifications,
     userPrefs,
     apiClients,
+    boardTemplates,
   },
 });
 

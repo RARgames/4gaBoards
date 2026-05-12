@@ -27,6 +27,7 @@ const ProjectActionsStep = React.memo(
     name,
     projectId,
     managedProjects,
+    templates,
     defaultDataRename,
     isAdmin,
     isProjectManager,
@@ -37,6 +38,8 @@ const ProjectActionsStep = React.memo(
     memberships,
     onUpdate,
     onBoardCreate,
+    onTemplateUpdate,
+    onTemplateDelete,
     onActivitiesFetch,
     onClose,
   }) => {
@@ -57,7 +60,20 @@ const ProjectActionsStep = React.memo(
             />
           );
         case StepTypes.ADD:
-          return <BoardAddStep projects={managedProjects} projectId={projectId} skipProjectDropdown isAdmin={isAdmin} onCreate={onBoardCreate} onBack={handleBack} onClose={onClose} />;
+          return (
+            <BoardAddStep
+              projects={managedProjects}
+              projectId={projectId}
+              skipProjectDropdown
+              isAdmin={isAdmin}
+              templates={templates}
+              onCreate={onBoardCreate}
+              onTemplateUpdate={onTemplateUpdate}
+              onTemplateDelete={onTemplateDelete}
+              onBack={handleBack}
+              onClose={onClose}
+            />
+          );
         case StepTypes.ACTIVITY:
           return (
             <ActivityStep
@@ -121,6 +137,7 @@ ProjectActionsStep.propTypes = {
   name: PropTypes.string.isRequired,
   projectId: PropTypes.string.isRequired,
   managedProjects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  templates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultDataRename: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isAdmin: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
@@ -131,6 +148,8 @@ ProjectActionsStep.propTypes = {
   isProjectManager: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
+  onTemplateUpdate: PropTypes.func.isRequired,
+  onTemplateDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
