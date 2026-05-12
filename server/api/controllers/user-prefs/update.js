@@ -17,7 +17,9 @@ const columnVisibilityValidator = (value) => _.isObject(value) && _.every(value,
 const hexColorsValidator = (value) => {
   if (!_.isObject(value)) return false;
 
-  return _.every(value, (v) => typeof v === 'string' && (validator.isHexColor(v) || validator.isRgbColor(v, { allowSpaces: true })));
+  const cssVariablePattern = /^--[a-zA-Z][a-zA-Z0-9_-]*$/;
+
+  return _.every(value, (v, k) => cssVariablePattern.test(k) && typeof v === 'string' && (validator.isHexColor(v) || validator.isRgbColor(v, { allowSpaces: true })));
 };
 
 module.exports = {
