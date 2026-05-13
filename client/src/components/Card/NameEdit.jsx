@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
-import { Button, ButtonVariant, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './NameEdit.module.scss';
@@ -99,7 +99,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     <Form className={s.wrapper}>
       <TextArea
         ref={field}
-        style={TextAreaStyle.Default}
+        variant={TextAreaVariant.Default}
         value={value}
         placeholder={t('common.enterCardName')}
         maxRows={2}

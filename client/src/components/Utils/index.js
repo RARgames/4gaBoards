@@ -16,7 +16,7 @@ import Popup from './PopupElements';
 import { ProgressBar, ProgressBarSize } from './ProgressBar';
 import { Radio, RadioSize } from './Radio';
 import Table from './Table';
-import { TextArea, TextAreaStyle } from './TextArea';
+import { TextArea, TextAreaVariant } from './TextArea';
 import withViewportPopup from './ViewportPopup';
 
 export {
@@ -51,5 +51,5 @@ export {
   RadioSize,
   Table,
   TextArea,
-  TextAreaStyle,
+  TextAreaVariant,
 };

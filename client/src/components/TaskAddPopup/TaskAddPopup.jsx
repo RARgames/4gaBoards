@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonVariant, Popup, Form, withPopup, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, withPopup, TextArea, TextAreaVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './TaskAddPopup.module.scss';
@@ -64,7 +64,7 @@ const TaskAddStep = React.memo(({ onCreate, onBack, onClose }) => {
       <Popup.Header onBack={onBack}>{t('common.addTask')}</Popup.Header>
       <Popup.Content className={s.content}>
         <Form onKeyDown={handleKeyDown}>
-          <TextArea ref={nameField} style={TextAreaStyle.Default} name="name" value={data.name} placeholder={t('common.enterTaskDescription')} maxRows={2} onChange={handleFieldChange} isError={isError} />
+          <TextArea ref={nameField} variant={TextAreaVariant.Default} name="name" value={data.name} placeholder={t('common.enterTaskDescription')} maxRows={2} onChange={handleFieldChange} isError={isError} />
           <div className={gs.controls}>
             <Button variant={ButtonVariant.Submit} content={t('common.addTask')} onClick={handleSubmit} />
           </div>

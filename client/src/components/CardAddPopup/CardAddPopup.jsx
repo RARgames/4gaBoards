@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Popup, Form, withPopup, Dropdown, DropdownVariant, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, withPopup, Dropdown, DropdownVariant, TextArea, TextAreaVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAddPopup.module.scss';
@@ -107,7 +107,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
       <Popup.Content className={s.content}>
         <Form ref={formRef} tabIndex="0" onKeyDown={handleKeyDown}>
           <div className={s.text}>{t('common.name')}</div>
-          <TextArea ref={nameField} style={TextAreaStyle.Default} name="name" value={data.name} placeholder={t('common.enterCardNameWithHint')} maxRows={3} onChange={handleFieldChange} isError={isError} />
+          <TextArea ref={nameField} variant={TextAreaVariant.Default} name="name" value={data.name} placeholder={t('common.enterCardNameWithHint')} maxRows={3} onChange={handleFieldChange} isError={isError} />
           {!forcedDefaultListId && <div className={s.text}>{t('common.list', { context: 'title' })}</div>}
           {!forcedDefaultListId && (
             <Dropdown

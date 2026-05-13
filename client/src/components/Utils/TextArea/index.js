@@ -1,4 +1,4 @@
 import TextArea from './TextArea';
-import TextAreaStyle from './TextAreaStyle';
+import TextAreaVariant from './TextAreaVariant';
 
-export { TextArea, TextAreaStyle };
+export { TextArea, TextAreaVariant };

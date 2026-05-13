@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './ListAdd.module.scss';
@@ -93,7 +93,7 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
     <Form className={s.wrapper}>
       <TextArea
         ref={nameField}
-        style={TextAreaStyle.Default}
+        variant={TextAreaVariant.Default}
         name="name"
         value={data.name}
         placeholder={t('common.enterListName')}

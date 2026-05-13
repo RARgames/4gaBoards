@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAdd.module.scss';
@@ -108,7 +108,7 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
     <Form className={clsx(s.wrapper, !isOpen && s.wrapperClosed)}>
       <TextArea
         ref={nameField}
-        style={TextAreaStyle.Default}
+        variant={TextAreaVariant.Default}
         name="name"
         value={data.name}
         placeholder={t('common.enterCardNameWithHint')}

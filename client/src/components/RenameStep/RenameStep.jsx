@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonVariant, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, TextArea, TextAreaVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 
@@ -67,7 +67,7 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
         <Form>
           <TextArea
             ref={field}
-            style={TextAreaStyle.Default}
+            variant={TextAreaVariant.Default}
             name="name"
             placeholder={placeholder}
             value={data.name}

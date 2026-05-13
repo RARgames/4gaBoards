@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonVariant, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, TextArea, TextAreaVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 
@@ -63,7 +63,7 @@ const BoardTemplateAddStep = React.memo(({ title, defaultData, placeholder, onUp
         <Form>
           <TextArea
             ref={field}
-            style={TextAreaStyle.Default}
+            variant={TextAreaVariant.Default}
             name="name"
             placeholder={placeholder}
             value={data.name}
