@@ -1,3 +1,5 @@
+const { isValidColor } = require('../../../utils/colorValidator');
+
 const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
@@ -24,7 +26,7 @@ module.exports = {
     },
     color: {
       type: 'string',
-      isIn: Label.COLORS,
+      custom: isValidColor,
     },
   },
 
