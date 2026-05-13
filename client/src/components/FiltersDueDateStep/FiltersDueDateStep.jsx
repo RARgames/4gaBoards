@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Input, InputStyle, Popup, Form, Checkbox } from '../Utils';
+import { Button, ButtonVariant, Input, InputStyle, Popup, Form, Checkbox } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './FiltersDueDateStep.module.scss';
@@ -115,8 +115,8 @@ const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultVal
           <Checkbox checked={justSelectedDay} label={t('common.justSelectedDay')} onChange={toggleJustSelectedDay} wrapperClassName={s.checkboxWrapper} />
           <Checkbox checked={includeTaskDueDates} label={t('common.includeTaskDueDates')} onChange={toggleIncludeTaskDueDates} wrapperClassName={s.checkboxWrapper} />
           <div className={gs.controlsSpaceBetween}>
-            <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('action.remove')} onClick={handleClearClick} />
+            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

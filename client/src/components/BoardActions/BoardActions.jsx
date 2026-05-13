@@ -11,7 +11,7 @@ import CardSearch from '../CardSearch';
 import ConnectionsPopup from '../ConnectionsPopup';
 import MembershipPermissionsSelectStep from '../MembershipPermissionsSelectStep';
 import Memberships from '../Memberships';
-import { Icon, IconType, IconSize, Button, ButtonStyle } from '../Utils';
+import { Icon, IconType, IconSize, Button, ButtonVariant } from '../Utils';
 import Filters from './Filters';
 
 import * as gs from '../../global.module.scss';
@@ -82,7 +82,7 @@ const BoardActions = React.memo(
 
     return (
       <div className={clsx(s.wrapper, gs.scrollableX)}>
-        <Button style={ButtonStyle.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={clsx(s.action, s.subscriptionButton)}>
+        <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={clsx(s.action, s.subscriptionButton)}>
           <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
         </Button>
         <div title={board.name} className={clsx(s.title, s.action)}>
@@ -136,17 +136,17 @@ const BoardActions = React.memo(
           />
         </div>
         <div className={s.action}>
-          <Button style={ButtonStyle.IconBase} title={t('common.switchToBoardView')} onClick={() => onViewModeChange('board')} className={clsx(s.switchViewButton, viewMode === 'board' && s.active)}>
+          <Button variant={ButtonVariant.IconBase} title={t('common.switchToBoardView')} onClick={() => onViewModeChange('board')} className={clsx(s.switchViewButton, viewMode === 'board' && s.active)}>
             <Icon type={IconType.Board} size={IconSize.Size18} />
           </Button>
-          <Button style={ButtonStyle.IconBase} title={t('common.switchToListView')} onClick={() => onViewModeChange('list')} className={clsx(s.switchViewButton, viewMode === 'list' && s.active)}>
+          <Button variant={ButtonVariant.IconBase} title={t('common.switchToListView')} onClick={() => onViewModeChange('list')} className={clsx(s.switchViewButton, viewMode === 'list' && s.active)}>
             <Icon type={IconType.List} size={IconSize.Size18} />
           </Button>
         </div>
         {isProjectManager && (
           <div className={clsx(s.action, s.actionRightFirst)}>
             <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-              <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
+              <Button variant={ButtonVariant.Icon} title={t('common.projectSettings')}>
                 <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
               </Button>
             </Link>
@@ -189,14 +189,14 @@ const BoardActions = React.memo(
             offset={10}
             hideCloseButton
           >
-            <Button style={ButtonStyle.Icon} title={t('common.editBoard', { context: 'title' })}>
+            <Button variant={ButtonVariant.Icon} title={t('common.editBoard', { context: 'title' })}>
               <Icon type={IconType.EllipsisVertical} size={IconSize.Size18} />
             </Button>
           </BoardActionsPopup>
         </div>
         <div className={clsx(s.action, s.actionRightLast)}>
           <Link to={Paths.PROJECTS.replace(':id', projectId)}>
-            <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
+            <Button variant={ButtonVariant.Icon} title={t('common.backToProject')}>
               <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
             </Button>
           </Link>

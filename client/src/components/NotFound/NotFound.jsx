@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import HeaderContainer from '../../containers/HeaderContainer';
-import { Loader, LoaderSize, Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Loader, LoaderSize, Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './NotFound.module.scss';
 
@@ -48,7 +48,7 @@ const NotFound = React.memo(({ isInitializing, isSocketDisconnected }) => {
           <div className={s.messageHeader}>
             <Icon className={clsx(s.messageIcon, isCollapsed && s.messageIconCollapsed)} type={IconType.NoConnection} size={IconSize.Size20} />
             <div className={clsx(s.messageTitle, isCollapsed && s.collapsed)}>{t('common.noConnection')}</div>
-            <Button style={ButtonStyle.Icon} title={t('common.close')} className={clsx(s.messageCloseButton, isCollapsed && s.collapsed)} onClick={handleToggleCollapse}>
+            <Button variant={ButtonVariant.Icon} title={t('common.close')} className={clsx(s.messageCloseButton, isCollapsed && s.collapsed)} onClick={handleToggleCollapse}>
               <Icon className={s.messageCloseIcon} type={IconType.Close} size={IconSize.Size16} />
             </Button>
           </div>

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
 import ActivityPopup from '../../ActivityPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
@@ -295,7 +295,7 @@ const InstanceSettings = React.memo(
                 offset={0}
                 wrapperClassName={s.activityButtonWrapper}
               >
-                <Button style={ButtonStyle.Icon} title={t('common.checkActivity')}>
+                <Button variant={ButtonVariant.Icon} title={t('common.checkActivity')}>
                   <Icon type={IconType.Activity} size={IconSize.Size10} />
                 </Button>
               </ActivityPopup>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useLocalStorage } from '../../hooks';
-import { Button, ButtonStyle, MDEditor } from '../Utils';
+import { Button, ButtonVariant, MDEditor } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './DescriptionEdit.module.scss';
@@ -145,8 +145,8 @@ const DescriptionEdit = React.forwardRef(
           className={s.editor}
         />
         <div className={gs.controls}>
-          <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-          <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+          <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+          <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
         </div>
       </>
     );

@@ -8,7 +8,7 @@ import logo from '../../assets/images/4gaLogo512w.png';
 import Paths from '../../constants/Paths';
 import User from '../User';
 import UserPopup from '../UserPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize, ExternalLink } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, ExternalLink } from '../Utils';
 import NotificationsPopup from './NotificationsPopup';
 
 import * as s from './Header.module.scss';
@@ -71,7 +71,7 @@ const Header = React.memo(
     return (
       <div className={s.wrapper}>
         <Link to={Paths.ROOT} className={s.logo}>
-          <Button style={ButtonStyle.HeaderLogo} title={t('common.dashboard')}>
+          <Button variant={ButtonVariant.HeaderLogo} title={t('common.dashboard')}>
             <img src={logo} alt="4ga Boards" className={s.logoIcon} />
           </Button>
         </Link>
@@ -99,14 +99,14 @@ const Header = React.memo(
         )}
         <div className={s.menuRight}>
           <Link to={Paths.SETTINGS} className={s.hideOnSmall}>
-            <Button style={ButtonStyle.Header} title={t('common.settings')}>
+            <Button variant={ButtonVariant.Header} title={t('common.settings')}>
               <Icon type={IconType.Settings} size={IconSize.Size18} />
               {instanceNotificationCount > 0 && <span className={s.notification}>{instanceNotificationCount}</span>}
             </Button>
           </Link>
           {isAdmin && (
             <Link to={Paths.SETTINGS_USERS} className={s.hideOnSmall}>
-              <Button style={ButtonStyle.Header} title={t('common.settingsUsers')}>
+              <Button variant={ButtonVariant.Header} title={t('common.settingsUsers')}>
                 <Icon type={IconType.Users} size={IconSize.Size18} />
                 {usersNotificationCount > 0 && <span className={s.notification}>{usersNotificationCount}</span>}
               </Button>
@@ -123,13 +123,13 @@ const Header = React.memo(
             onChangeFilterQuery={onNotificationChangeFilterQuery}
             hideCloseButton
           >
-            <Button style={ButtonStyle.Header} title={t('common.notifications')}>
+            <Button variant={ButtonVariant.Header} title={t('common.notifications')}>
               <Icon type={IconType.Bell} size={IconSize.Size18} />
               {notificationCount > 0 && <span className={s.notification}>{notificationCount}</span>}
             </Button>
           </NotificationsPopup>
           <UserPopup canEditProject={canEditProject} projectId={project?.id} isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
-            <Button style={ButtonStyle.Header} title={t('common.profileAndSettings')}>
+            <Button variant={ButtonVariant.Header} title={t('common.profileAndSettings')}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="card" skipTitle />
             </Button>
           </UserPopup>

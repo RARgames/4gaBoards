@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Button, ButtonStyle, Form, MDEditor } from '../../Utils';
+import { Button, ButtonVariant, Form, MDEditor } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './CommentEdit.module.scss';
@@ -143,8 +143,8 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
         className={s.editor}
       />
       <div className={gs.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
       </div>
     </Form>
   );

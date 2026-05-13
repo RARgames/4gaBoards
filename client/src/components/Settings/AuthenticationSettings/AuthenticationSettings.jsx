@@ -8,7 +8,7 @@ import DateText from '../../DateText';
 import DeletePopup from '../../DeletePopup';
 import ShowSecretPopup from '../../ShowSecretStep';
 import UserPasswordEditPopup from '../../UserPasswordEditPopup';
-import { Button, ButtonStyle, Icon, IconSize, IconType } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconSize, IconType } from '../../Utils';
 
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './AuthenticationSettings.module.scss';
@@ -57,7 +57,7 @@ const AuthenticationSettings = React.memo(
                 onUpdate={onPasswordUpdate}
                 onMessageDismiss={onPasswordUpdateMessageDismiss}
               >
-                <Button style={ButtonStyle.DefaultBorder} content={isPasswordAuthenticated ? t('action.editPassword', { context: 'title' }) : t('common.setPassword', { context: 'title' })} />
+                <Button variant={ButtonVariant.DefaultBorder} content={isPasswordAuthenticated ? t('action.editPassword', { context: 'title' }) : t('common.setPassword', { context: 'title' })} />
               </UserPasswordEditPopup>
             </div>
             <div className={s.action}>
@@ -72,7 +72,7 @@ const AuthenticationSettings = React.memo(
                 onSubmit={onApiClientCreate}
                 onMessageDismiss={onApiClientMessageDismiss}
               >
-                <Button style={ButtonStyle.DefaultBorder} content={t('common.generateApiClient')} />
+                <Button variant={ButtonVariant.DefaultBorder} content={t('common.generateApiClient')} />
               </ApiClientPopup>
             </div>
             <div className={clsx(s.action)}>
@@ -109,12 +109,12 @@ const AuthenticationSettings = React.memo(
                             onSubmit={(data) => onApiClientUpdate(apiClient.id, data)}
                             onMessageDismiss={onApiClientMessageDismiss}
                           >
-                            <Button style={ButtonStyle.Icon} title={t('common.editApiClient')}>
+                            <Button variant={ButtonVariant.Icon} title={t('common.editApiClient')}>
                               <Icon type={IconType.Pencil} size={IconSize.Size12} />
                             </Button>
                           </ApiClientPopup>
                           <ShowSecretPopup id={apiClient.clientId} secret={apiClient.clientSecret}>
-                            <Button style={ButtonStyle.Icon} title={t('common.resetApiClient')} onClick={() => handleResetClick(apiClient.id)}>
+                            <Button variant={ButtonVariant.Icon} title={t('common.resetApiClient')} onClick={() => handleResetClick(apiClient.id)}>
                               <Icon type={IconType.Reset} size={IconSize.Size12} />
                             </Button>
                           </ShowSecretPopup>
@@ -126,7 +126,7 @@ const AuthenticationSettings = React.memo(
                             position="left-start"
                             offset={0}
                           >
-                            <Button style={ButtonStyle.Icon} title={t('common.deleteApiClient')}>
+                            <Button variant={ButtonVariant.Icon} title={t('common.deleteApiClient')}>
                               <Icon type={IconType.Trash} size={IconSize.Size12} />
                             </Button>
                           </DeletePopup>
@@ -135,7 +135,7 @@ const AuthenticationSettings = React.memo(
                       <div className={s.itemContent}>
                         <span className={s.dataWrapper}>
                           {t('common.clientId')}:
-                          <Button style={ButtonStyle.Icon} title={t('common.copyClientId')} onClick={() => handleCopyClick(apiClient.clientId)} className={s.copyButton}>
+                          <Button variant={ButtonVariant.Icon} title={t('common.copyClientId')} onClick={() => handleCopyClick(apiClient.clientId)} className={s.copyButton}>
                             <Icon type={IconType.Copy} size={IconSize.Size12} />
                           </Button>
                           <span className={s.data}>{apiClient.clientId}</span>
@@ -144,7 +144,7 @@ const AuthenticationSettings = React.memo(
                           <span className={s.dataWrapper}>
                             {t('common.clientSecret')}:
                             {apiClient.clientSecret && (
-                              <Button style={ButtonStyle.Icon} title={t('common.copyClientSecret')} onClick={() => handleCopyClick(apiClient.clientSecret)} className={s.copyButton}>
+                              <Button variant={ButtonVariant.Icon} title={t('common.copyClientSecret')} onClick={() => handleCopyClick(apiClient.clientSecret)} className={s.copyButton}>
                                 <Icon type={IconType.Copy} size={IconSize.Size12} />
                               </Button>
                             )}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import MembershipsPopup from '../../../MembershipsPopup';
 import User from '../../../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './MembersCell.module.scss';
 
@@ -39,7 +39,7 @@ const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMembershi
       offset={0}
       wrapperClassName={s.popupWrapper}
     >
-      <Button style={ButtonStyle.Icon} title={t('common.addMember')} className={clsx(cellClassName, s.addButton)}>
+      <Button variant={ButtonVariant.Icon} title={t('common.addMember')} className={clsx(cellClassName, s.addButton)}>
         <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
       </Button>
     </MembershipsPopup>

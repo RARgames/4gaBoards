@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import NotificationFilter from '../NorificationFilter';
 import NotificationActionsPopup from '../NotificationActionsPopup';
 import Notifications from '../Notifications';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './NotificationCenter.module.scss';
@@ -24,7 +24,7 @@ const NotificationCenter = React.memo(({ items, filteredItems, filter, onUpdate,
           {totalCount === 0 && t('common.notifications')}
           <div className={s.actionsWrapper}>
             <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
-              <Button style={ButtonStyle.IconCentered} title={t('common.notificationActions')}>
+              <Button variant={ButtonVariant.IconCentered} title={t('common.notificationActions')}>
                 <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
               </Button>
             </NotificationActionsPopup>

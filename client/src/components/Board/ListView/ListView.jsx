@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import Paths from '../../../constants/Paths';
 import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Table } from '../../Utils';
 import { NameCellRenderer, LabelsCellRenderer, MembersCellRenderer, ListNameCellRenderer, DueDateCellRenderer, TimerCellRenderer, TasksCellRenderer, ActionsCellRenderer } from './Renderers';
 
 import * as gs from '../../../global.module.scss';
@@ -482,13 +482,13 @@ const ListView = React.memo(
           {canEdit && (
             <div className={s.paginationButtonsWrapper}>
               <ListAddPopup onCreate={onListCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
-                <Button style={ButtonStyle.DefaultBorder} title={t('common.addList', { context: 'title' })} className={s.paginationButton}>
+                <Button variant={ButtonVariant.DefaultBorder} title={t('common.addList', { context: 'title' })} className={s.paginationButton}>
                   <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
                   <span className={s.paginationButtonText}>{t('common.addList', { context: 'title' })}</span>
                 </Button>
               </ListAddPopup>
               <CardAddPopup lists={lists} labelIds={labelIds} memberIds={memberIds} onCreate={onCardCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
-                <Button style={ButtonStyle.DefaultBorder} title={t('common.addCard', { context: 'title' })} className={s.paginationButton}>
+                <Button variant={ButtonVariant.DefaultBorder} title={t('common.addCard', { context: 'title' })} className={s.paginationButton}>
                   <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
                   <span className={s.paginationButtonText}>{t('common.addCard', { context: 'title' })}</span>
                 </Button>

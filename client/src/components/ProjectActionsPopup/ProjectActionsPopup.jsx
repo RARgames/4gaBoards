@@ -8,7 +8,7 @@ import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import { BoardAddStep } from '../BoardAddPopup';
 import RenameStep from '../RenameStep';
-import { Button, ButtonStyle, Icon, IconType, IconSize, withPopup } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, withPopup } from '../Utils';
 
 import * as s from './ProjectActionsPopup.module.scss';
 
@@ -101,25 +101,25 @@ const ProjectActionsStep = React.memo(
     return (
       <>
         {isProjectManager && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.renameProject', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
             <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
             {t('common.renameProject', { context: 'title' })}
           </Button>
         )}
         {isProjectManager && (
           <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-            <Button style={ButtonStyle.PopupContext} title={t('common.projectSettings', { context: 'title' })} onClick={onClose}>
+            <Button variant={ButtonVariant.PopupContext} title={t('common.projectSettings', { context: 'title' })} onClick={onClose}>
               <Icon type={IconType.ProjectSettings} size={IconSize.Size13} className={s.icon} />
               {t('common.projectSettings', { context: 'title' })}
             </Button>
           </Link>
         )}
-        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
+        <Button variant={ButtonVariant.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
         {isProjectManager && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.addBoard', { context: 'title' })} onClick={() => openStep(StepTypes.ADD)}>
             <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
             {t('common.addBoard', { context: 'title' })}
           </Button>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle } from '../Button';
+import { Button, ButtonVariant } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 import MessageStyle from './MessageStyle';
 
@@ -15,7 +15,7 @@ const Message = React.forwardRef(({ title, style, content, className, onDismiss,
     // eslint-disable-next-line react/jsx-props-no-spreading
     <div ref={ref} title={content} className={clsx(s.message, style && s[style], className)} {...props}>
       {content}
-      <Button style={ButtonStyle.Icon} title={title || t('common.close')} onClick={onDismiss} className={s.closeButton}>
+      <Button variant={ButtonVariant.Icon} title={title || t('common.close')} onClick={onDismiss} className={s.closeButton}>
         <Icon type={IconType.Close} size={IconSize.Size14} />
       </Button>
     </div>

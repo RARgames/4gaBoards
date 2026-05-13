@@ -4,7 +4,7 @@ import { useFloating, useDismiss, useRole, useInteractions, FloatingFocusManager
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle } from '../Button';
+import { Button, ButtonVariant } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
 import * as s from './ViewportPopup.module.scss';
@@ -84,7 +84,7 @@ export default (WrappedComponent, defaultProps) => {
             {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
           >
             {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-              <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+              <Button variant={ButtonVariant.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                 <Icon type={IconType.Close} size={IconSize.Size14} />
               </Button>
             )}

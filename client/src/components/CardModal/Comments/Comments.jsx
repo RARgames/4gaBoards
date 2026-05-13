@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import Comment from './Comment';
 import CommentEdit from './CommentEdit';
 
@@ -88,11 +88,11 @@ const Comments = React.memo(
           {t('common.comments')}
           {commentCount > 0 && <div className={cStyles.headerCount}>({commentCount})</div>}
           {canEdit && (
-            <Button style={ButtonStyle.Icon} title={t('common.addComment')} onClick={openAddComment}>
+            <Button variant={ButtonVariant.Icon} title={t('common.addComment')} onClick={openAddComment}>
               <Icon type={IconType.Plus} size={IconSize.Size10} className={cStyles.iconAddButton} />
             </Button>
           )}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleItem', { item: t('common.comments') })} onClick={toggleCommShown} className={cStyles.buttonToggle}>
+          <Button variant={ButtonVariant.Icon} title={t('common.toggleItem', { item: t('common.comments') })} onClick={toggleCommShown} className={cStyles.buttonToggle}>
             <Icon type={commShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={s.icon} />
           </Button>
         </div>
@@ -111,7 +111,7 @@ const Comments = React.memo(
                   onUpdate={onCommentCreate}
                   onUserPrefsUpdate={onUserPrefsUpdate}
                 >
-                  <Button style={ButtonStyle.Default} content={t('common.addComment')} onClick={openAddComment} />
+                  <Button variant={ButtonVariant.Default} content={t('common.addComment')} onClick={openAddComment} />
                 </CommentEdit>
               )}
               <div className={s.comments}>

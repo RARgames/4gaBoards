@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useToggle } from '../../../lib/hooks';
-import { Button, ButtonStyle } from '../../Utils';
+import { Button, ButtonVariant } from '../../Utils';
 import Attachment from './Attachment';
 
 import * as s from './Attachments.module.scss';
@@ -136,7 +136,7 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
       </Gallery>
       {items.length > INITIALLY_VISIBLE && (
         <Button
-          style={ButtonStyle.NoBackground}
+          variant={ButtonVariant.NoBackground}
           content={isAllVisible ? t('action.showFewerAttachments') : t('action.showAllAttachments', { hidden: items.length - INITIALLY_VISIBLE })}
           className={s.toggleButton}
           onClick={handleToggleAllVisibleClick}

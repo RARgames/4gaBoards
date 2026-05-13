@@ -5,7 +5,7 @@ import isEmail from 'validator/lib/isEmail';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserEmailEditStep.module.scss';
@@ -164,7 +164,7 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
             </>
           )}
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={isSubmitting} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('action.save')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

@@ -7,7 +7,7 @@ import { useField, useSteps } from '../../hooks';
 import DateText from '../DateText';
 import DeleteStep from '../DeleteStep';
 import User from '../User';
-import { Popup, Input, InputStyle, Button, ButtonStyle, Icon, IconSize, IconType } from '../Utils';
+import { Popup, Input, InputStyle, Button, ButtonVariant, Icon, IconSize, IconType } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './MailTokenListStep.module.scss';
@@ -82,7 +82,7 @@ const MailTokenListStep = React.memo(({ title, mailTokens, mailServiceInboundEma
         <div className={s.inputWrapper}>
           <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.filterEmailsByUser')} onChange={handleSearchChange} />
           {canEdit && (
-            <Button style={ButtonStyle.Icon} title={t('common.generateNewEmail')} onClick={handleCreateClick} className={s.createButton}>
+            <Button variant={ButtonVariant.Icon} title={t('common.generateNewEmail')} onClick={handleCreateClick} className={s.createButton}>
               <Icon type={IconType.Plus} size={IconSize.Size14} />
             </Button>
           )}
@@ -99,17 +99,17 @@ const MailTokenListStep = React.memo(({ title, mailTokens, mailServiceInboundEma
                   <DateText value={mailToken.createdAt} showTime className={s.createdAt} />
                   <div className={s.itemHeaderButtons}>
                     {mailToken.isCurrentUser && (
-                      <Button style={ButtonStyle.Icon} title={t('common.resetEmail')} onClick={() => handleUpdateClick(mailToken.id)}>
+                      <Button variant={ButtonVariant.Icon} title={t('common.resetEmail')} onClick={() => handleUpdateClick(mailToken.id)}>
                         <Icon type={IconType.Reset} size={IconSize.Size12} />
                       </Button>
                     )}
-                    <Button style={ButtonStyle.Icon} title={t('common.deleteEmail')} onClick={() => handleDeleteClick(mailToken.id)}>
+                    <Button variant={ButtonVariant.Icon} title={t('common.deleteEmail')} onClick={() => handleDeleteClick(mailToken.id)}>
                       <Icon type={IconType.Trash} size={IconSize.Size12} />
                     </Button>
                   </div>
                 </div>
                 <div className={s.itemContent}>
-                  <Button style={ButtonStyle.Icon} title={t('common.copyEmail')} onClick={() => handleCopyClick(mailToken.token)} className={s.copyButton}>
+                  <Button variant={ButtonVariant.Icon} title={t('common.copyEmail')} onClick={() => handleCopyClick(mailToken.token)} className={s.copyButton}>
                     <Icon type={IconType.Copy} size={IconSize.Size12} />
                   </Button>
                   <span className={s.email}>{`${mailToken.token}-${mailServiceInboundEmail}`}</span>

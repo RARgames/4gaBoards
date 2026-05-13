@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
 import { useField } from '../../hooks';
-import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Input, Form, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Filter.module.scss';
 
@@ -111,14 +111,14 @@ const Filter = React.memo(({ defaultValue, projects, filteredProjects, path, onC
     <div>
       <Form className={s.form} onKeyDown={handleKeyDown}>
         <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t(`common.filter${upperCasedTarget}s`)} onFocus={handleFocus} />
-        <Button style={ButtonStyle.Icon} title={t('common.toggleSidebarFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
+        <Button variant={ButtonVariant.Icon} title={t('common.toggleSidebarFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
           <div className={s.inputButtonText}>{t(`common.filterId${upperCasedTarget}`)[0].toUpperCase()}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
         </Button>
       </Form>
       <div className={s.controls}>
         {value !== '' && <div className={s.counterText}> {getCounterText()} </div>}
         {value !== '' && (
-          <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
+          <Button variant={ButtonVariant.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
             <Icon type={IconType.Close} size={IconSize.Size10} />
           </Button>
         )}

@@ -9,7 +9,7 @@ import Label from '../Label';
 import LabelsPopup from '../LabelsPopup';
 import MembershipsPopup from '../MembershipsPopup';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Filters.module.scss';
 
@@ -117,7 +117,7 @@ const Filters = React.memo(
             </span>
           ))}
           {users.length > 0 && (
-            <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleRemoveAllUsersClick} className={s.clearButton}>
+            <Button variant={ButtonVariant.Icon} title={t('common.clearFilter')} onClick={handleRemoveAllUsersClick} className={s.clearButton}>
               <Icon type={IconType.Close} size={IconSize.Size10} />
             </Button>
           )}
@@ -148,7 +148,7 @@ const Filters = React.memo(
             </span>
           ))}
           {labels.length > 0 && (
-            <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleRemoveAllLabelsClick} className={s.clearButton}>
+            <Button variant={ButtonVariant.Icon} title={t('common.clearFilter')} onClick={handleRemoveAllLabelsClick} className={s.clearButton}>
               <Icon type={IconType.Close} size={IconSize.Size10} />
             </Button>
           )}
@@ -186,7 +186,7 @@ const Filters = React.memo(
             </Button>
           </FiltersDueDatePopup>
           {dueDateValue && (
-            <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleRemoveDueDateClick} className={clsx(s.clearButton, s.clearButtonDueDate)}>
+            <Button variant={ButtonVariant.Icon} title={t('common.clearFilter')} onClick={handleRemoveDueDateClick} className={clsx(s.clearButton, s.clearButtonDueDate)}>
               <Icon type={IconType.Close} size={IconSize.Size10} />
             </Button>
           )}

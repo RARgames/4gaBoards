@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle } from '../../Button';
+import { Button, ButtonVariant } from '../../Button';
 import { Icon, IconType, IconSize } from '../../Icon';
 import ActionsPopup from './ActionsPopup';
 
@@ -25,7 +25,7 @@ const ActionsHeader = React.memo(({ table, fitScreen, userPrefsKeys, onResetColu
       hideCloseButton
       keepOnScroll
     >
-      <Button style={ButtonStyle.Icon} title={t('common.editListView')} className={s.tableSettingsButton}>
+      <Button variant={ButtonVariant.Icon} title={t('common.editListView')} className={s.tableSettingsButton}>
         <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} className={s.iconTableSettingsButton} />
       </Button>
     </ActionsPopup>

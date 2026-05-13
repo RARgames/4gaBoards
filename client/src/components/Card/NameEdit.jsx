@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
-import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Form, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './NameEdit.module.scss';
@@ -110,8 +110,8 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
         isError={isError}
       />
       <div className={gs.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
       </div>
     </Form>
   );

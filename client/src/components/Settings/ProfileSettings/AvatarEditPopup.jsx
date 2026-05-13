@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Popup, withPopup, Button, ButtonStyle, FilePicker } from '../../Utils';
+import { Popup, withPopup, Button, ButtonVariant, FilePicker } from '../../Utils';
 
 const AvatarEditStep = React.memo(({ defaultValue, onUpdate, onDelete, onClose }) => {
   const [t] = useTranslation();
@@ -32,10 +32,10 @@ const AvatarEditStep = React.memo(({ defaultValue, onUpdate, onDelete, onClose }
   return (
     <>
       <FilePicker accept="image/*" onSelect={handleFileSelect}>
-        <Button ref={field} style={ButtonStyle.PopupContext} content={t('action.uploadNewAvatar')} />
+        <Button ref={field} variant={ButtonVariant.PopupContext} content={t('action.uploadNewAvatar')} />
       </FilePicker>
       <Popup.Separator />
-      {defaultValue && <Button style={ButtonStyle.PopupContext} content={t('action.deleteAvatar')} onClick={handleDeleteClick} />}
+      {defaultValue && <Button variant={ButtonVariant.PopupContext} content={t('action.deleteAvatar')} onClick={handleDeleteClick} />}
     </>
   );
 });

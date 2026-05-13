@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import { ProjectBackgroundTypes } from '../../../constants/Enums';
 import ProjectBackgroundGradients from '../../../constants/ProjectBackgroundGradients';
-import { Button, ButtonStyle, Icon, IconType, IconSize, FilePicker } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, FilePicker } from '../../Utils';
 
 import * as bs from '../../../backgrounds.module.scss';
 import * as s from './BackgroundPane.module.scss';
@@ -68,7 +68,7 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
       <div className={s.gradientButtons}>
         {ProjectBackgroundGradients.map((gradient) => (
           <Button
-            style={ButtonStyle.NoBackground}
+            variant={ButtonVariant.NoBackground}
             key={gradient}
             name="gradient"
             value={gradient}
@@ -92,17 +92,17 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
       <div className={s.actions}>
         <div className={s.action}>
           <FilePicker accept="image/*" onSelect={handleFileSelect}>
-            <Button style={ButtonStyle.DefaultBorder} ref={field} content={t('action.uploadNewImage', { context: 'title' })} disabled={isImageUpdating} />
+            <Button variant={ButtonVariant.DefaultBorder} ref={field} content={t('action.uploadNewImage', { context: 'title' })} disabled={isImageUpdating} />
           </FilePicker>
         </div>
         {imageCoverUrl && (
           <div className={s.action}>
-            <Button style={ButtonStyle.DefaultBorder} content={t('action.deleteImage', { context: 'title' })} disabled={isImageUpdating} onClick={handleDeleteImageClick} />
+            <Button variant={ButtonVariant.DefaultBorder} content={t('action.deleteImage', { context: 'title' })} disabled={isImageUpdating} onClick={handleDeleteImageClick} />
           </div>
         )}
         {item && (
           <div className={s.action}>
-            <Button style={ButtonStyle.DefaultBorder} content={t('action.removeBackground', { context: 'title' })} disabled={isImageUpdating} onClick={handleRemoveClick} />
+            <Button variant={ButtonVariant.DefaultBorder} content={t('action.removeBackground', { context: 'title' })} disabled={isImageUpdating} onClick={handleRemoveClick} />
           </div>
         )}
       </div>

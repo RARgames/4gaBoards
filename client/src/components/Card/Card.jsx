@@ -15,7 +15,7 @@ import MembershipsPopup from '../MembershipsPopup';
 import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, LinkifiedTextRenderer } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, LinkifiedTextRenderer } from '../Utils';
 import CardActionsPopup from './CardActionsPopup';
 import NameEdit from './NameEdit';
 
@@ -367,7 +367,7 @@ const Card = React.memo(
                         offset={0}
                         hideCloseButton
                       >
-                        <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={s.editCardButton}>
+                        <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={s.editCardButton}>
                           <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                         </Button>
                       </CardActionsPopup>

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import UserAddPopup from '../../UserAddPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Table } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Table } from '../../Utils';
 import { ActionsCellRenderer, NameCellRenderer, UserAvatarRenderer } from './Renderers';
 
 import * as gs from '../../../global.module.scss';
@@ -423,7 +423,7 @@ const UsersSettings = React.memo(
                 position="top"
                 wrapperClassName={s.popupWrapper}
               >
-                <Button style={ButtonStyle.DefaultBorder} title={t('common.addUser', { context: 'title' })} className={s.paginationButton}>
+                <Button variant={ButtonVariant.DefaultBorder} title={t('common.addUser', { context: 'title' })} className={s.paginationButton}>
                   <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
                   <span className={s.paginationButtonText}>{t('common.addUser', { context: 'title' })}</span>
                 </Button>

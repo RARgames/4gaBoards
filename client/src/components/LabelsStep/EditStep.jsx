@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import LabelColors from '../../constants/LabelColors';
 import { useForm, useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
-import { Button, ButtonStyle, Popup, Form } from '../Utils';
+import { Button, ButtonVariant, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
 import * as gs from '../../global.module.scss';
@@ -89,8 +89,8 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
         <Form onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={gs.controlsSpaceBetween}>
-            <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
+            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

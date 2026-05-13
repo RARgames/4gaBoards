@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle } from '../../Button';
+import { Button, ButtonVariant } from '../../Button';
 import { Checkbox, CheckboxSize } from '../../Checkbox';
 import withPopup from '../../Popup';
 import Popup from '../../PopupElements';
@@ -89,13 +89,13 @@ const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColu
               />
             );
           })}
-          <Button style={ButtonStyle.NoBackground} title={t('common.selectDefault')} onClick={handleSelectDefaultClick} className={s.selectDefaultButton}>
+          <Button variant={ButtonVariant.NoBackground} title={t('common.selectDefault')} onClick={handleSelectDefaultClick} className={s.selectDefaultButton}>
             {t('common.selectDefault')}
           </Button>
-          <Button style={ButtonStyle.NoBackground} title={t('common.selectAll')} onClick={handleSelectAllClick}>
+          <Button variant={ButtonVariant.NoBackground} title={t('common.selectAll')} onClick={handleSelectAllClick}>
             {t('common.selectAll')}
           </Button>
-          <Button style={ButtonStyle.NoBackground} title={t('common.selectNone')} onClick={handleSelectNoneClick}>
+          <Button variant={ButtonVariant.NoBackground} title={t('common.selectNone')} onClick={handleSelectNoneClick}>
             {t('common.selectNone')}
           </Button>
         </div>

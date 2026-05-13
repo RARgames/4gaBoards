@@ -6,7 +6,7 @@ import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
 
 import { BoardMembershipRoles } from '../../constants/Enums';
-import { Button, ButtonStyle, Popup, Form, Radio, RadioSize } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, Radio, RadioSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './MembershipPermissionsSelectStep.module.scss';
@@ -66,12 +66,12 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content isMinContent>
         <Form onKeyDown={handleKeyDown}>
-          <Button style={ButtonStyle.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={clsx(data.role === BoardMembershipRoles.EDITOR && s.selected)}>
+          <Button variant={ButtonVariant.Popup} onClick={() => handleSelectRoleClick(BoardMembershipRoles.EDITOR)} className={clsx(data.role === BoardMembershipRoles.EDITOR && s.selected)}>
             <div className={s.menuItemTitle}>{t('common.editor')}</div>
             <div className={s.menuItemDescription}>{t('common.canEditContentOfBoard')}</div>
           </Button>
           <Button
-            style={ButtonStyle.Popup}
+            variant={ButtonVariant.Popup}
             onClick={() => handleSelectRoleClick(BoardMembershipRoles.VIEWER)}
             className={clsx(data.role === BoardMembershipRoles.VIEWER && s.selected, data.role !== BoardMembershipRoles.VIEWER && s.last)}
           >
@@ -85,7 +85,7 @@ const MembershipPermissionsSelectStep = React.memo(({ defaultData, title, button
             </div>
           )}
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t(buttonContent)} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t(buttonContent)} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

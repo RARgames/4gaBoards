@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Input, InputStyle, Popup, Form } from '../Utils';
+import { Button, ButtonVariant, Input, InputStyle, Popup, Form } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 
@@ -109,8 +109,8 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
           <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gs.controlsSpaceBetween}>
-            <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('action.remove')} onClick={handleClearClick} />
+            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

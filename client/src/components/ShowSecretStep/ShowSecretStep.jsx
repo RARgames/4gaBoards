@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useTranslation, Trans } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle, Popup, Icon, IconType, IconSize, withPopup } from '../Utils';
+import { Button, ButtonVariant, Popup, Icon, IconType, IconSize, withPopup } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './ShowSecretStep.module.scss';
@@ -27,20 +27,20 @@ const ShowSecretStep = React.memo(({ id, secret, onBack, onClose }) => {
         </div>
         <div className={s.secretWrapper}>
           {t('common.clientId')}:
-          <Button style={ButtonStyle.Icon} title={t('common.copyClientId')} onClick={handleIdCopyClick}>
+          <Button variant={ButtonVariant.Icon} title={t('common.copyClientId')} onClick={handleIdCopyClick}>
             <Icon type={IconType.Copy} size={IconSize.Size12} />
           </Button>
           <span>{id || t('common.generating')}</span>
         </div>
         <div className={s.secretWrapper}>
           {t('common.clientSecret')}:
-          <Button style={ButtonStyle.Icon} title={t('common.copyClientSecret')} onClick={handleSecretCopyClick}>
+          <Button variant={ButtonVariant.Icon} title={t('common.copyClientSecret')} onClick={handleSecretCopyClick}>
             <Icon type={IconType.Copy} size={IconSize.Size12} />
           </Button>
           <span>{secret || t('common.generating')}</span>
         </div>
         <div className={gs.controls}>
-          <Button style={ButtonStyle.Submit} content={t('common.close')} onClick={onClose} />
+          <Button variant={ButtonVariant.Submit} content={t('common.close')} onClick={onClose} />
         </div>
       </Popup.Content>
     </>

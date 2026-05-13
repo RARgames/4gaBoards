@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../../../hooks';
-import { Button, ButtonStyle } from '../../Button';
+import { Button, ButtonVariant } from '../../Button';
 import { Checkbox, CheckboxSize } from '../../Checkbox';
 import withPopup from '../../Popup';
 import Popup from '../../PopupElements';
@@ -73,17 +73,17 @@ const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumn
 
   return (
     <>
-      <Button style={ButtonStyle.PopupContext} content={t('common.selectColumns')} onClick={handleSelectColumnsClick} />
-      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnVisibility')} onClick={handleResetColumnVisibilityClick} />
+      <Button variant={ButtonVariant.PopupContext} content={t('common.selectColumns')} onClick={handleSelectColumnsClick} />
+      <Button variant={ButtonVariant.PopupContext} content={t('common.resetColumnVisibility')} onClick={handleResetColumnVisibilityClick} />
       <Popup.Separator />
-      <Button style={ButtonStyle.PopupContext} title={t('common.resetColumnWidths')} onClick={() => handleResetColumnWidths(false)} className={s.buttonWithCheckbox}>
+      <Button variant={ButtonVariant.PopupContext} title={t('common.resetColumnWidths')} onClick={() => handleResetColumnWidths(false)} className={s.buttonWithCheckbox}>
         <Checkbox checked={!fitScreen} label={t('common.resetColumnWidths')} size={CheckboxSize.Size14} readOnly checkboxClassName={s.checkbox} labelClassName={s.label} />
       </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('common.resetColumnWidthsFitScreen')} onClick={() => handleResetColumnWidths(true)} className={s.buttonWithCheckbox}>
+      <Button variant={ButtonVariant.PopupContext} title={t('common.resetColumnWidthsFitScreen')} onClick={() => handleResetColumnWidths(true)} className={s.buttonWithCheckbox}>
         <Checkbox checked={fitScreen} label={t('common.resetColumnWidthsFitScreen')} size={CheckboxSize.Size14} readOnly checkboxClassName={s.checkbox} labelClassName={s.label} />
       </Button>
       <Popup.Separator />
-      <Button style={ButtonStyle.PopupContext} content={t('common.resetColumnSorting')} onClick={handleResetColumnSorting} />
+      <Button variant={ButtonVariant.PopupContext} content={t('common.resetColumnSorting')} onClick={handleResetColumnSorting} />
     </>
   );
 });

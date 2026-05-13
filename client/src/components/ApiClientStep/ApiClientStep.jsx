@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useForm, useSteps } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { ShowSecretStep } from '../ShowSecretStep';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle, Checkbox, CheckboxSize } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageStyle, Checkbox, CheckboxSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './ApiClientStep.module.scss';
@@ -253,7 +253,7 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
             ))}
           </div>
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={submitButtonText} disabled={isSubmitting} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={submitButtonText} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

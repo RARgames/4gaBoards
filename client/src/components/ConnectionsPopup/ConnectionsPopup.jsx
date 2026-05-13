@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Form, withPopup } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, withPopup } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 
@@ -76,8 +76,8 @@ const ConnectionsStep = React.memo(({ defaultData, onUpdate, onBack, onClose }) 
             isError={isError}
           />
           <div className={gs.controlsSpaceBetween}>
-            <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

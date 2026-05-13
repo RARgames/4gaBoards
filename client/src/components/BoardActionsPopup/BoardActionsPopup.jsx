@@ -11,7 +11,7 @@ import DeleteStep from '../DeleteStep';
 import ExportStep from '../ExportStep';
 import MailTokenListStep from '../MailTokenListStep';
 import RenameStep from '../RenameStep';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './BoardActionsPopup.module.scss';
 
@@ -193,30 +193,30 @@ const BoardActionsStep = React.memo(
     return (
       <>
         {isProjectManager && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.renameBoard', { context: 'title' })} onClick={() => openStep(StepTypes.RENAME)}>
             <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
             {t('common.renameBoard', { context: 'title' })}
           </Button>
         )}
         {isProjectManager && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.connections', { context: 'title' })} onClick={() => openStep(StepTypes.GITHUB)}>
             <Icon type={IconType.GitHub} size={IconSize.Size13} className={s.icon} />
             {t('common.connections', { context: 'title' })}
           </Button>
         )}
         {isProjectManager && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={() => openStep(StepTypes.EXPORT)}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={() => openStep(StepTypes.EXPORT)}>
             <Icon type={IconType.Board} size={IconSize.Size13} className={s.icon} />
             {t('common.exportBoard', { context: 'title' })}
           </Button>
         )}
-        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
+        <Button variant={ButtonVariant.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={() => openStep(StepTypes.ACTIVITY)}>
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
         {canEdit && (
           <Button
-            style={ButtonStyle.PopupContext}
+            variant={ButtonVariant.PopupContext}
             title={mailServiceAvailable ? t('common.emailCardToBoard') : t('common.emailServiceUnavailable')}
             onClick={() => openStep(StepTypes.MAILTOKEN_LIST)}
             disabled={!mailServiceAvailable}
@@ -226,14 +226,14 @@ const BoardActionsStep = React.memo(
           </Button>
         )}
         {(canEdit || isProjectManager) && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.convertToTemplate', { context: 'title' })} onClick={() => openStep(StepTypes.CREATE_TEMPLATE)}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.convertToTemplate', { context: 'title' })} onClick={() => openStep(StepTypes.CREATE_TEMPLATE)}>
             <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
             {t('common.convertToTemplate', { context: 'title' })}
           </Button>
         )}
         {isProjectManager && <Popup.Separator />}
         {isProjectManager && (
-          <Button style={ButtonStyle.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.deleteBoard', { context: 'title' })} onClick={() => openStep(StepTypes.DELETE)}>
             <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
             {t('common.deleteBoard', { context: 'title' })}
           </Button>

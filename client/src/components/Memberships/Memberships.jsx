@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import AddPopup from './AddPopup';
 import MembershipActionsStep from './MembershipActionsPopup';
 
@@ -59,7 +59,7 @@ const Memberships = React.memo(
         ))}
         {!canEdit && items.length > visibleMembersCount && (
           <Button
-            style={ButtonStyle.Icon}
+            variant={ButtonVariant.Icon}
             className={clsx(s.addUser, s.moreMembersButton, s.cannotEdit)}
             title={items
               .slice(visibleMembersCount)
@@ -93,7 +93,7 @@ const Memberships = React.memo(
           >
             {items.length > visibleMembersCount && (
               <Button
-                style={ButtonStyle.Icon}
+                variant={ButtonVariant.Icon}
                 className={clsx(s.addUser, s.moreMembersButton)}
                 title={items
                   .slice(visibleMembersCount)
@@ -127,7 +127,7 @@ const Memberships = React.memo(
             onUpdate={onUpdate}
             onDelete={onDelete}
           >
-            <Button style={ButtonStyle.Icon} title={t('action.addUser')} className={s.addUser}>
+            <Button variant={ButtonVariant.Icon} title={t('action.addUser')} className={s.addUser}>
               <Icon type={IconType.UserAdd} size={IconSize.Size20} />
             </Button>
           </AddPopup>

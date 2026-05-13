@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import DueDate from '../../../DueDate';
 import DueDateEditPopup from '../../../DueDateEditPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './DueDateCell.module.scss';
 
@@ -25,7 +25,7 @@ const DueDateCell = React.memo(({ dueDate, cellClassName, canEdit, isReadOnly, t
     if (canEdit) {
       return (
         <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} wrapperClassName={s.popupWrapper}>
-          <Button style={ButtonStyle.Icon} title={t('common.addDueDate')} className={clsx(cellClassName, s.addButton)}>
+          <Button variant={ButtonVariant.Icon} title={t('common.addDueDate')} className={clsx(cellClassName, s.addButton)}>
             <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
           </Button>
         </DueDateEditPopup>

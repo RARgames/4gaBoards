@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
-import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Input, Form, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './CardSearch.module.scss';
 
@@ -88,7 +88,7 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
         <Form onKeyDown={handleKeyDown}>
           <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t('common.filterCards')} onFocus={handleFocus} />
           {value !== '' && (
-            <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
+            <Button variant={ButtonVariant.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
               <Icon type={IconType.Close} size={IconSize.Size10} />
             </Button>
           )}

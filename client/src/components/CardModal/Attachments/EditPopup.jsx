@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Button, ButtonStyle, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
+import { Button, ButtonVariant, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 
@@ -62,7 +62,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
             isError={isError}
           />
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

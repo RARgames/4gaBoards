@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './MembershipActionsStep.module.scss';
 
@@ -95,7 +95,7 @@ const MembershipActionsStep = React.memo(
     return (
       <div className={s.wrapper}>
         {onBack && (
-          <Button style={ButtonStyle.Icon} title={t('common.back')} onClick={onBack} className={s.backButton}>
+          <Button variant={ButtonVariant.Icon} title={t('common.back')} onClick={onBack} className={s.backButton}>
             <Icon type={IconType.AngleLeft} size={IconSize.Size14} />
           </Button>
         )}
@@ -110,10 +110,10 @@ const MembershipActionsStep = React.memo(
             {membership.user.email}
           </div>
         </span>
-        {permissionsSelectStep && canEdit && <Button style={ButtonStyle.Popup} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} />}
+        {permissionsSelectStep && canEdit && <Button variant={ButtonVariant.Popup} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} />}
         {membership.user.isCurrent
-          ? canLeave && <Button style={ButtonStyle.Popup} content={t(leaveButtonContent)} onClick={handleDeleteClick} />
-          : canEdit && <Button style={ButtonStyle.Popup} content={t(deleteButtonContent)} onClick={handleDeleteClick} />}
+          ? canLeave && <Button variant={ButtonVariant.Popup} content={t(leaveButtonContent)} onClick={handleDeleteClick} />
+          : canEdit && <Button variant={ButtonVariant.Popup} content={t(deleteButtonContent)} onClick={handleDeleteClick} />}
       </div>
     );
   },

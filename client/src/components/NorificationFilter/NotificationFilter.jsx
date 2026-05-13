@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
-import { Button, ButtonStyle, Input, Form, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Input, Form, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './NotificationFilter.module.scss';
 
@@ -87,14 +87,14 @@ const NotificationFilter = React.memo(({ defaultValue, items, filteredItems, cla
     <div className={className}>
       <Form className={s.form} onKeyDown={handleKeyDown}>
         <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t(`common.filterBy${upperCasedTarget}`)} onFocus={handleFocus} />
-        <Button style={ButtonStyle.Icon} title={t('common.toggleNotificationFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
+        <Button variant={ButtonVariant.Icon} title={t('common.toggleNotificationFilter')} onClick={handleToggleClick} className={s.inputButton} tabIndex="-1">
           <div className={s.inputButtonText}>{t(`common.filterId${upperCasedTarget}`)[0].toUpperCase()}</div> <Icon type={IconType.Switch} size={IconSize.Size13} />
         </Button>
       </Form>
       <div className={s.controls}>
         {value !== '' && <div className={s.counterText}> {getCounterText()} </div>}
         {value !== '' && (
-          <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
+          <Button variant={ButtonVariant.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
             <Icon type={IconType.Close} size={IconSize.Size10} />
           </Button>
         )}

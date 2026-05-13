@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useField, useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 import RenameStep from '../RenameStep';
-import { Popup, Input, InputStyle, Button, ButtonStyle, Icon, IconSize, IconType } from '../Utils';
+import { Popup, Input, InputStyle, Button, ButtonVariant, Icon, IconSize, IconType } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './BoardTemplateManagerStep.module.scss';
@@ -118,17 +118,17 @@ const BoardTemplateManagerStep = React.memo(({ templates, isAdmin, onUpdate, onD
                     </div>
                     <div className={s.actions}>
                       {isAdmin && (
-                        <Button style={ButtonStyle.Icon} title={t('common.toggleGlobal')} onClick={() => handleToggleTemplateScopeClick(template)} className={s.button}>
+                        <Button variant={ButtonVariant.Icon} title={t('common.toggleGlobal')} onClick={() => handleToggleTemplateScopeClick(template)} className={s.button}>
                           <Icon type={template.isGlobal ? IconType.StarOutline : IconType.Star} size={IconSize.Size12} />
                         </Button>
                       )}
                       {canManage && (
-                        <Button style={ButtonStyle.Icon} title={t('common.renameTemplate')} onClick={() => handleRenameClick(template)} className={s.button}>
+                        <Button variant={ButtonVariant.Icon} title={t('common.renameTemplate')} onClick={() => handleRenameClick(template)} className={s.button}>
                           <Icon type={IconType.Pencil} size={IconSize.Size12} />
                         </Button>
                       )}
                       {canManage && (
-                        <Button style={ButtonStyle.Icon} title={t('common.deleteTemplate')} onClick={() => handleDeleteClick(template)} className={s.button}>
+                        <Button variant={ButtonVariant.Icon} title={t('common.deleteTemplate')} onClick={() => handleDeleteClick(template)} className={s.button}>
                           <Icon type={IconType.Trash} size={IconSize.Size12} />
                         </Button>
                       )}

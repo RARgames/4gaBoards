@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import DroppableTypes from '../../constants/DroppableTypes';
 import { useToggle } from '../../lib/hooks';
 import DueDate from '../DueDate';
-import { Button, ButtonStyle, ProgressBar, ProgressBarSize, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, ProgressBar, ProgressBarSize, Icon, IconType, IconSize } from '../Utils';
 import Task from './Task';
 import TaskAdd from './TaskAdd';
 
@@ -145,7 +145,7 @@ const Tasks = React.forwardRef(
             {canEdit && (
               <TaskAdd ref={taskAddRef} onCreate={onCreate}>
                 <Button
-                  style={ButtonStyle.Default}
+                  variant={ButtonVariant.Default}
                   content={t('common.addTask')}
                   className={clsx(s.taskButton, variant === VARIANTS.CARD && s.taskButtonCard, isCardActive && variant === VARIANTS.CARD && s.taskButtonCardActive)}
                 />
@@ -164,7 +164,7 @@ const Tasks = React.forwardRef(
             {variant !== VARIANTS.CARDMODAL && (
               <div className={s.progressItems}>
                 {closestDueDate && <DueDate variant="tasksCard" value={closestDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} />}
-                <Button style={ButtonStyle.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton} data-prevent-card-switch>
+                <Button variant={ButtonVariant.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton} data-prevent-card-switch>
                   {completedItems.length}/{items.length}
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
                 </Button>

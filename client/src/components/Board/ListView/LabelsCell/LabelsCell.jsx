@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Label from '../../../Label';
 import LabelsPopup from '../../../LabelsPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './LabelsCell.module.scss';
 
@@ -45,7 +45,7 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
       offset={0}
       wrapperClassName={s.popupWrapper}
     >
-      <Button style={ButtonStyle.Icon} title={t('common.addLabel')} className={clsx(cellClassName, s.addButton)}>
+      <Button variant={ButtonVariant.Icon} title={t('common.addLabel')} className={clsx(cellClassName, s.addButton)}>
         <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
       </Button>
     </LabelsPopup>

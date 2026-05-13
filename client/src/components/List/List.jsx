@@ -9,7 +9,7 @@ import { ResizeObserverSizeTypes } from '../../constants/Enums';
 import CardContainer from '../../containers/CardContainer';
 import { useResizeObserverSize } from '../../hooks';
 import CardAddPopup from '../CardAddPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import CardAdd from './CardAdd';
 import ListActionsPopup from './ListActionsPopup';
 import NameEdit from './NameEdit';
@@ -180,7 +180,7 @@ const List = React.memo(
           <div {...droppableProps} ref={innerRef}>
             {placeholder}
             {!isAddCardOpen && canEdit && (
-              <Button style={ButtonStyle.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
+              <Button variant={ButtonVariant.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
                 <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
                 <span className={s.addCardButtonText}>{t('action.addCard')}</span>
               </Button>
@@ -196,7 +196,7 @@ const List = React.memo(
           // eslint-disable-next-line react/jsx-props-no-spreading
           <div {...droppableProps} ref={innerRef} className={s.headerCollapsedInner}>
             {placeholder}
-            <Button style={ButtonStyle.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButtonCollapsed, !canEdit && gs.cursorDefault)}>
+            <Button variant={ButtonVariant.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButtonCollapsed, !canEdit && gs.cursorDefault)}>
               <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
             </Button>
             <div className={s.headerNameCollapsed} title={name}>
@@ -213,7 +213,7 @@ const List = React.memo(
               position="top"
               wrapperClassName={s.cardAddPopupWrapper}
             >
-              <Button style={ButtonStyle.Icon} title={t('common.addCard', { context: 'title' })} className={s.collapsedListCardAddButton}>
+              <Button variant={ButtonVariant.Icon} title={t('common.addCard', { context: 'title' })} className={s.collapsedListCardAddButton}>
                 <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.collapsedListCardAddButtonIcon} />
               </Button>
             </CardAddPopup>
@@ -251,7 +251,7 @@ const List = React.memo(
                 {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
                 className={s.header}
               >
-                <Button style={ButtonStyle.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButton, !canEdit && gs.cursorDefault)}>
+                <Button variant={ButtonVariant.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButton, !canEdit && gs.cursorDefault)}>
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={s.iconRotateRight} />
                 </Button>
                 <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
@@ -290,7 +290,7 @@ const List = React.memo(
                       offset={0}
                       hideCloseButton
                     >
-                      <Button style={ButtonStyle.Icon} title={t('common.editList')} className={s.editListButton}>
+                      <Button variant={ButtonVariant.Icon} title={t('common.editList')} className={s.editListButton}>
                         <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
                       </Button>
                     </ListActionsPopup>

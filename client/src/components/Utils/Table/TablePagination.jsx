@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Button, ButtonStyle } from '../Button';
+import { Button, ButtonVariant } from '../Button';
 import { Dropdown } from '../Dropdown';
 import { Icon, IconSize, IconType } from '../Icon';
 import { Input } from '../Input';
@@ -73,18 +73,18 @@ const TablePagination = React.memo(
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
       <div ref={ref} className={clsx(s.pagination, className)} {...props}>
-        <Button style={ButtonStyle.Icon} title={t('common.firstPage')} onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}>
+        <Button variant={ButtonVariant.Icon} title={t('common.firstPage')} onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}>
           <Icon type={IconType.AngleLeftDouble} size={IconSize.Size13} />
         </Button>
-        <Button style={ButtonStyle.Icon} title={t('common.previousPage')} onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+        <Button variant={ButtonVariant.Icon} title={t('common.previousPage')} onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
           <Icon type={IconType.AngleLeft} size={IconSize.Size13} />
         </Button>
         <Input ref={pageField} name="page" placeholder={currentPageIndex} value={data.page} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} className={s.paginationPageInput} />
         <span>/{table.getPageCount() || 1}</span>
-        <Button style={ButtonStyle.Icon} title={t('common.nextPage')} onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+        <Button variant={ButtonVariant.Icon} title={t('common.nextPage')} onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
           <Icon type={IconType.AngleLeft} size={IconSize.Size13} className={s.paginationIconRotated} />
         </Button>
-        <Button style={ButtonStyle.Icon} title={t('common.lastPage')} onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()}>
+        <Button variant={ButtonVariant.Icon} title={t('common.lastPage')} onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()}>
           <Icon type={IconType.AngleLeftDouble} size={IconSize.Size13} className={s.paginationIconRotated} />
         </Button>
         <Dropdown
@@ -112,7 +112,7 @@ const TablePagination = React.memo(
           hideCloseButton
           keepOnScroll
         >
-          <Button style={ButtonStyle.Icon} title={t('common.editListView')} className={s.tableSettingsButton}>
+          <Button variant={ButtonVariant.Icon} title={t('common.editListView')} className={s.tableSettingsButton}>
             <Icon type={IconType.Settings} size={IconSize.Size13} className={s.iconTableSettingsButton} />
           </Button>
         </ActionsPopup>

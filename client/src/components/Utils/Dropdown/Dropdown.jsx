@@ -4,7 +4,7 @@ import { useFloating, shift, flip, offset, size, useInteractions, autoUpdate, us
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle } from '../Button';
+import { Button, ButtonVariant } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
 import DropdownStyle from './DropdownStyle';
 
@@ -327,7 +327,7 @@ const Dropdown = React.forwardRef(
             {...props} // eslint-disable-line react/jsx-props-no-spreading
           />
           <Button
-            style={ButtonStyle.Icon}
+            variant={ButtonVariant.Icon}
             title={isOpen ? t('common.closeDropdown') : t('common.openDropdown')}
             onClick={handleDropdownToggleClick}
             className={clsx(s.dropdownButton, isError && s.dropdownButtonError, buttonClassName)}

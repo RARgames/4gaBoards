@@ -5,7 +5,7 @@ import pickBy from 'lodash/pickBy';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Input, InputStyle, Form } from '../Utils';
+import { Button, ButtonVariant, Input, InputStyle, Form } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserInformationEdit.module.scss';
@@ -56,7 +56,7 @@ const UserInformationEdit = React.memo(({ defaultData, onUpdate }) => {
       <div className={s.text}>{t('common.organization')}</div>
       <Input style={InputStyle.Default} name="organization" value={data.organization} onChange={handleFieldChange} />
       <div className={gs.controls}>
-        <Button style={ButtonStyle.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
       </div>
     </Form>
   );

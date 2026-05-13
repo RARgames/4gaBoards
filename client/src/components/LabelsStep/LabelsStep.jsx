@@ -5,7 +5,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import { useField, useSteps } from '../../hooks';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Icon, IconSize, IconType } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Icon, IconSize, IconType } from '../Utils';
 import AddStep from './AddStep';
 import EditStep from './EditStep';
 import Item from './Item';
@@ -125,7 +125,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
         <div className={s.inputWrapper}>
           <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} />
           {canEdit && (
-            <Button style={ButtonStyle.Icon} title={t('action.createNewLabel')} onClick={handleAddClick} className={s.addButton}>
+            <Button variant={ButtonVariant.Icon} title={t('action.createNewLabel')} onClick={handleAddClick} className={s.addButton}>
               <Icon type={IconType.Plus} size={IconSize.Size14} />
             </Button>
           )}

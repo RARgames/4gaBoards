@@ -4,7 +4,7 @@ import ColorPicker from '@uiw/react-color-sketch';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle } from '../Utils/Button';
+import { Button, ButtonVariant } from '../Utils/Button';
 import Form from '../Utils/Form';
 import withPopup from '../Utils/Popup';
 import Popup from '../Utils/PopupElements';
@@ -54,8 +54,8 @@ const ColorPickerStep = React.memo(({ defaultValue, onUpdate, onClose }) => {
       <Form>
         <ColorPicker ref={colorPickerRef} color={value} onChange={(color) => setValue(color.hexa)} presetColors={false} />
         <div className={clsx(gs.controlsSpaceBetween, s.controls)}>
-          <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} className={s.button} />
-          <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} className={s.button} />
+          <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} className={s.button} />
+          <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} className={s.button} />
         </div>
       </Form>
     </Popup.Content>

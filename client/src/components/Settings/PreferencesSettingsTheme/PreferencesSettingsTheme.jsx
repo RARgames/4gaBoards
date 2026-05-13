@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { Themes } from '../../../constants/Enums';
 import { readCSSVars } from '../../../utils/color-utils';
-import { Button, ButtonStyle, Dropdown, Table } from '../../Utils';
+import { Button, ButtonVariant, Dropdown, Table } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
@@ -169,7 +169,7 @@ const PreferencesSettingsTheme = React.memo(({ themeCustomColors, onUpdate }) =>
         <h2 className={sShared.headerText}>{t('common.themeEditor')}</h2>
         <div className={s.presets}>
           <Dropdown options={themes} placeholder={selectedTheme.name} defaultItem={selectedTheme} onChange={(item) => setTheme(item.id)} className={s.dropdown} />
-          <Button style={ButtonStyle.DefaultBorder} onClick={() => applyPreset(selectedTheme.id)} content={t('common.applyTheme', { theme: selectedTheme.name })} className={s.button} />
+          <Button variant={ButtonVariant.DefaultBorder} onClick={() => applyPreset(selectedTheme.id)} content={t('common.applyTheme', { theme: selectedTheme.name })} className={s.button} />
         </div>
       </div>
       <Table.Container className={s.container}>

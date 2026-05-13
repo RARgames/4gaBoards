@@ -6,7 +6,7 @@ import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
 import DeleteStep from '../DeleteStep';
 import MailTokenListStep from '../MailTokenListStep';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as s from './ListActionsPopup.module.scss';
 
@@ -127,24 +127,24 @@ const ListActionsStep = React.memo(
     return (
       <>
         {canEdit && (
-          <Button style={ButtonStyle.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
             <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
             {t('action.editName', { context: 'title' })}
           </Button>
         )}
-        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
+        <Button variant={ButtonVariant.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
         {canEdit && (
-          <Button style={ButtonStyle.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
             <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
             {t('action.addCard', { context: 'title' })}
           </Button>
         )}
         {canEdit && (
           <Button
-            style={ButtonStyle.PopupContext}
+            variant={ButtonVariant.PopupContext}
             title={mailServiceAvailable ? t('common.emailCardToList') : t('common.emailServiceUnavailable')}
             onClick={handleMailTokenListClick}
             disabled={!mailServiceAvailable}
@@ -155,7 +155,7 @@ const ListActionsStep = React.memo(
         )}
         {canEdit && <Popup.Separator />}
         {canEdit && (
-          <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
             <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
             {t('action.deleteList', { context: 'title' })}
           </Button>

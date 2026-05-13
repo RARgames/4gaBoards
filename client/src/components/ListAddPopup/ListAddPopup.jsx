@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Popup, Form, withPopup, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, withPopup, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './ListAddPopup.module.scss';
@@ -76,7 +76,7 @@ const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {
         <Form onKeyDown={handleKeyDown}>
           <TextArea ref={nameField} style={TextAreaStyle.Default} name="name" value={data.name} placeholder={t('common.enterListName')} maxRows={2} onChange={handleFieldChange} isError={isError} />
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('common.addList')} onClick={(e) => handleSubmit(e.shiftKey)} />
+            <Button variant={ButtonVariant.Submit} content={t('common.addList')} onClick={(e) => handleSubmit(e.shiftKey)} />
           </div>
         </Form>
       </Popup.Content>

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './TimerEditStep.module.scss';
@@ -172,21 +172,21 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
                 isError={isSecondsError}
               />
             </div>
-            <Button style={ButtonStyle.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={s.iconButton}>
+            <Button variant={ButtonVariant.Icon} title={isEditing ? t('common.close') : t('common.editTimer')} onClick={handleToggleEditingClick} className={s.iconButton}>
               <Icon type={isEditing ? IconType.Close : IconType.Pencil} size={IconSize.Size13} />
             </Button>
           </div>
           <div className={gs.controlsSpaceBetween}>
-            <Button style={ButtonStyle.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            {isEditing && <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />}
+            <Button variant={ButtonVariant.Cancel} content={t('action.remove')} onClick={handleClearClick} />
+            {isEditing && <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />}
             {!isEditing &&
               (defaultValue && defaultValue.startedAt ? (
-                <Button style={ButtonStyle.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>
+                <Button variant={ButtonVariant.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>
                   <Icon type={IconType.Pause} size={IconSize.Size10} className={s.startStopIcon} />
                   {t('action.stop')}
                 </Button>
               ) : (
-                <Button style={ButtonStyle.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
+                <Button variant={ButtonVariant.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
                   <Icon type={IconType.Play} size={IconSize.Size10} className={s.startStopIcon} />
                   {t('action.start')}
                 </Button>

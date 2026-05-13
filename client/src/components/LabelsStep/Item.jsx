@@ -5,7 +5,7 @@ import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as bs from '../../backgrounds.module.scss';
 import * as s from './Item.module.scss';
@@ -30,7 +30,7 @@ const Item = React.memo(({ name, color, isPersisted, isActive, canEdit, onSelect
         {name}
       </span>
       {canEdit && (
-        <Button style={ButtonStyle.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={s.editButton}>
+        <Button variant={ButtonVariant.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={s.editButton}>
           <Icon type={IconType.Pencil} size={IconSize.Size14} />
         </Button>
       )}

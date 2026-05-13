@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import EmailVerificationStatusPopup from '../../EmailVerificationStatusPopup';
 import UserEmailEditPopup from '../../UserEmailEditPopup';
 import UserUsernameEditPopup from '../../UserUsernameEditPopup';
-import { Button, ButtonStyle } from '../../Utils';
+import { Button, ButtonVariant } from '../../Utils';
 
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './AccountSettings.module.scss';
@@ -112,7 +112,7 @@ const AccountSettings = React.memo(
                 onUpdate={onUsernameUpdate}
                 onMessageDismiss={onUsernameUpdateMessageDismiss}
               >
-                <Button style={ButtonStyle.DefaultBorder} content={t('action.editUsername', { context: 'title' })} />
+                <Button variant={ButtonVariant.DefaultBorder} content={t('action.editUsername', { context: 'title' })} />
               </UserUsernameEditPopup>
             </div>
             <div className={s.action}>
@@ -138,13 +138,13 @@ const AccountSettings = React.memo(
                 onUpdate={onEmailUpdate}
                 onMessageDismiss={onEmailUpdateMessageDismiss}
               >
-                <Button style={ButtonStyle.DefaultBorder} content={t('action.editEmail', { context: 'title' })} />
+                <Button variant={ButtonVariant.DefaultBorder} content={t('action.editEmail', { context: 'title' })} />
               </UserEmailEditPopup>
             </div>
             {mailServiceAvailable && (
               <div className={s.action}>
                 <Button
-                  style={ButtonStyle.DefaultBorder}
+                  variant={ButtonVariant.DefaultBorder}
                   content={
                     emailVerificationRemainingSeconds > 0
                       ? `${t('common.resendVerificationEmail', { context: 'title' })} (${formatTime(emailVerificationRemainingSeconds)})`

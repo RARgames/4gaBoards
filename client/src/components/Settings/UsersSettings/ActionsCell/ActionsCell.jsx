@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils';
 import ActionsPopup from '../ActionsPopup';
 
 import * as s from './ActionsCell.module.scss';
@@ -86,7 +86,7 @@ const ActionsCell = React.memo(
         hideCloseButton
         wrapperClassName={s.popupWrapper}
       >
-        <Button style={ButtonStyle.Icon} title={t('common.editUser')} className={s.editButton}>
+        <Button variant={ButtonVariant.Icon} title={t('common.editUser')} className={s.editButton}>
           <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.iconEditButton} />
         </Button>
       </ActionsPopup>

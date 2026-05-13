@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Button, ButtonStyle, Input, InputStyle, Form, withModal } from '../../Utils';
+import { Button, ButtonVariant, Input, InputStyle, Form, withModal } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './TextFileAddModal.module.scss';
@@ -63,7 +63,7 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
         />
         <div className={s.inputLabel}>.txt</div>
         <div className={gs.controls}>
-          <Button style={ButtonStyle.Submit} content={t('action.createFile')} onClick={handleSubmit} />
+          <Button variant={ButtonVariant.Submit} content={t('action.createFile')} onClick={handleSubmit} />
         </div>
       </Form>
     </>

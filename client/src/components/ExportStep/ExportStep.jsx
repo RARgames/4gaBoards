@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Form, Checkbox } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, Checkbox } from '../Utils';
 import ExportConfirmationStep from './ExportConfirmationStep';
 
 import * as gs from '../../global.module.scss';
@@ -67,7 +67,7 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
             <Checkbox checked={skipActions} label={t('common.exportSkipActions')} onChange={toggleSkipActions} wrapperClassName={s.checkboxWrapper} />
           </div>
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('common.exportBoard', { context: 'title' })} className={s.submitButton} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('common.exportBoard', { context: 'title' })} className={s.submitButton} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

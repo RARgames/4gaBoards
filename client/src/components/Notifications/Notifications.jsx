@@ -9,7 +9,7 @@ import ActivityLabel from '../ActivityLabel';
 import ActivityLink from '../ActivityLink';
 import ActivityMessage from '../ActivityMessage';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Notifications.module.scss';
 
@@ -65,14 +65,14 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onC
               onClose={onClose}
             />
             <Button
-              style={ButtonStyle.Icon}
+              variant={ButtonVariant.Icon}
               onClick={() => handleUpdate(item.id, { isRead: !item.isRead })}
               className={clsx(s.firstItemButton, s.itemButton)}
               title={item.isRead ? t('activity.markAsUnread') : t('activity.markAsRead')}
             >
               <Icon type={item.isRead ? IconType.EyeSlash : IconType.Eye} size={IconSize.Size14} />
             </Button>
-            <Button style={ButtonStyle.Icon} onClick={() => handleDelete(item.id)} className={s.itemButton} title={t('activity.delete')}>
+            <Button variant={ButtonVariant.Icon} onClick={() => handleDelete(item.id)} className={s.itemButton} title={t('activity.delete')}>
               <Icon type={IconType.Trash} size={IconSize.Size14} />
             </Button>
           </div>

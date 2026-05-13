@@ -6,7 +6,7 @@ import isEmail from 'validator/lib/isEmail';
 import { useForm } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonStyle, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserAddStep.module.scss';
@@ -197,7 +197,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
             isError={isUsernameError}
           />
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('common.addUser')} disabled={isSubmitting} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('common.addUser')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

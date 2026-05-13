@@ -1,4 +1,4 @@
 import Button from './Button';
-import ButtonStyle from './ButtonStyle';
+import ButtonVariant from './ButtonVariant';
 
-export { Button, ButtonStyle };
+export { Button, ButtonVariant };

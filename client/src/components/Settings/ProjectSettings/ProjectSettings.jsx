@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Paths from '../../../constants/Paths';
 import DeletePopup from '../../DeletePopup';
 import Memberships from '../../Memberships';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../Utils';
 import BackgroundPane from './BackgroundPane';
 import InformationEdit from './InformationEdit';
 
@@ -36,7 +36,7 @@ const ProjectSettings = React.memo(
           <h2 className={sShared.headerText}>{t('common.projectSettings')}</h2>
           <div className={s.headerButton}>
             <Link to={Paths.PROJECTS.replace(':id', projectId)}>
-              <Button style={ButtonStyle.Icon} title={t('common.backToProject')}>
+              <Button variant={ButtonVariant.Icon} title={t('common.backToProject')}>
                 <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
               </Button>
             </Link>
@@ -97,7 +97,7 @@ const ProjectSettings = React.memo(
                 }}
               >
                 <div className={gs.controlsCenter}>
-                  <Button style={ButtonStyle.Cancel} content={t('action.deleteProject', { context: 'title' })} />
+                  <Button variant={ButtonVariant.Cancel} content={t('action.deleteProject', { context: 'title' })} />
                 </div>
               </DeletePopup>
             </div>

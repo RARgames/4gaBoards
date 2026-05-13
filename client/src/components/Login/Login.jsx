@@ -9,7 +9,7 @@ import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageStyle, Loader, LoaderSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageStyle, Loader, LoaderSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Login.module.scss';
@@ -220,7 +220,7 @@ const Login = React.memo(
                 onChange={handleFieldChange}
                 isError={isPasswordError}
               />
-              <Button style={ButtonStyle.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
+              <Button variant={ButtonVariant.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
                 {loadingProvider === 'local' ? (
                   <Loader size={LoaderSize.Small} />
                 ) : (
@@ -240,7 +240,7 @@ const Login = React.memo(
                 </div>
                 <div className={s.otherOptions}>
                   {SSO_PROVIDERS.filter((p) => ssoAvailable[p.type] && (p.type !== SsoTypes.OIDC || oidcEnabledMethods.length === 0)).map((p) => (
-                    <Button key={p.type} style={ButtonStyle.Login} title={t('common.continueWith', { provider: p.label })} onClick={() => handleSsoClick(p.type)} className={s.button}>
+                    <Button key={p.type} variant={ButtonVariant.Login} title={t('common.continueWith', { provider: p.label })} onClick={() => handleSsoClick(p.type)} className={s.button}>
                       {loadingProvider === p.type ? (
                         <Loader size={LoaderSize.Small} />
                       ) : (
@@ -256,7 +256,7 @@ const Login = React.memo(
                     oidcEnabledMethods.map((method) => {
                       const id = `${SsoTypes.OIDC}:${method}`;
                       return (
-                        <Button key={id} style={ButtonStyle.Login} title={t('common.continueWith', { provider: method })} onClick={() => handleSsoClick(SsoTypes.OIDC, method)} className={s.button}>
+                        <Button key={id} variant={ButtonVariant.Login} title={t('common.continueWith', { provider: method })} onClick={() => handleSsoClick(SsoTypes.OIDC, method)} className={s.button}>
                           {loadingProvider === id ? (
                             <Loader size={LoaderSize.Small} />
                           ) : (
@@ -275,7 +275,7 @@ const Login = React.memo(
               <>
                 <div className={s.alternateActionText}>{t('common.newToBoards')}</div>
                 <div className={s.alternateActionButtonContainer}>
-                  <Button style={ButtonStyle.Login} content={t('common.createAccount')} onClick={onRegisterOpen} />
+                  <Button variant={ButtonVariant.Login} content={t('common.createAccount')} onClick={onRegisterOpen} />
                 </div>
               </>
             )}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import ActivityPopup from '../../ActivityPopup';
 import DeletePopup from '../../DeletePopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Loader, LoaderSize } from '../../Utils';
 import EditPopup from './EditPopup';
 
 import * as s from './Attachment.module.scss';
@@ -85,7 +85,7 @@ const Attachment = React.forwardRef(
           <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: createdAt })}</span>
           {coverUrl && canEdit && (
             <Button
-              style={ButtonStyle.NoBackground}
+              variant={ButtonVariant.NoBackground}
               title={isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}
               onClick={handleToggleCoverClick}
               className={s.optionButton}
@@ -113,13 +113,13 @@ const Attachment = React.forwardRef(
             position="left-start"
             offset={0}
           >
-            <Button style={ButtonStyle.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.target}>
+            <Button variant={ButtonVariant.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.target}>
               <Icon type={IconType.Activity} size={IconSize.Size10} />
             </Button>
           </ActivityPopup>
           {canEdit && (
             <EditPopup defaultData={{ name }} onUpdate={onUpdate} position="left-start" offset={0}>
-              <Button style={ButtonStyle.Icon} title={t('common.editAttachmentName')} className={s.target}>
+              <Button variant={ButtonVariant.Icon} title={t('common.editAttachmentName')} className={s.target}>
                 <Icon type={IconType.Pencil} size={IconSize.Size10} />
               </Button>
             </EditPopup>
@@ -133,7 +133,7 @@ const Attachment = React.forwardRef(
               position="left-start"
               offset={0}
             >
-              <Button style={ButtonStyle.Icon} title={t('common.deleteAttachment', { context: 'title' })} disabled={!isPersisted} className={s.target}>
+              <Button variant={ButtonVariant.Icon} title={t('common.deleteAttachment', { context: 'title' })} disabled={!isPersisted} className={s.target}>
                 <Icon type={IconType.Trash} size={IconSize.Size10} />
               </Button>
             </DeletePopup>

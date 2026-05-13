@@ -4,7 +4,7 @@ import { useFloating, useClick, useInteractions, useDismiss, useRole, FloatingFo
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonStyle } from '../Button';
+import { Button, ButtonVariant } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 
 import * as s from './Modal.module.scss';
@@ -68,7 +68,7 @@ export default (WrappedComponent, defaultProps) => {
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <div className={clsx(s.modal, className, defaultProps?.className)} ref={refs.setFloating} {...getFloatingProps()}>
               {!(defaultProps?.hideCloseButton || hideCloseButton) && (
-                <Button style={ButtonStyle.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
+                <Button variant={ButtonVariant.Icon} title={t('common.close')} onClick={handleCloseClick} className={clsx(s.closeButton, closeButtonClassName, defaultProps?.closeButtonClassName)}>
                   <Icon type={IconType.Close} size={IconSize.Size14} />
                 </Button>
               )}

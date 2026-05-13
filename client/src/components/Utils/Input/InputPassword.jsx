@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import zxcvbn from 'zxcvbn';
 
 import { useToggle } from '../../../lib/hooks';
-import { Button, ButtonStyle } from '../Button';
+import { Button, ButtonVariant } from '../Button';
 import { Icon, IconType, IconSize } from '../Icon';
 import { ProgressBar, ProgressBarSize } from '../ProgressBar';
 import InputStyle from './InputStyle';
@@ -41,7 +41,7 @@ const InputPassword = React.forwardRef(({ style, value, withStrengthBar, minStre
     <div className={sPassword.inputWrapper}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...inputProps} className={clsx(s.input, sPassword.inputPassword, styles, className, isError && s.inputError)} />
-      <Button style={ButtonStyle.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
+      <Button variant={ButtonVariant.Icon} title={t('common.togglePasswordVisibility')} onClick={handleToggleClick} className={sPassword.passwordIcon} tabIndex="-1">
         <Icon type={isVisible ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size20} />
       </Button>
       {withStrengthBar && <ProgressBar value={value ? strengthScore + 1 : 0} total={5} size={ProgressBarSize.Tiny} className={sPassword.progressBar} />}

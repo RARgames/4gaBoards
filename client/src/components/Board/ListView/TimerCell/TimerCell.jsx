@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import Timer from '../../../Timer';
 import TimerEditPopup from '../../../TimerEditPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './TimerCell.module.scss';
 
@@ -32,7 +32,7 @@ const TimerCell = React.memo(({ timer, cellClassName, canEdit, onUpdate }) => {
     if (canEdit) {
       return (
         <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate} wrapperClassName={s.popupWrapper}>
-          <Button style={ButtonStyle.Icon} title={t('common.editTimer')} className={clsx(cellClassName, s.addButton)}>
+          <Button variant={ButtonVariant.Icon} title={t('common.editTimer')} className={clsx(cellClassName, s.addButton)}>
             <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
           </Button>
         </TimerEditPopup>

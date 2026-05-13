@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Form, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAdd.module.scss';
@@ -119,8 +119,8 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
         isError={isError}
       />
       <div className={gs.controls}>
-        <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button style={ButtonStyle.Submit} content={t('action.addCard')} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
+        <Button variant={ButtonVariant.Submit} content={t('action.addCard')} onClick={handleSubmit} />
       </div>
     </Form>
   );

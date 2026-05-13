@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import User from '../../User';
 import UserInformationEdit from '../../UserInformationEdit';
-import { Icon, IconType, IconSize, Button, ButtonStyle } from '../../Utils';
+import { Icon, IconType, IconSize, Button, ButtonVariant } from '../../Utils';
 import AvatarEditPopup from './AvatarEditPopup';
 
 import * as sShared from '../SettingsShared.module.scss';
@@ -30,7 +30,7 @@ const ProfileSettings = React.memo(({ name, avatarUrl, phone, organization, isAv
           <div className={s.avatarImage}>
             <AvatarEditPopup defaultValue={avatarUrl} onUpdate={onAvatarUpdate} onDelete={handleAvatarDelete} offset={-25} hideCloseButton>
               <User name={name} avatarUrl={avatarUrl} size="profile" isDisabled={isAvatarUpdating} onClick={() => {}} />
-              <Button style={ButtonStyle.NoBackground} title={t('action.edit')} className={s.editButton}>
+              <Button variant={ButtonVariant.NoBackground} title={t('action.edit')} className={s.editButton}>
                 <Icon type={IconType.Pencil} size={IconSize.Size10} className={s.iconEditButton} />
                 {t('action.edit')}
               </Button>

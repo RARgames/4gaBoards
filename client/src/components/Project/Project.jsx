@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Paths from '../../constants/Paths';
 import truncate from '../../utils/visual-truncate';
 import BoardAddPopup from '../BoardAddPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Project.module.scss';
@@ -48,7 +48,7 @@ const Project = React.memo(
         <div className={s.header}>
           <div ref={headerButtonGroupOffsetRef} />
           <div className={clsx(s.headerText)}>
-            <Button style={ButtonStyle.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick}>
+            <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick}>
               <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
             </Button>
             <div title={currentProject?.name} className={s.title}>
@@ -71,7 +71,7 @@ const Project = React.memo(
                   offset={16}
                   position="bottom"
                 >
-                  <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.addButton}>
+                  <Button variant={ButtonVariant.NoBackground} title={t('common.addBoard')} className={s.addButton}>
                     <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
                     {t('common.addBoard')}
                   </Button>
@@ -81,7 +81,7 @@ const Project = React.memo(
             {isProjectManager && (
               <div className={s.headerButton}>
                 <Link to={Paths.SETTINGS_PROJECT.replace(':id', projectId)}>
-                  <Button style={ButtonStyle.Icon} title={t('common.projectSettings')}>
+                  <Button variant={ButtonVariant.Icon} title={t('common.projectSettings')}>
                     <Icon type={IconType.ProjectSettings} size={IconSize.Size18} />
                   </Button>
                 </Link>
@@ -89,7 +89,7 @@ const Project = React.memo(
             )}
             <div className={s.headerButton}>
               <Link to={Paths.ROOT}>
-                <Button style={ButtonStyle.Icon} title={t('common.backToDashboard')}>
+                <Button variant={ButtonVariant.Icon} title={t('common.backToDashboard')}>
                   <Icon type={IconType.ArrowLeftBig} size={IconSize.Size18} />
                 </Button>
               </Link>
@@ -123,7 +123,7 @@ const Project = React.memo(
                 offset={16}
                 position="bottom"
               >
-                <Button style={ButtonStyle.NoBackground} title={t('common.addBoard')} className={s.addButton}>
+                <Button variant={ButtonVariant.NoBackground} title={t('common.addBoard')} className={s.addButton}>
                   <Icon type={IconType.Plus} size={IconSize.Size16} className={s.addButtonIcon} />
                   {t('common.addBoard')}
                 </Button>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle, useDidUpdate } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardMoveStep.module.scss';
@@ -144,7 +144,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             </>
           )}
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

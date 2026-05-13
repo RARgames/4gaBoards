@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import CardActionsPopup from '../../../Card/CardActionsPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './ActionsCell.module.scss';
 
@@ -103,7 +103,7 @@ const ActionsCell = React.memo(
           hideCloseButton
           wrapperClassName={s.popupWrapper}
         >
-          <Button style={ButtonStyle.Icon} title={t('common.editCard')} className={s.editCardButton}>
+          <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={s.editCardButton}>
             <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} className={s.iconEditCardButton} />
           </Button>
         </CardActionsPopup>

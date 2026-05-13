@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 
@@ -78,8 +78,8 @@ const RenameStep = React.memo(({ title, defaultData, placeholder, onUpdate, onBa
             isError={isError}
           />
           <div className={gs.controlsSpaceBetween}>
-            <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={onClose} />
-            <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={onClose} />
+            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

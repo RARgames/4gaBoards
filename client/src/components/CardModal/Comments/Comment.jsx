@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ActivityPopup from '../../ActivityPopup';
 import DeletePopup from '../../DeletePopup';
 import User from '../../User';
-import { Icon, IconType, IconSize, Button, ButtonStyle, MDPreview } from '../../Utils';
+import { Icon, IconType, IconSize, Button, ButtonVariant, MDPreview } from '../../Utils';
 import CommentEdit from './CommentEdit';
 
 import * as s from './Comment.module.scss';
@@ -57,7 +57,7 @@ const Comment = React.memo(
           )}
           <div className={s.buttons}>
             {canEdit && (
-              <Button style={ButtonStyle.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={s.button}>
+              <Button variant={ButtonVariant.Icon} title={t('common.editComment')} disabled={!isPersisted} onClick={handleEditClick} className={s.button}>
                 <Icon type={IconType.Pencil} size={IconSize.Size10} className={s.buttonIcon} />
               </Button>
             )}
@@ -79,7 +79,7 @@ const Comment = React.memo(
                 position="left-start"
                 offset={0}
               >
-                <Button style={ButtonStyle.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.button}>
+                <Button variant={ButtonVariant.Icon} title={t('common.checkActivity')} disabled={!isPersisted} className={s.button}>
                   <Icon type={IconType.Activity} size={IconSize.Size10} className={s.buttonIcon} />
                 </Button>
               </ActivityPopup>
@@ -94,7 +94,7 @@ const Comment = React.memo(
                   position="left-start"
                   offset={0}
                 >
-                  <Button style={ButtonStyle.Icon} title={t('common.deleteComment')} disabled={!isPersisted} className={s.button}>
+                  <Button variant={ButtonVariant.Icon} title={t('common.deleteComment')} disabled={!isPersisted} className={s.button}>
                     <Icon type={IconType.Trash} size={IconSize.Size10} className={s.buttonIcon} />
                   </Button>
                 </DeletePopup>

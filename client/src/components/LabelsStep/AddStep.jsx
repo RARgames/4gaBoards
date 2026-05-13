@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import LabelColors from '../../constants/LabelColors';
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Popup, Form } from '../Utils';
+import { Button, ButtonVariant, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
 import * as gs from '../../global.module.scss';
@@ -62,7 +62,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
         <Form onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.createLabel')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('action.createLabel')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

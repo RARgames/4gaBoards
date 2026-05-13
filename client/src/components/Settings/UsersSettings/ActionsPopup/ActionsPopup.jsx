@@ -10,7 +10,7 @@ import UserEmailEditStep from '../../../UserEmailEditStep';
 import UserInformationEditStep from '../../../UserInformationEditStep';
 import UserPasswordEditStep from '../../../UserPasswordEditStep';
 import UserUsernameEditStep from '../../../UserUsernameEditStep';
-import { Popup, withPopup, Button, ButtonStyle } from '../../../Utils';
+import { Popup, withPopup, Button, ButtonVariant } from '../../../Utils';
 
 const StepTypes = {
   EDIT_INFORMATION: 'EDIT_INFORMATION',
@@ -173,14 +173,14 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Button style={ButtonStyle.PopupContext} content={t('action.editInformation', { context: 'title' })} onClick={handleEditInformationClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleUserActivityClick} />
-        <Button style={ButtonStyle.PopupContext} content={t('common.checkUserAccountActivity', { context: 'title' })} onClick={handleUserAccountActivityClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('action.editInformation', { context: 'title' })} onClick={handleEditInformationClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleUserActivityClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('common.checkUserAccountActivity', { context: 'title' })} onClick={handleUserAccountActivityClick} />
         {!isCurrentUser && <Popup.Separator />}
-        {!isCurrentUser && <Button style={ButtonStyle.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />}
+        {!isCurrentUser && <Button variant={ButtonVariant.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />}
       </>
     );
   },

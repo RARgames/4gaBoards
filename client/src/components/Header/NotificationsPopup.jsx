@@ -8,7 +8,7 @@ import Paths from '../../constants/Paths';
 import NotificationFilter from '../NorificationFilter';
 import NotificationActionsPopup from '../NotificationActionsPopup';
 import Notifications from '../Notifications';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, withPopup } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './NotificationsPopup.module.scss';
@@ -27,12 +27,12 @@ const NotificationsStep = React.memo(({ items, filteredItems, filter, onUpdate, 
           {totalCount === 0 && t('common.notifications')}
           <div className={s.actionsWrapper}>
             <Link to={Paths.NOTIFICATIONS}>
-              <Button style={ButtonStyle.Icon} title={t('common.openNotificationCenter')} onClick={onClose}>
+              <Button variant={ButtonVariant.Icon} title={t('common.openNotificationCenter')} onClick={onClose}>
                 <Icon type={IconType.FullScreen} size={IconSize.Size12} />
               </Button>
             </Link>
             <NotificationActionsPopup onMarkAllAs={onMarkAllAs} onDeleteAll={onDeleteAll} position="bottom-start" hideCloseButton>
-              <Button style={ButtonStyle.Icon} title={t('common.notificationActions')}>
+              <Button variant={ButtonVariant.Icon} title={t('common.notificationActions')}>
                 <Icon type={IconType.EllipsisVertical} size={IconSize.Size12} />
               </Button>
             </NotificationActionsPopup>

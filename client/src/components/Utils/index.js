@@ -1,4 +1,4 @@
-import { Button, ButtonStyle } from './Button';
+import { Button, ButtonVariant } from './Button';
 import { Checkbox, CheckboxSize } from './Checkbox';
 import { Dropdown, DropdownStyle } from './Dropdown';
 import ExternalLink from './ExternalLink';
@@ -21,7 +21,7 @@ import withViewportPopup from './ViewportPopup';
 
 export {
   Button,
-  ButtonStyle,
+  ButtonVariant,
   Checkbox,
   CheckboxSize,
   Dropdown,

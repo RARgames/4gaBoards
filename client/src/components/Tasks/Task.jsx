@@ -9,7 +9,7 @@ import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import MembershipsPopup from '../MembershipsPopup';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Checkbox, CheckboxSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Checkbox, CheckboxSize } from '../Utils';
 import TaskActionsPopup from './TaskActionsPopup';
 import TaskEdit from './TaskEdit';
 
@@ -209,7 +209,7 @@ const Task = React.memo(
                     position="left-start"
                     offset={0}
                   >
-                    <Button style={ButtonStyle.Icon} title={t('common.editTask')} className={clsx(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
+                    <Button variant={ButtonVariant.Icon} title={t('common.editTask')} className={clsx(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
                       <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={s.icon} />
                     </Button>
                   </TaskActionsPopup>

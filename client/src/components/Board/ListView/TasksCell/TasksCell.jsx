@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import TaskAddPopup from '../../../TaskAddPopup';
 import Tasks from '../../../Tasks';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils';
 
 import * as s from './TasksCell.module.scss';
 
@@ -34,7 +34,7 @@ const TasksCell = React.memo(
       if (canEdit) {
         return (
           <TaskAddPopup onCreate={onTaskCreate} wrapperClassName={s.popupWrapper}>
-            <Button style={ButtonStyle.Icon} title={t('common.addTask')} className={clsx(cellClassName, s.addButton)}>
+            <Button variant={ButtonVariant.Icon} title={t('common.addTask')} className={clsx(cellClassName, s.addButton)}>
               <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
             </Button>
           </TaskAddPopup>

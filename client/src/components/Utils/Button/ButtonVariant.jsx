@@ -1,4 +1,4 @@
-const ButtonStyle = {
+const ButtonVariant = {
   Default: '_default',
   DefaultBorder: 'defaultBorder',
   IconBase: 'iconBase',
@@ -15,4 +15,4 @@ const ButtonStyle = {
   HeaderLogo: 'headerLogo',
 };
 
-export default ButtonStyle;
+export default ButtonVariant;

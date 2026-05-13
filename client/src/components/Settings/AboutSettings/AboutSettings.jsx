@@ -6,7 +6,7 @@ import logoDarkTheme from '../../../assets/images/4gaboardsLogo1024w-white.png';
 import logoLightTheme from '../../../assets/images/4gaboardsLogo1024w.png';
 import Config from '../../../constants/Config';
 import { Themes } from '../../../constants/Enums';
-import { Icon, IconType, IconSize, ExternalLink, Button, ButtonStyle } from '../../Utils';
+import { Icon, IconType, IconSize, ExternalLink, Button, ButtonVariant } from '../../Utils';
 
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './AboutSettings.module.scss';
@@ -58,7 +58,7 @@ const AboutSettings = React.memo(({ demoMode, theme, onGettingStartedProjectImpo
             <ExternalLink href={i18n && i18n.resolvedLanguage === 'pl' ? 'https://docs.4gaboards.com/pl' : 'https://docs.4gaboards.com'}>{t('common.docs')}</ExternalLink>
           </div>
           <ExternalLink href="https://www.paypal.com/donate/?hosted_button_id=86RVDTMNLBBPJ">
-            <Button style={ButtonStyle.DefaultBorder} content={t('common.supportDevelopment')} className={s.donateButton} />
+            <Button variant={ButtonVariant.DefaultBorder} content={t('common.supportDevelopment')} className={s.donateButton} />
           </ExternalLink>
           <div className={s.link}>
             <ExternalLink href="https://github.com/RARgames/4gaBoards">
@@ -97,7 +97,7 @@ const AboutSettings = React.memo(({ demoMode, theme, onGettingStartedProjectImpo
             <ExternalLink href="https://4gaboards.com/terms-of-service">{t('common.termsOfService')}</ExternalLink>
           </div>
           <Button
-            style={ButtonStyle.DefaultBorder}
+            variant={ButtonVariant.DefaultBorder}
             content={t('common.importGettingStartedProject')}
             onClick={handleGettingStartedProjectImportClick}
             disabled={importGettingStartedButtonDisabled}

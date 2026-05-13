@@ -9,7 +9,7 @@ import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import CardModalContainer from '../../containers/CardModalContainer';
 import ListContainer from '../../containers/ListContainer';
 import ListViewContainer from '../../containers/ListViewContainer';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import ListAdd from './ListAdd';
 
 import * as gs from '../../global.module.scss';
@@ -141,7 +141,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
                   {isListAddOpened ? (
                     <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
                   ) : (
-                    <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
+                    <Button variant={ButtonVariant.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
                       <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
                       <span className={s.addListButtonText}>{t('action.addList')}</span>
                     </Button>

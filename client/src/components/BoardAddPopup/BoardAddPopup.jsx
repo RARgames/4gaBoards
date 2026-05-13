@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm, useSteps } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import BoardTemplateManagerStep from '../BoardTemplateManagerStep';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
 import ImportStep from './ImportStep';
 
 import * as gs from '../../global.module.scss';
@@ -212,7 +212,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
             <div>
               <div className={s.templateLabelRow}>
                 <div className={s.text}>{t('common.template')}</div>
-                <Button style={ButtonStyle.Icon} title={t('common.manageTemplates')} className={s.manageTemplatesButton} onClick={() => openStep(StepTypes.TEMPLATE_MANAGER)}>
+                <Button variant={ButtonVariant.Icon} title={t('common.manageTemplates')} className={s.manageTemplatesButton} onClick={() => openStep(StepTypes.TEMPLATE_MANAGER)}>
                   <Icon type={IconType.Settings} size={IconSize.Size13} />
                 </Button>
               </div>
@@ -244,11 +244,11 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
             </div>
           )}
           <div className={gs.controlsSpaceBetween}>
-            <Button style={ButtonStyle.NoBackground} title={t('action.import')} onClick={handleImportClick} className={s.importButton}>
+            <Button variant={ButtonVariant.NoBackground} title={t('action.import')} onClick={handleImportClick} className={s.importButton}>
               <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
               {data.import ? data.import.file.name : t('action.import')}
             </Button>
-            <Button style={ButtonStyle.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={s.submitButton} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={s.submitButton} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

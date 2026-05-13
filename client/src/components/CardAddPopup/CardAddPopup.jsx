@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonStyle, Popup, Form, withPopup, Dropdown, DropdownStyle, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, withPopup, Dropdown, DropdownStyle, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAddPopup.module.scss';
@@ -126,7 +126,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
             />
           )}
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('common.addCard')} onClick={(e) => handleSubmit(e.ctrlKey, e.shiftKey)} />
+            <Button variant={ButtonVariant.Submit} content={t('common.addCard')} onClick={(e) => handleSubmit(e.ctrlKey, e.shiftKey)} />
           </div>
         </Form>
       </Popup.Content>
