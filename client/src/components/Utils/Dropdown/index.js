@@ -1,4 +1,4 @@
 import Dropdown from './Dropdown';
-import DropdownStyle from './DropdownStyle';
+import DropdownVariant from './DropdownVariant';
 
-export { Dropdown, DropdownStyle };
+export { Dropdown, DropdownVariant };

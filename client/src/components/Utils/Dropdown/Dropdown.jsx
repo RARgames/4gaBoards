@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { Button, ButtonVariant } from '../Button';
 import { Icon, IconType, IconSize, FlagType } from '../Icon';
-import DropdownStyle from './DropdownStyle';
+import DropdownVariant from './DropdownVariant';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './Dropdown.module.scss';
@@ -15,7 +15,7 @@ const Dropdown = React.forwardRef(
   (
     {
       children,
-      style,
+      variant,
       options,
       defaultItem,
       placeholder,
@@ -47,7 +47,7 @@ const Dropdown = React.forwardRef(
     const [searchValue, setSearchValue] = useState('');
     const dropdown = useRef(null);
     const itemsRef = useRef([]);
-    const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
+    const variants = Array.isArray(variant) ? variant.map((st) => s[st]) : variant && s[variant];
 
     const getItemLabel = useCallback(
       (item) => {
@@ -311,7 +311,7 @@ const Dropdown = React.forwardRef(
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <div ref={refs.setReference} {...getReferenceProps()} className={clsx(s.dropdownContainer, styles, className)}>
+      <div ref={refs.setReference} {...getReferenceProps()} className={clsx(s.dropdownContainer, variants, className)}>
         <div>
           <input
             onChange={handleSearch}
@@ -373,7 +373,7 @@ const Dropdown = React.forwardRef(
 
 Dropdown.propTypes = {
   children: PropTypes.node,
-  style: PropTypes.oneOfType([PropTypes.oneOf(Object.values(DropdownStyle)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(DropdownStyle)))]),
+  variant: PropTypes.oneOfType([PropTypes.oneOf(Object.values(DropdownVariant)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(DropdownVariant)))]),
   options: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultItem: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   placeholder: PropTypes.string.isRequired,
@@ -399,7 +399,7 @@ Dropdown.propTypes = {
 
 Dropdown.defaultProps = {
   children: null,
-  style: undefined,
+  variant: undefined,
   defaultItem: null,
   isSearchable: false,
   isError: false,

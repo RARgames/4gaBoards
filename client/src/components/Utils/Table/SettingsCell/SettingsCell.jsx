@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Dropdown, DropdownStyle } from '../../Dropdown';
+import { Dropdown, DropdownVariant } from '../../Dropdown';
 import { Input, InputStyle } from '../../Input';
 import { Radio, RadioSize } from '../../Radio';
 
@@ -12,7 +12,7 @@ const SettingsCell = React.memo(({ value, cellClassName, title, ariaLabel, optio
       {typeof value === 'boolean' && <Radio size={RadioSize.Size12} checked={value} onChange={onChange} title={title} {...props} />}
       {typeof value === 'object' && !isCustomComponent && (
         // eslint-disable-next-line react/jsx-props-no-spreading
-        <Dropdown style={DropdownStyle.FullWidth} options={options} placeholder={placeholder} defaultItem={value} onChange={onChange} {...props} />
+        <Dropdown variant={DropdownVariant.FullWidth} options={options} placeholder={placeholder} defaultItem={value} onChange={onChange} {...props} />
       )}
       {(typeof value === 'object' || Array.isArray(value)) && isCustomComponent && (
         // eslint-disable-next-line react/jsx-props-no-spreading

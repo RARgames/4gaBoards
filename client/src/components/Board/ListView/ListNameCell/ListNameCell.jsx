@@ -2,7 +2,7 @@ import React, { useRef, useMemo, useCallback } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { Dropdown, DropdownStyle } from '../../../Utils';
+import { Dropdown, DropdownVariant } from '../../../Utils';
 
 import * as gs from '../../../../global.module.scss';
 import * as s from './ListNameCell.module.scss';
@@ -24,7 +24,7 @@ const ListNameCell = React.memo(({ cellClassName, projectId, boardId, listId, al
     <div className={clsx(cellClassName, s.listName)}>
       <Dropdown
         ref={dropdown}
-        style={DropdownStyle.FullWidth}
+        variant={DropdownVariant.FullWidth}
         options={selectedBoard.lists.map((list) => ({
           name: list.name,
           id: list.id,

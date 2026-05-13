@@ -18,7 +18,7 @@ import Tasks from '../Tasks';
 import Timer from '../Timer';
 import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
-import { Button, ButtonVariant, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview, LinkifiedTextRenderer, ExternalLink } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Dropdown, DropdownVariant, MDPreview, LinkifiedTextRenderer, ExternalLink } from '../Utils';
 import AttachmentAdd from './AttachmentAdd';
 import AttachmentAddZone from './AttachmentAddZone';
 import Attachments from './Attachments';
@@ -405,7 +405,7 @@ const CardModal = React.memo(
         <div className={s.headerListFieldWrapper}>
           <Dropdown
             ref={dropdown}
-            style={DropdownStyle.FullWidth}
+            variant={DropdownVariant.FullWidth}
             options={selectedBoard.lists.map((list) => ({
               name: list.name,
               id: list.id,

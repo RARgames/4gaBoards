@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm, useSteps } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import BoardTemplateManagerStep from '../BoardTemplateManagerStep';
-import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownStyle, Checkbox } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownVariant, Checkbox } from '../Utils';
 import ImportStep from './ImportStep';
 
 import * as gs from '../../global.module.scss';
@@ -194,7 +194,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
               <div className={s.text}>{t('common.project', { context: 'title' })}</div>
               <Dropdown
                 ref={projectDropdownRef}
-                style={DropdownStyle.Default}
+                variant={DropdownVariant.Default}
                 options={projects}
                 placeholder={projects.length < 1 ? t('common.noProjects') : selectedProject ? selectedProject.name : t('common.selectProject')} // eslint-disable-line no-nested-ternary
                 defaultItem={selectedProject}
@@ -218,7 +218,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
               </div>
               <Dropdown
                 ref={templateDropdownRef}
-                style={DropdownStyle.Default}
+                variant={DropdownVariant.Default}
                 options={templateOptions}
                 placeholder={selectedTemplate?.name}
                 defaultItem={selectedTemplate}

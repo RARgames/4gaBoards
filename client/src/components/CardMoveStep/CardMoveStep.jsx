@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle, useDidUpdate } from '../../lib/hooks';
-import { Button, ButtonVariant, Popup, Form, Dropdown, DropdownStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, Dropdown, DropdownVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardMoveStep.module.scss';
@@ -81,7 +81,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
           <div className={s.text}>{t('common.project', { context: 'title' })}</div>
           <Dropdown
             ref={dropdownProject}
-            style={DropdownStyle.Default}
+            variant={DropdownVariant.Default}
             name="projectId"
             options={projectsToLists.map((project) => ({
               id: project.id,
@@ -102,7 +102,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               <div className={s.text}>{t('common.board', { context: 'title' })}</div>
               <Dropdown
                 ref={dropdownBoard}
-                style={DropdownStyle.Default}
+                variant={DropdownVariant.Default}
                 name="boardId"
                 options={selectedProject.boards.map((board) => ({
                   id: board.id,
@@ -125,7 +125,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
               <div className={s.text}>{t('common.list')}</div>
               <Dropdown
                 ref={dropdownList}
-                style={DropdownStyle.Default}
+                variant={DropdownVariant.Default}
                 name="listId"
                 options={selectedBoard.lists.map((list) => ({
                   id: list.id,

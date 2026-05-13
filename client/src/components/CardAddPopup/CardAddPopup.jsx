@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Popup, Form, withPopup, Dropdown, DropdownStyle, TextArea, TextAreaStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, withPopup, Dropdown, DropdownVariant, TextArea, TextAreaStyle } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAddPopup.module.scss';
@@ -112,7 +112,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
           {!forcedDefaultListId && (
             <Dropdown
               ref={listDropdownRef}
-              style={DropdownStyle.Default}
+              variant={DropdownVariant.Default}
               options={lists}
               placeholder={lists.length < 1 ? t('common.noLists') : selectedList ? selectedList.name : t('common.selectList')} // eslint-disable-line no-nested-ternary
               defaultItem={selectedList}
