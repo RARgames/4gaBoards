@@ -8,7 +8,7 @@ import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageVariant, Checkbox, Loader, LoaderSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, ExternalLink, Input, InputVariant, Form, Message, MessageVariant, Checkbox, Loader, LoaderSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Register.module.scss';
@@ -231,7 +231,7 @@ const Register = React.memo(
                   <div className={s.inputLabel}>{t('common.email')}</div>
                   <Input
                     ref={emailField}
-                    style={InputStyle.LoginRegister}
+                    variant={InputVariant.LoginRegister}
                     name="email"
                     value={data.email}
                     readOnly={isSubmitting}
@@ -243,7 +243,7 @@ const Register = React.memo(
                   <Input.Password
                     withStrengthBar
                     ref={passwordField}
-                    style={InputStyle.LoginRegister}
+                    variant={InputVariant.LoginRegister}
                     name="password"
                     value={data.password}
                     readOnly={isSubmitting}

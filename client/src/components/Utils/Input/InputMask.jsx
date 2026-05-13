@@ -3,7 +3,7 @@ import MaskedInputComponent from 'react-input-mask';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import InputStyle from './InputStyle';
+import InputVariant from './InputVariant';
 
 import * as s from './Input.module.scss';
 
@@ -17,14 +17,14 @@ class MaskedInput extends MaskedInputComponent {
   }
 }
 
-const InputMask = React.forwardRef(({ style, className, mask, maskChar, isError, ...props }, ref) => {
-  const styles = Array.isArray(style) ? style.map((st) => s[st]) : style && s[style];
+const InputMask = React.forwardRef(({ variant, className, mask, maskChar, isError, ...props }, ref) => {
+  const variants = Array.isArray(variant) ? variant.map((v) => s[v]) : variant && s[variant];
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <MaskedInput ref={ref} className={clsx(s.input, styles, className, isError && s.inputError)} mask={mask} maskChar={maskChar} {...props} />;
+  return <MaskedInput ref={ref} className={clsx(s.input, variants, className, isError && s.inputError)} mask={mask} maskChar={maskChar} {...props} />;
 });
 
 InputMask.propTypes = {
-  style: PropTypes.oneOfType([PropTypes.oneOf(Object.values(InputStyle)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(InputStyle)))]),
+  variant: PropTypes.oneOfType([PropTypes.oneOf(Object.values(InputVariant)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(InputVariant)))]),
   className: PropTypes.string,
   mask: PropTypes.string.isRequired,
   maskChar: PropTypes.string,
@@ -32,7 +32,7 @@ InputMask.propTypes = {
 };
 
 InputMask.defaultProps = {
-  style: undefined,
+  variant: undefined,
   className: undefined,
   maskChar: undefined,
   isError: false,

@@ -5,7 +5,7 @@ import ExternalLink from './ExternalLink';
 import FilePicker from './FilePicker';
 import Form from './Form';
 import { Icon, IconType, IconSize } from './Icon';
-import { Input, InputStyle } from './Input';
+import { Input, InputVariant } from './Input';
 import LinkifiedTextRenderer from './LinkifiedTextRenderer';
 import { Loader, LoaderSize } from './Loader';
 import { MDEditor, MDPreview } from './Markdown';
@@ -33,7 +33,7 @@ export {
   IconType,
   IconSize,
   Input,
-  InputStyle,
+  InputVariant,
   LinkifiedTextRenderer,
   Loader,
   LoaderSize,

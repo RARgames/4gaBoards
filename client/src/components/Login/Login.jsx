@@ -9,7 +9,7 @@ import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageVariant, Loader, LoaderSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputVariant, Form, Message, MessageVariant, Loader, LoaderSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Login.module.scss';
@@ -201,7 +201,7 @@ const Login = React.memo(
               <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
               <Input
                 ref={emailOrUsernameField}
-                style={InputStyle.LoginRegister}
+                variant={InputVariant.LoginRegister}
                 name="emailOrUsername"
                 value={data.emailOrUsername}
                 readOnly={isSubmitting}
@@ -212,7 +212,7 @@ const Login = React.memo(
               <div className={s.inputLabel}>{t('common.password')}</div>
               <Input.Password
                 ref={passwordField}
-                style={InputStyle.LoginRegister}
+                variant={InputVariant.LoginRegister}
                 name="password"
                 value={data.password}
                 readOnly={isSubmitting}

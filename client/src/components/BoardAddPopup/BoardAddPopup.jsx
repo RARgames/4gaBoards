@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm, useSteps } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import BoardTemplateManagerStep from '../BoardTemplateManagerStep';
-import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, Input, InputStyle, Form, withPopup, Dropdown, DropdownVariant, Checkbox } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, Input, InputVariant, Form, withPopup, Dropdown, DropdownVariant, Checkbox } from '../Utils';
 import ImportStep from './ImportStep';
 
 import * as gs from '../../global.module.scss';
@@ -181,7 +181,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
           <div className={s.text}>{t('common.name')}</div>
           <Input
             ref={nameField}
-            style={InputStyle.Default}
+            variant={InputVariant.Default}
             name="name"
             value={data.name}
             placeholder={t('common.enterBoardName')}

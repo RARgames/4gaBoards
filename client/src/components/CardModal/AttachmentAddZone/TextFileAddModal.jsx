@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Button, ButtonVariant, Input, InputStyle, Form, withModal } from '../../Utils';
+import { Button, ButtonVariant, Input, InputVariant, Form, withModal } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './TextFileAddModal.module.scss';
@@ -52,7 +52,7 @@ const TextFileAddModal = React.memo(({ content, onCreate, onClose }) => {
       <Form className={s.form}>
         <Input
           ref={nameField}
-          style={InputStyle.Default}
+          variant={InputVariant.Default}
           placeholder={t('common.enterFileName')}
           name="name"
           value={data.name}

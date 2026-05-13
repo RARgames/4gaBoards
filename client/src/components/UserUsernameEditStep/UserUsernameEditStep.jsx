@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputVariant, Form, Message, MessageVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserUsernameEditStep.module.scss';
@@ -150,7 +150,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
           <div className={s.text}>{t('common.newUsername')}</div>
           <Input
             ref={usernameField}
-            style={InputStyle.Default}
+            variant={InputVariant.Default}
             name="username"
             value={data.username}
             placeholder={username}
@@ -163,7 +163,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
               <div className={s.text}>{t('common.currentPassword')}</div>
               <Input.Password
                 ref={currentPasswordField}
-                style={InputStyle.Default}
+                variant={InputVariant.Default}
                 name="currentPassword"
                 value={data.currentPassword}
                 onKeyDown={handlePasswordKeyDown}

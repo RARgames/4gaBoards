@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useField } from '../../hooks';
-import { Popup, Input, InputStyle } from '../Utils';
+import { Popup, Input, InputVariant } from '../Utils';
 import Item from './Item';
 
 import * as gs from '../../global.module.scss';
@@ -58,7 +58,7 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, memberships,
     <>
       <Popup.Header onBack={onBack}>{t(title, { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        <Input ref={searchField} style={InputStyle.Default} value={search} placeholder={t('common.searchMembers')} onChange={handleSearchChange} />
+        <Input ref={searchField} variant={InputVariant.Default} value={search} placeholder={t('common.searchMembers')} onChange={handleSearchChange} />
         {filteredItems.length > 0 && (
           <div className={clsx(s.menu, gs.scrollableY)}>
             {filteredItems.map((item) => (

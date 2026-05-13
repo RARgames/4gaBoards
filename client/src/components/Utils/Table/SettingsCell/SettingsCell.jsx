@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Dropdown, DropdownVariant } from '../../Dropdown';
-import { Input, InputStyle } from '../../Input';
+import { Input, InputVariant } from '../../Input';
 import { Radio, RadioSize } from '../../Radio';
 
 const SettingsCell = React.memo(({ value, cellClassName, title, ariaLabel, options, placeholder, isCustomComponent, CustomComponent, onChange, onSubmit, ...props }) => {
@@ -20,7 +20,7 @@ const SettingsCell = React.memo(({ value, cellClassName, title, ariaLabel, optio
       )}
       {typeof value === 'string' && (
         <Input
-          style={InputStyle.FullWidth}
+          variant={InputVariant.FullWidth}
           value={value}
           onChange={(e) => onChange(e)}
           onSubmit={(e) => onSubmit(e)}

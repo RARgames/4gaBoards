@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useField, useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 import RenameStep from '../RenameStep';
-import { Popup, Input, InputStyle, Button, ButtonVariant, Icon, IconSize, IconType } from '../Utils';
+import { Popup, Input, InputVariant, Button, ButtonVariant, Icon, IconSize, IconType } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './BoardTemplateManagerStep.module.scss';
@@ -97,7 +97,7 @@ const BoardTemplateManagerStep = React.memo(({ templates, isAdmin, onUpdate, onD
       <Popup.Header onBack={onBack}>{t('common.boardTemplates')}</Popup.Header>
       <Popup.Content className={s.content}>
         <div className={s.inputWrapper}>
-          <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.filterTemplates')} onChange={handleSearchChange} />
+          <Input ref={searchField} variant={InputVariant.FullWidth} value={search} placeholder={t('common.filterTemplates')} onChange={handleSearchChange} />
         </div>
         {filteredTemplates.length > 0 ? (
           <div className={clsx(s.items, gs.scrollableY)}>

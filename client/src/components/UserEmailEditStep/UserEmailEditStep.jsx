@@ -5,7 +5,7 @@ import isEmail from 'validator/lib/isEmail';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputVariant, Form, Message, MessageVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserEmailEditStep.module.scss';
@@ -148,13 +148,13 @@ const UserEmailEditStep = React.memo(({ defaultData, email, isSubmitting, error,
         {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form>
           <div className={s.text}>{t('common.newEmail')}</div>
-          <Input ref={emailField} style={InputStyle.Default} name="email" value={data.email} placeholder={email} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
+          <Input ref={emailField} variant={InputVariant.Default} name="email" value={data.email} placeholder={email} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
           {usePasswordConfirmation && (
             <>
               <div className={s.text}>{t('common.currentPassword')}</div>
               <Input.Password
                 ref={currentPasswordField}
-                style={InputStyle.Default}
+                variant={InputVariant.Default}
                 name="currentPassword"
                 value={data.currentPassword}
                 onKeyDown={handlePasswordKeyDown}

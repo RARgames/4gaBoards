@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputStyle, Popup, Form } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputVariant, Popup, Form } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './TimerEditStep.module.scss';
@@ -131,7 +131,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={s.text}>{t('common.hours')}</div>
               <Input.Mask
                 ref={hoursField}
-                style={InputStyle.Default}
+                variant={InputVariant.Default}
                 name="hours"
                 value={data.hours}
                 mask="9999"
@@ -146,7 +146,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={s.text}>{t('common.minutes')}</div>
               <Input.Mask
                 ref={minutesField}
-                style={InputStyle.Default}
+                variant={InputVariant.Default}
                 name="minutes"
                 value={data.minutes}
                 mask="99"
@@ -161,7 +161,7 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
               <div className={s.text}>{t('common.seconds')}</div>
               <Input.Mask
                 ref={secondsField}
-                style={InputStyle.Default}
+                variant={InputVariant.Default}
                 name="seconds"
                 value={data.seconds}
                 mask="99"

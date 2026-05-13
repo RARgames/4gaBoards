@@ -6,7 +6,7 @@ import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
 import LabelColors from '../../constants/LabelColors';
-import { Button, ButtonVariant, Input, InputStyle } from '../Utils';
+import { Button, ButtonVariant, Input, InputVariant } from '../Utils';
 
 import * as bs from '../../backgrounds.module.scss';
 import * as s from './Editor.module.scss';
@@ -34,7 +34,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
 
   return (
     <>
-      <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} placeholder={t('common.enterLabelName')} isError={isError} onChange={onFieldChange} />
+      <Input ref={nameField} variant={InputVariant.Default} name="name" value={data.name} placeholder={t('common.enterLabelName')} isError={isError} onChange={onFieldChange} />
       <div className={s.text}>{t('common.color')}</div>
       <div className={s.colorButtons}>
         {LabelColors.map((color) => (

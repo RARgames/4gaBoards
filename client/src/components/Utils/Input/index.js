@@ -1,9 +1,9 @@
 import Input from './Input';
 import InputMask from './InputMask';
 import InputPassword from './InputPassword';
-import InputStyle from './InputStyle';
+import InputVariant from './InputVariant';
 
 Input.Mask = InputMask;
 Input.Password = InputPassword;
 
-export { Input, InputStyle };
+export { Input, InputVariant };

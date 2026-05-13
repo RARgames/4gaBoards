@@ -6,7 +6,7 @@ import isEmail from 'validator/lib/isEmail';
 import { useForm } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputVariant, Form, Message, MessageVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserAddStep.module.scss';
@@ -168,12 +168,12 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
         {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form>
           <div className={s.text}>{t('common.email')}</div>
-          <Input ref={emailField} name="email" style={InputStyle.Default} value={data.email} readOnly={isSubmitting} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
+          <Input ref={emailField} name="email" variant={InputVariant.Default} value={data.email} readOnly={isSubmitting} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />
           <div className={s.text}>{t('common.password')}</div>
           <Input.Password
             withStrengthBar
             ref={passwordField}
-            style={InputStyle.Default}
+            variant={InputVariant.Default}
             name="password"
             value={data.password}
             readOnly={isSubmitting}
@@ -182,13 +182,13 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
             isError={isPasswordError}
           />
           <div className={s.text}>{t('common.name')}</div>
-          <Input ref={nameField} name="name" style={InputStyle.Default} value={data.name} readOnly={isSubmitting} onKeyDown={handleNameKeyDown} onChange={handleFieldChange} isError={isNameError} />
+          <Input ref={nameField} name="name" variant={InputVariant.Default} value={data.name} readOnly={isSubmitting} onKeyDown={handleNameKeyDown} onChange={handleFieldChange} isError={isNameError} />
           <div className={s.text}>
             {t('common.username')} ({t('common.optional', { context: 'inline' })})
           </div>
           <Input
             ref={usernameField}
-            style={InputStyle.Default}
+            variant={InputVariant.Default}
             name="username"
             value={data.username || ''}
             readOnly={isSubmitting}

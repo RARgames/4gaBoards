@@ -7,7 +7,7 @@ import { useField, useSteps } from '../../hooks';
 import DateText from '../DateText';
 import DeleteStep from '../DeleteStep';
 import User from '../User';
-import { Popup, Input, InputStyle, Button, ButtonVariant, Icon, IconSize, IconType } from '../Utils';
+import { Popup, Input, InputVariant, Button, ButtonVariant, Icon, IconSize, IconType } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './MailTokenListStep.module.scss';
@@ -80,7 +80,7 @@ const MailTokenListStep = React.memo(({ title, mailTokens, mailServiceInboundEma
       </Popup.Header>
       <Popup.Content>
         <div className={s.inputWrapper}>
-          <Input ref={searchField} style={InputStyle.FullWidth} value={search} placeholder={t('common.filterEmailsByUser')} onChange={handleSearchChange} />
+          <Input ref={searchField} variant={InputVariant.FullWidth} value={search} placeholder={t('common.filterEmailsByUser')} onChange={handleSearchChange} />
           {canEdit && (
             <Button variant={ButtonVariant.Icon} title={t('common.generateNewEmail')} onClick={handleCreateClick} className={s.createButton}>
               <Icon type={IconType.Plus} size={IconSize.Size14} />

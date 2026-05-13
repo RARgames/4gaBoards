@@ -5,7 +5,7 @@ import pickBy from 'lodash/pickBy';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Button, ButtonVariant, Form, Input, InputStyle } from '../../Utils';
+import { Button, ButtonVariant, Form, Input, InputVariant } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './InformationEdit.module.scss';
@@ -53,7 +53,16 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
   return (
     <Form>
       <div className={s.text}>{t('common.name')}</div>
-      <Input ref={nameField} style={InputStyle.Default} name="name" placeholder={t('common.enterProjectName')} value={data.name} onKeyDown={handleFieldKeyDown} onChange={handleFieldChange} isError={isError} />
+      <Input
+        ref={nameField}
+        variant={InputVariant.Default}
+        name="name"
+        placeholder={t('common.enterProjectName')}
+        value={data.name}
+        onKeyDown={handleFieldKeyDown}
+        onChange={handleFieldChange}
+        isError={isError}
+      />
       <div className={gs.controls}>
         <Button variant={ButtonVariant.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
       </div>

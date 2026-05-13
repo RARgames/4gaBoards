@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../../hooks';
-import { Button, ButtonVariant, Form, Input, InputStyle, Popup, withPopup } from '../../Utils';
+import { Button, ButtonVariant, Form, Input, InputVariant, Popup, withPopup } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 
@@ -53,7 +53,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
         <Form>
           <Input
             ref={nameField}
-            style={InputStyle.Default}
+            variant={InputVariant.Default}
             name="name"
             value={data.name}
             placeholder={t('common.enterAttachmentName')}

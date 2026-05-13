@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Input, InputStyle, Popup, Form, Checkbox } from '../Utils';
+import { Button, ButtonVariant, Input, InputVariant, Popup, Form, Checkbox } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './FiltersDueDateStep.module.scss';
@@ -110,7 +110,7 @@ const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultVal
       <Popup.Header onBack={onBack}>{t(title)}</Popup.Header>
       <Popup.Content isMinContent>
         <Form onKeyDown={handleKeyDown}>
-          <Input ref={dateField} style={InputStyle.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
+          <Input ref={dateField} variant={InputVariant.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <Checkbox checked={justSelectedDay} label={t('common.justSelectedDay')} onChange={toggleJustSelectedDay} wrapperClassName={s.checkboxWrapper} />
           <Checkbox checked={includeTaskDueDates} label={t('common.includeTaskDueDates')} onChange={toggleIncludeTaskDueDates} wrapperClassName={s.checkboxWrapper} />

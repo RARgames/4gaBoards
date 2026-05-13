@@ -4,7 +4,7 @@ import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, withPopup } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputVariant, Form, withPopup } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 
@@ -67,7 +67,7 @@ const ConnectionsStep = React.memo(({ defaultData, onUpdate, onBack, onClose }) 
         <Form>
           <Input
             ref={inputRef}
-            style={InputStyle.Default}
+            variant={InputVariant.Default}
             value={data.githubRepo}
             name="githubRepo"
             placeholder={t('common.enterGithubRepository')}

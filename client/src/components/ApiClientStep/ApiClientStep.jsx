@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useForm, useSteps } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { ShowSecretStep } from '../ShowSecretStep';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant, Checkbox, CheckboxSize } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputVariant, Form, Message, MessageVariant, Checkbox, CheckboxSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './ApiClientStep.module.scss';
@@ -227,7 +227,7 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
         {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form className={s.form}>
           <div className={s.text}>{t('common.name')}</div>
-          <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} onChange={handleFieldChange} />
+          <Input ref={nameField} variant={InputVariant.Default} name="name" value={data.name} onChange={handleFieldChange} />
           {isUpdate && <div className={s.text}>{t('common.regenerateSecret')}</div>}
           {isUpdate && <Checkbox checked={regenerateSecret} label={t('common.regenerateSecret')} size={CheckboxSize.Size14} onChange={handleRegenerateSecretChange} wrapperClassName={s.checkbox} />}
           <div className={s.text}>{t('common.permissions')}</div>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, withPopup } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputVariant, Form, withPopup } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 
@@ -51,7 +51,7 @@ const ProjectAddPopup = React.memo(({ defaultData, isSubmitting, onCreate, onClo
       <Popup.Header>{t('common.addProject')}</Popup.Header>
       <Popup.Content>
         <Form onKeyDown={handleKeyDown}>
-          <Input ref={nameField} style={InputStyle.Default} name="name" placeholder={t('common.enterProjectName')} value={data.name} readOnly={isSubmitting} onChange={handleFieldChange} isError={isError} />
+          <Input ref={nameField} variant={InputVariant.Default} name="name" placeholder={t('common.enterProjectName')} value={data.name} readOnly={isSubmitting} onChange={handleFieldChange} isError={isError} />
           <div className={gs.controls}>
             <Button variant={ButtonVariant.Submit} content={t('common.addProject')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
