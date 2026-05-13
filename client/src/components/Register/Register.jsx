@@ -8,7 +8,7 @@ import logo from '../../assets/images/4gaboardsLogo1024w-white.png';
 import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageStyle, Checkbox, Loader, LoaderSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, ExternalLink, Input, InputStyle, Form, Message, MessageVariant, Checkbox, Loader, LoaderSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Register.module.scss';
@@ -223,7 +223,7 @@ const Register = React.memo(
           <img src={logo} className={s.logo} alt="4ga Boards" />
           <h1 className={s.formTitle}>{t('common.createYourAccount')}</h1>
           <div>
-            {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
+            {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
             {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={s.registrationDisabledText}>{t('error.registrationDisabled')}</div>}
             <Form>
               {registrationEnabled && localRegistrationEnabled && (

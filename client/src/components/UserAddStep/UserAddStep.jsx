@@ -6,7 +6,7 @@ import isEmail from 'validator/lib/isEmail';
 import { useForm } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserAddStep.module.scss';
@@ -165,7 +165,7 @@ const UserAddStep = React.memo(({ defaultData, isSubmitting, error, onCreate, on
     <>
       <Popup.Header>{t('common.addUser')}</Popup.Header>
       <Popup.Content>
-        {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
+        {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form>
           <div className={s.text}>{t('common.email')}</div>
           <Input ref={emailField} name="email" style={InputStyle.Default} value={data.email} readOnly={isSubmitting} onKeyDown={handleEmailKeyDown} onChange={handleFieldChange} isError={isEmailError} />

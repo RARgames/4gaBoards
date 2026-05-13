@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserPasswordEditStep.module.scss';
@@ -123,7 +123,7 @@ const UserPasswordEditStep = React.memo(({ defaultData, isSubmitting, error, use
     <>
       <Popup.Header onBack={onBack}>{title || t('common.editPassword', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
+        {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form>
           {usePasswordConfirmation && (
             <>

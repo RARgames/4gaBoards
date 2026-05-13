@@ -9,7 +9,7 @@ import { SsoTypes } from '../../constants/Enums';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageStyle, Loader, LoaderSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, Input, InputStyle, Form, Message, MessageVariant, Loader, LoaderSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Login.module.scss';
@@ -196,7 +196,7 @@ const Login = React.memo(
           <img src={logo} className={s.logo} alt="4ga Boards" />
           <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
           <div>
-            {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
+            {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
             <Form>
               <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
               <Input

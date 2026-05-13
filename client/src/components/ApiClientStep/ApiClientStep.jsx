@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useForm, useSteps } from '../../hooks';
 import { usePrevious } from '../../lib/hooks';
 import { ShowSecretStep } from '../ShowSecretStep';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageStyle, Checkbox, CheckboxSize } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant, Checkbox, CheckboxSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './ApiClientStep.module.scss';
@@ -224,7 +224,7 @@ const ApiClientStep = React.memo(({ id, secret, defaultData, isSubmitting, error
     <>
       <Popup.Header onBack={onBack}>{title}</Popup.Header>
       <Popup.Content>
-        {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
+        {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form className={s.form}>
           <div className={s.text}>{t('common.name')}</div>
           <Input ref={nameField} style={InputStyle.Default} name="name" value={data.name} onChange={handleFieldChange} />

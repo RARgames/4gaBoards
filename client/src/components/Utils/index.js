@@ -9,7 +9,7 @@ import { Input, InputStyle } from './Input';
 import LinkifiedTextRenderer from './LinkifiedTextRenderer';
 import { Loader, LoaderSize } from './Loader';
 import { MDEditor, MDPreview } from './Markdown';
-import { Message, MessageStyle } from './Message';
+import { Message, MessageVariant } from './Message';
 import withModal from './Modal';
 import withPopup from './Popup';
 import Popup from './PopupElements';
@@ -40,7 +40,7 @@ export {
   MDEditor,
   MDPreview,
   Message,
-  MessageStyle,
+  MessageVariant,
   Popup,
   withModal,
   withPopup,

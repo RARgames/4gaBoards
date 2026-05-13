@@ -1,4 +1,4 @@
 import Message from './Message';
-import MessageStyle from './MessageStyle';
+import MessageVariant from './MessageVariant';
 
-export { Message, MessageStyle };
+export { Message, MessageVariant };

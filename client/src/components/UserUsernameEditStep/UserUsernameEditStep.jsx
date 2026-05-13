@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useForm } from '../../hooks';
 import { useDidUpdate, usePrevious, useToggle } from '../../lib/hooks';
 import { isUsername } from '../../utils/validator';
-import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageStyle } from '../Utils';
+import { Button, ButtonVariant, Popup, Input, InputStyle, Form, Message, MessageVariant } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './UserUsernameEditStep.module.scss';
@@ -145,7 +145,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
     <>
       <Popup.Header onBack={onBack}>{t('common.editUsername', { context: 'title' })}</Popup.Header>
       <Popup.Content>
-        {message && <Message style={message.type === 'error' ? MessageStyle.Error : MessageStyle.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
+        {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} />}
         <Form>
           <div className={s.text}>{t('common.newUsername')}</div>
           <Input
