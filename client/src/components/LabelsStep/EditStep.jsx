@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
-import LabelColors from '../../constants/LabelColors';
+import { LabelColors } from '../../constants/LabelColors';
 import { useForm, useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 import { Button, ButtonVariant, Popup, Form } from '../Utils';
@@ -29,6 +29,11 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   const [step, openStep, handleBack] = useSteps();
 
   const handleSubmit = useCallback(() => {
+    const isColorValid = editorRef.current?.validateColor() ?? true;
+    if (!isColorValid) {
+      return;
+    }
+
     const cleanData = {
       ...data,
       name: data.name.trim() || null,
@@ -36,7 +41,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
 
     if (!cleanData.name) {
       setIsError(true);
-      editorRef.current?.focus();
+      editorRef.current?.focusName();
       return;
     }
 

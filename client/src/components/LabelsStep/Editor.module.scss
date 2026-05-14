@@ -35,6 +35,26 @@
     }
   }
 
+  .customColor {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .customColorSwatch {
+    flex: 0 0 43px;
+    margin: 0;
+    height: 30px;
+    width: 43px;
+    margin-left: 1px;
+  }
+
+  .customColorInput {
+    margin: 0;
+    max-height: 30px;
+  }
+
   .text {
     color: var(--text1);
     font-size: 12px;

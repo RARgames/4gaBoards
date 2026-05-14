@@ -2,7 +2,7 @@ import React, { useCallback, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import LabelColors from '../../constants/LabelColors';
+import { LabelColors } from '../../constants/LabelColors';
 import { useForm } from '../../hooks';
 import { Button, ButtonVariant, Popup, Form } from '../Utils';
 import Editor from './Editor';
@@ -21,6 +21,11 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   }));
 
   const handleSubmit = useCallback(() => {
+    const isColorValid = editorRef.current?.validateColor() ?? true;
+    if (!isColorValid) {
+      return;
+    }
+
     const cleanData = {
       ...data,
       name: data.name.trim(),
@@ -28,7 +33,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
 
     if (!cleanData.name) {
       setIsError(true);
-      editorRef.current?.focus();
+      editorRef.current?.focusName();
       return;
     }
 

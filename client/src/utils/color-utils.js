@@ -18,3 +18,41 @@ export const readCSSVars = (el) => {
 
   return sortedVars;
 };
+
+export const normalizeHexColor = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  let normalized = value.trim();
+
+  if (!normalized) {
+    return null;
+  }
+
+  if (!normalized.startsWith('#')) {
+    normalized = `#${normalized}`;
+  }
+
+  if (/^#[0-9a-fA-F]{3}$/.test(normalized)) {
+    normalized = `#${normalized
+      .slice(1)
+      .split('')
+      .map((char) => `${char}${char}`)
+      .join('')}`;
+  }
+
+  if (/^#[0-9a-fA-F]{4}$/.test(normalized)) {
+    normalized = `#${normalized
+      .slice(1)
+      .split('')
+      .map((char) => `${char}${char}`)
+      .join('')}`;
+  }
+
+  if (!/^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$/.test(normalized)) {
+    return null;
+  }
+
+  return normalized.toLowerCase();
+};

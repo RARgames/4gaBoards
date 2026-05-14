@@ -1,13 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
-import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
-import LabelColors from '../../constants/LabelColors';
+import { LabelColors } from '../../constants/LabelColors';
 import { Button } from '../Utils';
 
-import * as bs from '../../backgrounds.module.scss';
 import * as gs from '../../global.module.scss';
 import * as s from './Label.module.scss';
 
@@ -21,15 +19,8 @@ const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, isCli
   const contentNode = (
     <div
       title={name}
-      className={clsx(
-        s.wrapper,
-        s[`wrapper${upperFirst(variant)}`],
-        onClick && s.wrapperHoverable,
-        isRemovable && s.wrapperRemovable,
-        bs[`background${upperFirst(camelCase(color))}`],
-        (onClick || isClickable) && gs.cursorPointer,
-        className,
-      )}
+      style={{ backgroundColor: color }}
+      className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], onClick && s.wrapperHoverable, isRemovable && s.wrapperRemovable, (onClick || isClickable) && gs.cursorPointer, className)}
     >
       {name}
     </div>
