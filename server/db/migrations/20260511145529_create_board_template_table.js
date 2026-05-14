@@ -1,28 +1,106 @@
 const POSITION_GAP = 65535;
 
+const defaultLabels = [
+  { name: 'common.critical', color: '#c62828' },
+  { name: 'common.highPriority', color: '#ef4444' },
+  { name: 'common.mediumPriority', color: '#f59e0b' },
+  { name: 'common.lowPriority', color: '#4a8753' },
+  { name: 'common.improvement', color: '#7c3aed' },
+  { name: 'common.blocked', color: '#6b7280' },
+  { name: 'common.review', color: '#3b82f6' },
+  { name: 'common.urgent', color: '#dc2626' },
+  { name: 'common.actionRequired', color: '#c500b8' },
+  { name: 'common.future', color: '#64748b' },
+];
+
+const extraDefaultLabels = [
+  { name: 'common.bug', color: '#ff1744' },
+  { name: 'common.feature', color: '#5164cf' },
+];
+
 const defaultBoardTemplates = [
   {
     name: 'common.simple',
     isGlobal: true,
     data: {
-      lists: ['common.ideas', 'common.todo', 'common.inProgress', 'common.done'].map((name, index) => ({
+      lists: ['common.open', 'common.todo', 'common.inProgress', 'common.done'].map((name, index) => ({
         position: (index + 1) * POSITION_GAP,
         name,
         isCollapsed: false,
       })),
-      labels: [],
+      labels: [...defaultLabels, ...extraDefaultLabels],
     },
   },
   {
     name: 'common.kanban',
     isGlobal: true,
     data: {
-      lists: ['common.ideas', 'common.todo', 'common.inProgress', 'common.toTest', 'common.done'].map((name, index) => ({
+      lists: ['common.open', 'common.todo', 'common.inProgress', 'common.toTest', 'common.done'].map((name, index) => ({
         position: (index + 1) * POSITION_GAP,
         name,
         isCollapsed: false,
       })),
-      labels: [],
+      labels: [...defaultLabels, ...extraDefaultLabels],
+    },
+  },
+  {
+    name: 'common.softwareDevelopment',
+    isGlobal: true,
+    data: {
+      lists: ['common.open', 'common.todo', 'common.inProgress', 'common.codeReview', 'common.testing', 'common.done'].map((name, index) => ({
+        position: (index + 1) * POSITION_GAP,
+        name,
+        isCollapsed: false,
+      })),
+      labels: [
+        ...defaultLabels,
+        ...extraDefaultLabels,
+        { name: 'common.refactor', color: '#8b5cf6' },
+        { name: 'common.frontend', color: '#06b6d4' },
+        { name: 'common.backend', color: '#f97316' },
+        { name: 'common.devops', color: '#6366f1' },
+        { name: 'common.ux', color: '#ec4899' },
+      ],
+    },
+  },
+  {
+    name: 'common.marketingCampaign',
+    isGlobal: true,
+    data: {
+      lists: ['common.open', 'common.planned', 'common.creating', 'common.review', 'common.scheduled', 'common.published', 'common.analytics'].map((name, index) => ({
+        position: (index + 1) * POSITION_GAP,
+        name,
+        isCollapsed: false,
+      })),
+      labels: [
+        ...defaultLabels,
+        ...extraDefaultLabels,
+        { name: 'common.socialMedia', color: '#3b82f6' },
+        { name: 'common.email', color: '#8b5cf6' },
+        { name: 'common.seo', color: '#10b981' },
+        { name: 'common.ads', color: '#f59e0b' },
+        { name: 'common.blog', color: '#06b6d4' },
+        { name: 'common.video', color: '#6d4c41' },
+      ],
+    },
+  },
+  {
+    name: 'common.personal',
+    isGlobal: true,
+    data: {
+      lists: ['common.open', 'common.planned', 'common.today', 'common.thisWeek', 'common.done'].map((name, index) => ({
+        position: (index + 1) * POSITION_GAP,
+        name,
+        isCollapsed: false,
+      })),
+      labels: [
+        ...defaultLabels,
+        { name: 'common.work', color: '#3b82f6' },
+        { name: 'common.personal', color: '#8b5cf6' },
+        { name: 'common.shopping', color: '#ec4899' },
+        { name: 'common.finance', color: '#10b981' },
+        { name: 'common.health', color: '#f97316' },
+      ],
     },
   },
 ];
