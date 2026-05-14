@@ -159,9 +159,9 @@ module.exports = {
       }
 
       const valueKeys = Object.keys(values);
-      const isOnlyLastLogin = valueKeys.length === 1 && (Object.prototype.hasOwnProperty.call(values, 'lastLogin') || Object.prototype.hasOwnProperty.call(values, 'lastEmailVerificationRequestAt'));
+      const isOnlyUsageUpdate = valueKeys.length === 1 && (Object.prototype.hasOwnProperty.call(values, 'lastLogin') || Object.prototype.hasOwnProperty.call(values, 'lastEmailVerificationRequestAt'));
 
-      if (!isOnlyLastLogin) {
+      if (!isOnlyUsageUpdate) {
         await sails.helpers.actions.createOne.with({
           values: {
             userAccount: user,
