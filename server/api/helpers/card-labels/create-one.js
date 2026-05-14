@@ -74,6 +74,7 @@ module.exports = {
               cardLabelId: cardLabel.id,
               labelId: cardLabel.labelId,
               labelName: values.label.name,
+              labelColor: values.label.color,
             },
           },
           currentUser,

@@ -7,7 +7,8 @@ function buildContext(t, activity, flags) {
   const cardName = activity.data?.cardName || activity.card?.name;
   const cardNameTruncated = truncateIf(cardName, isTruncated, cardNameTruncateLength);
 
-  const listName = activity.data?.listName || activity.list?.name;
+  let listName = activity.data?.listName || activity.list?.name;
+  listName = listName?.startsWith('common.') ? t(listName) : listName;
   const listNameTruncated = truncateIf(listName, isTruncated, listNameTruncateLength);
 
   const boardName = activity.data?.boardName || activity.board?.name;
@@ -345,8 +346,10 @@ export const activityRenderSpec = {
     },
 
     [ActivityTypes.CARD_LABEL_ADD]: (ctx) => {
-      const { labelName } = ctx.activity.data;
+      let { labelName } = ctx.activity.data;
+      labelName = labelName.startsWith('common.') ? ctx.t(labelName) : labelName;
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
+      const labelColorName = ctx.activity.data.labelColor;
 
       return {
         key: ctx.hideCardDetails ? 'activity.cardLabelAddShort' : 'activity.cardLabelAdd',
@@ -356,14 +359,16 @@ export const activityRenderSpec = {
         },
         components: [
           { slot: 'card', title: ctx.cardName },
-          { slot: 'label', title: labelName },
+          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
         ],
       };
     },
 
     [ActivityTypes.CARD_LABEL_REMOVE]: (ctx) => {
-      const { labelName } = ctx.activity.data;
+      let { labelName } = ctx.activity.data;
+      labelName = labelName.startsWith('common.') ? ctx.t(labelName) : labelName;
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
+      const labelColorName = ctx.activity.data.labelColor;
 
       return {
         key: ctx.hideCardDetails ? 'activity.cardLabelRemoveShort' : 'activity.cardLabelRemove',
@@ -373,7 +378,7 @@ export const activityRenderSpec = {
         },
         components: [
           { slot: 'card', title: ctx.cardName },
-          { slot: 'label', title: labelName },
+          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
         ],
       };
     },
@@ -698,7 +703,8 @@ export const activityRenderSpec = {
 
     [ActivityTypes.LIST_UPDATE]: (ctx) => {
       if (ctx.activity.data.listPrevName) {
-        const { listPrevName } = ctx.activity.data;
+        let { listPrevName } = ctx.activity.data;
+        listPrevName = listPrevName.startsWith('common.') ? ctx.t(listPrevName) : listPrevName;
         const prevListNameTruncated = truncateIf(listPrevName, ctx.isTruncated, ctx.truncateLengths.listName);
 
         return {
@@ -817,7 +823,8 @@ export const activityRenderSpec = {
 
   [ActivityScopes.BOARD]: {
     [ActivityTypes.LABEL_CREATE]: (ctx) => {
-      const { labelName } = ctx.activity.data;
+      let { labelName } = ctx.activity.data;
+      labelName = labelName.startsWith('common.') ? ctx.t(labelName) : labelName;
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
       const labelColorName = ctx.activity.data.labelColor;
 
@@ -835,39 +842,46 @@ export const activityRenderSpec = {
     },
 
     [ActivityTypes.LABEL_UPDATE]: (ctx) => {
-      const { labelName } = ctx.activity.data;
+      let { labelName } = ctx.activity.data;
+      labelName = labelName.startsWith('common.') ? ctx.t(labelName) : labelName;
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
+      const labelColorName = ctx.activity.data.labelColor;
 
       if (ctx.activity.data.labelColor !== ctx.activity.data.labelPrevColor) {
         const labelPrevColorName = ctx.activity.data.labelPrevColor;
-        const labelColorName = ctx.activity.data.labelColor;
 
         return {
           key: ctx.hideLabelDetails ? 'activity.labelUpdateColorShort' : 'activity.labelUpdateColor',
           values: {
             prevLabel: labelNameTruncated,
             label: labelNameTruncated,
+            board: ctx.boardNameTruncated,
           },
           components: [
             { slot: 'prevLabel', title: labelName, style: { backgroundColor: labelPrevColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
             { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
+            { slot: 'board', title: ctx.boardName },
           ],
         };
       }
 
       if (ctx.activity.data.labelPrevName) {
-        const { labelPrevName } = ctx.activity.data;
+        let { labelPrevName } = ctx.activity.data;
+        labelPrevName = labelPrevName.startsWith('common.') ? ctx.t(labelPrevName) : labelPrevName;
         const prevLabelNameTruncated = truncateIf(labelPrevName, ctx.isTruncated, ctx.truncateLengths.default);
+        const labelPrevColorName = ctx.activity.data.labelPrevColor;
 
         return {
           key: ctx.hideLabelDetails ? 'activity.labelUpdateNameShort' : 'activity.labelUpdateName',
           values: {
             prevLabel: prevLabelNameTruncated,
             label: labelNameTruncated,
+            board: ctx.boardNameTruncated,
           },
           components: [
-            { slot: 'prevLabel', title: labelPrevName },
-            { slot: 'label', title: labelName },
+            { slot: 'prevLabel', title: labelPrevName, style: { backgroundColor: labelPrevColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
+            { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
+            { slot: 'board', title: ctx.boardName },
           ],
         };
       }
@@ -876,8 +890,10 @@ export const activityRenderSpec = {
     },
 
     [ActivityTypes.LABEL_DELETE]: (ctx) => {
-      const { labelName } = ctx.activity.data;
+      let { labelName } = ctx.activity.data;
+      labelName = labelName.startsWith('common.') ? ctx.t(labelName) : labelName;
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
+      const labelColorName = ctx.activity.data.labelColor;
 
       return {
         key: ctx.hideLabelDetails ? 'activity.labelDeleteShort' : 'activity.labelDelete',
@@ -886,7 +902,7 @@ export const activityRenderSpec = {
           board: ctx.boardNameTruncated,
         },
         components: [
-          { slot: 'label', title: labelName },
+          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
           { slot: 'board', title: ctx.boardName },
         ],
       };
