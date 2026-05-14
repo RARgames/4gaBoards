@@ -47,37 +47,37 @@ const ActivityMessage = React.memo(({ activity, isTruncated, hideCardDetails, hi
 
   const components = {};
 
-  (transProps.components || []).forEach(({ slot, title = '' }) => {
+  (transProps.components || []).forEach(({ slot, title = '', style }) => {
     let node;
 
     if (slot === 'user') {
-      node = <span className={s.data} title={title} />;
+      node = <span className={s.data} title={title} style={style} />;
     } else if (slot === 'project') {
       if (activity.project) {
-        node = <Link to={Paths.PROJECTS.replace(':id', activity.project.id)} className={s.linked} title={title} onClick={onClose} />;
+        node = <Link to={Paths.PROJECTS.replace(':id', activity.project.id)} className={s.linked} title={title} onClick={onClose} style={style} />;
       } else {
-        node = <Link to={Paths.PROJECTS.replace(':id', activity.projectId)} className={s.linkedDeleted} title={t('activity.deletedProject', { project: title })} onClick={onClose} />;
+        node = <Link to={Paths.PROJECTS.replace(':id', activity.projectId)} className={s.linkedDeleted} title={t('activity.deletedProject', { project: title })} onClick={onClose} style={style} />;
       }
     } else if (slot === 'card') {
       if (activity.card) {
-        node = <Link to={Paths.CARDS.replace(':id', activity.card.id)} className={s.linked} title={title} onClick={onClose} />;
+        node = <Link to={Paths.CARDS.replace(':id', activity.card.id)} className={s.linked} title={title} onClick={onClose} style={style} />;
       } else {
-        node = <Link to={Paths.CARDS.replace(':id', activity.cardId)} className={s.linkedDeleted} title={t('activity.deletedCard', { card: title })} onClick={onClose} />;
+        node = <Link to={Paths.CARDS.replace(':id', activity.cardId)} className={s.linkedDeleted} title={t('activity.deletedCard', { card: title })} onClick={onClose} style={style} />;
       }
     } else if (slot === 'board') {
       if (activity.board) {
-        node = <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={title} onClick={onClose} />;
+        node = <Link to={Paths.BOARDS.replace(':id', activity.board.id)} className={s.linked} title={title} onClick={onClose} style={style} />;
       } else {
-        node = <Link to={Paths.BOARDS.replace(':id', activity.boardId)} className={s.linkedDeleted} title={t('activity.deletedBoard', { board: title })} onClick={onClose} />;
+        node = <Link to={Paths.BOARDS.replace(':id', activity.boardId)} className={s.linkedDeleted} title={t('activity.deletedBoard', { board: title })} onClick={onClose} style={style} />;
       }
     } else if (slot.toLowerCase().includes('mail')) {
       if (title) {
-        node = <ExternalLink href={`mailto:${title}`} className={s.linked} title={title} />;
+        node = <ExternalLink href={`mailto:${title}`} className={s.linked} title={title} style={style} />;
       } else {
-        node = <span className={s.data} title={title} />;
+        node = <span className={s.data} title={title} style={style} />;
       }
     } else {
-      node = <span className={s.data} title={title} />;
+      node = <span className={s.data} title={title} style={style} />;
     }
 
     if (node) {

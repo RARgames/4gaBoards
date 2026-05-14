@@ -819,6 +819,7 @@ export const activityRenderSpec = {
     [ActivityTypes.LABEL_CREATE]: (ctx) => {
       const { labelName } = ctx.activity.data;
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
+      const labelColorName = ctx.activity.data.labelColor;
 
       return {
         key: ctx.hideLabelDetails ? 'activity.labelCreateShort' : 'activity.labelCreate',
@@ -827,7 +828,7 @@ export const activityRenderSpec = {
           board: ctx.boardNameTruncated,
         },
         components: [
-          { slot: 'label', title: labelName },
+          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
           { slot: 'board', title: ctx.boardName },
         ],
       };
@@ -838,17 +839,18 @@ export const activityRenderSpec = {
       const labelNameTruncated = truncateIf(labelName, ctx.isTruncated, ctx.truncateLengths.default);
 
       if (ctx.activity.data.labelColor !== ctx.activity.data.labelPrevColor) {
+        const labelPrevColorName = ctx.activity.data.labelPrevColor;
         const labelColorName = ctx.activity.data.labelColor;
 
         return {
           key: ctx.hideLabelDetails ? 'activity.labelUpdateColorShort' : 'activity.labelUpdateColor',
           values: {
+            prevLabel: labelNameTruncated,
             label: labelNameTruncated,
-            color: labelColorName,
           },
           components: [
-            { slot: 'label', title: labelName },
-            { slot: 'color', title: labelColorName },
+            { slot: 'prevLabel', title: labelName, style: { backgroundColor: labelPrevColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
+            { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
           ],
         };
       }
