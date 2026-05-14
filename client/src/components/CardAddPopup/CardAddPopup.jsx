@@ -123,6 +123,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
               onChange={handleListChange}
               onErrorClear={() => setIsDropdownError(false)}
               dropdownMenuClassName={s.dropdownMenu}
+              translateI18nKeys
             />
           )}
           <div className={gs.controls}>

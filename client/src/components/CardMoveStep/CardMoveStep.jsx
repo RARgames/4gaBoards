@@ -140,6 +140,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
                 onBlur={focusForm}
                 disabled={selectedBoard.lists.length === 0}
                 dropdownMenuClassName={s.dropdownMenu}
+                translateI18nKeys
               />
             </>
           )}

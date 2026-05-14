@@ -53,6 +53,7 @@ const List = React.memo(
     onMailTokenDelete,
   }) => {
     const [t] = useTranslation();
+    const listName = name.startsWith('common.') ? t(name) : name;
     const [isAddCardOpen, setIsAddCardOpen] = useState(false);
     const [addCardAtTop, setAddCardAtTop] = useState(false);
     const [nameEditHeight, setNameEditHeight] = useState(0);
@@ -199,8 +200,8 @@ const List = React.memo(
             <Button variant={ButtonVariant.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButtonCollapsed, !canEdit && gs.cursorDefault)}>
               <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
             </Button>
-            <div className={s.headerNameCollapsed} title={name}>
-              {name}
+            <div className={s.headerNameCollapsed} title={listName}>
+              {listName}
             </div>
             <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
             <CardAddPopup
@@ -256,8 +257,8 @@ const List = React.memo(
                 </Button>
                 <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
                   {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                  <div className={clsx(s.headerName, canEdit && gs.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={name}>
-                    {name}
+                  <div className={clsx(s.headerName, canEdit && gs.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={listName}>
+                    {listName}
                   </div>
                 </NameEdit>
                 {isPersisted && (

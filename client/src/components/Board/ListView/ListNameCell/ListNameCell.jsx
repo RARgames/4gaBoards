@@ -1,4 +1,5 @@
 import React, { useRef, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -8,11 +9,13 @@ import * as gs from '../../../../global.module.scss';
 import * as s from './ListNameCell.module.scss';
 
 const ListNameCell = React.memo(({ cellClassName, projectId, boardId, listId, allProjectsToLists, canEdit, onMove }) => {
+  const [t] = useTranslation();
   const dropdown = useRef(null);
 
   const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
   const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
   const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
+  const selectedListName = useMemo(() => (selectedList?.name?.startsWith('common.') ? t(selectedList.name) : selectedList?.name), [selectedList, t]);
 
   const handleDropdownClick = useCallback(() => {
     if (canEdit) {
@@ -25,20 +28,21 @@ const ListNameCell = React.memo(({ cellClassName, projectId, boardId, listId, al
       <Dropdown
         ref={dropdown}
         variant={DropdownVariant.FullWidth}
-        options={selectedBoard.lists.map((list) => ({
+        options={selectedBoard?.lists.map((list) => ({
           name: list.name,
           id: list.id,
         }))}
-        placeholder={selectedList.name}
+        placeholder={selectedListName}
         defaultItem={selectedList}
+        translateI18nKeys
         isSearchable
         onChange={(list) => onMove(list.id)}
         selectFirstOnSearch
       >
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div className={clsx(canEdit && gs.cursorPointer)} onClick={handleDropdownClick} data-prevent-card-switch>
-          <div className={clsx(s.headerListField)} title={selectedList.name}>
-            {selectedList.name}
+          <div className={clsx(s.headerListField)} title={selectedListName}>
+            {selectedListName}
           </div>
         </div>
       </Dropdown>

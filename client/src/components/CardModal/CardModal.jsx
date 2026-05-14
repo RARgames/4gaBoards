@@ -136,6 +136,7 @@ const CardModal = React.memo(
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
+    const selectedListName = useMemo(() => (selectedList?.name?.startsWith('common.') ? t(selectedList.name) : selectedList?.name), [selectedList, t]);
 
     useEffect(() => {
       if (!didMountRef.current) {
@@ -410,17 +411,18 @@ const CardModal = React.memo(
               name: list.name,
               id: list.id,
             }))}
-            placeholder={selectedList?.name || ''}
+            placeholder={selectedListName || ''}
             defaultItem={selectedList}
             isSearchable
             onChange={(list) => onMove(list.id)}
             selectFirstOnSearch
+            translateI18nKeys
             dropdownMenuClassName={s.dropdownMenu}
           >
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div className={clsx(canEdit && gs.cursorPointer)} onClick={handleDropdownClick}>
-              <div className={clsx(s.headerListField)} title={selectedList?.name}>
-                {selectedList?.name}
+              <div className={clsx(s.headerListField)} title={selectedListName}>
+                {selectedListName}
               </div>
               <Icon type={IconType.TriangleDown} title={t('common.moveCardToList')} size={IconSize.Size10} className={s.headerListFieldIcon} />
             </div>

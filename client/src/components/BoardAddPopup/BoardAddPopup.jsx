@@ -107,15 +107,10 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
   }, [handleBack]);
 
   const handleSubmit = useCallback(() => {
-    const mappedLists = (selectedTemplate.data?.lists || []).map((list) => ({
-      ...list,
-      name: list.name.startsWith('common.') ? t(list.name) : list.name,
-    }));
-
     const cleanData = {
       ...data,
       name: data.name.trim(),
-      lists: mappedLists,
+      lists: selectedTemplate.data?.lists || [],
       labels: selectedTemplate.data?.labels || [],
       importNonExistingUsers,
       importProjectManagers,
@@ -134,7 +129,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
 
     onCreate(selectedProject.id, cleanData);
     onClose();
-  }, [data, selectedTemplate, importNonExistingUsers, importProjectManagers, selectedProject, onCreate, onClose, t]);
+  }, [data, selectedTemplate, importNonExistingUsers, importProjectManagers, selectedProject, onCreate, onClose]);
 
   const handleImportClick = useCallback(() => {
     openStep(StepTypes.IMPORT);
