@@ -1,6 +1,15 @@
 import { ActivityScopes, ActivityTypes } from '@4gaboards/enums';
 import { getTimerState, formatTimerActivities, truncateIf } from '@4gaboards/utils';
 
+function getLabelStyle(backgroundColor) {
+  return {
+    backgroundColor,
+    borderRadius: '3px',
+    padding: '1px 6px',
+    marginLeft: '2px',
+  };
+}
+
 function buildContext(t, activity, flags) {
   const { boardNameTruncateLength = 30, cardNameTruncateLength = 30, commentTruncateLength = 30, defaultTruncateLength = 30, descriptionTruncateLength = 30, hideBoardDetails = false, hideCardDetails = false, hideLabelDetails = false, hideListDetails = false, hideProjectDetails = false, isDescriptionTruncated = false, isTruncated = false, listNameTruncateLength = 30, projectNameTruncateLength = 30, taskNameTruncateLength = 30, userNameTruncateLength = 30 } = flags;
 
@@ -359,7 +368,7 @@ export const activityRenderSpec = {
         },
         components: [
           { slot: 'card', title: ctx.cardName },
-          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
+          { slot: 'label', title: labelName, style: getLabelStyle(labelColorName) },
         ],
       };
     },
@@ -378,7 +387,7 @@ export const activityRenderSpec = {
         },
         components: [
           { slot: 'card', title: ctx.cardName },
-          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
+          { slot: 'label', title: labelName, style: getLabelStyle(labelColorName) },
         ],
       };
     },
@@ -835,7 +844,7 @@ export const activityRenderSpec = {
           board: ctx.boardNameTruncated,
         },
         components: [
-          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
+          { slot: 'label', title: labelName, style: getLabelStyle(labelColorName) },
           { slot: 'board', title: ctx.boardName },
         ],
       };
@@ -858,8 +867,8 @@ export const activityRenderSpec = {
             board: ctx.boardNameTruncated,
           },
           components: [
-            { slot: 'prevLabel', title: labelName, style: { backgroundColor: labelPrevColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
-            { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
+            { slot: 'prevLabel', title: labelName, style: getLabelStyle(labelPrevColorName) },
+            { slot: 'label', title: labelName, style: getLabelStyle(labelColorName) },
             { slot: 'board', title: ctx.boardName },
           ],
         };
@@ -879,8 +888,8 @@ export const activityRenderSpec = {
             board: ctx.boardNameTruncated,
           },
           components: [
-            { slot: 'prevLabel', title: labelPrevName, style: { backgroundColor: labelPrevColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
-            { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px' } },
+            { slot: 'prevLabel', title: labelPrevName, style: getLabelStyle(labelPrevColorName) },
+            { slot: 'label', title: labelName, style: getLabelStyle(labelColorName) },
             { slot: 'board', title: ctx.boardName },
           ],
         };
@@ -902,7 +911,7 @@ export const activityRenderSpec = {
           board: ctx.boardNameTruncated,
         },
         components: [
-          { slot: 'label', title: labelName, style: { backgroundColor: labelColorName, borderRadius: '3px', padding: '1px 6px', marginLeft: '2px' } },
+          { slot: 'label', title: labelName, style: getLabelStyle(labelColorName) },
           { slot: 'board', title: ctx.boardName },
         ],
       };
