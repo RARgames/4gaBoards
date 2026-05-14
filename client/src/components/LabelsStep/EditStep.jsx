@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
@@ -10,6 +11,7 @@ import { Button, ButtonVariant, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
 import * as gs from '../../global.module.scss';
+import * as s from './EditStep.module.scss';
 
 const StepTypes = {
   DELETE: 'DELETE',
@@ -90,10 +92,10 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.editLabel', { context: 'title' })}</Popup.Header>
-      <Popup.Content isMinContent>
-        <Form onKeyDown={handleKeyDown}>
+      <Popup.Content className={s.content}>
+        <Form className={s.form} onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
-          <div className={gs.controlsSpaceBetween}>
+          <div className={clsx(gs.controlsSpaceBetween, s.scrollbarOffset)}>
             <Button variant={ButtonVariant.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
             <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
           </div>

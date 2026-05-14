@@ -8,6 +8,7 @@ import { normalizeHexColor } from '../../utils/color-utils';
 import ColorPickerPopup from '../ColorPickerPopup';
 import { Button, ButtonVariant, Input, InputVariant } from '../Utils';
 
+import * as gs from '../../global.module.scss';
 import * as s from './Editor.module.scss';
 
 const DEFAULT_COLOR = LabelColors[0];
@@ -109,23 +110,14 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
   );
 
   return (
-    <>
+    <div className={clsx(gs.scrollableY, s.wrapper)}>
       <Input ref={nameField} variant={InputVariant.Default} name="name" value={data.name} placeholder={t('common.enterLabelName')} isError={isError} onChange={onFieldChange} />
       <div className={s.text}>{t('common.color')}</div>
-      <div className={s.customColor}>
+      <div className={s.color}>
         <ColorPickerPopup defaultValue={colorValue} onUpdate={handleColorPickerUpdate}>
-          <Button variant={ButtonVariant.Default} name="color" title={t('common.editColor')} value={colorValue} style={{ backgroundColor: colorValue }} className={clsx(s.colorButton, s.customColorSwatch)} />
+          <Button variant={ButtonVariant.Default} name="color" title={t('common.editColor')} value={colorValue} style={{ backgroundColor: colorValue }} className={clsx(s.colorButton, s.colorSwatch)} />
         </ColorPickerPopup>
-        <Input
-          ref={colorField}
-          variant={InputVariant.Default}
-          className={s.customColorInput}
-          value={colorValue}
-          onChange={handleColorInputChange}
-          onBlur={handleColorInputBlur}
-          isError={isColorError}
-          maxLength={9}
-        />
+        <Input ref={colorField} variant={InputVariant.Default} className={s.colorInput} value={colorValue} onChange={handleColorInputChange} onBlur={handleColorInputBlur} isError={isColorError} maxLength={9} />
       </div>
       <div className={s.text}>{t('common.presetColors')}</div>
       <div className={s.colorButtons}>
@@ -142,7 +134,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 });
 

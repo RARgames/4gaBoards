@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { LabelColors } from '../../constants/LabelColors';
@@ -8,6 +9,7 @@ import { Button, ButtonVariant, Popup, Form } from '../Utils';
 import Editor from './Editor';
 
 import * as gs from '../../global.module.scss';
+import * as s from './AddStep.module.scss';
 
 const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   const [t] = useTranslation();
@@ -63,10 +65,10 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
   return (
     <>
       <Popup.Header onBack={onBack}>{t('common.createLabel', { context: 'title' })}</Popup.Header>
-      <Popup.Content isMinContent>
-        <Form onKeyDown={handleKeyDown}>
+      <Popup.Content className={s.content}>
+        <Form className={s.form} onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
-          <div className={gs.controls}>
+          <div className={clsx(gs.controls, s.scrollbarOffset)}>
             <Button variant={ButtonVariant.Submit} content={t('action.createLabel')} onClick={handleSubmit} />
           </div>
         </Form>
