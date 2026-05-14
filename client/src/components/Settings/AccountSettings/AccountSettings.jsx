@@ -30,7 +30,7 @@ const AccountSettings = React.memo(
     const [t] = useTranslation();
     const [emailVerificationPopupStatus, setEmailVerificationPopupStatus] = useState(null);
     const [emailVerificationPopupReason, setEmailVerificationPopupReason] = useState(null);
-    const [emailVerificationCooldownEndTime, setEmailVerificationCooldownEndTime] = useState(lastEmailVerificationRequestAt.getTime() + 60 * 1000);
+    const [emailVerificationCooldownEndTime, setEmailVerificationCooldownEndTime] = useState((lastEmailVerificationRequestAt?.getTime() ?? 0) + 60 * 1000);
     const [emailVerificationRemainingSeconds, setEmailVerificationRemainingSeconds] = useState(0);
 
     const handleEmailVerificationPopupClose = useCallback(() => {
