@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { isValidColor } = require('../../../utils/colorValidator');
+
 const parseJSON = (json) => {
   try {
     return json ? JSON.parse(json) : null;
@@ -145,8 +147,6 @@ module.exports = {
     const getActionsOfCard = (cardId) => actions.filter((action) => action.cardId === cardId);
     const getActionsOfList = (listId) => actions.filter((action) => action.listId === listId && !action.cardId);
     const getActionsOfBoard = (boardId) => actions.filter((action) => action.boardId === boardId && !action.listId && !action.cardId);
-
-    const getLabelColor = (labelColor) => Label.COLORS.find((color) => color.indexOf(labelColor) !== -1) || 'desert-sand';
 
     const importUsers = async () => {
       return Promise.all(
@@ -304,7 +304,7 @@ module.exports = {
           const newLabel = await Label.create({
             boardId: inputs.board.id,
             name: label.name || null,
-            color: getLabelColor(label.color),
+            color: isValidColor(label.color) ? label.color : '#e04556',
             position: label.position,
             createdAt: parseJSON(label.createdAt),
             createdById: allUsers[label.createdById]?.id ?? currentUser.id,

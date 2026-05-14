@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
-import { LabelColors } from '../../constants/LabelColors';
 import { Button } from '../Utils';
 
 import * as gs from '../../global.module.scss';
@@ -37,7 +36,7 @@ const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, isCli
 
 Label.propTypes = {
   name: PropTypes.string.isRequired,
-  color: PropTypes.oneOf(LabelColors).isRequired,
+  color: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(Object.values(VARIANTS)),
   isDisabled: PropTypes.bool,
   isRemovable: PropTypes.bool,

@@ -1,3 +1,5 @@
+const { isValidColor } = require('../../../utils/colorValidator');
+
 module.exports = {
   inputs: {
     currentUser: {
@@ -45,8 +47,6 @@ module.exports = {
         .flat();
 
     const getTrelloCommentsOfCard = (cardId) => inputs.trelloBoard.actions.filter((action) => action.type === 'commentCard' && action.data && action.data.card && action.data.card.id === cardId);
-
-    const get4gaBoardsLabelColor = (trelloLabelColor) => Label.COLORS.find((color) => color.indexOf(trelloLabelColor) !== -1) || 'desert-sand';
 
     const importCardLabels = async (boardsCard, trelloCard) => {
       return Promise.all(
@@ -128,7 +128,7 @@ module.exports = {
           const boardsLabel = await Label.create({
             boardId: inputs.board.id,
             name: trelloLabel.name || null,
-            color: get4gaBoardsLabelColor(trelloLabel.color),
+            color: isValidColor(trelloLabel.color) ? trelloLabel.color : '#e04556',
             position: sails.config.custom.positionGap * (index + 1),
             createdById: currentUser.id,
           }).fetch();

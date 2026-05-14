@@ -10,11 +10,11 @@ import { Button, ButtonVariant, Input, InputVariant } from '../Utils';
 
 import * as s from './Editor.module.scss';
 
-const DEFAULT_CUSTOM_COLOR = LabelColors[0];
+const DEFAULT_COLOR = LabelColors[0];
 
 const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
   const [t] = useTranslation();
-  const [colorValue, setColorValue] = useState(() => normalizeHexColor(data.color) || DEFAULT_CUSTOM_COLOR);
+  const [colorValue, setColorValue] = useState(() => normalizeHexColor(data.color) || DEFAULT_COLOR);
   const [isColorError, setIsColorError] = useState(false);
   const nameField = useRef(null);
   const colorField = useRef(null);
@@ -63,7 +63,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
 
   const handlePresetColorClick = useCallback(
     (color) => {
-      const normalizedColor = normalizeHexColor(color) || DEFAULT_CUSTOM_COLOR;
+      const normalizedColor = normalizeHexColor(color) || DEFAULT_COLOR;
 
       setIsColorError(false);
       setColorValue(normalizedColor);
@@ -99,7 +99,7 @@ const Editor = React.forwardRef(({ data, isError, onFieldChange }, ref) => {
 
   const handleColorPickerUpdate = useCallback(
     (value) => {
-      const normalizedColor = normalizeHexColor(value) || DEFAULT_CUSTOM_COLOR;
+      const normalizedColor = normalizeHexColor(value) || DEFAULT_COLOR;
 
       setIsColorError(false);
       setColorValue(normalizedColor);
