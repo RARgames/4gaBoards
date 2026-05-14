@@ -9,6 +9,7 @@ import * as s from './Item.module.scss';
 
 const Item = React.memo(({ name, color, isPersisted, isActive, canEdit, onSelect, onDeselect, onEdit }) => {
   const [t] = useTranslation();
+  const labelName = name.startsWith('common.') ? t(name) : name;
 
   const handleToggleClick = useCallback(() => {
     if (isPersisted) {
@@ -22,7 +23,7 @@ const Item = React.memo(({ name, color, isPersisted, isActive, canEdit, onSelect
 
   return (
     <div className={s.wrapper}>
-      <Button variant={ButtonVariant.Default} style={{ backgroundColor: color }} className={clsx(s.name, isActive && s.nameActive)} onClick={handleToggleClick} content={name} />
+      <Button variant={ButtonVariant.Default} style={{ backgroundColor: color }} className={clsx(s.name, isActive && s.nameActive)} onClick={handleToggleClick} content={labelName} />
       {canEdit && (
         <Button variant={ButtonVariant.Icon} title={t('common.editLabel')} onClick={onEdit} disabled={!isPersisted} className={s.editButton}>
           <Icon type={IconType.Pencil} size={IconSize.Size14} />

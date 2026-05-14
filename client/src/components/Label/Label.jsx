@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
@@ -15,13 +16,16 @@ const VARIANTS = {
 };
 
 const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, isClickable, className, onClick }) => {
+  const [t] = useTranslation();
+  const labelName = name.startsWith('common.') ? t(name) : name;
+
   const contentNode = (
     <div
-      title={name}
+      title={labelName}
       style={{ backgroundColor: color }}
       className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], onClick && s.wrapperHoverable, isRemovable && s.wrapperRemovable, (onClick || isClickable) && gs.cursorPointer, className)}
     >
-      {name}
+      {labelName}
     </div>
   );
 

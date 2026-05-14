@@ -103,17 +103,21 @@ const BoardTemplateManagerStep = React.memo(({ templates, isAdmin, onUpdate, onD
           <div className={clsx(s.items, gs.scrollableY)}>
             {filteredTemplates.map((template) => {
               const canManage = !template.isGlobal || isAdmin;
-              const listNames = template.data?.lists?.map((list) => list.name).filter(Boolean) || [];
-              const labelNames = template.data?.labels?.map((label) => label.name).filter(Boolean) || [];
+              const translateValue = (value) => (value.startsWith('common.') ? t(value) : value);
+              const listNames = template.data?.lists?.map((list) => translateValue(list.name)).filter(Boolean) || [];
+              const labelNames = template.data?.labels?.map((label) => translateValue(label.name)).filter(Boolean) || [];
               const listsText = listNames.length > 0 ? `${t('common.lists', { count: listNames.length })}: ${listNames.join(', ')}` : t('common.lists', { count: 0 });
               const labelsText = labelNames.length > 0 ? `${t('common.labels', { count: labelNames.length })}: ${labelNames.join(', ')}` : t('common.labels', { count: 0 });
+              const templateName = translateValue(template.name);
 
               return (
                 <div key={template.id} className={s.item}>
                   <div className={s.itemHeader}>
                     <div className={s.name}>
                       {template.isGlobal && <Icon type={IconType.Star} size={IconSize.Size12} className={s.globalIcon} />}
-                      <span className={s.nameText}>{template.name}</span>
+                      <span className={s.nameText} title={templateName}>
+                        {templateName}
+                      </span>
                       {template.isGlobal && <span className={s.globalBadge}>{t('common.global')}</span>}
                     </div>
                     <div className={s.actions}>
