@@ -32,13 +32,14 @@ jobs:
         working-directory: tests
         run: pnpm exec playwright install chromium
 
-      - name: Start and wait for 4ga Boards
+      - name: Prepare services
         run: |
           docker compose -f docker-compose-dev.yml up -d --wait
           cp server/.env.sample server/.env
           pnpm server:db:init
-          nohup pnpm start > app.log 2>&1 &
-          pnpm exec wait-on http://localhost:1337
 
-      - name: Run e2e tests
-        run: pnpm test:e2e
+      - name: Start 4ga Boards and run tests
+        run: |
+          pnpm start > app.log 2>&1 &
+          pnpm exec wait-on http://127.0.0.1:1337
+          pnpm test:e2e
