@@ -40,6 +40,6 @@ jobs:
 
       - name: Start 4ga Boards and run tests
         run: |
-          pnpm start > app.log 2>&1 &
+          setsid pnpm start > app.log 2>&1 < /dev/null &
           pnpm exec wait-on http://127.0.0.1:1337
           pnpm test:e2e
