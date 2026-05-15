@@ -19,7 +19,7 @@ export class UserSettingPage {
     this.baseUrl = 'http://localhost:3000';
     this.userSettingsUrl = `${this.baseUrl}/settings/users`;
     this.profileAndSettingButton = this.page.locator("button[title='Profile and Settings']");
-    this.usersButton = this.page.getByRole('button', { name: /^Users$/ });
+    this.usersButton = this.page.getByRole('button', { name: /^Users$/ }).nth(0);
     this.dashboardTitle = this.page.locator("div[title='Settings: Users']");
     this.addUserButton = this.page.locator("button[title='Add User']").nth(0);
     this.email = this.page.locator("input[name='email']");
