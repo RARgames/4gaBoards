@@ -28,17 +28,17 @@ jobs:
           pnpm install
           pnpm add -D wait-on
 
-      - name: Start and wait for 4ga Boards db
+      - name: Install chromium
+        working-directory: tests
+        run: pnpm exec playwright install chromium
+
+      - name: Start and wait for 4ga Boards
         run: |
           docker compose -f docker-compose-dev.yml up -d --wait
           cp server/.env.sample server/.env
           pnpm server:db:init
-          pnpm start & echo $! > server.pid
+          pnpm start &
           pnpm exec wait-on http://localhost:1337
-
-      - name: Install chromium
-        working-directory: tests
-        run: pnpm exec playwright install chromium
 
       - name: Run e2e tests
         run: pnpm test:e2e
