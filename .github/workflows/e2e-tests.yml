@@ -23,20 +23,22 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm@11.1.2
 
+      - name: Install dependencies
+        run: |
+          pnpm install
+          pnpm add -D wait-on
+
       - name: Start and wait for 4ga Boards db
         run: |
-          pnpm add -D wait-on
           docker compose -f docker-compose-dev.yml up -d --wait
           cp server/.env.sample server/.env
           pnpm server:db:init
           pnpm start & echo $! > server.pid
           pnpm exec wait-on http://localhost:1337
 
-      - name: Install test dependencies
+      - name: Install chromium
         working-directory: tests
-        run: |
-          pnpm install --ignore-workspace
-          pnpm exec playwright install chromium
+        run: pnpm exec playwright install chromium
 
       - name: Run e2e tests
         run: pnpm test:e2e
