@@ -97,6 +97,13 @@ module.exports = {
 
     const accessToken = sails.helpers.utils.createToken(user.id);
     await Session.create({ accessToken, remoteAddress: this.req.connection.remoteAddress, userId: user.id, userAgent: this.req.headers['user-agent'] });
+    this.res.cookie('accessToken', accessToken, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+      httpOnly: false,
+      sameSite: 'lax',
+      path: '/',
+    });
+
     return {
       item: accessToken,
     };

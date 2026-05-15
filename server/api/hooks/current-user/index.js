@@ -34,6 +34,18 @@ module.exports = function defineCurrentUserHook(sails) {
                   currentUser,
                 });
 
+                // Set cookie so <img> tags on the same origin can authenticate
+                // Fixes issue where uploaded attachment images render as black
+                // https://github.com/RARgames/4gaBoards/issues/27
+                if (!req.cookies || req.cookies.accessToken !== accessToken) {
+                  res.cookie('accessToken', accessToken, {
+                    maxAge: 365 * 24 * 60 * 60 * 1000,
+                    httpOnly: false,
+                    sameSite: 'lax',
+                    path: '/',
+                  });
+                }
+
                 if (req.isSocket) {
                   sails.sockets.join(req, `@user:${currentUser.id}`);
                 }
