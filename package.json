@@ -41,7 +41,8 @@
     "dev": "pnpm packages:build && concurrently -n server,client,packages \"pnpm -C server start\" \"pnpm -C client start\" \"pnpm -r --parallel --filter @4gaboards/* dev\"",
     "pretest": "pnpm packages:build",
     "test": "pnpm -C server test && pnpm -C client test",
-    "test:e2e": "pnpm -C tests test"
+    "test:e2e": "pnpm -C tests test",
+    "ci:test:e2e": "concurrently -k -n app \"pnpm start\" \"wait-on http://localhost:1337 && pnpm test:e2e\""
   },
   "lint-staged": {
     "client/**/*.{js,jsx}": [
@@ -76,7 +77,8 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.8.3",
     "stylelint": "^17.11.0",
-    "stylelint-config-recommended-scss": "^17.0.1"
+    "stylelint-config-recommended-scss": "^17.0.1",
+    "wait-on": "^9.0.10"
   },
   "devEngines": {
     "packageManager": {

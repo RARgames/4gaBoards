@@ -39,7 +39,4 @@ jobs:
           pnpm server:db:init
 
       - name: Start 4ga Boards and run tests
-        run: |
-          setsid pnpm start > app.log 2>&1 < /dev/null &
-          pnpm exec wait-on http://127.0.0.1:1337
-          pnpm test:e2e
+        run: pnpm ci:test:e2e
