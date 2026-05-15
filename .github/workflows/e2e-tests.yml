@@ -26,6 +26,7 @@ jobs:
       - name: Start and wait for 4ga Boards db
         run: |
           docker compose -f docker-compose-dev.yml up -d --wait
+          cp server/.env.sample server/.env
           pnpm server:db:init
           pnpm start
 
