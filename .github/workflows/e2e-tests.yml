@@ -11,33 +11,27 @@ on:
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6.0.2
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6.4.0
         with:
           node-version: 24
 
       - name: Install pnpm
-        run: npm install -g pnpm@10.33.0
+        run: npm install -g pnpm@11.1.2
 
-      - name: Start 4gaBoards Server
-        run: docker compose up -d
-
-      - name: Wait for development server
-        run: |
-          sudo apt-get install wait-for-it -y
-          wait-for-it -h localhost -p 3000 -t 10
+      - name: Start and wait for 4ga Boards
+        run: docker compose up -d --wait
 
       - name: Install test dependencies
         working-directory: tests
         run: |
           pnpm install --ignore-workspace
-          npx playwright install chromium
+          pnpm exec playwright install chromium
 
       - name: Run e2e tests
         working-directory: tests
-        run: pnpm run test:e2e e2e/features/
+        run: pnpm run test
