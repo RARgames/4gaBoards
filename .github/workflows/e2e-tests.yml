@@ -24,6 +24,7 @@ jobs:
         run: npm install -g pnpm@11.1.2
 
       - name: Start and wait for 4ga Boards
+        working-directory: tests
         run: docker compose up -d --wait
 
       - name: Install test dependencies
