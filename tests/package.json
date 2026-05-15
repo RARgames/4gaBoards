@@ -7,7 +7,7 @@
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
-    "test:codegen": "playwright codegen http://localhost:3000",
+    "test:record": "playwright codegen http://localhost:3000",
     "test:install": "playwright install"
   },
   "devDependencies": {
