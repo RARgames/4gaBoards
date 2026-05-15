@@ -25,10 +25,12 @@ jobs:
 
       - name: Start and wait for 4ga Boards db
         run: |
+          pnpm add -D wait-on
           docker compose -f docker-compose-dev.yml up -d --wait
           cp server/.env.sample server/.env
           pnpm server:db:init
-          pnpm start
+          pnpm start & echo $! > server.pid
+          pnpm exec wait-on http://localhost:1337
 
       - name: Install test dependencies
         working-directory: tests
