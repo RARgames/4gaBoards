@@ -54,17 +54,8 @@ export class UserSettingPage {
 
     await row.scrollIntoViewIfNeeded();
     await row.locator("button[title='Edit User']").click();
-
-    const dialog = this.page.getByRole('dialog');
-    await expect(dialog).toBeVisible();
-    const deleteButton = dialog.locator("button[title='Delete User']");
-    await expect(deleteButton).toBeVisible();
-    await deleteButton.click();
-
-    const confirmButton = dialog.locator("button[title='Delete User']");
-    if (await confirmButton.isVisible().catch(() => false)) {
-      await confirmButton.click();
-    }
+    await this.page.locator("button[title='Delete User']").click();
+    await this.page.locator("button[title='Delete User']").click();
 
     await expect(row).toHaveCount(0);
   }
