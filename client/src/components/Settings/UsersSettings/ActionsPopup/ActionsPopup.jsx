@@ -128,7 +128,7 @@ const ActionsStep = React.memo(
             <DeleteStep
               title={t('common.deleteUser', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisUser')}
-              buttonContent={t('action.deleteUser')}
+              buttonContent={t('common.deleteUser', { context: 'title' })}
               onConfirm={handleDelete}
               onBack={handleBack}
             />
@@ -180,7 +180,7 @@ const ActionsStep = React.memo(
         <Button variant={ButtonVariant.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleUserActivityClick} />
         <Button variant={ButtonVariant.PopupContext} content={t('common.checkUserAccountActivity', { context: 'title' })} onClick={handleUserAccountActivityClick} />
         {!isCurrentUser && <Popup.Separator />}
-        {!isCurrentUser && <Button variant={ButtonVariant.PopupContext} content={t('action.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />}
+        {!isCurrentUser && <Button variant={ButtonVariant.PopupContext} content={t('common.deleteUser', { context: 'title' })} onClick={handleDeleteClick} />}
       </>
     );
   },

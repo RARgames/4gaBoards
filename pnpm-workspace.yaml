@@ -1,6 +1,7 @@
 packages:
   - 'client'
   - 'server'
+  - 'tests'
   - 'packages/*'
 ignoreWorkspaceRootCheck: true
 allowBuilds:

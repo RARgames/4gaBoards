@@ -1,9 +1,6 @@
-import {Locator, Page} from '@playwright/test';
-import {DataTable} from '@cucumber/cucumber';
+import { Locator, Page } from '@playwright/test';
 
-
-export class LoginPage{
-
+export class LoginPage {
   public readonly baseUrl: string;
   public readonly page: Page;
   public readonly emailField: Locator;
@@ -13,8 +10,7 @@ export class LoginPage{
   public readonly loginUrl: string;
   public readonly dashboardUrl: string;
 
-
-  constructor (page: Page){
+  constructor(page: Page) {
     this.page = page;
     this.baseUrl = 'http://localhost:3000';
     this.loginUrl = `${this.baseUrl}/login`;
@@ -30,10 +26,9 @@ export class LoginPage{
     await this.page.goto(this.loginUrl);
   }
 
-  public async loginToDashboard(loginDataTable: DataTable): Promise<void> {
-    const loginCredentials = loginDataTable.hashes();
-    await this.emailField.fill(loginCredentials[0].email)
-    await this.passwordField.fill(loginCredentials[0].password)
-    await this.loginBtn.click()
+  public async loginToDashboard(email: string, password: string): Promise<void> {
+    await this.emailField.fill(email);
+    await this.passwordField.fill(password);
+    await this.loginBtn.click();
   }
 }
