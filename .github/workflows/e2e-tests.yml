@@ -38,7 +38,7 @@ jobs:
           cp server/.env.sample server/.env
           pnpm server:db:init
           nohup pnpm start > app.log 2>&1 &
-          npx wait-on http://localhost:1337
+          pnpm exec wait-on http://localhost:1337
 
       - name: Run e2e tests
         run: pnpm test:e2e
