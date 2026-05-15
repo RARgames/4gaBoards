@@ -37,8 +37,8 @@ jobs:
           docker compose -f docker-compose-dev.yml up -d --wait
           cp server/.env.sample server/.env
           pnpm server:db:init
-          pnpm start &
-          pnpm exec wait-on http://localhost:1337
+          nohup pnpm start > app.log 2>&1 &
+          npx wait-on http://localhost:1337
 
       - name: Run e2e tests
         run: pnpm test:e2e
