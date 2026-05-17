@@ -1,20 +1,8 @@
-import { test, expect, request } from '@playwright/test';
-import { LoginPage } from '../pageObjects/LoginPage';
+import { test, expect } from '@playwright/test';
 import { ListPage } from '../pageObjects/ListPage';
 import { BoardPage } from '../pageObjects/BoardPage';
 import { ADMIN, TEST_USERS, TEST_PROJECT_NAME } from '../testData';
-
-const BASE_URL = 'http://localhost:3000';
-const BOARD_01 = 'Board 01';
-
-async function getAdminToken() {
-  const apiContext = await request.newContext();
-  const authRes = await apiContext.post(`${BASE_URL}/api/access-tokens`, {
-    data: { emailOrUsername: ADMIN.username, password: ADMIN.password },
-  });
-  const { item: token } = await authRes.json();
-  return { apiContext, token };
-}
+import { BASE_URL, BOARD_01, loginToDashboard, getAdminToken } from '../utils';
 
 test.describe('TC11: PM has auto-editor on all boards', () => {
   const boardName = `TC11 Board ${Date.now()}`;
@@ -22,13 +10,10 @@ test.describe('TC11: PM has auto-editor on all boards', () => {
   // TEST: Verify a Project Manager has editor access on all boards without explicit membership
   // RESULT: PM can navigate to a newly created board and create a list (proving editor-level access)
   test('PM can access and edit a board without explicit membership', async ({ page, browser }) => {
-    const loginPage = new LoginPage(page);
     const boardPage = new BoardPage(page);
 
     // Step 1: Admin creates a new board (PM is NOT explicitly added)
-    await loginPage.navigateToLoginPage();
-    await loginPage.loginToDashboard(ADMIN.username, ADMIN.password);
-    await expect(loginPage.dashboardTitle).toBeVisible({ timeout: 15000 });
+    await loginToDashboard(page, ADMIN.username, ADMIN.password);
 
     await boardPage.createBoard(boardName, TEST_PROJECT_NAME);
     await expect(page.getByRole('button', { name: boardName, exact: true }).first()).toBeVisible({ timeout: 5000 });
@@ -36,12 +21,9 @@ test.describe('TC11: PM has auto-editor on all boards', () => {
     // Step 2: Login as PM in a separate browser context (isolated session)
     const pmContext = await browser.newContext();
     const pmPage = await pmContext.newPage();
-    const pmLoginPage = new LoginPage(pmPage);
     const pmListPage = new ListPage(pmPage);
 
-    await pmLoginPage.navigateToLoginPage();
-    await pmLoginPage.loginToDashboard(TEST_USERS.pm.username, TEST_USERS.pm.password);
-    await expect(pmLoginPage.dashboardTitle).toBeVisible({ timeout: 15000 });
+    await loginToDashboard(pmPage, TEST_USERS.pm.username, TEST_USERS.pm.password);
 
     // Step 3: Navigate to the board
     await pmPage.getByRole('button', { name: 'Project 01', exact: true }).first().click();
@@ -69,12 +51,8 @@ test.describe('TC12: PM cannot be removed from board', () => {
   // TEST: Verify an admin cannot remove a PM from a board membership
   // RESULT: After confirming removal, the server silently rejects it and the PM remains a board member
   test('Admin attempt to remove PM from board is rejected', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
     // Login as admin
-    await loginPage.navigateToLoginPage();
-    await loginPage.loginToDashboard(ADMIN.username, ADMIN.password);
-    await expect(loginPage.dashboardTitle).toBeVisible({ timeout: 15000 });
+    await loginToDashboard(page, ADMIN.username, ADMIN.password);
 
     // Navigate to Board 01
     await page.getByRole('button', { name: 'Project 01', exact: true }).first().click();
@@ -135,12 +113,9 @@ test.describe('TC13: Promoting user to PM grants board access', () => {
     expect([200, 409]).toContain(promoteRes.status());
 
     // Login as the promoted user
-    const loginPage = new LoginPage(page);
     const listPage = new ListPage(page);
 
-    await loginPage.navigateToLoginPage();
-    await loginPage.loginToDashboard(TEST_USERS.nonMember.username, TEST_USERS.nonMember.password);
-    await expect(loginPage.dashboardTitle).toBeVisible({ timeout: 15000 });
+    await loginToDashboard(page, TEST_USERS.nonMember.username, TEST_USERS.nonMember.password);
 
     // Navigate to Project 01 boards
     await page.getByRole('button', { name: 'Project 01', exact: true }).first().click();

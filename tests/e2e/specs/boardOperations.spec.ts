@@ -1,16 +1,7 @@
-import { test, expect, Page } from '@playwright/test';
-import { LoginPage } from '../pageObjects/LoginPage';
+import { test, expect } from '@playwright/test';
 import { BoardPage } from '../pageObjects/BoardPage';
 import { ROLES, TEST_PROJECT_NAME } from '../testData';
-
-const BOARD_01 = 'Board 01';
-
-async function loginToDashboard(page: Page, role: (typeof ROLES)[number]) {
-  const loginPage = new LoginPage(page);
-  await loginPage.navigateToLoginPage();
-  await loginPage.loginToDashboard(role.user.username, role.user.password);
-  await expect(loginPage.dashboardTitle).toBeVisible({ timeout: 15000 });
-}
+import { BOARD_01, loginToDashboard } from '../utils';
 
 test.describe('TC01: Create Board - Role Based Access', () => {
   for (const role of ROLES) {
@@ -19,7 +10,7 @@ test.describe('TC01: Create Board - Role Based Access', () => {
     // RESULT: PMs can create and see new boards; non-PMs cannot select a project in the Add Board form
 
     test(`${role.name} - board creation behavior`, async ({ page }) => {
-      await loginToDashboard(page, role);
+      await loginToDashboard(page, role.user.username, role.user.password);
       const boardPage = new BoardPage(page);
       const boardName = `TC01 Board ${Date.now()} ${role.name}`;
 
@@ -46,7 +37,7 @@ test.describe('TC02: Update Board Name - Role Based Access', () => {
     // RESULT: PMs can rename a board and see the updated name; non-PMs do not see the "Rename Board" option
 
     test(`${role.name} - rename board behavior`, async ({ page }) => {
-      await loginToDashboard(page, role);
+      await loginToDashboard(page, role.user.username, role.user.password);
       const boardPage = new BoardPage(page);
 
       if (role.isProjectManager) {
@@ -80,7 +71,7 @@ test.describe('TC03: Delete Board - Role Based Access', () => {
     // RESULT: PMs can delete a board and it disappears from sidebar; non-PMs do not see the "Delete Board" option
 
     test(`${role.name} - delete board behavior`, async ({ page }) => {
-      await loginToDashboard(page, role);
+      await loginToDashboard(page, role.user.username, role.user.password);
       const boardPage = new BoardPage(page);
 
       if (role.isProjectManager) {
@@ -109,7 +100,7 @@ test.describe('TC04: View Board - Role Based Access', () => {
     // RESULT: Board title is visible for all roles; "Add list" button only shows for editors
 
     test(`${role.name} - board view behavior`, async ({ page }) => {
-      await loginToDashboard(page, role);
+      await loginToDashboard(page, role.user.username, role.user.password);
       const boardPage = new BoardPage(page);
 
       await boardPage.navigateToBoard(BOARD_01, 'Project 01');
@@ -136,7 +127,7 @@ test.describe('TC05: Manage Board Memberships - Role Based Access', () => {
     // TEST: Verify only authorized roles can manage board memberships
     // RESULT: Roles with canManageMembers see the "Add user" button; others do not
     test(`${role.name} - membership management behavior`, async ({ page }) => {
-      await loginToDashboard(page, role);
+      await loginToDashboard(page, role.user.username, role.user.password);
       const boardPage = new BoardPage(page);
 
       await boardPage.navigateToBoard(BOARD_01, 'Project 01');

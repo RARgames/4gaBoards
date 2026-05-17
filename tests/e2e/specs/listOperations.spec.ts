@@ -1,27 +1,14 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pageObjects/LoginPage';
 import { ListPage } from '../pageObjects/ListPage';
 import { ROLES } from '../testData';
-
-const BOARD_01 = 'Board 01';
-
-async function loginAndNavigateToBoard(page: import('@playwright/test').Page, role: (typeof ROLES)[number]) {
-  const loginPage = new LoginPage(page);
-  await loginPage.navigateToLoginPage();
-  await loginPage.loginToDashboard(role.user.username, role.user.password);
-  await expect(loginPage.dashboardTitle).toBeVisible({ timeout: 15000 });
-
-  await page.getByRole('button', { name: 'Project 01', exact: true }).first().click();
-  await page.getByRole('link', { name: BOARD_01, exact: true }).last().click();
-  await page.getByRole('button', { name: 'Back to Project' }).waitFor({ state: 'visible', timeout: 5000 });
-}
+import { loginAndNavigateToBoard } from '../utils';
 
 test.describe('TC06: Create a List - Role Based Access', () => {
   for (const role of ROLES) {
     // TEST: Verify list creation is only available to editors
     // RESULT: Editors can create a list and see it on the board; non-editors do not see the "Add list" button
     test(`${role.name} - create list behavior`, async ({ page }) => {
-      await loginAndNavigateToBoard(page, role);
+      await loginAndNavigateToBoard(page, role.user.username, role.user.password);
       const listPage = new ListPage(page);
       const listName = `TC06 List ${role.name} ${Date.now()}`;
 
@@ -43,7 +30,7 @@ test.describe('TC07: Rename a List - Role Based Access', () => {
     // TEST: Verify list renaming is only available to editors
     // RESULT: Editors can click the list title to rename it; non-editors clicking the title does not open the edit field
     test(`${role.name} - rename list behavior`, async ({ page }) => {
-      await loginAndNavigateToBoard(page, role);
+      await loginAndNavigateToBoard(page, role.user.username, role.user.password);
       const listPage = new ListPage(page);
 
       if (role.canEditBoard) {
@@ -71,7 +58,7 @@ test.describe('TC08: Reorder Lists (Drag-and-Drop) - Role Based Access', () => {
     // TEST: Verify drag-and-drop list reordering is only available to editors
     // RESULT: Editors can drag a list to a new position and the order changes; non-editors have draggable disabled
     test(`${role.name} - reorder list behavior`, async ({ page }) => {
-      await loginAndNavigateToBoard(page, role);
+      await loginAndNavigateToBoard(page, role.user.username, role.user.password);
       const listPage = new ListPage(page);
 
       if (role.canEditBoard) {
@@ -111,7 +98,7 @@ test.describe('TC09: Collapse/Expand a List - Role Based Access', () => {
     // TEST: Verify collapse/expand is only functional for editors
     // RESULT: Editors can collapse a list (shows expand button) and expand it back; non-editors clicking collapse has no effect
     test(`${role.name} - collapse/expand list behavior`, async ({ page }) => {
-      await loginAndNavigateToBoard(page, role);
+      await loginAndNavigateToBoard(page, role.user.username, role.user.password);
       const listPage = new ListPage(page);
 
       if (role.canEditBoard) {
@@ -144,7 +131,7 @@ test.describe('TC10: Delete a List - Role Based Access', () => {
     // TEST: Verify list deletion is only available to editors
     // RESULT: Editors can delete a list via the menu; non-editors do not see the "Delete List" option in the menu
     test(`${role.name} - delete list behavior`, async ({ page }) => {
-      await loginAndNavigateToBoard(page, role);
+      await loginAndNavigateToBoard(page, role.user.username, role.user.password);
       const listPage = new ListPage(page);
 
       if (role.canEditBoard) {

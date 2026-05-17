@@ -1,7 +1,6 @@
 import { test, request } from '@playwright/test';
 import { ADMIN, TEST_USERS, TEST_PROJECT_NAME } from './testData';
-
-const BASE_URL = 'http://localhost:3000';
+import { BASE_URL, BOARD_01 } from './utils';
 
 test('seed test users and assign roles', async () => {
   const apiContext = await request.newContext();
@@ -12,19 +11,45 @@ test('seed test users and assign roles', async () => {
   });
   const { item: token } = await authRes.json();
 
-  // 2. Find "Project 01"
+  // 2. Find or create "Project 01"
   const projectsRes = await apiContext.get(`${BASE_URL}/api/projects`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const projectsBody = await projectsRes.json();
-  const project = projectsBody.items.find((p: any) => p.name === TEST_PROJECT_NAME) || projectsBody.items[0];
+  let project = projectsBody.items.find((p: any) => p.name === TEST_PROJECT_NAME);
 
-  // 3. Get the first board in the project
+  if (!project) {
+    const createProjectRes = await apiContext.post(`${BASE_URL}/api/projects`, {
+      headers: { Authorization: `Bearer ${token}` },
+      data: { name: TEST_PROJECT_NAME },
+    });
+    if (!createProjectRes.ok()) {
+      throw new Error(`Failed to create project: ${createProjectRes.status()} ${await createProjectRes.text()}`);
+    }
+    const createProjectBody = await createProjectRes.json();
+    project = createProjectBody.item;
+    console.log(`[Setup] Created project: "${project.name}" (${project.id})`);
+  }
+
+  // 3. Find or create "Board 01" in the project
   const projectRes = await apiContext.get(`${BASE_URL}/api/projects/${project.id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const projectBody = await projectRes.json();
-  const firstBoard = projectBody.included.boards[0];
+  let firstBoard = projectBody.included.boards.find((b: any) => b.name === BOARD_01);
+
+  if (!firstBoard) {
+    const createBoardRes = await apiContext.post(`${BASE_URL}/api/projects/${project.id}/boards`, {
+      headers: { Authorization: `Bearer ${token}` },
+      data: { name: BOARD_01, position: 65536, isGithubConnected: false },
+    });
+    if (!createBoardRes.ok()) {
+      throw new Error(`Failed to create board: ${createBoardRes.status()} ${await createBoardRes.text()}`);
+    }
+    const createBoardBody = await createBoardRes.json();
+    firstBoard = createBoardBody.item;
+    console.log(`[Setup] Created board: "${firstBoard.name}" (${firstBoard.id})`);
+  }
 
   console.log(`[Setup] Project: "${project.name}" (${project.id}), Board: "${firstBoard.name}" (${firstBoard.id})`);
 
