@@ -17,6 +17,7 @@ export class BoardPage {
     this.submitBoardButton = this.page.getByRole('button', { name: 'Add Board' }).last();
   }
 
+  // Open the "Add Board" form, fill the name, select a project, and submit
   public async createBoard(boardName: string, projectName?: string): Promise<void> {
     await this.addBoardButton.click();
     await expect(this.boardNameInput).toBeVisible({ timeout: 5000 });
@@ -30,16 +31,22 @@ export class BoardPage {
     await this.submitBoardButton.click();
   }
 
+  // Check whether a board button is visible in the sidebar
   public async isBoardVisibleInSidebar(boardName: string): Promise<boolean> {
     const boardLink = this.page.getByRole('button', { name: boardName, exact: true });
     return boardLink.isVisible();
   }
 
-  public async navigateToBoard(boardName: string): Promise<void> {
-    const boardLink = this.page.getByRole('link', { name: boardName, exact: true });
-    await boardLink.click();
+  // Expand a project in the sidebar and click a board link to navigate into it
+  public async navigateToBoard(boardName: string, projectName?: string): Promise<void> {
+    if (projectName) {
+      await this.page.getByRole('button', { name: projectName, exact: true }).first().click();
+    }
+    await this.page.getByRole('link', { name: boardName, exact: true }).last().click();
+    await this.page.getByRole('button', { name: 'Back to Project' }).waitFor({ state: 'visible', timeout: 5000 });
   }
 
+  // Navigate into a board (if needed), open the edit menu, and confirm deletion
   public async deleteBoard(boardName: string): Promise<void> {
     // Navigate into the board if not already there
     const backToProject = this.page.getByRole('button', { name: 'Back to Project' });
@@ -57,10 +64,27 @@ export class BoardPage {
     await this.page.getByRole('button', { name: 'Delete Board' }).click();
   }
 
-  public async isAddBoardButtonVisible(): Promise<boolean> {
-    return this.addBoardButton.isVisible();
+  // Returns a locator for the board button in the sidebar
+  public boardInSidebar(boardName: string): Locator {
+    return this.page.getByRole('button', { name: boardName, exact: true }).first();
   }
 
+  // Returns a locator for the board title div in the header area
+  public boardTitle(boardName: string): Locator {
+    return this.page.locator(`div[title="${boardName}"]`).first();
+  }
+
+  // Returns the "Add user" button for managing board memberships
+  public get addUserButton(): Locator {
+    return this.page.getByRole('button', { name: 'Add user' });
+  }
+
+  // Returns the "Add list" button (only visible to editors)
+  public get addListButton(): Locator {
+    return this.page.getByRole('button', { name: 'Add list' });
+  }
+
+  // Check if a project appears in the "Add Board" form dropdown
   public async isProjectInAddBoardDropdown(projectName: string): Promise<boolean> {
     const projectInput = this.page.locator('input[placeholder="Select project"]');
     await projectInput.click();
@@ -70,12 +94,14 @@ export class BoardPage {
     return visible;
   }
 
+  // Open the board actions popup (⋮ menu) from the board header
   public async openBoardActionsPopup(): Promise<void> {
     const backToProject = this.page.getByRole('button', { name: 'Back to Project' });
     await backToProject.waitFor({ state: 'visible', timeout: 5000 });
     await this.page.getByRole('button', { name: 'Edit Board' }).last().click();
   }
 
+  // Open board actions, click rename, fill new name, and save
   public async renameCurrentBoard(newName: string): Promise<void> {
     await this.openBoardActionsPopup();
     await this.page.getByRole('button', { name: 'Rename Board' }).click();

@@ -51,7 +51,7 @@ test('seed test users and assign roles', async () => {
     }
   }
 
-  console.log(`[Setup] Users: pm=${userIds.pm}, editor=${userIds.editor}, commenter=${userIds.commenter}, viewer=${userIds.viewer}`);
+  console.log(`[Setup] Users: pm=${userIds.pm}, editor=${userIds.editor}, commenter=${userIds.commenter}, viewer=${userIds.viewer}, nonMember=${userIds.nonMember}`);
 
   // 5. Assign roles (idempotent — 409 means already assigned)
   // PM → Project Manager

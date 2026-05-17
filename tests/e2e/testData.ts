@@ -5,6 +5,7 @@ export const TEST_USERS = {
   editor: { username: 'editor_user', password: 'Test@12345', email: 'editor_user@test.com', name: 'Editor User' },
   commenter: { username: 'commenter_user', password: 'Test@12345', email: 'commenter_user@test.com', name: 'Commenter User' },
   viewer: { username: 'viewer_user', password: 'Test@12345', email: 'viewer_user@test.com', name: 'Viewer User' },
+  nonMember: { username: 'non_member_user', password: 'Test@12345', email: 'non_member@test.com', name: 'Non Member User' },
 };
 
 export const TEST_PROJECT_NAME = 'Project 01';

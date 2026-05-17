@@ -22,10 +22,12 @@ export class LoginPage {
     this.dashboardTitle = this.page.locator("div[title='Dashboard']");
   }
 
+  // Navigate browser to the login page URL
   public async navigateToLoginPage(): Promise<void> {
     await this.page.goto(this.loginUrl);
   }
 
+  // Fill credentials and submit the login form
   public async loginToDashboard(email: string, password: string): Promise<void> {
     await this.emailField.fill(email);
     await this.passwordField.fill(password);
