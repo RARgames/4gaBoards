@@ -1,7 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './e2e/specs',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -16,4 +15,16 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
+  projects: [
+    {
+      name: 'setup',
+      testDir: './e2e',
+      testMatch: 'setup.spec.ts',
+    },
+    {
+      name: 'e2e',
+      testDir: './e2e/specs',
+      dependencies: ['setup'],
+    },
+  ],
 });

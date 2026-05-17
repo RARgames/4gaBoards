@@ -1,0 +1,451 @@
+================================================================================
+TEST PROCEDURE: CREATE CARD & DRAG-AND-DROP CARD
+================================================================================
+
+--------------------------------------------------------------------------------
+1. METADATA
+--------------------------------------------------------------------------------
+
+Author:              Achauhan
+Created On:          2026-05-15
+Document Status:     Draft
+Target Release:      TBD
+Jira Epic / Link:    TBD
+Reviewers:           TBD
+
+--------------------------------------------------------------------------------
+2. OVERVIEW
+--------------------------------------------------------------------------------
+
+DESCRIPTION:
+4ga Boards is a real-time collaborative project management application (kanban
+board). This test procedure covers two core features: Create Card and
+Drag-and-Drop Card.
+
+- What problem does it solve?
+  Teams need a way to create work items and organize them visually across
+  workflow stages (lists) in real-time.
+
+- Who are the users?
+  Team members with EDITOR role on a board who manage tasks collaboratively.
+
+- What are the key workflows?
+  * User opens a board, clicks "Add card" on a list, types a name, presses
+    Enter to create a card
+  * User drags a card from one list and drops it into another list
+  * User reorders cards within a list by dragging to a new position
+  * Multiple users view the same board and see changes in real-time
+
+REFERENCES:
+- Functional Spec:              FUNCTIONAL_FLOW.md (local)
+- Architecture Design:          TBD
+- API Documentation:            TBD
+- Related Services:             Socket.io (real-time), PostgreSQL (persistence)
+
+--------------------------------------------------------------------------------
+3. FEATURE / ENDPOINT OVERVIEW
+--------------------------------------------------------------------------------
+
+Feature                   Endpoint / UI Action                      Persisted
+-----------------------   ----------------------------------------  ---------
+Create Card               POST /api/lists/:listId/cards              Yes (DB)
+Create Card (UI)          Click "Add card" > type name > Enter       Yes
+Move Card (same list)     PATCH /api/cards/:id  {position}           Yes (DB)
+Move Card (cross-list)    PATCH /api/cards/:id  {listId, position}   Yes (DB)
+Transfer Card (board)     PATCH /api/cards/:id  {boardId, listId}    Yes (DB)
+Drag-and-Drop (UI)        Drag card > drop on target                 Yes
+
+--------------------------------------------------------------------------------
+4. WORKFLOWS
+--------------------------------------------------------------------------------
+
+WORKFLOW: CREATE CARD
+
+  1. User navigates to board, clicks "Add card" on a list
+  2. Inline textarea appears; user types card name
+  3. User presses Enter (or Ctrl+Enter for auto-open)
+  4. Client generates local ID, calculates gap-based position
+  5. Client dispatches optimistic Redux action (card appears instantly)
+  6. Client sends POST /api/lists/:listId/cards via WebSocket
+  7. Server validates EDITOR role, persists card to PostgreSQL
+  8. Server broadcasts 'cardCreate' socket event to board channel
+  9. Server creates Action record (audit trail)
+ 10. Other connected users see card in real-time
+ 11. On success: client merges server data. On failure: rollback.
+
+WORKFLOW: DRAG-AND-DROP CARD
+
+  1. User picks up card (mouse down + drag)
+  2. react-beautiful-dnd renders placeholder and animates cards
+  3. User drops card on target (same list, different list, or cancels)
+  4. handleDragEnd fires, parses destination list and index
+  5. If same position or no destination: no-op
+  6. Saga calculates position (midpoint between neighbors)
+  7. Client sends PATCH /api/cards/:id with {listId, position}
+  8. Server validates EDITOR role, updates record, recalculates if collision
+  9. Server broadcasts 'cardUpdate' to board channel
+ 10. Server creates CARD_MOVE or CARD_TRANSFER Action record
+ 11. All board viewers see card move in real-time
+
+--------------------------------------------------------------------------------
+5. TEST STRATEGY
+--------------------------------------------------------------------------------
+
+TESTING APPROACH:
+- Unit Testing (Developer owned): Components, sagas, selectors
+- Integration Testing (Service layer): API controllers, DB, socket broadcasts
+- End-to-End Testing (Full workflow): Browser user flows, multi-user sync
+- Smoke Testing (Post-deploy): Subset of E2E for critical paths
+
+TOOLS / FRAMEWORKS:
+- Unit Testing:         Jest + React Testing Library
+- Integration Testing:  Mocha (server-side)
+- E2E / Smoke:          Playwright
+- CI/CD:                GitHub Actions
+
+TEST FILE LOCATIONS:
+- E2E:          tests/e2e/specs/*.spec.ts
+- Integration:  server/test/integration/**/*.test.js
+- Unit:         client/src/**/*.test.js
+
+COVERAGE GOALS:
+- Backend (card controllers/helpers):   85%
+- Frontend (card sagas/selectors):      80%
+- E2E (critical paths):                 100% of smoke scenarios
+
+--------------------------------------------------------------------------------
+6. TEST ENVIRONMENT
+--------------------------------------------------------------------------------
+
+Deployment:        Docker Compose or pnpm dev (local)
+Test Environments: Local Dev (localhost:3000), CI (GitHub Actions)
+Authentication:    JWT via POST /api/access-tokens (demo/demo)
+
+DEPENDENCIES:
+  Dependency          Type            Purpose
+  ----------------    -------------   -------------------------------------------
+  PostgreSQL 16       Database        Card/list/board persistence
+  Socket.io           Service         Real-time broadcasting
+  Redis (optional)    Queue/Adapter   Multi-instance socket adapter
+  Node.js 24          Runtime         Server execution
+  Playwright          Tool            Browser automation
+  Docker              Infrastructure  Container runtime
+  pnpm                Package Mgr     Dependency/script execution
+
+ENVIRONMENT VARIABLES:
+  DATABASE_URL = postgresql://postgres:notpassword@localhost/4gaBoards
+  SECRET_KEY   = notsecretkey
+  BASE_URL     = http://localhost:3000
+  NODE_ENV     = test
+
+--------------------------------------------------------------------------------
+7. TEST DATA
+--------------------------------------------------------------------------------
+
+REQUIRED DATA:
+- User accounts: EDITOR, VIEWER, COMMENTER (all on same board)
+- Project with at least 1 board
+- Board with 3 lists: "To Do", "In Progress", "Done"
+- 3-4 cards in "To Do" list
+- At least 1 label on a card
+
+EDGE / NEGATIVE DATA:
+- Empty string card name
+- Special characters: <script>alert('xss')</script>, unicode, 500+ chars
+- Null / missing name field in API
+- Invalid listId (non-existent)
+- Position: 0, negative, extremely large
+- Exhausted position gaps
+
+--------------------------------------------------------------------------------
+8. TEST CASES
+--------------------------------------------------------------------------------
+
+Type values:        Smoke | Unit | Integration | E2E
+Category values:    Functional | Security | Authentication | Authorization |
+                    Validation | Real-time | Persistence | Performance
+
+=== 8.1 CREATE CARD ===
+
+ID      Test Case                           Steps                                                                           Expected Result                                                  Type          Category         Automated
+------  ----------------------------------  ------------------------------------------------------------------------------  ---------------------------------------------------------------  -----------   ---------------  ---------
+CC-01   Create card with valid name         1. Login as EDITOR                                                              Card "New Card" appears at bottom of list                         Smoke         Functional       No
+                                            2. Navigate to board
+                                            3. Click "Add card" on a list
+                                            4. Type "New Card"
+                                            5. Press Enter
+
+CC-02   Empty name rejected                 1. Click "Add card"                                                             Form does not submit, no card created, textarea remains focused   Unit          Validation       No
+                                            2. Leave name empty
+                                            3. Press Enter
+
+CC-03   Ctrl+Enter auto-opens modal         1. Click "Add card"                                                             Card created AND detail modal opens with card title               E2E           Functional       No
+                                            2. Type "Auto Open"
+                                            3. Press Ctrl+Enter
+
+CC-04   Position auto-calculated            1. List has cards at positions 65536, 131072                                    Card created at position 196608 (last + positionGap)             Integration   Functional       No
+                                            2. Create new card without specifying position
+
+CC-05   Broadcast to other users            1. User A and User B view same board                                            User B sees "Broadcast Test" appear without refresh              E2E           Real-time        No
+                                            2. User A creates card "Broadcast Test"
+
+CC-06   Persists after page reload          1. Create card "Persist Test"                                                   Card still visible in correct list and position                   E2E           Persistence      No
+                                            2. Wait for network idle
+                                            3. Reload page
+
+CC-07   VIEWER cannot see Add card          1. Login as VIEWER                                                              "Add card" button hidden or disabled                             E2E           Authorization    No
+                                            2. Navigate to board
+
+CC-08   API rejects without auth            1. POST /api/lists/:listId/cards without auth header                            401 Unauthorized                                                 Integration   Authentication   No
+
+CC-09   API rejects for VIEWER role         1. Authenticate as VIEWER                                                       403 Forbidden                                                    Integration   Authorization    No
+                                            2. POST /api/lists/:listId/cards with {name: "Test"}
+
+CC-10   Creation with optional fields       1. POST /api/lists/:listId/cards with {name, description, dueDate, timer}       Card created with all fields persisted correctly                  Integration   Functional       No
+
+CC-11   Action audit record created         1. Create card via API                                                          Action record with type cardCreate, correct userId and cardId     Integration   Persistence      No
+                                            2. Query Action table for type 'cardCreate'
+
+CC-12   Creator auto-subscribed             1. User has subscribeToOwnCards enabled                                         CardSubscription record created for user + card                   Integration   Functional       No
+                                            2. Create card
+
+CC-13   Optimistic update before response   1. Mock slow network                                                            Card appears in UI before API responds                           Unit          Functional       No
+                                            2. Create card
+
+CC-14   Rollback on API failure             1. Mock API to return 500                                                       Optimistic card removed from store, error dispatched             Unit          Functional       No
+                                            2. Trigger createCard saga
+
+CC-15   CardAdd closes on blur when empty   1. Open CardAdd form                                                            Form closes, onClose callback fired                              Unit          Validation       No
+                                            2. Leave empty
+                                            3. Click outside
+
+CC-16   Sequential cards maintain order     1. Create "Card A", "Card B", "Card C" in same list                             Cards in order A, B, C with incrementing positions                E2E           Functional       No
+
+CC-17   Special chars / XSS prevention      1. Create card with <script> in name                                            Name stored and displayed correctly, no script execution          Integration   Security         No
+
+CC-18   CardAddPopup requires list          1. Open popup without forced list                                               Form does not submit until list selected                          Unit          Validation       No
+                                            2. Type name, don't select list
+                                            3. Submit
+
+=== 8.2 DRAG-AND-DROP CARD ===
+
+ID      Test Case                           Steps                                                                           Expected Result                                                  Type          Category         Automated
+------  ----------------------------------  ------------------------------------------------------------------------------  ---------------------------------------------------------------  -----------   ---------------  ---------
+DD-01   Drag within same list (reorder)     1. Login as EDITOR                                                              Card in third position, others shift up                          Smoke         Functional       No
+                                            2. Board with 3+ cards in a list
+                                            3. Drag first card to third position
+                                            4. Release
+
+DD-02   Drag to different list              1. Drag card from List A                                                        Card removed from List A, appears in List B                      Smoke         Functional       No
+                                            2. Drop on List B
+
+DD-03   Drag to empty list                  1. Drag from populated list                                                     Card is sole card in previously empty list                        E2E           Functional       No
+                                            2. Drop into empty list
+
+DD-04   Drag cancelled with Escape          1. Start dragging card                                                          Card snaps back, no API call                                     E2E           Functional       No
+                                            2. Press Escape
+
+DD-05   Drop outside valid area             1. Start dragging                                                               Card returns to original position                                E2E           Functional       No
+                                            2. Release outside any droppable
+
+DD-06   Drop in same position (no-op)       1. Pick up card                                                                 No API call, no state change                                     Unit          Functional       No
+                                            2. Drop in exact same spot
+
+DD-07   Position midpoint calculation       1. Cards at 65536 and 196608                                                    Position = 131072 (midpoint)                                     Unit          Functional       No
+                                            2. Move card to index 1
+
+DD-08   Move to end of list                 1. Cards at 65536, 131072                                                       Position = 196608 (last + gap)                                   Unit          Functional       No
+                                            2. Move card to index 2
+
+DD-09   Move to beginning of list           1. First card at 65536                                                          Position = 32768 (first / 2)                                     Unit          Functional       No
+                                            2. Move card to index 0
+
+DD-10   Position collision recalculation    1. Cards with exhausted gaps                                                    Server recalculates all positions, broadcasts updates             Integration   Functional       No
+                                            2. Move card between them
+
+DD-11   Cross-list persists after reload    1. Drag from List A to List B                                                   Card still in List B at correct position                         E2E           Persistence      No
+                                            2. Reload page
+
+DD-12   Real-time sync second user          1. User A and B on same board                                                   User B sees move without refresh                                 E2E           Real-time        No
+                                            2. User A drags card to List 2
+
+DD-13   VIEWER cannot drag                  1. Login as VIEWER                                                              Drag handle hidden or interaction disabled                        E2E           Authorization    No
+                                            2. Attempt to drag card
+
+DD-14   API PATCH moves between lists       1. Authenticate as EDITOR                                                       200 OK, card listId updated, broadcast sent                      Integration   Functional       No
+                                            2. PATCH /api/cards/:id with {listId, position}
+
+DD-15   API PATCH rejected for VIEWER       1. Authenticate as VIEWER                                                       403 Forbidden                                                    Integration   Authorization    No
+                                            2. PATCH /api/cards/:id with {listId, position}
+
+DD-16   Transfer removes labels             1. Card has Board A labels                                                      Labels not in Board B removed from card                          Integration   Functional       No
+                                            2. Transfer to Board B
+
+DD-17   Transfer removes subscriptions      1. Card has non-Board-B subscribers                                             Invalid subscriptions deleted                                     Integration   Functional       No
+                                            2. Transfer to Board B
+
+DD-18   CARD_MOVE action created            1. Move card to different list                                                  Action type=CARD_MOVE with source/dest list                      Integration   Persistence      No
+                                            2. Query Action table
+
+DD-19   CARD_TRANSFER action created        1. Transfer card to different board                                             Action type=CARD_TRANSFER with source/dest board                 Integration   Persistence      No
+                                            2. Query Action table
+
+DD-20   Broadcast for repositioned cards    1. Move triggers recalculation for 3 cards                                      3 cardUpdate events broadcast                                    Integration   Real-time        No
+                                            2. Listen on socket
+
+DD-21   Rapid sequential drags              1. Drag A to List 2                                                             All succeed, no duplicates, positions correct                     E2E           Functional       No
+                                            2. Immediately drag B to List 3
+                                            3. Immediately drag C within List 1
+
+DD-22   handleDragEnd parses draggableId    1. Simulate end with draggableId: 'card:42'                                     onCardMove(42, 5, index) called                                  Unit          Functional       No
+                                            2. Destination droppableId: 'list:5'
+
+DD-23   handleDragEnd null destination      1. Simulate end with destination: null                                          onCardMove NOT called, no error                                  Unit          Validation       No
+
+--------------------------------------------------------------------------------
+9. WORKFLOW / E2E SCENARIOS
+--------------------------------------------------------------------------------
+
+Scenario                     Description                          Validation
+--------------------------   ----------------------------------   -------------------
+Create > Move > Verify       Create in A, drag to B, reload       Card in B after reload
+Multi-user create + move     A creates, B moves, A sees final     Consistent views
+Rapid create + reorder       Create 5, reorder all                Correct final order
+Partial failure recovery     Move during offline, reconnect       Last confirmed state
+Cross-board full flow        Create with labels, transfer         Labels stripped, logged
+
+--------------------------------------------------------------------------------
+10. CROSS-SERVICE / INTEGRATION TESTING
+--------------------------------------------------------------------------------
+
+Integration Point         Validation
+------------------------  --------------------------------------------------
+App > PostgreSQL          Card persisted with correct fields
+App > Socket.io           Events broadcast to correct room
+Socket.io > Client        Event triggers Redux action, UI updates
+App > Action table        Audit records for create/move/transfer
+App > Notification svc    Subscribers notified on card creation
+
+--------------------------------------------------------------------------------
+11. NON-FUNCTIONAL TESTING
+--------------------------------------------------------------------------------
+
+Type           Scope                              Target
+-----------    --------------------------------   ----------------------------
+Performance    Card creation latency              < 200ms at 100 concurrent
+Performance    DnD position calculation           < 50ms client-side
+Memory         Socket connections under load      Stable with 50+ viewers
+Security       XSS in card names                  HTML entities escaped
+Security       Authorization bypass               VIEWER blocked at API
+Stress         1000+ cards in single list         Drag perf acceptable
+
+--------------------------------------------------------------------------------
+12. COMPATIBILITY TESTING
+--------------------------------------------------------------------------------
+
+Browsers:   Chrome (latest), Firefox (latest), Edge (latest), Safari (latest)
+OS:         Windows 11, macOS, Ubuntu Linux
+Viewports:  1920x1080, 1366x768, 768x1024
+Input:      Mouse, trackpad, touch (if supported)
+
+--------------------------------------------------------------------------------
+13. CROSS-FEATURE IMPACT
+--------------------------------------------------------------------------------
+
+Feature              Impact                              Regression Needed
+------------------   ---------------------------------   -----------------
+Card Labels          Transfer removes labels             Same-board intact
+Card Subscriptions   Transfer removes non-members        Same-board intact
+Notifications        Create triggers subscriber notify   Pipeline OK
+Activity Feed        Actions power activity UI           Displays correctly
+Board Export         Positions affect export order       Reflects final order
+Search/Filter        List membership affects results     Filters update
+
+--------------------------------------------------------------------------------
+14. OPEN ISSUES / RISKS
+--------------------------------------------------------------------------------
+
+#  Risk                                    Impact         Mitigation
+-  ---------------------------------------- ----------    ----------------------
+1  react-beautiful-dnd unmaintained         High          Monitor alternatives
+2  Position gap exhaustion                  Medium        Server recalculation
+3  Race condition on simultaneous moves     Medium        Last-write-wins + sync
+4  No offline support for moves             Low           Queue + reconnect
+5  Playwright DnD simulation flaky          Medium        Mouse events + waits
+
+--------------------------------------------------------------------------------
+15. AUTOMATION PLAN
+--------------------------------------------------------------------------------
+
+Phase    Scope                              Target Date   CI Integration
+------   --------------------------------   -----------   ----------------
+1        Smoke (CC-01, DD-01, DD-02)        TBD           Every PR
+2        Integration (CC-04..12, DD-10..20) TBD           Nightly
+3        Full E2E suite                     TBD           Release branch
+4        Unit tests                         TBD           Every PR
+
+File Locations:
+- E2E:         tests/e2e/specs/createCard.spec.ts
+               tests/e2e/specs/dragDropCard.spec.ts
+- Integration: server/test/integration/controllers/cards/create.test.js
+               server/test/integration/controllers/cards/update.test.js
+- Unit:        client/src/sagas/core/services/__tests__/cards.test.js
+               client/src/components/Board/__tests__/Board.test.jsx
+
+Execution:
+  pnpm test           - All tests
+  pnpm test:e2e       - E2E Playwright
+  pnpm test:headed    - E2E visible browser
+  pnpm server:test    - Server integration
+  pnpm client:test    - Client unit
+  pnpm test:debug     - Debug mode
+
+--------------------------------------------------------------------------------
+16. FEATURE READINESS CRITERIA
+--------------------------------------------------------------------------------
+
+[ ] All Smoke tests passing (CC-01, DD-01, DD-02)
+[ ] All Integration tests passing
+[ ] No high/critical severity defects open
+[ ] Code coverage: Backend 85%, Frontend 80%
+[ ] Performance baseline: <200ms create, <50ms position calc
+[ ] Cross-browser validated (Chrome, Firefox, Edge)
+[ ] Real-time sync verified with 2+ users
+[ ] Security review passed
+
+--------------------------------------------------------------------------------
+17. TEST PROCEDURE REVIEW
+--------------------------------------------------------------------------------
+
+Review Notes:      TBD
+Approval Status:   Pending
+Review Date:       TBD
+Approved By:       TBD
+
+--------------------------------------------------------------------------------
+18. SUMMARY
+--------------------------------------------------------------------------------
+
+BY TYPE:
+  Classification    Count
+  --------------    -----
+  Smoke             3
+  Unit              13
+  Integration       16
+  E2E               9
+  TOTAL             41
+
+BY CATEGORY:
+  Category          Count
+  ---------------   -----
+  Functional        26
+  Authorization     5
+  Persistence       5
+  Real-time         4
+  Validation        4
+  Authentication    1
+  Security          1
+
+================================================================================
+END OF DOCUMENT
+================================================================================

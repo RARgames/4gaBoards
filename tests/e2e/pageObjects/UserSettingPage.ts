@@ -54,8 +54,8 @@ export class UserSettingPage {
 
     await row.scrollIntoViewIfNeeded();
     await row.locator("button[title='Edit User']").click();
-    await this.page.locator("button[title='Delete User']").click();
-    await this.page.locator("button[title='Delete User']").click();
+    await this.page.getByRole('button', { name: 'Delete user' }).click();
+    await this.page.getByRole('button', { name: 'Delete user' }).click();
 
     await expect(row).toHaveCount(0);
   }
