@@ -132,10 +132,7 @@ module.exports = {
 
       return `${escapeHtml(label)}: ${renderedValue}`;
     });
-    const relatedDataHtml = relatedDataParts.length ? `<div>${relatedDataParts.join('<br>')}</div>` : null;
-    if (relatedDataHtml) {
-      htmlBlocks.push(relatedDataHtml);
-    }
+    const relatedDataHtml = relatedDataParts.length ? `<div style="border-top: 1px solid #818181; padding-top: 10px;">${relatedDataParts.join('<br>')}</div>` : null;
 
     // eslint-disable-next-line no-restricted-syntax
     for (const notification of notifications) {
@@ -175,6 +172,9 @@ module.exports = {
       }
 
       htmlBlocks.push(activityHtml || buildFallbackActivityHtml(action));
+    }
+    if (relatedDataHtml) {
+      htmlBlocks.push(relatedDataHtml);
     }
     const htmlMessage = `<div>${htmlBlocks.join('\n')}</div>`;
     const ids = notifications.map((n) => n.id);
