@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { enUS, cs, da, de, es, fr, it, ja, ko, pl, ptBR, ru, sk, sv, uz, zhCN } from 'date-fns/locale'; // TODO should be moved to locales - cannot get it to working with embeddedLocales
 import PropTypes from 'prop-types';
 
 import * as s from './DateText.module.scss';
@@ -12,26 +11,7 @@ const DateText = React.memo(({ value, title, titlePrefix, isClickable, showTime,
   const { i18n } = useTranslation();
 
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
-  // TODO localeMap is temp solution - move to locales
-  const localeMap = {
-    en: enUS,
-    cs,
-    da,
-    de,
-    es,
-    fr,
-    it,
-    ja,
-    ko,
-    pl,
-    'pt-BR': ptBR,
-    ru,
-    sk,
-    sv,
-    uz,
-    zh: zhCN,
-  };
-  const locale = localeMap[i18n.resolvedLanguage] || enUS;
+  const locale = i18n.dateFns.getLocale(i18n.resolvedLanguage) || i18n.dateFns.getLocale(i18n.language) || i18n.dateFns.getLocale('en');
 
   if (value) {
     const preFormattedValue = t(showTime ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' });
