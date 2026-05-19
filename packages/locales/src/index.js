@@ -32,6 +32,7 @@ import zh from './zh';
 import zhActivity from './zh/activity';
 
 const locales = [cs, da, de, en, es, fr, it, ja, ko, pl, ptBr, ru, sk, sv, uz, zh];
+const localeActivities = [csActivity, daActivity, deActivity, enActivity, esActivity, frActivity, itActivity, jaActivity, koActivity, plActivity, ptBrActivity, ruActivity, skActivity, svActivity, uzActivity, zhActivity];
 
 export default locales;
 
@@ -45,23 +46,12 @@ export const embeddedLocales = locales.reduce(
   {},
 );
 
-export const activityLocales = {
-  cs: csActivity,
-  da: daActivity,
-  de: deActivity,
-  en: enActivity,
-  es: esActivity,
-  fr: frActivity,
-  it: itActivity,
-  ja: jaActivity,
-  ko: koActivity,
-  pl: plActivity,
-  'pt-BR': ptBrActivity,
-  ru: ruActivity,
-  sk: skActivity,
-  sv: svActivity,
-  uz: uzActivity,
-  zh: zhActivity,
-};
+export const activityLocales = locales.reduce(
+  (result, locale, index) => ({
+    ...result,
+    [locale.language]: localeActivities[index],
+  }),
+  {},
+);
 
 export const flags = locales.map((locale) => locale.flags);

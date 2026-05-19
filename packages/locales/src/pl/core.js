@@ -1,14 +1,4 @@
-import dateFns from 'date-fns/locale/pl';
-
 export default {
-  dateFns,
-
-  format: {
-    date: 'd.MM.yyyy',
-    dateTime: '$t(format:date) $t(format:time)',
-    time: 'HH:mm',
-  },
-
   translation: {
     common: {
       about: 'O 4ga Boards',

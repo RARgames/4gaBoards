@@ -1,10 +1,4 @@
 export default {
-  format: {
-    date: 'd.MM.yyyy',
-    dateTime: '$t(format:date) $t(format:time)',
-    time: 'HH:mm',
-  },
-
   translation: {
     common: {
       about: 'About 4ga Boards',

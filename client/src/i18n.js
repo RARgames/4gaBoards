@@ -83,6 +83,15 @@ i18n
   });
 
 i18n.loadCoreLocale = async (language = i18n.resolvedLanguage) => {
+  const { default: localeConfig } = await import(`@4gaboards/locales/${language}`);
+  const { dateFns, format } = localeConfig;
+  if (dateFns) {
+    i18n.dateFns.addLocale(language, dateFns);
+  }
+  if (format) {
+    i18n.addResourceBundle(language, 'format', format, true, true);
+  }
+
   if (language === 'en') {
     return;
   }
@@ -90,13 +99,8 @@ i18n.loadCoreLocale = async (language = i18n.resolvedLanguage) => {
   await Promise.all(
     ['action', 'activity', 'core'].map(async (ns) => {
       const { default: locale } = await import(`@4gaboards/locales/${language}/${ns}`);
-
       Object.keys(locale).forEach((namespace) => {
-        if (namespace === 'dateFns') {
-          i18n.dateFns.addLocale(language, locale[namespace]);
-        } else {
-          i18n.addResourceBundle(language, namespace, locale[namespace], true, true);
-        }
+        i18n.addResourceBundle(language, namespace, locale[namespace], true, true);
       });
     }),
   );

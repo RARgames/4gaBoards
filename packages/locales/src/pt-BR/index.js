@@ -1,4 +1,5 @@
 // Translated by dacampsss
+import { ptBR as dateFns } from 'date-fns/locale';
 import merge from 'lodash/merge';
 
 import error from './error';
@@ -10,4 +11,10 @@ export default {
   name: 'Português',
   embeddedLocale: merge(error, login),
   flags: ['BR', 'PT'],
+  dateFns,
+  format: {
+    date: 'd/MM/yyyy',
+    dateTime: '$t(format:date) $t(format:time)',
+    time: 'HH:mm',
+  },
 };

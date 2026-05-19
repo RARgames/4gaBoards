@@ -1,14 +1,4 @@
-import dateFns from 'date-fns/locale/it';
-
 export default {
-  dateFns,
-
-  format: {
-    date: 'dd.MM.yyyy',
-    dateTime: '$t(format:date) $t(format:time)',
-    time: 'HH:mm',
-  },
-
   translation: {
     common: {
       about: 'Informazioni su 4ga Boards',

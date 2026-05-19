@@ -1,4 +1,5 @@
 const localesModule = require('@4gaboards/locales');
+const { format: formatDate } = require('date-fns');
 const i18next = require('i18next');
 
 let rendererModulesPromise;
@@ -39,10 +40,25 @@ const getI18nextTranslator = async (language, activityLocale) => {
   }
 
   const instance = i18next.createInstance();
+  const format = localesModule.default.find((l) => l.language === language)?.format ?? {};
+
+  const formatDatePostProcessor = {
+    type: 'postProcessor',
+    name: 'formatDate',
+    process(value, _, options) {
+      return formatDate(options.value, value);
+    },
+  };
+
+  instance.use(formatDatePostProcessor);
+
   await instance.init({
     lng: language,
     resources: {
-      [language]: activityLocale,
+      [language]: {
+        ...activityLocale,
+        format,
+      },
     },
     interpolation: {
       escapeValue: false,

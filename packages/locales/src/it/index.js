@@ -1,3 +1,4 @@
+import { it as dateFns } from 'date-fns/locale';
 import merge from 'lodash/merge';
 
 import error from './error';
@@ -9,4 +10,10 @@ export default {
   name: 'Italiano',
   embeddedLocale: merge(error, login),
   flags: ['IT'],
+  dateFns,
+  format: {
+    date: 'dd.MM.yyyy',
+    dateTime: '$t(format:date) $t(format:time)',
+    time: 'HH:mm',
+  },
 };
