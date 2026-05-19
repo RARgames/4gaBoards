@@ -8,7 +8,7 @@ const resolveRelatedData = async (action) => {
     return null;
   }
   const scope = getNormalizedScope(action.scope);
-  if (![Action.Scopes.CARD, Action.Scopes.LIST, Action.Scopes.BOARD].includes(scope)) {
+  if (![Action.Scopes.CARD, Action.Scopes.LIST, Action.Scopes.BOARD, Action.Scopes.USER].includes(scope)) {
     return null;
   }
 
@@ -16,6 +16,7 @@ const resolveRelatedData = async (action) => {
   let card = null;
   let board = null;
   let project = null;
+  let userAccount = null;
 
   if (scope === Action.Scopes.CARD && action.cardId) {
     card = await Card.findOne({ id: action.cardId });
@@ -33,7 +34,12 @@ const resolveRelatedData = async (action) => {
     project = await Project.findOne({ id: action.projectId });
   }
 
+  if (scope === Action.Scopes.USER && action.userAccountId) {
+    userAccount = await User.findOne({ id: action.userAccountId });
+  }
+
   return {
+    userName: userAccount?.name || null,
     cardName: card?.name || null,
     listName: list?.name || null,
     boardName: board?.name || null,
@@ -97,6 +103,7 @@ module.exports = {
     const relatedData = resolvedRelatedData || {};
     const localizedScope = t ? t(getActivityScopeLabelKey(scope, Action.Scopes)) : scope;
     const relatedDataEntries = [
+      { key: 'userName', labelKey: 'activity.user' },
       { key: 'cardName', labelKey: 'activity.card' },
       { key: 'listName', labelKey: 'activity.list' },
       { key: 'boardName', labelKey: 'activity.board' },
