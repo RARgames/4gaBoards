@@ -1,5 +1,4 @@
 const { getActivityTransProps } = require('@4gaboards/locales/renderer');
-const { format } = require('date-fns');
 
 const { getActivityScopeLabelKey, getI18nextTranslator, getLocaleByLanguage, loadRendererModules } = require('../../../utils/activity-i18n');
 const { buildActionLinks, buildFallbackActivityHtml, escapeHtml, getNormalizedScope, renderLinkedStrong, renderLocalizedHtmlFromTransProps } = require('../../../utils/activity-rendering');
@@ -147,11 +146,7 @@ module.exports = {
       if (Number.isNaN(createdAtDate.getTime())) {
         createdAt = String(action.createdAt);
       } else {
-        try {
-          createdAt = format(createdAtDate, 'dd.MM.yyyy HH:mm');
-        } catch {
-          createdAt = createdAtDate.toUTCString();
-        }
+        createdAt = t ? t('format:dateTime', { postProcess: 'formatDate', value: createdAtDate }) : createdAtDate.toUTCString();
       }
 
       const username = actionUser.username ? `(${escapeHtml(actionUser.username)})` : '';
