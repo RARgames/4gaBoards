@@ -15,5 +15,8 @@ allowBuilds:
 overrides:
   '@babel/runtime@<7.26.10': ^7.26.10
   diff@>=6.0.0 <8.0.3: ^8.0.3
+  multiparty@<=4.2.3: ^4.2.4
+  protobufjs@<=7.5.7: ^7.5.8
   serialize-javascript@<7.0.5: ^7.0.5
   serialize-javascript@<=7.0.2: ^7.0.3
+  ws@>=8.0.0 <8.20.1: ^8.20.1
