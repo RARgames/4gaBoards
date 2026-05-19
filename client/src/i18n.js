@@ -1,8 +1,7 @@
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
 import { initReactI18next } from 'react-i18next';
 import { embeddedLocales, languages } from '@4gaboards/locales';
-import formatDate from 'date-fns/format';
-import parseDate from 'date-fns/parse';
+import { format as formatDate, parse as parseDate } from 'date-fns';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 

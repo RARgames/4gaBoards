@@ -52,7 +52,7 @@
     "cross-spawn": "^7.0.6",
     "css-loader": "^7.1.4",
     "css-minimizer-webpack-plugin": "^8.0.0",
-    "date-fns": "^4.1.0",
+    "date-fns": "^4.2.1",
     "dequal": "^2.0.3",
     "detect-port-alt": "^1.1.6",
     "dotenv": "^17.4.2",
