@@ -28,7 +28,6 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install
-          pnpm add -D wait-on
 
       - name: Install chromium
         working-directory: tests
