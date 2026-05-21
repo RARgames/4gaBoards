@@ -13,7 +13,6 @@ import http from './http';
 import labels from './labels';
 import lists from './lists';
 import notifications from './notifications';
-import priorities from './priorities';
 import projectManagers from './project-managers';
 import projects from './projects';
 import register from './register';
@@ -41,7 +40,6 @@ export default {
   ...labels,
   ...lists,
   ...notifications,
-  ...priorities,
   ...projectManagers,
   ...projects,
   ...register,

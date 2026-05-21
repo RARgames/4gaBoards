@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import BoardActions from '../components/BoardActions';
 import { BoardMembershipRoles } from '../constants/Enums';
+import Priorities, { getPriority } from '../constants/Priorities';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
@@ -16,10 +17,10 @@ const mapStateToProps = (state) => {
   const memberships = selectors.selectMembershipsForCurrentBoard(state);
   const allBoardCardAndTaskMemberships = selectors.selectBoardCardAndTaskMembershipsForCurrentBoard(state);
   const labels = selectors.selectLabelsForCurrentBoard(state);
-  const allPriorities = selectors.selectAllPriorities(state);
+  const allPriorities = Priorities;
   const filterUsers = selectors.selectFilterUsersForCurrentBoard(state);
   const filterLabels = selectors.selectFilterLabelsForCurrentBoard(state);
-  const filterPriorities = selectors.selectFilterPrioritiesForCurrentBoard(state);
+  const filterPriorities = (selectors.selectFilterPrioritiesForCurrentBoard(state) || []).map(getPriority).filter(Boolean);
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
   const boardData = selectors.selectCurrentBoard(state);

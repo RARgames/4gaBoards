@@ -42,9 +42,10 @@ module.exports = {
       required: true,
       columnName: 'card_id',
     },
-    priorityId: {
-      model: 'Priority',
-      columnName: 'priority_id',
+    priority: {
+      type: 'string',
+      isIn: ['low', 'medium', 'high'],
+      allowNull: true,
     },
     memberUsers: {
       collection: 'User',

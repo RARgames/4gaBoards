@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import Card from '../components/Card';
 import { BoardMembershipRoles } from '../constants/Enums';
+import { getPriority } from '../constants/Priorities';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
@@ -43,11 +44,11 @@ const makeMapStateToProps = () => {
       createdBy,
       updatedAt,
       updatedBy,
-      priorityId,
+      priority: priorityValue,
       parentCardId,
     } = selectCardById(state, id);
 
-    const priority = priorityId ? selectors.selectPriorityById(state, priorityId) : null;
+    const priority = getPriority(priorityValue) || null;
     const parentCard = parentCardId ? selectCardById(state, parentCardId) : null;
     const parent = parentCard ? { id: parentCard.id, name: parentCard.name } : null;
     const childrenCount = selectors.selectChildrenCountByCardId(state, id);

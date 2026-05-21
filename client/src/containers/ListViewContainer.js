@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import ListView from '../components/Board/ListView';
 import { BoardMembershipRoles } from '../constants/Enums';
+import { getPriority } from '../constants/Priorities';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
@@ -32,7 +33,7 @@ const makeMapStateToProps = () => {
       }));
       const notificationsCount = selectors.selectNotificationsTotalByCardId(state, cardId);
       const closestDueDate = selectClosestDueDateByCardId(state, cardId);
-      const priority = card.priorityId ? selectors.selectPriorityById(state, card.priorityId) : undefined;
+      const priority = getPriority(card.priority);
 
       return {
         id: card.id,

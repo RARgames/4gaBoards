@@ -51,11 +51,7 @@ export default class extends BaseModel {
       as: 'coverAttachment',
       relatedName: 'coveredCard',
     }),
-    priorityId: fk({
-      to: 'Priority',
-      as: 'priority',
-      relatedName: 'cards',
-    }),
+    priority: attr(),
     parentCardId: fk({
       to: 'Card',
       as: 'parentCard',

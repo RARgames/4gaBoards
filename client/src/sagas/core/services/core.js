@@ -29,7 +29,6 @@ export function* initializeCore() {
     notifications,
     userProjects,
     userPrefs,
-    priorities,
     cardLinks,
   } = yield call(requests.fetchCore); // TODO: handle error
 
@@ -58,7 +57,6 @@ export function* initializeCore() {
       notifications,
       userProjects,
       userPrefs,
-      priorities,
       cardLinks,
     ),
   );

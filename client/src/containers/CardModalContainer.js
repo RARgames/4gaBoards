@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import CardModal from '../components/CardModal';
 import { BoardMembershipRoles } from '../constants/Enums';
 import Paths from '../constants/Paths';
+import Priorities, { getPriority } from '../constants/Priorities';
 import entryActions from '../entry-actions';
 import { push } from '../lib/redux-router';
 import selectors from '../selectors';
@@ -37,12 +38,12 @@ const mapStateToProps = (state) => {
     createdBy,
     updatedAt,
     updatedBy,
-    priorityId,
+    priority: priorityValue,
     parentCardId,
   } = selectors.selectCurrentCard(state);
 
-  const priority = priorityId ? selectors.selectPriorityById(state, priorityId) : null;
-  const allPriorities = selectors.selectAllPriorities(state);
+  const priority = getPriority(priorityValue) || null;
+  const allPriorities = Priorities;
 
   const parent = parentCardId ? selectors.selectCardById(state, parentCardId) : null;
   const childCards = [];
@@ -73,7 +74,7 @@ const mapStateToProps = (state) => {
     ...task,
     users: selectors.selectUsersForTaskById(state, task.id),
     activities: taskActivities[task.id] || [],
-    priority: task.priorityId ? selectors.selectPriorityById(state, task.priorityId) : undefined,
+    priority: getPriority(task.priority),
   }));
   const attachmentActivities = selectors.selectAttachmentActivitiesByCardId(state, id);
   const attachments = selectors.selectAttachmentsForCurrentCard(state).map((attachment) => ({

@@ -7,7 +7,6 @@ import core from './core';
 import labels from './labels';
 import lists from './lists';
 import modals from './modals';
-import priorities from './priorities';
 import projectManagers from './project-managers';
 import projects from './projects';
 import router from './router';
@@ -26,7 +25,6 @@ export default {
   ...labels,
   ...lists,
   ...modals,
-  ...priorities,
   ...projectManagers,
   ...projects,
   ...router,

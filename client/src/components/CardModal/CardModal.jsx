@@ -590,7 +590,7 @@ const CardModal = React.memo(
             placeholder={priorityDefaultItem.name}
             defaultItem={priorityDefaultItem}
             isSearchable
-            onChange={(option) => onUpdate({ priorityId: option.id === 'none' ? null : option.id })}
+            onChange={(option) => onUpdate({ priority: option.id === 'none' ? null : option.id })}
           />
         ) : (
           <span className={s.headerItem}>{priority ? <Priority name={priority.name} color={priority.color} /> : t('common.noPriority')}</span>

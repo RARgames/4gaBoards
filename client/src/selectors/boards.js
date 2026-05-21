@@ -264,7 +264,7 @@ export const selectFilterPrioritiesForCurrentBoard = createSelector(
       return boardModel;
     }
 
-    return boardModel.filterPriorities.toRefArray().sort((a, b) => a.position - b.position);
+    return boardModel.filterPriorities || [];
   },
 );
 
@@ -283,7 +283,7 @@ export const selectIsFilteredForCurrentBoard = createSelector(
     }
     const filterUsersArray = boardModel.filterUsers.toRefArray();
     const filterLabelsArray = boardModel.filterLabels.toRefArray();
-    const filterPrioritiesArray = boardModel.filterPriorities.toRefArray();
+    const filterPrioritiesArray = boardModel.filterPriorities || [];
     const { searchParams } = boardModel;
 
     return (

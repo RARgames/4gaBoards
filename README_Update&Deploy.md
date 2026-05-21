@@ -125,11 +125,11 @@ docker build -t ricardorheeder/4gaboards:latest .
 
 Run on your **local development PC**:
 
+(If you haven't logged in: `docker login` first.)
+
 ```bash
 docker push ricardorheeder/4gaboards:latest
 ```
-
-(If you haven't logged in: `docker login` first.)
 
 ---
 

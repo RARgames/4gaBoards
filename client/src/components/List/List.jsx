@@ -155,6 +155,20 @@ const List = React.memo(
       return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // react-window caches each row's height by index. When the card set or order changes
+    // (delete, reorder, filter, socket update) those indices remap to different cards, so
+    // the cache must be invalidated here or rows render at stale heights and overlap.
+    // A card resizing itself is already handled by setCardSize below.
+    const prevCardIdsRef = useRef(filteredCardIds);
+    useEffect(() => {
+      const prev = prevCardIdsRef.current;
+      const isSame = prev.length === filteredCardIds.length && prev.every((cardId, cardIndex) => cardId === filteredCardIds[cardIndex]);
+      if (!isSame) {
+        prevCardIdsRef.current = filteredCardIds;
+        listRef.current?.resetAfterIndex(0);
+      }
+    }, [filteredCardIds]);
+
     const setCardSize = useCallback(
       (cardId, size) => {
         if (sizeMap.current[cardId] === size) {

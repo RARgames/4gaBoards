@@ -8,7 +8,11 @@
       "Bash(grep -E 'error|warning|\\\\.jsx$')",
       "Bash(npm run *)",
       "Bash(xargs grep -l \"isCollapsed\")",
-      "Bash(ls -la \"D:\\\\LucidRain\\\\LRS_KanBan\\\\\" | head -20)"
+      "Bash(ls -la \"D:\\\\LucidRain\\\\LRS_KanBan\\\\\" | head -20)",
+      "Bash(node -e \"let s='';process.stdin.on\\('data',d=>s+=d\\);process.stdin.on\\('end',\\(\\)=>{const p=JSON.parse\\(s\\);console.log\\('react-window installed version:',p.version\\);}\\)\")",
+      "Bash(grep -rl \"components/List\" src/containers src/components)",
+      "Bash(grep -rln \"filteredCardIds\\\\|filteredCardId\" src)",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }

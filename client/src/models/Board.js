@@ -27,7 +27,9 @@ export default class extends BaseModel {
     }),
     filterUsers: many('User', 'filterBoards'),
     filterLabels: many('Label', 'filterBoards'),
-    filterPriorities: many('Priority', 'filterBoards'),
+    filterPriorities: attr({
+      getDefault: () => [],
+    }),
     searchParams: attr({
       getDefault: () => ({
         query: '',
@@ -210,14 +212,22 @@ export default class extends BaseModel {
         Board.withId(payload.boardId).filterLabels.remove(payload.id);
 
         break;
-      case ActionTypes.PRIORITY_TO_BOARD_FILTER_ADD:
-        Board.withId(payload.boardId).filterPriorities.add(payload.id);
+      case ActionTypes.PRIORITY_TO_BOARD_FILTER_ADD: {
+        const boardModel = Board.withId(payload.boardId);
+        const current = boardModel.filterPriorities || [];
+        if (!current.includes(payload.id)) {
+          boardModel.update({ filterPriorities: [...current, payload.id] });
+        }
 
         break;
-      case ActionTypes.PRIORITY_FROM_BOARD_FILTER_REMOVE:
-        Board.withId(payload.boardId).filterPriorities.remove(payload.id);
+      }
+      case ActionTypes.PRIORITY_FROM_BOARD_FILTER_REMOVE: {
+        const boardModel = Board.withId(payload.boardId);
+        const current = boardModel.filterPriorities || [];
+        boardModel.update({ filterPriorities: current.filter((value) => value !== payload.id) });
 
         break;
+      }
 
       case ActionTypes.BOARD_EXPORT__SUCCESS:
         if (payload.downloadUrl) {

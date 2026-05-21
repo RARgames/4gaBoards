@@ -13,7 +13,7 @@ const PriorityCell = React.memo(({ priority, allPriorities, cellClassName, canEd
 
   const handleChange = useCallback(
     (option) => {
-      onUpdate({ priorityId: option.id === 'none' ? null : option.id });
+      onUpdate({ priority: option.id === 'none' ? null : option.id });
     },
     [onUpdate],
   );

@@ -3,11 +3,12 @@ import { bindActionCreators } from 'redux';
 
 import PriorityCell from '../../components/Board/ListView/PriorityCell';
 import { BoardMembershipRoles } from '../../constants/Enums';
+import Priorities from '../../constants/Priorities';
 import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const allPriorities = selectors.selectAllPriorities(state);
+  const allPriorities = Priorities;
   const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
   const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 

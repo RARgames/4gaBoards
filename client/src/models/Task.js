@@ -19,11 +19,7 @@ export default class extends BaseModel {
       as: 'card',
       relatedName: 'tasks',
     }),
-    priorityId: fk({
-      to: 'Priority',
-      as: 'priority',
-      relatedName: 'tasks',
-    }),
+    priority: attr(),
     users: many('User', 'tasks'),
     createdAt: attr(),
     createdById: fk({

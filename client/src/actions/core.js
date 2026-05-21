@@ -21,7 +21,6 @@ const initializeCore = (
   notifications,
   userProjects,
   userPrefs,
-  priorities,
   cardLinks,
 ) => ({
   type: ActionTypes.CORE_INITIALIZE,
@@ -46,7 +45,6 @@ const initializeCore = (
     notifications,
     userProjects,
     userPrefs,
-    priorities,
     cardLinks,
   },
 });

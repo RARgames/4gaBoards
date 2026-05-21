@@ -69,7 +69,6 @@ export function* fetchCore() {
   const core = yield call(request, api.getCoreSettingsPublic);
   const { items: userProjects } = yield call(request, api.getUserProjects);
   const { item: userPrefs } = yield call(request, api.getUserPrefs, user.id);
-  const { items: priorities } = yield call(request, api.getPriorities);
 
   return {
     user,
@@ -92,7 +91,6 @@ export function* fetchCore() {
     core,
     userProjects,
     userPrefs,
-    priorities,
     cardLinks,
   };
 }

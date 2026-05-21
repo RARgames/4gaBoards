@@ -96,8 +96,8 @@ const Item = React.memo(
     );
 
     const handlePriorityUpdate = useCallback(
-      (priorityId) => {
-        onUpdate({ priorityId });
+      (priorityValue) => {
+        onUpdate({ priority: priorityValue });
       },
       [onUpdate],
     );

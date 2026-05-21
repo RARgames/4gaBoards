@@ -73,9 +73,10 @@ module.exports = {
       model: 'Attachment',
       columnName: 'cover_attachment_id',
     },
-    priorityId: {
-      model: 'Priority',
-      columnName: 'priority_id',
+    priority: {
+      type: 'string',
+      isIn: ['low', 'medium', 'high'],
+      allowNull: true,
     },
     parentCardId: {
       model: 'Card',

@@ -26,7 +26,6 @@ const handleSocketReconnect = (
   notifications,
   userProjects,
   userPrefs,
-  priorities,
   cardLinks,
 ) => ({
   type: ActionTypes.SOCKET_RECONNECT_HANDLE,
@@ -51,7 +50,6 @@ const handleSocketReconnect = (
     notifications,
     userProjects,
     userPrefs,
-    priorities,
     cardLinks,
   },
 });
