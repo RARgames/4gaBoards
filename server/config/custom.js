@@ -99,4 +99,5 @@ module.exports.custom = {
   notificationsMailBatchIntervalMs: process.env.NODE_ENV === 'production' ? 10 * 60 * 1000 : 1 * 60 * 1000,
   emailVerificationCooldownMs: 60 * 1000,
   systemNotificationsHostUrl: process.env.NODE_ENV === 'production' ? 'https://notifications.4gaboards.com' : 'http://localhost:2998',
+  systemNotificationsDisabled: process.env.SYSTEM_NOTIFICATIONS_DISABLED === 'true',
 };

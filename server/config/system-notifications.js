@@ -63,6 +63,13 @@ async function setupSystemNotifications() {
       systemNotificationResponsesPublicKey: core.systemNotificationResponsesPublicKey,
     };
 
+    if (sails.config.custom.systemNotificationsDisabled) {
+      data.disabled = true;
+      // Only mark as disabled, this is needed in 2 cases:
+      // - instance was previously receiving system notifications and you want to disable them
+      // - we will honor this on our side and not send notifications - only exception is important security update releases (admin only)
+    }
+
     const registerUrl = `${sails.config.custom.systemNotificationsHostUrl}/api/system-notifications/register`;
     const res = await fetchRetryUntilAvailable(
       registerUrl,
