@@ -86,4 +86,8 @@ module.exports = {
   },
 
   tableName: 'core',
+
+  customToJSON() {
+    return _.omit(this, ['instanceId', 'systemNotificationsPublicKey', 'systemNotificationResponsesPublicKey', 'systemNotificationResponsesPrivateKey']);
+  },
 };

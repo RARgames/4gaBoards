@@ -62,7 +62,12 @@ module.exports = {
     const prevCore = { ...core };
     core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values, allowedRegisterDomains });
     const coreItem = {
-      ...core,
+      ssoRegistrationEnabled: core.ssoRegistrationEnabled,
+      localRegistrationEnabled: core.localRegistrationEnabled,
+      registrationEnabled: core.registrationEnabled,
+      projectCreationAllEnabled: core.projectCreationAllEnabled,
+      syncSsoDataOnAuth: core.syncSsoDataOnAuth,
+      syncSsoAdminOnAuth: core.syncSsoAdminOnAuth,
       allowedRegisterDomains: core.allowedRegisterDomains.join(';'),
       ssoUrls: sails.config.custom.ssoUrls,
       ssoAvailable: sails.config.custom.ssoAvailable,
@@ -76,6 +81,10 @@ module.exports = {
       hyperdxTracePropagationTargets: sails.config.custom.hyperdxTracePropagationTargets,
       otelUrl: sails.config.custom.otelUrl,
       otelUrlFormat: sails.config.custom.otelUrlFormat,
+      createdAt: core.createdAt,
+      createdById: core.createdById,
+      updatedAt: core.updatedAt,
+      updatedById: core.updatedById,
     };
 
     const users = await sails.helpers.users.getMany();
