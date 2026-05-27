@@ -11,7 +11,7 @@ import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import * as gs from '../../global.module.scss';
 import * as s from './NotificationCenter.module.scss';
 
-const NotificationCenter = React.memo(({ items, filteredItems, filter, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onChangeFilterQuery }) => {
+const NotificationCenter = React.memo(({ items, filteredItems, filter, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onChangeFilterQuery, onSystemNotificationSubmitResponse }) => {
   const [t] = useTranslation();
   const unreadCount = items.filter((item) => !item.isRead).length;
   const totalCount = items.length;
@@ -34,7 +34,7 @@ const NotificationCenter = React.memo(({ items, filteredItems, filter, onUpdate,
       </div>
       {totalCount > 0 ? (
         <div className={clsx(s.content, gs.scrollableY)}>
-          <Notifications items={filteredItems} isFullScreen onUpdate={onUpdate} onDelete={onDelete} onClose={() => {}} />
+          <Notifications items={filteredItems} isFullScreen onUpdate={onUpdate} onDelete={onDelete} onSystemNotificationSubmitResponse={onSystemNotificationSubmitResponse} onClose={() => {}} />
         </div>
       ) : (
         <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>
@@ -52,6 +52,7 @@ NotificationCenter.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onDeleteAll: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
+  onSystemNotificationSubmitResponse: PropTypes.func.isRequired,
 };
 
 export default NotificationCenter;

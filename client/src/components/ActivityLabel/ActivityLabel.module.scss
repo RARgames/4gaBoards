@@ -19,6 +19,7 @@
     width: inherit;
     -webkit-text-stroke: 0.3px currentColor;
     pointer-events: none;
+    white-space: nowrap;
   }
 
   .instanceScope {
@@ -55,5 +56,9 @@
 
   .commentScope {
     background: var(--commentActivity);
+  }
+
+  .systemScope {
+    background: var(--systemActivity);
   }
 }

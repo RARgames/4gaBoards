@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) =>
       onDelete: entryActions.deleteNotification,
       onDeleteAll: entryActions.deleteAllNotifications,
       onChangeFilterQuery: entryActions.updateCurrentUserNotificationFilterQuery,
+      onSystemNotificationSubmitResponse: entryActions.submitSystemNotificationResponse,
     },
     dispatch,
   );

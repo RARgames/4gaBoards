@@ -132,6 +132,7 @@
   --scrollbarTrack: #1c2532;
 
   /* Activities */
+  --systemActivity: #ffbd00;
   --instanceActivity: #c0392b;
   --userActivity: #e57373;
   --projectActivity: #f1c40f;
@@ -321,6 +322,7 @@
   --scrollbarTrack: #0d1117;
 
   /* Activities */
+  --systemActivity: #ffbd00;
   --instanceActivity: #c0392b;
   --userActivity: #e57373;
   --projectActivity: #f1c40f;
@@ -510,6 +512,7 @@
   --scrollbarTrack: #f2f2f2;
 
   /* Activities */
+  --systemActivity: #ffbd00;
   --instanceActivity: #c0392b;
   --userActivity: #e57373;
   --projectActivity: #f1c40f;

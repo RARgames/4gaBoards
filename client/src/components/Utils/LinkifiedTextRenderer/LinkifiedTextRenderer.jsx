@@ -8,15 +8,23 @@ import { Icon, IconType, IconSize } from '../Icon';
 
 import * as s from './LinkifiedTextRenderer.module.scss';
 
-const LinkifiedTextRenderer = React.memo(({ text, wrapperClassName, linkClassName, iconClassName }) => {
-  const parts = text.split(/(\s+)/);
+const LinkifiedTextRenderer = React.memo(({ text, isInline, wrapperClassName, linkClassName, iconClassName }) => {
+  const parts = text?.split(/(\s+)/);
 
-  return parts.map((part, i) => {
+  return parts?.map((part, i) => {
     if (isLink(part)) {
       const normalized = normalizeLink(part);
 
       if (normalized) {
         const key = `${part}-${i}`;
+
+        if (isInline) {
+          return (
+            <ExternalLink key={key} href={normalized.href} className={clsx(s.wrapper, wrapperClassName, linkClassName)} data-prevent-card-switch>
+              {beautifyLink(part)}
+            </ExternalLink>
+          );
+        }
 
         return (
           <span key={key} className={clsx(s.wrapper, wrapperClassName)}>
@@ -34,13 +42,16 @@ const LinkifiedTextRenderer = React.memo(({ text, wrapperClassName, linkClassNam
 });
 
 LinkifiedTextRenderer.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
+  isInline: PropTypes.bool,
   wrapperClassName: PropTypes.string,
   linkClassName: PropTypes.string,
   iconClassName: PropTypes.string,
 };
 
 LinkifiedTextRenderer.defaultProps = {
+  text: '',
+  isInline: false,
   wrapperClassName: undefined,
   linkClassName: undefined,
   iconClassName: undefined,

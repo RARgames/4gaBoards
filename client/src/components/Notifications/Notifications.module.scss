@@ -47,8 +47,12 @@
 
   .user {
     display: inline-block;
-    padding: 4px 8px 0 0;
+    padding: 0 8px 0 0;
     vertical-align: top;
+  }
+
+  .systemUser {
+    padding-right: 6px;
   }
 
   .author {
@@ -91,5 +95,48 @@
     padding: 0 2px;
     overflow-wrap: anywhere;
     color: var(--text2);
+  }
+
+  .systemTitle {
+    display: block;
+    font-weight: bold;
+    color: var(--text1);
+    padding: 0 2px 2px;
+  }
+
+  .systemContent {
+    display: block;
+    font-size: 13px;
+    overflow: hidden;
+    padding: 0 2px;
+    overflow-wrap: anywhere;
+    color: var(--text2);
+  }
+
+  .link {
+    color: var(--text2);
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--text3);
+    }
+  }
+
+  .systemNotificationResponseWrapper {
+    padding: 6px 2px 2px 2px;
+  }
+
+  .answers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .answer {
+    font-size: 12px;
+    padding: 4px 8px;
+    width: auto;
+    flex: 1 0 auto;
+    text-align: center;
   }
 }

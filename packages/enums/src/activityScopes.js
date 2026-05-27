@@ -8,6 +8,7 @@ const ActivityScopes = {
   TASK: 'task',
   COMMENT: 'comment',
   ATTACHMENT: 'attachment',
+  SYSTEM: 'system',
 };
 
 export default ActivityScopes;

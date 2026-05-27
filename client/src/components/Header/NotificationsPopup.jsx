@@ -13,7 +13,7 @@ import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, withPopup } fro
 import * as gs from '../../global.module.scss';
 import * as s from './NotificationsPopup.module.scss';
 
-const NotificationsStep = React.memo(({ items, filteredItems, filter, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onChangeFilterQuery, onClose }) => {
+const NotificationsStep = React.memo(({ items, filteredItems, filter, onUpdate, onMarkAllAs, onDelete, onDeleteAll, onChangeFilterQuery, onSystemNotificationSubmitResponse, onClose }) => {
   const [t] = useTranslation();
 
   const unreadCount = items.filter((item) => !item.isRead).length;
@@ -43,7 +43,7 @@ const NotificationsStep = React.memo(({ items, filteredItems, filter, onUpdate, 
       <Popup.Content>
         {totalCount > 0 ? (
           <div className={clsx(s.wrapper, gs.scrollableY)}>
-            <Notifications items={filteredItems} isFullScreen={false} onUpdate={onUpdate} onDelete={onDelete} onClose={onClose} />
+            <Notifications items={filteredItems} isFullScreen={false} onUpdate={onUpdate} onDelete={onDelete} onSystemNotificationSubmitResponse={onSystemNotificationSubmitResponse} onClose={onClose} />
           </div>
         ) : (
           <div className={s.noUnread}>{t('common.noUnreadNotifications')}</div>
@@ -62,6 +62,7 @@ NotificationsStep.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onDeleteAll: PropTypes.func.isRequired,
   onChangeFilterQuery: PropTypes.func.isRequired,
+  onSystemNotificationSubmitResponse: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

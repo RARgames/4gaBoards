@@ -52,8 +52,12 @@ module.exports = {
     },
     actionId: {
       model: 'Action',
-      required: true,
       columnName: 'action_id',
+    },
+    systemNotificationId: {
+      type: 'string',
+      allowNull: true,
+      columnName: 'system_notification_id',
     },
     attachmentId: {
       model: 'Attachment',

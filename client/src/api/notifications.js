@@ -45,6 +45,12 @@ const deleteNotifications = (ids, headers) =>
 
 const deleteAllNotifications = (data, headers) => socket.delete('/notifications', data, headers);
 
+const submitSystemNotificationResponse = (id, answer, headers) =>
+  socket.post(`/notifications/${id}/submit-system-notification-response`, { answer }, headers).then((body) => ({
+    ...body,
+    item: transformNotification(body.item),
+  }));
+
 /* Event handlers */
 
 const makeHandleNotificationCreate = (next) => (body) => {
@@ -72,6 +78,7 @@ export default {
   markAllNotificationsAs,
   deleteNotifications,
   deleteAllNotifications,
+  submitSystemNotificationResponse,
   makeHandleNotificationCreate,
   makeHandleNotificationUpdate,
   makeHandleMarkAllNotificationsAs,

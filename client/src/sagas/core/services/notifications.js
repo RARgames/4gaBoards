@@ -105,6 +105,20 @@ export function* handleDeleteAllNotifications(notifications) {
   yield put(actions.handleDeleteAllNotifications(notifications));
 }
 
+export function* submitSystemNotificationResponse(id, answer) {
+  yield put(actions.submitSystemNotificationResponse(id, answer));
+
+  let notification;
+  try {
+    ({ item: notification } = yield call(request, api.submitSystemNotificationResponse, id, answer));
+  } catch (error) {
+    yield put(actions.submitSystemNotificationResponse.failure(id, error));
+    return;
+  }
+
+  yield put(actions.submitSystemNotificationResponse.success(notification));
+}
+
 export default {
   handleNotificationCreate,
   updateNotification,
@@ -115,4 +129,5 @@ export default {
   handleNotificationDelete,
   deleteAllNotifications,
   handleDeleteAllNotifications,
+  submitSystemNotificationResponse,
 };

@@ -14,5 +14,6 @@ export default function* notificationsWatchers() {
     takeEvery(EntryActionTypes.NOTIFICATION_DELETE_HANDLE, ({ payload: { notification } }) => services.handleNotificationDelete(notification)),
     takeEvery(EntryActionTypes.NOTIFICATION_DELETE_ALL, ({ payload: { data } }) => services.deleteAllNotifications(data)),
     takeEvery(EntryActionTypes.NOTIFICATION_DELETE_ALL_HANDLE, ({ payload: { notifications } }) => services.handleDeleteAllNotifications(notifications)),
+    takeEvery(EntryActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT, ({ payload: { id, answer } }) => services.submitSystemNotificationResponse(id, answer)),
   ]);
 }

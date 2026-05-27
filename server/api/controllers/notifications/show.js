@@ -32,6 +32,20 @@ module.exports = {
       throw Errors.NOTIFICATION_NOT_FOUND;
     }
 
+    if (!notification.actionId) {
+      const enrichedNotification = await sails.helpers.notifications.attachSystemData.with({
+        notifications: notification,
+      });
+
+      return {
+        item: enrichedNotification,
+        included: {
+          users: [],
+          actions: [],
+        },
+      };
+    }
+
     const action = await Action.findOne(notification.actionId);
     const user = await sails.helpers.users.getOne(action.userId, true);
     const card = notification.cardId ? await Card.findOne(notification.cardId) : null;

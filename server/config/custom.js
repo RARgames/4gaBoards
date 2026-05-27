@@ -98,4 +98,5 @@ module.exports.custom = {
   commentsLimit: 50,
   notificationsMailBatchIntervalMs: process.env.NODE_ENV === 'production' ? 10 * 60 * 1000 : 1 * 60 * 1000,
   emailVerificationCooldownMs: 60 * 1000,
+  systemNotificationsHostUrl: process.env.NODE_ENV === 'production' ? 'https://notifications.4gaboards.com' : 'http://localhost:2998',
 };

@@ -125,6 +125,29 @@ const handleDeleteAllNotifications = (notifications) => ({
   },
 });
 
+const submitSystemNotificationResponse = (id, answer) => ({
+  type: ActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT,
+  payload: {
+    id,
+    answer,
+  },
+});
+
+submitSystemNotificationResponse.success = (notification) => ({
+  type: ActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT__SUCCESS,
+  payload: {
+    notification,
+  },
+});
+
+submitSystemNotificationResponse.failure = (id, error) => ({
+  type: ActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
 export default {
   handleNotificationCreate,
   updateNotification,
@@ -135,4 +158,5 @@ export default {
   handleMarkAllNotificationsAs,
   deleteAllNotifications,
   handleDeleteAllNotifications,
+  submitSystemNotificationResponse,
 };

@@ -64,6 +64,14 @@ const handleDeleteAllNotifications = (notifications) => ({
   },
 });
 
+const submitSystemNotificationResponse = (id, answer) => ({
+  type: EntryActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT,
+  payload: {
+    id,
+    answer,
+  },
+});
+
 export default {
   handleNotificationCreate,
   updateNotification,
@@ -74,4 +82,5 @@ export default {
   handleNotificationDelete,
   deleteAllNotifications,
   handleDeleteAllNotifications,
+  submitSystemNotificationResponse,
 };

@@ -10,8 +10,10 @@
  */
 const { setupNotifications } = require('./notifications');
 const { setupOIDC } = require('./passport');
+const { setupSystemNotifications } = require('./system-notifications');
 
 module.exports.bootstrap = async () => {
   setupOIDC();
   setupNotifications();
+  setupSystemNotifications();
 };

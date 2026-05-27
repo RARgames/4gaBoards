@@ -8,20 +8,17 @@ import * as s from './ActivityLabel.module.scss';
 
 const ActivityLabel = React.memo(({ scope }) => {
   const [t] = useTranslation();
+  const isSystemScope = scope === ActivityScopes.SYSTEM;
 
   return scope ? (
     <div className={clsx(s.scope, s[`${scope}Scope`])}>
-      <div className={s.scopeText}>{t(`activity.${scope}Short`).toUpperCase()}</div>
+      <div className={s.scopeText}>{isSystemScope ? '4GA BOARDS' : t(`activity.${scope}Short`).toUpperCase()}</div>
     </div>
   ) : null;
 });
 
 ActivityLabel.propTypes = {
-  scope: PropTypes.oneOf(Object.values(ActivityScopes)),
-};
-
-ActivityLabel.defaultProps = {
-  scope: undefined,
+  scope: PropTypes.oneOf(Object.values(ActivityScopes)).isRequired,
 };
 
 export default ActivityLabel;

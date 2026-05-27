@@ -124,6 +124,8 @@ module.exports.routes = {
   'PATCH /api/notifications': 'notifications/mark-all-as',
   'DELETE /api/notifications/:ids': 'notifications/delete',
   'DELETE /api/notifications': 'notifications/delete-all',
+  'POST /api/notifications/receive-system-notification': 'notifications/receive-system-notification',
+  'POST /api/notifications/:id/submit-system-notification-response': 'notifications/submit-system-notification-response',
 
   'GET /attachments/:id/download/:filename': {
     action: 'attachments/download',

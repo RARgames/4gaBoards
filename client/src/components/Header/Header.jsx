@@ -33,6 +33,7 @@ const Header = React.memo(
     onNotificationDelete,
     onNotificationDeleteAll,
     onNotificationChangeFilterQuery,
+    onSystemNotificationSubmitResponse,
     onLogout,
   }) => {
     const [t] = useTranslation();
@@ -121,6 +122,7 @@ const Header = React.memo(
             onDelete={onNotificationDelete}
             onDeleteAll={onNotificationDeleteAll}
             onChangeFilterQuery={onNotificationChangeFilterQuery}
+            onSystemNotificationSubmitResponse={onSystemNotificationSubmitResponse}
             hideCloseButton
           >
             <Button variant={ButtonVariant.Header} title={t('common.notifications')}>
@@ -158,6 +160,7 @@ Header.propTypes = {
   onNotificationDelete: PropTypes.func.isRequired,
   onNotificationDeleteAll: PropTypes.func.isRequired,
   onNotificationChangeFilterQuery: PropTypes.func.isRequired,
+  onSystemNotificationSubmitResponse: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
 

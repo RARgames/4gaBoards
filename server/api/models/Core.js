@@ -46,6 +46,26 @@ module.exports = {
       defaultsTo: [],
       columnName: 'allowed_register_domains',
     },
+    instanceId: {
+      type: 'string',
+      allowNull: true,
+      columnName: 'instance_id',
+    },
+    systemNotificationsPublicKey: {
+      type: 'string',
+      allowNull: true,
+      columnName: 'system_notifications_public_key',
+    },
+    systemNotificationResponsesPublicKey: {
+      type: 'string',
+      allowNull: true,
+      columnName: 'system_notification_responses_public_key',
+    },
+    systemNotificationResponsesPrivateKey: {
+      type: 'string',
+      allowNull: true,
+      columnName: 'system_notification_responses_private_key',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

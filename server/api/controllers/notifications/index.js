@@ -3,8 +3,11 @@ module.exports = {
     const { currentUser } = this.req;
 
     const notifications = await sails.helpers.users.getNotifications(currentUser.id);
+    const enrichedNotifications = await sails.helpers.notifications.attachSystemData.with({
+      notifications,
+    });
 
-    const actionIds = sails.helpers.utils.mapRecords(notifications, 'actionId');
+    const actionIds = sails.helpers.utils.mapRecords(notifications, 'actionId').filter((id) => id != null);
     const actions = await sails.helpers.actions.getMany(actionIds);
 
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
@@ -14,7 +17,7 @@ module.exports = {
     const cards = await sails.helpers.cards.getMany(cardIds);
 
     return {
-      items: notifications,
+      items: enrichedNotifications,
       included: {
         users,
         ...(cards?.length ? { cards } : {}),

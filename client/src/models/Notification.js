@@ -11,6 +11,12 @@ export default class extends BaseModel {
     type: attr(),
     data: attr(),
     isRead: attr(),
+    systemNotificationId: attr(),
+    systemType: attr(),
+    systemTitle: attr(),
+    systemContent: attr(),
+    systemAnswers: attr(),
+    systemTargetUsers: attr(),
     userId: fk({
       to: 'User',
       as: 'user',
@@ -151,11 +157,13 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.NOTIFICATION_DELETE:
+      case ActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT:
         Notification.withId(payload.id).deleteWithRelated();
 
         break;
       case ActionTypes.NOTIFICATION_DELETE__SUCCESS:
-      case ActionTypes.NOTIFICATION_DELETE_HANDLE: {
+      case ActionTypes.NOTIFICATION_DELETE_HANDLE:
+      case ActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT__SUCCESS: {
         const notificationModel = Notification.withId(payload.notification.id);
 
         if (notificationModel) {
