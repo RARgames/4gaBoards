@@ -32,6 +32,10 @@ module.exports = {
       required: true,
       isIn: ['default', 'poll'],
     },
+    tag: {
+      type: 'string',
+      required: true,
+    },
     title: {
       type: 'string',
       required: true,
@@ -92,6 +96,7 @@ module.exports = {
     const systemNotification = {
       id: inputs.id,
       type: inputs.type,
+      tag: inputs.tag,
       title: inputs.title,
       content: inputs.content,
       answers: inputs.answers,

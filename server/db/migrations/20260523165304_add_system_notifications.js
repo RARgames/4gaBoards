@@ -10,7 +10,8 @@ module.exports.up = async (knex) => {
     table.bigInteger('id').primary().defaultTo(knex.raw('next_id()'));
     table.uuid('system_notification_id').notNullable().unique();
     table.string('type').notNullable();
-    table.string('title').nullable();
+    table.string('tag').notNullable();
+    table.string('title').notNullable();
     table.text('content').nullable();
     table.json('answers').nullable();
     table.string('target_users').notNullable();

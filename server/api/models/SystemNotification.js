@@ -20,6 +20,11 @@ module.exports = {
       isIn: ['default', 'poll'],
       columnName: 'type',
     },
+    tag: {
+      type: 'string',
+      required: true,
+      columnName: 'tag',
+    },
     title: {
       type: 'string',
       required: true,

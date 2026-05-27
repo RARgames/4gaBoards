@@ -23,6 +23,7 @@ module.exports = {
     if (existingSystemNotification) {
       const updatedSystemNotification = await SystemNotification.updateOne({ id: existingSystemNotification.id }).set({
         type: systemNotification.type,
+        tag: systemNotification.tag,
         title: systemNotification.title,
         content: systemNotification.content,
         answers,
@@ -35,6 +36,7 @@ module.exports = {
             item: {
               ...notif,
               systemType: updatedSystemNotification.type,
+              systemTag: updatedSystemNotification.tag,
               systemTitle: updatedSystemNotification.title,
               systemContent: updatedSystemNotification.content,
               systemAnswers: updatedSystemNotification.answers,
@@ -50,6 +52,7 @@ module.exports = {
     const createdSystemNotification = await SystemNotification.create({
       systemNotificationId: systemNotification.id,
       type: systemNotification.type,
+      tag: systemNotification.tag,
       title: systemNotification.title,
       content: systemNotification.content,
       answers,
@@ -83,6 +86,7 @@ module.exports = {
             item: {
               ...created,
               systemType: systemNotification.type,
+              systemTag: systemNotification.tag,
               systemTitle: systemNotification.title,
               systemContent: systemNotification.content,
               systemAnswers: systemNotification.answers,

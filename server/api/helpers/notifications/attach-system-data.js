@@ -25,6 +25,7 @@ module.exports = {
       return {
         ...notification,
         systemType: systemNotification.type,
+        systemTag: systemNotification.tag,
         systemTitle: systemNotification.title,
         systemContent: systemNotification.content,
         systemAnswers: systemNotification.answers,

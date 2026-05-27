@@ -13,6 +13,7 @@ export default class extends BaseModel {
     isRead: attr(),
     systemNotificationId: attr(),
     systemType: attr(),
+    systemTag: attr(),
     systemTitle: attr(),
     systemContent: attr(),
     systemAnswers: attr(),
