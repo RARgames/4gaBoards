@@ -7,8 +7,8 @@ module.exports.up = async (knex) => {
   });
 
   await knex.schema.createTable('system_notification', (table) => {
-    table.increments('id').primary();
-    table.string('system_notification_id').notNullable().unique();
+    table.bigInteger('id').primary().defaultTo(knex.raw('next_id()'));
+    table.uuid('system_notification_id').notNullable().unique();
     table.string('type').notNullable();
     table.string('title').nullable();
     table.text('content').nullable();
@@ -20,7 +20,7 @@ module.exports.up = async (knex) => {
 
   await knex.schema.alterTable('notification', (table) => {
     table.bigInteger('action_id').nullable().alter();
-    table.string('system_notification_id').nullable();
+    table.bigInteger('system_notification_id').nullable();
   });
 
   await knex.raw(`

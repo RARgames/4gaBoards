@@ -11,6 +11,7 @@ module.exports = {
       type: 'string',
       required: true,
       unique: true,
+      isUUID: true,
       columnName: 'system_notification_id',
     },
     type: {

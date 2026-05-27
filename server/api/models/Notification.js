@@ -55,8 +55,7 @@ module.exports = {
       columnName: 'action_id',
     },
     systemNotificationId: {
-      type: 'string',
-      allowNull: true,
+      model: 'SystemNotification',
       columnName: 'system_notification_id',
     },
     attachmentId: {
