@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const { createSignature } = require('../../../utils/systemNotificationSignature');
 
 const Errors = {
@@ -73,9 +75,11 @@ module.exports = {
     }
 
     const responseUrl = `${sails.config.custom.systemNotificationsHostUrl.replace(/\/$/, '')}/api/system-notifications/${systemNotification.systemNotificationId}/responses`;
+
+    const userIdentifier = crypto.createHash('sha256').update(`${core.instanceId}:${currentUser.id}`).digest('hex');
     const data = {
       instanceId: core.instanceId,
-      userId: currentUser.id,
+      userId: userIdentifier,
       answer: inputs.answer,
     };
     const body = JSON.stringify(data);
