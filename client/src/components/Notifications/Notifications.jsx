@@ -51,6 +51,7 @@ const Notifications = React.memo(({ items, isFullScreen, onUpdate, onDelete, onS
               </span>
               <span className={s.author}>4ga Boards</span>
               {item.createdAt && <span className={s.date}>{t('format:dateTime', { postProcess: 'formatDate', value: item.createdAt })} </span>}
+              <span className={s.systemTag}>{item.systemTag}</span>
               <Button
                 variant={ButtonVariant.Icon}
                 onClick={() => handleUpdate(item.id, { isRead: !item.isRead })}

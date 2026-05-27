@@ -11,7 +11,7 @@ module.exports.up = async (knex) => {
     table.uuid('system_notification_id').notNullable().unique();
     table.string('type').notNullable();
     table.string('tag').notNullable();
-    table.string('title').notNullable();
+    table.text('title').notNullable();
     table.text('content').nullable();
     table.json('answers').nullable();
     table.string('target_users').notNullable();
