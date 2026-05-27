@@ -8,7 +8,7 @@ async function setupSystemNotifications() {
   }
 
   try {
-    const core = await Core.findOne({ id: 0 });
+    let core = await Core.findOne({ id: 0 });
     if (!core) {
       sails.log.warn('SystemNotifications: Core record not found, skipping setup');
       return;
@@ -39,7 +39,7 @@ async function setupSystemNotifications() {
         },
       });
 
-      await Core.updateOne({ id: core.id }).set({
+      core = await Core.updateOne({ id: core.id }).set({
         systemNotificationResponsesPublicKey: publicKey,
         systemNotificationResponsesPrivateKey: privateKey,
       });
