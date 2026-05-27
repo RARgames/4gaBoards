@@ -140,11 +140,12 @@ submitSystemNotificationResponse.success = (notification) => ({
   },
 });
 
-submitSystemNotificationResponse.failure = (id, error) => ({
+submitSystemNotificationResponse.failure = (id, error, notification) => ({
   type: ActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT__FAILURE,
   payload: {
     id,
     error,
+    notification,
   },
 });
 

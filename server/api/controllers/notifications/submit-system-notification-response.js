@@ -15,6 +15,9 @@ const Errors = {
   CORE_NOT_FOUND: {
     coreNotFound: 'Core not found',
   },
+  RESPONSE_SUBMIT_FAILED: {
+    responseSubmitFailed: 'Failed to submit system notification response',
+  },
 };
 
 module.exports = {
@@ -42,6 +45,9 @@ module.exports = {
     },
     coreNotFound: {
       responseType: 'notFound',
+    },
+    responseSubmitFailed: {
+      responseType: 'serverError',
     },
   },
 
@@ -86,22 +92,31 @@ module.exports = {
     const timestamp = String(Date.now());
     const signature = createSignature({ privateKey: core.systemNotificationResponsesPrivateKey, timestamp, rawBody: body });
 
-    fetch(responseUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(signature
-          ? {
-              'x-4ga-notifications-signature': signature,
-              'x-4ga-notifications-timestamp': timestamp,
-              'x-4ga-notifications-signature-algorithm': 'ed25519',
-            }
-          : {}),
-      },
-      body,
-    }).catch((err) => {
+    let response;
+    try {
+      response = await fetch(responseUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(signature
+            ? {
+                'x-4ga-notifications-signature': signature,
+                'x-4ga-notifications-timestamp': timestamp,
+                'x-4ga-notifications-signature-algorithm': 'ed25519',
+              }
+            : {}),
+        },
+        body,
+      });
+    } catch (err) {
       sails.log.warn('SystemNotifications: Failed to send system notification response:', err.message);
-    });
+      throw Errors.RESPONSE_SUBMIT_FAILED;
+    }
+
+    if (!response.ok) {
+      sails.log.warn('SystemNotifications: Failed to send system notification response with status:', response.status);
+      throw Errors.RESPONSE_SUBMIT_FAILED;
+    }
 
     const deletedAt = new Date().toUTCString();
     const [deletedNotification] = await sails.helpers.notifications.updateMany.with({

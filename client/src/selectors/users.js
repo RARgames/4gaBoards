@@ -261,6 +261,30 @@ export const selectNotificationsForCurrentUser = createSelector(
   },
 );
 
+export const makeSelectNotificationByIdForCurrentUser = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ Notification }, notificationId, id) => {
+      if (!notificationId || !id) {
+        return null;
+      }
+
+      const notificationModel = Notification.withId(notificationId);
+
+      if (!notificationModel || notificationModel.userId !== id) {
+        return null;
+      }
+
+      return {
+        ...notificationModel.ref,
+      };
+    },
+  );
+
+export const selectNotificationByIdForCurrentUser = makeSelectNotificationByIdForCurrentUser();
+
 export const selectFilterForCurrentUser = createSelector(
   orm,
   (state) => selectCurrentUserId(state),
@@ -347,6 +371,8 @@ export default {
   selectManagedProjectsForCurrentUser,
   selectProjectsToListsForCurrentUser,
   selectNotificationsForCurrentUser,
+  makeSelectNotificationByIdForCurrentUser,
+  selectNotificationByIdForCurrentUser,
   selectFilterForCurrentUser,
   selectIsFilteredForCurrentUser,
   makeSelectUserNotificationsTotalByUserId,

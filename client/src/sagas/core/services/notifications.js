@@ -106,17 +106,19 @@ export function* handleDeleteAllNotifications(notifications) {
 }
 
 export function* submitSystemNotificationResponse(id, answer) {
+  const notification = yield select(selectors.selectNotificationByIdForCurrentUser, id);
+
   yield put(actions.submitSystemNotificationResponse(id, answer));
 
-  let notification;
+  let respondedNotification;
   try {
-    ({ item: notification } = yield call(request, api.submitSystemNotificationResponse, id, answer));
+    ({ item: respondedNotification } = yield call(request, api.submitSystemNotificationResponse, id, answer));
   } catch (error) {
-    yield put(actions.submitSystemNotificationResponse.failure(id, error));
+    yield put(actions.submitSystemNotificationResponse.failure(id, error, notification));
     return;
   }
 
-  yield put(actions.submitSystemNotificationResponse.success(notification));
+  yield put(actions.submitSystemNotificationResponse.success(respondedNotification));
 }
 
 export default {

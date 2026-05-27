@@ -172,6 +172,12 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.SYSTEM_NOTIFICATION_RESPONSE_SUBMIT__FAILURE:
+        if (payload.notification) {
+          Notification.upsert(payload.notification);
+        }
+
+        break;
       case ActionTypes.NOTIFICATION_DELETE_ALL:
         if (payload.data && payload.data.deleteIsReadOnly) {
           Notification.all()
