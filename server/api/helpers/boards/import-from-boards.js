@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 
 const { isValidColor } = require('../../../utils/colorValidator');
 
@@ -9,18 +8,6 @@ const parseJSON = (json) => {
   } catch {
     return null;
   }
-};
-
-const resolveWithinImportDir = (importTempDir, ...parts) => {
-  const baseDir = path.resolve(importTempDir);
-  const resolvedPath = path.resolve(baseDir, ...parts.filter((v) => typeof v === 'string' && v));
-  const relativePath = path.relative(baseDir, resolvedPath);
-
-  if (relativePath === '' || (!relativePath.startsWith('..') && !path.isAbsolute(relativePath))) {
-    return resolvedPath;
-  }
-
-  throw 'invalidFile';
 };
 
 module.exports = {
@@ -168,7 +155,7 @@ module.exports = {
             if (user.avatar) {
               avatarData = parseJSON(user.avatar);
               if (avatarData) {
-                const dirPath = resolveWithinImportDir(inputs.importTempDir, 'user-avatars', avatarData.dirname, `original.${avatarData.extension}`);
+                const dirPath = sails.helpers.utils.resolveWithinDir(inputs.importTempDir, ['user-avatars', avatarData.dirname, `original.${avatarData.extension}`]);
                 const metadata = {
                   fd: dirPath,
                   filename: `original.${avatarData.extension}`,
@@ -322,7 +309,7 @@ module.exports = {
 
       const filesData = await Promise.all(
         attachmentsToImport.map((attachment) => {
-          const dirPath = resolveWithinImportDir(inputs.importTempDir, 'attachments', attachment.dirname, attachment.filename);
+          const dirPath = sails.helpers.utils.resolveWithinDir(inputs.importTempDir, ['attachments', attachment.dirname, attachment.filename]);
           return sails.helpers.attachments.processUploadedFile({
             fd: dirPath,
             filename: attachment.filename,

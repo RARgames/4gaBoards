@@ -1,5 +1,5 @@
+const { default: filenamify } = require('filenamify');
 const fs = require('fs');
-const path = require('path');
 
 const Errors = {
   BOARD_NOT_FOUND: {
@@ -47,13 +47,18 @@ module.exports = {
       throw Errors.BOARD_NOT_FOUND; // Forbidden
     }
 
-    const filePath = path.join(sails.config.custom.exportsPath, currentUser.id, inputs.filename);
+    const filename = filenamify(inputs.filename);
+    if (filename !== inputs.filename) {
+      throw Errors.FILE_NOT_FOUND;
+    }
+
+    const filePath = sails.helpers.utils.resolveWithinDir(sails.config.custom.exportsPath, [currentUser.id, filename]);
 
     if (!fs.existsSync(filePath)) {
       throw Errors.FILE_NOT_FOUND;
     }
 
-    this.res.type(inputs.filename);
+    this.res.type(filename);
     this.res.set('Content-Disposition', 'attachment');
     this.res.set('Cache-Control', `private, max-age=${sails.config.custom.cacheMaxAge}`);
     const fileStream = fs.createReadStream(filePath);
