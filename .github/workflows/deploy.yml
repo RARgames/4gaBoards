@@ -260,3 +260,17 @@ jobs:
           token: ${{ secrets.HOMEPAGE_4GA_BOARDS_DEPLOY_TOKEN }}
           repository: RARgames/4gaBoardsHomepage
           event-type: trigger-deploy
+
+      - name: Trigger system notification for release
+        run: |
+          curl -X POST https://notifications.4gaboards.com/api/system-notifications \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.API_KEY_4GA_BOARDS_NOTIFICATIONS }}" \
+            -d '{
+              "type": "default",
+              "title": "4ga Boards ${{ needs.prepare.outputs.ghcr_tag }} Released",
+              "content": "Check out latest changes in our release blog: https://4gaboards.com/posts/${{ steps.release_date.outputs.date }}_4gaBoardsRelease_${{ needs.prepare.outputs.ghcr_tag }}",
+              "targetUsers": "admins",
+              "targetScope": "all_instances",
+              "tag": "releases"
+            }'
