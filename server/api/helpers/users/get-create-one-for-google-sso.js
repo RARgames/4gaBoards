@@ -54,6 +54,15 @@ module.exports = {
         ssoGoogleId: inputs.id,
         ssoGoogleEmail: email,
       };
+      if (!user.isVerified) {
+        await Session.update({
+          userId: user.id,
+          deletedAt: null,
+        }).set({
+          deletedAt: new Date().toUTCString(),
+        });
+        updatedValues.password = null;
+      }
       if (core.syncSsoDataOnAuth) {
         if (user.name !== name) {
           updatedValues.name = name;

@@ -66,6 +66,15 @@ module.exports = {
         ssoGithubId: inputs.id,
         ssoGithubEmail: email,
       };
+      if (!user.isVerified) {
+        await Session.update({
+          userId: user.id,
+          deletedAt: null,
+        }).set({
+          deletedAt: new Date().toUTCString(),
+        });
+        updatedValues.password = null;
+      }
       if (core.syncSsoDataOnAuth) {
         if (isUsernameAvailable && inputs.username !== user.username) {
           updatedValues.username = inputs.username;

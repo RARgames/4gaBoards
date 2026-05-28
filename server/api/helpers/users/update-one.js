@@ -12,7 +12,7 @@ const valuesValidator = (value) => {
     return false;
   }
 
-  if (!_.isUndefined(value.password) && !_.isString(value.password)) {
+  if (!_.isNil(value.password) && !_.isString(value.password)) {
     return false;
   }
 
@@ -71,7 +71,7 @@ module.exports = {
 
     if (!_.isUndefined(values.password)) {
       Object.assign(values, {
-        password: bcrypt.hashSync(values.password, 10),
+        password: values.password === null ? null : bcrypt.hashSync(values.password, 10),
         passwordChangedAt: new Date().toUTCString(),
       });
 
