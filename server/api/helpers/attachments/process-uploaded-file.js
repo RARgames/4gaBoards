@@ -1,13 +1,9 @@
+const { default: filenamify } = require('filenamify');
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 const sharp = require('sharp');
 const { v4: uuid } = require('uuid');
-
-const processFilename = async (filename) => {
-  const { default: filenamify } = await import('filenamify');
-  return filenamify(filename);
-};
 
 const moveFile = async (...args) => {
   const moveFileModule = await import('move-file');
@@ -28,9 +24,7 @@ module.exports = {
 
   async fn(inputs) {
     const dirname = uuid();
-
-    const filename = await processFilename(inputs.file.filename);
-
+    const filename = filenamify(inputs.file.filename);
     const rootPath = path.join(sails.config.custom.attachmentsPath, dirname);
     const filePath = path.join(rootPath, filename);
 
