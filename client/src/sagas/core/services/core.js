@@ -1,8 +1,9 @@
-import { call, put, take } from 'redux-saga/effects';
+import { call, put, select, take } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
 import i18n from '../../../i18n';
+import selectors from '../../../selectors';
 import { removeAccessToken } from '../../../utils/access-token-storage';
 import { initializeHyperDX, setHyperDXUserInfo } from '../../../utils/hyperdx-init';
 import request from '../request';
@@ -107,13 +108,14 @@ export function* fetchCoreSettingsPublic() {
 }
 
 export function* updateCoreSettings(data) {
+  const currentCoreSettings = yield select(selectors.selectCoreSettings);
   yield put(actions.updateCoreSettings(data));
 
   let core;
   try {
     ({ item: core } = yield call(request, api.updateCoreSettings, data));
   } catch (error) {
-    yield put(actions.updateCoreSettings.failure(error));
+    yield put(actions.updateCoreSettings.failure(error, currentCoreSettings));
     return;
   }
 

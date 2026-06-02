@@ -86,10 +86,11 @@ updateCoreSettings.success = (data) => ({
   },
 });
 
-updateCoreSettings.failure = (error) => ({
+updateCoreSettings.failure = (error, data) => ({
   type: ActionTypes.CORE_SETTINGS_UPDATE__FAILURE,
   payload: {
     error,
+    data,
   },
 });
 

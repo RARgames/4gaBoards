@@ -62,6 +62,7 @@ module.exports = {
     const prevCore = { ...core };
     core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values, allowedRegisterDomains });
     const coreItem = {
+      id: core.id,
       ssoRegistrationEnabled: core.ssoRegistrationEnabled,
       localRegistrationEnabled: core.localRegistrationEnabled,
       registrationEnabled: core.registrationEnabled,

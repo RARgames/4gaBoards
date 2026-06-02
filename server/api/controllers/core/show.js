@@ -23,6 +23,7 @@ module.exports = {
 
     return {
       item: {
+        id: core.id,
         ssoRegistrationEnabled: core.ssoRegistrationEnabled,
         localRegistrationEnabled: core.localRegistrationEnabled,
         registrationEnabled: core.registrationEnabled,

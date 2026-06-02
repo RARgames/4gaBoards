@@ -45,7 +45,6 @@ export default class extends BaseModel {
       case ActionTypes.CORE_INITIALIZE:
         if (payload.core) {
           const { item } = payload.core;
-          item.id = '0'; // TODO this is quick fix, need to get proper item from Action, also this may fix the need of extra calling of FetchCoreSettingsPublic
           Core.upsert(item);
         }
         break;
@@ -53,6 +52,16 @@ export default class extends BaseModel {
       case ActionTypes.CORE_SETTINGS_UPDATE__SUCCESS:
       case ActionTypes.CORE_SETTINGS_UPDATE_HANDLE:
         Core.upsert(payload.data);
+        break;
+      case ActionTypes.CORE_SETTINGS_UPDATE: {
+        Core.withId(0)?.update(payload.data);
+        break;
+      }
+      case ActionTypes.CORE_SETTINGS_UPDATE__FAILURE:
+        if (payload.data) {
+          Core.upsert(payload.data);
+        }
+
         break;
       case ActionTypes.ACTIVITIES_INSTANCE_FETCH:
         Core.withId('0').update({
