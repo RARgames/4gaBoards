@@ -37,51 +37,6 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
-    ssoGoogleId: {
-      type: 'string',
-      isNotEmptyString: true,
-      allowNull: true,
-    },
-    ssoGoogleEmail: {
-      type: 'string',
-      isEmail: true,
-      allowNull: true,
-    },
-    ssoGithubId: {
-      type: 'string',
-      isNotEmptyString: true,
-      allowNull: true,
-    },
-    ssoGithubUsername: {
-      type: 'string',
-      isNotEmptyString: true,
-      allowNull: true,
-    },
-    ssoGithubEmail: {
-      type: 'string',
-      isEmail: true,
-      allowNull: true,
-    },
-    ssoMicrosoftId: {
-      type: 'string',
-      isNotEmptyString: true,
-      allowNull: true,
-    },
-    ssoMicrosoftEmail: {
-      type: 'string',
-      isEmail: true,
-      allowNull: true,
-    },
-    ssoOidcId: {
-      type: 'string',
-      isNotEmptyString: true,
-      allowNull: true,
-    },
-    ssoOidcEmail: {
-      type: 'string',
-      isEmail: true,
-      allowNull: true,
-    },
     lastLogin: {
       type: 'ref',
     },
@@ -123,15 +78,7 @@ module.exports = {
         'name',
         'phone',
         'organization',
-        'ssoGoogleId',
-        'ssoGoogleEmail',
-        'ssoGithubId',
-        'ssoGithubUsername',
-        'ssoGithubEmail',
-        'ssoMicrosoftId',
-        'ssoMicrosoftEmail',
-        'ssoOidcId',
-        'ssoOidcEmail',
+        // Sensitive SSO fields (e.g. ssoOidcEmail, ssoOidcId) - only updatable via their respective SSO helpers from backend
         'lastLogin',
       ]),
       avatar: inputs.avatarUrl,
