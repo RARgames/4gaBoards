@@ -42,11 +42,12 @@ module.exports = {
 
     const userIds = sails.helpers.utils.mapRecords(comments, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
 
     return {
       items: comments,
       included: {
-        users,
+        users: sanitizedUsers,
       },
     };
   },

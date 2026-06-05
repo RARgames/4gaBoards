@@ -34,6 +34,7 @@ module.exports = {
 
     const userIds = sails.helpers.utils.mapRecords(projectManagers, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds);
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
 
     const managerBoards = await sails.helpers.projects.getBoards(managerProjectIds);
 
@@ -47,7 +48,7 @@ module.exports = {
     return {
       items: projects,
       included: {
-        users,
+        users: sanitizedUsers,
         projectManagers,
         boards,
         boardMemberships,

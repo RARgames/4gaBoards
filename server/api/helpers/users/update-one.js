@@ -112,11 +112,13 @@ module.exports = {
       }
 
       if (!_.isUndefined(values.password)) {
+        const sanitizedUser = await sails.helpers.users.sanitize(user, user);
+
         sails.sockets.broadcast(
           `user:${user.id}`,
           'userDelete', // TODO: introduce separate event
           {
-            item: user,
+            item: sanitizedUser,
           },
           inputs.request,
         );
@@ -144,18 +146,21 @@ module.exports = {
         ); */
 
         const users = await sails.helpers.users.getMany();
-        const userIds = sails.helpers.utils.mapRecords(users);
 
-        userIds.forEach((userId) => {
-          sails.sockets.broadcast(
-            `user:${userId}`,
-            'userUpdate',
-            {
-              item: user,
-            },
-            inputs.request,
-          );
-        });
+        await Promise.all(
+          users.map(async (recipientUser) => {
+            const sanitizedUser = await sails.helpers.users.sanitize(user, recipientUser);
+
+            sails.sockets.broadcast(
+              `user:${recipientUser.id}`,
+              'userUpdate',
+              {
+                item: sanitizedUser,
+              },
+              inputs.request,
+            );
+          }),
+        );
       }
 
       const valueKeys = Object.keys(values);

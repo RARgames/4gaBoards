@@ -1,9 +1,10 @@
 module.exports = {
   async fn() {
-    const users = await sails.helpers.users.getMany();
+    const { currentUser } = this.req;
 
-    return {
-      items: users,
-    };
+    const users = await sails.helpers.users.getMany();
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
+
+    return { items: sanitizedUsers };
   },
 };

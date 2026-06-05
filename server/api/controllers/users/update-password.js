@@ -93,6 +93,8 @@ module.exports = {
       throw Errors.USER_NOT_FOUND;
     }
 
+    const sanitizedUser = await sails.helpers.users.sanitize(user, currentUser);
+
     if (user.id === currentUser.id) {
       const accessToken = sails.helpers.utils.createToken(user.id, user.passwordUpdatedAt);
 
@@ -104,7 +106,7 @@ module.exports = {
       });
 
       return {
-        item: user,
+        item: sanitizedUser,
         included: {
           accessTokens: [accessToken],
         },
@@ -112,7 +114,7 @@ module.exports = {
     }
 
     return {
-      item: user,
+      item: sanitizedUser,
     };
   },
 };

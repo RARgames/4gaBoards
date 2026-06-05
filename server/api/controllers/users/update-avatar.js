@@ -95,8 +95,10 @@ module.exports = {
       throw Errors.USER_NOT_FOUND;
     }
 
+    const sanitizedUser = await sails.helpers.users.sanitize(user, currentUser);
+
     return exits.success({
-      item: user,
+      item: sanitizedUser,
     });
   },
 };

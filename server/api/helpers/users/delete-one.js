@@ -58,18 +58,22 @@ module.exports = {
       await sails.helpers.userPrefs.deleteOne.with({ record: user, currentUser });
 
       const users = await sails.helpers.users.getMany();
-      const userIds = [inputs.record.id, ...sails.helpers.utils.mapRecords(users)];
+      const recipientUsers = _.uniqBy([inputs.record, ...users], 'id');
 
-      userIds.forEach((userId) => {
-        sails.sockets.broadcast(
-          `user:${userId}`,
-          'userDelete',
-          {
-            item: user,
-          },
-          inputs.request,
-        );
-      });
+      await Promise.all(
+        recipientUsers.map(async (recipientUser) => {
+          const sanitizedUser = await sails.helpers.users.sanitize(user, recipientUser);
+
+          sails.sockets.broadcast(
+            `user:${recipientUser.id}`,
+            'userDelete',
+            {
+              item: sanitizedUser,
+            },
+            inputs.request,
+          );
+        }),
+      );
 
       await sails.helpers.actions.createOne.with({
         values: {

@@ -82,18 +82,21 @@ module.exports = {
     // const userIds = await sails.helpers.users.getAdminIds();
 
     const users = await sails.helpers.users.getMany();
-    const userIds = sails.helpers.utils.mapRecords(users);
 
-    userIds.forEach((userId) => {
-      sails.sockets.broadcast(
-        `user:${userId}`,
-        'userCreate',
-        {
-          item: user,
-        },
-        inputs.request,
-      );
-    });
+    await Promise.all(
+      users.map(async (recipientUser) => {
+        const sanitizedUser = await sails.helpers.users.sanitize(user, recipientUser);
+
+        sails.sockets.broadcast(
+          `user:${recipientUser.id}`,
+          'userCreate',
+          {
+            item: sanitizedUser,
+          },
+          inputs.request,
+        );
+      }),
+    );
 
     if (user) {
       await sails.helpers.actions.createOne.with({

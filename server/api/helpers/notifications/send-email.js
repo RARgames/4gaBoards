@@ -204,14 +204,18 @@ module.exports = {
         if (response.status === 403 && responseJson.status === 'email_not_verified') {
           if (user?.isVerified) {
             user = await User.updateOne({ id: receiverUserId }).set({ isVerified: false });
-            const adminIds = await sails.helpers.users.getAdminIds();
-            const userIds = _.union([user.id], adminIds);
+            const admins = await sails.helpers.users.getAdmins();
+            const recipientUsers = _.uniqBy([user, ...admins], 'id');
 
-            userIds.forEach((userId) => {
-              sails.sockets.broadcast(`user:${userId}`, 'userUpdate', {
-                item: user,
-              });
-            });
+            await Promise.all(
+              recipientUsers.map(async (recipientUser) => {
+                const sanitizedUser = await sails.helpers.users.sanitize(user, recipientUser);
+
+                sails.sockets.broadcast(`user:${recipientUser.id}`, 'userUpdate', {
+                  item: sanitizedUser,
+                });
+              }),
+            );
           }
 
           await Notification.update({ id: ids }).set({ deliveredAt: now });

@@ -48,12 +48,13 @@ module.exports = {
 
     const action = await Action.findOne(notification.actionId);
     const user = await sails.helpers.users.getOne(action.userId, true);
+    const sanitizedUser = await sails.helpers.users.sanitize(user, currentUser);
     const card = notification.cardId ? await Card.findOne(notification.cardId) : null;
 
     return {
       item: notification,
       included: {
-        users: [user],
+        users: [sanitizedUser],
         ...(card ? { cards: [card] } : {}),
         actions: [action],
       },

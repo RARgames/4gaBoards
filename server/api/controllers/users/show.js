@@ -25,9 +25,11 @@ module.exports = {
   },
 
   async fn(inputs) {
+    const { currentUser } = this.req;
+
     let user;
     if (inputs.id === CURRENT_USER_ID) {
-      ({ currentUser: user } = this.req);
+      user = currentUser;
 
       if (inputs.subscribe && this.req.isSocket) {
         sails.sockets.join(this.req, `user:${user.id}`);
@@ -40,8 +42,10 @@ module.exports = {
       }
     }
 
+    const sanitizedUser = await sails.helpers.users.sanitize(user, currentUser);
+
     return {
-      item: user,
+      item: sanitizedUser,
     };
   },
 };

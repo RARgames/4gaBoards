@@ -42,6 +42,7 @@ module.exports = {
 
     const userIds = sails.helpers.utils.mapRecords(filteredActions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
 
     if (this.req.isSocket) {
       sails.sockets.join(this.req, `user:${inputs.userId}`);
@@ -50,7 +51,7 @@ module.exports = {
     return {
       items: filteredActions,
       included: {
-        users,
+        users: sanitizedUsers,
       },
     };
   },

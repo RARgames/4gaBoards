@@ -61,8 +61,10 @@ module.exports = {
       });
     });
 
+    const sanitizedUser = await sails.helpers.users.sanitize(user, currentUser);
+
     return {
-      item: user,
+      item: sanitizedUser,
     };
   },
 };

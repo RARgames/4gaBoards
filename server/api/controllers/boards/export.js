@@ -98,7 +98,7 @@ module.exports = {
     users = users.map((user) => ({
       id: user.id,
       name: user.name,
-      email: user.email,
+      email: currentUser.isAdmin ? user.email : undefined,
       avatar: !inputs.skipUserAvatars ? user.avatar : undefined,
     }));
     if (inputs.skipAttachments) {

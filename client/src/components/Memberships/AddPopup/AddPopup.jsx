@@ -59,7 +59,7 @@ const AddStep = React.memo(
     }, [sortUsers]);
 
     const filteredUsers = useMemo(
-      () => sortedUsers.filter((user) => user.email.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch))),
+      () => sortedUsers.filter((user) => user.email?.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch))),
       [sortedUsers, cleanSearch],
     );
 

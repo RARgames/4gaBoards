@@ -138,8 +138,10 @@ module.exports = {
       .intercept('emailAlreadyInUse', () => Errors.EMAIL_ALREADY_IN_USE)
       .intercept('usernameAlreadyInUse', () => Errors.USERNAME_ALREADY_IN_USE);
 
+    const sanitizedUser = await sails.helpers.users.sanitize(user, currentUser);
+
     return {
-      item: user,
+      item: sanitizedUser,
     };
   },
 };

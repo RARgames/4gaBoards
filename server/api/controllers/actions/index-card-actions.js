@@ -41,11 +41,12 @@ module.exports = {
     const actions = await sails.helpers.cards.getActions(card.id, inputs.beforeId);
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
 
     return {
       items: actions,
       included: {
-        users,
+        users: sanitizedUsers,
       },
     };
   },

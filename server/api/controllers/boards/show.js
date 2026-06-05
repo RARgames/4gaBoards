@@ -38,6 +38,7 @@ module.exports = {
 
     const userIds = sails.helpers.utils.mapRecords(boardMemberships, 'userId');
     const users = await sails.helpers.users.getMany(userIds);
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
 
     const labels = await sails.helpers.boards.getLabels(board.id);
     const lists = await sails.helpers.boards.getLists(board.id);
@@ -84,7 +85,7 @@ module.exports = {
     return {
       item: board,
       included: {
-        users,
+        users: sanitizedUsers,
         boardMemberships,
         labels,
         lists,

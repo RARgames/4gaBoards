@@ -33,6 +33,7 @@ module.exports = {
     const actions = await sails.helpers.users.getUserAccountActions(inputs.userAccountId, inputs.beforeId);
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
 
     if (this.req.isSocket) {
       sails.sockets.join(this.req, `user:${inputs.userAccountId}`);
@@ -41,7 +42,7 @@ module.exports = {
     return {
       items: actions,
       included: {
-        users,
+        users: sanitizedUsers,
       },
     };
   },

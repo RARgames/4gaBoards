@@ -12,6 +12,7 @@ module.exports = {
 
     const userIds = sails.helpers.utils.mapRecords(actions, 'userId', true);
     const users = await sails.helpers.users.getMany(userIds, true);
+    const sanitizedUsers = await sails.helpers.users.sanitize(users, currentUser);
 
     const cardIds = sails.helpers.utils.mapRecords(notifications, 'cardId').filter((id) => id != null);
     const cards = await sails.helpers.cards.getMany(cardIds);
@@ -19,7 +20,7 @@ module.exports = {
     return {
       items: enrichedNotifications,
       included: {
-        users,
+        users: sanitizedUsers,
         ...(cards?.length ? { cards } : {}),
         actions: actions.map((action) => ({ ...action, notificationOnly: true })),
       },
