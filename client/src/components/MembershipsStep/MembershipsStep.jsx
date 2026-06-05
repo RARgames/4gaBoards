@@ -31,7 +31,7 @@ const MembershipsStep = React.memo(({ items, currentUserIds, title, memberships,
   }, [sortItems]);
 
   const filteredItems = useMemo(() => {
-    return sortedItems.filter(({ user }) => user.email.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch)));
+    return sortedItems.filter(({ user }) => user.email?.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch)));
   }, [sortedItems, cleanSearch]);
 
   const searchField = useRef(null);

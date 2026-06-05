@@ -106,8 +106,17 @@ const MembershipActionsStep = React.memo(
           <div className={s.name} title={membership.user.name}>
             {membership.user.name}
           </div>
-          <div className={s.email} title={membership.user.email}>
-            {membership.user.email}
+          <div className={s.details}>
+            {membership.user.username && (
+              <span className={s.detailsData} title={membership.user.username}>
+                {membership.user.username}
+              </span>
+            )}
+            {membership.user.email && (
+              <span className={s.detailsData} title={membership.user.email}>
+                {membership.user.email}
+              </span>
+            )}
           </div>
         </span>
         {permissionsSelectStep && canEdit && <Button variant={ButtonVariant.Popup} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} />}
