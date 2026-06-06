@@ -40,6 +40,7 @@ const ActionsCell = React.memo(
     onDelete,
     onUserAdd,
     onUserRemove,
+    onUserEmailLookup,
     onBoardFetch,
     onLabelAdd,
     onLabelRemove,
@@ -92,6 +93,7 @@ const ActionsCell = React.memo(
           onDelete={onDelete}
           onUserAdd={onUserAdd}
           onUserRemove={onUserRemove}
+          onUserEmailLookup={onUserEmailLookup}
           onBoardFetch={onBoardFetch}
           onLabelAdd={onLabelAdd}
           onLabelRemove={onLabelRemove}
@@ -146,6 +148,7 @@ ActionsCell.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,
   onLabelAdd: PropTypes.func.isRequired,
   onLabelRemove: PropTypes.func.isRequired,

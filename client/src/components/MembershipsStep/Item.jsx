@@ -21,7 +21,11 @@ const Item = React.memo(({ isPersisted, isActive, user, memberships, onUserSelec
   return (
     <Button onClick={handleToggleClick} disabled={!isPersisted} className={s.menuItem} title={user.name}>
       <User name={user.name} avatarUrl={user.avatarUrl} isMember={memberships ? memberships.some((m) => m.user?.id === user.id) : true} isNotMemberTitle={t('common.noLongerBoardMember')} />
-      <div className={s.menuItemText}>{user.name}</div>
+      <div className={s.menuItemText}>
+        <div className={s.name}>{user.name}</div>
+        {user.email && <div className={s.email}>{user.email}</div>}
+        {user.username && <div className={s.username}>{user.username}</div>}
+      </div>
       {isActive && <Icon type={IconType.Check} size={IconSize.Size14} />}
     </Button>
   );

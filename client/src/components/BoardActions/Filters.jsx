@@ -27,6 +27,7 @@ const Filters = React.memo(
     onlyWithNotifications,
     onUserAdd,
     onUserRemove,
+    onUserEmailLookup,
     onLabelAdd,
     onLabelRemove,
     onLabelCreate,
@@ -94,6 +95,7 @@ const Filters = React.memo(
             memberships={boardMemberships}
             onUserSelect={onUserAdd}
             onUserDeselect={onUserRemove}
+            onUserEmailLookup={onUserEmailLookup}
             offset={16}
             wrapperClassName={s.popupWrapper}
           >
@@ -209,6 +211,7 @@ Filters.propTypes = {
   onlyWithNotifications: PropTypes.bool,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onLabelAdd: PropTypes.func.isRequired,
   onLabelRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,

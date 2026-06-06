@@ -89,6 +89,7 @@ const CardModal = React.memo(
     onDelete,
     onUserAdd,
     onUserRemove,
+    onUserEmailLookup,
     onBoardFetch,
     onLabelAdd,
     onLabelRemove,
@@ -385,6 +386,7 @@ const CardModal = React.memo(
             onDelete={onDelete}
             onUserAdd={onUserAdd}
             onUserRemove={onUserRemove}
+            onUserEmailLookup={onUserEmailLookup}
             onBoardFetch={onBoardFetch}
             onLabelAdd={onLabelAdd}
             onLabelRemove={onLabelRemove}
@@ -438,7 +440,15 @@ const CardModal = React.memo(
           {t('common.members', { context: 'title' })}
           {canEdit && (
             <div className={s.popupWrapper}>
-              <MembershipsPopup items={boardAndCardMemberships} currentUserIds={userIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0}>
+              <MembershipsPopup
+                items={boardAndCardMemberships}
+                currentUserIds={userIds}
+                memberships={boardMemberships}
+                onUserSelect={onUserAdd}
+                onUserDeselect={onUserRemove}
+                onUserEmailLookup={onUserEmailLookup}
+                offset={0}
+              >
                 <Button variant={ButtonVariant.Icon} title={t('common.addMember')}>
                   <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton2} />
                 </Button>
@@ -446,7 +456,16 @@ const CardModal = React.memo(
             </div>
           )}
         </div>
-        <MembershipsPopup items={boardAndCardMemberships} currentUserIds={userIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} offset={0} disabled={!canEdit}>
+        <MembershipsPopup
+          items={boardAndCardMemberships}
+          currentUserIds={userIds}
+          memberships={boardMemberships}
+          onUserSelect={onUserAdd}
+          onUserDeselect={onUserRemove}
+          onUserEmailLookup={onUserEmailLookup}
+          offset={0}
+          disabled={!canEdit}
+        >
           {users.slice(0, visibleMembersCount).map((user, index) => (
             <span key={user.id} className={clsx(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="small" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
@@ -715,6 +734,7 @@ const CardModal = React.memo(
               onDelete={onTaskDelete}
               onUserAdd={onUserToTaskAdd}
               onUserRemove={onUserFromTaskRemove}
+              onUserEmailLookup={onUserEmailLookup}
               onActivitiesFetch={onTaskActivitiesFetch}
             />
           )}
@@ -888,6 +908,7 @@ CardModal.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,
   onLabelAdd: PropTypes.func.isRequired,
   onLabelRemove: PropTypes.func.isRequired,

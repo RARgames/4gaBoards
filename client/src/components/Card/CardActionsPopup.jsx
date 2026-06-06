@@ -51,6 +51,7 @@ const CardActionsStep = React.memo(
     onDelete,
     onUserAdd,
     onUserRemove,
+    onUserEmailLookup,
     onBoardFetch,
     onLabelAdd,
     onLabelRemove,
@@ -131,7 +132,17 @@ const CardActionsStep = React.memo(
     if (step) {
       switch (step.type) {
         case StepTypes.USERS:
-          return <MembershipsStep items={allBoardMemberships} currentUserIds={currentUserIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
+          return (
+            <MembershipsStep
+              items={allBoardMemberships}
+              currentUserIds={currentUserIds}
+              memberships={boardMemberships}
+              onUserSelect={onUserAdd}
+              onUserDeselect={onUserRemove}
+              onUserEmailLookup={onUserEmailLookup}
+              onBack={handleBack}
+            />
+          );
         case StepTypes.LABELS:
           return (
             <LabelsStep
@@ -244,6 +255,7 @@ CardActionsStep.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,
   onLabelAdd: PropTypes.func.isRequired,
   onLabelRemove: PropTypes.func.isRequired,

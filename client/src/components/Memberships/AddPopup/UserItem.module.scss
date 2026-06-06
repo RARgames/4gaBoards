@@ -20,9 +20,21 @@
     color: var(--text1);
     margin-left: 8px;
     width: calc(100% - 40px - 14px - 10px);
+    vertical-align: middle;
+  }
+
+  .name,
+  .email,
+  .username {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    vertical-align: text-bottom;
+  }
+
+  .email,
+  .username {
+    color: var(--text2);
+    font-size: 12px;
+    line-height: 16px;
   }
 }

@@ -41,6 +41,13 @@ const handleUserUpdate = (user) => ({
   },
 });
 
+const lookupUserEmail = (query) => ({
+  type: EntryActionTypes.USER_EMAIL_LOOKUP,
+  payload: {
+    query,
+  },
+});
+
 const updateUserEmail = (id, data) => ({
   type: EntryActionTypes.USER_EMAIL_UPDATE,
   payload: {
@@ -263,6 +270,7 @@ export default {
   updateUser,
   updateCurrentUser,
   handleUserUpdate,
+  lookupUserEmail,
   updateUserEmail,
   updateCurrentUserEmail,
   resendCurrentUserEmailVerification,

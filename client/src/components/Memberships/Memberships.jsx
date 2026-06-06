@@ -29,6 +29,7 @@ const Memberships = React.memo(
     onCreate,
     onUpdate,
     onDelete,
+    onUserEmailLookup,
   }) => {
     const [t] = useTranslation();
     const visibleMembersCount = 5;
@@ -90,6 +91,7 @@ const Memberships = React.memo(
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
+            onUserEmailLookup={onUserEmailLookup}
           >
             {items.length > visibleMembersCount && (
               <Button
@@ -126,6 +128,7 @@ const Memberships = React.memo(
             onCreate={onCreate}
             onUpdate={onUpdate}
             onDelete={onDelete}
+            onUserEmailLookup={onUserEmailLookup}
           >
             <Button variant={ButtonVariant.Icon} title={t('action.addUser')} className={s.addUser}>
               <Icon type={IconType.UserAdd} size={IconSize.Size20} />
@@ -155,6 +158,7 @@ Memberships.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func,
 };
 
 Memberships.defaultProps = {
@@ -170,6 +174,7 @@ Memberships.defaultProps = {
   deleteConfirmationButtonContent: undefined,
   canLeaveIfLast: true,
   onUpdate: undefined,
+  onUserEmailLookup: () => {},
 };
 
 export default Memberships;

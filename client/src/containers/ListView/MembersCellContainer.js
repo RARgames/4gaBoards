@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
     {
       onUserAdd: (userId) => entryActions.addUserToCard(userId, id),
       onUserRemove: (userId) => entryActions.removeUserFromCard(userId, id),
+      onUserEmailLookup: entryActions.lookupUserEmail,
     },
     dispatch,
   );

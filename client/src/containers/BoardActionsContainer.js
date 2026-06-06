@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch, ownProps) =>
       onMembershipDelete: entryActions.deleteBoardMembership,
       onUserToFilterAdd: entryActions.addUserToFilterInCurrentBoard,
       onUserFromFilterRemove: entryActions.removeUserFromFilterInCurrentBoard,
+      onUserEmailLookup: entryActions.lookupUserEmail,
       onLabelToFilterAdd: entryActions.addLabelToFilterInCurrentBoard,
       onLabelFromFilterRemove: entryActions.removeLabelFromFilterInCurrentBoard,
       onLabelCreate: entryActions.createLabelInCurrentBoard,

@@ -40,6 +40,7 @@ const TaskActionsStep = React.memo(
     onDelete,
     onUserAdd,
     onUserRemove,
+    onUserEmailLookup,
     onActivitiesFetch,
     onClose,
   }) => {
@@ -84,7 +85,17 @@ const TaskActionsStep = React.memo(
         case StepTypes.EDIT_DUE_DATE:
           return <DueDateEditStep defaultValue={dueDate} onUpdate={handleDueDateUpdate} onBack={handleBack} onClose={onClose} />;
         case StepTypes.EDIT_MEMBERS:
-          return <MembershipsStep items={allBoardMemberships} currentUserIds={userIds} memberships={boardMemberships} onUserSelect={onUserAdd} onUserDeselect={onUserRemove} onBack={handleBack} />;
+          return (
+            <MembershipsStep
+              items={allBoardMemberships}
+              currentUserIds={userIds}
+              memberships={boardMemberships}
+              onUserSelect={onUserAdd}
+              onUserDeselect={onUserRemove}
+              onUserEmailLookup={onUserEmailLookup}
+              onBack={handleBack}
+            />
+          );
         case StepTypes.DELETE:
           return (
             <DeleteStep
@@ -182,6 +193,7 @@ TaskActionsStep.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };

@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { useField, useSteps } from '../../../hooks';
+import { useField, useSteps, useUserEmailLookup } from '../../../hooks';
 import { Popup, Input, InputVariant, withPopup } from '../../Utils';
 import MembershipActionsStep from '../MembershipActionsStep';
 import UserItem from './UserItem';
@@ -36,30 +36,26 @@ const AddStep = React.memo(
     onCreate,
     onUpdate,
     onDelete,
+    onUserEmailLookup,
     onClose,
   }) => {
     const [t] = useTranslation();
     const [step, openStep, handleBack] = useSteps();
     const [search, handleSearchChange] = useField('');
+    useUserEmailLookup(users, search, onUserEmailLookup);
     const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
-    const [sortedUsers, setSortedUsers] = useState([]);
-
-    const sortUsers = useCallback(() => {
-      setSortedUsers(
+    const sortedUsers = useMemo(
+      () =>
         [...users].sort((a, b) => {
           const aIsActive = currentUserIds.includes(a.id);
           const bIsActive = currentUserIds.includes(b.id);
           return bIsActive - aIsActive;
         }),
-      );
-    }, [users, currentUserIds]);
-
-    useEffect(() => {
-      sortUsers();
-    }, [sortUsers]);
+      [users, currentUserIds],
+    );
 
     const filteredUsers = useMemo(
-      () => sortedUsers.filter((user) => user.email?.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch))),
+      () => sortedUsers.filter((user) => user.email?.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || user.username?.includes(cleanSearch)),
       [sortedUsers, cleanSearch],
     );
 
@@ -160,7 +156,15 @@ const AddStep = React.memo(
           {filteredUsers.length > 0 && (
             <div className={clsx(s.users, gs.scrollableY)}>
               {filteredUsers.map((user) => (
-                <UserItem key={user.id} name={user.name} avatarUrl={user.avatarUrl} isActive={currentUserIds.includes(user.id)} onSelect={() => handleUserSelect(user.id)} />
+                <UserItem
+                  key={user.id}
+                  name={user.name}
+                  email={user.email}
+                  username={user.username}
+                  avatarUrl={user.avatarUrl}
+                  isActive={currentUserIds.includes(user.id)}
+                  onSelect={() => handleUserSelect(user.id)}
+                />
               ))}
             </div>
           )}
@@ -189,6 +193,7 @@ AddStep.propTypes = {
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

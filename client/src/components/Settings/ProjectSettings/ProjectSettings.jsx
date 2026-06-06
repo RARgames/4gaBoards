@@ -15,7 +15,22 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './ProjectSettings.module.scss';
 
 const ProjectSettings = React.memo(
-  ({ projectId, name, background, backgroundImage, isBackgroundImageUpdating, managers, allUsers, isManager, onUpdate, onBackgroundImageUpdate, onDelete, onManagerCreate, onManagerDelete }) => {
+  ({
+    projectId,
+    name,
+    background,
+    backgroundImage,
+    isBackgroundImageUpdating,
+    managers,
+    allUsers,
+    isManager,
+    onUpdate,
+    onBackgroundImageUpdate,
+    onDelete,
+    onManagerCreate,
+    onManagerDelete,
+    onUserEmailLookup,
+  }) => {
     const [t] = useTranslation();
 
     const handleBackgroundUpdate = useCallback(
@@ -71,6 +86,7 @@ const ProjectSettings = React.memo(
                   onManagerCreate(projectId, data);
                 }}
                 onDelete={onManagerDelete}
+                onUserEmailLookup={onUserEmailLookup}
               />
             </div>
             <div className={s.action}>
@@ -122,6 +138,7 @@ ProjectSettings.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onManagerCreate: PropTypes.func.isRequired,
   onManagerDelete: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
 };
 
 ProjectSettings.defaultProps = {

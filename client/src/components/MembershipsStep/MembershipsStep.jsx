@@ -1,37 +1,30 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { useField } from '../../hooks';
+import { useField, useUserEmailLookup } from '../../hooks';
 import { Popup, Input, InputVariant } from '../Utils';
 import Item from './Item';
 
 import * as gs from '../../global.module.scss';
 import * as s from './MembershipsStep.module.scss';
 
-const MembershipsStep = React.memo(({ items, currentUserIds, title, memberships, onUserSelect, onUserDeselect, onBack }) => {
+const MembershipsStep = React.memo(({ items, currentUserIds, title, memberships, onUserSelect, onUserDeselect, onUserEmailLookup, onBack }) => {
   const [t] = useTranslation();
   const [search, handleSearchChange] = useField('');
+  useUserEmailLookup(items, search, onUserEmailLookup);
   const cleanSearch = useMemo(() => search.trim().toLowerCase(), [search]);
-  const [sortedItems, setSortedItems] = useState([]);
-
-  const sortItems = useCallback(() => {
-    setSortedItems(
-      [...items].sort((a, b) => {
-        const aIsActive = currentUserIds.includes(a.user.id);
-        const bIsActive = currentUserIds.includes(b.user.id);
-        return bIsActive - aIsActive;
-      }),
-    );
+  const sortedItems = useMemo(() => {
+    return [...items].sort((a, b) => {
+      const aIsActive = currentUserIds.includes(a.user.id);
+      const bIsActive = currentUserIds.includes(b.user.id);
+      return bIsActive - aIsActive;
+    });
   }, [items, currentUserIds]);
 
-  useEffect(() => {
-    sortItems();
-  }, [sortItems]);
-
   const filteredItems = useMemo(() => {
-    return sortedItems.filter(({ user }) => user.email?.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || (user.username && user.username.includes(cleanSearch)));
+    return sortedItems.filter(({ user }) => user.email?.includes(cleanSearch) || user.name.toLowerCase().includes(cleanSearch) || user.username?.includes(cleanSearch));
   }, [sortedItems, cleanSearch]);
 
   const searchField = useRef(null);
@@ -86,12 +79,14 @@ MembershipsStep.propTypes = {
   memberships: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onUserSelect: PropTypes.func.isRequired,
   onUserDeselect: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func,
   onBack: PropTypes.func,
 };
 
 MembershipsStep.defaultProps = {
   title: 'common.members',
   memberships: undefined,
+  onUserEmailLookup: () => {},
   onBack: undefined,
 };
 

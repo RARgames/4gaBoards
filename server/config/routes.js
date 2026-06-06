@@ -24,6 +24,7 @@ module.exports.routes = {
   'GET /api/users': 'users/index',
   'POST /api/users': 'users/create',
   'GET /api/users/:id': 'users/show',
+  'POST /api/users/find-by-email': 'users/find-by-email',
   'PATCH /api/users/:id': 'users/update',
   'PATCH /api/users/:id/email': 'users/update-email',
   'POST /api/users/:id/email-verification/request': 'users/request-email-verification',

@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onTaskDelete: (taskId) => entryActions.deleteTask(taskId),
       onUserToTaskAdd: (userId, taskId, cardId) => entryActions.addUserToTask(userId, taskId, cardId),
       onUserFromTaskRemove: (userId, taskId) => entryActions.removeUserFromTask(userId, taskId),
+      onUserEmailLookup: entryActions.lookupUserEmail,
       onTaskCreate: (data) => entryActions.createTask(id, data),
       onTaskMove: (taskId, index) => entryActions.moveTask(taskId, index),
       onActivitiesFetch: (taskId) => entryActions.fetchTaskActivities(taskId),

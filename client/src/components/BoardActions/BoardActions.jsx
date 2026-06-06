@@ -51,6 +51,7 @@ const BoardActions = React.memo(
     onMembershipDelete,
     onUserToFilterAdd,
     onUserFromFilterRemove,
+    onUserEmailLookup,
     onLabelToFilterAdd,
     onLabelFromFilterRemove,
     onLabelCreate,
@@ -110,6 +111,7 @@ const BoardActions = React.memo(
             onCreate={onMembershipCreate}
             onUpdate={onMembershipUpdate}
             onDelete={onMembershipDelete}
+            onUserEmailLookup={onUserEmailLookup}
           />
         </div>
         <div className={clsx(s.action, s.actionFlex)}>
@@ -127,6 +129,7 @@ const BoardActions = React.memo(
             onlyWithNotifications={boardSearchParams.onlyWithNotifications}
             onUserAdd={onUserToFilterAdd}
             onUserRemove={onUserFromFilterRemove}
+            onUserEmailLookup={onUserEmailLookup}
             onLabelAdd={onLabelToFilterAdd}
             onLabelRemove={onLabelFromFilterRemove}
             onLabelCreate={onLabelCreate}
@@ -239,6 +242,7 @@ BoardActions.propTypes = {
   onMembershipDelete: PropTypes.func.isRequired,
   onUserToFilterAdd: PropTypes.func.isRequired,
   onUserFromFilterRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onLabelToFilterAdd: PropTypes.func.isRequired,
   onLabelFromFilterRemove: PropTypes.func.isRequired,
   onLabelCreate: PropTypes.func.isRequired,

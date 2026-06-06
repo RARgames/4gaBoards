@@ -9,7 +9,7 @@ import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils'
 
 import * as s from './MembersCell.module.scss';
 
-const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMemberships, cellClassName, canEdit, onUserAdd, onUserRemove }) => {
+const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMemberships, cellClassName, canEdit, onUserAdd, onUserRemove, onUserEmailLookup }) => {
   const [t] = useTranslation();
   const userIds = users.map((user) => user.id);
 
@@ -21,6 +21,7 @@ const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMembershi
       memberships={boardMemberships}
       onUserSelect={(userId) => onUserAdd(userId, id)}
       onUserDeselect={(userId) => onUserRemove(userId, id)}
+      onUserEmailLookup={onUserEmailLookup}
       offset={0}
       disabled={!canEdit}
       wrapperClassName={s.userWrapper}
@@ -36,6 +37,7 @@ const MembersCell = React.memo(({ id, users, boardMemberships, allBoardMembershi
       memberships={boardMemberships}
       onUserSelect={(userId) => onUserAdd(userId, id)}
       onUserDeselect={(userId) => onUserRemove(userId, id)}
+      onUserEmailLookup={onUserEmailLookup}
       offset={0}
       wrapperClassName={s.popupWrapper}
     >
@@ -61,6 +63,7 @@ MembersCell.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
 };
 
 MembersCell.defaultProps = {

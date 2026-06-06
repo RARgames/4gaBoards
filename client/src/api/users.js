@@ -10,6 +10,12 @@ const getUsers = (headers) =>
     items: body.items.map(transformUser),
   }));
 
+const findUserByEmail = (data, headers) =>
+  socket.post('/users/find-by-email', data, headers).then((body) => ({
+    ...body,
+    item: transformUser(body.item),
+  }));
+
 const createUser = (data, headers) =>
   socket.post('/users', transformUserData(data), headers).then((body) => ({
     ...body,
@@ -85,6 +91,7 @@ const makeHandleUserDelete = makeHandleUserCreate;
 
 export default {
   getUsers,
+  findUserByEmail,
   createUser,
   getUser,
   getCurrentUser,

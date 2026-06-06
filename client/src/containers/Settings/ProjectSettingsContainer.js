@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch) =>
       onDelete: entryActions.deleteProject,
       onManagerCreate: entryActions.createManagerInProject,
       onManagerDelete: entryActions.deleteProjectManager,
+      onUserEmailLookup: entryActions.lookupUserEmail,
     },
     dispatch,
   );

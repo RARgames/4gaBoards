@@ -64,6 +64,7 @@ const Card = React.memo(
     onDelete,
     onUserAdd,
     onUserRemove,
+    onUserEmailLookup,
     onBoardFetch,
     onLabelAdd,
     onLabelRemove,
@@ -231,6 +232,7 @@ const Card = React.memo(
                 onDelete={onTaskDelete}
                 onUserAdd={onUserToTaskAdd}
                 onUserRemove={onUserFromTaskRemove}
+                onUserEmailLookup={onUserEmailLookup}
                 onMouseEnterTasks={handleTasksMouseEnter}
                 onMouseLeaveTasks={handleTasksMouseOut}
                 onActivitiesFetch={onTaskActivitiesFetch}
@@ -276,6 +278,7 @@ const Card = React.memo(
                     memberships={boardMemberships}
                     onUserSelect={(userId) => onUserAdd(userId, id)}
                     onUserDeselect={(userId) => onUserRemove(userId, id)}
+                    onUserEmailLookup={onUserEmailLookup}
                     offset={0}
                   >
                     {users.slice(0, visibleMembersCount).map((user) => (
@@ -357,6 +360,7 @@ const Card = React.memo(
                         onDelete={onDelete}
                         onUserAdd={onUserAdd}
                         onUserRemove={onUserRemove}
+                        onUserEmailLookup={onUserEmailLookup}
                         onBoardFetch={onBoardFetch}
                         onLabelAdd={onLabelAdd}
                         onLabelRemove={onLabelRemove}
@@ -427,6 +431,7 @@ Card.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,
   onLabelAdd: PropTypes.func.isRequired,
   onLabelRemove: PropTypes.func.isRequired,

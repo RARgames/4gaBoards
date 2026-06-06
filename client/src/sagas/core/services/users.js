@@ -62,6 +62,23 @@ export function* handleUserUpdate(user) {
   yield put(actions.handleUserUpdate(user, users, isCurrent));
 }
 
+export function* lookupUserEmail(query) {
+  let user;
+
+  try {
+    ({ item: user } = yield call(request, api.findUserByEmail, {
+      query,
+    }));
+  } catch {
+    return;
+  }
+
+  if (!user) {
+    return;
+  }
+  yield put(actions.handleUserUpdate(user));
+}
+
 export function* updateUserEmail(id, data) {
   yield put(actions.updateUserEmail(id, data));
 
@@ -353,6 +370,7 @@ export default {
   updateUser,
   updateCurrentUser,
   handleUserUpdate,
+  lookupUserEmail,
   updateUserEmail,
   updateCurrentUserEmail,
   resendCurrentUserEmailVerification,

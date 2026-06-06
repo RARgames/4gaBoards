@@ -24,6 +24,7 @@ const TasksCell = React.memo(
     onTaskDelete,
     onUserToTaskAdd,
     onUserFromTaskRemove,
+    onUserEmailLookup,
     onTaskCreate,
     onTaskMove,
     onActivitiesFetch,
@@ -62,6 +63,7 @@ const TasksCell = React.memo(
           onDelete={onTaskDelete}
           onUserAdd={onUserToTaskAdd}
           onUserRemove={onUserFromTaskRemove}
+          onUserEmailLookup={onUserEmailLookup}
           cellClassName={cellClassName}
           onActivitiesFetch={onActivitiesFetch}
         />
@@ -84,6 +86,7 @@ TasksCell.propTypes = {
   onTaskDelete: PropTypes.func.isRequired,
   onUserToTaskAdd: PropTypes.func.isRequired,
   onUserFromTaskRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onTaskCreate: PropTypes.func.isRequired,
   onTaskMove: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,

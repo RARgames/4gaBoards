@@ -50,6 +50,7 @@ const Task = React.memo(
     onDelete,
     onUserAdd,
     onUserRemove,
+    onUserEmailLookup,
     onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
@@ -166,6 +167,7 @@ const Task = React.memo(
                     memberships={boardMemberships}
                     onUserSelect={onUserAdd}
                     onUserDeselect={onUserRemove}
+                    onUserEmailLookup={onUserEmailLookup}
                     offset={0}
                     position="left-start"
                     disabled={!(canEdit && isPersisted)}
@@ -204,6 +206,7 @@ const Task = React.memo(
                     onDelete={onDelete}
                     onUserAdd={onUserAdd}
                     onUserRemove={onUserRemove}
+                    onUserEmailLookup={onUserEmailLookup}
                     onActivitiesFetch={onActivitiesFetch}
                     hideCloseButton
                     position="left-start"
@@ -252,6 +255,7 @@ Task.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
 };
 

@@ -38,6 +38,7 @@ const Tasks = React.forwardRef(
       onDelete,
       onUserAdd,
       onUserRemove,
+      onUserEmailLookup,
       onMouseEnterTasks,
       onMouseLeaveTasks,
       onActivitiesFetch,
@@ -138,6 +139,7 @@ const Tasks = React.forwardRef(
                 onDelete={() => handleDelete(item.id)}
                 onUserAdd={(userId) => handleUserAdd(item.id, userId)}
                 onUserRemove={(userId) => handleUserRemove(item.id, userId)}
+                onUserEmailLookup={onUserEmailLookup}
                 onActivitiesFetch={() => onActivitiesFetch(item.id)}
               />
             ))}
@@ -197,6 +199,7 @@ Tasks.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
+  onUserEmailLookup: PropTypes.func.isRequired,
   onMouseEnterTasks: PropTypes.func,
   onMouseLeaveTasks: PropTypes.func,
   onActivitiesFetch: PropTypes.func.isRequired,

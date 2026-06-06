@@ -11,6 +11,7 @@ export default function* usersWatchers() {
     takeEvery(EntryActionTypes.USER_UPDATE, ({ payload: { id, data } }) => services.updateUser(id, data)),
     takeEvery(EntryActionTypes.CURRENT_USER_UPDATE, ({ payload: { data } }) => services.updateCurrentUser(data)),
     takeEvery(EntryActionTypes.USER_UPDATE_HANDLE, ({ payload: { user } }) => services.handleUserUpdate(user)),
+    takeEvery(EntryActionTypes.USER_EMAIL_LOOKUP, ({ payload: { query } }) => services.lookupUserEmail(query)),
     takeEvery(EntryActionTypes.USER_EMAIL_UPDATE, ({ payload: { id, data } }) => services.updateUserEmail(id, data)),
     takeEvery(EntryActionTypes.CURRENT_USER_EMAIL_UPDATE, ({ payload: { data } }) => services.updateCurrentUserEmail(data)),
     takeEvery(EntryActionTypes.CURRENT_USER_EMAIL_VERIFICATION_RESEND, () => services.resendCurrentUserEmailVerification()),
