@@ -22,12 +22,17 @@ jobs:
         with:
           node-version: 24
 
+      - name: Get pnpm version from package.json
+        id: pnpm_version
+        run: |
+          version=$(jq -r '.engines.pnpm' package.json | sed 's/[^0-9.]//g')
+          echo "version=$version" >> $GITHUB_OUTPUT
+
       - name: Install pnpm
-        run: npm install -g pnpm@11.1.2
+        run: npm install -g pnpm@${{ steps.pnpm_version.outputs.version }}
 
       - name: Install dependencies
-        run: |
-          pnpm install
+        run: pnpm install
 
       - name: Install chromium
         working-directory: tests
