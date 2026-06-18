@@ -1,25 +1,20 @@
 // eslint-disable-next-line import-x/no-extraneous-dependencies
 const babelJest = require('babel-jest').default;
 
-const hasJsxRuntime = (() => {
-  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
-    return false;
-  }
-
-  try {
-    require.resolve('react/jsx-runtime');
-    return true;
-  } catch {
-    return false;
-  }
-})();
-
 module.exports = babelJest.createTransformer({
   presets: [
     [
-      require.resolve('babel-preset-react-app'),
+      require.resolve('@babel/preset-env'),
       {
-        runtime: hasJsxRuntime ? 'automatic' : 'classic',
+        targets: {
+          node: 'current',
+        },
+      },
+    ],
+    [
+      require.resolve('@babel/preset-react'),
+      {
+        runtime: 'automatic',
       },
     ],
   ],

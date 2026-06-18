@@ -25,7 +25,14 @@ export default [
       parser: clientParser,
       parserOptions: {
         babelOptions: {
-          presets: ['@babel/preset-react', ['babel-preset-react-app', false]],
+          presets: [
+            [
+              '@babel/preset-react',
+              {
+                runtime: 'automatic',
+              },
+            ],
+          ],
         },
         ecmaFeatures: {
           jsx: true,
