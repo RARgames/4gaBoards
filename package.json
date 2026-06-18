@@ -63,21 +63,21 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.29.7",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.3",
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-perfectionist": "^5.9.0",
-    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-perfectionist": "^5.9.1",
+    "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "lint-staged": "^17.0.5",
+    "lint-staged": "^17.0.7",
     "postcss-scss": "^4.0.9",
-    "prettier": "^3.8.3",
-    "start-server-and-test": "^3.0.5",
-    "stylelint": "^17.12.0",
+    "prettier": "^3.8.4",
+    "start-server-and-test": "^3.0.11",
+    "stylelint": "^17.13.0",
     "stylelint-config-recommended-scss": "^17.0.1"
   },
   "devEngines": {
@@ -88,6 +88,6 @@
   },
   "engines": {
     "node": "^24.11",
-    "pnpm": "^11.1.2"
+    "pnpm": "^11.8.0"
   }
 }
