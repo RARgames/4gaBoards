@@ -23,6 +23,7 @@ module.exports.policies = {
 
   'access-tokens/create': 'rate-limit-auth',
   'core/show': true,
+  'assetlinks/show': true,
   'auth/*': true,
   'register/create': true,
   'notifications/receive-system-notification': true,

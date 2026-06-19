@@ -100,4 +100,7 @@ module.exports.custom = {
   emailVerificationCooldownMs: 60 * 1000,
   systemNotificationsHostUrl: process.env.NODE_ENV === 'production' ? 'https://notifications.4gaboards.com' : process.env.NOTIFICATIONS_HOST_URL,
   systemNotificationsDisabled: process.env.SYSTEM_NOTIFICATIONS_DISABLED === 'true',
+
+  androidPackageName: process.env.ANDROID_PACKAGE_NAME || 'com.ga4boards.app',
+  androidSha256Fingerprint: process.env.ANDROID_SHA256_FINGERPRINT || '0A:8F:18:85:B8:62:D5:B2:93:6A:A4:AD:CE:E8:85:3B:6A:DD:2F:CA:B7:1E:DC:99:4D:9E:A7:6A:56:83:F7:40',
 };

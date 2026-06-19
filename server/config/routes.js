@@ -143,6 +143,8 @@ module.exports.routes = {
     skipAssets: false,
   },
 
+  'GET /.well-known/assetlinks.json': 'assetlinks/show',
+
   'GET /*': {
     view: 'index',
     skipAssets: true,
