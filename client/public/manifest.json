@@ -1,5 +1,13 @@
 {
   "name": "4ga Boards",
+  "short_name": "4ga Boards",
+  "id": "/",
+  "start_url": ".",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "theme_color": "#22252a",
+  "background_color": "#000000",
   "icons": [
     {
       "src": "favicon.ico",
@@ -14,11 +22,8 @@
     {
       "src": "4gaboards512w.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#22252a",
-  "background_color": "#000000"
+  ]
 }
