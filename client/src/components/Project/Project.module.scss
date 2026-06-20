@@ -100,18 +100,36 @@
     padding: 20px;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .boardTitle {
     width: 100%;
-    height: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     overflow: hidden;
     text-overflow: ellipsis;
     overflow-wrap: anywhere;
+  }
+
+  .boardProgress {
+    flex: 0 0 auto;
+    padding-top: 12px;
+    margin-top: auto;
+    display: flex;
+    line-height: 0;
+    align-items: center;
+    color: var(--text3);
+    font-size: 12px;
+    white-space: nowrap;
+    gap: 4px;
+  }
+
+  .boardProgressBar {
+    margin: 0;
   }
 
   .notification {

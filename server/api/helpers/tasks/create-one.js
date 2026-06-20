@@ -105,6 +105,7 @@ module.exports = {
       }
 
       await sails.helpers.cards.updateMeta.with({ id: task.cardId, currentUser, skipMetaUpdate });
+      await sails.helpers.boards.updateStats.with({ boardId: values.card.boardId });
     }
 
     return task;

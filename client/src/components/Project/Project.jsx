@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Paths from '../../constants/Paths';
 import truncate from '../../utils/visual-truncate';
 import BoardAddPopup from '../BoardAddPopup';
-import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize, ProgressBar, ProgressBarSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Project.module.scss';
@@ -104,6 +104,11 @@ const Project = React.memo(
                 <div className={s.board}>
                   <div title={item.name} className={s.boardTitle}>
                     {item.name}
+                  </div>
+                  <div className={s.boardProgress}>
+                    {t('common.tasks')}:
+                    <ProgressBar value={item.taskCompleted} total={item.taskTotal} size={ProgressBarSize.Tiny} className={s.boardProgressBar} />
+                    {item.taskCompleted}/{item.taskTotal}
                   </div>
                 </div>
               </Link>

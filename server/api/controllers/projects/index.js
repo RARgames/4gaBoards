@@ -40,10 +40,20 @@ module.exports = {
 
     membershipBoards = membershipBoards.filter((membershipBoard) => membershipProjectIds.includes(membershipBoard.projectId));
 
-    const boards = [...managerBoards, ...membershipBoards];
+    let boards = [...managerBoards, ...membershipBoards];
     const boardIds = sails.helpers.utils.mapRecords(boards);
 
     boardMemberships = boardMemberships.filter((boardMembership) => boardIds.includes(boardMembership.boardId));
+
+    const taskStatsByBoard = await sails.helpers.boards.getTaskStats(boardIds);
+    boards = boards.map((board) => {
+      const stats = taskStatsByBoard[board.id];
+      return {
+        ...board,
+        taskTotal: stats.total,
+        taskCompleted: stats.completed,
+      };
+    });
 
     return {
       items: projects,

@@ -57,6 +57,16 @@ module.exports = {
     const listsPerBoard = await Promise.all(boardIds.map((boardId) => sails.helpers.boards.getLists(boardId)));
     const listIds = listsPerBoard.flatMap((lists) => sails.helpers.utils.mapRecords(lists));
 
+    const taskStatsByBoard = await sails.helpers.boards.getTaskStats(boardIds);
+    boards = boards.map((board) => {
+      const stats = taskStatsByBoard[board.id];
+      return {
+        ...board,
+        taskTotal: stats.total,
+        taskCompleted: stats.completed,
+      };
+    });
+
     const mailTokensBoard = await sails.helpers.mailTokens.getMany({ boardId: boardIds, ...(!isProjectManager && { userId: currentUser.id }) });
     const mailTokensLists = await sails.helpers.mailTokens.getMany({ listId: listIds, ...(!isProjectManager && { userId: currentUser.id }) });
     const mailTokens = [...mailTokensBoard, ...mailTokensLists].map((mailToken) => ({

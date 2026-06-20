@@ -13,6 +13,12 @@ export default class extends BaseModel {
     name: attr(),
     isGithubConnected: attr(),
     githubRepo: attr(),
+    taskTotal: attr({
+      getDefault: () => 0,
+    }),
+    taskCompleted: attr({
+      getDefault: () => 0,
+    }),
     isFetching: attr({
       getDefault: () => null,
     }),
