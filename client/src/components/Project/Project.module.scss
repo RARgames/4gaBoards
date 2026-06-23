@@ -133,9 +133,11 @@
   }
 
   .notification {
+    position: absolute;
+    right: 0;
+    top: 0;
     background: var(--backgroundNotifications);
     color: var(--textWhite);
-    float: right;
     font-size: 12px;
     line-height: 20px;
     padding: 0px 6px;
