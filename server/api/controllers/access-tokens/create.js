@@ -44,7 +44,7 @@ module.exports = {
       throw Errors.INVALID_USERNAME_PASSWORD;
     }
 
-    if (!bcrypt.compareSync(inputs.password, user.password)) {
+    if (!user.password || !bcrypt.compareSync(inputs.password, user.password)) {
       await sails.helpers.failedAuths.createOne.with({ attemptedIdentifier, remoteAddress });
       sails.log.warn(`Invalid password! (IP: ${remoteAddress})`);
       throw Errors.INVALID_USERNAME_PASSWORD;
