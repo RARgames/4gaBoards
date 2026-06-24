@@ -141,7 +141,7 @@ const ListActionsStep = React.memo(
         )}
         {canEdit && (
           <Button variant={ButtonVariant.PopupContext} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} onClick={handleToggleCompletedClick}>
-            <Icon type={isCompleted ? IconType.Close : IconType.Check} size={IconSize.Size13} className={s.icon} />
+            <Icon type={isCompleted ? IconType.Reset : IconType.Check} size={IconSize.Size13} className={s.icon} />
             {isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')}
           </Button>
         )}

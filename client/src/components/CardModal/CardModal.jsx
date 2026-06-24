@@ -301,9 +301,9 @@ const CardModal = React.memo(
       setUnsavedDesc(false);
     }, []);
 
-    const handleMarkCompleted = useCallback(() => {
-      onMarkCompleted(true);
-    }, [onMarkCompleted]);
+    const handleToggleMarkAsCompleted = useCallback(() => {
+      onMarkCompleted(!isCompleted);
+    }, [onMarkCompleted, isCompleted]);
 
     // eslint-disable-next-line consistent-return
     useEffect(() => {
@@ -343,9 +343,9 @@ const CardModal = React.memo(
               </div>
             </NameField>
           </div>
-          {canEdit && !isCompleted && (
-            <Button variant={ButtonVariant.Icon} title={t('common.markAsDone')} onClick={handleMarkCompleted}>
-              <Icon type={IconType.Check} size={IconSize.Size14} />
+          {canEdit && (
+            <Button variant={ButtonVariant.Icon} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} onClick={handleToggleMarkAsCompleted}>
+              <Icon type={isCompleted ? IconType.Reset : IconType.Check} size={IconSize.Size14} />
             </Button>
           )}
           {canEdit && isCompleted && (

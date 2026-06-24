@@ -217,7 +217,7 @@ const CardActionsStep = React.memo(
       <>
         {canEdit && (
           <Button variant={ButtonVariant.PopupContext} title={card.isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} onClick={handleToggleCompletedClick}>
-            <Icon type={card.isCompleted ? IconType.Close : IconType.Check} size={IconSize.Size13} className={s.icon} />
+            <Icon type={card.isCompleted ? IconType.Reset : IconType.Check} size={IconSize.Size13} className={s.icon} />
             {card.isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')}
           </Button>
         )}
