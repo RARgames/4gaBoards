@@ -90,7 +90,7 @@ module.exports = {
         card,
         prevCard,
         scope: Action.Scopes.CARD,
-        type: isCompleted ? Action.Types.CARD_COMPLETE : Action.Types.CARD_UNCOMPLETE,
+        type: isCompleted ? Action.Types.CARD_MARK_AS_DONE : Action.Types.CARD_MARK_AS_NOT_DONE,
         data: {
           listFromId: prevList.id,
           listFromName: prevList.name,

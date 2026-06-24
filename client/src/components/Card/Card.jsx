@@ -185,7 +185,7 @@ const Card = React.memo(
         <div>
           <div className={s.detailsTitle}>
             <div title={name} className={clsx(s.name, isCompleted && s.nameCompleted)}>
-              {isCompleted && <Icon type={IconType.Check} size={IconSize.Size13} title={t('common.completed')} />}
+              {isCompleted && <Icon type={IconType.Check} size={IconSize.Size13} title={t('common.done')} />}
               <LinkifiedTextRenderer text={name} />
             </div>
           </div>

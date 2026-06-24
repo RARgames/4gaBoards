@@ -276,7 +276,7 @@ export const activityRenderSpec = {
       };
     },
 
-    [ActivityTypes.CARD_COMPLETE]: (ctx) => {
+    [ActivityTypes.CARD_MARK_AS_DONE]: (ctx) => {
       let { listFromName, listToName } = ctx.activity.data;
       listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
       listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
@@ -284,7 +284,7 @@ export const activityRenderSpec = {
       const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
 
       return {
-        key: ctx.hideCardDetails ? 'activity.cardCompleteShort' : 'activity.cardComplete',
+        key: ctx.hideCardDetails ? 'activity.cardMarkAsDoneShort' : 'activity.cardMarkAsDone',
         values: {
           card: ctx.cardNameTruncated,
           fromList: fromListNameTruncated,
@@ -298,7 +298,7 @@ export const activityRenderSpec = {
       };
     },
 
-    [ActivityTypes.CARD_UNCOMPLETE]: (ctx) => {
+    [ActivityTypes.CARD_MARK_AS_NOT_DONE]: (ctx) => {
       let { listFromName, listToName } = ctx.activity.data;
       listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
       listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
@@ -306,7 +306,7 @@ export const activityRenderSpec = {
       const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
 
       return {
-        key: ctx.hideCardDetails ? 'activity.cardReopenShort' : 'activity.cardReopen',
+        key: ctx.hideCardDetails ? 'activity.cardMarkAsNotDoneShort' : 'activity.cardMarkAsNotDone',
         values: {
           card: ctx.cardNameTruncated,
           fromList: fromListNameTruncated,
@@ -490,7 +490,7 @@ export const activityRenderSpec = {
           values: {
             card: ctx.cardNameTruncated,
             task: taskNameTruncated,
-            isCompleted: data.taskIsCompleted ? ctx.t('activity.cardTaskCompleted') : ctx.t('activity.cardTaskUncompleted'),
+            isCompleted: data.taskIsCompleted ? ctx.t('activity.done') : ctx.t('activity.notDone'),
           },
           components: [
             { slot: 'card', title: ctx.cardName },
@@ -814,9 +814,9 @@ export const activityRenderSpec = {
         const { listIsCompleted } = ctx.activity.data;
         let key;
         if (listIsCompleted === true) {
-          key = ctx.hideListDetails ? 'activity.listCompleteShort' : 'activity.listComplete';
+          key = ctx.hideListDetails ? 'activity.listMarkAsDoneShort' : 'activity.listMarkAsDone';
         } else {
-          key = ctx.hideListDetails ? 'activity.listUncompleteShort' : 'activity.listUncomplete';
+          key = ctx.hideListDetails ? 'activity.listMarkAsNotDoneShort' : 'activity.listMarkAsNotDone';
         }
 
         return {

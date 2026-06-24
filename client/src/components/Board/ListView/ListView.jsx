@@ -233,11 +233,11 @@ const ListView = React.memo(
         },
         {
           accessorKey: 'isCompleted',
-          header: <Icon type={IconType.Check} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.completed')} />,
+          header: <Icon type={IconType.Check} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.done')} />,
           cell: Table.Renderers.BoolCellRenderer,
           enableSorting: true,
-          meta: { headerTitle: t('common.completed'), size: 20 },
-          cellProps: { title: t('common.completed') },
+          meta: { headerTitle: t('common.done'), size: 20 },
+          cellProps: { title: t('common.done') },
         },
         {
           accessorKey: 'name',

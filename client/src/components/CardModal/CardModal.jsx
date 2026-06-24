@@ -344,7 +344,7 @@ const CardModal = React.memo(
             </NameField>
           </div>
           {canEdit && !isCompleted && (
-            <Button variant={ButtonVariant.Icon} title={t('common.markCompleted')} onClick={handleMarkCompleted}>
+            <Button variant={ButtonVariant.Icon} title={t('common.markAsDone')} onClick={handleMarkCompleted}>
               <Icon type={IconType.Check} size={IconSize.Size14} />
             </Button>
           )}

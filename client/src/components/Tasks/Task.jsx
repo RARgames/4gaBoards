@@ -148,13 +148,7 @@ const Task = React.memo(
           const contentNode = (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={clsx(s.wrapper, gs.scrollableX, s.contentHoverable)}>
-              <Checkbox
-                checked={isCompleted}
-                size={checkboxSize}
-                disabled={!isPersisted || !canEdit}
-                onChange={handleToggleChange}
-                title={isCompleted ? t('common.markAsUncompleted') : t('common.markAsCompleted')}
-              />
+              <Checkbox checked={isCompleted} size={checkboxSize} disabled={!isPersisted || !canEdit} onChange={handleToggleChange} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} />
               <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <span className={clsx(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
