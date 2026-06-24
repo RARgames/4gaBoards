@@ -59,6 +59,7 @@ const CardActionsStep = React.memo(
     onLabelUpdate,
     onLabelDelete,
     onActivitiesFetch,
+    onMarkCompleted,
     onClose,
   }) => {
     const [t] = useTranslation();
@@ -67,6 +68,11 @@ const CardActionsStep = React.memo(
     const handleEditNameClick = useCallback(() => {
       onNameEdit();
     }, [onNameEdit]);
+
+    const handleToggleCompletedClick = useCallback(() => {
+      onMarkCompleted(!card.isCompleted);
+      onClose();
+    }, [card.isCompleted, onMarkCompleted, onClose]);
 
     const handleUsersClick = useCallback(() => {
       openStep(StepTypes.USERS);
@@ -209,6 +215,12 @@ const CardActionsStep = React.memo(
 
     return (
       <>
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={card.isCompleted ? t('common.markUncompleted') : t('common.markCompleted')} onClick={handleToggleCompletedClick}>
+            <Icon type={card.isCompleted ? IconType.Close : IconType.Check} size={IconSize.Size13} className={s.icon} />
+            {card.isCompleted ? t('common.markUncompleted') : t('common.markCompleted')}
+          </Button>
+        )}
         {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('action.editName', { context: 'title' })} onClick={handleEditNameClick} />}
         {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick} />}
         {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick} />}
@@ -263,6 +275,7 @@ CardActionsStep.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
+  onMarkCompleted: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

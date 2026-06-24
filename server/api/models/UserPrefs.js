@@ -127,6 +127,7 @@ module.exports = {
       defaultsTo: {
         notificationsCount: true,
         coverUrl: false,
+        isCompleted: true,
         name: true,
         labels: true,
         users: true,

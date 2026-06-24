@@ -49,6 +49,9 @@ const BoardActionsStep = React.memo(
     isProjectManager,
     canEdit,
     isFetching,
+    boardMembershipId,
+    hideCompletedLists,
+    onMembershipUpdate,
     onUpdate,
     onExport,
     onFetch,
@@ -104,6 +107,12 @@ const BoardActionsStep = React.memo(
       },
       [onTemplateDelete],
     );
+
+    const handleToggleHideCompletedClick = useCallback(() => {
+      onMembershipUpdate(boardMembershipId, {
+        hideCompletedLists: !hideCompletedLists,
+      });
+    }, [boardMembershipId, hideCompletedLists, onMembershipUpdate]);
 
     if (step) {
       switch (step.type) {
@@ -214,6 +223,10 @@ const BoardActionsStep = React.memo(
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
         </Button>
+        <Button variant={ButtonVariant.PopupContext} title={hideCompletedLists ? t('common.showCompletedLists') : t('common.hideCompletedLists')} onClick={handleToggleHideCompletedClick}>
+          <Icon type={hideCompletedLists ? IconType.Eye : IconType.EyeSlash} size={IconSize.Size13} className={s.icon} />
+          {hideCompletedLists ? t('common.showCompletedLists') : t('common.hideCompletedLists')}
+        </Button>
         {canEdit && (
           <Button
             variant={ButtonVariant.PopupContext}
@@ -265,6 +278,9 @@ BoardActionsStep.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   templates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
+  boardMembershipId: PropTypes.string.isRequired,
+  hideCompletedLists: PropTypes.bool.isRequired,
+  onMembershipUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFetch: PropTypes.func,

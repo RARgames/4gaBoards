@@ -26,6 +26,12 @@ const updateCard = (id, data, headers) =>
     item: transformCard(body.item),
   }));
 
+const markCardCompleted = (id, isCompleted, headers) =>
+  socket.post(`/cards/${id}/mark-completed`, { isCompleted }, headers).then((body) => ({
+    ...body,
+    item: transformCard(body.item),
+  }));
+
 const deleteCard = (id, headers) =>
   socket.delete(`/cards/${id}`, undefined, headers).then((body) => ({
     ...body,
@@ -62,6 +68,7 @@ export default {
   createCard,
   getCard,
   updateCard,
+  markCardCompleted,
   deleteCard,
   duplicateCard,
   makeHandleCardCreate,

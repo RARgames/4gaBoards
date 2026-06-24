@@ -32,6 +32,7 @@ import * as s from './CardModal.module.scss';
 const CardModal = React.memo(
   ({
     name,
+    isCompleted,
     id,
     description,
     dueDate,
@@ -83,6 +84,7 @@ const CardModal = React.memo(
     updatedBy,
     onUserPrefsUpdate,
     onUpdate,
+    onMarkCompleted,
     onMove,
     onTransfer,
     onDuplicate,
@@ -355,6 +357,7 @@ const CardModal = React.memo(
             card={{
               id,
               name,
+              isCompleted,
               dueDate,
               timer,
               boardId,
@@ -380,6 +383,7 @@ const CardModal = React.memo(
             onActivitiesFetch={onActivitiesFetch}
             onNameEdit={handleNameEdit}
             onUpdate={onUpdate}
+            onMarkCompleted={onMarkCompleted}
             onMove={onMove}
             onTransfer={onTransfer}
             onDuplicate={onDuplicate}
@@ -851,6 +855,7 @@ const CardModal = React.memo(
 
 CardModal.propTypes = {
   name: PropTypes.string.isRequired,
+  isCompleted: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   description: PropTypes.string,
   dueDate: PropTypes.instanceOf(Date),
@@ -902,6 +907,7 @@ CardModal.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,

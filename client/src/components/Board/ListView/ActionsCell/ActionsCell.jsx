@@ -11,6 +11,7 @@ const ActionsCell = React.memo(
   ({
     id,
     name,
+    isCompleted,
     projectId,
     allProjectsToLists,
     allBoardMemberships,
@@ -34,6 +35,7 @@ const ActionsCell = React.memo(
     updatedAt,
     updatedBy,
     onUpdate,
+    onMarkCompleted,
     onMove,
     onTransfer,
     onDuplicate,
@@ -62,6 +64,7 @@ const ActionsCell = React.memo(
           card={{
             id,
             name,
+            isCompleted,
             dueDate,
             timer,
             boardId,
@@ -87,6 +90,7 @@ const ActionsCell = React.memo(
           onActivitiesFetch={onActivitiesFetch}
           onNameEdit={handleNameEdit}
           onUpdate={onUpdate}
+          onMarkCompleted={onMarkCompleted}
           onMove={onMove}
           onTransfer={onTransfer}
           onDuplicate={onDuplicate}
@@ -119,6 +123,7 @@ const ActionsCell = React.memo(
 ActionsCell.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  isCompleted: PropTypes.bool.isRequired,
   projectId: PropTypes.string.isRequired,
   allProjectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -142,6 +147,7 @@ ActionsCell.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
+  onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,

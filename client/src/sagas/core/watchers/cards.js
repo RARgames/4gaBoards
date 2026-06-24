@@ -10,6 +10,8 @@ export default function* cardsWatchers() {
     takeEvery(EntryActionTypes.CARD_UPDATE, ({ payload: { id, data } }) => services.updateCard(id, data)),
     takeEvery(EntryActionTypes.CURRENT_CARD_UPDATE, ({ payload: { data } }) => services.updateCurrentCard(data)),
     takeEvery(EntryActionTypes.CARD_UPDATE_HANDLE, ({ payload: { card } }) => services.handleCardUpdate(card)),
+    takeEvery(EntryActionTypes.CARD_MARK_COMPLETED, ({ payload: { id, isCompleted } }) => services.markCardCompleted(id, isCompleted)),
+    takeEvery(EntryActionTypes.CURRENT_CARD_MARK_COMPLETED, ({ payload: { isCompleted } }) => services.markCurrentCardCompleted(isCompleted)),
     takeEvery(EntryActionTypes.CARD_MOVE, ({ payload: { id, listId, index } }) => services.moveCard(id, listId, index)),
     takeEvery(EntryActionTypes.CURRENT_CARD_MOVE, ({ payload: { listId, index } }) => services.moveCurrentCard(listId, index)),
     takeEvery(EntryActionTypes.CARD_TRANSFER, ({ payload: { id, boardId, listId, index } }) => services.transferCard(id, boardId, listId, index)),

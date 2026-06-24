@@ -13,7 +13,7 @@ const makeMapStateToProps = () => {
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
 
   return (state, { id, index }) => {
-    const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched, lastActivityId } = selectListById(state, id);
+    const { name, isPersisted, isCollapsed, isCompleted, createdAt, createdBy, updatedAt, updatedBy, isActivitiesFetching, isAllActivitiesFetched, lastActivityId } = selectListById(state, id);
     const cardIds = selectCardIdsByListId(state, id);
     const isFiltered = selectIsFilteredByListId(state, id);
     const filteredCardIds = selectFilteredCardIdsByListId(state, id);
@@ -33,6 +33,7 @@ const makeMapStateToProps = () => {
       index,
       name,
       isCollapsed,
+      isCompleted,
       isPersisted,
       cardIds,
       isFiltered,
@@ -63,6 +64,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
     {
       onUpdate: (data) => entryActions.updateList(id, data),
       onDelete: () => entryActions.deleteList(id),
+      onToggleCompleted: (isCompleted) => entryActions.updateList(id, { isCompleted }),
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
       onActivitiesFetch: () => entryActions.fetchListActivities(id),
       onMailTokenCreate: () => entryActions.createMailToken({ listId: id }),

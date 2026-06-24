@@ -33,12 +33,14 @@ const ListActionsStep = React.memo(
     mailServiceAvailable,
     mailServiceInboundEmail,
     canEdit,
+    isCompleted,
     onNameEdit,
     onCardAdd,
     onActivitiesFetch,
     onMailTokenCreate,
     onMailTokenUpdate,
     onMailTokenDelete,
+    onToggleCompleted,
     onDelete,
     onClose,
   }) => {
@@ -49,6 +51,11 @@ const ListActionsStep = React.memo(
       onNameEdit();
       onClose();
     }, [onNameEdit, onClose]);
+
+    const handleToggleCompletedClick = useCallback(() => {
+      onToggleCompleted(!isCompleted);
+      onClose();
+    }, [isCompleted, onToggleCompleted, onClose]);
 
     const handleAddCardClick = useCallback(() => {
       onCardAdd();
@@ -132,6 +139,12 @@ const ListActionsStep = React.memo(
             {t('action.editName', { context: 'title' })}
           </Button>
         )}
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={isCompleted ? t('common.markUncompleted') : t('common.markCompleted')} onClick={handleToggleCompletedClick}>
+            <Icon type={isCompleted ? IconType.Close : IconType.Check} size={IconSize.Size13} className={s.icon} />
+            {isCompleted ? t('common.markUncompleted') : t('common.markCompleted')}
+          </Button>
+        )}
         <Button variant={ButtonVariant.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
           <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
           {t('common.checkActivity', { context: 'title' })}
@@ -181,11 +194,13 @@ ListActionsStep.propTypes = {
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  isCompleted: PropTypes.bool.isRequired,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onMailTokenCreate: PropTypes.func.isRequired,
   onMailTokenUpdate: PropTypes.func.isRequired,
   onMailTokenDelete: PropTypes.func.isRequired,
+  onToggleCompleted: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

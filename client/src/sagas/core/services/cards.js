@@ -97,6 +97,26 @@ export function* handleCardUpdate(card) {
   yield put(actions.handleCardUpdate(card));
 }
 
+export function* markCardCompleted(id, isCompleted) {
+  yield put(actions.updateCard(id, { isCompleted }));
+
+  let card;
+  try {
+    ({ item: card } = yield call(request, api.markCardCompleted, id, isCompleted));
+  } catch (error) {
+    yield put(actions.updateCard.failure(id, error));
+    return;
+  }
+
+  yield put(actions.updateCard.success(card));
+}
+
+export function* markCurrentCardCompleted(isCompleted) {
+  const { cardId } = yield select(selectors.selectPath);
+
+  yield call(markCardCompleted, cardId, isCompleted);
+}
+
 export function* moveCard(id, listId, index) {
   const position = yield select(selectors.selectNextCardPosition, listId, index, id, true);
 
@@ -209,11 +229,13 @@ export default {
   handleCardCreate,
   updateCard,
   updateCurrentCard,
+  handleCardUpdate,
+  markCardCompleted,
+  markCurrentCardCompleted,
   moveCard,
   moveCurrentCard,
   transferCard,
   transferCurrentCard,
-  handleCardUpdate,
   duplicateCard,
   duplicateCurrentCard,
   handleCardDuplicate,

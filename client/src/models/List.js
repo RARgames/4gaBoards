@@ -12,6 +12,7 @@ export default class extends BaseModel {
     position: attr(),
     name: attr(),
     isCollapsed: attr(),
+    isCompleted: attr(),
     boardId: fk({
       to: 'Board',
       as: 'board',

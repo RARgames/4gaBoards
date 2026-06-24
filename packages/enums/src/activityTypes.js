@@ -56,6 +56,8 @@ const ActivityTypes = {
   CARD_CREATE: 'cardCreate',
   CARD_DUPLICATE: 'cardDuplicate',
   CARD_UPDATE: 'cardUpdate',
+  CARD_COMPLETE: 'cardComplete',
+  CARD_UNCOMPLETE: 'cardUncomplete',
   CARD_MOVE: 'cardMove',
   CARD_TRANSFER: 'cardTransfer',
   CARD_DELETE: 'cardDelete',

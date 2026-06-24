@@ -19,6 +19,11 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    isCompleted: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'is_completed',
+    },
     description: {
       type: 'string',
       isNotEmptyString: true,

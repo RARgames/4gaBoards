@@ -19,7 +19,10 @@ const makeMapStateToProps = () => {
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const url = selectors.selectUrlForCard(state, id);
     const activities = selectors.selectCardActivitiesById(state, id);
-    const { name, dueDate, timer, boardId, listId, isActivitiesFetching, isAllActivitiesFetched, lastActivityId, createdAt, createdBy, updatedAt, updatedBy, isPersisted } = selectCardById(state, id);
+    const { name, isCompleted, dueDate, timer, boardId, listId, isActivitiesFetching, isAllActivitiesFetched, lastActivityId, createdAt, createdBy, updatedAt, updatedBy, isPersisted } = selectCardById(
+      state,
+      id,
+    );
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
 
@@ -28,6 +31,7 @@ const makeMapStateToProps = () => {
 
     return {
       name,
+      isCompleted,
       projectId,
       allProjectsToLists,
       allBoardMemberships,
@@ -58,6 +62,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
   bindActionCreators(
     {
       onUpdate: (data) => entryActions.updateCard(id, data),
+      onMarkCompleted: (isCompleted) => entryActions.markCardCompleted(id, isCompleted),
       onMove: (listId, index) => entryActions.moveCard(id, listId, index),
       onTransfer: (boardId, listId) => entryActions.transferCard(id, boardId, listId),
       onDuplicate: () => entryActions.duplicateCard(id),

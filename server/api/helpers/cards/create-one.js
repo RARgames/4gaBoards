@@ -73,6 +73,7 @@ module.exports = {
 
     const card = await Card.create({
       ...values,
+      isCompleted: values.list.isCompleted,
       position,
       boardId: values.list.boardId,
       listId: values.list.id,

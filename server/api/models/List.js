@@ -24,6 +24,11 @@ module.exports = {
       required: true,
       columnName: 'is_collapsed',
     },
+    isCompleted: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'is_completed',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

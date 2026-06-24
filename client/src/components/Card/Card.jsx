@@ -26,6 +26,7 @@ const Card = React.memo(
     id,
     index,
     name,
+    isCompleted,
     dueDate,
     timer,
     coverUrl,
@@ -62,6 +63,7 @@ const Card = React.memo(
     onTransfer,
     onDuplicate,
     onDelete,
+    onMarkCompleted,
     onUserAdd,
     onUserRemove,
     onUserEmailLookup,
@@ -182,7 +184,8 @@ const Card = React.memo(
       <>
         <div>
           <div className={s.detailsTitle}>
-            <div title={name} className={s.name}>
+            <div title={name} className={clsx(s.name, isCompleted && s.nameCompleted)}>
+              {isCompleted && <Icon type={IconType.Check} size={IconSize.Size13} title={t('common.completed')} />}
               <LinkifiedTextRenderer text={name} />
             </div>
           </div>
@@ -329,6 +332,7 @@ const Card = React.memo(
                         card={{
                           id,
                           name,
+                          isCompleted,
                           dueDate,
                           timer,
                           boardId,
@@ -354,6 +358,7 @@ const Card = React.memo(
                         onActivitiesFetch={onActivitiesFetch}
                         onNameEdit={handleNameEdit}
                         onUpdate={onUpdate}
+                        onMarkCompleted={onMarkCompleted}
                         onMove={onMove}
                         onTransfer={onTransfer}
                         onDuplicate={onDuplicate}
@@ -393,6 +398,7 @@ Card.propTypes = {
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  isCompleted: PropTypes.bool.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   coverUrl: PropTypes.string,
@@ -425,6 +431,7 @@ Card.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
+  onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,

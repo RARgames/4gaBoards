@@ -157,7 +157,7 @@ module.exports = {
       if (inputs.lists) {
         await Promise.all(
           inputs.lists.map(async (list) => {
-            const valuesList = _.pick(list, ['position', 'name', 'isCollapsed']);
+            const valuesList = _.pick(list, ['position', 'name', 'isCollapsed', 'isCompleted']);
 
             await sails.helpers.lists.createOne.with({
               values: {

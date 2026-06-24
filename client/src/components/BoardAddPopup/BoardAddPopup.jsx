@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
+import Config from '../../constants/Config';
 import { useForm, useSteps } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
 import BoardTemplateManagerStep from '../BoardTemplateManagerStep';
@@ -20,7 +21,17 @@ const BUILTIN_EMPTY_TEMPLATE = {
   id: 'builtin-empty',
   name: 'common.empty',
   icon: 'Star',
-  data: { lists: [], labels: [] },
+  data: {
+    lists: [
+      {
+        name: 'common.done',
+        position: Config.POSITION_GAP,
+        isCollapsed: false,
+        isCompleted: true,
+      },
+    ],
+    labels: [],
+  },
 };
 
 const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isAdmin, templates, onCreate, onTemplateUpdate, onTemplateDelete, onBack, onClose }) => {

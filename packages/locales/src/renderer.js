@@ -255,7 +255,9 @@ export const activityRenderSpec = {
     },
 
     [ActivityTypes.CARD_MOVE]: (ctx) => {
-      const { listFromName, listToName } = ctx.activity.data;
+      let { listFromName, listToName } = ctx.activity.data;
+      listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
+      listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
       const fromListNameTruncated = truncateIf(listFromName, ctx.isTruncated, ctx.truncateLengths.listName);
       const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
 
@@ -274,8 +276,55 @@ export const activityRenderSpec = {
       };
     },
 
+    [ActivityTypes.CARD_COMPLETE]: (ctx) => {
+      let { listFromName, listToName } = ctx.activity.data;
+      listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
+      listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
+      const fromListNameTruncated = truncateIf(listFromName, ctx.isTruncated, ctx.truncateLengths.listName);
+      const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
+
+      return {
+        key: ctx.hideCardDetails ? 'activity.cardCompleteShort' : 'activity.cardComplete',
+        values: {
+          card: ctx.cardNameTruncated,
+          fromList: fromListNameTruncated,
+          toList: toListNameTruncated,
+        },
+        components: [
+          { slot: 'card', title: ctx.cardName },
+          { slot: 'fromList', title: listFromName },
+          { slot: 'toList', title: listToName },
+        ],
+      };
+    },
+
+    [ActivityTypes.CARD_UNCOMPLETE]: (ctx) => {
+      let { listFromName, listToName } = ctx.activity.data;
+      listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
+      listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
+      const fromListNameTruncated = truncateIf(listFromName, ctx.isTruncated, ctx.truncateLengths.listName);
+      const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
+
+      return {
+        key: ctx.hideCardDetails ? 'activity.cardReopenShort' : 'activity.cardReopen',
+        values: {
+          card: ctx.cardNameTruncated,
+          fromList: fromListNameTruncated,
+          toList: toListNameTruncated,
+        },
+        components: [
+          { slot: 'card', title: ctx.cardName },
+          { slot: 'fromList', title: listFromName },
+          { slot: 'toList', title: listToName },
+        ],
+      };
+    },
+
     [ActivityTypes.CARD_TRANSFER]: (ctx) => {
-      const { boardFromName, boardToName, listFromName, listToName, projectFromId, projectFromName, projectToId, projectToName } = ctx.activity.data;
+      const { boardFromName, boardToName, projectFromId, projectFromName, projectToId, projectToName } = ctx.activity.data;
+      let { listFromName, listToName } = ctx.activity.data;
+      listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
+      listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
       const fromListNameTruncated = truncateIf(listFromName, ctx.isTruncated, ctx.truncateLengths.listName);
       const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
       const fromBoardNameTruncated = truncateIf(boardFromName, ctx.isTruncated, ctx.truncateLengths.boardName);
@@ -750,6 +799,24 @@ export const activityRenderSpec = {
           key = ctx.hideListDetails ? 'activity.listCollapseShort' : 'activity.listCollapse';
         } else {
           key = ctx.hideListDetails ? 'activity.listExpandShort' : 'activity.listExpand';
+        }
+
+        return {
+          key,
+          values: {
+            list: ctx.listNameTruncated,
+          },
+          components: [{ slot: 'list', title: ctx.listName }],
+        };
+      }
+
+      if (ctx.activity.data.listIsCompleted !== undefined) {
+        const { listIsCompleted } = ctx.activity.data;
+        let key;
+        if (listIsCompleted === true) {
+          key = ctx.hideListDetails ? 'activity.listCompleteShort' : 'activity.listComplete';
+        } else {
+          key = ctx.hideListDetails ? 'activity.listUncompleteShort' : 'activity.listUncomplete';
         }
 
         return {

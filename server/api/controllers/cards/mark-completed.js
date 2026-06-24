@@ -2,33 +2,21 @@ const Errors = {
   NOT_ENOUGH_RIGHTS: {
     notEnoughRights: 'Not enough rights',
   },
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
+  CARD_NOT_FOUND: {
+    cardNotFound: 'Card not found',
   },
 };
 
 module.exports = {
   inputs: {
-    boardId: {
+    id: {
       type: 'string',
       regex: /^[0-9]+$/,
       required: true,
     },
-    position: {
-      type: 'number',
-      required: true,
-    },
-    name: {
-      type: 'string',
-      required: true,
-    },
-    isCollapsed: {
-      type: 'boolean',
-      required: true,
-    },
     isCompleted: {
       type: 'boolean',
-      defaultsTo: false,
+      required: true,
     },
   },
 
@@ -36,7 +24,7 @@ module.exports = {
     notEnoughRights: {
       responseType: 'forbidden',
     },
-    boardNotFound: {
+    cardNotFound: {
       responseType: 'notFound',
     },
   },
@@ -44,7 +32,7 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    const { board } = await sails.helpers.boards.getProjectPath(inputs.boardId).intercept('pathNotFound', () => Errors.BOARD_NOT_FOUND);
+    const { card, list, board } = await sails.helpers.cards.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.CARD_NOT_FOUND);
 
     const boardMembership = await BoardMembership.findOne({
       boardId: board.id,
@@ -52,26 +40,28 @@ module.exports = {
     });
 
     if (!boardMembership) {
-      throw Errors.BOARD_NOT_FOUND; // Forbidden
+      throw Errors.CARD_NOT_FOUND;
     }
 
     if (boardMembership.role !== BoardMembership.Roles.EDITOR) {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'isCollapsed', 'isCompleted']);
-
-    const list = await sails.helpers.lists.createOne.with({
-      values: {
-        ...values,
-        board,
-      },
+    const updatedCard = await sails.helpers.cards.setCompleted.with({
+      record: card,
+      isCompleted: inputs.isCompleted,
+      board,
+      list,
       currentUser,
       request: this.req,
     });
 
+    if (!updatedCard) {
+      throw Errors.CARD_NOT_FOUND;
+    }
+
     return {
-      item: list,
+      item: updatedCard,
     };
   },
 };

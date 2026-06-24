@@ -11,6 +11,7 @@ import * as s from './CardAddPopup.module.scss';
 
 const DEFAULT_DATA = {
   name: '',
+  isCompleted: false,
 };
 
 // eslint-disable-next-line no-unused-vars

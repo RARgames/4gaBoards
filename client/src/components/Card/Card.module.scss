@@ -123,6 +123,15 @@
     max-height: 58px;
   }
 
+  .nameCompleted {
+    color: var(--text2);
+    text-decoration: line-through;
+    text-decoration-color: var(--text2Subtle);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
   .notification {
     background: var(--backgroundNotifications);
     color: var(--textWhite);

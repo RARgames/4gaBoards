@@ -11,6 +11,7 @@ export default class extends BaseModel {
     role: attr(),
     canComment: attr(),
     isSubscribed: attr(),
+    hideCompletedLists: attr(),
     boardId: fk({
       to: 'Board',
       as: 'board',

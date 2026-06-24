@@ -12,6 +12,7 @@ import * as s from './ListAdd.module.scss';
 const DEFAULT_DATA = {
   name: '',
   isCollapsed: false,
+  isCompleted: false,
 };
 
 const ListAdd = React.memo(({ onCreate, onClose }) => {

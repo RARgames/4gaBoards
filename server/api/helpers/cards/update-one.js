@@ -101,6 +101,10 @@ module.exports = {
       }
     }
 
+    if (values.list) {
+      values.isCompleted = values.list.isCompleted;
+    }
+
     if (!_.isUndefined(values.position)) {
       const boardId = values.boardId || inputs.record.boardId;
       const listId = values.listId || inputs.record.listId;

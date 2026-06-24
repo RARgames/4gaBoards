@@ -42,6 +42,8 @@ const Sidebar = React.memo(
     boardTemplates,
     mailServiceAvailable,
     mailServiceInboundEmail,
+    boardMembershipId,
+    hideCompletedLists,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -60,6 +62,7 @@ const Sidebar = React.memo(
     onMailTokenCreate,
     onMailTokenUpdate,
     onMailTokenDelete,
+    onBoardMembershipUpdate,
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
@@ -232,6 +235,9 @@ const Sidebar = React.memo(
                                   isProjectManager={isProjectManager}
                                   canEdit={board.canEdit}
                                   isFetching={board.isFetching}
+                                  boardMembershipId={boardMembershipId}
+                                  hideCompletedLists={hideCompletedLists}
+                                  onMembershipUpdate={onBoardMembershipUpdate}
                                   onUpdate={(data) => onBoardUpdate(board.id, data)}
                                   onExport={(data) => onBoardExport(board.id, data)}
                                   onFetch={() => onBoardFetch(board.id)}
@@ -419,6 +425,8 @@ Sidebar.propTypes = {
   boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
+  boardMembershipId: PropTypes.string.isRequired,
+  hideCompletedLists: PropTypes.bool.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -437,6 +445,7 @@ Sidebar.propTypes = {
   onMailTokenCreate: PropTypes.func.isRequired,
   onMailTokenUpdate: PropTypes.func.isRequired,
   onMailTokenDelete: PropTypes.func.isRequired,
+  onBoardMembershipUpdate: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {

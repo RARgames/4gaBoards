@@ -37,6 +37,7 @@ const BoardActions = React.memo(
     boardSearchParams,
     boardMembershipId,
     isSubscribed,
+    hideCompletedLists,
     mailTokens,
     mailTokenCount,
     mailServiceAvailable,
@@ -178,6 +179,9 @@ const BoardActions = React.memo(
             mailServiceInboundEmail={mailServiceInboundEmail}
             boardName={board.name}
             isAdmin={isAdmin}
+            boardMembershipId={boardMembershipId}
+            hideCompletedLists={hideCompletedLists}
+            onMembershipUpdate={onMembershipUpdate}
             onUpdate={(data) => onBoardUpdate(board.id, data)}
             onExport={(data) => onBoardExport(board.id, data)}
             onDelete={() => onBoardDelete(board.id)}
@@ -228,6 +232,7 @@ BoardActions.propTypes = {
   boardSearchParams: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMembershipId: PropTypes.string.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
+  hideCompletedLists: PropTypes.bool.isRequired,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailTokenCount: PropTypes.number.isRequired,
   mailServiceAvailable: PropTypes.bool.isRequired,

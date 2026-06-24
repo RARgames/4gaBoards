@@ -2,6 +2,9 @@ const Errors = {
   BOARD_MEMBERSHIP_NOT_FOUND: {
     boardMembershipNotFound: 'Board membership not found',
   },
+  NOT_ENOUGH_RIGHTS: {
+    notEnoughRights: 'Not enough rights',
+  },
 };
 
 module.exports = {
@@ -21,11 +24,17 @@ module.exports = {
     isSubscribed: {
       type: 'boolean',
     },
+    hideCompletedLists: {
+      type: 'boolean',
+    },
   },
 
   exits: {
     boardMembershipNotFound: {
       responseType: 'notFound',
+    },
+    notEnoughRights: {
+      responseType: 'forbidden',
     },
   },
 
@@ -40,10 +49,15 @@ module.exports = {
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
 
     if (!isProjectManager) {
-      throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
+      const isSelf = boardMembership.userId === currentUser.id;
+      const onlySelfPrefs = Object.keys(inputs).every((key) => ['id', 'isSubscribed', 'hideCompletedLists'].includes(key));
+
+      if (!isSelf || !onlySelfPrefs) {
+        throw Errors.NOT_ENOUGH_RIGHTS;
+      }
     }
 
-    const values = _.pick(inputs, ['role', 'canComment', 'isSubscribed']);
+    const values = _.pick(inputs, ['role', 'canComment', 'isSubscribed', 'hideCompletedLists']);
 
     boardMembership = await sails.helpers.boardMemberships.updateOne.with({
       values,

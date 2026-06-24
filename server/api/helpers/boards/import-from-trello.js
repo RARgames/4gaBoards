@@ -108,6 +108,7 @@ module.exports = {
             dueDate: trelloCard.due,
             commentCount: 0,
             isCreatedViaApi: !!(inputs.request && inputs.request.apiClient),
+            isCompleted: boardsList.isCompleted,
           }).fetch();
 
           await importCardLabels(boardsCard, trelloCard);
@@ -139,19 +140,40 @@ module.exports = {
     };
 
     const importLists = async () => {
-      return Promise.all(
+      const importedLists = await Promise.all(
         getTrelloLists().map(async (trelloList) => {
+          const isCompleted = await sails.helpers.utils.isCompletedListName(trelloList.name);
           const boardsList = await List.create({
             boardId: inputs.board.id,
             name: trelloList.name,
             position: trelloList.pos,
             isCollapsed: false,
+            isCompleted,
             createdById: currentUser.id,
           }).fetch();
 
-          return importCards(boardsList, trelloList);
+          await importCards(boardsList, trelloList);
+          return boardsList;
         }),
       );
+
+      const hasCompletedList = importedLists.some((boardsList) => boardsList.isCompleted);
+      if (!hasCompletedList) {
+        const nextPosition = importedLists.reduce((max, l) => (l.position > max ? l.position : max), 0) + sails.config.custom.positionGap;
+
+        const completedList = await List.create({
+          boardId: inputs.board.id,
+          name: 'common.done',
+          position: nextPosition,
+          isCollapsed: false,
+          isCompleted: true,
+          createdById: currentUser.id,
+        }).fetch();
+
+        importedLists.push(completedList);
+      }
+
+      return importedLists;
     };
 
     await importLabels();

@@ -27,6 +27,7 @@ const makeMapStateToProps = () => {
 
     const {
       name,
+      isCompleted,
       description,
       dueDate,
       timer,
@@ -84,6 +85,7 @@ const makeMapStateToProps = () => {
 
     return {
       name,
+      isCompleted,
       id,
       description,
       dueDate,
@@ -142,6 +144,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       onUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
       onUpdate: entryActions.updateCurrentCard,
+      onMarkCompleted: entryActions.markCurrentCardCompleted,
       onMove: entryActions.moveCurrentCard,
       onTransfer: entryActions.transferCurrentCard,
       onDuplicate: entryActions.duplicateCurrentCard,

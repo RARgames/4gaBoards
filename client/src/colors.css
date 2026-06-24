@@ -98,6 +98,7 @@
   --text0: #ebebec;
   --text1: #d3d3d3;
   --text2: #c2c2c2;
+  --text2Subtle: rgb(194, 194, 194, 0.75);
   --text3: #999999;
   --text4: #6d6d6d;
   --text5: #363636;
@@ -288,6 +289,7 @@
   --text0: #f0f6fc;
   --text1: #e6edf3;
   --text2: #c9d1d9;
+  --text2Subtle: rgba(201, 209, 217, 0.75);
   --text3: #8b949e;
   --text4: #6e7681;
   --text5: #484f58;
@@ -478,6 +480,7 @@
   --text0: #222222;
   --text1: #444444;
   --text2: #555555;
+  --text2Subtle: rgba(85, 85, 85, 0.75);
   --text3: #777777;
   --text4: #999999;
   --text5: #bbbbbb;

@@ -11,6 +11,7 @@ export default class extends BaseModel {
     id: attr(),
     position: attr(),
     name: attr(),
+    isCompleted: attr(),
     description: attr(),
     dueDate: attr(),
     timer: attr(),

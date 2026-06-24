@@ -24,6 +24,7 @@ const List = React.memo(
     name,
     isPersisted,
     isCollapsed,
+    isCompleted,
     cardIds,
     isFiltered,
     filteredCardIds,
@@ -46,6 +47,7 @@ const List = React.memo(
     mailServiceInboundEmail,
     onUpdate,
     onDelete,
+    onToggleCompleted,
     onCardCreate,
     onActivitiesFetch,
     onMailTokenCreate,
@@ -280,12 +282,14 @@ const List = React.memo(
                       mailServiceAvailable={mailServiceAvailable}
                       mailServiceInboundEmail={mailServiceInboundEmail}
                       canEdit={canEdit}
+                      isCompleted={isCompleted}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onActivitiesFetch={onActivitiesFetch}
                       onMailTokenCreate={onMailTokenCreate}
                       onMailTokenUpdate={onMailTokenUpdate}
                       onMailTokenDelete={onMailTokenDelete}
+                      onToggleCompleted={onToggleCompleted}
                       onDelete={onDelete}
                       position="left-start"
                       offset={0}
@@ -318,6 +322,7 @@ List.propTypes = {
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   isCollapsed: PropTypes.bool.isRequired,
+  isCompleted: PropTypes.bool.isRequired,
   isPersisted: PropTypes.bool.isRequired,
   cardIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFiltered: PropTypes.bool.isRequired,
@@ -341,6 +346,7 @@ List.propTypes = {
   mailServiceInboundEmail: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onToggleCompleted: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onMailTokenCreate: PropTypes.func.isRequired,

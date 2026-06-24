@@ -50,6 +50,9 @@ const makeMapStateToProps = () => {
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
     const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
 
+    const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
+    const { id, hideCompletedLists } = currentUserMembership ?? {};
+
     return {
       path,
       projects,
@@ -69,6 +72,8 @@ const makeMapStateToProps = () => {
       boardTemplates,
       mailServiceAvailable,
       mailServiceInboundEmail,
+      boardMembershipId: id,
+      hideCompletedLists,
     };
   };
 };
@@ -94,6 +99,7 @@ const mapDispatchToProps = (dispatch) =>
       onMailTokenCreate: (boardId) => entryActions.createMailToken({ boardId }),
       onMailTokenUpdate: (mailTokenId, boardId) => entryActions.updateMailToken(mailTokenId, { boardId }),
       onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
+      onBoardMembershipUpdate: entryActions.updateBoardMembership,
     },
     dispatch,
   );

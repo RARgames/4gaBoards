@@ -39,6 +39,21 @@ const handleCardUpdate = (card) => ({
   },
 });
 
+const markCardCompleted = (id, isCompleted) => ({
+  type: EntryActionTypes.CARD_MARK_COMPLETED,
+  payload: {
+    id,
+    isCompleted,
+  },
+});
+
+const markCurrentCardCompleted = (isCompleted) => ({
+  type: EntryActionTypes.CURRENT_CARD_MARK_COMPLETED,
+  payload: {
+    isCompleted,
+  },
+});
+
 const moveCard = (id, listId, index = 0) => ({
   type: EntryActionTypes.CARD_MOVE,
   payload: {
@@ -119,6 +134,8 @@ export default {
   updateCard,
   updateCurrentCard,
   handleCardUpdate,
+  markCardCompleted,
+  markCurrentCardCompleted,
   moveCard,
   moveCurrentCard,
   transferCard,

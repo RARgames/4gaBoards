@@ -73,6 +73,19 @@ module.exports = {
         inputs.request,
       );
 
+      if (values.isCompleted !== undefined) {
+        const cardsInList = await sails.helpers.lists.getCards(list.id);
+        await Card.update({ listId: list.id }).set({ isCompleted: values.isCompleted });
+        cardsInList.forEach((cardInList) => {
+          sails.sockets.broadcast(`board:${list.boardId}`, 'cardUpdate', {
+            item: {
+              id: cardInList.id,
+              isCompleted: values.isCompleted,
+            },
+          });
+        });
+      }
+
       await sails.helpers.actions.createOne.with({
         values: {
           list,
@@ -84,6 +97,8 @@ module.exports = {
             listName: list.name,
             listPrevIsCollapsed: values.isCollapsed !== undefined ? inputs.record.isCollapsed : undefined,
             listIsCollapsed: values.isCollapsed && list.isCollapsed,
+            listPrevIsCompleted: values.isCompleted !== undefined ? inputs.record.isCompleted : undefined,
+            listIsCompleted: values.isCompleted !== undefined ? list.isCompleted : undefined,
             listPrevPosition: values.position ? inputs.record.position : undefined,
             listPosition: values.position && list.position,
           },

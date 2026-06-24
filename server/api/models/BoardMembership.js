@@ -33,6 +33,11 @@ module.exports = {
       defaultsTo: true,
       columnName: 'is_subscribed',
     },
+    hideCompletedLists: {
+      type: 'boolean',
+      allowNull: true,
+      columnName: 'hide_completed_lists',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -64,4 +69,11 @@ module.exports = {
   },
 
   tableName: 'board_membership',
+
+  customToJSON() {
+    return {
+      ...this,
+      hideCompletedLists: this.hideCompletedLists === true,
+    };
+  },
 };

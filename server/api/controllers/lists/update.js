@@ -24,6 +24,9 @@ module.exports = {
     isCollapsed: {
       type: 'boolean',
     },
+    isCompleted: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -38,7 +41,8 @@ module.exports = {
   async fn(inputs) {
     const { currentUser } = this.req;
 
-    let { list } = await sails.helpers.lists.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.LIST_NOT_FOUND);
+    // eslint-disable-next-line prefer-const
+    let { list, board } = await sails.helpers.lists.getProjectPath(inputs.id).intercept('pathNotFound', () => Errors.LIST_NOT_FOUND);
 
     const boardMembership = await BoardMembership.findOne({
       boardId: list.boardId,
@@ -53,7 +57,7 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'isCollapsed']);
+    const values = _.pick(inputs, ['position', 'name', 'isCollapsed', 'isCompleted']);
 
     list = await sails.helpers.lists.updateOne.with({
       values,
@@ -64,6 +68,23 @@ module.exports = {
 
     if (!list) {
       throw Errors.LIST_NOT_FOUND;
+    }
+
+    const noCompletedListsLeft = values.isCompleted === false ? (await List.count({ boardId: list.boardId, isCompleted: true })) <= 0 : false;
+    if (noCompletedListsLeft) {
+      const [lastList] = await List.find({ boardId: board.id }).sort('position DESC').limit(1);
+      const nextPosition = (lastList?.position || 0) + sails.config.custom.positionGap;
+
+      await sails.helpers.lists.createOne.with({
+        values: {
+          name: 'common.done',
+          position: nextPosition,
+          isCollapsed: false,
+          isCompleted: true,
+          board,
+        },
+        currentUser,
+      });
     }
 
     return {

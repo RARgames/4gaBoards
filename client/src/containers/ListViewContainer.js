@@ -38,6 +38,7 @@ const makeMapStateToProps = () => {
         id: card.id,
         coverUrl: card.coverUrl,
         name: card.name,
+        isCompleted: card.isCompleted,
         users,
         labels,
         listName: list.name,

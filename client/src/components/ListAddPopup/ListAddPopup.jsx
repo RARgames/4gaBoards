@@ -11,6 +11,7 @@ import * as s from './ListAddPopup.module.scss';
 const DEFAULT_DATA = {
   name: '',
   isCollapsed: false,
+  isCompleted: false,
 };
 
 const ListAddStep = React.memo(({ onCreate, onBack, onClose }) => {

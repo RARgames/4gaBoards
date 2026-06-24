@@ -546,6 +546,7 @@ module.exports = {
           dueDate: parseJSON(card.dueDate),
           commentCount: card.commentCount,
           timer: parseJSON(card.timer),
+          isCompleted: newList.isCompleted,
           isCreatedViaApi: !!(inputs.request && inputs.request.apiClient),
           createdAt: parseJSON(card.createdAt),
           createdById: allUsers[card.createdById]?.id ?? currentUser.id,
@@ -580,21 +581,43 @@ module.exports = {
     };
 
     const importLists = async () => {
-      const listRecords = lists.map((list) => {
-        const updatedAt = parseJSON(list.updatedAt);
-        return {
-          boardId: inputs.board.id,
-          name: list.name,
-          position: list.position,
-          isCollapsed: list.isCollapsed,
-          createdAt: parseJSON(list.createdAt),
-          createdById: allUsers[list.createdById]?.id ?? currentUser.id,
-          updatedAt,
-          updatedById: updatedAt && (allUsers[list.updatedById]?.id ?? currentUser.id),
-        };
-      });
+      const listRecords = await Promise.all(
+        lists.map(async (list) => {
+          const updatedAt = parseJSON(list.updatedAt);
+          const isKeywordCompleted = await sails.helpers.utils.isCompletedListName(list.name);
+
+          return {
+            boardId: inputs.board.id,
+            name: list.name,
+            position: list.position,
+            isCollapsed: list.isCollapsed,
+            isCompleted: list.isCompleted === true || isKeywordCompleted ? true : undefined,
+            createdAt: parseJSON(list.createdAt),
+            createdById: allUsers[list.createdById]?.id ?? currentUser.id,
+            updatedAt,
+            updatedById: updatedAt && (allUsers[list.updatedById]?.id ?? currentUser.id),
+          };
+        }),
+      );
 
       const insertedLists = await List.createEach(listRecords).fetch();
+
+      const hasCompletedList = insertedLists.some((insertedList) => insertedList.isCompleted);
+      if (!hasCompletedList) {
+        const maxPosition = insertedLists.reduce((max, l) => (l.position > max ? l.position : max), 0);
+
+        const completedList = await List.create({
+          boardId: inputs.board.id,
+          name: 'common.done',
+          position: maxPosition + sails.config.custom.positionGap,
+          isCollapsed: false,
+          isCompleted: true,
+          createdAt: new Date().toUTCString(),
+          createdById: currentUser.id,
+        }).fetch();
+
+        insertedLists.push(completedList);
+      }
 
       await Promise.all(
         lists.map(async (list, i) => {

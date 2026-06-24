@@ -17,6 +17,7 @@ import * as s from './ListView.module.scss';
 const DEFAULT_COLUMN_VISIBILITY = {
   notificationsCount: true,
   coverUrl: false,
+  isCompleted: true,
   name: true,
   labels: true,
   users: true,
@@ -229,6 +230,14 @@ const ListView = React.memo(
           sortUndefined: 'last',
           sortDescFirst: true,
           meta: { headerTitle: t('common.coverImage'), minSize: 50, headerSize: 20 },
+        },
+        {
+          accessorKey: 'isCompleted',
+          header: <Icon type={IconType.Check} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.completed')} />,
+          cell: Table.Renderers.BoolCellRenderer,
+          enableSorting: true,
+          meta: { headerTitle: t('common.completed'), size: 20 },
+          cellProps: { title: t('common.completed') },
         },
         {
           accessorKey: 'name',

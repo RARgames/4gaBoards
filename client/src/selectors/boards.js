@@ -223,7 +223,8 @@ export const selectLabelsForCurrentBoard = createSelector(
 export const selectListIdsForCurrentBoard = createSelector(
   orm,
   (state) => selectPath(state).boardId,
-  ({ Board }, id) => {
+  (state) => selectCurrentUserId(state),
+  ({ Board }, id, currentUserId) => {
     if (!id) {
       return id;
     }
@@ -234,9 +235,13 @@ export const selectListIdsForCurrentBoard = createSelector(
       return boardModel;
     }
 
+    const boardMembershipModel = boardModel.getMembershipModelForUser(currentUserId);
+    const { hideCompletedLists } = boardMembershipModel;
+
     return boardModel
       .getOrderedListsQuerySet()
       .toRefArray()
+      .filter((list) => !hideCompletedLists || !list.isCompleted)
       .map((list) => list.id);
   },
 );

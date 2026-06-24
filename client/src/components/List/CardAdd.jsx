@@ -12,6 +12,7 @@ import * as s from './CardAdd.module.scss';
 
 const DEFAULT_DATA = {
   name: '',
+  isCompleted: false,
 };
 
 // eslint-disable-next-line no-unused-vars
