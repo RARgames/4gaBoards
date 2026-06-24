@@ -42,8 +42,6 @@ const Sidebar = React.memo(
     boardTemplates,
     mailServiceAvailable,
     mailServiceInboundEmail,
-    boardMembershipId,
-    hideCompletedLists,
     onProjectCreate,
     onProjectUpdate,
     onBoardCreate,
@@ -235,8 +233,8 @@ const Sidebar = React.memo(
                                   isProjectManager={isProjectManager}
                                   canEdit={board.canEdit}
                                   isFetching={board.isFetching}
-                                  boardMembershipId={boardMembershipId}
-                                  hideCompletedLists={hideCompletedLists}
+                                  boardMembershipId={board.boardMembershipId}
+                                  hideCompletedLists={board.hideCompletedLists}
                                   onMembershipUpdate={onBoardMembershipUpdate}
                                   onUpdate={(data) => onBoardUpdate(board.id, data)}
                                   onExport={(data) => onBoardExport(board.id, data)}
@@ -425,8 +423,6 @@ Sidebar.propTypes = {
   boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
-  boardMembershipId: PropTypes.string,
-  hideCompletedLists: PropTypes.bool,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -454,8 +450,6 @@ Sidebar.defaultProps = {
   currBoardId: undefined,
   filterQuery: undefined,
   filterTarget: undefined,
-  boardMembershipId: undefined,
-  hideCompletedLists: false,
 };
 
 export default Sidebar;

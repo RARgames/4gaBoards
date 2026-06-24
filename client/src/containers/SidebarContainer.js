@@ -25,6 +25,7 @@ const makeMapStateToProps = () => {
       boards: project.boards.map((board) => {
         const membership = selectCurrentUserMembershipByBoardId(state, board.id);
         const isCurrentUserEditor = !!membership && membership.role === BoardMembershipRoles.EDITOR;
+        const { id, hideCompletedLists } = membership;
 
         return {
           ...board,
@@ -32,6 +33,8 @@ const makeMapStateToProps = () => {
           mailTokens: selectMailTokensByBoardId(state, board.id),
           mailTokenCount: selectMailTokenCountByBoardId(state, board.id),
           canEdit: isCurrentUserEditor,
+          boardMembershipId: id,
+          hideCompletedLists,
         };
       }),
     }));
@@ -49,9 +52,6 @@ const makeMapStateToProps = () => {
     const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
     const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
     const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
-
-    const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
-    const { id, hideCompletedLists } = currentUserMembership ?? {};
 
     return {
       path,
@@ -72,8 +72,6 @@ const makeMapStateToProps = () => {
       boardTemplates,
       mailServiceAvailable,
       mailServiceInboundEmail,
-      boardMembershipId: id,
-      hideCompletedLists,
     };
   };
 };
