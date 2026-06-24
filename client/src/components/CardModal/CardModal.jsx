@@ -301,6 +301,10 @@ const CardModal = React.memo(
       setUnsavedDesc(false);
     }, []);
 
+    const handleMarkCompleted = useCallback(() => {
+      onMarkCompleted(true);
+    }, [onMarkCompleted]);
+
     // eslint-disable-next-line consistent-return
     useEffect(() => {
       // TODO here reset state of all inner components (tasks, comments)
@@ -339,7 +343,12 @@ const CardModal = React.memo(
               </div>
             </NameField>
           </div>
-          {canEdit && (
+          {canEdit && !isCompleted && (
+            <Button variant={ButtonVariant.Icon} title={t('common.markCompleted')} onClick={handleMarkCompleted}>
+              <Icon type={IconType.Check} size={IconSize.Size14} />
+            </Button>
+          )}
+          {canEdit && isCompleted && (
             <DeletePopup
               title={t('common.deleteCard', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisCard')}
