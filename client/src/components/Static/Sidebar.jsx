@@ -425,8 +425,8 @@ Sidebar.propTypes = {
   boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
-  boardMembershipId: PropTypes.string.isRequired,
-  hideCompletedLists: PropTypes.bool.isRequired,
+  boardMembershipId: PropTypes.string,
+  hideCompletedLists: PropTypes.bool,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
@@ -454,6 +454,8 @@ Sidebar.defaultProps = {
   currBoardId: undefined,
   filterQuery: undefined,
   filterTarget: undefined,
+  boardMembershipId: undefined,
+  hideCompletedLists: false,
 };
 
 export default Sidebar;
