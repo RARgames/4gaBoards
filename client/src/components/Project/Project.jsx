@@ -109,12 +109,12 @@ const Project = React.memo(
                     <div className={s.boardProgress}>
                       {t('common.cards', { context: 'title' })}:
                       <ProgressBar value={item.cardCompleted} total={item.cardTotal} size={ProgressBarSize.Tiny} className={s.boardProgressBar} />
-                      {item.cardCompleted !== 0 && item.cardTotal !== 0 && `${item.cardCompleted}/${item.cardTotal}`}
+                      {!(item.cardCompleted === 0 && item.cardTotal === 0) && `${item.cardCompleted}/${item.cardTotal}`}
                     </div>
                     <div className={s.boardProgress}>
                       {t('common.tasks')}:
                       <ProgressBar value={item.taskCompleted} total={item.taskTotal} size={ProgressBarSize.Tiny} className={s.boardProgressBar} />
-                      {item.taskCompleted !== 0 && item.taskTotal !== 0 && `${item.taskCompleted}/${item.taskTotal}`}
+                      {!(item.taskCompleted === 0 && item.taskTotal === 0) && `${item.taskCompleted}/${item.taskTotal}`}
                     </div>
                   </div>
                 </div>
