@@ -280,24 +280,29 @@ module.exports = {
           request: inputs.request,
         });
       } else if (!values.board && values.list) {
+        const isCompletionChange = prevCard.isCompleted !== card.isCompleted;
+        // eslint-disable-next-line no-nested-ternary
+        const type = !isCompletionChange ? Action.Types.CARD_MOVE : card.isCompleted ? Action.Types.CARD_MARK_AS_DONE : Action.Types.CARD_MARK_AS_NOT_DONE;
+
         await sails.helpers.actions.createOne.with({
           values: {
             card,
             prevCard,
             scope: Action.Scopes.CARD,
-            type: Action.Types.CARD_MOVE,
+            type,
             data: {
               listFromId: inputs.list.id,
               listFromName: inputs.list.name,
               listToId: values.list.id,
               listToName: values.list.name,
+              isCompleted: card.isCompleted,
             },
           },
           currentUser,
           request: inputs.request,
         });
         await sails.helpers.lists.updateMeta.with({ id: inputs.list.id, currentUser, skipMetaUpdate });
-        if (prevCard.isCompleted !== card.isCompleted) {
+        if (isCompletionChange) {
           await sails.helpers.boards.updateStats.with({ boardId: card.boardId });
         }
       } else {
