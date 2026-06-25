@@ -252,6 +252,9 @@ module.exports = {
         const projectFrom = await Project.findOne(boardFrom.projectId);
         const projectTo = await Project.findOne(boardTo.projectId);
 
+        await sails.helpers.boards.updateStats.with({ boardId: prevCard.boardId });
+        await sails.helpers.boards.updateStats.with({ boardId: card.boardId });
+
         await sails.helpers.actions.createOne.with({
           values: {
             card,
@@ -294,6 +297,9 @@ module.exports = {
           request: inputs.request,
         });
         await sails.helpers.lists.updateMeta.with({ id: inputs.list.id, currentUser, skipMetaUpdate });
+        if (prevCard.isCompleted !== card.isCompleted) {
+          await sails.helpers.boards.updateStats.with({ boardId: card.boardId });
+        }
       } else {
         const list = await List.findOne(card.listId);
         const prevAttachment = inputs.record.coverAttachmentId ? await Attachment.findOne(inputs.record.coverAttachmentId) : undefined;

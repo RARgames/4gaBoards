@@ -45,13 +45,17 @@ module.exports = {
 
     boardMemberships = boardMemberships.filter((boardMembership) => boardIds.includes(boardMembership.boardId));
 
+    const cardStatsByBoard = await sails.helpers.boards.getCardStats(boardIds);
     const taskStatsByBoard = await sails.helpers.boards.getTaskStats(boardIds);
     boards = boards.map((board) => {
-      const stats = taskStatsByBoard[board.id];
+      const cardStats = cardStatsByBoard[board.id];
+      const taskStats = taskStatsByBoard[board.id];
       return {
         ...board,
-        taskTotal: stats.total,
-        taskCompleted: stats.completed,
+        cardTotal: cardStats.total,
+        cardCompleted: cardStats.completed,
+        taskTotal: taskStats.total,
+        taskCompleted: taskStats.completed,
       };
     });
 

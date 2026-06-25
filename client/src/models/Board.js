@@ -13,6 +13,12 @@ export default class extends BaseModel {
     name: attr(),
     isGithubConnected: attr(),
     githubRepo: attr(),
+    cardTotal: attr({
+      getDefault: () => 0,
+    }),
+    cardCompleted: attr({
+      getDefault: () => 0,
+    }),
     taskTotal: attr({
       getDefault: () => 0,
     }),

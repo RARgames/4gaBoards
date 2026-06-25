@@ -97,7 +97,7 @@
 
   .board {
     color: var(--text0);
-    padding: 20px;
+    padding: 20px 20px 12px 20px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -108,22 +108,28 @@
     width: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
     overflow-wrap: anywhere;
   }
 
-  .boardProgress {
-    flex: 0 0 auto;
+  .boardProgresses {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     padding-top: 12px;
     margin-top: auto;
+  }
+
+  .boardProgress {
+    flex: 0 0 auto;
     display: flex;
-    line-height: 0;
     align-items: center;
     color: var(--text3);
     font-size: 12px;
+    line-height: 12px;
     white-space: nowrap;
     gap: 4px;
   }

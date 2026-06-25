@@ -12,8 +12,10 @@ module.exports = {
       return undefined;
     }
 
-    const statsByBoard = await sails.helpers.boards.getTaskStats(inputs.boardId);
-    const stats = statsByBoard[inputs.boardId];
+    const cardStatsByBoard = await sails.helpers.boards.getCardStats(inputs.boardId);
+    const cardStats = cardStatsByBoard[inputs.boardId];
+    const taskStatsByBoard = await sails.helpers.boards.getTaskStats(inputs.boardId);
+    const taskStats = taskStatsByBoard[inputs.boardId];
 
     const relatedUserIds = await sails.helpers.boards.getProjectManagerAndBoardMemberUserIds(board);
 
@@ -21,8 +23,10 @@ module.exports = {
       sails.sockets.broadcast(`user:${userId}`, 'boardUpdate', {
         item: {
           id: inputs.boardId,
-          taskTotal: stats.total,
-          taskCompleted: stats.completed,
+          cardTotal: cardStats.total,
+          cardCompleted: cardStats.completed,
+          taskTotal: taskStats.total,
+          taskCompleted: taskStats.completed,
         },
       });
     });

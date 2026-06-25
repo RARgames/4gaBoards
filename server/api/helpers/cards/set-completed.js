@@ -105,6 +105,7 @@ module.exports = {
 
     await sails.helpers.lists.updateMeta.with({ id: card.listId, currentUser });
     await sails.helpers.lists.updateMeta.with({ id: prevList.id, currentUser });
+    await sails.helpers.boards.updateStats.with({ boardId: card.boardId });
 
     return card;
   },
