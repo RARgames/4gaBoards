@@ -84,6 +84,27 @@ module.exports = {
             },
           });
         });
+
+        await Promise.all(
+          cardsInList.map((cardInList) =>
+            sails.helpers.actions.createOne.with({
+              values: {
+                card: cardInList,
+                scope: Action.Scopes.CARD,
+                type: values.isCompleted ? Action.Types.CARD_MARK_AS_DONE : Action.Types.CARD_MARK_AS_NOT_DONE,
+                data: {
+                  listFromId: list.id,
+                  listFromName: list.name,
+                  listToId: list.id,
+                  listToName: list.name,
+                  isCompleted: values.isCompleted,
+                },
+              },
+              currentUser,
+              request: inputs.request,
+            }),
+          ),
+        );
       }
 
       await sails.helpers.actions.createOne.with({

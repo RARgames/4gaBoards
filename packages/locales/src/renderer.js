@@ -278,45 +278,65 @@ export const activityRenderSpec = {
 
     [ActivityTypes.CARD_MARK_AS_DONE]: (ctx) => {
       let { listFromName, listToName } = ctx.activity.data;
+      const { listFromId, listToId } = ctx.activity.data;
       listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
       listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
       const fromListNameTruncated = truncateIf(listFromName, ctx.isTruncated, ctx.truncateLengths.listName);
       const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
 
+      if (listFromId !== listToId) {
+        return {
+          key: ctx.hideCardDetails ? 'activity.cardMarkAsDoneShort' : 'activity.cardMarkAsDone',
+          values: {
+            card: ctx.cardNameTruncated,
+            fromList: fromListNameTruncated,
+            toList: toListNameTruncated,
+          },
+          components: [
+            { slot: 'card', title: ctx.cardName },
+            { slot: 'fromList', title: listFromName },
+            { slot: 'toList', title: listToName },
+          ],
+        };
+      }
       return {
-        key: ctx.hideCardDetails ? 'activity.cardMarkAsDoneShort' : 'activity.cardMarkAsDone',
+        key: ctx.hideCardDetails ? 'activity.cardMarkAsDoneSimpleShort' : 'activity.cardMarkAsDoneSimple',
         values: {
           card: ctx.cardNameTruncated,
-          fromList: fromListNameTruncated,
-          toList: toListNameTruncated,
         },
-        components: [
-          { slot: 'card', title: ctx.cardName },
-          { slot: 'fromList', title: listFromName },
-          { slot: 'toList', title: listToName },
-        ],
+        components: [{ slot: 'card', title: ctx.cardName }],
       };
     },
 
     [ActivityTypes.CARD_MARK_AS_NOT_DONE]: (ctx) => {
       let { listFromName, listToName } = ctx.activity.data;
+      const { listFromId, listToId } = ctx.activity.data;
       listFromName = listFromName?.startsWith('common.') ? ctx.t(listFromName) : listFromName;
       listToName = listToName?.startsWith('common.') ? ctx.t(listToName) : listToName;
       const fromListNameTruncated = truncateIf(listFromName, ctx.isTruncated, ctx.truncateLengths.listName);
       const toListNameTruncated = truncateIf(listToName, ctx.isTruncated, ctx.truncateLengths.listName);
 
+      if (listFromId !== listToId) {
+        return {
+          key: ctx.hideCardDetails ? 'activity.cardMarkAsNotDoneShort' : 'activity.cardMarkAsNotDone',
+          values: {
+            card: ctx.cardNameTruncated,
+            fromList: fromListNameTruncated,
+            toList: toListNameTruncated,
+          },
+          components: [
+            { slot: 'card', title: ctx.cardName },
+            { slot: 'fromList', title: listFromName },
+            { slot: 'toList', title: listToName },
+          ],
+        };
+      }
       return {
-        key: ctx.hideCardDetails ? 'activity.cardMarkAsNotDoneShort' : 'activity.cardMarkAsNotDone',
+        key: ctx.hideCardDetails ? 'activity.cardMarkAsNotDoneSimpleShort' : 'activity.cardMarkAsNotDoneSimple',
         values: {
           card: ctx.cardNameTruncated,
-          fromList: fromListNameTruncated,
-          toList: toListNameTruncated,
         },
-        components: [
-          { slot: 'card', title: ctx.cardName },
-          { slot: 'fromList', title: listFromName },
-          { slot: 'toList', title: listToName },
-        ],
+        components: [{ slot: 'card', title: ctx.cardName }],
       };
     },
 
