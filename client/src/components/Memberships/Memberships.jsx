@@ -130,7 +130,7 @@ const Memberships = React.memo(
             onDelete={onDelete}
             onUserEmailLookup={onUserEmailLookup}
           >
-            <Button variant={ButtonVariant.Icon} title={t('action.addUser')} className={s.addUser}>
+            <Button variant={ButtonVariant.Icon} title={t('common.addUser')} className={s.addUser}>
               <Icon type={IconType.UserAdd} size={IconSize.Size20} />
             </Button>
           </AddPopup>

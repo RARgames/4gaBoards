@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Hisobingizni yarating',
       emailOrUsername: 'Email yoki foydalanuvchi nomi',
       login: 'Kirish',
+      logIn: 'Kirish',
       logInToBoards: 'Kirish',
       newToBoards: '4ga Boardsda yangimisiz?',
       pageNotFound_title: 'Sahifa topilmadi',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: "Google orqali ro'yxatdan o'tish",
       termsOfService: 'Xizmat shartlari',
       togglePasswordVisibility: "Parolni ko'rsatish/yashirish",
-    },
-
-    action: {
-      logIn: 'Kirish',
     },
   },
 };

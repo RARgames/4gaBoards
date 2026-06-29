@@ -89,7 +89,7 @@ const Comment = React.memo(
                 <DeletePopup
                   title={t('common.deleteComment', { context: 'title' })}
                   content={t('common.areYouSureYouWantToDeleteThisComment')}
-                  buttonContent={t('action.deleteComment')}
+                  buttonContent={t('common.deleteComment')}
                   onConfirm={onDelete}
                   position="left-start"
                   offset={0}

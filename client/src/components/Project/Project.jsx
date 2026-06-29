@@ -48,7 +48,7 @@ const Project = React.memo(
         <div className={s.header}>
           <div ref={headerButtonGroupOffsetRef} />
           <div className={clsx(s.headerText)}>
-            <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick}>
+            <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('common.unsubscribe') : t('common.subscribe')} onClick={handleToggleSubscriptionClick}>
               <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
             </Button>
             <div title={currentProject?.name} className={s.title}>

@@ -1,7 +1,6 @@
 import { enGB as dateFns } from 'date-fns/locale';
 import merge from 'lodash/merge';
 
-import action from './action';
 import activity from './activity';
 import core from './core';
 import error from './error';
@@ -11,7 +10,7 @@ export default {
   language: 'en',
   country: 'gb',
   name: 'English',
-  embeddedLocale: merge(action, activity, core, error, login),
+  embeddedLocale: merge(activity, core, error, login),
   flags: ['GB', 'US'],
   dateFns,
   format: {

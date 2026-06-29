@@ -54,8 +54,8 @@ const ColorPickerStep = React.memo(({ defaultValue, onUpdate, onClose }) => {
       <Form>
         <ColorPicker ref={colorPickerRef} color={value} onChange={(color) => setValue(color.hexa)} presetColors={false} />
         <div className={clsx(gs.controlsSpaceBetween, s.controls)}>
-          <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} className={s.button} />
-          <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} className={s.button} />
+          <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} className={s.button} />
+          <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} className={s.button} />
         </div>
       </Form>
     </Popup.Content>

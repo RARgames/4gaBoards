@@ -112,7 +112,7 @@ const AccountSettings = React.memo(
                 onUpdate={onUsernameUpdate}
                 onMessageDismiss={onUsernameUpdateMessageDismiss}
               >
-                <Button variant={ButtonVariant.DefaultBorder} content={t('action.editUsername', { context: 'title' })} />
+                <Button variant={ButtonVariant.DefaultBorder} content={t('common.editUsername', { context: 'title' })} />
               </UserUsernameEditPopup>
             </div>
             <div className={s.action}>
@@ -138,7 +138,7 @@ const AccountSettings = React.memo(
                 onUpdate={onEmailUpdate}
                 onMessageDismiss={onEmailUpdateMessageDismiss}
               >
-                <Button variant={ButtonVariant.DefaultBorder} content={t('action.editEmail', { context: 'title' })} />
+                <Button variant={ButtonVariant.DefaultBorder} content={t('common.editEmail', { context: 'title' })} />
               </UserEmailEditPopup>
             </div>
             {mailServiceAvailable && (

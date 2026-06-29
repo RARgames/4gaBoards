@@ -64,7 +64,7 @@ const InformationEdit = React.memo(({ defaultData, onUpdate }) => {
         isError={isError}
       />
       <div className={gs.controls}>
-        <Button variant={ButtonVariant.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Submit} content={t('common.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
       </div>
     </Form>
   );

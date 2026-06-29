@@ -109,8 +109,8 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
           <Input ref={dateField} variant={InputVariant.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gs.controlsSpaceBetween}>
-            <Button variant={ButtonVariant.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('common.remove')} onClick={handleClearClick} />
+            <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

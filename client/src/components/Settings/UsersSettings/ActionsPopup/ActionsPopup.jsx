@@ -173,10 +173,10 @@ const ActionsStep = React.memo(
 
     return (
       <>
-        <Button variant={ButtonVariant.PopupContext} content={t('action.editInformation', { context: 'title' })} onClick={handleEditInformationClick} />
-        <Button variant={ButtonVariant.PopupContext} content={t('action.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
-        <Button variant={ButtonVariant.PopupContext} content={t('action.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
-        <Button variant={ButtonVariant.PopupContext} content={t('action.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('common.editInformation', { context: 'title' })} onClick={handleEditInformationClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('common.editUsername', { context: 'title' })} onClick={handleEditUsernameClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('common.editEmail', { context: 'title' })} onClick={handleEditEmailClick} />
+        <Button variant={ButtonVariant.PopupContext} content={t('common.editPassword', { context: 'title' })} onClick={handleEditPasswordClick} />
         <Button variant={ButtonVariant.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleUserActivityClick} />
         <Button variant={ButtonVariant.PopupContext} content={t('common.checkUserAccountActivity', { context: 'title' })} onClick={handleUserAccountActivityClick} />
         {!isCurrentUser && <Popup.Separator />}

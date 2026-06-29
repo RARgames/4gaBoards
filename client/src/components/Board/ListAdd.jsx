@@ -105,8 +105,8 @@ const ListAdd = React.memo(({ onCreate, onClose }) => {
         isError={isError}
       />
       <div className={gs.controls}>
-        <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button variant={ButtonVariant.Submit} content={t('action.addList')} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} />
+        <Button variant={ButtonVariant.Submit} content={t('common.addList')} onClick={handleSubmit} />
       </div>
     </Form>
   );

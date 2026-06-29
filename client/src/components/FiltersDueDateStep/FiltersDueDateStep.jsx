@@ -115,8 +115,8 @@ const FiltersDueDateStep = React.memo(({ defaultValue, justSelectedDayDefaultVal
           <Checkbox checked={justSelectedDay} label={t('common.justSelectedDay')} onChange={toggleJustSelectedDay} wrapperClassName={s.checkboxWrapper} />
           <Checkbox checked={includeTaskDueDates} label={t('common.includeTaskDueDates')} onChange={toggleIncludeTaskDueDates} wrapperClassName={s.checkboxWrapper} />
           <div className={gs.controlsSpaceBetween}>
-            <Button variant={ButtonVariant.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('common.remove')} onClick={handleClearClick} />
+            <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

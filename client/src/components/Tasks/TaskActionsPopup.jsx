@@ -101,7 +101,7 @@ const TaskActionsStep = React.memo(
             <DeleteStep
               title={t('common.deleteTask', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisTask')}
-              buttonContent={t('action.deleteTask')}
+              buttonContent={t('common.deleteTask')}
               onConfirm={onDelete}
               onBack={handleBack}
             />
@@ -133,15 +133,15 @@ const TaskActionsStep = React.memo(
     return (
       <>
         {canEdit && (
-          <Button variant={ButtonVariant.PopupContext} title={t('action.editDescription', { context: 'title' })} onClick={handleEditNameClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.editDescription', { context: 'title' })} onClick={handleEditNameClick}>
             <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-            {t('action.editDescription', { context: 'title' })}
+            {t('common.editDescription', { context: 'title' })}
           </Button>
         )}
         {canEdit && (
-          <Button variant={ButtonVariant.PopupContext} title={t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })} onClick={handleDueDateEditClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t(dueDate ? 'common.editDueDate' : 'common.addDueDate', { context: 'title' })} onClick={handleDueDateEditClick}>
             <Icon type={IconType.Calendar} size={IconSize.Size13} className={s.icon} />
-            {t(dueDate ? 'action.editDueDate' : 'common.addDueDate', { context: 'title' })}
+            {t(dueDate ? 'common.editDueDate' : 'common.addDueDate', { context: 'title' })}
           </Button>
         )}
         {canEdit && (
@@ -162,9 +162,9 @@ const TaskActionsStep = React.memo(
         </Button>
         {canEdit && <Popup.Separator />}
         {canEdit && (
-          <Button variant={ButtonVariant.PopupContext} title={t('action.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.deleteTask', { context: 'title' })} onClick={handleDeleteClick}>
             <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-            {t('action.deleteTask', { context: 'title' })}
+            {t('common.deleteTask', { context: 'title' })}
           </Button>
         )}
       </>

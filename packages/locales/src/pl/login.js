@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Utwórz konto',
       emailOrUsername: 'Email lub nazwa użytkownika',
       login: 'Logowanie',
+      logIn: 'Zaloguj',
       logInToBoards: 'Logowanie',
       newToBoards: 'Nowy użytkownik?',
       pageNotFound_title: 'Nie znaleziono strony',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Zarejestruj przez Google',
       termsOfService: 'Warunki świadczenia usług',
       togglePasswordVisibility: 'Pokaż/Ukryj hasło',
-    },
-
-    action: {
-      logIn: 'Zaloguj',
     },
   },
 };

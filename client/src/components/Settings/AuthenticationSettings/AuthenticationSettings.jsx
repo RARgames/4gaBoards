@@ -57,7 +57,7 @@ const AuthenticationSettings = React.memo(
                 onUpdate={onPasswordUpdate}
                 onMessageDismiss={onPasswordUpdateMessageDismiss}
               >
-                <Button variant={ButtonVariant.DefaultBorder} content={isPasswordAuthenticated ? t('action.editPassword', { context: 'title' }) : t('common.setPassword', { context: 'title' })} />
+                <Button variant={ButtonVariant.DefaultBorder} content={isPasswordAuthenticated ? t('common.editPassword', { context: 'title' }) : t('common.setPassword', { context: 'title' })} />
               </UserPasswordEditPopup>
             </div>
             <div className={s.action}>

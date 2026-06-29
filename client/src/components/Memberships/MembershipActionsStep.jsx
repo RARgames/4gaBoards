@@ -71,7 +71,7 @@ const MembershipActionsStep = React.memo(
             <PermissionsSelectStep
               defaultData={pick(membership, ['role', 'canComment'])}
               title="common.editPermissions"
-              buttonContent="action.save"
+              buttonContent="common.save"
               onSelect={handleRoleSelect}
               onBack={handleBack}
               onClose={onClose}
@@ -119,7 +119,7 @@ const MembershipActionsStep = React.memo(
             )}
           </div>
         </span>
-        {permissionsSelectStep && canEdit && <Button variant={ButtonVariant.Popup} content={t('action.editPermissions')} onClick={handleEditPermissionsClick} />}
+        {permissionsSelectStep && canEdit && <Button variant={ButtonVariant.Popup} content={t('common.editPermissions')} onClick={handleEditPermissionsClick} />}
         {membership.user.isCurrent
           ? canLeave && <Button variant={ButtonVariant.Popup} content={t(leaveButtonContent)} onClick={handleDeleteClick} />
           : canEdit && <Button variant={ButtonVariant.Popup} content={t(deleteButtonContent)} onClick={handleDeleteClick} />}
@@ -149,14 +149,14 @@ MembershipActionsStep.propTypes = {
 
 MembershipActionsStep.defaultProps = {
   permissionsSelectStep: undefined,
-  leaveButtonContent: 'action.leaveBoard',
+  leaveButtonContent: 'common.leaveBoard',
   leaveConfirmationTitle: 'common.leaveBoard',
   leaveConfirmationContent: 'common.areYouSureYouWantToLeaveBoard',
-  leaveConfirmationButtonContent: 'action.leaveBoard',
-  deleteButtonContent: 'action.removeFromBoard',
+  leaveConfirmationButtonContent: 'common.leaveBoard',
+  deleteButtonContent: 'common.removeFromBoard',
   deleteConfirmationTitle: 'common.removeMember',
   deleteConfirmationContent: 'common.areYouSureYouWantToRemoveThisMemberFromBoard',
-  deleteConfirmationButtonContent: 'action.removeMember',
+  deleteConfirmationButtonContent: 'common.removeMember',
   onUpdate: undefined,
   onBack: undefined,
 };

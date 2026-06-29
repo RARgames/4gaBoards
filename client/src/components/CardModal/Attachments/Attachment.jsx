@@ -86,12 +86,12 @@ const Attachment = React.forwardRef(
           {coverUrl && canEdit && (
             <Button
               variant={ButtonVariant.NoBackground}
-              title={isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}
+              title={isCover ? t('common.removeCover', { context: 'title' }) : t('common.makeCover', { context: 'title' })}
               onClick={handleToggleCoverClick}
               className={s.optionButton}
             >
               <Icon type={IconType.WindowMaximize} size={IconSize.Size10} className={s.optionIcon} />
-              <span className={s.optionText}>{isCover ? t('action.removeCover', { context: 'title' }) : t('action.makeCover', { context: 'title' })}</span>
+              <span className={s.optionText}>{isCover ? t('common.removeCover', { context: 'title' }) : t('common.makeCover', { context: 'title' })}</span>
             </Button>
           )}
         </div>
@@ -128,7 +128,7 @@ const Attachment = React.forwardRef(
             <DeletePopup
               title={t('common.deleteAttachment', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisAttachment')}
-              buttonContent={t('action.deleteAttachment')}
+              buttonContent={t('common.deleteAttachment')}
               onConfirm={onDelete}
               position="left-start"
               offset={0}

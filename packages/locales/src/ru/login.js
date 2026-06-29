@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Sozdayte akkount',
       emailOrUsername: 'Email ili imya polzovatelya',
       login: 'Voyti',
+      logIn: 'Voyti',
       logInToBoards: 'Voyti',
       newToBoards: 'Vpervye v 4ga Boards?',
       pageNotFound_title: 'Stranica ne naydena',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Zaregistrirovatsya cherez Google',
       termsOfService: 'Usloviya ispolzovaniya',
       togglePasswordVisibility: 'Pokazat/skryt parol',
-    },
-
-    action: {
-      logIn: 'Voyti',
     },
   },
 };

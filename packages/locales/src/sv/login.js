@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Skapa ditt konto',
       emailOrUsername: 'E-post eller användarnamn',
       login: 'Logga in',
+      logIn: 'Logga in',
       logInToBoards: 'Logga in',
       newToBoards: 'Ny på 4ga Boards?',
       pageNotFound_title: 'Sidan hittades inte',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Registrera med Google',
       termsOfService: 'Användarvillkor',
       togglePasswordVisibility: 'Visa/dölj lösenord',
-    },
-
-    action: {
-      logIn: 'Logga in',
     },
   },
 };

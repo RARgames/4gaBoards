@@ -125,7 +125,7 @@ const LabelsStep = React.memo(({ items, currentIds, title, canEdit, onSelect, on
         <div className={s.inputWrapper}>
           <Input ref={searchField} variant={InputVariant.FullWidth} value={search} placeholder={t('common.searchLabels')} onChange={handleSearchChange} />
           {canEdit && (
-            <Button variant={ButtonVariant.Icon} title={t('action.createNewLabel')} onClick={handleAddClick} className={s.addButton}>
+            <Button variant={ButtonVariant.Icon} title={t('common.createNewLabel')} onClick={handleAddClick} className={s.addButton}>
               <Icon type={IconType.Plus} size={IconSize.Size14} />
             </Button>
           )}

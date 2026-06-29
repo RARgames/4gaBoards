@@ -10,6 +10,7 @@ export default {
       createYourAccount: '创建你的账户',
       emailOrUsername: '邮箱或用户名',
       login: '登录',
+      logIn: '登录',
       logInToBoards: '登录',
       newToBoards: '刚来到 4ga Boards?',
       pageNotFound_title: '页面未找到',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: '使用 Google 注册',
       termsOfService: '服务条款',
       togglePasswordVisibility: '切换密码可见性',
-    },
-
-    action: {
-      logIn: '登录',
     },
   },
 };

@@ -177,18 +177,18 @@ const TimerEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) =
             </Button>
           </div>
           <div className={gs.controlsSpaceBetween}>
-            <Button variant={ButtonVariant.Cancel} content={t('action.remove')} onClick={handleClearClick} />
-            {isEditing && <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />}
+            <Button variant={ButtonVariant.Cancel} content={t('common.remove')} onClick={handleClearClick} />
+            {isEditing && <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />}
             {!isEditing &&
               (defaultValue && defaultValue.startedAt ? (
-                <Button variant={ButtonVariant.Submit} type="button" title={t('action.stop')} onClick={handleStopClick}>
+                <Button variant={ButtonVariant.Submit} type="button" title={t('common.stop')} onClick={handleStopClick}>
                   <Icon type={IconType.Pause} size={IconSize.Size10} className={s.startStopIcon} />
-                  {t('action.stop')}
+                  {t('common.stop')}
                 </Button>
               ) : (
-                <Button variant={ButtonVariant.Submit} type="button" title={t('action.start')} onClick={handleStartClick}>
+                <Button variant={ButtonVariant.Submit} type="button" title={t('common.start')} onClick={handleStartClick}>
                   <Icon type={IconType.Play} size={IconSize.Size10} className={s.startStopIcon} />
-                  {t('action.start')}
+                  {t('common.start')}
                 </Button>
               ))}
           </div>

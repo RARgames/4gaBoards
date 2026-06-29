@@ -143,8 +143,8 @@ const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, comm
         className={s.editor}
       />
       <div className={gs.controls}>
-        <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} />
+        <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
       </div>
     </Form>
   );

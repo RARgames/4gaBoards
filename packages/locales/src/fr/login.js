@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Créez votre compte',
       emailOrUsername: "Email ou nom d'utilisateur",
       login: 'Se connecter',
+      logIn: 'Se connecter',
       logInToBoards: 'Se connecter',
       newToBoards: 'Vous débutez avec les cartes 4ga Boards?',
       pageNotFound_title: 'Page non trouvée',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Inscrivez-vous sur Google',
       termsOfService: "Conditions d'utilisation",
       togglePasswordVisibility: 'Activer/désactiver la visibilité du mot de passe',
-    },
-
-    action: {
-      logIn: 'Se connecter',
     },
   },
 };

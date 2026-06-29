@@ -74,8 +74,8 @@ const BoardTemplateAddStep = React.memo(({ title, defaultData, placeholder, onUp
             isError={isError}
           />
           <div className={gs.controlsSpaceBetween}>
-            <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={onClose} />
-            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={onClose} />
+            <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

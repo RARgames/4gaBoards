@@ -56,7 +56,7 @@ const UserInformationEdit = React.memo(({ defaultData, onUpdate }) => {
       <div className={s.text}>{t('common.organization')}</div>
       <Input variant={InputVariant.Default} name="organization" value={data.organization} onChange={handleFieldChange} />
       <div className={gs.controls}>
-        <Button variant={ButtonVariant.Submit} content={t('action.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Submit} content={t('common.save')} disabled={dequal(cleanData, defaultData)} onClick={handleSubmit} />
       </div>
     </Form>
   );

@@ -69,7 +69,7 @@ const AddStep = React.memo(({ defaultData, onCreate, onBack }) => {
         <Form className={s.form} onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={clsx(gs.controls, s.scrollbarOffset)}>
-            <Button variant={ButtonVariant.Submit} content={t('action.createLabel')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('common.createLabel')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

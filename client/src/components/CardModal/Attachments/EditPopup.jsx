@@ -62,7 +62,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onClose }) => {
             isError={isError}
           />
           <div className={gs.controls}>
-            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

@@ -332,7 +332,7 @@ const CardModal = React.memo(
     const headerNode = (
       <div className={s.header}>
         <div className={s.headerFirstLine}>
-          <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={s.headerNotificationsButton}>
+          <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('common.unsubscribe') : t('common.subscribe')} onClick={handleToggleSubscriptionClick} className={s.headerNotificationsButton}>
             <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} className={s.headerNotificationsIcon} />
           </Button>
           <div className={s.headerTitleWrapper}>
@@ -352,7 +352,7 @@ const CardModal = React.memo(
             <DeletePopup
               title={t('common.deleteCard', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisCard')}
-              buttonContent={t('action.deleteCard')}
+              buttonContent={t('common.deleteCard')}
               onConfirm={onDelete}
               position="left-start"
               offset={0}
@@ -653,7 +653,7 @@ const CardModal = React.memo(
       </Button>
     ) : (
       <Button variant={ButtonVariant.Default} title={t('common.addDescription')} onClick={handleDescClick} className={s.descriptionButton}>
-        <span className={s.descriptionButtonText}>{t('action.addDescription')}</span>
+        <span className={s.descriptionButtonText}>{t('common.addDescription')}</span>
       </Button>
     );
 

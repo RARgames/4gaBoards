@@ -81,7 +81,7 @@ const ListActionsStep = React.memo(
             <DeleteStep
               title={t('common.deleteList', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisList')}
-              buttonContent={t('action.deleteList')}
+              buttonContent={t('common.deleteList')}
               onConfirm={onDelete}
               onBack={handleBack}
             />
@@ -134,9 +134,9 @@ const ListActionsStep = React.memo(
     return (
       <>
         {canEdit && (
-          <Button variant={ButtonVariant.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.editName', { context: 'title' })} onClick={handleEditNameClick}>
             <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-            {t('action.editName', { context: 'title' })}
+            {t('common.editName', { context: 'title' })}
           </Button>
         )}
         {canEdit && (
@@ -150,9 +150,9 @@ const ListActionsStep = React.memo(
           {t('common.checkActivity', { context: 'title' })}
         </Button>
         {canEdit && (
-          <Button variant={ButtonVariant.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.addCard', { context: 'title' })} onClick={handleAddCardClick}>
             <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
-            {t('action.addCard', { context: 'title' })}
+            {t('common.addCard', { context: 'title' })}
           </Button>
         )}
         {canEdit && (
@@ -168,9 +168,9 @@ const ListActionsStep = React.memo(
         )}
         {canEdit && <Popup.Separator />}
         {canEdit && (
-          <Button variant={ButtonVariant.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
             <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-            {t('action.deleteList', { context: 'title' })}
+            {t('common.deleteList', { context: 'title' })}
           </Button>
         )}
       </>

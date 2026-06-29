@@ -106,7 +106,7 @@ const AddStep = React.memo(
           if (currentUser) {
             const PermissionsSelectStep = permissionsSelectStep;
 
-            return <PermissionsSelectStep buttonContent="action.addMember" onSelect={handleRoleSelect} onBack={handleBack} onClose={onClose} />;
+            return <PermissionsSelectStep buttonContent="common.addMember" onSelect={handleRoleSelect} onBack={handleBack} onClose={onClose} />;
           }
 
           openStep(null);

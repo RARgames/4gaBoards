@@ -83,7 +83,7 @@ const BoardTemplateManagerStep = React.memo(({ templates, isAdmin, onUpdate, onD
           <DeleteStep
             title={t('common.deleteTemplate_title', { name: step.params.template.name })}
             content={t('common.areYouSureYouWantToDeleteThisTemplate')}
-            buttonContent={t('action.delete')}
+            buttonContent={t('common.delete')}
             onConfirm={() => handleDelete(step.params.template.id)}
             onBack={handleBack}
           />

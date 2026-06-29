@@ -72,14 +72,14 @@ const ProjectSettings = React.memo(
                 items={managers}
                 allUsers={allUsers}
                 addTitle="common.addManager"
-                leaveButtonContent="action.leaveProject"
+                leaveButtonContent="common.leaveProject"
                 leaveConfirmationTitle="common.leaveProject"
                 leaveConfirmationContent="common.areYouSureYouWantToLeaveProject"
-                leaveConfirmationButtonContent="action.leaveProject"
-                deleteButtonContent="action.removeFromProject"
+                leaveConfirmationButtonContent="common.leaveProject"
+                deleteButtonContent="common.removeFromProject"
                 deleteConfirmationTitle="common.removeManager"
                 deleteConfirmationContent="common.areYouSureYouWantToRemoveThisManagerFromProject"
-                deleteConfirmationButtonContent="action.removeManager"
+                deleteConfirmationButtonContent="common.removeManager"
                 canLeaveIfLast={false}
                 canEdit={isManager}
                 onCreate={(data) => {
@@ -107,13 +107,13 @@ const ProjectSettings = React.memo(
               <DeletePopup
                 title={t('common.deleteProject', { context: 'title' })}
                 content={t('common.areYouSureYouWantToDeleteThisProject')}
-                buttonContent={t('action.deleteProject')}
+                buttonContent={t('common.deleteProject')}
                 onConfirm={() => {
                   onDelete(projectId);
                 }}
               >
                 <div className={gs.controlsCenter}>
-                  <Button variant={ButtonVariant.Cancel} content={t('action.deleteProject', { context: 'title' })} />
+                  <Button variant={ButtonVariant.Cancel} content={t('common.deleteProject', { context: 'title' })} />
                 </div>
               </DeletePopup>
             </div>

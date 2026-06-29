@@ -137,7 +137,7 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
       {items.length > INITIALLY_VISIBLE && (
         <Button
           variant={ButtonVariant.NoBackground}
-          content={isAllVisible ? t('action.showFewerAttachments') : t('action.showAllAttachments', { hidden: items.length - INITIALLY_VISIBLE })}
+          content={isAllVisible ? t('common.showFewerAttachments') : t('common.showAllAttachments', { hidden: items.length - INITIALLY_VISIBLE })}
           className={s.toggleButton}
           onClick={handleToggleAllVisibleClick}
         />

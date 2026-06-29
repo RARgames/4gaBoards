@@ -184,7 +184,7 @@ const CardActionsStep = React.memo(
             <DeleteStep
               title={t('common.deleteCard', { context: 'title' })}
               content={t('common.areYouSureYouWantToDeleteThisCard')}
-              buttonContent={t('action.deleteCard')}
+              buttonContent={t('common.deleteCard')}
               onConfirm={handleDelete}
               onBack={handleBack}
             />
@@ -221,20 +221,20 @@ const CardActionsStep = React.memo(
             {card.isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')}
           </Button>
         )}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('action.editName', { context: 'title' })} onClick={handleEditNameClick} />}
+        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editName', { context: 'title' })} onClick={handleEditNameClick} />}
         {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick} />}
         {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('action.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('action.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('action.moveCard', { context: 'title' })} onClick={handleMoveClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('action.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />}
+        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />}
+        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />}
+        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.moveCard', { context: 'title' })} onClick={handleMoveClick} />}
+        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />}
         <Button variant={ButtonVariant.PopupContext} content={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink} />
         <Button variant={ButtonVariant.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick} />
         {canEdit && <Popup.Separator />}
         {canEdit && (
-          <Button variant={ButtonVariant.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
+          <Button variant={ButtonVariant.PopupContext} title={t('common.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
             <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-            {t('action.deleteCard', { context: 'title' })}
+            {t('common.deleteCard', { context: 'title' })}
           </Button>
         )}
       </>

@@ -32,10 +32,10 @@ const AvatarEditStep = React.memo(({ defaultValue, onUpdate, onDelete, onClose }
   return (
     <>
       <FilePicker accept="image/*" onSelect={handleFileSelect}>
-        <Button ref={field} variant={ButtonVariant.PopupContext} content={t('action.uploadNewAvatar')} />
+        <Button ref={field} variant={ButtonVariant.PopupContext} content={t('common.uploadNewAvatar')} />
       </FilePicker>
       <Popup.Separator />
-      {defaultValue && <Button variant={ButtonVariant.PopupContext} content={t('action.deleteAvatar')} onClick={handleDeleteClick} />}
+      {defaultValue && <Button variant={ButtonVariant.PopupContext} content={t('common.deleteAvatar')} onClick={handleDeleteClick} />}
     </>
   );
 });

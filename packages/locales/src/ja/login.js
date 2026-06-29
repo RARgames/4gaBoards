@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'アカウントを作成する',
       emailOrUsername: 'メールアドレスまたはユーザー名',
       login: 'ログイン',
+      logIn: 'ログイン',
       logInToBoards: 'ログイン',
       newToBoards: '4ga Boardsは初めてですか?',
       pageNotFound_title: 'ページが見つかりません',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Googleで登録',
       termsOfService: '利用規約',
       togglePasswordVisibility: 'パスワードの表示/非表示',
-    },
-
-    action: {
-      logIn: 'ログイン',
     },
   },
 };

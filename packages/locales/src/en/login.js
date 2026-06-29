@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Create your account',
       emailOrUsername: 'Email or username',
       login: 'Login',
+      logIn: 'Log in',
       logInToBoards: 'Log in',
       newToBoards: 'New to 4ga Boards?',
       pageNotFound_title: 'Page Not Found',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Register with Google',
       termsOfService: 'Terms of Service',
       togglePasswordVisibility: 'Toggle password visibility',
-    },
-
-    action: {
-      logIn: 'Log in',
     },
   },
 };

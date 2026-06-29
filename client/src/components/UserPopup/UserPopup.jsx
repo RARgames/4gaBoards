@@ -61,7 +61,7 @@ const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, 
         </Button>
       )}
       <Popup.Separator />
-      <Button variant={ButtonVariant.PopupContext} content={t('action.logOut', { context: 'title' })} onClick={onLogout} disabled={isLogouting} />
+      <Button variant={ButtonVariant.PopupContext} content={t('common.logOut', { context: 'title' })} onClick={onLogout} disabled={isLogouting} />
     </>
   );
 });

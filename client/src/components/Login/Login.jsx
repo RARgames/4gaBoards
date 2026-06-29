@@ -220,12 +220,12 @@ const Login = React.memo(
                 onChange={handleFieldChange}
                 isError={isPasswordError}
               />
-              <Button variant={ButtonVariant.Login} type="submit" title={t('action.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
+              <Button variant={ButtonVariant.Login} type="submit" title={t('common.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
                 {loadingProvider === 'local' ? (
                   <Loader size={LoaderSize.Small} />
                 ) : (
                   <>
-                    {t('action.logIn')}
+                    {t('common.logIn')}
                     <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
                   </>
                 )}

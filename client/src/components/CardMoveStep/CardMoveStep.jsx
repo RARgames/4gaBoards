@@ -145,7 +145,7 @@ const CardMoveStep = React.memo(({ projectsToLists, defaultPath, onMove, onTrans
             </>
           )}
           <div className={gs.controls}>
-            <Button variant={ButtonVariant.Submit} content={t('action.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('common.move')} disabled={(selectedBoard && selectedBoard.isFetching !== false) || !selectedList} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

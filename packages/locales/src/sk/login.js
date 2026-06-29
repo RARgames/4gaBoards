@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Vytvorte si účet',
       emailOrUsername: 'Email alebo používateľské meno',
       login: 'Prihlásiť sa',
+      logIn: 'Prihlásiť sa',
       logInToBoards: 'Prihlásiť sa',
       newToBoards: 'Nový v 4ga Boards?',
       pageNotFound_title: 'Stránka nenájdená',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Registrovať cez Google',
       termsOfService: 'Všeobecné podmienky',
       togglePasswordVisibility: 'Zobraziť/skryť heslo',
-    },
-
-    action: {
-      logIn: 'Prihlásiť sa',
     },
   },
 };

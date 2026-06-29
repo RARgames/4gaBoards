@@ -10,6 +10,7 @@ export default {
       createYourAccount: 'Opret din konto',
       emailOrUsername: 'E-mail eller brugernavn',
       login: 'Log ind',
+      logIn: 'Log ind',
       logInToBoards: 'Log ind',
       newToBoards: 'Ny i 4ga Boards?',
       pageNotFound_title: 'Siden blev ikke fundet',
@@ -19,10 +20,6 @@ export default {
       registerWithGoogle: 'Registrer med Google',
       termsOfService: 'Vilkår for brug',
       togglePasswordVisibility: 'Vis/skjul adgangskode',
-    },
-
-    action: {
-      logIn: 'Log ind',
     },
   },
 };

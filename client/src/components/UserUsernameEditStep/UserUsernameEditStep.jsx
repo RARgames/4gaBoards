@@ -173,7 +173,7 @@ const UserUsernameEditStep = React.memo(({ defaultData, username, isSubmitting, 
             </>
           )}
           <div className={gs.controls}>
-            <Button variant={ButtonVariant.Submit} content={t('action.save')} disabled={isSubmitting} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Submit} content={t('common.save')} disabled={isSubmitting} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

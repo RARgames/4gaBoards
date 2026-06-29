@@ -92,17 +92,17 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, onUpd
       <div className={s.actions}>
         <div className={s.action}>
           <FilePicker accept="image/*" onSelect={handleFileSelect}>
-            <Button variant={ButtonVariant.DefaultBorder} ref={field} content={t('action.uploadNewImage', { context: 'title' })} disabled={isImageUpdating} />
+            <Button variant={ButtonVariant.DefaultBorder} ref={field} content={t('common.uploadNewImage', { context: 'title' })} disabled={isImageUpdating} />
           </FilePicker>
         </div>
         {imageCoverUrl && (
           <div className={s.action}>
-            <Button variant={ButtonVariant.DefaultBorder} content={t('action.deleteImage', { context: 'title' })} disabled={isImageUpdating} onClick={handleDeleteImageClick} />
+            <Button variant={ButtonVariant.DefaultBorder} content={t('common.deleteImage', { context: 'title' })} disabled={isImageUpdating} onClick={handleDeleteImageClick} />
           </div>
         )}
         {item && (
           <div className={s.action}>
-            <Button variant={ButtonVariant.DefaultBorder} content={t('action.removeBackground', { context: 'title' })} disabled={isImageUpdating} onClick={handleRemoveClick} />
+            <Button variant={ButtonVariant.DefaultBorder} content={t('common.removeBackground', { context: 'title' })} disabled={isImageUpdating} onClick={handleRemoveClick} />
           </div>
         )}
       </div>

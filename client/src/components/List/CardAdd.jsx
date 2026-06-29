@@ -120,8 +120,8 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
         isError={isError}
       />
       <div className={gs.controls}>
-        <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button variant={ButtonVariant.Submit} content={t('action.addCard')} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} />
+        <Button variant={ButtonVariant.Submit} content={t('common.addCard')} onClick={handleSubmit} />
       </div>
     </Form>
   );

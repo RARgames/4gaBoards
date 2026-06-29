@@ -110,8 +110,8 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
         isError={isError}
       />
       <div className={gs.controls}>
-        <Button variant={ButtonVariant.Cancel} content={t('action.cancel')} onClick={handleCancel} />
-        <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
+        <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} />
+        <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
       </div>
     </Form>
   );

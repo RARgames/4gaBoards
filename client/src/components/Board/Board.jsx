@@ -143,7 +143,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
                   ) : (
                     <Button variant={ButtonVariant.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
                       <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
-                      <span className={s.addListButtonText}>{t('action.addList')}</span>
+                      <span className={s.addListButtonText}>{t('common.addList')}</span>
                     </Button>
                   )}
                 </div>

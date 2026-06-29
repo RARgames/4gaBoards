@@ -61,7 +61,7 @@ const MailTokenListStep = React.memo(({ title, mailTokens, mailServiceInboundEma
           <DeleteStep
             title={t('common.deleteEmail_withEmail', { email: step.params.mailTokenId })}
             content={t('common.deleteEmailConfirmation')}
-            buttonContent={t('action.delete')}
+            buttonContent={t('common.delete')}
             onConfirm={() => {
               onDelete(step.params.mailTokenId);
               handleBack();

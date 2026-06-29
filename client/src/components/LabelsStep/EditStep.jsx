@@ -82,7 +82,7 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
       <DeleteStep
         title={t('common.deleteLabel', { context: 'title' })}
         content={t('common.areYouSureYouWantToDeleteThisLabel')}
-        buttonContent={t('action.deleteLabel')}
+        buttonContent={t('common.deleteLabel')}
         onConfirm={onDelete}
         onBack={handleBack}
       />
@@ -96,8 +96,8 @@ const EditStep = React.memo(({ defaultData, onUpdate, onDelete, onBack }) => {
         <Form className={s.form} onKeyDown={handleKeyDown}>
           <Editor ref={editorRef} data={data} onFieldChange={handleFieldChange} isError={isError} />
           <div className={clsx(gs.controlsSpaceBetween, s.scrollbarOffset)}>
-            <Button variant={ButtonVariant.Cancel} content={t('action.delete')} onClick={handleDeleteClick} />
-            <Button variant={ButtonVariant.Submit} content={t('action.save')} onClick={handleSubmit} />
+            <Button variant={ButtonVariant.Cancel} content={t('common.delete')} onClick={handleDeleteClick} />
+            <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
           </div>
         </Form>
       </Popup.Content>

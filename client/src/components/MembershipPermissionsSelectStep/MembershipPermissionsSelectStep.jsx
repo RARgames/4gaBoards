@@ -105,7 +105,7 @@ MembershipPermissionsSelectStep.propTypes = {
 MembershipPermissionsSelectStep.defaultProps = {
   defaultData: undefined,
   title: 'common.selectPermissions',
-  buttonContent: 'action.selectPermissions',
+  buttonContent: 'common.selectPermissions',
 };
 
 export default MembershipPermissionsSelectStep;

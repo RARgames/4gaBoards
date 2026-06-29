@@ -84,7 +84,7 @@ const BoardActions = React.memo(
 
     return (
       <div className={clsx(s.wrapper, gs.scrollableX)}>
-        <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('action.unsubscribe') : t('action.subscribe')} onClick={handleToggleSubscriptionClick} className={clsx(s.action, s.subscriptionButton)}>
+        <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('common.unsubscribe') : t('common.subscribe')} onClick={handleToggleSubscriptionClick} className={clsx(s.action, s.subscriptionButton)}>
           <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
         </Button>
         <div title={board.name} className={clsx(s.title, s.action)}>

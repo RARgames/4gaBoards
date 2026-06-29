@@ -185,7 +185,7 @@ const List = React.memo(
             {!isAddCardOpen && canEdit && (
               <Button variant={ButtonVariant.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
                 <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
-                <span className={s.addCardButtonText}>{t('action.addCard')}</span>
+                <span className={s.addCardButtonText}>{t('common.addCard')}</span>
               </Button>
             )}
           </div>
