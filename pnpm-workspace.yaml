@@ -19,7 +19,7 @@ overrides:
   http-proxy-middleware@>=0.16.0 <3.0.6: ^3.0.6
   js-yaml@<=4.1.1: ^4.1.2
   multiparty@<=4.2.3: ^4.2.4
-  protobufjs@<=7.6.2: ^7.6.3
+  protobufjs@<=7.6.2: ^8.0.0
   qs@>=6.11.1 <=6.15.1: ^6.15.2
   serialize-javascript@<7.0.5: ^7.0.5
   uuid@<11.1.1: ^14.0.1
