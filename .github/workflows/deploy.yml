@@ -15,7 +15,7 @@ jobs:
       beta: ${{ steps.increment_version.outputs.beta }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.0
 
       - name: Fetch tags
         run: git fetch --tags
@@ -95,7 +95,7 @@ jobs:
             runner: ubuntu-24.04-arm
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.0
 
       - name: Update package.json version
         run: jq '.version = "'${{ needs.prepare.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
@@ -107,10 +107,10 @@ jobs:
         run: awk '/appVersion:/ {$2="\"${{ needs.prepare.outputs.ghcr_tag }}\""} 1' helm-chart/Chart.yaml > temp.yaml && mv temp.yaml helm-chart/Chart.yaml
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4.0.0
+        uses: docker/setup-buildx-action@v4.1.0
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v4.0.0
+        uses: docker/login-action@v4.2.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -135,7 +135,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Build and push
-        uses: docker/build-push-action@v7.1.0
+        uses: docker/build-push-action@v7.3.0
         with:
           context: .
           platforms: ${{ matrix.platform }}
@@ -152,10 +152,10 @@ jobs:
       packages: write
     steps:
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4.0.0
+        uses: docker/setup-buildx-action@v4.1.0
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v4.0.0
+        uses: docker/login-action@v4.2.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -203,7 +203,7 @@ jobs:
       packages: write
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.0
 
       - name: Update package.json version
         run: jq '.version = "'${{ needs.prepare.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
@@ -240,7 +240,7 @@ jobs:
 
       - name: Release
         id: create_release
-        uses: softprops/action-gh-release@v2.6.1
+        uses: softprops/action-gh-release@v3.0.1
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
           tag_name: '${{ needs.prepare.outputs.new_tag }}'
