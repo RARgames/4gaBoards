@@ -15,7 +15,7 @@ allowBuilds:
 overrides:
   '@babel/runtime@<7.26.10': ^7.26.10
   '@opentelemetry/core@<2.8.0': ^2.8.0
-  diff@>=6.0.0 <8.0.3: ^8.0.3
+  diff@>=6.0.0 <8.0.3: ^9.0.0
   http-proxy-middleware@>=0.16.0 <3.0.6: ^3.0.6
   js-yaml@<=4.1.1: ^4.1.2
   multiparty@<=4.2.3: ^4.2.4
