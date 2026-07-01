@@ -17,7 +17,7 @@ overrides:
   '@opentelemetry/core@<2.8.0': ^2.8.0
   diff@>=6.0.0 <8.0.3: ^8.0.3
   http-proxy-middleware@>=0.16.0 <3.0.6: ^3.0.6
-  js-yaml@<=4.1.1: ^4.1.2
+  js-yaml@<=4.1.1: ^5.0.0
   multiparty@<=4.2.3: ^4.2.4
   protobufjs@<=7.6.2: ^7.6.3
   qs@>=6.11.1 <=6.15.1: ^6.15.2
