@@ -80,6 +80,7 @@
     "stylelint": "^17.13.0",
     "stylelint-config-recommended-scss": "^17.0.1"
   },
+  "packageManager": "pnpm@11.9.0",
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
@@ -88,6 +89,6 @@
   },
   "engines": {
     "node": "^24.11",
-    "pnpm": "^11.8.0"
+    "pnpm": "^11.9.0"
   }
 }
