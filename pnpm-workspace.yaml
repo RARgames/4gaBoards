@@ -13,14 +13,10 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
 overrides:
-  '@babel/runtime@<7.26.10': ^7.26.10
   '@opentelemetry/core@<2.8.0': ^2.8.0
-  diff@>=6.0.0 <8.0.3: ^8.0.3
-  http-proxy-middleware@>=0.16.0 <3.0.6: ^3.0.6
-  js-yaml@<=4.1.1: ^4.1.2
-  multiparty@<=4.2.3: ^4.2.4
-  protobufjs@<=7.6.2: ^7.6.3
-  qs@>=6.11.1 <=6.15.1: ^6.15.2
+  diff@>=6.0.0 <8.0.3: ^9.0.0
+  http-proxy-middleware@>=0.16.0 <3.0.6: ^4.1.1
+  js-yaml@<=4.1.1: ^5.2.0
+  protobufjs@<=7.6.2: ^8.6.5
   serialize-javascript@<7.0.5: ^7.0.5
   uuid@<11.1.1: ^14.0.1
-  ws@>=8.0.0 <8.20.1: ^8.20.1
