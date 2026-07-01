@@ -213,7 +213,7 @@ importers:
         version: 5.6.7(webpack@5.107.2(postcss@8.5.15))
       i18next:
         specifier: ^26.3.1
-        version: 26.3.1(typescript@6.0.3)
+        version: 26.3.4(typescript@6.0.3)
       i18next-browser-languagedetector:
         specifier: ^8.2.1
         version: 8.2.1
@@ -288,7 +288,7 @@ importers:
         version: 15.0.0(react@18.3.1)
       react-i18next:
         specifier: ^17.0.8
-        version: 17.0.8(i18next@26.3.1(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3)
+        version: 17.0.8(i18next@26.3.4(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3)
       react-input-mask:
         specifier: ^2.0.4
         version: 2.0.4(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
@@ -533,7 +533,7 @@ importers:
         version: 7.0.2
       i18next:
         specifier: ^26.3.1
-        version: 26.3.1(typescript@6.0.3)
+        version: 26.3.4(typescript@6.0.3)
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
@@ -3740,6 +3740,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  baseline-browser-mapping@2.10.40:
+    resolution: {integrity: sha512-BSSLZ9/Cjjv7Gtj5B68ZzXcXUg8iOf3fme+FCuh8rC/Go+Kmh8cox7M3A8dolou16s64QjLPOSdngh7GxXvkSw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   batch@0.6.1:
     resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
 
@@ -3796,6 +3801,11 @@ packages:
 
   browserslist@4.28.2:
     resolution: {integrity: sha512-48xSriZYYg+8qXna9kwqjIVzuQxi+KYWp2+5nCYnYKPTr0LvD89Jqk2Or5ogxz0NUMfIjhh2lIUX/LyX9B4oIg==}
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
+
+  browserslist@4.28.4:
+    resolution: {integrity: sha512-MTc8i/x9jBQd1iMw2CFGS+rwMa07eYjLR0CCTLDACl9xhxy+nIs3KeML/biicXtk9JrZ6dnnTatmc7ErPXIxqw==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
@@ -4589,6 +4599,9 @@ packages:
 
   electron-to-chromium@1.5.375:
     resolution: {integrity: sha512-ZWP5eB4BVPW/ZYo9252hQZHZ5XavtsTgpbhcmMmRwymavC5AsLWQWBPaKMeNd2LW0KGby5HPXvj7+sr4ta5j/Q==}
+
+  electron-to-chromium@1.5.381:
+    resolution: {integrity: sha512-n9Wa6yB+vDsGuA8AKbl/0z7HbvWqt5jxIdvr1IUicd0ryPrk7/xzwqLv8D9AbbvZ6avVNtXYLTfmgFHkwkyelg==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -5482,8 +5495,8 @@ packages:
   i18next-browser-languagedetector@8.2.1:
     resolution: {integrity: sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw==}
 
-  i18next@26.3.1:
-    resolution: {integrity: sha512-txQqd5EULsqEh9OJqRH15aCaOuy/nLJyhw5EHCSKLKJE1aBbb3Zve2+uQIxgWhPm1QqUQoWyQBm2kfmmIrzkcQ==}
+  i18next@26.3.4:
+    resolution: {integrity: sha512-pa7m0d7pBDqGHZxljT+WPFeyFgQ7P7SciPPo1tTqYuO0z4sqADYhwnBESmmGp/wEof1inwdls/k8ZgTg8rxFHA==}
     peerDependencies:
       typescript: ^5 || ^6
     peerDependenciesMeta:
@@ -6668,8 +6681,8 @@ packages:
   mute-stream@0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
 
-  nanoid@3.3.12:
-    resolution: {integrity: sha512-ZB9RH/39qpq5Vu6Y+NmUaFhQR6pp+M2Xt76XBnEwDaGcVAqhlvxrl3B2bKS5D3NH3QR76v3aSrKaF/Kiy7lEtQ==}
+  nanoid@3.3.15:
+    resolution: {integrity: sha512-y7Wygv/7mEOvxTuEQDB8StXdMRBWf1kR/tlhAzBRUFkB2jfcLOAxO/SHmOO2zgz1pVgK29/kyupn059/bCHdjA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -6726,6 +6739,10 @@ packages:
 
   node-releases@2.0.47:
     resolution: {integrity: sha512-Uzmd6LXpouKo8EUK68IjH4+E01w/hXyV3R3g/geCJo+rXLNfh1xucB+LOzYEOQPSiUK3h/xZf0cQGcSsmyL2Og==}
+    engines: {node: '>=18'}
+
+  node-releases@2.0.50:
+    resolution: {integrity: sha512-J6l92tKHX6w8Jy5nO1Vuc01NoIiRGi/d6qBKVxh+IQ8Cr3b6HbVNfKiF8ZpFKufTwpwxMmce2W3iQZ861ZRyTg==}
     engines: {node: '>=18'}
 
   nodemon@3.1.14:
@@ -8124,6 +8141,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  semver@7.8.5:
+    resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   send@0.19.0:
     resolution: {integrity: sha512-dW41u5VfLXu8SJh5bwRmyYUbAoSB3c9uQh6L8h/KtsFREPWpbX1lrljJo186Jc4nmci/sGUZ9a0a0J2zgfq2hw==}
     engines: {node: '>= 0.8.0'}
@@ -9431,7 +9453,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.29.7
       '@babel/helper-validator-option': 7.29.7
-      browserslist: 4.28.2
+      browserslist: 4.28.4
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -12416,7 +12438,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 8.61.1
       debug: 4.4.3
       minimatch: 10.2.5
-      semver: 7.8.4
+      semver: 7.8.5
       tinyglobby: 0.2.17
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
@@ -13040,6 +13062,8 @@ snapshots:
 
   baseline-browser-mapping@2.10.38: {}
 
+  baseline-browser-mapping@2.10.40: {}
+
   batch@0.6.1: {}
 
   bcp-47-match@2.0.3: {}
@@ -13113,6 +13137,14 @@ snapshots:
       electron-to-chromium: 1.5.375
       node-releases: 2.0.47
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
+
+  browserslist@4.28.4:
+    dependencies:
+      baseline-browser-mapping: 2.10.40
+      caniuse-lite: 1.0.30001799
+      electron-to-chromium: 1.5.381
+      node-releases: 2.0.50
+      update-browserslist-db: 1.2.3(browserslist@4.28.4)
 
   bser@2.1.1:
     dependencies:
@@ -13851,6 +13883,8 @@ snapshots:
       jake: 10.9.4
 
   electron-to-chromium@1.5.375: {}
+
+  electron-to-chromium@1.5.381: {}
 
   emittery@0.13.1: {}
 
@@ -15096,7 +15130,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.7
 
-  i18next@26.3.1(typescript@6.0.3):
+  i18next@26.3.4(typescript@6.0.3):
     optionalDependencies:
       typescript: 6.0.3
 
@@ -16688,7 +16722,7 @@ snapshots:
 
   mute-stream@0.0.8: {}
 
-  nanoid@3.3.12: {}
+  nanoid@3.3.15: {}
 
   napi-postinstall@0.3.4: {}
 
@@ -16728,6 +16762,8 @@ snapshots:
   node-int64@0.4.0: {}
 
   node-releases@2.0.47: {}
+
+  node-releases@2.0.50: {}
 
   nodemon@3.1.14:
     dependencies:
@@ -17515,7 +17551,7 @@ snapshots:
 
   postcss@8.5.15:
     dependencies:
-      nanoid: 3.3.12
+      nanoid: 3.3.15
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -17717,11 +17753,11 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
-  react-i18next@17.0.8(i18next@26.3.1(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3):
+  react-i18next@17.0.8(i18next@26.3.4(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3):
     dependencies:
       '@babel/runtime': 7.29.7
       html-parse-stringify: 3.0.1
-      i18next: 26.3.1(typescript@6.0.3)
+      i18next: 26.3.4(typescript@6.0.3)
       react: 18.3.1
       use-sync-external-store: 1.6.0(react@18.3.1)
     optionalDependencies:
@@ -18433,6 +18469,8 @@ snapshots:
       lru-cache: 6.0.0
 
   semver@7.8.4: {}
+
+  semver@7.8.5: {}
 
   send@0.19.0:
     dependencies:
@@ -19402,6 +19440,12 @@ snapshots:
   update-browserslist-db@1.2.3(browserslist@4.28.2):
     dependencies:
       browserslist: 4.28.2
+      escalade: 3.2.0
+      picocolors: 1.1.1
+
+  update-browserslist-db@1.2.3(browserslist@4.28.4):
+    dependencies:
+      browserslist: 4.28.4
       escalade: 3.2.0
       picocolors: 1.1.1
 
