@@ -21,7 +21,7 @@
     "@azure/msal-node": "^5.2.5",
     "@rargames/passport-github": "^1.1.2",
     "bcrypt": "^6.0.0",
-    "cookie": "^1.1.1",
+    "cookie": "^2.0.0",
     "date-fns": "^4.4.0",
     "dotenv": "^17.4.2",
     "dotenv-cli": "^11.0.0",
