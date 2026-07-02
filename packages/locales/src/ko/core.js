@@ -282,6 +282,7 @@ export default {
       enterComment: '댓글...',
       enterDescription: '설명...',
       enterDueDate: '마감일...',
+      enterDueTime: '마감 시간...',
       enterFileName: '파일 이름...',
       enterGithubRepository: 'GitHub 저장소... <Owner/Repo>',
       enterLabelName: '라벨 이름...',

@@ -289,6 +289,7 @@ export default {
       enterComment: 'Kommentar eingeben...',
       enterDescription: 'Beschreibung eingeben...',
       enterDueDate: 'Fälligkeitsdatum eingeben...',
+      enterDueTime: 'Fälligkeitsuhrzeit eingeben...',
       enterFileName: 'Dateiname eingeben...',
       enterGithubRepository: 'GitHub-Repository eingeben... <Owner/Repo>',
       enterLabelName: 'Label-Name eingeben...',

@@ -289,6 +289,7 @@ export default {
       enterComment: 'Skriv kommentar...',
       enterDescription: 'Indtast beskrivelse...',
       enterDueDate: 'Indtast forfaldsdato...',
+      enterDueTime: 'Indtast forfaldstid...',
       enterFileName: 'Indtast filnavn...',
       enterGithubRepository: 'Indtast GitHub-repository... <Ejer/Repo>',
       enterLabelName: 'Indtast etiketnavn...',

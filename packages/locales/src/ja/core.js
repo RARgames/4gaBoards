@@ -282,6 +282,7 @@ export default {
       enterComment: 'コメントを入力...',
       enterDescription: '説明を入力...',
       enterDueDate: '期限を入力...',
+      enterDueTime: '期限時間を入力...',
       enterFileName: 'ファイル名を入力...',
       enterGithubRepository: 'GitHub リポジトリを入力... <Owner/Repo>',
       enterLabelName: 'ラベル名を入力...',

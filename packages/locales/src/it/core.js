@@ -289,6 +289,7 @@ export default {
       enterComment: 'Inserisci commento...',
       enterDescription: 'Inserisci descrizione...',
       enterDueDate: 'Inserisci scadenza...',
+      enterDueTime: 'Inserisci orario scadenza...',
       enterFileName: 'Inserisci nome file...',
       enterGithubRepository: 'Inserisci repository GitHub... <Proprietario/Repo>',
       enterLabelName: 'Inserisci nome etichetta...',

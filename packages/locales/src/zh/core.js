@@ -282,6 +282,7 @@ export default {
       enterComment: '输入评论...',
       enterDescription: '输入描述...',
       enterDueDate: '输入截止日期...',
+      enterDueTime: '输入截止时间...',
       enterFileName: '输入文件名...',
       enterGithubRepository: '输入 GitHub 仓库... <Owner/Repo>',
       enterLabelName: '输入标签名称...',

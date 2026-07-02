@@ -10,7 +10,8 @@ import * as gs from '../../global.module.scss';
 
 const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose }) => {
   const [t] = useTranslation();
-  const [isError, setIsError] = useState(false);
+  const [isDateError, setIsDateError] = useState(false);
+  const [isTimeError, setIsTimeError] = useState(false);
 
   const [data, handleFieldChange, setData] = useForm(() => {
     const date = defaultValue || new Date().setHours(12, 0, 0, 0);
@@ -28,23 +29,30 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
   });
 
   const dateField = useRef(null);
+  const timeField = useRef(null);
 
   const nullableDate = useMemo(() => {
     const date = t('format:date', {
       postProcess: 'parseDate',
       value: data.date,
     });
+    return Number.isNaN(date.getTime()) ? null : date;
+  }, [data.date, t]);
 
-    if (Number.isNaN(date.getTime())) {
+  const nullableDateTime = useMemo(() => {
+    if (!nullableDate) {
       return null;
     }
-
-    return date;
-  }, [data.date, t]);
+    const value = t('format:dateTime', {
+      postProcess: 'parseDate',
+      value: `${data.date} ${data.time}`,
+    });
+    return Number.isNaN(value.getTime()) ? null : value;
+  }, [data.date, data.time, nullableDate, t]);
 
   const handleDatePickerChange = useCallback(
     (date) => {
-      setIsError(false);
+      setIsDateError(false);
       setData((prevData) => ({
         ...prevData,
         date: t('format:date', {
@@ -59,21 +67,21 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
   const handleSubmit = useCallback(() => {
     if (!nullableDate) {
       dateField.current?.focus();
-      setIsError(true);
+      setIsDateError(true);
+      return;
+    }
+    if (!nullableDateTime) {
+      timeField.current?.focus();
+      setIsTimeError(true);
       return;
     }
 
-    const value = t('format:dateTime', {
-      postProcess: 'parseDate',
-      value: `${data.date} ${data.time}`,
-    });
-
-    if (!defaultValue || value.getTime() !== defaultValue.getTime()) {
-      onUpdate(value);
+    if (!defaultValue || nullableDateTime.getTime() !== defaultValue.getTime()) {
+      onUpdate(nullableDateTime);
     }
 
     onClose();
-  }, [defaultValue, onUpdate, onClose, data, nullableDate, t]);
+  }, [nullableDate, nullableDateTime, defaultValue, onClose, onUpdate]);
 
   const handleClearClick = useCallback(() => {
     if (defaultValue) {
@@ -85,7 +93,6 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
 
   const handleKeyDown = useCallback(
     (e) => {
-      setIsError(false);
       switch (e.key) {
         case 'Enter': {
           handleSubmit();
@@ -106,7 +113,26 @@ const DueDateEditStep = React.memo(({ defaultValue, onUpdate, onBack, onClose })
       <Popup.Header onBack={onBack}>{t('common.dueDate', { context: 'title' })}</Popup.Header>
       <Popup.Content isMinContent>
         <Form onKeyDown={handleKeyDown}>
-          <Input ref={dateField} variant={InputVariant.Default} name="date" value={data.date} placeholder={t('common.enterDueDate')} onChange={handleFieldChange} isError={isError} />
+          <Input
+            ref={dateField}
+            variant={InputVariant.Default}
+            name="date"
+            value={data.date}
+            placeholder={t('common.enterDueDate')}
+            onChange={handleFieldChange}
+            isError={isDateError}
+            onKeyDown={() => setIsDateError(false)}
+          />
+          <Input
+            ref={timeField}
+            variant={InputVariant.Default}
+            name="time"
+            value={data.time}
+            placeholder={t('common.enterDueTime')}
+            onChange={handleFieldChange}
+            isError={isTimeError}
+            onKeyDown={() => setIsTimeError(false)}
+          />
           <DatePicker inline disabledKeyboardNavigation selected={nullableDate} onChange={handleDatePickerChange} />
           <div className={gs.controlsSpaceBetween}>
             <Button variant={ButtonVariant.Cancel} content={t('common.remove')} onClick={handleClearClick} />

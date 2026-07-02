@@ -289,6 +289,7 @@ export default {
       enterComment: 'Preencha o comentário...',
       enterDescription: 'Preencha a descrição...',
       enterDueDate: 'Preencha a data de prazo...',
+      enterDueTime: 'Preencha a hora de prazo...',
       enterFileName: 'Preencha o nome do arquivo...',
       enterGithubRepository: 'Preencha o repositório do GitHub... <Proprietário/Repositório>',
       enterLabelName: 'Preencha o nome do rótulo...',

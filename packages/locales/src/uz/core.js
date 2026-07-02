@@ -289,6 +289,7 @@ export default {
       enterComment: 'Izoh yozing...',
       enterDescription: 'Tavsif yozing...',
       enterDueDate: 'Muddatni kiriting...',
+      enterDueTime: 'Muddat vaqtini kiriting...',
       enterFileName: 'Fayl nomini kiriting...',
       enterGithubRepository: 'GitHub repozitoriyini kiriting... <Owner/Repo>',
       enterLabelName: 'Yorliq nomini kiriting...',

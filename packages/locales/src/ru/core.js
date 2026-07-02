@@ -303,6 +303,7 @@ export default {
       enterComment: 'Комментарий...',
       enterDescription: 'Описание...',
       enterDueDate: 'Срок...',
+      enterDueTime: 'Время...',
       enterFileName: 'Имя файла...',
       enterGithubRepository: 'Репозиторий GitHub... <Owner/Repo>',
       enterLabelName: 'Название метки...',

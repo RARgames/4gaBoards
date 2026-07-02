@@ -296,6 +296,7 @@ export default {
       enterComment: 'Zadejte komentář...',
       enterDescription: 'Zadejte popis...',
       enterDueDate: 'Zadejte termín...',
+      enterDueTime: 'Zadejte čas...',
       enterFileName: 'Zadejte název souboru...',
       enterGithubRepository: 'Zadejte GitHub repozitář... <Vlastník/Repo>',
       enterLabelName: 'Zadejte název štítku...',

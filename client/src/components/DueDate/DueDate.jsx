@@ -17,13 +17,11 @@ const VARIANTS = {
   LIST_VIEW: 'listView',
 };
 
-const getDueStyle = (value, completedAt) => {
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const reference = completedAt || new Date();
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-  const utc1 = Date.UTC(value.getFullYear(), value.getMonth(), value.getDate());
-  const utc2 = Date.UTC(reference.getFullYear(), reference.getMonth(), reference.getDate());
-  const diff = (utc2 - utc1) / msPerDay;
+const getDueStyle = (value, completedAt) => {
+  const reference = completedAt || new Date();
+  const diff = (reference.getTime() - value.getTime()) / MS_PER_DAY;
 
   if (diff > 0) {
     return 'Over';
@@ -54,6 +52,49 @@ const DueDate = React.memo(({ value, completedAt, variant, titlePrefix, iconSize
 
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
   const locale = i18n.dateFns.getLocale(i18n.resolvedLanguage) || i18n.dateFns.getLocale(i18n.language) || i18n.dateFns.getLocale('en');
+
+  useEffect(() => {
+    if (!value || completedAt) {
+      return undefined;
+    }
+    if (variant === VARIANTS.LIST_VIEW || variant === VARIANTS.CARDMODAL_ACTIVITY) {
+      return undefined;
+    }
+
+    const closeBoundaryTime = value.getTime() - 14 * MS_PER_DAY;
+    const overBoundaryTime = value.getTime();
+
+    // setTimeout delays are clamped to a 32-bit signed int (~25 days) internally, anything longer overflows and fires immediately. Cap to prevent it and reschedule on wake.
+    const MAX_TIMEOUT_DELAY = 20 * MS_PER_DAY;
+    let timeoutId;
+
+    const scheduleNextBoundary = () => {
+      const now = Date.now();
+
+      let nextBoundaryTime;
+      if (now < closeBoundaryTime) {
+        nextBoundaryTime = closeBoundaryTime;
+      } else if (now < overBoundaryTime) {
+        nextBoundaryTime = overBoundaryTime;
+      } else {
+        return;
+      }
+
+      const remaining = nextBoundaryTime - now;
+      const delay = remaining > MAX_TIMEOUT_DELAY ? MAX_TIMEOUT_DELAY : Math.max(remaining, 0) + 50;
+
+      timeoutId = setTimeout(() => {
+        if (Date.now() >= nextBoundaryTime) {
+          setDueStyle(getDueStyle(value, completedAt));
+        }
+        scheduleNextBoundary();
+      }, delay);
+    };
+
+    scheduleNextBoundary();
+
+    return () => clearTimeout(timeoutId);
+  }, [value, completedAt, variant]);
 
   useEffect(() => {
     if (!showRelative || !value) return;

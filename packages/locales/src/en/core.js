@@ -289,6 +289,7 @@ export default {
       enterComment: 'Enter comment...',
       enterDescription: 'Enter description...',
       enterDueDate: 'Enter due date...',
+      enterDueTime: 'Enter due time...',
       enterFileName: 'Enter file name...',
       enterGithubRepository: 'Enter GitHub repository... <Owner/Repo>',
       enterLabelName: 'Enter label name...',

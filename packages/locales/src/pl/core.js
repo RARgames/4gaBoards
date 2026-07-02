@@ -296,6 +296,7 @@ export default {
       enterComment: 'Podaj komentarz...',
       enterDescription: 'Podaj opis...',
       enterDueDate: 'Podaj termin...',
+      enterDueTime: 'Podaj godzinę...',
       enterFileName: 'Podaj nazwę pliku...',
       enterGithubRepository: 'Podaj repozytorium GitHub... <Owner/Repo>',
       enterLabelName: 'Podaj nazwę etykiety...',
