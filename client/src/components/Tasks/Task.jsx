@@ -31,6 +31,7 @@ const Task = React.memo(
     index,
     name,
     dueDate,
+    completedAt,
     allBoardMemberships,
     boardMemberships,
     users,
@@ -172,7 +173,7 @@ const Task = React.memo(
                 {dueDate && (
                   <div className={clsx(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!(canEdit && isPersisted)}>
-                      <DueDate variant={dueDateVariant} value={dueDate} isClickable={canEdit && isPersisted} />
+                      <DueDate variant={dueDateVariant} value={dueDate} completedAt={completedAt} isClickable={canEdit && isPersisted} />
                     </DueDateEditPopup>
                   </div>
                 )}
@@ -230,6 +231,7 @@ Task.propTypes = {
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
+  completedAt: PropTypes.instanceOf(Date),
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -255,6 +257,7 @@ Task.propTypes = {
 
 Task.defaultProps = {
   dueDate: undefined,
+  completedAt: undefined,
   lastActivityId: undefined,
   createdAt: undefined,
   createdBy: undefined,

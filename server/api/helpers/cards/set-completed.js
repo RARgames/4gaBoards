@@ -71,6 +71,8 @@ module.exports = {
 
     const card = await Card.updateOne(record.id).set({
       isCompleted,
+      completedAt: isCompleted ? new Date().toUTCString() : null,
+      completedById: isCompleted ? currentUser.id : null,
       boardId: board.id,
       listId: targetList.id,
       position: nextPosition,

@@ -12,6 +12,7 @@ export default class extends BaseModel {
     position: attr(),
     name: attr(),
     isCompleted: attr(),
+    completedAt: attr(),
     description: attr(),
     dueDate: attr(),
     timer: attr(),
@@ -67,6 +68,11 @@ export default class extends BaseModel {
       to: 'User',
       as: 'updatedBy',
       relatedName: 'updatedCards',
+    }),
+    completedById: fk({
+      to: 'User',
+      as: 'completedBy',
+      relatedName: 'completedCards',
     }),
   };
 

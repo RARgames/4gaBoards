@@ -28,6 +28,7 @@ const Card = React.memo(
     name,
     isCompleted,
     dueDate,
+    completedAt,
     timer,
     coverUrl,
     boardId,
@@ -261,7 +262,7 @@ const Card = React.memo(
                 {dueDate && (
                   <span className={clsx(s.attachment, s.attachmentLeft)}>
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
-                      <DueDate value={dueDate} variant="card" isClickable={canEdit} />
+                      <DueDate value={dueDate} completedAt={completedAt} variant="card" isClickable={canEdit} />
                     </DueDateEditPopup>
                   </span>
                 )}
@@ -400,6 +401,7 @@ Card.propTypes = {
   name: PropTypes.string.isRequired,
   isCompleted: PropTypes.bool.isRequired,
   dueDate: PropTypes.instanceOf(Date),
+  completedAt: PropTypes.instanceOf(Date),
   timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   coverUrl: PropTypes.string,
   boardId: PropTypes.string.isRequired,
@@ -458,6 +460,7 @@ Card.propTypes = {
 
 Card.defaultProps = {
   dueDate: undefined,
+  completedAt: undefined,
   timer: undefined,
   coverUrl: undefined,
   description: undefined,

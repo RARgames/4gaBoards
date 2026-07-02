@@ -36,6 +36,7 @@ const CardModal = React.memo(
     id,
     description,
     dueDate,
+    completedAt,
     timer,
     isSubscribed,
     isActivitiesFetching,
@@ -560,7 +561,7 @@ const CardModal = React.memo(
         </div>
         <span className={s.headerItem}>
           <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
-            <DueDate value={dueDate} isClickable={canEdit} />
+            <DueDate value={dueDate} completedAt={completedAt} isClickable={canEdit} />
           </DueDateEditPopup>
         </span>
       </div>
@@ -868,6 +869,7 @@ CardModal.propTypes = {
   id: PropTypes.string.isRequired,
   description: PropTypes.string,
   dueDate: PropTypes.instanceOf(Date),
+  completedAt: PropTypes.instanceOf(Date),
   timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isSubscribed: PropTypes.bool.isRequired,
   isActivitiesFetching: PropTypes.bool.isRequired,
@@ -954,6 +956,7 @@ CardModal.propTypes = {
 CardModal.defaultProps = {
   description: undefined,
   dueDate: undefined,
+  completedAt: undefined,
   timer: undefined,
   lastActivityId: undefined,
   closestTaskDueDate: undefined,

@@ -17,6 +17,9 @@ export const transformCard = (card) => ({
   ...(card.updatedAt && {
     updatedAt: new Date(card.updatedAt),
   }),
+  ...(card.completedAt && {
+    completedAt: new Date(card.completedAt),
+  }),
 });
 
 export const transformCardData = (data) => ({

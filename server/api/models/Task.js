@@ -24,6 +24,10 @@ module.exports = {
       defaultsTo: false,
       columnName: 'is_completed',
     },
+    completedAt: {
+      type: 'ref',
+      columnName: 'completed_at',
+    },
     dueDate: {
       type: 'ref',
       columnName: 'due_date',
@@ -55,6 +59,10 @@ module.exports = {
     updatedById: {
       model: 'User',
       columnName: 'updated_by_id',
+    },
+    completedById: {
+      model: 'User',
+      columnName: 'completed_by_id',
     },
   },
 };

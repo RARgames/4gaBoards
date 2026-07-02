@@ -127,6 +127,10 @@ export const makeSelectClosestDueDateByCardId = () =>
         return cardModel;
       }
 
+      if (cardModel.isCompleted) {
+        return undefined;
+      }
+
       const cardDueTime = cardModel.dueDate ? new Date(cardModel.dueDate).getTime() : undefined;
       const taskDueTimes = cardModel
         .getOrderedTasksQuerySet()

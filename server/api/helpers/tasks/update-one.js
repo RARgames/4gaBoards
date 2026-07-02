@@ -65,6 +65,11 @@ module.exports = {
       });
     }
 
+    if (values.isCompleted !== undefined) {
+      values.completedAt = values.isCompleted ? new Date().toUTCString() : null;
+      values.completedById = values.isCompleted ? currentUser.id : null;
+    }
+
     const task = await Task.updateOne(inputs.record.id).set({ updatedById: currentUser.id, ...values });
 
     if (task) {

@@ -17,23 +17,24 @@ const VARIANTS = {
   LIST_VIEW: 'listView',
 };
 
-const getDueStyle = (value) => {
+const getDueStyle = (value, completedAt) => {
   const msPerDay = 1000 * 60 * 60 * 24;
-  const currDate = new Date();
+  const reference = completedAt || new Date();
+
   const utc1 = Date.UTC(value.getFullYear(), value.getMonth(), value.getDate());
-  const utc2 = Date.UTC(currDate.getFullYear(), currDate.getMonth(), currDate.getDate());
+  const utc2 = Date.UTC(reference.getFullYear(), reference.getMonth(), reference.getDate());
   const diff = (utc2 - utc1) / msPerDay;
 
-  if (diff >= -14 && diff <= 0) {
-    return 'Close';
-  }
   if (diff > 0) {
     return 'Over';
+  }
+  if (diff >= -14) {
+    return 'Close';
   }
   return 'Normal';
 };
 
-const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable, className, showUndefined, showRelative }) => {
+const DueDate = React.memo(({ value, completedAt, variant, titlePrefix, iconSize, isClickable, className, showUndefined, showRelative }) => {
   const [t] = useTranslation();
   const { i18n } = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
@@ -46,10 +47,10 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
       } else if (variant === VARIANTS.CARDMODAL_ACTIVITY) {
         setDueStyle('CardModalActivity');
       } else {
-        setDueStyle(getDueStyle(value));
+        setDueStyle(getDueStyle(value, completedAt));
       }
     }
-  }, [value, variant]);
+  }, [value, completedAt, variant]);
 
   const titlePrefixString = titlePrefix ? `${titlePrefix} ` : '';
   const locale = i18n.dateFns.getLocale(i18n.resolvedLanguage) || i18n.dateFns.getLocale(i18n.language) || i18n.dateFns.getLocale('en');
@@ -110,6 +111,7 @@ const DueDate = React.memo(({ value, variant, titlePrefix, iconSize, isClickable
 
 DueDate.propTypes = {
   value: PropTypes.instanceOf(Date),
+  completedAt: PropTypes.instanceOf(Date),
   variant: PropTypes.oneOf(Object.values(VARIANTS)),
   titlePrefix: PropTypes.string,
   iconSize: PropTypes.oneOf(Object.values(IconSize)),
@@ -121,6 +123,7 @@ DueDate.propTypes = {
 
 DueDate.defaultProps = {
   value: undefined,
+  completedAt: undefined,
   variant: VARIANTS.CARDMODAL,
   titlePrefix: undefined,
   iconSize: IconSize.Size13,

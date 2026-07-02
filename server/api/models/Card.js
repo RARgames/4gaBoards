@@ -24,6 +24,10 @@ module.exports = {
       defaultsTo: false,
       columnName: 'is_completed',
     },
+    completedAt: {
+      type: 'ref',
+      columnName: 'completed_at',
+    },
     description: {
       type: 'string',
       isNotEmptyString: true,
@@ -79,6 +83,10 @@ module.exports = {
     updatedById: {
       model: 'User',
       columnName: 'updated_by_id',
+    },
+    completedById: {
+      model: 'User',
+      columnName: 'completed_by_id',
     },
     coverAttachmentId: {
       model: 'Attachment',

@@ -33,6 +33,7 @@ const listViewPropTypes = {
       attachmentsCount: PropTypes.number.isRequired,
       commentCount: PropTypes.number.isRequired,
       dueDate: PropTypes.instanceOf(Date),
+      completedAt: PropTypes.instanceOf(Date),
       timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
       createdAt: PropTypes.instanceOf(Date),
       updatedAt: PropTypes.instanceOf(Date),
@@ -66,7 +67,7 @@ function ListNameCellRenderer({ table, column, row, getValue }) {
 ListNameCellRenderer.propTypes = listViewPropTypes;
 
 function DueDateCellRenderer({ table, column, row, getValue }) {
-  return <DueDateCellContainer id={row.original.id} dueDate={getValue()} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
+  return <DueDateCellContainer id={row.original.id} dueDate={getValue()} completedAt={row.original.completedAt} cellClassName={ts[table.options.style]} {...column.columnDef.cellProps} />;
 }
 DueDateCellRenderer.propTypes = listViewPropTypes;
 

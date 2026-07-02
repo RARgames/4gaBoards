@@ -103,6 +103,8 @@ module.exports = {
 
     if (values.list) {
       values.isCompleted = values.list.isCompleted;
+      values.completedAt = values.isCompleted ? new Date().toUTCString() : null;
+      values.completedById = values.isCompleted ? currentUser.id : null;
     }
 
     if (!_.isUndefined(values.position)) {

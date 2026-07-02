@@ -14,6 +14,7 @@ export default class extends BaseModel {
     isCompleted: attr({
       getDefault: () => false,
     }),
+    completedAt: attr(),
     dueDate: attr(),
     cardId: fk({
       to: 'Card',
@@ -39,6 +40,11 @@ export default class extends BaseModel {
       to: 'User',
       as: 'updatedBy',
       relatedName: 'updatedTasks',
+    }),
+    completedById: fk({
+      to: 'User',
+      as: 'completedBy',
+      relatedName: 'completedTasks',
     }),
   };
 

@@ -9,6 +9,9 @@ export const transformTask = (task) => ({
   ...(task.dueDate && {
     dueDate: new Date(task.dueDate),
   }),
+  ...(task.completedAt && {
+    completedAt: new Date(task.completedAt),
+  }),
 });
 
 export const transformTaskData = (data) => ({

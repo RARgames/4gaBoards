@@ -120,6 +120,7 @@ const Tasks = React.forwardRef(
                 index={index}
                 name={item.name}
                 dueDate={item.dueDate}
+                completedAt={item.completedAt}
                 allBoardMemberships={allBoardMemberships}
                 boardMemberships={boardMemberships}
                 users={item.users}
