@@ -160,8 +160,8 @@ export const activityRenderSpec = {
           key,
           values: {
             card: ctx.cardNameTruncated,
-            dueDate: ctx.t('format:date', { value: data.cardDueDate, postProcess: 'formatDate' }),
-            prevDueDate: ctx.t('format:date', { value: data.cardPrevDueDate, postProcess: 'formatDate' }),
+            dueDate: ctx.t('format:dateTime', { value: data.cardDueDate, postProcess: 'formatDate' }),
+            prevDueDate: ctx.t('format:dateTime', { value: data.cardPrevDueDate, postProcess: 'formatDate' }),
           },
           components: [
             { slot: 'card', title: ctx.cardName },
@@ -536,8 +536,8 @@ export const activityRenderSpec = {
           values: {
             card: ctx.cardNameTruncated,
             task: taskNameTruncated,
-            dueDate: ctx.t('format:date', { value: taskDueDate, postProcess: 'formatDate' }),
-            prevDueDate: ctx.t('format:date', { value: taskPrevDueDate, postProcess: 'formatDate' }),
+            dueDate: ctx.t('format:dateTime', { value: taskDueDate, postProcess: 'formatDate' }),
+            prevDueDate: ctx.t('format:dateTime', { value: taskPrevDueDate, postProcess: 'formatDate' }),
           },
           components: [
             { slot: 'card', title: ctx.cardName },
