@@ -18,3 +18,13 @@ export const normalizeLink = (string) => {
 export const beautifyLink = (string) => {
   return string.replace(/^https?:\/\//i, '').replace(/\/$/, '');
 };
+
+export const isSafeUrl = (url) => {
+  if (!url) return false;
+  try {
+    const parsed = new URL(url, window.location.origin);
+    return ['http:', 'https:', 'data:'].includes(parsed.protocol);
+  } catch {
+    return false;
+  }
+};

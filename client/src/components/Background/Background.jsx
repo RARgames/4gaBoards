@@ -5,21 +5,12 @@ import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
 import { ProjectBackgroundTypes } from '../../constants/Enums';
+import { isSafeUrl } from '../../utils/url';
 
 import * as bs from '../../backgrounds.module.scss';
 import * as s from './Background.module.scss';
 
 function Background({ type, name, imageUrl }) {
-  const isSafeUrl = (url) => {
-    if (!url) return false;
-    try {
-      const parsed = new URL(url, window.location.origin);
-      return ['http:', 'https:', 'data:'].includes(parsed.protocol);
-    } catch {
-      return false;
-    }
-  };
-
   const safeImageUrl = isSafeUrl(imageUrl) ? imageUrl : '';
 
   return (
