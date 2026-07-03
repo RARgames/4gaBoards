@@ -96,7 +96,7 @@ i18n.loadCoreLocale = async (language = i18n.resolvedLanguage) => {
   }
 
   await Promise.all(
-    ['action', 'activity', 'core'].map(async (ns) => {
+    ['activity', 'core'].map(async (ns) => {
       const { default: locale } = await import(`@4gaboards/locales/${language}/${ns}`);
       Object.keys(locale).forEach((namespace) => {
         i18n.addResourceBundle(language, namespace, locale[namespace], true, true);
