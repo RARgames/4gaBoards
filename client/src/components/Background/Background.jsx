@@ -10,11 +10,23 @@ import * as bs from '../../backgrounds.module.scss';
 import * as s from './Background.module.scss';
 
 function Background({ type, name, imageUrl }) {
+  const isSafeUrl = (url) => {
+    if (!url) return false;
+    try {
+      const parsed = new URL(url, window.location.origin);
+      return ['http:', 'https:', 'data:'].includes(parsed.protocol);
+    } catch {
+      return false;
+    }
+  };
+
+  const safeImageUrl = isSafeUrl(imageUrl) ? imageUrl : '';
+
   return (
     <div
       className={clsx(s.wrapper, type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(name))}`])}
       style={{
-        background: type === 'image' && `url("${imageUrl}") center / cover`,
+        background: type === 'image' && safeImageUrl && `url("${safeImageUrl}") center / cover`,
       }}
     />
   );
