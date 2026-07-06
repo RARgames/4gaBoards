@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
+import CardMoveStepContainer from '../../containers/CardMoveStepContainer';
 import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
-import CardMoveStep from '../CardMoveStep';
 import DeleteStep from '../DeleteStep';
 import DueDateEditStep from '../DueDateEditStep';
 import LabelsStep from '../LabelsStep';
@@ -28,7 +28,6 @@ const StepTypes = {
 const ActionsStep = React.memo(
   ({
     card,
-    projectsToLists,
     allBoardMemberships,
     boardMemberships,
     currentUserIds,
@@ -151,17 +150,7 @@ const ActionsStep = React.memo(
         case StepTypes.EDIT_TIMER:
           return <TimerEditStep defaultValue={card.timer} onUpdate={handleTimerUpdate} onBack={handleBack} onClose={onClose} />;
         case StepTypes.MOVE:
-          return (
-            <CardMoveStep
-              projectsToLists={projectsToLists}
-              defaultPath={pick(card, ['projectId', 'boardId', 'listId'])}
-              onMove={onMove}
-              onTransfer={onTransfer}
-              onBoardFetch={onBoardFetch}
-              onBack={handleBack}
-              onClose={onClose}
-            />
-          );
+          return <CardMoveStepContainer defaultPath={pick(card, ['projectId', 'boardId', 'listId'])} onMove={onMove} onTransfer={onTransfer} onBoardFetch={onBoardFetch} onBack={handleBack} onClose={onClose} />;
         case StepTypes.DELETE:
           return (
             <DeleteStep
@@ -218,7 +207,6 @@ const ActionsStep = React.memo(
 
 ActionsStep.propTypes = {
   card: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  projectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

@@ -69,6 +69,34 @@ export const makeSelectChildrenCountByCardId = () =>
 
 export const selectChildrenCountByCardId = makeSelectChildrenCountByCardId();
 
+// Minimal parent-card summary for the hero bar; memoized so the card face gets a
+// stable object reference instead of a new `{ id, name }` per mapStateToProps run.
+export const makeSelectParentCardByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Card }, id) => {
+      const cardModel = Card.withId(id);
+
+      if (!cardModel || !cardModel.parentCardId) {
+        return null;
+      }
+
+      const parentModel = Card.withId(cardModel.parentCardId);
+
+      if (!parentModel) {
+        return null;
+      }
+
+      return {
+        id: parentModel.id,
+        name: parentModel.name,
+      };
+    },
+  );
+
+export const selectParentCardByCardId = makeSelectParentCardByCardId();
+
 // Stable swimlane id for a card: its primary assignee's user id, or 'unassigned'.
 export const makeSelectPrimaryUserIdByCardId = () =>
   createSelector(
@@ -127,6 +155,62 @@ export const makeSelectTasksByCardId = () =>
   );
 
 export const selectTasksByCardId = makeSelectTasksByCardId();
+
+// Tasks with their users and per-task activities merged in a single memoized pass,
+// so card faces get one stable array reference instead of rebuilding it (and querying
+// per task) on every store change.
+export const makeSelectDetailedTasksByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectCurrentUserId(state),
+    ({ Card }, id, currentUserId) => {
+      const cardModel = Card.withId(id);
+
+      if (!cardModel) {
+        return cardModel;
+      }
+
+      const taskActivitiesByTaskId = {};
+      cardModel
+        .getOrderedTaskActivitiesQuerySet()
+        .toModelArray()
+        .forEach((activityModel) => {
+          const taskId = activityModel.ref.data?.taskId;
+          if (taskId == null) {
+            return;
+          }
+          if (!taskActivitiesByTaskId[taskId]) {
+            taskActivitiesByTaskId[taskId] = [];
+          }
+          taskActivitiesByTaskId[taskId].push({
+            ...activityModel.ref,
+            ...getMeta(activityModel),
+            isPersisted: !isLocalId(activityModel.id),
+            user: {
+              ...activityModel.user.ref,
+            },
+          });
+        });
+
+      return cardModel
+        .getOrderedTasksQuerySet()
+        .toModelArray()
+        .map((taskModel) => ({
+          ...taskModel.ref,
+          ...getMeta(taskModel),
+          isPersisted: !isLocalId(taskModel.id),
+          users: taskModel.users.toRefArray().sort((a, b) => {
+            if (a.id === currentUserId) return -1;
+            if (b.id === currentUserId) return 1;
+            return a.name.localeCompare(b.name);
+          }),
+          activities: taskActivitiesByTaskId[taskModel.id] || [],
+        }));
+    },
+  );
+
+export const selectDetailedTasksByCardId = makeSelectDetailedTasksByCardId();
 
 export const makeSelectClosestTaskDueDateByCardId = () =>
   createSelector(
@@ -605,28 +689,31 @@ export const selectUrlForCard = createSelector(
   },
 );
 
-export const selectBoardAndCardMembershipsByCardId = createSelector(
-  orm,
-  (_, id) => id,
-  (state) => selectPath(state).boardId,
-  (state) => selectCurrentUserId(state),
-  ({ Board, Card }, id, boardId, currentUserId) => {
-    if (!id) return id;
-    if (!boardId) return boardId;
+export const makeSelectBoardAndCardMembershipsByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectPath(state).boardId,
+    (state) => selectCurrentUserId(state),
+    ({ Board, Card }, id, boardId, currentUserId) => {
+      if (!id) return id;
+      if (!boardId) return boardId;
 
-    const cardModel = Card.withId(id);
-    const boardModel = Board.withId(boardId);
+      const cardModel = Card.withId(id);
+      const boardModel = Board.withId(boardId);
 
-    if (!cardModel) return cardModel;
-    if (!boardModel) return boardModel;
+      if (!cardModel) return cardModel;
+      if (!boardModel) return boardModel;
 
-    const memberships = new Map();
-    addBoardMemberships(boardModel, memberships, currentUserId);
-    addCardMemberships(cardModel, memberships, currentUserId);
+      const memberships = new Map();
+      addBoardMemberships(boardModel, memberships, currentUserId);
+      addCardMemberships(cardModel, memberships, currentUserId);
 
-    return sortByCurrentUserAndName(Array.from(memberships.values()));
-  },
-);
+      return sortByCurrentUserAndName(Array.from(memberships.values()));
+    },
+  );
+
+export const selectBoardAndCardMembershipsByCardId = makeSelectBoardAndCardMembershipsByCardId();
 
 export const selectBoardAndCardMembershipsForCurrentCard = createSelector(
   orm,
@@ -651,28 +738,31 @@ export const selectBoardAndCardMembershipsForCurrentCard = createSelector(
   },
 );
 
-export const selectBoardAndTaskMembershipsByCardId = createSelector(
-  orm,
-  (_, id) => id,
-  (state) => selectPath(state).boardId,
-  (state) => selectCurrentUserId(state),
-  ({ Board, Card }, id, boardId, currentUserId) => {
-    if (!id) return id;
-    if (!boardId) return boardId;
+export const makeSelectBoardAndTaskMembershipsByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    (state) => selectPath(state).boardId,
+    (state) => selectCurrentUserId(state),
+    ({ Board, Card }, id, boardId, currentUserId) => {
+      if (!id) return id;
+      if (!boardId) return boardId;
 
-    const cardModel = Card.withId(id);
-    const boardModel = Board.withId(boardId);
+      const cardModel = Card.withId(id);
+      const boardModel = Board.withId(boardId);
 
-    if (!cardModel) return cardModel;
-    if (!boardModel) return boardModel;
+      if (!cardModel) return cardModel;
+      if (!boardModel) return boardModel;
 
-    const memberships = new Map();
-    addBoardMemberships(boardModel, memberships, currentUserId);
-    addTaskMemberships(cardModel, memberships, currentUserId);
+      const memberships = new Map();
+      addBoardMemberships(boardModel, memberships, currentUserId);
+      addTaskMemberships(cardModel, memberships, currentUserId);
 
-    return sortByCurrentUserAndName(Array.from(memberships.values()));
-  },
-);
+      return sortByCurrentUserAndName(Array.from(memberships.values()));
+    },
+  );
+
+export const selectBoardAndTaskMembershipsByCardId = makeSelectBoardAndTaskMembershipsByCardId();
 
 export const selectBoardAndTaskMembershipsForCurrentCard = createSelector(
   orm,
@@ -704,12 +794,16 @@ export default {
   selectUsersByCardId,
   makeSelectChildrenCountByCardId,
   selectChildrenCountByCardId,
+  makeSelectParentCardByCardId,
+  selectParentCardByCardId,
   makeSelectPrimaryUserIdByCardId,
   selectPrimaryUserIdByCardId,
   makeSelectLabelsByCardId,
   selectLabelsByCardId,
   makeSelectTasksByCardId,
   selectTasksByCardId,
+  makeSelectDetailedTasksByCardId,
+  selectDetailedTasksByCardId,
   makeSelectClosestTaskDueDateByCardId,
   selectClosestTaskDueDateByCardId,
   makeSelectClosestDueDateByCardId,
@@ -740,8 +834,10 @@ export default {
   selectCommentsForCurrentCard,
   selectNotificationIdsForCurrentCard,
   selectUrlForCard,
+  makeSelectBoardAndCardMembershipsByCardId,
   selectBoardAndCardMembershipsByCardId,
   selectBoardAndCardMembershipsForCurrentCard,
+  makeSelectBoardAndTaskMembershipsByCardId,
   selectBoardAndTaskMembershipsByCardId,
   selectBoardAndTaskMembershipsForCurrentCard,
 };

@@ -7,15 +7,17 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = () => {
+  const selectCardById = selectors.makeSelectCardById();
   const selectClosestDueDateByCardId = selectors.makeSelectClosestTaskDueDateByCardId();
+  const selectBoardAndTaskMembershipsByCardId = selectors.makeSelectBoardAndTaskMembershipsByCardId();
 
   return (state, { id }) => {
-    const allBoardMemberships = selectors.selectBoardAndTaskMembershipsByCardId(state, id);
+    const allBoardMemberships = selectBoardAndTaskMembershipsByCardId(state, id);
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const closestDueDate = selectClosestDueDateByCardId(state, id);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
-    const { name: cardName, isActivitiesFetching, isAllActivitiesFetched } = selectors.selectCardById(state, id);
+    const { name: cardName, isActivitiesFetching, isAllActivitiesFetched } = selectCardById(state, id);
 
     return {
       cardName,

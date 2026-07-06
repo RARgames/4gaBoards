@@ -49,7 +49,6 @@ const Card = React.memo(
     parent,
     childrenCount,
     isBlocked,
-    allProjectsToLists,
     boardMemberships,
     boardAndCardMemberships,
     boardAndTaskMemberships,
@@ -402,7 +401,6 @@ const Card = React.memo(
                         listId,
                         projectId,
                       }}
-                      projectsToLists={allProjectsToLists}
                       allBoardMemberships={boardAndCardMemberships}
                       boardMemberships={boardMemberships}
                       currentUserIds={users.map((user) => user.id)}
@@ -486,7 +484,6 @@ Card.propTypes = {
   parent: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   childrenCount: PropTypes.number.isRequired,
   isBlocked: PropTypes.bool,
-  allProjectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndCardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

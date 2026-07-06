@@ -1,4 +1,4 @@
-import { call, put, select } from 'redux-saga/effects';
+import { call, fork, put, select } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
@@ -131,23 +131,24 @@ export function* moveCurrentCard(listId, index) {
   yield call(moveCard, cardId, listId, index);
 }
 
+// A card's lane is its most recently assigned member, so making the target user primary
+// means recreating their membership. The server rejects duplicate memberships, so the
+// remove must complete before the add.
+function* reassignUserToCard(userId, cardId) {
+  yield call(removeUserFromCard, userId, cardId);
+  yield call(addUserToCard, userId, cardId);
+}
+
 // Swimlane drag-drop: `index` is the position within the destination (list, lane) cell.
 // Reassigns the primary user when the lane changes, then translates the cell index into a
 // list position using the same convention as a normal card move.
 export function* moveCardToSwimlane(id, listId, laneId, index) {
   const currentLaneId = yield select(selectors.selectPrimaryUserIdByCardId, id);
 
-  if (currentLaneId !== laneId) {
-    if (currentLaneId !== UNASSIGNED_LANE_ID) {
-      yield call(removeUserFromCard, currentLaneId, id);
-    }
-    if (laneId !== UNASSIGNED_LANE_ID) {
-      yield call(addUserToCard, laneId, id);
-    }
-  }
-
+  // The dragged card is excluded from both arrays: nextPosition computes against the list
+  // without the moved card, so the anchor's index must be taken in that same space.
   const laneCardIds = (yield select(selectors.selectFilteredCardIdsByListIdAndLane, listId, laneId)).filter((cardId) => cardId !== id);
-  const listCardIds = yield select(selectors.selectFilteredCardIdsByListId, listId);
+  const listCardIds = (yield select(selectors.selectFilteredCardIdsByListId, listId)).filter((cardId) => cardId !== id);
 
   const anchorCardId = laneCardIds[index];
   let listIndex;
@@ -157,6 +158,24 @@ export function* moveCardToSwimlane(id, listId, laneId, index) {
     listIndex = listCardIds.indexOf(laneCardIds[laneCardIds.length - 1]) + 1;
   } else {
     listIndex = listCardIds.length;
+  }
+
+  // Fork the membership changes so their optimistic updates land in the same tick as the
+  // position update; awaiting the API round trips here made the card hop between lanes.
+  if (currentLaneId !== laneId) {
+    if (currentLaneId !== UNASSIGNED_LANE_ID) {
+      yield fork(removeUserFromCard, currentLaneId, id);
+    }
+    if (laneId !== UNASSIGNED_LANE_ID) {
+      const cardUsers = yield select(selectors.selectUsersByCardId, id);
+      const isAlreadyMember = cardUsers.some((user) => user.id === laneId);
+
+      if (isAlreadyMember) {
+        yield fork(reassignUserToCard, laneId, id);
+      } else {
+        yield fork(addUserToCard, laneId, id);
+      }
+    }
   }
 
   yield call(moveCard, id, listId, listIndex);

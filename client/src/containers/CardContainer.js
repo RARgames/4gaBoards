@@ -11,20 +11,25 @@ const makeMapStateToProps = () => {
   const selectCardById = selectors.makeSelectCardById();
   const selectUsersByCardId = selectors.makeSelectUsersByCardId();
   const selectLabelsByCardId = selectors.makeSelectLabelsByCardId();
-  const selectTasksByCardId = selectors.makeSelectTasksByCardId();
+  const selectDetailedTasksByCardId = selectors.makeSelectDetailedTasksByCardId();
   const selectNotificationsTotalByCardId = selectors.makeSelectNotificationsTotalByCardId();
   const selectAttachmentsCountByCardId = selectors.makeSelectAttachmentsCountByCardId();
   const selectClosestDueDateByCardId = selectors.makeSelectClosestTaskDueDateByCardId();
+  const selectChildrenCountByCardId = selectors.makeSelectChildrenCountByCardId();
+  const selectParentCardByCardId = selectors.makeSelectParentCardByCardId();
+  const selectIsBlockedByCardId = selectors.makeSelectIsBlockedByCardId();
+  const selectBoardAndCardMembershipsByCardId = selectors.makeSelectBoardAndCardMembershipsByCardId();
+  const selectBoardAndTaskMembershipsByCardId = selectors.makeSelectBoardAndTaskMembershipsByCardId();
+  const selectActivitiesByCardId = selectors.makeSelectActivitiesByCardId();
 
   return (state, { id, index }) => {
     const currentCardId = selectors.selectPath(state).cardId;
     const isOpen = currentCardId === id;
 
     const { projectId } = selectors.selectPath(state);
-    const allProjectsToLists = selectors.selectProjectsToListsForCurrentUser(state);
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
-    const boardAndCardMemberships = selectors.selectBoardAndCardMembershipsByCardId(state, id);
-    const boardAndTaskMemberships = selectors.selectBoardAndTaskMembershipsByCardId(state, id);
+    const boardAndCardMemberships = selectBoardAndCardMembershipsByCardId(state, id);
+    const boardAndTaskMemberships = selectBoardAndTaskMembershipsByCardId(state, id);
     const allLabels = selectors.selectLabelsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
@@ -45,35 +50,23 @@ const makeMapStateToProps = () => {
       updatedAt,
       updatedBy,
       priority: priorityValue,
-      parentCardId,
     } = selectCardById(state, id);
 
     const priority = getPriority(priorityValue) || null;
-    const parentCard = parentCardId ? selectCardById(state, parentCardId) : null;
-    const parent = parentCard ? { id: parentCard.id, name: parentCard.name } : null;
-    const childrenCount = selectors.selectChildrenCountByCardId(state, id);
-
-    // Show a "blocked" indicator if this card declares any blocker (outgoing blockedBy)
-    // OR if it appears as a blocker on someone else's card (incoming blockedBy).
-    const outgoingLinks = selectors.selectOutgoingLinksByCardId(state, id) || [];
-    const incomingLinks = selectors.selectIncomingLinksByCardId(state, id) || [];
-    const isBlocked = outgoingLinks.some((l) => l.type === 'blockedBy') || incomingLinks.some((l) => l.type === 'blockedBy');
+    const parent = selectParentCardByCardId(state, id);
+    const childrenCount = selectChildrenCountByCardId(state, id);
+    const isBlocked = selectIsBlockedByCardId(state, id);
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
-    const taskActivities = selectors.selectTaskActivitiesByCardId(state, id);
-    const tasks = selectTasksByCardId(state, id).map((task) => ({
-      ...task,
-      users: selectors.selectUsersForTaskById(state, task.id),
-      activities: taskActivities[task.id] || [],
-    }));
+    const tasks = selectDetailedTasksByCardId(state, id);
     const notificationsTotal = selectNotificationsTotalByCardId(state, id);
     const attachmentsCount = selectAttachmentsCountByCardId(state, id);
     const closestDueDate = selectClosestDueDateByCardId(state, id);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const url = selectors.selectUrlForCard(state, id);
-    const activities = selectors.selectActivitiesByCardId(state, id);
+    const activities = selectActivitiesByCardId(state, id);
 
     return {
       id,
@@ -98,7 +91,6 @@ const makeMapStateToProps = () => {
       parent,
       childrenCount,
       isBlocked,
-      allProjectsToLists,
       boardMemberships,
       boardAndCardMemberships,
       boardAndTaskMemberships,

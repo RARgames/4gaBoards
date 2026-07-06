@@ -378,7 +378,6 @@ const CardModal = React.memo(
                 listId,
                 projectId,
               }}
-              projectsToLists={allProjectsToLists}
               allBoardMemberships={boardAndCardMemberships}
               boardMemberships={boardMemberships}
               currentUserIds={users.map((user) => user.id)}
@@ -563,13 +562,7 @@ const CardModal = React.memo(
             </div>
             <div className={s.heroChildrenList}>
               {childCards.map((child) => (
-                <Button
-                  key={child.id}
-                  style={ButtonStyle.Default}
-                  title={child.name}
-                  onClick={() => handleSelectChild(child.id)}
-                  className={s.heroChildrenItem}
-                >
+                <Button key={child.id} style={ButtonStyle.Default} title={child.name} onClick={() => handleSelectChild(child.id)} className={s.heroChildrenItem}>
                   {child.name}
                 </Button>
               ))}

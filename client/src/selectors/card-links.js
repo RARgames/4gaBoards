@@ -9,10 +9,12 @@ import orm from '../orm';
 const resolveLinkedSide = (linkModel) => {
   const ref = linkModel.ref || {};
   const linkedFromOrm = linkModel.linkedCard; // populated for same-board links
+  const ormName = linkedFromOrm ? linkedFromOrm.name : null;
+  const ormBoardId = linkedFromOrm ? linkedFromOrm.boardId : null;
   return {
     linkedCardId: linkModel.linkedCardId,
-    linkedCardName: ref.linkedCardName != null ? ref.linkedCardName : linkedFromOrm ? linkedFromOrm.name : null,
-    linkedCardBoardId: ref.linkedCardBoardId != null ? ref.linkedCardBoardId : linkedFromOrm ? linkedFromOrm.boardId : null,
+    linkedCardName: ref.linkedCardName != null ? ref.linkedCardName : ormName,
+    linkedCardBoardId: ref.linkedCardBoardId != null ? ref.linkedCardBoardId : ormBoardId,
     linkedCardBoardName: ref.linkedCardBoardName != null ? ref.linkedCardBoardName : null,
   };
 };
@@ -20,10 +22,12 @@ const resolveLinkedSide = (linkModel) => {
 const resolveSourceSide = (linkModel) => {
   const ref = linkModel.ref || {};
   const cardFromOrm = linkModel.card;
+  const ormName = cardFromOrm ? cardFromOrm.name : null;
+  const ormBoardId = cardFromOrm ? cardFromOrm.boardId : null;
   return {
     cardId: linkModel.cardId,
-    cardName: ref.cardName != null ? ref.cardName : cardFromOrm ? cardFromOrm.name : null,
-    cardBoardId: ref.cardBoardId != null ? ref.cardBoardId : cardFromOrm ? cardFromOrm.boardId : null,
+    cardName: ref.cardName != null ? ref.cardName : ormName,
+    cardBoardId: ref.cardBoardId != null ? ref.cardBoardId : ormBoardId,
     cardBoardName: ref.cardBoardName != null ? ref.cardBoardName : null,
   };
 };
@@ -75,9 +79,28 @@ export const makeSelectIncomingLinksByCardId = () =>
 
 export const selectIncomingLinksByCardId = makeSelectIncomingLinksByCardId();
 
+// Whether the card should show the "blocked" indicator: it declares a blocker
+// (outgoing blockedBy) OR appears as a blocker on someone else's card (incoming blockedBy).
+export const makeSelectIsBlockedByCardId = () =>
+  createSelector(
+    orm,
+    (_, id) => id,
+    ({ Card }, id) => {
+      const cardModel = Card.withId(id);
+      if (!cardModel) {
+        return false;
+      }
+      return cardModel.outgoingLinks.toRefArray().some((link) => link.type === 'blockedBy') || cardModel.incomingLinks.toRefArray().some((link) => link.type === 'blockedBy');
+    },
+  );
+
+export const selectIsBlockedByCardId = makeSelectIsBlockedByCardId();
+
 export default {
   makeSelectOutgoingLinksByCardId,
   selectOutgoingLinksByCardId,
   makeSelectIncomingLinksByCardId,
   selectIncomingLinksByCardId,
+  makeSelectIsBlockedByCardId,
+  selectIsBlockedByCardId,
 };
