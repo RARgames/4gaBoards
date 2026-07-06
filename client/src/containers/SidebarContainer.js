@@ -25,7 +25,7 @@ const makeMapStateToProps = () => {
       boards: project.boards.map((board) => {
         const membership = selectCurrentUserMembershipByBoardId(state, board.id);
         const isCurrentUserEditor = !!membership && membership.role === BoardMembershipRoles.EDITOR;
-        const { id, hideCompletedLists } = membership;
+        const { id, hideCompletedLists } = membership || {};
 
         return {
           ...board,
