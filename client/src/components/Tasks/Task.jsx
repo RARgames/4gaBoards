@@ -32,6 +32,7 @@ const Task = React.memo(
     name,
     dueDate,
     completedAt,
+    showFullDueDates,
     allBoardMemberships,
     boardMemberships,
     users,
@@ -173,7 +174,7 @@ const Task = React.memo(
                 {dueDate && (
                   <div className={clsx(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!(canEdit && isPersisted)}>
-                      <DueDate variant={dueDateVariant} value={dueDate} completedAt={completedAt} isClickable={canEdit && isPersisted} />
+                      <DueDate variant={dueDateVariant} value={dueDate} completedAt={completedAt} isClickable={canEdit && isPersisted} showFullDueDates={showFullDueDates} />
                     </DueDateEditPopup>
                   </div>
                 )}
@@ -232,6 +233,7 @@ Task.propTypes = {
   name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   completedAt: PropTypes.instanceOf(Date),
+  showFullDueDates: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

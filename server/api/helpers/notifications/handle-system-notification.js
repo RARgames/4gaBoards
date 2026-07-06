@@ -66,6 +66,9 @@ module.exports = {
       return 0;
     }
 
+    const userPrefs = await UserPrefs.find({ id: users.map((user) => user.id) });
+    const userPrefsById = _.keyBy(userPrefs, 'id');
+
     const notificationValues = {
       scope: ActionScopes.SYSTEM,
       systemNotificationId: createdSystemNotification.id,
@@ -76,6 +79,10 @@ module.exports = {
     await Promise.all(
       users.map(async (user) => {
         try {
+          if (userPrefsById[user.id]?.suppressedSystemNotificationTags?.includes(systemNotification.tag)) {
+            return;
+          }
+
           const created = await Notification.create({
             ...notificationValues,
             userId: user.id,

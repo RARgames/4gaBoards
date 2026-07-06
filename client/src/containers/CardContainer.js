@@ -60,6 +60,7 @@ const makeMapStateToProps = () => {
     const notificationsTotal = selectNotificationsTotalByCardId(state, id);
     const attachmentsCount = selectAttachmentsCountByCardId(state, id);
     const closestDueDate = selectClosestDueDateByCardId(state, id);
+    const { showFullDueDates } = selectors.selectCurrentUserPrefs(state);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const url = selectors.selectUrlForCard(state, id);
@@ -102,6 +103,7 @@ const makeMapStateToProps = () => {
       updatedAt,
       updatedBy,
       closestDueDate,
+      showFullDueDates,
     };
   };
 };

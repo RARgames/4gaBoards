@@ -218,6 +218,11 @@ module.exports = {
       defaultsTo: false,
       columnName: 'hide_closest_due_date',
     },
+    showFullDueDates: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'show_full_due_dates',
+    },
     theme: {
       type: 'string',
       isIn: THEMES,
@@ -264,6 +269,12 @@ module.exports = {
       defaultsTo: actionScopes.filter((s) => s !== ActionScopes.INSTANCE && s !== ActionScopes.USER),
       columnName: 'notification_types',
       custom: (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => actionScopesSet.has(v)),
+    },
+    suppressedSystemNotificationTags: {
+      type: 'json',
+      defaultsTo: [],
+      columnName: 'suppressed_system_notification_tags',
+      custom: (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => _.isString(v) && v.length > 0),
     },
   },
 

@@ -28,6 +28,7 @@ const Tasks = React.forwardRef(
       isCardActive,
       items,
       closestDueDate,
+      showFullDueDates,
       canEdit,
       allBoardMemberships,
       boardMemberships,
@@ -121,6 +122,7 @@ const Tasks = React.forwardRef(
                 name={item.name}
                 dueDate={item.dueDate}
                 completedAt={item.completedAt}
+                showFullDueDates={showFullDueDates}
                 allBoardMemberships={allBoardMemberships}
                 boardMemberships={boardMemberships}
                 users={item.users}
@@ -166,7 +168,9 @@ const Tasks = React.forwardRef(
             <ProgressBar value={completedItems.length} total={items.length} size={ProgressBarSize.Tiny} className={clsx(variant === VARIANTS.CARDMODAL ? s.progress : s.progressCard)} />
             {variant !== VARIANTS.CARDMODAL && (
               <div className={s.progressItems}>
-                {closestDueDate && <DueDate variant="tasksCard" value={closestDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} />}
+                {closestDueDate && (
+                  <DueDate variant="tasksCard" value={closestDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} showFullDueDates={showFullDueDates} />
+                )}
                 <Button variant={ButtonVariant.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton} data-prevent-card-switch>
                   {completedItems.length}/{items.length}
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
@@ -190,6 +194,7 @@ Tasks.propTypes = {
   isCardActive: PropTypes.bool,
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   closestDueDate: PropTypes.instanceOf(Date),
+  showFullDueDates: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

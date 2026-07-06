@@ -60,6 +60,7 @@ const CardModal = React.memo(
     commentsShown,
     hideCardModalActivity,
     hideClosestDueDate,
+    showFullDueDates,
     preferredDetailsFont,
     userId,
     isGithubConnected,
@@ -561,7 +562,7 @@ const CardModal = React.memo(
         </div>
         <span className={s.headerItem}>
           <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
-            <DueDate value={dueDate} completedAt={completedAt} isClickable={canEdit} />
+            <DueDate value={dueDate} completedAt={completedAt} isClickable={canEdit} showFullDueDates={showFullDueDates} />
           </DueDateEditPopup>
         </span>
       </div>
@@ -571,7 +572,7 @@ const CardModal = React.memo(
       <div className={s.headerItems}>
         <div className={s.text}>{t('common.closestDueDate', { context: 'title' })}</div>
         <span className={s.headerItem}>
-          <DueDate value={closestDueDate} titlePrefix={t('common.cardDueDateSummary', { context: 'title' })} />
+          <DueDate value={closestDueDate} titlePrefix={t('common.cardDueDateSummary', { context: 'title' })} showFullDueDates={showFullDueDates} />
         </span>
       </div>
     );
@@ -713,7 +714,7 @@ const CardModal = React.memo(
           {t('common.tasks')}
           {tasks.length > 0 && closestTaskDueDate && (
             <div className={s.taskDueDateSummaryWrapper}>
-              <DueDate variant="tasksCard" value={closestTaskDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} />
+              <DueDate variant="tasksCard" value={closestTaskDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} showFullDueDates={showFullDueDates} />
             </div>
           )}
           {tasks.length > 0 && (
@@ -738,6 +739,7 @@ const CardModal = React.memo(
               cardId={id}
               cardName={name}
               items={tasks}
+              showFullDueDates={showFullDueDates}
               canEdit={canEdit}
               allBoardMemberships={boardAndTaskMemberships}
               boardMemberships={boardMemberships}
@@ -893,6 +895,7 @@ CardModal.propTypes = {
   commentsShown: PropTypes.bool.isRequired,
   hideCardModalActivity: PropTypes.bool.isRequired,
   hideClosestDueDate: PropTypes.bool.isRequired,
+  showFullDueDates: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,

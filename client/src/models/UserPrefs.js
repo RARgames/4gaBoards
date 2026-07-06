@@ -33,6 +33,7 @@ export default class extends BaseModel {
     preferredDetailsFont: attr(),
     hideCardModalActivity: attr(),
     hideClosestDueDate: attr(),
+    showFullDueDates: attr(),
     theme: attr(),
     themeShape: attr(),
     themeCustomColors: attr(),
@@ -41,6 +42,7 @@ export default class extends BaseModel {
     emailNotificationsDeliveryMode: attr(),
     emailNotificationsMarkReadAsDelivered: attr(),
     notificationTypes: attr(),
+    suppressedSystemNotificationTags: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

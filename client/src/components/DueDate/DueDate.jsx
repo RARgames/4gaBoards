@@ -32,7 +32,7 @@ const getDueStyle = (value, completedAt) => {
   return 'Normal';
 };
 
-const DueDate = React.memo(({ value, completedAt, variant, titlePrefix, iconSize, isClickable, className, showUndefined, showRelative }) => {
+const DueDate = React.memo(({ value, completedAt, variant, titlePrefix, iconSize, isClickable, className, showUndefined, showRelative, showFullDueDates }) => {
   const [t] = useTranslation();
   const { i18n } = useTranslation();
   const [dueStyle, setDueStyle] = useState('Normal');
@@ -138,10 +138,11 @@ const DueDate = React.memo(({ value, completedAt, variant, titlePrefix, iconSize
   }, [showRelative, value]);
 
   if (value) {
-    const preFormattedValue = t(variant === VARIANTS.LIST_VIEW || variant === VARIANTS.CARDMODAL_ACTIVITY ? `format:dateTime` : `format:date`, { value, postProcess: 'formatDate' });
+    const fullFormattedValue = t(`format:dateTime`, { value, postProcess: 'formatDate' });
+    const preFormattedValue = showFullDueDates || variant === VARIANTS.LIST_VIEW || variant === VARIANTS.CARDMODAL_ACTIVITY ? fullFormattedValue : t(`format:date`, { value, postProcess: 'formatDate' });
     const formattedValue = showRelative ? formatDistanceToNowStrict(new Date(value), { locale, addSuffix: true }) : preFormattedValue;
     return (
-      <div className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)} title={`${titlePrefixString}${preFormattedValue}`}>
+      <div className={clsx(s.wrapper, s[`wrapper${upperFirst(variant)}`], s[`due${dueStyle}`], isClickable && s.dueDateHoverable, className)} title={`${titlePrefixString}${fullFormattedValue}`}>
         {variant === VARIANTS.TASKS_CARD ? <Icon type={IconType.Calendar} size={iconSize} className={s[`due${dueStyle}`]} /> : formattedValue}
       </div>
     );
@@ -160,6 +161,7 @@ DueDate.propTypes = {
   className: PropTypes.string,
   showUndefined: PropTypes.bool,
   showRelative: PropTypes.bool,
+  showFullDueDates: PropTypes.bool,
 };
 
 DueDate.defaultProps = {
@@ -172,6 +174,7 @@ DueDate.defaultProps = {
   className: undefined,
   showUndefined: false,
   showRelative: false,
+  showFullDueDates: false,
 };
 
 export default DueDate;

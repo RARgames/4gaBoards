@@ -4,9 +4,11 @@ import { ActivityScopes } from '@4gaboards/enums';
 import locales from '@4gaboards/locales';
 import { useReactTable, getCoreRowModel, getGroupedRowModel, getExpandedRowModel, flexRender } from '@tanstack/react-table';
 import clsx from 'clsx';
+import uniq from 'lodash/uniq';
 import PropTypes from 'prop-types';
 
 import { ThemeShapes, Themes, NotificationsDeliveryModes } from '../../../constants/Enums';
+import { useForm } from '../../../hooks';
 import { Table } from '../../Utils';
 import CustomThemeButton from './CustomThemeButton';
 import NotificationTypesSelector from './NotificationTypesSelector';
@@ -33,6 +35,7 @@ const PreferencesSettings = React.memo(
     preferredDetailsFont,
     hideCardModalActivity,
     hideClosestDueDate,
+    showFullDueDates,
     theme,
     themeShape,
     onUpdate,
@@ -41,6 +44,7 @@ const PreferencesSettings = React.memo(
     emailNotificationsDeliveryMode,
     emailNotificationsMarkReadAsDelivered,
     notificationTypes,
+    suppressedSystemNotificationTags,
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
@@ -203,6 +207,14 @@ const PreferencesSettings = React.memo(
 
     const selectedNotificationTypes = useMemo(() => notificationTypesOptions.filter((opt) => notificationTypes.includes(opt.id)), [notificationTypesOptions, notificationTypes]);
 
+    const [suppressedSystemNotificationTagsData, handleSuppressedSystemNotificationTagsFieldChange] = useForm(() => ({
+      text: suppressedSystemNotificationTags.join(', '),
+    }));
+
+    useEffect(() => {
+      handleSuppressedSystemNotificationTagsFieldChange({ target: { name: 'text', value: suppressedSystemNotificationTags.join(', ') } });
+    }, [suppressedSystemNotificationTags, handleSuppressedSystemNotificationTagsFieldChange]);
+
     const selectedEmailNotificationsTypes = useMemo(() => notificationTypesOptions.filter((opt) => emailNotificationsTypes.includes(opt.id)), [notificationTypesOptions, emailNotificationsTypes]);
 
     const emailNotificationsDeliveryModes = useMemo(
@@ -304,6 +316,12 @@ const PreferencesSettings = React.memo(
       });
     }, [onUpdate, hideClosestDueDate]);
 
+    const handleShowFullDueDatesChange = useCallback(() => {
+      onUpdate({
+        showFullDueDates: !showFullDueDates,
+      });
+    }, [onUpdate, showFullDueDates]);
+
     const handleLanguageChange = useCallback(
       (value) => {
         onUpdate({ language: value.id === 'auto' ? null : value.id }); // FIXME: hack
@@ -340,6 +358,24 @@ const PreferencesSettings = React.memo(
         onUpdate({ notificationTypes: next });
       },
       [onUpdate, notificationTypes],
+    );
+
+    const handleSuppressedSystemNotificationTagsSubmit = useCallback(
+      (e) => {
+        const next = uniq(
+          e.target.value
+            .split(',')
+            .map((tag) => tag.trim())
+            .filter(Boolean),
+        );
+
+        if (next.join(',') !== suppressedSystemNotificationTags.join(',')) {
+          onUpdate({ suppressedSystemNotificationTags: next });
+        }
+
+        handleSuppressedSystemNotificationTagsFieldChange({ target: { name: 'text', value: next.join(', ') } });
+      },
+      [handleSuppressedSystemNotificationTagsFieldChange, onUpdate, suppressedSystemNotificationTags],
     );
 
     const handleEmailNotificationsTypesChange = useCallback(
@@ -495,6 +531,15 @@ const PreferencesSettings = React.memo(
             group: Groups.GENERAL,
           },
           {
+            id: 'showFullDueDates',
+            preferences: t('common.showFullDueDates'),
+            modifySettings: showFullDueDates,
+            modifySettingsProps: { onChange: handleShowFullDueDatesChange, title: t('common.toggleItem', { item: t('common.showFullDueDates', { postProcess: 'lowercase' }) }) },
+            currentValue: showFullDueDates ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionShowFullDueDates'),
+            group: Groups.GENERAL,
+          },
+          {
             id: 'subscribeToOwnCards',
             preferences: t('common.subscribeToOwnCards'),
             modifySettings: subscribeToOwnCards,
@@ -551,6 +596,21 @@ const PreferencesSettings = React.memo(
             },
             currentValue: selectedNotificationTypes.map((v) => v.name).join(', '),
             description: t('common.descriptionNotificationTypes'),
+            group: Groups.NOTIFICATIONS,
+          },
+          {
+            id: 'suppressedSystemNotificationTags',
+            preferences: t('common.suppressedSystemNotificationTags'),
+            modifySettings: suppressedSystemNotificationTagsData.text,
+            modifySettingsProps: {
+              name: 'text',
+              onSubmit: handleSuppressedSystemNotificationTagsSubmit,
+              onChange: handleSuppressedSystemNotificationTagsFieldChange,
+              placeholder: t('common.enterSystemNotificationTags'),
+              title: t('common.suppressedSystemNotificationTags'),
+            },
+            currentValue: suppressedSystemNotificationTags.join(', '),
+            description: t('common.descriptionSuppressedSystemNotificationTags'),
             group: Groups.NOTIFICATIONS,
           },
           {
@@ -636,6 +696,8 @@ const PreferencesSettings = React.memo(
         handleHideCardModalActivityChange,
         hideClosestDueDate,
         handleHideClosestDueDateChange,
+        showFullDueDates,
+        handleShowFullDueDatesChange,
         subscribeToOwnCards,
         handleSubscribeToOwnCardsChange,
         subscribeToNewBoards,
@@ -650,6 +712,10 @@ const PreferencesSettings = React.memo(
         selectedNotificationTypes,
         handleNotificationTypesChange,
         notificationTypesOptions,
+        suppressedSystemNotificationTags,
+        suppressedSystemNotificationTagsData.text,
+        handleSuppressedSystemNotificationTagsFieldChange,
+        handleSuppressedSystemNotificationTagsSubmit,
         emailNotificationsEnabled,
         handleEmailNotificationsEnabledChange,
         selectedEmailNotificationsTypes,
@@ -824,6 +890,7 @@ PreferencesSettings.propTypes = {
   preferredDetailsFont: PropTypes.string.isRequired,
   hideCardModalActivity: PropTypes.bool.isRequired,
   hideClosestDueDate: PropTypes.bool.isRequired,
+  showFullDueDates: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   themeShape: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
@@ -832,6 +899,7 @@ PreferencesSettings.propTypes = {
   emailNotificationsDeliveryMode: PropTypes.string.isRequired,
   emailNotificationsMarkReadAsDelivered: PropTypes.bool.isRequired,
   notificationTypes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  suppressedSystemNotificationTags: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 PreferencesSettings.defaultProps = {

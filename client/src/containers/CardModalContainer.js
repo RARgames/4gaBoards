@@ -67,7 +67,7 @@ const makeMapStateToProps = () => {
     }));
     const activities = selectors.selectCardActivitiesById(state, id);
     const user = selectors.selectCurrentUser(state);
-    const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, hideClosestDueDate, preferredDetailsFont } =
+    const { commentMode, descriptionMode, descriptionShown, tasksShown, attachmentsShown, commentsShown, hideCardModalActivity, hideClosestDueDate, showFullDueDates, preferredDetailsFont } =
       selectors.selectCurrentUserPrefs(state);
     const userId = user.id;
 
@@ -114,6 +114,7 @@ const makeMapStateToProps = () => {
       commentsShown,
       hideCardModalActivity,
       hideClosestDueDate,
+      showFullDueDates,
       preferredDetailsFont,
       userId,
       isGithubConnected,

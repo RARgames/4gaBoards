@@ -16,12 +16,14 @@ const mapStateToProps = () => {
     const closestDueDate = selectClosestDueDateByCardId(state, id);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const { name: cardName } = selectors.selectCardById(state, id);
+    const { showFullDueDates } = selectors.selectCurrentUserPrefs(state);
 
     return {
       cardName,
       allBoardMemberships,
       boardMemberships,
       closestDueDate,
+      showFullDueDates,
       canEdit: isCurrentUserEditor,
     };
   };

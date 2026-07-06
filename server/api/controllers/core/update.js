@@ -57,10 +57,12 @@ module.exports = {
     }
     const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled', 'syncSsoDataOnAuth', 'syncSsoAdminOnAuth']);
 
-    const allowedRegisterDomains = _.uniq(inputs.allowedRegisterDomains?.map((d) => d.trim().toLowerCase()).filter(Boolean));
+    if (inputs.allowedRegisterDomains !== undefined) {
+      values.allowedRegisterDomains = _.uniq(inputs.allowedRegisterDomains.map((d) => d.trim().toLowerCase()).filter(Boolean));
+    }
 
     const prevCore = { ...core };
-    core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values, allowedRegisterDomains });
+    core = await Core.updateOne({ id: 0 }).set({ updatedById: currentUser.id, ...values });
     const coreItem = {
       id: core.id,
       ssoRegistrationEnabled: core.ssoRegistrationEnabled,

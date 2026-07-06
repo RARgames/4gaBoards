@@ -51,6 +51,7 @@ const ListView = React.memo(
     listViewColumnVisibility,
     listViewFitScreen,
     listViewItemsPerPage,
+    showFullDueDates,
     currentCardIndex,
     canEdit,
     preferredDetailsFont,
@@ -309,6 +310,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortUndefined: 'last',
           meta: { headerTitle: t('common.dueDate', { context: 'title' }), suggestedSize: 110 },
+          cellProps: { showFullDueDates },
         },
         {
           accessorKey: 'closestDueDate',
@@ -317,7 +319,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortUndefined: 'last',
           meta: { headerTitle: t('common.closestDueDate', { context: 'title' }), suggestedSize: 110 },
-          cellProps: { isReadOnly: true, titlePrefix: t('common.cardDueDateSummary') },
+          cellProps: { isReadOnly: true, titlePrefix: t('common.cardDueDateSummary'), showFullDueDates },
         },
         {
           accessorKey: 'timer',
@@ -344,6 +346,7 @@ const ListView = React.memo(
           cell: Table.Renderers.DateCellRenderer,
           enableSorting: true,
           meta: { headerTitle: t('common.createdAt'), suggestedSize: 100 },
+          cellProps: { showFullDueDates },
         },
         {
           accessorKey: 'createdBy',
@@ -361,6 +364,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortUndefined: 'last',
           meta: { headerTitle: t('common.updatedAt'), suggestedSize: 100 },
+          cellProps: { showFullDueDates },
         },
         {
           accessorKey: 'updatedBy',
@@ -406,6 +410,7 @@ const ListView = React.memo(
         isGithubConnected,
         githubRepo,
         preferredDetailsFont,
+        showFullDueDates,
         listViewFitScreen,
         handleResetColumnSortingClick,
         handleResetColumnWidthsClick,
@@ -523,6 +528,7 @@ ListView.propTypes = {
   listViewColumnVisibility: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   listViewFitScreen: PropTypes.bool.isRequired,
   listViewItemsPerPage: PropTypes.string.isRequired,
+  showFullDueDates: PropTypes.bool.isRequired,
   currentCardIndex: PropTypes.number,
   canEdit: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,

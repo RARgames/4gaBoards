@@ -5,6 +5,13 @@ import ActionTypes from '../constants/ActionTypes';
 import Config from '../constants/Config';
 import BaseModel from './BaseModel';
 
+const normalizeCoreSettings = (data) => ({
+  ...data,
+  ...(Array.isArray(data.allowedRegisterDomains) && {
+    allowedRegisterDomains: data.allowedRegisterDomains.join(';'),
+  }),
+});
+
 export default class extends BaseModel {
   static modelName = 'Core';
 
@@ -51,15 +58,15 @@ export default class extends BaseModel {
       case ActionTypes.FETCH_CORE_SETTINGS_PUBLIC:
       case ActionTypes.CORE_SETTINGS_UPDATE__SUCCESS:
       case ActionTypes.CORE_SETTINGS_UPDATE_HANDLE:
-        Core.upsert(payload.data);
+        Core.upsert(normalizeCoreSettings(payload.data));
         break;
       case ActionTypes.CORE_SETTINGS_UPDATE: {
-        Core.withId(0)?.update(payload.data);
+        Core.withId(0)?.update(normalizeCoreSettings(payload.data));
         break;
       }
       case ActionTypes.CORE_SETTINGS_UPDATE__FAILURE:
         if (payload.data) {
-          Core.upsert(payload.data);
+          Core.upsert(normalizeCoreSettings(payload.data));
         }
 
         break;

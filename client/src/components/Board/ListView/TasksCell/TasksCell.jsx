@@ -18,6 +18,7 @@ const TasksCell = React.memo(
     allBoardMemberships,
     boardMemberships,
     closestDueDate,
+    showFullDueDates,
     canEdit,
     onTaskUpdate,
     onTaskDuplicate,
@@ -53,6 +54,7 @@ const TasksCell = React.memo(
           cardName={cardName}
           items={tasks}
           closestDueDate={closestDueDate}
+          showFullDueDates={showFullDueDates}
           canEdit={canEdit}
           allBoardMemberships={allBoardMemberships}
           boardMemberships={boardMemberships}
@@ -80,6 +82,7 @@ TasksCell.propTypes = {
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   closestDueDate: PropTypes.instanceOf(Date),
+  showFullDueDates: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onTaskUpdate: PropTypes.func.isRequired,
   onTaskDuplicate: PropTypes.func.isRequired,

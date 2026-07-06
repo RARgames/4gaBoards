@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
     preferredDetailsFont,
     hideCardModalActivity,
     hideClosestDueDate,
+    showFullDueDates,
     theme,
     themeShape,
     emailNotificationsEnabled,
@@ -27,6 +28,7 @@ const mapStateToProps = (state) => {
     emailNotificationsDeliveryMode,
     emailNotificationsMarkReadAsDelivered,
     notificationTypes,
+    suppressedSystemNotificationTags,
   } = selectors.selectCurrentUserPrefs(state);
   const { isAdmin, isVerified } = selectors.selectCurrentUser(state);
 
@@ -46,6 +48,7 @@ const mapStateToProps = (state) => {
     preferredDetailsFont,
     hideCardModalActivity,
     hideClosestDueDate,
+    showFullDueDates,
     theme,
     themeShape,
     emailNotificationsEnabled,
@@ -53,6 +56,7 @@ const mapStateToProps = (state) => {
     emailNotificationsDeliveryMode,
     emailNotificationsMarkReadAsDelivered,
     notificationTypes,
+    suppressedSystemNotificationTags,
   };
 };
 

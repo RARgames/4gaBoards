@@ -59,6 +59,7 @@ const Card = React.memo(
     createdBy,
     updatedAt,
     updatedBy,
+    showFullDueDates,
     onUpdate,
     onMove,
     onTransfer,
@@ -226,6 +227,7 @@ const Card = React.memo(
                 cardName={name}
                 items={tasks}
                 closestDueDate={closestDueDate}
+                showFullDueDates={showFullDueDates}
                 canEdit={canEdit}
                 allBoardMemberships={boardAndTaskMemberships}
                 boardMemberships={boardMemberships}
@@ -262,7 +264,7 @@ const Card = React.memo(
                 {dueDate && (
                   <span className={clsx(s.attachment, s.attachmentLeft)}>
                     <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
-                      <DueDate value={dueDate} completedAt={completedAt} variant="card" isClickable={canEdit} />
+                      <DueDate value={dueDate} completedAt={completedAt} variant="card" isClickable={canEdit} showFullDueDates={showFullDueDates} />
                     </DueDateEditPopup>
                   </span>
                 )}
@@ -432,6 +434,7 @@ Card.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  showFullDueDates: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,

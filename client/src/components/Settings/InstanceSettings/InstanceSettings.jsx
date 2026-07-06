@@ -41,6 +41,10 @@ const InstanceSettings = React.memo(
     }));
     const [isErrorAllowedRegisterDomains, setIsErrorAllowedRegisterDomains] = useState(false);
 
+    useEffect(() => {
+      handleAllowedRegisterDomainsFieldChange({ target: { name: 'text', value: allowedRegisterDomains } });
+    }, [allowedRegisterDomains, handleAllowedRegisterDomainsFieldChange]);
+
     const handleRegistrationEnabledChange = useCallback(() => {
       onCoreSettingsUpdate({
         registrationEnabled: !registrationEnabled,

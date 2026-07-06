@@ -66,7 +66,7 @@ const makeMapStateToProps = () => {
     });
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
-    const { listViewStyle, listViewColumnVisibility, listViewFitScreen, listViewItemsPerPage } = selectors.selectCurrentUserPrefs(state);
+    const { listViewStyle, listViewColumnVisibility, listViewFitScreen, listViewItemsPerPage, showFullDueDates } = selectors.selectCurrentUserPrefs(state);
     const currentCardIndex = filteredCards.findIndex((card) => card.id === currentCardId);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
@@ -86,6 +86,7 @@ const makeMapStateToProps = () => {
       listViewColumnVisibility,
       listViewFitScreen,
       listViewItemsPerPage,
+      showFullDueDates,
       currentCardIndex,
       canEdit: isCurrentUserEditor,
       preferredDetailsFont,

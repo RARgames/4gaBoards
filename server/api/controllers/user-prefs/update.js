@@ -13,6 +13,7 @@ const Errors = {
 };
 
 const columnVisibilityValidator = (value) => _.isObject(value) && _.every(value, (v) => typeof v === 'boolean');
+const stringArrayValidator = (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => _.isString(v) && v.length > 0);
 
 const hexColorsValidator = (value) => {
   if (!_.isObject(value)) return false;
@@ -124,6 +125,9 @@ module.exports = {
     hideClosestDueDate: {
       type: 'boolean',
     },
+    showFullDueDates: {
+      type: 'boolean',
+    },
     theme: {
       type: 'string',
       isIn: UserPrefs.THEMES,
@@ -156,6 +160,10 @@ module.exports = {
     notificationTypes: {
       type: 'json',
       custom: (value) => Array.isArray(value) && value.every((v) => Object.values(Action.Scopes).includes(v)),
+    },
+    suppressedSystemNotificationTags: {
+      type: 'json',
+      custom: stringArrayValidator,
     },
   },
 
@@ -210,6 +218,7 @@ module.exports = {
         'preferredDetailsFont',
         'hideCardModalActivity',
         'hideClosestDueDate',
+        'showFullDueDates',
         'theme',
         'themeShape',
         'themeCustomColors',
@@ -218,6 +227,7 @@ module.exports = {
         'emailNotificationsDeliveryMode',
         'emailNotificationsMarkReadAsDelivered',
         'notificationTypes',
+        'suppressedSystemNotificationTags',
       ]),
     };
 
