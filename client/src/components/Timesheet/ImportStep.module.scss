@@ -1,0 +1,63 @@
+:global(#app) {
+  .instructions {
+    font-size: 12px;
+    opacity: 0.75;
+    margin: 0 0 12px;
+    max-width: 320px;
+  }
+
+  .icon {
+    fill: currentColor;
+    margin-right: 4px;
+  }
+
+  .mappingRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .mappingLabel {
+    font-size: 12px;
+    color: var(--textColor1);
+    flex-shrink: 0;
+    width: 100px;
+  }
+
+  .mappingDropdown {
+    width: 180px;
+  }
+
+  .teamImportRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--textColor1);
+    margin: 12px 0 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .memberMatchList {
+    max-height: 280px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+  }
+
+  .resultLine {
+    font-size: 13px;
+    margin: 0 0 6px;
+  }
+
+  .failureList {
+    max-height: 150px;
+    overflow-y: auto;
+    font-size: 11px;
+    opacity: 0.75;
+    margin: 8px 0;
+    padding-left: 16px;
+  }
+}

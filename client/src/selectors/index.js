@@ -19,6 +19,7 @@ import router from './router';
 import socket from './socket';
 import tasks from './tasks';
 import timeEntries from './time-entries';
+import timesheetOverview from './timesheet-overview';
 import userPrefs from './user-prefs';
 import users from './users';
 import wikiPages from './wiki-pages';
@@ -45,6 +46,7 @@ export default {
   ...socket,
   ...tasks,
   ...timeEntries,
+  ...timesheetOverview,
   ...userPrefs,
   ...users,
   ...wikiPages,

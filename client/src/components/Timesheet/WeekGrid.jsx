@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { addDays, addMinutes, differenceInCalendarDays, format, isSameDay, startOfDay } from 'date-fns';
 import PropTypes from 'prop-types';
 
+import formatDuration from '../../utils/format-duration';
 import { Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './WeekGrid.module.scss';
@@ -21,18 +22,6 @@ const snapMinutes = (minutes) => Math.min(DAY_MINUTES, Math.max(0, Math.round(mi
 const yToMinutes = (y) => (y / HOUR_HEIGHT) * 60;
 
 const minutesToY = (minutes) => (minutes / 60) * HOUR_HEIGHT;
-
-const formatDuration = (minutes) => {
-  const hours = Math.floor(minutes / 60);
-  const mins = minutes % 60;
-  if (hours === 0) {
-    return `${mins}m`;
-  }
-  if (mins === 0) {
-    return `${hours}h`;
-  }
-  return `${hours}h ${mins}m`;
-};
 
 const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, onEntryClick }) => {
   const [t] = useTranslation();

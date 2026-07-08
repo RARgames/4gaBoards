@@ -60,6 +60,8 @@ const Header = React.memo(
           return t('common.notifications');
         case Paths.TIMESHEET:
           return t('common.timesheet');
+        case Paths.TIMESHEET_TEAM:
+          return t('common.teamTimesheets');
         default:
           return project ? project.name : null;
       }

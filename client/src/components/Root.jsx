@@ -41,6 +41,7 @@ function Root({ store, history }) {
           <Route path={Paths.SETTINGS_MEMBERS} element={<CoreContainer />} />
           <Route path={Paths.NOTIFICATIONS} element={<CoreContainer />} />
           <Route path={Paths.TIMESHEET} element={<CoreContainer />} />
+          <Route path={Paths.TIMESHEET_TEAM} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_GANTT} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_TEAM_PLANNER} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_WIKI_PAGE} element={<CoreContainer />} />

@@ -1,32 +1,32 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router';
 import { addDays, addWeeks, format, startOfWeek } from 'date-fns';
 import PropTypes from 'prop-types';
 
+import api from '../../api';
+import Paths from '../../constants/Paths';
 import { getBoardAccentColor } from '../../utils/board-colors';
+import formatDuration from '../../utils/format-duration';
+import triggerDownload from '../../utils/trigger-download';
 import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize } from '../Utils';
 import EntryPopup from './EntryPopup';
+import ExportPopup from './ExportPopup';
+import ImportPopup from './ImportPopup';
+import PrintSummary from './PrintSummary';
 import WeekGrid from './WeekGrid';
 
 import * as s from './Timesheet.module.scss';
 
-const formatDuration = (minutes) => {
-  const hours = Math.floor(minutes / 60);
-  const mins = minutes % 60;
-  if (hours === 0) {
-    return `${mins}m`;
-  }
-  if (mins === 0) {
-    return `${hours}h`;
-  }
-  return `${hours}h ${mins}m`;
-};
-
-const Timesheet = React.memo(({ currentUserId, isAdmin, users, timeEntries, projects, assignedCards, allCards, onFetch, onCreate, onUpdate, onDelete }) => {
+const Timesheet = React.memo(({ currentUserId, isAdmin, users, timeEntries, projects, assignedCards, allCards, accessToken, onFetch, onCreate, onUpdate, onDelete }) => {
   const [t] = useTranslation();
-  const [weekStart, setWeekStart] = useState(() => startOfWeek(new Date(), { weekStartsOn: 1 }));
+  const location = useLocation();
+  const [weekStart, setWeekStart] = useState(() =>
+    location.state && location.state.weekStart ? startOfWeek(new Date(location.state.weekStart), { weekStartsOn: 1 }) : startOfWeek(new Date(), { weekStartsOn: 1 }),
+  );
   const [popup, setPopup] = useState(null);
-  const [selectedViewedUserId, setSelectedViewedUserId] = useState(null);
+  const [selectedViewedUserId, setSelectedViewedUserId] = useState(() => (location.state && location.state.viewedUserId) || null);
+  const [printRange, setPrintRange] = useState(null);
 
   const viewedUserId = isAdmin && selectedViewedUserId ? selectedViewedUserId : currentUserId;
   const isViewingOther = viewedUserId !== currentUserId;
@@ -143,6 +143,39 @@ const Timesheet = React.memo(({ currentUserId, isAdmin, users, timeEntries, proj
     setPopup(null);
   }, [popup, onDelete]);
 
+  const handleDownloadCsv = useCallback(
+    async ({ from, to, projectId, groupBy, allMembers }) => {
+      try {
+        const { blob, filename } = await api.exportTimeEntries(
+          {
+            from: from.toISOString(),
+            to: to.toISOString(),
+            projectId,
+            groupBy,
+            userId: allMembers ? undefined : viewedUserId,
+            allMembers,
+          },
+          { Authorization: `Bearer ${accessToken}` },
+        );
+        triggerDownload(blob, filename);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }
+    },
+    [viewedUserId, accessToken],
+  );
+
+  const handlePrintSummary = useCallback(({ from, to, projectId }) => {
+    setPrintRange({ from, to, projectId });
+  }, []);
+
+  const handleClosePrintSummary = useCallback(() => setPrintRange(null), []);
+
+  const handleImportComplete = useCallback(() => {
+    onFetch({ userId: currentUserId, from: weekStart, to: weekEnd, subscribe: true });
+  }, [onFetch, currentUserId, weekStart, weekEnd]);
+
   return (
     <div className={s.wrapper}>
       <div className={s.pageHeader}>
@@ -175,8 +208,19 @@ const Timesheet = React.memo(({ currentUserId, isAdmin, users, timeEntries, proj
             className={s.switcherDropdown}
           />
         )}
+        {isAdmin && (
+          <Link to={Paths.TIMESHEET_TEAM}>
+            <Button style={ButtonStyle.NoBackground} className={s.todayButton} content={t('common.teamView')} />
+          </Link>
+        )}
         <div className={s.spacer} />
         <span className={s.weekTotal}>{t('common.weekTotal', { duration: formatDuration(weekTotalMinutes) })}</span>
+        <ImportPopup accessToken={accessToken} isAdmin={isAdmin} users={users} onImportComplete={handleImportComplete}>
+          <Button style={ButtonStyle.DefaultBorder} content={t('action.import')} />
+        </ImportPopup>
+        <ExportPopup projects={projectOptions} isAdmin={isAdmin} viewedUserName={viewedUser ? viewedUser.name : undefined} onDownloadCsv={handleDownloadCsv} onPrintSummary={handlePrintSummary}>
+          <Button style={ButtonStyle.DefaultBorder} content={t('common.export')} />
+        </ExportPopup>
       </div>
       <div className={s.content}>
         <WeekGrid weekStart={weekStart} entries={weekEntries} onCreate={handleCreate} onMove={handleMove} onResize={handleResize} onEntryClick={handleEntryClick} />
@@ -196,6 +240,17 @@ const Timesheet = React.memo(({ currentUserId, isAdmin, users, timeEntries, proj
           onClose={handleClosePopup}
         />
       )}
+      {printRange && (
+        <PrintSummary
+          range={printRange}
+          viewedUserId={viewedUserId}
+          viewedUserName={viewedUser ? viewedUser.name : undefined}
+          timeEntries={timeEntries}
+          projectsById={projectsById}
+          onFetch={onFetch}
+          onClose={handleClosePrintSummary}
+        />
+      )}
     </div>
   );
 });
@@ -208,6 +263,7 @@ Timesheet.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   assignedCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  accessToken: PropTypes.string,
   onFetch: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
@@ -216,6 +272,7 @@ Timesheet.propTypes = {
 
 Timesheet.defaultProps = {
   currentUserId: undefined,
+  accessToken: undefined,
 };
 
 export default Timesheet;

@@ -128,6 +128,9 @@ module.exports.routes = {
   'POST /api/time-entries': 'time-entries/create',
   'PATCH /api/time-entries/:id': 'time-entries/update',
   'DELETE /api/time-entries/:id': 'time-entries/delete',
+  'GET /api/time-entries/export': 'time-entries/export',
+  'POST /api/time-entries/import': 'time-entries/import',
+  'GET /api/time-entries/overview': 'time-entries/overview',
 
   'GET /api/cards/:cardId/actions': 'actions/index',
 

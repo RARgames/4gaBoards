@@ -22,6 +22,7 @@ import router from './router';
 import socket from './socket';
 import tasks from './tasks';
 import timeEntries from './time-entries';
+import timesheetOverview from './timesheet-overview';
 import userPrefs from './user-prefs';
 import userProjects from './user-projects';
 import users from './users';
@@ -52,6 +53,7 @@ export default {
   ...socket,
   ...tasks,
   ...timeEntries,
+  ...timesheetOverview,
   ...userPrefs,
   ...userProjects,
   ...users,

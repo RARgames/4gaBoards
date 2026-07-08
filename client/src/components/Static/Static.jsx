@@ -6,6 +6,7 @@ import Paths from '../../constants/Paths';
 import BoardContainer from '../../containers/BoardContainer';
 import BoardsContainer from '../../containers/BoardsContainer';
 import NotificationCenterContainer from '../../containers/NotificationCenterContainer';
+import TeamOverviewContainer from '../../containers/TeamOverviewContainer';
 import TimesheetContainer from '../../containers/TimesheetContainer';
 import DocumentsContainer from '../../containers/Project/DocumentsContainer';
 import GanttContainer from '../../containers/Project/GanttContainer';
@@ -61,6 +62,16 @@ function Static({ path, projectId, cardId, board }) {
       <div className={s.wrapper}>
         <SidebarContainer>
           <TimesheetContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.TIMESHEET_TEAM) {
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <TeamOverviewContainer />
         </SidebarContainer>
       </div>
     );

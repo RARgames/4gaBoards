@@ -22,6 +22,7 @@ const SETTINGS_PROJECT = `${Config.BASE_PATH}/projects/:id/settings`;
 const SETTINGS_MEMBERS = `${Config.BASE_PATH}/settings/members`;
 const NOTIFICATIONS = `${Config.BASE_PATH}/notifications`;
 const TIMESHEET = `${Config.BASE_PATH}/timesheet`;
+const TIMESHEET_TEAM = `${Config.BASE_PATH}/timesheet/team`;
 const PROJECT_GANTT = `${Config.BASE_PATH}/projects/:id/gantt`;
 const PROJECT_TEAM_PLANNER = `${Config.BASE_PATH}/projects/:id/team-planner`;
 const PROJECT_WIKI = `${Config.BASE_PATH}/projects/:id/wiki`;
@@ -53,6 +54,7 @@ export default {
   SETTINGS_MEMBERS,
   NOTIFICATIONS,
   TIMESHEET,
+  TIMESHEET_TEAM,
   PROJECT_GANTT,
   PROJECT_TEAM_PLANNER,
   PROJECT_WIKI,

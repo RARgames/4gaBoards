@@ -1,0 +1,19 @@
+:global(#app) {
+  .fieldLabel {
+    color: var(--textColor1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .field {
+    width: 260px;
+    margin-bottom: 10px;
+  }
+
+  .customRangeRow {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+}

@@ -31,6 +31,7 @@ module.exports.security = {
     allRoutes: true,
     allowOrigins: ['http://localhost:3000'],
     allowRequestHeaders: ['Authorization'],
+    allowResponseHeaders: ['Content-Disposition'],
     allowCredentials: true,
   },
 
