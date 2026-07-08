@@ -1,9 +1,9 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     restart: unless-stopped
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data-18:/var/lib/postgresql
     networks:
       - boards-network
     ports:
@@ -18,6 +18,6 @@ services:
       retries: 20
 
 volumes:
-  db-data:
+  db-data-18:
 networks:
   boards-network:

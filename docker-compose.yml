@@ -2,12 +2,12 @@
 
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     restart: always
     networks:
       - boards-network
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data-18:/var/lib/postgresql
     environment:
       POSTGRES_DB: 4gaBoards
       POSTGRES_PASSWORD: notpassword
@@ -43,6 +43,6 @@ volumes:
   user-avatars:
   project-background-images:
   attachments:
-  db-data:
+  db-data-18:
 networks:
   boards-network:
