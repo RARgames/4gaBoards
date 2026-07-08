@@ -31,6 +31,8 @@ const getProject = (id, headers) =>
     },
   }));
 
+const getProjectMembersOverview = (projectId, headers) => socket.get(`/projects/${projectId}/members-overview`, undefined, headers);
+
 const updateProject = (id, data, headers) =>
   socket.patch(`/projects/${id}`, data, headers).then((body) => ({
     ...body,
@@ -76,6 +78,7 @@ export default {
   getProjects,
   createProject,
   getProject,
+  getProjectMembersOverview,
   updateProject,
   updateProjectBackgroundImage,
   deleteProject,

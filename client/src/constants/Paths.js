@@ -19,7 +19,16 @@ const SETTINGS_ABOUT = `${Config.BASE_PATH}/settings/about`;
 const SETTINGS_INSTANCE = `${Config.BASE_PATH}/settings/instance`;
 const SETTINGS_USERS = `${Config.BASE_PATH}/settings/users`;
 const SETTINGS_PROJECT = `${Config.BASE_PATH}/projects/:id/settings`;
+const SETTINGS_MEMBERS = `${Config.BASE_PATH}/settings/members`;
 const NOTIFICATIONS = `${Config.BASE_PATH}/notifications`;
+const TIMESHEET = `${Config.BASE_PATH}/timesheet`;
+const PROJECT_GANTT = `${Config.BASE_PATH}/projects/:id/gantt`;
+const PROJECT_TEAM_PLANNER = `${Config.BASE_PATH}/projects/:id/team-planner`;
+const PROJECT_WIKI = `${Config.BASE_PATH}/projects/:id/wiki`;
+const PROJECT_WIKI_PAGE = `${Config.BASE_PATH}/projects/:id/wiki/:slug`;
+const PROJECT_DOCUMENTS = `${Config.BASE_PATH}/projects/:id/documents`;
+const PROJECT_MEDIA = `${Config.BASE_PATH}/projects/:id/media`;
+const PROJECT_MEMBERS = `${Config.BASE_PATH}/projects/:id/members`;
 
 export default {
   ROOT,
@@ -41,5 +50,14 @@ export default {
   SETTINGS_INSTANCE,
   SETTINGS_USERS,
   SETTINGS_PROJECT,
+  SETTINGS_MEMBERS,
   NOTIFICATIONS,
+  TIMESHEET,
+  PROJECT_GANTT,
+  PROJECT_TEAM_PLANNER,
+  PROJECT_WIKI,
+  PROJECT_WIKI_PAGE,
+  PROJECT_DOCUMENTS,
+  PROJECT_MEDIA,
+  PROJECT_MEMBERS,
 };

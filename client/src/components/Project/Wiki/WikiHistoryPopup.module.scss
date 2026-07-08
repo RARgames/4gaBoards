@@ -1,0 +1,46 @@
+:global(#app) {
+  .list {
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  .revisionItem {
+    display: block;
+    padding: 8px 10px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .revisionInfo {
+    min-width: 0;
+  }
+
+  .revisionTitle {
+    color: var(--textColor0);
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .revisionDate {
+    color: var(--textColor3);
+    font-size: 11px;
+  }
+
+  .empty {
+    color: var(--textColor3);
+    padding: 10px;
+    text-align: center;
+  }
+
+  .revisionPreview {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .restoreControls {
+    margin-top: 10px;
+    text-align: center;
+  }
+}

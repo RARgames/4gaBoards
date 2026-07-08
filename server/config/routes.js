@@ -30,6 +30,12 @@ module.exports.routes = {
   'GET /api/user-projects/:projectId': 'user-projects/show',
   'PATCH /api/user-projects/:projectId': 'user-projects/update',
 
+  'POST /api/projects/:projectId/memberships': 'project-memberships/create',
+  'PATCH /api/project-memberships/:id': 'project-memberships/update',
+  'DELETE /api/project-memberships/:id': 'project-memberships/delete',
+
+  'GET /api/members-overview': 'members-overview/index',
+
   'GET /api/users': 'users/index',
   'POST /api/users': 'users/create',
   'GET /api/users/:id': 'users/show',
@@ -53,6 +59,9 @@ module.exports.routes = {
 
   'POST /api/projects/:projectId/managers': 'project-managers/create',
   'DELETE /api/project-managers/:id': 'project-managers/delete',
+
+  'GET /api/projects/:projectId/members-overview': 'projects/members-overview',
+  'GET /api/projects/:projectId/media': 'projects/media',
 
   'POST /api/projects/:projectId/boards': 'boards/create',
   'GET /api/boards/:id': 'boards/show',
@@ -97,6 +106,29 @@ module.exports.routes = {
   'PATCH /api/attachments/:id': 'attachments/update',
   'DELETE /api/attachments/:id': 'attachments/delete',
 
+  'GET /api/projects/:projectId/wiki-pages': 'wiki-pages/index',
+  'POST /api/projects/:projectId/wiki-pages': 'wiki-pages/create',
+  'GET /api/wiki-pages/:id': 'wiki-pages/show',
+  'PATCH /api/wiki-pages/:id': 'wiki-pages/update',
+  'DELETE /api/wiki-pages/:id': 'wiki-pages/delete',
+  'GET /api/wiki-pages/:id/revisions/:revisionId': 'wiki-pages/revisions/show',
+  'POST /api/wiki-pages/:id/revisions/:revisionId/restore': 'wiki-pages/revisions/restore',
+
+  'GET /api/projects/:projectId/documents': 'documents/index',
+  'POST /api/projects/:projectId/documents': 'documents/create',
+  'PATCH /api/documents/:id': 'documents/update',
+  'DELETE /api/documents/:id': 'documents/delete',
+
+  'GET /api/projects/:projectId/chart-views': 'chart-views/index',
+  'POST /api/projects/:projectId/chart-views': 'chart-views/create',
+  'PATCH /api/chart-views/:id': 'chart-views/update',
+  'DELETE /api/chart-views/:id': 'chart-views/delete',
+
+  'GET /api/time-entries': 'time-entries/index',
+  'POST /api/time-entries': 'time-entries/create',
+  'PATCH /api/time-entries/:id': 'time-entries/update',
+  'DELETE /api/time-entries/:id': 'time-entries/delete',
+
   'GET /api/cards/:cardId/actions': 'actions/index',
 
   'POST /api/cards/:cardId/comment-actions': 'comment-actions/create',
@@ -117,6 +149,16 @@ module.exports.routes = {
 
   'GET /attachments/:id/download/thumbnails/cover-256.:extension': {
     action: 'attachments/download-thumbnail',
+    skipAssets: false,
+  },
+
+  'GET /documents/:id/download/:filename': {
+    action: 'documents/download',
+    skipAssets: false,
+  },
+
+  'GET /documents/:id/download/thumbnails/cover-256.:extension': {
+    action: 'documents/download-thumbnail',
     skipAssets: false,
   },
 

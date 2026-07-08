@@ -7,6 +7,7 @@ export default function* projectsWatchers() {
   yield all([
     takeEvery(EntryActionTypes.PROJECT_CREATE, ({ payload: { data } }) => services.createProject(data)),
     takeEvery(EntryActionTypes.PROJECT_CREATE_HANDLE, ({ payload: { project } }) => services.handleProjectCreate(project)),
+    takeEvery(EntryActionTypes.PROJECT_MEMBERS_OVERVIEW_FETCH, ({ payload: { projectId } }) => services.fetchProjectMembersOverview(projectId)),
     takeEvery(EntryActionTypes.PROJECT_UPDATE, ({ payload: { id, data } }) => services.updateProject(id, data)),
     takeEvery(EntryActionTypes.CURRENT_PROJECT_UPDATE, ({ payload: { data } }) => services.updateCurrentProject(data)),
     takeEvery(EntryActionTypes.PROJECT_UPDATE_HANDLE, ({ payload: { project } }) => services.handleProjectUpdate(project)),

@@ -1,0 +1,51 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .tree {
+    background-color: var(--backgroundColorTmpBackground);
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    flex: 0 0 280px;
+    min-width: 280px;
+    max-width: 280px;
+    overflow-y: auto;
+  }
+
+  .content {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    padding: 20px 28px;
+  }
+
+  .empty {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .emptyIcon {
+    fill: var(--textColor3);
+    margin-bottom: 12px;
+    opacity: 0.6;
+  }
+
+  .emptyTitle {
+    color: var(--textColor0);
+    font-size: 18px;
+    margin: 0 0 14px;
+  }
+}

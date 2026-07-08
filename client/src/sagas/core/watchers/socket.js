@@ -60,6 +60,66 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleProjectManagerDelete(item));
     };
 
+    const handleProjectMembershipCreate = ({ item }) => {
+      emit(entryActions.handleProjectMembershipCreate(item));
+    };
+
+    const handleProjectMembershipUpdate = ({ item }) => {
+      emit(entryActions.handleProjectMembershipUpdate(item));
+    };
+
+    const handleProjectMembershipDelete = ({ item }) => {
+      emit(entryActions.handleProjectMembershipDelete(item));
+    };
+
+    const handleWikiPageCreate = ({ item }) => {
+      emit(entryActions.handleWikiPageCreate(item));
+    };
+
+    const handleWikiPageUpdate = ({ item }) => {
+      emit(entryActions.handleWikiPageUpdate(item));
+    };
+
+    const handleWikiPageDelete = ({ item }) => {
+      emit(entryActions.handleWikiPageDelete(item));
+    };
+
+    const handleDocumentCreate = api.makeHandleDocumentCreate(({ item }) => {
+      emit(entryActions.handleDocumentCreate(item));
+    });
+
+    const handleDocumentUpdate = api.makeHandleDocumentUpdate(({ item }) => {
+      emit(entryActions.handleDocumentUpdate(item));
+    });
+
+    const handleDocumentDelete = api.makeHandleDocumentDelete(({ item }) => {
+      emit(entryActions.handleDocumentDelete(item));
+    });
+
+    const handleChartViewCreate = api.makeHandleChartViewCreate(({ item }) => {
+      emit(entryActions.handleChartViewCreate(item));
+    });
+
+    const handleChartViewUpdate = api.makeHandleChartViewUpdate(({ item }) => {
+      emit(entryActions.handleChartViewUpdate(item));
+    });
+
+    const handleChartViewDelete = api.makeHandleChartViewDelete(({ item }) => {
+      emit(entryActions.handleChartViewDelete(item));
+    });
+
+    const handleTimeEntryCreate = api.makeHandleTimeEntryCreate(({ item }) => {
+      emit(entryActions.handleTimeEntryCreate(item));
+    });
+
+    const handleTimeEntryUpdate = api.makeHandleTimeEntryUpdate(({ item }) => {
+      emit(entryActions.handleTimeEntryUpdate(item));
+    });
+
+    const handleTimeEntryDelete = api.makeHandleTimeEntryDelete(({ item }) => {
+      emit(entryActions.handleTimeEntryDelete(item));
+    });
+
     const handleBoardCreate = api.makeHandleBoardCreate(({ item, requestId }) => {
       emit(entryActions.handleBoardCreate(item, requestId));
     });
@@ -236,6 +296,26 @@ const createSocketEventsChannel = () =>
     socket.on('projectManagerCreate', handleProjectManagerCreate);
     socket.on('projectManagerDelete', handleProjectManagerDelete);
 
+    socket.on('projectMembershipCreate', handleProjectMembershipCreate);
+    socket.on('projectMembershipUpdate', handleProjectMembershipUpdate);
+    socket.on('projectMembershipDelete', handleProjectMembershipDelete);
+
+    socket.on('wikiPageCreate', handleWikiPageCreate);
+    socket.on('wikiPageUpdate', handleWikiPageUpdate);
+    socket.on('wikiPageDelete', handleWikiPageDelete);
+
+    socket.on('documentCreate', handleDocumentCreate);
+    socket.on('documentUpdate', handleDocumentUpdate);
+    socket.on('documentDelete', handleDocumentDelete);
+
+    socket.on('chartViewCreate', handleChartViewCreate);
+    socket.on('chartViewUpdate', handleChartViewUpdate);
+    socket.on('chartViewDelete', handleChartViewDelete);
+
+    socket.on('timeEntryCreate', handleTimeEntryCreate);
+    socket.on('timeEntryUpdate', handleTimeEntryUpdate);
+    socket.on('timeEntryDelete', handleTimeEntryDelete);
+
     socket.on('boardCreate', handleBoardCreate);
     socket.on('boardUpdate', handleBoardUpdate);
     socket.on('boardDelete', handleBoardDelete);
@@ -307,6 +387,26 @@ const createSocketEventsChannel = () =>
 
       socket.off('projectManagerCreate', handleProjectManagerCreate);
       socket.off('projectManagerDelete', handleProjectManagerDelete);
+
+      socket.off('projectMembershipCreate', handleProjectMembershipCreate);
+      socket.off('projectMembershipUpdate', handleProjectMembershipUpdate);
+      socket.off('projectMembershipDelete', handleProjectMembershipDelete);
+
+      socket.off('wikiPageCreate', handleWikiPageCreate);
+      socket.off('wikiPageUpdate', handleWikiPageUpdate);
+      socket.off('wikiPageDelete', handleWikiPageDelete);
+
+      socket.off('documentCreate', handleDocumentCreate);
+      socket.off('documentUpdate', handleDocumentUpdate);
+      socket.off('documentDelete', handleDocumentDelete);
+
+      socket.off('chartViewCreate', handleChartViewCreate);
+      socket.off('chartViewUpdate', handleChartViewUpdate);
+      socket.off('chartViewDelete', handleChartViewDelete);
+
+      socket.off('timeEntryCreate', handleTimeEntryCreate);
+      socket.off('timeEntryUpdate', handleTimeEntryUpdate);
+      socket.off('timeEntryDelete', handleTimeEntryDelete);
 
       socket.off('boardCreate', handleBoardCreate);
       socket.off('boardUpdate', handleBoardUpdate);

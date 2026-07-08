@@ -1,0 +1,37 @@
+:global(#app) {
+  .wrapper {
+    max-width: 900px;
+  }
+
+  .header {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .title {
+    color: var(--textColor0);
+    font-size: 22px;
+    margin: 0;
+    overflow-wrap: break-word;
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    gap: 4px;
+  }
+
+  .meta {
+    color: var(--textColor3);
+    font-size: 12px;
+    margin: 6px 0 16px;
+  }
+
+  .titleInput {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+}

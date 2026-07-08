@@ -13,6 +13,7 @@ import { ReactComponent as Board } from '../../../assets/icons/Board.svg';
 import { ReactComponent as Calendar } from '../../../assets/icons/Calendar.svg';
 import { ReactComponent as Check } from '../../../assets/icons/Check.svg';
 import { ReactComponent as CircleQuestion } from '../../../assets/icons/CircleQuestion.svg';
+import { ReactComponent as Clock } from '../../../assets/icons/Clock.svg';
 import { ReactComponent as Close } from '../../../assets/icons/Close.svg';
 import { ReactComponent as Comment } from '../../../assets/icons/Comment.svg';
 import { ReactComponent as Duplicate } from '../../../assets/icons/Duplicate.svg';
@@ -24,6 +25,7 @@ import { ReactComponent as Facebook } from '../../../assets/icons/Facebook.svg';
 import { ReactComponent as FillDrip } from '../../../assets/icons/FillDrip.svg';
 import { ReactComponent as FullScreen } from '../../../assets/icons/FullScreen.svg';
 import { ReactComponent as GitHub } from '../../../assets/icons/GitHub.svg';
+import { ReactComponent as GripVertical } from '../../../assets/icons/GripVertical.svg';
 import { ReactComponent as Google } from '../../../assets/icons/Google.svg';
 import { ReactComponent as Hide } from '../../../assets/icons/Hide.svg';
 import { ReactComponent as Image } from '../../../assets/icons/Image.svg';
@@ -79,6 +81,7 @@ const IconType = {
   Calendar,
   Check,
   CircleQuestion,
+  Clock,
   Close,
   Comment,
   Duplicate,
@@ -90,6 +93,7 @@ const IconType = {
   FillDrip,
   FullScreen,
   GitHub,
+  GripVertical,
   Google,
   Hide,
   Image,

@@ -22,6 +22,10 @@ const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, 
 
   return (
     <>
+      <Button style={ButtonStyle.PopupContext} title={t('common.timesheet')} onClick={() => handleClick(Paths.TIMESHEET)}>
+        <Icon type={IconType.Clock} size={IconSize.Size14} className={s.icon} />
+        {t('common.timesheet')}
+      </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.profile')} onClick={() => handleClick(Paths.SETTINGS_PROFILE)}>
         <Icon type={IconType.User} size={IconSize.Size14} className={s.icon} />
         {t('common.profile')}

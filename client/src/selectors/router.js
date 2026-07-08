@@ -25,7 +25,27 @@ export const selectPath = createReduxOrmSelector(
   ({ Project, Board, Card }, pathsMatch, currentUserId) => {
     if (pathsMatch) {
       switch (pathsMatch.pattern.path) {
+        case Paths.PROJECT_WIKI_PAGE: {
+          const projectModel = Project.withId(pathsMatch.params.id);
+
+          if (!projectModel || !projectModel.isAvailableForUser(currentUserId)) {
+            return {
+              projectId: null,
+            };
+          }
+
+          return {
+            projectId: projectModel.id,
+            wikiPageSlug: pathsMatch.params.slug,
+          };
+        }
         case Paths.SETTINGS_PROJECT:
+        case Paths.PROJECT_GANTT:
+        case Paths.PROJECT_TEAM_PLANNER:
+        case Paths.PROJECT_WIKI:
+        case Paths.PROJECT_DOCUMENTS:
+        case Paths.PROJECT_MEDIA:
+        case Paths.PROJECT_MEMBERS:
         case Paths.PROJECTS: {
           const projectModel = Project.withId(pathsMatch.params.id);
 

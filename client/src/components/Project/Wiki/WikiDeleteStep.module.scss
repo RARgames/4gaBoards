@@ -1,0 +1,17 @@
+:global(#app) {
+  .content {
+    color: var(--textColor1);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .checkboxLabel {
+    align-items: center;
+    color: var(--textColor2);
+    display: flex;
+    font-size: 12px;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+}

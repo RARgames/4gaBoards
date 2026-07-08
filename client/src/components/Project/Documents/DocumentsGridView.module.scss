@@ -1,0 +1,51 @@
+:global(#app) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 4px;
+  }
+
+  .card {
+    position: relative;
+    border-radius: 6px;
+    background-color: var(--backgroundColorTmpDarkerField1);
+    overflow: hidden;
+  }
+
+  .thumbnail {
+    height: 110px;
+    background-color: var(--backgroundColorTmpDarkerField2);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+  }
+
+  .cardBody {
+    padding: 8px;
+  }
+
+  .name {
+    font-size: 13px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .folder {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+
+  .actionsButton {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+}

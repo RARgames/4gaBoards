@@ -39,6 +39,7 @@ const CardModal = React.memo(
     id,
     description,
     dueDate,
+    startDate,
     timer,
     isSubscribed,
     isActivitiesFetching,
@@ -208,6 +209,15 @@ const CardModal = React.memo(
       (newDueDate) => {
         onUpdate({
           dueDate: newDueDate,
+        });
+      },
+      [onUpdate],
+    );
+
+    const handleStartDateUpdate = useCallback(
+      (newStartDate) => {
+        onUpdate({
+          startDate: newStartDate,
         });
       },
       [onUpdate],
@@ -613,6 +623,28 @@ const CardModal = React.memo(
       </div>
     );
 
+    const startDateNode = (
+      <div className={s.headerItems}>
+        <div className={s.text}>
+          {t('common.startDate', { context: 'title' })}
+          {canEdit && (
+            <div className={s.popupWrapper}>
+              <DueDateEditPopup defaultValue={startDate} onUpdate={handleStartDateUpdate} offset={0}>
+                <Button style={ButtonStyle.Icon} title={startDate ? t('common.editStartDate') : t('common.addStartDate')}>
+                  <Icon type={startDate ? IconType.Pencil : IconType.Plus} size={IconSize.Size10} className={s.iconAddButton2} />
+                </Button>
+              </DueDateEditPopup>
+            </div>
+          )}
+        </div>
+        <span className={s.headerItem}>
+          <DueDateEditPopup defaultValue={startDate} onUpdate={handleStartDateUpdate} disabled={!canEdit}>
+            <DueDate value={startDate} isClickable={canEdit} />
+          </DueDateEditPopup>
+        </span>
+      </div>
+    );
+
     const closestDueDateNode = closestDueDate && (
       <div className={s.headerItems}>
         <div className={s.text}>{t('common.closestDueDate', { context: 'title' })}</div>
@@ -874,6 +906,7 @@ const CardModal = React.memo(
             {membersNode}
             {labelsNode}
             {priorityNode}
+            {startDateNode}
             {dueDateNode}
             {timerNode}
             {!hideClosestDueDate && closestDueDateNode}
@@ -912,6 +945,7 @@ CardModal.propTypes = {
   id: PropTypes.string.isRequired,
   description: PropTypes.string,
   dueDate: PropTypes.instanceOf(Date),
+  startDate: PropTypes.instanceOf(Date),
   timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isSubscribed: PropTypes.bool.isRequired,
   isActivitiesFetching: PropTypes.bool.isRequired,
@@ -996,6 +1030,7 @@ CardModal.propTypes = {
 CardModal.defaultProps = {
   description: undefined,
   dueDate: undefined,
+  startDate: undefined,
   timer: undefined,
   priority: undefined,
   parent: undefined,

@@ -28,6 +28,10 @@ module.exports = {
       type: 'ref',
       columnName: 'due_date',
     },
+    startDate: {
+      type: 'ref',
+      columnName: 'start_date',
+    },
     timer: {
       type: 'json',
     },

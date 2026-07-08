@@ -126,10 +126,13 @@ export const selectIsCurrentUserManagerForCurrentProject = createSelector(
   },
 );
 
+export const selectProjectMembersOverview = ({ ui: { projectMembersOverview } }) => projectMembersOverview;
+
 export default {
   selectProject,
   selectCurrentProject,
   selectManagersForProject,
   selectBoardsForCurrentProject,
   selectIsCurrentUserManagerForCurrentProject,
+  selectProjectMembersOverview,
 };

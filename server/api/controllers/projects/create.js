@@ -52,10 +52,20 @@ module.exports = {
       request: this.req,
     });
 
+    const projectMembership = await sails.helpers.projectMemberships.createOne.with({
+      values: {
+        project,
+        user: currentUser,
+      },
+      currentUser,
+      request: this.req,
+    });
+
     return {
       item: project,
       included: {
         projectManagers: [projectManager],
+        projectMemberships: [projectMembership],
       },
     };
   },

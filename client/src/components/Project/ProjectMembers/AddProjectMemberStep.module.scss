@@ -1,0 +1,20 @@
+:global(#app) {
+  .users {
+    margin-top: 8px;
+    max-height: 280px;
+  }
+
+  .userButton {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    padding: 6px 8px;
+    text-align: left;
+    width: 100%;
+  }
+
+  .userName {
+    color: var(--textColor0);
+    font-size: 13px;
+  }
+}

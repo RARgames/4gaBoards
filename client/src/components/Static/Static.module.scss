@@ -15,4 +15,15 @@
     height: calc(100vh - 50px);
     background: var(--backgroundColor);
   }
+
+  .projectContent {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .projectContentBody {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
 }

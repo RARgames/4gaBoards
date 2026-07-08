@@ -1,0 +1,186 @@
+:global(#app) {
+  .wrapper {
+    position: relative;
+    margin: 4px 0 10px;
+  }
+
+  .affordance {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    opacity: 0.65;
+    cursor: pointer;
+    padding: 2px 0;
+
+    svg {
+      fill: currentColor;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .chipRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--backgroundColorTmpDarkerField1);
+    border-radius: 10px;
+    padding: 2px 4px 2px 8px;
+    font-size: 11px;
+    cursor: pointer;
+    max-width: 100%;
+  }
+
+  .chipDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .chipLabel {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+  }
+
+  .chipRemove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    svg {
+      fill: var(--textColor2);
+    }
+
+    &:hover {
+      background: var(--backgroundColorTmpDarkerField2);
+    }
+  }
+
+  .addTicketAffordance {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    opacity: 0.6;
+    cursor: pointer;
+
+    svg {
+      fill: currentColor;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .popup {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--backgroundPopup);
+    border-radius: 4px;
+    box-shadow:
+      -1px -1px 3px var(--backgroundPopupShadow),
+      1px 1px 3px var(--backgroundPopupShadow);
+    z-index: 10;
+    padding: 6px;
+  }
+
+  .searchInput {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--backgroundColorTmpDarkerField1);
+    border: none;
+    border-radius: 3px;
+    color: var(--textColor0);
+    padding: 6px 8px;
+    font-size: 12px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .results {
+    max-height: 220px;
+    overflow-y: auto;
+    margin-top: 4px;
+  }
+
+  .section {
+    margin-bottom: 4px;
+  }
+
+  .sectionTitle {
+    font-size: 10px;
+    text-transform: uppercase;
+    opacity: 0.5;
+    padding: 4px 6px 2px;
+  }
+
+  .resultRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--backgroundPopupHover);
+    }
+  }
+
+  .resultTexts {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .resultLabel {
+    font-size: 12px;
+    color: var(--textColor0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .resultSubtitle {
+    font-size: 10px;
+    opacity: 0.6;
+  }
+
+  .highlight {
+    background: var(--backgroundGreen);
+    color: var(--textColorWhite, #fff);
+    border-radius: 2px;
+  }
+
+  .emptyResults {
+    padding: 8px 6px;
+    font-size: 12px;
+    opacity: 0.6;
+    text-align: center;
+  }
+}

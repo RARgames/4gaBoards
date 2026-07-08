@@ -61,6 +61,15 @@ module.exports = {
           request: this.req,
         });
       }
+
+      const projectMembership = await sails.helpers.projectMemberships.getOne({ userId: boardMembership.userId, projectId: project.id });
+      if (projectMembership) {
+        await sails.helpers.projectMemberships.deleteOne.with({
+          record: projectMembership,
+          currentUser,
+          request: this.req,
+        });
+      }
     }
 
     return {

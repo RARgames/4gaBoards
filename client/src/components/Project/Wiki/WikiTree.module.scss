@@ -1,0 +1,80 @@
+:global(#app) {
+  .wrapper {
+    padding: 8px 0;
+  }
+
+  .header {
+    padding: 4px 8px 8px;
+  }
+
+  .newPageButton {
+    align-items: center;
+    color: var(--textColor2);
+    display: flex;
+    font-size: 12px;
+    gap: 5px;
+    padding: 4px 6px;
+  }
+
+  .newPageButtonIcon {
+    fill: var(--textColor2);
+  }
+
+  .item {
+    align-items: center;
+    display: flex;
+    gap: 2px;
+    padding: 5px 6px;
+
+    &:hover {
+      background-color: var(--backgroundColorTmpHighlighted);
+
+      .addChildButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .itemActive {
+    background-color: var(--backgroundSidebarItemActive);
+  }
+
+  .caret {
+    flex-shrink: 0;
+    height: 16px;
+    width: 16px;
+  }
+
+  .caretHidden {
+    visibility: hidden;
+  }
+
+  .caretIcon {
+    fill: var(--textColor3);
+  }
+
+  .caretIconCollapsed {
+    transform: rotate(-90deg);
+  }
+
+  .dragHandle {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .link {
+    color: var(--textColor1);
+    display: block;
+    font-size: 13px;
+    overflow: hidden;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .addChildButton {
+    flex-shrink: 0;
+    fill: var(--textColor4);
+    opacity: 0;
+  }
+}

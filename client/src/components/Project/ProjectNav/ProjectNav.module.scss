@@ -1,0 +1,56 @@
+.wrapper {
+  align-items: center;
+  background-color: var(--backgroundHeader);
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 0 12px;
+}
+
+.tab {
+  align-items: center;
+  color: var(--textColor3);
+  display: flex;
+  gap: 6px;
+  padding: 10px 10px 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    color: var(--textColor1);
+  }
+}
+
+.tabActive {
+  border-bottom-color: var(--borderOutline);
+  color: var(--textColor0);
+}
+
+.tabIcon {
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.tabLabel {
+  font-size: 13px;
+}
+
+/* Collapse tab labels to icons on narrow viewports; tooltips (title) provide context. */
+@media (max-width: 720px) {
+  .tabLabel {
+    display: none;
+  }
+
+  .tab {
+    padding: 10px 8px 8px;
+  }
+}
+
+.divider {
+  background-color: var(--backgroundColorTmpSeparatorLight);
+  flex-shrink: 0;
+  height: 16px;
+  margin: 0 4px;
+  width: 1px;
+}

@@ -7,11 +7,12 @@ const createProject = (data) => ({
   },
 });
 
-createProject.success = (project, projectManagers) => ({
+createProject.success = (project, projectManagers, projectMemberships) => ({
   type: ActionTypes.PROJECT_CREATE__SUCCESS,
   payload: {
     project,
     projectManagers,
+    projectMemberships,
   },
 });
 
@@ -22,7 +23,26 @@ createProject.failure = (error) => ({
   },
 });
 
-const handleProjectCreate = (project, users, projectManagers, boards, boardMemberships) => ({
+const fetchProjectMembersOverview = () => ({
+  type: ActionTypes.PROJECT_MEMBERS_OVERVIEW_FETCH,
+  payload: {},
+});
+
+fetchProjectMembersOverview.success = (items) => ({
+  type: ActionTypes.PROJECT_MEMBERS_OVERVIEW_FETCH__SUCCESS,
+  payload: {
+    items,
+  },
+});
+
+fetchProjectMembersOverview.failure = (error) => ({
+  type: ActionTypes.PROJECT_MEMBERS_OVERVIEW_FETCH__FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const handleProjectCreate = (project, users, projectManagers, boards, boardMemberships, projectMemberships) => ({
   type: ActionTypes.PROJECT_CREATE_HANDLE,
   payload: {
     project,
@@ -30,6 +50,7 @@ const handleProjectCreate = (project, users, projectManagers, boards, boardMembe
     projectManagers,
     boards,
     boardMemberships,
+    projectMemberships,
   },
 });
 
@@ -141,6 +162,7 @@ importGettingStartedProject.failure = (error) => ({
 export default {
   createProject,
   handleProjectCreate,
+  fetchProjectMembersOverview,
   updateProject,
   handleProjectUpdate,
   updateProjectBackgroundImage,

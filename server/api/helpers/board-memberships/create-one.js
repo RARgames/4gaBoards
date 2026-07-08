@@ -59,6 +59,17 @@ module.exports = {
       .fetch();
 
     if (boardMembership) {
+      await sails.helpers.projectMemberships.createOne
+        .with({
+          values: {
+            project: { id: values.board.projectId },
+            user: values.user,
+          },
+          currentUser,
+          request: inputs.request,
+        })
+        .tolerate('userAlreadyProjectMember');
+
       sails.sockets.broadcast(
         `user:${boardMembership.userId}`,
         'boardMembershipCreate',

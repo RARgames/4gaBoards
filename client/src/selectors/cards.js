@@ -787,6 +787,46 @@ export const selectBoardAndTaskMembershipsForCurrentCard = createSelector(
   },
 );
 
+const toPickerCard = (cardModel) => ({
+  id: cardModel.id,
+  name: cardModel.name,
+  updatedAt: cardModel.updatedAt,
+  boardId: cardModel.boardId,
+  boardName: cardModel.board ? cardModel.board.name : null,
+  projectId: cardModel.board ? cardModel.board.projectId : null,
+  projectName: cardModel.board && cardModel.board.project ? cardModel.board.project.name : null,
+});
+
+// Best-effort: only reflects cards from boards already loaded into the ORM cache (opened by the
+// user at some point), since there's no dedicated "cards assigned to me across all boards"
+// endpoint. Used by the Timesheet project/ticket picker's "Assigned to you" section.
+export const selectCardsAssignedToCurrentUser = createSelector(
+  orm,
+  (state) => selectCurrentUserId(state),
+  ({ Card }, currentUserId) => {
+    if (!currentUserId) {
+      return [];
+    }
+
+    return Card.all()
+      .toModelArray()
+      .filter((cardModel) => cardModel.users.filter({ id: currentUserId }).exists())
+      .map(toPickerCard)
+      .filter((card) => card.projectId)
+      .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  },
+);
+
+// All cards currently loaded into the ORM cache (across whichever boards the user has opened),
+// used for the Timesheet picker's type-ahead search over tickets beyond "assigned to you".
+export const selectAllCardsForPicker = createSelector(orm, ({ Card }) =>
+  Card.all()
+    .toModelArray()
+    .map(toPickerCard)
+    .filter((card) => card.projectId)
+    .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)),
+);
+
 export default {
   makeSelectCardById,
   selectCardById,
@@ -840,4 +880,6 @@ export default {
   makeSelectBoardAndTaskMembershipsByCardId,
   selectBoardAndTaskMembershipsByCardId,
   selectBoardAndTaskMembershipsForCurrentCard,
+  selectCardsAssignedToCurrentUser,
+  selectAllCardsForPicker,
 };

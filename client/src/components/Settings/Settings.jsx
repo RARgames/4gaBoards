@@ -7,6 +7,7 @@ import AboutSettingsContainer from '../../containers/Settings/AboutSettingsConta
 import AccountSettingsContainer from '../../containers/Settings/AccountSettingsContainer';
 import AuthenticationSettingsContainer from '../../containers/Settings/AuthenticationSettingsContainer';
 import InstanceSettingsContainer from '../../containers/Settings/InstanceSettingsContainer';
+import MembersSettingsContainer from '../../containers/Settings/MembersSettingsContainer';
 import PreferencesSettingsContainer from '../../containers/Settings/PreferencesSettingsContainer';
 import ProfileSettingsContainer from '../../containers/Settings/ProfileSettingsContainer';
 import ProjectSettingsContainer from '../../containers/Settings/ProjectSettingsContainer';
@@ -36,6 +37,8 @@ const Settings = React.memo(({ path, isAdmin, isManager }) => {
         return `${t('common.settingsInstance')} | ${mainTitle}`;
       case Paths.SETTINGS_USERS:
         return `${t('common.settingsUsers')} | ${mainTitle}`;
+      case Paths.SETTINGS_MEMBERS:
+        return `${t('common.settingsMembers')} | ${mainTitle}`;
       case Paths.SETTINGS_PROJECT:
         return `${t('common.settingsProject')} | ${mainTitle}`;
       default:
@@ -68,6 +71,11 @@ const Settings = React.memo(({ path, isAdmin, isManager }) => {
         return <h1 className={s.text}>{t('common.cannotEditUsersSettings')}</h1>;
       }
       return <UsersSettingsContainer />;
+    case Paths.SETTINGS_MEMBERS:
+      if (!isAdmin) {
+        return <h1 className={s.text}>{t('common.cannotEditUsersSettings')}</h1>;
+      }
+      return <MembersSettingsContainer />;
     case Paths.SETTINGS_PROJECT:
       if (!isManager) {
         return <h1 className={s.text}>{t('common.projectNotFound', { context: 'title' })}</h1>;

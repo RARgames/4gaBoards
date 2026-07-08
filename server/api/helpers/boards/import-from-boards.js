@@ -473,6 +473,7 @@ module.exports = {
           name: card.name,
           description: card.description || null,
           dueDate: parseJSON(card.dueDate),
+          startDate: parseJSON(card.startDate),
           commentCount: card.commentCount,
           timer: parseJSON(card.timer),
           createdAt: parseJSON(card.createdAt),

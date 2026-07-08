@@ -1,0 +1,86 @@
+:global(#app) {
+  .container {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .row {
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+
+    &:hover {
+      background: var(--backgroundColorTmpDarkerField1);
+    }
+  }
+
+  .thumbnailCell {
+    width: 44px;
+    padding: 8px 4px 8px 12px;
+  }
+
+  .thumbnail {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    background-color: var(--backgroundColorTmpDarkerField2);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+  }
+
+  .nameCell {
+    padding: 8px;
+    max-width: 320px;
+  }
+
+  .name {
+    font-weight: 600;
+  }
+
+  .description {
+    font-size: 12px;
+    opacity: 0.7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .folderCell {
+    padding: 8px;
+    opacity: 0.85;
+    white-space: nowrap;
+  }
+
+  .userCell {
+    padding: 8px;
+    white-space: nowrap;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .userName {
+    font-size: 13px;
+  }
+
+  .dateCell {
+    padding: 8px;
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  .actionsCell {
+    padding: 8px 12px 8px 8px;
+    text-align: right;
+  }
+}

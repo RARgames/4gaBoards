@@ -1,0 +1,640 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+  }
+
+  .scroll {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: auto;
+    position: relative;
+  }
+
+  .grid {
+    position: relative;
+  }
+
+  /* Header */
+
+  .header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: var(--backgroundColorTmpBackground);
+  }
+
+  .headerCorner {
+    position: sticky;
+    left: 0;
+    z-index: 4;
+    display: flex;
+    align-items: flex-end;
+    padding: 4px 12px;
+    font-weight: 700;
+    font-size: 12px;
+    background: var(--backgroundColorTmpBackground);
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .headerTime {
+    position: relative;
+  }
+
+  .headerTopTier {
+    display: flex;
+    height: 24px;
+  }
+
+  .headerSegment {
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .headerSegmentLabel {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.8;
+    padding: 0 6px;
+    line-height: 24px;
+  }
+
+  .headerBottomTier {
+    display: flex;
+    height: 24px;
+  }
+
+  .headerDay {
+    box-sizing: border-box;
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .headerDayWeekend {
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .headerDayNum {
+    font-size: 10px;
+    opacity: 0.7;
+    line-height: 24px;
+    white-space: nowrap;
+  }
+
+  /* Body */
+
+  .body {
+    position: relative;
+    cursor: crosshair;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .overlayTop {
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .weekend {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: var(--backgroundColorTmpDarkerField1);
+    opacity: 0.5;
+  }
+
+  .todayLine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--colorDanger, #eb5a46);
+    opacity: 0.7;
+  }
+
+  .todayPill {
+    position: absolute;
+    top: 3px;
+    transform: translateX(-50%);
+    background: var(--colorDanger, #eb5a46);
+    color: var(--textColorWhite, #fff);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 3px 6px;
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .markerLine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-left: 2px dashed #fff;
+    z-index: 2;
+    pointer-events: auto;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      transform: translateX(-50%) rotate(45deg);
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .scheduleGhostLine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-left: 2px dashed var(--colorAccent, #4a90d9);
+    z-index: 4;
+  }
+
+  .scheduleGhostBar {
+    position: absolute;
+    top: 6px;
+    height: 24px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 2px dashed rgba(255, 255, 255, 0.85);
+    background: var(--colorAccent, #4a90d9);
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--textColorWhite, #fff);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 4;
+  }
+
+  .scheduleGhostDate {
+    position: absolute;
+    top: 34px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--textColorWhite, #fff);
+    background: var(--colorAccent, #4a90d9);
+    padding: 2px 4px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 4;
+  }
+
+  .dependencyLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+  }
+
+  .dependencyPath {
+    fill: none;
+    stroke: var(--textColor3);
+    stroke-width: 1.5;
+    opacity: 0.6;
+  }
+
+  .row {
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .rowGroup {
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .rowReassignTarget {
+    background: var(--backgroundColorTmpDarkerField2);
+  }
+
+  .rowLabel {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    padding-right: 8px;
+    background: var(--backgroundColorTmpBackground);
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .rowLabelGroup {
+    background: var(--backgroundColorTmpDarkerField1);
+    font-weight: 700;
+  }
+
+  .rowLabelText {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .rowLabelMain {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .rowWorkload {
+    flex: 0 0 auto;
+    max-width: 45%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  .dropHint {
+    position: absolute;
+    inset: 2px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--textColorWhite, #fff);
+    background: rgba(74, 144, 217, 0.22);
+    border: 1px dashed rgba(74, 144, 217, 0.6);
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .reassignPreview {
+    position: absolute;
+    top: 6px;
+    height: 24px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 4px;
+    border: 2px dashed rgba(255, 255, 255, 0.85);
+    background: var(--colorAccent, #4a90d9);
+    opacity: 0.7;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--textColorWhite, #fff);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .collapseButton {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .caretIcon {
+    fill: var(--textColor3);
+    transition: transform 0.1s ease;
+  }
+
+  .caretIconCollapsed {
+    transform: rotate(-90deg);
+  }
+
+  .rowTrack {
+    position: relative;
+    flex: 1;
+  }
+
+  /* Bars */
+
+  .bar {
+    position: absolute;
+    height: 24px;
+    border-radius: 4px;
+    background: var(--colorAccent, #4a90d9);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .barDragging {
+    opacity: 0.75;
+    z-index: 5;
+  }
+
+  .barOverlap {
+    opacity: 0.65;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+  }
+
+  .barSelected {
+    box-shadow: 0 0 0 2px #fff, 0 1px 2px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+  }
+
+  .barBody {
+    flex: 1;
+    padding: 0 8px;
+    font-size: 12px;
+    color: var(--textColorWhite, #fff);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: grab;
+    line-height: 24px;
+  }
+
+  .resizeHandle {
+    position: relative;
+    width: 8px;
+    align-self: stretch;
+    cursor: ew-resize;
+    flex: 0 0 auto;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 3px;
+      height: 14px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.55);
+      opacity: 0;
+      transition:
+        opacity 0.12s ease,
+        background-color 0.12s ease;
+    }
+
+    &:hover::after {
+      background: rgba(255, 255, 255, 0.95);
+    }
+  }
+
+  .resizeHandleStart {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  .resizeHandleEnd {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .bar:hover .resizeHandle::after {
+    opacity: 1;
+  }
+
+  .milestone {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 0;
+    background: var(--colorAccent, #4a90d9);
+    transform: translateX(-8px) rotate(45deg);
+    cursor: pointer;
+    z-index: 1;
+    border-bottom: 0;
+  }
+
+  /* Backlog drawer */
+
+  .drawer {
+    flex: 0 0 280px;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    background: var(--backgroundColorTmpBackground);
+  }
+
+  .drawerCollapsed {
+    flex-basis: 32px;
+    width: 32px;
+  }
+
+  .drawerCollapsedStrip {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .drawerCollapsedLabel {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.8;
+  }
+
+  .drawerHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 10px 8px 12px;
+  }
+
+  .drawerTitle {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .drawerSpacer {
+    flex: 1;
+  }
+
+  .drawerSearch {
+    padding: 0 10px 8px;
+  }
+
+  .drawerList {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .drawerGroupHead {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px 7px 9px;
+    border: 0;
+    border-left: 3px solid var(--textColor3);
+    border-radius: 0;
+    background: var(--backgroundColorTmpDarkerField1);
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .drawerGroupName {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .trayBadge {
+    background: var(--backgroundColorTmpDarkerField2);
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.7;
+    padding: 1px 7px;
+    border-radius: 9px;
+    flex: 0 0 auto;
+  }
+
+  .drawerRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px 6px 8px;
+
+    &:hover {
+      background: var(--backgroundColorTmpDarkerField1);
+    }
+  }
+
+  .drawerGrip {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    color: var(--textColor3);
+    opacity: 0.5;
+    cursor: grab;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .drawerDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background: var(--textColor3);
+  }
+
+  .drawerRowName {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .drawerRowList {
+    flex: 0 0 auto;
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  .trayScheduleButton {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+    flex: 0 0 auto;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .trayMore {
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.6;
+    padding: 8px;
+  }
+
+  .empty {
+    padding: 40px;
+    text-align: center;
+    opacity: 0.6;
+  }
+}

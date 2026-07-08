@@ -1,0 +1,101 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 16px 20px;
+  }
+
+  .header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .headerText {
+    color: var(--textColor0);
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .headerTextDetails {
+    color: var(--textColor3);
+    font-size: 14px;
+  }
+
+  .empty {
+    color: var(--textColor3);
+    padding: 20px 0;
+  }
+
+  .tableWrapper {
+    padding-bottom: 10px;
+  }
+
+  .table {
+    border-collapse: collapse;
+
+    th,
+    td {
+      border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+      padding: 8px 10px;
+      white-space: nowrap;
+    }
+
+    th {
+      color: var(--textColor2);
+      font-size: 12px;
+      text-align: left;
+    }
+  }
+
+  .stickyCol {
+    background-color: var(--backgroundColor);
+    left: 0;
+    position: sticky;
+    z-index: 1;
+  }
+
+  .userName {
+    color: var(--textColor0);
+  }
+
+  .userEmail {
+    color: var(--textColor3);
+    font-size: 12px;
+  }
+
+  .centeredCell {
+    text-align: center;
+  }
+
+  .roleText {
+    color: var(--textColor3);
+    font-size: 12px;
+  }
+
+  .boardCell {
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .roleDropdown {
+    margin-top: 4px;
+    width: 100px;
+  }
+
+  .removeButton {
+    fill: var(--textColor3);
+
+    &:hover {
+      fill: var(--errorRed);
+    }
+  }
+}

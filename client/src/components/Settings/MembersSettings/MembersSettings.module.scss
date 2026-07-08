@@ -1,0 +1,223 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .headerTextDetails {
+    color: var(--textColor3);
+    font-size: 14px;
+  }
+
+  .headerActions {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .searchInput {
+    width: 220px;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    gap: 12px;
+    padding: 0 20px 20px;
+  }
+
+  .listContainer {
+    flex: 0 0 320px !important;
+    width: 320px !important;
+    min-width: 320px !important;
+    max-width: 320px !important;
+  }
+
+  .listTable {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .rowSelected {
+    background-color: var(--backgroundColorTmpHighlighted);
+  }
+
+  .userCell {
+    padding: 8px 10px;
+  }
+
+  .userName {
+    color: var(--textColor0);
+  }
+
+  .userEmail {
+    color: var(--textColor3);
+    font-size: 12px;
+  }
+
+  .summaryCell {
+    color: var(--textColor3);
+    font-size: 12px;
+    padding: 8px 10px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .detailPanel {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+  }
+
+  .emptyDetail {
+    color: var(--textColor3);
+    padding: 20px;
+  }
+
+  .detail {
+    padding: 0 10px;
+  }
+
+  .detailHeader {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .detailUser {
+    color: var(--textColor0);
+  }
+
+  .detailUserEmail {
+    color: var(--textColor3);
+    display: block;
+    font-size: 12px;
+  }
+
+  .projectSection {
+    background-color: var(--backgroundColorTmpBackground);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+  }
+
+  .projectSectionHeader {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+  }
+
+  .projectName {
+    color: var(--textColor0);
+    flex: 1;
+  }
+
+  .roleChip {
+    background-color: var(--backgroundColorTmpSeparatorLight);
+    border-radius: 10px;
+    color: var(--textColor2);
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+
+  .roleChipManager {
+    background-color: var(--textColorGold);
+    color: var(--textColor5);
+  }
+
+  .removeButton {
+    fill: var(--textColor3);
+
+    &:hover {
+      fill: var(--errorRed);
+    }
+  }
+
+  .flagsRow {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+
+    label {
+      align-items: center;
+      color: var(--textColor2);
+      display: flex;
+      font-size: 12px;
+      gap: 5px;
+    }
+  }
+
+  .boardsGrid {
+    margin-top: 8px;
+  }
+
+  .noBoards {
+    color: var(--textColor3);
+    font-size: 12px;
+  }
+
+  .boardRow {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    padding: 3px 0;
+  }
+
+  .boardLabel {
+    align-items: center;
+    color: var(--textColor1);
+    display: flex;
+    flex: 1;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .roleDropdown {
+    width: 100px;
+  }
+
+  .matrixWrapper {
+    padding: 0 20px 20px;
+  }
+
+  .matrixTable {
+    border-collapse: collapse;
+    width: 100%;
+
+    th,
+    td {
+      border: 1px solid var(--backgroundColorTmpSeparatorLight);
+      padding: 6px 10px;
+      text-align: center;
+    }
+
+    th {
+      color: var(--textColor2);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+  }
+
+  .matrixUserHeader {
+    text-align: left !important;
+  }
+
+  .matrixUserCell {
+    color: var(--textColor0);
+    text-align: left !important;
+    white-space: nowrap;
+  }
+
+  .matrixCell {
+    color: var(--textColor1);
+    font-size: 12px;
+  }
+
+  .matrixCellEmpty {
+    color: var(--textColor4);
+  }
+}

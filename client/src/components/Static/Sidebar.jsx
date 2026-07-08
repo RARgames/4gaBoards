@@ -300,6 +300,14 @@ const Sidebar = React.memo(
                     </Button>
                   </Link>
                 </div>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_MEMBERS && s.sidebarActive)}>
+                  <Link to={Paths.SETTINGS_MEMBERS}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.members')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.Users} size={IconSize.Size14} className={s.icon} />
+                      {t('common.members')}
+                    </Button>
+                  </Link>
+                </div>
                 <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_INSTANCE && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_INSTANCE}>
                     <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>

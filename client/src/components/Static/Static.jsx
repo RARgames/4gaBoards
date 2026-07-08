@@ -6,6 +6,14 @@ import Paths from '../../constants/Paths';
 import BoardContainer from '../../containers/BoardContainer';
 import BoardsContainer from '../../containers/BoardsContainer';
 import NotificationCenterContainer from '../../containers/NotificationCenterContainer';
+import TimesheetContainer from '../../containers/TimesheetContainer';
+import DocumentsContainer from '../../containers/Project/DocumentsContainer';
+import GanttContainer from '../../containers/Project/GanttContainer';
+import MediaContainer from '../../containers/Project/MediaContainer';
+import ProjectMembersContainer from '../../containers/Project/ProjectMembersContainer';
+import ProjectNavContainer from '../../containers/Project/ProjectNavContainer';
+import TeamPlannerContainer from '../../containers/Project/TeamPlannerContainer';
+import WikiContainer from '../../containers/Project/WikiContainer';
 import ProjectsContainer from '../../containers/ProjectsContainer';
 import SettingsContainer from '../../containers/Settings/SettingsContainer';
 import SidebarContainer from '../../containers/SidebarContainer';
@@ -25,6 +33,7 @@ function Static({ path, projectId, cardId, board }) {
       Paths.SETTINGS_ABOUT,
       Paths.SETTINGS_INSTANCE,
       Paths.SETTINGS_USERS,
+      Paths.SETTINGS_MEMBERS,
       Paths.SETTINGS_PROJECT,
     ].includes(path)
   ) {
@@ -42,6 +51,148 @@ function Static({ path, projectId, cardId, board }) {
       <div className={s.wrapper}>
         <SidebarContainer>
           <NotificationCenterContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.TIMESHEET) {
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <TimesheetContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.PROJECT_MEMBERS) {
+    if (projectId === null) {
+      return (
+        <div className={s.wrapper}>
+          <SidebarContainer>
+            <div className={s.message}>
+              <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+            </div>
+          </SidebarContainer>
+        </div>
+      );
+    }
+
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <ProjectMembersContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.PROJECT_WIKI || path === Paths.PROJECT_WIKI_PAGE) {
+    if (projectId === null) {
+      return (
+        <div className={s.wrapper}>
+          <SidebarContainer>
+            <div className={s.message}>
+              <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+            </div>
+          </SidebarContainer>
+        </div>
+      );
+    }
+
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <WikiContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.PROJECT_DOCUMENTS) {
+    if (projectId === null) {
+      return (
+        <div className={s.wrapper}>
+          <SidebarContainer>
+            <div className={s.message}>
+              <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+            </div>
+          </SidebarContainer>
+        </div>
+      );
+    }
+
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <DocumentsContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.PROJECT_GANTT) {
+    if (projectId === null) {
+      return (
+        <div className={s.wrapper}>
+          <SidebarContainer>
+            <div className={s.message}>
+              <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+            </div>
+          </SidebarContainer>
+        </div>
+      );
+    }
+
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <GanttContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.PROJECT_MEDIA) {
+    if (projectId === null) {
+      return (
+        <div className={s.wrapper}>
+          <SidebarContainer>
+            <div className={s.message}>
+              <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+            </div>
+          </SidebarContainer>
+        </div>
+      );
+    }
+
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <MediaContainer />
+        </SidebarContainer>
+      </div>
+    );
+  }
+
+  if (path === Paths.PROJECT_TEAM_PLANNER) {
+    if (projectId === null) {
+      return (
+        <div className={s.wrapper}>
+          <SidebarContainer>
+            <div className={s.message}>
+              <h1>{t('common.projectNotFound', { context: 'title' })}</h1>
+            </div>
+          </SidebarContainer>
+        </div>
+      );
+    }
+
+    return (
+      <div className={s.wrapper}>
+        <SidebarContainer>
+          <TeamPlannerContainer />
         </SidebarContainer>
       </div>
     );
@@ -97,7 +248,12 @@ function Static({ path, projectId, cardId, board }) {
     return (
       <div className={s.wrapper}>
         <SidebarContainer>
-          <BoardsContainer />
+          <div className={s.projectContent}>
+            <ProjectNavContainer />
+            <div className={s.projectContentBody}>
+              <BoardsContainer />
+            </div>
+          </div>
         </SidebarContainer>
       </div>
     );
@@ -116,7 +272,12 @@ function Static({ path, projectId, cardId, board }) {
   return (
     <div className={s.wrapper}>
       <SidebarContainer>
-        <BoardContainer />
+        <div className={s.projectContent}>
+          <ProjectNavContainer />
+          <div className={s.projectContentBody}>
+            <BoardContainer />
+          </div>
+        </div>
       </SidebarContainer>
     </div>
   );

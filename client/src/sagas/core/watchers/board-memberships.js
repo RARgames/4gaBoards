@@ -6,6 +6,7 @@ import services from '../services';
 export default function* boardMembershipsWatchers() {
   yield all([
     takeEvery(EntryActionTypes.MEMBERSHIP_IN_CURRENT_BOARD_CREATE, ({ payload: { data } }) => services.createMembershipInCurrentBoard(data)),
+    takeEvery(EntryActionTypes.MEMBERSHIP_IN_BOARD_CREATE, ({ payload: { id, data } }) => services.createBoardMembership(id, data)),
     takeEvery(EntryActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE, ({ payload: { boardMembership } }) => services.handleBoardMembershipCreate(boardMembership)),
     takeEvery(EntryActionTypes.BOARD_MEMBERSHIP_UPDATE, ({ payload: { id, data } }) => services.updateBoardMembership(id, data)),
     takeEvery(EntryActionTypes.BOARD_MEMBERSHIP_UPDATE_HANDLE, ({ payload: { boardMembership } }) => services.handleBoardMembershipUpdate(boardMembership)),

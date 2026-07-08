@@ -11,7 +11,7 @@ export function* fetchCore() {
 
   const {
     items: projects1,
-    included: { projectManagers, boards, boardMemberships: boardMemberships1 },
+    included: { projectManagers, boards, boardMemberships: boardMemberships1, projectMemberships },
   } = yield call(request, api.getProjects);
 
   let board;
@@ -92,6 +92,7 @@ export function* fetchCore() {
     userProjects,
     userPrefs,
     cardLinks,
+    projectMemberships,
   };
 }
 

@@ -30,6 +30,7 @@ export function* initializeCore() {
     userProjects,
     userPrefs,
     cardLinks,
+    projectMemberships,
   } = yield call(requests.fetchCore); // TODO: handle error
 
   yield call(i18n.changeLanguage, userPrefs.language);
@@ -58,6 +59,7 @@ export function* initializeCore() {
       userProjects,
       userPrefs,
       cardLinks,
+      projectMemberships,
     ),
   );
 }

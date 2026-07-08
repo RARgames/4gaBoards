@@ -15,7 +15,14 @@ module.exports = {
       },
     });
 
-    let membershipProjectIds = sails.helpers.utils.mapRecords(membershipBoards, 'projectId', true);
+    // A user can belong to a project (and see it) before having access to any of its boards —
+    // e.g. an admin adds them to the project first, then grants board access separately.
+    const projectMemberships = await sails.helpers.projectMemberships.getMany({ userId: currentUser.id });
+
+    let membershipProjectIds = _.union(sails.helpers.utils.mapRecords(membershipBoards, 'projectId', true), sails.helpers.utils.mapRecords(projectMemberships, 'projectId', true)).filter(
+      (projectId) => !managerProjectIds.includes(projectId),
+    );
+
     const membershipProjects = await sails.helpers.projects.getMany(membershipProjectIds);
 
     membershipProjectIds = sails.helpers.utils.mapRecords(membershipProjects);
@@ -44,6 +51,7 @@ module.exports = {
         projectManagers,
         boards,
         boardMemberships,
+        projectMemberships,
       },
     };
   },

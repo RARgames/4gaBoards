@@ -22,6 +22,7 @@ const initializeCore = (
   userProjects,
   userPrefs,
   cardLinks,
+  projectMemberships,
 ) => ({
   type: ActionTypes.CORE_INITIALIZE,
   payload: {
@@ -46,6 +47,7 @@ const initializeCore = (
     userProjects,
     userPrefs,
     cardLinks,
+    projectMemberships,
   },
 });
 

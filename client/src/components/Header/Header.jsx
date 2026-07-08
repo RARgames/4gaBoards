@@ -58,6 +58,8 @@ const Header = React.memo(
           return t('common.settingsProject');
         case Paths.NOTIFICATIONS:
           return t('common.notifications');
+        case Paths.TIMESHEET:
+          return t('common.timesheet');
         default:
           return project ? project.name : null;
       }
@@ -105,6 +107,11 @@ const Header = React.memo(
               </Button>
             </Link>
           )}
+          <Link to={Paths.TIMESHEET} className={s.hideOnSmall}>
+            <Button style={ButtonStyle.Header} title={t('common.timesheet')}>
+              <Icon type={IconType.Clock} size={IconSize.Size18} />
+            </Button>
+          </Link>
           <NotificationsPopup
             items={notifications}
             filteredItems={filteredNotifications}

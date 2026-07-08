@@ -14,6 +14,13 @@ const handleProjectCreate = (project) => ({
   },
 });
 
+const fetchProjectMembersOverview = (projectId) => ({
+  type: EntryActionTypes.PROJECT_MEMBERS_OVERVIEW_FETCH,
+  payload: {
+    projectId,
+  },
+});
+
 const updateProject = (id, data) => ({
   type: EntryActionTypes.PROJECT_UPDATE,
   payload: {
@@ -81,6 +88,7 @@ const importGettingStartedProject = (data, userRequested) => ({
 export default {
   createProject,
   handleProjectCreate,
+  fetchProjectMembersOverview,
   updateProject,
   updateCurrentProject,
   handleProjectUpdate,

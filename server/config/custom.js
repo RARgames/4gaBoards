@@ -28,6 +28,9 @@ module.exports.custom = {
   attachmentsPath: path.join(sails.config.appPath, 'private', 'attachments'),
   attachmentsUrl: `${process.env.BASE_URL}/attachments`,
 
+  documentsPath: path.join(sails.config.appPath, 'private', 'documents'),
+  documentsUrl: `${process.env.BASE_URL}/documents`,
+
   exportsPath: path.join(sails.config.appPath, 'private', 'exports'),
   exportsUrl: `${process.env.BASE_URL}/exports`,
 

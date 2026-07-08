@@ -1,0 +1,216 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .headerRow {
+    display: flex;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .gutterHeader {
+    width: 48px;
+    flex-shrink: 0;
+  }
+
+  .dayHeaderCell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 4px;
+    border-left: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .dayHeaderCellToday {
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .dayHeaderName {
+    font-size: 11px;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .dayHeaderDate {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--textColor0);
+  }
+
+  .dayHeaderTotal {
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  .scrollArea {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .gridInner {
+    display: flex;
+    position: relative;
+  }
+
+  .gutter {
+    width: 48px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .hourLabel {
+    position: absolute;
+    left: 0;
+    right: 6px;
+    text-align: right;
+    font-size: 10px;
+    opacity: 0.55;
+    transform: translateY(-6px);
+  }
+
+  .days {
+    flex: 1;
+    display: flex;
+    position: relative;
+  }
+
+  .dayColumn {
+    flex: 1;
+    position: relative;
+    border-left: 1px solid var(--backgroundColorTmpSeparatorLight);
+    cursor: crosshair;
+    user-select: none;
+  }
+
+  .dayColumnToday {
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .hourLine {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .nowLine {
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-top: 2px solid var(--colorDanger, #eb5a46);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .nowDot {
+    position: absolute;
+    left: -3px;
+    top: -4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--colorDanger, #eb5a46);
+  }
+
+  .createGhost {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    background: var(--backgroundSidebarItemActive);
+    opacity: 0.55;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    svg {
+      fill: var(--textColorWhite, #fff);
+    }
+  }
+
+  .entryBlock {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    background: var(--backgroundCardOpened);
+    border: 1px solid var(--backgroundSidebarItemActive);
+    border-left: 3px solid var(--backgroundSidebarItemActive);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: grab;
+    z-index: 1;
+
+    &:hover {
+      z-index: 2;
+      border-color: var(--backgroundGreen);
+    }
+  }
+
+  .entryBlockDragging {
+    z-index: 6;
+    opacity: 0.85;
+    cursor: grabbing;
+  }
+
+  .entryBlockUnsaved {
+    opacity: 0.6;
+  }
+
+  .entryResizeHandle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px;
+    cursor: ns-resize;
+
+    &[data-role='resize-start'] {
+      top: 0;
+    }
+
+    &[data-role='resize-end'] {
+      bottom: 0;
+    }
+  }
+
+  .entryContent {
+    padding: 2px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    pointer-events: none;
+  }
+
+  .entryDescription {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--textColor0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .entryTime {
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  .entryProject {
+    font-size: 10px;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

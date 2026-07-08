@@ -11,19 +11,34 @@ export function* createProject(data) {
 
   let project;
   let projectManagers;
+  let projectMemberships;
 
   try {
     ({
       item: project,
-      included: { projectManagers },
+      included: { projectManagers, projectMemberships },
     } = yield call(request, api.createProject, data));
   } catch (error) {
     yield put(actions.createProject.failure(error));
     return;
   }
 
-  yield put(actions.createProject.success(project, projectManagers));
+  yield put(actions.createProject.success(project, projectManagers, projectMemberships));
   yield call(goToProject, project.id);
+}
+
+export function* fetchProjectMembersOverview(projectId) {
+  yield put(actions.fetchProjectMembersOverview());
+
+  let items;
+  try {
+    ({ items } = yield call(request, api.getProjectMembersOverview, projectId));
+  } catch (error) {
+    yield put(actions.fetchProjectMembersOverview.failure(error));
+    return;
+  }
+
+  yield put(actions.fetchProjectMembersOverview.success(items));
 }
 
 export function* handleProjectCreate({ id }) {
@@ -32,17 +47,18 @@ export function* handleProjectCreate({ id }) {
   let projectManagers;
   let boards;
   let boardMemberships;
+  let projectMemberships;
 
   try {
     ({
       item: project,
-      included: { users, projectManagers, boards, boardMemberships },
+      included: { users, projectManagers, boards, boardMemberships, projectMemberships },
     } = yield call(request, api.getProject, id));
   } catch {
     return;
   }
 
-  yield put(actions.handleProjectCreate(project, users, projectManagers, boards, boardMemberships));
+  yield put(actions.handleProjectCreate(project, users, projectManagers, boards, boardMemberships, projectMemberships));
 }
 
 export function* updateProject(id, data) {
@@ -152,6 +168,7 @@ export function* importGettingStartedProject(data, userRequested = false) {
 export default {
   createProject,
   handleProjectCreate,
+  fetchProjectMembersOverview,
   updateProject,
   updateCurrentProject,
   handleProjectUpdate,

@@ -86,6 +86,11 @@ module.exports = {
       custom: dueDateValidator,
       allowNull: true,
     },
+    startDate: {
+      type: 'string',
+      custom: dueDateValidator,
+      allowNull: true,
+    },
     timer: {
       type: 'json',
       custom: timerValidator,
@@ -171,7 +176,7 @@ module.exports = {
       }
     }
 
-    const values = _.pick(inputs, ['coverAttachmentId', 'priority', 'parentCardId', 'position', 'name', 'description', 'dueDate', 'timer', 'isSubscribed']);
+    const values = _.pick(inputs, ['coverAttachmentId', 'priority', 'parentCardId', 'position', 'name', 'description', 'dueDate', 'startDate', 'timer', 'isSubscribed']);
 
     const formatAssignedUsers = async () => {
       const memberships = await sails.helpers.cardMemberships.getMany({ cardId: card.id });

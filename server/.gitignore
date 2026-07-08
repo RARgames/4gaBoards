@@ -141,6 +141,9 @@ private/*
 !private/attachments
 private/attachments/*
 !private/attachments/.gitkeep
+!private/documents
+private/documents/*
+!private/documents/.gitkeep
 
 views/*
 !views/.gitkeep

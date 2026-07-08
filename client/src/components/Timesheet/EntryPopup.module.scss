@@ -1,0 +1,48 @@
+:global(#app) {
+  .popup {
+    position: fixed;
+    width: 300px;
+    background: var(--backgroundPopup);
+    color: var(--textColor1);
+    border-radius: 3px;
+    text-align: left;
+    z-index: 2000;
+    box-shadow:
+      -1px -1px 3px var(--backgroundPopupShadow),
+      1px 1px 3px var(--backgroundPopupShadow);
+  }
+
+  .closeButton {
+    position: absolute;
+    right: 4px;
+    top: 6px;
+    z-index: 1;
+  }
+
+  .descriptionField {
+    min-height: 54px;
+  }
+
+  .timeRow {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0;
+  }
+
+  .timeField {
+    flex: 1;
+  }
+
+  .fieldLabel {
+    color: var(--textColor1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .loggedBy {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-bottom: 8px;
+  }
+}

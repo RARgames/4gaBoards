@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -6,11 +6,25 @@ import remarkGithub from 'remark-github';
 
 import { PreferredFonts } from '../../../constants/Enums';
 import MDSettings from './MDSettings';
+import wikiLinkPlugin from './wiki-link-plugin';
 
 import * as s from './MD.module.scss';
 
-const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, preferredDetailsFont, className, ...props }, ref) => {
-  const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
+const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, preferredDetailsFont, wikiPages, wikiBasePath, className, ...props }, ref) => {
+  const remarkPlugins = useMemo(() => {
+    const plugins = [];
+
+    if (isGithubConnected) {
+      plugins.push([remarkGithub, { repository: githubRepo }]);
+    }
+
+    if (wikiPages) {
+      plugins.push([wikiLinkPlugin, { wikiPages, basePath: wikiBasePath }]);
+    }
+
+    return plugins.length > 0 ? plugins : null;
+  }, [isGithubConnected, githubRepo, wikiPages, wikiBasePath]);
+
   const isMonospaceSelected = preferredDetailsFont === PreferredFonts.MONOSPACE;
 
   const handleClick = useCallback((e) => {
@@ -41,6 +55,8 @@ MDPreview.propTypes = {
   isGithubConnected: PropTypes.bool,
   githubRepo: PropTypes.string,
   preferredDetailsFont: PropTypes.string.isRequired,
+  wikiPages: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  wikiBasePath: PropTypes.string,
   className: PropTypes.string,
 };
 
@@ -48,6 +64,8 @@ MDPreview.defaultProps = {
   source: undefined,
   isGithubConnected: false,
   githubRepo: '',
+  wikiPages: undefined,
+  wikiBasePath: undefined,
   className: undefined,
 };
 

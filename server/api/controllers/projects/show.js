@@ -11,6 +11,9 @@ module.exports = {
       regex: /^[0-9]+$/,
       required: true,
     },
+    subscribe: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -37,9 +40,10 @@ module.exports = {
     });
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
+    const projectMembership = await sails.helpers.projectMemberships.getOne({ userId: currentUser.id, projectId: project.id });
 
     if (!isProjectManager) {
-      if (boardMemberships.length === 0) {
+      if (boardMemberships.length === 0 && !projectMembership) {
         throw Errors.PROJECT_NOT_FOUND; // Forbidden
       }
 
@@ -52,6 +56,10 @@ module.exports = {
     const userIds = sails.helpers.utils.mapRecords(projectManagers, 'userId');
     const users = await sails.helpers.users.getMany(userIds);
 
+    if (inputs.subscribe && this.req.isSocket) {
+      sails.sockets.join(this.req, `project:${project.id}`);
+    }
+
     return {
       item: project,
       included: {
@@ -59,6 +67,7 @@ module.exports = {
         projectManagers,
         boards,
         boardMemberships,
+        projectMemberships: projectMembership ? [projectMembership] : [],
       },
     };
   },

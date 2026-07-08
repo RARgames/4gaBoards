@@ -1,0 +1,159 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 20px 28px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .filterChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .chip {
+    opacity: 0.7;
+    padding: 4px 10px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .chipActive {
+    opacity: 1;
+    background-color: var(--backgroundColorTmpDarkerField1);
+    border-radius: 4px;
+  }
+
+  .headerActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .boardDropdown {
+    width: 180px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .gridItem {
+    display: block;
+    text-align: left;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .gridThumbnail {
+    height: 110px;
+    background-color: var(--backgroundColorTmpDarkerField2);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .gridName {
+    padding: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--textColor0);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fileList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .fileRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: var(--backgroundColorTmpDarkerField1);
+    }
+  }
+
+  .fileIcon {
+    flex: 0 0 auto;
+    opacity: 0.7;
+  }
+
+  .fileName {
+    font-weight: 600;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fileSource {
+    flex: 1;
+    opacity: 0.7;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fileDownload {
+    flex: 0 0 auto;
+    font-size: 12px;
+  }
+
+  .empty {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .emptyIcon {
+    fill: var(--textColor3);
+    margin-bottom: 12px;
+    opacity: 0.6;
+  }
+
+  .emptyTitle {
+    color: var(--textColor0);
+    font-size: 18px;
+    margin: 0 0 14px;
+  }
+}
