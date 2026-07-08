@@ -15,12 +15,7 @@ docker ps | grep $POSTGRES
 
 mkdir -p $BACKUP_DIR
 echo "Exporting db..."
-{ 
-    for i in {1..4}; do
-        echo $DB_PASSWD
-        sleep 0.2
-    done
-} | docker exec -i $POSTGRES pg_dumpall -c -U postgres > $BACKUP_DIR/postgres.sql
+docker exec -e PGPASSWORD="$DB_PASSWD" $POSTGRES pg_dumpall -c -U postgres > $BACKUP_DIR/postgres.sql
 echo "Exporting attachments..."
 docker run --rm --volumes-from $BOARDS -v $HOST_PWD/$BACKUP_DIR:/backup alpine sh -c 'cp -r /app/private/attachments /backup/attachments'
 echo "Exporting user-avatars..."

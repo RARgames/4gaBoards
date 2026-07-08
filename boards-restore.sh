@@ -20,11 +20,7 @@ mkdir -p $BACKUP_DIR
 tar -xzf $BACKUP_FILE -C $BACKUP_DIR
 
 echo "Importing db..."
-{ 
-    echo $DB_PASSWD
-    sleep 0.2
-    echo "\i $(<"$BACKUP_DIR/postgres.sql")"
-} | docker exec -i $POSTGRES psql -U postgres
+docker exec -i -e PGPASSWORD="$DB_PASSWD" $POSTGRES psql -U postgres < "$BACKUP_DIR/postgres.sql"
 echo "Importing attachments ... "
 docker run --rm --volumes-from $BOARDS -v $HOST_PWD/$BACKUP_DIR:/backup alpine sh -c 'cp -rf /backup/attachments /app/private/'
 echo "Importing user-avatars..."
