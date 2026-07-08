@@ -1,5 +1,6 @@
 import { Button, ButtonStyle } from './Button';
 import { Checkbox, CheckboxSize } from './Checkbox';
+import withDrawer from './Drawer';
 import { Dropdown, DropdownStyle } from './Dropdown';
 import ExternalLink from './ExternalLink';
 import FilePicker from './FilePicker';
@@ -41,6 +42,7 @@ export {
   Message,
   MessageStyle,
   Popup,
+  withDrawer,
   withModal,
   withPopup,
   ProgressBar,

@@ -1,0 +1,36 @@
+:global(#app) {
+  .closeButton {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
+
+  .drawerOverlay {
+    background: var(--modalOverlay);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 2000;
+  }
+
+  .drawer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--backgroundPopup);
+    color: var(--textColor1);
+    width: 420px;
+    max-width: calc(100vw - 20px);
+    height: 100%;
+    box-shadow: -2px 0 8px var(--backgroundPopupShadow);
+    animation: slideIn 0.2s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}

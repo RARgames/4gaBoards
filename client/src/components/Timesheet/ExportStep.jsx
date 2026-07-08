@@ -94,7 +94,7 @@ const ExportStep = React.memo(({ projects, isAdmin, viewedUserName, onDownloadCs
   return (
     <>
       <Popup.Header>{t('common.exportTimesheet', { context: 'title' })}</Popup.Header>
-      <Popup.Content isMinContent>
+      <Popup.Content>
         <Form>
           <div className={s.fieldLabel}>{t('common.dateRange')}</div>
           <Dropdown
@@ -104,6 +104,7 @@ const ExportStep = React.memo(({ projects, isAdmin, viewedUserName, onDownloadCs
             placeholder={t('common.dateRange')}
             onChange={(item) => setPreset(item.id)}
             className={s.field}
+            dropdownMenuClassName={s.dropdownMenu}
           />
           {preset === 'custom' && (
             <div className={s.customRangeRow}>
@@ -119,6 +120,7 @@ const ExportStep = React.memo(({ projects, isAdmin, viewedUserName, onDownloadCs
             placeholder={t('common.allProjects')}
             onChange={(item) => setProjectId(item.id)}
             className={s.field}
+            dropdownMenuClassName={s.dropdownMenu}
           />
           <div className={s.fieldLabel}>{t('common.groupBy')}</div>
           <Dropdown
@@ -128,6 +130,7 @@ const ExportStep = React.memo(({ projects, isAdmin, viewedUserName, onDownloadCs
             placeholder={t('common.groupBy')}
             onChange={(item) => setGroupBy(item.id)}
             className={s.field}
+            dropdownMenuClassName={s.dropdownMenu}
           />
           {isAdmin && (
             <>
@@ -139,18 +142,22 @@ const ExportStep = React.memo(({ projects, isAdmin, viewedUserName, onDownloadCs
                 placeholder={t('common.memberScope')}
                 onChange={(item) => setMemberScope(item.id)}
                 className={s.field}
+                dropdownMenuClassName={s.dropdownMenu}
               />
             </>
           )}
           <div className={gs.controlsSpaceBetween}>
-            <Button
-              style={ButtonStyle.DefaultBorder}
-              content={t('common.printSummary')}
-              onClick={handlePrintSummary}
-              disabled={isAllMembers}
-              title={isAllMembers ? t('common.printSummaryDisabledForAllMembers') : undefined}
-            />
-            <Button style={ButtonStyle.Submit} content={t('common.downloadCsv')} onClick={handleDownloadCsv} />
+            <Button style={ButtonStyle.DefaultBorder} content={t('action.cancel')} onClick={onClose} />
+            <div className={s.footerActions}>
+              <Button
+                style={ButtonStyle.DefaultBorder}
+                content={t('common.printSummary')}
+                onClick={handlePrintSummary}
+                disabled={isAllMembers}
+                title={isAllMembers ? t('common.printSummaryDisabledForAllMembers') : undefined}
+              />
+              <Button style={ButtonStyle.Submit} content={t('common.downloadCsv')} onClick={handleDownloadCsv} />
+            </div>
           </div>
         </Form>
       </Popup.Content>

@@ -7,7 +7,7 @@
   }
 
   .field {
-    width: 260px;
+    width: 100%;
     margin-bottom: 10px;
   }
 
@@ -15,5 +15,18 @@
     display: flex;
     gap: 8px;
     margin-bottom: 10px;
+
+    > * {
+      flex: 1;
+    }
+  }
+
+  .footerActions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dropdownMenu {
+    z-index: 2001;
   }
 }
