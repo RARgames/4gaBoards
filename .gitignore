@@ -11,3 +11,4 @@ test_docker
 # `npm i --package-lock-only`
 pnpm-lock.yaml
 yarn.lock
+/graphify-out

@@ -66,6 +66,7 @@ module.exports = {
       startedAt: values.startedAt,
       endedAt: values.endedAt,
       description: values.description || null,
+      categoryTagId: values.categoryTagId || null,
       importedFrom: values.importedFrom || null,
       createdById: currentUser.id,
       updatedById: currentUser.id,

@@ -11,6 +11,7 @@ export default class extends BaseModel {
     startedAt: attr(),
     endedAt: attr(),
     description: attr(),
+    categoryTagId: attr(),
     importedFrom: attr(),
     userId: fk({
       to: 'User',

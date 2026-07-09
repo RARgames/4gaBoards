@@ -1,4 +1,27 @@
 :global(#app) {
+  .content {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .scrollArea {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .footerRow {
+    flex-shrink: 0;
+    padding-top: 10px;
+  }
+
   .fieldLabel {
     color: var(--textColor1);
     font-size: 12px;
@@ -21,12 +44,91 @@
     }
   }
 
+  .fieldRow {
+    display: flex;
+    gap: 8px;
+  }
+
+  .fieldRowItem {
+    flex: 1;
+    min-width: 0;
+
+    input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+
   .footerActions {
     display: flex;
     gap: 8px;
   }
 
+  .fitContentButton {
+    width: auto !important;
+    flex-shrink: 0;
+  }
+
   .dropdownMenu {
     z-index: 2001;
+  }
+
+  .buttonGroup {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    border: 1px solid var(--backgroundPopupSeparator);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .buttonGroupItem {
+    flex: 1 1 auto;
+    width: auto !important;
+    text-align: center;
+    padding: 8px 4px;
+    font-size: 11px;
+    white-space: normal !important;
+    border-right: 1px solid var(--backgroundPopupSeparator);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .buttonGroupItemActive {
+    background: var(--backgroundSidebarItemActive);
+    color: var(--textColorWhite);
+  }
+
+  .collapsibleSection {
+    margin-bottom: 10px;
+    border: 1px solid var(--backgroundPopupSeparator);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .collapsibleHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .collapsibleIcon {
+    flex-shrink: 0;
+    transform: rotate(180deg);
+    transition: transform 0.15s ease;
+  }
+
+  .collapsibleIconOpen {
+    transform: rotate(90deg);
+  }
+
+  .collapsibleContent {
+    padding: 0 10px 10px;
   }
 }

@@ -132,6 +132,9 @@ module.exports.routes = {
   'POST /api/time-entries/import': 'time-entries/import',
   'GET /api/time-entries/overview': 'time-entries/overview',
 
+  'GET /api/category-tags': 'category-tags/index',
+  'POST /api/category-tags': 'category-tags/create',
+
   'GET /api/cards/:cardId/actions': 'actions/index',
 
   'POST /api/cards/:cardId/comment-actions': 'comment-actions/create',

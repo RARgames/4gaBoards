@@ -4,6 +4,7 @@ import boardMemberships from './board-memberships';
 import boards from './boards';
 import cardLinks from './card-links';
 import cards from './cards';
+import categoryTags from './category-tags';
 import chartViews from './chart-views';
 import commentActivities from './comment-activities';
 import core from './core';
@@ -35,6 +36,7 @@ export default {
   ...boards,
   ...cardLinks,
   ...cards,
+  ...categoryTags,
   ...chartViews,
   ...commentActivities,
   ...core,

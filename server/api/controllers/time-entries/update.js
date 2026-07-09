@@ -43,6 +43,11 @@ module.exports = {
       regex: /^[0-9]+$/,
       allowNull: true,
     },
+    categoryTagId: {
+      type: 'string',
+      regex: /^[0-9]+$/,
+      allowNull: true,
+    },
   },
 
   exits: {
@@ -86,6 +91,9 @@ module.exports = {
     }
     if (inputs.description !== undefined) {
       values.description = inputs.description;
+    }
+    if (inputs.categoryTagId !== undefined) {
+      values.categoryTagId = inputs.categoryTagId;
     }
 
     if (inputs.projectId !== undefined || inputs.cardId !== undefined) {

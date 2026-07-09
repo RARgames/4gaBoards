@@ -54,6 +54,10 @@ module.exports = {
       model: 'Card',
       columnName: 'card_id',
     },
+    categoryTagId: {
+      model: 'CategoryTag',
+      columnName: 'category_tag_id',
+    },
     createdById: {
       model: 'User',
       columnName: 'created_by_id',

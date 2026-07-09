@@ -7,6 +7,7 @@ import cardLabels from './card-labels';
 import cardLinks from './card-links';
 import cardMemberships from './card-memberships';
 import cards from './cards';
+import categoryTags from './category-tags';
 import chartViews from './chart-views';
 import commentActivities from './comment-activities';
 import core from './core';
@@ -42,6 +43,7 @@ export default {
   ...cardLinks,
   ...cardMemberships,
   ...cards,
+  ...categoryTags,
   ...chartViews,
   ...commentActivities,
   ...core,

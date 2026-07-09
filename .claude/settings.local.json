@@ -13,7 +13,15 @@
       "Bash(grep -rl \"components/List\" src/containers src/components)",
       "Bash(grep -rln \"filteredCardIds\\\\|filteredCardId\" src)",
       "Bash(echo \"exit: $?\")",
-      "Bash(netstat -ano)"
+      "Bash(netstat -ano)",
+      "Bash(python -c \"import graphify\")",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(python -c \"import sys; open\\('.graphify_python', 'w'\\).write\\(sys.executable\\)\")",
+      "Bash(python *)",
+      "Bash(mkdir -p /h/LRS_KanBan/graphify-out)",
+      "Bash(powershell -Command \"New-Item -ItemType Directory -Force -Path 'H:\\\\LRS_KanBan\\\\graphify-out' | Out-Null\")",
+      "Bash(Remove-Item -ErrorAction SilentlyContinue .graphify_cached.json)",
+      "Bash(PYTHONIOENCODING=utf-8 python *)"
     ]
   }
 }

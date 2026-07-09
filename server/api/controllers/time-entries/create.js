@@ -38,6 +38,10 @@ module.exports = {
       type: 'string',
       regex: /^[0-9]+$/,
     },
+    categoryTagId: {
+      type: 'string',
+      regex: /^[0-9]+$/,
+    },
   },
 
   exits: {
@@ -81,6 +85,7 @@ module.exports = {
           startedAt: new Date(inputs.startedAt),
           endedAt: new Date(inputs.endedAt),
           description: inputs.description,
+          categoryTagId: inputs.categoryTagId,
           project,
           card,
         },

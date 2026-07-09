@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
   const allCards = selectors.selectAllCardsForPicker(state);
   const users = selectors.selectUsers(state);
   const accessToken = selectors.selectAccessToken(state);
+  const categoryTags = selectors.selectCategoryTags(state);
 
   return {
     currentUserId: currentUser ? currentUser.id : null,
@@ -23,6 +24,7 @@ const mapStateToProps = (state) => {
     allCards,
     users,
     accessToken,
+    categoryTags: categoryTags.items,
   };
 };
 
@@ -33,6 +35,8 @@ const mapDispatchToProps = (dispatch) =>
       onCreate: entryActions.createTimeEntry,
       onUpdate: entryActions.updateTimeEntry,
       onDelete: entryActions.deleteTimeEntry,
+      onFetchCategoryTags: entryActions.fetchCategoryTags,
+      onCreateCategoryTag: entryActions.createCategoryTag,
     },
     dispatch,
   );

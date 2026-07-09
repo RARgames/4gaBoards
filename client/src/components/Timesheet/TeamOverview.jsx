@@ -12,6 +12,7 @@ import triggerDownload from '../../utils/trigger-download';
 import User from '../User';
 import { Button, ButtonStyle, Checkbox, Dropdown, DropdownStyle, Icon, IconType, IconSize, Input, InputStyle, Loader, LoaderSize } from '../Utils';
 import ExportPopup from './ExportPopup';
+import InvoicePrint from './InvoicePrint';
 
 import * as s from './TeamOverview.module.scss';
 
@@ -19,7 +20,7 @@ const VIEW_MODES = ['week', 'month'];
 
 const anchorForMode = (mode, date) => (mode === 'week' ? startOfWeek(date, { weekStartsOn: 1 }) : startOfMonth(date));
 
-const TeamOverview = React.memo(({ isAdmin, users, overview, projects, accessToken, onFetch }) => {
+const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntries, categoryTags, accessToken, onFetch, onFetchTimeEntries, onFetchCategoryTags }) => {
   const [t] = useTranslation();
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, accessTok
   const [periodStart, setPeriodStart] = useState(() => anchorForMode('week', new Date()));
   const [query, setQuery] = useState('');
   const [hideEmpty, setHideEmpty] = useState(false);
+  const [invoiceParams, setInvoiceParams] = useState(null);
 
   useEffect(() => {
     if (!isAdmin) {
@@ -41,6 +43,12 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, accessTok
       onFetch({ from: periodStart, to: viewMode === 'week' ? periodEnd : addMonths(periodStart, 1) });
     }
   }, [isAdmin, periodStart, periodEnd, viewMode, onFetch]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      onFetchCategoryTags();
+    }
+  }, [isAdmin, onFetchCategoryTags]);
 
   const days = useMemo(() => eachDayOfInterval({ start: periodStart, end: viewMode === 'week' ? subDays(periodEnd, 1) : periodEnd }), [periodStart, periodEnd, viewMode]);
 
@@ -99,6 +107,9 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, accessTok
   );
 
   const projectOptions = useMemo(() => projects.map((project) => ({ id: project.id, name: project.name })), [projects]);
+  const projectsById = useMemo(() => new Map(projects.map((project) => [project.id, project.name])), [projects]);
+  const categoryTagsById = useMemo(() => new Map(categoryTags.map((categoryTag) => [categoryTag.id, categoryTag.name])), [categoryTags]);
+  const memberOptions = useMemo(() => users.map((user) => ({ id: user.id, name: user.name })), [users]);
 
   const handleDownloadCsv = useCallback(
     async ({ from, to, projectId, groupBy, allMembers }) => {
@@ -123,6 +134,10 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, accessTok
   );
 
   const handlePrintSummary = useCallback(() => {}, []);
+
+  const handlePrintInvoice = useCallback((params) => setInvoiceParams(params), []);
+
+  const handleCloseInvoice = useCallback(() => setInvoiceParams(null), []);
 
   if (!isAdmin) {
     return null;
@@ -168,7 +183,7 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, accessTok
         <Button style={ButtonStyle.NoBackground} className={s.todayButton} onClick={() => navigate(Paths.TIMESHEET)}>
           {t('common.myTimesheet')}
         </Button>
-        <ExportPopup projects={projectOptions} isAdmin viewedUserName={undefined} onDownloadCsv={handleDownloadCsv} onPrintSummary={handlePrintSummary}>
+        <ExportPopup projects={projectOptions} isAdmin members={memberOptions} onDownloadCsv={handleDownloadCsv} onPrintSummary={handlePrintSummary} onPrintInvoice={handlePrintInvoice}>
           <Button style={ButtonStyle.DefaultBorder} content={t('common.export')} />
         </ExportPopup>
       </div>
@@ -218,6 +233,18 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, accessTok
           </div>
         )}
       </div>
+      {invoiceParams && (
+        <InvoicePrint
+          params={invoiceParams}
+          viewedUserId={invoiceParams.userId}
+          viewedUserName={invoiceParams.userName}
+          timeEntries={timeEntries}
+          projectsById={projectsById}
+          categoryTagsById={categoryTagsById}
+          onFetch={onFetchTimeEntries}
+          onClose={handleCloseInvoice}
+        />
+      )}
     </div>
   );
 });
@@ -231,8 +258,12 @@ TeamOverview.propTypes = {
     error: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   }).isRequired,
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  timeEntries: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  categoryTags: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   accessToken: PropTypes.string,
   onFetch: PropTypes.func.isRequired,
+  onFetchTimeEntries: PropTypes.func.isRequired,
+  onFetchCategoryTags: PropTypes.func.isRequired,
 };
 
 TeamOverview.defaultProps = {

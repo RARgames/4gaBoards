@@ -3,6 +3,7 @@ import boardMemberships from './board-memberships';
 import boards from './boards';
 import cardLinks from './card-links';
 import cards from './cards';
+import categoryTags from './category-tags';
 import chartViews from './chart-views';
 import core from './core';
 import gantt from './gantt';
@@ -30,6 +31,7 @@ export default {
   ...boards,
   ...cardLinks,
   ...cards,
+  ...categoryTags,
   ...chartViews,
   ...core,
   ...gantt,

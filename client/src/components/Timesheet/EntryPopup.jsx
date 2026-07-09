@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { format, setHours, setMinutes, startOfDay } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
-import { Button, ButtonStyle, Icon, IconType, IconSize, Input, InputStyle, TextArea, TextAreaStyle, Popup, Form } from '../Utils';
+import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize, Input, InputStyle, TextArea, TextAreaStyle, Popup, Form } from '../Utils';
 import ProjectTicketPicker from './ProjectTicketPicker';
 
 import * as gs from '../../global.module.scss';
@@ -17,6 +17,14 @@ const createData = (initialValues) => ({
   startTime: format(initialValues.startedAt, 'HH:mm'),
   endTime: format(initialValues.endedAt, 'HH:mm'),
 });
+
+const getDefaultCategoryTagId = (mode, initialValues, categoryTags) => {
+  if (mode === 'create') {
+    const developmentTag = categoryTags.find((tag) => !tag.projectId && tag.name.toLowerCase() === 'development');
+    return developmentTag ? developmentTag.id : null;
+  }
+  return (initialValues && initialValues.categoryTagId) || null;
+};
 
 const parseTimeToDate = (baseDate, value) => {
   const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim());
@@ -31,11 +39,15 @@ const parseTimeToDate = (baseDate, value) => {
   return setMinutes(setHours(startOfDay(baseDate), hours), minutes);
 };
 
-const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions, assignedCards, allCards, loggedByName, onSave, onDelete, onClose }) => {
+const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions, assignedCards, allCards, categoryTags, isAdmin, loggedByName, onSave, onDelete, onClose, onCreateCategoryTag }) => {
   const [t] = useTranslation();
   const [data, handleFieldChange, setData] = useForm(() => createData(initialValues));
   const [projectId, setProjectId] = useState(initialValues.projectId || null);
   const [cardId, setCardId] = useState(initialValues.cardId || null);
+  const [categoryTagId, setCategoryTagId] = useState(() => getDefaultCategoryTagId(mode, initialValues, categoryTags));
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [pendingCategoryName, setPendingCategoryName] = useState(null);
   const [isError, setIsError] = useState(false);
   const [style, setStyle] = useState({ top: anchorRect.top, left: anchorRect.left, visibility: 'hidden' });
 
@@ -46,6 +58,7 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
     setData(createData(initialValues));
     setProjectId(initialValues.projectId || null);
     setCardId(initialValues.cardId || null);
+    setCategoryTagId(getDefaultCategoryTagId(mode, initialValues, categoryTags));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialValues]);
 
@@ -100,6 +113,31 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
     };
   }, [onClose]);
 
+  // If the linked project changes, drop a category selection that no longer applies
+  // (a custom tag scoped to the previous project isn't valid for the new one).
+  useEffect(() => {
+    const isStillValid = categoryTags.some((tag) => tag.id === categoryTagId && (!tag.projectId || tag.projectId === projectId));
+    if (categoryTagId && !isStillValid) {
+      setCategoryTagId(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId]);
+
+  useEffect(() => {
+    if (!pendingCategoryName) {
+      return;
+    }
+
+    const match = categoryTags.find((tag) => tag.projectId === projectId && tag.name.toLowerCase() === pendingCategoryName.toLowerCase());
+
+    if (match) {
+      setCategoryTagId(match.id);
+      setPendingCategoryName(null);
+      setIsAddingCategory(false);
+      setNewCategoryName('');
+    }
+  }, [categoryTags, pendingCategoryName, projectId]);
+
   const handleSubmit = useCallback(() => {
     const startedAt = parseTimeToDate(initialValues.startedAt, data.startTime);
     const endedAt = parseTimeToDate(initialValues.startedAt, data.endTime);
@@ -111,12 +149,13 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
 
     onSave({
       description: data.description.trim(),
+      categoryTagId,
       startedAt,
       endedAt,
       projectId,
       cardId,
     });
-  }, [data, initialValues.startedAt, projectId, cardId, onSave]);
+  }, [data, initialValues.startedAt, categoryTagId, projectId, cardId, onSave]);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -133,6 +172,22 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
     setCardId(nextCardId);
   }, []);
 
+  const categoryOptions = useMemo(() => categoryTags.filter((tag) => !tag.projectId || tag.projectId === projectId).map((tag) => ({ id: tag.id, name: tag.name })), [categoryTags, projectId]);
+
+  const handleAddCategory = useCallback(() => {
+    const trimmedName = newCategoryName.trim();
+    if (!trimmedName || !projectId) {
+      return;
+    }
+    onCreateCategoryTag({ name: trimmedName, projectId });
+    setPendingCategoryName(trimmedName);
+  }, [newCategoryName, projectId, onCreateCategoryTag]);
+
+  const handleCancelAddCategory = useCallback(() => {
+    setIsAddingCategory(false);
+    setNewCategoryName('');
+  }, []);
+
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className={s.popup} ref={popupRef} style={style} onKeyDown={handleKeyDown} data-prevent-card-switch>
@@ -140,7 +195,7 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
         <Icon type={IconType.Close} size={IconSize.Size14} />
       </Button>
       <Popup.Header>{mode === 'edit' ? t('common.editTimeEntry', { context: 'title' }) : t('common.addTimeEntry', { context: 'title' })}</Popup.Header>
-      <Popup.Content isMinContent>
+      <Popup.Content isMinContent className={s.content}>
         {loggedByName && <div className={s.loggedBy}>{t('common.loggedBy', { name: loggedByName })}</div>}
         <Form>
           <TextArea
@@ -163,6 +218,31 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
             </div>
           </div>
           <ProjectTicketPicker projectId={projectId} cardId={cardId} projects={projectOptions} assignedCards={assignedCards} allCards={allCards} onChange={handlePickerChange} />
+          <div className={s.fieldLabel}>{t('common.category')}</div>
+          <Dropdown
+            style={DropdownStyle.Default}
+            options={categoryOptions}
+            defaultItem={categoryOptions.find((option) => option.id === categoryTagId)}
+            placeholder={t('common.category')}
+            onChange={(item) => setCategoryTagId(item.id)}
+            className={s.categoryField}
+            dropdownMenuClassName={s.dropdownMenu}
+          />
+          {isAdmin &&
+            projectId &&
+            (isAddingCategory ? (
+              <div className={s.addCategoryRow}>
+                <Input style={InputStyle.Default} value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} placeholder={t('common.newCategoryName')} className={s.addCategoryInput} />
+                <Button style={ButtonStyle.Submit} content={t('action.add')} onClick={handleAddCategory} />
+                <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancelAddCategory} />
+              </div>
+            ) : (
+              // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+              <div className={s.addCategoryAffordance} onClick={() => setIsAddingCategory(true)}>
+                <Icon type={IconType.Plus} size={IconSize.Size10} />
+                {t('common.addCategory')}
+              </div>
+            ))}
           <div className={gs.controlsSpaceBetween}>
             {mode === 'edit' ? <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={onDelete} /> : <span />}
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
@@ -187,14 +267,18 @@ EntryPopup.propTypes = {
     endedAt: PropTypes.instanceOf(Date).isRequired,
     projectId: PropTypes.string,
     cardId: PropTypes.string,
+    categoryTagId: PropTypes.string,
   }).isRequired,
   projectOptions: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   assignedCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  categoryTags: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isAdmin: PropTypes.bool.isRequired,
   loggedByName: PropTypes.string,
   onSave: PropTypes.func.isRequired,
   onDelete: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  onCreateCategoryTag: PropTypes.func.isRequired,
 };
 
 EntryPopup.defaultProps = {
