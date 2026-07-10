@@ -4,7 +4,7 @@
     color: var(--textColor1);
     padding: 9px 8px;
     border: 1px solid var(--backgroundPopupSeparator);
-    border-radius: 3px;
+    border-radius: var(--tw-radius);
     resize: none;
     outline: 0;
     width: 100%;
@@ -16,10 +16,6 @@
     &:focus {
       border: 1px solid var(--borderOutline2);
     }
-  }
-
-  &:global([data-theme-shape='rounded']) .textarea {
-    border-radius: 8px;
   }
 
   .textareaError {

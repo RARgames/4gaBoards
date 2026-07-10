@@ -10,7 +10,7 @@
 
   .wrapper {
     border: none;
-    border-radius: 3px;
+    border-radius: calc(var(--tw-radius) - 2px);
     display: inline-block;
     outline: none;
     text-align: left;

@@ -5,13 +5,15 @@
       "name": "client",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "client:start"],
-      "port": 3000
+      "port": 3000,
+      "autoPort": true
     },
     {
       "name": "server",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "server:start"],
-      "port": 1337
+      "port": 1337,
+      "autoPort": true
     }
   ]
 }

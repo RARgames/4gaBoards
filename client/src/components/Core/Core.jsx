@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import { Themes } from '../../constants/Enums';
 import HeaderContainer from '../../containers/HeaderContainer';
 import StaticContainer from '../../containers/StaticContainer';
 import { beautifyLink } from '../../utils/url';
@@ -39,6 +40,9 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
     if (body) {
       body.setAttribute('data-theme', theme);
     }
+    // Sync @uiw/react-md-editor's color mode (read from <html data-color-mode>) with the active theme;
+    // index.html ships it as "dark" for the pre-mount loading state.
+    document.documentElement.setAttribute('data-color-mode', theme === Themes.TRELLO_LIGHT ? 'light' : 'dark');
   }, [theme]);
 
   useEffect(() => {

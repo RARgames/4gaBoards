@@ -11,7 +11,7 @@
   .logo {
     display: inline-block;
     margin: 8px 0 8px 30px;
-    border-radius: 6px;
+    border-radius: var(--tw-radius);
     transition: background-color 120ms ease;
 
     &:hover {
@@ -69,7 +69,7 @@
     font-size: 12px;
     font-weight: bold;
     line-height: 16px;
-    border-radius: 8px;
+    border-radius: 9999px;
     transform: translate(-8px, -6px);
     padding: 0 2px;
     min-width: 14px;

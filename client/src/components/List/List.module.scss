@@ -5,7 +5,7 @@
 
   .addCardButton {
     background: var(--backgroundList);
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 var(--tw-radius-lg) var(--tw-radius-lg);
     color: var(--textColor3);
     cursor: pointer;
     display: block;
@@ -24,10 +24,6 @@
         fill: var(--textColor1);
       }
     }
-  }
-
-  &:global([data-theme-shape='rounded']) .addCardButton {
-    border-radius: 0 0 12px 12px;
   }
 
   .addCardButtonIcon {
@@ -187,13 +183,9 @@
 
   .outerWrapper {
     background: var(--backgroundList);
-    border-radius: 8px;
-    box-shadow: var(--shadowBlack015) 0 1px 2px 0;
+    border-radius: var(--tw-radius-lg);
+    box-shadow: var(--tw-shadow);
     overflow: hidden;
-  }
-
-  &:global([data-theme-shape='rounded']) .outerWrapper {
-    border-radius: 12px;
   }
 
   .cardAddPopupWrapper {

@@ -29,7 +29,7 @@
   .addListButton {
     background: var(--shadowBlack02);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--tw-radius-lg);
     color: var(--textColor1);
     cursor: pointer;
     display: block;
@@ -45,10 +45,6 @@
       background: var(--shadowBlack03);
       color: var(--textColor0);
     }
-  }
-
-  &:global([data-theme-shape='rounded']) .addListButton {
-    border-radius: 12px;
   }
 
   .addListButtonIcon {

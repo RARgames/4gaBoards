@@ -27,7 +27,7 @@
   }
 
   .moreUsers {
-    color: var(--textColorWhite);
+    color: var(--textColor0);
     background: var(--shadowBlack02);
     border-radius: 50%;
     text-align: center;
@@ -111,7 +111,7 @@
   }
 
   .headerTitle {
-    color: var(--textColorWhite);
+    color: var(--textColor0);
     font-size: 18px;
     font-weight: 700;
     line-height: 20px;
@@ -307,8 +307,8 @@
   // size + weight match the header title so the banner sits visually as a peer of the title
   // rather than an arbitrary callout.
   .heroCardBanner {
-    background: #f1c40f;
-    color: #1a1a1a;
+    background: var(--heroBanner);
+    color: var(--heroBannerText);
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;
@@ -324,7 +324,7 @@
   // Unified hero hierarchy section: contains two rows (parent picker + children list),
   // visually grouped with a left-edge yellow accent so the relation reads as one concept.
   .hierarchyBlock {
-    border-left: 3px solid #f1c40f;
+    border-left: 3px solid var(--heroAccent);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -347,7 +347,7 @@
   .heroChildrenItem {
     background: var(--backgroundColorTmpDarkerField2);
     border: none;
-    border-left: 3px solid #f1c40f;
+    border-left: 3px solid var(--heroAccent);
     border-radius: 4px;
     color: var(--textColor1);
     cursor: pointer;

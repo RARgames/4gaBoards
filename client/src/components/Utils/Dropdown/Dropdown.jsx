@@ -18,6 +18,8 @@ const Dropdown = React.forwardRef(
       style,
       options,
       defaultItem,
+      isMultiple,
+      defaultItems,
       placeholder,
       isSearchable,
       isError,
@@ -43,6 +45,7 @@ const Dropdown = React.forwardRef(
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedItems, setSelectedItems] = useState(defaultItems);
     const [searchValue, setSearchValue] = useState('');
     const dropdown = useRef(null);
     const itemsRef = useRef([]);
@@ -181,7 +184,27 @@ const Dropdown = React.forwardRef(
       [close, getCurrItem, handleSubmit, onBlur, selectedItem, stayOpenOnBlur, submitOnBlur],
     );
 
+    const toggleMultipleItem = useCallback(
+      (item) => {
+        setSelectedItems((prevSelectedItems) => {
+          const nextSelectedItems = prevSelectedItems.some((prevItem) => prevItem.id === item.id) ? prevSelectedItems.filter((prevItem) => prevItem.id !== item.id) : [...prevSelectedItems, item];
+          onChange(nextSelectedItems);
+          return nextSelectedItems;
+        });
+      },
+      [onChange],
+    );
+
     const getDisplay = useCallback(() => {
+      if (isMultiple) {
+        if (selectedItems.length === 0) {
+          return placeholder;
+        }
+        if (selectedItems.length === 1) {
+          return selectedItems[0].name;
+        }
+        return t('common.nSelected', { count: selectedItems.length });
+      }
       if (isOpen && selectedItem) {
         return selectedItem.name;
       }
@@ -189,21 +212,34 @@ const Dropdown = React.forwardRef(
         return defaultItem.name;
       }
       return placeholder;
-    }, [isOpen, placeholder, defaultItem, selectedItem]);
+    }, [isMultiple, selectedItems, isOpen, placeholder, defaultItem, selectedItem, t]);
 
     const handleItemClick = useCallback(
       (item) => {
+        if (!item) {
+          if (!isMultiple) {
+            handleSubmit(item);
+          }
+          return;
+        }
+        if (isMultiple) {
+          toggleMultipleItem(item);
+          return;
+        }
         setSelectedItem(item);
         handleSubmit(item);
       },
-      [handleSubmit],
+      [isMultiple, toggleMultipleItem, handleSubmit],
     );
 
     const isSelected = useCallback(
       (item) => {
+        if (isMultiple) {
+          return selectedItems.some((selectedItemItem) => selectedItemItem.id === item.id);
+        }
         return selectedItem === item;
       },
-      [selectedItem],
+      [isMultiple, selectedItems, selectedItem],
     );
 
     const handleSearch = useCallback((e) => {
@@ -227,13 +263,17 @@ const Dropdown = React.forwardRef(
           }
           case 'Enter': {
             e.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
-            handleSubmit(getCurrItem());
+            handleItemClick(getCurrItem());
             break;
           }
           case 'Tab': {
             e.stopPropagation(); // TODO Prevent accepting popup - change how popup handles key input
             e.preventDefault(); // Prevent switching focus
-            handleSubmit(getCurrItem());
+            if (isMultiple) {
+              close();
+            } else {
+              handleSubmit(getCurrItem());
+            }
             break;
           }
           case 'Escape': {
@@ -244,16 +284,20 @@ const Dropdown = React.forwardRef(
           default:
         }
       },
-      [getCurrItem, getCurrItemIndex, getOptions, handleCancel, handleSubmit, selectItemByIndex],
+      [getCurrItem, getCurrItemIndex, getOptions, handleCancel, handleItemClick, handleSubmit, isMultiple, close, selectItemByIndex],
     );
 
     const handleDropdownToggleClick = useCallback(() => {
       if (isOpen) {
-        handleSubmit(selectedItem);
+        if (isMultiple) {
+          close();
+        } else {
+          handleSubmit(selectedItem);
+        }
       } else {
         open();
       }
-    }, [open, handleSubmit, isOpen, selectedItem]);
+    }, [open, close, handleSubmit, isOpen, isMultiple, selectedItem]);
 
     const onOpenChange = useCallback(
       // eslint-disable-next-line no-unused-vars
@@ -337,11 +381,12 @@ const Dropdown = React.forwardRef(
                     key={item.id}
                     id={item.id}
                     name={item.name}
-                    className={clsx(s.dropdownItem, defaultItem && defaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
+                    className={clsx(s.dropdownItem, isMultiple && s.dropdownItemMultiple, defaultItem && defaultItem.id === item.id && s.dropdownItemDefault, isSelected(item) && s.dropdownItemSelected)}
                     onClick={() => handleItemClick(item)}
                     onMouseDown={(e) => e.preventDefault()} // Prevent input onBlur
                     data-prevent-card-switch
                   >
+                    {isMultiple && <Icon type={IconType.Check} size={IconSize.Size12} className={clsx(s.multiCheckIcon, !isSelected(item) && s.multiCheckIconHidden)} />}
                     {item.flags && item.flags.map((flag) => <Icon key={flag} type={FlagType[flag]} size={IconSize.Size14} className={s.icon} />)}
                     {item.icon && <Icon type={IconType[item.icon]} size={IconSize.Size14} className={s.icon} />}
                     {item.name}
@@ -362,6 +407,8 @@ Dropdown.propTypes = {
   style: PropTypes.oneOfType([PropTypes.oneOf(Object.values(DropdownStyle)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(DropdownStyle)))]),
   options: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   defaultItem: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  isMultiple: PropTypes.bool,
+  defaultItems: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   placeholder: PropTypes.string.isRequired,
   isSearchable: PropTypes.bool,
   isError: PropTypes.bool,
@@ -386,6 +433,8 @@ Dropdown.defaultProps = {
   children: null,
   style: undefined,
   defaultItem: null,
+  isMultiple: false,
+  defaultItems: [],
   isSearchable: false,
   isError: false,
   onChange: () => {},

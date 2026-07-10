@@ -463,6 +463,8 @@ export default {
       members: 'Members',
       addToProject_title: 'Add to Project',
       pickProject: 'Pick a project…',
+      nSelected_one: '{{count}} selected',
+      nSelected_other: '{{count}} selected',
       asProjectManager: 'As project manager',
       matrixView: 'Matrix',
       removeFromProject_title: 'Remove from Project',

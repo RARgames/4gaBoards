@@ -1,4 +1,8 @@
-#app {
+/* Pre-mount loading background only. Scoped to :not([data-theme]) because the
+   #app ID selector otherwise outranks the [data-theme] attribute selectors in
+   colors.css, permanently forcing the dark --backgroundColor onto every theme.
+   Core.jsx sets data-theme on #app as soon as React mounts, ending this rule. */
+#app:not([data-theme]) {
   --backgroundColor: #22252a;
   background: var(--backgroundColor);
 }

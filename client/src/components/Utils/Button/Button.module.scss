@@ -3,6 +3,11 @@
     background: none;
     border: none;
     cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--tw-ring);
+      outline-offset: 1px;
+    }
   }
 
   .default {
@@ -13,7 +18,7 @@
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-radius: 6px;
+    border-radius: var(--tw-radius);
     line-height: 20px;
     transition:
       background-color 120ms ease,
@@ -39,10 +44,6 @@
     }
   }
 
-  &:global([data-theme-shape='rounded']) .default {
-    border-radius: 10px;
-  }
-
   .defaultBorder {
     @extend .default;
     border: 1px solid var(--backgroundPopupSeparator);
@@ -56,7 +57,7 @@
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-radius: 6px;
+    border-radius: var(--tw-radius);
     line-height: 20px;
     transition:
       background-color 120ms ease,
@@ -80,10 +81,6 @@
         fill: var(--textColor4);
       }
     }
-  }
-
-  &:global([data-theme-shape='rounded']) .noBackground {
-    border-radius: 10px;
   }
 
   .iconBase {
@@ -126,13 +123,16 @@
   .login {
     background: var(--loginBackground);
     color: var(--textColorWhite);
-    border-radius: 6px;
+    border-radius: var(--tw-radius);
     padding: 8px 12px;
     width: auto;
     height: 45px;
     font-weight: bold;
     overflow: hidden;
-    transition: background-color 120ms ease;
+    box-shadow: var(--tw-shadow-sm);
+    transition:
+      background-color 120ms ease,
+      box-shadow 120ms ease;
 
     svg {
       fill: var(--textColorWhite);
@@ -140,17 +140,14 @@
 
     &:hover {
       background: var(--loginBackgroundDark);
+      box-shadow: var(--tw-shadow);
     }
-  }
-
-  &:global([data-theme-shape='rounded']) .login {
-    border-radius: 10px;
   }
 
   // TODO think about multiline buttons - word-wrap: break-word and min-height instead of white-space, text-overflow
   .controlButtons {
     color: var(--textColorWhite);
-    border-radius: 6px;
+    border-radius: var(--tw-radius);
     height: 32px;
     width: auto;
     padding: 4px 6px 3px 6px;
@@ -159,15 +156,15 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     font-weight: bold;
-    transition: background-color 120ms ease;
+    box-shadow: var(--tw-shadow-sm);
+    transition:
+      background-color 120ms ease,
+      box-shadow 120ms ease;
 
     &:disabled {
       cursor: not-allowed;
+      box-shadow: none;
     }
-  }
-
-  &:global([data-theme-shape='rounded']) .controlButtons {
-    border-radius: 10px;
   }
 
   .submit {
@@ -177,6 +174,7 @@
 
     &:hover {
       background: var(--backgroundGreenHover);
+      box-shadow: var(--tw-shadow);
     }
 
     &:disabled {
@@ -190,6 +188,7 @@
 
     &:hover {
       background: var(--backgroundRedHover);
+      box-shadow: var(--tw-shadow);
     }
 
     &:disabled {
@@ -205,7 +204,7 @@
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-radius: 6px;
+    border-radius: var(--tw-radius);
     line-height: 20px;
     transition:
       background-color 120ms ease,
@@ -236,10 +235,6 @@
     //   outline: none;
     //   box-shadow: inset 0px 0px 0px 1px var(--borderOutline2);
     // }
-  }
-
-  &:global([data-theme-shape='rounded']) .popup {
-    border-radius: 10px;
   }
 
   .popupContext {

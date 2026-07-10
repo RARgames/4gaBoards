@@ -17,6 +17,7 @@ import '../assets/styles.css';
 import '../colors.css';
 import '../backgrounds.module.scss';
 import '../root.module.scss';
+import '../tailwind.css';
 
 function Root({ store, history }) {
   return (

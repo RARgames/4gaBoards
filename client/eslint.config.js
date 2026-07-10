@@ -119,4 +119,13 @@ module.exports = [
       // endregion
     },
   },
+  {
+    // Hand-ported shadcn/ui primitives follow the upstream shadcn source conventions
+    // (prop spreading to forward Radix props, multiple named exports per file).
+    files: ['src/components/ui/**/*.{js,jsx}', 'src/lib/utils.js'],
+    rules: {
+      'react/jsx-props-no-spreading': 'off',
+      'import/prefer-default-export': 'off',
+    },
+  },
 ];

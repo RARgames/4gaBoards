@@ -8,35 +8,33 @@ import * as gs from '../../../global.module.scss';
 
 const AddToProjectStep = React.memo(({ projects, onSelect, onClose }) => {
   const [t] = useTranslation();
-  const [projectId, setProjectId] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [asManager, setAsManager] = useState(false);
 
   const options = projects.map((project) => ({ id: project.id, name: project.name }));
-  const defaultItem = options.find((option) => option.id === projectId) || null;
-
-  const handleProjectChange = useCallback((item) => {
-    setProjectId(item.id);
-  }, []);
 
   const handleAsManagerChange = useCallback((e) => {
     setAsManager(e.target.checked);
   }, []);
 
   const handleSubmit = useCallback(() => {
-    if (!projectId) {
+    if (selectedItems.length === 0) {
       return;
     }
 
-    onSelect(projectId, asManager);
+    onSelect(
+      selectedItems.map((item) => item.id),
+      asManager,
+    );
     onClose();
-  }, [projectId, asManager, onSelect, onClose]);
+  }, [selectedItems, asManager, onSelect, onClose]);
 
   return (
     <>
       <Popup.Header>{t('common.addToProject', { context: 'title' })}</Popup.Header>
       <Popup.Content isMinContent>
         <Form>
-          <Dropdown style={DropdownStyle.FullWidth} options={options} placeholder={t('common.pickProject')} defaultItem={defaultItem} onChange={handleProjectChange} />
+          <Dropdown style={DropdownStyle.FullWidth} options={options} placeholder={t('common.pickProject')} isMultiple defaultItems={selectedItems} onChange={setSelectedItems} />
           <div className={gs.controlsSpaceBetween}>
             <label htmlFor="asProjectManager">
               <Checkbox id="asProjectManager" checked={asManager} onChange={handleAsManagerChange} />
@@ -44,7 +42,7 @@ const AddToProjectStep = React.memo(({ projects, onSelect, onClose }) => {
             </label>
           </div>
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('action.addMember')} onClick={handleSubmit} />
+            <Button style={ButtonStyle.Submit} content={t('action.addMember')} onClick={handleSubmit} disabled={selectedItems.length === 0} />
           </div>
         </Form>
       </Popup.Content>

@@ -52,12 +52,14 @@ const MembersSettings = React.memo(
     }, []);
 
     const handleAddToProject = useCallback(
-      (projectId, asManager) => {
-        if (asManager) {
-          onAddManager(projectId, selectedUserId);
-        } else {
-          onAddMembership(projectId, selectedUserId);
-        }
+      (projectIds, asManager) => {
+        projectIds.forEach((projectId) => {
+          if (asManager) {
+            onAddManager(projectId, selectedUserId);
+          } else {
+            onAddMembership(projectId, selectedUserId);
+          }
+        });
         refetchSoon();
       },
       [onAddManager, onAddMembership, selectedUserId, refetchSoon],

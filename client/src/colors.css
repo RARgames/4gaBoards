@@ -138,6 +138,56 @@
   --mdBlue: #006eff;
   --mdCyan: #00ffff;
   --mdOrange: #ffa500;
+  /* Hero card accent system (hero bar on card faces, hero banner + hierarchy accents in card modal) */
+  --heroAccent: #b8a51c;
+  --heroAccentHover: #c8b321;
+  --heroAccentText: #ffffff;
+  --heroBanner: #f1c40f;
+  --heroBannerText: #1a1a1a;
+
+  /*
+   * Tailwind / shadcn-ui token bridge.
+   * These alias the existing theme variables above instead of introducing a
+   * second color system. Because CSS custom properties resolve var() refs
+   * lazily at the point of use, this single block automatically tracks
+   * whichever [data-theme] is active on #app — no per-theme duplication needed.
+   */
+  --tw-background: var(--backgroundColor);
+  --tw-foreground: var(--textColor0);
+  --tw-card: var(--backgroundColorTmpHeader);
+  --tw-card-foreground: var(--textColor0);
+  --tw-popover: var(--backgroundPopup);
+  --tw-popover-foreground: var(--textColor1);
+  --tw-primary: var(--backgroundGreen);
+  --tw-primary-hover: var(--backgroundGreenHover);
+  --tw-primary-foreground: var(--textColorWhite);
+  --tw-secondary: var(--backgroundColorTmpDarkerField2);
+  --tw-secondary-hover: var(--backgroundColorTmpDarkerField1);
+  --tw-secondary-foreground: var(--textColor1);
+  --tw-destructive: var(--backgroundRed);
+  --tw-destructive-hover: var(--backgroundRedHover);
+  --tw-destructive-foreground: var(--textColorWhite);
+  --tw-muted: var(--backgroundColorTmp1);
+  --tw-muted-foreground: var(--textColor3);
+  --tw-accent: var(--backgroundPopupHover);
+  --tw-accent-foreground: var(--textColor1);
+  --tw-border: var(--backgroundPopupSeparator);
+  --tw-input: var(--backgroundPopupSeparator);
+  --tw-ring: var(--borderOutline);
+  --tw-shadow-sm: 0 1px 2px var(--shadowBlack01);
+  --tw-shadow: 0 1px 3px var(--shadowBlack015), 0 1px 2px var(--shadowBlack01);
+  --tw-shadow-md: 0 4px 6px -1px var(--shadowBlack02), 0 2px 4px -2px var(--shadowBlack01);
+  --tw-shadow-lg: 0 10px 15px -3px var(--shadowBlack03), 0 4px 6px -4px var(--shadowBlack015);
+  /* Mirrors the existing [data-theme-shape] convention used across the SCSS modules.
+   * Two-tier scale already present in the app: tight controls (buttons/inputs/badges)
+   * use 6/10, larger surfaces (lists, cards, dialogs, popovers) use 8/12. */
+  --tw-radius: 6px;
+  --tw-radius-lg: 8px;
+}
+
+[data-theme-shape='rounded'] {
+  --tw-radius: 10px;
+  --tw-radius-lg: 12px;
 }
 
 /* Github Dark Color Schema */
@@ -421,4 +471,10 @@
   --mdBlue: #0c66e4;
   --mdCyan: #1d7f8c;
   --mdOrange: #d97008;
+  /* Hero card accent system — softened for light surfaces: yellow chip with dark amber text */
+  --heroAccent: #f5cd47;
+  --heroAccentHover: #e2b203;
+  --heroAccentText: #533f04;
+  --heroBanner: #f8e6a0;
+  --heroBannerText: #533f04;
 }

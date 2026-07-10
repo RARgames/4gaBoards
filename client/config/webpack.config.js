@@ -113,6 +113,7 @@ module.exports = function (webpackEnv) {
             ident: 'postcss',
             config: false,
             plugins: [
+              'tailwindcss',
               'postcss-flexbugs-fixes',
               [
                 'postcss-preset-env',

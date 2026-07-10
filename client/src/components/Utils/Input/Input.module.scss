@@ -4,7 +4,7 @@
     color: var(--textColor1);
     padding: 9.5px 8px;
     border: 1px solid var(--backgroundPopupSeparator);
-    border-radius: 3px;
+    border-radius: var(--tw-radius);
 
     &:focus {
       border: 1px solid var(--borderOutline2);
@@ -15,10 +15,6 @@
       background: var(--backgroundColorTmpDarkerField);
       color: var(--textColor4);
     }
-  }
-
-  &:global([data-theme-shape='rounded']) .input {
-    border-radius: 8px;
   }
 
   .inputError {

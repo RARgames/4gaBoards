@@ -6,11 +6,11 @@
 
   .dropdownSearchInput {
     width: 100%;
-    padding: 3px 20px 3px 3px;
+    padding: 6px 24px 6px 8px;
     background: var(--backgroundColorTmpDarkerField);
     color: var(--textColor1);
     outline: none;
-    border-radius: 3px;
+    border-radius: var(--tw-radius);
     border: 1px solid var(--backgroundPopupSeparator);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -32,8 +32,7 @@
   }
 
   &:global([data-theme-shape='rounded']) .dropdownSearchInput {
-    padding: 3px 20px 3px 6px;
-    border-radius: 8px;
+    padding: 6px 24px 6px 12px;
   }
 
   .dropdownSearchInputError {
@@ -48,8 +47,9 @@
     display: inline-block;
     overflow: hidden;
     position: absolute;
-    right: 1px;
-    top: 1px;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .dropdownButtonError {
@@ -69,19 +69,19 @@
     max-height: calc(100vh / 3);
     background: var(--backgroundColorTmpDarkerField);
     color: var(--textColor1);
+    // Dropdowns are frequently opened from inside a Popup (z-index: 2000) or Modal —
+    // without an explicit z-index here the menu can render underneath them.
+    z-index: 2100;
   }
 
   .dropdownMenuWithChildren {
     border: 1px solid var(--borderOutline);
-    border-radius: 3px;
-  }
-
-  &:global([data-theme-shape='rounded']) .dropdownMenuWithChildren {
-    border-radius: 8px;
+    border-radius: var(--tw-radius-lg);
+    box-shadow: var(--tw-shadow-lg);
   }
 
   .dropdownItem {
-    padding: 3px;
+    padding: 6px 10px;
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -92,8 +92,23 @@
     }
   }
 
+  .dropdownItemMultiple {
+    align-items: center;
+    display: flex;
+  }
+
+  .multiCheckIcon {
+    fill: var(--tw-primary);
+    flex-shrink: 0;
+    margin-right: 6px;
+  }
+
+  .multiCheckIconHidden {
+    visibility: hidden;
+  }
+
   &:global([data-theme-shape='rounded']) .dropdownItem {
-    border-radius: 8px;
+    border-radius: var(--tw-radius-lg);
   }
 
   .dropdownItemSelected {
@@ -101,7 +116,7 @@
   }
 
   &:global([data-theme-shape='rounded']) .dropdownItemSelected {
-    border-radius: 8px;
+    border-radius: var(--tw-radius-lg);
   }
 
   .dropdownItemDefault {
@@ -110,7 +125,7 @@
   }
 
   &:global([data-theme-shape='rounded']) .dropdownItemDefault {
-    border-radius: 8px;
+    border-radius: var(--tw-radius-lg);
   }
 
   .icon {
@@ -126,13 +141,9 @@
     line-height: 1;
     color: var(--textColorWhite);
     background-color: var(--backgroundRed);
-    border-radius: 3px;
+    border-radius: calc(var(--tw-radius) - 2px);
     text-transform: uppercase;
     vertical-align: middle;
-  }
-
-  &:global([data-theme-shape='rounded']) .badge {
-    border-radius: 6px;
   }
 
   .fullWidth {

@@ -11,7 +11,7 @@
   }
 
   .wrapper {
-    border-radius: 3px;
+    border-radius: calc(var(--tw-radius) - 2px);
     box-sizing: border-box;
     color: var(--textColorWhite);
     font-weight: 400;

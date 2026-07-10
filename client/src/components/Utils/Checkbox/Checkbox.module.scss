@@ -1,39 +1,59 @@
 :global(#app) {
   .checkbox {
     appearance: none;
-    background: var(--backgroundColo0);
-    border-radius: 3px;
-    border: 1px solid var(--textColor3);
-    display: flex;
-    align-content: center;
+    background: var(--backgroundColorTmpDarkerField2);
+    border-radius: calc(var(--tw-radius) - 2px);
+    border: 1px solid var(--backgroundPopupSeparator);
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    padding: 1px;
-
-    &:before {
-      content: 'Г';
-      color: var(--textColor2);
-      transform: rotate(-135deg);
-      visibility: hidden;
-    }
-
-    &:checked:before {
-      visibility: visible;
-    }
+    flex-shrink: 0;
+    padding: 0;
+    transition:
+      background-color 120ms ease,
+      border-color 120ms ease,
+      box-shadow 120ms ease;
 
     &:hover {
-      background: var(--backgroundColor2);
-      cursor: pointer;
+      border-color: var(--borderOutline);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--tw-ring);
+    }
+
+    &:checked {
+      background: var(--tw-primary);
+      border-color: var(--tw-primary);
+
+      &:before {
+        content: '';
+        display: block;
+        width: 0.3em;
+        height: 0.55em;
+        margin-bottom: 0.15em;
+        border: solid var(--tw-primary-foreground);
+        border-width: 0 0.15em 0.15em 0;
+        transform: rotate(45deg);
+      }
     }
 
     &:disabled {
       background: var(--backgroundDisabled);
-      border: 1px solid var(--backgroundPopupSeparator);
+      border-color: var(--backgroundPopupSeparator);
       cursor: not-allowed;
+
+      &:checked:before {
+        border-color: var(--textColor4);
+      }
     }
   }
 
   .checkboxError {
-    border: 1px solid var(--errorRed);
+    border-color: var(--errorRed);
   }
 
   .size14 {
@@ -41,7 +61,7 @@
     height: 14px;
     min-width: 14px;
     min-height: 14px;
-    font-size: 11.2px;
+    font-size: 14px;
   }
 
   .size20 {
@@ -49,6 +69,6 @@
     height: 20px;
     min-width: 20px;
     min-height: 20px;
-    font-size: 16px;
+    font-size: 20px;
   }
 }
