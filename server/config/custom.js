@@ -96,6 +96,7 @@ module.exports.custom = {
   cacheMaxAge: 900,
   actionsLimit: 50,
   commentsLimit: 50,
+  notificationsCronSchedule: process.env.NODE_ENV === 'production' ? '*/5 * * * *' : '*/1 * * * *',
   notificationsMailBatchIntervalMs: process.env.NODE_ENV === 'production' ? 10 * 60 * 1000 : 1 * 60 * 1000,
   emailVerificationCooldownMs: 60 * 1000,
   systemNotificationsHostUrl: process.env.NODE_ENV === 'production' ? 'https://notifications.4gaboards.com' : process.env.NOTIFICATIONS_HOST_URL || 'https://notifications.4gaboards.com',

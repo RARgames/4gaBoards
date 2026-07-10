@@ -6,7 +6,7 @@ module.exports = function defineCronNotificationsBatchingHook(sails) {
   return {
     initialize(cb) {
       sails.log.info('Initializing custom hook: cron-notifications-batching');
-      const cronSchedule = process.env.NODE_ENV === 'production' ? '*/5 * * * *' : '*/1 * * * *';
+      const cronSchedule = sails.config.custom.notificationsCronSchedule;
       cron.schedule(cronSchedule, async () => {
         try {
           const pending = await Notification.find({ deliveredAt: null });
