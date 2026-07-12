@@ -3,6 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import clsx from 'clsx';
+import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
@@ -35,6 +36,9 @@ const Card = React.memo(
     coverUrl,
     boardId,
     listId,
+    listType,
+    listAutoArchiveDays,
+    completedAt,
     projectId,
     isPersisted,
     isOpen,
@@ -213,10 +217,38 @@ const Card = React.memo(
     const visibleMembersCount = 3;
     const labelIds = labels.map((label) => label.id);
 
+    // §6.2: Done card treatment — gated on the parent list's type, same shape as isBlocked
+    // above. completedAt can be null even in a done-type list right after a restore (§5.4
+    // cards/unarchive.js always clears it), so the meta/countdown rows are additionally
+    // gated on completedAt being present rather than assuming it whenever listType is 'done'.
+    const isDoneList = listType === 'done';
+    let completionMetaText = null;
+    let autoArchiveDaysRemaining = null;
+    let autoArchiveElapsedPercent = 0;
+    let isAutoArchiveUrgent = false;
+    if (isDoneList && completedAt) {
+      const now = new Date();
+      const isSameDay = completedAt.getFullYear() === now.getFullYear() && completedAt.getMonth() === now.getMonth() && completedAt.getDate() === now.getDate();
+      if (isSameDay) {
+        completionMetaText = t('common.completedAt', { time: format(completedAt, 'h:mmaaa').toLowerCase() });
+      } else if (completedAt.getFullYear() === now.getFullYear()) {
+        completionMetaText = format(completedAt, 'MMM dd');
+      } else {
+        completionMetaText = format(completedAt, 'MMM dd, yyyy');
+      }
+
+      const autoArchiveDaysValue = listAutoArchiveDays || 30;
+      const daysSinceCompleted = (now.getTime() - completedAt.getTime()) / (1000 * 60 * 60 * 24);
+      autoArchiveDaysRemaining = Math.max(0, Math.ceil(autoArchiveDaysValue - daysSinceCompleted));
+      autoArchiveElapsedPercent = Math.min(100, (daysSinceCompleted / autoArchiveDaysValue) * 100);
+      isAutoArchiveUrgent = autoArchiveElapsedPercent >= 80;
+    }
+
     const contentNode = (
       <>
         <div>
           <div className={s.detailsTitle}>
+            {isDoneList && <Icon type={IconType.Check} size={IconSize.Size13} className={s.doneCheck} />}
             <div title={name} className={s.name}>
               <LinkifiedTextRenderer text={name} />
             </div>
@@ -344,6 +376,15 @@ const Card = React.memo(
             )}
           </div>
         )}
+        {isDoneList && completionMetaText && <div className={s.doneMeta}>{completionMetaText}</div>}
+        {isDoneList && completedAt && (
+          <div className={clsx(s.autoArchiveRow, isAutoArchiveUrgent && s.autoArchiveRowUrgent)}>
+            {autoArchiveDaysRemaining > 0 ? t('common.autoArchivesInDays', { days: autoArchiveDaysRemaining }) : t('common.autoArchivesToday')}
+            <span className={s.autoArchiveBar}>
+              <span className={s.autoArchiveBarFill} style={{ width: `${autoArchiveElapsedPercent}%` }} />
+            </span>
+          </div>
+        )}
       </>
     );
 
@@ -351,7 +392,7 @@ const Card = React.memo(
       // eslint-disable-next-line react/jsx-props-no-spreading
       <div {...dragProvided.draggableProps} {...dragProvided.dragHandleProps} ref={dragProvided.innerRef} className={s.wrapper} style={getStyle(dragProvided.draggableProps.style, dragSnapshot)}>
         <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-          <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, (parent || childrenCount > 0) && s.cardHasHeroAccent)}>
+          <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, (parent || childrenCount > 0) && s.cardHasHeroAccent, !isClone && dragSnapshot.isDragging && s.cardDragging)}>
             {isBlocked && (
               <span className={s.blockedIndicator} title={t('common.cardIsBlocked')}>
                 <Icon type={IconType.Exclamation} size={IconSize.Size20} className={s.blockedIndicatorIcon} />
@@ -470,6 +511,9 @@ Card.propTypes = {
   coverUrl: PropTypes.string,
   boardId: PropTypes.string.isRequired,
   listId: PropTypes.string.isRequired,
+  listType: PropTypes.oneOf(['none', 'active', 'blocked', 'done']),
+  listAutoArchiveDays: PropTypes.number,
+  completedAt: PropTypes.instanceOf(Date),
   projectId: PropTypes.string.isRequired,
   isPersisted: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
@@ -530,6 +574,9 @@ Card.defaultProps = {
   dueDate: undefined,
   timer: undefined,
   coverUrl: undefined,
+  listType: 'none',
+  listAutoArchiveDays: undefined,
+  completedAt: undefined,
   description: undefined,
   priority: undefined,
   parent: undefined,

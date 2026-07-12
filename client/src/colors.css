@@ -146,6 +146,19 @@
   --heroBannerText: #1a1a1a;
 
   /*
+   * List type indicators (List.jsx header dot + ActionsPopup type menu) and the
+   * WIP-limit-exceeded / blocked warning stripe. Aliases only, like the Tailwind
+   * bridge below — resolve lazily per active [data-theme], so defining them once
+   * here is sufficient (same reasoning as --heroAccent not being redefined for
+   * github-dark below: the aliased tokens already carry the per-theme color).
+   */
+  --listTypeNone: var(--textColor4);
+  --listTypeActive: var(--borderOutline);
+  --listTypeBlocked: var(--backgroundRed);
+  --listTypeDone: var(--backgroundGreen);
+  --listWarningStripe: var(--backgroundRed);
+
+  /*
    * Tailwind / shadcn-ui token bridge.
    * These alias the existing theme variables above instead of introducing a
    * second color system. Because CSS custom properties resolve var() refs

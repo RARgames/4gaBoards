@@ -24,6 +24,22 @@ module.exports = {
       required: true,
       columnName: 'is_collapsed',
     },
+    type: {
+      type: 'string',
+      isIn: ['none', 'active', 'blocked', 'done'],
+      defaultsTo: 'none',
+    },
+    wipLimit: {
+      type: 'number',
+      allowNull: true,
+      columnName: 'wip_limit',
+    },
+    autoArchiveDays: {
+      type: 'number',
+      allowNull: true,
+      defaultsTo: 30,
+      columnName: 'auto_archive_days',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

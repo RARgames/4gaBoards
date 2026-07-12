@@ -11,12 +11,15 @@ const makeMapStateToProps = () => {
   const selectCardIdsByListId = selectors.makeSelectCardIdsByListId();
   const selectIsFilteredByListId = selectors.makeSelectIsFilteredByListId();
   const selectFilteredCardIdsByListId = selectors.makeSelectFilteredCardIdsByListId();
+  const selectCompletedAtByCardIdForListId = selectors.makeSelectCompletedAtByCardIdForListId();
 
   return (state, { id, index }) => {
-    const { name, isPersisted, isCollapsed, createdAt, createdBy, updatedAt, updatedBy } = selectListById(state, id);
+    const { boardId } = selectors.selectPath(state);
+    const { name, isPersisted, isCollapsed, type, wipLimit, autoArchiveDays, createdAt, createdBy, updatedAt, updatedBy } = selectListById(state, id);
     const cardIds = selectCardIdsByListId(state, id);
     const isFiltered = selectIsFilteredByListId(state, id);
     const filteredCardIds = selectFilteredCardIdsByListId(state, id);
+    const completedAtByCardId = type === 'done' ? selectCompletedAtByCardIdForListId(state, id) : undefined;
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
@@ -27,12 +30,17 @@ const makeMapStateToProps = () => {
     return {
       id,
       index,
+      boardId,
       name,
       isCollapsed,
       isPersisted,
+      type,
+      wipLimit,
+      autoArchiveDays,
       cardIds,
       isFiltered,
       filteredCardIds,
+      completedAtByCardId,
       labelIds,
       memberIds,
       canEdit: isCurrentUserEditor,

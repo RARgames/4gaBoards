@@ -72,4 +72,13 @@
     flex: 1 1 220px;
     min-width: 0;
   }
+
+  .adderCardError {
+    width: 100%;
+    color: var(--textColorError);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

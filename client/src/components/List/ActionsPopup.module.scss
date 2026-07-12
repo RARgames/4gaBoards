@@ -12,4 +12,86 @@
   .icon {
     margin-right: 4px;
   }
+
+  .typeOption {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+  }
+
+  .typeOptionSelected {
+    background: var(--backgroundPopupHover);
+  }
+
+  .typeOptionDot {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    margin-top: 4px;
+    border-radius: 50%;
+  }
+
+  .typeOptionDot-none {
+    background: var(--listTypeNone);
+  }
+
+  .typeOptionDot-active {
+    background: var(--listTypeActive);
+  }
+
+  .typeOptionDot-blocked {
+    background: var(--listTypeBlocked);
+  }
+
+  .typeOptionDot-done {
+    background: var(--listTypeDone);
+  }
+
+  .typeOptionText {
+    flex: 1;
+    min-width: 0;
+
+    b {
+      display: block;
+      font-size: 13px;
+      color: var(--textColor0);
+    }
+
+    small {
+      display: block;
+      font-size: 11px;
+      color: var(--textColor3);
+      margin-top: 1px;
+    }
+  }
+
+  .typeOptionCheck {
+    flex: none;
+    fill: var(--textColorGreen);
+    margin-top: 4px;
+  }
+
+  .typeField {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 14px 2px;
+
+    label {
+      font-size: 12px;
+      color: var(--textColor3);
+    }
+
+    input {
+      width: 60px;
+      background: var(--backgroundColorTmpDarkerField);
+      border: 1px solid var(--backgroundPopupSeparator);
+      border-radius: var(--tw-radius);
+      color: var(--textColor0);
+      padding: 4px 6px;
+      font-size: 12px;
+    }
+  }
 }

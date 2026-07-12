@@ -6,6 +6,12 @@ export const transformCard = (card) => ({
   ...(card.startDate && {
     startDate: new Date(card.startDate),
   }),
+  ...(card.completedAt && {
+    completedAt: new Date(card.completedAt),
+  }),
+  ...(card.archivedAt && {
+    archivedAt: new Date(card.archivedAt),
+  }),
   ...(card.timer && {
     timer: {
       ...card.timer,

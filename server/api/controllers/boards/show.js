@@ -45,7 +45,12 @@ module.exports = {
     const labels = await sails.helpers.boards.getLabels(board.id);
     const lists = await sails.helpers.boards.getLists(board.id);
 
-    const cards = await sails.helpers.boards.getCards(board.id);
+    const autoArchiveDaysByListId = _.mapValues(_.keyBy(lists, 'id'), 'autoArchiveDays');
+
+    // §5.3: cards past their list's auto-archive delay disappear from the normal board view —
+    // no background job, just excluded lazily here. They remain visible via the Archive view
+    // (boards/archived-cards controller), which applies the inverse of this same predicate.
+    const cards = (await sails.helpers.boards.getCards(board.id)).filter((card) => !sails.helpers.cards.isArchived(card, autoArchiveDaysByListId[card.listId]));
     const cardIds = sails.helpers.utils.mapRecords(cards);
 
     const cardSubscriptions = await sails.helpers.cardSubscriptions.getMany({

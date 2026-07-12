@@ -11,6 +11,9 @@ export default class extends BaseModel {
     position: attr(),
     name: attr(),
     isCollapsed: attr(),
+    type: attr(),
+    wipLimit: attr(),
+    autoArchiveDays: attr(),
     boardId: fk({
       to: 'Board',
       as: 'board',

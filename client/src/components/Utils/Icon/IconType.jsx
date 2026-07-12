@@ -3,6 +3,7 @@ import { ReactComponent as AddressCard } from '../../../assets/icons/AddressCard
 import { ReactComponent as AngleLeft } from '../../../assets/icons/AngleLeft.svg';
 import { ReactComponent as AngleLeftDouble } from '../../../assets/icons/AngleLeftDouble.svg';
 import { ReactComponent as AnyMatch } from '../../../assets/icons/AnyMatch.svg';
+import { ReactComponent as Archive } from '../../../assets/icons/Archive.svg';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/ArrowDown.svg';
 import { ReactComponent as ArrowLeftBig } from '../../../assets/icons/ArrowLeftBig.svg';
 import { ReactComponent as Attach } from '../../../assets/icons/Attach.svg';
@@ -25,8 +26,8 @@ import { ReactComponent as Facebook } from '../../../assets/icons/Facebook.svg';
 import { ReactComponent as FillDrip } from '../../../assets/icons/FillDrip.svg';
 import { ReactComponent as FullScreen } from '../../../assets/icons/FullScreen.svg';
 import { ReactComponent as GitHub } from '../../../assets/icons/GitHub.svg';
-import { ReactComponent as GripVertical } from '../../../assets/icons/GripVertical.svg';
 import { ReactComponent as Google } from '../../../assets/icons/Google.svg';
+import { ReactComponent as GripVertical } from '../../../assets/icons/GripVertical.svg';
 import { ReactComponent as Hide } from '../../../assets/icons/Hide.svg';
 import { ReactComponent as Image } from '../../../assets/icons/Image.svg';
 import { ReactComponent as Info } from '../../../assets/icons/Info.svg';
@@ -71,6 +72,7 @@ const IconType = {
   AngleLeft,
   AngleLeftDouble,
   AnyMatch,
+  Archive,
   ArrowDown,
   ArrowLeftBig,
   Attach,

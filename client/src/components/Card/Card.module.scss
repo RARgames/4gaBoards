@@ -62,6 +62,12 @@
     line-height: 0;
   }
 
+  // §6.7: the card left behind in its list while being dragged — matches the timeline's
+  // .barDragging treatment (Timeline.module.scss) so both drag surfaces read consistently.
+  .cardDragging {
+    opacity: 0.75;
+  }
+
   .card {
     background: var(--backgroundColorTmpHeader);
     border-radius: var(--tw-radius-lg);
@@ -169,6 +175,9 @@
   }
 
   .detailsTitle {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
     padding: 4px 8px 4px 4px;
   }
 
@@ -187,16 +196,62 @@
   }
 
   .name {
-    color: var(--textColor1);
-    font-size: 14px;
-    line-height: 18px;
+    flex: 1;
+    min-width: 0;
+    color: var(--textColor0);
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 17px;
     word-wrap: break-word;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     line-clamp: 3;
-    max-height: 58px;
+    max-height: 51px;
+  }
+
+  .doneCheck {
+    flex: none;
+    fill: var(--textColorGreen);
+    margin-top: 2px;
+  }
+
+  .doneMeta {
+    font-family: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 10.5px;
+    color: var(--textColor4);
+    padding: 4px 6px 0 4px;
+  }
+
+  .autoArchiveRow {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 10px;
+    color: var(--textColor4);
+    padding: 2px 6px 6px 4px;
+  }
+
+  .autoArchiveRowUrgent {
+    color: var(--heroAccent);
+  }
+
+  .autoArchiveBar {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--backgroundPopupSeparator);
+    overflow: hidden;
+  }
+
+  .autoArchiveBarFill {
+    display: block;
+    height: 100%;
+    background: var(--heroAccent);
   }
 
   .notification {

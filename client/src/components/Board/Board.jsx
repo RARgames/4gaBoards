@@ -5,11 +5,13 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
+import ArchiveViewContainer from '../../containers/ArchiveViewContainer';
 import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import CardModalContainer from '../../containers/CardModalContainer';
 import ListContainer from '../../containers/ListContainer';
 import ListViewContainer from '../../containers/ListViewContainer';
 import SwimlanesViewContainer from '../../containers/SwimlanesViewContainer';
+import DragPreviewContext from '../../contexts/DragPreviewContext';
 import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 import ListAdd from './ListAdd';
 
@@ -24,6 +26,9 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
   const wrapper = useRef(null);
   const prevPosition = useRef(null);
   const [viewMode, setViewMode] = useState(defaultView);
+  // §6.7: live card-drag destination for the placement-preview ghost — see DragPreviewContext
+  // for why this is plain state + context rather than Redux.
+  const [dragPreview, setDragPreview] = useState(null);
 
   const handleAddListClick = useCallback(() => {
     setIsListAddOpened(true);
@@ -33,8 +38,39 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
     setIsListAddOpened(false);
   }, []);
 
+  // §6.6: the Done list's archive-teaser row switches straight to the Archive view — threaded
+  // down to ListContainer the same way viewMode/onViewModeChange already reaches BoardActionsContainer.
+  const handleArchiveViewOpen = useCallback(() => {
+    setViewMode('archive');
+  }, []);
+
+  const handleDragStart = useCallback(() => {
+    setDragPreview(null);
+  }, []);
+
+  const handleDragUpdate = useCallback(({ draggableId, type, destination }) => {
+    if (type !== DroppableTypes.CARD || !destination) {
+      // Functional form + returning `prev` unchanged makes React bail out of the re-render
+      // entirely instead of just producing an equal-looking new object every time.
+      setDragPreview((prev) => (prev === null ? prev : null));
+      return;
+    }
+    // rbd calls onDragUpdate on every animation frame while dragging, not just when the
+    // destination actually changes — without this guard, a card merely hovering in place would
+    // still re-render every list on every frame (rowItems/resetAfterIndex churn), which is what
+    // caused the glitching. Only commit a new object when the logical destination differs.
+    setDragPreview((prev) => {
+      if (prev && prev.draggableId === draggableId && prev.destination.droppableId === destination.droppableId && prev.destination.index === destination.index) {
+        return prev;
+      }
+      return { draggableId, destination };
+    });
+  }, []);
+
   const handleDragEnd = useCallback(
     ({ draggableId, type, source, destination }) => {
+      setDragPreview(null);
+
       if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) {
         return;
       }
@@ -124,35 +160,37 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
   const boardView = (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div ref={wrapper} className={clsx(s.boardWrapper, gs.scrollableX)} onMouseDown={handleMouseDown}>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
-          {({ innerRef, droppableProps, placeholder }) => (
-            <div
-              {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-              data-drag-scroller
-              ref={innerRef}
-              className={clsx(s.lists, gs.cursorGrab)}
-            >
-              {listIds.map((listId, index) => (
-                <ListContainer key={listId} id={listId} index={index} />
-              ))}
-              {placeholder}
-              {canEdit && (
-                <div data-drag-scroller className={s.list}>
-                  {isListAddOpened ? (
-                    <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
-                  ) : (
-                    <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
-                      <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
-                      <span className={s.addListButtonText}>{t('action.addList')}</span>
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <DragPreviewContext.Provider value={dragPreview}>
+        <DragDropContext onDragStart={handleDragStart} onDragUpdate={handleDragUpdate} onDragEnd={handleDragEnd}>
+          <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
+            {({ innerRef, droppableProps, placeholder }) => (
+              <div
+                {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
+                data-drag-scroller
+                ref={innerRef}
+                className={clsx(s.lists, gs.cursorGrab)}
+              >
+                {listIds.map((listId, index) => (
+                  <ListContainer key={listId} id={listId} index={index} onArchiveViewOpen={handleArchiveViewOpen} />
+                ))}
+                {placeholder}
+                {canEdit && (
+                  <div data-drag-scroller className={s.list}>
+                    {isListAddOpened ? (
+                      <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
+                    ) : (
+                      <Button style={ButtonStyle.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
+                        <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
+                        <span className={s.addListButtonText}>{t('action.addList')}</span>
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </DragPreviewContext.Provider>
     </div>
   );
 
@@ -168,6 +206,12 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
     </div>
   );
 
+  const archiveView = (
+    <div className={clsx(s.listWrapper)}>
+      <ArchiveViewContainer />
+    </div>
+  );
+
   return (
     <div className={s.boardContainer}>
       <BoardActionsContainer boardId={id} viewMode={viewMode} onViewModeChange={setViewMode} />
@@ -175,6 +219,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
         {viewMode === 'board' && boardView}
         {viewMode === 'list' && listView}
         {viewMode === 'swimlanes' && swimlanesView}
+        {viewMode === 'archive' && archiveView}
         {isCardModalOpened && <CardModalContainer />}
       </div>
     </div>

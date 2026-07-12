@@ -50,10 +50,14 @@
   /* VARIANTS */
 
   .wrapperCard {
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
     max-width: 176px;
-    padding: 1px 6px;
+    padding: 2px 7px;
+    border-radius: 4px;
   }
 
   .wrapperCardModal {

@@ -69,6 +69,7 @@ module.exports.routes = {
   'DELETE /api/boards/:id': 'boards/delete',
   'GET /api/boards/:id/export': 'boards/export',
   'GET /api/boards/:id/cards-summary': 'boards/cards-summary',
+  'GET /api/boards/:id/archived-cards': 'boards/archived-cards',
 
   'POST /api/boards/:boardId/memberships': 'board-memberships/create',
   'PATCH /api/board-memberships/:id': 'board-memberships/update',
@@ -86,6 +87,8 @@ module.exports.routes = {
   'GET /api/cards/:id': 'cards/show',
   'PATCH /api/cards/:id': 'cards/update',
   'POST /api/cards/:id/duplicate': 'cards/duplicate',
+  'POST /api/cards/:id/archive': 'cards/archive',
+  'POST /api/cards/:id/unarchive': 'cards/unarchive',
   'DELETE /api/cards/:id': 'cards/delete',
   'POST /api/cards/:cardId/memberships': 'card-memberships/create',
   'DELETE /api/cards/:cardId/memberships': 'card-memberships/delete',

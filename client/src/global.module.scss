@@ -43,4 +43,9 @@
   .cursorResize {
     cursor: ew-resize;
   }
+
+  .fontMono {
+    font-family: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
 }

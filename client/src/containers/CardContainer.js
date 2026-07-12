@@ -18,6 +18,7 @@ const makeMapStateToProps = () => {
   const selectChildrenCountByCardId = selectors.makeSelectChildrenCountByCardId();
   const selectParentCardByCardId = selectors.makeSelectParentCardByCardId();
   const selectIsBlockedByCardId = selectors.makeSelectIsBlockedByCardId();
+  const selectListById = selectors.makeSelectListById();
   const selectBoardAndCardMembershipsByCardId = selectors.makeSelectBoardAndCardMembershipsByCardId();
   const selectBoardAndTaskMembershipsByCardId = selectors.makeSelectBoardAndTaskMembershipsByCardId();
   const selectActivitiesByCardId = selectors.makeSelectActivitiesByCardId();
@@ -41,6 +42,7 @@ const makeMapStateToProps = () => {
       description,
       boardId,
       listId,
+      completedAt,
       isPersisted,
       commentCount,
       isActivitiesFetching,
@@ -56,6 +58,9 @@ const makeMapStateToProps = () => {
     const parent = selectParentCardByCardId(state, id);
     const childrenCount = selectChildrenCountByCardId(state, id);
     const isBlocked = selectIsBlockedByCardId(state, id);
+    // §6.2: the Done card treatment is gated on the parent list's type, the same shape as
+    // isBlocked above — threaded down as a plain prop rather than recomputed inside Card.jsx.
+    const { type: listType, autoArchiveDays: listAutoArchiveDays } = selectListById(state, listId) || {};
 
     const users = selectUsersByCardId(state, id);
     const labels = selectLabelsByCardId(state, id);
@@ -77,6 +82,9 @@ const makeMapStateToProps = () => {
       coverUrl,
       boardId,
       listId,
+      listType,
+      listAutoArchiveDays,
+      completedAt,
       projectId,
       isPersisted,
       isOpen,

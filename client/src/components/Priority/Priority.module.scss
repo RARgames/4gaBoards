@@ -16,9 +16,11 @@
   }
 
   .wrapperCard {
-    font-size: 11px;
+    font-size: 10px;
     line-height: 14px;
-    padding: 1px 6px;
+    letter-spacing: 0.02em;
+    padding: 2px 7px;
+    border-radius: 4px;
   }
 
   .wrapperHoverable {

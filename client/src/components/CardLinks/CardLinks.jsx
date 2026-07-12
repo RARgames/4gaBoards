@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import api from '../../api';
 import Paths from '../../constants/Paths';
+import { getAccessToken } from '../../utils/access-token-storage';
 import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './CardLinks.module.scss';
@@ -18,34 +19,47 @@ const LinkAdder = React.memo(({ cardId, currentBoardId, accessibleBoards, type, 
   const [boardId, setBoardId] = useState(currentBoardId);
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState(null);
   const [pickResetKey, setPickResetKey] = useState(0); // bump to reset the card dropdown after a pick
+  const [retryKey, setRetryKey] = useState(0); // bump to re-run the fetch below without changing boardId
 
   useEffect(() => {
     if (!boardId) return undefined;
     let cancelled = false;
     setIsLoading(true);
+    setLoadError(null);
     api
-      .getBoardCardsSummary(boardId)
+      .getBoardCardsSummary(boardId, { Authorization: `Bearer ${getAccessToken()}` })
       .then((res) => {
         if (cancelled) return;
         const items = (res.items || []).filter((c) => c.id !== cardId);
         setCards(items);
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
         if (cancelled) return;
+        // Previously swallowed silently, which made a genuinely empty board and a failed
+        // request (permissions, network, server error) look identical in the UI — both showed
+        // "No cards on this board". Surface it so it's diagnosable and distinguishable.
+        // eslint-disable-next-line no-console
+        console.error(`Failed to load cards for board ${boardId}:`, error);
         setCards([]);
+        setLoadError(error);
         setIsLoading(false);
       });
     return () => {
       cancelled = true;
     };
-  }, [boardId, cardId]);
+  }, [boardId, cardId, retryKey]);
 
   const handleBoardChange = useCallback((option) => {
     if (option && option.id) {
       setBoardId(option.id);
     }
+  }, []);
+
+  const handleRetryClick = useCallback(() => {
+    setRetryKey((k) => k + 1);
   }, []);
 
   const handleCardChange = useCallback(
@@ -61,6 +75,7 @@ const LinkAdder = React.memo(({ cardId, currentBoardId, accessibleBoards, type, 
   const cardPlaceholder = (() => {
     if (!boardId) return t('common.pickBoardFirst');
     if (isLoading) return t('common.loading');
+    if (loadError) return t('common.couldNotLoadCards');
     if (cards.length === 0) return t('common.noLinkableCards');
     return placeholder;
   })();
@@ -68,24 +83,14 @@ const LinkAdder = React.memo(({ cardId, currentBoardId, accessibleBoards, type, 
   return (
     <div className={s.adderRow}>
       <div className={s.adderBoard}>
-        <Dropdown
-          style={DropdownStyle.FullWidth}
-          options={accessibleBoards}
-          placeholder={t('common.pickBoard')}
-          defaultItem={defaultBoardOption}
-          isSearchable
-          onChange={handleBoardChange}
-        />
+        <Dropdown style={DropdownStyle.FullWidth} options={accessibleBoards} placeholder={t('common.pickBoard')} defaultItem={defaultBoardOption} isSearchable onChange={handleBoardChange} />
       </div>
       <div className={s.adderCard}>
-        <Dropdown
-          key={`${type}-${boardId}-${pickResetKey}`}
-          style={DropdownStyle.FullWidth}
-          options={cards}
-          placeholder={cardPlaceholder}
-          isSearchable
-          onChange={handleCardChange}
-        />
+        {loadError ? (
+          <Button style={ButtonStyle.DefaultBorder} content={cardPlaceholder} onClick={handleRetryClick} className={s.adderCardError} />
+        ) : (
+          <Dropdown key={`${type}-${boardId}-${pickResetKey}`} style={DropdownStyle.FullWidth} options={cards} placeholder={cardPlaceholder} isSearchable onChange={handleCardChange} />
+        )}
       </div>
     </div>
   );
@@ -147,9 +152,7 @@ const CardLinks = React.memo(({ cardId, currentBoardId, references, blockedBy, r
           );
         })}
       </div>
-      {canEdit && accessibleBoards.length > 0 && (
-        <LinkAdder cardId={cardId} currentBoardId={currentBoardId} accessibleBoards={accessibleBoards} type={type} placeholder={addLabel} onCreate={onCreate} />
-      )}
+      {canEdit && accessibleBoards.length > 0 && <LinkAdder cardId={cardId} currentBoardId={currentBoardId} accessibleBoards={accessibleBoards} type={type} placeholder={addLabel} onCreate={onCreate} />}
     </div>
   );
 

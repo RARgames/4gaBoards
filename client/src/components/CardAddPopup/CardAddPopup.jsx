@@ -72,7 +72,10 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
       switch (e.key) {
         case 'Enter': {
           e.preventDefault(); // Prevent adding new line in TextArea
-          const autoOpen = e.ctrlKey;
+          // Enter (and Ctrl+Enter, kept for muscle memory) opens the new card's details;
+          // Shift+Enter adds without opening and keeps the popup up, for entering several
+          // cards in a row.
+          const autoOpen = !e.shiftKey;
           const keepOpen = e.shiftKey;
           handleSubmit(autoOpen, keepOpen);
           break;
@@ -126,7 +129,7 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
             />
           )}
           <div className={gs.controls}>
-            <Button style={ButtonStyle.Submit} content={t('common.addCard')} onClick={(e) => handleSubmit(e.ctrlKey, e.shiftKey)} />
+            <Button style={ButtonStyle.Submit} content={t('common.addCard')} onClick={(e) => handleSubmit(!e.shiftKey, e.shiftKey)} />
           </div>
         </Form>
       </Popup.Content>

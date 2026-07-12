@@ -3,6 +3,62 @@
   --cardsInnerWrapperOffset: 227;
   --headerNameDefaultHeight: 20;
 
+  // §6.6: synthetic (non-draggable) rows interleaved into the virtualized card list of a
+  // `done`-type list. Heights here must match GROUP_LABEL_HEIGHT/ARCHIVE_TEASER_HEIGHT in List.jsx.
+  .groupLabel {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--textColor4);
+    padding: 8px 3px 4px;
+  }
+
+  .archiveTeaserWrapper {
+    box-sizing: border-box;
+    padding: 4px 1px 2px;
+  }
+
+  .archiveTeaser {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background: transparent;
+    border: 1px dashed var(--scrollbarThumb);
+    border-radius: var(--tw-radius-lg);
+    padding: 10px 11px;
+    font-size: 11.5px;
+    line-height: 1.4;
+    text-align: left;
+    color: var(--textColor3);
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--heroAccent);
+      color: var(--textColor0);
+    }
+  }
+
+  // §6.7: drag placement-preview ghost — a synthetic, non-draggable row (see List.jsx
+  // buildRowItems/'ghost' handling), styled as the board translation of the timeline's
+  // .reassignPreview (Timeline.module.scss): dashed border, tinted fill, no solid card face.
+  .dropPreviewWrapper {
+    box-sizing: border-box;
+    padding: 0 0 8px;
+    pointer-events: none;
+  }
+
+  .dropPreview {
+    height: 100%;
+    border: 2px dashed var(--borderOutline);
+    border-radius: var(--tw-radius-lg);
+    background: color-mix(in srgb, var(--borderOutline) 12%, transparent);
+  }
+
   .addCardButton {
     background: var(--backgroundList);
     border-radius: 0 0 var(--tw-radius-lg) var(--tw-radius-lg);
@@ -67,10 +123,67 @@
   }
 
   .header {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
     outline: none;
-    padding: 10px 4px 6px 8px;
+    padding: 11px 6px 9px 12px;
+    // box-shadow, not border: a border adds to the box's rendered height, which the virtualized
+    // card-list height math (List.jsx wrapperOffset/HEADER_CHROME_DELTA) doesn't account for and
+    // was showing up as a phantom scrollbar. box-shadow paints the same 1px line with zero
+    // layout footprint.
+    box-shadow: inset 0 -1px 0 0 var(--backgroundPopupSeparator);
     position: relative;
-    float: left;
+  }
+
+  .headerNameBlock {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .headerTitleRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .headerCaption {
+    font-size: 10.5px;
+    color: var(--textColor4);
+    margin-top: 2px;
+  }
+
+  .headerCaptionWarning {
+    color: var(--listWarningStripe);
+  }
+
+  .typeDot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-top: 6px; // centers against the name's first 20px line-height, not the full 2-line block
+    border-radius: 50%;
+  }
+
+  .typeDot-none {
+    background: var(--listTypeNone);
+  }
+
+  .typeDot-active {
+    background: var(--listTypeActive);
+  }
+
+  .typeDot-blocked {
+    background: var(--listTypeBlocked);
+  }
+
+  .typeDot-done {
+    background: var(--listTypeDone);
+  }
+
+  .warningStripe {
+    height: 3px;
+    background: var(--listWarningStripe);
   }
 
   .headerCollapsed {
@@ -91,6 +204,7 @@
   }
 
   .popupWrapper {
+    flex: none;
     display: inline-block;
     position: relative;
     width: 10px;
@@ -102,15 +216,14 @@
   }
 
   .headerName {
+    flex: 1;
+    min-width: 0;
     color: var(--textColor0);
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 650;
+    letter-spacing: -0.005em;
     line-height: 20px;
     max-height: 40px;
-    width: 240px;
-    text-indent: 8px;
-    position: relative;
-    float: left;
-    left: -10px;
     outline: none;
     overflow: hidden;
     overflow-wrap: break-word;
@@ -135,10 +248,8 @@
   }
 
   .headerCollapseButton {
+    flex: none;
     z-index: 1;
-    position: relative;
-    float: left;
-    left: -2px;
     width: 10px;
     height: 20px;
   }
@@ -154,10 +265,12 @@
   }
 
   .headerCardsCount {
-    color: var(--textColor3);
-    font-size: 12px;
-    position: relative;
-    float: left;
+    flex: none;
+    align-self: flex-start;
+    margin-top: 3px; // roughly centers against the 20px name line-height, matching headerCollapseButton
+    margin-left: auto;
+    color: var(--textColor4);
+    font-size: 11px;
   }
 
   .headerCardsCountCollapsed {
@@ -184,7 +297,12 @@
   .outerWrapper {
     background: var(--backgroundList);
     border-radius: var(--tw-radius-lg);
-    box-shadow: var(--tw-shadow);
+    // inset outline instead of a real border — same reasoning as .header above: a real border
+    // adds to the box's dimensions and was contributing to the virtualized list computing
+    // itself a few pixels taller than actually fits.
+    box-shadow:
+      inset 0 0 0 1px var(--backgroundPopupSeparator),
+      var(--tw-shadow);
     overflow: hidden;
   }
 

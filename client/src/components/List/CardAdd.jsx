@@ -57,9 +57,14 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
     [data, onCreate, setData, onClose, focusNameField],
   );
 
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
+  const handleSubmit = useCallback(
+    (e) => {
+      // Default: open the new card's details right away. Shift inverts into the quick
+      // multi-add flow (create, stay in the form, don't open) — same modifier as Shift+Enter.
+      submit(!e.shiftKey);
+    },
+    [submit],
+  );
 
   const handleCancel = useCallback(() => {
     close();
@@ -71,7 +76,9 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
       switch (e.key) {
         case 'Enter': {
           e.preventDefault(); // Prevent adding new line in TextArea
-          const autoOpen = e.ctrlKey;
+          // Enter (and Ctrl+Enter, kept for muscle memory) opens the new card's details;
+          // Shift+Enter adds without opening, for entering several cards in a row.
+          const autoOpen = !e.shiftKey;
           submit(autoOpen);
           break;
         }

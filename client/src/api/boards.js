@@ -49,6 +49,14 @@ const exportBoard = (id, data, headers) => socket.get(`/boards/${id}/export`, da
 // picker so we don't have to fetch the entire target board's payload just to enumerate cards.
 const getBoardCardsSummary = (id, headers) => socket.get(`/boards/${id}/cards-summary`, undefined, headers);
 
+// §5.4/§6.4: cards past their list's auto-archive delay (or manually archived). Grouping and
+// filtering happen client-side on the returned set (ArchiveView), same as the approved mockup.
+const getBoardArchivedCards = (id, headers) =>
+  socket.get(`/boards/${id}/archived-cards`, undefined, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformCard),
+  }));
+
 /* Event handlers */
 
 const makeHandleBoardCreate = (next) => (body) => {
@@ -70,6 +78,7 @@ export default {
   deleteBoard,
   exportBoard,
   getBoardCardsSummary,
+  getBoardArchivedCards,
   makeHandleBoardCreate,
   makeHandleBoardUpdate,
   makeHandleBoardDelete,

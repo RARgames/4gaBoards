@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
@@ -12,9 +13,78 @@ import * as s from './ActionsPopup.module.scss';
 const StepTypes = {
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
+  LIST_TYPE: 'LIST_TYPE',
 };
 
-const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onClose }) => {
+const LIST_TYPES = ['none', 'active', 'blocked', 'done'];
+
+// §6.1: the mockup's four-option list-type menu, translated into this app's popup-step
+// convention (same shape as DeleteStep/ActivityStep — Popup.Header w/ onBack + Popup.Content).
+const ListTypeStep = React.memo(({ type, wipLimit, autoArchiveDays, onUpdate, onBack }) => {
+  const [t] = useTranslation();
+
+  const handleWipLimitChange = useCallback(
+    (event) => {
+      const { value } = event.target;
+      onUpdate({ wipLimit: value === '' ? null : Number(value) });
+    },
+    [onUpdate],
+  );
+
+  const handleAutoArchiveDaysChange = useCallback(
+    (event) => {
+      const { value } = event.target;
+      onUpdate({ autoArchiveDays: value === '' ? null : Number(value) });
+    },
+    [onUpdate],
+  );
+
+  return (
+    <>
+      <Popup.Header onBack={onBack}>{t('common.listType')}</Popup.Header>
+      <Popup.Content>
+        {LIST_TYPES.map((candidateType) => (
+          <Button key={candidateType} style={ButtonStyle.PopupContext} className={clsx(s.typeOption, candidateType === type && s.typeOptionSelected)} onClick={() => onUpdate({ type: candidateType })}>
+            <span className={clsx(s.typeOptionDot, s[`typeOptionDot-${candidateType}`])} />
+            <span className={s.typeOptionText}>
+              <b>{t(`common.listType${candidateType.charAt(0).toUpperCase()}${candidateType.slice(1)}`)}</b>
+              <small>{t(`common.listType${candidateType.charAt(0).toUpperCase()}${candidateType.slice(1)}Description`)}</small>
+            </span>
+            {candidateType === type && <Icon type={IconType.Check} size={IconSize.Size13} className={s.typeOptionCheck} />}
+          </Button>
+        ))}
+        {type === 'active' && (
+          <div className={s.typeField}>
+            <label htmlFor="listActionsPopupWipLimit">{t('common.wipLimit')}</label>
+            <input id="listActionsPopupWipLimit" type="number" min="0" value={wipLimit ?? ''} onChange={handleWipLimitChange} />
+          </div>
+        )}
+        {type === 'done' && (
+          <div className={s.typeField}>
+            <label htmlFor="listActionsPopupAutoArchiveDays">{t('common.autoArchiveAfter')}</label>
+            <input id="listActionsPopupAutoArchiveDays" type="number" min="1" value={autoArchiveDays ?? ''} onChange={handleAutoArchiveDaysChange} />
+          </div>
+        )}
+      </Popup.Content>
+    </>
+  );
+});
+
+ListTypeStep.propTypes = {
+  type: PropTypes.oneOf(LIST_TYPES).isRequired,
+  wipLimit: PropTypes.number,
+  autoArchiveDays: PropTypes.number,
+  onUpdate: PropTypes.func.isRequired,
+  onBack: PropTypes.func,
+};
+
+ListTypeStep.defaultProps = {
+  wipLimit: undefined,
+  autoArchiveDays: undefined,
+  onBack: undefined,
+};
+
+const ActionsStep = React.memo(({ name, type, wipLimit, autoArchiveDays, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onTypeUpdate, onClose }) => {
   const [t] = useTranslation();
   const [step, openStep, handleBack] = useSteps();
 
@@ -33,6 +103,10 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
 
   const handleActivityClick = useCallback(() => {
     openStep(StepTypes.ACTIVITY);
+  }, [openStep]);
+
+  const handleListTypeClick = useCallback(() => {
+    openStep(StepTypes.LIST_TYPE);
   }, [openStep]);
 
   if (step) {
@@ -65,6 +139,8 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
             onBack={handleBack}
           />
         );
+      case StepTypes.LIST_TYPE:
+        return <ListTypeStep type={type} wipLimit={wipLimit} autoArchiveDays={autoArchiveDays} onUpdate={onTypeUpdate} onBack={handleBack} />;
       default:
     }
   }
@@ -74,6 +150,10 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
       <Button style={ButtonStyle.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
         <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
         {t('action.editName', { context: 'title' })}
+      </Button>
+      <Button style={ButtonStyle.PopupContext} title={t('common.listType')} onClick={handleListTypeClick}>
+        <Icon type={IconType.Sliders} size={IconSize.Size13} className={s.icon} />
+        {t('common.listType')}
       </Button>
       <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
         <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
@@ -94,6 +174,9 @@ const ActionsStep = React.memo(({ name, createdAt, createdBy, updatedAt, updated
 
 ActionsStep.propTypes = {
   name: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(LIST_TYPES).isRequired,
+  wipLimit: PropTypes.number,
+  autoArchiveDays: PropTypes.number,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -102,10 +185,13 @@ ActionsStep.propTypes = {
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onTypeUpdate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {
+  wipLimit: undefined,
+  autoArchiveDays: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

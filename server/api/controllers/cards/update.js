@@ -178,13 +178,24 @@ module.exports = {
 
     const values = _.pick(inputs, ['coverAttachmentId', 'priority', 'parentCardId', 'position', 'name', 'description', 'dueDate', 'startDate', 'timer', 'isSubscribed']);
 
+    // Stamp/clear completedAt when the card is moving into or out of a `done`-type list.
+    // Moving between two `done`-type lists (if a board has more than one) leaves it untouched.
+    let completedAt;
+    if (nextList) {
+      if (nextList.type === 'done') {
+        if (!card.completedAt) {
+          completedAt = new Date();
+        }
+      } else if (card.completedAt) {
+        completedAt = null;
+      }
+    }
+
     const formatAssignedUsers = async () => {
       const memberships = await sails.helpers.cardMemberships.getMany({ cardId: card.id });
       const memberUserIds = memberships.map((membership) => membership.userId);
       const memberUsers = memberUserIds.length ? await User.find({ id: memberUserIds }) : [];
-      return memberUsers.length > 0
-        ? memberUsers.map((user) => user.name || user.username || user.email || `${user.id}`).join(', ')
-        : 'Unassigned';
+      return memberUsers.length > 0 ? memberUsers.map((user) => user.name || user.username || user.email || `${user.id}`).join(', ') : 'Unassigned';
     };
 
     const beforeAssignedUsers = await formatAssignedUsers();
@@ -201,6 +212,7 @@ module.exports = {
           ...values,
           board: nextBoard,
           list: nextList,
+          ...(completedAt !== undefined && { completedAt }),
         },
         currentUser,
         request: this.req,
@@ -229,9 +241,7 @@ module.exports = {
 
         if (onlyStateChanged) {
           const boardLink = boardLinks[String(card.boardId)] || `https://kanban.lucidrainstudios.com/boards/${card.boardId}`;
-          const cardLink = boardLink.includes('/boards/')
-            ? boardLink.replace(/\/boards\/[^/]+/, `/cards/${card.id}`)
-            : `https://kanban.lucidrainstudios.com/cards/${card.id}`;
+          const cardLink = boardLink.includes('/boards/') ? boardLink.replace(/\/boards\/[^/]+/, `/cards/${card.id}`) : `https://kanban.lucidrainstudios.com/cards/${card.id}`;
 
           const payload = {
             username: 'LRS Kanban',

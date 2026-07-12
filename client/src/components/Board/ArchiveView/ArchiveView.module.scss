@@ -1,0 +1,228 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .rail {
+    width: 220px;
+    flex: none;
+    border-right: 1px solid var(--backgroundPopupSeparator);
+    padding: 18px 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .filterBlock {
+    h3 {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--textColor4);
+      margin: 0 0 9px;
+    }
+  }
+
+  .segmented {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .segmentedOption {
+    display: flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    padding: 7px 9px;
+    border-radius: var(--tw-radius);
+    font-size: 12.5px;
+    color: var(--textColor3);
+    font-weight: 550;
+    text-align: left;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--backgroundPopupHover);
+    }
+  }
+
+  .segmentedOptionActive {
+    background: var(--heroAccent);
+    color: var(--heroAccentText);
+    font-weight: 650;
+  }
+
+  .filterChipList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .filterChip {
+    border: 1px solid var(--backgroundPopupSeparator);
+    background: var(--backgroundColorTmpHeader);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    color: var(--textColor3);
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--textColor0);
+    }
+  }
+
+  .filterChipActive {
+    background: var(--textColor0);
+    color: var(--backgroundColor);
+    border-color: var(--textColor0);
+  }
+
+  .main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .statStrip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--backgroundPopupSeparator);
+    border-bottom: 1px solid var(--backgroundPopupSeparator);
+    flex: none;
+  }
+
+  .stat {
+    background: var(--backgroundColor);
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .statNum {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--textColor0);
+  }
+
+  .statNumAccent {
+    color: var(--heroAccent);
+  }
+
+  .statLabel {
+    font-size: 11px;
+    color: var(--textColor3);
+  }
+
+  .list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 20px 24px;
+  }
+
+  .emptyState {
+    padding: 40px 10px;
+    text-align: center;
+    color: var(--textColor4);
+    font-size: 12.5px;
+  }
+
+  .group {
+    border-bottom: 1px solid var(--backgroundPopupSeparator);
+  }
+
+  .groupHead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 13px 2px;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .groupChev {
+    fill: var(--textColor4);
+    flex: none;
+    transition: transform 0.15s ease;
+  }
+
+  .groupChevClosed {
+    transform: rotate(-90deg);
+  }
+
+  .groupName {
+    font-weight: 650;
+    font-size: 13.5px;
+    color: var(--textColor0);
+  }
+
+  .groupCount {
+    font-size: 11.5px;
+    color: var(--textColor4);
+    margin-left: auto;
+  }
+
+  .groupRows {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 8px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1.4fr auto 120px 80px 60px;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 10px;
+    border-radius: var(--tw-radius);
+    font-size: 12.5px;
+
+    &:hover {
+      background: var(--backgroundPopupHover);
+    }
+  }
+
+  .rowName {
+    font-weight: 560;
+    color: var(--textColor0);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rowChips {
+    display: flex;
+    gap: 5px;
+  }
+
+  .rowAssignee {
+    color: var(--textColor3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rowDate {
+    color: var(--textColor3);
+    text-align: right;
+  }
+
+  .rowCycle {
+    color: var(--textColor4);
+    text-align: right;
+  }
+}

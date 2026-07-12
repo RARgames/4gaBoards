@@ -24,6 +24,18 @@ module.exports = {
     isCollapsed: {
       type: 'boolean',
     },
+    type: {
+      type: 'string',
+      isIn: ['none', 'active', 'blocked', 'done'],
+    },
+    wipLimit: {
+      type: 'number',
+      allowNull: true,
+    },
+    autoArchiveDays: {
+      type: 'number',
+      allowNull: true,
+    },
   },
 
   exits: {
@@ -53,7 +65,7 @@ module.exports = {
       throw Errors.NOT_ENOUGH_RIGHTS;
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'isCollapsed']);
+    const values = _.pick(inputs, ['position', 'name', 'isCollapsed', 'type', 'wipLimit', 'autoArchiveDays']);
 
     list = await sails.helpers.lists.updateOne.with({
       values,

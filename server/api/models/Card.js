@@ -32,6 +32,14 @@ module.exports = {
       type: 'ref',
       columnName: 'start_date',
     },
+    completedAt: {
+      type: 'ref',
+      columnName: 'completed_at',
+    },
+    archivedAt: {
+      type: 'ref',
+      columnName: 'archived_at',
+    },
     timer: {
       type: 'json',
     },
