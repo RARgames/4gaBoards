@@ -323,10 +323,9 @@ const List = React.memo(
     // `done` lists) vs. card-space (filteredCardIds order, what react-beautiful-dnd's Draggable
     // `index` and destination math use). For every non-`done` list these two spaces are identical
     // — buildRowItems degenerates to one 'card' row per filtered card, unchanged from before.
-    // CRITICAL: existing rows must never MOVE during a drag. An earlier version spliced a ghost
-    // row in at the destination, but react-beautiful-dnd displaces the rendered cards with CSS
-    // transforms to open a gap at the same time — the reflow and the transforms stacked, and
-    // cards jumped around/offscreen. The drop preview is now a pure overlay (below), and the
+    // During a same-list hover we own the row layout explicitly: the dragged card becomes a
+    // preview row at the destination, and the real source card is omitted. When the card leaves
+    // the source list's valid hover area, we still omit it so the remaining cards stack normally.
     const dragPreview = useContext(DragPreviewContext);
 
     const isHomeListDrag = dragPreview && dragPreview.source && dragPreview.source.droppableId === `list:${id}`;
@@ -338,8 +337,15 @@ const List = React.memo(
       if (isSameListPreview && draggedCardId) {
         return buildSameListPreviewRowItems(filteredCardIds, draggedCardId, dragPreview.destination.index, type, completedAtByCardId, draggedRowHeight);
       }
+      if (isHomeListDrag && draggedCardId) {
+        return buildRowItems(
+          filteredCardIds.filter((cardId) => cardId !== draggedCardId),
+          type,
+          completedAtByCardId,
+        );
+      }
       return buildRowItems(filteredCardIds, type, completedAtByCardId);
-    }, [filteredCardIds, type, completedAtByCardId, isSameListPreview, draggedCardId, dragPreview, draggedRowHeight]);
+    }, [filteredCardIds, type, completedAtByCardId, isSameListPreview, draggedCardId, dragPreview, draggedRowHeight, isHomeListDrag]);
 
     const rowIndexByCardId = useMemo(() => {
       const map = {};
