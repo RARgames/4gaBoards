@@ -25,6 +25,8 @@ import * as s from './Card.module.scss';
 
 // .wrapper margin-bottom (8px); baked into the virtual row height since react-window positions rows absolutely
 const CARD_GAP = 8;
+const ROW_DRAG_TRANSFORM_PROPERTY = '--list-drag-transform';
+const ROW_DRAG_TRANSITION_PROPERTY = '--list-drag-transition';
 
 const Card = React.memo(
   ({
@@ -186,8 +188,18 @@ const Card = React.memo(
     );
 
     const getStyle = (draggableStyle, dragSnapshot) => {
-      // Merge in the virtualized-list row style (`style` prop); undefined for the drag clone
-      const merged = { ...draggableStyle, ...style };
+      // Merge the virtualized-list row style first so react-beautiful-dnd's live positioning
+      // and transform styles win while dragging. Reversing this leaves the source row pinned to
+      // its react-window slot while RBD is trying to animate the same-list displacement.
+      const merged = { ...style, ...draggableStyle };
+      const rowDragTransform = style?.[ROW_DRAG_TRANSFORM_PROPERTY];
+      if (rowDragTransform && !dragSnapshot.isDragging && !dragSnapshot.isDropAnimating) {
+        return {
+          ...merged,
+          transform: rowDragTransform,
+          transition: style?.[ROW_DRAG_TRANSITION_PROPERTY] || merged.transition,
+        };
+      }
       if (!dragSnapshot.isDropAnimating) {
         return merged;
       }

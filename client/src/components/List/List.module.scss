@@ -64,6 +64,15 @@
     background: color-mix(in srgb, var(--borderOutline) 12%, transparent);
   }
 
+  .sameListDropPreview {
+    box-sizing: border-box;
+    pointer-events: none;
+    border: 2px dashed var(--borderOutline);
+    border-radius: var(--tw-radius-lg);
+    background: color-mix(in srgb, var(--borderOutline) 12%, transparent);
+    margin-bottom: 8px;
+  }
+
   .addCardButton {
     background: var(--backgroundList);
     border-radius: 0 0 var(--tw-radius-lg) var(--tw-radius-lg);

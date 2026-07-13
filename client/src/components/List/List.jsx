@@ -42,6 +42,8 @@ const ARCHIVE_TEASER_HEIGHT = 62;
 // Card.jsx bakes its 8px margin-bottom (CARD_GAP) into each measured row height; the drop
 // preview box subtracts it back out so the dashed outline matches the card face, not the row.
 const CARD_ROW_GAP = 8;
+const ROW_DRAG_TRANSFORM_PROPERTY = '--list-drag-transform';
+const ROW_DRAG_TRANSITION_PROPERTY = '--list-drag-transition';
 
 const LIST_TYPE_LABEL_KEY = {
   none: 'common.listTypeNone',
@@ -98,13 +100,43 @@ function buildRowItems(filteredCardIds, type, completedAtByCardId) {
   return rows;
 }
 
+function buildSameListPreviewRowItems(filteredCardIds, draggedCardId, destinationIndex, type, completedAtByCardId, previewHeight) {
+  const remainingCardIds = filteredCardIds.filter((cardId) => cardId !== draggedCardId);
+  const finalCardIds = [...remainingCardIds];
+  finalCardIds.splice(Math.min(destinationIndex, finalCardIds.length), 0, draggedCardId);
+
+  if (type !== 'done') {
+    return finalCardIds.map((cardId) =>
+      cardId === draggedCardId ? { rowType: 'preview', key: 'same-list-drop-preview', height: previewHeight } : { rowType: 'card', key: cardId, cardId, cardIndex: filteredCardIds.indexOf(cardId) },
+    );
+  }
+
+  const rows = [];
+  let prevBucket = null;
+  finalCardIds.forEach((cardId) => {
+    const bucket = getDoneGroupBucket(completedAtByCardId ? completedAtByCardId[cardId] : null);
+    if (bucket !== prevBucket) {
+      rows.push({ rowType: 'label', key: `label:${bucket}`, bucket });
+      prevBucket = bucket;
+    }
+    if (cardId === draggedCardId) {
+      rows.push({ rowType: 'preview', key: 'same-list-drop-preview', height: previewHeight });
+    } else {
+      rows.push({ rowType: 'card', key: cardId, cardId, cardIndex: filteredCardIds.indexOf(cardId) });
+    }
+  });
+  rows.push({ rowType: 'teaser', key: 'archive-teaser' });
+
+  return rows;
+}
+
 function CardRow({ data, index, style }) {
   const item = data.rowItems[index];
   if (!item) {
     return null;
   }
 
-  const rowStyle = data.getSyntheticRowStyle ? data.getSyntheticRowStyle(item, style) : style;
+  const rowStyle = data.getRowStyle ? data.getRowStyle(item, style) : style;
 
   if (item.rowType === 'label') {
     return (
@@ -124,11 +156,11 @@ function CardRow({ data, index, style }) {
     );
   }
 
-  if (item.rowType === 'spacer') {
-    return <div style={rowStyle} />;
+  if (item.rowType === 'preview') {
+    return <div style={rowStyle} className={s.sameListDropPreview} />;
   }
 
-  return <CardContainer id={item.cardId} index={item.cardIndex} style={style} onSizeChange={data.onSizeChange} />;
+  return <CardContainer id={item.cardId} index={item.cardIndex} style={rowStyle} onSizeChange={data.onSizeChange} />;
 }
 
 CardRow.propTypes = {
@@ -295,26 +327,19 @@ const List = React.memo(
     // row in at the destination, but react-beautiful-dnd displaces the rendered cards with CSS
     // transforms to open a gap at the same time — the reflow and the transforms stacked, and
     // cards jumped around/offscreen. The drop preview is now a pure overlay (below), and the
-    // only drag-time row change allowed is APPENDING a spacer at the very end (rbd's documented
-    // virtual-list pattern): while a card from another list hovers here, rbd translates existing
-    // cards downward, and without extra room at the end the last card gets pushed out of the
-    // list's fixed height and clipped. An appended row shifts nothing above it, so it cannot
-    // re-introduce the double-shift glitch. Same-list drags need no spacer (net height is
-    // unchanged — the dragged card's own slot is the room).
     const dragPreview = useContext(DragPreviewContext);
 
+    const isHomeListDrag = dragPreview && dragPreview.source && dragPreview.source.droppableId === `list:${id}`;
+    const isSameListPreview = isHomeListDrag && dragPreview.destination && dragPreview.destination.droppableId === `list:${id}`;
+    const draggedCardId = dragPreview ? dragPreview.draggableId.split(':')[1] : null;
+    const draggedRowHeight = dragPreview && dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT;
+
     const rowItems = useMemo(() => {
-      const rows = buildRowItems(filteredCardIds, type, completedAtByCardId);
-      const isIncomingCrossListDrag = dragPreview && dragPreview.destination && dragPreview.destination.droppableId === `list:${id}` && (!dragPreview.source || dragPreview.source.droppableId !== `list:${id}`);
-      if (isIncomingCrossListDrag) {
-        rows.push({
-          rowType: 'spacer',
-          key: 'drag-spacer',
-          height: dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT,
-        });
+      if (isSameListPreview && draggedCardId) {
+        return buildSameListPreviewRowItems(filteredCardIds, draggedCardId, dragPreview.destination.index, type, completedAtByCardId, draggedRowHeight);
       }
-      return rows;
-    }, [filteredCardIds, type, completedAtByCardId, dragPreview, id]);
+      return buildRowItems(filteredCardIds, type, completedAtByCardId);
+    }, [filteredCardIds, type, completedAtByCardId, isSameListPreview, draggedCardId, dragPreview, draggedRowHeight]);
 
     const rowIndexByCardId = useMemo(() => {
       const map = {};
@@ -378,7 +403,7 @@ const List = React.memo(
       (rowIndex) => {
         const item = rowItems[rowIndex];
         if (!item) {
-          return ESTIMATED_CARD_HEIGHT;
+          return dragPreview && dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT;
         }
         if (item.rowType === 'label') {
           return GROUP_LABEL_HEIGHT;
@@ -386,20 +411,21 @@ const List = React.memo(
         if (item.rowType === 'teaser') {
           return ARCHIVE_TEASER_HEIGHT;
         }
-        if (item.rowType === 'spacer') {
+        if (item.rowType === 'preview') {
           return item.height;
         }
         return sizeMap.current[item.cardId] || ESTIMATED_CARD_HEIGHT;
       },
-      [rowItems],
+      [rowItems, dragPreview],
     );
 
     const getRowKey = useCallback((rowIndex) => rowItems[rowIndex]?.key ?? rowIndex, [rowItems]);
 
-    const syntheticRowBoundaryByKey = useMemo(() => {
+    const rowBoundaryByKey = useMemo(() => {
       const map = {};
       rowItems.forEach((item, rowIndex) => {
         if (item.rowType === 'card') {
+          map[item.key] = item.cardIndex;
           return;
         }
 
@@ -409,14 +435,16 @@ const List = React.memo(
           return;
         }
 
-        map[item.key] = filteredCardIds.length;
+        if (item.rowType === 'teaser') {
+          map[item.key] = filteredCardIds.length;
+        }
       });
       return map;
     }, [rowItems, filteredCardIds.length]);
 
-    const getSyntheticRowDisplacement = useCallback(
+    const getRowDisplacement = useCallback(
       (item) => {
-        if (item.rowType === 'card' || !dragPreview || !dragPreview.source) {
+        if (!dragPreview || !dragPreview.source) {
           return 0;
         }
 
@@ -427,9 +455,9 @@ const List = React.memo(
           return 0;
         }
 
-        const [, draggedCardId] = dragPreview.draggableId.split(':');
-        const draggedRowHeight = (isSourceList && sizeMap.current[draggedCardId]) || (dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT);
-        const rowBoundary = syntheticRowBoundaryByKey[item.key];
+        const [, activeDraggedCardId] = dragPreview.draggableId.split(':');
+        const activeDraggedRowHeight = (isSourceList && sizeMap.current[activeDraggedCardId]) || (dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT);
+        const rowBoundary = rowBoundaryByKey[item.key];
         if (rowBoundary === undefined) {
           return 0;
         }
@@ -437,31 +465,47 @@ const List = React.memo(
         if (isSourceList && isDestinationList) {
           const sourceIndex = dragPreview.source.index;
           const destinationIndex = dragPreview.destination.index;
+          if (item.rowType === 'card') {
+            return 0;
+          }
           if (destinationIndex > sourceIndex && rowBoundary > sourceIndex && rowBoundary <= destinationIndex) {
-            return -draggedRowHeight;
+            return -activeDraggedRowHeight;
           }
           if (destinationIndex < sourceIndex) {
             const isAfterDestination = item.rowType === 'label' ? rowBoundary > destinationIndex : rowBoundary >= destinationIndex;
             if (isAfterDestination && rowBoundary < sourceIndex) {
-              return draggedRowHeight;
+              return activeDraggedRowHeight;
             }
           }
           return 0;
         }
 
+        if (item.rowType === 'card') {
+          return 0;
+        }
+
         if (isSourceList) {
-          return rowBoundary > dragPreview.source.index ? -draggedRowHeight : 0;
+          return rowBoundary > dragPreview.source.index ? -activeDraggedRowHeight : 0;
         }
 
         const isAfterDestination = item.rowType === 'label' ? rowBoundary > dragPreview.destination.index : rowBoundary >= dragPreview.destination.index;
-        return isAfterDestination ? draggedRowHeight : 0;
+        return isAfterDestination ? activeDraggedRowHeight : 0;
       },
-      [dragPreview, id, syntheticRowBoundaryByKey],
+      [dragPreview, id, rowBoundaryByKey],
     );
 
-    const getSyntheticRowStyle = useCallback(
+    const getRowStyle = useCallback(
       (item, style) => {
-        const displacement = getSyntheticRowDisplacement(item);
+        const displacement = getRowDisplacement(item);
+
+        if (item.rowType === 'card' && isSameListPreview) {
+          return {
+            ...style,
+            [ROW_DRAG_TRANSFORM_PROPERTY]: displacement ? `translateY(${displacement}px)` : 'translateY(0px)',
+            [ROW_DRAG_TRANSITION_PROPERTY]: 'transform 200ms cubic-bezier(0.2, 0, 0, 1)',
+          };
+        }
+
         if (!displacement) {
           return style;
         }
@@ -472,13 +516,10 @@ const List = React.memo(
           transition: 'transform 200ms cubic-bezier(0.2, 0, 0, 1)',
         };
       },
-      [getSyntheticRowDisplacement],
+      [getRowDisplacement, isSameListPreview],
     );
 
-    const cardsItemData = useMemo(
-      () => ({ rowItems, onSizeChange: setCardSize, t, archiveStats, onArchiveViewOpen, getSyntheticRowStyle }),
-      [rowItems, setCardSize, t, archiveStats, onArchiveViewOpen, getSyntheticRowStyle],
-    );
+    const cardsItemData = useMemo(() => ({ rowItems, onSizeChange: setCardSize, t, archiveStats, onArchiveViewOpen, getRowStyle }), [rowItems, setCardSize, t, archiveStats, onArchiveViewOpen, getRowStyle]);
 
     const wrapperOffset = (isAddCardOpen || !canEdit ? styleVars.cardsInnerWrapperFullOffset : styleVars.cardsInnerWrapperOffset) + HEADER_CHROME_DELTA;
     const headerOffset = (nameEditHeight || headerNameHeight) + (showWarningStripe ? WARNING_STRIPE_HEIGHT : 0);
@@ -487,8 +528,6 @@ const List = React.memo(
       () => rowItems.reduce((acc, item, rowIndex) => acc + getRowSize(rowIndex), 0),
       [rowItems, sizeVersion], // eslint-disable-line react-hooks/exhaustive-deps
     );
-    const listHeight = Math.min(totalCardsHeight, availableHeight) || 1;
-
     // react-window's outer element defaults to overflow:auto, which makes scrollbars appear
     // whenever content exceeds listHeight by even 1px — and listHeight is computed to EXACTLY
     // equal content height when the list fits, so any sub-pixel/rounding mismatch (measured
@@ -497,7 +536,7 @@ const List = React.memo(
     // one too. State the intent directly instead: vertical scrolling only when the cards
     // genuinely exceed the available height; horizontal scrolling never. VariableSizeList
     // merges this `style` onto the outer element after its defaults, so these values win.
-    const listStyle = useMemo(() => ({ overflowX: 'hidden', overflowY: totalCardsHeight > availableHeight ? 'auto' : 'hidden' }), [totalCardsHeight, availableHeight]);
+    const getListStyle = useCallback((height) => ({ overflowX: 'hidden', overflowY: height > availableHeight ? 'auto' : 'hidden' }), [availableHeight]);
 
     // §6.7 drop preview, overlay edition. react-beautiful-dnd already opens a gap at the
     // destination by translating the rendered cards (it does this in virtual mode too) — so the
@@ -517,11 +556,14 @@ const List = React.memo(
         return null;
       }
 
-      const [, draggedCardId] = dragPreview.draggableId.split(':');
+      const [, previewDraggedCardId] = dragPreview.draggableId.split(':');
       const isSameList = dragPreview.source && dragPreview.source.droppableId === `list:${id}`;
+      if (isSameList) {
+        return null;
+      }
       // Same-list: the dragged card's row height from this list's own measurements. Cross-list:
       // the height Board.jsx measured off the card's DOM node at drag start (+ the row gap).
-      const draggedRowHeight = (isSameList && sizeMap.current[draggedCardId]) || (dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT);
+      const previewDraggedRowHeight = (isSameList && sizeMap.current[previewDraggedCardId]) || (dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT);
 
       const cardRowIndexes = [];
       rowItems.forEach((item, rowIndex) => {
@@ -545,7 +587,7 @@ const List = React.memo(
         if (destRow === undefined) {
           return null;
         }
-        gapTop = offsetOfRow(destRow) + getRowSize(destRow) - draggedRowHeight;
+        gapTop = offsetOfRow(destRow) + getRowSize(destRow) - previewDraggedRowHeight;
       } else if (destIndex < filteredCardIds.length) {
         const destRow = cardRowIndexes[destIndex];
         if (destRow === undefined) {
@@ -559,7 +601,7 @@ const List = React.memo(
 
       return {
         top: gapTop - scrollOffset,
-        height: Math.max(0, draggedRowHeight - CARD_ROW_GAP),
+        height: Math.max(0, previewDraggedRowHeight - CARD_ROW_GAP),
       };
     }, [dragPreview, id, rowItems, getRowSize, filteredCardIds, scrollOffset]);
 
@@ -575,28 +617,35 @@ const List = React.memo(
         mode="virtual"
         renderClone={(dragProvided, dragSnapshot, rubric) => <CardContainer id={filteredCardIds[rubric.source.index]} index={rubric.source.index} isClone provided={dragProvided} snapshot={dragSnapshot} />}
       >
-        {(droppableProvided) => (
-          <div className={s.cardsListWrapper}>
-            <VariableSizeList
-              ref={listRef}
-              outerRef={droppableProvided.innerRef}
-              className={s.cards}
-              style={listStyle}
-              width="100%"
-              height={listHeight}
-              itemCount={rowItems.length}
-              itemSize={getRowSize}
-              itemKey={getRowKey}
-              itemData={cardsItemData}
-              estimatedItemSize={ESTIMATED_CARD_HEIGHT}
-              overscanCount={3}
-              onScroll={handleListScroll}
-            >
-              {CardRow}
-            </VariableSizeList>
-            {dropPreviewBox && <div className={s.dropPreviewOverlay} style={{ top: dropPreviewBox.top, height: dropPreviewBox.height }} />}
-          </div>
-        )}
+        {(droppableProvided, droppableSnapshot) => {
+          const shouldRenderVirtualPlaceholder = droppableSnapshot.isUsingPlaceholder && !isHomeListDrag;
+          const placeholderHeight = shouldRenderVirtualPlaceholder ? getRowSize(rowItems.length) : 0;
+          const visibleTotalCardsHeight = totalCardsHeight + placeholderHeight;
+          const visibleListHeight = Math.min(visibleTotalCardsHeight, availableHeight) || 1;
+
+          return (
+            <div className={s.cardsListWrapper}>
+              <VariableSizeList
+                ref={listRef}
+                outerRef={droppableProvided.innerRef}
+                className={s.cards}
+                style={getListStyle(visibleTotalCardsHeight)}
+                width="100%"
+                height={visibleListHeight}
+                itemCount={rowItems.length + (shouldRenderVirtualPlaceholder ? 1 : 0)}
+                itemSize={getRowSize}
+                itemKey={getRowKey}
+                itemData={cardsItemData}
+                estimatedItemSize={ESTIMATED_CARD_HEIGHT}
+                overscanCount={3}
+                onScroll={handleListScroll}
+              >
+                {CardRow}
+              </VariableSizeList>
+              {dropPreviewBox && <div className={s.dropPreviewOverlay} style={{ top: dropPreviewBox.top, height: dropPreviewBox.height }} />}
+            </div>
+          );
+        }}
       </Droppable>
     );
 
