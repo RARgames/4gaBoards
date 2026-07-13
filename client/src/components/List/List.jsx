@@ -104,9 +104,11 @@ function CardRow({ data, index, style }) {
     return null;
   }
 
+  const rowStyle = data.getSyntheticRowStyle ? data.getSyntheticRowStyle(item, style) : style;
+
   if (item.rowType === 'label') {
     return (
-      <div style={style} className={s.groupLabel}>
+      <div style={rowStyle} className={s.groupLabel}>
         {data.t(DONE_GROUP_LABEL_KEY[item.bucket])}
       </div>
     );
@@ -114,7 +116,7 @@ function CardRow({ data, index, style }) {
 
   if (item.rowType === 'teaser') {
     return (
-      <div style={style} className={s.archiveTeaserWrapper}>
+      <div style={rowStyle} className={s.archiveTeaserWrapper}>
         <button type="button" className={s.archiveTeaser} onClick={data.onArchiveViewOpen}>
           {data.archiveStats ? data.t('common.viewFullArchive', { count: data.archiveStats.total, month: data.archiveStats.newestArchivedMonth }) : data.t('common.viewFullArchiveShort')}
         </button>
@@ -123,7 +125,7 @@ function CardRow({ data, index, style }) {
   }
 
   if (item.rowType === 'spacer') {
-    return <div style={style} />;
+    return <div style={rowStyle} />;
   }
 
   return <CardContainer id={item.cardId} index={item.cardIndex} style={style} onSizeChange={data.onSizeChange} />;
@@ -394,7 +396,89 @@ const List = React.memo(
 
     const getRowKey = useCallback((rowIndex) => rowItems[rowIndex]?.key ?? rowIndex, [rowItems]);
 
-    const cardsItemData = useMemo(() => ({ rowItems, onSizeChange: setCardSize, t, archiveStats, onArchiveViewOpen }), [rowItems, setCardSize, t, archiveStats, onArchiveViewOpen]);
+    const syntheticRowBoundaryByKey = useMemo(() => {
+      const map = {};
+      rowItems.forEach((item, rowIndex) => {
+        if (item.rowType === 'card') {
+          return;
+        }
+
+        if (item.rowType === 'label') {
+          const nextCard = rowItems.slice(rowIndex + 1).find((nextItem) => nextItem.rowType === 'card');
+          map[item.key] = nextCard ? nextCard.cardIndex : filteredCardIds.length;
+          return;
+        }
+
+        map[item.key] = filteredCardIds.length;
+      });
+      return map;
+    }, [rowItems, filteredCardIds.length]);
+
+    const getSyntheticRowDisplacement = useCallback(
+      (item) => {
+        if (item.rowType === 'card' || !dragPreview || !dragPreview.source) {
+          return 0;
+        }
+
+        const currentDroppableId = `list:${id}`;
+        const isSourceList = dragPreview.source.droppableId === currentDroppableId;
+        const isDestinationList = dragPreview.destination && dragPreview.destination.droppableId === currentDroppableId;
+        if (!isSourceList && !isDestinationList) {
+          return 0;
+        }
+
+        const [, draggedCardId] = dragPreview.draggableId.split(':');
+        const draggedRowHeight = (isSourceList && sizeMap.current[draggedCardId]) || (dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT);
+        const rowBoundary = syntheticRowBoundaryByKey[item.key];
+        if (rowBoundary === undefined) {
+          return 0;
+        }
+
+        if (isSourceList && isDestinationList) {
+          const sourceIndex = dragPreview.source.index;
+          const destinationIndex = dragPreview.destination.index;
+          if (destinationIndex > sourceIndex && rowBoundary > sourceIndex && rowBoundary <= destinationIndex) {
+            return -draggedRowHeight;
+          }
+          if (destinationIndex < sourceIndex) {
+            const isAfterDestination = item.rowType === 'label' ? rowBoundary > destinationIndex : rowBoundary >= destinationIndex;
+            if (isAfterDestination && rowBoundary < sourceIndex) {
+              return draggedRowHeight;
+            }
+          }
+          return 0;
+        }
+
+        if (isSourceList) {
+          return rowBoundary > dragPreview.source.index ? -draggedRowHeight : 0;
+        }
+
+        const isAfterDestination = item.rowType === 'label' ? rowBoundary > dragPreview.destination.index : rowBoundary >= dragPreview.destination.index;
+        return isAfterDestination ? draggedRowHeight : 0;
+      },
+      [dragPreview, id, syntheticRowBoundaryByKey],
+    );
+
+    const getSyntheticRowStyle = useCallback(
+      (item, style) => {
+        const displacement = getSyntheticRowDisplacement(item);
+        if (!displacement) {
+          return style;
+        }
+
+        return {
+          ...style,
+          transform: `translateY(${displacement}px)`,
+          transition: 'transform 200ms cubic-bezier(0.2, 0, 0, 1)',
+        };
+      },
+      [getSyntheticRowDisplacement],
+    );
+
+    const cardsItemData = useMemo(
+      () => ({ rowItems, onSizeChange: setCardSize, t, archiveStats, onArchiveViewOpen, getSyntheticRowStyle }),
+      [rowItems, setCardSize, t, archiveStats, onArchiveViewOpen, getSyntheticRowStyle],
+    );
 
     const wrapperOffset = (isAddCardOpen || !canEdit ? styleVars.cardsInnerWrapperFullOffset : styleVars.cardsInnerWrapperOffset) + HEADER_CHROME_DELTA;
     const headerOffset = (nameEditHeight || headerNameHeight) + (showWarningStripe ? WARNING_STRIPE_HEIGHT : 0);
