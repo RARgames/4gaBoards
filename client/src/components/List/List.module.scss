@@ -43,17 +43,22 @@
     }
   }
 
-  // §6.7: drag placement-preview ghost — a synthetic, non-draggable row (see List.jsx
-  // buildRowItems/'ghost' handling), styled as the board translation of the timeline's
-  // .reassignPreview (Timeline.module.scss): dashed border, tinted fill, no solid card face.
-  .dropPreviewWrapper {
-    box-sizing: border-box;
-    padding: 0 0 8px;
-    pointer-events: none;
+  // §6.7: drag placement-preview — an absolutely-positioned overlay drawn inside the gap that
+  // react-beautiful-dnd's own displacement opens (see the dropPreviewBox math in List.jsx).
+  // Deliberately NOT a virtualized row: inserting a row mid-drag reflowed the list while rbd was
+  // simultaneously translating the same cards, and the two shifts stacked into glitches.
+  // Visual recipe is the board translation of the timeline's .reassignPreview.
+  .cardsListWrapper {
+    position: relative;
+    overflow: hidden; // clips the overlay when its gap is scrolled out of view
   }
 
-  .dropPreview {
-    height: 100%;
+  .dropPreviewOverlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
     border: 2px dashed var(--borderOutline);
     border-radius: var(--tw-radius-lg);
     background: color-mix(in srgb, var(--borderOutline) 12%, transparent);

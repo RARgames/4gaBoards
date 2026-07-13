@@ -44,26 +44,43 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
     setViewMode('archive');
   }, []);
 
-  const handleDragStart = useCallback(() => {
-    setDragPreview(null);
+  const handleDragStart = useCallback(({ draggableId, type, source }) => {
+    if (type !== DroppableTypes.CARD) {
+      setDragPreview(null);
+      return;
+    }
+    // Measure the dragged card's element once, while it's still in the DOM at its origin.
+    // Destination lists have never measured this card themselves, and need its height both to
+    // size the drop-preview box and to reserve the right amount of space for displaced cards.
+    const draggedElement = document.querySelector(`[data-rbd-draggable-id="${draggableId}"]`);
+    setDragPreview({
+      draggableId,
+      source,
+      destination: null,
+      cardHeight: draggedElement ? draggedElement.offsetHeight : null,
+    });
   }, []);
 
-  const handleDragUpdate = useCallback(({ draggableId, type, destination }) => {
-    if (type !== DroppableTypes.CARD || !destination) {
-      // Functional form + returning `prev` unchanged makes React bail out of the re-render
-      // entirely instead of just producing an equal-looking new object every time.
-      setDragPreview((prev) => (prev === null ? prev : null));
+  const handleDragUpdate = useCallback(({ type, destination }) => {
+    if (type !== DroppableTypes.CARD) {
       return;
     }
     // rbd calls onDragUpdate on every animation frame while dragging, not just when the
-    // destination actually changes — without this guard, a card merely hovering in place would
-    // still re-render every list on every frame (rowItems/resetAfterIndex churn), which is what
-    // caused the glitching. Only commit a new object when the logical destination differs.
+    // destination actually changes — without a bail-out, a card merely hovering in place would
+    // re-render every list on every frame, which showed up as visible glitching. Only commit a
+    // new object when the logical destination differs; draggableId/source/cardHeight are set
+    // once at drag start and constant for the whole drag.
     setDragPreview((prev) => {
-      if (prev && prev.draggableId === draggableId && prev.destination.droppableId === destination.droppableId && prev.destination.index === destination.index) {
+      if (!prev) {
         return prev;
       }
-      return { draggableId, destination };
+      if (!destination) {
+        return prev.destination === null ? prev : { ...prev, destination: null };
+      }
+      if (prev.destination && prev.destination.droppableId === destination.droppableId && prev.destination.index === destination.index) {
+        return prev;
+      }
+      return { ...prev, destination };
     });
   }, []);
 

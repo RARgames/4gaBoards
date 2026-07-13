@@ -39,6 +39,9 @@ const HEADER_CHROME_DELTA = 4;
 // §6.6: synthetic (non-draggable) row heights, matching List.module.scss .groupLabel/.archiveTeaser.
 const GROUP_LABEL_HEIGHT = 28;
 const ARCHIVE_TEASER_HEIGHT = 62;
+// Card.jsx bakes its 8px margin-bottom (CARD_GAP) into each measured row height; the drop
+// preview box subtracts it back out so the dashed outline matches the card face, not the row.
+const CARD_ROW_GAP = 8;
 
 const LIST_TYPE_LABEL_KEY = {
   none: 'common.listTypeNone',
@@ -119,12 +122,8 @@ function CardRow({ data, index, style }) {
     );
   }
 
-  if (item.rowType === 'ghost') {
-    return (
-      <div style={style} className={s.dropPreviewWrapper}>
-        <div className={s.dropPreview} />
-      </div>
-    );
+  if (item.rowType === 'spacer') {
+    return <div style={style} />;
   }
 
   return <CardContainer id={item.cardId} index={item.cardIndex} style={style} onSizeChange={data.onSizeChange} />;
@@ -290,41 +289,29 @@ const List = React.memo(
     // `done` lists) vs. card-space (filteredCardIds order, what react-beautiful-dnd's Draggable
     // `index` and destination math use). For every non-`done` list these two spaces are identical
     // — buildRowItems degenerates to one 'card' row per filtered card, unchanged from before.
+    // CRITICAL: existing rows must never MOVE during a drag. An earlier version spliced a ghost
+    // row in at the destination, but react-beautiful-dnd displaces the rendered cards with CSS
+    // transforms to open a gap at the same time — the reflow and the transforms stacked, and
+    // cards jumped around/offscreen. The drop preview is now a pure overlay (below), and the
+    // only drag-time row change allowed is APPENDING a spacer at the very end (rbd's documented
+    // virtual-list pattern): while a card from another list hovers here, rbd translates existing
+    // cards downward, and without extra room at the end the last card gets pushed out of the
+    // list's fixed height and clipped. An appended row shifts nothing above it, so it cannot
+    // re-introduce the double-shift glitch. Same-list drags need no spacer (net height is
+    // unchanged — the dragged card's own slot is the room).
     const dragPreview = useContext(DragPreviewContext);
 
-    // §6.7: when this list is the live drag destination, splice a non-draggable 'ghost' row into
-    // row-space at the destination position — same trick as label/teaser rows, so it gets correct
-    // virtualized positioning/scroll behavior "for free" instead of needing a manually
-    // scroll-synced overlay. It never becomes a <Draggable>, so react-beautiful-dnd's own
-    // destination-index math (card-space only) is completely unaffected by its presence.
     const rowItems = useMemo(() => {
-      const base = buildRowItems(filteredCardIds, type, completedAtByCardId);
-
-      const isThisListTheDestination = dragPreview && dragPreview.destination && dragPreview.destination.droppableId === `list:${id}`;
-      if (!isThisListTheDestination) {
-        return base;
-      }
-
-      const destCardIndex = dragPreview.destination.index;
-      let insertAtRowIndex = base.findIndex((item) => item.rowType === 'card' && item.cardIndex === destCardIndex);
-      if (insertAtRowIndex === -1) {
-        // Past the last card (drop at the end) — insert right after the last card row, before
-        // any trailing label/teaser rows.
-        let lastCardRowIndex = -1;
-        base.forEach((item, rowIndex) => {
-          if (item.rowType === 'card') lastCardRowIndex = rowIndex;
+      const rows = buildRowItems(filteredCardIds, type, completedAtByCardId);
+      const isIncomingCrossListDrag = dragPreview && dragPreview.destination && dragPreview.destination.droppableId === `list:${id}` && (!dragPreview.source || dragPreview.source.droppableId !== `list:${id}`);
+      if (isIncomingCrossListDrag) {
+        rows.push({
+          rowType: 'spacer',
+          key: 'drag-spacer',
+          height: dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT,
         });
-        insertAtRowIndex = lastCardRowIndex + 1;
       }
-
-      // Same-list reorder: this card is already in sizeMap, so the ghost matches its real
-      // height. Cross-list drag in: no local measurement exists yet, fall back to the estimate.
-      const [, draggedCardId] = dragPreview.draggableId.split(':');
-      const ghostHeight = sizeMap.current[draggedCardId] || ESTIMATED_CARD_HEIGHT;
-
-      const next = base.slice();
-      next.splice(insertAtRowIndex, 0, { rowType: 'ghost', key: 'drag-ghost', height: ghostHeight });
-      return next;
+      return rows;
     }, [filteredCardIds, type, completedAtByCardId, dragPreview, id]);
 
     const rowIndexByCardId = useMemo(() => {
@@ -397,7 +384,7 @@ const List = React.memo(
         if (item.rowType === 'teaser') {
           return ARCHIVE_TEASER_HEIGHT;
         }
-        if (item.rowType === 'ghost') {
+        if (item.rowType === 'spacer') {
           return item.height;
         }
         return sizeMap.current[item.cardId] || ESTIMATED_CARD_HEIGHT;
@@ -428,6 +415,70 @@ const List = React.memo(
     // merges this `style` onto the outer element after its defaults, so these values win.
     const listStyle = useMemo(() => ({ overflowX: 'hidden', overflowY: totalCardsHeight > availableHeight ? 'auto' : 'hidden' }), [totalCardsHeight, availableHeight]);
 
+    // §6.7 drop preview, overlay edition. react-beautiful-dnd already opens a gap at the
+    // destination by translating the rendered cards (it does this in virtual mode too) — so the
+    // preview's only job is to DRAW the dashed box inside that gap, without touching layout.
+    // This computes where the gap sits in this list's original (untranslated) row layout:
+    //  - same-list, dragging down: cards between source+1..dest shift UP by the dragged row's
+    //    height, so the gap is at dest's original bottom edge minus that height;
+    //  - same-list dragging up, and cross-list: cards from dest shift DOWN, gap at dest's top;
+    //  - cross-list past the last card: gap right after the last card row.
+    // Scroll position comes from the virtualizer's own onScroll, so auto-scroll during a drag
+    // keeps the overlay glued to the gap.
+    const [scrollOffset, setScrollOffset] = useState(0);
+    const handleListScroll = useCallback(({ scrollOffset: nextScrollOffset }) => setScrollOffset(nextScrollOffset), []);
+
+    const dropPreviewBox = useMemo(() => {
+      if (!dragPreview || !dragPreview.destination || dragPreview.destination.droppableId !== `list:${id}`) {
+        return null;
+      }
+
+      const [, draggedCardId] = dragPreview.draggableId.split(':');
+      const isSameList = dragPreview.source && dragPreview.source.droppableId === `list:${id}`;
+      // Same-list: the dragged card's row height from this list's own measurements. Cross-list:
+      // the height Board.jsx measured off the card's DOM node at drag start (+ the row gap).
+      const draggedRowHeight = (isSameList && sizeMap.current[draggedCardId]) || (dragPreview.cardHeight != null ? dragPreview.cardHeight + CARD_ROW_GAP : ESTIMATED_CARD_HEIGHT);
+
+      const cardRowIndexes = [];
+      rowItems.forEach((item, rowIndex) => {
+        if (item.rowType === 'card') {
+          cardRowIndexes[item.cardIndex] = rowIndex;
+        }
+      });
+
+      const offsetOfRow = (rowIndex) => {
+        let offset = 0;
+        for (let i = 0; i < rowIndex; i += 1) {
+          offset += getRowSize(i);
+        }
+        return offset;
+      };
+
+      const destIndex = dragPreview.destination.index;
+      let gapTop;
+      if (isSameList && destIndex > dragPreview.source.index) {
+        const destRow = cardRowIndexes[destIndex];
+        if (destRow === undefined) {
+          return null;
+        }
+        gapTop = offsetOfRow(destRow) + getRowSize(destRow) - draggedRowHeight;
+      } else if (destIndex < filteredCardIds.length) {
+        const destRow = cardRowIndexes[destIndex];
+        if (destRow === undefined) {
+          return null;
+        }
+        gapTop = offsetOfRow(destRow);
+      } else {
+        const lastCardRow = cardRowIndexes[filteredCardIds.length - 1];
+        gapTop = lastCardRow === undefined ? 0 : offsetOfRow(lastCardRow) + getRowSize(lastCardRow);
+      }
+
+      return {
+        top: gapTop - scrollOffset,
+        height: Math.max(0, draggedRowHeight - CARD_ROW_GAP),
+      };
+    }, [dragPreview, id, rowItems, getRowSize, filteredCardIds, scrollOffset]);
+
     const cardsCountText = () => {
       return isFiltered ? t('common.ofCards', { filteredCount: filteredCardIds.length, count: cardIds.length }) : t('common.cards', { count: cardIds.length });
     };
@@ -441,22 +492,26 @@ const List = React.memo(
         renderClone={(dragProvided, dragSnapshot, rubric) => <CardContainer id={filteredCardIds[rubric.source.index]} index={rubric.source.index} isClone provided={dragProvided} snapshot={dragSnapshot} />}
       >
         {(droppableProvided) => (
-          <VariableSizeList
-            ref={listRef}
-            outerRef={droppableProvided.innerRef}
-            className={s.cards}
-            style={listStyle}
-            width="100%"
-            height={listHeight}
-            itemCount={rowItems.length}
-            itemSize={getRowSize}
-            itemKey={getRowKey}
-            itemData={cardsItemData}
-            estimatedItemSize={ESTIMATED_CARD_HEIGHT}
-            overscanCount={3}
-          >
-            {CardRow}
-          </VariableSizeList>
+          <div className={s.cardsListWrapper}>
+            <VariableSizeList
+              ref={listRef}
+              outerRef={droppableProvided.innerRef}
+              className={s.cards}
+              style={listStyle}
+              width="100%"
+              height={listHeight}
+              itemCount={rowItems.length}
+              itemSize={getRowSize}
+              itemKey={getRowKey}
+              itemData={cardsItemData}
+              estimatedItemSize={ESTIMATED_CARD_HEIGHT}
+              overscanCount={3}
+              onScroll={handleListScroll}
+            >
+              {CardRow}
+            </VariableSizeList>
+            {dropPreviewBox && <div className={s.dropPreviewOverlay} style={{ top: dropPreviewBox.top, height: dropPreviewBox.height }} />}
+          </div>
         )}
       </Droppable>
     );
