@@ -209,7 +209,7 @@ importers:
         version: 5.6.7(webpack@5.108.4(postcss@8.5.16))
       i18next:
         specifier: ^26.3.4
-        version: 26.3.4(typescript@6.0.3)
+        version: 26.3.6(typescript@6.0.3)
       i18next-browser-languagedetector:
         specifier: ^8.2.1
         version: 8.2.1
@@ -284,7 +284,7 @@ importers:
         version: 15.0.0(react@18.3.1)
       react-i18next:
         specifier: ^17.0.8
-        version: 17.0.8(i18next@26.3.4(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3)
+        version: 17.0.8(i18next@26.3.6(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3)
       react-input-mask:
         specifier: ^2.0.4
         version: 2.0.4(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
@@ -529,7 +529,7 @@ importers:
         version: 7.0.2
       i18next:
         specifier: ^26.3.4
-        version: 26.3.4(typescript@6.0.3)
+        version: 26.3.6(typescript@6.0.3)
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
@@ -5619,10 +5619,10 @@ packages:
   i18next-browser-languagedetector@8.2.1:
     resolution: {integrity: sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw==}
 
-  i18next@26.3.4:
-    resolution: {integrity: sha512-pa7m0d7pBDqGHZxljT+WPFeyFgQ7P7SciPPo1tTqYuO0z4sqADYhwnBESmmGp/wEof1inwdls/k8ZgTg8rxFHA==}
+  i18next@26.3.6:
+    resolution: {integrity: sha512-Bu5Z2nAXgfVyM8xvW3jk9EKRIuX37PudsrBViThNFx7CR7aaYTpP01cxNB/E4c4UUzTDiAZRstEhsRfPOL/8xA==}
     peerDependencies:
-      typescript: ^5 || ^6
+      typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -15415,7 +15415,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.7
 
-  i18next@26.3.4(typescript@6.0.3):
+  i18next@26.3.6(typescript@6.0.3):
     optionalDependencies:
       typescript: 6.0.3
 
@@ -18040,11 +18040,11 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
-  react-i18next@17.0.8(i18next@26.3.4(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3):
+  react-i18next@17.0.8(i18next@26.3.6(typescript@6.0.3))(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(typescript@6.0.3):
     dependencies:
       '@babel/runtime': 7.29.7
       html-parse-stringify: 3.0.1
-      i18next: 26.3.4(typescript@6.0.3)
+      i18next: 26.3.6(typescript@6.0.3)
       react: 18.3.1
       use-sync-external-store: 1.6.0(react@18.3.1)
     optionalDependencies:
