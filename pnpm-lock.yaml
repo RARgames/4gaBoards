@@ -185,7 +185,7 @@ importers:
         version: 6.2.0(webpack@5.108.4(postcss@8.5.16))
       filesize:
         specifier: ^11.0.19
-        version: 11.0.19
+        version: 11.0.22
       find-up:
         specifier: ^8.0.0
         version: 8.0.0
@@ -5125,8 +5125,8 @@ packages:
     resolution: {integrity: sha512-fz10TUqSZ1lG7ftW1KnRotJzMD8YRb6kaAQKpZJBLvqXXfFgIEpuazy1w2lK3zhMiBSdH/uF9LFlv5smJ2Jl1w==}
     engines: {node: '>=20'}
 
-  filesize@11.0.19:
-    resolution: {integrity: sha512-9Q2itINBvCHwFw9v5X7czZm855yAiFIYlnugrh7+8tYO4ITHZMzV91m35q2FngL9hoZwwjSTQACFF/W52OzJZQ==}
+  filesize@11.0.22:
+    resolution: {integrity: sha512-RlCVs9CY+oSsRnNZn95J9vDXjNjOwddKyTFjOYtA4yxYVIxBnwiVVGJX+TFhsmu3uUf81JDGyijtYL9xgawlTw==}
     engines: {node: '>= 10.8.0'}
 
   fill-range@7.1.1:
@@ -14753,7 +14753,7 @@ snapshots:
     dependencies:
       filename-reserved-regex: 4.0.0
 
-  filesize@11.0.19: {}
+  filesize@11.0.22: {}
 
   fill-range@7.1.1:
     dependencies:
