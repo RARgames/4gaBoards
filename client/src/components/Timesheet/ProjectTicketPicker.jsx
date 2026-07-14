@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
+import api from '../../api';
+import Paths from '../../constants/Paths';
+import { getAccessToken } from '../../utils/access-token-storage';
 import { getBoardAccentColor } from '../../utils/board-colors';
 import { Icon, IconType, IconSize } from '../Utils';
 
@@ -30,12 +34,53 @@ const ProjectTicketPicker = React.memo(({ projectId, cardId, projects, assignedC
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
+  // allCards only reflects boards already loaded into the client's ORM cache (i.e. boards the
+  // user has actually opened), so a project's tickets can go missing from search entirely. Once
+  // a project is selected, fetch every one of its boards' card summaries on demand so search
+  // actually covers the whole project regardless of what's been opened before.
+  const [projectCardsByProjectId, setProjectCardsByProjectId] = useState({});
+  const [loadingProjectId, setLoadingProjectId] = useState(null);
+  const fetchedProjectIdsRef = useRef(new Set());
 
   const wrapperRef = useRef(null);
   const searchFieldRef = useRef(null);
 
   const selectedProject = projectId ? projects.find((project) => project.id === projectId) : null;
-  const selectedCard = cardId ? [...assignedCards, ...allCards].find((card) => card.id === cardId) : null;
+  const selectedCard = cardId ? [...assignedCards, ...allCards, ...Object.values(projectCardsByProjectId).flat()].find((card) => card.id === cardId) : null;
+
+  useEffect(() => {
+    if (!projectId || fetchedProjectIdsRef.current.has(projectId)) {
+      return undefined;
+    }
+
+    const project = projects.find((p) => p.id === projectId);
+    if (!project || !project.boards || project.boards.length === 0) {
+      return undefined;
+    }
+
+    fetchedProjectIdsRef.current.add(projectId);
+    setLoadingProjectId(projectId);
+
+    let cancelled = false;
+    Promise.all(
+      project.boards.map((board) =>
+        api
+          .getBoardCardsSummary(board.id, { Authorization: `Bearer ${getAccessToken()}` })
+          .then((res) => (res.items || []).map((card) => ({ id: card.id, name: card.name, projectId, projectName: project.name, boardId: board.id, boardName: board.name })))
+          .catch(() => []),
+      ),
+    ).then((results) => {
+      if (cancelled) {
+        return;
+      }
+      setProjectCardsByProjectId((prev) => ({ ...prev, [projectId]: results.flat() }));
+      setLoadingProjectId((current) => (current === projectId ? null : current));
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [projectId, projects]);
 
   useEffect(() => {
     if (isOpen) {
@@ -101,12 +146,14 @@ const ProjectTicketPicker = React.memo(({ projectId, cardId, projects, assignedC
   );
 
   const trimmedQuery = query.trim();
+  const isLoadingProjectCards = projectId !== null && loadingProjectId === projectId;
+  const projectPool = projectId ? projectCardsByProjectId[projectId] || allCards.filter((card) => card.projectId === projectId) : null;
 
   const { projectResults, cardSections, flatResults } = useMemo(() => {
     if (trimmedQuery) {
       const matchingProjects = projectId ? [] : projects.filter((project) => project.name.toLowerCase().includes(trimmedQuery.toLowerCase())).slice(0, MAX_RESULTS);
 
-      const pool = projectId ? allCards.filter((card) => card.projectId === projectId) : allCards;
+      const pool = projectId ? projectPool || [] : allCards;
       const matchingCards = pool.filter((card) => card.name.toLowerCase().includes(trimmedQuery.toLowerCase())).slice(0, MAX_RESULTS);
 
       return {
@@ -119,7 +166,7 @@ const ProjectTicketPicker = React.memo(({ projectId, cardId, projects, assignedC
     if (projectId) {
       const scopedAssigned = assignedCards.filter((card) => card.projectId === projectId);
       const assignedIds = new Set(scopedAssigned.map((card) => card.id));
-      const moreTickets = allCards.filter((card) => card.projectId === projectId && !assignedIds.has(card.id)).slice(0, MAX_RESULTS);
+      const moreTickets = (projectPool || []).filter((card) => !assignedIds.has(card.id)).slice(0, MAX_RESULTS);
 
       return {
         projectResults: [],
@@ -136,7 +183,7 @@ const ProjectTicketPicker = React.memo(({ projectId, cardId, projects, assignedC
       cardSections: [{ title: t('common.assignedToYou', { context: 'title' }), cards: assignedCards.slice(0, MAX_RESULTS) }],
       flatResults: [...projects.slice(0, MAX_RESULTS).map((project) => ({ type: 'project', item: project })), ...assignedCards.slice(0, MAX_RESULTS).map((card) => ({ type: 'card', item: card }))],
     };
-  }, [trimmedQuery, projectId, projects, assignedCards, allCards, t]);
+  }, [trimmedQuery, projectId, projects, assignedCards, allCards, projectPool, t]);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -183,6 +230,9 @@ const ProjectTicketPicker = React.memo(({ projectId, cardId, projects, assignedC
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
             <div className={s.chip} onClick={handleOpen}>
               <span className={s.chipLabel}>{selectedCard.name}</span>
+              <Link to={Paths.CARDS.replace(':id', selectedCard.id)} className={s.chipOpen} title={t('action.openTicket')} onClick={(e) => e.stopPropagation()}>
+                <Icon type={IconType.WindowMaximize} size={IconSize.Size8} />
+              </Link>
               <button type="button" className={s.chipRemove} onClick={handleClearCard} title={t('action.remove')}>
                 <Icon type={IconType.Close} size={IconSize.Size8} />
               </button>
@@ -230,7 +280,7 @@ const ProjectTicketPicker = React.memo(({ projectId, cardId, projects, assignedC
                   </div>
                 ),
             )}
-            {flatResults.length === 0 && <div className={s.emptyResults}>{t('common.noResults')}</div>}
+            {flatResults.length === 0 && <div className={s.emptyResults}>{isLoadingProjectCards ? t('common.loading') : t('common.noResults')}</div>}
           </div>
         </div>
       )}

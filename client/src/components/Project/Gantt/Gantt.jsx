@@ -1,28 +1,26 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { addDays, format, startOfDay } from 'date-fns';
 import clsx from 'clsx';
+import { addDays, format, startOfDay } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import CardDetailPanelContainer from '../../../containers/Project/CardDetailPanelContainer';
 import ProjectNavContainer from '../../../containers/Project/ProjectNavContainer';
-import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize } from '../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 import Timeline, { ZOOM } from '../Timeline';
 import { SCHEDULE_SPAN_DAYS, shiftViewDate } from '../Timeline/timeline-utils';
 
 import * as s from './Gantt.module.scss';
 
-const ALL_BOARDS = { id: 'all', name: null };
-
-const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageViews, onBoardFetch, onCardUpdate, onChartViewsFetch, onChartViewCreate, onChartViewUpdate, onChartViewDelete }) => {
+const Gantt = React.memo(({ schedulingData, onBoardFetch, onCardUpdate }) => {
   const [t] = useTranslation();
 
   const [zoom, setZoom] = useState(ZOOM.DAY);
   const [grouping, setGrouping] = useState('boardList');
-  const [showDependencies, setShowDependencies] = useState(true);
-  const [boardFilter, setBoardFilter] = useState(null);
-  const [collapsed, setCollapsed] = useState(() => new Set());
-  const [activeViewId, setActiveViewId] = useState(null);
+  // Boards default to collapsed (opt-in expand) so every board is listed on screen without
+  // scrolling past thousands of cards; lists inside an expanded board default to open.
+  const [expandedBoards, setExpandedBoards] = useState(() => new Set());
+  const [collapsedLists, setCollapsedLists] = useState(() => new Set());
   const [viewDate, setViewDate] = useState(() => startOfDay(new Date()));
   const [markerDate, setMarkerDate] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
@@ -30,10 +28,6 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
   const requestedBoardsRef = useRef(new Set());
 
   const boards = useMemo(() => (schedulingData ? schedulingData.boards : []), [schedulingData]);
-
-  useEffect(() => {
-    onChartViewsFetch(projectId);
-  }, [projectId, onChartViewsFetch]);
 
   // Ensure every accessible board's cards are loaded into the ORM.
   useEffect(() => {
@@ -45,8 +39,20 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
     });
   }, [boards, onBoardFetch]);
 
-  const toggleCollapse = useCallback((id) => {
-    setCollapsed((prev) => {
+  const toggleBoardExpanded = useCallback((id) => {
+    setExpandedBoards((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }, []);
+
+  const toggleListCollapsed = useCallback((id) => {
+    setCollapsedLists((prev) => {
       const next = new Set(prev);
       if (next.has(id)) {
         next.delete(id);
@@ -80,8 +86,6 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
     [markerDate, onCardUpdate],
   );
 
-  const visibleBoards = useMemo(() => (boardFilter ? boards.filter((b) => b.id === boardFilter) : boards), [boards, boardFilter]);
-
   const toBar = useCallback(
     (card) => ({
       id: `card:${card.id}`,
@@ -105,7 +109,7 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
     const tray = [];
 
     if (grouping === 'none') {
-      visibleBoards.forEach((board) => {
+      boards.forEach((board) => {
         board.lists.forEach((list) => {
           list.cards.forEach((card) => {
             if (isScheduled(card)) {
@@ -119,10 +123,10 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
       return { rows: resultRows, unscheduledBars: tray };
     }
 
-    visibleBoards.forEach((board) => {
+    boards.forEach((board) => {
       const boardRowId = `board:${board.id}`;
-      const boardCollapsed = collapsed.has(boardRowId);
-      resultRows.push({ id: boardRowId, label: board.name, isGroup: true, indent: 0, isCollapsed: boardCollapsed, onToggleCollapse: () => toggleCollapse(boardRowId) });
+      const boardCollapsed = !expandedBoards.has(boardRowId);
+      resultRows.push({ id: boardRowId, label: board.name, isGroup: true, indent: 0, isCollapsed: boardCollapsed, onToggleCollapse: () => toggleBoardExpanded(boardRowId) });
 
       if (boardCollapsed) {
         board.lists.forEach((list) => list.cards.forEach((card) => !isScheduled(card) && tray.push(toBar(card))));
@@ -131,10 +135,10 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
 
       board.lists.forEach((list) => {
         const listRowId = `list:${board.id}:${list.id}`;
-        const listCollapsed = collapsed.has(listRowId);
+        const listCollapsed = collapsedLists.has(listRowId);
         const scheduledCards = list.cards.filter(isScheduled);
 
-        resultRows.push({ id: listRowId, label: list.name, isGroup: true, indent: 1, isCollapsed: listCollapsed, onToggleCollapse: () => toggleCollapse(listRowId) });
+        resultRows.push({ id: listRowId, label: list.name, isGroup: true, indent: 1, isCollapsed: listCollapsed, onToggleCollapse: () => toggleListCollapsed(listRowId) });
 
         if (!listCollapsed) {
           scheduledCards.forEach((card) => {
@@ -147,45 +151,7 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
     });
 
     return { rows: resultRows, unscheduledBars: tray };
-  }, [visibleBoards, grouping, collapsed, toggleCollapse, toBar]);
-
-  const dependencies = schedulingData ? schedulingData.dependencies : [];
-
-  const handleApplyView = useCallback((view) => {
-    setActiveViewId(view.id);
-    const config = view.config || {};
-    if (config.zoom) {
-      setZoom(config.zoom);
-    }
-    if (config.grouping) {
-      setGrouping(config.grouping);
-    }
-    setShowDependencies(config.showDependencies !== false);
-    setBoardFilter(config.boardId || null);
-  }, []);
-
-  const handleSaveView = useCallback(() => {
-    const name = t('common.ganttView', { number: chartViews.length + 1 });
-    onChartViewCreate(projectId, {
-      type: 'gantt',
-      name,
-      position: (chartViews.length + 1) * 65535,
-      config: { zoom, grouping, showDependencies, boardId: boardFilter },
-    });
-  }, [t, chartViews.length, onChartViewCreate, projectId, zoom, grouping, showDependencies, boardFilter]);
-
-  const handleUpdateActiveView = useCallback(() => {
-    if (activeViewId) {
-      onChartViewUpdate(activeViewId, { config: { zoom, grouping, showDependencies, boardId: boardFilter } });
-    }
-  }, [activeViewId, onChartViewUpdate, zoom, grouping, showDependencies, boardFilter]);
-
-  const handleDeleteActiveView = useCallback(() => {
-    if (activeViewId) {
-      onChartViewDelete(activeViewId);
-      setActiveViewId(null);
-    }
-  }, [activeViewId, onChartViewDelete]);
+  }, [boards, grouping, expandedBoards, collapsedLists, toggleBoardExpanded, toggleListCollapsed, toBar]);
 
   const renderZoomButton = (value, label) => (
     <Button style={ButtonStyle.NoBackground} className={clsx(s.zoomButton, zoom === value && s.zoomButtonActive)} onClick={() => setZoom(value)}>
@@ -201,9 +167,6 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
       </div>
     );
   }
-
-  const boardOptions = [ALL_BOARDS, ...boards.map((b) => ({ id: b.id, name: b.name }))];
-  const viewOptions = chartViews.map((v) => ({ id: v.id, name: v.name }));
 
   return (
     <div className={s.wrapper}>
@@ -233,42 +196,7 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
         <Button style={ButtonStyle.NoBackground} className={clsx(s.toolButton, grouping === 'none' && s.toolButtonActive)} onClick={() => setGrouping(grouping === 'none' ? 'boardList' : 'none')}>
           {grouping === 'none' ? t('common.flat') : t('common.grouped')}
         </Button>
-        <Button style={ButtonStyle.NoBackground} className={clsx(s.toolButton, showDependencies && s.toolButtonActive)} onClick={() => setShowDependencies((v) => !v)}>
-          <Icon type={IconType.Link} size={IconSize.Size14} className={s.toolIcon} />
-          {t('common.dependencies')}
-        </Button>
-        {boards.length > 1 && (
-          <Dropdown
-            style={DropdownStyle.Default}
-            options={boardOptions}
-            defaultItem={boardFilter ? boardOptions.find((o) => o.id === boardFilter) : ALL_BOARDS}
-            placeholder={t('common.allBoards')}
-            onChange={(item) => setBoardFilter(item.id === ALL_BOARDS.id ? null : item.id)}
-            className={s.boardDropdown}
-          />
-        )}
         <div className={s.spacer} />
-        {viewOptions.length > 0 && (
-          <Dropdown
-            style={DropdownStyle.Default}
-            options={viewOptions}
-            defaultItem={activeViewId ? viewOptions.find((o) => o.id === activeViewId) : undefined}
-            placeholder={t('common.savedViews')}
-            onChange={(item) => handleApplyView(chartViews.find((v) => v.id === item.id))}
-            className={s.viewDropdown}
-          />
-        )}
-        {canManageViews && activeViewId && (
-          <>
-            <Button style={ButtonStyle.NoBackground} className={s.toolButton} onClick={handleUpdateActiveView}>
-              {t('action.saveView')}
-            </Button>
-            <Button style={ButtonStyle.Icon} title={t('action.deleteView', { context: 'title' })} onClick={handleDeleteActiveView}>
-              <Icon type={IconType.Trash} size={IconSize.Size13} />
-            </Button>
-          </>
-        )}
-        {canManageViews && <Button style={ButtonStyle.DefaultBorder} content={t('action.saveCurrentView')} onClick={handleSaveView} />}
       </div>
       <div className={s.content}>
         <Timeline
@@ -276,8 +204,6 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
           zoom={zoom}
           viewDate={viewDate}
           markerDate={markerDate}
-          dependencies={dependencies}
-          showDependencies={showDependencies}
           unscheduledBars={unscheduledBars}
           emptyText={t('common.noScheduledCards')}
           selectedCardId={selectedCard ? selectedCard.id : undefined}
@@ -293,16 +219,9 @@ const Gantt = React.memo(({ projectId, schedulingData, chartViews, canManageView
 });
 
 Gantt.propTypes = {
-  projectId: PropTypes.string.isRequired,
   schedulingData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  chartViews: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  canManageViews: PropTypes.bool.isRequired,
   onBoardFetch: PropTypes.func.isRequired,
   onCardUpdate: PropTypes.func.isRequired,
-  onChartViewsFetch: PropTypes.func.isRequired,
-  onChartViewCreate: PropTypes.func.isRequired,
-  onChartViewUpdate: PropTypes.func.isRequired,
-  onChartViewDelete: PropTypes.func.isRequired,
 };
 
 Gantt.defaultProps = {

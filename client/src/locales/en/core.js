@@ -854,6 +854,7 @@ export default {
       today: 'Today',
       print: 'Print',
       openFullCard: 'Open full card',
+      openTicket: 'Open ticket',
       backToProject: 'Back to project',
       add: 'Add',
       cancel: 'Cancel',

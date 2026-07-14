@@ -18,6 +18,7 @@
 
   .pageDescription {
     font-size: 12px;
+    color: var(--textColor0);
     opacity: 0.65;
     margin: 0 0 10px;
   }
@@ -39,8 +40,10 @@
   }
 
   .zoomButton {
+    width: auto;
     padding: 4px 12px;
     opacity: 0.7;
+    white-space: nowrap;
 
     &:hover {
       opacity: 1;
@@ -74,6 +77,7 @@
   .periodLabel {
     font-size: 13px;
     font-weight: 600;
+    color: var(--textColor0);
     opacity: 0.85;
     min-width: 100px;
   }
@@ -96,15 +100,6 @@
     border-radius: 4px;
   }
 
-  .toolIcon {
-    fill: currentColor;
-  }
-
-  .boardDropdown,
-  .viewDropdown {
-    width: 170px;
-  }
-
   .spacer {
     flex: 1;
   }
@@ -119,6 +114,7 @@
   .empty {
     padding: 40px;
     text-align: center;
+    color: var(--textColor0);
     opacity: 0.6;
   }
 }

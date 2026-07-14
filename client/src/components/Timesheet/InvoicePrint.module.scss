@@ -10,14 +10,17 @@
 
   .toolbar {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-top: 16px;
   }
 
   .toolbarHint {
-    opacity: 0.7;
+    max-width: 800px;
+    margin: 0 auto 12px;
     font-size: 13px;
+    font-weight: 700;
   }
 
   .printArea {

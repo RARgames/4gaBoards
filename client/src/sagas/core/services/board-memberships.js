@@ -47,6 +47,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
   let users1;
   let users2;
   let projectManagers;
+  let projectMemberships;
   let boards;
   let boardMemberships1;
   let boardMemberships2;
@@ -76,7 +77,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
     try {
       ({
         item: project,
-        included: { users: users1, projectManagers, boards, boardMemberships: boardMemberships1 },
+        included: { users: users1, projectManagers, projectMemberships, boards, boardMemberships: boardMemberships1 },
       } = yield call(request, api.getProject, board2.projectId));
     } catch {
       return;
@@ -112,6 +113,7 @@ export function* handleBoardMembershipCreate(boardMembership) {
       board1,
       isCurrentUser ? mergeRecords(users1, users2) : [user],
       projectManagers,
+      projectMemberships,
       boards,
       mergeRecords(boardMemberships1, boardMemberships2),
       labels,

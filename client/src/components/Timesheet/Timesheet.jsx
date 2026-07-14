@@ -49,7 +49,9 @@ const Timesheet = React.memo(
     const switcherOptions = useMemo(() => users.map((user) => ({ id: user.id, name: user.id === currentUserId ? t('common.me') : user.name })), [users, currentUserId, t]);
     const viewedUser = usersById.get(viewedUserId);
 
-    const projectOptions = useMemo(() => projects.map((project) => ({ id: project.id, name: project.name })), [projects]);
+    // Keep boards attached — the ticket picker needs each project's board ids to fetch card
+    // summaries on demand, since it can't rely on boards the user hasn't opened being cached.
+    const projectOptions = useMemo(() => projects.map((project) => ({ id: project.id, name: project.name, boards: project.boards })), [projects]);
     const projectsById = useMemo(() => new Map(projects.map((project) => [project.id, project.name])), [projects]);
     const cardsById = useMemo(() => {
       const map = new Map();

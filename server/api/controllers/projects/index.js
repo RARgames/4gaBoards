@@ -17,9 +17,9 @@ module.exports = {
 
     // A user can belong to a project (and see it) before having access to any of its boards —
     // e.g. an admin adds them to the project first, then grants board access separately.
-    const projectMemberships = await sails.helpers.projectMemberships.getMany({ userId: currentUser.id });
+    const currentUserProjectMemberships = await sails.helpers.projectMemberships.getMany({ userId: currentUser.id });
 
-    let membershipProjectIds = _.union(sails.helpers.utils.mapRecords(membershipBoards, 'projectId', true), sails.helpers.utils.mapRecords(projectMemberships, 'projectId', true)).filter(
+    let membershipProjectIds = _.union(sails.helpers.utils.mapRecords(membershipBoards, 'projectId', true), sails.helpers.utils.mapRecords(currentUserProjectMemberships, 'projectId', true)).filter(
       (projectId) => !managerProjectIds.includes(projectId),
     );
 
@@ -31,8 +31,11 @@ module.exports = {
     const projects = [...managerProjects, ...membershipProjects];
 
     const projectManagers = await sails.helpers.projects.getProjectManagers(projectIds);
+    // Every accessible project's full member list (not just the current user's own membership) so
+    // Gantt/Team Planner can resolve all project members, not only ones who are also managers.
+    const projectMemberships = await sails.helpers.projectMemberships.getMany({ projectId: projectIds });
 
-    const userIds = sails.helpers.utils.mapRecords(projectManagers, 'userId', true);
+    const userIds = _.union(sails.helpers.utils.mapRecords(projectManagers, 'userId', true), sails.helpers.utils.mapRecords(projectMemberships, 'userId', true));
     const users = await sails.helpers.users.getMany(userIds);
 
     const managerBoards = await sails.helpers.projects.getBoards(managerProjectIds);

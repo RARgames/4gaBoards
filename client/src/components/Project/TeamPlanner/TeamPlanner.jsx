@@ -34,6 +34,11 @@ const TeamPlanner = React.memo(
     const boards = useMemo(() => (schedulingData ? schedulingData.boards : []), [schedulingData]);
     const cards = useMemo(() => (schedulingData ? schedulingData.cards : []), [schedulingData]);
     const members = useMemo(() => (schedulingData ? schedulingData.members : []), [schedulingData]);
+    const isAdmin = schedulingData ? schedulingData.isAdmin : false;
+    const currentUserId = schedulingData ? schedulingData.currentUserId : null;
+
+    // Admins can edit any row; everyone else can only edit cards assigned to them (their own row).
+    const canEditCard = useCallback((card) => isAdmin || card.memberUserIds.includes(currentUserId), [isAdmin, currentUserId]);
 
     useEffect(() => {
       onChartViewsFetch(projectId);
@@ -148,9 +153,9 @@ const TeamPlanner = React.memo(
       const scheduledCards = cards.filter(isScheduled);
       const tray = cards
         .filter((card) => !isScheduled(card))
-        .map((card) => ({ id: `tray:${card.id}`, cardId: card.id, name: card.name, color: card.color, canEdit: card.canEdit, boardId: card.boardId, boardName: card.boardName, listName: card.listName }));
+        .map((card) => ({ id: `tray:${card.id}`, cardId: card.id, name: card.name, color: card.color, canEdit: canEditCard(card), boardId: card.boardId, boardName: card.boardName, listName: card.listName }));
 
-      const makeBar = (rowId, card) => ({ id: `${rowId}:card:${card.id}`, cardId: card.id, name: card.name, startDate: card.startDate, dueDate: card.dueDate, color: card.color, canEdit: card.canEdit });
+      const makeBar = (rowId, card) => ({ id: `${rowId}:card:${card.id}`, cardId: card.id, name: card.name, startDate: card.startDate, dueDate: card.dueDate, color: card.color, canEdit: canEditCard(card) });
 
       const resultRows = [];
 
@@ -184,7 +189,7 @@ const TeamPlanner = React.memo(
       });
 
       return { rows: resultRows, unscheduledBars: tray };
-    }, [cards, members, t, collapsedRows, toggleRowCollapse]);
+    }, [cards, members, t, collapsedRows, toggleRowCollapse, canEditCard]);
 
     const handleApplyView = useCallback((view) => {
       setActiveViewId(view.id);

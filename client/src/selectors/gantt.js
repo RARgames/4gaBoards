@@ -4,9 +4,9 @@ import orm from '../orm';
 import { getCardColor } from '../utils/board-colors';
 import { selectCurrentUserId } from './users';
 
-// Composes project-wide scheduling data (boards → lists → cards, dependencies, members)
-// consumed by both the Gantt and Team Planner pages. Reads whatever board data is loaded
-// into the ORM; the container is responsible for ensuring boards are fetched.
+// Composes project-wide scheduling data (boards → lists → cards, members) consumed by both
+// the Gantt and Team Planner pages. Reads whatever board data is loaded into the ORM; the
+// container is responsible for ensuring boards are fetched.
 export const makeSelectSchedulingData = () =>
   createSelector(
     orm,
@@ -24,30 +24,23 @@ export const makeSelectSchedulingData = () =>
 
       const userModel = User.withId(userId);
       const isAdmin = !!(userModel && userModel.isAdmin);
-      const isManager = projectModel.hasManagerForUser(userId);
 
       const boardModels = projectModel.getOrderedBoardsModelArrayAvailableForUser(userId);
 
       const boards = [];
       const cards = [];
-      const dependencies = [];
+
+      // Gantt is admin-edit-only: everyone else views. Team Planner layers its own "own row"
+      // edit rule (member is one of the card's assignees) on top of this base flag client-side.
+      const canEdit = isAdmin;
 
       boardModels.forEach((boardModel) => {
-        const membership = boardModel.getMembershipModelForUser(userId);
-        const canEdit = isAdmin || isManager || !!(membership && membership.role === 'editor');
-
         const lists = boardModel
           .getOrderedListsQuerySet()
           .toModelArray()
           .map((listModel) => {
             const listCards = listModel.getOrderedCardsModelArray().map((cardModel) => {
               const memberUserIds = cardModel.users.toRefArray().map((user) => user.id);
-
-              cardModel.outgoingLinks.toRefArray().forEach((link) => {
-                if (link.type === 'blockedBy') {
-                  dependencies.push({ fromCardId: link.linkedCardId, toCardId: link.cardId });
-                }
-              });
 
               const card = {
                 id: cardModel.id,
@@ -89,7 +82,7 @@ export const makeSelectSchedulingData = () =>
         .filter(Boolean)
         .sort((a, b) => a.name.localeCompare(b.name));
 
-      return { boards, cards, dependencies, members };
+      return { boards, cards, members, currentUserId: userId, isAdmin };
     },
   );
 

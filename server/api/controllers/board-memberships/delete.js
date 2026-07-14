@@ -29,7 +29,7 @@ module.exports = {
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
     const isUserProjectManager = await sails.helpers.users.isProjectManager(boardMembership.userId, project.id);
-    if (boardMembership.userId !== currentUser.id && !isProjectManager) {
+    if (boardMembership.userId !== currentUser.id && !currentUser.isAdmin && !isProjectManager) {
       throw Errors.BOARD_MEMBERSHIP_NOT_FOUND; // Forbidden
     }
     if (isUserProjectManager) {

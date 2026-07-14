@@ -51,7 +51,7 @@ module.exports = {
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, board.projectId);
 
-    if (!isProjectManager) {
+    if (!currentUser.isAdmin && !isProjectManager) {
       throw Errors.BOARD_NOT_FOUND; // Forbidden
     }
 

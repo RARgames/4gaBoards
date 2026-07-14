@@ -93,11 +93,7 @@ const InvoicePrint = React.memo(({ params, viewedUserId, viewedUserName, timeEnt
 
   return (
     <div className={s.overlay}>
-      <div className={clsx(s.toolbar, 'timesheet-print-toolbar')}>
-        <Button style={ButtonStyle.Submit} content={t('action.print')} onClick={() => window.print()} />
-        <Button style={ButtonStyle.Cancel} content={t('common.close')} onClick={onClose} />
-        {viewedUserName && <span className={s.toolbarHint}>{viewedUserName}</span>}
-      </div>
+      {viewedUserName && <div className={clsx(s.toolbarHint, 'timesheet-print-toolbar')}>{viewedUserName}</div>}
       <div className={clsx(s.printArea, 'timesheet-print-area')}>
         <h1 className={s.title}>{t('common.invoice_title')}</h1>
         <div className={s.metaRow}>
@@ -184,6 +180,10 @@ const InvoicePrint = React.memo(({ params, viewedUserId, viewedUserName, timeEnt
             </tbody>
           </table>
         </div>
+      </div>
+      <div className={clsx(s.toolbar, 'timesheet-print-toolbar')}>
+        <Button style={ButtonStyle.Submit} content={t('action.print')} onClick={() => window.print()} />
+        <Button style={ButtonStyle.Cancel} content={t('common.close')} onClick={onClose} />
       </div>
     </div>
   );

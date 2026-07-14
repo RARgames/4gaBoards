@@ -40,7 +40,8 @@ module.exports = {
     });
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
-    const projectMembership = await sails.helpers.projectMemberships.getOne({ userId: currentUser.id, projectId: project.id });
+    const projectMemberships = await sails.helpers.projectMemberships.getMany({ projectId: project.id });
+    const projectMembership = projectMemberships.find((membership) => membership.userId === currentUser.id);
 
     if (!isProjectManager) {
       if (boardMemberships.length === 0 && !projectMembership) {
@@ -53,7 +54,7 @@ module.exports = {
 
     const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);
 
-    const userIds = sails.helpers.utils.mapRecords(projectManagers, 'userId');
+    const userIds = _.union(sails.helpers.utils.mapRecords(projectManagers, 'userId', true), sails.helpers.utils.mapRecords(projectMemberships, 'userId', true));
     const users = await sails.helpers.users.getMany(userIds);
 
     if (inputs.subscribe && this.req.isSocket) {
@@ -67,7 +68,7 @@ module.exports = {
         projectManagers,
         boards,
         boardMemberships,
-        projectMemberships: projectMembership ? [projectMembership] : [],
+        projectMemberships,
       },
     };
   },

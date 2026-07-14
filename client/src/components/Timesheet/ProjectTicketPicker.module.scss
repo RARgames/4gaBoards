@@ -55,7 +55,8 @@
     max-width: 160px;
   }
 
-  .chipRemove {
+  .chipRemove,
+  .chipOpen {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,6 +67,8 @@
     border: none;
     padding: 0;
     cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
 
     svg {
       fill: var(--textColor2);

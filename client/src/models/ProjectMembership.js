@@ -76,6 +76,14 @@ export default class extends BaseModel {
         }
 
         break;
+      case ActionTypes.BOARD_MEMBERSHIP_CREATE_HANDLE:
+        if (payload.projectMemberships) {
+          payload.projectMemberships.forEach((projectMembership) => {
+            ProjectMembership.upsert(projectMembership);
+          });
+        }
+
+        break;
       case ActionTypes.PROJECT_MEMBERSHIP_UPDATE:
         ProjectMembership.withId(payload.id).update(payload.data);
 

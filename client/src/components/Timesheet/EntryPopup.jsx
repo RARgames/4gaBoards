@@ -95,7 +95,10 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
 
   useEffect(() => {
     const handlePointerDown = (e) => {
-      if (popupRef.current && !popupRef.current.contains(e.target)) {
+      // The category Dropdown's open menu renders through a portal at the end of <body>, outside
+      // popupRef's DOM subtree, so a click on an option would otherwise look like an outside click
+      // and close the whole popup (discarding unsaved changes) before the option's own click fires.
+      if (popupRef.current && !popupRef.current.contains(e.target) && !e.target.closest(`.${s.dropdownMenu}`)) {
         onClose();
       }
     };
@@ -167,10 +170,20 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
     [handleSubmit],
   );
 
-  const handlePickerChange = useCallback(({ projectId: nextProjectId, cardId: nextCardId }) => {
-    setProjectId(nextProjectId);
-    setCardId(nextCardId);
-  }, []);
+  const handlePickerChange = useCallback(
+    ({ projectId: nextProjectId, cardId: nextCardId }) => {
+      setProjectId(nextProjectId);
+      setCardId(nextCardId);
+
+      if (nextCardId) {
+        const card = assignedCards.find((c) => c.id === nextCardId) || allCards.find((c) => c.id === nextCardId);
+        if (card) {
+          setData((prevData) => (prevData.description ? prevData : { ...prevData, description: card.name }));
+        }
+      }
+    },
+    [assignedCards, allCards, setData],
+  );
 
   const categoryOptions = useMemo(() => categoryTags.filter((tag) => !tag.projectId || tag.projectId === projectId).map((tag) => ({ id: tag.id, name: tag.name })), [categoryTags, projectId]);
 
@@ -198,26 +211,6 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
       <Popup.Content isMinContent className={s.content}>
         {loggedByName && <div className={s.loggedBy}>{t('common.loggedBy', { name: loggedByName })}</div>}
         <Form>
-          <TextArea
-            ref={descriptionField}
-            style={TextAreaStyle.Default}
-            name="description"
-            value={data.description}
-            placeholder={t('common.description')}
-            onChange={handleFieldChange}
-            className={s.descriptionField}
-          />
-          <div className={s.timeRow}>
-            <div className={s.timeField}>
-              <div className={s.fieldLabel}>{t('common.start')}</div>
-              <Input style={InputStyle.Default} name="startTime" value={data.startTime} onChange={handleFieldChange} isError={isError} />
-            </div>
-            <div className={s.timeField}>
-              <div className={s.fieldLabel}>{t('common.end')}</div>
-              <Input style={InputStyle.Default} name="endTime" value={data.endTime} onChange={handleFieldChange} isError={isError} />
-            </div>
-          </div>
-          <ProjectTicketPicker projectId={projectId} cardId={cardId} projects={projectOptions} assignedCards={assignedCards} allCards={allCards} onChange={handlePickerChange} />
           <div className={s.fieldLabel}>{t('common.category')}</div>
           <Dropdown
             style={DropdownStyle.Default}
@@ -243,6 +236,26 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
                 {t('common.addCategory')}
               </div>
             ))}
+          <ProjectTicketPicker projectId={projectId} cardId={cardId} projects={projectOptions} assignedCards={assignedCards} allCards={allCards} onChange={handlePickerChange} />
+          <TextArea
+            ref={descriptionField}
+            style={TextAreaStyle.Default}
+            name="description"
+            value={data.description}
+            placeholder={t('common.description')}
+            onChange={handleFieldChange}
+            className={s.descriptionField}
+          />
+          <div className={s.timeRow}>
+            <div className={s.timeField}>
+              <div className={s.fieldLabel}>{t('common.start')}</div>
+              <Input style={InputStyle.Default} name="startTime" value={data.startTime} onChange={handleFieldChange} isError={isError} />
+            </div>
+            <div className={s.timeField}>
+              <div className={s.fieldLabel}>{t('common.end')}</div>
+              <Input style={InputStyle.Default} name="endTime" value={data.endTime} onChange={handleFieldChange} isError={isError} />
+            </div>
+          </div>
           <div className={gs.controlsSpaceBetween}>
             {mode === 'edit' ? <Button style={ButtonStyle.Cancel} content={t('action.delete')} onClick={onDelete} /> : <span />}
             <Button style={ButtonStyle.Submit} content={t('action.save')} onClick={handleSubmit} />
