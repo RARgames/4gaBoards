@@ -123,7 +123,9 @@ const ProjectTicketPicker = React.memo(({ projectId, cardId, projects, assignedC
 
   const handlePickCard = useCallback(
     (card) => {
-      onChange({ projectId: card.projectId, cardId: card.id });
+      // Pass the name along directly rather than making the caller re-look the card up: it may
+      // only exist in this component's on-demand-fetched pool, not in assignedCards/allCards.
+      onChange({ projectId: card.projectId, cardId: card.id, cardName: card.name });
       handleClose();
     },
     [onChange, handleClose],

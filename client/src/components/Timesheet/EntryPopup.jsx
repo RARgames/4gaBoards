@@ -171,18 +171,15 @@ const EntryPopup = React.memo(({ mode, anchorRect, initialValues, projectOptions
   );
 
   const handlePickerChange = useCallback(
-    ({ projectId: nextProjectId, cardId: nextCardId }) => {
+    ({ projectId: nextProjectId, cardId: nextCardId, cardName: nextCardName }) => {
       setProjectId(nextProjectId);
       setCardId(nextCardId);
 
-      if (nextCardId) {
-        const card = assignedCards.find((c) => c.id === nextCardId) || allCards.find((c) => c.id === nextCardId);
-        if (card) {
-          setData((prevData) => (prevData.description ? prevData : { ...prevData, description: card.name }));
-        }
+      if (nextCardId && nextCardName) {
+        setData((prevData) => (prevData.description ? prevData : { ...prevData, description: nextCardName }));
       }
     },
-    [assignedCards, allCards, setData],
+    [setData],
   );
 
   const categoryOptions = useMemo(() => categoryTags.filter((tag) => !tag.projectId || tag.projectId === projectId).map((tag) => ({ id: tag.id, name: tag.name })), [categoryTags, projectId]);
