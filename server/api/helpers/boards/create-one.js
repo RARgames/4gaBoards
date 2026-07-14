@@ -120,15 +120,19 @@ module.exports = {
     }
 
     const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
-    await BoardMembership.create({
-      boardId: board.id,
-      userId: currentUser.id,
-      role: BoardMembership.Roles.EDITOR,
-      isSubscribed: userPrefs?.subscribeToNewBoards || false,
-      createdById: currentUser.id,
-    })
-      .tolerate('E_UNIQUE')
-      .fetch();
+    await BoardMembership.findOrCreate(
+      {
+        boardId: board.id,
+        userId: currentUser.id,
+      },
+      {
+        boardId: board.id,
+        userId: currentUser.id,
+        role: BoardMembership.Roles.EDITOR,
+        isSubscribed: userPrefs?.subscribeToNewBoards || false,
+        createdById: currentUser.id,
+      },
+    ).tolerate('E_UNIQUE');
     const boardMemberships = await sails.helpers.boards.getBoardMemberships(board.id);
 
     projectManagerUserIds.forEach((userId) => {
