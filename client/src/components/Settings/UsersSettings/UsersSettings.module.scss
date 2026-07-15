@@ -62,4 +62,9 @@
     display: inline-block;
     margin-left: 2px;
   }
+
+  .iconTableHeader {
+    fill: var(--text1);
+    flex-shrink: 0;
+  }
 }

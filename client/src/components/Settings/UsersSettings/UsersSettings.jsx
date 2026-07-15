@@ -146,10 +146,10 @@ const UsersSettings = React.memo(
       () => [
         {
           accessorKey: 'notificationsTotal',
-          header: Table.Renderers.EmptyHeaderRenderer,
+          header: <Icon type={IconType.Bell} size={IconSize.Size13} className={s.iconTableHeader} title={t('common.notifications')} />,
           cell: Table.Renderers.NumberCellRenderer,
           enableSorting: true,
-          meta: { headerAriaLabel: t('common.userAccountNotifications'), headerTitle: t('common.userAccountNotifications') },
+          meta: { headerAriaLabel: t('common.userAccountNotifications'), headerTitle: t('common.userAccountNotifications'), headerSize: 20 },
         },
         {
           accessorKey: 'avatar',
