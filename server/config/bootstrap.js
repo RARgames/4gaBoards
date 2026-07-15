@@ -10,9 +10,11 @@
  */
 const { setupNotifications } = require('./notifications');
 const { setupOIDC } = require('./passport');
+const { setupSharp } = require('./sharp');
 const { setupSystemNotifications } = require('./system-notifications');
 
 module.exports.bootstrap = async () => {
+  setupSharp();
   setupOIDC();
   setupNotifications();
   setupSystemNotifications();

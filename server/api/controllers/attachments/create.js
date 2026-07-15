@@ -65,7 +65,7 @@ module.exports = {
     try {
       files = await upload({
         saveAs: uuid(),
-        maxBytes: null,
+        maxBytes: sails.config.custom.uploadLimits.attachmentMaxBytes,
       });
     } catch (error) {
       return exits.uploadError(error.message); // TODO: add error

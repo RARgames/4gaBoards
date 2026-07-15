@@ -91,6 +91,38 @@ module.exports.custom = {
     windowMs: Math.max(parseInt(process.env.AUTH_RATE_LIMIT_WINDOW_MS, 10) || 60 * 1000, 60 * 1000),
   },
 
+  uploadRateLimit: {
+    enabled: process.env.UPLOAD_RATE_LIMIT_ENABLED !== 'false',
+    maxAttempts: Math.max(parseInt(process.env.UPLOAD_RATE_LIMIT_MAX_ATTEMPTS, 10) || 30, 1),
+    windowMs: Math.max(parseInt(process.env.UPLOAD_RATE_LIMIT_WINDOW_MS, 10) || 60 * 1000, 1000),
+    store: process.env.UPLOAD_RATE_LIMIT_STORE || 'memory',
+    redisUrl: process.env.UPLOAD_RATE_LIMIT_REDIS_URL || null,
+    redisConnectTimeoutMs: Math.max(parseInt(process.env.UPLOAD_RATE_LIMIT_REDIS_CONNECT_TIMEOUT_MS, 10) || 500, 100),
+    keyPrefix: process.env.UPLOAD_RATE_LIMIT_KEY_PREFIX || 'rl:upload',
+  },
+
+  uploadLimits: {
+    attachmentMaxBytes: Math.max(parseInt(process.env.ATTACHMENT_MAX_BYTES, 10) || 25 * 1024 * 1024, 1),
+    avatarMaxBytes: Math.max(parseInt(process.env.AVATAR_MAX_BYTES, 10) || 25 * 1024 * 1024, 1),
+    projectBackgroundImageMaxBytes: Math.max(parseInt(process.env.PROJECT_BACKGROUND_IMAGE_MAX_BYTES, 10) || 25 * 1024 * 1024, 1),
+    boardImportMaxBytes: Math.max(parseInt(process.env.BOARD_IMPORT_MAX_BYTES, 10) || 100 * 1024 * 1024, 1),
+  },
+
+  boardImportExtractionLimits: {
+    maxCompressedBytes: Math.max(parseInt(process.env.BOARD_IMPORT_MAX_COMPRESSED_BYTES, 10) || 100 * 1024 * 1024, 1),
+    maxUncompressedBytes: Math.max(parseInt(process.env.BOARD_IMPORT_MAX_UNCOMPRESSED_BYTES, 10) || 500 * 1024 * 1024, 1),
+    maxEntries: Math.max(parseInt(process.env.BOARD_IMPORT_MAX_ENTRIES, 10) || 5000, 1),
+    maxExtractionMs: Math.max(parseInt(process.env.BOARD_IMPORT_MAX_EXTRACTION_MS, 10) || 30 * 1000, 1000),
+  },
+
+  sharpLimits: {
+    maxInputPixels: Math.max(parseInt(process.env.SHARP_MAX_INPUT_PIXELS, 10) || 40_000_000, 1),
+    concurrency: Math.max(parseInt(process.env.SHARP_CONCURRENCY, 10) || 2, 1),
+    cacheMemoryMb: Math.max(parseInt(process.env.SHARP_CACHE_MEMORY_MB, 10) || 50, 0),
+    cacheItems: Math.max(parseInt(process.env.SHARP_CACHE_ITEMS, 10) || 100, 0),
+    cacheFiles: Math.max(parseInt(process.env.SHARP_CACHE_FILES, 10) || 20, 0),
+  },
+
   positionGap: 65535,
   requiredPasswordStrength: 2,
   cacheMaxAge: 900,

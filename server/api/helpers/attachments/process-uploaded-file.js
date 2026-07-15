@@ -37,6 +37,7 @@ module.exports = {
 
     const image = sharp(filePath, {
       animated: true,
+      limitInputPixels: sails.config.custom.sharpLimits.maxInputPixels,
     });
 
     let metadata;

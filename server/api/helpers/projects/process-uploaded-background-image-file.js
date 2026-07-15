@@ -19,6 +19,7 @@ module.exports = {
   async fn(inputs) {
     const image = sharp(inputs.file.fd, {
       animated: true,
+      limitInputPixels: sails.config.custom.sharpLimits.maxInputPixels,
     });
 
     let metadata;

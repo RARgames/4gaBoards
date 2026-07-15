@@ -17,7 +17,24 @@ services:
       timeout: 5s
       retries: 20
 
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data-8:/data
+    networks:
+      - boards-network
+    ports:
+      - 6379:6379
+    command: ['redis-server', '--appendonly', 'yes']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
 volumes:
   db-data-18:
+  redis-data-8:
 networks:
   boards-network:

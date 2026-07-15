@@ -18,20 +18,6 @@ services:
       timeout: 5s
       retries: 20
 
-  redis:
-    image: redis:8-alpine
-    restart: always
-    networks:
-      - boards-network
-    volumes:
-      - redis-data-8:/data
-    command: ['redis-server', '--appendonly', 'yes', '--requirepass', 'notredispassword']
-    healthcheck:
-      test: ['CMD-SHELL', 'redis-cli -a "notredispassword" ping | grep PONG']
-      interval: 5s
-      timeout: 5s
-      retries: 20
-
   4gaBoards:
     image: ghcr.io/rargames/4gaboards:latest
     restart: always
@@ -48,13 +34,9 @@ services:
       SECRET_KEY: notsecretkey
       DATABASE_URL: postgresql://postgres:notpassword@db/4gaBoards
       NODE_ENV: production
-      UPLOAD_RATE_LIMIT_STORE: redis
-      UPLOAD_RATE_LIMIT_REDIS_URL: redis://:notredispassword@redis:6379/0
       ## Add optional 4ga Boards instance variables here
     depends_on:
       db:
-        condition: service_healthy
-      redis:
         condition: service_healthy
 
 volumes:
@@ -62,6 +44,5 @@ volumes:
   project-background-images:
   attachments:
   db-data-18:
-  redis-data-8:
 networks:
   boards-network:

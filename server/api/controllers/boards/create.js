@@ -109,7 +109,7 @@ module.exports = {
       try {
         files = await upload({
           saveAs: uuid(),
-          maxBytes: null,
+          maxBytes: sails.config.custom.uploadLimits.boardImportMaxBytes,
         });
       } catch (error) {
         return exits.uploadError(error.message); // TODO: add error
@@ -124,7 +124,7 @@ module.exports = {
       if (inputs.importType === Board.ImportTypes.BOARDS) {
         boardImport = {
           type: inputs.importType,
-          board: await sails.helpers.boards.processUploadedBoardsImportFile(file),
+          board: await sails.helpers.boards.processUploadedBoardsImportFile(file).intercept('invalidFile', () => Errors.INVALID_IMPORT_FILE),
           importFilePath: file.fd,
           importNonExistingUsers: currentUser.isAdmin ? inputs.importNonExistingUsers : false,
           importProjectManagers: inputs.importProjectManagers,
@@ -133,7 +133,7 @@ module.exports = {
       if (inputs.importType === Board.ImportTypes.TRELLO) {
         boardImport = {
           type: inputs.importType,
-          board: await sails.helpers.boards.processUploadedTrelloImportFile(file),
+          board: await sails.helpers.boards.processUploadedTrelloImportFile(file).intercept('invalidFile', () => Errors.INVALID_IMPORT_FILE),
         };
       }
     }
