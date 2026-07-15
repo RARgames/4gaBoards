@@ -60,12 +60,20 @@ postgresql:
   postgresUrl: <URL> #Set only if using external postgres and postgresql.enabled: false
   volumePermissions:
     enabled: true
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: true
+    password: 'notredispassword'
 env:
   required:
     SECRET_KEY: notsecretkey
     BASE_URL: http://localhost:80
   optional:
     CLIENT_URL: http://localhost:80
+    UPLOAD_RATE_LIMIT_STORE: 'redis'
+    UPLOAD_RATE_LIMIT_REDIS_URL: 'redis://:notredispassword@redis:6379/0'
     ## Add optional 4ga Boards instance variables here
 
 pv:

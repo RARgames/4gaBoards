@@ -153,9 +153,21 @@ spec:
           - name: UPLOAD_RATE_LIMIT_WINDOW_MS
             value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_WINDOW_MS }}
           - name: UPLOAD_RATE_LIMIT_STORE
+            {{- if .Values.env.optional.UPLOAD_RATE_LIMIT_STORE }}
             value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_STORE }}
+            {{- else if .Values.redis.enabled }}
+            value: redis
+            {{- else }}
+            value: memory
+            {{- end }}
           - name: UPLOAD_RATE_LIMIT_REDIS_URL
+            {{- if .Values.env.optional.UPLOAD_RATE_LIMIT_REDIS_URL }}
             value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_REDIS_URL }}
+            {{- else if .Values.redis.enabled }}
+            value: "redis://{{ .Release.Name }}-redis-master:6379/0"
+            {{- else }}
+            value: ""
+            {{- end }}
           - name: UPLOAD_RATE_LIMIT_REDIS_CONNECT_TIMEOUT_MS
             value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_REDIS_CONNECT_TIMEOUT_MS }}
           - name: UPLOAD_RATE_LIMIT_KEY_PREFIX
