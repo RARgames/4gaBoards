@@ -11,5 +11,5 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
   - condition: redis.enabled
     name: redis
-    version: 27.0.14
+    version: 27.0.15
     repository: https://charts.bitnami.com/bitnami
