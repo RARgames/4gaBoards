@@ -54,6 +54,8 @@ spec:
             value: {{ .Values.env.required.SECRET_KEY }}
           - name: CLIENT_URL
             value: {{ .Values.env.optional.CLIENT_URL }}
+          - name: INSTANCE_NAME
+            value: {{ .Values.env.optional.INSTANCE_NAME }}
           - name: DEFAULT_ADMIN_USERNAME
             value: {{ .Values.env.optional.DEFAULT_ADMIN_USERNAME }}
           - name: DEFAULT_ADMIN_EMAIL
@@ -82,16 +84,114 @@ spec:
             value: {{ .Values.env.optional.MICROSOFT_CLIENT_ID }}
           - name: MICROSOFT_CLIENT_SECRET
             value: {{ .Values.env.optional.MICROSOFT_CLIENT_SECRET }}
+          - name: OIDC_CLIENT_ID
+            value: {{ .Values.env.optional.OIDC_CLIENT_ID }}
+          - name: OIDC_CLIENT_SECRET
+            value: {{ .Values.env.optional.OIDC_CLIENT_SECRET }}
+          - name: OIDC_AUTH_URL
+            value: {{ .Values.env.optional.OIDC_AUTH_URL }}
+          - name: OIDC_TOKEN_URL
+            value: {{ .Values.env.optional.OIDC_TOKEN_URL }}
+          - name: OIDC_USERINFO_URL
+            value: {{ .Values.env.optional.OIDC_USERINFO_URL }}
+          - name: OIDC_ISSUER_URL
+            value: {{ .Values.env.optional.OIDC_ISSUER_URL }}
+          - name: OIDC_STATE_SECRET
+            value: {{ .Values.env.optional.OIDC_STATE_SECRET }}
+          - name: OIDC_ENABLED_METHODS
+            value: {{ .Values.env.optional.OIDC_ENABLED_METHODS }}
+          - name: OIDC_SKIP_ACCOUNT_SELECTION
+            value: {{ .Values.env.optional.OIDC_SKIP_ACCOUNT_SELECTION }}
+          - name: OIDC_SKIP_ACCOUNT_SELECTION_HINT_GOOGLE
+            value: {{ .Values.env.optional.OIDC_SKIP_ACCOUNT_SELECTION_HINT_GOOGLE }}
+          - name: OIDC_SKIP_ACCOUNT_SELECTION_HINT_MICROSOFT
+            value: {{ .Values.env.optional.OIDC_SKIP_ACCOUNT_SELECTION_HINT_MICROSOFT }}
+          - name: OIDC_SKIP_ACCOUNT_SELECTION_HINT_GITHUB
+            value: {{ .Values.env.optional.OIDC_SKIP_ACCOUNT_SELECTION_HINT_GITHUB }}
+          - name: OIDC_DISABLE_HINT_GOOGLE
+            value: {{ .Values.env.optional.OIDC_DISABLE_HINT_GOOGLE }}
+          - name: OIDC_DISABLE_HINT_MICROSOFT
+            value: {{ .Values.env.optional.OIDC_DISABLE_HINT_MICROSOFT }}
+          - name: OIDC_DISABLE_HINT_GITHUB
+            value: {{ .Values.env.optional.OIDC_DISABLE_HINT_GITHUB }}
+          - name: MAIL_SERVICE_INBOUND_EMAIL
+            value: {{ .Values.env.optional.MAIL_SERVICE_INBOUND_EMAIL }}
+          - name: NOTIFICATIONS_HOST_URL
+            value: {{ .Values.env.optional.NOTIFICATIONS_HOST_URL }}
           - name: DEMO_MODE
             value: {{ .Values.env.optional.DEMO_MODE }}
           - name: METRICS_ENABLED
             value: {{ .Values.env.optional.METRICS_ENABLED }}
+          - name: HYPERDX_ENABLED
+            value: {{ .Values.env.optional.HYPERDX_ENABLED }}
+          - name: HYPERDX_API_KEY
+            value: {{ .Values.env.optional.HYPERDX_API_KEY }}
+          - name: HYPERDX_INSTANCE_NAME
+            value: {{ .Values.env.optional.HYPERDX_INSTANCE_NAME }}
+          - name: HYPERDX_TRACE_PROPAGATION_TARGETS
+            value: {{ .Values.env.optional.HYPERDX_TRACE_PROPAGATION_TARGETS }}
+          - name: OTEL_URL
+            value: {{ .Values.env.optional.OTEL_URL }}
+          - name: OTEL_URL_FORMAT
+            value: {{ .Values.env.optional.OTEL_URL_FORMAT }}
           - name: LOG_LEVEL
             value: {{ .Values.env.optional.LOG_LEVEL }}
           - name: TRUST_PROXY
             value: {{ .Values.env.optional.TRUST_PROXY }}
           - name: TOKEN_EXPIRES_IN
             value: {{ .Values.env.optional.TOKEN_EXPIRES_IN }}
+          - name: AUTH_RATE_LIMIT_ENABLED
+            value: {{ .Values.env.optional.AUTH_RATE_LIMIT_ENABLED }}
+          - name: AUTH_RATE_LIMIT_MAX_ATTEMPTS
+            value: {{ .Values.env.optional.AUTH_RATE_LIMIT_MAX_ATTEMPTS }}
+          - name: AUTH_RATE_LIMIT_WINDOW_MS
+            value: {{ .Values.env.optional.AUTH_RATE_LIMIT_WINDOW_MS }}
+          - name: UPLOAD_RATE_LIMIT_ENABLED
+            value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_ENABLED }}
+          - name: UPLOAD_RATE_LIMIT_MAX_ATTEMPTS
+            value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_MAX_ATTEMPTS }}
+          - name: UPLOAD_RATE_LIMIT_WINDOW_MS
+            value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_WINDOW_MS }}
+          - name: UPLOAD_RATE_LIMIT_STORE
+            value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_STORE }}
+          - name: UPLOAD_RATE_LIMIT_REDIS_URL
+            value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_REDIS_URL }}
+          - name: UPLOAD_RATE_LIMIT_REDIS_CONNECT_TIMEOUT_MS
+            value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_REDIS_CONNECT_TIMEOUT_MS }}
+          - name: UPLOAD_RATE_LIMIT_KEY_PREFIX
+            value: {{ .Values.env.optional.UPLOAD_RATE_LIMIT_KEY_PREFIX }}
+          - name: ATTACHMENT_MAX_BYTES
+            value: {{ .Values.env.optional.ATTACHMENT_MAX_BYTES }}
+          - name: AVATAR_MAX_BYTES
+            value: {{ .Values.env.optional.AVATAR_MAX_BYTES }}
+          - name: PROJECT_BACKGROUND_IMAGE_MAX_BYTES
+            value: {{ .Values.env.optional.PROJECT_BACKGROUND_IMAGE_MAX_BYTES }}
+          - name: BOARD_IMPORT_MAX_BYTES
+            value: {{ .Values.env.optional.BOARD_IMPORT_MAX_BYTES }}
+          - name: BOARD_IMPORT_MAX_COMPRESSED_BYTES
+            value: {{ .Values.env.optional.BOARD_IMPORT_MAX_COMPRESSED_BYTES }}
+          - name: BOARD_IMPORT_MAX_UNCOMPRESSED_BYTES
+            value: {{ .Values.env.optional.BOARD_IMPORT_MAX_UNCOMPRESSED_BYTES }}
+          - name: BOARD_IMPORT_MAX_ENTRIES
+            value: {{ .Values.env.optional.BOARD_IMPORT_MAX_ENTRIES }}
+          - name: BOARD_IMPORT_MAX_EXTRACTION_MS
+            value: {{ .Values.env.optional.BOARD_IMPORT_MAX_EXTRACTION_MS }}
+          - name: SHARP_MAX_INPUT_PIXELS
+            value: {{ .Values.env.optional.SHARP_MAX_INPUT_PIXELS }}
+          - name: SHARP_CONCURRENCY
+            value: {{ .Values.env.optional.SHARP_CONCURRENCY }}
+          - name: SHARP_CACHE_MEMORY_MB
+            value: {{ .Values.env.optional.SHARP_CACHE_MEMORY_MB }}
+          - name: SHARP_CACHE_ITEMS
+            value: {{ .Values.env.optional.SHARP_CACHE_ITEMS }}
+          - name: SHARP_CACHE_FILES
+            value: {{ .Values.env.optional.SHARP_CACHE_FILES }}
+          - name: SYSTEM_NOTIFICATIONS_DISABLED
+            value: {{ .Values.env.optional.SYSTEM_NOTIFICATIONS_DISABLED }}
+          - name: ANDROID_PACKAGE_NAME
+            value: {{ .Values.env.optional.ANDROID_PACKAGE_NAME }}
+          - name: ANDROID_SHA256_FINGERPRINT
+            value: {{ .Values.env.optional.ANDROID_SHA256_FINGERPRINT }}
           - name: DATABASE_URL
             {{- if .Values.postgresql.enabled }}
             value: "postgresql://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc/{{ .Values.postgresql.auth.database }}"
