@@ -488,6 +488,7 @@ export default {
       renameProject: 'Omdøb projekt',
       renameTemplate: 'Omdøb skabelon',
       reorderBoards: 'Omarrangér tavler i projektet',
+      reorderProjects: 'Omarrangér projekter',
       requiresAdminRights: '(kræver admin-rettigheder)',
       requiresEmailVerification: '(kræver e-mailbekræftelse)',
       resendVerificationEmail_title: 'Send bekræftelsesmail igen',

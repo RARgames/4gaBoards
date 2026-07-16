@@ -488,6 +488,7 @@ export default {
       renameProject: 'Projekt umbenennen',
       renameTemplate: 'Vorlage umbenennen',
       reorderBoards: 'Boards im Projekt neu sortieren',
+      reorderProjects: 'Projekte neu sortieren',
       requiresAdminRights: '(Admin-Rechte erforderlich)',
       requiresEmailVerification: '(E-Mail-Bestätigung erforderlich)',
       resendVerificationEmail_title: 'Bestätigungs-E-Mail erneut senden',

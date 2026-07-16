@@ -503,6 +503,7 @@ export default {
       renameProject: 'Zmień nazwę projektu',
       renameTemplate: 'Zmień nazwę szablonu',
       reorderBoards: 'Zmień kolejność tablic wewnątrz projektu',
+      reorderProjects: 'Zmień kolejność projektów',
       requiresAdminRights: '(wymaga uprawnień administratora)',
       requiresEmailVerification: '(wymaga weryfikacji adresu e-mail)',
       resendVerificationEmail_title: 'Wyślij ponownie e-mail weryfikacyjny',

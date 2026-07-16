@@ -7,6 +7,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import SortableTypes from '../../constants/SortableTypes';
 import BoardActionsPopup from '../BoardActionsPopup';
 import ConnectionsPopup from '../ConnectionsPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
@@ -42,18 +43,17 @@ const SidebarBoard = React.memo(
     const [t] = useTranslation();
     const boardRefsCurrent = boardRefs.current;
 
-    // eslint-disable-next-line no-unused-vars
     const { ref, handleRef, isDragging } = useSortable({
       id: board.id,
       index,
       group: projectId,
-      accept: (source) => isSortable(source) && source.initialGroup === projectId,
+      type: SortableTypes.BOARD,
+      accept: (source) => isSortable(source) && source.type === SortableTypes.BOARD && source.initialGroup === projectId,
       disabled: !board.isPersisted || !isProjectManager,
     });
 
     return (
-      // , isDragging && s.boardDragging
-      <div ref={ref} className={clsx(s.boardDraggable)}>
+      <div ref={ref} className={clsx(s.boardDraggable, isDragging && s.boardDragging)}>
         {board.isPersisted && (
           <div
             className={clsx(s.sidebarItemBoard, currBoardId === board.id && ss.sidebarItemActive)}

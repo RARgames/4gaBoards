@@ -11,6 +11,9 @@ module.exports = {
       regex: /^[0-9]+$/,
       required: true,
     },
+    position: {
+      type: 'number',
+    },
     isCollapsed: {
       type: 'boolean',
     },
@@ -37,7 +40,7 @@ module.exports = {
       throw Errors.PROJECT_MEMBERSHIP_NOT_FOUND;
     }
 
-    const values = _.pick(inputs, ['isCollapsed', 'isSubscribed']);
+    const values = _.pick(inputs, ['position', 'isCollapsed', 'isSubscribed']);
 
     projectMembership = await sails.helpers.projectMemberships.updateOne.with({
       values,

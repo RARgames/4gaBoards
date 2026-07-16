@@ -518,6 +518,7 @@ export default {
       renameProject: 'Переименовать проект',
       renameTemplate: 'Переименовать шаблон',
       reorderBoards: 'Изменить порядок досок',
+      reorderProjects: 'Изменить порядок проектов',
       requiresAdminRights: '(нужны права админа)',
       requiresEmailVerification: '(требуется подтверждение электронной почты)',
       resendVerificationEmail_title: 'Отправить письмо с подтверждением повторно',

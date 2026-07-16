@@ -488,6 +488,7 @@ export default {
       renameProject: 'Byt namn på projekt',
       renameTemplate: 'Byt namn på mall',
       reorderBoards: 'Ordna om tavlor i projektet',
+      reorderProjects: 'Ordna om projekt',
       requiresAdminRights: '(kräver admin-rättigheter)',
       requiresEmailVerification: '(kräver e-postverifiering)',
       resendVerificationEmail_title: 'Skicka verifieringsmejl igen',

@@ -33,6 +33,9 @@ module.exports = {
   async fn(inputs) {
     const { values } = inputs;
 
+    const [lastMembership] = await ProjectMembership.find({ userId: values.userId }).sort('position DESC').limit(1);
+    values.position = (lastMembership?.position || 0) + sails.config.custom.positionGap;
+
     const projectMembership = await ProjectMembership.findOrCreate(
       {
         projectId: values.projectId,

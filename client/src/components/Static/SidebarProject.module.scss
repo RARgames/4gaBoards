@@ -1,0 +1,24 @@
+:global(#app) {
+  .hoverButton {
+    opacity: 0;
+  }
+
+  .projectDraggable {
+    &:hover {
+      .hoverButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .projectDragging {
+    opacity: 0.75;
+  }
+
+  .sidebarItemProject {
+    background: var(--backgroundSidebarItemCategory);
+    border-top: 1px solid var(--borderSidebar);
+    display: flex;
+    align-items: center;
+  }
+}

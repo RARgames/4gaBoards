@@ -10,6 +10,7 @@ export default function* projectsWatchers() {
     takeEvery(EntryActionTypes.PROJECT_UPDATE, ({ payload: { id, data } }) => services.updateProject(id, data)),
     takeEvery(EntryActionTypes.CURRENT_PROJECT_UPDATE, ({ payload: { data } }) => services.updateCurrentProject(data)),
     takeEvery(EntryActionTypes.PROJECT_UPDATE_HANDLE, ({ payload: { project } }) => services.handleProjectUpdate(project)),
+    takeEvery(EntryActionTypes.PROJECT_MOVE, ({ payload: { id, index } }) => services.moveProject(id, index)),
     takeEvery(EntryActionTypes.PROJECT_BACKGROUND_IMAGE_UPDATE, ({ payload: { id, data } }) => services.updateProjectBackgroundImage(id, data)),
     takeEvery(EntryActionTypes.CURRENT_PROJECT_BACKGROUND_IMAGE_UPDATE, ({ payload: { data } }) => services.updateCurrentProjectBackgroundImage(data)),
     takeEvery(EntryActionTypes.PROJECT_DELETE, ({ payload: { id } }) => services.deleteProject(id)),

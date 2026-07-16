@@ -11,6 +11,10 @@ module.exports = {
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
+    position: {
+      type: 'number',
+      required: true,
+    },
     isCollapsed: {
       type: 'boolean',
       defaultsTo: false,

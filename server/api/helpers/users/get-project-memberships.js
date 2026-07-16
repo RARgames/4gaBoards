@@ -7,11 +7,23 @@ module.exports = {
       custom: idOrIdsValidator,
       required: true,
     },
+    exceptProjectMembershipIdOrIds: {
+      type: 'json',
+      custom: idOrIdsValidator,
+    },
   },
 
   async fn(inputs) {
-    return sails.helpers.projectMemberships.getMany({
+    const criteria = {
       userId: inputs.idOrIds,
-    });
+    };
+
+    if (!_.isUndefined(inputs.exceptProjectMembershipIdOrIds)) {
+      criteria.id = {
+        '!=': inputs.exceptProjectMembershipIdOrIds,
+      };
+    }
+
+    return sails.helpers.projectMemberships.getMany(criteria);
   },
 };

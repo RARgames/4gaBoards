@@ -11,6 +11,10 @@
     }
   }
 
+  .boardDragging {
+    opacity: 0.75;
+  }
+
   .sidebarItemBoard {
     background: var(--backgroundSidebarItem);
     padding: 8px 0;

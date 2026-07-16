@@ -70,6 +70,15 @@ const nextPosition = (items, index, excludedId) => {
   return prevPosition + (nextItem.position - prevPosition) / 2;
 };
 
+export const selectNextProjectPosition = createSelector(
+  orm,
+  (_, index) => index,
+  (_, __, excludedId) => excludedId,
+  ({ Project }, index, excludedId) => {
+    return nextPosition(Project.all().orderBy('position').toRefArray(), index, excludedId);
+  },
+);
+
 export const selectNextBoardPosition = createSelector(
   orm,
   (_, projectId) => projectId,
@@ -184,6 +193,7 @@ export default {
   selectIsCoreInitializing,
   selectIsLogouting,
   selectCoreSettings,
+  selectNextProjectPosition,
   selectNextBoardPosition,
   selectNextListPosition,
   selectNextCardPosition,

@@ -10,6 +10,7 @@ export default class extends BaseModel {
 
   static fields = {
     id: attr(),
+    position: attr(),
     name: attr(),
     background: attr(),
     backgroundImage: attr(),
@@ -67,6 +68,7 @@ export default class extends BaseModel {
           Project.withId(projectMembership.projectId)?.update({
             // TODO ? - hacky way to fix #311 - remove later
             isCollapsed: projectMembership.isCollapsed,
+            position: projectMembership.position,
           });
         });
 
@@ -82,6 +84,7 @@ export default class extends BaseModel {
             Project.withId(projectMembership.projectId)?.update({
               // TODO ? - hacky way to fix #311 - remove later
               isCollapsed: projectMembership.isCollapsed,
+              position: projectMembership.position,
             });
           });
         }
@@ -150,6 +153,7 @@ export default class extends BaseModel {
           const { project } = payload;
           if (payload.projectMembership) {
             project.isCollapsed = payload.projectMembership.isCollapsed;
+            project.position = payload.projectMembership.position;
           }
 
           Project.upsert(project);
@@ -181,6 +185,7 @@ export default class extends BaseModel {
           projectModel.update({
             ...(payload.data?.isCollapsed !== undefined && { isCollapsed: payload.data.isCollapsed }),
             ...(payload.data?.isSubscribed !== undefined && { isSubscribed: payload.data.isSubscribed }),
+            ...(payload.data?.position !== undefined && { position: payload.data.position }),
           });
         }
 
@@ -194,6 +199,7 @@ export default class extends BaseModel {
           projectModel.update({
             ...(payload.projectMembership?.isCollapsed !== undefined && { isCollapsed: payload.projectMembership.isCollapsed }),
             ...(payload.projectMembership?.isSubscribed !== undefined && { isSubscribed: payload.projectMembership.isSubscribed }),
+            ...(payload.projectMembership?.position !== undefined && { position: payload.projectMembership.position }),
           });
         }
 

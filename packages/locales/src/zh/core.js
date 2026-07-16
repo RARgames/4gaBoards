@@ -473,6 +473,7 @@ export default {
       renameProject: '重命名项目',
       renameTemplate: '重命名模板',
       reorderBoards: '重新排序项目中的面板',
+      reorderProjects: '重新排序项目',
       requiresAdminRights: '(需要管理员权限)',
       requiresEmailVerification: '(需要验证电子邮箱)',
       resendVerificationEmail_title: '重新发送验证邮件',

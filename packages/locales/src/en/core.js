@@ -488,6 +488,7 @@ export default {
       renameProject: 'Rename Project',
       renameTemplate: 'Rename Template',
       reorderBoards: 'Reorder boards within the project',
+      reorderProjects: 'Reorder projects',
       requiresAdminRights: '(requires admin rights)',
       requiresEmailVerification: '(requires email verification)',
       resendVerificationEmail_title: 'Resend Verification Email',

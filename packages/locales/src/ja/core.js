@@ -473,6 +473,7 @@ export default {
       renameProject: 'プロジェクト名を変更',
       renameTemplate: 'テンプレート名を変更',
       reorderBoards: 'プロジェクト内のボードを並べ替え',
+      reorderProjects: 'プロジェクトを並べ替え',
       requiresAdminRights: '（管理者権限が必要）',
       requiresEmailVerification: '（メール認証が必要）',
       resendVerificationEmail_title: '認証メールを再送信',

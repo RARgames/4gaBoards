@@ -503,6 +503,7 @@ export default {
       renameProject: 'Premenovať projekt',
       renameTemplate: 'Premenovať šablónu',
       reorderBoards: 'Zmeniť poradie tabúľ v projekte',
+      reorderProjects: 'Zmeniť poradie projektov',
       requiresAdminRights: '(vyžaduje admin práva)',
       requiresEmailVerification: '(vyžaduje overenie e-mailu)',
       resendVerificationEmail_title: 'Znovu odoslať overovací e-mail',

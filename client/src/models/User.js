@@ -547,6 +547,7 @@ export default class extends BaseModel {
       .orderBy('createdAt', false);
   }
 
+  // TODO could be simplified
   getOrderedAvailableProjectsModelArray() {
     const projectIds = [];
 
@@ -569,7 +570,7 @@ export default class extends BaseModel {
         projectModels.push(projectModel);
       });
 
-    return projectModels.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+    return projectModels.sort((a, b) => a.position - b.position);
   }
 
   getOrderedApiClientsQuerySet() {

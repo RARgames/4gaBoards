@@ -4,17 +4,16 @@ import { Link } from 'react-router';
 import { DragDropProvider } from '@dnd-kit/react';
 import { isSortable } from '@dnd-kit/react/sortable';
 import clsx from 'clsx';
-import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import SortableTypes from '../../constants/SortableTypes';
 import { useToggle } from '../../lib/hooks';
 import BoardAddPopup from '../BoardAddPopup';
 import Filter from '../Filter';
-import ProjectActionsPopup from '../ProjectActionsPopup';
 import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
-import SidebarBoard from './SidebarBoard';
+import SidebarProject from './SidebarProject';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Sidebar.module.scss';
@@ -43,6 +42,7 @@ const Sidebar = React.memo(
     mailServiceInboundEmail,
     onProjectCreate,
     onProjectUpdate,
+    onProjectMove,
     onBoardCreate,
     onBoardUpdate,
     onBoardMove,
@@ -67,13 +67,6 @@ const Sidebar = React.memo(
     const boardRefs = useRef({});
     const isFilteringBoards = filterTarget === 'board' && !!filterQuery;
 
-    const handleToggleProjectCollapse = useCallback(
-      (project) => {
-        onProjectMembershipUpdate(project.id, { isCollapsed: !project.isCollapsed });
-      },
-      [onProjectMembershipUpdate],
-    );
-
     const handleDragEnd = useCallback(
       ({ canceled, operation }) => {
         if (canceled) {
@@ -85,18 +78,18 @@ const Sidebar = React.memo(
           return;
         }
 
-        if (source.initialGroup !== source.group) {
-          return;
-        }
-
         const { initialIndex, index } = source;
-        if (initialIndex === index) {
-          return;
+        if (initialIndex !== index) {
+          if (source.type === SortableTypes.PROJECT) {
+            onProjectMove(source.id, index);
+          } else if (source.type === SortableTypes.BOARD) {
+            if (source.initialGroup === source.group) {
+              onBoardMove(source.id, index);
+            }
+          }
         }
-
-        onBoardMove(source.id, index);
       },
-      [onBoardMove],
+      [onBoardMove, onProjectMove],
     );
 
     const scrollItemIntoView = useCallback((itemRef) => {
@@ -129,79 +122,41 @@ const Sidebar = React.memo(
       }
     }, [currProjectId, currBoardId, scrollItemIntoView]);
 
-    const projectsNode = filteredProjects.map((project) => {
+    const projectsNode = filteredProjects.map((project, index) => {
       const isProjectManager = managedProjects.some((p) => p.id === project.id);
       return (
-        <div key={project.id}>
-          {/* eslint-disable-next-line no-return-assign */}
-          <div className={clsx(s.sidebarItemProject, !currBoardId && currProjectId === project.id && s.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
-            <Button variant={ButtonVariant.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={s.sidebarButton} onClick={() => handleToggleProjectCollapse(project)}>
-              <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.collapseIcon, project.isCollapsed && s.collapseIconCollapsed)} />
-            </Button>
-            <Link to={Paths.PROJECTS.replace(':id', project.id)} className={s.sidebarItemInner}>
-              <Button variant={ButtonVariant.NoBackground} content={project.name} className={clsx(s.sidebarButton, s.sidebarButtonPadding)} />
-            </Link>
-            {project.notificationsTotal > 0 && <span className={s.notification}>{project.notificationsTotal}</span>}
-            <ProjectActionsPopup
-              activities={project.activities}
-              isActivitiesFetching={project.isActivitiesFetching}
-              isAllActivitiesFetched={project.isAllActivitiesFetched}
-              lastActivityId={project.lastActivityId}
-              name={project.name}
-              projectId={project.id}
-              managedProjects={managedProjects}
-              defaultDataRename={pick(project, 'name')}
-              isAdmin={isAdmin}
-              createdAt={project.createdAt}
-              createdBy={project.createdBy}
-              updatedAt={project.updatedAt}
-              updatedBy={project.updatedBy}
-              memberships={project.memberships}
-              templates={boardTemplates}
-              isProjectManager={isProjectManager}
-              onUpdate={(data) => onProjectUpdate(project.id, data)}
-              onBoardCreate={onBoardCreate}
-              onTemplateUpdate={onBoardTemplateUpdate}
-              onTemplateDelete={onBoardTemplateDelete}
-              onActivitiesFetch={() => onActivitiesProjectFetch(project.id)}
-              position="right-start"
-              offset={10}
-              hideCloseButton
-            >
-              <Button variant={ButtonVariant.Icon} title={t('common.editProject', { context: 'title' })} className={clsx(s.sidebarButton, s.hoverButton)}>
-                <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-              </Button>
-            </ProjectActionsPopup>
-          </div>
-          {(!project.isCollapsed || isFilteringBoards || currProjectId === project.id) &&
-            project.boards.map((board, index) => (
-              <SidebarBoard
-                key={board.id}
-                board={board}
-                index={index}
-                projectId={project.id}
-                isProjectManager={isProjectManager}
-                isAdmin={isAdmin}
-                currBoardId={currBoardId}
-                boardRefs={boardRefs}
-                boardTemplates={boardTemplates}
-                mailServiceAvailable={mailServiceAvailable}
-                mailServiceInboundEmail={mailServiceInboundEmail}
-                onBoardUpdate={onBoardUpdate}
-                onBoardDelete={onBoardDelete}
-                onBoardExport={onBoardExport}
-                onBoardFetch={onBoardFetch}
-                onBoardTemplateCreate={onBoardTemplateCreate}
-                onBoardTemplateUpdate={onBoardTemplateUpdate}
-                onBoardTemplateDelete={onBoardTemplateDelete}
-                onActivitiesBoardFetch={onActivitiesBoardFetch}
-                onMailTokenCreate={onMailTokenCreate}
-                onMailTokenUpdate={onMailTokenUpdate}
-                onMailTokenDelete={onMailTokenDelete}
-                onBoardMembershipUpdate={onBoardMembershipUpdate}
-              />
-            ))}
-        </div>
+        <SidebarProject
+          key={project.id}
+          project={project}
+          index={index}
+          isProjectManager={isProjectManager}
+          isAdmin={isAdmin}
+          currProjectId={currProjectId}
+          currBoardId={currBoardId}
+          boardRefs={boardRefs}
+          projectRefs={projectRefs}
+          managedProjects={managedProjects}
+          boardTemplates={boardTemplates}
+          mailServiceAvailable={mailServiceAvailable}
+          mailServiceInboundEmail={mailServiceInboundEmail}
+          isFilteringBoards={isFilteringBoards}
+          onProjectUpdate={onProjectUpdate}
+          onProjectMembershipUpdate={onProjectMembershipUpdate}
+          onBoardCreate={onBoardCreate}
+          onBoardUpdate={onBoardUpdate}
+          onBoardDelete={onBoardDelete}
+          onBoardExport={onBoardExport}
+          onBoardFetch={onBoardFetch}
+          onBoardTemplateCreate={onBoardTemplateCreate}
+          onBoardTemplateUpdate={onBoardTemplateUpdate}
+          onBoardTemplateDelete={onBoardTemplateDelete}
+          onActivitiesProjectFetch={onActivitiesProjectFetch}
+          onActivitiesBoardFetch={onActivitiesBoardFetch}
+          onMailTokenCreate={onMailTokenCreate}
+          onMailTokenUpdate={onMailTokenUpdate}
+          onMailTokenDelete={onMailTokenDelete}
+          onBoardMembershipUpdate={onBoardMembershipUpdate}
+        />
       );
     });
 
@@ -363,6 +318,7 @@ Sidebar.propTypes = {
   mailServiceInboundEmail: PropTypes.string.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
+  onProjectMove: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
   onBoardMove: PropTypes.func.isRequired,
