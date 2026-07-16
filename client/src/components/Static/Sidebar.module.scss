@@ -77,14 +77,6 @@
     opacity: 0;
   }
 
-  .boardDraggable {
-    &:hover {
-      .hoverButton {
-        opacity: 1;
-      }
-    }
-  }
-
   .sidebarItemProject {
     background: var(--backgroundSidebarItemCategory);
     border-top: 1px solid var(--borderSidebar);
@@ -96,12 +88,6 @@
         opacity: 1;
       }
     }
-  }
-
-  .sidebarItemBoard {
-    background: var(--backgroundSidebarItem);
-    padding: 8px 0;
-    display: flex;
   }
 
   .sidebarItemInner {
@@ -177,23 +163,6 @@
     padding: 8px 8px 8px 0px;
   }
 
-  .github {
-    fill: var(--iconGithubActive);
-    margin-left: 4px;
-  }
-
-  .githubNotifications {
-    margin-right: 4px;
-  }
-
-  .boardButton {
-    padding: 0;
-  }
-
-  .boardCannotManage {
-    margin-left: 13px;
-  }
-
   .collapseIcon {
     vertical-align: middle;
   }
@@ -208,10 +177,6 @@
 
   .footerButtonIcon {
     margin-right: 4px;
-  }
-
-  .reorderBoardsButton {
-    width: 13px;
   }
 
   .notification {

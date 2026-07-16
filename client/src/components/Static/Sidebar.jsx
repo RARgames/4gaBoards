@@ -1,21 +1,20 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import { DragDropProvider } from '@dnd-kit/react';
+import { isSortable } from '@dnd-kit/react/sortable';
 import clsx from 'clsx';
 import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
-import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
-import BoardActionsPopup from '../BoardActionsPopup';
 import BoardAddPopup from '../BoardAddPopup';
-import ConnectionsPopup from '../ConnectionsPopup';
 import Filter from '../Filter';
 import ProjectActionsPopup from '../ProjectActionsPopup';
 import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
+import SidebarBoard from './SidebarBoard';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Sidebar.module.scss';
@@ -76,12 +75,26 @@ const Sidebar = React.memo(
     );
 
     const handleDragEnd = useCallback(
-      ({ draggableId, source, destination }) => {
-        if (!destination || source.index === destination.index) {
+      ({ canceled, operation }) => {
+        if (canceled) {
           return;
         }
 
-        onBoardMove(draggableId, destination.index);
+        const { source } = operation;
+        if (!isSortable(source)) {
+          return;
+        }
+
+        if (source.initialGroup !== source.group) {
+          return;
+        }
+
+        const { initialIndex, index } = source;
+        if (initialIndex === index) {
+          return;
+        }
+
+        onBoardMove(source.id, index);
       },
       [onBoardMove],
     );
@@ -160,113 +173,34 @@ const Sidebar = React.memo(
               </Button>
             </ProjectActionsPopup>
           </div>
-          {(!project.isCollapsed || isFilteringBoards || currProjectId === project.id) && (
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="vertical">
-                {({ innerRef, droppableProps, placeholder }) => (
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  <div {...droppableProps} ref={innerRef}>
-                    {project.boards.map((board, index) => (
-                      <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !isProjectManager}>
-                        {/* eslint-disable-next-line no-shadow */}
-                        {({ innerRef, draggableProps, dragHandleProps }) => (
-                          // eslint-disable-next-line react/jsx-props-no-spreading
-                          <div {...draggableProps} ref={innerRef} className={s.boardDraggable}>
-                            {board.isPersisted && (
-                              <div
-                                key={board.id}
-                                className={clsx(s.sidebarItemBoard, currBoardId === board.id && s.sidebarItemActive)}
-                                // eslint-disable-next-line no-return-assign
-                                ref={(el) => (boardRefs.current[board.id] = el)}
-                              >
-                                {isProjectManager && (
-                                  // eslint-disable-next-line react/jsx-props-no-spreading
-                                  <div {...dragHandleProps}>
-                                    <Button variant={ButtonVariant.Icon} title={t('common.reorderBoards')} className={clsx(s.reorderBoardsButton, s.hoverButton)}>
-                                      <Icon type={IconType.MoveUpDown} size={IconSize.Size13} />
-                                    </Button>
-                                  </div>
-                                )}
-                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={clsx(s.sidebarItemInner, !isProjectManager && s.boardCannotManage)}>
-                                  <Button variant={ButtonVariant.NoBackground} content={board.name} className={clsx(s.boardButton, s.sidebarButton)} />
-                                </Link>
-                                {board.isGithubConnected &&
-                                  (isProjectManager ? (
-                                    <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
-                                      <Icon
-                                        type={IconType.GitHub}
-                                        size={IconSize.Size13}
-                                        className={clsx(s.github, board.notificationsTotal > 0 && s.githubNotifications)}
-                                        title={t('common.connectedToGithub', { repo: board.githubRepo })}
-                                      />
-                                    </ConnectionsPopup>
-                                  ) : (
-                                    <div>
-                                      <Icon
-                                        type={IconType.GitHub}
-                                        size={IconSize.Size13}
-                                        className={clsx(s.github, board.notificationsTotal > 0 && s.githubNotifications)}
-                                        title={t('common.connectedToGithub', { repo: board.githubRepo })}
-                                      />
-                                    </div>
-                                  ))}
-                                {board.notificationsTotal > 0 && <span className={s.notification}>{board.notificationsTotal}</span>}
-                                <BoardActionsPopup
-                                  activities={board.activities}
-                                  isActivitiesFetching={board.isActivitiesFetching}
-                                  isAllActivitiesFetched={board.isAllActivitiesFetched}
-                                  lastActivityId={board.lastActivityId}
-                                  defaultDataRename={pick(board, 'name')}
-                                  defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
-                                  createdAt={board.createdAt}
-                                  createdBy={board.createdBy}
-                                  updatedAt={board.updatedAt}
-                                  updatedBy={board.updatedBy}
-                                  memberships={board.memberships}
-                                  templates={boardTemplates}
-                                  boardName={board.name}
-                                  isAdmin={isAdmin}
-                                  mailTokens={board.mailTokens}
-                                  mailTokenCount={board.mailTokenCount}
-                                  mailServiceAvailable={mailServiceAvailable}
-                                  mailServiceInboundEmail={mailServiceInboundEmail}
-                                  isProjectManager={isProjectManager}
-                                  canEdit={board.canEdit}
-                                  isFetching={board.isFetching}
-                                  boardMembershipId={board.boardMembershipId}
-                                  hideCompletedLists={board.hideCompletedLists}
-                                  onMembershipUpdate={onBoardMembershipUpdate}
-                                  onUpdate={(data) => onBoardUpdate(board.id, data)}
-                                  onExport={(data) => onBoardExport(board.id, data)}
-                                  onFetch={() => onBoardFetch(board.id)}
-                                  onDelete={() => onBoardDelete(board.id)}
-                                  onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
-                                  onMailTokenCreate={() => onMailTokenCreate(board.id)}
-                                  onMailTokenUpdate={(mailTokenId) => onMailTokenUpdate(mailTokenId, board.id)}
-                                  onMailTokenDelete={(mailTokenId) => onMailTokenDelete(mailTokenId)}
-                                  onTemplateCreate={(data) => onBoardTemplateCreate(board.id, data)}
-                                  onTemplateUpdate={onBoardTemplateUpdate}
-                                  onTemplateDelete={onBoardTemplateDelete}
-                                  position="right-start"
-                                  offset={10}
-                                  hideCloseButton
-                                >
-                                  <Button variant={ButtonVariant.Icon} title={t('common.editBoard', { context: 'title' })} className={s.hoverButton}>
-                                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                                  </Button>
-                                </BoardActionsPopup>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          )}
+          {(!project.isCollapsed || isFilteringBoards || currProjectId === project.id) &&
+            project.boards.map((board, index) => (
+              <SidebarBoard
+                key={board.id}
+                board={board}
+                index={index}
+                projectId={project.id}
+                isProjectManager={isProjectManager}
+                isAdmin={isAdmin}
+                currBoardId={currBoardId}
+                boardRefs={boardRefs}
+                boardTemplates={boardTemplates}
+                mailServiceAvailable={mailServiceAvailable}
+                mailServiceInboundEmail={mailServiceInboundEmail}
+                onBoardUpdate={onBoardUpdate}
+                onBoardDelete={onBoardDelete}
+                onBoardExport={onBoardExport}
+                onBoardFetch={onBoardFetch}
+                onBoardTemplateCreate={onBoardTemplateCreate}
+                onBoardTemplateUpdate={onBoardTemplateUpdate}
+                onBoardTemplateDelete={onBoardTemplateDelete}
+                onActivitiesBoardFetch={onActivitiesBoardFetch}
+                onMailTokenCreate={onMailTokenCreate}
+                onMailTokenUpdate={onMailTokenUpdate}
+                onMailTokenDelete={onMailTokenDelete}
+                onBoardMembershipUpdate={onBoardMembershipUpdate}
+              />
+            ))}
         </div>
       );
     });
@@ -357,7 +291,11 @@ const Sidebar = React.memo(
                 </div>
               </div>
             )}
-            {!settingsOnly && <div>{projectsNode}</div>}
+            {!settingsOnly && (
+              <DragDropProvider onDragEnd={handleDragEnd}>
+                <div>{projectsNode}</div>
+              </DragDropProvider>
+            )}
           </div>
           <div>
             {!settingsOnly && canAddProject && (

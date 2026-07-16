@@ -1,0 +1,40 @@
+:global(#app) {
+  .hoverButton {
+    opacity: 0;
+  }
+
+  .boardDraggable {
+    &:hover {
+      .hoverButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .sidebarItemBoard {
+    background: var(--backgroundSidebarItem);
+    padding: 8px 0;
+    display: flex;
+  }
+
+  .github {
+    fill: var(--iconGithubActive);
+    margin-left: 4px;
+  }
+
+  .githubNotifications {
+    margin-right: 4px;
+  }
+
+  .boardButton {
+    padding: 0;
+  }
+
+  .boardCannotManage {
+    margin-left: 13px;
+  }
+
+  .reorderBoardsButton {
+    width: 13px;
+  }
+}
