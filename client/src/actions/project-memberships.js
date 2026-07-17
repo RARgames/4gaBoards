@@ -15,11 +15,12 @@ updateProjectMembership.success = (projectMembership) => ({
   },
 });
 
-updateProjectMembership.failure = (id, error) => ({
+updateProjectMembership.failure = (id, error, data) => ({
   type: ActionTypes.PROJECT_MEMBERSHIP_UPDATE__FAILURE,
   payload: {
     id,
     error,
+    data,
   },
 });
 

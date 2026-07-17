@@ -191,6 +191,19 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.PROJECT_MEMBERSHIP_UPDATE__FAILURE: {
+        const projectModel = Project.withId(payload.id);
+
+        if (projectModel) {
+          projectModel.update({
+            ...(payload.data?.isCollapsed !== undefined && { isCollapsed: payload.data.isCollapsed }),
+            ...(payload.data?.isSubscribed !== undefined && { isSubscribed: payload.data.isSubscribed }),
+            ...(payload.data?.position !== undefined && { position: payload.data.position }),
+          });
+        }
+
+        break;
+      }
 
       case ActionTypes.PROJECT_MEMBERSHIP_UPDATE__SUCCESS:
       case ActionTypes.PROJECT_MEMBERSHIP_UPDATE_HANDLE: {
