@@ -8,18 +8,16 @@
 
   .content {
     flex: 1;
+    min-width: 0;
     height: 100%;
-    width: calc(100% - 230px);
-  }
-
-  .contentCompact {
-    width: calc(100% - 180px);
   }
 
   .sidebar {
     background-color: var(--backgroundHeader);
     color: var(--textColor0);
-    width: 230px;
+    flex: none;
+    box-sizing: border-box;
+    width: 260px;
     height: 100%;
     padding: 10px 8px;
     box-shadow: 2px 0 5px var(--shadowBlack01);
@@ -34,12 +32,38 @@
   }
 
   .sidebarCompact {
-    width: 180px;
+    width: 200px;
   }
 
   .sidebarHidden {
     width: 0px;
     visibility: hidden;
+  }
+
+  .resizeHandle {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 5px;
+    height: 100%;
+    margin-left: -3px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: col-resize;
+    touch-action: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0 2px;
+      background: transparent;
+      transition: background 120ms ease;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+      background: var(--borderOutline2);
+    }
   }
 
   .scrollable {
@@ -289,4 +313,10 @@
   .notificationNonManager {
     margin-right: 20px;
   }
+}
+
+:global(body).resizingSidebar,
+:global(body).resizingSidebar * {
+  cursor: col-resize !important;
+  user-select: none !important;
 }

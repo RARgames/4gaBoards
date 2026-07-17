@@ -607,6 +607,7 @@ export default {
       renameBoard: 'Rename Board',
       renameProject: 'Rename Project',
       reorderBoards: 'Reorder boards within the project',
+      resizeSidebar: 'Resize sidebar',
       requiresAdminRights: '(requires admin rights)',
       resetColumnFilters: 'Reset Column Filters',
       resetColumnSorting: 'Reset Column Sorting',

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
@@ -20,6 +20,16 @@ import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Sidebar.module.scss';
+
+const SIDEBAR_WIDTH_STORAGE_KEY = 'sidebarWidth';
+const MIN_SIDEBAR_WIDTH = 180;
+const MAX_SIDEBAR_WIDTH = 480;
+
+const getStoredSidebarWidth = () => {
+  const storedWidth = Number(window.localStorage.getItem(SIDEBAR_WIDTH_STORAGE_KEY));
+
+  return Number.isFinite(storedWidth) && storedWidth >= MIN_SIDEBAR_WIDTH && storedWidth <= MAX_SIDEBAR_WIDTH ? storedWidth : null;
+};
 
 const Sidebar = React.memo(
   ({
@@ -50,8 +60,10 @@ const Sidebar = React.memo(
   }) => {
     const [t] = useTranslation();
     const [sidebarShown, toggleSidebar] = useToggle(true);
+    const [sidebarWidth, setSidebarWidth] = useState(getStoredSidebarWidth);
     const projectRefs = useRef({});
     const boardRefs = useRef({});
+    const resizeCleanupRef = useRef();
     const isFilteringBoards = filterTarget === 'board' && !!filterQuery;
 
     const handleToggleProjectCollapse = useCallback(
@@ -101,6 +113,61 @@ const Sidebar = React.memo(
         scrollItemIntoView(projectRefs.current[currProjectId]);
       }
     }, [currProjectId, currBoardId, scrollItemIntoView]);
+
+    useEffect(
+      () => () => {
+        resizeCleanupRef.current?.();
+      },
+      [],
+    );
+
+    const updateSidebarWidth = useCallback((width) => {
+      const maxWidth = Math.min(MAX_SIDEBAR_WIDTH, Math.floor(window.innerWidth / 2));
+      const nextWidth = Math.max(MIN_SIDEBAR_WIDTH, Math.min(maxWidth, width));
+
+      setSidebarWidth(nextWidth);
+      window.localStorage.setItem(SIDEBAR_WIDTH_STORAGE_KEY, String(nextWidth));
+    }, []);
+
+    const handleResizePointerDown = useCallback(
+      (event) => {
+        event.preventDefault();
+        const startX = event.clientX;
+        const startWidth = event.currentTarget.previousElementSibling.getBoundingClientRect().width;
+
+        const handlePointerMove = (moveEvent) => {
+          updateSidebarWidth(startWidth + moveEvent.clientX - startX);
+        };
+        const cleanup = () => {
+          document.removeEventListener('pointermove', handlePointerMove);
+          document.removeEventListener('pointerup', cleanup);
+          document.removeEventListener('pointercancel', cleanup);
+          document.body.classList.remove(s.resizingSidebar);
+          resizeCleanupRef.current = undefined;
+        };
+
+        resizeCleanupRef.current?.();
+        resizeCleanupRef.current = cleanup;
+        document.body.classList.add(s.resizingSidebar);
+        document.addEventListener('pointermove', handlePointerMove);
+        document.addEventListener('pointerup', cleanup);
+        document.addEventListener('pointercancel', cleanup);
+      },
+      [updateSidebarWidth],
+    );
+
+    const handleResizeKeyDown = useCallback(
+      (event) => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+          return;
+        }
+
+        event.preventDefault();
+        const currentWidth = event.currentTarget.previousElementSibling.getBoundingClientRect().width;
+        updateSidebarWidth(currentWidth + (event.key === 'ArrowLeft' ? -10 : 10));
+      },
+      [updateSidebarWidth],
+    );
 
     const projectsNode = filteredProjects.map((project) => {
       const isProjectManager = managedProjects.some((p) => p.id === project.id);
@@ -234,7 +301,7 @@ const Sidebar = React.memo(
         <Button style={ButtonStyle.Icon} title={sidebarShown ? t('common.hideSidebar') : t('common.showSidebar')} onClick={toggleSidebar} className={s.toggleSidebarButton}>
           <Icon type={sidebarShown ? IconType.Hide : IconType.Show} size={IconSize.Size18} />
         </Button>
-        <div className={clsx(s.sidebar, sidebarCompact && s.sidebarCompact, !sidebarShown && s.sidebarHidden)}>
+        <div className={clsx(s.sidebar, sidebarCompact && s.sidebarCompact, !sidebarShown && s.sidebarHidden)} style={sidebarShown && sidebarWidth ? { width: sidebarWidth } : undefined}>
           <div>
             {!settingsOnly && (
               <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
@@ -350,7 +417,24 @@ const Sidebar = React.memo(
             )}
           </div>
         </div>
-        <div className={clsx(s.content, sidebarCompact && s.contentCompact)}>{children}</div>
+        {sidebarShown && (
+          /* The separator is operable by pointer and keyboard like a native splitter. */
+          /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
+          <div
+            className={s.resizeHandle}
+            role="separator"
+            aria-label={t('common.resizeSidebar')}
+            aria-orientation="vertical"
+            aria-valuemin={MIN_SIDEBAR_WIDTH}
+            aria-valuemax={MAX_SIDEBAR_WIDTH}
+            aria-valuenow={sidebarWidth || (sidebarCompact ? 200 : 260)}
+            tabIndex={0}
+            onPointerDown={handleResizePointerDown}
+            onKeyDown={handleResizeKeyDown}
+          />
+          /* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
+        )}
+        <div className={s.content}>{children}</div>
       </div>
     );
   },
