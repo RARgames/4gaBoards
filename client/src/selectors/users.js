@@ -95,6 +95,12 @@ export const selectProjectsForCurrentUser = createSelector(
       });
 
       let notificationsTotal = 0;
+      const statsTotals = {
+        openCount: 0,
+        dueSoonCount: 0,
+        doneRecentCount: 0,
+        lastActivityAt: null,
+      };
       const boardsRefs = boardsModels.map((boardModel) => {
         let notificationsBoardTotal = 0;
         boardModel.cards.toModelArray().forEach((cardModel) => {
@@ -108,6 +114,16 @@ export const selectProjectsForCurrentUser = createSelector(
             projectMemberships.set(user.id, { user });
           }
         });
+
+        if (boardModel.ref.stats) {
+          statsTotals.openCount += boardModel.ref.stats.openCount;
+          statsTotals.dueSoonCount += boardModel.ref.stats.dueSoonCount;
+          statsTotals.doneRecentCount += boardModel.ref.stats.doneRecentCount;
+
+          if (boardModel.ref.stats.lastActivityAt && (!statsTotals.lastActivityAt || boardModel.ref.stats.lastActivityAt > statsTotals.lastActivityAt)) {
+            statsTotals.lastActivityAt = boardModel.ref.stats.lastActivityAt;
+          }
+        }
 
         return {
           ...boardModel.ref,
@@ -125,6 +141,7 @@ export const selectProjectsForCurrentUser = createSelector(
         firstBoardId: boardsModels[0] && boardsModels[0].id,
         boards: boardsRefs,
         memberships: Array.from(projectMemberships.values()),
+        statsTotals,
       };
     });
 

@@ -92,7 +92,7 @@ module.exports = {
 
     const isProjectManager = await sails.helpers.users.isProjectManager(currentUser.id, project.id);
 
-    if (!isProjectManager) {
+    if (!isProjectManager && !currentUser.isAdmin) {
       throw Errors.PROJECT_NOT_FOUND; // Forbidden
     }
 

@@ -1,0 +1,286 @@
+:global(#app) {
+  .tileWrapper {
+    position: relative;
+    height: 100%;
+  }
+
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    padding: 15px 16px 13px;
+    background: var(--backgroundColorTmpHeader);
+    border: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-radius: var(--tw-radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transform: translateY(0);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: var(--tw-shadow-lg);
+      opacity: 0;
+      transition: opacity 180ms ease;
+      pointer-events: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--accent) var(--boardTileBorderMix), var(--backgroundColorTmpSeparatorLight));
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    &:hover .bar,
+    &:focus-visible .bar {
+      background: color-mix(in srgb, var(--accent) var(--boardTileAccentMixHover), var(--backgroundList));
+    }
+
+    &:hover .barDone,
+    &:focus-visible .barDone {
+      background: color-mix(in srgb, var(--backgroundGreen) var(--boardTileAccentMixHover), var(--backgroundList));
+    }
+  }
+
+  .top {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+  }
+
+  .teamDot {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    margin-top: 5px;
+    border-radius: 3px;
+    background: var(--accent);
+  }
+
+  .name {
+    font-family: var(--fontDisplay);
+    font-size: 15.5px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--textColor0);
+    text-wrap: balance;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .notification {
+    flex: none;
+    margin-left: auto;
+    font-family: var(--fontMono);
+    font-size: 10.5px;
+    line-height: 1;
+    color: var(--notificationRed);
+    background: color-mix(in srgb, var(--notificationRed) 18%, transparent);
+    border: 1px solid color-mix(in srgb, var(--notificationRed) 45%, transparent);
+    border-radius: 20px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+
+  /* Lane fingerprint */
+
+  .fingerprint {
+    display: flex;
+    align-items: stretch;
+    gap: 5px;
+    height: 46px;
+  }
+
+  .lane {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .barTrack {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .bar {
+    width: 100%;
+    min-height: 3px;
+    border-radius: 3px 3px 1px 1px;
+    background: color-mix(in srgb, var(--accent) var(--boardTileAccentMix), var(--backgroundList));
+    transition: background-color 180ms ease;
+  }
+
+  .barDone {
+    background: color-mix(in srgb, var(--backgroundGreen) var(--boardTileAccentMix), var(--backgroundList));
+  }
+
+  .laneLabel {
+    margin-top: 3px;
+    font-family: var(--fontMono);
+    font-style: normal;
+    font-size: 8.5px;
+    line-height: 1.2;
+    color: var(--textColor4);
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Progress hairline */
+
+  .progressRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .progressTrack {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--backgroundList);
+    overflow: hidden;
+  }
+
+  .progressFill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--backgroundGreen);
+  }
+
+  .progressPercent {
+    flex: none;
+    font-family: var(--fontMono);
+    font-size: 10px;
+    color: var(--textColor3);
+  }
+
+  /* Meta row */
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+  }
+
+  .cardCount {
+    font-family: var(--fontMono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11.5px;
+    color: var(--textColor1);
+  }
+
+  .cardCountLabel {
+    color: var(--textColor4);
+  }
+
+  .avatars {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .avatars > * {
+    margin-left: -6px;
+    border: 2px solid var(--backgroundColorTmpHeader);
+    border-radius: 50%;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .avatarsMore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 21px;
+    height: 21px;
+    margin-left: -6px;
+    font-family: var(--fontMono);
+    font-size: 9px;
+    color: var(--textColor3);
+    background: var(--backgroundColorTmpHighlighted);
+    border: 2px solid var(--backgroundColorTmpHeader);
+    border-radius: 50%;
+  }
+
+  .updated {
+    flex: none;
+    font-size: 10.5px;
+    color: var(--textColor4);
+    white-space: nowrap;
+  }
+
+  .tileStale .updated {
+    color: var(--textColorGold);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile {
+      transition: none;
+    }
+
+    .tile:hover,
+    .tile:focus-visible {
+      transform: none;
+    }
+  }
+
+  /* List (rows) view mode — grid container gets the global .rows class from Boards.jsx */
+
+  :global(.rows) .tile {
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
+    padding: 11px 16px;
+  }
+
+  :global(.rows) .top {
+    flex: 0 0 250px;
+    align-items: center;
+  }
+
+  :global(.rows) .teamDot {
+    margin-top: 0;
+  }
+
+  :global(.rows) .fingerprint {
+    flex: 0 0 190px;
+    height: 34px;
+  }
+
+  :global(.rows) .laneLabel {
+    display: none;
+  }
+
+  :global(.rows) .progressRow {
+    flex: 1;
+  }
+
+  :global(.rows) .meta {
+    flex: 0 0 auto;
+    margin-top: 0;
+    margin-left: auto;
+  }
+}

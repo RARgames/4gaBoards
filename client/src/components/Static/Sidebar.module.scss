@@ -17,13 +17,15 @@
   }
 
   .sidebar {
-    background-color: var(--backgroundSidebar);
+    background-color: var(--backgroundHeader);
     color: var(--textColor0);
     width: 230px;
     height: 100%;
+    padding: 10px 8px;
     box-shadow: 2px 0 5px var(--shadowBlack01);
     display: flex;
     flex-direction: column;
+    gap: 8px;
   }
 
   &:global([data-theme-shape='rounded']) .sidebar {
@@ -71,7 +73,11 @@
 
   .sidebarItem {
     padding: 0 10px;
-    background: var(--backgroundSidebarItem);
+    border-radius: var(--tw-radius);
+
+    &:hover {
+      background: var(--backgroundSidebarItem2);
+    }
   }
 
   .hoverButton {
@@ -86,23 +92,40 @@
     }
   }
 
+  .scrollable > div + div {
+    margin-top: 6px;
+  }
+
   .sidebarItemProject {
-    background: var(--backgroundSidebarItem3);
-    border-top: 1px solid var(--backgroundPopupSeparator);
+    padding: 0 10px;
+    border-radius: var(--tw-radius);
     display: flex;
     align-items: center;
 
     &:hover {
+      background: var(--backgroundSidebarItem2);
+
       .hoverButton {
         opacity: 1;
       }
     }
   }
 
+  .sidebarItemProject .sidebarButton {
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
   .sidebarItemBoard {
-    background: var(--backgroundSidebarItem);
-    padding: 8px 0;
+    padding: 6px 10px;
+    border-radius: var(--tw-radius);
     display: flex;
+
+    &:hover {
+      background: var(--backgroundSidebarItem2);
+    }
   }
 
   .sidebarItemInner {
@@ -114,6 +137,7 @@
   .sidebarItemActive {
     background: var(--backgroundSidebarItemActive);
     border-left: 2px solid var(--borderOutline2);
+    border-radius: 0 var(--tw-radius) var(--tw-radius) 0;
 
     button {
       font-weight: bold;
@@ -137,6 +161,7 @@
   .sidebarActive {
     background: var(--backgroundSidebarItemActive);
     border-left: 2px solid var(--borderOutline2);
+    border-radius: 0 var(--tw-radius) var(--tw-radius) 0;
 
     button {
       font-weight: bold;
@@ -203,6 +228,25 @@
     padding: 0;
   }
 
+  .boardAccentSwatch {
+    flex: none;
+    align-self: center;
+    width: 7px;
+    height: 7px;
+    margin: 0 8px;
+    border-radius: 2px;
+  }
+
+  .boardOpenCount {
+    flex: none;
+    align-self: center;
+    font-family: var(--fontMono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    color: var(--textColor4);
+    margin-left: 6px;
+  }
+
   .boardCannotManage {
     margin-left: 13px;
   }
@@ -217,6 +261,11 @@
 
   .footerButton {
     padding: 8px 14px;
+    border-radius: var(--tw-radius);
+
+    &:hover {
+      background: var(--backgroundSidebarItem2) !important;
+    }
   }
 
   .footerButtonIcon {

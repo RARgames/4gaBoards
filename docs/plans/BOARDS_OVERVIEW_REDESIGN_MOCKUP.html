@@ -1,0 +1,620 @@
+<title>INFERIUS — Boards page redesign concept</title>
+<style>
+  /* ============ tokens (from client/src/colors.css) ============ */
+  :root {
+    color-scheme: dark;
+    --page: #121722;
+    --bg: #1b2230;
+    --panel: #161b24;
+    --surface: #232a3a;
+    --card: #2b3346;
+    --raised: #303a4e;
+    --line: #2a3245;
+    --text0: #ebebec;
+    --text1: #d3d3d3;
+    --text3: #999999;
+    --text4: #6d6d6d;
+    --blue: #5ba4cf;
+    --gold: #f1c40f;
+    --red: #eb5a46;
+    --green: #21ba45;
+    /* team accents — existing avatar palette */
+    --t-admin: #f1c40f;
+    --t-tech: #3498db;
+    --t-creative: #1abc9c;
+    --t-art: #8e44ad;
+    --t-art-soft: #b06cd4;
+    --t-marketing: #e67e22;
+    --t-bizdev: #2ecc71;
+    --t-playtest: #e74c3c;
+    --sans: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --display: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+    --mono: "Cascadia Code", Consolas, ui-monospace, monospace;
+  }
+
+  html, body { background: var(--page); }
+  body {
+    font-family: var(--sans);
+    color: var(--text1);
+    margin: 0;
+    padding: 28px clamp(10px, 3vw, 40px) 48px;
+  }
+  * { box-sizing: border-box; }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+
+  /* ============ concept caption ============ */
+  .caption {
+    max-width: 1360px; margin: 0 auto 14px;
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  }
+  .caption .tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+    color: var(--gold); text-transform: uppercase;
+  }
+  .caption p { margin: 0; font-size: 13px; color: var(--text3); }
+
+  /* ============ app frame ============ */
+  .frame-scroll { max-width: 1360px; margin: 0 auto; overflow-x: auto; border-radius: 14px; }
+  .app {
+    min-width: 1020px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,.45);
+    display: flex; flex-direction: column;
+    height: 860px;
+  }
+
+  /* ---- top bar ---- */
+  .topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 20px;
+    padding: 0 18px; height: 52px; flex: none;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo .mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(140deg, var(--blue), #2e5d80);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 700; color: #0e1520;
+  }
+  .logo .studio {
+    font-family: var(--display); font-weight: 700; font-size: 12px;
+    letter-spacing: .18em; color: var(--text0); text-transform: uppercase;
+  }
+  .logo .studio small { display: block; font-size: 8px; letter-spacing: .34em; color: var(--text3); font-weight: 400; }
+  .top-divider { width: 1px; height: 22px; background: var(--line); }
+  .tabs { display: flex; gap: 2px; height: 100%; }
+  .tab {
+    background: none; border: 0; color: var(--text3);
+    font-size: 13px; padding: 0 13px; height: 100%;
+    border-bottom: 2px solid transparent; border-top: 2px solid transparent;
+  }
+  .tab:hover { color: var(--text1); }
+  .tab.active { color: var(--text0); border-bottom-color: var(--blue); }
+  .top-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+  .icon-btn {
+    position: relative; background: none; border: 0; color: var(--text3);
+    width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+  }
+  .icon-btn:hover { background: var(--surface); color: var(--text1); }
+  .icon-btn svg { width: 17px; height: 17px; }
+  .icon-btn .dot {
+    position: absolute; top: 2px; right: 2px;
+    background: var(--red); color: #fff; font-size: 9px; font-family: var(--mono);
+    min-width: 14px; height: 14px; border-radius: 7px;
+    display: grid; place-items: center; padding: 0 3px;
+  }
+  .me {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--t-art); color: #fff; font-size: 12px; font-weight: 600;
+    display: grid; place-items: center;
+  }
+
+  /* ---- body ---- */
+  .body { flex: 1; display: flex; min-height: 0; }
+
+  /* ---- sidebar ---- */
+  .sidebar {
+    width: 232px; flex: none;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column;
+    padding: 12px 10px;
+    gap: 4px;
+    overflow-y: auto;
+  }
+  .side-search {
+    background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+    padding: 7px 10px; font-size: 12.5px; color: var(--text1);
+    margin-bottom: 8px; width: 100%;
+  }
+  .side-search::placeholder { color: var(--text4); }
+  .proj {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 9px; border-radius: 8px;
+    font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--text1); background: none; border: 0; width: 100%; text-align: left;
+  }
+  .proj:hover { background: var(--surface); }
+  .proj .chev { color: var(--text4); font-size: 9px; width: 10px; }
+  .proj.current { color: var(--text0); }
+  .proj .pill {
+    margin-left: auto; font-family: var(--mono); font-size: 10px;
+    background: var(--red); color: #fff; border-radius: 8px; padding: 1px 6px;
+  }
+  .side-board {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5.5px 9px 5.5px 26px; border-radius: 8px;
+    font-size: 12.5px; color: var(--text3);
+    background: none; border: 0; width: 100%; text-align: left;
+  }
+  .side-board:hover { background: var(--surface); color: var(--text1); }
+  .side-board .sw { width: 7px; height: 7px; border-radius: 2px; flex: none; }
+  .side-board .n {
+    margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--text4);
+  }
+  .side-board .n.alert { color: var(--red); font-weight: 700; }
+  .side-footer { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); display: grid; gap: 2px; }
+  .side-footer .side-board { padding-left: 9px; }
+
+  /* ---- main ---- */
+  .main { flex: 1; min-width: 0; overflow-y: auto; padding: 26px 30px 34px; }
+
+  .project-head { display: flex; align-items: flex-end; gap: 26px; flex-wrap: wrap; margin-bottom: 6px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--blue); margin: 0 0 6px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: 30px; font-weight: 750; letter-spacing: .01em;
+    color: var(--text0); margin: 0; line-height: 1.05;
+  }
+  .project-sub { margin: 7px 0 0; font-size: 13px; color: var(--text3); }
+  .stats { display: flex; gap: 10px; margin-left: auto; flex-wrap: wrap; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 9px 14px; min-width: 92px;
+  }
+  .stat b {
+    display: block; font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: 19px; font-weight: 600; color: var(--text0); line-height: 1.1;
+  }
+  .stat span { font-size: 11px; color: var(--text3); }
+  .stat.watch b { color: var(--gold); }
+
+  /* toolbar */
+  .toolbar {
+    display: flex; align-items: center; gap: 12px;
+    margin: 22px 0 6px; flex-wrap: wrap;
+  }
+  .board-filter {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 9px;
+    padding: 8px 12px; font-size: 13px; width: 240px; color: var(--text1);
+  }
+  .board-filter::placeholder { color: var(--text4); }
+  .showing { font-size: 12.5px; color: var(--text3); font-variant-numeric: tabular-nums; }
+  .toolbar .spacer { flex: 1; }
+  .seg { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 2px; }
+  .seg button {
+    border: 0; background: none; color: var(--text3);
+    font-size: 12px; padding: 5px 12px; border-radius: 7px;
+  }
+  .seg button[aria-pressed="true"] { background: var(--raised); color: var(--text0); }
+  .btn-gold {
+    background: var(--gold); color: #1a1a1a; border: 0; border-radius: 9px;
+    font-weight: 700; font-size: 13px; padding: 9px 16px;
+  }
+  .btn-gold:hover { background: #ffd634; }
+
+  /* sections */
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    margin: 22px 0 12px;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--text3);
+  }
+  .section-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .section-label .count { color: var(--text4); letter-spacing: 0; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(252px, 1fr));
+    gap: 14px;
+  }
+
+  /* ---- board card ---- */
+  .bcard {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 15px 16px 13px;
+    display: flex; flex-direction: column; gap: 12px;
+    text-align: left; width: 100%;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .bcard:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+    box-shadow: 0 14px 30px rgba(0,0,0,.35);
+  }
+  .bcard-top { display: flex; align-items: flex-start; gap: 9px; }
+  .team-dot { width: 9px; height: 9px; border-radius: 3px; background: var(--accent); flex: none; margin-top: 5px; }
+  .bname {
+    font-family: var(--display); font-size: 15.5px; font-weight: 650;
+    color: var(--text0); line-height: 1.25; text-wrap: balance;
+  }
+  .bsub { font-size: 11.5px; color: var(--text3); margin-top: 2px; }
+  .notif {
+    margin-left: auto; flex: none;
+    background: color-mix(in srgb, var(--red) 18%, transparent);
+    color: #ff9e91; border: 1px solid color-mix(in srgb, var(--red) 45%, transparent);
+    font-family: var(--mono); font-size: 10.5px; border-radius: 20px; padding: 2px 8px;
+    white-space: nowrap;
+  }
+
+  /* lane fingerprint — the signature */
+  .fp { display: flex; align-items: flex-end; gap: 5px; height: 46px; }
+  .fp .lane { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .fp .bar {
+    background: color-mix(in srgb, var(--accent) 38%, var(--surface));
+    border-radius: 3px 3px 1px 1px;
+    min-height: 3px;
+  }
+  .fp .lane.done .bar { background: color-mix(in srgb, var(--green) 42%, var(--surface)); }
+  .fp .lane em {
+    font-style: normal; font-family: var(--mono); font-size: 8.5px;
+    color: var(--text4); text-align: center; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap;
+  }
+  .bcard:hover .fp .bar { background: color-mix(in srgb, var(--accent) 62%, var(--surface)); }
+  .bcard:hover .fp .lane.done .bar { background: color-mix(in srgb, var(--green) 60%, var(--surface)); }
+
+  /* meta row */
+  .bmeta { display: flex; align-items: center; gap: 10px; }
+  .bmeta .cards {
+    font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: 11.5px; color: var(--text1);
+  }
+  .bmeta .cards span { color: var(--text4); }
+  .avatars { display: flex; margin-left: auto; }
+  .avatars i {
+    width: 21px; height: 21px; border-radius: 50%; flex: none;
+    font-style: normal; font-size: 9px; font-weight: 700; color: #fff;
+    display: grid; place-items: center;
+    border: 2px solid var(--card); margin-left: -6px;
+  }
+  .avatars i:first-child { margin-left: 0; }
+  .avatars i.more { background: var(--raised); color: var(--text3); }
+  .updated { font-size: 10.5px; color: var(--text4); white-space: nowrap; }
+
+  /* progress hairline */
+  .prog { height: 3px; border-radius: 2px; background: var(--surface); overflow: hidden; }
+  .prog b { display: block; height: 100%; background: var(--green); border-radius: 2px; }
+  .prog-row { display: flex; align-items: center; gap: 8px; }
+  .prog-row .prog { flex: 1; }
+  .prog-row .pct { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+
+  .bcard.stale .updated { color: var(--gold); }
+
+  /* ghost tile */
+  .ghost {
+    border: 1.5px dashed var(--line); border-radius: 12px; background: none;
+    display: grid; place-items: center; min-height: 150px;
+    color: var(--text4); font-size: 13px; gap: 0;
+    transition: border-color .18s ease, color .18s ease;
+  }
+  .ghost:hover { border-color: var(--blue); color: var(--blue); }
+  .ghost b { display: block; font-size: 22px; font-weight: 400; text-align: center; }
+
+  /* ---- list (rows) mode ---- */
+  .grid.rows { grid-template-columns: 1fr; gap: 8px; }
+  .grid.rows .bcard { flex-direction: row; align-items: center; gap: 18px; padding: 11px 16px; }
+  .grid.rows .bcard-top { flex: 0 0 250px; align-items: center; }
+  .grid.rows .team-dot { margin-top: 0; }
+  .grid.rows .fp { flex: 0 0 190px; height: 34px; }
+  .grid.rows .fp .lane em { display: none; }
+  .grid.rows .prog-row { flex: 1; }
+  .grid.rows .bmeta { flex: 0 0 auto; margin-left: auto; }
+  .grid.rows .ghost { min-height: 0; padding: 14px; grid-auto-flow: column; }
+  .grid.rows .ghost b { display: inline; font-size: 16px; margin-right: 8px; }
+
+  .hidden { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bcard, .ghost { transition: none; }
+    .bcard:hover { transform: none; }
+  }
+</style>
+
+<div class="caption">
+  <span class="tag">Concept · Boards page</span>
+  <p>Same palette as the app — tiles now carry lane fingerprints, progress, members, and activity. Try the filter and the Grid / List toggle.</p>
+</div>
+
+<div class="frame-scroll">
+<div class="app">
+
+  <!-- top bar -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="mark">LR</div>
+      <div class="studio">Lucid Rain<small>Studios</small></div>
+    </div>
+    <div class="top-divider"></div>
+    <nav class="tabs" aria-label="Project views">
+      <button class="tab active">Boards</button>
+      <button class="tab">Gantt</button>
+      <button class="tab">Team Planner</button>
+      <button class="tab">Wiki</button>
+      <button class="tab">Documents</button>
+      <button class="tab">Media</button>
+      <button class="tab">Members</button>
+    </nav>
+    <div class="top-right">
+      <button class="icon-btn" title="Time tracking">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </button>
+      <button class="icon-btn" title="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <span class="dot">2</span>
+      </button>
+      <div class="me" title="You">RR</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+      <input class="side-search" placeholder="Filter boards…" aria-label="Filter boards in sidebar" />
+      <button class="proj current"><span class="chev">▾</span> Inferius <span class="pill">2</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-admin)"></span> ADMIN Board <span class="n">31</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-tech)"></span> Tech Team <span class="n">47</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-creative)"></span> Creative Team <span class="n">23</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-art-soft)"></span> Art Team <span class="n alert">2 new</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-marketing)"></span> Marketing Team <span class="n">18</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-bizdev)"></span> Bizdev <span class="n">9</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-playtest)"></span> Playtest (Mar 26) <span class="n">54</span></button>
+      <button class="side-board"><span class="sw" style="background:var(--t-playtest)"></span> Playtest (May 26) <span class="n">32</span></button>
+      <button class="proj"><span class="chev">▸</span> Mind 29</button>
+      <button class="proj"><span class="chev">▸</span> OGS</button>
+      <div class="side-footer">
+        <button class="side-board">＋ New project</button>
+        <button class="side-board">＋ New board</button>
+      </div>
+    </aside>
+
+    <!-- main -->
+    <main class="main">
+
+      <div class="project-head">
+        <div>
+          <p class="eyebrow">Project</p>
+          <h1>Inferius</h1>
+          <p class="project-sub">8 boards across 6 teams · playtest cycle: May 2026</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>214</b><span>open cards</span></div>
+          <div class="stat"><b>12</b><span>members</span></div>
+          <div class="stat watch"><b>6</b><span>due this week</span></div>
+          <div class="stat"><b>38</b><span>done in last 7 days</span></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input id="filter" class="board-filter" placeholder="Filter boards…" aria-label="Filter boards" />
+        <span class="showing" id="showing">Showing 8 of 8 boards</span>
+        <span class="spacer"></span>
+        <div class="seg" role="group" aria-label="Layout">
+          <button id="viewGrid" aria-pressed="true">Grid</button>
+          <button id="viewList" aria-pressed="false">List</button>
+        </div>
+        <button class="btn-gold">＋ New board</button>
+      </div>
+
+      <div class="section-label">Teams <span class="count">6 boards</span></div>
+      <div class="grid" data-grid>
+
+        <button class="bcard" style="--accent: var(--t-admin)" data-name="admin board">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">ADMIN Board</span><span class="bsub" style="display:block">Studio ops &amp; approvals</span></span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:38%"></span><em>Inbox</em></span>
+            <span class="lane"><span class="bar" style="height:60%"></span><em>Review</em></span>
+            <span class="lane"><span class="bar" style="height:26%"></span><em>Blocked</em></span>
+            <span class="lane done"><span class="bar" style="height:88%"></span><em>Done</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:64%"></b></span><span class="pct">64%</span></span>
+          <span class="bmeta">
+            <span class="cards">31 <span>cards</span></span>
+            <span class="avatars"><i style="background:var(--t-art)">RR</i><i style="background:var(--t-tech)">KM</i></span>
+            <span class="updated">2h ago</span>
+          </span>
+        </button>
+
+        <button class="bcard" style="--accent: var(--t-tech)" data-name="tech team">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">Tech Team</span><span class="bsub" style="display:block">Engine, netcode, tooling</span></span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:92%"></span><em>Backlog</em></span>
+            <span class="lane"><span class="bar" style="height:48%"></span><em>Sprint</em></span>
+            <span class="lane"><span class="bar" style="height:34%"></span><em>Doing</em></span>
+            <span class="lane"><span class="bar" style="height:20%"></span><em>QA</em></span>
+            <span class="lane done"><span class="bar" style="height:74%"></span><em>Done</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:47%"></b></span><span class="pct">47%</span></span>
+          <span class="bmeta">
+            <span class="cards">47 <span>cards</span></span>
+            <span class="avatars"><i style="background:var(--t-tech)">KM</i><i style="background:var(--t-bizdev)">JD</i><i style="background:var(--t-marketing)">AV</i><i class="more">+2</i></span>
+            <span class="updated">14m ago</span>
+          </span>
+        </button>
+
+        <button class="bcard" style="--accent: var(--t-creative)" data-name="creative team">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">Creative Team</span><span class="bsub" style="display:block">Narrative, level &amp; sound design</span></span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:54%"></span><em>Ideas</em></span>
+            <span class="lane"><span class="bar" style="height:70%"></span><em>Drafting</em></span>
+            <span class="lane"><span class="bar" style="height:30%"></span><em>Review</em></span>
+            <span class="lane done"><span class="bar" style="height:58%"></span><em>Done</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:52%"></b></span><span class="pct">52%</span></span>
+          <span class="bmeta">
+            <span class="cards">23 <span>cards</span></span>
+            <span class="avatars"><i style="background:var(--t-creative)">LS</i><i style="background:var(--t-art)">MB</i></span>
+            <span class="updated">1d ago</span>
+          </span>
+        </button>
+
+        <button class="bcard" style="--accent: var(--t-art-soft)" data-name="art team">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">Art Team</span><span class="bsub" style="display:block">Characters, environments, VFX</span></span>
+            <span class="notif">2 new</span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:66%"></span><em>Queue</em></span>
+            <span class="lane"><span class="bar" style="height:82%"></span><em>WIP</em></span>
+            <span class="lane"><span class="bar" style="height:44%"></span><em>Polish</em></span>
+            <span class="lane done"><span class="bar" style="height:52%"></span><em>Done</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:39%"></b></span><span class="pct">39%</span></span>
+          <span class="bmeta">
+            <span class="cards">36 <span>cards</span></span>
+            <span class="avatars"><i style="background:var(--t-art)">MB</i><i style="background:var(--t-playtest)">TS</i><i class="more">+3</i></span>
+            <span class="updated">just now</span>
+          </span>
+        </button>
+
+        <button class="bcard" style="--accent: var(--t-marketing)" data-name="marketing team">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">Marketing Team</span><span class="bsub" style="display:block">Steam page, trailers, socials</span></span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:40%"></span><em>Planned</em></span>
+            <span class="lane"><span class="bar" style="height:28%"></span><em>Drafting</em></span>
+            <span class="lane"><span class="bar" style="height:16%"></span><em>Sched.</em></span>
+            <span class="lane done"><span class="bar" style="height:64%"></span><em>Live</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:58%"></b></span><span class="pct">58%</span></span>
+          <span class="bmeta">
+            <span class="cards">18 <span>cards</span></span>
+            <span class="avatars"><i style="background:var(--t-marketing)">AV</i></span>
+            <span class="updated">3d ago</span>
+          </span>
+        </button>
+
+        <button class="bcard stale" style="--accent: var(--t-bizdev)" data-name="bizdev">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">Bizdev</span><span class="bsub" style="display:block">Publishers, funding, partners</span></span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:52%"></span><em>Leads</em></span>
+            <span class="lane"><span class="bar" style="height:30%"></span><em>Talking</em></span>
+            <span class="lane"><span class="bar" style="height:12%"></span><em>Terms</em></span>
+            <span class="lane done"><span class="bar" style="height:22%"></span><em>Signed</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:19%"></b></span><span class="pct">19%</span></span>
+          <span class="bmeta">
+            <span class="cards">9 <span>cards</span></span>
+            <span class="avatars"><i style="background:var(--t-bizdev)">JD</i></span>
+            <span class="updated">12d ago</span>
+          </span>
+        </button>
+
+      </div>
+
+      <div class="section-label">Playtest &amp; QA <span class="count">2 boards</span></div>
+      <div class="grid" data-grid>
+
+        <button class="bcard" style="--accent: var(--t-playtest)" data-name="playtest bugs march 2026">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">Playtest Bugs — March 2026</span><span class="bsub" style="display:block">Closed cycle · triaged</span></span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:10%"></span><em>New</em></span>
+            <span class="lane"><span class="bar" style="height:14%"></span><em>Triage</em></span>
+            <span class="lane"><span class="bar" style="height:8%"></span><em>Fixing</em></span>
+            <span class="lane done"><span class="bar" style="height:94%"></span><em>Fixed</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:91%"></b></span><span class="pct">91%</span></span>
+          <span class="bmeta">
+            <span class="cards">54 <span>bugs</span></span>
+            <span class="avatars"><i style="background:var(--t-playtest)">TS</i><i style="background:var(--t-tech)">KM</i></span>
+            <span class="updated">6w ago</span>
+          </span>
+        </button>
+
+        <button class="bcard" style="--accent: var(--t-playtest)" data-name="playtest bugs may 2026">
+          <span class="bcard-top">
+            <span class="team-dot"></span>
+            <span><span class="bname">Playtest Bugs — May 2026</span><span class="bsub" style="display:block">Active cycle · 4 critical open</span></span>
+          </span>
+          <span class="fp" aria-hidden="true">
+            <span class="lane"><span class="bar" style="height:72%"></span><em>New</em></span>
+            <span class="lane"><span class="bar" style="height:46%"></span><em>Triage</em></span>
+            <span class="lane"><span class="bar" style="height:38%"></span><em>Fixing</em></span>
+            <span class="lane done"><span class="bar" style="height:30%"></span><em>Fixed</em></span>
+          </span>
+          <span class="prog-row"><span class="prog"><b style="width:24%"></b></span><span class="pct">24%</span></span>
+          <span class="bmeta">
+            <span class="cards">32 <span>bugs</span></span>
+            <span class="avatars"><i style="background:var(--t-playtest)">TS</i><i style="background:var(--t-tech)">KM</i><i style="background:var(--t-art)">MB</i></span>
+            <span class="updated">4h ago</span>
+          </span>
+        </button>
+
+        <button class="ghost" data-ghost><span><b>＋</b> New board</span></button>
+
+      </div>
+
+    </main>
+  </div>
+</div>
+</div>
+
+<script>
+  const cards = [...document.querySelectorAll('.bcard')];
+  const filter = document.getElementById('filter');
+  const showing = document.getElementById('showing');
+  const total = cards.length;
+
+  filter.addEventListener('input', () => {
+    const q = filter.value.trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(c => {
+      const hit = !q || c.dataset.name.includes(q);
+      c.classList.toggle('hidden', !hit);
+      if (hit) visible++;
+    });
+    showing.textContent = `Showing ${visible} of ${total} boards`;
+  });
+
+  const grids = [...document.querySelectorAll('[data-grid]')];
+  const gridBtn = document.getElementById('viewGrid');
+  const listBtn = document.getElementById('viewList');
+  function setView(list) {
+    grids.forEach(g => g.classList.toggle('rows', list));
+    gridBtn.setAttribute('aria-pressed', String(!list));
+    listBtn.setAttribute('aria-pressed', String(list));
+  }
+  gridBtn.addEventListener('click', () => setView(false));
+  listBtn.addEventListener('click', () => setView(true));
+</script>

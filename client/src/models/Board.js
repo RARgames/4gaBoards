@@ -15,6 +15,9 @@ export default class extends BaseModel {
     isFetching: attr({
       getDefault: () => null,
     }),
+    stats: attr({
+      getDefault: () => null,
+    }),
     projectId: fk({
       to: 'Project',
       as: 'project',

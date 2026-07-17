@@ -1,0 +1,300 @@
+:global(#app) {
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--backgroundColorTmpHeader);
+    border: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-radius: var(--tw-radius-lg);
+    overflow: hidden;
+    transform: translateY(0);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: var(--tw-shadow-lg);
+      opacity: 0;
+      transition: opacity 180ms ease;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--accent) var(--boardTileBorderMix), var(--backgroundColorTmpSeparatorLight));
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  .banner {
+    flex: none;
+    height: 6px;
+    transition: height 180ms ease;
+  }
+
+  // A real photo needs real height to read as an image rather than a color smear — this is the
+  // one case where the banner grows from a thin ribbon into an actual cover photo.
+  .bannerImage {
+    height: 88px;
+  }
+
+  .head {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px 10px;
+  }
+
+  .headLink {
+    flex: 1;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .headText {
+    min-width: 0;
+  }
+
+  .name {
+    font-family: var(--fontDisplay);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--textColor0);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sub {
+    margin-top: 3px;
+    font-family: var(--fontMono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11.5px;
+    color: var(--textColor3);
+  }
+
+  .notification {
+    flex: none;
+    margin-left: auto;
+    font-family: var(--fontMono);
+    font-size: 10.5px;
+    line-height: 1;
+    color: var(--notificationRed);
+    background: color-mix(in srgb, var(--notificationRed) 18%, transparent);
+    border: 1px solid color-mix(in srgb, var(--notificationRed) 45%, transparent);
+    border-radius: 20px;
+    padding: 2px 8px;
+    white-space: nowrap;
+  }
+
+  // Manager/admin-only "set project image" trigger — quiet until the card is hovered or the
+  // button itself gets keyboard focus, so it doesn't clutter the view for everyone else.
+  .imageButton {
+    flex: none;
+    opacity: 0;
+
+    &:disabled {
+      opacity: 1;
+    }
+  }
+
+  .card:hover .imageButton,
+  .card:focus-within .imageButton {
+    opacity: 1;
+  }
+
+  /* Board shelf */
+
+  .shelf {
+    display: flex;
+    flex-direction: column;
+    padding: 2px 8px 6px;
+  }
+
+  .shelfEmpty {
+    padding: 8px;
+    font-size: 12px;
+    color: var(--textColor4);
+  }
+
+  .shelfRow {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 8px;
+    border-radius: var(--tw-radius);
+    text-decoration: none;
+    color: var(--textColor1);
+    font-size: 13px;
+    transition: background-color 120ms ease;
+
+    &:hover {
+      background: var(--backgroundColorTmpHighlighted);
+      color: var(--textColor0);
+    }
+  }
+
+  .shelfSwatch {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 2.5px;
+    background: var(--sw);
+  }
+
+  .shelfName {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .shelfPill {
+    flex: none;
+    font-family: var(--fontMono);
+    font-size: 9.5px;
+    color: var(--notificationRed);
+    background: color-mix(in srgb, var(--notificationRed) 18%, transparent);
+    border-radius: 14px;
+    padding: 1px 6px;
+  }
+
+  .shelfSpark {
+    flex: none;
+    margin-left: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 14px;
+
+    i {
+      width: 4px;
+      border-radius: 1px;
+      min-height: 2px;
+      background: color-mix(in srgb, var(--sw) 45%, var(--backgroundList));
+    }
+  }
+
+  .shelfSparkDone {
+    background: color-mix(in srgb, var(--backgroundGreen) 50%, var(--backgroundList)) !important;
+  }
+
+  .shelfCount {
+    flex: none;
+    width: 32px;
+    text-align: right;
+    font-family: var(--fontMono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    color: var(--textColor4);
+  }
+
+  .shelfMore {
+    padding: 6px 8px;
+    font-size: 11.5px;
+    color: var(--textColor4);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--borderOutline);
+    }
+  }
+
+  /* Footer */
+
+  .foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    padding: 10px 16px 13px;
+    border-top: 1px solid var(--backgroundColorTmpSeparatorLight);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .footOpen {
+    flex: none;
+    font-family: var(--fontMono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11.5px;
+    color: var(--textColor1);
+  }
+
+  .footOpenLabel {
+    color: var(--textColor4);
+  }
+
+  .footDue {
+    flex: none;
+    font-family: var(--fontMono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11.5px;
+    color: var(--textColorGold);
+  }
+
+  .footDueLabel {
+    opacity: 0.85;
+  }
+
+  .avatars {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .avatars > * {
+    margin-left: -6px;
+    border: 2px solid var(--backgroundColorTmpHeader);
+    border-radius: 50%;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .avatarsMore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 21px;
+    height: 21px;
+    margin-left: -6px;
+    font-family: var(--fontMono);
+    font-size: 9px;
+    color: var(--textColor3);
+    background: var(--backgroundColorTmpHighlighted);
+    border: 2px solid var(--backgroundColorTmpHeader);
+    border-radius: 50%;
+  }
+
+  .updated {
+    flex: none;
+    font-size: 10.5px;
+    color: var(--textColor4);
+    white-space: nowrap;
+  }
+
+  .footStale .updated {
+    color: var(--textColorGold);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card {
+      transition: none;
+    }
+
+    .card:hover {
+      transform: none;
+    }
+  }
+}

@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
   const isFiltered = selectors.selectIsFilteredForCurrentUser(state);
   const { isAdmin } = selectors.selectCurrentUser(state);
+  const filter = selectors.selectFilterForCurrentUser(state);
 
   return {
     projectId,
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
     managedProjects,
     isFiltered,
     isAdmin,
+    filterQuery: filter && filter.target === 'board' ? filter.query : '',
   };
 };
 
@@ -26,6 +28,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onCreate: entryActions.createBoard,
+      onChangeFilterQuery: entryActions.updateCurrentUserFilterQuery,
     },
     dispatch,
   );

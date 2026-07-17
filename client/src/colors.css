@@ -146,6 +146,18 @@
   --heroBannerText: #1a1a1a;
 
   /*
+   * Boards overview tiles (Boards.jsx / BoardTile.jsx) — lane fingerprint bar mix
+   * percentages and hover border mix. Only percentages; the color itself comes
+   * from each tile's own --accent custom property (see utils/board-accent.js).
+   * Defined once here and inherited by [data-theme='github-dark'] (same reasoning
+   * as --heroAccent above); [data-theme='trello-light'] overrides below for
+   * contrast against its light surfaces.
+   */
+  --boardTileAccentMix: 38%;
+  --boardTileAccentMixHover: 62%;
+  --boardTileBorderMix: 55%;
+
+  /*
    * List type indicators (List.jsx header dot + ActionsPopup type menu) and the
    * WIP-limit-exceeded / blocked warning stripe. Aliases only, like the Tailwind
    * bridge below — resolve lazily per active [data-theme], so defining them once
@@ -196,6 +208,16 @@
    * use 6/10, larger surfaces (lists, cards, dialogs, popovers) use 8/12. */
   --tw-radius: 6px;
   --tw-radius-lg: 8px;
+
+  /*
+   * App-wide type stack (applied on body in assets/styles.css and the
+   * .react-datepicker override in root.module.scss). Originated on the boards
+   * overview redesign; rolled out globally by explicit sign-off. Fonts don't
+   * vary by theme, one block.
+   */
+  --fontSans: 'Segoe UI Variable Text', 'Segoe UI', 'Museo Sans', system-ui, -apple-system, sans-serif;
+  --fontDisplay: 'Segoe UI Variable Display', 'Segoe UI', 'Museo Sans', system-ui, sans-serif;
+  --fontMono: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
 }
 
 [data-theme-shape='rounded'] {
@@ -490,4 +512,9 @@
   --heroAccentText: #533f04;
   --heroBanner: #f8e6a0;
   --heroBannerText: #533f04;
+  /* Boards overview tiles — higher mix % than default theme so fingerprint bars stay
+     visible against this theme's light --backgroundList instead of washing out. */
+  --boardTileAccentMix: 55%;
+  --boardTileAccentMixHover: 78%;
+  --boardTileBorderMix: 70%;
 }

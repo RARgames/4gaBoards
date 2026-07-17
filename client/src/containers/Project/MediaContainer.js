@@ -21,6 +21,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       onMediaFetch: entryActions.fetchMedia,
+      onBoardFetch: entryActions.fetchBoard,
     },
     dispatch,
   );

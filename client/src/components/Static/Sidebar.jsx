@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
+import { getBoardAccentColor } from '../../utils/board-colors';
 import BoardActionsPopup from '../BoardActionsPopup';
 import BoardAddPopup from '../BoardAddPopup';
 import ConnectionsPopup from '../ConnectionsPopup';
@@ -165,9 +166,11 @@ const Sidebar = React.memo(
                                     </Button>
                                   </div>
                                 )}
+                                <span className={s.boardAccentSwatch} style={{ background: getBoardAccentColor(board.id) }} aria-hidden="true" />
                                 <Link to={Paths.BOARDS.replace(':id', board.id)} className={clsx(s.sidebarItemInner, !isProjectManager && s.boardCannotManage)}>
                                   <Button style={ButtonStyle.NoBackground} content={board.name} className={clsx(s.boardButton, s.sidebarButton)} />
                                 </Link>
+                                {board.stats && <span className={s.boardOpenCount}>{board.stats.openCount}</span>}
                                 {board.isGithubConnected &&
                                   (isProjectManager ? (
                                     <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">

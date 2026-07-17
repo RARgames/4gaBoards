@@ -720,6 +720,13 @@ export default {
       x: 'X',
       you: '(You)',
       youtube: 'YouTube',
+
+      // Boards overview page (Boards.jsx / BoardTile.jsx)
+      openCards: 'Open Cards',
+      dueThisWeek: 'Due This Week',
+      doneLast7Days: 'Done in Last 7 Days',
+      unreadNotificationsCount_one: '{{count}} unread notification',
+      unreadNotificationsCount_other: '{{count}} unread notifications',
     },
 
     activity: {
@@ -917,6 +924,7 @@ export default {
       unsubscribe: 'Unsubscribe',
       uploadNewAvatar: 'Upload new avatar',
       uploadNewImage: 'Upload new image',
+      viewCardInfo: 'View card info',
     },
   },
 };

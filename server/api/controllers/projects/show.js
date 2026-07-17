@@ -34,7 +34,9 @@ module.exports = {
     let boards = await sails.helpers.projects.getBoards(project.id);
     let boardIds = sails.helpers.utils.mapRecords(boards);
 
-    const boardMemberships = await sails.helpers.boardMemberships.getMany({
+    // Only the current user's own board memberships — used solely to work out which boards a
+    // non-manager can see (below). Not what gets returned to the client; see boardMemberships.
+    const currentUserBoardMemberships = await sails.helpers.boardMemberships.getMany({
       boardId: boardIds,
       userId: currentUser.id,
     });
@@ -44,29 +46,44 @@ module.exports = {
     const projectMembership = projectMemberships.find((membership) => membership.userId === currentUser.id);
 
     if (!isProjectManager) {
-      if (boardMemberships.length === 0 && !projectMembership) {
+      if (currentUserBoardMemberships.length === 0 && !projectMembership) {
         throw Errors.PROJECT_NOT_FOUND; // Forbidden
       }
 
-      boardIds = sails.helpers.utils.mapRecords(boardMemberships, 'boardId');
+      boardIds = sails.helpers.utils.mapRecords(currentUserBoardMemberships, 'boardId');
       boards = boards.filter((board) => boardIds.includes(board.id));
     }
 
+    // Every returned board's full member list (not just the current user's own membership) so the
+    // client can resolve each board's complete member set — e.g. the boards-overview "Members" stat,
+    // which unions members across every board in the project.
+    const boardMemberships = await sails.helpers.boardMemberships.getMany({ boardId: boardIds });
+
     const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);
 
-    const userIds = _.union(sails.helpers.utils.mapRecords(projectManagers, 'userId', true), sails.helpers.utils.mapRecords(projectMemberships, 'userId', true));
+    const userIds = _.union(
+      sails.helpers.utils.mapRecords(projectManagers, 'userId', true),
+      sails.helpers.utils.mapRecords(projectMemberships, 'userId', true),
+      sails.helpers.utils.mapRecords(boardMemberships, 'userId', true),
+    );
     const users = await sails.helpers.users.getMany(userIds);
 
     if (inputs.subscribe && this.req.isSocket) {
       sails.sockets.join(this.req, `project:${project.id}`);
     }
 
+    const statsByBoardId = await sails.helpers.boards.getStatsByIds(boardIds);
+    const boardsWithStats = boards.map((board) => ({
+      ...board,
+      stats: statsByBoardId.get(board.id) || null,
+    }));
+
     return {
       item: project,
       included: {
         users,
         projectManagers,
-        boards,
+        boards: boardsWithStats,
         boardMemberships,
         projectMemberships,
       },

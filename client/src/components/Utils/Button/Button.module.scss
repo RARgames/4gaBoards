@@ -246,10 +246,13 @@
     padding: 0;
     width: 50px;
     height: 50px;
-    transition: background-color 120ms ease;
+    transition:
+      background-color 120ms ease,
+      border-radius 120ms ease;
 
     &:hover {
       background: var(--backgroundHeaderHover);
+      border-radius: var(--tw-radius);
     }
   }
 

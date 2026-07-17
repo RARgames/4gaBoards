@@ -5,8 +5,10 @@ module.exports = {
     const managerProjectIds = await sails.helpers.users.getManagerProjectIds(currentUser.id);
     const managerProjects = await sails.helpers.projects.getMany(managerProjectIds);
 
-    let boardMemberships = await sails.helpers.users.getBoardMemberships(currentUser.id);
-    const membershipBoardIds = sails.helpers.utils.mapRecords(boardMemberships, 'boardId');
+    // Only the current user's own board memberships — used solely to work out which non-managed
+    // boards this user can see (§ below). Not what gets returned to the client; see boardMemberships.
+    const currentUserBoardMemberships = await sails.helpers.users.getBoardMemberships(currentUser.id);
+    const membershipBoardIds = sails.helpers.utils.mapRecords(currentUserBoardMemberships, 'boardId');
 
     let membershipBoards = await sails.helpers.boards.getMany({
       id: membershipBoardIds,
@@ -35,9 +37,6 @@ module.exports = {
     // Gantt/Team Planner can resolve all project members, not only ones who are also managers.
     const projectMemberships = await sails.helpers.projectMemberships.getMany({ projectId: projectIds });
 
-    const userIds = _.union(sails.helpers.utils.mapRecords(projectManagers, 'userId', true), sails.helpers.utils.mapRecords(projectMemberships, 'userId', true));
-    const users = await sails.helpers.users.getMany(userIds);
-
     const managerBoards = await sails.helpers.projects.getBoards(managerProjectIds);
 
     membershipBoards = membershipBoards.filter((membershipBoard) => membershipProjectIds.includes(membershipBoard.projectId));
@@ -45,14 +44,30 @@ module.exports = {
     const boards = [...managerBoards, ...membershipBoards];
     const boardIds = sails.helpers.utils.mapRecords(boards);
 
-    boardMemberships = boardMemberships.filter((boardMembership) => boardIds.includes(boardMembership.boardId));
+    // Every returned board's full member list (not just the current user's own membership) so the
+    // client can resolve each board's complete member set — e.g. the boards-overview "Members" stat,
+    // which unions members across every board in the project.
+    const boardMemberships = await sails.helpers.boardMemberships.getMany({ boardId: boardIds });
+
+    const userIds = _.union(
+      sails.helpers.utils.mapRecords(projectManagers, 'userId', true),
+      sails.helpers.utils.mapRecords(projectMemberships, 'userId', true),
+      sails.helpers.utils.mapRecords(boardMemberships, 'userId', true),
+    );
+    const users = await sails.helpers.users.getMany(userIds);
+
+    const statsByBoardId = await sails.helpers.boards.getStatsByIds(boardIds);
+    const boardsWithStats = boards.map((board) => ({
+      ...board,
+      stats: statsByBoardId.get(board.id) || null,
+    }));
 
     return {
       items: projects,
       included: {
         users,
         projectManagers,
-        boards,
+        boards: boardsWithStats,
         boardMemberships,
         projectMemberships,
       },

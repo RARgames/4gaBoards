@@ -1,6 +1,8 @@
 :global(#app) {
-  --cardsInnerWrapperFullOffset: 191;
-  --cardsInnerWrapperOffset: 227;
+  // +20px on both vs. the original calibration, so the list (and its "+ Add card" button) stops
+  // rendering flush against the very bottom of the viewport — see List.jsx wrapperOffset.
+  --cardsInnerWrapperFullOffset: 211;
+  --cardsInnerWrapperOffset: 247;
   --headerNameDefaultHeight: 20;
 
   // §6.6: synthetic (non-draggable) rows interleaved into the virtualized card list of a
@@ -202,7 +204,8 @@
 
   .headerCollapsed {
     outline: none;
-    height: calc(100vh - 191px);
+    // Kept in sync with --cardsInnerWrapperFullOffset above (same +20px bottom-margin adjustment).
+    height: calc(100vh - 211px);
   }
 
   .headerCollapsedInner {

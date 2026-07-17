@@ -6,6 +6,10 @@
   .field {
     width: 100%;
     padding-right: 34px;
+    /* Sidebar background darkened to --backgroundHeader; the Input's default bg
+       (--backgroundColorTmpDarkerField2) is nearly the same value and would
+       disappear against it, so this needs a lighter tone for contrast. */
+    background: var(--backgroundColor) !important;
   }
 
   .inputButton {
