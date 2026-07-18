@@ -62,23 +62,23 @@ const SidebarProject = React.memo(
     }, [project.id, project.isCollapsed, onProjectMembershipUpdate]);
 
     return (
-      <div ref={ref} className={clsx(s.projectDraggable, isDragging && s.projectDragging)}>
+      <div ref={ref} className={clsx(isDragging && s.projectDragging)}>
         <div
           className={clsx(s.sidebarItemProject, !currBoardId && currProjectId === project.id && ss.sidebarItemActive)}
           // eslint-disable-next-line no-return-assign
           ref={(el) => (projectRefsCurrent[project.id] = el)}
         >
-          <div ref={handleRef}>
-            <Button variant={ButtonVariant.Icon} title={t('common.reorderProjects')} className={clsx(ss.sidebarButton, s.hoverButton)}>
-              <Icon type={IconType.MoveUpDown} size={IconSize.Size13} />
-            </Button>
-          </div>
           <Button variant={ButtonVariant.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={ss.sidebarButton} onClick={handleToggleCollapse}>
             <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(ss.collapseIcon, project.isCollapsed && ss.collapseIconCollapsed)} />
           </Button>
           <Link to={Paths.PROJECTS.replace(':id', project.id)} className={ss.sidebarItemInner}>
             <Button variant={ButtonVariant.NoBackground} content={project.name} className={clsx(ss.sidebarButton, ss.sidebarButtonPadding)} />
           </Link>
+          <div ref={handleRef}>
+            <Button variant={ButtonVariant.Icon} title={t('common.reorderProjects')} className={clsx(s.reorderProjectsButton, s.hoverButton)}>
+              <Icon type={IconType.MoveUpDown} size={IconSize.Size13} />
+            </Button>
+          </div>
           {project.notificationsTotal > 0 && <span className={ss.notification}>{project.notificationsTotal}</span>}
           <ProjectActionsPopup
             activities={project.activities}

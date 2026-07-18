@@ -3,14 +3,6 @@
     opacity: 0;
   }
 
-  .projectDraggable {
-    &:hover {
-      .hoverButton {
-        opacity: 1;
-      }
-    }
-  }
-
   .projectDragging {
     opacity: 0.75;
   }
@@ -20,5 +12,15 @@
     border-top: 1px solid var(--borderSidebar);
     display: flex;
     align-items: center;
+
+    &:hover {
+      .hoverButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .reorderProjectsButton {
+    width: 13px;
   }
 }
