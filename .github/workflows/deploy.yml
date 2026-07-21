@@ -15,7 +15,7 @@ jobs:
       beta: ${{ steps.increment_version.outputs.beta }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
 
       - name: Fetch tags
         run: git fetch --tags
@@ -95,7 +95,7 @@ jobs:
             runner: ubuntu-24.04-arm
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
 
       - name: Update package.json version
         run: jq '.version = "'${{ needs.prepare.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
@@ -203,7 +203,7 @@ jobs:
       packages: write
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7.0.1
 
       - name: Update package.json version
         run: jq '.version = "'${{ needs.prepare.outputs.ghcr_tag }}'"' package.json > temp.json && mv temp.json package.json
