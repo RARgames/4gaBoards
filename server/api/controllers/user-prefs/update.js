@@ -112,6 +112,11 @@ module.exports = {
       isIn: UserPrefs.THEME_SHAPES,
       isNotEmptyString: true,
     },
+    timezone: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+    },
   },
 
   exits: {
@@ -163,6 +168,7 @@ module.exports = {
         'hideClosestDueDate',
         'theme',
         'themeShape',
+        'timezone',
       ]),
     };
 

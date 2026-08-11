@@ -1,5 +1,5 @@
-// Lightweight cards summary for a board, used by the cross-board card-link picker.
-// Returns just `[{ id, name }]` for cards on the requested board, gated on the requester
+// Lightweight cards + lists summary for a board, used by the cross-board card-link picker
+// (which lets a user narrow project -> board -> column -> ticket). Gated on the requester
 // being a member of that board.
 
 const Errors = {
@@ -38,10 +38,11 @@ module.exports = {
       throw Errors.BOARD_NOT_FOUND;
     }
 
-    const cards = await Card.find({ boardId: board.id }).select(['id', 'name']).sort('position');
+    const [cards, lists] = await Promise.all([Card.find({ boardId: board.id }).select(['id', 'name', 'listId']).sort('position'), List.find({ boardId: board.id }).select(['id', 'name']).sort('position')]);
 
     return {
-      items: cards.map((card) => ({ id: card.id, name: card.name })),
+      items: cards.map((card) => ({ id: card.id, name: card.name, listId: card.listId })),
+      lists: lists.map((list) => ({ id: list.id, name: list.name })),
     };
   },
 };

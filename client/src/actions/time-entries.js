@@ -68,11 +68,12 @@ updateTimeEntry.success = (timeEntry) => ({
   },
 });
 
-updateTimeEntry.failure = (id, error) => ({
+updateTimeEntry.failure = (id, error, prevTimeEntry) => ({
   type: ActionTypes.TIME_ENTRY_UPDATE__FAILURE,
   payload: {
     id,
     error,
+    prevTimeEntry,
   },
 });
 
@@ -97,11 +98,12 @@ deleteTimeEntry.success = (timeEntry) => ({
   },
 });
 
-deleteTimeEntry.failure = (id, error) => ({
+deleteTimeEntry.failure = (id, error, prevTimeEntry) => ({
   type: ActionTypes.TIME_ENTRY_DELETE__FAILURE,
   payload: {
     id,
     error,
+    prevTimeEntry,
   },
 });
 

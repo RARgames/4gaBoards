@@ -43,6 +43,8 @@ const duplicateCard = (id, headers) =>
     },
   }));
 
+const getCardTimeEntries = (id, headers) => socket.get(`/cards/${id}/time-entries`, undefined, headers);
+
 /* Event handlers */
 
 const makeHandleCardCreate = (next) => (body) => {
@@ -64,6 +66,7 @@ export default {
   updateCard,
   deleteCard,
   duplicateCard,
+  getCardTimeEntries,
   makeHandleCardCreate,
   makeHandleCardUpdate,
   makeHandleCardDelete,

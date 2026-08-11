@@ -1,0 +1,43 @@
+:global(#app) {
+  .pageTitle {
+    font-size: 16px;
+    margin: 0 0 2px;
+    color: var(--textColor0);
+  }
+
+  .tabs {
+    display: inline-flex;
+    border-radius: var(--tw-radius, 6px);
+    overflow: hidden;
+    border: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .tab {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--textColor1);
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease;
+
+    &:hover {
+      background: var(--backgroundColorTmpBackgroundHover);
+    }
+
+    & + & {
+      border-left: 1px solid var(--backgroundColorTmpSeparatorLight);
+    }
+  }
+
+  .tabActive {
+    background: var(--backgroundSidebarItemActive);
+    color: var(--textColorWhite, #fff);
+
+    &:hover {
+      background: var(--backgroundSidebarItemActive);
+    }
+  }
+}

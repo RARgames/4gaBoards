@@ -199,6 +199,12 @@ module.exports = {
       columnName: 'theme_shape',
       defaultsTo: 'default',
     },
+    timezone: {
+      type: 'string',
+      isNotEmptyString: true,
+      allowNull: true,
+      columnName: 'timezone',
+    },
   },
 
   tableName: 'user_prefs',

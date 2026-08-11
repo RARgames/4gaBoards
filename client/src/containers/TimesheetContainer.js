@@ -14,6 +14,8 @@ const mapStateToProps = (state) => {
   const users = selectors.selectUsers(state);
   const accessToken = selectors.selectAccessToken(state);
   const categoryTags = selectors.selectCategoryTags(state);
+  const { timezone } = selectors.selectCurrentUserPrefs(state) || {};
+  const timeEntriesError = selectors.selectTimeEntriesError(state);
 
   return {
     currentUserId: currentUser ? currentUser.id : null,
@@ -25,6 +27,8 @@ const mapStateToProps = (state) => {
     users,
     accessToken,
     categoryTags: categoryTags.items,
+    timezone,
+    timeEntriesError,
   };
 };
 
@@ -37,6 +41,7 @@ const mapDispatchToProps = (dispatch) =>
       onDelete: entryActions.deleteTimeEntry,
       onFetchCategoryTags: entryActions.fetchCategoryTags,
       onCreateCategoryTag: entryActions.createCategoryTag,
+      onTimezoneChange: (timezone) => entryActions.updateCurrentUserPrefs({ timezone }),
     },
     dispatch,
   );

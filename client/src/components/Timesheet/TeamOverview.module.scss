@@ -10,16 +10,35 @@
     border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
   }
 
-  .pageTitle {
-    font-size: 16px;
-    margin: 0 0 2px;
-    color: var(--textColor0);
+  .pageHeaderRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .pageHeaderTitles {
+    min-width: 0;
   }
 
   .pageDescription {
     font-size: 12px;
     opacity: 0.65;
     margin: 0 0 10px;
+  }
+
+  .timezoneField {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .timezoneFieldLabel {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.75;
+    white-space: nowrap;
   }
 
   .toolbar {
@@ -63,6 +82,10 @@
 
   .searchInput {
     width: 200px;
+  }
+
+  .timezoneDropdown {
+    width: 220px;
   }
 
   .hideEmptyRow {
@@ -144,11 +167,31 @@
     color: var(--textColor0);
   }
 
-  .today {
+  // .headerCell is position: sticky and needs to stay fully opaque (or content scrolling
+  // underneath would show through), so the tint is layered on top of its required background
+  // via a same-color gradient rather than replacing it outright — a plain translucent
+  // background here would make the sticky row see-through. .dayCell has no background of its
+  // own, so a plain translucent tint is enough there. Either way this stays a translucent
+  // overlay (not a named palette color) so it stays close to whatever sits behind it and never
+  // risks matching var(--backgroundColorTmpSeparatorLight) closely enough to wash out borders.
+  .dayHeaderCellAlt {
+    background: linear-gradient(rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.14)), var(--backgroundColorTmpBackground);
+  }
+
+  .dayCellAlt {
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  // Compound selectors so today/weekend reliably win over the alt-stripe background above,
+  // regardless of specificity — .today/.weekend are combined with their own base class here
+  // since they're shared generic modifiers applied to both header and body cells via clsx.
+  .headerCell.today,
+  .dayCell.today {
     background: var(--backgroundColorTmpDarkerField1);
   }
 
-  .weekend {
+  .headerCell.weekend,
+  .dayCell.weekend {
     opacity: 0.75;
   }
 

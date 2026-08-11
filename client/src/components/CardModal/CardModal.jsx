@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import api from '../../api';
 import Paths from '../../constants/Paths';
 import CardLinksContainer from '../../containers/CardLinksContainer';
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
-import { createTimer, startTimer, stopTimer } from '../../utils/timer';
+import { getAccessToken } from '../../utils/access-token-storage';
+import formatDuration from '../../utils/format-duration';
 import ActionsPopup from '../Card/ActionsPopup';
 import DeletePopup from '../DeletePopup';
 import DueDate from '../DueDate';
@@ -19,8 +21,6 @@ import LabelsPopup from '../LabelsPopup';
 import MembershipsPopup from '../MembershipsPopup';
 import Priority from '../Priority';
 import Tasks from '../Tasks';
-import Timer from '../Timer';
-import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
 import { Button, ButtonStyle, Icon, IconType, IconSize, Dropdown, DropdownStyle, MDPreview, LinkifiedTextRenderer } from '../Utils';
 import AttachmentAdd from './AttachmentAdd';
@@ -118,6 +118,7 @@ const CardModal = React.memo(
     onCommentActivityCreate,
     onCommentActivityUpdate,
     onCommentActivityDelete,
+    onCreateTimeEntry,
     onClose,
   }) => {
     const [t] = useTranslation();
@@ -223,28 +224,28 @@ const CardModal = React.memo(
       [onUpdate],
     );
 
-    const handleTimerUpdate = useCallback(
-      (newTimer) => {
-        onUpdate({
-          timer: newTimer,
-        });
-      },
-      [onUpdate],
-    );
+    const [timeTotalMinutes, setTimeTotalMinutes] = useState(0);
 
-    const handleToggleTimerClick = useCallback(() => {
-      // TODO hacky way of creating new timer - should be created using TimerEditStep
-      if (!timer) {
-        const newTimer = createTimer({ hours: 0, minutes: 0, seconds: 0 });
-        onUpdate({
-          timer: newTimer.startedAt ? stopTimer(newTimer) : startTimer(newTimer),
-        });
-      } else {
-        onUpdate({
-          timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
-        });
-      }
-    }, [onUpdate, timer]);
+    useEffect(() => {
+      let isCancelled = false;
+
+      api
+        .getCardTimeEntries(id, { Authorization: `Bearer ${getAccessToken()}` })
+        .then((body) => {
+          if (!isCancelled) {
+            setTimeTotalMinutes(body.totalMinutes);
+          }
+        })
+        .catch(() => {});
+
+      return () => {
+        isCancelled = true;
+      };
+    }, [id]);
+
+    const handleCreateTimeEntryClick = useCallback(() => {
+      onCreateTimeEntry();
+    }, [onCreateTimeEntry]);
 
     const handleCoverUpdate = useCallback(
       (newCoverAttachmentId) => {
@@ -654,23 +655,19 @@ const CardModal = React.memo(
       </div>
     );
 
-    const timerNode = (
+    const timeNode = (
       <div className={s.headerItems}>
         <div className={s.text}>
-          {t('common.timer', { context: 'title' })}
+          {t('common.time', { context: 'title' })}
           {canEdit && (
             <div className={s.popupWrapper}>
-              <TimerEditPopup defaultValue={timer} onUpdate={handleTimerUpdate} offset={0}>
-                <Button style={ButtonStyle.Icon} title={t('common.editTimer')}>
-                  <Icon type={IconType.Pencil} size={IconSize.Size10} className={s.iconAddButton2} />
-                </Button>
-              </TimerEditPopup>
+              <Button style={ButtonStyle.Icon} title={t('common.addTimeEntry', { context: 'title' })} onClick={handleCreateTimeEntryClick}>
+                <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton2} />
+              </Button>
             </div>
           )}
         </div>
-        <span className={s.headerItem}>
-          <Timer startedAt={timer ? timer.startedAt : undefined} total={timer ? timer.total : 0} variant="cardModal" onClick={canEdit ? handleToggleTimerClick : undefined} />
-        </span>
+        <span className={s.headerItem}>{formatDuration(timeTotalMinutes)}</span>
       </div>
     );
 
@@ -908,7 +905,7 @@ const CardModal = React.memo(
             {priorityNode}
             {startDateNode}
             {dueDateNode}
-            {timerNode}
+            {timeNode}
             {!hideClosestDueDate && closestDueDateNode}
             {!hideCardModalActivity && createdNode}
             {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
@@ -1024,6 +1021,7 @@ CardModal.propTypes = {
   onCommentActivityCreate: PropTypes.func.isRequired,
   onCommentActivityUpdate: PropTypes.func.isRequired,
   onCommentActivityDelete: PropTypes.func.isRequired,
+  onCreateTimeEntry: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

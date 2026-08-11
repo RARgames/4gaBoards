@@ -88,6 +88,18 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.TIME_ENTRY_UPDATE__FAILURE: {
+        // The optimistic update above already applied — without rolling it back here, a
+        // rejected move/edit (e.g. an overlap conflict) would keep showing the rejected values
+        // as if the server had accepted them, silently diverging from what's actually stored.
+        const timeEntryModel = payload.prevTimeEntry && TimeEntry.withId(payload.id);
+
+        if (timeEntryModel) {
+          timeEntryModel.update(payload.prevTimeEntry);
+        }
+
+        break;
+      }
       case ActionTypes.TIME_ENTRY_DELETE:
         TimeEntry.withId(payload.id).delete();
 
@@ -102,6 +114,14 @@ export default class extends BaseModel {
 
         break;
       }
+      case ActionTypes.TIME_ENTRY_DELETE__FAILURE:
+        // Restore the entry the optimistic delete above already removed, if the server rejected
+        // the deletion (e.g. the user lost rights to it mid-flight).
+        if (payload.prevTimeEntry) {
+          TimeEntry.upsert(payload.prevTimeEntry);
+        }
+
+        break;
       default:
     }
   }

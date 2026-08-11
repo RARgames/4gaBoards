@@ -110,8 +110,9 @@ const Header = React.memo(
             </Link>
           )}
           <Link to={Paths.TIMESHEET} className={s.hideOnSmall}>
-            <Button style={ButtonStyle.Header} title={t('common.timesheet')}>
+            <Button style={ButtonStyle.Header} title={t('common.timesheet')} className={s.timesheetButton}>
               <Icon type={IconType.Clock} size={IconSize.Size18} />
+              <span className={s.headerButtonLabel}>{t('common.timesheet')}</span>
             </Button>
           </Link>
           <NotificationsPopup

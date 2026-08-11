@@ -7,6 +7,7 @@ import membersOverview from './members-overview';
 import projectCreateForm from './project-create-form';
 import projectMembersOverview from './project-members-overview';
 import registerForm from './register-form';
+import timeEntries from './time-entries';
 import timesheetOverview from './timesheet-overview';
 import userCreateForm from './user-create-form';
 
@@ -18,6 +19,7 @@ export default combineReducers({
   projectCreateForm,
   projectMembersOverview,
   registerForm,
+  timeEntries,
   timesheetOverview,
   userCreateForm,
 });

@@ -92,4 +92,10 @@
     flex: 1;
     min-width: 0;
   }
+
+  .footerLeftActions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
 }

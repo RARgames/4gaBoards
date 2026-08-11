@@ -31,6 +31,7 @@ export default class extends BaseModel {
     hideClosestDueDate: attr(),
     theme: attr(),
     themeShape: attr(),
+    timezone: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

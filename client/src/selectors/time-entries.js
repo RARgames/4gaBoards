@@ -37,10 +37,16 @@ export const makeSelectTimeEntriesForUserInRange = () =>
 
 export const selectTimeEntriesForUserInRange = makeSelectTimeEntriesForUserInRange();
 
+// The ui.timeEntries slice tracks only the most recent create/update/delete failure (cleared as
+// soon as the next attempt starts) — see reducers/ui/time-entries.js — so the Timesheet page can
+// show it instead of the mutation failing silently.
+export const selectTimeEntriesError = ({ ui: { timeEntries } }) => timeEntries.error;
+
 export default {
   makeSelectTimeEntryById,
   selectTimeEntryById,
   selectTimeEntries,
   makeSelectTimeEntriesForUserInRange,
   selectTimeEntriesForUserInRange,
+  selectTimeEntriesError,
 };

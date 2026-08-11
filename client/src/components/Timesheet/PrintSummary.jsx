@@ -5,12 +5,14 @@ import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import formatDuration from '../../utils/format-duration';
+import { getEffectiveTimeZone, utcToZonedTime } from '../../utils/timezone';
 import { Button, ButtonStyle } from '../Utils';
 
 import * as s from './PrintSummary.module.scss';
 
-const PrintSummary = React.memo(({ range, viewedUserId, viewedUserName, timeEntries, projectsById, onFetch, onClose }) => {
+const PrintSummary = React.memo(({ range, viewedUserId, viewedUserName, timeEntries, projectsById, timezone, onFetch, onClose }) => {
   const [t] = useTranslation();
+  const effectiveTimeZone = getEffectiveTimeZone(timezone);
 
   useEffect(() => {
     if (viewedUserId) {
@@ -22,6 +24,7 @@ const PrintSummary = React.memo(({ range, viewedUserId, viewedUserName, timeEntr
   const { dayGroups, grandTotalMinutes } = useMemo(() => {
     const scoped = timeEntries
       .filter((timeEntry) => timeEntry.userId === viewedUserId && timeEntry.startedAt < range.to && timeEntry.endedAt > range.from && (!range.projectId || timeEntry.projectId === range.projectId))
+      .map((timeEntry) => ({ ...timeEntry, startedAt: utcToZonedTime(timeEntry.startedAt, effectiveTimeZone), endedAt: utcToZonedTime(timeEntry.endedAt, effectiveTimeZone) }))
       .sort((a, b) => a.startedAt - b.startedAt);
 
     const byDay = new Map();
@@ -44,7 +47,7 @@ const PrintSummary = React.memo(({ range, viewedUserId, viewedUserName, timeEntr
     });
 
     return { dayGroups: Array.from(byDay.values()), grandTotalMinutes: total };
-  }, [timeEntries, viewedUserId, range, projectsById]);
+  }, [timeEntries, viewedUserId, range, projectsById, effectiveTimeZone]);
 
   return (
     <div className={s.overlay}>
@@ -107,6 +110,7 @@ PrintSummary.propTypes = {
   viewedUserName: PropTypes.string,
   timeEntries: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   projectsById: PropTypes.instanceOf(Map).isRequired,
+  timezone: PropTypes.string,
   onFetch: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
@@ -114,6 +118,7 @@ PrintSummary.propTypes = {
 PrintSummary.defaultProps = {
   viewedUserId: undefined,
   viewedUserName: undefined,
+  timezone: undefined,
 };
 
 export default PrintSummary;

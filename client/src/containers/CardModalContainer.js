@@ -205,6 +205,10 @@ const mergeProps = (stateProps, dispatchProps) => ({
   ...stateProps,
   ...omit(dispatchProps, 'push'),
   onClose: () => dispatchProps.push(Paths.BOARDS.replace(':id', stateProps.boardId)),
+  onCreateTimeEntry: () =>
+    dispatchProps.push(Paths.TIMESHEET, {
+      createEntry: { cardId: stateProps.id, projectId: stateProps.projectId, boardId: stateProps.boardId, listId: stateProps.listId, description: stateProps.name },
+    }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(CardModal);

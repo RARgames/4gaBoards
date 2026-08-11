@@ -29,7 +29,16 @@
     border-left: 1px solid var(--backgroundColorTmpSeparatorLight);
   }
 
-  .dayHeaderCellToday {
+  // A translucent tint (rather than a named palette color) keeps the stripe close to whatever
+  // background already sits behind it in any theme, and never risks landing on a color close
+  // enough to var(--backgroundColorTmpSeparatorLight) to wash out the border-left column dividers.
+  .dayHeaderCell:nth-child(even) {
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  // Compound selector to match the specificity of the stripe rule above — a single-class
+  // selector here would lose to it on an even (striped) day regardless of source order.
+  .dayHeaderCell.dayHeaderCellToday {
     background: var(--backgroundColorTmpDarkerField1);
   }
 
@@ -93,7 +102,15 @@
     user-select: none;
   }
 
-  .dayColumnToday {
+  // .days has no gutter sibling (unlike .headerRow's .gutterHeader), so day columns here are
+  // offset by one child position relative to their header cells — :nth-child(odd) here lines up
+  // with :nth-child(even) on .dayHeaderCell so the same visual days get shaded in both rows.
+  .dayColumn:nth-child(odd) {
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  // Compound selector to match the specificity of the stripe rule above (see .dayHeaderCellToday).
+  .dayColumn.dayColumnToday {
     background: var(--backgroundColorTmpDarkerField1);
   }
 

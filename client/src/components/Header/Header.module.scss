@@ -41,6 +41,21 @@
     margin-left: auto;
   }
 
+  .timesheetButton {
+    width: auto;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .headerButtonLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--textColor0);
+    white-space: nowrap;
+  }
+
   @media (max-width: 600px) {
     .hideOnSmall {
       display: none;

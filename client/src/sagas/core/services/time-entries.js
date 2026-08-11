@@ -1,7 +1,8 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
 import request from '../request';
 
@@ -45,13 +46,17 @@ export function* handleTimeEntryCreate(timeEntry) {
 }
 
 export function* updateTimeEntry(id, data) {
+  // Captured before the optimistic dispatch below overwrites it, so a rejected update (e.g. an
+  // overlap conflict) can be rolled back to what the server actually still has.
+  const prevTimeEntry = yield select(selectors.selectTimeEntryById, id);
+
   yield put(actions.updateTimeEntry(id, data));
 
   let timeEntry;
   try {
     ({ item: timeEntry } = yield call(request, api.updateTimeEntry, id, data));
   } catch (error) {
-    yield put(actions.updateTimeEntry.failure(id, error));
+    yield put(actions.updateTimeEntry.failure(id, error, prevTimeEntry));
     return;
   }
 
@@ -63,13 +68,16 @@ export function* handleTimeEntryUpdate(timeEntry) {
 }
 
 export function* deleteTimeEntry(id) {
+  // Captured before the optimistic delete below removes it, so a rejected deletion can restore it.
+  const prevTimeEntry = yield select(selectors.selectTimeEntryById, id);
+
   yield put(actions.deleteTimeEntry(id));
 
   let timeEntry;
   try {
     ({ item: timeEntry } = yield call(request, api.deleteTimeEntry, id));
   } catch (error) {
-    yield put(actions.deleteTimeEntry.failure(id, error));
+    yield put(actions.deleteTimeEntry.failure(id, error, prevTimeEntry));
     return;
   }
 

@@ -1,13 +1,16 @@
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
+import { getEffectiveTimeZone } from '../../../utils/timezone';
 import request from '../request';
 
 export function* fetchTimesheetOverview(params) {
   yield put(actions.fetchTimesheetOverview());
 
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const userPrefs = yield select(selectors.selectCurrentUserPrefs);
+  const timezone = getEffectiveTimeZone(userPrefs && userPrefs.timezone);
 
   let items;
   try {

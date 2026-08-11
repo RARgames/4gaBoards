@@ -795,6 +795,8 @@ const toPickerCard = (cardModel) => ({
   boardName: cardModel.board ? cardModel.board.name : null,
   projectId: cardModel.board ? cardModel.board.projectId : null,
   projectName: cardModel.board && cardModel.board.project ? cardModel.board.project.name : null,
+  listId: cardModel.listId,
+  listName: cardModel.list ? cardModel.list.name : null,
 });
 
 // Best-effort: only reflects cards from boards already loaded into the ORM cache (opened by the

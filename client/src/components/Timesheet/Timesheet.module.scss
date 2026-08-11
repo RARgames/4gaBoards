@@ -10,16 +10,35 @@
     border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
   }
 
-  .pageTitle {
-    font-size: 16px;
-    margin: 0 0 2px;
-    color: var(--textColor0);
+  .pageHeaderRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .pageHeaderTitles {
+    min-width: 0;
   }
 
   .pageDescription {
     font-size: 12px;
     opacity: 0.65;
     margin: 0 0 10px;
+  }
+
+  .timezoneField {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .timezoneFieldLabel {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.75;
+    white-space: nowrap;
   }
 
   .viewingBanner {
@@ -30,6 +49,7 @@
   }
 
   .toolbar {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -68,14 +88,59 @@
     width: 160px;
   }
 
+  .timezoneDropdown {
+    width: 220px;
+  }
+
   .spacer {
     flex: 1;
   }
 
   .weekTotal {
-    font-size: 13px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px;
+    font-weight: 700;
+    opacity: 0.9;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .errorBanner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 12px;
     font-weight: 600;
-    opacity: 0.85;
+    color: var(--colorDanger, #eb5a46);
+    background: rgba(235, 90, 70, 0.12);
+    border-bottom: 1px solid var(--colorDanger, #eb5a46);
+  }
+
+  .errorBannerDismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    svg {
+      fill: var(--colorDanger, #eb5a46);
+    }
+
+    &:hover {
+      background: rgba(235, 90, 70, 0.2);
+    }
   }
 
   .content {
@@ -87,10 +152,12 @@
 
   .empty {
     position: absolute;
-    top: 40px;
+    top: 50%;
     left: 0;
     right: 0;
+    transform: translateY(-50%);
     text-align: center;
+    font-size: 13px;
     opacity: 0.6;
     pointer-events: none;
   }

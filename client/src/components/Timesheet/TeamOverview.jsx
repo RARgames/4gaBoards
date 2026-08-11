@@ -8,11 +8,13 @@ import PropTypes from 'prop-types';
 import api from '../../api';
 import Paths from '../../constants/Paths';
 import formatDuration from '../../utils/format-duration';
+import { getEffectiveTimeZone, getSupportedTimeZones, getTimeZoneLabel, utcToZonedTime, zonedTimeToUtc } from '../../utils/timezone';
 import triggerDownload from '../../utils/trigger-download';
 import User from '../User';
 import { Button, ButtonStyle, Checkbox, Dropdown, DropdownStyle, Icon, IconType, IconSize, Input, InputStyle, Loader, LoaderSize } from '../Utils';
 import ExportPopup from './ExportPopup';
 import InvoicePrint from './InvoicePrint';
+import TimesheetHeaderTabs from './TimesheetHeaderTabs';
 
 import * as s from './TeamOverview.module.scss';
 
@@ -20,12 +22,19 @@ const VIEW_MODES = ['week', 'month'];
 
 const anchorForMode = (mode, date) => (mode === 'week' ? startOfWeek(date, { weekStartsOn: 1 }) : startOfMonth(date));
 
-const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntries, categoryTags, accessToken, onFetch, onFetchTimeEntries, onFetchCategoryTags }) => {
+// periodStart/periodEnd are kept as real instants (correct for the fetch range and for
+// TimeEntry comparisons), while everything rendered — day columns, labels, dayKey lookups
+// against the server's zone-bucketed response — works off their "fake-local" zoned counterparts.
+// See the equivalent comment in Timesheet.jsx for the utcToZonedTime/zonedTimeToUtc trick itself.
+const computePeriodStartReal = (mode, timeZone, referenceRealDate = new Date()) => zonedTimeToUtc(anchorForMode(mode, utcToZonedTime(referenceRealDate, timeZone)), timeZone);
+
+const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntries, categoryTags, accessToken, timezone, onFetch, onFetchTimeEntries, onFetchCategoryTags, onTimezoneChange }) => {
   const [t] = useTranslation();
   const navigate = useNavigate();
+  const effectiveTimeZone = getEffectiveTimeZone(timezone);
 
   const [viewMode, setViewMode] = useState('week');
-  const [periodStart, setPeriodStart] = useState(() => anchorForMode('week', new Date()));
+  const [periodStart, setPeriodStart] = useState(() => computePeriodStartReal('week', effectiveTimeZone));
   const [query, setQuery] = useState('');
   const [hideEmpty, setHideEmpty] = useState(false);
   const [invoiceParams, setInvoiceParams] = useState(null);
@@ -36,13 +45,17 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
     }
   }, [isAdmin, navigate]);
 
-  const periodEnd = useMemo(() => (viewMode === 'week' ? addWeeks(periodStart, 1) : endOfMonth(periodStart)), [viewMode, periodStart]);
+  const zonedPeriodStart = useMemo(() => utcToZonedTime(periodStart, effectiveTimeZone), [periodStart, effectiveTimeZone]);
+
+  const periodEnd = useMemo(() => zonedTimeToUtc(viewMode === 'week' ? addWeeks(zonedPeriodStart, 1) : endOfMonth(zonedPeriodStart), effectiveTimeZone), [viewMode, zonedPeriodStart, effectiveTimeZone]);
+
+  const zonedPeriodEnd = useMemo(() => utcToZonedTime(periodEnd, effectiveTimeZone), [periodEnd, effectiveTimeZone]);
 
   useEffect(() => {
     if (isAdmin) {
-      onFetch({ from: periodStart, to: viewMode === 'week' ? periodEnd : addMonths(periodStart, 1) });
+      onFetch({ from: periodStart, to: viewMode === 'week' ? periodEnd : zonedTimeToUtc(addMonths(zonedPeriodStart, 1), effectiveTimeZone) });
     }
-  }, [isAdmin, periodStart, periodEnd, viewMode, onFetch]);
+  }, [isAdmin, periodStart, periodEnd, viewMode, zonedPeriodStart, effectiveTimeZone, onFetch]);
 
   useEffect(() => {
     if (isAdmin) {
@@ -50,7 +63,9 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
     }
   }, [isAdmin, onFetchCategoryTags]);
 
-  const days = useMemo(() => eachDayOfInterval({ start: periodStart, end: viewMode === 'week' ? subDays(periodEnd, 1) : periodEnd }), [periodStart, periodEnd, viewMode]);
+  const days = useMemo(() => eachDayOfInterval({ start: zonedPeriodStart, end: viewMode === 'week' ? subDays(zonedPeriodEnd, 1) : zonedPeriodEnd }), [zonedPeriodStart, zonedPeriodEnd, viewMode]);
+
+  const zonedNow = utcToZonedTime(new Date(), effectiveTimeZone);
 
   const overviewByUserId = useMemo(() => new Map(overview.items.map((item) => [item.userId, item])), [overview.items]);
 
@@ -74,36 +89,44 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
 
   const viewModeOptions = useMemo(() => VIEW_MODES.map((mode) => ({ id: mode, name: t(`common.${mode === 'week' ? 'weeklyTimesheets' : 'monthlyTimesheets'}`) })), [t]);
 
-  const handleViewModeChange = useCallback((mode) => {
-    setViewMode(mode);
-    setPeriodStart((prev) => anchorForMode(mode, prev));
-  }, []);
+  const timeZoneOptions = useMemo(
+    () => [{ id: 'browser-default', name: `${t('common.browserDefault')} (${getEffectiveTimeZone(null)})` }, ...getSupportedTimeZones().map((zone) => ({ id: zone, name: getTimeZoneLabel(zone) }))],
+    [t],
+  );
+
+  const handleViewModeChange = useCallback(
+    (mode) => {
+      setViewMode(mode);
+      setPeriodStart((prev) => zonedTimeToUtc(anchorForMode(mode, utcToZonedTime(prev, effectiveTimeZone)), effectiveTimeZone));
+    },
+    [effectiveTimeZone],
+  );
 
   const handlePrev = useCallback(() => {
-    setPeriodStart((prev) => (viewMode === 'week' ? addWeeks(prev, -1) : addMonths(prev, -1)));
-  }, [viewMode]);
+    setPeriodStart((prev) => zonedTimeToUtc(viewMode === 'week' ? addWeeks(utcToZonedTime(prev, effectiveTimeZone), -1) : addMonths(utcToZonedTime(prev, effectiveTimeZone), -1), effectiveTimeZone));
+  }, [viewMode, effectiveTimeZone]);
 
   const handleNext = useCallback(() => {
-    setPeriodStart((prev) => (viewMode === 'week' ? addWeeks(prev, 1) : addMonths(prev, 1)));
-  }, [viewMode]);
+    setPeriodStart((prev) => zonedTimeToUtc(viewMode === 'week' ? addWeeks(utcToZonedTime(prev, effectiveTimeZone), 1) : addMonths(utcToZonedTime(prev, effectiveTimeZone), 1), effectiveTimeZone));
+  }, [viewMode, effectiveTimeZone]);
 
   const handleToday = useCallback(() => {
-    setPeriodStart(anchorForMode(viewMode, new Date()));
-  }, [viewMode]);
+    setPeriodStart(computePeriodStartReal(viewMode, effectiveTimeZone));
+  }, [viewMode, effectiveTimeZone]);
 
   const handleMemberClick = useCallback(
     (userId) => {
-      const weekStart = viewMode === 'week' ? periodStart : startOfWeek(new Date(), { weekStartsOn: 1 });
-      navigate(Paths.TIMESHEET, { state: { viewedUserId: userId, weekStart: weekStart.toISOString() } });
+      const weekStartZoned = viewMode === 'week' ? zonedPeriodStart : startOfWeek(zonedNow, { weekStartsOn: 1 });
+      navigate(Paths.TIMESHEET, { state: { viewedUserId: userId, weekStart: zonedTimeToUtc(weekStartZoned, effectiveTimeZone).toISOString() } });
     },
-    [navigate, viewMode, periodStart],
+    [navigate, viewMode, zonedPeriodStart, zonedNow, effectiveTimeZone],
   );
 
   const handleDayClick = useCallback(
     (userId, day) => {
-      navigate(Paths.TIMESHEET, { state: { viewedUserId: userId, weekStart: startOfWeek(day, { weekStartsOn: 1 }).toISOString() } });
+      navigate(Paths.TIMESHEET, { state: { viewedUserId: userId, weekStart: zonedTimeToUtc(startOfWeek(day, { weekStartsOn: 1 }), effectiveTimeZone).toISOString() } });
     },
-    [navigate],
+    [navigate, effectiveTimeZone],
   );
 
   const projectOptions = useMemo(() => projects.map((project) => ({ id: project.id, name: project.name })), [projects]);
@@ -143,15 +166,32 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
     return null;
   }
 
-  const periodLabel = viewMode === 'week' ? `${format(periodStart, 'MMM d')} – ${format(subDays(periodEnd, 1), 'MMM d, yyyy')}` : format(periodStart, 'MMMM yyyy');
+  const periodLabel = viewMode === 'week' ? `${format(zonedPeriodStart, 'MMM d')} – ${format(subDays(zonedPeriodEnd, 1), 'MMM d, yyyy')}` : format(zonedPeriodStart, 'MMMM yyyy');
 
   const gridTemplateColumns = `minmax(180px, 240px) repeat(${days.length}, ${viewMode === 'week' ? '1fr' : '64px'}) 90px`;
 
   return (
     <div className={s.wrapper}>
       <div className={s.pageHeader}>
-        <h1 className={s.pageTitle}>{t('common.teamTimesheets')}</h1>
-        <p className={s.pageDescription}>{t('common.teamTimesheetsDescription')}</p>
+        <div className={s.pageHeaderRow}>
+          <div className={s.pageHeaderTitles}>
+            <TimesheetHeaderTabs isAdmin={isAdmin} active="team" />
+            <p className={s.pageDescription}>{t('common.teamTimesheetsDescription')}</p>
+          </div>
+          <div className={s.timezoneField}>
+            <span className={s.timezoneFieldLabel}>{t('common.timezone', { context: 'title' })}:</span>
+            <Dropdown
+              style={DropdownStyle.Default}
+              options={timeZoneOptions}
+              defaultItem={timeZoneOptions.find((option) => option.id === (timezone || 'browser-default'))}
+              placeholder={t('common.timezone', { context: 'title' })}
+              onChange={(item) => onTimezoneChange(item.id === 'browser-default' ? null : item.id)}
+              isSearchable
+              selectFirstOnSearch
+              className={s.timezoneDropdown}
+            />
+          </div>
+        </div>
       </div>
       <div className={s.toolbar}>
         <Dropdown
@@ -180,9 +220,6 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
           <span>{t('common.hideMembersWithNoTime')}</span>
         </div>
         <div className={s.spacer} />
-        <Button style={ButtonStyle.NoBackground} className={s.todayButton} onClick={() => navigate(Paths.TIMESHEET)}>
-          {t('common.myTimesheet')}
-        </Button>
         <ExportPopup projects={projectOptions} isAdmin members={memberOptions} onDownloadCsv={handleDownloadCsv} onPrintSummary={handlePrintSummary} onPrintInvoice={handlePrintInvoice}>
           <Button style={ButtonStyle.DefaultBorder} content={t('common.export')} />
         </ExportPopup>
@@ -196,8 +233,8 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
           <div className={s.tableScroll}>
             <div className={s.grid} style={{ gridTemplateColumns }}>
               <div className={clsx(s.headerCell, s.cornerCell)} />
-              {days.map((day) => (
-                <div key={day.toISOString()} className={clsx(s.headerCell, s.dayHeaderCell, isSameDay(day, new Date()) && s.today, isWeekend(day) && s.weekend)}>
+              {days.map((day, dayIndex) => (
+                <div key={day.toISOString()} className={clsx(s.headerCell, s.dayHeaderCell, dayIndex % 2 === 1 && s.dayHeaderCellAlt, isSameDay(day, zonedNow) && s.today, isWeekend(day) && s.weekend)}>
                   <span className={s.dayHeaderName}>{format(day, viewMode === 'week' ? 'EEE' : 'EEEEE')}</span>
                   <span className={s.dayHeaderDate}>{format(day, 'd')}</span>
                 </div>
@@ -211,14 +248,14 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
                     <User name={row.user.name} avatarUrl={row.user.avatarUrl} size="small" />
                     <span className={s.memberName}>{row.user.name}</span>
                   </div>
-                  {days.map((day) => {
+                  {days.map((day, dayIndex) => {
                     const dayKey = format(day, 'yyyy-MM-dd');
                     const minutes = row.days[dayKey];
                     return (
                       // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
                       <div
                         key={dayKey}
-                        className={clsx(s.dayCell, isSameDay(day, new Date()) && s.today, isWeekend(day) && s.weekend, minutes && s.dayCellClickable)}
+                        className={clsx(s.dayCell, dayIndex % 2 === 1 && s.dayCellAlt, isSameDay(day, zonedNow) && s.today, isWeekend(day) && s.weekend, minutes && s.dayCellClickable)}
                         onClick={minutes ? () => handleDayClick(row.user.id, day) : undefined}
                       >
                         {minutes ? formatDuration(minutes) : <span className={s.emptyDash}>–</span>}
@@ -261,13 +298,16 @@ TeamOverview.propTypes = {
   timeEntries: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   categoryTags: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   accessToken: PropTypes.string,
+  timezone: PropTypes.string,
   onFetch: PropTypes.func.isRequired,
   onFetchTimeEntries: PropTypes.func.isRequired,
   onFetchCategoryTags: PropTypes.func.isRequired,
+  onTimezoneChange: PropTypes.func.isRequired,
 };
 
 TeamOverview.defaultProps = {
   accessToken: undefined,
+  timezone: undefined,
 };
 
 export default TeamOverview;
