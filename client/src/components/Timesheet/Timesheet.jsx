@@ -112,7 +112,9 @@ const Timesheet = React.memo(
         mode: 'create',
         anchorRect: { top: 120, left: Math.max(0, window.innerWidth / 2 - 150), width: 300, height: 0 },
         initialValues: {
-          description: createEntry.description || '',
+          title: '',
+          cardName: createEntry.cardName || null,
+          description: '',
           startedAt,
           endedAt,
           projectId: createEntry.projectId || null,
@@ -168,7 +170,7 @@ const Timesheet = React.memo(
     const handleClosePopup = useCallback(() => setPopup(null), []);
 
     const handleCreate = useCallback(({ startedAt, endedAt, anchorRect }) => {
-      setPopup({ mode: 'create', anchorRect, initialValues: { description: '', startedAt, endedAt, projectId: null, cardId: null }, entryId: null });
+      setPopup({ mode: 'create', anchorRect, initialValues: { title: '', description: '', startedAt, endedAt, projectId: null, cardId: null }, entryId: null });
     }, []);
 
     const handleEntryClick = useCallback(
@@ -179,6 +181,8 @@ const Timesheet = React.memo(
           mode: 'edit',
           anchorRect: { top: entryRect.top, left: entryRect.left, width: entryRect.width, height: entryRect.height },
           initialValues: {
+            title: entry.title,
+            cardName: entry.cardName,
             description: entry.description,
             startedAt: entry.startedAt,
             endedAt: entry.endedAt,
@@ -218,6 +222,7 @@ const Timesheet = React.memo(
 
         if (popup.mode === 'create') {
           const payload = {
+            title: values.title,
             description: values.description,
             categoryTagId: values.categoryTagId,
             startedAt,
@@ -232,6 +237,7 @@ const Timesheet = React.memo(
           onCreate(payload);
         } else {
           onUpdate(popup.entryId, {
+            title: values.title,
             description: values.description,
             categoryTagId: values.categoryTagId,
             startedAt,
@@ -267,6 +273,7 @@ const Timesheet = React.memo(
         const newEndedAt = new Date(Math.min(newStartedAt.getTime() + duration, dayEnd.getTime()));
 
         const payload = {
+          title: values.title,
           description: values.description,
           categoryTagId: values.categoryTagId,
           startedAt: zonedTimeToUtc(newStartedAt, effectiveTimeZone),

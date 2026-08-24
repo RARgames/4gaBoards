@@ -45,6 +45,12 @@ const duplicateCard = (id, headers) =>
 
 const getCardTimeEntries = (id, headers) => socket.get(`/cards/${id}/time-entries`, undefined, headers);
 
+const searchCards = (q, headers) => socket.get('/cards/search', { q }, headers);
+
+// Creates a card at the end of a list and assigns the creator to it, for the Timesheet's ticket
+// picker — see server/api/controllers/cards/create-and-assign.js for why this isn't createCard.
+const createAndAssignCard = (listId, name, headers) => socket.post(`/lists/${listId}/cards/create-and-assign`, { name }, headers);
+
 /* Event handlers */
 
 const makeHandleCardCreate = (next) => (body) => {
@@ -67,6 +73,8 @@ export default {
   deleteCard,
   duplicateCard,
   getCardTimeEntries,
+  searchCards,
+  createAndAssignCard,
   makeHandleCardCreate,
   makeHandleCardUpdate,
   makeHandleCardDelete,

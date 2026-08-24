@@ -17,6 +17,7 @@ const Dropdown = React.forwardRef(
       children,
       style,
       options,
+      footer,
       defaultItem,
       isMultiple,
       defaultItems,
@@ -372,7 +373,7 @@ const Dropdown = React.forwardRef(
                 {...getFloatingProps()} // eslint-disable-line react/jsx-props-no-spreading
                 ref={refs.setFloating}
                 style={floatingStyles}
-                className={clsx(s.dropdownMenu, gs.scrollableY, getOptions().length > 0 && s.dropdownMenuWithChildren, dropdownMenuClassName)}
+                className={clsx(s.dropdownMenu, gs.scrollableY, (getOptions().length > 0 || footer) && s.dropdownMenuWithChildren, dropdownMenuClassName)}
               >
                 {getOptions().map((item, index) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -393,6 +394,7 @@ const Dropdown = React.forwardRef(
                     {item.badge && <span className={s.badge}>{item.badge}</span>}
                   </div>
                 ))}
+                {footer}
               </div>
             </FloatingFocusManager>
           </FloatingPortal>
@@ -406,6 +408,7 @@ Dropdown.propTypes = {
   children: PropTypes.node,
   style: PropTypes.oneOfType([PropTypes.oneOf(Object.values(DropdownStyle)), PropTypes.arrayOf(PropTypes.oneOf(Object.values(DropdownStyle)))]),
   options: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  footer: PropTypes.node, // Rendered after the options, inside the menu (e.g. an "add new" action)
   defaultItem: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isMultiple: PropTypes.bool,
   defaultItems: PropTypes.array, // eslint-disable-line react/forbid-prop-types
@@ -432,6 +435,7 @@ Dropdown.propTypes = {
 Dropdown.defaultProps = {
   children: null,
   style: undefined,
+  footer: null,
   defaultItem: null,
   isMultiple: false,
   defaultItems: [],

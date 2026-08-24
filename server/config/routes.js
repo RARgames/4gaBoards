@@ -84,6 +84,10 @@ module.exports.routes = {
   'DELETE /api/lists/:id': 'lists/delete',
 
   'POST /api/lists/:listId/cards': 'cards/create',
+  'POST /api/lists/:listId/cards/create-and-assign': 'cards/create-and-assign',
+  // Must come before the :id route below — a static path is otherwise shadowed by the param
+  // route (same segment count), and "search" would get treated as an :id value and rejected.
+  'GET /api/cards/search': 'cards/search',
   'GET /api/cards/:id': 'cards/show',
   'GET /api/cards/:id/time-entries': 'cards/list-time-entries',
   'PATCH /api/cards/:id': 'cards/update',

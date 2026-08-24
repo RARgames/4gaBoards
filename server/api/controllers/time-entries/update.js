@@ -29,6 +29,10 @@ module.exports = {
     endedAt: {
       type: 'string',
     },
+    title: {
+      type: 'string',
+      allowNull: true,
+    },
     description: {
       type: 'string',
       allowNull: true,
@@ -88,6 +92,9 @@ module.exports = {
     }
     if (inputs.endedAt) {
       values.endedAt = new Date(inputs.endedAt);
+    }
+    if (inputs.title !== undefined) {
+      values.title = inputs.title;
     }
     if (inputs.description !== undefined) {
       values.description = inputs.description;

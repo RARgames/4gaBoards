@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 
 import api from '../../api';
+import Config from '../../constants/Config';
 import Paths from '../../constants/Paths';
 import { getAccessToken } from '../../utils/access-token-storage';
 import { getBoardAccentColor } from '../../utils/board-colors';
@@ -38,7 +38,7 @@ const highlight = (text, query) => {
   );
 };
 
-const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, projects, assignedCards, allCards, onChange }) => {
+const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, projects, assignedCards, allCards, defaultCardName, onChange }) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -52,11 +52,26 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
   const [loadingProjectId, setLoadingProjectId] = useState(null);
   const fetchedProjectIdsRef = useRef(new Set());
 
+  // Before a project is picked, allCards/assignedCards only cover boards already loaded into the
+  // ORM cache, so a search here can miss cards on boards the user hasn't opened this session. This
+  // debounced server search backfills that gap — see server/api/controllers/cards/search.js.
+  const [rootSearchResults, setRootSearchResults] = useState([]);
+  const [rootSearchHasMore, setRootSearchHasMore] = useState(false);
+  const [isSearchingRoot, setIsSearchingRoot] = useState(false);
+  const rootSearchSeqRef = useRef(0);
+
+  // Logging time against work that has no ticket yet is common enough that the picker offers to
+  // create one on the spot rather than sending the user off to the board and back.
+  const [isCreatingCard, setIsCreatingCard] = useState(false);
+  const [createError, setCreateError] = useState(null);
+
   const wrapperRef = useRef(null);
   const searchFieldRef = useRef(null);
 
+  const trimmedQuery = query.trim();
+
   const selectedProject = projectId ? projects.find((project) => project.id === projectId) : null;
-  const selectedCard = cardId ? [...assignedCards, ...allCards, ...Object.values(projectCardsByProjectId).flat()].find((card) => card.id === cardId) : null;
+  const selectedCard = cardId ? [...assignedCards, ...allCards, ...Object.values(projectCardsByProjectId).flat(), ...rootSearchResults].find((card) => card.id === cardId) : null;
   const selectedBoard = selectedProject && boardId ? (selectedProject.boards || []).find((board) => board.id === boardId) : null;
   // Older entries (or entries picked before the board/list steps existed) may carry a cardId with
   // no explicit boardId/listId — fall back to the card's own board/list so the chip row and
@@ -116,6 +131,42 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
   }, [projectId, projects]);
 
   useEffect(() => {
+    if (projectId || trimmedQuery.length < 2) {
+      setRootSearchResults([]);
+      setRootSearchHasMore(false);
+      setIsSearchingRoot(false);
+      return undefined;
+    }
+
+    setIsSearchingRoot(true);
+    rootSearchSeqRef.current += 1;
+    const seq = rootSearchSeqRef.current;
+
+    const timeoutId = setTimeout(() => {
+      api
+        .searchCards(trimmedQuery, { Authorization: `Bearer ${getAccessToken()}` })
+        .then((res) => {
+          if (rootSearchSeqRef.current !== seq) {
+            return;
+          }
+          setRootSearchResults(res.items || []);
+          setRootSearchHasMore(!!res.hasMore);
+          setIsSearchingRoot(false);
+        })
+        .catch(() => {
+          if (rootSearchSeqRef.current !== seq) {
+            return;
+          }
+          setRootSearchResults([]);
+          setRootSearchHasMore(false);
+          setIsSearchingRoot(false);
+        });
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [projectId, trimmedQuery]);
+
+  useEffect(() => {
     if (isOpen) {
       searchFieldRef.current?.focus();
     }
@@ -138,12 +189,14 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
 
   const handleOpen = useCallback(() => {
     setQuery('');
+    setCreateError(null);
     setIsOpen(true);
   }, []);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
     setQuery('');
+    setCreateError(null);
   }, []);
 
   const handlePickProject = useCallback(
@@ -212,12 +265,58 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
     [projectId, boardId, listId, onChange],
   );
 
-  const trimmedQuery = query.trim();
   const isLoadingProjectCards = projectId !== null && loadingProjectId === projectId;
   const projectPool = projectId ? projectCardsByProjectId[projectId] || allCards.filter((card) => card.projectId === projectId) : null;
   const boardPool = effectiveBoardId ? (projectPool || []).filter((card) => card.boardId === effectiveBoardId) : null;
   const listPool = effectiveListId ? (boardPool || []).filter((card) => card.listId === effectiveListId) : null;
   const boardLists = useMemo(() => (effectiveBoardId ? listsByBoardId[effectiveBoardId] || [] : []), [effectiveBoardId, listsByBoardId]);
+
+  // A new ticket needs a column to live in. Use the one the user picked, or fall back to the
+  // board's first column (the usual "new work lands here" convention) — the target is named in the
+  // button either way, so it's never a surprise.
+  const createTargetList = useMemo(() => {
+    if (!effectiveBoardId) {
+      return null;
+    }
+    if (effectiveListId) {
+      return boardLists.find((list) => list.id === effectiveListId) || (effectiveListName ? { id: effectiveListId, name: effectiveListName } : null);
+    }
+    return boardLists[0] || null;
+  }, [effectiveBoardId, effectiveListId, effectiveListName, boardLists]);
+
+  // Cards created from a time entry always inherit its title. Search text is only for finding
+  // existing cards and must never allow (or rename) a newly created card when the title is blank.
+  const createCardName = (defaultCardName || '').trim();
+  const canCreateCard = Boolean(createTargetList && createCardName);
+
+  const handleCreateCard = useCallback(() => {
+    if (!canCreateCard || isCreatingCard) {
+      return;
+    }
+
+    setIsCreatingCard(true);
+    setCreateError(null);
+
+    api
+      .createAndAssignCard(createTargetList.id, createCardName, { Authorization: `Bearer ${getAccessToken()}` })
+      .then(({ item }) => {
+        // Seed the new card into this picker's own pool so the chip row can resolve it without
+        // waiting on a refetch (the project fetch below only runs once per project).
+        setProjectCardsByProjectId((prev) => {
+          const existing = prev[item.projectId] || allCards.filter((card) => card.projectId === item.projectId);
+          return { ...prev, [item.projectId]: [...existing, item] };
+        });
+        setIsCreatingCard(false);
+        onChange({ projectId: item.projectId, boardId: item.boardId, listId: item.listId, cardId: item.id, cardName: item.name });
+        handleClose();
+      })
+      .catch((error) => {
+        setIsCreatingCard(false);
+        // A non-member gets notFound and a viewer gets forbidden, but both mean the same thing
+        // to the user, so don't make them guess which.
+        setCreateError(error && (error.code === 'E_FORBIDDEN' || error.code === 'E_NOT_FOUND') ? 'noRights' : 'failed');
+      });
+  }, [canCreateCard, isCreatingCard, createTargetList, createCardName, allCards, onChange, handleClose]);
 
   const { projectResults, projectsMoreCount, boardSection, listSection, cardSections, flatResults } = useMemo(() => {
     if (trimmedQuery) {
@@ -225,14 +324,26 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
 
       if (!projectId) {
         const { items: matchingProjects, moreCount: projectsMore } = sliceWithMore(projects.filter((project) => project.name.toLowerCase().includes(lowerQuery)));
-        const { items: matchingCards, moreCount } = sliceWithMore(allCards.filter((card) => card.name.toLowerCase().includes(lowerQuery)));
+
+        // allCards only covers boards already loaded into the ORM cache. Backfill with the
+        // debounced server search (rootSearchResults) for boards the user hasn't opened this
+        // session, preferring the cached copy of a card when both sources have it.
+        const cachedMatches = allCards.filter((card) => card.name.toLowerCase().includes(lowerQuery));
+        const cachedIds = new Set(cachedMatches.map((card) => card.id));
+        const serverOnlyMatches = rootSearchResults.filter((card) => !cachedIds.has(card.id));
+        const combinedMatches = [...cachedMatches, ...serverOnlyMatches];
+        const { items: matchingCards, moreCount: combinedMoreCount } = sliceWithMore(combinedMatches);
+        // Once the server says there's more than we fetched, our own slice count is no longer
+        // meaningful (we don't know the true total) — show it as an open-ended "more" hint instead.
+        const moreCount = rootSearchHasMore ? 0 : combinedMoreCount;
+        const moreIsApproximate = rootSearchHasMore;
 
         return {
           projectResults: matchingProjects,
           projectsMoreCount: projectsMore,
           boardSection: null,
           listSection: null,
-          cardSections: [{ title: t('common.matchingTickets', { context: 'title' }), cards: matchingCards, moreCount }],
+          cardSections: [{ title: t('common.matchingTickets', { context: 'title' }), cards: matchingCards, moreCount, moreIsApproximate }],
           flatResults: [...matchingProjects.map((project) => ({ type: 'project', item: project })), ...matchingCards.map((card) => ({ type: 'card', item: card }))],
         };
       }
@@ -336,7 +447,7 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
       ],
       flatResults: [...scopedAssigned.map((card) => ({ type: 'card', item: card })), ...moreTickets.map((card) => ({ type: 'card', item: card }))],
     };
-  }, [trimmedQuery, projectId, effectiveBoardId, effectiveListId, projects, selectedProject, assignedCards, allCards, projectPool, boardPool, listPool, boardLists, t]);
+  }, [trimmedQuery, projectId, effectiveBoardId, effectiveListId, projects, selectedProject, assignedCards, allCards, projectPool, boardPool, listPool, boardLists, rootSearchResults, rootSearchHasMore, t]);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -359,6 +470,24 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
     },
     [flatResults, handleClose, handlePickProject, handlePickBoard, handlePickList, handlePickCard],
   );
+
+  // The create action also lives inside the picker popup (where the search text names the ticket),
+  // but that's only reachable once the popup is open. This is the visible-by-default entry point:
+  // create straight away when we already know where the ticket goes and what to call it, otherwise
+  // open the picker so the user can supply the missing piece.
+  const handlePrimaryAction = useCallback(() => {
+    if (canCreateCard) {
+      handleCreateCard();
+      return;
+    }
+    handleOpen();
+  }, [canCreateCard, handleCreateCard, handleOpen]);
+
+  // Deliberately a real navigation rather than a react-router <Link>: the /cards/:id route renders
+  // from the ORM cache and derives the board from the card, so an in-app transition from the
+  // Timesheet — where no board has been loaded — lands on "Card Not Found". A full load bootstraps
+  // the board properly, and as a bonus this makes middle-click / open-in-new-tab work.
+  const cardHref = selectedCard ? `${Config.BASE_PATH}${Paths.CARDS.replace(':id', selectedCard.id)}` : null;
 
   const renderCardSubtitle = (card) => {
     if (!projectId) {
@@ -416,9 +545,9 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
             // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
             <div className={s.chip} onClick={handleOpen}>
               <span className={s.chipLabel}>{selectedCard.name}</span>
-              <Link to={Paths.CARDS.replace(':id', selectedCard.id)} className={s.chipOpen} title={t('action.openTicket')} onClick={(e) => e.stopPropagation()}>
+              <a href={cardHref} className={s.chipOpen} title={t('action.openTicket')} onClick={(e) => e.stopPropagation()}>
                 <Icon type={IconType.WindowMaximize} size={IconSize.Size8} />
-              </Link>
+              </a>
               <button type="button" className={s.chipRemove} onClick={handleClearCard} title={t('action.remove')}>
                 <Icon type={IconType.Close} size={IconSize.Size8} />
               </button>
@@ -446,6 +575,17 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
             </div>
           )}
         </div>
+      )}
+      {selectedCard ? (
+        <a href={cardHref} target="_blank" rel="noopener noreferrer" className={s.primaryAction}>
+          <Icon type={IconType.WindowMaximize} size={IconSize.Size13} />
+          {t('common.openTicketOnBoard')}
+        </a>
+      ) : (
+        <button type="button" className={s.primaryAction} onClick={handlePrimaryAction} disabled={!createCardName || isCreatingCard}>
+          <Icon type={IconType.Plus} size={IconSize.Size13} />
+          {isCreatingCard ? t('common.creatingTicket') : t('common.createTicketOnBoard')}
+        </button>
       )}
       {isOpen && (
         <div className={s.popup}>
@@ -502,14 +642,23 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
                         </div>
                       </div>
                     ))}
-                    {section.moreCount > 0 && <div className={s.moreResultsHint}>{t('common.moreResults', { count: section.moreCount })}</div>}
+                    {(section.moreCount > 0 || section.moreIsApproximate) && (
+                      <div className={s.moreResultsHint}>{section.moreIsApproximate ? t('common.moreResultsApprox') : t('common.moreResults', { count: section.moreCount })}</div>
+                    )}
                   </div>
                 ),
             )}
-            {flatResults.length === 0 && <div className={s.emptyResults}>{isLoadingProjectCards ? t('common.loading') : t('common.noResults')}</div>}
+            {flatResults.length === 0 && <div className={s.emptyResults}>{isLoadingProjectCards || isSearchingRoot ? t('common.loading') : t('common.noResults')}</div>}
           </div>
+          {canCreateCard && (
+            <button type="button" className={s.createRow} onClick={handleCreateCard} disabled={isCreatingCard}>
+              <Icon type={IconType.Plus} size={IconSize.Size10} />
+              <span className={s.createLabel}>{isCreatingCard ? t('common.creatingTicket') : t('common.createTicketIn', { name: createCardName, list: createTargetList.name })}</span>
+            </button>
+          )}
         </div>
       )}
+      {createError && <div className={s.createError}>{createError === 'noRights' ? t('common.createTicketNoRights') : t('common.createTicketFailed')}</div>}
     </div>
   );
 });
@@ -522,6 +671,7 @@ ProjectTicketPicker.propTypes = {
   projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   assignedCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allCards: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  defaultCardName: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
@@ -530,6 +680,7 @@ ProjectTicketPicker.defaultProps = {
   boardId: null,
   listId: null,
   cardId: null,
+  defaultCardName: '',
 };
 
 export default ProjectTicketPicker;

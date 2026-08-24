@@ -65,6 +65,7 @@ module.exports = {
       cardId: values.card ? values.card.id : null,
       startedAt: values.startedAt,
       endedAt: values.endedAt,
+      title: values.title || null,
       description: values.description || null,
       categoryTagId: values.categoryTagId || null,
       importedFrom: values.importedFrom || null,

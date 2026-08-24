@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { format, setHours, setMinutes, startOfDay } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -13,6 +14,7 @@ import * as s from './EntryPopup.module.scss';
 const VIEWPORT_MARGIN = 10;
 
 const createData = (initialValues) => ({
+  title: (initialValues && initialValues.title) || '',
   description: (initialValues && initialValues.description) || '',
   startTime: format(initialValues.startedAt, 'HH:mm'),
   endTime: format(initialValues.endedAt, 'HH:mm'),
@@ -100,6 +102,10 @@ const EntryPopup = React.memo(
     const [boardId, setBoardId] = useState(() => getInitialBoardId(mode, initialValues, currentUserId));
     const [listId, setListId] = useState(initialValues.listId || null);
     const [cardId, setCardId] = useState(initialValues.cardId || null);
+    // When a board card is linked, the card's own name is the entry's title, so the field becomes a
+    // read-only mirror of it. Seeded from the grid entry on edit, and refreshed by the picker when a
+    // card is picked or created (the picker can resolve names the grid's cache can't).
+    const [linkedCardName, setLinkedCardName] = useState(initialValues.cardName || null);
     const [categoryTagId, setCategoryTagId] = useState(() => getDefaultCategoryTagId(mode, initialValues, categoryTags));
     const [isAddingCategory, setIsAddingCategory] = useState(false);
     const [newCategoryName, setNewCategoryName] = useState('');
@@ -116,6 +122,7 @@ const EntryPopup = React.memo(
       setBoardId(getInitialBoardId(mode, initialValues, currentUserId));
       setListId(initialValues.listId || null);
       setCardId(initialValues.cardId || null);
+      setLinkedCardName(initialValues.cardName || null);
       setCategoryTagId(getDefaultCategoryTagId(mode, initialValues, categoryTags));
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialValues]);
@@ -211,6 +218,7 @@ const EntryPopup = React.memo(
       writeLastProjectBoard(currentUserId, projectId, boardId);
 
       onSave({
+        title: data.title.trim(),
         description: data.description.trim(),
         categoryTagId,
         startedAt,
@@ -225,6 +233,7 @@ const EntryPopup = React.memo(
         return;
       }
       onDuplicate({
+        title: data.title.trim(),
         description: data.description.trim(),
         categoryTagId,
         projectId,
@@ -232,7 +241,7 @@ const EntryPopup = React.memo(
         startedAt: initialValues.startedAt,
         endedAt: initialValues.endedAt,
       });
-    }, [onDuplicate, data.description, categoryTagId, projectId, cardId, initialValues.startedAt, initialValues.endedAt]);
+    }, [onDuplicate, data.title, data.description, categoryTagId, projectId, cardId, initialValues.startedAt, initialValues.endedAt]);
 
     const handleKeyDown = useCallback(
       (e) => {
@@ -244,19 +253,13 @@ const EntryPopup = React.memo(
       [handleSubmit],
     );
 
-    const handlePickerChange = useCallback(
-      ({ projectId: nextProjectId, boardId: nextBoardId, listId: nextListId, cardId: nextCardId, cardName: nextCardName }) => {
-        setProjectId(nextProjectId);
-        setBoardId(nextBoardId || null);
-        setListId(nextListId || null);
-        setCardId(nextCardId);
-
-        if (nextCardId && nextCardName) {
-          setData((prevData) => (prevData.description ? prevData : { ...prevData, description: nextCardName }));
-        }
-      },
-      [setData],
-    );
+    const handlePickerChange = useCallback(({ projectId: nextProjectId, boardId: nextBoardId, listId: nextListId, cardId: nextCardId, cardName: nextCardName }) => {
+      setProjectId(nextProjectId);
+      setBoardId(nextBoardId || null);
+      setListId(nextListId || null);
+      setCardId(nextCardId);
+      setLinkedCardName(nextCardId ? nextCardName || null : null);
+    }, []);
 
     const categoryOptions = useMemo(() => categoryTags.filter((tag) => !tag.projectId || tag.projectId === projectId).map((tag) => ({ id: tag.id, name: tag.name })), [categoryTags, projectId]);
 
@@ -268,6 +271,10 @@ const EntryPopup = React.memo(
       onCreateCategoryTag({ name: trimmedName, projectId });
       setPendingCategoryName(trimmedName);
     }, [newCategoryName, projectId, onCreateCategoryTag]);
+
+    const handleStartAddCategory = useCallback(() => {
+      setIsAddingCategory(true);
+    }, []);
 
     const handleCancelAddCategory = useCallback(() => {
       setIsAddingCategory(false);
@@ -293,22 +300,25 @@ const EntryPopup = React.memo(
               onChange={(item) => setCategoryTagId(item.id)}
               className={s.categoryField}
               dropdownMenuClassName={s.dropdownMenu}
+              footer={
+                // Admin-only: adding a category here creates one for everyone on the project, so it
+                // lives in the menu as an action rather than a selectable value.
+                isAdmin && projectId ? (
+                  // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+                  <div className={s.addCategoryOption} onClick={handleStartAddCategory} onMouseDown={(e) => e.preventDefault()} data-prevent-card-switch>
+                    <Icon type={IconType.Plus} size={IconSize.Size10} />
+                    {t('common.addCategory')}
+                  </div>
+                ) : null
+              }
             />
-            {isAdmin &&
-              projectId &&
-              (isAddingCategory ? (
-                <div className={s.addCategoryRow}>
-                  <Input style={InputStyle.Default} value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} placeholder={t('common.newCategoryName')} className={s.addCategoryInput} />
-                  <Button style={ButtonStyle.Submit} content={t('action.add')} onClick={handleAddCategory} />
-                  <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancelAddCategory} />
-                </div>
-              ) : (
-                // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-                <div className={s.addCategoryAffordance} onClick={() => setIsAddingCategory(true)}>
-                  <Icon type={IconType.Plus} size={IconSize.Size10} />
-                  {t('common.addCategory')}
-                </div>
-              ))}
+            {isAdmin && projectId && isAddingCategory && (
+              <div className={s.addCategoryRow}>
+                <Input style={InputStyle.Default} value={newCategoryName} onChange={(e) => setNewCategoryName(e.target.value)} placeholder={t('common.newCategoryName')} className={s.addCategoryInput} />
+                <Button style={ButtonStyle.Submit} content={t('action.add')} onClick={handleAddCategory} />
+                <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancelAddCategory} />
+              </div>
+            )}
             <ProjectTicketPicker
               projectId={projectId}
               boardId={boardId}
@@ -317,14 +327,30 @@ const EntryPopup = React.memo(
               projects={projectOptions}
               assignedCards={assignedCards}
               allCards={allCards}
+              defaultCardName={data.title}
               onChange={handlePickerChange}
             />
+            <div className={s.fieldLabel}>{t('common.title')}</div>
+            <Input
+              style={InputStyle.Default}
+              name="title"
+              // Falls back to the stored title when the linked card's name can't be resolved — the
+              // grid only knows names for cards on boards already loaded, so this is the common
+              // case when reopening an entry, and an empty locked field would look like data loss.
+              value={cardId ? linkedCardName || data.title : data.title}
+              placeholder={cardId ? '' : t('common.titlePlaceholder')}
+              onChange={handleFieldChange}
+              readOnly={!!cardId}
+              title={cardId ? t('common.titleFromLinkedCard') : undefined}
+              className={clsx(s.titleField, cardId && s.titleFieldReadOnly)}
+            />
+            <div className={s.fieldLabel}>{t('common.whatWasDone')}</div>
             <TextArea
               ref={descriptionField}
               style={TextAreaStyle.Default}
               name="description"
               value={data.description}
-              placeholder={t('common.description')}
+              placeholder={t('common.whatWasDone')}
               onChange={handleFieldChange}
               className={s.descriptionField}
             />
@@ -367,6 +393,8 @@ EntryPopup.propTypes = {
     height: PropTypes.number,
   }).isRequired,
   initialValues: PropTypes.shape({
+    title: PropTypes.string,
+    cardName: PropTypes.string,
     description: PropTypes.string,
     startedAt: PropTypes.instanceOf(Date).isRequired,
     endedAt: PropTypes.instanceOf(Date).isRequired,

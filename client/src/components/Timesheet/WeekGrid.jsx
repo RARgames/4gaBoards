@@ -292,11 +292,11 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
         style={{ top: minutesToY(previewStart), height: Math.max(14, minutesToY(previewEndMinutes - previewStart)), borderLeftColor: entry.projectColor || undefined }}
         onPointerDown={(e) => handleEntryPointerDown(e, entry, dayIndex)}
         onClick={(e) => handleEntryClick(e, entry)}
-        title={entry.description || t('common.noDescription')}
+        title={entry.title || entry.cardName || entry.description || t('common.noDescription')}
       >
         <div className={s.entryResizeHandle} data-role="resize-start" onPointerDown={(e) => handleResizeHandlePointerDown(e, entry, dayIndex, 'resize-start')} />
         <div className={s.entryContent}>
-          <span className={s.entryDescription}>{entry.description || t('common.noDescription')}</span>
+          <span className={s.entryDescription}>{entry.title || entry.cardName || entry.description || t('common.noDescription')}</span>
           <span className={s.entryTime}>
             {format(entry.startedAt, 'HH:mm')}–{format(entry.endedAt, 'HH:mm')}
           </span>

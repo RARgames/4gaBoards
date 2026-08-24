@@ -207,7 +207,9 @@ const mergeProps = (stateProps, dispatchProps) => ({
   onClose: () => dispatchProps.push(Paths.BOARDS.replace(':id', stateProps.boardId)),
   onCreateTimeEntry: () =>
     dispatchProps.push(Paths.TIMESHEET, {
-      createEntry: { cardId: stateProps.id, projectId: stateProps.projectId, boardId: stateProps.boardId, listId: stateProps.listId, description: stateProps.name },
+      // The card's name becomes the entry's (read-only) title, not its description — the
+      // description is for what was actually done, which only the user can fill in.
+      createEntry: { cardId: stateProps.id, projectId: stateProps.projectId, boardId: stateProps.boardId, listId: stateProps.listId, cardName: stateProps.name },
     }),
 });
 

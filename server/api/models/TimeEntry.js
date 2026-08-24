@@ -23,6 +23,10 @@ module.exports = {
       required: true,
       columnName: 'ended_at',
     },
+    title: {
+      type: 'string',
+      allowNull: true,
+    },
     description: {
       type: 'string',
       allowNull: true,

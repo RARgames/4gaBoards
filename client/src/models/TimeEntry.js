@@ -10,6 +10,7 @@ export default class extends BaseModel {
     id: attr(),
     startedAt: attr(),
     endedAt: attr(),
+    title: attr(),
     description: attr(),
     categoryTagId: attr(),
     importedFrom: attr(),

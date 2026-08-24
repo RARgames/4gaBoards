@@ -193,4 +193,95 @@
     opacity: 0.55;
     font-style: italic;
   }
+
+  .createRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+    padding: 6px;
+    border: none;
+    border-top: 1px solid var(--backgroundColorTmpDarkerField2);
+    border-radius: 0 0 3px 3px;
+    background: transparent;
+    color: var(--textColor0);
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+
+    svg {
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--backgroundPopupHover);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+
+  .createLabel {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .createError {
+    padding: 4px 6px 2px;
+    font-size: 10px;
+    color: var(--textColorError);
+  }
+
+  // The always-visible entry point to "open the linked ticket" / "create one". Deliberately
+  // full-width and bordered so it reads as an action rather than as another chip — the create
+  // affordance inside the popup was too easy to miss.
+  .primaryAction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 8px;
+    padding: 10px 14px;
+    border: 1px solid var(--backgroundPopupSeparator);
+    border-radius: var(--tw-radius);
+    background: var(--backgroundColorTmpDarkerField2);
+    color: var(--textColor1);
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 120ms ease,
+      color 120ms ease;
+
+    svg {
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--backgroundPopupHover);
+      color: var(--textColor3);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--tw-ring);
+      outline-offset: 1px;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
 }

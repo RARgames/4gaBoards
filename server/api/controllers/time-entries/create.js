@@ -27,6 +27,9 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    title: {
+      type: 'string',
+    },
     description: {
       type: 'string',
     },
@@ -84,6 +87,7 @@ module.exports = {
           userId: targetUserId,
           startedAt: new Date(inputs.startedAt),
           endedAt: new Date(inputs.endedAt),
+          title: inputs.title,
           description: inputs.description,
           categoryTagId: inputs.categoryTagId,
           project,
