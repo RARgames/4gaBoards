@@ -176,13 +176,25 @@
   }
 
   .entryBlockLong {
-    background: color-mix(in srgb, var(--backgroundCardOpened) 82%, var(--yellow, #fbbd08) 18%);
-    border-color: color-mix(in srgb, var(--backgroundSidebarItemActive) 68%, var(--yellow, #fbbd08) 32%);
+    background: linear-gradient(145deg, #735318 0%, #52380f 100%);
+    border-color: rgba(251, 191, 36, 0.72);
+    box-shadow: inset 0 1px 0 rgba(255, 215, 107, 0.14);
   }
 
   .entryBlockVeryLong {
-    background: color-mix(in srgb, var(--backgroundCardOpened) 84%, var(--red, #db2828) 16%);
-    border-color: color-mix(in srgb, var(--backgroundSidebarItemActive) 66%, var(--red, #db2828) 34%);
+    background: linear-gradient(145deg, #823b35 0%, #602924 100%);
+    border-color: rgba(248, 113, 113, 0.76);
+    box-shadow: inset 0 1px 0 rgba(255, 165, 158, 0.14);
+  }
+
+  &:global([data-theme='trello-light']) .entryBlockLong {
+    background: linear-gradient(145deg, #fff1bb 0%, #ffe39a 100%);
+    border-color: #d5a11c;
+  }
+
+  &:global([data-theme='trello-light']) .entryBlockVeryLong {
+    background: linear-gradient(145deg, #ffe0db 0%, #ffc8c0 100%);
+    border-color: #df675d;
   }
 
   .entryBlockDragging {
