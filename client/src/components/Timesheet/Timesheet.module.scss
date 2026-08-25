@@ -108,6 +108,57 @@
     pointer-events: none;
   }
 
+  .weekCapacitySummary {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--backgroundCardOpened) 82%, transparent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .weekCapacityMetric {
+    display: flex;
+    min-width: 68px;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .weekCapacityLabel {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    opacity: 0.58;
+    text-transform: uppercase;
+  }
+
+  .weekCapacityValue,
+  .weekCapacityExceeded {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .weekCapacityExceeded {
+    color: var(--textColorRed, #ff0000);
+  }
+
+  .weekCapacityDivider {
+    width: 1px;
+    height: 24px;
+    margin: 0 8px;
+    background: var(--backgroundColorTmpSeparatorLight);
+  }
+
   .errorBanner {
     display: flex;
     align-items: center;

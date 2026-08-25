@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import { format, setHours, setMinutes, startOfDay } from 'date-fns';
+import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
+import parseTimeEntryRange from '../../utils/time-entry-range';
 import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize, Input, InputStyle, TextArea, TextAreaStyle, Popup, Form } from '../Utils';
 import ProjectTicketPicker from './ProjectTicketPicker';
 
@@ -79,19 +80,6 @@ const getInitialBoardId = (mode, initialValues, currentUserId) => {
     }
   }
   return null;
-};
-
-const parseTimeToDate = (baseDate, value) => {
-  const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim());
-  if (!match) {
-    return null;
-  }
-  const hours = Number(match[1]);
-  const minutes = Number(match[2]);
-  if (hours > 23 || minutes > 59) {
-    return null;
-  }
-  return setMinutes(setHours(startOfDay(baseDate), hours), minutes);
 };
 
 const EntryPopup = React.memo(
@@ -207,10 +195,9 @@ const EntryPopup = React.memo(
     }, [categoryTags, pendingCategoryName, projectId]);
 
     const handleSubmit = useCallback(() => {
-      const startedAt = parseTimeToDate(initialValues.startedAt, data.startTime);
-      const endedAt = parseTimeToDate(initialValues.startedAt, data.endTime);
+      const range = parseTimeEntryRange(initialValues.startedAt, initialValues.endedAt, data.startTime, data.endTime);
 
-      if (!startedAt || !endedAt || endedAt <= startedAt) {
+      if (!range) {
         setIsError(true);
         return;
       }
@@ -221,12 +208,12 @@ const EntryPopup = React.memo(
         title: data.title.trim(),
         description: data.description.trim(),
         categoryTagId,
-        startedAt,
-        endedAt,
+        startedAt: range.startedAt,
+        endedAt: range.endedAt,
         projectId,
         cardId,
       });
-    }, [data, initialValues.startedAt, categoryTagId, projectId, boardId, cardId, currentUserId, onSave]);
+    }, [data, initialValues.startedAt, initialValues.endedAt, categoryTagId, projectId, boardId, cardId, currentUserId, onSave]);
 
     const handleDuplicate = useCallback(() => {
       if (!onDuplicate) {

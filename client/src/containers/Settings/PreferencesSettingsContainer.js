@@ -6,7 +6,7 @@ import entryActions from '../../entry-actions';
 import selectors from '../../selectors';
 
 const mapStateToProps = (state) => {
-  const { language, subscribeToOwnCards, sidebarCompact, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, theme, themeShape } =
+  const { language, subscribeToOwnCards, sidebarCompact, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, theme, themeShape, weeklyHours } =
     selectors.selectCurrentUserPrefs(state);
 
   return {
@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
     hideClosestDueDate,
     theme,
     themeShape,
+    weeklyHours: Number(weeklyHours ?? 40),
   };
 };
 

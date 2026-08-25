@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
 import clsx from 'clsx';
@@ -14,9 +14,32 @@ import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
 
 const PreferencesSettings = React.memo(
-  ({ subscribeToOwnCards, sidebarCompact, language, defaultView, listViewStyle, usersSettingsStyle, preferredDetailsFont, hideCardModalActivity, hideClosestDueDate, theme, themeShape, onUpdate }) => {
+  ({
+    subscribeToOwnCards,
+    sidebarCompact,
+    language,
+    defaultView,
+    listViewStyle,
+    usersSettingsStyle,
+    preferredDetailsFont,
+    hideCardModalActivity,
+    hideClosestDueDate,
+    theme,
+    themeShape,
+    weeklyHours,
+    onUpdate,
+  }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
+    const submittedWeeklyHoursRef = useRef(weeklyHours);
+    const [weeklyHoursInput, setWeeklyHoursInput] = useState(() => String(weeklyHours));
+    const [isWeeklyHoursError, setIsWeeklyHoursError] = useState(false);
+
+    useEffect(() => {
+      submittedWeeklyHoursRef.current = weeklyHours;
+      setWeeklyHoursInput(String(weeklyHours));
+      setIsWeeklyHoursError(false);
+    }, [weeklyHours]);
 
     const languages = useMemo(
       () => [
@@ -194,6 +217,31 @@ const PreferencesSettings = React.memo(
       [onUpdate],
     );
 
+    const handleWeeklyHoursChange = useCallback((event) => {
+      setWeeklyHoursInput(event.target.value);
+      setIsWeeklyHoursError(false);
+    }, []);
+
+    const handleWeeklyHoursSubmit = useCallback(
+      (event) => {
+        const parsedValue = Number(event.target.value);
+        if (!Number.isFinite(parsedValue) || parsedValue < 0 || parsedValue > 168) {
+          setIsWeeklyHoursError(true);
+          return;
+        }
+
+        const normalizedValue = Math.round(parsedValue * 100) / 100;
+        setWeeklyHoursInput(String(normalizedValue));
+        setIsWeeklyHoursError(false);
+
+        if (normalizedValue !== submittedWeeklyHoursRef.current) {
+          submittedWeeklyHoursRef.current = normalizedValue;
+          onUpdate({ weeklyHours: normalizedValue });
+        }
+      },
+      [onUpdate],
+    );
+
     const data = useMemo(
       () => [
         {
@@ -255,6 +303,25 @@ const PreferencesSettings = React.memo(
           },
           currentValue: selectedPreferredDetailsFont.name,
           description: t('common.descriptionPreferredDetailsFont'),
+        },
+        {
+          id: 'weeklyHours',
+          preferences: t('common.weeklyWorkCapacity'),
+          modifySettings: weeklyHoursInput,
+          modifySettingsProps: {
+            name: 'weeklyHours',
+            type: 'number',
+            min: 0,
+            max: 168,
+            step: 0.25,
+            onChange: handleWeeklyHoursChange,
+            onSubmit: handleWeeklyHoursSubmit,
+            onBlur: handleWeeklyHoursSubmit,
+            isError: isWeeklyHoursError,
+            title: t('common.weeklyWorkCapacity'),
+          },
+          currentValue: t('common.hoursPerWeek', { hours: weeklyHours }),
+          description: t('common.descriptionWeeklyWorkCapacity'),
         },
         {
           id: 'hideCardModalActivity',
@@ -325,6 +392,11 @@ const PreferencesSettings = React.memo(
         selectedPreferredDetailsFont,
         handlePreferredDetailsFontChange,
         preferredFonts,
+        weeklyHours,
+        weeklyHoursInput,
+        handleWeeklyHoursChange,
+        handleWeeklyHoursSubmit,
+        isWeeklyHoursError,
         hideCardModalActivity,
         handleHideCardModalActivityChange,
         hideClosestDueDate,
@@ -464,6 +536,7 @@ PreferencesSettings.propTypes = {
   hideClosestDueDate: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   themeShape: PropTypes.string.isRequired,
+  weeklyHours: PropTypes.number.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

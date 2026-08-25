@@ -16,6 +16,8 @@ const DEFAULT_CREATE_MINUTES = 30;
 const DEFAULT_SCROLL_HOUR = 6;
 const MOVE_THRESHOLD = 4;
 const DAY_MINUTES = 24 * 60;
+const LONG_ENTRY_DURATION_MS = 6 * 60 * 60 * 1000;
+const VERY_LONG_ENTRY_DURATION_MS = 8 * 60 * 60 * 1000;
 
 const snapMinutes = (minutes) => Math.min(DAY_MINUTES, Math.max(0, Math.round(minutes / MINUTES_PER_SLOT) * MINUTES_PER_SLOT));
 
@@ -270,6 +272,7 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
     const startMinutes = entry.startedAt.getHours() * 60 + entry.startedAt.getMinutes();
     const rawEndMinutes = isSameDay(entry.startedAt, entry.endedAt) ? entry.endedAt.getHours() * 60 + entry.endedAt.getMinutes() : DAY_MINUTES;
     const endMinutes = Math.max(startMinutes + MIN_DURATION_MINUTES, rawEndMinutes);
+    const durationMs = entry.endedAt.getTime() - entry.startedAt.getTime();
     const isDraggingThis = drag && drag.entry && drag.entry.id === entry.id;
     const previewStartMinutes =
       isDraggingThis && drag.mode === 'move' ? Math.max(0, Math.min(snapMinutes(drag.originalStartMinutes + (drag.deltaMinutes || 0)), DAY_MINUTES - drag.durationMinutes)) : startMinutes;
@@ -288,7 +291,12 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
       <div
         key={entry.id}
         data-entry-block
-        className={clsx(s.entryBlock, isDraggingThis && s.entryBlockDragging, entry.isPersisted === false && s.entryBlockUnsaved)}
+        className={clsx(
+          s.entryBlock,
+          durationMs > VERY_LONG_ENTRY_DURATION_MS ? s.entryBlockVeryLong : durationMs > LONG_ENTRY_DURATION_MS && s.entryBlockLong,
+          isDraggingThis && s.entryBlockDragging,
+          entry.isPersisted === false && s.entryBlockUnsaved,
+        )}
         style={{ top: minutesToY(previewStart), height: Math.max(14, minutesToY(previewEndMinutes - previewStart)), borderLeftColor: entry.projectColor || undefined }}
         onPointerDown={(e) => handleEntryPointerDown(e, entry, dayIndex)}
         onClick={(e) => handleEntryClick(e, entry)}

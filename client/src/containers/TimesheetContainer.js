@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
   const users = selectors.selectUsers(state);
   const accessToken = selectors.selectAccessToken(state);
   const categoryTags = selectors.selectCategoryTags(state);
-  const { timezone } = selectors.selectCurrentUserPrefs(state) || {};
+  const { timezone, weeklyHours } = selectors.selectCurrentUserPrefs(state) || {};
   const timeEntriesError = selectors.selectTimeEntriesError(state);
 
   return {
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
     accessToken,
     categoryTags: categoryTags.items,
     timezone,
+    weeklyHours: Number(weeklyHours ?? 40),
     timeEntriesError,
   };
 };

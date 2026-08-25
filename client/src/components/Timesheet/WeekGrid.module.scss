@@ -175,6 +175,16 @@
     }
   }
 
+  .entryBlockLong {
+    background: color-mix(in srgb, var(--backgroundCardOpened) 82%, var(--yellow, #fbbd08) 18%);
+    border-color: color-mix(in srgb, var(--backgroundSidebarItemActive) 68%, var(--yellow, #fbbd08) 32%);
+  }
+
+  .entryBlockVeryLong {
+    background: color-mix(in srgb, var(--backgroundCardOpened) 84%, var(--red, #db2828) 16%);
+    border-color: color-mix(in srgb, var(--backgroundSidebarItemActive) 66%, var(--red, #db2828) 34%);
+  }
+
   .entryBlockDragging {
     z-index: 6;
     opacity: 0.85;

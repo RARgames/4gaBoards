@@ -9,6 +9,7 @@ import { getBoardAccentColor } from '../../utils/board-colors';
 import formatDuration from '../../utils/format-duration';
 import { getEffectiveTimeZone, getSupportedTimeZones, getTimeZoneLabel, utcToZonedTime, zonedTimeToUtc } from '../../utils/timezone';
 import triggerDownload from '../../utils/trigger-download';
+import getWeeklyCapacity from '../../utils/weekly-capacity';
 import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize } from '../Utils';
 import EntryPopup from './EntryPopup';
 import ExportPopup from './ExportPopup';
@@ -34,6 +35,7 @@ const Timesheet = React.memo(
     categoryTags,
     accessToken,
     timezone,
+    weeklyHours,
     timeEntriesError,
     onFetch,
     onCreate,
@@ -152,7 +154,10 @@ const Timesheet = React.memo(
     const weekEntries = useMemo(
       () =>
         timeEntries
-          .filter((timeEntry) => timeEntry.userId === viewedUserId && timeEntry.startedAt < weekEnd && timeEntry.endedAt > weekStart)
+          // The grid attributes a block's full duration to its start day. The API fetches all
+          // overlapping entries, so constrain the displayed week by start time to keep its total
+          // (and remaining capacity) aligned with the blocks and day totals the user can see.
+          .filter((timeEntry) => timeEntry.userId === viewedUserId && timeEntry.startedAt >= weekStart && timeEntry.startedAt < weekEnd)
           .map((timeEntry) => ({
             ...timeEntry,
             startedAt: utcToZonedTime(timeEntry.startedAt, effectiveTimeZone),
@@ -166,6 +171,7 @@ const Timesheet = React.memo(
     );
 
     const weekTotalMinutes = useMemo(() => weekEntries.reduce((sum, entry) => sum + Math.round((entry.endedAt.getTime() - entry.startedAt.getTime()) / 60000), 0), [weekEntries]);
+    const weeklyCapacity = useMemo(() => getWeeklyCapacity(weeklyHours, weekTotalMinutes), [weeklyHours, weekTotalMinutes]);
 
     const handleClosePopup = useCallback(() => setPopup(null), []);
 
@@ -378,7 +384,33 @@ const Timesheet = React.memo(
             />
           )}
           <div className={s.spacer} />
-          <span className={s.weekTotal}>{t('common.weekTotal', { duration: formatDuration(weekTotalMinutes) })}</span>
+          {isViewingOther ? (
+            <span className={s.weekTotal}>{t('common.weekTotal', { duration: formatDuration(weekTotalMinutes) })}</span>
+          ) : (
+            <div
+              className={s.weekCapacitySummary}
+              aria-label={t('common.weekCapacitySummary', {
+                spent: formatDuration(weekTotalMinutes),
+                remaining: formatDuration(weeklyCapacity.remainingMinutes),
+                capacity: formatDuration(weeklyCapacity.capacityMinutes),
+              })}
+              title={t('common.weekCapacitySummary', {
+                spent: formatDuration(weekTotalMinutes),
+                remaining: formatDuration(weeklyCapacity.remainingMinutes),
+                capacity: formatDuration(weeklyCapacity.capacityMinutes),
+              })}
+            >
+              <span className={s.weekCapacityMetric}>
+                <span className={s.weekCapacityLabel}>{t('common.spent')}</span>
+                <strong className={s.weekCapacityValue}>{formatDuration(weekTotalMinutes)}</strong>
+              </span>
+              <span className={s.weekCapacityDivider} />
+              <span className={s.weekCapacityMetric}>
+                <span className={s.weekCapacityLabel}>{t('common.remaining')}</span>
+                <strong className={weeklyCapacity.isOverCapacity ? s.weekCapacityExceeded : s.weekCapacityValue}>{formatDuration(weeklyCapacity.remainingMinutes)}</strong>
+              </span>
+            </div>
+          )}
           <ImportPopup accessToken={accessToken} isAdmin={isAdmin} users={users} onImportComplete={handleImportComplete}>
             <Button style={ButtonStyle.DefaultBorder} content={t('action.import')} />
           </ImportPopup>
@@ -465,6 +497,7 @@ Timesheet.propTypes = {
   categoryTags: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   accessToken: PropTypes.string,
   timezone: PropTypes.string,
+  weeklyHours: PropTypes.number.isRequired,
   timeEntriesError: PropTypes.shape({
     message: PropTypes.string,
   }),

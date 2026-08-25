@@ -32,6 +32,7 @@ export default class extends BaseModel {
     theme: attr(),
     themeShape: attr(),
     timezone: attr(),
+    weeklyHours: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

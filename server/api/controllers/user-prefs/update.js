@@ -117,6 +117,10 @@ module.exports = {
       isNotEmptyString: true,
       allowNull: true,
     },
+    weeklyHours: {
+      type: 'number',
+      custom: (value) => value >= 0 && value <= 168,
+    },
   },
 
   exits: {
@@ -169,6 +173,7 @@ module.exports = {
         'theme',
         'themeShape',
         'timezone',
+        'weeklyHours',
       ]),
     };
 

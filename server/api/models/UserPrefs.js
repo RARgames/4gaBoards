@@ -205,6 +205,11 @@ module.exports = {
       allowNull: true,
       columnName: 'timezone',
     },
+    weeklyHours: {
+      type: 'number',
+      defaultsTo: 40,
+      columnName: 'weekly_hours',
+    },
   },
 
   tableName: 'user_prefs',
