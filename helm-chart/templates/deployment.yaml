@@ -88,6 +88,8 @@ spec:
             value: {{ .Values.env.optional.OIDC_CLIENT_ID }}
           - name: OIDC_CLIENT_SECRET
             value: {{ .Values.env.optional.OIDC_CLIENT_SECRET }}
+          - name: OIDC_ENABLE_PKCE
+            value: {{ .Values.env.optional.OIDC_ENABLE_PKCE }}
           - name: OIDC_AUTH_URL
             value: {{ .Values.env.optional.OIDC_AUTH_URL }}
           - name: OIDC_TOKEN_URL
