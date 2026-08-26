@@ -5,11 +5,36 @@
  * Supports any OIDC-compliant provider (Authentik, Keycloak, Auth0, Okta, etc.)
  */
 
-const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { Strategy } = require('passport-strategy');
 
 const { checkOidcAdminStatus } = require('../utils/checkOidcAdminStatus');
 const { validateOidcUsername } = require('../utils/validateOidcUsername');
+
+const createCodeVerifier = () => crypto.randomBytes(32).toString('base64url');
+const createCodeChallenge = (codeVerifier) => crypto.createHash('sha256').update(codeVerifier).digest('base64url');
+const getStateEncryptionKey = () => crypto.createHash('sha256').update(process.env.OIDC_STATE_SECRET).digest();
+
+async function createOidcState(codeVerifier) {
+  const { EncryptJWT } = await import('jose');
+  return new EncryptJWT({
+    nonce: crypto.randomUUID(),
+    ...(codeVerifier && { codeVerifier }),
+  })
+    .setProtectedHeader({ alg: 'dir', enc: 'A256GCM', typ: 'JWT' })
+    .setIssuedAt()
+    .setExpirationTime('5m')
+    .encrypt(getStateEncryptionKey());
+}
+
+async function readOidcState(state) {
+  const { jwtDecrypt } = await import('jose');
+  const { payload, protectedHeader } = await jwtDecrypt(state, getStateEncryptionKey());
+  if (protectedHeader.alg !== 'dir' || protectedHeader.enc !== 'A256GCM' || !payload.nonce) {
+    throw new Error('Invalid state parameter');
+  }
+  return payload;
+}
 
 class OIDCStrategy extends Strategy {
   /**
@@ -19,8 +44,9 @@ class OIDCStrategy extends Strategy {
    * @param {string} options.tokenURL - OIDC token endpoint
    * @param {string} options.userInfoURL - OIDC userinfo endpoint
    * @param {string} options.clientID - OAuth2 client ID
-   * @param {string} options.clientSecret - OAuth2 client secret
+   * @param {string} [options.clientSecret] - OAuth2 client secret
    * @param {string} options.callbackURL - Callback URL for this application
+   * @param {boolean} [options.pkceEnabled] - Enable PKCE (S256)
    * @param {Array<string>} [options.scope] - OAuth2 scopes (default: ['openid', 'profile', 'email'])
    * @param {Function} verify - Passport verify callback function
    */
@@ -35,6 +61,7 @@ class OIDCStrategy extends Strategy {
     this.clientID = options.clientID;
     this.clientSecret = options.clientSecret;
     this.callbackURL = options.callbackURL;
+    this.pkceEnabled = options.pkceEnabled;
     this.scope = options.scope || ['openid', 'profile', 'email'];
   }
 
@@ -46,10 +73,10 @@ class OIDCStrategy extends Strategy {
   authenticate(req, res, next) {
     if (req.query && req.query.code) {
       // Handle OAuth2 callback with authorization code
-      this.handleCallback(req, res, next);
+      return this.handleCallback(req, res, next);
     } else {
       // Initiate OAuth2 authorization code flow
-      this.startAuth(req, res, next);
+      return this.startAuth(req, res, next).catch((error) => this.error(error));
     }
   }
 
@@ -57,7 +84,7 @@ class OIDCStrategy extends Strategy {
    * Initiates OAuth2 authorization code flow
    * Redirects user to OIDC provider's authorization endpoint
    */
-  startAuth(req) {
+  async startAuth(req) {
     const hint = req?.query?.kc_idp_hint;
     if (hint) {
       const disabledEnvVar = `OIDC_DISABLE_HINT_${hint.toUpperCase()}`;
@@ -66,8 +93,8 @@ class OIDCStrategy extends Strategy {
       }
     }
 
-    const nonce = crypto.randomUUID();
-    const state = jwt.sign({ nonce }, process.env.OIDC_STATE_SECRET, { expiresIn: '5m' });
+    const codeVerifier = this.pkceEnabled ? createCodeVerifier() : undefined;
+    const state = await createOidcState(codeVerifier);
     const authURL = new URL(this.authorizationURL);
     authURL.search = new URLSearchParams({
       client_id: this.clientID,
@@ -75,6 +102,7 @@ class OIDCStrategy extends Strategy {
       scope: this.scope.join(' '),
       response_type: 'code',
       state,
+      ...(codeVerifier && { code_challenge: createCodeChallenge(codeVerifier), code_challenge_method: 'S256' }),
       ...(hint && { kc_idp_hint: hint }),
       ...(hint === 'google' && !(process.env.OIDC_SKIP_ACCOUNT_SELECTION === 'true' || process.env[`OIDC_SKIP_ACCOUNT_SELECTION_HINT_${hint.toUpperCase()}`] === 'true') && { prompt: 'select_account' }),
       ...(hint === 'microsoft' && !(process.env.OIDC_SKIP_ACCOUNT_SELECTION === 'true' || process.env[`OIDC_SKIP_ACCOUNT_SELECTION_HINT_${hint.toUpperCase()}`] === 'true') && { prompt: 'login' }),
@@ -90,10 +118,10 @@ class OIDCStrategy extends Strategy {
    */
   async handleCallback(req) {
     try {
-      // Verify state signature and nonce
+      // Verify and decrypt the state. It contains the PKCE verifier when enabled.
       if (!req.query.state) throw new Error('Missing state parameter');
-      const decoded = jwt.verify(req.query.state, process.env.OIDC_STATE_SECRET);
-      if (!decoded?.nonce) throw new Error('Missing nonce in state');
+      const state = await readOidcState(req.query.state);
+      if (this.pkceEnabled && !state.codeVerifier) throw new Error('Missing PKCE verifier in state');
       // FUTURE verify nonce
 
       // Exchange authorization code for access token
@@ -107,7 +135,8 @@ class OIDCStrategy extends Strategy {
           code: req.query.code,
           redirect_uri: this.callbackURL,
           client_id: this.clientID,
-          client_secret: this.clientSecret,
+          ...(this.clientSecret && { client_secret: this.clientSecret }),
+          ...(this.pkceEnabled && { code_verifier: state.codeVerifier }),
         }),
       });
       if (!tokenResponse.ok) {

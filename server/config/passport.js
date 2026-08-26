@@ -51,7 +51,8 @@ if (process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET) {
   );
 }
 async function setupOIDC() {
-  if (!process.env.OIDC_CLIENT_ID || !process.env.OIDC_CLIENT_SECRET || !process.env.OIDC_STATE_SECRET) {
+  const pkceEnabled = process.env.OIDC_ENABLE_PKCE === 'true';
+  if (!process.env.OIDC_CLIENT_ID || !process.env.OIDC_STATE_SECRET || (!process.env.OIDC_CLIENT_SECRET && !pkceEnabled)) {
     return;
   }
 
@@ -92,6 +93,7 @@ async function setupOIDC() {
           userInfoURL,
           clientID: process.env.OIDC_CLIENT_ID,
           clientSecret: process.env.OIDC_CLIENT_SECRET,
+          pkceEnabled,
           callbackURL: `${process.env.BASE_URL}/auth/oidc/callback`,
           scope: ['openid', 'profile', 'email'],
         },
