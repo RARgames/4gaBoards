@@ -22,5 +22,13 @@ export default function* cardsWatchers() {
     takeEvery(EntryActionTypes.CARD_DELETE, ({ payload: { id } }) => services.deleteCard(id)),
     takeEvery(EntryActionTypes.CURRENT_CARD_DELETE, () => services.deleteCurrentCard()),
     takeEvery(EntryActionTypes.CARD_DELETE_HANDLE, ({ payload: { card } }) => services.handleCardDelete(card)),
+    takeEvery(EntryActionTypes.CARD_ARCHIVE, ({ payload: { id } }) => services.archiveCard(id)),
+    takeEvery(EntryActionTypes.CURRENT_CARD_ARCHIVE, () => services.archiveCurrentCard()),
+    takeEvery(EntryActionTypes.CARD_UNARCHIVE, ({ payload: { id } }) => services.unarchiveCard(id)),
+    takeEvery(EntryActionTypes.CARDS_UPDATE, ({ payload: { ids, data } }) => services.updateCards(ids, data)),
+    takeEvery(EntryActionTypes.CARDS_MOVE, ({ payload: { ids, listId } }) => services.moveCards(ids, listId)),
+    takeEvery(EntryActionTypes.CARDS_TRANSFER, ({ payload: { ids, boardId, listId } }) => services.transferCards(ids, boardId, listId)),
+    takeEvery(EntryActionTypes.CARDS_ARCHIVE, ({ payload: { ids } }) => services.archiveCards(ids)),
+    takeEvery(EntryActionTypes.CARDS_DELETE, ({ payload: { ids } }) => services.deleteCards(ids)),
   ]);
 }

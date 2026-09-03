@@ -40,6 +40,25 @@
     opacity: 1;
   }
 
+  // Multi-select checkbox. Hidden until the card is hovered or a selection is already in
+  // progress, so the default card face stays exactly as it was before multi-select existed.
+  .selectCheckbox {
+    left: 5px;
+    opacity: 0;
+    position: absolute;
+    top: 5px;
+    transition: opacity 120ms ease;
+    z-index: 2;
+  }
+
+  .selectCheckboxWithHero {
+    top: 29px;
+  }
+
+  .selectCheckboxChecked {
+    opacity: 1;
+  }
+
   .attachment {
     display: inline-block;
     line-height: 0;
@@ -91,6 +110,26 @@
       .copyLinkButton {
         opacity: 1;
       }
+
+      .selectCheckbox {
+        opacity: 1;
+      }
+
+      .detailsTitle {
+        padding-left: 24px;
+      }
+    }
+  }
+
+  // While a multi-selection is in progress every card keeps its checkbox out, so the user can
+  // keep adding cards without hunting for the hover target.
+  .cardSelectionActive {
+    .selectCheckbox {
+      opacity: 1;
+    }
+
+    .detailsTitle {
+      padding-left: 24px;
     }
   }
 
@@ -104,6 +143,15 @@
   // Hero cards (cards that have children) AND child cards (cards with a parent) share the same yellow accent border.
   .cardHasHeroAccent {
     border: 2px solid var(--heroAccent);
+  }
+
+  // Declared after .cardOpen/.cardHasHeroAccent (and repeated with the hover selector) so the
+  // multi-select ring wins over every other card border state while the card is selected.
+  .cardSelected,
+  .card.cardSelected:hover {
+    background: var(--backgroundCardSelected);
+    border-color: var(--tw-primary);
+    box-shadow: 0 0 0 2px var(--tw-primary);
   }
 
   // Clickable header bar shown at the top of a Child card with the Hero's name. Clicking opens the Hero.
@@ -179,6 +227,7 @@
     align-items: flex-start;
     gap: 4px;
     padding: 4px 8px 4px 4px;
+    transition: padding-left 120ms ease;
   }
 
   .details {

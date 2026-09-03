@@ -1,0 +1,237 @@
+:global(#app) {
+  .content {
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .description {
+    color: var(--textColor0);
+    opacity: 0.75;
+    font-size: 13px;
+    margin: 0 0 16px;
+  }
+
+  .success {
+    position: relative;
+    padding: 10px 36px 10px 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--textColor0);
+    background: var(--backgroundGreen);
+  }
+
+  .successClose {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+  }
+
+  .connections {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .connection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .connectionIcon {
+    flex: 0 0 auto;
+    opacity: 0.8;
+  }
+
+  .connectionText {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .connectionEmail {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--textColor0);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .connectionMeta {
+    font-size: 12px;
+    color: var(--textColor0);
+    opacity: 0.6;
+  }
+
+  .connectionError {
+    font-size: 12px;
+    color: var(--errorRed);
+  }
+
+  .empty {
+    color: var(--textColor0);
+    opacity: 0.6;
+    font-size: 13px;
+    margin: 0 0 16px;
+  }
+
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .sectionTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--textColor0);
+    margin: 0 0 4px;
+  }
+
+  .sectionHint {
+    font-size: 12px;
+    color: var(--textColor0);
+    opacity: 0.6;
+    margin: 0 0 12px;
+  }
+
+  .connectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .connection {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .linkedList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .linked {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .linkedText {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .linkedName {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--textColor0);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .linkedMeta {
+    font-size: 12px;
+    color: var(--textColor0);
+    opacity: 0.6;
+  }
+
+  .linkedError {
+    font-size: 12px;
+    color: var(--errorRed);
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .fieldRow {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .fieldLabel {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--textColor0);
+    opacity: 0.8;
+  }
+
+  .fieldHint {
+    font-size: 11px;
+    color: var(--textColor0);
+    opacity: 0.55;
+  }
+
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: 320px;
+  }
+
+  .swatch {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .swatchActive {
+    border-color: var(--textColor0);
+  }
+
+  .swatchStatic {
+    flex: 0 0 auto;
+    cursor: default;
+  }
+
+  .pickerList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 10px;
+  }
+
+  .pickerRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: var(--backgroundColorTmpDarkerField2);
+  }
+
+  .pickerName {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    color: var(--textColor0);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

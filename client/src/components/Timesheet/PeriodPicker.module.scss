@@ -1,0 +1,172 @@
+:global(#app) {
+  .wrapper {
+    width: 268px;
+    padding: 4px 0 0;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .headerLabel {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .iconFlipped {
+    transform: rotate(180deg);
+  }
+
+  .weekGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .dayNames,
+  .weekRow {
+    display: grid;
+    grid-template-columns: 26px repeat(7, 1fr);
+    align-items: center;
+    width: 100%;
+  }
+
+  .dayNames {
+    margin-bottom: 4px;
+  }
+
+  .dayName {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-transform: uppercase;
+    opacity: 0.55;
+  }
+
+  .weekNumber {
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    opacity: 0.45;
+  }
+
+  .weekRow {
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--backgroundColorTmpSeparatorLight);
+    }
+  }
+
+  .day {
+    padding: 5px 0;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  .dayOutsideMonth {
+    opacity: 0.4;
+  }
+
+  .dayToday {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .monthGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .monthCell {
+    padding: 8px 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    font-size: 12px;
+    text-transform: capitalize;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--backgroundColorTmpSeparatorLight);
+    }
+  }
+
+  .cellCurrent {
+    box-shadow: inset 0 0 0 1px var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .cellSelected {
+    background: var(--backgroundCardOpened);
+    color: var(--textColorWhite);
+
+    &:hover {
+      background: var(--backgroundCardOpened);
+    }
+
+    .weekNumber,
+    .dayOutsideMonth {
+      opacity: 0.7;
+    }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .shortcut {
+    width: auto;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .jumpToDate {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .jumpToDateLabel {
+    padding: 4px 8px;
+    border: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-radius: 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  // The native date input is the whole point of this control — it brings the OS picker and
+  // keyboard entry for free — but its chrome does not fit the toolbar, so it is stretched
+  // invisibly over the label and clicked through.
+  .jumpToDateInput {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: transparent;
+    opacity: 0;
+    cursor: pointer;
+  }
+}

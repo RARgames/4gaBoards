@@ -272,6 +272,100 @@ export function* handleCardDelete(card) {
   yield put(actions.handleCardDelete(card));
 }
 
+// §5.4: manual archive. The card stays on the server (with archivedAt stamped) but leaves the
+// board — boards/show.js excludes it — so the reducer drops it from the lists optimistically and
+// puts it back if the request fails.
+export function* archiveCard(id) {
+  const { cardId, boardId } = yield select(selectors.selectPath);
+
+  if (id === cardId) {
+    yield call(goToBoard, boardId);
+  }
+
+  yield put(actions.archiveCard(id));
+
+  let card;
+  try {
+    ({ item: card } = yield call(request, api.archiveCard, id));
+  } catch (error) {
+    yield put(actions.archiveCard.failure(id, error));
+    return;
+  }
+
+  yield put(actions.archiveCard.success(card));
+}
+
+// The card is not in the store while it is archived, so there is nothing to update
+// optimistically — it appears on the board when the server confirms.
+export function* unarchiveCard(id) {
+  yield put(actions.unarchiveCard(id));
+
+  let card;
+  try {
+    ({ item: card } = yield call(request, api.unarchiveCard, id));
+  } catch (error) {
+    yield put(actions.unarchiveCard.failure(id, error));
+    return;
+  }
+
+  yield put(actions.unarchiveCard.success(card));
+}
+
+export function* archiveCurrentCard() {
+  const { cardId } = yield select(selectors.selectPath);
+
+  yield call(archiveCard, cardId);
+}
+
+/* Bulk actions on a multi-selection. Each one drives the existing single-card service per id —
+   sequentially, so position-dependent moves stay deterministic — and clears the selection at the
+   end, since every card it acted on has either left the board or is no longer where it was. */
+
+export function* updateCards(ids, data) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const id of ids) {
+    yield call(updateCard, id, data);
+  }
+
+  yield put(actions.clearCardSelection());
+}
+
+export function* moveCards(ids, listId) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const id of ids) {
+    yield call(moveCard, id, listId);
+  }
+
+  yield put(actions.clearCardSelection());
+}
+
+export function* transferCards(ids, boardId, listId) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const id of ids) {
+    yield call(transferCard, id, boardId, listId);
+  }
+
+  yield put(actions.clearCardSelection());
+}
+
+export function* archiveCards(ids) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const id of ids) {
+    yield call(archiveCard, id);
+  }
+
+  yield put(actions.clearCardSelection());
+}
+
+export function* deleteCards(ids) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const id of ids) {
+    yield call(deleteCard, id);
+  }
+
+  yield put(actions.clearCardSelection());
+}
+
 export default {
   registerDescriptionOpenHandler,
   createCard,
@@ -291,4 +385,12 @@ export default {
   deleteCard,
   deleteCurrentCard,
   handleCardDelete,
+  archiveCard,
+  unarchiveCard,
+  archiveCurrentCard,
+  updateCards,
+  moveCards,
+  transferCards,
+  archiveCards,
+  deleteCards,
 };

@@ -130,6 +130,66 @@ const handleCardDelete = (card) => ({
   },
 });
 
+const archiveCard = (id) => ({
+  type: EntryActionTypes.CARD_ARCHIVE,
+  payload: {
+    id,
+  },
+});
+
+const unarchiveCard = (id) => ({
+  type: EntryActionTypes.CARD_UNARCHIVE,
+  payload: {
+    id,
+  },
+});
+
+const archiveCurrentCard = () => ({
+  type: EntryActionTypes.CURRENT_CARD_ARCHIVE,
+  payload: {},
+});
+
+/* Bulk actions on a multi-selection — each one fans out over the single-card service */
+
+const updateCards = (ids, data) => ({
+  type: EntryActionTypes.CARDS_UPDATE,
+  payload: {
+    ids,
+    data,
+  },
+});
+
+const moveCards = (ids, listId) => ({
+  type: EntryActionTypes.CARDS_MOVE,
+  payload: {
+    ids,
+    listId,
+  },
+});
+
+const transferCards = (ids, boardId, listId) => ({
+  type: EntryActionTypes.CARDS_TRANSFER,
+  payload: {
+    ids,
+    boardId,
+    listId,
+  },
+});
+
+const archiveCards = (ids) => ({
+  type: EntryActionTypes.CARDS_ARCHIVE,
+  payload: {
+    ids,
+  },
+});
+
+const deleteCards = (ids) => ({
+  type: EntryActionTypes.CARDS_DELETE,
+  payload: {
+    ids,
+  },
+});
+
 export default {
   createCard,
   handleCardCreate,
@@ -148,4 +208,12 @@ export default {
   deleteCard,
   deleteCurrentCard,
   handleCardDelete,
+  archiveCard,
+  unarchiveCard,
+  archiveCurrentCard,
+  updateCards,
+  moveCards,
+  transferCards,
+  archiveCards,
+  deleteCards,
 };

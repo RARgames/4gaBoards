@@ -103,7 +103,17 @@ module.exports = {
       values.categoryTagId = inputs.categoryTagId;
     }
 
-    if (inputs.projectId !== undefined || inputs.cardId !== undefined) {
+    // The edit popup sends projectId/cardId on every save, even when only the times or the
+    // description changed. Re-resolving an unchanged link re-checks the *editing* user's project
+    // membership, which locks a member out of their own entry whenever it was logged for them
+    // against a project they aren't a member of (an admin logging on their behalf, a team CSV
+    // import, or a membership revoked after the fact). An unchanged link grants no new access, so
+    // only a link the request actually changes needs validating.
+    const nextProjectId = inputs.projectId === undefined ? record.projectId : inputs.projectId;
+    const nextCardId = inputs.cardId === undefined ? record.cardId : inputs.cardId;
+    const isLinkChanged = (nextProjectId || null) !== (record.projectId || null) || (nextCardId || null) !== (record.cardId || null);
+
+    if (isLinkChanged) {
       const { project, card } = await sails.helpers.timeEntries.resolveLink
         .with({
           projectId: inputs.projectId || undefined,

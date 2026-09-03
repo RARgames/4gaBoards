@@ -8,8 +8,19 @@
  * https://sailsjs.com/config/custom
  */
 
+const crypto = require('crypto');
 const path = require('path');
 const sails = require('sails');
+
+// Any passphrase is accepted and folded down to the 32 bytes AES-256-GCM needs, so operators are
+// not forced to generate key material by hand. Changing it makes every already-stored secret
+// undecryptable, which surfaces as connections needing to be re-authorized rather than as data loss.
+const secretEncryptionKey = process.env.SECRET_ENCRYPTION_KEY ? crypto.createHash('sha256').update(process.env.SECRET_ENCRYPTION_KEY).digest() : null;
+
+// The calendar integration reuses the Google SSO OAuth client unless given its own, so an instance
+// that already signs in with Google needs no second app registered - only the extra redirect URI.
+const googleCalendarClientId = process.env.GOOGLE_CALENDAR_CLIENT_ID || process.env.GOOGLE_CLIENT_ID;
+const googleCalendarClientSecret = process.env.GOOGLE_CALENDAR_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET;
 
 module.exports.custom = {
   baseUrl: process.env.BASE_URL,
@@ -60,6 +71,21 @@ module.exports.custom = {
     .map((s) => s.trim())
     .filter((s) => s.length > 0)
     .filter((s) => s && process.env[`OIDC_DISABLE_HINT_${s.toUpperCase()}`] !== 'true'),
+
+  secretEncryptionKey,
+
+  googleCalendar: {
+    clientId: googleCalendarClientId,
+    clientSecret: googleCalendarClientSecret,
+    redirectUri: `${process.env.BASE_URL}/auth/google/calendar/callback`,
+    // Marks a signed `state` as belonging to this flow, so a token minted for anything else
+    // signed with the same secret cannot be replayed into the OAuth callback.
+    statePurpose: 'googleCalendarConnect',
+    // Read-only on calendars, plus the email scope purely to label the stored connection with the
+    // account it belongs to. Widening this list invalidates existing grants, forcing a reconnect.
+    scopes: ['https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/userinfo.email'],
+    available: !!googleCalendarClientId && !!googleCalendarClientSecret && !!secretEncryptionKey,
+  },
 
   demoMode: process.env.DEMO_MODE === 'true',
   metricsEnabled: process.env.METRICS_ENABLED === 'true',

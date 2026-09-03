@@ -8,6 +8,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import ArchiveViewContainer from '../../containers/ArchiveViewContainer';
 import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import CardModalContainer from '../../containers/CardModalContainer';
+import CardSelectionToolbarContainer from '../../containers/CardSelectionToolbarContainer';
 import ListContainer from '../../containers/ListContainer';
 import ListViewContainer from '../../containers/ListViewContainer';
 import SwimlanesViewContainer from '../../containers/SwimlanesViewContainer';
@@ -238,6 +239,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
         {viewMode === 'swimlanes' && swimlanesView}
         {viewMode === 'archive' && archiveView}
         {isCardModalOpened && <CardModalContainer />}
+        {canEdit && <CardSelectionToolbarContainer />}
       </div>
     </div>
   );

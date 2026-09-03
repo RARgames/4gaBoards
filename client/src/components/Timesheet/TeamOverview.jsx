@@ -11,9 +11,10 @@ import formatDuration from '../../utils/format-duration';
 import { getEffectiveTimeZone, getSupportedTimeZones, getTimeZoneLabel, utcToZonedTime, zonedTimeToUtc } from '../../utils/timezone';
 import triggerDownload from '../../utils/trigger-download';
 import User from '../User';
-import { Button, ButtonStyle, Checkbox, Dropdown, DropdownStyle, Icon, IconType, IconSize, Input, InputStyle, Loader, LoaderSize } from '../Utils';
+import { Button, ButtonStyle, Checkbox, Dropdown, DropdownStyle, Input, InputStyle, Loader, LoaderSize } from '../Utils';
 import ExportPopup from './ExportPopup';
 import InvoicePrint from './InvoicePrint';
+import PeriodNav from './PeriodNav';
 import TimesheetHeaderTabs from './TimesheetHeaderTabs';
 
 import * as s from './TeamOverview.module.scss';
@@ -114,6 +115,8 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
     setPeriodStart(computePeriodStartReal(viewMode, effectiveTimeZone));
   }, [viewMode, effectiveTimeZone]);
 
+  const handleSelectPeriod = useCallback((zonedDate) => setPeriodStart(zonedTimeToUtc(anchorForMode(viewMode, zonedDate), effectiveTimeZone)), [viewMode, effectiveTimeZone]);
+
   const handleMemberClick = useCallback(
     (userId) => {
       const weekStartZoned = viewMode === 'week' ? zonedPeriodStart : startOfWeek(zonedNow, { weekStartsOn: 1 });
@@ -166,8 +169,6 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
     return null;
   }
 
-  const periodLabel = viewMode === 'week' ? `${format(zonedPeriodStart, 'MMM d')} – ${format(subDays(zonedPeriodEnd, 1), 'MMM d, yyyy')}` : format(zonedPeriodStart, 'MMMM yyyy');
-
   const gridTemplateColumns = `minmax(180px, 240px) repeat(${days.length}, ${viewMode === 'week' ? '1fr' : '64px'}) 90px`;
 
   return (
@@ -202,18 +203,8 @@ const TeamOverview = React.memo(({ isAdmin, users, overview, projects, timeEntri
           onChange={(item) => handleViewModeChange(item.id)}
           className={s.viewModeDropdown}
         />
-        <div className={s.navGroup}>
-          <Button style={ButtonStyle.Icon} title={t('action.previousPeriod')} onClick={handlePrev}>
-            <Icon type={IconType.AngleLeft} size={IconSize.Size12} />
-          </Button>
-          <Button style={ButtonStyle.NoBackground} className={s.todayButton} onClick={handleToday}>
-            {t('action.today')}
-          </Button>
-          <Button style={ButtonStyle.Icon} title={t('action.nextPeriod')} onClick={handleNext}>
-            <Icon type={IconType.AngleLeft} size={IconSize.Size12} className={s.iconFlipped} />
-          </Button>
-          <span className={s.periodLabel}>{periodLabel}</span>
-        </div>
+        <PeriodNav mode={viewMode} zonedPeriodStart={zonedPeriodStart} zonedNow={zonedNow} onPrev={handlePrev} onNext={handleNext} onToday={handleToday} onSelect={handleSelectPeriod} />
+        <div className={s.toolbarDivider} />
         <Input style={InputStyle.Default} value={query} placeholder={t('common.searchMembers')} onChange={(e) => setQuery(e.target.value)} className={s.searchInput} />
         <div className={s.hideEmptyRow}>
           <Checkbox checked={hideEmpty} onChange={() => setHideEmpty((prev) => !prev)} />

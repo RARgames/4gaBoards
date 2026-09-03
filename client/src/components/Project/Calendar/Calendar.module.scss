@@ -1,0 +1,320 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .pageHeader {
+    padding: 12px 16px 4px;
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .pageTitle {
+    font-size: 16px;
+    margin: 0 0 2px;
+    color: var(--textColor0);
+  }
+
+  .pageDescription {
+    font-size: 12px;
+    color: var(--textColor0);
+    opacity: 0.65;
+    margin: 0 0 10px;
+  }
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+    flex-wrap: wrap;
+  }
+
+  .modeGroup {
+    display: flex;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .modeButton {
+    width: auto;
+    padding: 4px 12px;
+    opacity: 0.7;
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .modeButtonActive {
+    opacity: 1;
+    background: var(--backgroundColorTmpDarkerField2);
+  }
+
+  .navGroup {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .todayButton {
+    padding: 4px 8px;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .iconFlipped {
+    transform: rotate(180deg);
+  }
+
+  .periodLabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--textColor0);
+    opacity: 0.85;
+    min-width: 160px;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  // Linked events are coloured by their calendar, so the view needs a key to read them by. It
+  // lists every enabled calendar, not just the ones with events in the visible period, so the
+  // colours stay stable as you page through months.
+  .legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    padding: 6px 16px;
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .legendTitle {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--textColor0);
+    opacity: 0.6;
+  }
+
+  .legendItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--textColor0);
+    opacity: 0.85;
+  }
+
+  .legendSwatch {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 auto;
+    border-radius: 3px;
+    // Matches the muted fill the event chips use, so the key reads as the same colour as the grid.
+    opacity: 0.75;
+    border-left: 3px solid rgb(255 255 255 / 55%);
+  }
+
+  .content {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+  }
+
+  .calendar {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--backgroundColorTmpBackground);
+  }
+
+  .weekday {
+    padding: 6px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--textColor0);
+    opacity: 0.6;
+  }
+
+  .weeks {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .week {
+    position: relative;
+    flex: 1;
+    min-height: 110px;
+  }
+
+  .weeksSingle .week {
+    min-height: 320px;
+  }
+
+  // Absolute rather than a percentage height so the cells always fill the row that flex sized,
+  // with no dependency on .week resolving a definite height for its children.
+  .dayCells {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .dayCell {
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .dayCellWeekend {
+    background: var(--backgroundColorTmpDarkerField1);
+  }
+
+  .dayCellOutside {
+    opacity: 0.45;
+  }
+
+  .dayNumber {
+    display: inline-block;
+    margin: 3px 6px;
+    min-width: 16px;
+    padding: 0 4px;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+    color: var(--textColor0);
+    opacity: 0.7;
+  }
+
+  .dayNumberToday {
+    opacity: 1;
+    font-weight: 700;
+    border-radius: 8px;
+    color: #fff;
+    background: var(--backgroundSidebarItemActive);
+  }
+
+  // Cards float above the day grid so a multi-day card can be one continuous bar rather than a
+  // repeated chip per day. Only the chips themselves take pointer events.
+  .segments {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  .chip {
+    position: absolute;
+    height: 18px;
+    padding: 0 6px;
+    border: none;
+    border-radius: 3px;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: left;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0.92;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .chipSelected {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--textColor0);
+  }
+
+  .overflow {
+    position: absolute;
+    height: 18px;
+    padding: 0 6px;
+    border: none;
+    background: none;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: left;
+    color: var(--textColor0);
+    opacity: 0.7;
+    cursor: pointer;
+    pointer-events: auto;
+    white-space: nowrap;
+    overflow: hidden;
+
+    &:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+  }
+
+  .empty {
+    padding: 40px;
+    text-align: center;
+    color: var(--textColor0);
+    opacity: 0.6;
+  }
+
+  .emptyOverlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: 13px;
+    color: var(--textColor0);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  // A linked calendar's events sit behind the project's own cards visually: same lanes, but
+  // outlined and slightly muted so a glance separates "someone's meeting" from "a card due".
+  .chipEvent {
+    opacity: 0.75;
+    border-left: 3px solid rgb(255 255 255 / 55%);
+    cursor: default;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

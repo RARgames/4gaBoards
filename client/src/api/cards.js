@@ -43,6 +43,20 @@ const duplicateCard = (id, headers) =>
     },
   }));
 
+// §5.4: manual archive/restore. The board fetch excludes cards matching the archived
+// predicate, so the client drops archived cards from the board the same way.
+const archiveCard = (id, headers) =>
+  socket.post(`/cards/${id}/archive`, undefined, headers).then((body) => ({
+    ...body,
+    item: transformCard(body.item),
+  }));
+
+const unarchiveCard = (id, headers) =>
+  socket.post(`/cards/${id}/unarchive`, undefined, headers).then((body) => ({
+    ...body,
+    item: transformCard(body.item),
+  }));
+
 const getCardTimeEntries = (id, headers) => socket.get(`/cards/${id}/time-entries`, undefined, headers);
 
 const searchCards = (q, headers) => socket.get('/cards/search', { q }, headers);
@@ -72,6 +86,8 @@ export default {
   updateCard,
   deleteCard,
   duplicateCard,
+  archiveCard,
+  unarchiveCard,
   getCardTimeEntries,
   searchCards,
   createAndAssignCard,

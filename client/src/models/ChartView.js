@@ -9,6 +9,7 @@ export default class extends BaseModel {
   static Types = {
     GANTT: 'gantt',
     TEAM_PLANNER: 'teamPlanner',
+    CALENDAR: 'calendar',
   };
 
   static fields = {

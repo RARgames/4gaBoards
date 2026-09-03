@@ -15,7 +15,8 @@ const ProjectNav = React.memo(({ projectId, path, isManager, isAdmin }) => {
   const tabs = [
     { path: Paths.PROJECTS, icon: IconType.Board, label: t('common.boards_title') },
     { path: Paths.PROJECT_GANTT, icon: IconType.Activity, label: t('common.gantt') },
-    { path: Paths.PROJECT_TEAM_PLANNER, icon: IconType.Calendar, label: t('common.teamPlanner') },
+    { path: Paths.PROJECT_CALENDAR, icon: IconType.Calendar, label: t('common.calendar') },
+    { path: Paths.PROJECT_TEAM_PLANNER, icon: IconType.AddressCard, label: t('common.teamPlanner') },
     { path: Paths.PROJECT_WIKI, icon: IconType.List, label: t('common.wiki'), activePaths: [Paths.PROJECT_WIKI, Paths.PROJECT_WIKI_PAGE] },
     { path: Paths.PROJECT_DOCUMENTS, icon: IconType.Attach, label: t('common.documents') },
     { path: Paths.PROJECT_MEDIA, icon: IconType.Image, label: t('common.media') },

@@ -127,4 +127,72 @@ module.exports = {
       }
     })(req, res, next);
   },
+
+  // Completes the Google Calendar authorization an admin started from instance settings. This is
+  // deliberately not a passport strategy: it grants the server access to a resource rather than
+  // signing anyone in, so it must never mint a session, and the admin it belongs to is carried in
+  // the signed `state` rather than in a cookie.
+  async googleCalendarCallback(req, res) {
+    const settingsUrl = `${sails.config.custom.clientUrl}/settings/calendar`;
+    const fail = (reason) => res.redirect(`${settingsUrl}?error=${encodeURIComponent(reason)}`);
+
+    let subject;
+    try {
+      ({ subject } = sails.helpers.utils.verifyToken(req.query.state || ''));
+    } catch {
+      return fail('invalidState');
+    }
+
+    if (!subject || subject.purpose !== sails.config.custom.googleCalendar.statePurpose) {
+      return fail('invalidState');
+    }
+
+    // Re-checked rather than trusted from the state: admin rights can have been revoked in the
+    // seconds the consent screen was open.
+    const currentUser = await User.findOne({ id: subject.userId });
+    if (!currentUser || !currentUser.isAdmin) {
+      return fail('notEnoughRights');
+    }
+
+    if (req.query.error) {
+      return fail(req.query.error);
+    }
+
+    if (!req.query.code) {
+      return fail('noCode');
+    }
+
+    try {
+      const config = sails.helpers.integrations.google.getConfig();
+      const tokens = await sails.helpers.integrations.google.requestTokens({
+        grant_type: 'authorization_code',
+        code: req.query.code,
+        redirect_uri: config.redirectUri,
+      });
+
+      // Without a refresh token the connection would stop working within the hour and could not
+      // renew itself, so refuse to store it rather than record something quietly broken.
+      if (!tokens.refreshToken) {
+        return fail('noRefreshToken');
+      }
+
+      const accountEmail = await sails.helpers.integrations.google.getAccountEmail(tokens.accessToken);
+
+      await sails.helpers.calendarConnections.createOne.with({
+        provider: CalendarConnection.Providers.GOOGLE,
+        accountEmail,
+        refreshToken: tokens.refreshToken,
+        accessToken: tokens.accessToken,
+        accessTokenExpiresAt: tokens.expiresAt,
+        currentUser,
+      });
+
+      sails.log.info('Google Calendar: account connected', accountEmail, 'by', currentUser.id, currentUser.email);
+
+      return res.redirect(`${settingsUrl}?connected=${encodeURIComponent(accountEmail)}`);
+    } catch (error) {
+      sails.log.error('Google Calendar: authorization failed', error);
+      return fail(error.requestFailed || error.code || 'authorizationFailed');
+    }
+  },
 };

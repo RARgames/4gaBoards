@@ -11,7 +11,7 @@ import { getPriority } from '../../../constants/Priorities';
 import { getAccessToken } from '../../../utils/access-token-storage';
 import Label from '../../Label';
 import Priority from '../../Priority';
-import { Icon, IconType, IconSize } from '../../Utils';
+import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './ArchiveView.module.scss';
@@ -22,7 +22,7 @@ const GROUP_BY_OPTIONS = ['month', 'label', 'assignee', 'priority'];
 // fetched once and grouped/filtered client-side here, mirroring the approved mockup's
 // renderArchive(). Cycle time is a proxy (createdAt → completedAt), not a true
 // first-entered-an-active-list timestamp — this app doesn't track list-transition history.
-function ArchiveView({ boardId, allLabels }) {
+function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
   const [t] = useTranslation();
   const [items, setItems] = useState([]);
   const [included, setIncluded] = useState({ cardLabels: [], labels: [], cardMemberships: [], users: [] });
@@ -116,6 +116,13 @@ function ArchiveView({ boardId, allLabels }) {
     setClosedGroups((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // The card goes back to the board through the store (the unarchive saga upserts it); this
+  // listing is a one-shot fetch, so the restored row is dropped from it locally.
+  const handleRestore = (cardId) => {
+    onRestore(cardId);
+    setItems((prev) => prev.filter((card) => card.id !== cardId));
+  };
+
   const toggleLabelFilter = (labelId) => {
     setSelectedLabelIds((prev) => (prev.includes(labelId) ? prev.filter((id) => id !== labelId) : [...prev, labelId]));
   };
@@ -188,6 +195,11 @@ function ArchiveView({ boardId, allLabels }) {
                         <span className={s.rowAssignee}>{card.cardUsers.length > 0 ? card.cardUsers[0].name : '—'}</span>
                         <span className={clsx(s.rowDate, gs.fontMono)}>{format(card.completedAt || card.archivedAt || card.createdAt, 'MMM dd')}</span>
                         <span className={clsx(s.rowCycle, gs.fontMono)}>{card.cycleDays != null ? `${card.cycleDays}d` : '—'}</span>
+                        {canEdit && (
+                          <Button style={ButtonStyle.Icon} title={t('action.restoreCard', { context: 'title' })} onClick={() => handleRestore(card.id)} className={s.rowRestore}>
+                            <Icon type={IconType.ArrowLeftBig} size={IconSize.Size13} />
+                          </Button>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -204,6 +216,8 @@ function ArchiveView({ boardId, allLabels }) {
 ArchiveView.propTypes = {
   boardId: PropTypes.string.isRequired,
   allLabels: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  canEdit: PropTypes.bool.isRequired,
+  onRestore: PropTypes.func.isRequired,
 };
 
 ArchiveView.defaultProps = {

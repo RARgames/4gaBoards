@@ -229,27 +229,53 @@
     flex-direction: column;
     gap: 1px;
     pointer-events: none;
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 0;
   }
 
-  .entryDescription {
+  // The line heights below (and this block's padding/gap) are mirrored by the ENTRY_*_HEIGHT
+  // constants in WeekGrid.jsx, which use them to decide how many note lines fit — keep them in step.
+  .entryTitle {
     font-size: 11px;
+    line-height: 15px;
     font-weight: 600;
     color: var(--textColor0);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-shrink: 0;
   }
 
   .entryTime {
     font-size: 10px;
+    line-height: 13px;
     opacity: 0.7;
+    flex-shrink: 0;
   }
 
   .entryProject {
     font-size: 10px;
+    line-height: 13px;
     opacity: 0.7;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-shrink: 0;
+  }
+
+  // Clamped to however many lines are left over in the block, set per entry as --note-lines.
+  .entryNote {
+    font-size: 10px;
+    line-height: 13px;
+    opacity: 0.7;
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--note-lines, 1);
+    -webkit-box-orient: vertical;
+    line-clamp: var(--note-lines, 1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 0;
   }
 }

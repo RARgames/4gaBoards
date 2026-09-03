@@ -58,30 +58,20 @@
     flex-wrap: wrap;
   }
 
-  .navGroup {
+  .toolbarDivider {
+    width: 1px;
+    height: 22px;
+    background: var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .memberField {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
   }
 
-  .todayButton {
-    padding: 4px 8px;
-    opacity: 0.8;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  .iconFlipped {
-    transform: rotate(180deg);
-  }
-
-  .periodLabel {
-    font-size: 13px;
-    font-weight: 600;
-    opacity: 0.85;
-    min-width: 160px;
+  .memberFieldIcon {
+    opacity: 0.6;
   }
 
   .switcherDropdown {

@@ -18,6 +18,12 @@ const MOVE_THRESHOLD = 4;
 const DAY_MINUTES = 24 * 60;
 const LONG_ENTRY_DURATION_MS = 6 * 60 * 60 * 1000;
 const VERY_LONG_ENTRY_DURATION_MS = 8 * 60 * 60 * 1000;
+// Mirror .entryContent's padding/gap and the .entryTitle/.entryTime/.entryProject/.entryNote line
+// heights in WeekGrid.module.scss — a block is only as tall as its duration, so these are what let
+// us work out how many note lines actually fit. Keep the two in step.
+const ENTRY_HEADER_HEIGHT = 34;
+const ENTRY_META_LINE_HEIGHT = 14;
+const ENTRY_NOTE_LINE_HEIGHT = 13;
 
 const snapMinutes = (minutes) => Math.min(DAY_MINUTES, Math.max(0, Math.round(minutes / MINUTES_PER_SLOT) * MINUTES_PER_SLOT));
 
@@ -286,6 +292,18 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
 
     const previewStart = isDraggingThis && drag.mode === 'resize-start' ? Math.min(drag.currentMinutes, endMinutes - MIN_DURATION_MINUTES) : previewStartMinutes;
 
+    const height = Math.max(14, minutesToY(previewEndMinutes - previewStart));
+    const timeRange = `${format(entry.startedAt, 'HH:mm')}–${format(entry.endedAt, 'HH:mm')}`;
+    const duration = formatDuration(Math.round(durationMs / 60000));
+    const ticketName = entry.cardName || entry.projectName || null;
+    const heading = entry.title || entry.cardName || entry.description || t('common.noDescription');
+    // An untitled entry already shows its description as the heading, so don't repeat it below.
+    const note = entry.description && entry.description !== heading ? entry.description : null;
+    const noteLines = Math.floor((height - ENTRY_HEADER_HEIGHT - (ticketName ? ENTRY_META_LINE_HEIGHT : 0)) / ENTRY_NOTE_LINE_HEIGHT);
+    // Short blocks fit little more than the heading, so the tooltip carries the whole set —
+    // including the tail of a note the clamp above ellipsized away.
+    const tooltip = [heading, ticketName, `${timeRange} · ${duration}`, note].filter(Boolean).join('\n');
+
     return (
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div
@@ -297,18 +315,23 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
           isDraggingThis && s.entryBlockDragging,
           entry.isPersisted === false && s.entryBlockUnsaved,
         )}
-        style={{ top: minutesToY(previewStart), height: Math.max(14, minutesToY(previewEndMinutes - previewStart)), borderLeftColor: entry.projectColor || undefined }}
+        style={{ top: minutesToY(previewStart), height, borderLeftColor: entry.projectColor || undefined }}
         onPointerDown={(e) => handleEntryPointerDown(e, entry, dayIndex)}
         onClick={(e) => handleEntryClick(e, entry)}
-        title={entry.title || entry.cardName || entry.description || t('common.noDescription')}
+        title={tooltip}
       >
         <div className={s.entryResizeHandle} data-role="resize-start" onPointerDown={(e) => handleResizeHandlePointerDown(e, entry, dayIndex, 'resize-start')} />
         <div className={s.entryContent}>
-          <span className={s.entryDescription}>{entry.title || entry.cardName || entry.description || t('common.noDescription')}</span>
+          <span className={s.entryTitle}>{heading}</span>
           <span className={s.entryTime}>
-            {format(entry.startedAt, 'HH:mm')}–{format(entry.endedAt, 'HH:mm')}
+            {timeRange} · {duration}
           </span>
-          {(entry.cardName || entry.projectName) && <span className={s.entryProject}>{entry.cardName || entry.projectName}</span>}
+          {ticketName && <span className={s.entryProject}>{ticketName}</span>}
+          {note && noteLines >= 1 && (
+            <span className={s.entryNote} style={{ '--note-lines': noteLines }}>
+              {note}
+            </span>
+          )}
         </div>
         <div className={s.entryResizeHandle} data-role="resize-end" onPointerDown={(e) => handleResizeHandlePointerDown(e, entry, dayIndex, 'resize-end')} />
       </div>

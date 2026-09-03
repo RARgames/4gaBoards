@@ -17,6 +17,7 @@ module.exports.routes = {
   'GET /auth/microsoft/callback': 'AuthController.microsoftCallback',
   'GET /auth/oidc': 'AuthController.oidc',
   'GET /auth/oidc/callback': 'AuthController.oidcCallback',
+  'GET /auth/google/calendar/callback': 'AuthController.googleCalendarCallback',
 
   'POST /api/access-tokens': 'access-tokens/create',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
@@ -25,6 +26,18 @@ module.exports.routes = {
 
   'GET /api/core-settings-public': 'core/show',
   'POST /api/core-settings': 'core/update',
+
+  'GET /api/calendar-connections': 'calendar-connections/index',
+  'POST /api/calendar-connections/authorize-url': 'calendar-connections/authorize-url',
+  'DELETE /api/calendar-connections/:id': 'calendar-connections/delete',
+  'GET /api/calendar-connections/:id/calendars': 'calendar-connections/calendars',
+
+  'GET /api/linked-calendars': 'linked-calendars/index',
+  'POST /api/linked-calendars': 'linked-calendars/create',
+  'PATCH /api/linked-calendars/:id': 'linked-calendars/update',
+  'DELETE /api/linked-calendars/:id': 'linked-calendars/delete',
+
+  'GET /api/projects/:projectId/calendar-events': 'calendar-events/index',
 
   'GET /api/user-projects': 'user-projects/index',
   'GET /api/user-projects/:projectId': 'user-projects/show',

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import authenticateForm from './authenticate-form';
+import cardSelection from './card-selection';
 import categoryTags from './category-tags';
 import media from './media';
 import membersOverview from './members-overview';
@@ -13,6 +14,7 @@ import userCreateForm from './user-create-form';
 
 export default combineReducers({
   authenticateForm,
+  cardSelection,
   categoryTags,
   media,
   membersOverview,

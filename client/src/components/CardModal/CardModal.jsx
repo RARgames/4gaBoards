@@ -93,6 +93,7 @@ const CardModal = React.memo(
     onMove,
     onTransfer,
     onDuplicate,
+    onArchive,
     onDelete,
     onUserAdd,
     onUserRemove,
@@ -409,6 +410,7 @@ const CardModal = React.memo(
               onMove={onMove}
               onTransfer={onTransfer}
               onDuplicate={onDuplicate}
+              onArchive={onArchive}
               onDelete={onDelete}
               onUserAdd={onUserAdd}
               onUserRemove={onUserRemove}
@@ -996,6 +998,7 @@ CardModal.propTypes = {
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,
+  onArchive: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,

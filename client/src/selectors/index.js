@@ -2,6 +2,7 @@ import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
 import cardLinks from './card-links';
+import cardSelection from './card-selection';
 import cards from './cards';
 import categoryTags from './category-tags';
 import chartViews from './chart-views';
@@ -30,6 +31,7 @@ export default {
   ...boardMemberships,
   ...boards,
   ...cardLinks,
+  ...cardSelection,
   ...cards,
   ...categoryTags,
   ...chartViews,

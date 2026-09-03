@@ -17,6 +17,7 @@ const SETTINGS_ACCOUNT = `${Config.BASE_PATH}/settings/account`;
 const SETTINGS_AUTHENTICATION = `${Config.BASE_PATH}/settings/authentication`;
 const SETTINGS_ABOUT = `${Config.BASE_PATH}/settings/about`;
 const SETTINGS_INSTANCE = `${Config.BASE_PATH}/settings/instance`;
+const SETTINGS_CALENDAR = `${Config.BASE_PATH}/settings/calendar`;
 const SETTINGS_USERS = `${Config.BASE_PATH}/settings/users`;
 const SETTINGS_PROJECT = `${Config.BASE_PATH}/projects/:id/settings`;
 const SETTINGS_MEMBERS = `${Config.BASE_PATH}/settings/members`;
@@ -25,6 +26,7 @@ const TIMESHEET = `${Config.BASE_PATH}/timesheet`;
 const TIMESHEET_TEAM = `${Config.BASE_PATH}/timesheet/team`;
 const PROJECT_GANTT = `${Config.BASE_PATH}/projects/:id/gantt`;
 const PROJECT_TEAM_PLANNER = `${Config.BASE_PATH}/projects/:id/team-planner`;
+const PROJECT_CALENDAR = `${Config.BASE_PATH}/projects/:id/calendar`;
 const PROJECT_WIKI = `${Config.BASE_PATH}/projects/:id/wiki`;
 const PROJECT_WIKI_PAGE = `${Config.BASE_PATH}/projects/:id/wiki/:slug`;
 const PROJECT_DOCUMENTS = `${Config.BASE_PATH}/projects/:id/documents`;
@@ -49,6 +51,7 @@ export default {
   SETTINGS_AUTHENTICATION,
   SETTINGS_ABOUT,
   SETTINGS_INSTANCE,
+  SETTINGS_CALENDAR,
   SETTINGS_USERS,
   SETTINGS_PROJECT,
   SETTINGS_MEMBERS,
@@ -57,6 +60,7 @@ export default {
   TIMESHEET_TEAM,
   PROJECT_GANTT,
   PROJECT_TEAM_PLANNER,
+  PROJECT_CALENDAR,
   PROJECT_WIKI,
   PROJECT_WIKI_PAGE,
   PROJECT_DOCUMENTS,

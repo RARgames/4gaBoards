@@ -21,6 +21,9 @@ module.exports.policies = {
   'users/create': ['is-authenticated', 'is-admin'],
   'users/delete': ['is-authenticated', 'is-admin'],
 
+  'calendar-connections/*': ['is-authenticated', 'is-admin'],
+  'linked-calendars/*': ['is-authenticated', 'is-admin'],
+
   'access-tokens/create': true,
   'core/show': true,
   'auth/*': true,

@@ -147,6 +147,55 @@ const handleCardDuplicate = (card) => ({
   },
 });
 
+// §5.4: archive is a card update in disguise (it only stamps archivedAt), but it gets its own
+// action so the optimistic reducer knows to drop the card from the board straight away.
+const archiveCard = (id) => ({
+  type: ActionTypes.CARD_ARCHIVE,
+  payload: {
+    id,
+  },
+});
+
+archiveCard.success = (card) => ({
+  type: ActionTypes.CARD_ARCHIVE__SUCCESS,
+  payload: {
+    card,
+  },
+});
+
+archiveCard.failure = (id, error) => ({
+  type: ActionTypes.CARD_ARCHIVE__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
+// Restore is the inverse of archive, but it can also move the card into an `active` list and
+// clear completedAt server-side, so the success payload is upserted whole — the card may not
+// even be in the store yet (the board fetch skipped it while it was archived).
+const unarchiveCard = (id) => ({
+  type: ActionTypes.CARD_UNARCHIVE,
+  payload: {
+    id,
+  },
+});
+
+unarchiveCard.success = (card) => ({
+  type: ActionTypes.CARD_UNARCHIVE__SUCCESS,
+  payload: {
+    card,
+  },
+});
+
+unarchiveCard.failure = (id, error) => ({
+  type: ActionTypes.CARD_UNARCHIVE__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
 export default {
   createCard,
   handleCardCreate,
@@ -157,4 +206,6 @@ export default {
   handleCardDelete,
   duplicateCard,
   handleCardDuplicate,
+  archiveCard,
+  unarchiveCard,
 };

@@ -37,6 +37,7 @@ function Root({ store, history }) {
           <Route path={Paths.SETTINGS_AUTHENTICATION} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_ABOUT} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_INSTANCE} element={<CoreContainer />} />
+          <Route path={Paths.SETTINGS_CALENDAR} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_USERS} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_PROJECT} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_MEMBERS} element={<CoreContainer />} />
@@ -45,6 +46,7 @@ function Root({ store, history }) {
           <Route path={Paths.TIMESHEET_TEAM} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_GANTT} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_TEAM_PLANNER} element={<CoreContainer />} />
+          <Route path={Paths.PROJECT_CALENDAR} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_WIKI_PAGE} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_WIKI} element={<CoreContainer />} />
           <Route path={Paths.PROJECT_DOCUMENTS} element={<CoreContainer />} />

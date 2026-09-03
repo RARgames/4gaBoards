@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { addDays, addWeeks, format, startOfDay, startOfWeek } from 'date-fns';
+import { addDays, addWeeks, startOfDay, startOfWeek } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import api from '../../api';
@@ -15,6 +15,7 @@ import EntryPopup from './EntryPopup';
 import ExportPopup from './ExportPopup';
 import ImportPopup from './ImportPopup';
 import InvoicePrint from './InvoicePrint';
+import PeriodNav from './PeriodNav';
 import PrintSummary from './PrintSummary';
 import TimesheetHeaderTabs from './TimesheetHeaderTabs';
 import WeekGrid from './WeekGrid';
@@ -63,6 +64,13 @@ const Timesheet = React.memo(
     const isViewingOther = viewedUserId !== currentUserId;
     const weekEnd = useMemo(() => zonedTimeToUtc(addDays(utcToZonedTime(weekStart, effectiveTimeZone), 7), effectiveTimeZone), [weekStart, effectiveTimeZone]);
     const zonedWeekStart = useMemo(() => utcToZonedTime(weekStart, effectiveTimeZone), [weekStart, effectiveTimeZone]);
+    const zonedNow = useMemo(() => utcToZonedTime(new Date(), effectiveTimeZone), [effectiveTimeZone]);
+
+    const handlePrevWeek = useCallback(() => setWeekStart((prev) => zonedTimeToUtc(addWeeks(utcToZonedTime(prev, effectiveTimeZone), -1), effectiveTimeZone)), [effectiveTimeZone]);
+    const handleNextWeek = useCallback(() => setWeekStart((prev) => zonedTimeToUtc(addWeeks(utcToZonedTime(prev, effectiveTimeZone), 1), effectiveTimeZone)), [effectiveTimeZone]);
+    const handleTodayWeek = useCallback(() => setWeekStart(computeWeekStartForToday(effectiveTimeZone)), [effectiveTimeZone]);
+
+    const handleSelectWeek = useCallback((zonedDate) => setWeekStart(zonedTimeToUtc(startOfWeek(zonedDate, { weekStartsOn: 1 }), effectiveTimeZone)), [effectiveTimeZone]);
     const timeZoneOptions = useMemo(
       () => [{ id: 'browser-default', name: `${t('common.browserDefault')} (${getEffectiveTimeZone(null)})` }, ...getSupportedTimeZones().map((zone) => ({ id: zone, name: getTimeZoneLabel(zone) }))],
       [t],
@@ -359,29 +367,22 @@ const Timesheet = React.memo(
           {isViewingOther && viewedUser && <p className={s.viewingBanner}>{t('common.viewingTimesheet', { name: viewedUser.name })}</p>}
         </div>
         <div className={s.toolbar}>
-          <div className={s.navGroup}>
-            <Button style={ButtonStyle.Icon} title={t('action.previousPeriod')} onClick={() => setWeekStart((d) => zonedTimeToUtc(addWeeks(utcToZonedTime(d, effectiveTimeZone), -1), effectiveTimeZone))}>
-              <Icon type={IconType.AngleLeft} size={IconSize.Size12} />
-            </Button>
-            <Button style={ButtonStyle.NoBackground} className={s.todayButton} onClick={() => setWeekStart(computeWeekStartForToday(effectiveTimeZone))}>
-              {t('action.today')}
-            </Button>
-            <Button style={ButtonStyle.Icon} title={t('action.nextPeriod')} onClick={() => setWeekStart((d) => zonedTimeToUtc(addWeeks(utcToZonedTime(d, effectiveTimeZone), 1), effectiveTimeZone))}>
-              <Icon type={IconType.AngleLeft} size={IconSize.Size12} className={s.iconFlipped} />
-            </Button>
-            <span className={s.periodLabel}>
-              {format(zonedWeekStart, 'MMM d')} – {format(addDays(zonedWeekStart, 6), 'MMM d, yyyy')}
-            </span>
-          </div>
+          <PeriodNav zonedPeriodStart={zonedWeekStart} zonedNow={zonedNow} onPrev={handlePrevWeek} onNext={handleNextWeek} onToday={handleTodayWeek} onSelect={handleSelectWeek} />
           {isAdmin && (
-            <Dropdown
-              style={DropdownStyle.Default}
-              options={switcherOptions}
-              defaultItem={switcherOptions.find((option) => option.id === viewedUserId)}
-              placeholder={t('common.me')}
-              onChange={(item) => setSelectedViewedUserId(item.id === currentUserId ? null : item.id)}
-              className={s.switcherDropdown}
-            />
+            <>
+              <div className={s.toolbarDivider} />
+              <div className={s.memberField}>
+                <Icon type={IconType.User} size={IconSize.Size12} className={s.memberFieldIcon} />
+                <Dropdown
+                  style={DropdownStyle.Default}
+                  options={switcherOptions}
+                  defaultItem={switcherOptions.find((option) => option.id === viewedUserId)}
+                  placeholder={t('common.me')}
+                  onChange={(item) => setSelectedViewedUserId(item.id === currentUserId ? null : item.id)}
+                  className={s.switcherDropdown}
+                />
+              </div>
+            </>
           )}
           <div className={s.spacer} />
           {isViewingOther ? (

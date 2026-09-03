@@ -42,6 +42,7 @@ export const selectPath = createReduxOrmSelector(
         case Paths.SETTINGS_PROJECT:
         case Paths.PROJECT_GANTT:
         case Paths.PROJECT_TEAM_PLANNER:
+        case Paths.PROJECT_CALENDAR:
         case Paths.PROJECT_WIKI:
         case Paths.PROJECT_DOCUMENTS:
         case Paths.PROJECT_MEDIA:

@@ -54,30 +54,10 @@
     width: 150px;
   }
 
-  .navGroup {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .todayButton {
-    padding: 4px 8px;
-    opacity: 0.8;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  .iconFlipped {
-    transform: rotate(180deg);
-  }
-
-  .periodLabel {
-    font-size: 13px;
-    font-weight: 600;
-    opacity: 0.85;
-    min-width: 160px;
+  .toolbarDivider {
+    width: 1px;
+    height: 22px;
+    background: var(--backgroundColorTmpSeparatorLight);
   }
 
   .searchInput {

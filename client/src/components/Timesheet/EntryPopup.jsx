@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -321,15 +320,14 @@ const EntryPopup = React.memo(
             <Input
               style={InputStyle.Default}
               name="title"
-              // Falls back to the stored title when the linked card's name can't be resolved — the
-              // grid only knows names for cards on boards already loaded, so this is the common
-              // case when reopening an entry, and an empty locked field would look like data loss.
-              value={cardId ? linkedCardName || data.title : data.title}
-              placeholder={cardId ? '' : t('common.titlePlaceholder')}
+              value={data.title}
+              // A card-linked entry with no title of its own already falls back to the card's name
+              // wherever it's displayed (see WeekGrid's entry label), so the card name belongs here
+              // as the placeholder, not the value — typing overrides it, clearing restores it.
+              placeholder={(cardId && linkedCardName) || t('common.titlePlaceholder')}
               onChange={handleFieldChange}
-              readOnly={!!cardId}
-              title={cardId ? t('common.titleFromLinkedCard') : undefined}
-              className={clsx(s.titleField, cardId && s.titleFieldReadOnly)}
+              title={cardId ? t('common.titleOverridesCardName') : undefined}
+              className={s.titleField}
             />
             <div className={s.fieldLabel}>{t('common.whatWasDone')}</div>
             <TextArea

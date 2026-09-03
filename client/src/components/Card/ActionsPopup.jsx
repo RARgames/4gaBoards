@@ -47,6 +47,7 @@ const ActionsStep = React.memo(
     onMove,
     onTransfer,
     onDuplicate,
+    onArchive,
     onDelete,
     onUserAdd,
     onUserRemove,
@@ -94,6 +95,11 @@ const ActionsStep = React.memo(
       onDuplicate();
       onClose();
     }, [onClose, onDuplicate]);
+
+    const handleArchiveClick = useCallback(() => {
+      onArchive();
+      onClose();
+    }, [onArchive, onClose]);
 
     const handleDeleteClick = useCallback(() => {
       openStep(StepTypes.DELETE);
@@ -196,6 +202,10 @@ const ActionsStep = React.memo(
         <Button style={ButtonStyle.PopupContext} content={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink} />
         <Button style={ButtonStyle.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick} />
         <Popup.Separator />
+        <Button style={ButtonStyle.PopupContext} title={t('action.archiveCard', { context: 'title' })} onClick={handleArchiveClick}>
+          <Icon type={IconType.Archive} size={IconSize.Size13} className={s.icon} />
+          {t('action.archiveCard', { context: 'title' })}
+        </Button>
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
           <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
           {t('action.deleteCard', { context: 'title' })}
@@ -226,6 +236,7 @@ ActionsStep.propTypes = {
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,
+  onArchive: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,

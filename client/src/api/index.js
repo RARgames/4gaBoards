@@ -3,6 +3,8 @@ import activities from './activities';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
 import boards from './boards';
+import calendarConnections from './calendar-connections';
+import calendarEvents from './calendar-events';
 import cardLabels from './card-labels';
 import cardLinks from './card-links';
 import cardMemberships from './card-memberships';
@@ -14,6 +16,7 @@ import core from './core';
 import documents from './documents';
 import http from './http';
 import labels from './labels';
+import linkedCalendars from './linked-calendars';
 import lists from './lists';
 import media from './media';
 import membersOverview from './members-overview';
@@ -39,6 +42,8 @@ export default {
   ...attachments,
   ...boardMemberships,
   ...boards,
+  ...calendarConnections,
+  ...calendarEvents,
   ...cardLabels,
   ...cardLinks,
   ...cardMemberships,
@@ -49,6 +54,7 @@ export default {
   ...core,
   ...documents,
   ...labels,
+  ...linkedCalendars,
   ...lists,
   ...media,
   ...membersOverview,

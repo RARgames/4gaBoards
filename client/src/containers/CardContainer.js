@@ -70,6 +70,7 @@ const makeMapStateToProps = () => {
     const closestDueDate = selectClosestDueDateByCardId(state, id);
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
+    const selectedCardIds = selectors.selectSelectedCardIds(state);
     const url = selectors.selectUrlForCard(state, id);
     const activities = selectActivitiesByCardId(state, id);
 
@@ -113,6 +114,8 @@ const makeMapStateToProps = () => {
       updatedAt,
       updatedBy,
       closestDueDate,
+      isSelected: selectedCardIds.includes(id),
+      isSelectionActive: selectedCardIds.length > 0,
     };
   };
 };
@@ -124,7 +127,9 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onMove: (listId, index) => entryActions.moveCard(id, listId, index),
       onTransfer: (boardId, listId) => entryActions.transferCard(id, boardId, listId),
       onDuplicate: () => entryActions.duplicateCard(id),
+      onArchive: () => entryActions.archiveCard(id),
       onDelete: () => entryActions.deleteCard(id),
+      onSelectionToggle: (isRange) => entryActions.toggleCardSelection(id, isRange),
       onUserAdd: (userId) => entryActions.addUserToCard(userId, id),
       onUserRemove: (userId) => entryActions.removeUserFromCard(userId, id),
       onBoardFetch: entryActions.fetchBoard,

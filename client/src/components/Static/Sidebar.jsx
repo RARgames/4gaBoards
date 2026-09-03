@@ -378,6 +378,14 @@ const Sidebar = React.memo(
                     </Button>
                   </Link>
                 </div>
+                <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_CALENDAR && s.sidebarActive)}>
+                  <Link to={Paths.SETTINGS_CALENDAR}>
+                    <Button style={ButtonStyle.NoBackground} title={t('common.settingsCalendar')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>
+                      <Icon type={IconType.Calendar} size={IconSize.Size14} className={s.icon} />
+                      {t('common.calendar')}
+                    </Button>
+                  </Link>
+                </div>
                 <div className={clsx(s.sidebarItem, path === Paths.SETTINGS_INSTANCE && s.sidebarActive)}>
                   <Link to={Paths.SETTINGS_INSTANCE}>
                     <Button style={ButtonStyle.NoBackground} title={t('common.settings')} className={clsx(s.sidebarButton, s.sidebarButtonPadding)}>

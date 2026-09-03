@@ -6,6 +6,7 @@ import Paths from '../../constants/Paths';
 import AboutSettingsContainer from '../../containers/Settings/AboutSettingsContainer';
 import AccountSettingsContainer from '../../containers/Settings/AccountSettingsContainer';
 import AuthenticationSettingsContainer from '../../containers/Settings/AuthenticationSettingsContainer';
+import CalendarSettingsContainer from '../../containers/Settings/CalendarSettingsContainer';
 import InstanceSettingsContainer from '../../containers/Settings/InstanceSettingsContainer';
 import MembersSettingsContainer from '../../containers/Settings/MembersSettingsContainer';
 import PreferencesSettingsContainer from '../../containers/Settings/PreferencesSettingsContainer';
@@ -35,6 +36,8 @@ const Settings = React.memo(({ path, isAdmin, isManager }) => {
         return `${t('common.settingsAbout')} | ${mainTitle}`;
       case Paths.SETTINGS_INSTANCE:
         return `${t('common.settingsInstance')} | ${mainTitle}`;
+      case Paths.SETTINGS_CALENDAR:
+        return `${t('common.settingsCalendar')} | ${mainTitle}`;
       case Paths.SETTINGS_USERS:
         return `${t('common.settingsUsers')} | ${mainTitle}`;
       case Paths.SETTINGS_MEMBERS:
@@ -66,6 +69,11 @@ const Settings = React.memo(({ path, isAdmin, isManager }) => {
         return <h1 className={s.text}>{t('common.cannotEditInstanceSettings')}</h1>;
       }
       return <InstanceSettingsContainer />;
+    case Paths.SETTINGS_CALENDAR:
+      if (!isAdmin) {
+        return <h1 className={s.text}>{t('common.cannotEditInstanceSettings')}</h1>;
+      }
+      return <CalendarSettingsContainer />;
     case Paths.SETTINGS_USERS:
       if (!isAdmin) {
         return <h1 className={s.text}>{t('common.cannotEditUsersSettings')}</h1>;

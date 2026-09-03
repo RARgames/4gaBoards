@@ -184,7 +184,7 @@
 
   .row {
     display: grid;
-    grid-template-columns: 1.4fr auto 120px 80px 60px;
+    grid-template-columns: 1.4fr auto 120px 80px 60px 24px;
     align-items: center;
     gap: 14px;
     padding: 8px 10px;
@@ -193,7 +193,18 @@
 
     &:hover {
       background: var(--backgroundPopupHover);
+
+      .rowRestore {
+        opacity: 1;
+      }
     }
+  }
+
+  // Undo for a manual (or auto-) archive: puts the card back on the board. Hidden until the row
+  // is hovered so the listing stays as dense as it was before restore existed.
+  .rowRestore {
+    opacity: 0;
+    transition: opacity 120ms ease;
   }
 
   .rowName {

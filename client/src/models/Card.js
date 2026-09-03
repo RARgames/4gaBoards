@@ -201,6 +201,7 @@ export default class extends BaseModel {
       case ActionTypes.CARD_FETCH__SUCCESS:
       case ActionTypes.CARD_UPDATE__SUCCESS:
       case ActionTypes.CARD_UPDATE_HANDLE:
+      case ActionTypes.CARD_UNARCHIVE__SUCCESS:
       case ActionTypes.CARD_DUPLICATE:
       case ActionTypes.CARD_DUPLICATE_HANDLE:
         Card.upsert(payload.card);
@@ -234,6 +235,35 @@ export default class extends BaseModel {
 
         if (cardModel) {
           cardModel.deleteWithRelated();
+        }
+
+        break;
+      }
+      // §5.4: archiving only stamps archivedAt — the card stays in the store, but List's card
+      // query set filters archived cards out, so it disappears from the board immediately and
+      // comes back if the request fails.
+      case ActionTypes.CARD_ARCHIVE:
+        Card.withId(payload.id).update({
+          archivedAt: new Date(),
+        });
+
+        break;
+      case ActionTypes.CARD_ARCHIVE__SUCCESS: {
+        const cardModel = Card.withId(payload.card.id);
+
+        if (cardModel) {
+          cardModel.update(payload.card);
+        }
+
+        break;
+      }
+      case ActionTypes.CARD_ARCHIVE__FAILURE: {
+        const cardModel = Card.withId(payload.id);
+
+        if (cardModel) {
+          cardModel.update({
+            archivedAt: null,
+          });
         }
 
         break;

@@ -17,7 +17,7 @@ import Priority from '../Priority';
 import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize, LinkifiedTextRenderer } from '../Utils';
+import { Button, ButtonStyle, Checkbox, CheckboxSize, Icon, IconType, IconSize, LinkifiedTextRenderer } from '../Utils';
 import ActionsPopup from './ActionsPopup';
 import NameEdit from './NameEdit';
 
@@ -69,10 +69,14 @@ const Card = React.memo(
     createdBy,
     updatedAt,
     updatedBy,
+    isSelected,
+    isSelectionActive,
+    onSelectionToggle,
     onUpdate,
     onMove,
     onTransfer,
     onDuplicate,
+    onArchive,
     onDelete,
     onUserAdd,
     onUserRemove,
@@ -125,12 +129,21 @@ const Card = React.memo(
           target = target.parentElement;
         }
 
+        // Ctrl/Cmd-click (or shift-click, which extends the range) toggles multi-selection
+        // instead of opening the card — the same modifier convention as a file list. Checked
+        // after the walk above so a modified click on a task still belongs to the task.
+        if (canEdit && onSelectionToggle && (e.ctrlKey || e.metaKey || e.shiftKey)) {
+          e.preventDefault();
+          onSelectionToggle(e.shiftKey);
+          return;
+        }
+
         navigate(Paths.CARDS.replace(':id', id));
         if (document.activeElement) {
           document.activeElement.blur();
         }
       },
-      [id, navigate],
+      [canEdit, id, navigate, onSelectionToggle],
     );
 
     // TODO should be possible without 200ms timeout, but it's not due to other issues - somewhere else
@@ -185,6 +198,14 @@ const Card = React.memo(
         setTimeout(() => setIsLinkCopied(false), 1500);
       },
       [url],
+    );
+
+    const handleSelectionChange = useCallback(
+      (e) => {
+        e.stopPropagation();
+        onSelectionToggle?.(e.nativeEvent.shiftKey);
+      },
+      [onSelectionToggle],
     );
 
     const getStyle = (draggableStyle, dragSnapshot) => {
@@ -404,7 +425,17 @@ const Card = React.memo(
       // eslint-disable-next-line react/jsx-props-no-spreading
       <div {...dragProvided.draggableProps} {...dragProvided.dragHandleProps} ref={dragProvided.innerRef} className={s.wrapper} style={getStyle(dragProvided.draggableProps.style, dragSnapshot)}>
         <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-          <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, (parent || childrenCount > 0) && s.cardHasHeroAccent, !isClone && dragSnapshot.isDragging && s.cardDragging)}>
+          <div
+            ref={cardRef}
+            className={clsx(
+              s.card,
+              isOpen && s.cardOpen,
+              (parent || childrenCount > 0) && s.cardHasHeroAccent,
+              !isClone && dragSnapshot.isDragging && s.cardDragging,
+              isSelectionActive && s.cardSelectionActive,
+              isSelected && s.cardSelected,
+            )}
+          >
             {isBlocked && (
               <span className={s.blockedIndicator} title={t('common.cardIsBlocked')}>
                 <Icon type={IconType.Exclamation} size={IconSize.Size20} className={s.blockedIndicatorIcon} />
@@ -434,6 +465,16 @@ const Card = React.memo(
                 >
                   {contentNode}
                 </div>
+                {canEdit && onSelectionToggle && (
+                  <Checkbox
+                    size={CheckboxSize.Size14}
+                    checked={isSelected}
+                    title={t('common.selectCard')}
+                    className={clsx(s.selectCheckbox, parent && s.selectCheckboxWithHero, isSelected && s.selectCheckboxChecked)}
+                    onChange={handleSelectionChange}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                )}
                 <Button
                   style={ButtonStyle.Icon}
                   title={t('common.linkCard', { context: 'title' })}
@@ -474,6 +515,7 @@ const Card = React.memo(
                       onMove={onMove}
                       onTransfer={onTransfer}
                       onDuplicate={onDuplicate}
+                      onArchive={onArchive}
                       onDelete={onDelete}
                       onUserAdd={onUserAdd}
                       onUserRemove={onUserRemove}
@@ -557,7 +599,11 @@ Card.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool,
+  isSelectionActive: PropTypes.bool,
+  onSelectionToggle: PropTypes.func,
   onDuplicate: PropTypes.func.isRequired,
+  onArchive: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,
@@ -583,6 +629,9 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
+  isSelected: false,
+  isSelectionActive: false,
+  onSelectionToggle: undefined,
   dueDate: undefined,
   timer: undefined,
   coverUrl: undefined,

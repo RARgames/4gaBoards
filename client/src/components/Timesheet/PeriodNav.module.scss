@@ -1,0 +1,83 @@
+:global(#app) {
+  .wrapper {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  // The arrows and the range live in one bordered group so the chevrons visibly belong to the
+  // date, rather than reading as controls for the "Today" button they used to sit either side of.
+  .segment {
+    display: flex;
+    align-items: stretch;
+    flex-shrink: 0;
+    border: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .stepButton {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 8px;
+    border-radius: 0;
+  }
+
+  .pickerWrapper {
+    display: flex;
+    flex-shrink: 0;
+    border-right: 1px solid var(--backgroundColorTmpSeparatorLight);
+    border-left: 1px solid var(--backgroundColorTmpSeparatorLight);
+  }
+
+  .periodButton {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    padding: 3px 12px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--backgroundColorTmpSeparatorLight);
+    }
+  }
+
+  .periodLabel {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .periodCaret {
+    opacity: 0.55;
+  }
+
+  .periodOffset {
+    font-size: 11px;
+    line-height: 1.3;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+
+  .todayButton {
+    flex-shrink: 0;
+    width: auto;
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+
+  .iconFlipped {
+    transform: rotate(180deg);
+  }
+}

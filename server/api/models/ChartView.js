@@ -8,6 +8,7 @@
 const Types = {
   GANTT: 'gantt',
   TEAM_PLANNER: 'teamPlanner',
+  CALENDAR: 'calendar',
 };
 
 module.exports = {
