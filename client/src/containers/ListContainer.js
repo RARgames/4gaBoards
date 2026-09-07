@@ -27,6 +27,9 @@ const makeMapStateToProps = () => {
 
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
 
+    const selectedCardIds = selectors.selectSelectedCardIds(state);
+    const selectedInListCount = filteredCardIds.filter((cardId) => selectedCardIds.includes(cardId)).length;
+
     return {
       id,
       index,
@@ -49,6 +52,13 @@ const makeMapStateToProps = () => {
       updatedAt,
       updatedBy,
       boardMemberships,
+      isSelectionActive: selectedCardIds.length > 0,
+      // Only the done column needs the ids themselves (for its per-bucket select-all). The
+      // array reference is stable between selection changes, so handing it over doesn't make
+      // this list re-render on unrelated actions.
+      selectedCardIds: type === 'done' ? selectedCardIds : undefined,
+      isAllCardsSelected: filteredCardIds.length > 0 && selectedInListCount === filteredCardIds.length,
+      isSomeCardsSelected: selectedInListCount > 0,
     };
   };
 };
@@ -59,6 +69,8 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onUpdate: (data) => entryActions.updateList(id, data),
       onDelete: () => entryActions.deleteList(id),
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
+      onSelectAllToggle: () => entryActions.toggleListCardSelection(id),
+      onGroupSelectToggle: (cardIds) => entryActions.toggleCardsSelection(cardIds),
     },
     dispatch,
   );

@@ -8,7 +8,7 @@ import DroppableTypes from '../../../constants/DroppableTypes';
 import SwimlaneCellContainer from '../../../containers/SwimlaneCellContainer';
 import { useLocalStorage } from '../../../hooks';
 import User from '../../User';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
+import { Button, ButtonStyle, Checkbox, CheckboxSize, Icon, IconType, IconSize } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './Swimlanes.module.scss';
@@ -25,7 +25,7 @@ const abbreviateListName = (name) => {
   return trimmed.slice(0, 2).toUpperCase();
 };
 
-const SwimlanesView = React.memo(({ boardId, lists, swimlanes, onCardMove }) => {
+const SwimlanesView = React.memo(({ boardId, lists, swimlanes, isSelectionActive, onCardMove, onSelectAllToggle }) => {
   const [t] = useTranslation();
   const [setCollapsed, getCollapsed] = useLocalStorage(`swimlanes-collapsed-${boardId}`);
   const [setCollapsedCols, getCollapsedCols] = useLocalStorage(`swimlanes-collapsed-cols-${boardId}`);
@@ -94,6 +94,23 @@ const SwimlanesView = React.memo(({ boardId, lists, swimlanes, onCardMove }) => 
 
             return (
               <div key={list.id} className={clsx(s.headerCell, s.listHeaderCell, isColCollapsed && s.listHeaderCellCollapsed)} title={list.name}>
+                {/* Select-all for the column — same contextual rule as the board view's list header. */}
+                {isSelectionActive && !isColCollapsed && (
+                  <Checkbox
+                    size={CheckboxSize.Size14}
+                    checked={list.isAllSelected}
+                    disabled={!list.hasCards}
+                    title={t(list.isAllSelected ? 'common.deselectAllCardsInList' : 'common.selectAllCardsInList')}
+                    className={s.columnSelectCheckbox}
+                    ref={(element) => {
+                      if (element) {
+                        // eslint-disable-next-line no-param-reassign
+                        element.indeterminate = list.isSomeSelected && !list.isAllSelected;
+                      }
+                    }}
+                    onChange={() => onSelectAllToggle(list.id)}
+                  />
+                )}
                 <Button style={ButtonStyle.Icon} title={list.name} onClick={(event) => handleToggleColumn(list.id, event)} className={s.columnToggleButton}>
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.columnToggleIcon, isColCollapsed && s.columnToggleIconCollapsed)} />
                   <span className={s.listName}>{isColCollapsed ? abbreviateListName(list.name) : list.name}</span>
@@ -130,7 +147,13 @@ SwimlanesView.propTypes = {
   boardId: PropTypes.string.isRequired,
   lists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   swimlanes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isSelectionActive: PropTypes.bool,
   onCardMove: PropTypes.func.isRequired,
+  onSelectAllToggle: PropTypes.func.isRequired,
+};
+
+SwimlanesView.defaultProps = {
+  isSelectionActive: false,
 };
 
 export default SwimlanesView;

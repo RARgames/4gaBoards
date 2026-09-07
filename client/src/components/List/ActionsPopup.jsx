@@ -84,93 +84,122 @@ ListTypeStep.defaultProps = {
   onBack: undefined,
 };
 
-const ActionsStep = React.memo(({ name, type, wipLimit, autoArchiveDays, createdAt, createdBy, updatedAt, updatedBy, boardMemberships, onNameEdit, onCardAdd, onDelete, onTypeUpdate, onClose }) => {
-  const [t] = useTranslation();
-  const [step, openStep, handleBack] = useSteps();
+const ActionsStep = React.memo(
+  ({
+    name,
+    type,
+    wipLimit,
+    autoArchiveDays,
+    createdAt,
+    createdBy,
+    updatedAt,
+    updatedBy,
+    boardMemberships,
+    hasCards,
+    isAllCardsSelected,
+    onNameEdit,
+    onCardAdd,
+    onSelectAllToggle,
+    onDelete,
+    onTypeUpdate,
+    onClose,
+  }) => {
+    const [t] = useTranslation();
+    const [step, openStep, handleBack] = useSteps();
 
-  const handleEditNameClick = useCallback(() => {
-    onNameEdit();
-  }, [onNameEdit]);
+    const handleEditNameClick = useCallback(() => {
+      onNameEdit();
+    }, [onNameEdit]);
 
-  const handleAddCardClick = useCallback(() => {
-    onCardAdd();
-    onClose();
-  }, [onCardAdd, onClose]);
+    const handleAddCardClick = useCallback(() => {
+      onCardAdd();
+      onClose();
+    }, [onCardAdd, onClose]);
 
-  const handleDeleteClick = useCallback(() => {
-    openStep(StepTypes.DELETE);
-  }, [openStep]);
+    const handleDeleteClick = useCallback(() => {
+      openStep(StepTypes.DELETE);
+    }, [openStep]);
 
-  const handleActivityClick = useCallback(() => {
-    openStep(StepTypes.ACTIVITY);
-  }, [openStep]);
+    const handleActivityClick = useCallback(() => {
+      openStep(StepTypes.ACTIVITY);
+    }, [openStep]);
 
-  const handleListTypeClick = useCallback(() => {
-    openStep(StepTypes.LIST_TYPE);
-  }, [openStep]);
+    const handleSelectAllClick = useCallback(() => {
+      onSelectAllToggle();
+      onClose();
+    }, [onClose, onSelectAllToggle]);
 
-  if (step) {
-    switch (step.type) {
-      case StepTypes.DELETE:
-        return (
-          <DeleteStep
-            title={t('common.deleteList', { context: 'title' })}
-            content={t('common.areYouSureYouWantToDeleteThisList')}
-            buttonContent={t('action.deleteList')}
-            onConfirm={onDelete}
-            onBack={handleBack}
-          />
-        );
-      case StepTypes.ACTIVITY:
-        return (
-          <ActivityStep
-            title={t('common.activityFor', { name })}
-            createdAt={createdAt}
-            createdBy={createdBy}
-            updatedAt={updatedAt}
-            updatedBy={updatedBy}
-            memberships={boardMemberships}
-            isNotMemberTitle={t('common.noLongerBoardMember')}
-            // TODO replace with actual activities
-            activities={[]}
-            isFetching={false}
-            isAllFetched
-            onFetch={() => {}}
-            onBack={handleBack}
-          />
-        );
-      case StepTypes.LIST_TYPE:
-        return <ListTypeStep type={type} wipLimit={wipLimit} autoArchiveDays={autoArchiveDays} onUpdate={onTypeUpdate} onBack={handleBack} />;
-      default:
+    const handleListTypeClick = useCallback(() => {
+      openStep(StepTypes.LIST_TYPE);
+    }, [openStep]);
+
+    if (step) {
+      switch (step.type) {
+        case StepTypes.DELETE:
+          return (
+            <DeleteStep
+              title={t('common.deleteList', { context: 'title' })}
+              content={t('common.areYouSureYouWantToDeleteThisList')}
+              buttonContent={t('action.deleteList')}
+              onConfirm={onDelete}
+              onBack={handleBack}
+            />
+          );
+        case StepTypes.ACTIVITY:
+          return (
+            <ActivityStep
+              title={t('common.activityFor', { name })}
+              createdAt={createdAt}
+              createdBy={createdBy}
+              updatedAt={updatedAt}
+              updatedBy={updatedBy}
+              memberships={boardMemberships}
+              isNotMemberTitle={t('common.noLongerBoardMember')}
+              // TODO replace with actual activities
+              activities={[]}
+              isFetching={false}
+              isAllFetched
+              onFetch={() => {}}
+              onBack={handleBack}
+            />
+          );
+        case StepTypes.LIST_TYPE:
+          return <ListTypeStep type={type} wipLimit={wipLimit} autoArchiveDays={autoArchiveDays} onUpdate={onTypeUpdate} onBack={handleBack} />;
+        default:
+      }
     }
-  }
 
-  return (
-    <>
-      <Button style={ButtonStyle.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
-        <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
-        {t('action.editName', { context: 'title' })}
-      </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('common.listType')} onClick={handleListTypeClick}>
-        <Icon type={IconType.Sliders} size={IconSize.Size13} className={s.icon} />
-        {t('common.listType')}
-      </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
-        <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
-        {t('common.checkActivity', { context: 'title' })}
-      </Button>
-      <Button style={ButtonStyle.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
-        <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
-        {t('action.addCard', { context: 'title' })}
-      </Button>
-      <Popup.Separator />
-      <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
-        <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
-        {t('action.deleteList', { context: 'title' })}
-      </Button>
-    </>
-  );
-});
+    return (
+      <>
+        <Button style={ButtonStyle.PopupContext} title={t('action.editName', { context: 'title' })} onClick={handleEditNameClick}>
+          <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+          {t('action.editName', { context: 'title' })}
+        </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('common.listType')} onClick={handleListTypeClick}>
+          <Icon type={IconType.Sliders} size={IconSize.Size13} className={s.icon} />
+          {t('common.listType')}
+        </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
+          <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+          {t('common.checkActivity', { context: 'title' })}
+        </Button>
+        <Button style={ButtonStyle.PopupContext} title={t('action.addCard', { context: 'title' })} onClick={handleAddCardClick}>
+          <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
+          {t('action.addCard', { context: 'title' })}
+        </Button>
+        <Button style={ButtonStyle.PopupContext} title={t(isAllCardsSelected ? 'common.deselectAllCardsInList' : 'common.selectAllCardsInList')} onClick={handleSelectAllClick} disabled={!hasCards}>
+          <Icon type={IconType.Check} size={IconSize.Size13} className={s.icon} />
+          {t(isAllCardsSelected ? 'common.deselectAllCardsInList' : 'common.selectAllCardsInList')}
+        </Button>
+        <Popup.Separator />
+        <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
+          <Icon type={IconType.Trash} size={IconSize.Size13} className={s.icon} />
+          {t('action.deleteList', { context: 'title' })}
+        </Button>
+      </>
+    );
+  },
+);
 
 ActionsStep.propTypes = {
   name: PropTypes.string.isRequired,
@@ -182,14 +211,19 @@ ActionsStep.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  hasCards: PropTypes.bool,
+  isAllCardsSelected: PropTypes.bool,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
+  onSelectAllToggle: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onTypeUpdate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {
+  hasCards: false,
+  isAllCardsSelected: false,
   wipLimit: undefined,
   autoArchiveDays: undefined,
   createdAt: undefined,

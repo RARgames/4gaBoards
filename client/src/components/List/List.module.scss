@@ -11,12 +11,20 @@
     box-sizing: border-box;
     display: flex;
     align-items: flex-end;
+    gap: 6px;
     font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--textColor4);
     padding: 8px 3px 4px;
+  }
+
+  // Only rendered while a multi-selection is under way, so the bucket heading is otherwise
+  // laid out exactly as before.
+  .groupLabelCheckbox {
+    flex: none;
+    margin-bottom: 1px;
   }
 
   .archiveTeaserWrapper {
@@ -232,6 +240,12 @@
     width: 10px;
   }
 
+  .headerAddCardButton {
+    flex: none;
+    width: 14px;
+    height: 20px;
+  }
+
   .headerName {
     flex: 1;
     min-width: 0;
@@ -269,6 +283,14 @@
     z-index: 1;
     width: 10px;
     height: 20px;
+  }
+
+  // Sits between the collapse chevron and the list name while a multi-selection is under way.
+  // Nudged down so it lines up with the name rather than the top of the flex row.
+  .headerSelectCheckbox {
+    flex: none;
+    margin-top: 2px;
+    z-index: 1;
   }
 
   .iconRotateRight {

@@ -36,9 +36,18 @@
   }
 
   .listHeaderCell {
+    align-items: center;
     color: var(--textColor0);
+    display: flex;
     font-weight: bold;
+    gap: 6px;
     overflow: hidden;
+  }
+
+  // Only rendered while a multi-selection is under way, so the column header is otherwise
+  // laid out exactly as before.
+  .columnSelectCheckbox {
+    flex: none;
   }
 
   .listHeaderCellCollapsed {
@@ -54,6 +63,10 @@
     gap: 6px;
     // Override the ButtonStyle.Icon's fixed 20px height so the toggle has a normal label height.
     height: auto;
+    // flex/min-width let the button share the (now flex) header cell with the select-all
+    // checkbox and still ellipsize a long list name instead of overflowing it.
+    flex: 1;
+    min-width: 0;
     padding: 4px 6px;
     position: relative;
     text-align: left;

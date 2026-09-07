@@ -14,7 +14,7 @@ import DragPreviewContext from '../../contexts/DragPreviewContext';
 import { useResizeObserverSize } from '../../hooks';
 import { getAccessToken } from '../../utils/access-token-storage';
 import CardAddPopup from '../CardAddPopup';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../Utils';
+import { Button, ButtonStyle, Checkbox, CheckboxSize, Icon, IconType, IconSize } from '../Utils';
 import ActionsPopup from './ActionsPopup';
 import CardAdd from './CardAdd';
 import NameEdit from './NameEdit';
@@ -87,12 +87,17 @@ function buildRowItems(filteredCardIds, type, completedAtByCardId) {
 
   const rows = [];
   let prevBucket = null;
+  // The label row owns the ids of the cards under it, so its select-all checkbox doesn't have
+  // to re-derive the bucketing that this loop is already doing.
+  let labelRow = null;
   filteredCardIds.forEach((cardId, cardIndex) => {
     const bucket = getDoneGroupBucket(completedAtByCardId ? completedAtByCardId[cardId] : null);
     if (bucket !== prevBucket) {
-      rows.push({ rowType: 'label', key: `label:${bucket}`, bucket });
+      labelRow = { rowType: 'label', key: `label:${bucket}`, bucket, cardIds: [] };
+      rows.push(labelRow);
       prevBucket = bucket;
     }
+    labelRow.cardIds.push(cardId);
     rows.push({ rowType: 'card', key: cardId, cardId, cardIndex });
   });
   rows.push({ rowType: 'teaser', key: 'archive-teaser' });
@@ -113,12 +118,15 @@ function buildSameListPreviewRowItems(filteredCardIds, draggedCardId, destinatio
 
   const rows = [];
   let prevBucket = null;
+  let labelRow = null;
   finalCardIds.forEach((cardId) => {
     const bucket = getDoneGroupBucket(completedAtByCardId ? completedAtByCardId[cardId] : null);
     if (bucket !== prevBucket) {
-      rows.push({ rowType: 'label', key: `label:${bucket}`, bucket });
+      labelRow = { rowType: 'label', key: `label:${bucket}`, bucket, cardIds: [] };
+      rows.push(labelRow);
       prevBucket = bucket;
     }
+    labelRow.cardIds.push(cardId);
     if (cardId === draggedCardId) {
       rows.push({ rowType: 'preview', key: 'same-list-drop-preview', height: previewHeight });
     } else {
@@ -139,8 +147,30 @@ function CardRow({ data, index, style }) {
   const rowStyle = data.getRowStyle ? data.getRowStyle(item, style) : style;
 
   if (item.rowType === 'label') {
+    const groupCardIds = item.cardIds || [];
+    const selectedCardIds = data.selectedCardIds || [];
+    const isAllSelected = groupCardIds.length > 0 && groupCardIds.every((cardId) => selectedCardIds.includes(cardId));
+    const isSomeSelected = groupCardIds.some((cardId) => selectedCardIds.includes(cardId));
+
     return (
       <div style={rowStyle} className={s.groupLabel}>
+        {/* Select-all for this bucket. Contextual, same as the column-level one. */}
+        {data.canEdit && data.isSelectionActive && (
+          <Checkbox
+            size={CheckboxSize.Size14}
+            checked={isAllSelected}
+            disabled={groupCardIds.length === 0}
+            title={data.t(isAllSelected ? 'common.deselectAllCardsInGroup' : 'common.selectAllCardsInGroup')}
+            className={s.groupLabelCheckbox}
+            ref={(element) => {
+              if (element) {
+                // eslint-disable-next-line no-param-reassign
+                element.indeterminate = isSomeSelected && !isAllSelected;
+              }
+            }}
+            onChange={() => data.onGroupSelectToggle(groupCardIds)}
+          />
+        )}
         {data.t(DONE_GROUP_LABEL_KEY[item.bucket])}
       </div>
     );
@@ -192,9 +222,15 @@ const List = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    isSelectionActive,
+    isAllCardsSelected,
+    isSomeCardsSelected,
+    selectedCardIds,
     onUpdate,
     onDelete,
     onCardCreate,
+    onSelectAllToggle,
+    onGroupSelectToggle,
     onArchiveViewOpen,
   }) => {
     const [t] = useTranslation();
@@ -265,6 +301,23 @@ const List = React.memo(
         });
       }
     }, [isPersisted, canEdit, onUpdate, isCollapsed]);
+
+    const handleSelectAllChange = useCallback(() => {
+      onSelectAllToggle?.();
+    }, [onSelectAllToggle]);
+
+    // "Some but not all selected" is an indeterminate checkbox, which has no JSX attribute —
+    // it can only be set on the DOM node.
+    const selectAllCheckbox = useRef(null);
+    const setSelectAllCheckboxElement = useCallback((element) => {
+      selectAllCheckbox.current = element;
+    }, []);
+
+    useEffect(() => {
+      if (selectAllCheckbox.current) {
+        selectAllCheckbox.current.indeterminate = isSomeCardsSelected && !isAllCardsSelected;
+      }
+    }, [isSomeCardsSelected, isAllCardsSelected, isSelectionActive]);
 
     const handleHeaderNameClick = useCallback(() => {
       if (isPersisted && canEdit) {
@@ -525,7 +578,10 @@ const List = React.memo(
       [getRowDisplacement, isSameListPreview],
     );
 
-    const cardsItemData = useMemo(() => ({ rowItems, onSizeChange: setCardSize, t, archiveStats, onArchiveViewOpen, getRowStyle }), [rowItems, setCardSize, t, archiveStats, onArchiveViewOpen, getRowStyle]);
+    const cardsItemData = useMemo(
+      () => ({ rowItems, onSizeChange: setCardSize, t, archiveStats, onArchiveViewOpen, getRowStyle, canEdit, isSelectionActive, selectedCardIds, onGroupSelectToggle }),
+      [rowItems, setCardSize, t, archiveStats, onArchiveViewOpen, getRowStyle, canEdit, isSelectionActive, selectedCardIds, onGroupSelectToggle],
+    );
 
     const wrapperOffset = (isAddCardOpen || !canEdit ? styleVars.cardsInnerWrapperFullOffset : styleVars.cardsInnerWrapperOffset) + HEADER_CHROME_DELTA;
     const headerOffset = (nameEditHeight || headerNameHeight) + (showWarningStripe ? WARNING_STRIPE_HEIGHT : 0);
@@ -737,6 +793,22 @@ const List = React.memo(
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={s.iconRotateRight} />
                 </Button>
                 {/*
+                  Select-all for the column. Only rendered once a multi-selection is under way,
+                  so a board that isn't being multi-selected keeps exactly the header it had —
+                  the same action is always reachable from the list's ⋮ menu below.
+                */}
+                {canEdit && isSelectionActive && onSelectAllToggle && (
+                  <Checkbox
+                    size={CheckboxSize.Size14}
+                    checked={isAllCardsSelected}
+                    disabled={filteredCardIds.length === 0}
+                    title={t(isAllCardsSelected ? 'common.deselectAllCardsInList' : 'common.selectAllCardsInList')}
+                    className={s.headerSelectCheckbox}
+                    ref={setSelectAllCheckboxElement}
+                    onChange={handleSelectAllChange}
+                  />
+                )}
+                {/*
                   headerNameBlock carries the ResizeObserver ref (moved off .headerName) so the
                   optional caption row's height is picked up by the existing dynamic
                   headerOffset math (List.jsx `headerOffset`/`availableHeight`) automatically —
@@ -754,6 +826,15 @@ const List = React.memo(
                   </div>
                   {listTypeCaption && <div className={clsx(s.headerCaption, gs.fontMono, isOverWipLimit && s.headerCaptionWarning)}>{listTypeCaption}</div>}
                 </div>
+                {/*
+                  Adds to the TOP of the column — handleCardAdd is the same "add at top" entry
+                  point the list's ⋮ menu uses; the bottom .addCardButton appends instead.
+                */}
+                {isPersisted && canEdit && (
+                  <Button style={ButtonStyle.Icon} title={t('common.addCardToTop')} onClick={handleCardAdd} className={s.headerAddCardButton}>
+                    <Icon type={IconType.PlusMath} size={IconSize.Size13} />
+                  </Button>
+                )}
                 {isPersisted && canEdit && (
                   <div className={s.popupWrapper}>
                     <ActionsPopup
@@ -766,8 +847,11 @@ const List = React.memo(
                       updatedAt={updatedAt}
                       updatedBy={updatedBy}
                       boardMemberships={boardMemberships}
+                      hasCards={filteredCardIds.length > 0}
+                      isAllCardsSelected={isAllCardsSelected}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
+                      onSelectAllToggle={onSelectAllToggle}
                       onDelete={onDelete}
                       onTypeUpdate={onUpdate}
                       position="left-start"
@@ -821,13 +905,25 @@ List.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isSelectionActive: PropTypes.bool,
+  isAllCardsSelected: PropTypes.bool,
+  isSomeCardsSelected: PropTypes.bool,
+  selectedCardIds: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onCardCreate: PropTypes.func.isRequired,
+  onSelectAllToggle: PropTypes.func,
+  onGroupSelectToggle: PropTypes.func,
   onArchiveViewOpen: PropTypes.func,
 };
 
 List.defaultProps = {
+  isSelectionActive: false,
+  isAllCardsSelected: false,
+  isSomeCardsSelected: false,
+  selectedCardIds: undefined,
+  onSelectAllToggle: undefined,
+  onGroupSelectToggle: undefined,
   boardId: undefined,
   wipLimit: undefined,
   autoArchiveDays: undefined,

@@ -6,6 +6,8 @@ import services from '../services';
 export default function* cardSelectionWatchers() {
   yield all([
     takeEvery(EntryActionTypes.CARD_SELECTION_TOGGLE, ({ payload: { cardId, isRange } }) => services.toggleCardSelection(cardId, isRange)),
+    takeEvery(EntryActionTypes.CARD_SELECTION_LIST_TOGGLE, ({ payload: { listId } }) => services.toggleListCardSelection(listId)),
+    takeEvery(EntryActionTypes.CARD_SELECTION_GROUP_TOGGLE, ({ payload: { cardIds } }) => services.toggleCardsSelection(cardIds)),
     takeEvery(EntryActionTypes.CARD_SELECTION_CLEAR, () => services.clearCardSelection()),
   ]);
 }
