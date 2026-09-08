@@ -83,6 +83,7 @@ module.exports.routes = {
   'GET /api/boards/:id/export': 'boards/export',
   'GET /api/boards/:id/cards-summary': 'boards/cards-summary',
   'GET /api/boards/:id/archived-cards': 'boards/archived-cards',
+  'POST /api/boards/:id/move-archived-cards': 'boards/move-archived-cards',
 
   'POST /api/boards/:boardId/memberships': 'board-memberships/create',
   'PATCH /api/board-memberships/:id': 'board-memberships/update',

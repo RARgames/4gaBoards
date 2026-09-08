@@ -11,7 +11,7 @@ import { getPriority } from '../../../constants/Priorities';
 import { getAccessToken } from '../../../utils/access-token-storage';
 import Label from '../../Label';
 import Priority from '../../Priority';
-import { Button, ButtonStyle, Icon, IconType, IconSize } from '../../Utils';
+import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize } from '../../Utils';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './ArchiveView.module.scss';
@@ -30,6 +30,9 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
   const [groupByField, setGroupByField] = useState('month');
   const [selectedLabelIds, setSelectedLabelIds] = useState([]);
   const [closedGroups, setClosedGroups] = useState({});
+  const [moveFromListId, setMoveFromListId] = useState(null);
+  const [moveToListId, setMoveToListId] = useState(null);
+  const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
     if (!boardId) return undefined;
@@ -152,6 +155,50 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
     setItems((prev) => prev.filter((card) => card.id !== cardId));
   };
 
+  // Source columns are derived from the archived cards themselves, not from the board's current
+  // columns: a column that was already deleted still shows up here, which is how cards orphaned
+  // by an earlier delete get re-homed.
+  const moveSources = useMemo(() => {
+    const countsByListId = new Map();
+    enrichedItems.forEach((card) => {
+      countsByListId.set(card.listId, (countsByListId.get(card.listId) || 0) + 1);
+    });
+
+    return Array.from(countsByListId.entries())
+      .map(([listId, count]) => ({
+        id: listId,
+        name: `${listById[listId] ? listById[listId].name : t('common.deletedList')} (${count})`,
+        count,
+      }))
+      .sort((sourceA, sourceB) => sourceB.count - sourceA.count);
+  }, [enrichedItems, listById, t]);
+
+  const moveDestinations = useMemo(() => (included.lists || []).map((list) => ({ id: list.id, name: list.name })), [included.lists]);
+
+  const selectedMoveSource = moveSources.find((source) => source.id === moveFromListId) || null;
+  const selectedMoveDestination = moveDestinations.find((list) => list.id === moveToListId) || null;
+  const canMove = !!selectedMoveSource && !!selectedMoveDestination && moveFromListId !== moveToListId && !isMoving;
+
+  // The moved cards stay archived, so they stay in this listing — only the column they report
+  // changes. Patching them in place keeps the scroll position and avoids a second round trip.
+  const handleMoveArchivedCards = () => {
+    if (!canMove) return;
+    setIsMoving(true);
+    api
+      .moveBoardArchivedCards(boardId, { fromListId: moveFromListId, toListId: moveToListId }, { Authorization: `Bearer ${getAccessToken()}` })
+      .then(() => {
+        setItems((prev) => prev.map((card) => (card.listId === moveFromListId ? { ...card, listId: moveToListId } : card)));
+        setMoveFromListId(null);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(`Failed to move archived cards on board ${boardId}:`, error);
+      })
+      .finally(() => {
+        setIsMoving(false);
+      });
+  };
+
   const renderRow = (card) => (
     <div key={card.id} className={s.row}>
       <span className={s.rowName}>{card.name}</span>
@@ -189,6 +236,41 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
             ))}
           </div>
         </div>
+        {canEdit && moveSources.length > 0 && moveDestinations.length > 0 && (
+          <div className={s.filterBlock}>
+            <h3>{t('common.moveArchivedCards')}</h3>
+            <p className={s.blockHint}>{t('common.moveArchivedCardsHint')}</p>
+            <Dropdown
+              style={DropdownStyle.Default}
+              name="fromListId"
+              options={moveSources}
+              placeholder={t('common.selectSourceList')}
+              defaultItem={selectedMoveSource}
+              onChange={(e) => setMoveFromListId(e.target.value)}
+              returnOnChangeEvent
+              isSearchable
+              selectFirstOnSearch
+            />
+            <Dropdown
+              style={DropdownStyle.Default}
+              name="toListId"
+              options={moveDestinations}
+              placeholder={t('common.selectDestinationList')}
+              defaultItem={selectedMoveDestination}
+              onChange={(e) => setMoveToListId(e.target.value)}
+              returnOnChangeEvent
+              isSearchable
+              selectFirstOnSearch
+            />
+            <Button
+              style={ButtonStyle.Submit}
+              content={selectedMoveSource ? t('action.moveArchivedCards', { count: selectedMoveSource.count }) : t('action.move')}
+              disabled={!canMove}
+              onClick={handleMoveArchivedCards}
+              className={s.moveButton}
+            />
+          </div>
+        )}
         {allLabels.length > 0 && (
           <div className={s.filterBlock}>
             <h3>{t('common.labels')}</h3>

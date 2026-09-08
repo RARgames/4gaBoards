@@ -184,6 +184,18 @@
 
   // Source-column heading inside a month group. Only rendered when a month's cards came from
   // more than one column, so a consolidated board never shows it.
+  .blockHint {
+    color: var(--textColor4);
+    font-size: 11px;
+    line-height: 15px;
+    margin: 0 0 8px;
+  }
+
+  .moveButton {
+    margin-top: 8px;
+    width: 100%;
+  }
+
   .subGroupHead {
     align-items: center;
     color: var(--textColor4);

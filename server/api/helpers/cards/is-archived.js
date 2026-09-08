@@ -30,7 +30,15 @@ module.exports = {
       return true;
     }
 
-    if (!list || list.type !== 'done' || !card.completedAt) {
+    // Orphaned by a deleted list: card.list_id has no FK, so lists/delete leaves its cards
+    // behind pointing at a list that is gone. They can never render on a board again (there is
+    // no column to put them in), so they count as archived — that keeps them visible, and
+    // re-homeable, from the Archive instead of silently unreachable.
+    if (!list) {
+      return true;
+    }
+
+    if (list.type !== 'done' || !card.completedAt) {
       return false;
     }
 

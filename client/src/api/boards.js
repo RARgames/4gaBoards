@@ -57,6 +57,15 @@ const getBoardArchivedCards = (id, headers) =>
     items: body.items.map(transformCard),
   }));
 
+// Re-homes a column's archived cards onto another column without un-archiving them, so an old
+// column can be deleted without stranding the cards behind it. `fromListId` may name a column
+// that is already gone — that is the salvage path for cards orphaned by an earlier delete.
+const moveBoardArchivedCards = (id, data, headers) =>
+  socket.post(`/boards/${id}/move-archived-cards`, data, headers).then((body) => ({
+    ...body,
+    items: body.items.map(transformCard),
+  }));
+
 /* Event handlers */
 
 const makeHandleBoardCreate = (next) => (body) => {
@@ -79,6 +88,7 @@ export default {
   exportBoard,
   getBoardCardsSummary,
   getBoardArchivedCards,
+  moveBoardArchivedCards,
   makeHandleBoardCreate,
   makeHandleBoardUpdate,
   makeHandleBoardDelete,

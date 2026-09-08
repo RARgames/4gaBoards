@@ -1,6 +1,7 @@
 import { attr, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
+import { isCardArchived } from '../utils/card-archive';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -95,10 +96,13 @@ export default class extends BaseModel {
   }
 
   // §5.4: archived cards are excluded from the board fetch server-side, so the only way one is
-  // in the store is that it was archived during this session (locally or by another client via
-  // the update broadcast). Filtering here keeps every consumer — plain and filtered — in sync.
+  // in the store is that it became archived during this session (locally, or via another
+  // client's update broadcast). Filtering here — with the same predicate the server uses —
+  // keeps every consumer, plain and filtered, in sync without a refetch.
   getOrderedCardsQuerySet() {
-    return this.cards.filter((card) => !card.archivedAt).orderBy('position');
+    const listRef = this.ref;
+
+    return this.cards.filter((card) => !isCardArchived(card, listRef)).orderBy('position');
   }
 
   getOrderedCardsModelArray() {
