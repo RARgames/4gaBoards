@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import { format, differenceInCalendarDays } from 'date-fns';
+import { format, differenceInCalendarDays, startOfMonth } from 'date-fns';
 import groupBy from 'lodash/groupBy';
 import keyBy from 'lodash/keyBy';
 import PropTypes from 'prop-types';
@@ -60,16 +60,23 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
   const cardLabelsByCardId = useMemo(() => groupBy(included.cardLabels || [], 'cardId'), [included.cardLabels]);
   const userById = useMemo(() => keyBy(included.users || [], 'id'), [included.users]);
   const cardMembershipsByCardId = useMemo(() => groupBy(included.cardMemberships || [], 'cardId'), [included.cardMemberships]);
+  const listById = useMemo(() => keyBy(included.lists || [], 'id'), [included.lists]);
 
+  // archivedAt is only a fallback: a card that was completed in June and manually archived in
+  // September belongs under June, which is the month the work actually finished in.
   const enrichedItems = useMemo(
     () =>
-      items.map((card) => ({
-        ...card,
-        cardLabels: (cardLabelsByCardId[card.id] || []).map((cardLabel) => labelById[cardLabel.labelId]).filter(Boolean),
-        cardUsers: (cardMembershipsByCardId[card.id] || []).map((cardMembership) => userById[cardMembership.userId]).filter(Boolean),
-        cycleDays: card.completedAt && card.createdAt ? Math.max(0, differenceInCalendarDays(card.completedAt, card.createdAt)) : null,
-      })),
-    [items, cardLabelsByCardId, labelById, cardMembershipsByCardId, userById],
+      items
+        .map((card) => ({
+          ...card,
+          cardLabels: (cardLabelsByCardId[card.id] || []).map((cardLabel) => labelById[cardLabel.labelId]).filter(Boolean),
+          cardUsers: (cardMembershipsByCardId[card.id] || []).map((cardMembership) => userById[cardMembership.userId]).filter(Boolean),
+          cycleDays: card.completedAt && card.createdAt ? Math.max(0, differenceInCalendarDays(card.completedAt, card.createdAt)) : null,
+          archivedFrom: listById[card.listId] ? listById[card.listId].name : t('common.deletedList'),
+          archivedOn: card.completedAt || card.archivedAt || card.createdAt || new Date(),
+        }))
+        .sort((cardA, cardB) => cardB.archivedOn - cardA.archivedOn),
+    [items, cardLabelsByCardId, labelById, cardMembershipsByCardId, userById, listById, t],
   );
 
   const filteredItems = useMemo(() => {
@@ -77,8 +84,12 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
     return enrichedItems.filter((card) => card.cardLabels.some((label) => selectedLabelIds.includes(label.id)));
   }, [enrichedItems, selectedLabelIds]);
 
+  // One group per month, newest first, so scrolling the archive walks backwards through time.
+  // The other groupings have no natural order, so they stay sorted by size as before.
   const groups = useMemo(() => {
     const map = new Map();
+    const monthOrder = new Map();
+
     filteredItems.forEach((card) => {
       let keys;
       if (groupByField === 'label') {
@@ -89,14 +100,32 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
         const priority = getPriority(card.priority);
         keys = [priority ? priority.name : t('common.none')];
       } else {
-        keys = [format(card.completedAt || card.archivedAt || new Date(), 'MMM yyyy')];
+        const key = format(card.archivedOn, 'MMMM yyyy');
+        monthOrder.set(key, startOfMonth(card.archivedOn).getTime());
+        keys = [key];
       }
       keys.forEach((key) => {
         if (!map.has(key)) map.set(key, []);
         map.get(key).push(card);
       });
     });
-    return Array.from(map.entries()).sort(([, cardsA], [, cardsB]) => cardsB.length - cardsA.length || 0);
+
+    const entries = Array.from(map.entries());
+
+    if (groupByField === 'month') {
+      return entries
+        .sort(([keyA], [keyB]) => monthOrder.get(keyB) - monthOrder.get(keyA))
+        .map(([key, cards]) => {
+          // Sub-headings only earn their space when a month actually spans more than one
+          // source column — after the Done lists are consolidated, months read as flat lists.
+          const byList = groupBy(cards, 'archivedFrom');
+          const listNames = Object.keys(byList);
+
+          return [key, cards, listNames.length > 1 ? listNames.sort().map((listName) => [listName, byList[listName]]) : null];
+        });
+    }
+
+    return entries.sort(([, cardsA], [, cardsB]) => cardsB.length - cardsA.length || 0).map(([key, cards]) => [key, cards, null]);
   }, [filteredItems, groupByField, t]);
 
   const stats = useMemo(() => {
@@ -122,6 +151,26 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
     onRestore(cardId);
     setItems((prev) => prev.filter((card) => card.id !== cardId));
   };
+
+  const renderRow = (card) => (
+    <div key={card.id} className={s.row}>
+      <span className={s.rowName}>{card.name}</span>
+      <span className={s.rowChips}>
+        {card.priority && <Priority name={getPriority(card.priority)?.name} color={getPriority(card.priority)?.color} variant="card" />}
+        {card.cardLabels.slice(0, 1).map((label) => (
+          <Label key={label.id} name={label.name} color={label.color} variant="card" />
+        ))}
+      </span>
+      <span className={s.rowAssignee}>{card.cardUsers.length > 0 ? card.cardUsers[0].name : '—'}</span>
+      <span className={clsx(s.rowDate, gs.fontMono)}>{format(card.archivedOn, 'MMM dd')}</span>
+      <span className={clsx(s.rowCycle, gs.fontMono)}>{card.cycleDays != null ? `${card.cycleDays}d` : '—'}</span>
+      {canEdit && (
+        <Button style={ButtonStyle.Icon} title={t('action.restoreCard', { context: 'title' })} onClick={() => handleRestore(card.id)} className={s.rowRestore}>
+          <Icon type={IconType.ArrowLeftBig} size={IconSize.Size13} />
+        </Button>
+      )}
+    </div>
+  );
 
   const toggleLabelFilter = (labelId) => {
     setSelectedLabelIds((prev) => (prev.includes(labelId) ? prev.filter((id) => id !== labelId) : [...prev, labelId]));
@@ -172,7 +221,7 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
 
         <div className={s.list}>
           {!isLoading && groups.length === 0 && <div className={s.emptyState}>{t('common.noArchivedCards')}</div>}
-          {groups.map(([key, cards]) => {
+          {groups.map(([key, cards, subGroups]) => {
             const isOpen = !closedGroups[key];
             return (
               <div key={key} className={s.group}>
@@ -183,25 +232,17 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
                 </button>
                 {isOpen && (
                   <div className={s.groupRows}>
-                    {cards.map((card) => (
-                      <div key={card.id} className={s.row}>
-                        <span className={s.rowName}>{card.name}</span>
-                        <span className={s.rowChips}>
-                          {card.priority && <Priority name={getPriority(card.priority)?.name} color={getPriority(card.priority)?.color} variant="card" />}
-                          {card.cardLabels.slice(0, 1).map((label) => (
-                            <Label key={label.id} name={label.name} color={label.color} variant="card" />
-                          ))}
-                        </span>
-                        <span className={s.rowAssignee}>{card.cardUsers.length > 0 ? card.cardUsers[0].name : '—'}</span>
-                        <span className={clsx(s.rowDate, gs.fontMono)}>{format(card.completedAt || card.archivedAt || card.createdAt, 'MMM dd')}</span>
-                        <span className={clsx(s.rowCycle, gs.fontMono)}>{card.cycleDays != null ? `${card.cycleDays}d` : '—'}</span>
-                        {canEdit && (
-                          <Button style={ButtonStyle.Icon} title={t('action.restoreCard', { context: 'title' })} onClick={() => handleRestore(card.id)} className={s.rowRestore}>
-                            <Icon type={IconType.ArrowLeftBig} size={IconSize.Size13} />
-                          </Button>
-                        )}
-                      </div>
-                    ))}
+                    {subGroups
+                      ? subGroups.map(([listName, listCards]) => (
+                          <React.Fragment key={listName}>
+                            <div className={s.subGroupHead}>
+                              <span className={s.subGroupName}>{listName}</span>
+                              <span className={clsx(s.subGroupCount, gs.fontMono)}>{listCards.length}</span>
+                            </div>
+                            {listCards.map(renderRow)}
+                          </React.Fragment>
+                        ))
+                      : cards.map(renderRow)}
                   </div>
                 )}
               </div>

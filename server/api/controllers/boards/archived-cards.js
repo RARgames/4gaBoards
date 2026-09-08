@@ -40,10 +40,10 @@ module.exports = {
     }
 
     const lists = await sails.helpers.boards.getLists(board.id);
-    const autoArchiveDaysByListId = _.mapValues(_.keyBy(lists, 'id'), 'autoArchiveDays');
+    const listById = _.keyBy(lists, 'id');
 
     const boardCards = await sails.helpers.boards.getCards(board.id);
-    const cards = boardCards.filter((card) => sails.helpers.cards.isArchived(card, autoArchiveDaysByListId[card.listId]));
+    const cards = boardCards.filter((card) => sails.helpers.cards.isArchived(card, listById[card.listId]));
     const cardIds = sails.helpers.utils.mapRecords(cards);
 
     const cardLabels = await sails.helpers.cards.getCardLabels(cardIds);

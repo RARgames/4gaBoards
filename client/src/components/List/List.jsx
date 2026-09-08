@@ -231,6 +231,7 @@ const List = React.memo(
     onCardCreate,
     onSelectAllToggle,
     onGroupSelectToggle,
+    onArchiveAll,
     onArchiveViewOpen,
   }) => {
     const [t] = useTranslation();
@@ -305,6 +306,12 @@ const List = React.memo(
     const handleSelectAllChange = useCallback(() => {
       onSelectAllToggle?.();
     }, [onSelectAllToggle]);
+
+    // Archives what the column is showing, matching the select-all above: with a board filter
+    // on, "all" is the filtered set, not the cards the filter is hiding.
+    const handleArchiveAll = useCallback(() => {
+      onArchiveAll?.(filteredCardIds);
+    }, [filteredCardIds, onArchiveAll]);
 
     // "Some but not all selected" is an indeterminate checkbox, which has no JSX attribute —
     // it can only be set on the DOM node.
@@ -847,11 +854,12 @@ const List = React.memo(
                       updatedAt={updatedAt}
                       updatedBy={updatedBy}
                       boardMemberships={boardMemberships}
-                      hasCards={filteredCardIds.length > 0}
+                      cardsCount={filteredCardIds.length}
                       isAllCardsSelected={isAllCardsSelected}
                       onNameEdit={handleNameEdit}
                       onCardAdd={handleCardAdd}
                       onSelectAllToggle={onSelectAllToggle}
+                      onArchiveAll={handleArchiveAll}
                       onDelete={onDelete}
                       onTypeUpdate={onUpdate}
                       position="left-start"
@@ -914,6 +922,7 @@ List.propTypes = {
   onCardCreate: PropTypes.func.isRequired,
   onSelectAllToggle: PropTypes.func,
   onGroupSelectToggle: PropTypes.func,
+  onArchiveAll: PropTypes.func,
   onArchiveViewOpen: PropTypes.func,
 };
 
@@ -924,6 +933,7 @@ List.defaultProps = {
   selectedCardIds: undefined,
   onSelectAllToggle: undefined,
   onGroupSelectToggle: undefined,
+  onArchiveAll: undefined,
   boardId: undefined,
   wipLimit: undefined,
   autoArchiveDays: undefined,

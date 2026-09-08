@@ -178,17 +178,13 @@ module.exports = {
 
     const values = _.pick(inputs, ['coverAttachmentId', 'priority', 'parentCardId', 'position', 'name', 'description', 'dueDate', 'startDate', 'timer', 'isSubscribed']);
 
-    // Stamp/clear completedAt when the card is moving into or out of a `done`-type list.
-    // Moving between two `done`-type lists (if a board has more than one) leaves it untouched.
+    // Stamp completedAt the first time a card lands in a `done`-type list, and never touch it
+    // again. Moving a card between columns — including back out of Done, or between two Done
+    // lists while consolidating them — preserves the date it was actually completed, which is
+    // what the Archive groups by. Only an explicit restore clears it (cards/unarchive.js).
     let completedAt;
-    if (nextList) {
-      if (nextList.type === 'done') {
-        if (!card.completedAt) {
-          completedAt = new Date();
-        }
-      } else if (card.completedAt) {
-        completedAt = null;
-      }
+    if (nextList && nextList.type === 'done' && !card.completedAt) {
+      completedAt = new Date();
     }
 
     const formatAssignedUsers = async () => {

@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onCardCreate: (data, autoOpen, index) => entryActions.createCard(id, data, autoOpen, index),
       onSelectAllToggle: () => entryActions.toggleListCardSelection(id),
       onGroupSelectToggle: (cardIds) => entryActions.toggleCardsSelection(cardIds),
+      onArchiveAll: (cardIds) => entryActions.archiveCards(cardIds),
     },
     dispatch,
   );

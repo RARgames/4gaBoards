@@ -11,6 +11,7 @@ import { Button, ButtonStyle, Icon, IconType, IconSize, Popup, withPopup } from 
 import * as s from './ActionsPopup.module.scss';
 
 const StepTypes = {
+  ARCHIVE_ALL: 'ARCHIVE_ALL',
   DELETE: 'DELETE',
   ACTIVITY: 'ACTIVITY',
   LIST_TYPE: 'LIST_TYPE',
@@ -95,11 +96,12 @@ const ActionsStep = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
-    hasCards,
+    cardsCount,
     isAllCardsSelected,
     onNameEdit,
     onCardAdd,
     onSelectAllToggle,
+    onArchiveAll,
     onDelete,
     onTypeUpdate,
     onClose,
@@ -129,12 +131,32 @@ const ActionsStep = React.memo(
       onClose();
     }, [onClose, onSelectAllToggle]);
 
+    const handleArchiveAllClick = useCallback(() => {
+      openStep(StepTypes.ARCHIVE_ALL);
+    }, [openStep]);
+
+    const handleArchiveAllConfirm = useCallback(() => {
+      onArchiveAll();
+      onClose();
+    }, [onArchiveAll, onClose]);
+
     const handleListTypeClick = useCallback(() => {
       openStep(StepTypes.LIST_TYPE);
     }, [openStep]);
 
     if (step) {
       switch (step.type) {
+        case StepTypes.ARCHIVE_ALL:
+          return (
+            <DeleteStep
+              title={t('common.archiveAllCards', { context: 'title' })}
+              content={t('common.areYouSureYouWantToArchiveTheseCards', { count: cardsCount })}
+              buttonContent={t('action.archiveAllCards', { count: cardsCount })}
+              buttonStyle={ButtonStyle.Submit}
+              onConfirm={handleArchiveAllConfirm}
+              onBack={handleBack}
+            />
+          );
         case StepTypes.DELETE:
           return (
             <DeleteStep
@@ -187,9 +209,14 @@ const ActionsStep = React.memo(
           <Icon type={IconType.Plus} size={IconSize.Size13} className={s.icon} />
           {t('action.addCard', { context: 'title' })}
         </Button>
-        <Button style={ButtonStyle.PopupContext} title={t(isAllCardsSelected ? 'common.deselectAllCardsInList' : 'common.selectAllCardsInList')} onClick={handleSelectAllClick} disabled={!hasCards}>
+        <Button style={ButtonStyle.PopupContext} title={t(isAllCardsSelected ? 'common.deselectAllCardsInList' : 'common.selectAllCardsInList')} onClick={handleSelectAllClick} disabled={cardsCount === 0}>
           <Icon type={IconType.Check} size={IconSize.Size13} className={s.icon} />
           {t(isAllCardsSelected ? 'common.deselectAllCardsInList' : 'common.selectAllCardsInList')}
+        </Button>
+        <Popup.Separator />
+        <Button style={ButtonStyle.PopupContext} title={t('common.archiveAllCards', { context: 'title' })} onClick={handleArchiveAllClick} disabled={cardsCount === 0}>
+          <Icon type={IconType.Archive} size={IconSize.Size13} className={s.icon} />
+          {t('common.archiveAllCards', { context: 'title' })}
         </Button>
         <Popup.Separator />
         <Button style={ButtonStyle.PopupContext} title={t('action.deleteList', { context: 'title' })} onClick={handleDeleteClick}>
@@ -211,18 +238,19 @@ ActionsStep.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  hasCards: PropTypes.bool,
+  cardsCount: PropTypes.number,
   isAllCardsSelected: PropTypes.bool,
   onNameEdit: PropTypes.func.isRequired,
   onCardAdd: PropTypes.func.isRequired,
   onSelectAllToggle: PropTypes.func.isRequired,
+  onArchiveAll: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onTypeUpdate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
 ActionsStep.defaultProps = {
-  hasCards: false,
+  cardsCount: 0,
   isAllCardsSelected: false,
   wipLimit: undefined,
   autoArchiveDays: undefined,

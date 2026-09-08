@@ -182,6 +182,32 @@
     padding-bottom: 8px;
   }
 
+  // Source-column heading inside a month group. Only rendered when a month's cards came from
+  // more than one column, so a consolidated board never shows it.
+  .subGroupHead {
+    align-items: center;
+    color: var(--textColor4);
+    display: flex;
+    font-size: 10.5px;
+    font-weight: 700;
+    gap: 8px;
+    letter-spacing: 0.08em;
+    padding: 10px 10px 4px;
+    text-transform: uppercase;
+  }
+
+  .subGroupName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .subGroupCount {
+    color: var(--textColor4);
+    font-size: 10.5px;
+    opacity: 0.75;
+  }
+
   .row {
     display: grid;
     grid-template-columns: 1.4fr auto 120px 80px 60px 24px;

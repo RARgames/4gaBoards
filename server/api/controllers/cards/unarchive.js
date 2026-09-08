@@ -1,12 +1,14 @@
-// §5.4 / §7 Decision 2: "Restore" (card-detail-modal button). Always clears archivedAt AND
-// completedAt — the latter is required, not cosmetic: if the card stayed in a `done`-type list
-// with its old completedAt intact, sails.helpers.cards.isArchived would reclassify it as
-// archived again on the very next board fetch (completedAt + autoArchiveDays is still elapsed).
-// Restoring means "back to normal, undone" regardless of where it lands.
+// §5.4 / §7 Decision 2: "Restore" (card-detail-modal button). Always clears archivedAt.
 //
 // If the board has an `active`-type list, the card is moved there (appended to the end),
 // matching the spec's recommendation. Otherwise the card stays in its current list — un-done,
 // but not relocated — for the user to drag manually.
+//
+// completedAt is preserved when the card lands outside a `done`-type list, so a restored card
+// keeps the date it was actually completed (the Archive groups by it). It has to be cleared
+// when the card stays in a done list, though: sails.helpers.cards.isArchived would otherwise
+// reclassify it as archived on the very next board fetch, since completedAt + autoArchiveDays
+// is still elapsed.
 
 const Errors = {
   NOT_ENOUGH_RIGHTS: {
@@ -58,7 +60,6 @@ module.exports = {
 
     const values = {
       archivedAt: null,
-      completedAt: null,
     };
 
     if (targetList && targetList.id !== list.id) {
@@ -67,6 +68,11 @@ module.exports = {
 
       values.list = targetList;
       values.position = maxPosition + 65536;
+    }
+
+    const finalList = values.list || list;
+    if (finalList.type === 'done') {
+      values.completedAt = null;
     }
 
     const updatedCard = await sails.helpers.cards.updateOne.with({
