@@ -1,19 +1,97 @@
 :global(#app) {
-  .filter {
-    background: var(--backgroundColorTmpDarkerField2);
-    border: solid var(--backgroundPopupSeparator);
-    border-width: 1px 1px 1px 0;
-    overflow: hidden;
+  .wrapper {
+    position: relative;
+    flex: 0 0 auto;
+  }
 
-    &:last-child {
-      border-radius: 0 3px 3px 0;
+  // Collapsed control. The badge is what keeps the filter state legible when
+  // the panel is shut.
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 10px;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: var(--tw-radius);
+    color: var(--ink-2);
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      border-color 130ms ease,
+      color 130ms ease;
+
+    &:hover {
+      border-color: var(--ink-3);
+      color: var(--ink);
     }
   }
 
-  &:global([data-theme-shape='rounded']) .filter {
-    &:last-child {
-      border-radius: 0 8px 8px 0;
-    }
+  .toggleOpen {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+
+  .toggleIcon {
+    color: inherit;
+    flex-shrink: 0;
+  }
+
+  .toggleLabel {
+    white-space: nowrap;
+  }
+
+  .toggleBadge {
+    font-family: var(--fontMono);
+    font-size: 10px;
+    line-height: 15px;
+    min-width: 15px;
+    padding: 0 4px;
+    text-align: center;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--surface);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .toggleChevron {
+    color: inherit;
+    flex-shrink: 0;
+    transition: transform 160ms ease;
+  }
+
+  .toggleChevronOpen {
+    transform: rotate(180deg);
+  }
+
+  // Four rows, each showing its own current selection.
+  // Position comes from floating-ui; this only describes the surface.
+  .panel {
+    z-index: 30;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--tw-radius-lg);
+    box-shadow: 0 10px 26px -10px var(--backgroundPopupShadow);
+  }
+
+  .filter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    padding: 3px 6px;
+    background: var(--ground);
+    border: 1px solid var(--line);
+    border-radius: var(--tw-radius);
+    overflow: hidden;
   }
 
   .filterButton {
@@ -30,6 +108,14 @@
 
   .filterButtonDueDateIsFiltered {
     padding-right: 4px;
+  }
+
+  // Each panel row names itself; the chips beside it are its current value.
+  .filterName {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
   }
 
   .filterItem {
@@ -51,12 +137,13 @@
   }
 
   .filterTitle {
-    border-radius: 3px;
-    color: var(--textColor0);
-    display: inline-block;
+    border-radius: var(--tw-radius);
+    color: var(--ink-2);
+    display: inline-flex;
+    align-items: center;
     font-size: 12px;
     line-height: 20px;
-    padding: 7px 6px;
+    padding: 3px 4px;
   }
 
   .popupWrapper {

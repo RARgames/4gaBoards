@@ -4,18 +4,22 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: calc(15vw);
-    color: var(--textColor0);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
   }
 
   .cardsCount {
-    color: var(--textColorCounter);
-    font-size: 12px;
+    color: var(--ink-3);
+    font-family: var(--fontMono);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
   }
 
   .action {
     flex: 0 0 auto;
     align-items: center;
-    margin-right: 20px;
   }
 
   .actionFlex {
@@ -30,13 +34,26 @@
     margin-right: 0;
   }
 
+  // View switcher reads as one control, not four floating buttons.
+  .switchViewGroup {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--line);
+    border-radius: var(--tw-radius);
+  }
+
+  // Board bar. Third and last row of chrome, on --surface with the project
+  // row above it: both belong to the board, not to the app frame.
   .wrapper {
-    height: 68px;
+    height: 54px;
     width: 100%;
     align-items: center;
     display: flex;
-    padding: 16px 20px;
-    background: var(--backgroundColor);
+    gap: 10px;
+    padding: 0 18px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
   }
 
   .githubAction {
@@ -53,38 +70,32 @@
   }
 
   .switchViewButton {
-    border: 1px solid var(--backgroundPopupSeparator);
-    padding: 8px 6px;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-3);
     transition:
       background-color 120ms ease,
       color 120ms ease;
 
-    &:first-child {
-      border-right: 0px;
-      border-radius: 6px 0 0 6px;
-    }
-
-    &:last-child {
-      border-radius: 0 6px 6px 0;
-    }
-
     &:hover {
-      background: var(--backgroundPopupHover);
-    }
-  }
-
-  &:global([data-theme-shape='rounded']) .switchViewButton {
-    &:first-child {
-      border-radius: 10px 0 0 10px;
-    }
-
-    &:last-child {
-      border-radius: 0 10px 10px 0;
+      background: var(--line-soft);
+      color: var(--ink);
     }
   }
 
   .switchViewButton.active {
-    background: var(--backgroundSidebarItemActive);
-    color: var(--textColor0);
+    background: var(--accent);
+    color: var(--surface);
+
+    &:hover {
+      background: var(--accent);
+      color: var(--surface);
+    }
   }
 }

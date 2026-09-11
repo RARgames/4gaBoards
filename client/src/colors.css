@@ -147,9 +147,9 @@
   --turquoise: #1abc9c;
   --midnightBlue: #2c3e50;
   /* Colors (right now for DueDate) */
-  --dueDateNormal: #999999;
-  --dueDateClose: #fdd41e;
-  --dueDateOver: #ff3030;
+  --dueDateNormal: var(--ink-3);
+  --dueDateClose: var(--warn);
+  --dueDateOver: var(--crit);
   /* Colors Markdown Editor */
   --mdBlack: #000000;
   --mdGrey: #d3d3d3;
@@ -395,9 +395,9 @@
   --turquoise: #56d4dd;
   --midnightBlue: #1f6feb;
   /* Colors (right now for DueDate) */
-  --dueDateNormal: #8b949e;
-  --dueDateClose: #d29922;
-  --dueDateOver: #f85149;
+  --dueDateNormal: var(--ink-3);
+  --dueDateClose: var(--warn);
+  --dueDateOver: var(--crit);
   /* Colors Markdown Editor */
   --mdBlack: #0d1117;
   --mdGrey: #8b949e;
@@ -561,9 +561,9 @@
   --turquoise: #1d7f8c;
   --midnightBlue: #0055cc;
   /* Colors (right now for DueDate) */
-  --dueDateNormal: #626f86;
-  --dueDateClose: #b38600;
-  --dueDateOver: #c9372c;
+  --dueDateNormal: var(--ink-3);
+  --dueDateClose: var(--warn);
+  --dueDateOver: var(--crit);
   /* Colors Markdown Editor */
   --mdBlack: #172b4d;
   --mdGrey: #758195;

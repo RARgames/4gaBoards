@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import clsx from 'clsx';
 import { format } from 'date-fns';
+import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
@@ -13,7 +15,6 @@ import DueDateEditPopup from '../DueDateEditPopup';
 import Label from '../Label';
 import LabelsPopup from '../LabelsPopup';
 import MembershipsPopup from '../MembershipsPopup';
-import Priority from '../Priority';
 import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
@@ -21,6 +22,7 @@ import { Button, ButtonStyle, Checkbox, CheckboxSize, Icon, IconType, IconSize, 
 import ActionsPopup from './ActionsPopup';
 import NameEdit from './NameEdit';
 
+import * as bs from '../../backgrounds.module.scss';
 import * as s from './Card.module.scss';
 
 // .wrapper margin-bottom (8px); baked into the virtual row height since react-window positions rows absolutely
@@ -248,6 +250,7 @@ const Card = React.memo(
     );
 
     const visibleMembersCount = 3;
+    const visibleLabelsCount = 2;
     const labelIds = labels.map((label) => label.id);
 
     // §6.2: Done card treatment — gated on the parent list's type, same shape as isBlocked
@@ -293,14 +296,9 @@ const Card = React.memo(
         {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
         {(priority || labels.length > 0 || tasks.length > 0 || description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer || users.length > 0) && (
           <div className={s.details}>
-            {priority && (
-              <span className={s.attachment}>
-                <Priority name={priority.name} color={priority.color} variant="card" />
-              </span>
-            )}
             {labels.length > 0 && (
               <span className={s.labels}>
-                {labels.map((label) => (
+                {labels.slice(0, visibleLabelsCount).map((label) => (
                   <LabelsPopup
                     key={label.id}
                     items={allLabels}
@@ -318,6 +316,31 @@ const Card = React.memo(
                     <Label name={label.name} color={label.color} variant="card" isClickable={canEdit} />
                   </LabelsPopup>
                 ))}
+                {labels.length > visibleLabelsCount && (
+                  <LabelsPopup
+                    items={allLabels}
+                    currentIds={labelIds}
+                    onSelect={onLabelAdd}
+                    onDeselect={onLabelRemove}
+                    onCreate={onLabelCreate}
+                    onUpdate={onLabelUpdate}
+                    onDelete={onLabelDelete}
+                    canEdit={canEdit}
+                    offset={0}
+                    wrapperClassName={clsx(s.attachment, s.attachmentLeft)}
+                    disabled={!canEdit}
+                  >
+                    <span
+                      className={s.moreLabels}
+                      title={labels
+                        .slice(visibleLabelsCount)
+                        .map((label) => label.name)
+                        .join(',\n')}
+                    >
+                      +{labels.length - visibleLabelsCount}
+                    </span>
+                  </LabelsPopup>
+                )}
               </span>
             )}
             {tasks.length > 0 && (
@@ -436,6 +459,7 @@ const Card = React.memo(
               isSelected && s.cardSelected,
             )}
           >
+            {priority && <span className={clsx(s.priorityStripe, bs[`background${upperFirst(camelCase(priority.color))}`])} title={t('common.priority_title', { context: 'title' })} aria-hidden="true" />}
             {isBlocked && (
               <span className={s.blockedIndicator} title={t('common.cardIsBlocked')}>
                 <Icon type={IconType.Exclamation} size={IconSize.Size20} className={s.blockedIndicatorIcon} />

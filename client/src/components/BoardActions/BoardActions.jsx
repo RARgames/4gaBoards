@@ -112,7 +112,7 @@ const BoardActions = React.memo(
             onBoardSearchParamsUpdate={onBoardSearchParamsUpdate}
           />
         </div>
-        <div className={s.action}>
+        <div className={clsx(s.action, s.switchViewGroup)} role="group" aria-label={t('common.switchToBoardView')}>
           <Button style={ButtonStyle.IconBase} title={t('common.switchToBoardView')} onClick={() => onViewModeChange('board')} className={clsx(s.switchViewButton, viewMode === 'board' && s.active)}>
             <Icon type={IconType.Board} size={IconSize.Size18} />
           </Button>

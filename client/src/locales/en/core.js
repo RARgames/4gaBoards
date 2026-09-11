@@ -530,6 +530,7 @@ export default {
       filterByText: 'Filter by Text/Activity Type...',
       filterByUser: 'Filter by User...',
       filterCards: 'Filter cards...',
+      filters_title: 'Filters',
       filterIdAggregated: 'Aggregated',
       filterIdBoard: 'Board',
       filterIdCard: 'Card',

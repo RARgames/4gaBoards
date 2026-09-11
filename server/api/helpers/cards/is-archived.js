@@ -19,7 +19,6 @@ module.exports = {
     },
     list: {
       type: 'ref',
-      allowNull: true,
     },
   },
 
