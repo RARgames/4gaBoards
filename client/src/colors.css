@@ -165,11 +165,11 @@
   --mdCyan: #00ffff;
   --mdOrange: #ffa500;
   /* Hero card accent system (hero bar on card faces, hero banner + hierarchy accents in card modal) */
-  --heroAccent: #b8a51c;
-  --heroAccentHover: #c8b321;
-  --heroAccentText: #ffffff;
-  --heroBanner: #f1c40f;
-  --heroBannerText: #1a1a1a;
+  --heroAccent: #a58ae0;
+  --heroAccentHover: #b9a3e8;
+  --heroAccentText: #0e1315;
+  --heroBanner: #241d38;
+  --heroBannerText: #b9a3e8;
 
   /*
    * Boards overview tiles (Boards.jsx / BoardTile.jsx) — lane fingerprint bar mix
@@ -253,6 +253,13 @@
 
 /* Github Dark Color Schema */
 [data-theme='github-dark'] {
+  /* Hero/child relationship accent, in GitHub's own purple. */
+  --heroAccent: #a371f7;
+  --heroAccentHover: #b586f9;
+  --heroAccentText: #010409;
+  --heroBanner: #1f1b33;
+  --heroBannerText: #b586f9;
+
   /* Redesign primitives — GitHub's own palette, so the theme keeps its identity. */
   --surface: #161b22;
   --surface-hover: #1c2128;
@@ -579,11 +586,11 @@
   --mdCyan: #1d7f8c;
   --mdOrange: #d97008;
   /* Hero card accent system — softened for light surfaces: yellow chip with dark amber text */
-  --heroAccent: #f5cd47;
-  --heroAccentHover: #e2b203;
-  --heroAccentText: #533f04;
-  --heroBanner: #f8e6a0;
-  --heroBannerText: #533f04;
+  --heroAccent: #6b4fa8;
+  --heroAccentHover: #573f8c;
+  --heroAccentText: #ffffff;
+  --heroBanner: #eae5f6;
+  --heroBannerText: #55408a;
   /* Boards overview tiles — higher mix % than default theme so fingerprint bars stay
      visible against this theme's light --backgroundList instead of washing out. */
   --boardTileAccentMix: 55%;

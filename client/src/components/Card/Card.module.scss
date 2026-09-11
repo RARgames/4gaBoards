@@ -146,8 +146,10 @@
   }
 
   // Hero cards (cards that have children) AND child cards (cards with a parent) share the same yellow accent border.
+  // 1px, like every other card. At 2px it was the only card on the board with a
+  // heavier edge, which read as urgency rather than as a relationship.
   .cardHasHeroAccent {
-    border: 2px solid var(--heroAccent);
+    border: 1px solid var(--heroAccent);
   }
 
   // Declared after .cardOpen/.cardHasHeroAccent (and repeated with the hover selector) so the
@@ -160,11 +162,13 @@
   }
 
   // Clickable header bar shown at the top of a Child card with the Hero's name. Clicking opens the Hero.
+  // A tint carrying the hue as text, like the label chips: this names a
+  // relationship, it is not an alert.
   .heroBar {
-    background: var(--heroAccent);
+    background: var(--heroBanner);
     border: none;
     border-radius: 4px 4px 0 0;
-    color: var(--heroAccentText);
+    color: var(--heroBannerText);
     cursor: pointer;
     display: block;
     font-size: 12px;
@@ -180,7 +184,8 @@
     width: calc(100% + 4px);
 
     &:hover {
-      background: var(--heroAccentHover);
+      background: var(--heroBanner);
+      color: var(--heroAccentHover);
     }
   }
 
