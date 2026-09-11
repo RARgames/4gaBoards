@@ -81,4 +81,39 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .addToggle {
+    display: inline-flex;
+    align-self: flex-start;
+    width: fit-content;
+    align-items: center;
+    gap: 5px;
+    margin-top: 4px;
+    padding: 3px 8px;
+    font-size: 11.5px;
+    background: none;
+    border: 1px dashed var(--line);
+    border-radius: var(--tw-radius);
+    color: var(--ink-3);
+    cursor: pointer;
+    transition:
+      border-color 130ms ease,
+      color 130ms ease;
+
+    &:hover {
+      border-style: solid;
+      border-color: var(--accent);
+      color: var(--accent-ink);
+    }
+  }
+
+  .addToggleOpen {
+    border-style: solid;
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .addToggleIcon {
+    color: inherit;
+  }
 }

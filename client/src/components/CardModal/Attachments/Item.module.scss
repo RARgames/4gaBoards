@@ -123,4 +123,87 @@
     align-items: center;
     background: var(--backgroundColorTmpBackgroundTasks);
   }
+
+  // Tile variant: images are shown at a size where you can recognise them.
+  // A screenshot in a 26px square tells you nothing, which is the wrong thing
+  // to shrink on a card whose subject is what is on screen.
+  .wrapperTile {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    border-radius: var(--tw-radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+
+    .thumbnail {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      margin: 0;
+      border-radius: 0;
+      cursor: zoom-in;
+    }
+
+    .details {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 14px 6px 4px;
+      background: linear-gradient(to top, rgba(8, 12, 14, 0.86), transparent);
+      pointer-events: none;
+    }
+
+    .name {
+      display: block;
+      font-size: 10px;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .date,
+    .optionButton {
+      display: none;
+    }
+
+    .buttons {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      opacity: 0;
+      transition: opacity 130ms ease;
+    }
+
+    &:hover {
+      border-color: var(--accent);
+
+      .buttons {
+        opacity: 1;
+      }
+    }
+
+    .imageSelected {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      top: 4px;
+      left: 4px;
+      right: auto;
+      bottom: auto;
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: rgba(8, 12, 14, 0.68);
+      color: #fff;
+    }
+  }
+
+  .imageSelectedText {
+    font-family: var(--fontMono);
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
 }

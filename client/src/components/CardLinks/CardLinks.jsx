@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import api from '../../api';
@@ -106,6 +107,11 @@ LinkAdder.propTypes = {
 };
 
 const CardLinks = React.memo(({ cardId, currentBoardId, references, blockedBy, referencedBy, blocking, accessibleBoards, canEdit, onCreate, onDelete }) => {
+  // The board + card adder is two full-width dropdowns per section, i.e. four
+  // permanent selects on a card that usually links nothing. It sits behind its
+  // own chip instead; existing links stay visible as pills either way.
+  const [openAdderType, setOpenAdderType] = useState(null);
+
   const [t] = useTranslation();
   const navigate = useNavigate();
 
@@ -152,7 +158,15 @@ const CardLinks = React.memo(({ cardId, currentBoardId, references, blockedBy, r
           );
         })}
       </div>
-      {canEdit && accessibleBoards.length > 0 && <LinkAdder cardId={cardId} currentBoardId={currentBoardId} accessibleBoards={accessibleBoards} type={type} placeholder={addLabel} onCreate={onCreate} />}
+      {canEdit && accessibleBoards.length > 0 && (
+        <>
+          <Button style={ButtonStyle.Default} onClick={() => setOpenAdderType((prev) => (prev === type ? null : type))} className={clsx(s.addToggle, openAdderType === type && s.addToggleOpen)} title={addLabel}>
+            <Icon type={openAdderType === type ? IconType.Minus : IconType.Plus} size={IconSize.Size10} className={s.addToggleIcon} />
+            {addLabel}
+          </Button>
+          {openAdderType === type && <LinkAdder cardId={cardId} currentBoardId={currentBoardId} accessibleBoards={accessibleBoards} type={type} placeholder={addLabel} onCreate={onCreate} />}
+        </>
+      )}
     </div>
   );
 

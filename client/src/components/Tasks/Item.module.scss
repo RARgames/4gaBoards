@@ -30,9 +30,11 @@
     -webkit-line-clamp: 2;
   }
 
+  // A done task is still information you may need to read, so it is muted, not
+  // struck out. The green check already carries the state; colour + strikethrough
+  // + check was the same fact encoded three times.
   .taskCompleted {
-    color: var(--textColor3);
-    text-decoration: line-through;
+    color: var(--ink-3);
   }
 
   .taskEditable {
