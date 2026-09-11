@@ -1,50 +1,99 @@
 :global(#app) {
-  .field {
-    width: 100%;
-    padding-right: 26px;
-    height: 36px;
-    border-radius: 3px 0 0 3px;
+  // One bordered control: magnifier, input, clear, then the two search options.
+  .wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 250px;
+    padding: 0 6px 0 9px;
+    height: 32px;
+    background: var(--sunken);
+    border: 1px solid transparent;
+    border-radius: var(--tw-radius);
+    transition:
+      border-color 140ms ease,
+      background 140ms ease;
+
+    &:hover {
+      border-color: var(--line);
+    }
+
+    &:focus-within {
+      background: var(--surface);
+      border-color: var(--accent);
+    }
   }
 
-  &:global([data-theme-shape='rounded']) .field {
-    border-radius: 8px 0 0 8px;
+  .searchIcon {
+    color: var(--ink-3);
+    flex-shrink: 0;
+  }
+
+  .form {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .field {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    color: var(--ink);
+    font-size: 12.5px;
+
+    &:focus {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
   }
 
   .clearButton {
-    margin-left: -24px;
+    flex-shrink: 0;
 
     svg {
       vertical-align: middle;
-      fill: var(--textColor3);
+      color: var(--ink-3);
     }
 
-    &:hover {
-      svg {
-        fill: var(--textColor4);
-      }
+    &:hover svg {
+      color: var(--ink);
     }
-  }
-
-  .paramsWrapper {
-    display: flex;
   }
 
   .paramsButton {
-    background: var(--backgroundColorTmpDarkerField2);
-    border: solid var(--backgroundPopupSeparator);
-    border-width: 1px 1px 1px 0;
-    color: var(--textColor0);
-    display: inline-block;
-    font-size: 12px;
-    line-height: 20px;
-    padding: 7px 6px;
+    flex-shrink: 0;
+    width: 21px;
+    height: 19px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--ink-3);
+    transition:
+      background 120ms ease,
+      color 120ms ease;
 
     &:hover {
-      background: var(--backgroundColorTmpBackgroundHover);
+      background: var(--line-soft);
+      color: var(--ink);
     }
   }
 
   .paramsButtonActive {
-    background: var(--backgroundColorTmpBackgroundHover);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+
+    &:hover {
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+    }
   }
 }

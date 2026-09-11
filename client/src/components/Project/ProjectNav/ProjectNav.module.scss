@@ -1,39 +1,57 @@
+// Project row. Sits on --surface, not the chrome surface: it belongs to the
+// board below it, not to the app frame above it. Scope narrows as you go down.
 .wrapper {
-  align-items: center;
-  background-color: var(--backgroundHeader);
+  align-items: stretch;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--line);
   display: flex;
-  gap: 2px;
+  gap: 1px;
+  height: 42px;
   overflow-x: auto;
-  padding: 0 12px;
+  padding: 0 14px;
 }
 
 .tab {
   align-items: center;
-  color: var(--textColor3);
+  color: var(--ink-2);
   display: flex;
-  gap: 6px;
-  padding: 10px 10px 8px;
+  gap: 7px;
+  padding: 0 11px;
+  margin-bottom: -1px;
   text-decoration: none;
   white-space: nowrap;
   border-bottom: 2px solid transparent;
+  transition:
+    color 130ms ease,
+    border-color 130ms ease;
 
   &:hover {
-    color: var(--textColor1);
+    color: var(--ink);
   }
 }
 
 .tabActive {
-  border-bottom-color: var(--borderOutline);
-  color: var(--textColor0);
+  border-bottom-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
 }
 
 .tabIcon {
-  fill: currentColor;
+  color: inherit;
   flex-shrink: 0;
 }
 
 .tabLabel {
-  font-size: 13px;
+  font-size: 12.5px;
+}
+
+// Counts where a count is useful, so the row carries information as well as
+// navigation (Boards 9, Documents 18, Members 24).
+.tabCount {
+  font-family: var(--fontMono);
+  font-size: 10px;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Collapse tab labels to icons on narrow viewports; tooltips (title) provide context. */
@@ -43,7 +61,7 @@
   }
 
   .tab {
-    padding: 10px 8px 8px;
+    padding: 0 8px;
   }
 }
 

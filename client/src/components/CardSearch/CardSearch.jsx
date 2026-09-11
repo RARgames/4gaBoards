@@ -82,27 +82,26 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
     setAnyMatchValue(anyMatch);
   }, [anyMatch, defaultValue, matchCase, setValue]);
 
+  // Match-case and any-match only modify this search, so they live inside the
+  // field rather than sitting beside it as peers of the board filters.
   return (
-    <>
-      <div>
-        <Form onKeyDown={handleKeyDown}>
-          <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t('common.filterCards')} onFocus={handleFocus} />
-          {value !== '' && (
-            <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
-              <Icon type={IconType.Close} size={IconSize.Size10} />
-            </Button>
-          )}
-        </Form>
-      </div>
-      <div className={s.paramsWrapper}>
-        <Button title={t('common.matchCase')} className={clsx(s.paramsButton, matchCaseValue && s.paramsButtonActive)} onClick={handleMatchCaseChange}>
-          <Icon type={IconType.MatchCase} size={IconSize.Size13} />
+    <div className={s.wrapper}>
+      <Icon type={IconType.Search} size={IconSize.Size13} className={s.searchIcon} />
+      <Form onKeyDown={handleKeyDown} className={s.form}>
+        <Input ref={field} value={value} className={s.field} onChange={handleChange} placeholder={t('common.filterCards')} onFocus={handleFocus} />
+      </Form>
+      {value !== '' && (
+        <Button style={ButtonStyle.Icon} title={t('common.clearFilter')} onClick={handleCancel} className={s.clearButton}>
+          <Icon type={IconType.Close} size={IconSize.Size10} />
         </Button>
-        <Button title={t('common.anyMatch')} className={clsx(s.paramsButton, anyMatchValue && s.paramsButtonActive)} onClick={handleAnyMatchChange}>
-          <Icon type={IconType.AnyMatch} size={IconSize.Size13} />
-        </Button>
-      </div>
-    </>
+      )}
+      <Button title={t('common.matchCase')} className={clsx(s.paramsButton, matchCaseValue && s.paramsButtonActive)} onClick={handleMatchCaseChange}>
+        <Icon type={IconType.MatchCase} size={IconSize.Size13} />
+      </Button>
+      <Button title={t('common.anyMatch')} className={clsx(s.paramsButton, anyMatchValue && s.paramsButtonActive)} onClick={handleAnyMatchChange}>
+        <Icon type={IconType.AnyMatch} size={IconSize.Size13} />
+      </Button>
+    </div>
   );
 });
 

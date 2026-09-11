@@ -39,6 +39,10 @@ const ProjectNav = React.memo(({ projectId, path, isManager, isAdmin }) => {
     <Link key={tab.path} to={tab.path.replace(':id', projectId)} title={tab.label} className={clsx(s.tab, isTabActive(tab) && s.tabActive)}>
       <Icon type={tab.icon} size={IconSize.Size16} className={s.tabIcon} />
       <span className={s.tabLabel}>{tab.label}</span>
+      {/* TODO: counts are styled and rendered when a tab supplies one, but nothing
+          plumbs them in yet - ProjectNav is presentational and has no container.
+          Boards/Documents/Members are the three worth wiring. */}
+      {tab.count != null && <span className={s.tabCount}>{tab.count}</span>}
     </Link>
   );
 

@@ -1,34 +1,43 @@
 :global(#app) {
+  // Workspace row. Same surface as the sidebar so the two read as one
+  // L-shaped frame around the work; the board's own bars sit on --surface.
+  // No box-shadow: the border already draws the line, and the two together
+  // read as a double rule.
   .wrapper {
-    background: var(--backgroundHeader);
-    border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
-    box-shadow: var(--shadowBlack01) 0 1px 0 0;
+    background: var(--sunken);
+    border-bottom: 1px solid var(--line);
     display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 12px;
     width: 100%;
-    height: 50px;
+    height: 44px;
   }
 
   .logo {
-    display: inline-block;
-    margin: 8px 0 8px 30px;
+    display: inline-flex;
+    align-items: center;
+    // The supplied banner is blue-on-dark with white counters, so on a light
+    // ground its lower half disappears. The plaque gives it the dark it needs
+    // and is transparent in the dark themes, where the bar already provides one.
+    background: var(--logo-plaque);
     border-radius: var(--tw-radius);
+    padding: 3px 7px;
     transition: background-color 120ms ease;
-
-    &:hover {
-      background: var(--backgroundHeaderHover);
-    }
   }
 
   .logoIcon {
-    margin-top: 1px;
-    height: 32px;
+    display: block;
+    height: 28px;
+    width: auto;
   }
 
   .title {
-    color: var(--textColor0);
-    font-size: 20px;
-    font-weight: bold;
-    padding: 14px 10px 14px 10px;
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    padding: 0 10px;
     text-wrap: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -102,7 +111,7 @@
     color: var(--textColorGold);
 
     path {
-      fill: var(--textColorGold);
+      color: var(--textColorGold);
     }
     white-space: nowrap;
 
@@ -110,7 +119,7 @@
       color: var(--textColorGoldHover);
 
       path {
-        fill: var(--textColorGoldHover);
+        color: var(--textColorGoldHover);
       }
     }
   }
