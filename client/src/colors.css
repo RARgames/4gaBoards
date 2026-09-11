@@ -424,18 +424,21 @@
 /* Trello-style Light Theme — modern grey, content-light */
 [data-theme='trello-light'] {
   /* Redesign primitives — darker and higher contrast than the previous light set.
-   * White is the card face: refusing pure white is what forced every other grey
-   * to crowd it. --ink-3 was ~3.8:1 on white (under AA); it is now ~5.7:1. */
-  --surface: #ffffff;
-  --surface-hover: #f3f5f6;
-  --surface-selected: #d9eaeb;
-  --ground: #eceeef;
-  --sunken: #dfe3e4;
-  --line: #c3cbcc;
-  --line-soft: #d6dbdc;
-  --ink: #0d1314;
-  --ink-2: #344244;
-  --ink-3: #5a6a6c;
+   * Surfaces are stepped rather than crowded, but the whole ramp sits lower than
+   * a white-anchored one: --ground covers most of the screen, and at 0.85
+   * luminance that reads as glare. It is now 0.76, with a larger step down to
+   * --sunken than before (0.121 vs 0.090). --ink-3 is the lightest value that
+   * still clears AA on all three surfaces (4.54:1 on the darkest). */
+  --surface: #f2f4f5;
+  --surface-hover: #e8ebec;
+  --surface-selected: #d2e7e8;
+  --ground: #dfe3e5;
+  --sunken: #ccd3d5;
+  --line: #a9b4b7;
+  --line-soft: #bcc5c7;
+  --ink: #0c1213;
+  --ink-2: #31403f;
+  --ink-3: #4d5d5f;
   --accent: #0a656c;
   --accent-ink: #084f56;
   --accent-soft: #d2e9ea;
