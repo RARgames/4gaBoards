@@ -8,13 +8,15 @@
     padding: 0;
   }
 
+  // inline-block + vertical-align: top left this sitting ~2.5px above the rest
+  // of the card's meta row, which is a centred flex row.
   .wrapper {
     border: none;
     border-radius: calc(var(--tw-radius) - 2px);
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     outline: none;
     text-align: left;
-    vertical-align: top;
   }
 
   /* Colors */

@@ -60,25 +60,27 @@
   }
 
   .attachment {
-    display: inline-block;
-    line-height: 0;
-    margin: 0 0 6px 0;
+    display: inline-flex;
+    align-items: center;
+    line-height: normal;
+    margin: 0;
     max-width: 100%;
-    vertical-align: top;
   }
 
   .attachmentLeft {
-    margin-right: 4px;
+    margin-right: 0;
   }
 
   .attachments {
-    display: inline-block;
-    padding-bottom: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 0;
   }
 
   .attachmentsRight {
-    float: right;
-    line-height: 0;
+    margin-left: auto;
+    line-height: normal;
   }
 
   // §6.7: the card left behind in its list while being dragged — matches the timeline's
@@ -243,11 +245,19 @@
   }
 
   .details {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
     padding: 7px 11px 9px 11px;
   }
 
   .labels {
-    display: block;
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
     max-width: 100%;
     overflow: hidden;
   }
@@ -458,7 +468,8 @@
   }
 
   .users {
-    margin-right: 10px;
+    margin-right: 0;
+    gap: 0;
   }
 
   // When the card shows the blocked-indicator at bottom-right, push the members area further left so it doesn't overlap the indicator.
