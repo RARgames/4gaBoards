@@ -119,12 +119,16 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
       return entries
         .sort(([keyA], [keyB]) => monthOrder.get(keyB) - monthOrder.get(keyA))
         .map(([key, cards]) => {
-          // Sub-headings only earn their space when a month actually spans more than one
-          // source column — after the Done lists are consolidated, months read as flat lists.
-          const byList = groupBy(cards, 'archivedFrom');
-          const listNames = Object.keys(byList);
+          // Day sub-headings replace the per-row date column: the date is stated
+          // once per day instead of on every row it applies to.
+          const byDay = new Map();
+          cards.forEach((card) => {
+            const dayKey = format(card.archivedOn, 'EEE dd MMM');
+            if (!byDay.has(dayKey)) byDay.set(dayKey, []);
+            byDay.get(dayKey).push(card);
+          });
 
-          return [key, cards, listNames.length > 1 ? listNames.sort().map((listName) => [listName, byList[listName]]) : null];
+          return [key, cards, Array.from(byDay.entries())];
         });
     }
 
@@ -134,13 +138,23 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
   const stats = useMemo(() => {
     const now = new Date();
     const completedThisMonth = enrichedItems.filter((card) => card.completedAt && card.completedAt.getMonth() === now.getMonth() && card.completedAt.getFullYear() === now.getFullYear()).length;
-    const cycleDaysValues = enrichedItems.map((card) => card.cycleDays).filter((value) => value != null);
+    const cycleDaysValues = enrichedItems
+      .map((card) => card.cycleDays)
+      .filter((value) => value != null)
+      .sort((a, b) => a - b);
     const avgCycleDays = cycleDaysValues.length > 0 ? cycleDaysValues.reduce((sum, value) => sum + value, 0) / cycleDaysValues.length : null;
+    const middle = Math.floor(cycleDaysValues.length / 2);
+    let medianCycleDays = null;
+    if (cycleDaysValues.length > 0) {
+      medianCycleDays = cycleDaysValues.length % 2 === 0 ? (cycleDaysValues[middle - 1] + cycleDaysValues[middle]) / 2 : cycleDaysValues[middle];
+    }
 
     return {
       total: enrichedItems.length,
       completedThisMonth,
       avgCycleDays,
+      medianCycleDays,
+      cycleDataCount: cycleDaysValues.length,
     };
   }, [enrichedItems]);
 
@@ -209,8 +223,7 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
         ))}
       </span>
       <span className={s.rowAssignee}>{card.cardUsers.length > 0 ? card.cardUsers[0].name : '—'}</span>
-      <span className={clsx(s.rowDate, gs.fontMono)}>{format(card.archivedOn, 'MMM dd')}</span>
-      <span className={clsx(s.rowCycle, gs.fontMono)}>{card.cycleDays != null ? `${card.cycleDays}d` : '—'}</span>
+      <span className={clsx(s.rowCycle, gs.fontMono)}>{card.cycleDays != null ? `${card.cycleDays}d` : ''}</span>
       {canEdit && (
         <Button style={ButtonStyle.Icon} title={t('action.restoreCard', { context: 'title' })} onClick={() => handleRestore(card.id)} className={s.rowRestore}>
           <Icon type={IconType.ArrowLeftBig} size={IconSize.Size13} />
@@ -296,8 +309,13 @@ function ArchiveView({ boardId, allLabels, canEdit, onRestore }) {
             <span className={s.statLabel}>{t('common.completedThisMonth')}</span>
           </div>
           <div className={s.stat}>
-            <span className={clsx(s.statNum, gs.fontMono)}>{stats.avgCycleDays != null ? `${stats.avgCycleDays.toFixed(1)}d` : '—'}</span>
-            <span className={s.statLabel}>{t('common.avgCycleTime')}</span>
+            <span className={clsx(s.statNum, gs.fontMono)}>{stats.medianCycleDays != null ? `${Math.round(stats.medianCycleDays)}d` : '—'}</span>
+            <span className={s.statLabel}>{t('common.medianCycleTime')}</span>
+            {stats.avgCycleDays != null && (
+              <span className={clsx(s.statSub, gs.fontMono)}>
+                {t('common.meanCycleTime', { days: stats.avgCycleDays.toFixed(1) })} &middot; {t('common.cycleDataCoverage', { count: stats.cycleDataCount, total: stats.total })}
+              </span>
+            )}
           </div>
         </div>
 

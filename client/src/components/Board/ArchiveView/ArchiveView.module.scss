@@ -131,6 +131,18 @@
     padding: 6px 20px 24px;
   }
 
+  // Caps the ledger so rows stay readable on a wide monitor instead of the
+  // name column stretching away from its own metadata.
+  .group {
+    max-width: 1060px;
+  }
+
+  .statSub {
+    font-size: 10.5px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+
   .emptyState {
     padding: 40px 10px;
     text-align: center;
@@ -222,7 +234,11 @@
 
   .row {
     display: grid;
-    grid-template-columns: 1.4fr auto 120px 80px 60px 24px;
+    // Was 1.4fr for the name, which absorbs every spare pixel: on a wide monitor
+    // a 40-character title sat with ~600px of nothing between it and its own
+    // chips. minmax(0,1fr) inside a capped .list keeps the row readable in one
+    // saccade instead of two.
+    grid-template-columns: minmax(0, 1fr) auto 124px 86px 24px;
     align-items: center;
     gap: 14px;
     padding: 8px 10px;
