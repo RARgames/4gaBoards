@@ -61,7 +61,6 @@ const CardModal = React.memo(
     attachmentsShown,
     commentsShown,
     hideCardModalActivity,
-    hideClosestDueDate,
     preferredDetailsFont,
     userId,
     isGithubConnected,
@@ -83,7 +82,6 @@ const CardModal = React.memo(
     commentCount,
     url,
     closestTaskDueDate,
-    closestDueDate,
     createdAt,
     createdBy,
     updatedAt,
@@ -497,8 +495,8 @@ const CardModal = React.memo(
     );
 
     const labelsNode = (
-      <div className={s.headerItems}>
-        <div className={s.text}>
+      <div className={clsx(s.headerItems, s.headerItemsInline)}>
+        <div className={clsx(s.text, s.textInline)}>
           {t('common.labels', { context: 'title' })}
           {canEdit && (
             <div className={s.popupWrapper}>
@@ -644,15 +642,6 @@ const CardModal = React.memo(
           <DueDateEditPopup defaultValue={startDate} onUpdate={handleStartDateUpdate} disabled={!canEdit}>
             <DueDate value={startDate} isClickable={canEdit} />
           </DueDateEditPopup>
-        </span>
-      </div>
-    );
-
-    const closestDueDateNode = closestDueDate && (
-      <div className={s.headerItems}>
-        <div className={s.text}>{t('common.closestDueDate', { context: 'title' })}</div>
-        <span className={s.headerItem}>
-          <DueDate value={closestDueDate} titlePrefix={t('common.cardDueDateSummary', { context: 'title' })} />
         </span>
       </div>
     );
@@ -934,10 +923,11 @@ const CardModal = React.memo(
             <aside className={s.sideColumn}>
               {membersNode}
               {priorityNode}
-              {startDateNode}
-              {dueDateNode}
+              <div className={s.sideRow}>
+                {startDateNode}
+                {dueDateNode}
+              </div>
               {timeNode}
-              {!hideClosestDueDate && closestDueDateNode}
               <CardLinksContainer cardId={id} canEdit={canEdit} />
               {hierarchyNode}
               {(!hideCardModalActivity || updatedAt || updatedBy) && (
@@ -983,7 +973,6 @@ CardModal.propTypes = {
   attachmentsShown: PropTypes.bool.isRequired,
   commentsShown: PropTypes.bool.isRequired,
   hideCardModalActivity: PropTypes.bool.isRequired,
-  hideClosestDueDate: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
@@ -1005,7 +994,6 @@ CardModal.propTypes = {
   commentCount: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
   closestTaskDueDate: PropTypes.instanceOf(Date),
-  closestDueDate: PropTypes.instanceOf(Date),
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -1053,7 +1041,6 @@ CardModal.defaultProps = {
   priority: undefined,
   parent: undefined,
   closestTaskDueDate: undefined,
-  closestDueDate: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,
