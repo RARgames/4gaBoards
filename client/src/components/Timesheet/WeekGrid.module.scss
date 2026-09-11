@@ -305,4 +305,13 @@
   .dayHeaderCellWeekend {
     background: var(--sunken);
   }
+
+  .entryBlockDimmed {
+    opacity: 0.3;
+  }
+
+  .entryBlockScoped {
+    box-shadow: 0 0 0 2px var(--accent);
+    z-index: 5;
+  }
 }

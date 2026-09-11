@@ -82,6 +82,7 @@ module.exports.routes = {
   'DELETE /api/boards/:id': 'boards/delete',
   'GET /api/boards/:id/export': 'boards/export',
   'GET /api/boards/:id/cards-summary': 'boards/cards-summary',
+  'GET /api/boards/:id/time-totals': 'boards/time-totals',
   'GET /api/boards/:id/archived-cards': 'boards/archived-cards',
   'POST /api/boards/:id/move-archived-cards': 'boards/move-archived-cards',
 

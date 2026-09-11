@@ -36,7 +36,7 @@ const yToMinutes = (y) => (y / HOUR_HEIGHT) * 60;
 
 const minutesToY = (minutes) => (minutes / 60) * HOUR_HEIGHT;
 
-const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, onEntryClick }) => {
+const WeekGrid = React.memo(({ weekStart, entries, scopedCardId, onCreate, onMove, onResize, onEntryClick }) => {
   const [t] = useTranslation();
   const [drag, setDrag] = useState(null);
   const dragRef = useRef(null);
@@ -317,6 +317,8 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
         className={clsx(
           s.entryBlock,
           durationMs > VERY_LONG_ENTRY_DURATION_MS ? s.entryBlockVeryLong : durationMs > LONG_ENTRY_DURATION_MS && s.entryBlockLong,
+          // Scoped to one card: its blocks keep full contrast, the rest recede.
+          scopedCardId && (`${entry.cardId}` === scopedCardId ? s.entryBlockScoped : s.entryBlockDimmed),
           isDraggingThis && s.entryBlockDragging,
           entry.isPersisted === false && s.entryBlockUnsaved,
         )}
@@ -417,12 +419,17 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
 });
 
 WeekGrid.propTypes = {
+  scopedCardId: PropTypes.string,
   weekStart: PropTypes.instanceOf(Date).isRequired,
   entries: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onCreate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
   onEntryClick: PropTypes.func.isRequired,
+};
+
+WeekGrid.defaultProps = {
+  scopedCardId: null,
 };
 
 export default WeekGrid;

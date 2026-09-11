@@ -534,6 +534,7 @@ export default {
       medianCycleTime: 'Median cycle time',
       meanCycleTime: 'mean {{days}}d',
       cycleDataCoverage: '{{count}} of {{total}} tracked',
+      showingTimeOnCard: 'Showing time on {{name}}',
       filterCards: 'Filter cards...',
       filters_title: 'Filters',
       filterIdAggregated: 'Aggregated',
@@ -943,6 +944,7 @@ export default {
     },
 
     action: {
+      showAllTime: 'Show all time',
       addCard_title: 'Add Card',
       addCard: 'Add card',
       addComment: 'Add comment',

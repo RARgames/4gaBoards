@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useLocation, useSearchParams } from 'react-router';
 import { addDays, addWeeks, startOfDay, startOfWeek } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -48,13 +48,38 @@ const Timesheet = React.memo(
   }) => {
     const [t] = useTranslation();
     const location = useLocation();
+    // ?week=<yyyy-mm-dd>&card=<id> so a jump from a card's hours chip survives a
+    // reload and can be pasted to someone. location.state still works and takes
+    // second place; neither is required.
+    const [searchParams, setSearchParams] = useSearchParams();
     const effectiveTimeZone = getEffectiveTimeZone(timezone);
     const [errorBannerMessage, setErrorBannerMessage] = useState(null);
-    const [weekStart, setWeekStart] = useState(() =>
-      location.state && location.state.weekStart
-        ? zonedTimeToUtc(startOfWeek(utcToZonedTime(new Date(location.state.weekStart), effectiveTimeZone), { weekStartsOn: 1 }), effectiveTimeZone)
-        : computeWeekStartForToday(effectiveTimeZone),
-    );
+    const [weekStart, setWeekStart] = useState(() => {
+      const weekParam = searchParams.get('week');
+      const seed = weekParam || (location.state && location.state.weekStart);
+      if (seed) {
+        // A bare yyyy-mm-dd parses as UTC midnight, which in a negative-offset
+        // zone lands on the previous day and therefore the previous week. Pin it
+        // to local midnight so ?week=2026-09-07 means that Monday everywhere.
+        const parsed = new Date(/^\d{4}-\d{2}-\d{2}$/.test(seed) ? `${seed}T00:00:00` : seed);
+        if (!Number.isNaN(parsed.getTime())) {
+          return zonedTimeToUtc(startOfWeek(utcToZonedTime(parsed, effectiveTimeZone), { weekStartsOn: 1 }), effectiveTimeZone);
+        }
+      }
+      return computeWeekStartForToday(effectiveTimeZone);
+    });
+    const scopedCardId = searchParams.get('card');
+
+    const handleClearCardScope = useCallback(() => {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.delete('card');
+          return next;
+        },
+        { replace: true },
+      );
+    }, [setSearchParams]);
     const [popup, setPopup] = useState(null);
     const [selectedViewedUserId, setSelectedViewedUserId] = useState(() => (location.state && location.state.viewedUserId) || null);
     const [printRange, setPrintRange] = useState(null);
@@ -177,6 +202,10 @@ const Timesheet = React.memo(
           .sort((a, b) => a.startedAt - b.startedAt),
       [timeEntries, viewedUserId, weekStart, weekEnd, projectsById, cardsById, effectiveTimeZone],
     );
+
+    const scopedEntries = useMemo(() => (scopedCardId ? weekEntries.filter((entry) => `${entry.cardId}` === scopedCardId) : []), [scopedCardId, weekEntries]);
+    const scopedCardName = scopedEntries.length > 0 ? scopedEntries[0].cardName : null;
+    const scopedTotalMinutes = scopedEntries.reduce((sum, entry) => sum + Math.round((entry.endedAt.getTime() - entry.startedAt.getTime()) / 60000), 0);
 
     const weekTotalMinutes = useMemo(() => weekEntries.reduce((sum, entry) => sum + Math.round((entry.endedAt.getTime() - entry.startedAt.getTime()) / 60000), 0), [weekEntries]);
     const weeklyCapacity = useMemo(() => getWeeklyCapacity(weeklyHours, weekTotalMinutes), [weeklyHours, weekTotalMinutes]);
@@ -438,8 +467,16 @@ const Timesheet = React.memo(
             </button>
           </div>
         )}
+        {scopedCardId && (
+          <div className={s.cardScopeBar}>
+            <Icon type={IconType.Attach} size={IconSize.Size13} className={s.cardScopeIcon} />
+            <span>{t('common.showingTimeOnCard', { name: scopedCardName || t('common.card') })}</span>
+            {scopedTotalMinutes > 0 && <span className={s.cardScopeTotal}>{formatDuration(scopedTotalMinutes)}</span>}
+            <Button style={ButtonStyle.NoBackground} onClick={handleClearCardScope} className={s.cardScopeClear} content={t('action.showAllTime')} />
+          </div>
+        )}
         <div className={s.content}>
-          <WeekGrid weekStart={zonedWeekStart} entries={weekEntries} onCreate={handleCreate} onMove={handleMove} onResize={handleResize} onEntryClick={handleEntryClick} />
+          <WeekGrid weekStart={zonedWeekStart} entries={weekEntries} scopedCardId={scopedCardId} onCreate={handleCreate} onMove={handleMove} onResize={handleResize} onEntryClick={handleEntryClick} />
           {weekEntries.length === 0 && <div className={s.empty}>{t('common.noTimeEntriesWeek')}</div>}
         </div>
         {popup && (
