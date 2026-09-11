@@ -60,11 +60,17 @@
     border-radius: 4px;
   }
 
+  // Matches .wrapperCard: a label is the same object in both places, so it
+  // should not change size or case when you open the card.
   .wrapperCardModal {
-    font-size: 14px;
-    line-height: 28px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
     max-width: 176px;
-    padding: 0 6px;
+    padding: 2px 7px;
+    border-radius: 4px;
   }
 
   .wrapperLabels {
