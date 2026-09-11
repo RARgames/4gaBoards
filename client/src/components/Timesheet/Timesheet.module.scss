@@ -98,18 +98,14 @@
     pointer-events: none;
   }
 
+  // Was absolutely centred in the toolbar, which put the week's totals nowhere
+  // in particular. It now flows after the spacer, next to Import/Export, and
+  // drops the box: the figures carry themselves.
   .weekCapacitySummary {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
-    padding: 4px 10px;
-    border: 1px solid var(--backgroundColorTmpSeparatorLight);
-    border-radius: 8px;
-    background: color-mix(in srgb, var(--backgroundCardOpened) 82%, transparent);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    gap: 10px;
+    margin-right: 4px;
     white-space: nowrap;
     pointer-events: none;
   }
@@ -201,5 +197,54 @@
     font-size: 13px;
     opacity: 0.6;
     pointer-events: none;
+  }
+
+  .weekCapacityFigures {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .weekCapacitySpent {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .weekCapacityOf {
+    font-family: var(--fontMono);
+    font-size: 10.5px;
+    color: var(--ink-3);
+  }
+
+  .weekCapacityBar {
+    width: 96px;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--sunken);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    flex: none;
+  }
+
+  .weekCapacityBarFill {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .weekCapacityBarFillOver {
+    display: block;
+    height: 100%;
+    background: var(--crit);
+  }
+
+  .weekCapacityLeft {
+    font-family: var(--fontMono);
+    font-size: 10.5px;
+    color: var(--ok);
+    white-space: nowrap;
   }
 }

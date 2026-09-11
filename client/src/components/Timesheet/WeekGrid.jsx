@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import { addDays, addMinutes, differenceInCalendarDays, format, isSameDay, startOfDay } from 'date-fns';
+import { addDays, addMinutes, differenceInCalendarDays, format, isSameDay, isWeekend, startOfDay } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import formatDuration from '../../utils/format-duration';
@@ -13,7 +13,12 @@ export const HOUR_HEIGHT = 48;
 const MINUTES_PER_SLOT = 15;
 const MIN_DURATION_MINUTES = 15;
 const DEFAULT_CREATE_MINUTES = 30;
-const DEFAULT_SCROLL_HOUR = 6;
+const DEFAULT_SCROLL_HOUR = 7;
+// The band behind a normal working day. All 24 hours stay in the DOM - entries
+// can land anywhere - but this gives the grid a shape to read against, so a 7am
+// start looks early without you counting rows.
+const WORKING_HOURS_START = 9;
+const WORKING_HOURS_END = 17;
 const MOVE_THRESHOLD = 4;
 const DAY_MINUTES = 24 * 60;
 const LONG_ENTRY_DURATION_MS = 6 * 60 * 60 * 1000;
@@ -348,10 +353,10 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
           const totalMinutes = dayEntries.reduce((sum, entry) => sum + Math.round((entry.endedAt.getTime() - entry.startedAt.getTime()) / 60000), 0);
 
           return (
-            <div key={day.toISOString()} className={clsx(s.dayHeaderCell, isSameDay(day, now) && s.dayHeaderCellToday)}>
+            <div key={day.toISOString()} className={clsx(s.dayHeaderCell, isSameDay(day, now) && s.dayHeaderCellToday, isWeekend(day) && s.dayHeaderCellWeekend)}>
               <span className={s.dayHeaderName}>{format(day, 'EEE')}</span>
               <span className={s.dayHeaderDate}>{format(day, 'd')}</span>
-              {totalMinutes > 0 && <span className={s.dayHeaderTotal}>{formatDuration(totalMinutes)}</span>}
+              <span className={clsx(s.dayHeaderTotal, totalMinutes === 0 && s.dayHeaderTotalEmpty)}>{totalMinutes > 0 ? formatDuration(totalMinutes) : '—'}</span>
             </div>
           );
         })}
@@ -377,9 +382,10 @@ const WeekGrid = React.memo(({ weekStart, entries, onCreate, onMove, onResize, o
                   key={day.toISOString()}
                   ref={(el) => (columnRefs.current[dayIndex] = el)} // eslint-disable-line no-return-assign
                   data-day-index={dayIndex}
-                  className={clsx(s.dayColumn, isToday && s.dayColumnToday)}
+                  className={clsx(s.dayColumn, isToday && s.dayColumnToday, isWeekend(day) && s.dayColumnWeekend)}
                   onPointerDown={(e) => handleColumnPointerDown(e, dayIndex)}
                 >
+                  <div className={s.workingBand} style={{ top: WORKING_HOURS_START * HOUR_HEIGHT, height: (WORKING_HOURS_END - WORKING_HOURS_START) * HOUR_HEIGHT }} />
                   {Array.from({ length: 24 }, (_, hour) => (
                     <div key={hour} className={s.hourLine} style={{ top: hour * HOUR_HEIGHT }} />
                   ))}

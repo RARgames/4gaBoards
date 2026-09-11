@@ -348,7 +348,6 @@ const Timesheet = React.memo(
           <div className={s.pageHeaderRow}>
             <div className={s.pageHeaderTitles}>
               <TimesheetHeaderTabs isAdmin={isAdmin} active="individual" />
-              <p className={s.pageDescription}>{t('common.timesheetDescription')}</p>
             </div>
             <div className={s.timezoneField}>
               <span className={s.timezoneFieldLabel}>{t('common.timezone', { context: 'title' })}:</span>
@@ -401,14 +400,18 @@ const Timesheet = React.memo(
                 capacity: formatDuration(weeklyCapacity.capacityMinutes),
               })}
             >
-              <span className={s.weekCapacityMetric}>
-                <span className={s.weekCapacityLabel}>{t('common.spent')}</span>
-                <strong className={s.weekCapacityValue}>{formatDuration(weekTotalMinutes)}</strong>
+              <span className={s.weekCapacityFigures}>
+                <strong className={s.weekCapacitySpent}>{formatDuration(weekTotalMinutes)}</strong>
+                <span className={s.weekCapacityOf}>/ {formatDuration(weeklyCapacity.capacityMinutes)}</span>
               </span>
-              <span className={s.weekCapacityDivider} />
-              <span className={s.weekCapacityMetric}>
-                <span className={s.weekCapacityLabel}>{t('common.remaining')}</span>
-                <strong className={weeklyCapacity.isOverCapacity ? s.weekCapacityExceeded : s.weekCapacityValue}>{formatDuration(weeklyCapacity.remainingMinutes)}</strong>
+              <span className={s.weekCapacityBar}>
+                <span
+                  className={weeklyCapacity.isOverCapacity ? s.weekCapacityBarFillOver : s.weekCapacityBarFill}
+                  style={{ width: `${Math.min(100, weeklyCapacity.capacityMinutes ? (weekTotalMinutes / weeklyCapacity.capacityMinutes) * 100 : 0)}%` }}
+                />
+              </span>
+              <span className={weeklyCapacity.isOverCapacity ? s.weekCapacityExceeded : s.weekCapacityLeft}>
+                {formatDuration(Math.abs(weeklyCapacity.remainingMinutes))} {weeklyCapacity.isOverCapacity ? t('common.over') : t('common.remaining')}
               </span>
             </div>
           )}

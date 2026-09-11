@@ -149,6 +149,7 @@ export default {
       browserDefault: 'Browser default',
       weekTotal: 'Week total: {{duration}}',
       spent: 'Spent',
+      over: 'over',
       remaining: 'Remaining',
       weekCapacitySummary: '{{spent}} spent, {{remaining}} remaining of {{capacity}}',
       noTimeEntriesWeek: 'No time entries this week. Drag on the calendar to add one.',

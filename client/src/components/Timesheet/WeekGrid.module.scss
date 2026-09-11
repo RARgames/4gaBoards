@@ -281,4 +281,28 @@
     text-overflow: ellipsis;
     min-height: 0;
   }
+
+  // Shape of a normal working day, painted under the hour lines and entries.
+  .workingBand {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dayHeaderTotalEmpty {
+    color: var(--ink-3);
+    opacity: 0.45;
+  }
+
+  // Weekends stay available but stop claiming the same room as a Tuesday.
+  .dayColumnWeekend {
+    background: var(--sunken);
+  }
+
+  .dayHeaderCellWeekend {
+    background: var(--sunken);
+  }
 }
