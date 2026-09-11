@@ -18,7 +18,6 @@ const Item = React.forwardRef(
       name,
       url,
       coverUrl,
-      isTile,
       isCover,
       isPersisted,
       canEdit,
@@ -75,8 +74,7 @@ const Item = React.forwardRef(
           {coverUrl ? (
             isCover && (
               <div className={s.imageSelected}>
-                <Icon type={IconType.Star} size={IconSize.Size10} className={s.imageIcon} />
-                {isTile && <span className={s.imageSelectedText}>{t('common.cover')}</span>}
+                <Icon type={IconType.Star} size={IconSize.Size14} className={s.imageIcon} />
               </div>
             )
           ) : (
@@ -151,7 +149,6 @@ Item.propTypes = {
   name: PropTypes.string.isRequired,
   url: PropTypes.string,
   coverUrl: PropTypes.string,
-  isTile: PropTypes.bool,
   isCover: PropTypes.bool.isRequired,
   isPersisted: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
@@ -174,7 +171,6 @@ Item.propTypes = {
 Item.defaultProps = {
   url: undefined,
   coverUrl: undefined,
-  isTile: false,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

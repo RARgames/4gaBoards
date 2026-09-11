@@ -897,6 +897,11 @@ const CardModal = React.memo(
       />
     );
 
+    // The first image attachment doubles as the card's visual: a small thumbnail
+    // in the list tells you nothing about a screenshot, so it also renders at a
+    // readable size under the description. The list keeps its own thumbnail.
+    const previewAttachment = attachments.find((attachment) => attachment.image && attachment.url);
+
     const contentNode = (
       <div className={s.flexContainer}>
         {headerNode}
@@ -907,8 +912,13 @@ const CardModal = React.memo(
           <div className={s.columns}>
             <div className={s.mainColumn}>
               <div className={s.moduleContainer}>
+                {labelsNode}
                 {descriptionNode}
-                <CardLinksContainer cardId={id} canEdit={canEdit} />
+                {previewAttachment && (
+                  <div className={s.descriptionPreview}>
+                    <img src={previewAttachment.url} alt={previewAttachment.name} title={previewAttachment.name} className={s.descriptionPreviewImage} />
+                  </div>
+                )}
                 <hr className={s.hr} />
               </div>
               <div className={s.moduleContainer}>
@@ -916,19 +926,19 @@ const CardModal = React.memo(
                 <hr className={s.hr} />
               </div>
               <div className={s.moduleContainer}>
-                {attachmentsNode}
+                {commentsNode}
                 <hr className={s.hr} />
               </div>
-              <div className={s.moduleContainer}>{commentsNode}</div>
+              <div className={s.moduleContainer}>{attachmentsNode}</div>
             </div>
             <aside className={s.sideColumn}>
               {membersNode}
-              {labelsNode}
               {priorityNode}
               {startDateNode}
               {dueDateNode}
               {timeNode}
               {!hideClosestDueDate && closestDueDateNode}
+              <CardLinksContainer cardId={id} canEdit={canEdit} />
               {hierarchyNode}
               {(!hideCardModalActivity || updatedAt || updatedBy) && (
                 <div className={s.sideFoot}>

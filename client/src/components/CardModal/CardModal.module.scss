@@ -138,6 +138,22 @@
     gap: 4px;
   }
 
+  .descriptionPreview {
+    margin: 8px 0 2px;
+    border: 1px solid var(--line);
+    border-radius: var(--tw-radius);
+    overflow: hidden;
+    background: var(--sunken);
+    line-height: 0;
+  }
+
+  .descriptionPreviewImage {
+    display: block;
+    width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+  }
+
   .moduleContainer {
     position: relative;
     padding: 0 15px 0 15px;

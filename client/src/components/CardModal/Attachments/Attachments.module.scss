@@ -29,17 +29,4 @@
       color: var(--textColor4);
     }
   }
-
-  .imageGrid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-
-  .fileList {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
 }

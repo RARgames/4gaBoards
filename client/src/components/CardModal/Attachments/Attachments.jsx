@@ -57,10 +57,7 @@ const Attachments = React.memo(
       toggleAllVisible();
     }, [toggleAllVisible]);
 
-    // Images render as a grid, everything else keeps the row list: a PNG and a
-    // PDF are not the same kind of thing and were getting the same 26px square.
-    // Index stays the flat one so the show-more cutoff and PhotoSwipe order hold.
-    const renderGalleryItem = (item, index) => {
+    const galleryItemsNode = items.map((item, index) => {
       const isPdf = item.url && item.url.endsWith('.pdf');
 
       let props;
@@ -97,7 +94,6 @@ const Attachments = React.memo(
                 coverUrl={item.coverUrl}
                 isCover={item.isCover}
                 isPersisted={item.isPersisted}
-                isTile={Boolean(item.image)}
                 canEdit={canEdit}
                 activities={item.activities}
                 isActivitiesFetching={isActivitiesFetching}
@@ -120,11 +116,7 @@ const Attachments = React.memo(
           }
         </GalleryItem>
       );
-    };
-
-    const indexedItems = items.map((item, index) => ({ item, index }));
-    const imageEntries = indexedItems.filter((entry) => entry.item.image);
-    const fileEntries = indexedItems.filter((entry) => !entry.item.image);
+    });
 
     return (
       <>
@@ -142,8 +134,7 @@ const Attachments = React.memo(
           }}
           onBeforeOpen={handleBeforeGalleryOpen}
         >
-          {imageEntries.length > 0 && <div className={s.imageGrid}>{imageEntries.map((entry) => renderGalleryItem(entry.item, entry.index))}</div>}
-          {fileEntries.length > 0 && <div className={s.fileList}>{fileEntries.map((entry) => renderGalleryItem(entry.item, entry.index))}</div>}
+          {galleryItemsNode}
         </Gallery>
         {items.length > INITIALLY_VISIBLE && (
           <Button
