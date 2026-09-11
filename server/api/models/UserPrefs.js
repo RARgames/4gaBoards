@@ -182,7 +182,7 @@ module.exports = {
     },
     hideClosestDueDate: {
       type: 'boolean',
-      defaultsTo: false,
+      defaultsTo: true,
       columnName: 'hide_closest_due_date',
     },
     theme: {

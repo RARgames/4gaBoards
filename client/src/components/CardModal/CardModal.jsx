@@ -61,6 +61,7 @@ const CardModal = React.memo(
     attachmentsShown,
     commentsShown,
     hideCardModalActivity,
+    hideClosestDueDate,
     preferredDetailsFont,
     userId,
     isGithubConnected,
@@ -82,6 +83,7 @@ const CardModal = React.memo(
     commentCount,
     url,
     closestTaskDueDate,
+    closestDueDate,
     createdAt,
     createdBy,
     updatedAt,
@@ -646,6 +648,15 @@ const CardModal = React.memo(
       </div>
     );
 
+    const closestDueDateNode = closestDueDate && (
+      <div className={s.headerItems}>
+        <div className={s.text}>{t('common.closestDueDate', { context: 'title' })}</div>
+        <span className={s.headerItem}>
+          <DueDate value={closestDueDate} titlePrefix={t('common.cardDueDateSummary', { context: 'title' })} />
+        </span>
+      </div>
+    );
+
     const timeNode = (
       <div className={s.headerItems}>
         <div className={s.text}>
@@ -928,6 +939,7 @@ const CardModal = React.memo(
                 {dueDateNode}
               </div>
               {timeNode}
+              {!hideClosestDueDate && closestDueDateNode}
               <CardLinksContainer cardId={id} canEdit={canEdit} />
               {hierarchyNode}
               {(!hideCardModalActivity || updatedAt || updatedBy) && (
@@ -973,6 +985,7 @@ CardModal.propTypes = {
   attachmentsShown: PropTypes.bool.isRequired,
   commentsShown: PropTypes.bool.isRequired,
   hideCardModalActivity: PropTypes.bool.isRequired,
+  hideClosestDueDate: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,
@@ -994,6 +1007,7 @@ CardModal.propTypes = {
   commentCount: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
   closestTaskDueDate: PropTypes.instanceOf(Date),
+  closestDueDate: PropTypes.instanceOf(Date),
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
@@ -1041,6 +1055,7 @@ CardModal.defaultProps = {
   priority: undefined,
   parent: undefined,
   closestTaskDueDate: undefined,
+  closestDueDate: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,
