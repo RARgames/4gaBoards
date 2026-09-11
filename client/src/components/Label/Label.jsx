@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import LabelColors from '../../constants/LabelColors';
 import { Button } from '../Utils';
 
-import * as bs from '../../backgrounds.module.scss';
 import * as gs from '../../global.module.scss';
+import * as ls from '../../label-colors.module.scss';
 import * as s from './Label.module.scss';
 
 const VARIANTS = {
@@ -26,7 +26,7 @@ const Label = React.memo(({ name, color, variant, isDisabled, isRemovable, isCli
         s[`wrapper${upperFirst(variant)}`],
         onClick && s.wrapperHoverable,
         isRemovable && s.wrapperRemovable,
-        bs[`background${upperFirst(camelCase(color))}`],
+        ls[`soft${upperFirst(camelCase(color))}`],
         (onClick || isClickable) && gs.cursorPointer,
         className,
       )}

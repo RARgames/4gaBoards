@@ -1,0 +1,132 @@
+:global(#app) {
+  // Soft label variants: the same palette as backgrounds.module.scss, but as a
+  // tint with the colour carried by the text instead of a saturated fill with
+  // white text. A label is a quiet tag on a card, not an alert. Kept separate so
+  // project tiles, priorities and board backgrounds keep their solid fills.
+
+  .softBerryRed {
+    background: color-mix(in srgb, #e04556 20%, transparent) !important;
+    color: color-mix(in srgb, #e04556 82%, var(--ink)) !important;
+  }
+
+  .softPumpkinOrange {
+    background: color-mix(in srgb, #f0982d 20%, transparent) !important;
+    color: color-mix(in srgb, #f0982d 82%, var(--ink)) !important;
+  }
+
+  .softLagoonBlue {
+    background: color-mix(in srgb, #109dc0 20%, transparent) !important;
+    color: color-mix(in srgb, #109dc0 82%, var(--ink)) !important;
+  }
+
+  .softPinkTulip {
+    background: color-mix(in srgb, #f97394 20%, transparent) !important;
+    color: color-mix(in srgb, #f97394 82%, var(--ink)) !important;
+  }
+
+  .softLightMud {
+    background: color-mix(in srgb, #c7a57b 20%, transparent) !important;
+    color: color-mix(in srgb, #c7a57b 82%, var(--ink)) !important;
+  }
+
+  .softOrangePeel {
+    background: color-mix(in srgb, #fab623 20%, transparent) !important;
+    color: color-mix(in srgb, #fab623 82%, var(--ink)) !important;
+  }
+
+  .softBrightMoss {
+    background: color-mix(in srgb, #a5c261 20%, transparent) !important;
+    color: color-mix(in srgb, #a5c261 82%, var(--ink)) !important;
+  }
+
+  .softAntiqueBlue {
+    background: color-mix(in srgb, #6c99bb 20%, transparent) !important;
+    color: color-mix(in srgb, #6c99bb 82%, var(--ink)) !important;
+  }
+
+  .softDarkGranite {
+    background: color-mix(in srgb, #8b8680 20%, transparent) !important;
+    color: color-mix(in srgb, #8b8680 82%, var(--ink)) !important;
+  }
+
+  .softLaguneBlue {
+    background: color-mix(in srgb, #00b4b1 20%, transparent) !important;
+    color: color-mix(in srgb, #00b4b1 82%, var(--ink)) !important;
+  }
+
+  .softSunnyGrass {
+    background: color-mix(in srgb, #bfca02 20%, transparent) !important;
+    color: color-mix(in srgb, #bfca02 82%, var(--ink)) !important;
+  }
+
+  .softMorningSky {
+    background: color-mix(in srgb, #52bad5 20%, transparent) !important;
+    color: color-mix(in srgb, #52bad5 82%, var(--ink)) !important;
+  }
+
+  .softLightOrange {
+    background: color-mix(in srgb, #ffc66d 20%, transparent) !important;
+    color: color-mix(in srgb, #ffc66d 82%, var(--ink)) !important;
+  }
+
+  .softMidnightBlue {
+    background: color-mix(in srgb, #004d73 20%, transparent) !important;
+    color: color-mix(in srgb, #004d73 82%, var(--ink)) !important;
+  }
+
+  .softTankGreen {
+    background: color-mix(in srgb, #8aa177 20%, transparent) !important;
+    color: color-mix(in srgb, #8aa177 82%, var(--ink)) !important;
+  }
+
+  .softGunMetal {
+    background: color-mix(in srgb, #355263 20%, transparent) !important;
+    color: color-mix(in srgb, #355263 82%, var(--ink)) !important;
+  }
+
+  .softWetMoss {
+    background: color-mix(in srgb, #4a8753 20%, transparent) !important;
+    color: color-mix(in srgb, #4a8753 82%, var(--ink)) !important;
+  }
+
+  .softRedBurgundy {
+    background: color-mix(in srgb, #ad5f7d 20%, transparent) !important;
+    color: color-mix(in srgb, #ad5f7d 82%, var(--ink)) !important;
+  }
+
+  .softLightConcrete {
+    background: color-mix(in srgb, #afb0a4 20%, transparent) !important;
+    color: color-mix(in srgb, #afb0a4 82%, var(--ink)) !important;
+  }
+
+  .softApricotRed {
+    background: color-mix(in srgb, #fc736d 20%, transparent) !important;
+    color: color-mix(in srgb, #fc736d 82%, var(--ink)) !important;
+  }
+
+  .softDesertSand {
+    background: color-mix(in srgb, #edcb76 20%, transparent) !important;
+    color: color-mix(in srgb, #edcb76 82%, var(--ink)) !important;
+  }
+
+  .softNavyBlue {
+    background: color-mix(in srgb, #166a8f 20%, transparent) !important;
+    color: color-mix(in srgb, #166a8f 82%, var(--ink)) !important;
+  }
+
+  .softEggYellow {
+    background: color-mix(in srgb, #f7d036 20%, transparent) !important;
+    color: color-mix(in srgb, #f7d036 82%, var(--ink)) !important;
+  }
+
+  .softCoralGreen {
+    background: color-mix(in srgb, #2b6a6c 20%, transparent) !important;
+    color: color-mix(in srgb, #2b6a6c 82%, var(--ink)) !important;
+  }
+
+  .softLightCocoa {
+    background: color-mix(in srgb, #87564a 20%, transparent) !important;
+    color: color-mix(in srgb, #87564a 82%, var(--ink)) !important;
+  }
+
+}

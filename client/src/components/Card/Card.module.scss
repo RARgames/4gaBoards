@@ -221,6 +221,7 @@
 
   .cover {
     border-radius: var(--tw-radius-lg) var(--tw-radius-lg) 0 0;
+    display: block;
     vertical-align: middle;
     width: 100%;
   }
@@ -228,13 +229,13 @@
   .detailsTitle {
     display: flex;
     align-items: flex-start;
-    gap: 4px;
-    padding: 4px 8px 4px 4px;
+    gap: 6px;
+    padding: 9px 11px 0 11px;
     transition: padding-left 120ms ease;
   }
 
   .details {
-    padding: 6px 6px 0 4px;
+    padding: 7px 11px 9px 11px;
   }
 
   .labels {
@@ -366,7 +367,7 @@
     font-variant-numeric: tabular-nums;
     font-size: 10.5px;
     color: var(--ink-3);
-    padding: 4px 6px 0 4px;
+    padding: 4px 11px 0 11px;
   }
 
   .autoArchiveRow {
@@ -377,7 +378,7 @@
     font-variant-numeric: tabular-nums;
     font-size: 10px;
     color: var(--ink-3);
-    padding: 2px 6px 6px 4px;
+    padding: 2px 11px 9px 11px;
   }
 
   .autoArchiveRowUrgent {
