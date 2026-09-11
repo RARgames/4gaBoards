@@ -219,11 +219,15 @@
     }
   }
 
+  // Sits at the top of the card and bleeds to its edges, so the top corners
+  // follow the card's own radius. -1px pulls it over the border it sits inside.
   .cover {
-    border-radius: var(--tw-radius-lg) var(--tw-radius-lg) 0 0;
+    border-radius: calc(var(--tw-radius-lg) - 1px) calc(var(--tw-radius-lg) - 1px) 0 0;
     display: block;
-    vertical-align: middle;
-    width: 100%;
+    margin: -1px -1px 0;
+    width: calc(100% + 2px);
+    max-height: 160px;
+    object-fit: cover;
   }
 
   .detailsTitle {
@@ -232,6 +236,10 @@
     gap: 6px;
     padding: 9px 11px 0 11px;
     transition: padding-left 120ms ease;
+  }
+
+  .cover + div .detailsTitle {
+    padding-top: 8px;
   }
 
   .details {

@@ -280,6 +280,7 @@ const Card = React.memo(
 
     const contentNode = (
       <>
+        {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
         <div>
           <div className={s.detailsTitle}>
             {isDoneList && <Icon type={IconType.Check} size={IconSize.Size13} className={s.doneCheck} />}
@@ -291,7 +292,6 @@ const Card = React.memo(
           {notificationsTotal > 0 && notificationsTotal <= 9 && <span className={s.notification}>{notificationsTotal}</span>}
           {notificationsTotal > 9 && <span className={clsx(s.notification, s.notificationFull)}>9+</span>}
         </div>
-        {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
         {(priority || labels.length > 0 || tasks.length > 0 || description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer || users.length > 0) && (
           <div className={s.details}>
             {labels.length > 0 && (
