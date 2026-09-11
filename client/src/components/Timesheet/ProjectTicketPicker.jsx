@@ -452,6 +452,9 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
   const handleKeyDown = useCallback(
     (e) => {
       if (e.key === 'Escape') {
+        // Escape backs out of the step, not out of the whole entry — EntryPopup's own document-level
+        // Escape handler would otherwise discard the unsaved entry behind it.
+        e.stopPropagation();
         handleClose();
         return;
       }
@@ -501,6 +504,10 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
     }
     return null;
   };
+
+  // Everything the popover already knows about where this entry belongs, read out as a trail so
+  // the step can cover the chip row without the user losing their place.
+  const scopeTrail = [selectedProject && selectedProject.name, effectiveBoardName, effectiveListName, selectedCard && selectedCard.name].filter(Boolean);
 
   return (
     <div className={s.wrapper} ref={wrapperRef}>
@@ -577,19 +584,43 @@ const ProjectTicketPicker = React.memo(({ projectId, boardId, listId, cardId, pr
         </div>
       )}
       {selectedCard ? (
-        <a href={cardHref} target="_blank" rel="noopener noreferrer" className={s.primaryAction}>
+        <a href={cardHref} target="_blank" rel="noopener noreferrer" className={s.openAction}>
           <Icon type={IconType.WindowMaximize} size={IconSize.Size13} />
           {t('common.openTicketOnBoard')}
         </a>
       ) : (
-        <button type="button" className={s.primaryAction} onClick={handlePrimaryAction} disabled={!createCardName || isCreatingCard}>
-          <Icon type={IconType.Plus} size={IconSize.Size13} />
-          {isCreatingCard ? t('common.creatingTicket') : t('common.createTicketOnBoard')}
-        </button>
+        // Linking existing work is the common case and creating a ticket the exception, so the link
+        // action carries the weight here and creating sits beside it as a quiet dashed alternative.
+        // Save, at the foot of the form, is the only filled button in the popover.
+        <div className={s.actionRow}>
+          <button type="button" className={s.linkAction} onClick={handleOpen}>
+            <Icon type={IconType.Link} size={IconSize.Size13} />
+            {t('common.linkACard')}
+          </button>
+          <button type="button" className={s.createAction} onClick={handlePrimaryAction} disabled={!createCardName || isCreatingCard} title={createCardName ? undefined : t('common.titlePlaceholder')}>
+            <Icon type={IconType.Plus} size={IconSize.Size13} />
+            {isCreatingCard ? t('common.creatingTicket') : t('common.createTicketOnBoard')}
+          </button>
+        </div>
       )}
       {isOpen && (
-        <div className={s.popup}>
+        // A step over the whole popover rather than a menu hanging off the field: the popover is
+        // only 300px wide, and a nested dropdown inside a popup inside the grid stacked three
+        // overlapping surfaces. Escape and the back arrow both return to the form with whatever
+        // was picked, so nothing is lost by leaving.
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div className={s.stepPanel} onKeyDown={handleKeyDown}>
+          <div className={s.stepHeader}>
+            <button type="button" className={s.stepBack} onClick={handleClose} title={t('common.back')}>
+              <Icon type={IconType.AngleLeft} size={IconSize.Size13} />
+            </button>
+            <div className={s.stepTitles}>
+              <span className={s.stepTitle}>{t('common.linkedWork')}</span>
+              <span className={s.stepScope}>{scopeTrail.length > 0 ? scopeTrail.join(' › ') : t('common.notLinked')}</span>
+            </div>
+          </div>
           <input ref={searchFieldRef} className={s.searchInput} value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={handleKeyDown} placeholder={t('common.searchProjectsAndTickets')} />
+          {!projectId && <div className={s.stepHint}>{t('common.linkBoardOrListHint')}</div>}
           <div className={s.results}>
             {projectResults.length > 0 && (
               <div className={s.section}>

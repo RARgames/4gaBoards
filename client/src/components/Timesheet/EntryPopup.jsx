@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../hooks';
+import formatDuration from '../../utils/format-duration';
 import parseTimeEntryRange from '../../utils/time-entry-range';
 import { Button, ButtonStyle, Dropdown, DropdownStyle, Icon, IconType, IconSize, Input, InputStyle, TextArea, TextAreaStyle, Popup, Form } from '../Utils';
 import ProjectTicketPicker from './ProjectTicketPicker';
@@ -98,6 +100,9 @@ const EntryPopup = React.memo(
     const [newCategoryName, setNewCategoryName] = useState('');
     const [pendingCategoryName, setPendingCategoryName] = useState(null);
     const [isError, setIsError] = useState(false);
+    // The range arrives already decided (dragged out on the grid, or the entry being edited), so
+    // the inputs stay folded away behind the stated summary until the user asks to change it.
+    const [isEditingTimes, setIsEditingTimes] = useState(false);
     const [style, setStyle] = useState({ top: anchorRect.top, left: anchorRect.left, visibility: 'hidden' });
 
     const popupRef = useRef(null);
@@ -111,6 +116,7 @@ const EntryPopup = React.memo(
       setCardId(initialValues.cardId || null);
       setLinkedCardName(initialValues.cardName || null);
       setCategoryTagId(getDefaultCategoryTagId(mode, initialValues, categoryTags));
+      setIsEditingTimes(false);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialValues]);
 
@@ -198,6 +204,9 @@ const EntryPopup = React.memo(
 
       if (!range) {
         setIsError(true);
+        // The fields are folded away by default, so unfold them — otherwise the error marks a
+        // summary the user has no way to correct.
+        setIsEditingTimes(true);
         return;
       }
 
@@ -258,6 +267,21 @@ const EntryPopup = React.memo(
       setPendingCategoryName(trimmedName);
     }, [newCategoryName, projectId, onCreateCategoryTag]);
 
+    const handleToggleTimes = useCallback(() => {
+      setIsEditingTimes((prev) => !prev);
+    }, []);
+
+    // Reads back the range the user is actually about to save (edits to the fields included), so
+    // the summary is never stale. Null while the fields don't parse — the raw text is shown instead.
+    const whenSummary = useMemo(() => {
+      const range = parseTimeEntryRange(initialValues.startedAt, initialValues.endedAt, data.startTime, data.endTime);
+      if (!range) {
+        return null;
+      }
+      const minutes = Math.round((range.endedAt.getTime() - range.startedAt.getTime()) / 60000);
+      return `${format(range.startedAt, 'EEE d MMM')} · ${format(range.startedAt, 'HH:mm')}–${format(range.endedAt, 'HH:mm')} · ${formatDuration(minutes)}`;
+    }, [initialValues.startedAt, initialValues.endedAt, data.startTime, data.endTime]);
+
     const handleStartAddCategory = useCallback(() => {
       setIsAddingCategory(true);
     }, []);
@@ -275,8 +299,52 @@ const EntryPopup = React.memo(
         </Button>
         <Popup.Header>{mode === 'edit' ? t('common.editTimeEntry', { context: 'title' }) : t('common.addTimeEntry', { context: 'title' })}</Popup.Header>
         <Popup.Content isMinContent className={s.content}>
+          {/* When → what → where. The range was already set by the drag (or by the entry being
+              edited), so it is stated rather than asked for; the fields below are what's left to
+              fill in. Editing it is one click away, but it no longer leads the form. */}
+          <div className={clsx(s.whenBar, isError && s.whenBarError)}>
+            <span className={s.whenSummary}>{whenSummary || `${data.startTime} – ${data.endTime}`}</span>
+            <button type="button" className={s.whenEdit} onClick={handleToggleTimes} title={t('common.editTimes')}>
+              {isEditingTimes ? t('common.done') : t('action.edit')}
+            </button>
+          </div>
+          {isEditingTimes && (
+            <div className={s.timeRow}>
+              <div className={s.timeField}>
+                <div className={s.fieldLabel}>{t('common.start')}</div>
+                <Input style={InputStyle.Default} name="startTime" value={data.startTime} onChange={handleFieldChange} isError={isError} />
+              </div>
+              <div className={s.timeField}>
+                <div className={s.fieldLabel}>{t('common.end')}</div>
+                <Input style={InputStyle.Default} name="endTime" value={data.endTime} onChange={handleFieldChange} isError={isError} />
+              </div>
+            </div>
+          )}
           {loggedByName && <div className={s.loggedBy}>{t('common.loggedBy', { name: loggedByName })}</div>}
           <Form>
+            <div className={s.fieldLabel}>{t('common.title')}</div>
+            <Input
+              style={InputStyle.Default}
+              name="title"
+              value={data.title}
+              // A card-linked entry with no title of its own already falls back to the card's name
+              // wherever it's displayed (see WeekGrid's entry label), so the card name belongs here
+              // as the placeholder, not the value — typing overrides it, clearing restores it.
+              placeholder={(cardId && linkedCardName) || t('common.titlePlaceholder')}
+              onChange={handleFieldChange}
+              title={cardId ? t('common.titleOverridesCardName') : undefined}
+              className={s.titleField}
+            />
+            <div className={s.fieldLabel}>{t('common.whatWasDone')}</div>
+            <TextArea
+              ref={descriptionField}
+              style={TextAreaStyle.Default}
+              name="description"
+              value={data.description}
+              placeholder={t('common.whatWasDone')}
+              onChange={handleFieldChange}
+              className={s.descriptionField}
+            />
             <div className={s.fieldLabel}>{t('common.category')}</div>
             <Dropdown
               style={DropdownStyle.Default}
@@ -305,6 +373,7 @@ const EntryPopup = React.memo(
                 <Button style={ButtonStyle.Cancel} content={t('action.cancel')} onClick={handleCancelAddCategory} />
               </div>
             )}
+            <div className={s.fieldLabel}>{t('common.linkedWork')}</div>
             <ProjectTicketPicker
               projectId={projectId}
               boardId={boardId}
@@ -316,39 +385,6 @@ const EntryPopup = React.memo(
               defaultCardName={data.title}
               onChange={handlePickerChange}
             />
-            <div className={s.fieldLabel}>{t('common.title')}</div>
-            <Input
-              style={InputStyle.Default}
-              name="title"
-              value={data.title}
-              // A card-linked entry with no title of its own already falls back to the card's name
-              // wherever it's displayed (see WeekGrid's entry label), so the card name belongs here
-              // as the placeholder, not the value — typing overrides it, clearing restores it.
-              placeholder={(cardId && linkedCardName) || t('common.titlePlaceholder')}
-              onChange={handleFieldChange}
-              title={cardId ? t('common.titleOverridesCardName') : undefined}
-              className={s.titleField}
-            />
-            <div className={s.fieldLabel}>{t('common.whatWasDone')}</div>
-            <TextArea
-              ref={descriptionField}
-              style={TextAreaStyle.Default}
-              name="description"
-              value={data.description}
-              placeholder={t('common.whatWasDone')}
-              onChange={handleFieldChange}
-              className={s.descriptionField}
-            />
-            <div className={s.timeRow}>
-              <div className={s.timeField}>
-                <div className={s.fieldLabel}>{t('common.start')}</div>
-                <Input style={InputStyle.Default} name="startTime" value={data.startTime} onChange={handleFieldChange} isError={isError} />
-              </div>
-              <div className={s.timeField}>
-                <div className={s.fieldLabel}>{t('common.end')}</div>
-                <Input style={InputStyle.Default} name="endTime" value={data.endTime} onChange={handleFieldChange} isError={isError} />
-              </div>
-            </div>
             <div className={gs.controlsSpaceBetween}>
               {mode === 'edit' ? (
                 <div className={s.footerLeftActions}>

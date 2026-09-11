@@ -1,6 +1,7 @@
 :global(#app) {
+  // Deliberately NOT positioned: .stepPanel below is absolute and wants EntryPopup's fixed
+  // .popup as its containing block so it can cover the whole popover, not just this field.
   .wrapper {
-    position: relative;
     margin: 4px 0 10px;
   }
 
@@ -96,18 +97,76 @@
     }
   }
 
-  .popup {
+  .stepPanel {
     position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
     background: var(--backgroundPopup);
-    border-radius: 4px;
-    box-shadow:
-      -1px -1px 3px var(--backgroundPopupShadow),
-      1px 1px 3px var(--backgroundPopupShadow);
+    border-radius: inherit;
     z-index: 10;
-    padding: 6px;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  .stepHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--backgroundPopupSeparator);
+  }
+
+  .stepBack {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: var(--tw-radius);
+    background: transparent;
+    cursor: pointer;
+
+    svg {
+      color: var(--textColor1);
+    }
+
+    &:hover {
+      background: var(--backgroundPopupHover);
+    }
+  }
+
+  .stepTitles {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .stepTitle {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--textColor1);
+    line-height: 15px;
+  }
+
+  .stepScope {
+    font-size: 10px;
+    opacity: 0.6;
+    line-height: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stepHint {
+    margin-top: 6px;
+    font-size: 10px;
+    opacity: 0.6;
+    line-height: 13px;
   }
 
   .searchInput {
@@ -126,7 +185,8 @@
   }
 
   .results {
-    max-height: 220px;
+    flex: 1;
+    min-height: 120px;
     overflow-y: auto;
     margin-top: 4px;
   }
@@ -238,18 +298,25 @@
     color: var(--textColorError);
   }
 
-  // The always-visible entry point to "open the linked ticket" / "create one". Deliberately
-  // full-width and bordered so it reads as an action rather than as another chip — the create
-  // affordance inside the popup was too easy to miss.
-  .primaryAction {
+  .actionRow {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  // "Open the linked ticket" — full width, because once a card is linked there is nothing else
+  // to choose here.
+  .openAction,
+  .linkAction,
+  .createAction {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 7px;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     box-sizing: border-box;
-    margin-top: 8px;
-    padding: 10px 14px;
+    padding: 9px 10px;
     border: 1px solid var(--backgroundPopupSeparator);
     border-radius: var(--tw-radius);
     background: var(--backgroundColorTmpDarkerField2);
@@ -282,6 +349,24 @@
     &:disabled {
       opacity: 0.6;
       cursor: default;
+    }
+  }
+
+  .openAction {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  // Creating a ticket is the exception, so it stays a dashed outline against the link action's
+  // solid field — and neither competes with Save, the only filled button in the popover.
+  .createAction {
+    border-style: dashed;
+    background: transparent;
+    font-weight: normal;
+    opacity: 0.85;
+
+    &:hover:not(:disabled) {
+      opacity: 1;
     }
   }
 }

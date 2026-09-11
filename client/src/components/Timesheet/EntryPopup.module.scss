@@ -23,10 +23,54 @@
     min-height: 54px;
   }
 
+  // The dragged (or existing) range, stated rather than asked for. It leads the popup so the
+  // entry reads as "this block of time, spent on X" instead of opening with two clock fields.
+  .whenBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 6px 8px;
+    border-radius: var(--tw-radius);
+    background: var(--sunken);
+    border: 1px solid var(--line-soft);
+  }
+
+  .whenBarError {
+    border-color: var(--crit);
+  }
+
+  .whenSummary {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .whenEdit {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 11px;
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--accent-ink);
+    }
+  }
+
   .timeRow {
     display: flex;
     gap: 8px;
-    margin: 8px 0;
+    margin: 0 0 10px;
   }
 
   .timeField {
