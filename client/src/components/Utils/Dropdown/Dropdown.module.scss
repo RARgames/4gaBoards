@@ -54,12 +54,12 @@
 
   .dropdownButtonError {
     svg {
-      fill: var(--errorRed);
+      color: var(--errorRed);
     }
 
     &:hover {
       svg {
-        fill: var(--errorRedHover);
+        color: var(--errorRedHover);
       }
     }
   }
@@ -98,7 +98,7 @@
   }
 
   .multiCheckIcon {
-    fill: var(--tw-primary);
+    color: var(--tw-primary);
     flex-shrink: 0;
     margin-right: 6px;
   }

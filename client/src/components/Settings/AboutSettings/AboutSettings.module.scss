@@ -34,12 +34,12 @@
     margin-bottom: 5px;
 
     svg {
-      fill: var(--textColorLink);
+      color: var(--textColorLink);
     }
 
     &:hover {
       svg {
-        fill: var(--textColorLinkHover);
+        color: var(--textColorLinkHover);
       }
     }
   }

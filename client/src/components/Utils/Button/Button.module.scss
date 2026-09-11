@@ -30,7 +30,7 @@
       color: var(--textColor3);
 
       svg {
-        fill: var(--textColor3);
+        color: var(--textColor3);
       }
     }
 
@@ -39,7 +39,7 @@
       color: var(--textColor4);
 
       svg {
-        fill: var(--textColor4);
+        color: var(--textColor4);
       }
     }
   }
@@ -69,7 +69,7 @@
       color: var(--textColor3);
 
       svg {
-        fill: var(--textColor3);
+        color: var(--textColor3);
       }
     }
 
@@ -78,7 +78,7 @@
       color: var(--textColor4);
 
       svg {
-        fill: var(--textColor4);
+        color: var(--textColor4);
       }
     }
   }
@@ -86,7 +86,7 @@
   .iconBase {
     &:hover {
       svg {
-        fill: var(--textColor3);
+        color: var(--textColor3);
       }
     }
 
@@ -94,7 +94,7 @@
       cursor: not-allowed;
 
       svg {
-        fill: var(--textColor4);
+        color: var(--textColor4);
       }
     }
   }
@@ -135,7 +135,7 @@
       box-shadow 120ms ease;
 
     svg {
-      fill: var(--textColorWhite);
+      color: var(--textColorWhite);
     }
 
     &:hover {
@@ -217,7 +217,7 @@
       color: var(--textColor0);
 
       svg {
-        fill: var(--textColor0);
+        color: var(--textColor0);
       }
     }
 
@@ -226,7 +226,7 @@
       color: var(--textColor4);
 
       svg {
-        fill: var(--textColor4);
+        color: var(--textColor4);
       }
     }
 

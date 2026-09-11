@@ -17,10 +17,10 @@
 
     .closeButton {
       svg {
-        fill: var(--textColorWarning);
+        color: var(--textColorWarning);
 
         &:hover {
-          fill: var(--textColorWarningHover);
+          color: var(--textColorWarningHover);
         }
       }
     }
@@ -32,10 +32,10 @@
 
     .closeButton {
       svg {
-        fill: var(--textColorError);
+        color: var(--textColorError);
 
         &:hover {
-          fill: var(--textColorErrorHover);
+          color: var(--textColorErrorHover);
         }
       }
     }

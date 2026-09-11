@@ -48,6 +48,7 @@ import { ReactComponent as Play } from '../../../assets/icons/Play.svg';
 import { ReactComponent as Plus } from '../../../assets/icons/Plus.svg';
 import { ReactComponent as PlusMath } from '../../../assets/icons/PlusMath.svg';
 import { ReactComponent as ProjectSettings } from '../../../assets/icons/ProjectSettings.svg';
+import { ReactComponent as Search } from '../../../assets/icons/Search.svg';
 import { ReactComponent as Server } from '../../../assets/icons/Server.svg';
 import { ReactComponent as Settings } from '../../../assets/icons/Settings.svg';
 import { ReactComponent as Show } from '../../../assets/icons/Show.svg';
@@ -117,6 +118,7 @@ const IconType = {
   Plus,
   PlusMath,
   ProjectSettings,
+  Search,
   Server,
   Settings,
   Show,

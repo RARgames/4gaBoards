@@ -19,14 +19,14 @@
     color: var(--textColor3);
 
     svg {
-      fill: var(--textColor3);
+      color: var(--textColor3);
     }
 
     &:hover {
       color: var(--textColor4);
 
       svg {
-        fill: var(--textColor4);
+        color: var(--textColor4);
       }
     }
   }
@@ -52,13 +52,13 @@
     align-items: center;
     justify-content: flex-end;
     svg {
-      fill: var(--textColorCounter);
+      color: var(--textColorCounter);
       vertical-align: middle;
     }
 
     &:hover {
       svg {
-        fill: var(--textColorCounterHover);
+        color: var(--textColorCounterHover);
       }
     }
   }

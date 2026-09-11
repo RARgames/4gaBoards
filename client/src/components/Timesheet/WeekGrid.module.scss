@@ -153,7 +153,7 @@
     pointer-events: none;
 
     svg {
-      fill: var(--textColorWhite, #fff);
+      color: var(--textColorWhite, #fff);
     }
   }
 
@@ -175,26 +175,29 @@
     }
   }
 
+  // Duration warnings. Flat token tints rather than gradients, so every theme is
+  // covered by colors.css and no per-theme override is needed here. The inline
+  // border-left-color (entry.projectColor) still wins over these: colour says
+  // which board, fill says how long.
   .entryBlockLong {
-    background: linear-gradient(145deg, #735318 0%, #52380f 100%);
-    border-color: rgba(251, 191, 36, 0.72);
-    box-shadow: inset 0 1px 0 rgba(255, 215, 107, 0.14);
+    background: var(--warn-soft);
+    border-color: var(--warn);
+    color: var(--warn);
+
+    // .entryTitle sets its own colour, so it needs telling explicitly.
+    .entryTitle {
+      color: var(--warn);
+    }
   }
 
   .entryBlockVeryLong {
-    background: linear-gradient(145deg, #823b35 0%, #602924 100%);
-    border-color: rgba(248, 113, 113, 0.76);
-    box-shadow: inset 0 1px 0 rgba(255, 165, 158, 0.14);
-  }
+    background: var(--crit-soft);
+    border-color: var(--crit);
+    color: var(--crit);
 
-  &:global([data-theme='trello-light']) .entryBlockLong {
-    background: linear-gradient(145deg, #fff1bb 0%, #ffe39a 100%);
-    border-color: #d5a11c;
-  }
-
-  &:global([data-theme='trello-light']) .entryBlockVeryLong {
-    background: linear-gradient(145deg, #ffe0db 0%, #ffc8c0 100%);
-    border-color: #df675d;
+    .entryTitle {
+      color: var(--crit);
+    }
   }
 
   .entryBlockDragging {

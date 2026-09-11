@@ -203,7 +203,7 @@
   }
 
   .blockedIndicatorIcon {
-    fill: var(--notificationRed);
+    color: var(--notificationRed);
   }
 
   .content {
@@ -262,7 +262,7 @@
 
   .doneCheck {
     flex: none;
-    fill: var(--textColorGreen);
+    color: var(--textColorGreen);
     margin-top: 2px;
   }
 
@@ -359,6 +359,6 @@
   }
 
   .detailsIcon {
-    fill: var(--textColor3);
+    color: var(--textColor3);
   }
 }

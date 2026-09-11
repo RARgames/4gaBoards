@@ -96,7 +96,7 @@
     }
 
     svg {
-      fill: var(--textColorWhite);
+      color: var(--textColorWhite);
     }
   }
 
@@ -182,7 +182,7 @@
   }
 
   .emptyIcon {
-    fill: var(--textColor3);
+    color: var(--textColor3);
     margin-bottom: 12px;
     opacity: 0.6;
   }

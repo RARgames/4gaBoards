@@ -1,29 +1,55 @@
 :root {
-  --backgroundColor: #1b2230; /* Override loading.css — slightly deeper, less greenish */
+  /* ------------------------------------------------------------------
+   * Redesign primitives. Four surfaces, three inks, one accent, three
+   * status colours. Every legacy name below is an alias onto these, so a
+   * theme is edited here and nowhere else.
+   * ------------------------------------------------------------------ */
+  --surface: #161d1f;
+  --surface-hover: #1b2325;
+  --surface-selected: #1d2a2c;
+  --ground: #0e1315;
+  --sunken: #11171a;
+  --line: #253032;
+  --line-soft: #1e2729;
+  --ink: #e7ecec;
+  --ink-2: #a3b0b1;
+  --ink-3: #6e7c7e;
+  --accent: #46bfc7;
+  --accent-ink: #7ad4da;
+  --accent-soft: #10312f;
+  --ok: #43b583;
+  --ok-soft: #122c22;
+  --warn: #d69a3c;
+  --warn-soft: #2e2415;
+  --crit: #e0736a;
+  --crit-soft: #331d1c;
+  --logo-plaque: transparent;
+
+  --backgroundColor: var(--ground); /* Override loading.css — slightly deeper, less greenish */
   --backgroundColor0: #15192233;
-  --backgroundColor1: #1c212c;
-  --backgroundColor2: #2a3142;
-  --backgroundList: #232a3a; /* refined slate-navy lane */
-  --backgroundListButton: #1c2330;
-  --backgroundCardSelected: #2b3346;
-  --backgroundCardOpened: #143b54;
-  --backgroundColorTmp0: #262c3a;
-  --backgroundColorTmp1: #292f3d;
-  --backgroundColorTmp2: #232938;
-  --backgroundColorTmp3: #181d27;
-  --backgroundColorTmpHeader: #2b3346; /* card face — refined slate */
-  --backgroundColorTmpBackground: #232a3a;
-  --backgroundColorTmpBackgroundTasks: #1f2533;
-  --backgroundColorTmpBackgroundHover: #141822;
-  --backgroundColorTmpDarkerField: #1f2533;
-  --backgroundColorTmpDarkerField1: #1c2230;
-  --backgroundColorTmpDarkerField2: #181d27;
-  --backgroundColorTmpSeparatorLight: #2a3245;
-  --backgroundColorTmpHighlighted: #303a4e;
-  --backgroundHeaderHover: #2a3142;
+  --backgroundColor1: var(--ground);
+  --backgroundColor2: var(--surface);
+  --backgroundList: var(--sunken); /* lane recedes below the card face */
+  --backgroundListButton: var(--ground);
+  --backgroundCardSelected: var(--surface-selected);
+  --backgroundCardOpened: var(--accent-soft);
+  --backgroundColorTmp0: var(--surface);
+  --backgroundColorTmp1: var(--surface);
+  --backgroundColorTmp2: var(--sunken);
+  --backgroundColorTmp3: var(--ground);
+  --backgroundColorTmpHeader: var(--surface); /* card face — the raised surface */
+  --backgroundColorTmpBackground: var(--sunken);
+  --backgroundColorTmpBackgroundTasks: var(--ground);
+  --backgroundColorTmpBackgroundHover: var(--surface-hover);
+  --backgroundColorTmpDarkerField: var(--ground);
+  --backgroundColorTmpDarkerField1: var(--ground);
+  --backgroundColorTmpDarkerField2: var(--sunken);
+  --backgroundColorTmpSeparatorLight: var(--line);
+  --backgroundColorTmpHighlighted: var(--surface-selected);
+  --backgroundHeaderHover: var(--surface-hover);
   --nodeOutline: rgba(91, 164, 207, 0.45);
-  --borderOutline: #5ba4cf;
-  --borderOutline2: #4cc5db;
+  --borderOutline: var(--accent);
+  --borderOutline2: var(--accent);
   --linkedCard: #8deeff;
   --linkedCardHover: #77cfdf;
   --linkedCardDeleted: #f57272;
@@ -32,19 +58,19 @@
   --loginBackground: #2185d0;
   --loginBackgroundDark: #2075b6;
   --textColorWhite: #ffffff;
-  --textColor0: #ebebec;
-  --textColor1: #d3d3d3;
-  --textColor2: #c2c2c2;
-  --textColor3: #999999;
-  --textColor4: #6d6d6d;
+  --textColor0: var(--ink);
+  --textColor1: var(--ink-2);
+  --textColor2: var(--ink-2);
+  --textColor3: var(--ink-3);
+  --textColor4: var(--ink-3);
   --textColor5: #363636;
   --textColorCalendar: #4d4d4d;
-  --backgroundProject: #3b3b3b;
-  --textColorGreen: #0bff44;
+  --backgroundProject: var(--sunken);
+  --textColorGreen: var(--ok);
   --textColorYellow: #fdd41e;
   --textColorGold: #fbbd08;
   --textColorGoldHover: #e2aa00;
-  --textColorRed: #ff0000;
+  --textColorRed: var(--crit);
   --notificationRed: #eb5a46;
   --timerGreen: #21ba45;
   --timerGreenHover: #16ab39;
@@ -54,28 +80,28 @@
   --backgroundRedHover: #b04632;
   --backgroundSubmitDisabled: #89be7c;
   --backgroundCancelDisabled: #d9abab;
-  --backgroundSidebar: #232a3a;
-  --backgroundSidebarItem: #181d27;
-  --backgroundSidebarItemNone: #161b24;
-  --backgroundSidebarItem2: #262c3a;
-  --backgroundSidebarItem3: #1f2533;
-  --backgroundSidebarItemActive: #0e5d7a;
+  --backgroundSidebar: var(--sunken);
+  --backgroundSidebarItem: var(--ground);
+  --backgroundSidebarItemNone: var(--ground);
+  --backgroundSidebarItem2: var(--surface);
+  --backgroundSidebarItem3: var(--sunken);
+  --backgroundSidebarItemActive: var(--accent-soft);
   --backgroundNotificationHover: #1d2024;
   --radioBlue: #2196f3;
   --backgroundRadio: #5b647e;
-  --textColorLink: #2196f3;
+  --textColorLink: var(--accent);
   --textColorLinkHover: #1e88e5;
-  --backgroundPopup: #2a3346;
-  --backgroundPopupHover: #232a3a;
+  --backgroundPopup: var(--surface);
+  --backgroundPopupHover: var(--surface-hover);
   --backgroundPopupShadow: rgba(0, 0, 0, 0.35);
-  --backgroundPopupSeparator: #5f6064;
-  --textColorError: #ff6666;
+  --backgroundPopupSeparator: var(--line);
+  --textColorError: var(--crit);
   --textColorErrorHover: #be4e4e;
-  --textColorWarning: #ffa600;
+  --textColorWarning: var(--warn);
   --textColorWarningHover: #c57600;
   /* --headerButtonHover: #121316; */
-  --backgroundHeader: #161b24;
-  --backgroundTabActive: #1c2230;
+  --backgroundHeader: var(--sunken);
+  --backgroundTabActive: var(--ground);
   --textShadow: #000000;
   --attachmentDate: #6b808c;
   --attachmentExtension: #5e6c84;
@@ -227,30 +253,52 @@
 
 /* Github Dark Color Schema */
 [data-theme='github-dark'] {
-  --backgroundColor: #0d1117; /* Override loading.css */
+  /* Redesign primitives — GitHub's own palette, so the theme keeps its identity. */
+  --surface: #161b22;
+  --surface-hover: #1c2128;
+  --surface-selected: #1f2a3d;
+  --ground: #010409;
+  --sunken: #0d1117;
+  --line: #30363d;
+  --line-soft: #21262d;
+  --ink: #e6edf3;
+  --ink-2: #8b949e;
+  --ink-3: #6e7681;
+  --accent: #2f81f7;
+  --accent-ink: #58a6ff;
+  --accent-soft: #11213d;
+  --ok: #3fb950;
+  --ok-soft: #0f2417;
+  --warn: #d29922;
+  --warn-soft: #2b2111;
+  --crit: #f85149;
+  --crit-soft: #2d1517;
+  --logo-plaque: transparent;
+
+  --backgroundColor: var(--ground); /* Override loading.css */
   --backgroundColor0: #010409;
-  --backgroundColor1: #0d1117;
-  --backgroundColor2: #161b22;
-  --backgroundList: #161b22;
-  --backgroundListButton: #1c2128;
-  --backgroundCardSelected: #1f2937;
-  --backgroundCardOpened: #1e3a5f;
-  --backgroundColorTmp0: #1c2128;
-  --backgroundColorTmp1: #21262d;
-  --backgroundColorTmp2: #161b22;
-  --backgroundColorTmp3: #0d1117;
-  --backgroundColorTmpHeader: #1f2937;
-  --backgroundColorTmpBackground: #161b22;
-  --backgroundColorTmpBackgroundTasks: #0d1117;
-  --backgroundColorTmpBackgroundHover: #1c2128;
-  --backgroundColorTmpDarkerField: #010409;
-  --backgroundColorTmpDarkerField1: #0d1117;
-  --backgroundColorTmpDarkerField2: #161b22;
-  --backgroundColorTmpSeparatorLight: #21262d;
-  --backgroundColorTmpHighlighted: #1f2937;
+  --backgroundColor1: var(--ground);
+  --backgroundColor2: var(--surface);
+  --backgroundList: var(--sunken);
+  --backgroundListButton: var(--ground);
+  --backgroundCardSelected: var(--surface-selected);
+  --backgroundCardOpened: var(--accent-soft);
+  --backgroundColorTmp0: var(--surface);
+  --backgroundColorTmp1: var(--surface);
+  --backgroundColorTmp2: var(--sunken);
+  --backgroundColorTmp3: var(--ground);
+  --backgroundColorTmpHeader: var(--surface);
+  --backgroundColorTmpBackground: var(--sunken);
+  --backgroundColorTmpBackgroundTasks: var(--ground);
+  --backgroundColorTmpBackgroundHover: var(--surface-hover);
+  --backgroundColorTmpDarkerField: var(--ground);
+  --backgroundColorTmpDarkerField1: var(--ground);
+  --backgroundColorTmpDarkerField2: var(--sunken);
+  --backgroundColorTmpSeparatorLight: var(--line);
+  --backgroundColorTmpHighlighted: var(--surface-selected);
   --nodeOutline: rgba(88, 166, 255, 0.4);
-  --borderOutline: #58a6ff;
-  --borderOutline2: #1f6feb;
+  --borderOutline: var(--accent);
+  --borderOutline2: var(--accent);
   --linkedCard: #58a6ff;
   --linkedCardHover: #79c0ff;
   --linkedCardDeleted: #f85149;
@@ -259,19 +307,19 @@
   --loginBackground: #1f6feb;
   --loginBackgroundDark: #0969da;
   --textColorWhite: #ffffff;
-  --textColor0: #f0f6fc;
-  --textColor1: #e6edf3;
-  --textColor2: #c9d1d9;
-  --textColor3: #8b949e;
-  --textColor4: #6e7681;
+  --textColor0: var(--ink);
+  --textColor1: var(--ink-2);
+  --textColor2: var(--ink-2);
+  --textColor3: var(--ink-3);
+  --textColor4: var(--ink-3);
   --textColor5: #484f58;
   --textColorCalendar: #7d8590;
-  --backgroundProject: #21262d;
-  --textColorGreen: #3fb950;
+  --backgroundProject: var(--sunken);
+  --textColorGreen: var(--ok);
   --textColorYellow: #d29922;
   --textColorGold: #e3b341;
   --textColorGoldHover: #d29922;
-  --textColorRed: #f85149;
+  --textColorRed: var(--crit);
   --notificationRed: #da3633;
   --timerGreen: #3fb950;
   --timerGreenHover: #2ea043;
@@ -281,27 +329,27 @@
   --backgroundRedHover: #b62324;
   --backgroundSubmitDisabled: #1b4b2b;
   --backgroundCancelDisabled: #5a2828;
-  --backgroundSidebar: #0d1117;
-  --backgroundSidebarItem: #161b22;
-  --backgroundSidebarItemNone: #010409;
-  --backgroundSidebarItem2: #1c2128;
-  --backgroundSidebarItem3: #21262d;
-  --backgroundSidebarItemActive: #1e3a5f;
+  --backgroundSidebar: var(--sunken);
+  --backgroundSidebarItem: var(--ground);
+  --backgroundSidebarItemNone: var(--ground);
+  --backgroundSidebarItem2: var(--surface);
+  --backgroundSidebarItem3: var(--sunken);
+  --backgroundSidebarItemActive: var(--accent-soft);
   --radioBlue: #58a6ff;
   --backgroundRadio: #30363d;
-  --textColorLink: #58a6ff;
+  --textColorLink: var(--accent);
   --textColorLinkHover: #79c0ff;
-  --backgroundPopup: #161b22;
-  --backgroundPopupHover: #1c2128;
+  --backgroundPopup: var(--surface);
+  --backgroundPopupHover: var(--surface-hover);
   --backgroundPopupShadow: #010409;
-  --backgroundPopupSeparator: #30363d;
-  --textColorError: #f85149;
+  --backgroundPopupSeparator: var(--line);
+  --textColorError: var(--crit);
   --textColorErrorHover: #ff7b72;
-  --textColorWarning: #d29922;
+  --textColorWarning: var(--warn);
   --textColorWarningHover: #e3b341;
   /* --headerButtonHover: #1c2128; */
-  --backgroundHeader: #010409;
-  --backgroundTabActive: #0d1117;
+  --backgroundHeader: var(--sunken);
+  --backgroundTabActive: var(--ground);
   --textShadow: #000000;
   --attachmentDate: #7d8590;
   --attachmentExtension: #8b949e;
@@ -368,31 +416,55 @@
 
 /* Trello-style Light Theme — modern grey, content-light */
 [data-theme='trello-light'] {
-  --backgroundColor: #f4f5f7; /* light grey board background — override loading.css */
+  /* Redesign primitives — darker and higher contrast than the previous light set.
+   * White is the card face: refusing pure white is what forced every other grey
+   * to crowd it. --ink-3 was ~3.8:1 on white (under AA); it is now ~5.7:1. */
+  --surface: #ffffff;
+  --surface-hover: #f3f5f6;
+  --surface-selected: #d9eaeb;
+  --ground: #eceeef;
+  --sunken: #dfe3e4;
+  --line: #c3cbcc;
+  --line-soft: #d6dbdc;
+  --ink: #0d1314;
+  --ink-2: #344244;
+  --ink-3: #5a6a6c;
+  --accent: #0a656c;
+  --accent-ink: #084f56;
+  --accent-soft: #d2e9ea;
+  --ok: #15693f;
+  --ok-soft: #d3e9dc;
+  --warn: #7d500a;
+  --warn-soft: #f0e2c6;
+  --crit: #9c332a;
+  --crit-soft: #f3d9d6;
+  --logo-plaque: #151c26;
+
+  --backgroundColor: var(--ground); /* board canvas — override loading.css */
   --backgroundColor0: #f9fafb;
-  --backgroundColor1: #f4f5f7;
-  --backgroundColor2: #ebecf0;
-  --backgroundList: #e4e6ea; /* modern grey list lane — darker than page bg */
-  --backgroundListButton: #d8dbe1;
-  --backgroundCardSelected: #ebedf1;
-  --backgroundCardOpened: #d8e6fd;
-  --backgroundColorTmp0: #ebecf0;
-  --backgroundColorTmp1: #e4e6ea;
-  --backgroundColorTmp2: #dfe1e6;
-  --backgroundColorTmp3: #d8dbe1;
-  --backgroundColorTmpHeader: #eef0f3; /* card face — light grey, NOT pure white */
-  --backgroundColorTmpBackground: #e4e6ea;
-  --backgroundColorTmpBackgroundTasks: #eef0f3;
-  --backgroundColorTmpBackgroundHover: #dfe1e6;
-  --backgroundColorTmpDarkerField: #ebecf0;
-  --backgroundColorTmpDarkerField1: #e4e6ea;
-  --backgroundColorTmpDarkerField2: #eef0f3;
-  --backgroundColorTmpSeparatorLight: #d8dbe1;
-  --backgroundColorTmpHighlighted: #d8e6fd;
-  --backgroundHeaderHover: #d8dbe1;
+  --backgroundColor1: var(--ground);
+  --backgroundColor2: var(--surface);
+  --backgroundList: var(--sunken); /* lane — darker than the canvas */
+  --backgroundListButton: var(--ground);
+  --backgroundCardSelected: var(--surface-selected);
+  --backgroundCardOpened: var(--accent-soft);
+  --backgroundColorTmp0: var(--surface);
+  --backgroundColorTmp1: var(--surface);
+  --backgroundColorTmp2: var(--sunken);
+  --backgroundColorTmp3: var(--ground);
+  --backgroundColorTmpHeader: var(--surface); /* card face — white; it is the contrast anchor */
+  --backgroundColorTmpBackground: var(--sunken);
+  --backgroundColorTmpBackgroundTasks: var(--ground);
+  --backgroundColorTmpBackgroundHover: var(--surface-hover);
+  --backgroundColorTmpDarkerField: var(--ground);
+  --backgroundColorTmpDarkerField1: var(--ground);
+  --backgroundColorTmpDarkerField2: var(--sunken);
+  --backgroundColorTmpSeparatorLight: var(--line);
+  --backgroundColorTmpHighlighted: var(--surface-selected);
+  --backgroundHeaderHover: var(--surface-hover);
   --nodeOutline: rgba(9, 30, 66, 0.25);
-  --borderOutline: #0c66e4;
-  --borderOutline2: #0c66e4;
+  --borderOutline: var(--accent);
+  --borderOutline2: var(--accent);
   --linkedCard: #0c66e4;
   --linkedCardHover: #0055cc;
   --linkedCardDeleted: #c9372c;
@@ -401,19 +473,19 @@
   --loginBackground: #0c66e4;
   --loginBackgroundDark: #0055cc;
   --textColorWhite: #ffffff;
-  --textColor0: #172b4d; /* primary text */
-  --textColor1: #44546f;
-  --textColor2: #626f86;
-  --textColor3: #758195;
-  --textColor4: #8590a2;
+  --textColor0: var(--ink); /* primary text */
+  --textColor1: var(--ink-2);
+  --textColor2: var(--ink-2);
+  --textColor3: var(--ink-3);
+  --textColor4: var(--ink-3);
   --textColor5: #b3b9c4;
   --textColorCalendar: #b3b9c4;
-  --backgroundProject: #ebecf0;
-  --textColorGreen: #1f845a;
+  --backgroundProject: var(--sunken);
+  --textColorGreen: var(--ok);
   --textColorYellow: #b38600;
   --textColorGold: #b38600;
   --textColorGoldHover: #8f6900;
-  --textColorRed: #c9372c;
+  --textColorRed: var(--crit);
   --notificationRed: #c9372c;
   --timerGreen: #1f845a;
   --timerGreenHover: #216e4e;
@@ -423,27 +495,27 @@
   --backgroundRedHover: #ae2a19;
   --backgroundSubmitDisabled: #94c5af;
   --backgroundCancelDisabled: #e9b6b0;
-  --backgroundSidebar: #dfe1e6; /* modern grey side panel */
-  --backgroundSidebarItem: #d8dbe1;
-  --backgroundSidebarItemNone: #dfe1e6;
-  --backgroundSidebarItem2: #d3d6dc;
-  --backgroundSidebarItem3: #cdd1d8;
-  --backgroundSidebarItemActive: #b9cdf0;
+  --backgroundSidebar: var(--sunken); /* side panel shares the chrome surface */
+  --backgroundSidebarItem: var(--ground);
+  --backgroundSidebarItemNone: var(--ground);
+  --backgroundSidebarItem2: var(--surface);
+  --backgroundSidebarItem3: var(--sunken);
+  --backgroundSidebarItemActive: var(--accent-soft);
   --backgroundNotificationHover: #d8dbe1;
   --radioBlue: #0c66e4;
   --backgroundRadio: #c1c7d0;
-  --textColorLink: #0c66e4;
+  --textColorLink: var(--accent);
   --textColorLinkHover: #0055cc;
-  --backgroundPopup: #eef0f3;
-  --backgroundPopupHover: #dfe1e6;
+  --backgroundPopup: var(--surface);
+  --backgroundPopupHover: var(--surface-hover);
   --backgroundPopupShadow: rgba(9, 30, 66, 0.18);
-  --backgroundPopupSeparator: #cdd1d8;
-  --textColorError: #c9372c;
+  --backgroundPopupSeparator: var(--line);
+  --textColorError: var(--crit);
   --textColorErrorHover: #ae2a19;
-  --textColorWarning: #b38600;
+  --textColorWarning: var(--warn);
   --textColorWarningHover: #8f6900;
-  --backgroundHeader: #dfe1e6; /* modern grey top panel */
-  --backgroundTabActive: #d3d6dc;
+  --backgroundHeader: var(--sunken); /* top panel shares the chrome surface */
+  --backgroundTabActive: var(--ground);
   --textShadow: rgba(9, 30, 66, 0.1);
   --attachmentDate: #758195;
   --attachmentExtension: #626f86;

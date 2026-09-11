@@ -1,6 +1,11 @@
 :global(#app) {
+  // Icons are colour-driven, not fill-driven: each SVG declares its own
+  // fill/stroke against currentColor (stroked UI icons carry fill="none"
+  // stroke="currentColor"; brand marks carry fill="currentColor"). Setting
+  // `fill` here would beat those presentation attributes and flood the
+  // stroked set solid - set `color` instead, and recolour with `color`.
   .icon {
-    fill: var(--textColor1);
+    color: var(--textColor1);
     vertical-align: sub;
   }
 

@@ -111,7 +111,7 @@
     border-radius: var(--tw-radius);
 
     svg {
-      fill: var(--heroBannerText) !important;
+      color: var(--heroBannerText) !important;
     }
 
     &:hover {
@@ -119,7 +119,7 @@
       color: var(--heroBannerText) !important;
 
       svg {
-        fill: var(--heroBannerText) !important;
+        color: var(--heroBannerText) !important;
       }
     }
   }

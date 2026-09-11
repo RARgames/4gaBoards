@@ -92,7 +92,7 @@
   .sidebarTitleIcon {
     margin-right: 6px;
     vertical-align: -10%;
-    fill: var(--textColor0);
+    color: var(--textColor0);
   }
 
   .sidebarItem {
@@ -176,7 +176,7 @@
     button {
       &:hover {
         svg {
-          fill: var(--borderOutline2) !important;
+          color: var(--borderOutline2) !important;
         }
       }
     }
@@ -197,7 +197,7 @@
       }
 
       svg {
-        fill: var(--textColor0) !important;
+        color: var(--textColor0) !important;
       }
     }
   }
@@ -206,21 +206,21 @@
     color: var(--textColor0);
 
     svg {
-      fill: var(--textColor0);
+      color: var(--textColor0);
     }
 
     &:hover {
       color: var(--textColor1);
 
       svg {
-        fill: var(--textColor1);
+        color: var(--textColor1);
       }
     }
   }
 
   .icon {
     margin-right: 4px;
-    fill: var(--textColor0);
+    color: var(--textColor0);
   }
 
   .sidebarButtonPadding {
@@ -228,12 +228,12 @@
   }
 
   .githubGreen {
-    fill: var(--textColorGreen);
+    color: var(--textColorGreen);
     margin-left: 4px;
   }
 
   .githubGrey {
-    fill: var(--textColor0);
+    color: var(--textColor0);
   }
 
   .githubCannotManage {

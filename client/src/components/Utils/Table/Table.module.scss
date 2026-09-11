@@ -233,12 +233,12 @@
   .tableSettingsButton {
     &:hover {
       .iconTableSettingsButton {
-        fill: var(--textColor3);
+        color: var(--textColor3);
       }
     }
   }
 
   .iconTableSettingsButton {
-    fill: var(--textColor1);
+    color: var(--textColor1);
   }
 }

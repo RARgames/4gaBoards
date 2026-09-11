@@ -66,12 +66,12 @@
   .clearButton {
     svg {
       vertical-align: middle;
-      fill: var(--textColor3);
+      color: var(--textColor3);
     }
 
     &:hover {
       svg {
-        fill: var(--textColor4);
+        color: var(--textColor4);
       }
     }
   }

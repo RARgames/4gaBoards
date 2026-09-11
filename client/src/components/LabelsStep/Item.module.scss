@@ -5,12 +5,12 @@
     padding: 8px 10px;
 
     svg {
-      fill: var(--textColor1);
+      color: var(--textColor1);
     }
 
     &:hover {
       svg {
-        fill: var(--textColor2);
+        color: var(--textColor2);
       }
     }
   }

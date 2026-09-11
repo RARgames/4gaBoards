@@ -17,7 +17,7 @@
   }
 
   .newPageButtonIcon {
-    fill: var(--textColor2);
+    color: var(--textColor2);
   }
 
   .item {
@@ -50,7 +50,7 @@
   }
 
   .caretIcon {
-    fill: var(--textColor3);
+    color: var(--textColor3);
   }
 
   .caretIconCollapsed {
@@ -74,7 +74,7 @@
 
   .addChildButton {
     flex-shrink: 0;
-    fill: var(--textColor4);
+    color: var(--textColor4);
     opacity: 0;
   }
 }

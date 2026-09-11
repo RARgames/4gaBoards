@@ -92,10 +92,10 @@
   }
 
   .removeButton {
-    fill: var(--textColor3);
+    color: var(--textColor3);
 
     &:hover {
-      fill: var(--errorRed);
+      color: var(--errorRed);
     }
   }
 }

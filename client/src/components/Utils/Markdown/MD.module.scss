@@ -15,18 +15,18 @@
   .coloredTextButton {
     svg {
       vertical-align: -5%;
-      fill: var(--mdEditorIcon);
+      color: var(--mdEditorIcon);
     }
 
     &:hover {
       svg {
-        fill: var(--mdEditorIconHover);
+        color: var(--mdEditorIconHover);
       }
     }
 
     &:disabled {
       svg {
-        fill: var(--mdEditorIconDisabled);
+        color: var(--mdEditorIconDisabled);
       }
     }
   }

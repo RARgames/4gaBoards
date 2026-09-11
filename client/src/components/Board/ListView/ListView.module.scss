@@ -30,13 +30,13 @@
       background: var(--backgroundListButton);
 
       .paginationButtonIcon {
-        fill: var(--textColor2);
+        color: var(--textColor2);
       }
     }
   }
 
   .paginationButtonIcon {
-    fill: var(--textColor2);
+    color: var(--textColor2);
   }
 
   .paginationButtonText {
@@ -45,7 +45,7 @@
   }
 
   .iconTableHeader {
-    fill: var(--textColor1);
+    color: var(--textColor1);
     flex-shrink: 0;
   }
 }

@@ -14,7 +14,7 @@
     padding: 2px 0;
 
     svg {
-      fill: currentColor;
+      color: inherit;
     }
 
     &:hover {
@@ -71,7 +71,7 @@
     flex-shrink: 0;
 
     svg {
-      fill: var(--textColor2);
+      color: var(--textColor2);
     }
 
     &:hover {
@@ -88,7 +88,7 @@
     cursor: pointer;
 
     svg {
-      fill: currentColor;
+      color: inherit;
     }
 
     &:hover {
@@ -212,7 +212,7 @@
     cursor: pointer;
 
     svg {
-      fill: currentColor;
+      color: inherit;
       flex-shrink: 0;
     }
 
@@ -265,7 +265,7 @@
       color 120ms ease;
 
     svg {
-      fill: currentColor;
+      color: inherit;
       flex-shrink: 0;
     }
 

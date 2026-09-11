@@ -89,7 +89,7 @@
     color: var(--textColor3);
     cursor: pointer;
     display: block;
-    fill: var(--textColor3);
+    color: var(--textColor3);
     height: 36px;
     padding: 8px;
     text-align: left;
@@ -101,14 +101,14 @@
       color: var(--textColor1);
 
       svg {
-        fill: var(--textColor1);
+        color: var(--textColor1);
       }
     }
   }
 
   .addCardButtonIcon {
     vertical-align: -25%;
-    fill: var(--textColor3);
+    color: var(--textColor3);
   }
 
   .addCardButtonText {
@@ -361,12 +361,12 @@
 
     &:hover {
       svg {
-        fill: var(--textColor4);
+        color: var(--textColor4);
       }
     }
   }
 
   .collapsedListCardAddButtonIcon {
-    fill: var(--textColor3);
+    color: var(--textColor3);
   }
 }
