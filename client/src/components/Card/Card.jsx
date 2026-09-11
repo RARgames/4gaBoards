@@ -15,7 +15,6 @@ import DueDateEditPopup from '../DueDateEditPopup';
 import Label from '../Label';
 import LabelsPopup from '../LabelsPopup';
 import MembershipsPopup from '../MembershipsPopup';
-import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
 import { Button, ButtonStyle, Checkbox, CheckboxSize, Icon, IconType, IconSize, LinkifiedTextRenderer } from '../Utils';
@@ -59,13 +58,11 @@ const Card = React.memo(
     isBlocked,
     boardMemberships,
     boardAndCardMemberships,
-    boardAndTaskMemberships,
     allLabels,
     url,
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
-    closestDueDate,
     canEdit,
     createdAt,
     createdBy,
@@ -88,13 +85,6 @@ const Card = React.memo(
     onLabelCreate,
     onLabelUpdate,
     onLabelDelete,
-    onTaskUpdate,
-    onTaskDuplicate,
-    onTaskDelete,
-    onUserToTaskAdd,
-    onUserFromTaskRemove,
-    onTaskCreate,
-    onTaskMove,
     onActivitiesFetch,
     style,
     provided,
@@ -105,7 +95,6 @@ const Card = React.memo(
     const [t] = useTranslation();
     const nameEdit = useRef(null);
     const cardRef = useRef(null);
-    const [isDragOverTask, setIsDragOverTask] = useState(false);
     const [isLinkCopied, setIsLinkCopied] = useState(false);
     const navigate = useNavigate();
 
@@ -232,14 +221,6 @@ const Card = React.memo(
       };
     };
 
-    const handleTasksMouseEnter = useCallback(() => {
-      setIsDragOverTask(true);
-    }, []);
-
-    const handleTasksMouseOut = useCallback(() => {
-      setIsDragOverTask(false);
-    }, []);
-
     const handleDueDateUpdate = useCallback(
       (newDueDate) => {
         onUpdate({
@@ -251,6 +232,7 @@ const Card = React.memo(
 
     const visibleMembersCount = 3;
     const visibleLabelsCount = 2;
+    const completedTaskCount = tasks.filter((task) => task.isCompleted).length;
     const labelIds = labels.map((label) => label.id);
 
     // §6.2: Done card treatment — gated on the parent list's type, same shape as isBlocked
@@ -344,29 +326,12 @@ const Card = React.memo(
               </span>
             )}
             {tasks.length > 0 && (
-              <Tasks
-                variant="card"
-                isCardActive={isOpen}
-                cardId={id}
-                cardName={name}
-                items={tasks}
-                closestDueDate={closestDueDate}
-                canEdit={canEdit}
-                allBoardMemberships={boardAndTaskMemberships}
-                boardMemberships={boardMemberships}
-                isActivitiesFetching={isActivitiesFetching}
-                isAllActivitiesFetched={isAllActivitiesFetched}
-                onCreate={onTaskCreate}
-                onUpdate={onTaskUpdate}
-                onMove={onTaskMove}
-                onDuplicate={onTaskDuplicate}
-                onDelete={onTaskDelete}
-                onUserAdd={onUserToTaskAdd}
-                onUserRemove={onUserFromTaskRemove}
-                onMouseEnterTasks={handleTasksMouseEnter}
-                onMouseLeaveTasks={handleTasksMouseOut}
-                onActivitiesFetch={onActivitiesFetch}
-              />
+              <span className={clsx(s.attachment, s.attachmentLeft, s.taskMeter, completedTaskCount === tasks.length && s.taskMeterDone)} title={t('common.tasks')}>
+                <span className={s.taskMeterTrack}>
+                  <span className={s.taskMeterFill} style={{ width: `${(completedTaskCount / tasks.length) * 100}%` }} />
+                </span>
+                {completedTaskCount}/{tasks.length}
+              </span>
             )}
             {(description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer) && (
               <span className={s.attachments}>
@@ -573,7 +538,7 @@ const Card = React.memo(
     }
 
     return (
-      <Draggable draggableId={`card:${id}`} index={index} isDragDisabled={isDragOverTask || !isPersisted || !canEdit}>
+      <Draggable draggableId={`card:${id}`} index={index} isDragDisabled={!isPersisted || !canEdit}>
         {(dragProvided, dragSnapshot) => renderCard(dragProvided, dragSnapshot)}
       </Draggable>
     );
@@ -608,13 +573,11 @@ Card.propTypes = {
   isBlocked: PropTypes.bool,
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndCardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  boardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   url: PropTypes.string.isRequired,
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,
-  closestDueDate: PropTypes.instanceOf(Date),
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -637,13 +600,6 @@ Card.propTypes = {
   onLabelCreate: PropTypes.func.isRequired,
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
-  onTaskUpdate: PropTypes.func.isRequired,
-  onTaskDuplicate: PropTypes.func.isRequired,
-  onTaskDelete: PropTypes.func.isRequired,
-  onUserToTaskAdd: PropTypes.func.isRequired,
-  onUserFromTaskRemove: PropTypes.func.isRequired,
-  onTaskCreate: PropTypes.func.isRequired,
-  onTaskMove: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   style: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   provided: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -666,7 +622,6 @@ Card.defaultProps = {
   priority: undefined,
   parent: undefined,
   isBlocked: false,
-  closestDueDate: undefined,
   createdAt: undefined,
   createdBy: undefined,
   updatedAt: undefined,

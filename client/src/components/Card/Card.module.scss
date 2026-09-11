@@ -278,6 +278,41 @@
     vertical-align: middle;
   }
 
+  // The board card carries the checklist's shape, not its contents: ticking
+  // happens in the card itself now.
+  .taskMeter {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--fontMono);
+    font-size: 10.5px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+  }
+
+  .taskMeterTrack {
+    width: 26px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .taskMeterFill {
+    display: block;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--ink-3);
+  }
+
+  .taskMeterDone {
+    color: var(--ok);
+
+    .taskMeterFill {
+      background: var(--ok);
+    }
+  }
+
   .priorityStripe {
     position: absolute;
     left: 0;
