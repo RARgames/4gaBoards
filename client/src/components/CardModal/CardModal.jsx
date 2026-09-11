@@ -752,8 +752,8 @@ const CardModal = React.memo(
             </Button>
           )}
           {canEdit && unsavedDesc && <span className={s.localChangesLoaded}>{t('common.unsavedChanges')}</span>}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleDescription')} onClick={handleToggleDescShown} className={s.buttonToggle}>
-            <Icon type={descShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
+          <Button style={ButtonStyle.Icon} title={t('common.toggleDescription')} onClick={handleToggleDescShown} className={s.buttonToggle} aria-expanded={descShown}>
+            <Icon type={IconType.TriangleDown} size={IconSize.Size10} className={clsx(s.moduleChevron, !descShown && s.moduleChevronCollapsed)} />
           </Button>
         </div>
         <div>
@@ -789,8 +789,8 @@ const CardModal = React.memo(
               <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
             </Button>
           )}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleTasks')} onClick={handleToggleTasksShown} className={s.buttonToggle}>
-            <Icon type={taskShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
+          <Button style={ButtonStyle.Icon} title={t('common.toggleTasks')} onClick={handleToggleTasksShown} className={s.buttonToggle} aria-expanded={taskShown}>
+            <Icon type={IconType.TriangleDown} size={IconSize.Size10} className={clsx(s.moduleChevron, !taskShown && s.moduleChevronCollapsed)} />
           </Button>
         </div>
         <div>
@@ -834,8 +834,8 @@ const CardModal = React.memo(
               </Button>
             </AttachmentAdd>
           )}
-          <Button style={ButtonStyle.Icon} title={t('common.toggleAttachments')} onClick={handleToggleAttacShown} className={s.buttonToggle}>
-            <Icon type={attacShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
+          <Button style={ButtonStyle.Icon} title={t('common.toggleAttachments')} onClick={handleToggleAttacShown} className={s.buttonToggle} aria-expanded={attacShown}>
+            <Icon type={IconType.TriangleDown} size={IconSize.Size10} className={clsx(s.moduleChevron, !attacShown && s.moduleChevronCollapsed)} />
           </Button>
         </div>
         <div>
@@ -900,36 +900,43 @@ const CardModal = React.memo(
     const contentNode = (
       <div className={s.flexContainer}>
         {headerNode}
+        {/* Two columns: set-once metadata moves to a sidebar so the main column
+            opens on Description -> Tasks -> Attachments -> Comments instead of
+            having the attribute rows push them below the fold. */}
         <div className={clsx(s.mainContainer, gs.scrollableY)}>
-          <div className={s.moduleContainer}>
-            {membersNode}
-            {labelsNode}
-            {priorityNode}
-            {startDateNode}
-            {dueDateNode}
-            {timeNode}
-            {!hideClosestDueDate && closestDueDateNode}
-            {!hideCardModalActivity && createdNode}
-            {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
-            <hr className={s.hr} />
-          </div>
-          <div className={s.moduleContainer}>
-            {descriptionNode}
-            {hierarchyNode}
-            <CardLinksContainer cardId={id} canEdit={canEdit} />
-            <hr className={s.hr} />
-          </div>
-          <div className={s.moduleContainer}>
-            {tasksNode}
-            <hr className={s.hr} />
-          </div>
-          <div className={s.moduleContainer}>
-            {attachmentsNode}
-            <hr className={s.hr} />
-          </div>
-          <div className={s.moduleContainer}>
-            {commentsNode}
-            <hr className={s.hr} />
+          <div className={s.columns}>
+            <div className={s.mainColumn}>
+              <div className={s.moduleContainer}>
+                {descriptionNode}
+                <CardLinksContainer cardId={id} canEdit={canEdit} />
+                <hr className={s.hr} />
+              </div>
+              <div className={s.moduleContainer}>
+                {tasksNode}
+                <hr className={s.hr} />
+              </div>
+              <div className={s.moduleContainer}>
+                {attachmentsNode}
+                <hr className={s.hr} />
+              </div>
+              <div className={s.moduleContainer}>{commentsNode}</div>
+            </div>
+            <aside className={s.sideColumn}>
+              {membersNode}
+              {labelsNode}
+              {priorityNode}
+              {startDateNode}
+              {dueDateNode}
+              {timeNode}
+              {!hideClosestDueDate && closestDueDateNode}
+              {hierarchyNode}
+              {(!hideCardModalActivity || updatedAt || updatedBy) && (
+                <div className={s.sideFoot}>
+                  {!hideCardModalActivity && createdNode}
+                  {!hideCardModalActivity && (updatedAt || updatedBy) && updatedNode}
+                </div>
+              )}
+            </aside>
           </div>
         </div>
       </div>

@@ -40,10 +40,10 @@
   }
 
   .headerItems {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     max-width: 100%;
-    vertical-align: top;
-    margin-right: 4px;
   }
 
   .cursorPointer {
@@ -51,7 +51,7 @@
   }
 
   .wrapper {
-    width: 650px;
+    width: 654px;
     z-index: 1;
     box-shadow: -10px 0 10px -12px var(--overlay);
   }
@@ -67,8 +67,26 @@
     border-color: var(--nodeOutline);
   }
 
+  // First in the row, so collapse reads as a disclosure and every + means add.
   .buttonToggle {
-    float: right;
+    order: -1;
+    flex: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    color: var(--ink-3);
+
+    &:hover {
+      color: var(--ink);
+    }
+  }
+
+  .moduleChevron {
+    transition: transform 160ms ease;
+  }
+
+  .moduleChevronCollapsed {
+    transform: rotate(-90deg);
   }
 
   .mainContainer {
@@ -83,6 +101,41 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+  }
+
+  // Main column reads and writes; sidebar holds the set-once attributes.
+  .columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 228px;
+    align-items: start;
+    min-height: 100%;
+  }
+
+  .mainColumn {
+    min-width: 0;
+    padding-bottom: 12px;
+  }
+
+  .sideColumn {
+    min-width: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 12px 14px;
+    background: var(--sunken);
+    border-left: 1px solid var(--line);
+  }
+
+  // Created / updated are the least-reached things on the card; they sit at the
+  // foot of the sidebar rather than above the description.
+  .sideFoot {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .moduleContainer {
@@ -214,12 +267,16 @@
   }
 
   .moduleHeader {
-    color: var(--textColor1);
-    font-size: 16px;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     line-height: 20px;
     margin: 0 0 6px;
-    padding: 6px 0 0 0;
+    padding: 10px 0 0 0;
   }
 
   .descriptionButton {
