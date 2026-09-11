@@ -190,10 +190,11 @@
 
   // "N Children" subtitle shown on a Hero card under the title.
   .childrenCountText {
-    color: var(--textColor3);
-    font-size: 12px;
+    color: var(--ink-3);
+    font-size: 11.5px;
     line-height: 14px;
-    padding: 0 8px 4px 4px;
+    padding: 0 11px 10px 11px;
+    margin-top: -4px;
   }
 
   // Shown on cards that are blocked by another card OR are blocking another card.
@@ -236,12 +237,12 @@
     display: flex;
     align-items: flex-start;
     gap: 6px;
-    padding: 9px 11px 0 11px;
+    padding: 10px 11px;
     transition: padding-left 120ms ease;
   }
 
   .cover + div .detailsTitle {
-    padding-top: 8px;
+    padding-top: 9px;
   }
 
   .details {
@@ -249,7 +250,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 7px;
-    padding: 7px 11px 9px 11px;
+    padding: 0 11px 10px 11px;
   }
 
   .labels {
@@ -385,7 +386,7 @@
     font-variant-numeric: tabular-nums;
     font-size: 10.5px;
     color: var(--ink-3);
-    padding: 4px 11px 0 11px;
+    padding: 0 11px 6px 11px;
   }
 
   .autoArchiveRow {
@@ -396,7 +397,7 @@
     font-variant-numeric: tabular-nums;
     font-size: 10px;
     color: var(--ink-3);
-    padding: 2px 11px 9px 11px;
+    padding: 0 11px 10px 11px;
   }
 
   .autoArchiveRowUrgent {
