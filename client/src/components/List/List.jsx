@@ -674,7 +674,14 @@ const List = React.memo(
       };
     }, [dragPreview, id, rowItems, getRowSize, filteredCardIds, scrollOffset]);
 
+    // Expanded header shows the bare number: in a lane header every figure is a
+    // card count, and spelling it out costs ~35px of the list name's width on a
+    // 272px lane. The collapsed rail keeps the full phrase, where there is room.
     const cardsCountText = () => {
+      return isFiltered ? `${filteredCardIds.length}/${cardIds.length}` : `${cardIds.length}`;
+    };
+
+    const cardsCountTextLong = () => {
       return isFiltered ? t('common.ofCards', { filteredCount: filteredCardIds.length, count: cardIds.length }) : t('common.cards', { count: cardIds.length });
     };
 
@@ -747,7 +754,7 @@ const List = React.memo(
             <div className={s.headerNameCollapsed} title={name}>
               {name}
             </div>
-            <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
+            <div className={s.headerCardsCountCollapsed}>{cardsCountTextLong()}</div>
             <CardAddPopup
               lists={[]}
               labelIds={labelIds}
@@ -872,7 +879,9 @@ const List = React.memo(
                     </ActionsPopup>
                   </div>
                 )}
-                <div className={clsx(s.headerCardsCount, gs.fontMono)}>{cardsCountText()}</div>
+                <div className={clsx(s.headerCardsCount, gs.fontMono)} title={cardsCountTextLong()}>
+                  {cardsCountText()}
+                </div>
               </div>
               {showWarningStripe && <div className={s.warningStripe} />}
               <div className={s.cardsInnerWrapper}>

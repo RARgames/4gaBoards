@@ -148,10 +148,10 @@
 
   .header {
     display: flex;
-    align-items: flex-start;
-    gap: 6px;
+    align-items: center;
+    gap: 7px;
     outline: none;
-    padding: 11px 6px 9px 12px;
+    padding: 9px 8px 8px 6px;
     // box-shadow, not border: a border adds to the box's rendered height, which the virtualized
     // card-list height math (List.jsx wrapperOffset/HEADER_CHROME_DELTA) doesn't account for and
     // was showing up as a phantom scrollbar. box-shadow paints the same 1px line with zero
@@ -160,6 +160,10 @@
     position: relative;
   }
 
+  // Keeps flex: 1 deliberately. Shrinking it wraps long list names to two lines,
+  // which changes the header height the virtualized card list measures against
+  // (List.jsx wrapperOffset / headerNameDefaultHeight). The count and actions are
+  // reordered around it instead.
   .headerNameBlock {
     flex: 1;
     min-width: 0;
@@ -167,14 +171,15 @@
 
   .headerTitleRow {
     display: flex;
-    align-items: flex-start;
-    gap: 6px;
+    align-items: center;
+    gap: 7px;
   }
 
   .headerCaption {
-    font-size: 10.5px;
-    color: var(--textColor4);
-    margin-top: 2px;
+    font-family: var(--fontMono);
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 1px;
   }
 
   .headerCaptionWarning {
@@ -183,9 +188,8 @@
 
   .typeDot {
     flex: none;
-    width: 8px;
-    height: 8px;
-    margin-top: 6px; // centers against the name's first 20px line-height, not the full 2-line block
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
   }
 
@@ -230,28 +234,51 @@
 
   .popupWrapper {
     flex: none;
+    order: 3;
     display: inline-block;
     position: relative;
-    width: 10px;
+    width: 19px;
     height: 20px;
   }
 
   .editListButton {
-    width: 10px;
+    width: 19px;
+    height: 19px;
+    border-radius: 5px;
+    color: var(--ink-3);
+    transition:
+      background 120ms ease,
+      color 120ms ease;
+
+    &:hover {
+      background: var(--line-soft);
+      color: var(--ink);
+    }
   }
 
   .headerAddCardButton {
     flex: none;
-    width: 14px;
-    height: 20px;
+    order: 2;
+    width: 19px;
+    height: 19px;
+    border-radius: 5px;
+    color: var(--ink-3);
+    transition:
+      background 120ms ease,
+      color 120ms ease;
+
+    &:hover {
+      background: var(--line-soft);
+      color: var(--ink);
+    }
   }
 
   .headerName {
     flex: 1;
     min-width: 0;
-    color: var(--textColor0);
-    font-size: 13px;
-    font-weight: 650;
+    color: var(--ink);
+    font-size: 12.5px;
+    font-weight: 600;
     letter-spacing: -0.005em;
     line-height: 20px;
     max-height: 40px;
@@ -281,8 +308,14 @@
   .headerCollapseButton {
     flex: none;
     z-index: 1;
-    width: 10px;
+    width: 20px;
     height: 20px;
+    border-radius: 5px;
+    color: var(--ink-3);
+
+    &:hover {
+      color: var(--ink);
+    }
   }
 
   // Sits between the collapse chevron and the list name while a multi-selection is under way.
@@ -305,11 +338,11 @@
 
   .headerCardsCount {
     flex: none;
-    align-self: flex-start;
-    margin-top: 3px; // roughly centers against the 20px name line-height, matching headerCollapseButton
-    margin-left: auto;
-    color: var(--textColor4);
-    font-size: 11px;
+    order: 1;
+    color: var(--ink-3);
+    font-family: var(--fontMono);
+    font-size: 10.5px;
+    font-variant-numeric: tabular-nums;
   }
 
   .headerCardsCountCollapsed {
