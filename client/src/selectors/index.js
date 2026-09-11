@@ -1,5 +1,6 @@
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
+import boardTimeTotals from './board-time-totals';
 import boards from './boards';
 import cardLinks from './card-links';
 import cardSelection from './card-selection';
@@ -7,8 +8,8 @@ import cards from './cards';
 import categoryTags from './category-tags';
 import chartViews from './chart-views';
 import core from './core';
-import gantt from './gantt';
 import documents from './documents';
+import gantt from './gantt';
 import labels from './labels';
 import lists from './lists';
 import media from './media';
@@ -29,6 +30,7 @@ import wikiPages from './wiki-pages';
 export default {
   ...attachments,
   ...boardMemberships,
+  ...boardTimeTotals,
   ...boards,
   ...cardLinks,
   ...cardSelection,

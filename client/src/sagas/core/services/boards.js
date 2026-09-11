@@ -1,10 +1,11 @@
-import { call, put, select } from 'redux-saga/effects';
+import { call, fork, put, select } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
 import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
 import request from '../request';
+import { fetchBoardTimeTotals } from './board-time-totals';
 import { goToBoard, goToProject } from './router';
 
 export function* createBoard(projectId, { import: boardImport, ...data }) {
@@ -94,6 +95,11 @@ export function* fetchBoard(id) {
   }
 
   yield put(actions.fetchBoard.success(board, users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, cardLinks));
+
+  // Logged-time totals are a separate, cheap round trip rather than part of the
+  // board payload: they change on a different cadence, and a timesheet edit
+  // should be able to refresh them without refetching the whole board.
+  yield fork(fetchBoardTimeTotals, id);
 }
 
 export function* updateBoard(id, data) {

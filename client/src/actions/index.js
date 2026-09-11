@@ -1,6 +1,7 @@
 import activities from './activities';
 import attachments from './attachments';
 import boardMemberships from './board-memberships';
+import boardTimeTotals from './board-time-totals';
 import boards from './boards';
 import cardLinks from './card-links';
 import cardSelection from './card-selection';
@@ -35,6 +36,7 @@ export default {
   ...activities,
   ...attachments,
   ...boardMemberships,
+  ...boardTimeTotals,
   ...boards,
   ...cardLinks,
   ...cardSelection,

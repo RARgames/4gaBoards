@@ -535,6 +535,7 @@ export default {
       meanCycleTime: 'mean {{days}}d',
       cycleDataCoverage: '{{count}} of {{total}} tracked',
       showingTimeOnCard: 'Showing time on {{name}}',
+      openInTimesheet: 'Open in the timesheet',
       filterCards: 'Filter cards...',
       filters_title: 'Filters',
       filterIdAggregated: 'Aggregated',

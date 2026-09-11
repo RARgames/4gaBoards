@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import authenticateForm from './authenticate-form';
+import boardTimeTotals from './board-time-totals';
 import cardSelection from './card-selection';
 import categoryTags from './category-tags';
 import media from './media';
@@ -14,6 +15,7 @@ import userCreateForm from './user-create-form';
 
 export default combineReducers({
   authenticateForm,
+  boardTimeTotals,
   cardSelection,
   categoryTags,
   media,

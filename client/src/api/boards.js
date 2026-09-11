@@ -48,6 +48,7 @@ const exportBoard = (id, data, headers) => socket.get(`/boards/${id}/export`, da
 // Lightweight `[{ id, name }]` for cards on a board — used by the cross-board card-link
 // picker so we don't have to fetch the entire target board's payload just to enumerate cards.
 const getBoardCardsSummary = (id, headers) => socket.get(`/boards/${id}/cards-summary`, undefined, headers);
+const getBoardTimeTotals = (id, headers) => socket.get(`/boards/${id}/time-totals`, undefined, headers);
 
 // §5.4/§6.4: cards past their list's auto-archive delay (or manually archived). Grouping and
 // filtering happen client-side on the returned set (ArchiveView), same as the approved mockup.
@@ -87,6 +88,7 @@ export default {
   deleteBoard,
   exportBoard,
   getBoardCardsSummary,
+  getBoardTimeTotals,
   getBoardArchivedCards,
   moveBoardArchivedCards,
   makeHandleBoardCreate,

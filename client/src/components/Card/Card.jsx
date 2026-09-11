@@ -9,6 +9,7 @@ import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import formatDuration from '../../utils/format-duration';
 import { startTimer, stopTimer } from '../../utils/timer';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
@@ -56,6 +57,7 @@ const Card = React.memo(
     parent,
     childrenCount,
     isBlocked,
+    timeTotal,
     boardMemberships,
     boardAndCardMemberships,
     allLabels,
@@ -221,6 +223,20 @@ const Card = React.memo(
       };
     };
 
+    // Opens the timesheet at the week of the most recent entry for this card,
+    // scoped to it. data-prevent-card-switch keeps the click off the card.
+    const handleTimeTotalClick = useCallback(
+      (e) => {
+        e.stopPropagation();
+        const week = timeTotal && timeTotal.lastEntryAt ? new Date(timeTotal.lastEntryAt) : new Date();
+        const monday = new Date(week);
+        monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+        const iso = `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, '0')}-${String(monday.getDate()).padStart(2, '0')}`;
+        navigate(`${Paths.TIMESHEET}?card=${id}&week=${iso}`);
+      },
+      [id, navigate, timeTotal],
+    );
+
     const handleDueDateUpdate = useCallback(
       (newDueDate) => {
         onUpdate({
@@ -324,6 +340,12 @@ const Card = React.memo(
                   </LabelsPopup>
                 )}
               </span>
+            )}
+            {timeTotal && timeTotal.totalMinutes > 0 && (
+              <button type="button" data-prevent-card-switch className={clsx(s.attachment, s.attachmentLeft, s.timeLink)} onClick={handleTimeTotalClick} title={t('common.openInTimesheet')}>
+                <Icon type={IconType.Clock} size={IconSize.Size12} className={s.timeLinkIcon} />
+                {formatDuration(timeTotal.totalMinutes)}
+              </button>
             )}
             {tasks.length > 0 && (
               <span className={clsx(s.attachment, s.attachmentLeft, s.taskMeter, completedTaskCount === tasks.length && s.taskMeterDone)} title={t('common.tasks')}>
@@ -571,6 +593,7 @@ Card.propTypes = {
   parent: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   childrenCount: PropTypes.number.isRequired,
   isBlocked: PropTypes.bool,
+  timeTotal: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndCardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -615,6 +638,7 @@ Card.defaultProps = {
   dueDate: undefined,
   timer: undefined,
   coverUrl: undefined,
+  timeTotal: undefined,
   listType: 'none',
   listAutoArchiveDays: undefined,
   completedAt: undefined,

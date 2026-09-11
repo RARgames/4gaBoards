@@ -1,4 +1,4 @@
-import { call, put, select, take } from 'redux-saga/effects';
+import { call, fork, put, select, take } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
@@ -7,6 +7,7 @@ import Paths from '../../../constants/Paths';
 import { push, replace } from '../../../lib/redux-router';
 import selectors from '../../../selectors';
 import request from '../request';
+import { fetchBoardTimeTotals } from './board-time-totals';
 
 export function* goToRoot() {
   yield put(push(Paths.ROOT));
@@ -89,6 +90,13 @@ export function* handleLocationChange() {
             included: { users, projects, boardMemberships, labels, lists, cards, cardMemberships, cardLabels, tasks, taskMemberships, attachments, cardLinks },
           } = yield call(request, api.getBoard, currentBoard.id, true));
         } catch {} // eslint-disable-line no-empty
+      }
+
+      // Board navigation comes through here, not through services.fetchBoard,
+      // so the card time totals are fetched here too. Forked so it never delays
+      // the board itself.
+      if (currentBoard) {
+        yield fork(fetchBoardTimeTotals, currentBoard.id);
       }
 
       if (pathsMatch.pattern.path === Paths.CARDS) {

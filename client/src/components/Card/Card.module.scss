@@ -280,6 +280,34 @@
 
   // The board card carries the checklist's shape, not its contents: ticking
   // happens in the card itself now.
+  .timeLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 4px;
+    margin: 0 -2px;
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    color: var(--ink-3);
+    font-family: var(--fontMono);
+    font-size: 10.5px;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition:
+      background 120ms ease,
+      color 120ms ease;
+
+    &:hover {
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+    }
+  }
+
+  .timeLinkIcon {
+    color: inherit;
+  }
+
   .taskMeter {
     display: inline-flex;
     align-items: center;

@@ -18,6 +18,7 @@ const makeMapStateToProps = () => {
   const selectChildrenCountByCardId = selectors.makeSelectChildrenCountByCardId();
   const selectParentCardByCardId = selectors.makeSelectParentCardByCardId();
   const selectIsBlockedByCardId = selectors.makeSelectIsBlockedByCardId();
+  const selectCardTimeTotal = selectors.makeSelectCardTimeTotal();
   const selectListById = selectors.makeSelectListById();
   const selectBoardAndCardMembershipsByCardId = selectors.makeSelectBoardAndCardMembershipsByCardId();
   const selectBoardAndTaskMembershipsByCardId = selectors.makeSelectBoardAndTaskMembershipsByCardId();
@@ -116,6 +117,7 @@ const makeMapStateToProps = () => {
       closestDueDate,
       isSelected: selectedCardIds.includes(id),
       isSelectionActive: selectedCardIds.length > 0,
+      timeTotal: selectCardTimeTotal(state, id),
     };
   };
 };
