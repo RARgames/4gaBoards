@@ -73,10 +73,15 @@
     border-radius: 4px;
   }
 
+  // Same as the other two: a label reads identically wherever it appears.
   .wrapperLabels {
-    font-size: 14px;
-    line-height: 24px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
     max-width: 176px;
-    padding: 0 6px;
+    padding: 2px 7px;
+    border-radius: 4px;
   }
 }
