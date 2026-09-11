@@ -20,8 +20,10 @@
   }
 
   .headerText {
-    color: var(--textColor0);
-    font-size: 18px;
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
     margin: 0;
   }
 
@@ -44,32 +46,54 @@
 
     th,
     td {
-      border-bottom: 1px solid var(--backgroundColorTmpSeparatorLight);
-      padding: 8px 10px;
+      border-bottom: 1px solid var(--line-soft);
+      padding: 9px 12px;
       white-space: nowrap;
+      vertical-align: middle;
     }
 
+    // Column headings read as headings, matching the uppercase mono captions
+    // used elsewhere, and sit on the chrome surface so the rows read as rows.
     th {
-      color: var(--textColor2);
-      font-size: 12px;
+      background: var(--sunken);
+      border-bottom: 1px solid var(--line);
+      color: var(--ink-3);
+      font-family: var(--fontMono);
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
       text-align: left;
+    }
+
+    tbody tr {
+      transition: background 120ms ease;
+    }
+
+    tbody tr:hover {
+      background: var(--surface-hover);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
     }
   }
 
   .stickyCol {
-    background-color: var(--backgroundColor);
+    background-color: var(--ground);
     left: 0;
     position: sticky;
     z-index: 1;
   }
 
   .userName {
-    color: var(--textColor0);
+    color: var(--ink);
+    font-weight: 500;
   }
 
   .userEmail {
-    color: var(--textColor3);
-    font-size: 12px;
+    color: var(--ink-3);
+    font-size: 11.5px;
   }
 
   .centeredCell {
@@ -81,21 +105,37 @@
     font-size: 12px;
   }
 
+  // Access checkbox and role dropdown are one control in two parts, so they are
+  // stacked as a single centred unit rather than two loose items.
   .boardCell {
-    min-width: 120px;
+    min-width: 124px;
     text-align: center;
   }
 
+  .boardCell > * {
+    margin-inline: auto;
+  }
+
   .roleDropdown {
-    margin-top: 4px;
-    width: 100px;
+    margin-top: 6px;
+    width: 104px;
   }
 
   .removeButton {
-    color: var(--textColor3);
+    color: var(--ink-3);
+    border-radius: 5px;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 120ms ease,
+      color 120ms ease;
 
     &:hover {
-      color: var(--errorRed);
+      background: var(--crit-soft);
+      color: var(--crit);
     }
   }
 }

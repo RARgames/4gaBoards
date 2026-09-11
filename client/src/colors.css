@@ -209,9 +209,12 @@
   --tw-card-foreground: var(--textColor0);
   --tw-popover: var(--backgroundPopup);
   --tw-popover-foreground: var(--textColor1);
-  --tw-primary: var(--backgroundGreen);
-  --tw-primary-hover: var(--backgroundGreenHover);
-  --tw-primary-foreground: var(--textColorWhite);
+  /* Selected / active state: the checked checkbox, the card multi-select ring and
+   * the dropdown's multi-check. All three mean "on", not "succeeded", so they
+   * take the accent rather than --backgroundGreen. */
+  --tw-primary: var(--accent);
+  --tw-primary-hover: var(--accent-ink);
+  --tw-primary-foreground: var(--ground);
   --tw-secondary: var(--backgroundColorTmpDarkerField2);
   --tw-secondary-hover: var(--backgroundColorTmpDarkerField1);
   --tw-secondary-foreground: var(--textColor1);
@@ -253,6 +256,8 @@
 
 /* Github Dark Color Schema */
 [data-theme='github-dark'] {
+  --tw-primary-foreground: #010409;
+
   /* Hero/child relationship accent, in GitHub's own purple. */
   --heroAccent: #a371f7;
   --heroAccentHover: #b586f9;
@@ -419,10 +424,48 @@
   --mdBlue: #58a6ff;
   --mdCyan: #56d4dd;
   --mdOrange: #fb8500;
+
+  /* Re-declared per theme on purpose. These are indirections, and a var() is
+   * resolved on the element where it is declared. data-theme is stamped on
+   * #app while the base block is :root (html), so a single declaration up
+   * there captures the default theme's values and never sees this block.
+   * Keep any new indirection in all three blocks. */
+  --listTypeNone: var(--textColor4);
+  --listTypeActive: var(--borderOutline);
+  --listTypeBlocked: var(--backgroundRed);
+  --listTypeDone: var(--backgroundGreen);
+  --listWarningStripe: var(--backgroundRed);
+  --tw-background: var(--backgroundColor);
+  --tw-foreground: var(--textColor0);
+  --tw-card: var(--backgroundColorTmpHeader);
+  --tw-card-foreground: var(--textColor0);
+  --tw-popover: var(--backgroundPopup);
+  --tw-popover-foreground: var(--textColor1);
+  --tw-primary: var(--accent);
+  --tw-primary-hover: var(--accent-ink);
+  --tw-secondary: var(--backgroundColorTmpDarkerField2);
+  --tw-secondary-hover: var(--backgroundColorTmpDarkerField1);
+  --tw-secondary-foreground: var(--textColor1);
+  --tw-destructive: var(--backgroundRed);
+  --tw-destructive-hover: var(--backgroundRedHover);
+  --tw-destructive-foreground: var(--textColorWhite);
+  --tw-muted: var(--backgroundColorTmp1);
+  --tw-muted-foreground: var(--textColor3);
+  --tw-accent: var(--backgroundPopupHover);
+  --tw-accent-foreground: var(--textColor1);
+  --tw-border: var(--backgroundPopupSeparator);
+  --tw-input: var(--backgroundPopupSeparator);
+  --tw-ring: var(--borderOutline);
+  --tw-shadow-sm: 0 1px 2px var(--shadowBlack01);
+  --tw-shadow: 0 1px 3px var(--shadowBlack015), 0 1px 2px var(--shadowBlack01);
+  --tw-shadow-md: 0 4px 6px -1px var(--shadowBlack02), 0 2px 4px -2px var(--shadowBlack01);
+  --tw-shadow-lg: 0 10px 15px -3px var(--shadowBlack03), 0 4px 6px -4px var(--shadowBlack015);
 }
 
 /* Trello-style Light Theme — modern grey, content-light */
 [data-theme='trello-light'] {
+  --tw-primary-foreground: #ffffff;
+
   /* Redesign primitives — darker and higher contrast than the previous light set.
    * Surfaces are stepped rather than crowded, but the whole ramp sits lower than
    * a white-anchored one: --ground covers most of the screen, and at 0.85
@@ -599,4 +642,40 @@
   --boardTileAccentMix: 55%;
   --boardTileAccentMixHover: 78%;
   --boardTileBorderMix: 70%;
+
+  /* Re-declared per theme on purpose. These are indirections, and a var() is
+   * resolved on the element where it is declared. data-theme is stamped on
+   * #app while the base block is :root (html), so a single declaration up
+   * there captures the default theme's values and never sees this block.
+   * Keep any new indirection in all three blocks. */
+  --listTypeNone: var(--textColor4);
+  --listTypeActive: var(--borderOutline);
+  --listTypeBlocked: var(--backgroundRed);
+  --listTypeDone: var(--backgroundGreen);
+  --listWarningStripe: var(--backgroundRed);
+  --tw-background: var(--backgroundColor);
+  --tw-foreground: var(--textColor0);
+  --tw-card: var(--backgroundColorTmpHeader);
+  --tw-card-foreground: var(--textColor0);
+  --tw-popover: var(--backgroundPopup);
+  --tw-popover-foreground: var(--textColor1);
+  --tw-primary: var(--accent);
+  --tw-primary-hover: var(--accent-ink);
+  --tw-secondary: var(--backgroundColorTmpDarkerField2);
+  --tw-secondary-hover: var(--backgroundColorTmpDarkerField1);
+  --tw-secondary-foreground: var(--textColor1);
+  --tw-destructive: var(--backgroundRed);
+  --tw-destructive-hover: var(--backgroundRedHover);
+  --tw-destructive-foreground: var(--textColorWhite);
+  --tw-muted: var(--backgroundColorTmp1);
+  --tw-muted-foreground: var(--textColor3);
+  --tw-accent: var(--backgroundPopupHover);
+  --tw-accent-foreground: var(--textColor1);
+  --tw-border: var(--backgroundPopupSeparator);
+  --tw-input: var(--backgroundPopupSeparator);
+  --tw-ring: var(--borderOutline);
+  --tw-shadow-sm: 0 1px 2px var(--shadowBlack01);
+  --tw-shadow: 0 1px 3px var(--shadowBlack015), 0 1px 2px var(--shadowBlack01);
+  --tw-shadow-md: 0 4px 6px -1px var(--shadowBlack02), 0 2px 4px -2px var(--shadowBlack01);
+  --tw-shadow-lg: 0 10px 15px -3px var(--shadowBlack03), 0 4px 6px -4px var(--shadowBlack015);
 }
