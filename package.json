@@ -65,7 +65,7 @@
     "@babel/eslint-parser": "^7.29.7",
     "concurrently": "^10.0.3",
     "confusing-browser-globals": "^1.0.11",
-    "eslint": "^9.39.5",
+    "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
