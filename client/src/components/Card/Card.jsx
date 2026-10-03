@@ -1,12 +1,16 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { startTimer, stopTimer } from '@4gaboards/utils';
+import { attachClosestEdge, extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
+import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import Label from '../Label';
@@ -19,6 +23,7 @@ import { Button, ButtonVariant, Icon, IconType, IconSize, LinkifiedTextRenderer 
 import CardActionsPopup from './CardActionsPopup';
 import NameEdit from './NameEdit';
 
+import * as gs from '../../global.module.scss';
 import * as s from './Card.module.scss';
 
 const Card = React.memo(
@@ -88,8 +93,15 @@ const Card = React.memo(
     const [t] = useTranslation();
     const nameEdit = useRef(null);
     const cardRef = useRef(null);
+    const wrapperRef = useRef(null);
+    const cardActionsPopupRef = useRef(null);
     const [isDragOverTask, setIsDragOverTask] = useState(false);
     const navigate = useNavigate();
+    const [closestEdge, setClosestEdge] = useState(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [placeholderHeight, setPlaceholderHeight] = useState(0);
+    const [showOrigin, setShowOrigin] = useState(true);
+    const key = dragKey('card', id);
 
     const scrollCardIntoView = useCallback(() => {
       cardRef.current?.scrollIntoView({
@@ -133,6 +145,59 @@ const Card = React.memo(
       }
     }, [isOpen, scrollCardIntoView]);
 
+    useEffect(() => {
+      // DnD: the whole card is the drag handle and also a drop target (drop above/below it)
+      const element = wrapperRef.current;
+
+      if (!element) {
+        return undefined;
+      }
+
+      const data = { type: DroppableTypes.CARD, cardId: id, listId, index, hasPlaceholder: true };
+
+      return combine(
+        draggable({
+          element,
+          canDrag: () => isPersisted && canEdit && !isDragOverTask,
+          getInitialData: ({ input }) => ({
+            ...data,
+            height: cardRef.current?.offsetHeight,
+            ...getDragData(cardRef.current, input, key),
+          }),
+          onDragStart: ({ source }) => {
+            setPlaceholderHeight(source.data.height);
+            setShowOrigin(true);
+            setIsDragging(true);
+            cardActionsPopupRef.current?.close();
+          },
+          onDrag: ({ location }) => {
+            // another placeholder is visible only if the innermost target renders one and isn't this card
+            const innermost = location.current.dropTargets[0];
+            setShowOrigin(!innermost || !innermost.data.hasPlaceholder || innermost.data.cardId === id);
+          },
+          onDrop: () => setIsDragging(false),
+        }),
+        dropTargetForElements({
+          element,
+          canDrop: ({ source }) => source.data.type === DroppableTypes.CARD,
+          getData: ({ input, element: targetElement }) =>
+            attachClosestEdge(data, {
+              input,
+              element: cardRef.current || targetElement,
+              allowedEdges: ['top', 'bottom'],
+            }),
+          onDrag: ({ self, source }) => {
+            setClosestEdge(source.data.cardId === id ? null : extractClosestEdge(self.data));
+            setPlaceholderHeight(source.data.height);
+          },
+          onDragLeave: () => setClosestEdge(null),
+          onDrop: () => setClosestEdge(null),
+        }),
+      );
+    }, [id, listId, index, isPersisted, canEdit, isDragOverTask, key]);
+
+    useDropAnimation(cardRef, key);
+
     const handleToggleTimerClick = useCallback(() => {
       onUpdate({
         timer: timer.startedAt ? stopTimer(timer) : startTimer(timer),
@@ -151,16 +216,6 @@ const Card = React.memo(
     const handleNameEdit = useCallback(() => {
       nameEdit.current?.open();
     }, []);
-
-    const getStyle = (style, snapshot) => {
-      if (!snapshot.isDropAnimating) {
-        return style;
-      }
-      return {
-        ...style,
-        transitionDuration: `0.05s`,
-      };
-    };
 
     const handleTasksMouseEnter = useCallback(() => {
       setIsDragOverTask(true);
@@ -194,7 +249,7 @@ const Card = React.memo(
           {notificationsTotal > 0 && notificationsTotal <= 9 && <span className={s.notification}>{notificationsTotal}</span>}
           {notificationsTotal > 9 && <span className={clsx(s.notification, s.notificationFull)}>9+</span>}
         </div>
-        {coverUrl && <img src={coverUrl} alt="" className={s.cover} />}
+        {coverUrl && <img src={coverUrl} alt="" className={s.cover} draggable={false} />}
         {(labels.length > 0 || tasks.length > 0 || description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer || users.length > 0) && (
           <div className={s.details}>
             {labels.length > 0 && (
@@ -312,87 +367,87 @@ const Card = React.memo(
       </>
     );
 
+    const placeholder = <div style={{ height: placeholderHeight }} />;
+
     return (
-      <Draggable draggableId={`card:${id}`} index={index} isDragDisabled={isDragOverTask || !isPersisted || !canEdit}>
-        {(provided, snapshot) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className={s.wrapper} style={getStyle(provided.draggableProps.style, snapshot)}>
-            <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-              <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen)}>
-                {isPersisted ? (
-                  <>
-                    {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                    <div
-                      className={s.content}
-                      onClick={(e) => {
-                        handleClick(e);
-                      }}
-                    >
-                      {contentNode}
-                    </div>
-                    <div className={s.popupWrapper}>
-                      <CardActionsPopup
-                        card={{
-                          id,
-                          name,
-                          isCompleted,
-                          dueDate,
-                          timer,
-                          boardId,
-                          listId,
-                          projectId,
-                          lastActivityId,
-                        }}
-                        projectsToLists={allProjectsToLists}
-                        allBoardMemberships={boardAndCardMemberships}
-                        boardMemberships={boardMemberships}
-                        currentUserIds={users.map((user) => user.id)}
-                        labels={allLabels}
-                        currentLabelIds={labels.map((label) => label.id)}
-                        url={url}
-                        canEdit={canEdit}
-                        createdAt={createdAt}
-                        createdBy={createdBy}
-                        updatedAt={updatedAt}
-                        updatedBy={updatedBy}
-                        activities={activities}
-                        isActivitiesFetching={isActivitiesFetching}
-                        isAllActivitiesFetched={isAllActivitiesFetched}
-                        onActivitiesFetch={onActivitiesFetch}
-                        onNameEdit={handleNameEdit}
-                        onUpdate={onUpdate}
-                        onMarkCompleted={onMarkCompleted}
-                        onMove={onMove}
-                        onTransfer={onTransfer}
-                        onDuplicate={onDuplicate}
-                        onDelete={onDelete}
-                        onUserAdd={onUserAdd}
-                        onUserRemove={onUserRemove}
-                        onUserEmailLookup={onUserEmailLookup}
-                        onBoardFetch={onBoardFetch}
-                        onLabelAdd={onLabelAdd}
-                        onLabelRemove={onLabelRemove}
-                        onLabelCreate={onLabelCreate}
-                        onLabelUpdate={onLabelUpdate}
-                        onLabelDelete={onLabelDelete}
-                        position="left-start"
-                        offset={0}
-                        hideCloseButton
-                      >
-                        <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={s.editCardButton}>
-                          <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                        </Button>
-                      </CardActionsPopup>
-                    </div>
-                  </>
-                ) : (
-                  <span className={s.content}>{contentNode}</span>
-                )}
-              </div>
-            </NameEdit>
+      <div ref={wrapperRef} className={s.wrapper}>
+        {(closestEdge === 'top' || (isDragging && showOrigin)) && placeholder}
+        <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
+          <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isDragging && gs.hidden)}>
+            {isPersisted ? (
+              <>
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+                <div
+                  className={s.content}
+                  onClick={(e) => {
+                    handleClick(e);
+                  }}
+                >
+                  {contentNode}
+                </div>
+                <div className={s.popupWrapper}>
+                  <CardActionsPopup
+                    ref={cardActionsPopupRef}
+                    card={{
+                      id,
+                      name,
+                      isCompleted,
+                      dueDate,
+                      timer,
+                      boardId,
+                      listId,
+                      projectId,
+                      lastActivityId,
+                    }}
+                    projectsToLists={allProjectsToLists}
+                    allBoardMemberships={boardAndCardMemberships}
+                    boardMemberships={boardMemberships}
+                    currentUserIds={users.map((user) => user.id)}
+                    labels={allLabels}
+                    currentLabelIds={labels.map((label) => label.id)}
+                    url={url}
+                    canEdit={canEdit}
+                    createdAt={createdAt}
+                    createdBy={createdBy}
+                    updatedAt={updatedAt}
+                    updatedBy={updatedBy}
+                    activities={activities}
+                    isActivitiesFetching={isActivitiesFetching}
+                    isAllActivitiesFetched={isAllActivitiesFetched}
+                    onActivitiesFetch={onActivitiesFetch}
+                    onNameEdit={handleNameEdit}
+                    onUpdate={onUpdate}
+                    onMarkCompleted={onMarkCompleted}
+                    onMove={onMove}
+                    onTransfer={onTransfer}
+                    onDuplicate={onDuplicate}
+                    onDelete={onDelete}
+                    onUserAdd={onUserAdd}
+                    onUserRemove={onUserRemove}
+                    onUserEmailLookup={onUserEmailLookup}
+                    onBoardFetch={onBoardFetch}
+                    onLabelAdd={onLabelAdd}
+                    onLabelRemove={onLabelRemove}
+                    onLabelCreate={onLabelCreate}
+                    onLabelUpdate={onLabelUpdate}
+                    onLabelDelete={onLabelDelete}
+                    position="left-start"
+                    offset={0}
+                    hideCloseButton
+                  >
+                    <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={s.editCardButton}>
+                      <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                    </Button>
+                  </CardActionsPopup>
+                </div>
+              </>
+            ) : (
+              <span className={s.content}>{contentNode}</span>
+            )}
           </div>
-        )}
-      </Draggable>
+        </NameEdit>
+        {closestEdge === 'bottom' && placeholder}
+      </div>
     );
   },
 );

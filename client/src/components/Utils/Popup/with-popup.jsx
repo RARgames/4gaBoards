@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+import React, { useImperativeHandle, useCallback, useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFloating, shift, flip, offset as posOffset, size, useClick, useInteractions, autoUpdate, useDismiss, useRole, FloatingFocusManager, FloatingPortal } from '@floating-ui/react';
 import clsx from 'clsx';
@@ -10,7 +10,7 @@ import { Icon, IconType, IconSize } from '../Icon';
 import * as s from './Popup.module.scss';
 
 export default (WrappedComponent, defaultProps) => {
-  const Popup = React.memo(({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, disableShiftCrossAxis, closeButtonClassName, wrapperClassName, onClose, ...props }) => {
+  const Popup = React.forwardRef(({ children, disabled, keepOnScroll, className, hideCloseButton, offset, position, disableShiftCrossAxis, closeButtonClassName, wrapperClassName, onClose, ...props }, ref) => {
     const [t] = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [enableScrollDismiss, setEnableScrollDismiss] = useState(true);
@@ -45,6 +45,16 @@ export default (WrappedComponent, defaultProps) => {
         }
       },
       [onClose],
+    );
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        open: () => onOpenChange(true, undefined, 'imperative'),
+        close: () => onOpenChange(false, undefined, 'imperative'),
+        toggle: () => onOpenChange(!isOpen, undefined, 'imperative'),
+      }),
+      [onOpenChange, isOpen],
     );
 
     const { refs, floatingStyles, context } = useFloating({

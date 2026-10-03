@@ -196,7 +196,7 @@ Default password: `demo`
 
 ## Tech Stack
 
-- React, Redux, Redux-Saga, Redux-ORM, react-beautiful-dnd, floating-ui
+- React, Redux, Redux-Saga, Redux-ORM, floating-ui
 - Sails.js, Knex.js
 - PostgreSQL
 
