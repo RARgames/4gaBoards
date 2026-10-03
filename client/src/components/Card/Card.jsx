@@ -146,9 +146,10 @@ const Card = React.memo(
 
     useEffect(() => {
       // DnD: the whole card is the drag handle and also a drop target (drop above/below it)
-      const element = wrapperRef.current;
+      const wrapper = wrapperRef.current;
+      const card = cardRef.current;
 
-      if (!element) {
+      if (!wrapper || !card) {
         return undefined;
       }
 
@@ -156,12 +157,12 @@ const Card = React.memo(
 
       return combine(
         draggable({
-          element,
+          element: wrapper,
           canDrag: () => isPersisted && canEdit,
           getInitialData: ({ input }) => ({
             ...data,
-            height: cardRef.current?.offsetHeight,
-            ...getDragData(cardRef.current, input, key),
+            height: card.offsetHeight,
+            ...getDragData(card, input, key),
           }),
           onDragStart: ({ source }) => {
             setPlaceholderHeight(source.data.height);
@@ -177,12 +178,12 @@ const Card = React.memo(
           onDrop: () => setIsDragging(false),
         }),
         dropTargetForElements({
-          element,
+          element: wrapper,
           canDrop: ({ source }) => source.data.type === DroppableTypes.CARD,
           getData: ({ input, element: targetElement }) =>
             attachClosestEdge(data, {
               input,
-              element: cardRef.current || targetElement,
+              element: card || targetElement,
               allowedEdges: ['top', 'bottom'],
             }),
           onDrag: ({ self, source }) => {
