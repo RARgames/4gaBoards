@@ -59,10 +59,11 @@ You can also include your email address with the donation and later contact us a
 
 ## Deploy
 
-1. [Docker Compose (Recommended)](https://docs.4gaboards.com/docs/dev/install/docker-install)
-2. [Kubernetes](https://docs.4gaboards.com/docs/dev/install/k8s-install)
-3. [TrueNAS](https://docs.4gaboards.com/docs/dev/install/truenas-install)
-4. [Manual](https://docs.4gaboards.com/docs/dev/install/manual)
+1. [4ga Boards Professional Hosting (The Easiest)](https://4gaboards.com/pricing)
+2. [Docker Compose (Recommended)](https://docs.4gaboards.com/docs/dev/install/docker-install)
+3. [Kubernetes](https://docs.4gaboards.com/docs/dev/install/k8s-install)
+4. [TrueNAS](https://docs.4gaboards.com/docs/dev/install/truenas-install)
+5. [Manual](https://docs.4gaboards.com/docs/dev/install/manual)
 
 ### Docker Compose (Recommended)
 
