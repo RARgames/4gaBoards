@@ -95,7 +95,6 @@ const Card = React.memo(
     const cardRef = useRef(null);
     const wrapperRef = useRef(null);
     const cardActionsPopupRef = useRef(null);
-    const [isDragOverTask, setIsDragOverTask] = useState(false);
     const navigate = useNavigate();
     const [closestEdge, setClosestEdge] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -158,7 +157,7 @@ const Card = React.memo(
       return combine(
         draggable({
           element,
-          canDrag: () => isPersisted && canEdit && !isDragOverTask,
+          canDrag: () => isPersisted && canEdit,
           getInitialData: ({ input }) => ({
             ...data,
             height: cardRef.current?.offsetHeight,
@@ -194,7 +193,7 @@ const Card = React.memo(
           onDrop: () => setClosestEdge(null),
         }),
       );
-    }, [id, listId, index, isPersisted, canEdit, isDragOverTask, key]);
+    }, [id, listId, index, isPersisted, canEdit, key]);
 
     useDropAnimation(cardRef, key);
 
@@ -215,14 +214,6 @@ const Card = React.memo(
 
     const handleNameEdit = useCallback(() => {
       nameEdit.current?.open();
-    }, []);
-
-    const handleTasksMouseEnter = useCallback(() => {
-      setIsDragOverTask(true);
-    }, []);
-
-    const handleTasksMouseOut = useCallback(() => {
-      setIsDragOverTask(false);
     }, []);
 
     const handleDueDateUpdate = useCallback(
@@ -294,8 +285,6 @@ const Card = React.memo(
                 onUserAdd={onUserToTaskAdd}
                 onUserRemove={onUserFromTaskRemove}
                 onUserEmailLookup={onUserEmailLookup}
-                onMouseEnterTasks={handleTasksMouseEnter}
-                onMouseLeaveTasks={handleTasksMouseOut}
                 onActivitiesFetch={onTaskActivitiesFetch}
               />
             )}
