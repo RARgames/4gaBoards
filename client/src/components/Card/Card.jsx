@@ -1,8 +1,8 @@
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { startTimer, stopTimer } from '@4gaboards/utils';
-import { attachClosestEdge, extractClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import clsx from 'clsx';
@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
+import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
 import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
@@ -25,6 +26,8 @@ import NameEdit from './NameEdit';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Card.module.scss';
+
+const CARD_PLACEHOLDER_MARGIN = 8;
 
 const Card = React.memo(
   ({
@@ -95,11 +98,13 @@ const Card = React.memo(
     const cardRef = useRef(null);
     const wrapperRef = useRef(null);
     const cardActionsPopupRef = useRef(null);
+    const cardMembershipsPopupRef = useRef(null);
+    const cardDueDateEditPopupRef = useRef(null);
+    const cardLabelsPopupRef = useRef(null);
     const navigate = useNavigate();
-    const [closestEdge, setClosestEdge] = useState(null);
-    const [isDragging, setIsDragging] = useState(false);
-    const [placeholderHeight, setPlaceholderHeight] = useState(0);
-    const [showOrigin, setShowOrigin] = useState(true);
+
+    const isDragging = useCardDropSlot((slot) => slot?.cardId === id);
+    const placeholderHeight = useCardDropSlot((slot) => (slot && slot.listId === listId && slot.placeholderIndex === index ? slot.height : null));
     const key = dragKey('card', id);
 
     const scrollCardIntoView = useCallback(() => {
@@ -153,7 +158,7 @@ const Card = React.memo(
         return undefined;
       }
 
-      const data = { type: DroppableTypes.CARD, cardId: id, listId, index, hasPlaceholder: true };
+      const data = { type: DroppableTypes.CARD, cardId: id, listId, index };
 
       return combine(
         draggable({
@@ -164,18 +169,12 @@ const Card = React.memo(
             height: card.offsetHeight,
             ...getDragData(card, input, key),
           }),
-          onDragStart: ({ source }) => {
-            setPlaceholderHeight(source.data.height);
-            setShowOrigin(true);
-            setIsDragging(true);
+          onGenerateDragPreview: () => {
             cardActionsPopupRef.current?.close();
+            cardMembershipsPopupRef.current?.close();
+            cardDueDateEditPopupRef.current?.close();
+            cardLabelsPopupRef.current?.close();
           },
-          onDrag: ({ location }) => {
-            // another placeholder is visible only if the innermost target renders one and isn't this card
-            const innermost = location.current.dropTargets[0];
-            setShowOrigin(!innermost || !innermost.data.hasPlaceholder || innermost.data.cardId === id);
-          },
-          onDrop: () => setIsDragging(false),
         }),
         dropTargetForElements({
           element: wrapper,
@@ -186,12 +185,6 @@ const Card = React.memo(
               element: card || targetElement,
               allowedEdges: ['top', 'bottom'],
             }),
-          onDrag: ({ self, source }) => {
-            setClosestEdge(source.data.cardId === id ? null : extractClosestEdge(self.data));
-            setPlaceholderHeight(source.data.height);
-          },
-          onDragLeave: () => setClosestEdge(null),
-          onDrop: () => setClosestEdge(null),
         }),
       );
     }, [id, listId, index, isPersisted, canEdit, key]);
@@ -248,6 +241,7 @@ const Card = React.memo(
               <span className={s.labels}>
                 {labels.map((label) => (
                   <LabelsPopup
+                    ref={cardLabelsPopupRef}
                     key={label.id}
                     items={allLabels}
                     currentIds={labelIds}
@@ -308,7 +302,7 @@ const Card = React.memo(
                 )}
                 {dueDate && (
                   <span className={clsx(s.attachment, s.attachmentLeft)}>
-                    <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
+                    <DueDateEditPopup ref={cardDueDateEditPopupRef} defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!canEdit}>
                       <DueDate value={dueDate} completedAt={completedAt} variant="card" isClickable={canEdit} showFullDueDates={showFullDueDates} />
                     </DueDateEditPopup>
                   </span>
@@ -324,6 +318,7 @@ const Card = React.memo(
               <span className={clsx(s.attachments, s.attachmentsRight, s.users)}>
                 <div className={s.popupWrapper2}>
                   <MembershipsPopup
+                    ref={cardMembershipsPopupRef}
                     items={boardAndCardMemberships}
                     currentUserIds={users.map((user) => user.id)}
                     memberships={boardMemberships}
@@ -357,11 +352,9 @@ const Card = React.memo(
       </>
     );
 
-    const placeholder = <div style={{ height: placeholderHeight }} />;
-
     return (
       <div ref={wrapperRef} className={s.wrapper}>
-        {(closestEdge === 'top' || (isDragging && showOrigin)) && placeholder}
+        {placeholderHeight !== null && <div style={{ height: placeholderHeight + CARD_PLACEHOLDER_MARGIN }} />}
         <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
           <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isDragging && gs.hidden)}>
             {isPersisted ? (
@@ -436,7 +429,6 @@ const Card = React.memo(
             )}
           </div>
         </NameEdit>
-        {closestEdge === 'bottom' && placeholder}
       </div>
     );
   },

@@ -89,7 +89,10 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
   const handleBlur = useCallback(
     (e) => {
       if (e.target.value.trim() === DEFAULT_DATA.name.trim()) {
-        close();
+        // FIXME timeout introduced to fix a bug with dragging card when CardAdd is open and List is scrollable
+        setTimeout(() => {
+          close();
+        }, 100);
       }
     },
     [close],

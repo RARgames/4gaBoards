@@ -1,11 +1,13 @@
-import React, { useCallback, useRef, useImperativeHandle } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import React, { useCallback, useEffect, useRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { dropTargetForElements, monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import { useToggle } from '../../lib/hooks';
+import { clearTaskDropSlot, resolveTaskDropSlot, setTaskDropSlot, useTaskDropSlot } from '../../lib/hooks/use-task-drop-slot';
 import DueDate from '../DueDate';
 import { Button, ButtonVariant, ProgressBar, ProgressBarSize, Icon, IconType, IconSize } from '../Utils';
 import Task from './Task';
@@ -48,7 +50,11 @@ const Tasks = React.forwardRef(
   ) => {
     const [t] = useTranslation();
     const taskAddRef = useRef(null);
+    const tasksRef = useRef(null);
     const [isOpen, toggleOpen] = useToggle();
+    const tasksCount = items.length;
+
+    const placeholderHeight = useTaskDropSlot((slot) => (slot && slot.cardId === cardId && slot.variant === variant && slot.placeholderIndex >= tasksCount ? slot.height : null));
 
     const handleToggleClick = useCallback(() => {
       toggleOpen();
@@ -66,15 +72,36 @@ const Tasks = React.forwardRef(
       [openTaskAdd],
     );
 
-    const handleDragEnd = useCallback(
-      ({ draggableId, source, destination }) => {
-        if (!destination || source.index === destination.index) {
-          return;
-        }
-        onMove(draggableId, destination.index);
-      },
-      [onMove],
-    );
+    useEffect(() => {
+      const cleanups = [
+        monitorForElements({
+          canMonitor: ({ source }) => source.data.type === DroppableTypes.TASK && source.data.cardId === cardId && source.data.variant === variant,
+          onDragStart: ({ source, location }) => setTaskDropSlot(resolveTaskDropSlot(source, location)),
+          onDrag: ({ source, location }) => setTaskDropSlot(resolveTaskDropSlot(source, location)),
+          onDrop: ({ source, location }) => {
+            const destination = resolveTaskDropSlot(source, location);
+            setTaskDropSlot(null);
+
+            if (destination.index !== source.data.index) {
+              onMove(source.data.taskId, destination.index);
+            }
+          },
+        }),
+        () => clearTaskDropSlot(cardId, variant),
+      ];
+
+      if (tasksRef.current) {
+        cleanups.push(
+          dropTargetForElements({
+            element: tasksRef.current,
+            canDrop: ({ source }) => source.data.type === DroppableTypes.TASK && source.data.cardId === cardId && source.data.variant === variant,
+            getData: () => ({ type: DroppableTypes.TASK, cardId, variant, endIndex: tasksCount }),
+          }),
+        );
+      }
+
+      return combine(...cleanups);
+    }, [cardId, variant, tasksCount, isOpen, onMove]);
 
     const handleUpdate = useCallback(
       (id, data) => {
@@ -107,58 +134,53 @@ const Tasks = React.forwardRef(
     const completedItems = items.filter((item) => item.isCompleted);
 
     const tasksNode = (
-      <Droppable droppableId="tasks" type={DroppableTypes.TASK}>
-        {({ innerRef, droppableProps, placeholder }) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...droppableProps} ref={innerRef} onMouseEnter={onMouseEnterTasks} onMouseLeave={onMouseLeaveTasks} data-prevent-card-switch>
-            {items.map((item, index) => (
-              <Task
-                cardId={cardId}
-                cardName={cardName}
-                variant={variant}
-                key={item.id}
-                id={item.id}
-                index={index}
-                name={item.name}
-                dueDate={item.dueDate}
-                completedAt={item.completedAt}
-                showFullDueDates={showFullDueDates}
-                allBoardMemberships={allBoardMemberships}
-                boardMemberships={boardMemberships}
-                users={item.users}
-                activities={item.activities}
-                isActivitiesFetching={item.isActivitiesFetching}
-                isAllActivitiesFetched={item.isAllActivitiesFetched}
-                lastActivityId={item.lastActivityId}
-                isCompleted={item.isCompleted}
-                isPersisted={item.isPersisted}
-                canEdit={canEdit}
-                createdAt={item.createdAt}
-                createdBy={item.createdBy}
-                updatedAt={item.updatedAt}
-                updatedBy={item.updatedBy}
-                onUpdate={(data) => handleUpdate(item.id, data)}
-                onDuplicate={() => onDuplicate(item.id)}
-                onDelete={() => handleDelete(item.id)}
-                onUserAdd={(userId) => handleUserAdd(item.id, userId)}
-                onUserRemove={(userId) => handleUserRemove(item.id, userId)}
-                onUserEmailLookup={onUserEmailLookup}
-                onActivitiesFetch={() => onActivitiesFetch(item.id)}
-              />
-            ))}
-            {placeholder}
-            {canEdit && (
-              <TaskAdd ref={taskAddRef} onCreate={onCreate}>
-                <Button
-                  variant={ButtonVariant.Default}
-                  content={t('common.addTask')}
-                  className={clsx(s.taskButton, variant === VARIANTS.CARD && s.taskButtonCard, isCardActive && variant === VARIANTS.CARD && s.taskButtonCardActive)}
-                />
-              </TaskAdd>
-            )}
-          </div>
+      <div ref={tasksRef} onMouseEnter={onMouseEnterTasks} onMouseLeave={onMouseLeaveTasks} data-prevent-card-switch>
+        {items.map((item, index) => (
+          <Task
+            cardId={cardId}
+            cardName={cardName}
+            variant={variant}
+            key={item.id}
+            id={item.id}
+            index={index}
+            name={item.name}
+            dueDate={item.dueDate}
+            completedAt={item.completedAt}
+            showFullDueDates={showFullDueDates}
+            allBoardMemberships={allBoardMemberships}
+            boardMemberships={boardMemberships}
+            users={item.users}
+            activities={item.activities}
+            isActivitiesFetching={item.isActivitiesFetching}
+            isAllActivitiesFetched={item.isAllActivitiesFetched}
+            lastActivityId={item.lastActivityId}
+            isCompleted={item.isCompleted}
+            isPersisted={item.isPersisted}
+            canEdit={canEdit}
+            createdAt={item.createdAt}
+            createdBy={item.createdBy}
+            updatedAt={item.updatedAt}
+            updatedBy={item.updatedBy}
+            onUpdate={(data) => handleUpdate(item.id, data)}
+            onDuplicate={() => onDuplicate(item.id)}
+            onDelete={() => handleDelete(item.id)}
+            onUserAdd={(userId) => handleUserAdd(item.id, userId)}
+            onUserRemove={(userId) => handleUserRemove(item.id, userId)}
+            onUserEmailLookup={onUserEmailLookup}
+            onActivitiesFetch={() => onActivitiesFetch(item.id)}
+          />
+        ))}
+        {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
+        {canEdit && (
+          <TaskAdd ref={taskAddRef} onCreate={onCreate}>
+            <Button
+              variant={ButtonVariant.Default}
+              content={t('common.addTask')}
+              className={clsx(s.taskButton, variant === VARIANTS.CARD && s.taskButtonCard, isCardActive && variant === VARIANTS.CARD && s.taskButtonCardActive)}
+            />
+          </TaskAdd>
         )}
-      </Droppable>
+      </div>
     );
 
     return (
@@ -179,9 +201,9 @@ const Tasks = React.forwardRef(
             )}
           </div>
         )}
-        {variant === VARIANTS.CARDMODAL && <DragDropContext onDragEnd={handleDragEnd}>{tasksNode}</DragDropContext>}
+        {variant === VARIANTS.CARDMODAL && tasksNode}
         {variant === VARIANTS.CARD && isOpen && tasksNode}
-        {variant === VARIANTS.LISTVIEW && isOpen && <DragDropContext onDragEnd={handleDragEnd}>{tasksNode}</DragDropContext>}
+        {variant === VARIANTS.LISTVIEW && isOpen && tasksNode}
       </div>
     );
   },

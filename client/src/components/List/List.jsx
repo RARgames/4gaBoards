@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
+import { autoScrollForElements } from '@atlaskit/pragmatic-drag-and-drop-auto-scroll/element';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -8,6 +10,9 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import { ResizeObserverSizeTypes } from '../../constants/Enums';
 import CardContainer from '../../containers/CardContainer';
 import { useResizeObserverSize } from '../../hooks';
+import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
+import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import { useListDropSlot } from '../../lib/hooks/use-list-drop-slot';
 import CardAddPopup from '../CardAddPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import CardAdd from './CardAdd';
@@ -16,6 +21,10 @@ import NameEdit from './NameEdit';
 
 import * as gs from '../../global.module.scss';
 import * as s from './List.module.scss';
+
+const CARD_PLACEHOLDER_MARGIN = 8;
+const COLLAPSED_CARD_PLACEHOLDER_HEIGHT = 40;
+const LIST_PLACEHOLDER_MARGIN = 10;
 
 const List = React.memo(
   ({
@@ -65,6 +74,20 @@ const List = React.memo(
     const [listOuterWrapperScrollable] = useResizeObserverSize(listOuterWrapperElement, ResizeObserverSizeTypes.SCROLLABLE);
     const nameEdit = useRef(null);
     const listWrapper = useRef(null);
+    const listActionsPopupRef = useRef(null);
+    const innerWrapperRef = useRef(null);
+    const headerRef = useRef(null);
+    const addCardDropRef = useRef(null);
+    const collapsedDropRef = useRef(null);
+    const outerWrapperRef = useRef(null);
+    const cardsCount = cardIds.length;
+    const filteredCardsCount = filteredCardIds.length;
+
+    const isDragging = useListDropSlot((slot) => slot?.listId === id);
+    const placeholderWidth = useListDropSlot((slot) => (slot && slot.placeholderIndex === index ? slot.width : null));
+    const cardPlaceholderHeight = useCardDropSlot((slot) => (slot && slot.listId === id && slot.placeholderIndex >= filteredCardsCount ? slot.height : null));
+    const key = dragKey('list', id);
+    useDropAnimation(innerWrapperRef, key);
 
     const styleVars = useMemo(() => {
       const computedStyle = getComputedStyle(document.body);
@@ -154,165 +177,210 @@ const List = React.memo(
       }
     }, [canEdit, nameEditHeight, headerNameHeight, isAddCardOpen, styleVars, isCollapsed]);
 
+    useEffect(() => {
+      // DnD: list header is drag handle, list is drop target for cards (header - top, add card - bottom), drops of lists are handled by the board
+      const innerWrapper = innerWrapperRef.current;
+      const header = headerRef.current;
+
+      if (!innerWrapper || !header) {
+        return undefined;
+      }
+
+      const cardTarget = (element, endIndex) =>
+        dropTargetForElements({
+          element,
+          canDrop: ({ source }) => isPersisted && source.data.type === DroppableTypes.CARD,
+          getData: () => ({ type: DroppableTypes.CARD, listId: id, endIndex }),
+        });
+
+      const cleanups = [
+        draggable({
+          element: innerWrapper,
+          dragHandle: header,
+          canDrag: () => isPersisted && canEdit,
+          getInitialData: ({ input }) => ({
+            type: DroppableTypes.LIST,
+            listId: id,
+            index,
+            width: innerWrapper.offsetWidth,
+            height: innerWrapper.offsetHeight,
+            ...getDragData(innerWrapper, input, key),
+          }),
+          onGenerateDragPreview: () => {
+            listActionsPopupRef.current?.close();
+          },
+        }),
+      ];
+
+      // Header
+      if (!isCollapsed) {
+        cleanups.push(cardTarget(header, 0));
+      }
+
+      // Fallback for the whole list
+      if (outerWrapperRef.current && !isCollapsed) {
+        cleanups.push(cardTarget(outerWrapperRef.current, filteredCardsCount));
+      }
+
+      // Add Card Button
+      if (addCardDropRef.current) {
+        cleanups.push(cardTarget(addCardDropRef.current, cardsCount));
+      }
+
+      // Collapsed List
+      if (collapsedDropRef.current) {
+        cleanups.push(cardTarget(collapsedDropRef.current, cardsCount));
+      }
+
+      return combine(...cleanups);
+    }, [id, index, isPersisted, canEdit, isCollapsed, cardsCount, filteredCardsCount, key]);
+
+    useEffect(() => {
+      // Vertical auto scroll of the cards while dragging a card - only for scrollable lists
+      if (!listOuterWrapperElement || !listOuterWrapperScrollable) {
+        return undefined;
+      }
+
+      return autoScrollForElements({
+        element: listOuterWrapperElement,
+        canScroll: ({ source }) => source.data.type === DroppableTypes.CARD,
+      });
+    }, [listOuterWrapperElement, listOuterWrapperScrollable]);
+
     const cardsCountText = () => {
       return isFiltered ? t('common.ofCards', { filteredCount: filteredCardIds.length, count: cardIds.length }) : t('common.cards', { count: cardIds.length });
     };
 
     const cardsNode = (
-      <Droppable droppableId={`list:${id}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
-        {({ innerRef, droppableProps, placeholder }) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...droppableProps} ref={innerRef}>
-            <div className={s.cards}>
-              {canEdit && addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
-              {filteredCardIds.map((cardId, cardIndex) => (
-                <CardContainer key={cardId} id={cardId} index={cardIndex} />
-              ))}
-              {placeholder}
-              {canEdit && !addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
-            </div>
-          </div>
-        )}
-      </Droppable>
+      <div className={s.cards}>
+        {canEdit && addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
+        {filteredCardIds.map((cardId, cardIndex) => (
+          <CardContainer key={cardId} id={cardId} index={cardIndex} />
+        ))}
+        {cardPlaceholderHeight !== null && <div style={{ height: cardPlaceholderHeight + CARD_PLACEHOLDER_MARGIN }} />}
+        {canEdit && !addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
+      </div>
     );
 
     const addCardNode = (
-      <Droppable droppableId={`listAdd:${id}:${cardIds.length}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
-        {({ innerRef, droppableProps, placeholder }) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...droppableProps} ref={innerRef}>
-            {placeholder}
-            {!isAddCardOpen && canEdit && (
-              <Button variant={ButtonVariant.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
-                <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
-                <span className={s.addCardButtonText}>{t('common.addCard')}</span>
-              </Button>
-            )}
-          </div>
+      <div ref={addCardDropRef}>
+        {!isAddCardOpen && canEdit && (
+          <Button variant={ButtonVariant.Icon} title={t('common.addCard')} onClick={handleAddCardClick} className={s.addCardButton} disabled={!isPersisted}>
+            <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addCardButtonIcon} />
+            <span className={s.addCardButtonText}>{t('common.addCard')}</span>
+          </Button>
         )}
-      </Droppable>
+      </div>
     );
 
     const collapsedListNode = (
-      <Droppable droppableId={`listCollapsed:${id}:${cardIds.length}`} type={DroppableTypes.CARD} isDropDisabled={!isPersisted}>
-        {({ innerRef, droppableProps, placeholder }) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...droppableProps} ref={innerRef} className={s.headerCollapsedInner}>
-            {placeholder}
-            <Button variant={ButtonVariant.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButtonCollapsed, !canEdit && gs.cursorDefault)}>
-              <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
-            </Button>
-            <div className={s.headerNameCollapsed} title={listName}>
-              {listName}
-            </div>
-            <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
-            <CardAddPopup
-              lists={[]}
-              labelIds={labelIds}
-              memberIds={memberIds}
-              forcedDefaultListId={id}
-              onCreate={(listId, data, autoOpen) => onCardCreate(data, autoOpen)}
-              offset={5}
-              position="top"
-              wrapperClassName={s.cardAddPopupWrapper}
-            >
-              <Button variant={ButtonVariant.Icon} title={t('common.addCard', { context: 'title' })} className={s.collapsedListCardAddButton}>
-                <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.collapsedListCardAddButtonIcon} />
-              </Button>
-            </CardAddPopup>
-          </div>
-        )}
-      </Droppable>
+      <div ref={collapsedDropRef} className={s.headerCollapsedInner}>
+        {cardPlaceholderHeight !== null && <div style={{ height: COLLAPSED_CARD_PLACEHOLDER_HEIGHT + CARD_PLACEHOLDER_MARGIN }} />}
+        <Button variant={ButtonVariant.Icon} title={t('common.expandList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButtonCollapsed, !canEdit && gs.cursorDefault)}>
+          <Icon type={IconType.TriangleDown} size={IconSize.Size8} />
+        </Button>
+        <div className={s.headerNameCollapsed} title={listName}>
+          {listName}
+        </div>
+        <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
+        <CardAddPopup
+          lists={[]}
+          labelIds={labelIds}
+          memberIds={memberIds}
+          forcedDefaultListId={id}
+          onCreate={(listId, data, autoOpen) => onCardCreate(data, autoOpen)}
+          offset={5}
+          position="top"
+          wrapperClassName={s.cardAddPopupWrapper}
+        >
+          <Button variant={ButtonVariant.Icon} title={t('common.addCard', { context: 'title' })} className={s.collapsedListCardAddButton}>
+            <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.collapsedListCardAddButtonIcon} />
+          </Button>
+        </CardAddPopup>
+      </div>
     );
+
+    const placeholderNode = placeholderWidth !== null && <div style={{ width: placeholderWidth + LIST_PLACEHOLDER_MARGIN }} />;
 
     if (isCollapsed) {
       return (
-        <Draggable draggableId={`list:${id}`} index={index} isDragDisabled={!isPersisted || !canEdit}>
-          {({ innerRef, draggableProps, dragHandleProps }) => (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <div {...draggableProps} data-drag-scroller ref={innerRef} className={s.innerWrapperCollapsed}>
-              <div className={s.outerWrapper}>
-                <div
-                  {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
-                  className={s.headerCollapsed}
-                >
-                  {collapsedListNode}
-                </div>
+        <>
+          {placeholderNode}
+          <div ref={innerWrapperRef} data-drag-scroller className={clsx(s.innerWrapperCollapsed, isDragging && gs.hidden)}>
+            <div className={s.outerWrapper}>
+              <div ref={headerRef} className={s.headerCollapsed}>
+                {collapsedListNode}
               </div>
             </div>
-          )}
-        </Draggable>
+          </div>
+        </>
       );
     }
     return (
-      <Draggable draggableId={`list:${id}`} index={index} isDragDisabled={!isPersisted || !canEdit}>
-        {({ innerRef, draggableProps, dragHandleProps }) => (
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          <div {...draggableProps} data-drag-scroller ref={innerRef} className={s.innerWrapper}>
-            <div className={s.outerWrapper}>
-              <div
-                {...dragHandleProps} // eslint-disable-line react/jsx-props-no-spreading
-                className={s.header}
-              >
-                <Button variant={ButtonVariant.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButton, !canEdit && gs.cursorDefault)}>
-                  <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={s.iconRotateRight} />
-                </Button>
-                <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
-                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                  <div className={clsx(s.headerName, canEdit && gs.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={listName}>
-                    {listName}
-                  </div>
-                </NameEdit>
-                {isPersisted && (
-                  <div className={s.popupWrapper}>
-                    <ListActionsPopup
-                      name={name}
-                      createdAt={createdAt}
-                      createdBy={createdBy}
-                      updatedAt={updatedAt}
-                      updatedBy={updatedBy}
-                      boardMemberships={boardMemberships}
-                      activities={activities}
-                      isActivitiesFetching={isActivitiesFetching}
-                      isAllActivitiesFetched={isAllActivitiesFetched}
-                      lastActivityId={lastActivityId}
-                      isManager={isManager}
-                      mailTokens={mailTokens}
-                      mailTokenCount={mailTokenCount}
-                      mailServiceAvailable={mailServiceAvailable}
-                      mailServiceInboundEmail={mailServiceInboundEmail}
-                      canEdit={canEdit}
-                      isCompleted={isCompleted}
-                      onNameEdit={handleNameEdit}
-                      onCardAdd={handleCardAdd}
-                      onActivitiesFetch={onActivitiesFetch}
-                      onMailTokenCreate={onMailTokenCreate}
-                      onMailTokenUpdate={onMailTokenUpdate}
-                      onMailTokenDelete={onMailTokenDelete}
-                      onToggleCompleted={onToggleCompleted}
-                      onDelete={onDelete}
-                      position="left-start"
-                      offset={0}
-                      hideCloseButton
-                    >
-                      <Button variant={ButtonVariant.Icon} title={t('common.editList')} className={s.editListButton}>
-                        <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                      </Button>
-                    </ListActionsPopup>
-                  </div>
-                )}
-                <div className={s.headerCardsCount}>{cardsCountText()}</div>
-              </div>
-              {/* eslint-disable-next-line prettier/prettier */}
-              <div ref={(el) => { listWrapper.current = el; setListOuterWrapperElement(el); }} className={clsx(s.cardsInnerWrapper, gs.scrollableY, listOuterWrapperScrollable && s.cardsInnerWrapperScrollable)}
-              >
-                <div className={clsx(s.cardsOuterWrapper, listOuterWrapperScrollable && s.cardsOuterWrapperScrollable)}>{cardsNode}</div>
-              </div>
-              {addCardNode}
+      <>
+        {placeholderNode}
+        <div ref={innerWrapperRef} data-drag-scroller className={clsx(s.innerWrapper, isDragging && gs.hidden)}>
+          <div ref={outerWrapperRef} className={s.outerWrapper}>
+            <div ref={headerRef} className={s.header}>
+              <Button variant={ButtonVariant.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButton, !canEdit && gs.cursorDefault)}>
+                <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={s.iconRotateRight} />
+              </Button>
+              <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onClose={handleNameEditClose} onHeightChange={handleNameEditHeightChange}>
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+                <div className={clsx(s.headerName, canEdit && gs.cursorPointer)} onClick={handleHeaderNameClick} ref={setHeaderNameElement} title={listName}>
+                  {listName}
+                </div>
+              </NameEdit>
+              {isPersisted && (
+                <div className={s.popupWrapper}>
+                  <ListActionsPopup
+                    ref={listActionsPopupRef}
+                    name={name}
+                    createdAt={createdAt}
+                    createdBy={createdBy}
+                    updatedAt={updatedAt}
+                    updatedBy={updatedBy}
+                    boardMemberships={boardMemberships}
+                    activities={activities}
+                    isActivitiesFetching={isActivitiesFetching}
+                    isAllActivitiesFetched={isAllActivitiesFetched}
+                    lastActivityId={lastActivityId}
+                    isManager={isManager}
+                    mailTokens={mailTokens}
+                    mailTokenCount={mailTokenCount}
+                    mailServiceAvailable={mailServiceAvailable}
+                    mailServiceInboundEmail={mailServiceInboundEmail}
+                    canEdit={canEdit}
+                    isCompleted={isCompleted}
+                    onNameEdit={handleNameEdit}
+                    onCardAdd={handleCardAdd}
+                    onActivitiesFetch={onActivitiesFetch}
+                    onMailTokenCreate={onMailTokenCreate}
+                    onMailTokenUpdate={onMailTokenUpdate}
+                    onMailTokenDelete={onMailTokenDelete}
+                    onToggleCompleted={onToggleCompleted}
+                    onDelete={onDelete}
+                    position="left-start"
+                    offset={0}
+                    hideCloseButton
+                  >
+                    <Button variant={ButtonVariant.Icon} title={t('common.editList')} className={s.editListButton}>
+                      <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                    </Button>
+                  </ListActionsPopup>
+                </div>
+              )}
+              <div className={s.headerCardsCount}>{cardsCountText()}</div>
             </div>
+            {/* eslint-disable-next-line prettier/prettier */}
+          <div ref={(el) => { listWrapper.current = el; setListOuterWrapperElement(el); }} className={clsx(s.cardsInnerWrapper, gs.scrollableY, listOuterWrapperScrollable && s.cardsInnerWrapperScrollable)}
+            >
+              <div className={clsx(s.cardsOuterWrapper, listOuterWrapperScrollable && s.cardsOuterWrapperScrollable)}>{cardsNode}</div>
+            </div>
+            {addCardNode}
           </div>
-        )}
-      </Draggable>
+        </div>
+      </>
     );
   },
 );

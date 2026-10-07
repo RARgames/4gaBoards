@@ -46,6 +46,7 @@
     box-shadow: var(--shadowBlack015) 0px 1px 4px;
     position: relative;
     border: 2px solid transparent;
+    margin-bottom: 8px;
 
     &:hover {
       background: var(--backgroundCardHover);
@@ -151,7 +152,6 @@
   .wrapper {
     cursor: pointer;
     display: block;
-    margin-bottom: 8px;
     container-type: inline-size;
   }
 

@@ -1,10 +1,14 @@
-import React, { useCallback, useRef } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-import ReactDOM from 'react-dom';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { draggable, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import DroppableTypes from '../../constants/DroppableTypes';
+import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import { useTaskDropSlot } from '../../lib/hooks/use-task-drop-slot';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import MembershipsPopup from '../MembershipsPopup';
@@ -57,6 +61,56 @@ const Task = React.memo(
   }) => {
     const [t] = useTranslation();
     const nameEdit = useRef(null);
+    const wrapperRef = useRef(null);
+    const taskRef = useRef(null);
+    const taskActionsPopupRef = useRef(null);
+    const taskDueDateEditPopupRef = useRef(null);
+    const taskMembershipsPopupRef = useRef(null);
+
+    const isDragging = useTaskDropSlot((slot) => slot?.taskId === id && slot.variant === variant);
+    const placeholderHeight = useTaskDropSlot((slot) => (slot && slot.cardId === cardId && slot.variant === variant && slot.placeholderIndex === index ? slot.height : null));
+    const key = dragKey('task', `${variant}:${id}`); // Key contains variant because there could be 2 instances of tasks at the same time
+
+    useEffect(() => {
+      // DnD: the whole task is the drag handle, and also a drop target (drop above/below it)
+      const wrapper = wrapperRef.current;
+      const task = taskRef.current;
+
+      if (!wrapper || !task) {
+        return undefined;
+      }
+
+      const data = { type: DroppableTypes.TASK, taskId: id, cardId, variant, index };
+
+      return combine(
+        draggable({
+          element: wrapper,
+          canDrag: () => isPersisted && canEdit,
+          getInitialData: ({ input }) => ({
+            ...data,
+            height: task.offsetHeight,
+            ...getDragData(task, input, key),
+          }),
+          onGenerateDragPreview: () => {
+            taskActionsPopupRef.current?.close();
+            taskMembershipsPopupRef.current?.close();
+            taskDueDateEditPopupRef.current?.close();
+          },
+        }),
+        dropTargetForElements({
+          element: wrapper,
+          canDrop: ({ source }) => source.data.type === DroppableTypes.TASK && source.data.cardId === cardId && source.data.variant === variant,
+          getData: ({ input }) =>
+            attachClosestEdge(data, {
+              input,
+              element: task,
+              allowedEdges: ['top', 'bottom'],
+            }),
+        }),
+      );
+    }, [id, cardId, variant, index, isPersisted, canEdit, key]);
+
+    useDropAnimation(taskRef, key);
 
     const handleClick = useCallback(() => {
       if (isPersisted && canEdit) {
@@ -145,81 +199,77 @@ const Task = React.memo(
     );
 
     return (
-      <Draggable draggableId={id} index={index} isDragDisabled={!isPersisted || !canEdit}>
-        {({ innerRef, draggableProps, dragHandleProps }, { isDragging }) => {
-          const contentNode = (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <div {...draggableProps} {...dragHandleProps} ref={innerRef} className={clsx(s.wrapper, gs.scrollableX, s.contentHoverable)}>
-              <Checkbox checked={isCompleted} size={checkboxSize} disabled={!isPersisted || !canEdit} onChange={handleToggleChange} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} />
-              <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-                <span className={clsx(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
-                  {name}
-                </span>
-                {users && (
-                  <MembershipsPopup
-                    items={allBoardMemberships}
-                    currentUserIds={users.map((user) => user.id)}
-                    memberships={boardMemberships}
-                    onUserSelect={onUserAdd}
-                    onUserDeselect={onUserRemove}
-                    onUserEmailLookup={onUserEmailLookup}
-                    offset={0}
-                    position="left-start"
-                    disabled={!(canEdit && isPersisted)}
-                  >
-                    {membersNode}
-                  </MembershipsPopup>
-                )}
-                {dueDate && (
-                  <div className={clsx(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
-                    <DueDateEditPopup defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!(canEdit && isPersisted)}>
-                      <DueDate variant={dueDateVariant} value={dueDate} completedAt={completedAt} isClickable={canEdit && isPersisted} showFullDueDates={showFullDueDates} />
-                    </DueDateEditPopup>
-                  </div>
-                )}
-                {isPersisted && (
-                  <TaskActionsPopup
-                    cardId={cardId}
-                    cardName={cardName}
-                    name={name}
-                    dueDate={dueDate}
-                    allBoardMemberships={allBoardMemberships}
-                    boardMemberships={boardMemberships}
-                    users={users}
-                    activities={activities}
-                    isActivitiesFetching={isActivitiesFetching}
-                    isAllActivitiesFetched={isAllActivitiesFetched}
-                    lastActivityId={lastActivityId}
-                    canEdit={canEdit}
-                    createdAt={createdAt}
-                    createdBy={createdBy}
-                    updatedAt={updatedAt}
-                    updatedBy={updatedBy}
-                    onUpdate={handleDueDateUpdate}
-                    onDuplicate={onDuplicate}
-                    onNameEdit={handleNameEdit}
-                    onDelete={onDelete}
-                    onUserAdd={onUserAdd}
-                    onUserRemove={onUserRemove}
-                    onUserEmailLookup={onUserEmailLookup}
-                    onActivitiesFetch={onActivitiesFetch}
-                    hideCloseButton
-                    position="left-start"
-                    offset={0}
-                  >
-                    <Button variant={ButtonVariant.Icon} title={t('common.editTask')} className={clsx(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
-                      <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={s.icon} />
-                    </Button>
-                  </TaskActionsPopup>
-                )}
-              </TaskEdit>
-            </div>
-          );
-
-          return isDragging ? ReactDOM.createPortal(contentNode, document.body) : contentNode;
-        }}
-      </Draggable>
+      <div ref={wrapperRef}>
+        {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
+        <div ref={taskRef} className={clsx(s.wrapper, gs.scrollableX, s.contentHoverable, isDragging && gs.hidden)}>
+          <Checkbox checked={isCompleted} size={checkboxSize} disabled={!isPersisted || !canEdit} onChange={handleToggleChange} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} />
+          <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+            <span className={clsx(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
+              {name}
+            </span>
+            {users && (
+              <MembershipsPopup
+                ref={taskMembershipsPopupRef}
+                items={allBoardMemberships}
+                currentUserIds={users.map((user) => user.id)}
+                memberships={boardMemberships}
+                onUserSelect={onUserAdd}
+                onUserDeselect={onUserRemove}
+                onUserEmailLookup={onUserEmailLookup}
+                offset={0}
+                position="left-start"
+                disabled={!(canEdit && isPersisted)}
+              >
+                {membersNode}
+              </MembershipsPopup>
+            )}
+            {dueDate && (
+              <div className={clsx(s.dueDate, canEdit && gs.cursorGrab, isCompleted && s.itemCompleted, variant !== VARIANTS.CARDMODAL && s.dueDateCard)}>
+                <DueDateEditPopup ref={taskDueDateEditPopupRef} defaultValue={dueDate} onUpdate={handleDueDateUpdate} disabled={!(canEdit && isPersisted)}>
+                  <DueDate variant={dueDateVariant} value={dueDate} completedAt={completedAt} isClickable={canEdit && isPersisted} showFullDueDates={showFullDueDates} />
+                </DueDateEditPopup>
+              </div>
+            )}
+            {isPersisted && (
+              <TaskActionsPopup
+                ref={taskActionsPopupRef}
+                cardId={cardId}
+                cardName={cardName}
+                name={name}
+                dueDate={dueDate}
+                allBoardMemberships={allBoardMemberships}
+                boardMemberships={boardMemberships}
+                users={users}
+                activities={activities}
+                isActivitiesFetching={isActivitiesFetching}
+                isAllActivitiesFetched={isAllActivitiesFetched}
+                lastActivityId={lastActivityId}
+                canEdit={canEdit}
+                createdAt={createdAt}
+                createdBy={createdBy}
+                updatedAt={updatedAt}
+                updatedBy={updatedBy}
+                onUpdate={handleDueDateUpdate}
+                onDuplicate={onDuplicate}
+                onNameEdit={handleNameEdit}
+                onDelete={onDelete}
+                onUserAdd={onUserAdd}
+                onUserRemove={onUserRemove}
+                onUserEmailLookup={onUserEmailLookup}
+                onActivitiesFetch={onActivitiesFetch}
+                hideCloseButton
+                position="left-start"
+                offset={0}
+              >
+                <Button variant={ButtonVariant.Icon} title={t('common.editTask')} className={clsx(s.button, s.target, variant !== VARIANTS.CARDMODAL && s.buttonCard)}>
+                  <Icon type={IconType.EllipsisVertical} size={IconSize.Size10} className={s.icon} />
+                </Button>
+              </TaskActionsPopup>
+            )}
+          </TaskEdit>
+        </div>
+      </div>
     );
   },
 );

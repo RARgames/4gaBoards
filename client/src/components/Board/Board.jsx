@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
+import { autoScrollForElements } from '@atlaskit/pragmatic-drag-and-drop-auto-scroll/element';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { monitorForElements, dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -9,20 +11,25 @@ import BoardActionsContainer from '../../containers/BoardActionsContainer';
 import CardModalContainer from '../../containers/CardModalContainer';
 import ListContainer from '../../containers/ListContainer';
 import ListViewContainer from '../../containers/ListViewContainer';
+import { resolveCardDropSlot, setCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
+import { dropAnimation } from '../../lib/hooks/use-drop-animation';
+import { resolveListDropSlot, setListDropSlot, useListDropSlot } from '../../lib/hooks/use-list-drop-slot';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import ListAdd from './ListAdd';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Board.module.scss';
 
-const parseDndDestination = (dndId) => dndId.split(':');
+const LIST_PLACEHOLDER_MARGIN = 10;
 
-const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView, onListCreate, onListMove, onCardMove, onTaskMove }) => {
+const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView, onListCreate, onListMove, onCardMove }) => {
   const [t] = useTranslation();
   const [isListAddOpened, setIsListAddOpened] = useState(false);
   const wrapper = useRef(null);
   const prevPosition = useRef(null);
   const [viewMode, setViewMode] = useState(defaultView);
+
+  const listPlaceholderWidth = useListDropSlot((slot) => (slot && slot.placeholderIndex >= listIds.length ? slot.width : null));
 
   const handleAddListClick = useCallback(() => {
     setIsListAddOpened(true);
@@ -32,36 +39,86 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
     setIsListAddOpened(false);
   }, []);
 
-  const handleDragEnd = useCallback(
-    ({ draggableId, type, source, destination }) => {
-      if (!destination || (source.droppableId === destination.droppableId && source.index === destination.index)) {
-        return;
-      }
+  useEffect(
+    () =>
+      monitorForElements({
+        onDrop: ({ source, location }) => {
+          setListDropSlot(null);
+          setCardDropSlot(null);
 
-      const [, dndId] = parseDndDestination(draggableId);
+          // targets are ordered innermost first
+          const targets = location.current.dropTargets;
+          if (!targets.length) {
+            return;
+          }
 
-      switch (type) {
-        case DroppableTypes.LIST:
-          onListMove(dndId, destination.index);
+          const sourceData = source.data;
 
-          break;
-        case DroppableTypes.CARD: {
-          const [, listId, indexOverride] = parseDndDestination(destination.droppableId);
-          const [, sourceListId] = parseDndDestination(source.droppableId);
+          switch (sourceData.type) {
+            case DroppableTypes.LIST: {
+              const destination = resolveListDropSlot(source, location);
+              if (destination.index === sourceData.index) {
+                return;
+              }
 
-          onCardMove(dndId, listId, (listId === sourceListId ? indexOverride - 1 : indexOverride) || destination.index);
+              onListMove(sourceData.listId, destination.index);
 
-          break;
-        }
-        case DroppableTypes.TASK: {
-          onTaskMove(draggableId, destination.index);
+              break;
+            }
+            case DroppableTypes.CARD: {
+              const destination = resolveCardDropSlot(source, location);
+              if (destination.index === sourceData.index && destination.listId === sourceData.listId) {
+                return;
+              }
 
-          break;
-        }
-        default:
-      }
-    },
-    [onListMove, onCardMove, onTaskMove],
+              onCardMove(sourceData.cardId, destination.listId, destination.index);
+
+              break;
+            }
+            default:
+          }
+        },
+      }),
+    [onListMove, onCardMove],
+  );
+
+  useEffect(() => {
+    const cleanup = monitorForElements({
+      canMonitor: ({ source }) => source.data.type === DroppableTypes.CARD,
+      onDragStart: ({ source, location }) => setCardDropSlot(resolveCardDropSlot(source, location)),
+      onDrag: ({ source, location }) => setCardDropSlot(resolveCardDropSlot(source, location)),
+    });
+
+    return () => {
+      cleanup();
+      setCardDropSlot(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    const cleanup = monitorForElements({
+      canMonitor: ({ source }) => source.data.type === DroppableTypes.LIST,
+      onDragStart: ({ source, location }) => setListDropSlot(resolveListDropSlot(source, location)),
+      onDrag: ({ source, location }) => setListDropSlot(resolveListDropSlot(source, location)),
+    });
+
+    return () => {
+      cleanup();
+      setListDropSlot(null);
+    };
+  }, []);
+
+  useEffect(
+    () =>
+      monitorForElements({
+        onGenerateDragPreview: dropAnimation.onGenerateDragPreview,
+        onDragStart: dropAnimation.onDragStart,
+        onDrag: dropAnimation.onDrag,
+        onDrop(args) {
+          dropAnimation.onDrop(args);
+        },
+      }),
+    [],
   );
 
   const handleMouseDown = useCallback(
@@ -70,7 +127,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
         return;
       }
 
-      if (e.target !== wrapper.current && !e.target.dataset.dragScroller) {
+      if (e.target !== wrapper.current && !e.target?.hasAttribute('data-drag-scroller')) {
         return;
       }
 
@@ -120,38 +177,45 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
     };
   }, [handleWindowMouseMove, handleWindowMouseUp]);
 
+  useEffect(() => {
+    if (viewMode !== 'board' || !wrapper.current) {
+      return undefined;
+    }
+
+    return combine(
+      autoScrollForElements({
+        element: wrapper.current,
+        canScroll: ({ source }) => source.data.type === DroppableTypes.LIST || source.data.type === DroppableTypes.CARD,
+      }),
+      dropTargetForElements({
+        element: wrapper.current,
+        canDrop: ({ source }) => source.data.type === DroppableTypes.LIST,
+        getData: () => ({ type: DroppableTypes.LIST }),
+      }),
+    );
+  }, [viewMode]);
+
   const boardView = (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div ref={wrapper} className={clsx(s.boardWrapper, gs.scrollableX)} onMouseDown={handleMouseDown}>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="board" type={DroppableTypes.LIST} direction="horizontal">
-          {({ innerRef, droppableProps, placeholder }) => (
-            <div
-              {...droppableProps} // eslint-disable-line react/jsx-props-no-spreading
-              data-drag-scroller
-              ref={innerRef}
-              className={clsx(s.lists, gs.cursorGrab)}
-            >
-              {listIds.map((listId, index) => (
-                <ListContainer key={listId} id={listId} index={index} />
-              ))}
-              {placeholder}
-              {canEdit && (
-                <div data-drag-scroller className={s.list}>
-                  {isListAddOpened ? (
-                    <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
-                  ) : (
-                    <Button variant={ButtonVariant.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
-                      <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
-                      <span className={s.addListButtonText}>{t('common.addList')}</span>
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div data-drag-scroller className={clsx(s.lists, gs.cursorGrab)}>
+        {listIds.map((listId, index) => (
+          <ListContainer key={listId} id={listId} index={index} />
+        ))}
+        {listPlaceholderWidth !== null && <div style={{ width: listPlaceholderWidth + LIST_PLACEHOLDER_MARGIN }} />}
+        {canEdit && (
+          <div data-drag-scroller className={s.list}>
+            {isListAddOpened ? (
+              <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
+            ) : (
+              <Button variant={ButtonVariant.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
+                <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
+                <span className={s.addListButtonText}>{t('common.addList')}</span>
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 
@@ -181,7 +245,5 @@ Board.propTypes = {
   onListCreate: PropTypes.func.isRequired,
   onListMove: PropTypes.func.isRequired,
   onCardMove: PropTypes.func.isRequired,
-  onTaskMove: PropTypes.func.isRequired,
 };
-
 export default Board;
