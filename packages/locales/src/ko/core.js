@@ -473,6 +473,7 @@ export default {
       renameProject: '프로젝트 이름 변경',
       renameTemplate: '템플릿 이름 변경',
       reorderBoards: '보드 순서 재정렬',
+      reorderProjects: '프로젝트 순서 재정렬',
       requiresAdminRights: '(관리자 권한 필요)',
       requiresEmailVerification: '(이메일 인증 필요)',
       resendVerificationEmail_title: '인증 이메일 다시 보내기',

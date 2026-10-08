@@ -488,6 +488,7 @@ export default {
       renameProject: 'Renombrar Proyecto',
       renameTemplate: 'Renombrar plantilla',
       reorderBoards: 'Reordenar tableros dentro del proyecto',
+      reorderProjects: 'Reordenar proyectos',
       requiresAdminRights: '(requiere derechos de administrador)',
       requiresEmailVerification: '(requiere verificación de correo electrónico)',
       resendVerificationEmail_title: 'Reenviar correo de verificación',

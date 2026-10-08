@@ -503,6 +503,7 @@ export default {
       renameProject: 'Přejmenovat projekt',
       renameTemplate: 'Přejmenovat šablonu',
       reorderBoards: 'Změnit pořadí nástěnek v projektu',
+      reorderProjects: 'Změnit pořadí projektů',
       requiresAdminRights: '(vyžaduje admin práva)',
       requiresEmailVerification: '(vyžaduje ověření e-mailu)',
       resendVerificationEmail_title: 'Znovu odeslat ověřovací e-mail',

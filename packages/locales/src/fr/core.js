@@ -488,6 +488,7 @@ export default {
       renameProject: 'Renommer le projet',
       renameTemplate: 'Renommer le modèle',
       reorderBoards: 'Réorganiser les tableaux',
+      reorderProjects: 'Réorganiser les projets',
       requiresAdminRights: "(requiert des privilèges d'administrateur)",
       requiresEmailVerification: "(nécessite une vérification de l'e-mail)",
       resendVerificationEmail_title: "Renvoyer l'e-mail de vérification",

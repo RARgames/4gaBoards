@@ -488,6 +488,7 @@ export default {
       renameProject: "Loyiha nomini o'zgartirish",
       renameTemplate: 'Shablon nomini o‘zgartirish',
       reorderBoards: 'Loyiha ichida doskalarni qayta tartiblash',
+      reorderProjects: 'Loyihalarni qayta tartiblash',
       requiresAdminRights: '(admin huquqlari talab qilinadi)',
       requiresEmailVerification: '(email tasdiqlash talab qilinadi)',
       resendVerificationEmail_title: 'Tasdiqlash emailini qayta yuborish',
