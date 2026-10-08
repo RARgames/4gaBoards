@@ -62,7 +62,7 @@
     "husky": "^9.1.7"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.29.7",
+    "@babel/eslint-parser": "^8.0.0",
     "concurrently": "^10.0.3",
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^9.39.5",
