@@ -81,6 +81,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       onProjectCreate: entryActions.createProject,
       onProjectUpdate: entryActions.updateProject,
+      onProjectMove: entryActions.moveProject,
       onBoardCreate: entryActions.createBoard,
       onBoardUpdate: entryActions.updateBoard,
       onBoardMove: entryActions.moveBoard,

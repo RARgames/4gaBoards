@@ -4,6 +4,7 @@ import actions from '../../../actions';
 import api from '../../../api';
 import selectors from '../../../selectors';
 import request from '../request';
+import { updateProjectMembership } from './project-memberships';
 import { goToBoard, goToProject, goToRoot } from './router';
 
 export function* createProject(data) {
@@ -67,6 +68,12 @@ export function* updateCurrentProject(data) {
 
 export function* handleProjectUpdate(project) {
   yield put(actions.handleProjectUpdate(project));
+}
+
+export function* moveProject(id, index) {
+  const position = yield select(selectors.selectNextProjectPosition, index, id);
+
+  yield call(updateProjectMembership, id, { position });
 }
 
 export function* updateProjectBackgroundImage(id, data) {
@@ -155,6 +162,7 @@ export default {
   updateProject,
   updateCurrentProject,
   handleProjectUpdate,
+  moveProject,
   updateProjectBackgroundImage,
   updateCurrentProjectBackgroundImage,
   deleteProject,

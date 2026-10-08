@@ -36,6 +36,14 @@ const handleProjectUpdate = (project) => ({
   },
 });
 
+const moveProject = (id, index) => ({
+  type: EntryActionTypes.PROJECT_MOVE,
+  payload: {
+    id,
+    index,
+  },
+});
+
 const updateProjectBackgroundImage = (id, data) => ({
   type: EntryActionTypes.PROJECT_BACKGROUND_IMAGE_UPDATE,
   payload: {
@@ -84,6 +92,7 @@ export default {
   updateProject,
   updateCurrentProject,
   handleProjectUpdate,
+  moveProject,
   updateProjectBackgroundImage,
   updateCurrentProjectBackgroundImage,
   deleteProject,
