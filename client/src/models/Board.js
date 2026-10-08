@@ -211,6 +211,10 @@ export default class extends BaseModel {
         Board.withId(payload.id).update(payload.data);
 
         break;
+      case ActionTypes.BOARD_UPDATE__FAILURE:
+        Board.upsert(payload.board);
+
+        break;
       case ActionTypes.BOARD_DELETE:
         Board.withId(payload.id).deleteWithRelated();
 

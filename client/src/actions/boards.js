@@ -80,11 +80,12 @@ updateBoard.success = (board) => ({
   },
 });
 
-updateBoard.failure = (id, error) => ({
+updateBoard.failure = (id, error, board) => ({
   type: ActionTypes.BOARD_UPDATE__FAILURE,
   payload: {
     id,
     error,
+    board,
   },
 });
 

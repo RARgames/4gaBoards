@@ -1,16 +1,24 @@
-import { put, call } from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
+import selectors from '../../../selectors';
 import request from '../request';
 
 export function* updateProjectMembership(id, data) {
+  const { position: previousPosition, isCollapsed: previousIsCollapsed, isSubscribed: previousIsSubscribed } = yield select(selectors.selectProject, id);
   yield put(actions.updateProjectMembership(id, data));
   let projectMembership;
   try {
     ({ item: projectMembership } = yield call(request, api.updateProjectMembership, id, data));
   } catch (error) {
-    yield put(actions.updateProjectMembership.failure(id, error));
+    yield put(
+      actions.updateProjectMembership.failure(id, error, {
+        position: previousPosition,
+        isCollapsed: previousIsCollapsed,
+        isSubscribed: previousIsSubscribed,
+      }),
+    );
     return;
   }
 

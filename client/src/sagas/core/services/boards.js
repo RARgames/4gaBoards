@@ -97,13 +97,14 @@ export function* fetchBoard(id) {
 }
 
 export function* updateBoard(id, data) {
+  const previousBoard = yield select(selectors.selectBoardById, id);
   yield put(actions.updateBoard(id, data));
 
   let board;
   try {
     ({ item: board } = yield call(request, api.updateBoard, id, data));
   } catch (error) {
-    yield put(actions.updateBoard.failure(id, error));
+    yield put(actions.updateBoard.failure(id, error, previousBoard));
     return;
   }
 
@@ -118,9 +119,7 @@ export function* moveBoard(id, index) {
   const { projectId } = yield select(selectors.selectBoardById, id);
   const position = yield select(selectors.selectNextBoardPosition, projectId, index, id);
 
-  yield call(updateBoard, id, {
-    position,
-  });
+  yield call(updateBoard, id, { position });
 }
 
 export function* deleteBoard(id) {
