@@ -74,21 +74,6 @@ const Sidebar = React.memo(
 
     const projectsPlaceholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.PROJECT && slot.placeholderIndex >= projectsCount ? slot.height : null));
 
-    const handleToggleProjectCollapse = useCallback(
-      (project) => {
-        onProjectMembershipUpdate(project.id, { isCollapsed: !project.isCollapsed });
-      },
-      [onProjectMembershipUpdate],
-    );
-
-    const handleProjectRef = useCallback((projectId, el) => {
-      projectRefs.current[projectId] = el;
-    }, []);
-
-    const handleBoardRef = useCallback((boardId, el) => {
-      boardRefs.current[boardId] = el;
-    }, []);
-
     useEffect(() => {
       const cleanup = monitorForElements({
         canMonitor: ({ source }) => source.data.type === DroppableTypes.PROJECT || source.data.type === DroppableTypes.BOARD,
@@ -187,8 +172,8 @@ const Sidebar = React.memo(
         isFilteringBoards={isFilteringBoards}
         mailServiceAvailable={mailServiceAvailable}
         mailServiceInboundEmail={mailServiceInboundEmail}
-        onProjectRef={handleProjectRef}
-        onBoardRef={handleBoardRef}
+        projectRefs={projectRefs}
+        boardRefs={boardRefs}
         onProjectUpdate={onProjectUpdate}
         onProjectMembershipUpdate={onProjectMembershipUpdate}
         onBoardCreate={onBoardCreate}

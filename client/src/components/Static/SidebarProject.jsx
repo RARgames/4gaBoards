@@ -33,8 +33,8 @@ const SidebarProject = React.memo(
     isFilteringBoards,
     mailServiceAvailable,
     mailServiceInboundEmail,
-    onProjectRef,
-    onBoardRef,
+    projectRefs,
+    boardRefs,
     onProjectUpdate,
     onProjectMembershipUpdate,
     onBoardCreate,
@@ -57,22 +57,13 @@ const SidebarProject = React.memo(
     const projectRef = useRef(null);
     const headerRef = useRef(null);
     const handleRef = useRef(null);
-    const boardRefs = useRef({});
-
+    const projectRefsCurrent = projectRefs.current;
     const { id } = project;
     const key = dragKey('project', id);
 
     const isDragging = useSidebarDropSlot((slot) => !!slot && slot.type === DroppableTypes.PROJECT && slot.id === id);
     const placeholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.PROJECT && slot.placeholderIndex === index ? slot.height : null));
     const boardsPlaceholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.BOARD && slot.parentId === id && slot.placeholderIndex >= project.boards.length ? slot.height : null));
-
-    const handleHeaderRef = useCallback(
-      (el) => {
-        headerRef.current = el;
-        onProjectRef(id, el);
-      },
-      [id, onProjectRef],
-    );
 
     useEffect(() => {
       // DnD: only the handle starts the drag, and the whole project is a drop target (drop above/below it)
@@ -119,7 +110,13 @@ const SidebarProject = React.memo(
       <div ref={wrapperRef}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         <div ref={projectRef} className={clsx(isDragging && gs.hidden)}>
-          <div className={clsx(s.sidebarItemProject, !currBoardId && currProjectId === id && ss.sidebarItemActive)} ref={handleHeaderRef}>
+          <div
+            className={clsx(s.sidebarItemProject, !currBoardId && currProjectId === id && ss.sidebarItemActive)}
+            ref={(el) => {
+              headerRef.current = el;
+              projectRefsCurrent[id] = el;
+            }}
+          >
             <Button variant={ButtonVariant.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={clsx(ss.sidebarButton)} onClick={handleToggleCollapse}>
               <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(ss.collapseIcon, project.isCollapsed && ss.collapseIconCollapsed)} />
             </Button>
@@ -168,19 +165,16 @@ const SidebarProject = React.memo(
               {project.boards.map((board, boardIndex) => (
                 <SidebarBoard
                   key={board.id}
-                  ref={(el) => {
-                    boardRefs.current[board.id] = el;
-                  }}
                   board={board}
                   index={boardIndex}
                   projectId={id}
+                  boardRefs={boardRefs}
                   isActive={currBoardId === board.id}
                   isAdmin={isAdmin}
                   isProjectManager={isProjectManager}
                   templates={boardTemplates}
                   mailServiceAvailable={mailServiceAvailable}
                   mailServiceInboundEmail={mailServiceInboundEmail}
-                  onItemRef={onBoardRef}
                   onUpdate={onBoardUpdate}
                   onExport={onBoardExport}
                   onFetch={onBoardFetch}
@@ -216,8 +210,8 @@ SidebarProject.propTypes = {
   isFilteringBoards: PropTypes.bool.isRequired,
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
-  onProjectRef: PropTypes.func.isRequired,
-  onBoardRef: PropTypes.func.isRequired,
+  projectRefs: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardRefs: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onProjectUpdate: PropTypes.func.isRequired,
   onProjectMembershipUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,

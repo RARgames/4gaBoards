@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
@@ -31,7 +31,7 @@ const SidebarBoard = React.memo(
     templates,
     mailServiceAvailable,
     mailServiceInboundEmail,
-    onItemRef,
+    boardRefs,
     onUpdate,
     onExport,
     onFetch,
@@ -49,19 +49,12 @@ const SidebarBoard = React.memo(
     const wrapperRef = useRef(null);
     const boardRef = useRef(null);
     const handleRef = useRef(null);
+    const boardRefsCurrent = boardRefs.current;
     const { id, isPersisted } = board;
 
     const key = dragKey('board', id);
     const isDragging = useSidebarDropSlot((slot) => !!slot && slot.type === DroppableTypes.BOARD && slot.id === id);
     const placeholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.BOARD && slot.parentId === projectId && slot.placeholderIndex === index ? slot.height : null));
-
-    const handleBoardRef = useCallback(
-      (el) => {
-        boardRef.current = el;
-        onItemRef(id, el);
-      },
-      [id, onItemRef],
-    );
 
     useEffect(() => {
       // DnD: only the handle starts the drag, and the whole board is a drop target (drop above/below it)
@@ -104,7 +97,13 @@ const SidebarBoard = React.memo(
       <div ref={wrapperRef} className={s.boardDraggable}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         {isPersisted && (
-          <div className={clsx(s.sidebarItemBoard, isActive && ss.sidebarItemActive, isDragging && gs.hidden)} ref={handleBoardRef}>
+          <div
+            className={clsx(s.sidebarItemBoard, isActive && ss.sidebarItemActive, isDragging && gs.hidden)}
+            ref={(el) => {
+              boardRef.current = el;
+              boardRefsCurrent[id] = el;
+            }}
+          >
             {isProjectManager && (
               <div ref={handleRef}>
                 <Button variant={ButtonVariant.Icon} title={t('common.reorderBoards')} className={clsx(s.reorderBoardsButton, s.hoverButton)}>
@@ -197,7 +196,7 @@ SidebarBoard.propTypes = {
   templates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
-  onItemRef: PropTypes.func.isRequired,
+  boardRefs: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFetch: PropTypes.func.isRequired,
