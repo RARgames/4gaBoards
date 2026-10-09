@@ -47,6 +47,7 @@ module.exports = {
       boards = boards.filter((board) => boardIds.includes(board.id));
     }
     project.isSubscribed = await sails.helpers.users.isProjectSubscriber(currentUser.id, project.id);
+    project.position = await sails.helpers.users.getProjectPosition(currentUser.id, project.id);
 
     const projectManagers = await sails.helpers.projects.getProjectManagers(project.id);
 

@@ -4,6 +4,7 @@ import orm from '../orm';
 import getActivityDetails from '../utils/get-activity-details';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
+import { filterSidebarProjects } from '../utils/sidebar-filter';
 
 export const selectCurrentUserId = ({ auth: { userId } }) => userId;
 
@@ -122,20 +123,7 @@ export const selectProjectsForCurrentUser = createSelector(
       };
     });
 
-    let filteredProjects = projects;
-    if (userModel.filter) {
-      const query = userModel.filter.query.toLowerCase();
-      if (userModel.filter.target === 'project') {
-        filteredProjects = projects.filter((project) => project.name.toLowerCase().includes(query));
-      } else if (userModel.filter.target === 'board') {
-        filteredProjects = projects
-          .map((project) => ({
-            ...project,
-            boards: project.boards.filter((board) => board.name.toLowerCase().includes(query)),
-          }))
-          .filter((project) => project.boards.length > 0);
-      }
-    }
+    const filteredProjects = filterSidebarProjects(projects, userModel.filter);
 
     return { projects, filteredProjects };
   },

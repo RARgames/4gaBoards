@@ -77,33 +77,6 @@
     opacity: 0;
   }
 
-  .boardDraggable {
-    &:hover {
-      .hoverButton {
-        opacity: 1;
-      }
-    }
-  }
-
-  .sidebarItemProject {
-    background: var(--backgroundSidebarItemCategory);
-    border-top: 1px solid var(--borderSidebar);
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      .hoverButton {
-        opacity: 1;
-      }
-    }
-  }
-
-  .sidebarItemBoard {
-    background: var(--backgroundSidebarItem);
-    padding: 8px 0;
-    display: flex;
-  }
-
   .sidebarItemInner {
     flex: 1 1 0;
     padding: 0;
@@ -177,23 +150,6 @@
     padding: 8px 8px 8px 0px;
   }
 
-  .github {
-    fill: var(--iconGithubActive);
-    margin-left: 4px;
-  }
-
-  .githubNotifications {
-    margin-right: 4px;
-  }
-
-  .boardButton {
-    padding: 0;
-  }
-
-  .boardCannotManage {
-    margin-left: 13px;
-  }
-
   .collapseIcon {
     vertical-align: middle;
   }
@@ -208,10 +164,6 @@
 
   .footerButtonIcon {
     margin-right: 4px;
-  }
-
-  .reorderBoardsButton {
-    width: 13px;
   }
 
   .notification {

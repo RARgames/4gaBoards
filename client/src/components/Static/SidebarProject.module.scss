@@ -1,0 +1,22 @@
+:global(#app) {
+  .hoverButton {
+    opacity: 0;
+  }
+
+  .sidebarItemProject {
+    background: var(--backgroundSidebarItemCategory);
+    border-top: 1px solid var(--borderSidebar);
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      .hoverButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .reorderProjectsButton {
+    width: 13px;
+  }
+}

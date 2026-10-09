@@ -26,15 +26,6 @@ module.exports = {
         createdById: currentUser.id,
       }).fetch();
 
-      sails.sockets.broadcast(
-        `user:${projectManager.userId}`,
-        'projectCreate',
-        {
-          item: project,
-        },
-        inputs.request,
-      );
-
       const userPrefs = await sails.helpers.userPrefs.getOne.with({ criteria: { id: currentUser.id }, currentUser });
       await sails.helpers.projectMemberships.createOne.with({
         values: {
@@ -46,6 +37,16 @@ module.exports = {
         request: inputs.request,
       });
       project.isSubscribed = await sails.helpers.users.isProjectSubscriber(currentUser.id, project.id);
+      project.position = await sails.helpers.users.getProjectPosition(currentUser.id, project.id);
+
+      sails.sockets.broadcast(
+        `user:${projectManager.userId}`,
+        'projectCreate',
+        {
+          item: project,
+        },
+        inputs.request,
+      );
 
       await sails.helpers.actions.createOne.with({
         values: {

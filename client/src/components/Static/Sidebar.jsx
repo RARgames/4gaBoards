@@ -1,21 +1,22 @@
 import React, { useCallback, useRef, useEffect } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import { autoScrollForElements } from '@atlaskit/pragmatic-drag-and-drop-auto-scroll/element';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import { dropTargetForElements, monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import clsx from 'clsx';
-import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useToggle } from '../../lib/hooks';
-import BoardActionsPopup from '../BoardActionsPopup';
+import { dropAnimation } from '../../lib/hooks/use-drop-animation';
+import { resolveSidebarDropSlot, setSidebarDropSlot, useSidebarDropSlot } from '../../lib/hooks/use-sidebar-drop-slot';
 import BoardAddPopup from '../BoardAddPopup';
-import ConnectionsPopup from '../ConnectionsPopup';
 import Filter from '../Filter';
-import ProjectActionsPopup from '../ProjectActionsPopup';
 import ProjectAddPopup from '../ProjectAddPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
+import SidebarProject from './SidebarProject';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Sidebar.module.scss';
@@ -44,6 +45,7 @@ const Sidebar = React.memo(
     mailServiceInboundEmail,
     onProjectCreate,
     onProjectUpdate,
+    onProjectMove,
     onBoardCreate,
     onBoardUpdate,
     onBoardMove,
@@ -66,7 +68,11 @@ const Sidebar = React.memo(
     const [sidebarShown, toggleSidebar] = useToggle(true);
     const projectRefs = useRef({});
     const boardRefs = useRef({});
+    const scrollableRef = useRef(null);
     const isFilteringBoards = filterTarget === 'board' && !!filterQuery;
+    const projectsCount = filteredProjects.length;
+
+    const projectsPlaceholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.PROJECT && slot.placeholderIndex >= projectsCount ? slot.height : null));
 
     const handleToggleProjectCollapse = useCallback(
       (project) => {
@@ -75,16 +81,67 @@ const Sidebar = React.memo(
       [onProjectMembershipUpdate],
     );
 
-    const handleDragEnd = useCallback(
-      ({ draggableId, source, destination }) => {
-        if (!destination || source.index === destination.index) {
-          return;
-        }
+    const handleProjectRef = useCallback((projectId, el) => {
+      projectRefs.current[projectId] = el;
+    }, []);
 
-        onBoardMove(draggableId, destination.index);
-      },
-      [onBoardMove],
-    );
+    const handleBoardRef = useCallback((boardId, el) => {
+      boardRefs.current[boardId] = el;
+    }, []);
+
+    useEffect(() => {
+      const cleanup = monitorForElements({
+        canMonitor: ({ source }) => source.data.type === DroppableTypes.PROJECT || source.data.type === DroppableTypes.BOARD,
+        onGenerateDragPreview: dropAnimation.onGenerateDragPreview,
+        onDragStart: (args) => {
+          setSidebarDropSlot(resolveSidebarDropSlot(args.source, args.location));
+          dropAnimation.onDragStart(args);
+        },
+        onDrag: (args) => {
+          setSidebarDropSlot(resolveSidebarDropSlot(args.source, args.location));
+          dropAnimation.onDrag(args);
+        },
+        onDrop: (args) => {
+          const { source, location } = args;
+          const destination = resolveSidebarDropSlot(source, location);
+          setSidebarDropSlot(null);
+
+          if (destination.index !== source.data.index) {
+            if (source.data.type === DroppableTypes.PROJECT) {
+              onProjectMove(source.data.id, destination.index);
+            } else {
+              onBoardMove(source.data.id, destination.index);
+            }
+          }
+
+          dropAnimation.onDrop(args);
+        },
+      });
+
+      return () => {
+        cleanup();
+        setSidebarDropSlot(null);
+      };
+    }, [onProjectMove, onBoardMove]);
+
+    // Auto scroll of the sidebar while dragging projects/boards and the drop target for dropping a project after the last one
+    useEffect(() => {
+      if (!scrollableRef.current) {
+        return undefined;
+      }
+
+      return combine(
+        autoScrollForElements({
+          element: scrollableRef.current,
+          canScroll: ({ source }) => source.data.type === DroppableTypes.PROJECT || source.data.type === DroppableTypes.BOARD,
+        }),
+        dropTargetForElements({
+          element: scrollableRef.current,
+          canDrop: ({ source }) => source.data.type === DroppableTypes.PROJECT,
+          getData: () => ({ type: DroppableTypes.PROJECT, endIndex: projectsCount }),
+        }),
+      );
+    }, [projectsCount]);
 
     const scrollItemIntoView = useCallback((itemRef) => {
       if (itemRef) {
@@ -116,160 +173,40 @@ const Sidebar = React.memo(
       }
     }, [currProjectId, currBoardId, scrollItemIntoView]);
 
-    const projectsNode = filteredProjects.map((project) => {
-      const isProjectManager = managedProjects.some((p) => p.id === project.id);
-      return (
-        <div key={project.id}>
-          {/* eslint-disable-next-line no-return-assign */}
-          <div className={clsx(s.sidebarItemProject, !currBoardId && currProjectId === project.id && s.sidebarItemActive)} ref={(el) => (projectRefs.current[project.id] = el)}>
-            <Button variant={ButtonVariant.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={s.sidebarButton} onClick={() => handleToggleProjectCollapse(project)}>
-              <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.collapseIcon, project.isCollapsed && s.collapseIconCollapsed)} />
-            </Button>
-            <Link to={Paths.PROJECTS.replace(':id', project.id)} className={s.sidebarItemInner}>
-              <Button variant={ButtonVariant.NoBackground} content={project.name} className={clsx(s.sidebarButton, s.sidebarButtonPadding)} />
-            </Link>
-            {project.notificationsTotal > 0 && <span className={s.notification}>{project.notificationsTotal}</span>}
-            <ProjectActionsPopup
-              activities={project.activities}
-              isActivitiesFetching={project.isActivitiesFetching}
-              isAllActivitiesFetched={project.isAllActivitiesFetched}
-              lastActivityId={project.lastActivityId}
-              name={project.name}
-              projectId={project.id}
-              managedProjects={managedProjects}
-              defaultDataRename={pick(project, 'name')}
-              isAdmin={isAdmin}
-              createdAt={project.createdAt}
-              createdBy={project.createdBy}
-              updatedAt={project.updatedAt}
-              updatedBy={project.updatedBy}
-              memberships={project.memberships}
-              templates={boardTemplates}
-              isProjectManager={isProjectManager}
-              onUpdate={(data) => onProjectUpdate(project.id, data)}
-              onBoardCreate={onBoardCreate}
-              onTemplateUpdate={onBoardTemplateUpdate}
-              onTemplateDelete={onBoardTemplateDelete}
-              onActivitiesFetch={() => onActivitiesProjectFetch(project.id)}
-              position="right-start"
-              offset={10}
-              hideCloseButton
-            >
-              <Button variant={ButtonVariant.Icon} title={t('common.editProject', { context: 'title' })} className={clsx(s.sidebarButton, s.hoverButton)}>
-                <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-              </Button>
-            </ProjectActionsPopup>
-          </div>
-          {(!project.isCollapsed || isFilteringBoards || currProjectId === project.id) && (
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <Droppable droppableId="boards" type={DroppableTypes.BOARD} direction="vertical">
-                {({ innerRef, droppableProps, placeholder }) => (
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  <div {...droppableProps} ref={innerRef}>
-                    {project.boards.map((board, index) => (
-                      <Draggable key={board.id} draggableId={board.id} index={index} isDragDisabled={!board.isPersisted || !isProjectManager}>
-                        {/* eslint-disable-next-line no-shadow */}
-                        {({ innerRef, draggableProps, dragHandleProps }) => (
-                          // eslint-disable-next-line react/jsx-props-no-spreading
-                          <div {...draggableProps} ref={innerRef} className={s.boardDraggable}>
-                            {board.isPersisted && (
-                              <div
-                                key={board.id}
-                                className={clsx(s.sidebarItemBoard, currBoardId === board.id && s.sidebarItemActive)}
-                                // eslint-disable-next-line no-return-assign
-                                ref={(el) => (boardRefs.current[board.id] = el)}
-                              >
-                                {isProjectManager && (
-                                  // eslint-disable-next-line react/jsx-props-no-spreading
-                                  <div {...dragHandleProps}>
-                                    <Button variant={ButtonVariant.Icon} title={t('common.reorderBoards')} className={clsx(s.reorderBoardsButton, s.hoverButton)}>
-                                      <Icon type={IconType.MoveUpDown} size={IconSize.Size13} />
-                                    </Button>
-                                  </div>
-                                )}
-                                <Link to={Paths.BOARDS.replace(':id', board.id)} className={clsx(s.sidebarItemInner, !isProjectManager && s.boardCannotManage)}>
-                                  <Button variant={ButtonVariant.NoBackground} content={board.name} className={clsx(s.boardButton, s.sidebarButton)} />
-                                </Link>
-                                {board.isGithubConnected &&
-                                  (isProjectManager ? (
-                                    <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={(data) => onBoardUpdate(board.id, data)} offset={30} position="right-start">
-                                      <Icon
-                                        type={IconType.GitHub}
-                                        size={IconSize.Size13}
-                                        className={clsx(s.github, board.notificationsTotal > 0 && s.githubNotifications)}
-                                        title={t('common.connectedToGithub', { repo: board.githubRepo })}
-                                      />
-                                    </ConnectionsPopup>
-                                  ) : (
-                                    <div>
-                                      <Icon
-                                        type={IconType.GitHub}
-                                        size={IconSize.Size13}
-                                        className={clsx(s.github, board.notificationsTotal > 0 && s.githubNotifications)}
-                                        title={t('common.connectedToGithub', { repo: board.githubRepo })}
-                                      />
-                                    </div>
-                                  ))}
-                                {board.notificationsTotal > 0 && <span className={s.notification}>{board.notificationsTotal}</span>}
-                                <BoardActionsPopup
-                                  activities={board.activities}
-                                  isActivitiesFetching={board.isActivitiesFetching}
-                                  isAllActivitiesFetched={board.isAllActivitiesFetched}
-                                  lastActivityId={board.lastActivityId}
-                                  defaultDataRename={pick(board, 'name')}
-                                  defaultDataGithub={pick(board, ['isGithubConnected', 'githubRepo'])}
-                                  createdAt={board.createdAt}
-                                  createdBy={board.createdBy}
-                                  updatedAt={board.updatedAt}
-                                  updatedBy={board.updatedBy}
-                                  memberships={board.memberships}
-                                  templates={boardTemplates}
-                                  boardName={board.name}
-                                  isAdmin={isAdmin}
-                                  mailTokens={board.mailTokens}
-                                  mailTokenCount={board.mailTokenCount}
-                                  mailServiceAvailable={mailServiceAvailable}
-                                  mailServiceInboundEmail={mailServiceInboundEmail}
-                                  isProjectManager={isProjectManager}
-                                  canEdit={board.canEdit}
-                                  isFetching={board.isFetching}
-                                  boardMembershipId={board.boardMembershipId}
-                                  hideCompletedLists={board.hideCompletedLists}
-                                  onMembershipUpdate={onBoardMembershipUpdate}
-                                  onUpdate={(data) => onBoardUpdate(board.id, data)}
-                                  onExport={(data) => onBoardExport(board.id, data)}
-                                  onFetch={() => onBoardFetch(board.id)}
-                                  onDelete={() => onBoardDelete(board.id)}
-                                  onActivitiesFetch={() => onActivitiesBoardFetch(board.id)}
-                                  onMailTokenCreate={() => onMailTokenCreate(board.id)}
-                                  onMailTokenUpdate={(mailTokenId) => onMailTokenUpdate(mailTokenId, board.id)}
-                                  onMailTokenDelete={(mailTokenId) => onMailTokenDelete(mailTokenId)}
-                                  onTemplateCreate={(data) => onBoardTemplateCreate(board.id, data)}
-                                  onTemplateUpdate={onBoardTemplateUpdate}
-                                  onTemplateDelete={onBoardTemplateDelete}
-                                  position="right-start"
-                                  offset={10}
-                                  hideCloseButton
-                                >
-                                  <Button variant={ButtonVariant.Icon} title={t('common.editBoard', { context: 'title' })} className={s.hoverButton}>
-                                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                                  </Button>
-                                </BoardActionsPopup>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          )}
-        </div>
-      );
-    });
+    const projectsNode = filteredProjects.map((project, index) => (
+      <SidebarProject
+        key={project.id}
+        project={project}
+        index={index}
+        currProjectId={currProjectId}
+        currBoardId={currBoardId}
+        managedProjects={managedProjects}
+        boardTemplates={boardTemplates}
+        isAdmin={isAdmin}
+        isProjectManager={managedProjects.some((p) => p.id === project.id)}
+        isFilteringBoards={isFilteringBoards}
+        mailServiceAvailable={mailServiceAvailable}
+        mailServiceInboundEmail={mailServiceInboundEmail}
+        onProjectRef={handleProjectRef}
+        onBoardRef={handleBoardRef}
+        onProjectUpdate={onProjectUpdate}
+        onProjectMembershipUpdate={onProjectMembershipUpdate}
+        onBoardCreate={onBoardCreate}
+        onBoardUpdate={onBoardUpdate}
+        onBoardDelete={onBoardDelete}
+        onBoardExport={onBoardExport}
+        onBoardFetch={onBoardFetch}
+        onBoardMembershipUpdate={onBoardMembershipUpdate}
+        onBoardTemplateCreate={onBoardTemplateCreate}
+        onBoardTemplateUpdate={onBoardTemplateUpdate}
+        onBoardTemplateDelete={onBoardTemplateDelete}
+        onActivitiesProjectFetch={onActivitiesProjectFetch}
+        onActivitiesBoardFetch={onActivitiesBoardFetch}
+        onMailTokenCreate={onMailTokenCreate}
+        onMailTokenUpdate={onMailTokenUpdate}
+        onMailTokenDelete={onMailTokenDelete}
+      />
+    ));
 
     return (
       <div className={s.wrapper}>
@@ -282,7 +219,7 @@ const Sidebar = React.memo(
               <Filter defaultValue="" projects={projects} filteredProjects={filteredProjects} path={path} onChangeFilterQuery={onChangeFilterQuery} onFilterQueryClear={handleFilterQueryClear} />
             )}
           </div>
-          <div className={clsx(s.scrollable, gs.scrollableY)}>
+          <div ref={scrollableRef} className={clsx(s.scrollable, gs.scrollableY)}>
             {settingsOnly && (
               <div>
                 <div className={s.sidebarTitle}>
@@ -357,7 +294,12 @@ const Sidebar = React.memo(
                 </div>
               </div>
             )}
-            {!settingsOnly && <div>{projectsNode}</div>}
+            {!settingsOnly && (
+              <>
+                {projectsNode}
+                {projectsPlaceholderHeight !== null && <div style={{ height: projectsPlaceholderHeight }} />}
+              </>
+            )}
           </div>
           <div>
             {!settingsOnly && canAddProject && (
@@ -425,6 +367,7 @@ Sidebar.propTypes = {
   mailServiceInboundEmail: PropTypes.string.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
+  onProjectMove: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
   onBoardMove: PropTypes.func.isRequired,

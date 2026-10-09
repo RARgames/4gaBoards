@@ -111,6 +111,7 @@ const Board = React.memo(({ id, listIds, isCardModalOpened, canEdit, defaultView
   useEffect(
     () =>
       monitorForElements({
+        canMonitor: ({ source }) => source.data.type !== DroppableTypes.PROJECT && source.data.type !== DroppableTypes.BOARD, // Sidebar projects/boards have their own drop animation handling
         onGenerateDragPreview: dropAnimation.onGenerateDragPreview,
         onDragStart: dropAnimation.onDragStart,
         onDrag: dropAnimation.onDrag,

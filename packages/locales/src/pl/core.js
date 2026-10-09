@@ -227,7 +227,7 @@ export default {
       devops: 'DevOps',
       disabled: 'Wyłączono',
       docs: 'Dokumentacja',
-      done: 'Zrobione',
+      done: 'Zakończone',
       dropFileToUpload: 'Upuść pliki aby wgrać',
       dueDate_title: 'Termin',
       dueDateSummary: 'Najbliższy termin nieukończonego zadania:',

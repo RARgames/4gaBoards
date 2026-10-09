@@ -5,6 +5,8 @@ import Config from '../constants/Config';
 import { SsoTypes } from '../constants/Enums';
 import orm from '../orm';
 import getMeta from '../utils/get-meta';
+import { filterSidebarBoards, filterSidebarProjects } from '../utils/sidebar-filter';
+import { selectCurrentUserId } from './users';
 
 export const selectAccessToken = ({ auth: { accessToken } }) => accessToken;
 
@@ -70,28 +72,70 @@ const nextPosition = (items, index, excludedId) => {
   return prevPosition + (nextItem.position - prevPosition) / 2;
 };
 
+// Maps an index within the visible list
+const toFullListIndex = (items, visibleItems, index, excludedId) => {
+  const rest = items.filter((item) => item.id !== excludedId);
+  const visibleRest = visibleItems.filter((item) => item.id !== excludedId);
+
+  if (visibleRest.length === 0) return index;
+  if (index < visibleRest.length) {
+    return rest.findIndex((item) => item.id === visibleRest[index].id);
+  }
+  return rest.findIndex((item) => item.id === visibleRest[visibleRest.length - 1].id) + 1;
+};
+
 export const selectNextProjectPosition = createSelector(
   orm,
+  (state) => selectCurrentUserId(state),
   (_, index) => index,
   (_, __, excludedId) => excludedId,
-  ({ Project }, index, excludedId) => {
-    return nextPosition(Project.all().orderBy('position').toRefArray(), index, excludedId);
+  ({ Project, User }, userId, index, excludedId) => {
+    const projects = Project.all().orderBy('position').toRefArray();
+    const userModel = isUndefined(index) ? undefined : User.withId(userId);
+
+    if (!userModel) {
+      return nextPosition(projects, index, excludedId);
+    }
+
+    const visibleProjects = filterSidebarProjects(
+      userModel.getOrderedAvailableProjectsModelArray().map((projectModel) => ({
+        id: projectModel.id,
+        name: projectModel.name,
+        boards: projectModel.getOrderedBoardsModelArrayAvailableForUser(userId).map((boardModel) => ({ id: boardModel.id, name: boardModel.name })),
+      })),
+      userModel.filter,
+    );
+
+    return nextPosition(projects, toFullListIndex(projects, visibleProjects, index, excludedId), excludedId);
   },
 );
 
 export const selectNextBoardPosition = createSelector(
   orm,
+  (state) => selectCurrentUserId(state),
   (_, projectId) => projectId,
   (_, __, index) => index,
   (_, __, ___, excludedId) => excludedId,
-  ({ Project }, projectId, index, excludedId) => {
+  ({ Project, User }, userId, projectId, index, excludedId) => {
     const projectModel = Project.withId(projectId);
 
     if (!projectModel) {
       return projectModel;
     }
 
-    return nextPosition(projectModel.getOrderedBoardsQuerySet().toRefArray(), index, excludedId);
+    const boards = projectModel.getOrderedBoardsQuerySet().toRefArray();
+    const userModel = isUndefined(index) ? undefined : User.withId(userId);
+
+    if (!userModel) {
+      return nextPosition(boards, index, excludedId);
+    }
+
+    const visibleBoards = filterSidebarBoards(
+      projectModel.getOrderedBoardsModelArrayAvailableForUser(userId).map((boardModel) => ({ id: boardModel.id, name: boardModel.name })),
+      userModel.filter,
+    );
+
+    return nextPosition(boards, toFullListIndex(boards, visibleBoards, index, excludedId), excludedId);
   },
 );
 
