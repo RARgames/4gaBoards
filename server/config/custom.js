@@ -10,6 +10,7 @@
 
 const path = require('path');
 const sails = require('sails');
+const oidcPkceEnabled = process.env.OIDC_ENABLE_PKCE === 'true';
 
 module.exports.custom = {
   baseUrl: process.env.BASE_URL,
@@ -50,7 +51,7 @@ module.exports.custom = {
     google: !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET,
     github: !!process.env.GITHUB_CLIENT_ID && !!process.env.GITHUB_CLIENT_SECRET,
     microsoft: !!process.env.MICROSOFT_CLIENT_ID && !!process.env.MICROSOFT_CLIENT_SECRET,
-    oidc: !!process.env.OIDC_CLIENT_ID && !!process.env.OIDC_CLIENT_SECRET && !!process.env.OIDC_AUTH_URL && !!process.env.OIDC_TOKEN_URL && !!process.env.OIDC_USERINFO_URL && !!process.env.OIDC_STATE_SECRET,
+    oidc: !!process.env.OIDC_CLIENT_ID && (oidcPkceEnabled || !!process.env.OIDC_CLIENT_SECRET) && !!process.env.OIDC_AUTH_URL && !!process.env.OIDC_TOKEN_URL && !!process.env.OIDC_USERINFO_URL && !!process.env.OIDC_STATE_SECRET,
   },
 
   oidcEnabledMethods: (process.env.OIDC_ENABLED_METHODS || '')
