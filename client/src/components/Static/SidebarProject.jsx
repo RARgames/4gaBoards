@@ -55,6 +55,7 @@ const SidebarProject = React.memo(
     const [t] = useTranslation();
     const wrapperRef = useRef(null);
     const projectRef = useRef(null);
+    const boardsRef = useRef(null);
     const headerRef = useRef(null);
     const handleRef = useRef(null);
     const projectRefsCurrent = projectRefs.current;
@@ -69,6 +70,7 @@ const SidebarProject = React.memo(
       // DnD: only the handle starts the drag, and the whole project is a drop target (drop above/below it)
       const wrapper = wrapperRef.current;
       const projectElement = projectRef.current;
+      const boardsElement = boardsRef.current;
       const header = headerRef.current;
 
       if (!wrapper || !projectElement || !header) {
@@ -77,7 +79,7 @@ const SidebarProject = React.memo(
 
       const data = { type: DroppableTypes.PROJECT, id, index };
 
-      return combine(
+      const cleanups = [
         draggable({
           element: wrapper,
           dragHandle: handleRef.current || undefined,
@@ -97,8 +99,21 @@ const SidebarProject = React.memo(
               allowedEdges: ['top', 'bottom'],
             }),
         }),
-      );
-    }, [id, index, key]);
+      ];
+
+      // Keep stable drop target at the bottom of the boards list to avoid placeholder flicker when drag below last board
+      if (boardsElement) {
+        cleanups.push(
+          dropTargetForElements({
+            element: boardsElement,
+            canDrop: ({ source }) => source.data.type === DroppableTypes.BOARD && source.data.parentId === id,
+            getData: () => ({ type: DroppableTypes.BOARD, parentId: id, endIndex: project.boards.length }),
+          }),
+        );
+      }
+
+      return combine(...cleanups);
+    }, [id, index, key, project.boards.length]);
 
     useDropAnimation(projectRef, key);
 
@@ -161,7 +176,7 @@ const SidebarProject = React.memo(
             </ProjectActionsPopup>
           </div>
           {(!project.isCollapsed || isFilteringBoards || currProjectId === id) && (
-            <div>
+            <div ref={boardsRef}>
               {project.boards.map((board, boardIndex) => (
                 <SidebarBoard
                   key={board.id}
