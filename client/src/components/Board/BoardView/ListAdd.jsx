@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useForm } from '../../hooks';
-import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../Utils';
+import { useForm } from '../../../hooks';
+import { useDidUpdate, useToggle } from '../../../lib/hooks';
+import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../../Utils';
 
-import * as gs from '../../global.module.scss';
+import * as gs from '../../../global.module.scss';
 import * as s from './ListAdd.module.scss';
 
 const DEFAULT_DATA = {

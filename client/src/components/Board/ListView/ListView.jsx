@@ -425,92 +425,94 @@ const ListView = React.memo(
     table.setOptions((prev) => ({ ...prev, onSortingChange: handleSortingChange, columns }));
 
     return (
-      <Table.Container>
-        <Table.Wrapper isPaginated className={clsx(s.wrapper, gs.scrollableX)}>
-          <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
-            <Table.Header style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <Table.HeaderRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    const sortedState = header.column.getIsSorted();
-                    const sortIndex = sorting.length > 1 ? sorting.findIndex((so) => so.id === header.column.id) + 1 : null;
+      <div className={s.listViewWrapper}>
+        <Table.Container>
+          <Table.Wrapper isPaginated className={clsx(s.wrapper, gs.scrollableX)}>
+            <Table ref={tableRef} style={{ width: `${table.getCenterTotalSize()}px` }}>
+              <Table.Header style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <Table.HeaderRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      const sortedState = header.column.getIsSorted();
+                      const sortIndex = sorting.length > 1 ? sorting.findIndex((so) => so.id === header.column.id) + 1 : null;
 
-                    return (
-                      <Table.HeaderCell
-                        key={header.id}
-                        style={{ width: `${header.getSize()}px` }}
-                        colSpan={header.colSpan}
-                        onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
-                        className={clsx(header.column.getCanSort() && gs.cursorPointer)}
-                        title={header.column.columnDef.meta?.headerTitle}
-                        aria-label={header.column.columnDef.meta?.headerAriaLabel}
-                        isCentered
-                      >
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        <Table.SortingIndicator sortedState={sortedState} sortIndex={sortIndex} />
-                        {header.column.getCanResize() && <Table.Resizer data-prevent-sorting onMouseDown={(e) => handleResizerMouseDown(e, header)} title={t('common.resizeColumn')} />}
-                      </Table.HeaderCell>
-                    );
-                  })}
-                </Table.HeaderRow>
-              ))}
-            </Table.Header>
-            <Table.Body ref={tableBodyRef} className={gs.scrollableY} style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
-              {table.getRowModel().rows.map((row) => (
-                <Table.Row
-                  // eslint-disable-next-line no-return-assign
-                  ref={(el) => (rowRefs.current[row.original.id] = el)}
-                  key={row.id}
-                  selected={row.original.id === currentCardId}
-                  onClick={(e) => {
-                    if (!row.original.isPersisted) return;
-                    handleClick(e, row.original.id);
-                  }}
-                  className={clsx(canEdit && gs.cursorPointer)}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} data-prevent-card-switch-end>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </Table.Cell>
-                  ))}
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-        </Table.Wrapper>
-        <Table.Pagination
-          table={table}
-          itemsPerPage={listViewItemsPerPage}
-          rowsCount={filteredCards.length}
-          fitScreen={listViewFitScreen}
-          userPrefsKeys={{
-            itemsPerPage: 'listViewItemsPerPage',
-            columnVisibility: 'listViewColumnVisibility',
-            fitScreen: 'listViewFitScreen',
-          }}
-          onResetColumnSorting={handleResetColumnSortingClick}
-          onResetColumnWidths={handleResetColumnWidthsClick}
-          onResetColumnVisibility={handleResetColumnVisibilityClick}
-          onUserPrefsUpdate={onUserPrefsUpdate}
-        >
-          {canEdit && (
-            <div className={s.paginationButtonsWrapper}>
-              <ListAddPopup onCreate={onListCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
-                <Button variant={ButtonVariant.DefaultBorder} title={t('common.addList', { context: 'title' })} className={s.paginationButton}>
-                  <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
-                  <span className={s.paginationButtonText}>{t('common.addList', { context: 'title' })}</span>
-                </Button>
-              </ListAddPopup>
-              <CardAddPopup lists={lists} labelIds={labelIds} memberIds={memberIds} onCreate={onCardCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
-                <Button variant={ButtonVariant.DefaultBorder} title={t('common.addCard', { context: 'title' })} className={s.paginationButton}>
-                  <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
-                  <span className={s.paginationButtonText}>{t('common.addCard', { context: 'title' })}</span>
-                </Button>
-              </CardAddPopup>
-            </div>
-          )}
-        </Table.Pagination>
-      </Table.Container>
+                      return (
+                        <Table.HeaderCell
+                          key={header.id}
+                          style={{ width: `${header.getSize()}px` }}
+                          colSpan={header.colSpan}
+                          onClick={(e) => handleSortingChange(e, header.column.getCanSort(), { id: header.column.id, desc: sortedState === 'asc' })}
+                          className={clsx(header.column.getCanSort() && gs.cursorPointer)}
+                          title={header.column.columnDef.meta?.headerTitle}
+                          aria-label={header.column.columnDef.meta?.headerAriaLabel}
+                          isCentered
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          <Table.SortingIndicator sortedState={sortedState} sortIndex={sortIndex} />
+                          {header.column.getCanResize() && <Table.Resizer data-prevent-sorting onMouseDown={(e) => handleResizerMouseDown(e, header)} title={t('common.resizeColumn')} />}
+                        </Table.HeaderCell>
+                      );
+                    })}
+                  </Table.HeaderRow>
+                ))}
+              </Table.Header>
+              <Table.Body ref={tableBodyRef} className={gs.scrollableY} style={listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
+                {table.getRowModel().rows.map((row) => (
+                  <Table.Row
+                    // eslint-disable-next-line no-return-assign
+                    ref={(el) => (rowRefs.current[row.original.id] = el)}
+                    key={row.id}
+                    selected={row.original.id === currentCardId}
+                    onClick={(e) => {
+                      if (!row.original.isPersisted) return;
+                      handleClick(e, row.original.id);
+                    }}
+                    className={clsx(canEdit && gs.cursorPointer)}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }} data-prevent-card-switch-end>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </Table.Cell>
+                    ))}
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </Table.Wrapper>
+          <Table.Pagination
+            table={table}
+            itemsPerPage={listViewItemsPerPage}
+            rowsCount={filteredCards.length}
+            fitScreen={listViewFitScreen}
+            userPrefsKeys={{
+              itemsPerPage: 'listViewItemsPerPage',
+              columnVisibility: 'listViewColumnVisibility',
+              fitScreen: 'listViewFitScreen',
+            }}
+            onResetColumnSorting={handleResetColumnSortingClick}
+            onResetColumnWidths={handleResetColumnWidthsClick}
+            onResetColumnVisibility={handleResetColumnVisibilityClick}
+            onUserPrefsUpdate={onUserPrefsUpdate}
+          >
+            {canEdit && (
+              <div className={s.paginationButtonsWrapper}>
+                <ListAddPopup onCreate={onListCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
+                  <Button variant={ButtonVariant.DefaultBorder} title={t('common.addList', { context: 'title' })} className={s.paginationButton}>
+                    <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
+                    <span className={s.paginationButtonText}>{t('common.addList', { context: 'title' })}</span>
+                  </Button>
+                </ListAddPopup>
+                <CardAddPopup lists={lists} labelIds={labelIds} memberIds={memberIds} onCreate={onCardCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
+                  <Button variant={ButtonVariant.DefaultBorder} title={t('common.addCard', { context: 'title' })} className={s.paginationButton}>
+                    <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
+                    <span className={s.paginationButtonText}>{t('common.addCard', { context: 'title' })}</span>
+                  </Button>
+                </CardAddPopup>
+              </div>
+            )}
+          </Table.Pagination>
+        </Table.Container>
+      </div>
     );
   },
 );
