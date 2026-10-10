@@ -132,45 +132,48 @@ const Tasks = React.forwardRef(
     );
 
     const completedItems = items.filter((item) => item.isCompleted);
+    const isScrollLimited = variant !== VARIANTS.CARDMODAL;
 
     const tasksNode = (
       <div ref={tasksRef} onMouseEnter={onMouseEnterTasks} onMouseLeave={onMouseLeaveTasks} data-prevent-card-switch>
-        {items.map((item, index) => (
-          <Task
-            cardId={cardId}
-            cardName={cardName}
-            variant={variant}
-            key={item.id}
-            id={item.id}
-            index={index}
-            name={item.name}
-            dueDate={item.dueDate}
-            completedAt={item.completedAt}
-            showFullDueDates={showFullDueDates}
-            allBoardMemberships={allBoardMemberships}
-            boardMemberships={boardMemberships}
-            users={item.users}
-            activities={item.activities}
-            isActivitiesFetching={item.isActivitiesFetching}
-            isAllActivitiesFetched={item.isAllActivitiesFetched}
-            lastActivityId={item.lastActivityId}
-            isCompleted={item.isCompleted}
-            isPersisted={item.isPersisted}
-            canEdit={canEdit}
-            createdAt={item.createdAt}
-            createdBy={item.createdBy}
-            updatedAt={item.updatedAt}
-            updatedBy={item.updatedBy}
-            onUpdate={(data) => handleUpdate(item.id, data)}
-            onDuplicate={() => onDuplicate(item.id)}
-            onDelete={() => handleDelete(item.id)}
-            onUserAdd={(userId) => handleUserAdd(item.id, userId)}
-            onUserRemove={(userId) => handleUserRemove(item.id, userId)}
-            onUserEmailLookup={onUserEmailLookup}
-            onActivitiesFetch={() => onActivitiesFetch(item.id)}
-          />
-        ))}
-        {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
+        <div className={clsx(isScrollLimited && s.tasksScrollable)}>
+          {items.map((item, index) => (
+            <Task
+              cardId={cardId}
+              cardName={cardName}
+              variant={variant}
+              key={item.id}
+              id={item.id}
+              index={index}
+              name={item.name}
+              dueDate={item.dueDate}
+              completedAt={item.completedAt}
+              showFullDueDates={showFullDueDates}
+              allBoardMemberships={allBoardMemberships}
+              boardMemberships={boardMemberships}
+              users={item.users}
+              activities={item.activities}
+              isActivitiesFetching={item.isActivitiesFetching}
+              isAllActivitiesFetched={item.isAllActivitiesFetched}
+              lastActivityId={item.lastActivityId}
+              isCompleted={item.isCompleted}
+              isPersisted={item.isPersisted}
+              canEdit={canEdit}
+              createdAt={item.createdAt}
+              createdBy={item.createdBy}
+              updatedAt={item.updatedAt}
+              updatedBy={item.updatedBy}
+              onUpdate={(data) => handleUpdate(item.id, data)}
+              onDuplicate={() => onDuplicate(item.id)}
+              onDelete={() => handleDelete(item.id)}
+              onUserAdd={(userId) => handleUserAdd(item.id, userId)}
+              onUserRemove={(userId) => handleUserRemove(item.id, userId)}
+              onUserEmailLookup={onUserEmailLookup}
+              onActivitiesFetch={() => onActivitiesFetch(item.id)}
+            />
+          ))}
+          {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
+        </div>
         {canEdit && (
           <TaskAdd ref={taskAddRef} onCreate={onCreate}>
             <Button

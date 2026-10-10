@@ -8,6 +8,12 @@
     width: 100%;
   }
 
+  .tasksScrollable {
+    max-height: 200px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
   .progressWrapper {
     display: flex;
     line-height: 0;
