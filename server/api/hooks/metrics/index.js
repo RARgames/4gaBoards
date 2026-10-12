@@ -1,6 +1,6 @@
+const client = require('@prometheus-io/client');
 const cookie = require('cookie');
 const http = require('http');
-const client = require('prom-client');
 
 const METRICS_PORT = 1338;
 
