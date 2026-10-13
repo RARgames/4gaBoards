@@ -28,7 +28,7 @@ const ActionsStep = React.memo(({ table, fitScreen, userPrefsKeys, onResetColumn
     setTimeout(() => {
       onResetColumnWidths(false, fitScreen);
       onUserPrefsUpdate({
-        [userPrefsKeys.columnVisibility]: table.getState().columnVisibility,
+        [userPrefsKeys.columnVisibility]: table.store.state.columnVisibility,
       });
     }, 0);
     onClose();

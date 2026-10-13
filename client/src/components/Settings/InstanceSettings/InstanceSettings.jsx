@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
+import { useTable, tableFeatures, columnSizingFeature, columnVisibilityFeature, flexRender } from '@tanstack/react-table';
 import clsx from 'clsx';
 import uniq from 'lodash/uniq';
 import PropTypes from 'prop-types';
@@ -12,6 +12,11 @@ import { Button, ButtonVariant, Icon, IconType, IconSize, Table } from '../../Ut
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './InstanceSettings.module.scss';
+
+const features = tableFeatures({
+  columnSizingFeature,
+  columnVisibilityFeature,
+});
 
 const InstanceSettings = React.memo(
   ({
@@ -213,10 +218,10 @@ const InstanceSettings = React.memo(
       ],
     );
 
-    const table = useReactTable({
+    const table = useTable({
+      features,
       data,
       columns: [],
-      getCoreRowModel: getCoreRowModel(),
       style: Table.Style.Default,
     });
 

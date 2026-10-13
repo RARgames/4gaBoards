@@ -2,7 +2,17 @@ import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityScopes } from '@4gaboards/enums';
 import locales from '@4gaboards/locales';
-import { useReactTable, getCoreRowModel, getGroupedRowModel, getExpandedRowModel, flexRender } from '@tanstack/react-table';
+import {
+  useTable,
+  tableFeatures,
+  flexRender,
+  columnGroupingFeature,
+  rowExpandingFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
+  createGroupedRowModel,
+  createExpandedRowModel,
+} from '@tanstack/react-table';
 import clsx from 'clsx';
 import uniq from 'lodash/uniq';
 import PropTypes from 'prop-types';
@@ -17,6 +27,15 @@ import ThemeShapeSelector from './ThemeShapeSelector';
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettings.module.scss';
+
+const features = tableFeatures({
+  columnGroupingFeature,
+  rowExpandingFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
+  groupedRowModel: createGroupedRowModel(),
+  expandedRowModel: createExpandedRowModel(),
+});
 
 const PreferencesSettings = React.memo(
   ({
@@ -728,16 +747,14 @@ const PreferencesSettings = React.memo(
       ],
     );
 
-    const table = useReactTable({
+    const table = useTable({
+      features,
       data,
       columns: [],
       initialState: {
         grouping: ['preferences'],
         expanded: true,
       },
-      getCoreRowModel: getCoreRowModel(),
-      getGroupedRowModel: getGroupedRowModel(),
-      getExpandedRowModel: getExpandedRowModel(),
       style: Table.Style.Default,
     });
 

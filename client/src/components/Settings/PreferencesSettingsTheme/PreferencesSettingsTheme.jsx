@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from '@tanstack/react-table';
+import { useTable, tableFeatures, rowSortingFeature, columnSizingFeature, columnVisibilityFeature, createSortedRowModel, sortFns, flexRender } from '@tanstack/react-table';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -11,6 +11,14 @@ import { Button, ButtonVariant, Dropdown, Table } from '../../Utils';
 import * as gs from '../../../global.module.scss';
 import * as sShared from '../SettingsShared.module.scss';
 import * as s from './PreferencesSettingsTheme.module.scss';
+
+const features = tableFeatures({
+  rowSortingFeature,
+  columnSizingFeature,
+  columnVisibilityFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns,
+});
 
 const PreferencesSettingsTheme = React.memo(({ themeCustomColors, onUpdate }) => {
   const [t] = useTranslation();
@@ -108,11 +116,10 @@ const PreferencesSettingsTheme = React.memo(({ themeCustomColors, onUpdate }) =>
     [effectiveTheme],
   );
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns: [],
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     state: { sorting },
     style: Table.Style.Default,
   });

@@ -11,7 +11,7 @@ import * as s from './ColumnSelectPopup.module.scss';
 
 const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColumns, onResetColumnWidths, onResetColumnVisibility, onUserPrefsUpdate, onBack }) => {
   const [t] = useTranslation();
-  const [visibilityState, setVisibilityState] = useState(table.getState().columnVisibility);
+  const [visibilityState, setVisibilityState] = useState(table.store.state.columnVisibility);
 
   const handleColumnToggleVisibilityClick = useCallback(
     (column) => {
@@ -29,7 +29,7 @@ const ColumnSelectStep = React.memo(({ table, fitScreen, userPrefsKeys, skipColu
   const handleSelectDefaultClick = useCallback(() => {
     onResetColumnVisibility();
     setTimeout(() => {
-      setVisibilityState(table.getState().columnVisibility);
+      setVisibilityState(table.store.state.columnVisibility);
     }, 0);
   }, [onResetColumnVisibility, table]);
 

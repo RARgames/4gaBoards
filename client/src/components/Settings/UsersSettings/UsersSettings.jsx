@@ -1,6 +1,18 @@
 import React, { useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
+import {
+  useTable,
+  tableFeatures,
+  rowSortingFeature,
+  rowPaginationFeature,
+  columnVisibilityFeature,
+  columnSizingFeature,
+  columnResizingFeature,
+  createSortedRowModel,
+  createPaginatedRowModel,
+  sortFns,
+  flexRender,
+} from '@tanstack/react-table';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -31,6 +43,17 @@ const DEFAULT_COLUMN_VISIBILITY = {
   updatedBy: false,
   actions: true,
 };
+
+const features = tableFeatures({
+  rowSortingFeature,
+  rowPaginationFeature,
+  columnVisibilityFeature,
+  columnSizingFeature,
+  columnResizingFeature,
+  sortedRowModel: createSortedRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  sortFns,
+});
 
 const UsersSettings = React.memo(
   ({
@@ -108,13 +131,11 @@ const UsersSettings = React.memo(
       [onUpdate],
     );
 
-    const table = useReactTable({
+    const table = useTable({
+      features,
       autoResetPageIndex: false,
       data: items,
       columns: [],
-      getCoreRowModel: getCoreRowModel(),
-      getSortedRowModel: getSortedRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
       enableMultiSort: true,
       columnResizeMode: 'onChange',
       state: { sorting, columnVisibility, pagination },
@@ -124,7 +145,7 @@ const UsersSettings = React.memo(
     });
 
     const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
-    const sortingFunctions = Table.HooksSorting(table);
+    const sortFunctions = Table.HooksSorting(table);
 
     const resetColumnsWidths = useCallback(() => {
       handleResetColumnWidthsClick(false, usersSettingsFitScreen);
@@ -164,7 +185,7 @@ const UsersSettings = React.memo(
           header: t('common.name'),
           cell: NameCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.name') },
         },
         {
@@ -173,7 +194,7 @@ const UsersSettings = React.memo(
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.username') },
           cellProps: { showEmpty: true, cellClassNameInner: s.cell },
         },
@@ -196,7 +217,7 @@ const UsersSettings = React.memo(
           header: t('common.email'),
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.email') },
           cellProps: { cellClassNameInner: s.cell },
         },
@@ -214,7 +235,7 @@ const UsersSettings = React.memo(
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.ssoGoogleEmail') },
           cellProps: { showEmpty: true, cellClassNameInner: s.cell },
         },
@@ -224,7 +245,7 @@ const UsersSettings = React.memo(
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.ssoGithubUsername') },
           cellProps: { showEmpty: true, cellClassNameInner: s.cell },
         },
@@ -234,7 +255,7 @@ const UsersSettings = React.memo(
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.ssoGithubEmail') },
           cellProps: { showEmpty: true, cellClassNameInner: s.cell },
         },
@@ -244,7 +265,7 @@ const UsersSettings = React.memo(
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.ssoMicrosoftEmail') },
           cellProps: { showEmpty: true, cellClassNameInner: s.cell },
         },
@@ -254,7 +275,7 @@ const UsersSettings = React.memo(
           cell: Table.Renderers.DefaultCellRenderer,
           enableSorting: true,
           sortUndefined: 'last',
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.ssoOidcEmail') },
           cellProps: { showEmpty: true, cellClassNameInner: s.cell },
         },
@@ -281,7 +302,7 @@ const UsersSettings = React.memo(
           header: t('common.createdBy'),
           cell: Table.Renderers.UserCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          sortFn: sortFunctions.recursiveNameSortingFn,
           meta: { headerTitle: t('common.createdBy') },
         },
         {
@@ -298,7 +319,7 @@ const UsersSettings = React.memo(
           header: t('common.updatedBy'),
           cell: Table.Renderers.UserCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          sortFn: sortFunctions.recursiveNameSortingFn,
           meta: { headerTitle: t('common.updatedBy') },
         },
         {
@@ -322,18 +343,7 @@ const UsersSettings = React.memo(
         },
       ],
 
-      [
-        currentUserId,
-        demoMode,
-        handleIsAdminChange,
-        handleResetColumnSortingClick,
-        handleResetColumnVisibilityClick,
-        handleResetColumnWidthsClick,
-        onUserPrefsUpdate,
-        sortingFunctions,
-        t,
-        usersSettingsFitScreen,
-      ],
+      [currentUserId, demoMode, handleIsAdminChange, handleResetColumnSortingClick, handleResetColumnVisibilityClick, handleResetColumnWidthsClick, onUserPrefsUpdate, sortFunctions, t, usersSettingsFitScreen],
     );
 
     const { handleSortingChange } = Table.HooksPost(columns, setSorting);
@@ -405,7 +415,7 @@ const UsersSettings = React.memo(
             userPrefsKeys={{
               itemsPerPage: 'usersSettingsItemsPerPage',
               columnVisibility: 'usersSettingsColumnVisibility',
-              fitScreen: 'userSettingsFitScreen',
+              fitScreen: 'usersSettingsFitScreen',
             }}
             onResetColumnSorting={handleResetColumnSortingClick}
             onResetColumnWidths={handleResetColumnWidthsClick}

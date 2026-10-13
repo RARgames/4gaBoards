@@ -1,7 +1,19 @@
 import React, { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
+import {
+  useTable,
+  tableFeatures,
+  flexRender,
+  rowSortingFeature,
+  rowPaginationFeature,
+  columnVisibilityFeature,
+  columnSizingFeature,
+  columnResizingFeature,
+  createSortedRowModel,
+  createPaginatedRowModel,
+  sortFns,
+} from '@tanstack/react-table';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -36,6 +48,17 @@ const DEFAULT_COLUMN_VISIBILITY = {
   description: false,
   actions: true,
 };
+
+const features = tableFeatures({
+  rowSortingFeature,
+  rowPaginationFeature,
+  columnVisibilityFeature,
+  columnSizingFeature,
+  columnResizingFeature,
+  sortedRowModel: createSortedRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  sortFns,
+});
 
 const ListView = React.memo(
   ({
@@ -138,13 +161,11 @@ const ListView = React.memo(
       [currentCardIndex, setPagination],
     );
 
-    const table = useReactTable({
-      autoResetPageIndex: false,
+    const table = useTable({
+      features,
       data: filteredCards,
+      autoResetPageIndex: false,
       columns: [],
-      getCoreRowModel: getCoreRowModel(),
-      getSortedRowModel: getSortedRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
       enableMultiSort: true,
       columnResizeMode: 'onChange',
       state: { sorting, columnVisibility, pagination },
@@ -154,7 +175,7 @@ const ListView = React.memo(
     });
 
     const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
-    const sortingFunctions = Table.HooksSorting(table);
+    const sortFunctions = Table.HooksSorting(table);
 
     const resetColumnsWidths = useCallback(() => {
       handleResetColumnWidthsClick(false, listViewFitScreen);
@@ -198,7 +219,7 @@ const ListView = React.memo(
       const haveCardsChanged = prevCardIds.length !== currentCardIds.length || prevCardIds.some((id, index) => id !== currentCardIds[index]);
 
       if (haveCardsChanged) {
-        const { pageSize } = table.getState().pagination;
+        const { pageSize } = table.store.state.pagination;
         const pageIndex = Math.floor(currentCardIndex / pageSize);
         setPagination((prev) => ({ ...prev, pageIndex: pageIndex === -1 ? 0 : pageIndex }));
         scrollCardIntoView();
@@ -245,7 +266,7 @@ const ListView = React.memo(
           header: t('common.name'),
           cell: NameCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.name') },
           cellProps: { onSetNameCellFns: setNameCellFns },
         },
@@ -254,7 +275,7 @@ const ListView = React.memo(
           header: t('common.labels'),
           cell: LabelsCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          sortFn: sortFunctions.recursiveNameSortFn,
           meta: { headerTitle: t('common.labels') },
         },
         {
@@ -262,7 +283,7 @@ const ListView = React.memo(
           header: t('common.members'),
           cell: MembersCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          sortFn: sortFunctions.recursiveNameSortFn,
           meta: {
             headerTitle: t('common.members'),
             getCellWidthWithArrayLength: (length) => length * 27,
@@ -273,7 +294,7 @@ const ListView = React.memo(
           header: t('common.list'),
           cell: ListNameCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.localeSortingFn,
+          sortFn: sortFunctions.localeSortFn,
           meta: { headerTitle: t('common.list') },
         },
         {
@@ -328,7 +349,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortUndefined: 'last',
           sortDescFirst: true,
-          sortingFn: sortingFunctions.timerSortingFn,
+          sortFn: sortFunctions.timerSortFn,
           meta: { headerTitle: t('common.timer') },
         },
         {
@@ -337,7 +358,7 @@ const ListView = React.memo(
           cell: TasksCellRenderer,
           enableSorting: true,
           sortDescFirst: true,
-          sortingFn: sortingFunctions.lengthSortingFn,
+          sortFn: sortFunctions.lengthSortFn,
           meta: { headerTitle: t('common.tasks') },
         },
         {
@@ -353,7 +374,7 @@ const ListView = React.memo(
           header: t('common.createdBy'),
           cell: Table.Renderers.UserCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          sortFn: sortFunctions.recursiveNameSortFn,
           meta: { headerTitle: t('common.createdBy') },
           cellProps: { getIsMember: (id) => allBoardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
         },
@@ -371,7 +392,7 @@ const ListView = React.memo(
           header: t('common.updatedBy'),
           cell: Table.Renderers.UserCellRenderer,
           enableSorting: true,
-          sortingFn: sortingFunctions.recursiveNameSortingFn,
+          sortFn: sortFunctions.recursiveNameSortFn,
           meta: { headerTitle: t('common.updatedBy') },
           cellProps: { getIsMember: (id) => allBoardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
         },
@@ -406,7 +427,7 @@ const ListView = React.memo(
       ],
       [
         t,
-        sortingFunctions,
+        sortFunctions,
         isGithubConnected,
         githubRepo,
         preferredDetailsFont,

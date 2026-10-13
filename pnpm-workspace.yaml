@@ -20,3 +20,6 @@ overrides:
   protobufjs@<=7.6.2: ^8.6.5
   serialize-javascript@<7.0.5: ^7.0.5
   uuid@<11.1.1: ^14.0.1
+minimumReleaseAgeExclude:
+  - '@tanstack/react-table@9.3.1'
+  - '@tanstack/table-core@9.3.1'

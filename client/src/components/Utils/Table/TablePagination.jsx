@@ -16,7 +16,7 @@ const TablePagination = React.memo(
   React.forwardRef(({ table, itemsPerPage, rowsCount, children, className, fitScreen, userPrefsKeys, onResetColumnSorting, onResetColumnWidths, onResetColumnVisibility, onUserPrefsUpdate, ...props }, ref) => {
     const [t] = useTranslation();
     const dropdown = useRef(null);
-    const currentPageIndex = table.getState().pagination.pageIndex + 1;
+    const currentPageIndex = table.state.pagination.pageIndex + 1;
     const [data, handleFieldChange, setData] = useForm(() => ({ page: '' }));
     const pageField = useRef(null);
     const itemsPerPageOptions = ['25', '50', '100', '250', '500', '1000', 'all'].map((item) => ({

@@ -3,13 +3,13 @@ import { getFullSeconds } from '@4gaboards/utils';
 
 export default (table) => {
   return useMemo(() => {
-    const isColumnDescending = (colId) => table.getState().sorting.some((sort) => sort.id === colId && sort.desc);
+    const isColumnDescending = (colId) => table.store.state.sorting.some((sort) => sort.id === colId && sort.desc);
 
     return {
-      localeSortingFn: (rowA, rowB, columnId) => {
+      localeSortFn: (rowA, rowB, columnId) => {
         return rowA.original[columnId].localeCompare(rowB.original[columnId]);
       },
-      recursiveNameSortingFn: (rowA, rowB, columnId) => {
+      recursiveNameSortFn: (rowA, rowB, columnId) => {
         const getSortingValue = (values) => {
           // eslint-disable-next-line no-nested-ternary
           const array = Array.isArray(values) ? values : values ? [values] : [];
@@ -38,7 +38,7 @@ export default (table) => {
 
         return compareRecursively(aList, bList);
       },
-      timerSortingFn: (rowA, rowB, columnId) => {
+      timerSortFn: (rowA, rowB, columnId) => {
         const getSortingValue = (timer) => {
           if (!timer) return undefined;
           return getFullSeconds({ startedAt: timer.startedAt, total: timer.total });
@@ -48,7 +48,7 @@ export default (table) => {
         const b = getSortingValue(rowB.original[columnId]);
         return a - b;
       },
-      lengthSortingFn: (rowA, rowB, columnId) => {
+      lengthSortFn: (rowA, rowB, columnId) => {
         const getSortingValue = (value) => value.length;
         const a = getSortingValue(rowA.original[columnId]);
         const b = getSortingValue(rowB.original[columnId]);
