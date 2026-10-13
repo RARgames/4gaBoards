@@ -747,35 +747,6 @@ const PreferencesSettings = React.memo(
       ],
     );
 
-    const table = useTable({
-      features,
-      data,
-      columns: [],
-      initialState: {
-        grouping: ['preferences'],
-        expanded: true,
-      },
-      style: Table.Style.Default,
-    });
-
-    const { handleResetColumnWidthsClick } = Table.HooksPre(tableRef, table);
-
-    const resetColumnsWidths = useCallback(() => {
-      handleResetColumnWidthsClick(false, true);
-    }, [handleResetColumnWidthsClick]);
-
-    useEffect(() => {
-      resetColumnsWidths();
-    }, [resetColumnsWidths, sidebarCompact]);
-
-    useEffect(() => {
-      window.addEventListener('resize', resetColumnsWidths);
-
-      return () => {
-        window.removeEventListener('resize', resetColumnsWidths);
-      };
-    }, [resetColumnsWidths]);
-
     const columns = useMemo(
       () => [
         {
@@ -815,7 +786,21 @@ const PreferencesSettings = React.memo(
       [t],
     );
 
-    table.setOptions((prev) => ({ ...prev, columns }));
+    const table = useTable({
+      features,
+      data,
+      columns,
+      initialState: {
+        grouping: ['preferences'],
+        expanded: true,
+      },
+      style: Table.Style.Default,
+    });
+
+    Table.HooksPre(tableRef, table, {
+      autoFit: true,
+      refitKey: sidebarCompact,
+    });
 
     return (
       <div className={sShared.wrapper}>

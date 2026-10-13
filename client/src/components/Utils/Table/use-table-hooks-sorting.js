@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { getFullSeconds } from '@4gaboards/utils';
 
-export default (table) => {
+export default (tableInstanceRef) => {
   return useMemo(() => {
-    const isColumnDescending = (colId) => table.store.state.sorting.some((sort) => sort.id === colId && sort.desc);
+    const isColumnDescending = (colId) => tableInstanceRef.current?.store.state.sorting.some((sort) => sort.id === colId && sort.desc) ?? false;
 
     return {
       localeSortFn: (rowA, rowB, columnId) => {
@@ -61,5 +61,5 @@ export default (table) => {
         return a - b;
       },
     };
-  }, [table]);
+  }, [tableInstanceRef]);
 };

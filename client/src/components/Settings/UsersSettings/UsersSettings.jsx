@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useTable,
@@ -74,6 +74,8 @@ const UsersSettings = React.memo(
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
+    const tableInstanceRef = useRef(null);
+    const resetColumnWidthsRef = useRef(null);
     const tableBodyRef = useRef(null);
     const initialPageIndexRef = useRef(null);
     if (initialPageIndexRef.current === null) {
@@ -131,37 +133,11 @@ const UsersSettings = React.memo(
       [onUpdate],
     );
 
-    const table = useTable({
-      features,
-      autoResetPageIndex: false,
-      data: items,
-      columns: [],
-      enableMultiSort: true,
-      columnResizeMode: 'onChange',
-      state: { sorting, columnVisibility, pagination },
-      onColumnVisibilityChange: handleColumnVisibilityChange,
-      onPaginationChange: handlePaginationChange,
-      style: usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
-    });
+    const handleResetColumnWidthsClick = useCallback(() => {
+      resetColumnWidthsRef.current?.();
+    }, []);
 
-    const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
-    const sortFunctions = Table.HooksSorting(table);
-
-    const resetColumnsWidths = useCallback(() => {
-      handleResetColumnWidthsClick(false, usersSettingsFitScreen);
-    }, [handleResetColumnWidthsClick, usersSettingsFitScreen]);
-
-    useEffect(() => {
-      resetColumnsWidths();
-    }, [resetColumnsWidths]);
-
-    useEffect(() => {
-      window.addEventListener('resize', resetColumnsWidths);
-
-      return () => {
-        window.removeEventListener('resize', resetColumnsWidths);
-      };
-    }, [resetColumnsWidths]);
+    const sortFunctions = Table.HooksSorting(tableInstanceRef);
 
     const columns = useMemo(
       () => [
@@ -287,7 +263,7 @@ const UsersSettings = React.memo(
           sortDescFirst: true,
           sortUndefined: 'last',
           meta: { headerTitle: t('common.lastLogin'), suggestedSize: 110 },
-          cellProps: { className: s.dateCell, showUndefined: true },
+          cellProps: { className: s.dateCell, showUndefined: true, showFullDueDates: true },
         },
         {
           accessorKey: 'createdAt',
@@ -295,7 +271,7 @@ const UsersSettings = React.memo(
           cell: Table.Renderers.DateCellRenderer,
           enableSorting: true,
           meta: { headerTitle: t('common.createdAt'), suggestedSize: 110 },
-          cellProps: { className: s.dateCell },
+          cellProps: { className: s.dateCell, showFullDueDates: true },
         },
         {
           accessorKey: 'createdBy',
@@ -312,7 +288,7 @@ const UsersSettings = React.memo(
           enableSorting: true,
           sortUndefined: 'last',
           meta: { headerTitle: t('common.updatedAt'), suggestedSize: 110 },
-          cellProps: { className: s.dateCell },
+          cellProps: { className: s.dateCell, showFullDueDates: true },
         },
         {
           accessorKey: 'updatedBy',
@@ -342,12 +318,33 @@ const UsersSettings = React.memo(
           },
         },
       ],
-
       [currentUserId, demoMode, handleIsAdminChange, handleResetColumnSortingClick, handleResetColumnVisibilityClick, handleResetColumnWidthsClick, onUserPrefsUpdate, sortFunctions, t, usersSettingsFitScreen],
     );
 
     const { handleSortingChange } = Table.HooksPost(columns, setSorting);
-    table.setOptions((prev) => ({ ...prev, onSortingChange: handleSortingChange, columns }));
+
+    const table = useTable({
+      features,
+      autoResetPageIndex: false,
+      data: items,
+      columns,
+      enableMultiSort: true,
+      columnResizeMode: 'onChange',
+      state: { sorting, columnVisibility, pagination },
+      onSortingChange: handleSortingChange,
+      onColumnVisibilityChange: handleColumnVisibilityChange,
+      onPaginationChange: handlePaginationChange,
+      style: usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
+    });
+
+    tableInstanceRef.current = table;
+
+    const { handleResetColumnWidthsClick: resetColumnWidths, handleResizerMouseDown } = Table.HooksPre(tableRef, table, {
+      autoFit: true,
+      autoFitScreen: usersSettingsFitScreen,
+    });
+
+    resetColumnWidthsRef.current = resetColumnWidths;
 
     return (
       <div className={clsx(sShared.wrapper, s.wrapper)}>

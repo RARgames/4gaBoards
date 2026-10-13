@@ -1,20 +1,28 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-export default (tableRef, table) => {
-  const measureTextWidth = (text, font, offset = 0) => {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    if (!context) return 0;
-    context.font = font;
-    return context.measureText(text).width + offset;
-  };
+const measureTextWidth = (text, font, offset = 0) => {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  if (!context) return 0;
+  context.font = font;
+  return context.measureText(text).width + offset;
+};
 
-  const asignIfLarger = (a, b) => {
-    return Math.max(a, b);
-  };
+const asignIfLarger = (a, b) => {
+  return Math.max(a, b);
+};
+
+export default (tableRef, table, { autoFit = false, autoFitScreen = true, refitKey } = {}) => {
+  const tableLatestRef = useRef(table);
+
+  useEffect(() => {
+    tableLatestRef.current = table;
+  }, [table]);
 
   const autoSizeColumns = useCallback(
     (scrollToEnd, fitScreen, columnId) => {
+      const currentTable = tableLatestRef.current;
+
       try {
         const minColSizes = {};
         const recommendedColSizes = {};
@@ -30,13 +38,13 @@ export default (tableRef, table) => {
         const firstTd = tableRef.current.querySelector('td');
         const bodyFont = firstTd ? window.getComputedStyle(firstTd).font : defaultFont;
 
-        const columnsToResize = columnId ? table.getAllLeafColumns().filter((col) => col.id === columnId) : table.getAllLeafColumns().filter((col) => col.getIsVisible());
+        const columnsToResize = columnId ? currentTable.getAllLeafColumns().filter((col) => col.id === columnId) : currentTable.getAllLeafColumns().filter((col) => col.getIsVisible());
 
         if (!columnsToResize.length) {
           return;
         }
 
-        const rowsToProcess = table.getCoreRowModel().rows.slice(0, maxRowsToProcess);
+        const rowsToProcess = currentTable.getCoreRowModel().rows.slice(0, maxRowsToProcess);
 
         columnsToResize.forEach((column) => {
           const colId = column.id;
@@ -104,29 +112,45 @@ export default (tableRef, table) => {
         } else {
           finalColSizes = recommendedColSizes;
         }
-        table.setColumnSizing(finalColSizes);
+        currentTable.setColumnSizing(finalColSizes);
       } catch {} // eslint-disable-line no-empty
 
       if (scrollToEnd) {
         tableRef.current.parentNode.scrollBy({ left: tableRef.current.parentNode.scrollWidth, behavior: 'instant' });
       }
     },
-    [tableRef, table],
+    [tableRef],
   );
 
   const handleResetColumnWidthsClick = useCallback(
-    (scrollToEnd = false, fitScreen = false) => {
+    (scrollToEnd = false, fitScreen = autoFitScreen) => {
       if (tableRef.current) {
         autoSizeColumns(scrollToEnd, fitScreen);
       }
     },
-    [autoSizeColumns, tableRef],
+    [autoFitScreen, autoSizeColumns, tableRef],
   );
 
   const handleResizerMouseDown = useCallback((e, header) => {
     e.preventDefault(); // Prevent text selecton when dragging column resizer
     header.getResizeHandler()(e);
   }, []);
+
+  // Fit on mount, whenever refitKey changes, on window resize
+  useEffect(() => {
+    if (!autoFit) return undefined;
+    handleResetColumnWidthsClick(false, autoFitScreen);
+    return undefined;
+  }, [autoFit, autoFitScreen, handleResetColumnWidthsClick, refitKey]);
+
+  useEffect(() => {
+    if (!autoFit) return undefined;
+
+    const onResize = () => handleResetColumnWidthsClick(false, autoFitScreen);
+    window.addEventListener('resize', onResize);
+
+    return () => window.removeEventListener('resize', onResize);
+  }, [autoFit, autoFitScreen, handleResetColumnWidthsClick]);
 
   return { autoSizeColumns, handleResetColumnWidthsClick, handleResizerMouseDown };
 };

@@ -86,6 +86,8 @@ const ListView = React.memo(
     const [t] = useTranslation();
     const navigate = useNavigate();
     const tableRef = useRef(null);
+    const tableInstanceRef = useRef(null);
+    const resetColumnWidthsRef = useRef(null);
     const tableBodyRef = useRef(null);
     const rowRefs = useRef({});
     const [nameCellFns, setNameCellFns] = useState({});
@@ -161,77 +163,11 @@ const ListView = React.memo(
       [currentCardIndex, setPagination],
     );
 
-    const table = useTable({
-      features,
-      data: filteredCards,
-      autoResetPageIndex: false,
-      columns: [],
-      enableMultiSort: true,
-      columnResizeMode: 'onChange',
-      state: { sorting, columnVisibility, pagination },
-      onColumnVisibilityChange: handleColumnVisibilityChange,
-      onPaginationChange: handlePaginationChange,
-      style: listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
-    });
+    const handleResetColumnWidthsClick = useCallback(() => {
+      resetColumnWidthsRef.current?.();
+    }, []);
 
-    const { handleResetColumnWidthsClick, handleResizerMouseDown } = Table.HooksPre(tableRef, table);
-    const sortFunctions = Table.HooksSorting(table);
-
-    const resetColumnsWidths = useCallback(() => {
-      handleResetColumnWidthsClick(false, listViewFitScreen);
-    }, [handleResetColumnWidthsClick, listViewFitScreen]);
-
-    useEffect(() => {
-      resetColumnsWidths();
-    }, [resetColumnsWidths, isCardModalOpened]);
-
-    useEffect(() => {
-      let resizeTimeout;
-
-      const handleResize = () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-          resetColumnsWidths();
-        }, 100);
-      };
-
-      window.addEventListener('resize', handleResize);
-
-      return () => {
-        window.removeEventListener('resize', handleResize);
-        clearTimeout(resizeTimeout);
-      };
-    }, [resetColumnsWidths]);
-
-    const scrollCardIntoView = useCallback(() => {
-      setTimeout(() => {
-        rowRefs.current[currentCardId]?.scrollIntoView({ behavior: 'auto', block: 'center' });
-      }, 0);
-    }, [currentCardId]);
-
-    useEffect(() => {
-      scrollCardIntoView();
-    }, [scrollCardIntoView, pagination]);
-
-    const adjustPageIndex = useCallback(() => {
-      const currentCardIds = filteredCards.map((card) => card.id);
-      const prevCardIds = prevFilteredCardIdsRef.current;
-      const haveCardsChanged = prevCardIds.length !== currentCardIds.length || prevCardIds.some((id, index) => id !== currentCardIds[index]);
-
-      if (haveCardsChanged) {
-        const { pageSize } = table.store.state.pagination;
-        const pageIndex = Math.floor(currentCardIndex / pageSize);
-        setPagination((prev) => ({ ...prev, pageIndex: pageIndex === -1 ? 0 : pageIndex }));
-        scrollCardIntoView();
-        resetColumnsWidths();
-      }
-
-      prevFilteredCardIdsRef.current = currentCardIds;
-    }, [currentCardIndex, filteredCards, resetColumnsWidths, scrollCardIntoView, setPagination, table]);
-
-    useEffect(() => {
-      adjustPageIndex();
-    }, [adjustPageIndex]);
+    const sortFunctions = Table.HooksSorting(tableInstanceRef);
 
     const columns = useMemo(
       () => [
@@ -443,7 +379,59 @@ const ListView = React.memo(
     );
 
     const { handleSortingChange } = Table.HooksPost(columns, setSorting);
-    table.setOptions((prev) => ({ ...prev, onSortingChange: handleSortingChange, columns }));
+
+    const table = useTable({
+      features,
+      data: filteredCards,
+      columns,
+      autoResetPageIndex: false,
+      enableMultiSort: true,
+      columnResizeMode: 'onChange',
+      state: { sorting, columnVisibility, pagination },
+      onSortingChange: handleSortingChange,
+      onColumnVisibilityChange: handleColumnVisibilityChange,
+      onPaginationChange: handlePaginationChange,
+      style: listViewStyle === 'compact' ? Table.Style.Compact : Table.Style.Default,
+    });
+
+    tableInstanceRef.current = table;
+
+    const { handleResetColumnWidthsClick: resetColumnWidths, handleResizerMouseDown } = Table.HooksPre(tableRef, table, {
+      autoFit: true,
+      autoFitScreen: listViewFitScreen,
+      refitKey: isCardModalOpened,
+    });
+    resetColumnWidthsRef.current = resetColumnWidths;
+
+    const scrollCardIntoView = useCallback(() => {
+      setTimeout(() => {
+        rowRefs.current[currentCardId]?.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }, 0);
+    }, [currentCardId]);
+
+    useEffect(() => {
+      scrollCardIntoView();
+    }, [scrollCardIntoView, pagination]);
+
+    const adjustPageIndex = useCallback(() => {
+      const currentCardIds = filteredCards.map((card) => card.id);
+      const prevCardIds = prevFilteredCardIdsRef.current;
+      const haveCardsChanged = prevCardIds.length !== currentCardIds.length || prevCardIds.some((id, index) => id !== currentCardIds[index]);
+
+      if (haveCardsChanged) {
+        const { pageSize } = table.store.state.pagination;
+        const pageIndex = Math.floor(currentCardIndex / pageSize);
+        setPagination((prev) => ({ ...prev, pageIndex: pageIndex === -1 ? 0 : pageIndex }));
+        scrollCardIntoView();
+        handleResetColumnWidthsClick();
+      }
+
+      prevFilteredCardIdsRef.current = currentCardIds;
+    }, [currentCardIndex, filteredCards, handleResetColumnWidthsClick, scrollCardIntoView, setPagination, table]);
+
+    useEffect(() => {
+      adjustPageIndex();
+    }, [adjustPageIndex]);
 
     return (
       <div className={s.listViewWrapper}>

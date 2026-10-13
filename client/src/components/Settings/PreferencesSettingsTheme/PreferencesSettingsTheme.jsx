@@ -116,32 +116,6 @@ const PreferencesSettingsTheme = React.memo(({ themeCustomColors, onUpdate }) =>
     [effectiveTheme],
   );
 
-  const table = useTable({
-    features,
-    data,
-    columns: [],
-    state: { sorting },
-    style: Table.Style.Default,
-  });
-
-  const { handleResetColumnWidthsClick } = Table.HooksPre(tableRef, table);
-
-  const resetColumnsWidths = useCallback(() => {
-    handleResetColumnWidthsClick(false, true);
-  }, [handleResetColumnWidthsClick]);
-
-  useEffect(() => {
-    resetColumnsWidths();
-  }, [resetColumnsWidths]);
-
-  useEffect(() => {
-    window.addEventListener('resize', resetColumnsWidths);
-
-    return () => {
-      window.removeEventListener('resize', resetColumnsWidths);
-    };
-  }, [resetColumnsWidths]);
-
   const columns = useMemo(
     () => [
       {
@@ -168,7 +142,19 @@ const PreferencesSettingsTheme = React.memo(({ themeCustomColors, onUpdate }) =>
   );
 
   const { handleSortingChange } = Table.HooksPost(columns, setSorting);
-  table.setOptions((prev) => ({ ...prev, onSortingChange: handleSortingChange, columns }));
+
+  const table = useTable({
+    features,
+    data,
+    columns,
+    state: { sorting },
+    onSortingChange: handleSortingChange,
+    style: Table.Style.Default,
+  });
+
+  Table.HooksPre(tableRef, table, {
+    autoFit: true,
+  });
 
   return (
     <div className={sShared.wrapper}>
