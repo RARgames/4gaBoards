@@ -358,12 +358,7 @@ module.exports = function (webpackEnv) {
               loader: require.resolve('babel-loader'),
               options: {
                 presets: [
-                  [
-                    require.resolve('@babel/preset-env'),
-                    {
-                      bugfixes: true,
-                    },
-                  ],
+                  [require.resolve('@babel/preset-env')],
                   [
                     require.resolve('@babel/preset-react'),
                     {
@@ -391,7 +386,7 @@ module.exports = function (webpackEnv) {
                 babelrc: false,
                 configFile: false,
                 compact: false,
-                presets: [[require.resolve('@babel/preset-env'), { bugfixes: true }]],
+                presets: [[require.resolve('@babel/preset-env')]],
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,

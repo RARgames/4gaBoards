@@ -27,6 +27,7 @@ const dotenvFiles = [
 // that have already been set.  Variable expansion is supported in .env files.
 // https://github.com/motdotla/dotenv
 // https://github.com/motdotla/dotenv-expand
+// FIXME: this is now obsolete - dotenv-expand is not needed as client env is not using and ${var} syntax
 dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
     const dotEnvExpand = async (...args) => {
