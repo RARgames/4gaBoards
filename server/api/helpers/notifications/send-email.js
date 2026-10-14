@@ -112,11 +112,12 @@ module.exports = {
       .filter(({ key }) => relatedData[key] != null)
       .map(({ key, labelKey }) => {
         const label = t ? t(labelKey) : labelKey.split('.').pop();
-        return {
-          key,
-          label,
-          value: relatedData[key],
-        };
+        let value = relatedData[key];
+
+        if (key === 'listName' && t && typeof value === 'string') {
+          value = t(value, { defaultValue: value });
+        }
+        return { key, label, value };
       });
     const relatedDataSubject = relatedDataEntries.map(({ value }) => value).join(' | ') || '';
     const subjectScope = `[${localizedScope.toUpperCase()}] ${relatedDataSubject}`.trim();
