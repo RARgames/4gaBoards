@@ -157,9 +157,9 @@ module.exports = {
 
     const exportDir = path.join(__dirname, '../../../private/exports', currentUser.id);
     const date = new Date().toISOString().replace(/[:]/g, '-').split('.')[0]; // Format: YYYY-MM-DDTHH-MM-SS
-    const filename = `4gaBoards_${inputs.id}_${date}.tgz`;
+    const filename = `4gaBoards_${board.id}_${date}.tgz`;
     const tarPath = path.join(exportDir, filename);
-    const tempDir = path.join(exportDir, `temp_${inputs.id}_${date}`);
+    const tempDir = path.join(exportDir, `temp_${board.id}_${date}`);
     try {
       fs.mkdirSync(exportDir, { recursive: true });
       fs.mkdirSync(tempDir, { recursive: true });
