@@ -189,7 +189,7 @@ module.exports = {
 
         if (!inputs.skipNotifications) {
           let subscriptionUserIds = await sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId);
-          subscriptionUserIds = [...new Set([...subscriptionUserIds, ...notifyUserIds])].filter(Boolean);
+          subscriptionUserIds = [...new Set([...subscriptionUserIds, ...notifyUserIds])].filter((userId) => userId && userId !== action.userId);
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({
