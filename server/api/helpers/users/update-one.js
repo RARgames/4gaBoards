@@ -103,6 +103,12 @@ module.exports = {
       );
 
     if (user) {
+      if (values.password === null) {
+        await ApiClient.destroy({
+          userId: user.id,
+        });
+      }
+
       if (inputs.record.avatar && (!user.avatar || user.avatar.dirname !== inputs.record.avatar.dirname)) {
         try {
           rimraf.sync(path.join(sails.config.custom.userAvatarsPath, inputs.record.avatar.dirname));
