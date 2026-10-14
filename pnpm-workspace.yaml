@@ -12,6 +12,9 @@ allowBuilds:
   protobufjs: true
   sharp: true
   unrs-resolver: true
+skills:
+  dirs:
+    - .claude/skills
 overrides:
   '@opentelemetry/core@<2.8.0': ^2.8.0
   diff@>=6.0.0 <8.0.3: ^9.0.0
@@ -20,6 +23,6 @@ overrides:
   protobufjs@<=7.6.2: ^8.6.5
   serialize-javascript@<7.0.5: ^7.0.5
   uuid@<11.1.1: ^14.0.1
-minimumReleaseAgeExclude:
-  - '@tanstack/react-table@9.3.1'
-  - '@tanstack/table-core@9.3.1'
+permissions:
+  '@tanstack/react-table':
+    skills: true
