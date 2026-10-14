@@ -5,13 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@opentelemetry/core@<2.8.0': ^2.8.0
-  diff@>=6.0.0 <8.0.3: ^9.0.0
-  http-proxy-middleware@>=0.16.0 <3.0.6: ^4.1.1
   js-yaml@<=4.1.1: ^5.2.0
-  protobufjs@<=7.6.2: ^8.6.5
-  serialize-javascript@<7.0.5: ^7.0.5
-  uuid@<11.1.1: ^14.0.1
 
 importers:
 
@@ -4142,7 +4136,6 @@ packages:
 
   ansi-html-community@0.0.8:
     resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
-    engines: {'0': node >= 0.8.0}
     hasBin: true
 
   ansi-regex@5.0.1:

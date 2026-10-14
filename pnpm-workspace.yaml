@@ -16,13 +16,7 @@ skills:
   dirs:
     - .claude/skills
 overrides:
-  '@opentelemetry/core@<2.8.0': ^2.8.0
-  diff@>=6.0.0 <8.0.3: ^9.0.0
-  http-proxy-middleware@>=0.16.0 <3.0.6: ^4.1.1
   js-yaml@<=4.1.1: ^5.2.0
-  protobufjs@<=7.6.2: ^8.6.5
-  serialize-javascript@<7.0.5: ^7.0.5
-  uuid@<11.1.1: ^14.0.1
 permissions:
   '@tanstack/react-table':
     skills: true
