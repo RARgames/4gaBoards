@@ -28,7 +28,7 @@
     "fast-csv": "^5.0.8",
     "filenamify": "^7.0.3",
     "i18next": "^26.4.4",
-    "jose": "^6.2.10",
+    "jose": "^6.2.12",
     "jsonwebtoken": "^9.0.3",
     "knex": "^3.3.0",
     "lodash": "^4.18.1",
