@@ -11,9 +11,9 @@ async function fetchRetry(url, options = {}, retries = 3, delayMs = 1000) {
       if (res.ok) return res;
 
       const resText = await res.text();
-      sails.log.warn(`Fetch failed (status ${res.status}) — attempt ${i + 1}/${retries}\n${resText}`);
+      sails.log.warn(`Fetch ${url} failed (status ${res.status}) — attempt ${i + 1}/${retries}\n${resText}`);
     } catch (err) {
-      sails.log.warn(`Fetch error — attempt ${i + 1}/${retries}`, err.message);
+      sails.log.warn(`Fetch ${url} error — attempt ${i + 1}/${retries}`, err.message);
     }
     if (i < retries - 1) await sleep(delayMs);
   }
@@ -32,9 +32,9 @@ async function fetchRetryUntilAvailable(url, options = {}, baseDelayMs = 1000, m
       if (res.ok) return res;
 
       const resText = await res.text();
-      sails.log.warn(`Fetch failed (status ${res.status}) — attempt ${attempt}/inf\n${resText}`);
+      sails.log.warn(`Fetch ${url} failed (status ${res.status}) — attempt ${attempt}/inf\n${resText}`);
     } catch (err) {
-      sails.log.warn(`Fetch error - attempt ${attempt}/inf`, err.message);
+      sails.log.warn(`Fetch ${url} error - attempt ${attempt}/inf`, err.message);
     }
     await sleep(delay);
     attempt += 1;
