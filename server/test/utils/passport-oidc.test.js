@@ -1,5 +1,5 @@
-const crypto = require('crypto');
 const { expect } = require('chai');
+const crypto = require('crypto');
 
 const OIDCStrategy = require('../../strategies/passport-oidc');
 
@@ -44,7 +44,9 @@ describe('OIDCStrategy', () => {
     const params = new URL(url).searchParams;
 
     expect(params.get('state').split('.')).to.have.length(5);
+    // eslint-disable-next-line no-unused-expressions
     expect(params.has('code_challenge')).to.be.false;
+    // eslint-disable-next-line no-unused-expressions
     expect((await decryptState(params.get('state'))).payload.codeVerifier).to.be.undefined;
   });
 

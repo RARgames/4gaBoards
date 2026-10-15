@@ -74,10 +74,9 @@ class OIDCStrategy extends Strategy {
     if (req.query && req.query.code) {
       // Handle OAuth2 callback with authorization code
       return this.handleCallback(req, res, next);
-    } else {
-      // Initiate OAuth2 authorization code flow
-      return this.startAuth(req, res, next).catch((error) => this.error(error));
     }
+    // Initiate OAuth2 authorization code flow
+    return this.startAuth(req, res, next).catch((error) => this.error(error));
   }
 
   /**
