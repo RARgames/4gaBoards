@@ -51,7 +51,7 @@ if (process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET) {
   );
 }
 async function setupOIDC() {
-  const pkceEnabled = process.env.OIDC_ENABLE_PKCE === 'true';
+  const pkceEnabled = process.env.OIDC_PKCE_ENABLED !== 'false';
   if (!process.env.OIDC_CLIENT_ID || !process.env.OIDC_STATE_SECRET || (!process.env.OIDC_CLIENT_SECRET && !pkceEnabled)) {
     return;
   }
