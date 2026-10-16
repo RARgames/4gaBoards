@@ -9,7 +9,9 @@ const mapStateToProps = (state) => {
 
   return {
     id: boardId,
+    cardId,
     isCardModalOpened: !!cardId,
+    pathView: selectors.selectPathView(state),
     defaultView,
   };
 };

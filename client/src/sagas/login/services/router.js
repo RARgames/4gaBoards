@@ -37,7 +37,7 @@ export function* handleLocationChange() {
     case Paths.SETTINGS_USERS:
     case Paths.SETTINGS_PROJECT:
     case Paths.NOTIFICATIONS:
-      localStorage.setItem('pre_login_path', JSON.stringify(pathsMatch.pathname));
+      localStorage.setItem('pre_login_path', JSON.stringify(yield select(selectors.selectPathname)));
       yield call(goToLogin);
       break;
     case Paths.GOOGLE_CALLBACK: {

@@ -28,7 +28,9 @@ function Root({ store, history }) {
           <Route path={Paths.ROOT} element={<CoreContainer />} />
           <Route path={Paths.PROJECTS} element={<CoreContainer />} />
           <Route path={Paths.BOARDS} element={<CoreContainer />} />
+          <Route path={`${Paths.BOARDS}/:view`} element={<CoreContainer />} />
           <Route path={Paths.CARDS} element={<CoreContainer />} />
+          <Route path={`${Paths.CARDS}/:view`} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_PROFILE} element={<CoreContainer />} />
           <Route path={Paths.SETTINGS_PREFERENCES} element={<CoreContainer />} />

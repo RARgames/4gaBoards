@@ -4,6 +4,7 @@ import { createSelector as createReselectSelector } from 'reselect';
 import Paths from '../constants/Paths';
 import orm from '../orm';
 import matchPaths from '../utils/match-paths';
+import { getPathView, stripPathView } from '../utils/path-view';
 import { selectCurrentUserId } from './users';
 
 export const selectPathname = ({
@@ -12,11 +13,11 @@ export const selectPathname = ({
   },
 }) => pathname;
 
-export const selectPathsMatch = createReselectSelector(selectPathname, (pathname) => matchPaths(pathname, Object.values(Paths)));
+export const selectPathView = createReselectSelector(selectPathname, (pathname) => getPathView(pathname));
 
-export const selectPathConstant = createReselectSelector(selectPathname, (pathname) => {
-  return matchPaths(pathname, Object.values(Paths))?.pattern.path;
-});
+export const selectPathsMatch = createReselectSelector(selectPathname, (pathname) => matchPaths(stripPathView(pathname), Object.values(Paths)));
+
+export const selectPathConstant = createReselectSelector(selectPathsMatch, (pathsMatch) => pathsMatch?.pattern.path);
 
 export const selectPath = createReduxOrmSelector(
   orm,
@@ -81,6 +82,7 @@ export const selectPath = createReduxOrmSelector(
 
 export default {
   selectPathname,
+  selectPathView,
   selectPathsMatch,
   selectPathConstant,
   selectPath,

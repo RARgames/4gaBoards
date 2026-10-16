@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { startTimer, stopTimer } from '@4gaboards/utils';
 import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
@@ -12,6 +12,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
 import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import { withPathView, getPathView } from '../../utils/path-view';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import Label from '../Label';
@@ -102,6 +103,7 @@ const Card = React.memo(
     const cardDueDateEditPopupRef = useRef(null);
     const cardLabelsPopupRef = useRef(null);
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     const isDragging = useCardDropSlot((slot) => slot?.cardId === id);
     const placeholderHeight = useCardDropSlot((slot) => (slot && slot.listId === listId && slot.placeholderIndex === index ? slot.height : null));
@@ -129,12 +131,12 @@ const Card = React.memo(
           target = target.parentElement;
         }
 
-        navigate(Paths.CARDS.replace(':id', id));
+        navigate(withPathView(Paths.CARDS.replace(':id', id), getPathView(pathname) && 'board'));
         if (document.activeElement) {
           document.activeElement.blur();
         }
       },
-      [id, navigate],
+      [id, navigate, pathname],
     );
 
     // TODO should be possible without 200ms timeout, but it's not due to other issues - somewhere else

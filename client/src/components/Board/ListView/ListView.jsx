@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import {
   useTable,
   tableFeatures,
@@ -18,6 +18,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../../constants/Paths';
+import { withPathView, getPathView } from '../../../utils/path-view';
 import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize, Table } from '../../Utils';
@@ -85,6 +86,7 @@ const ListView = React.memo(
   }) => {
     const [t] = useTranslation();
     const navigate = useNavigate();
+    const { pathname } = useLocation();
     const tableRef = useRef(null);
     const tableInstanceRef = useRef(null);
     const resetColumnWidthsRef = useRef(null);
@@ -119,12 +121,12 @@ const ListView = React.memo(
           target = target.parentElement;
         }
 
-        navigate(Paths.CARDS.replace(':id', id));
+        navigate(withPathView(Paths.CARDS.replace(':id', id), getPathView(pathname) && 'list'));
         if (document.activeElement) {
           document.activeElement.blur();
         }
       },
-      [navigate],
+      [navigate, pathname],
     );
 
     const handleResetColumnVisibilityClick = useCallback(() => {

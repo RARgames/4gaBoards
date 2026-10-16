@@ -8,6 +8,7 @@ import Paths from '../constants/Paths';
 import entryActions from '../entry-actions';
 import { push } from '../lib/redux-router';
 import selectors from '../selectors';
+import { withPathView } from '../utils/path-view';
 
 const makeMapStateToProps = () => {
   const selectAttachmentActivitiesById = selectors.makeSelectAttachmentActivitiesById();
@@ -17,6 +18,7 @@ const makeMapStateToProps = () => {
 
   return (state) => {
     const { projectId } = selectors.selectPath(state);
+    const pathView = selectors.selectPathView(state);
     const allProjectsToLists = selectors.selectProjectsToListsForCurrentUser(state);
     const isCurrentUserManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
@@ -101,6 +103,7 @@ const makeMapStateToProps = () => {
       listId,
       boardId,
       projectId,
+      pathView,
       users,
       labels,
       tasks,
@@ -187,7 +190,7 @@ const mapDispatchToProps = (dispatch) =>
 const mergeProps = (stateProps, dispatchProps) => ({
   ...stateProps,
   ...omit(dispatchProps, 'push'),
-  onClose: () => dispatchProps.push(Paths.BOARDS.replace(':id', stateProps.boardId)),
+  onClose: () => dispatchProps.push(withPathView(Paths.BOARDS.replace(':id', stateProps.boardId), stateProps.pathView)),
 });
 
 export default connect(makeMapStateToProps, mapDispatchToProps, mergeProps)(CardModal);
