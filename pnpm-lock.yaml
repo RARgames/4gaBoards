@@ -343,10 +343,10 @@ importers:
         version: 5.0.0
       sass:
         specifier: ^1.105.1
-        version: 1.105.1
+        version: 1.105.2
       sass-loader:
         specifier: ^17.0.1
-        version: 17.0.1(sass@1.105.1)(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.30))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.30)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
+        version: 17.0.1(sass@1.105.2)(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.30))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.30)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
       semver:
         specifier: ^7.8.5
         version: 7.8.5
@@ -8689,8 +8689,8 @@ packages:
       webpack:
         optional: true
 
-  sass@1.105.1:
-    resolution: {integrity: sha512-1CnAWPyrrnVQzXGB/DUep1vYCKCm1CIBr+YxjjiW6wk9qtzemnGP4qicH56T2F9S4Hjtv/Ne3jDz8JqfdDU4oA==}
+  sass@1.105.2:
+    resolution: {integrity: sha512-KxW6ZKZiBKWK3ziQ4YZ3cpqo8/1TlHXE8t9nBNvGDZFoBFbk2MD7RacxYFs8zy8hzeFwpFYkVyAhboi47uYPEQ==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -19520,12 +19520,12 @@ snapshots:
 
   sanitize.css@13.0.0: {}
 
-  sass-loader@17.0.1(sass@1.105.1)(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.30))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.30)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)):
+  sass-loader@17.0.1(sass@1.105.2)(webpack@5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.30))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.30)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)):
     optionalDependencies:
-      sass: 1.105.1
+      sass: 1.105.2
       webpack: 5.111.1(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.30))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.30)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)
 
-  sass@1.105.1:
+  sass@1.105.2:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
