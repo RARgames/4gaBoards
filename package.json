@@ -17,6 +17,7 @@
     "client:start": "pnpm -C client start",
     "preclient:test": "pnpm packages:build",
     "client:test": "pnpm -C client test",
+    "client:lang:test": "pnpm -C client lang:test",
     "preclient:ci:test": "pnpm packages:build",
     "client:ci:test": "pnpm -C client ci:test",
     "docker:build": "docker build -t ghcr.io/rargames/4gaboards:local -f Dockerfile .",
