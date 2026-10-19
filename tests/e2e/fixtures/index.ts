@@ -64,7 +64,7 @@ export const test = base.extend<Fixtures>({
     const user = await api.createUser({
       name: `Test User ${runId}`,
       username: `user_${runId}`,
-      email: `user_${runId}@test.local`,
+      email: `user_${runId}@example.com`,
       password,
     });
     await use({ ...user, password });

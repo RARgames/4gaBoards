@@ -8,7 +8,7 @@ test('admin user can create a new user', async ({ page }) => {
   const createdUserEmails: string[] = [];
 
   const user = {
-    email: 'test_user@gmail.com',
+    email: 'test_user_playwright@example.com',
     password: 'Abcde@123',
     name: 'test user',
     username: 'test_user',
