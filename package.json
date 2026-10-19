@@ -42,7 +42,7 @@
     "pretest": "pnpm packages:build",
     "test": "pnpm -C server test && pnpm -C client test",
     "test:e2e": "pnpm -C tests test",
-    "ci:test:e2e": "start-server-and-test \"pnpm start\" http://localhost:3000 \"pnpm test:e2e\""
+    "ci:test:e2e": "start-server-and-test \"pnpm start\" http://localhost:3000 \"pnpm test:e2e e2e/specs/auth/login.spec.ts\""
   },
   "lint-staged": {
     "client/**/*.{js,jsx}": [

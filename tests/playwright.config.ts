@@ -2,12 +2,13 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e/specs',
-  fullyParallel: false,
+  fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 4,
   timeout: 30_000,
   reporter: [['list'], ['html', { open: 'never' }]],
+  globalSetup: './global-setup.ts',
   use: {
     baseURL: 'http://localhost:3000',
     headless: true,
@@ -15,5 +16,6 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
+    storageState: './auth-state/user.json',
   },
 });
