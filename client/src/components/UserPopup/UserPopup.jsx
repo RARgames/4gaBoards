@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
@@ -8,16 +7,15 @@ import { Button, ButtonVariant, Icon, IconType, IconSize, Popup, withPopup } fro
 
 import * as s from './UserPopup.module.scss';
 
-const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, onLogout, onClose }) => {
+const UserStep = React.memo(({ canEditProject, projectId, isAdmin, isLogouting, onLogout, onNavigatePush, onClose }) => {
   const [t] = useTranslation();
-  const navigate = useNavigate();
 
   const handleClick = useCallback(
     (path) => {
-      navigate(path);
+      onNavigatePush(path);
       onClose();
     },
-    [navigate, onClose],
+    [onNavigatePush, onClose],
   );
 
   return (
@@ -72,6 +70,7 @@ UserStep.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isLogouting: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onNavigatePush: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

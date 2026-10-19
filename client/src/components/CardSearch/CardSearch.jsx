@@ -107,10 +107,16 @@ const CardSearch = React.memo(({ defaultValue, matchCase, anyMatch, onBoardSearc
 });
 
 CardSearch.propTypes = {
-  defaultValue: PropTypes.string.isRequired,
-  matchCase: PropTypes.bool.isRequired,
-  anyMatch: PropTypes.bool.isRequired,
+  defaultValue: PropTypes.string,
+  matchCase: PropTypes.bool,
+  anyMatch: PropTypes.bool,
   onBoardSearchParamsUpdate: PropTypes.func.isRequired,
+};
+
+CardSearch.defaultProps = {
+  defaultValue: '',
+  matchCase: false,
+  anyMatch: false,
 };
 
 export default CardSearch;

@@ -116,7 +116,7 @@ const BoardActions = React.memo(
           />
         </div>
         <div className={clsx(s.action, s.actionFlex)}>
-          <CardSearch defaultValue={boardSearchParams.query} matchCase={boardSearchParams.matchCase} anyMatch={boardSearchParams.anyMatch} onBoardSearchParamsUpdate={onBoardSearchParamsUpdate} />
+          <CardSearch defaultValue={boardSearchParams?.query} matchCase={boardSearchParams?.matchCase} anyMatch={boardSearchParams?.anyMatch} onBoardSearchParamsUpdate={onBoardSearchParamsUpdate} />
           <Filters
             users={filterUsers}
             labels={filterLabels}
@@ -124,10 +124,10 @@ const BoardActions = React.memo(
             boardMemberships={memberships}
             allLabels={labels}
             canEdit={canEdit}
-            dueDate={boardSearchParams.dueDate}
-            justSelectedDay={boardSearchParams.justSelectedDay}
-            includeTaskDueDates={boardSearchParams.includeTaskDueDates}
-            onlyWithNotifications={boardSearchParams.onlyWithNotifications}
+            dueDate={boardSearchParams?.dueDate}
+            justSelectedDay={boardSearchParams?.justSelectedDay}
+            includeTaskDueDates={boardSearchParams?.includeTaskDueDates}
+            onlyWithNotifications={boardSearchParams?.onlyWithNotifications}
             onUserAdd={onUserToFilterAdd}
             onUserRemove={onUserFromFilterRemove}
             onUserEmailLookup={onUserEmailLookup}

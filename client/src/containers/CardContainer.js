@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import Card from '../components/Card';
 import { BoardMembershipRoles } from '../constants/Enums';
 import entryActions from '../entry-actions';
+import { push } from '../lib/redux-router';
 import selectors from '../selectors';
 
 const makeMapStateToProps = () => {
@@ -65,6 +66,7 @@ const makeMapStateToProps = () => {
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const url = selectors.selectUrlForCard(state, id);
     const activities = selectors.selectCardActivitiesById(state, id);
+    const pathname = selectors.selectPathname(state);
 
     return {
       id,
@@ -104,6 +106,7 @@ const makeMapStateToProps = () => {
       updatedBy,
       closestDueDate,
       showFullDueDates,
+      pathname,
     };
   };
 };
@@ -135,6 +138,7 @@ const mapDispatchToProps = (dispatch, { id }) =>
       onTaskMove: (taskId, index) => entryActions.moveTask(taskId, index),
       onActivitiesFetch: () => entryActions.fetchCardActivities(id),
       onTaskActivitiesFetch: (taskId) => entryActions.fetchTaskActivities(taskId),
+      onNavigatePush: push,
     },
     dispatch,
   );

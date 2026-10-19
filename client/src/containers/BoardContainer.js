@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Board from '../components/Board';
+import { push, replace } from '../lib/redux-router';
 import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
@@ -11,9 +13,19 @@ const mapStateToProps = (state) => {
     id: boardId,
     cardId,
     isCardModalOpened: !!cardId,
+    pathname: selectors.selectPathname(state),
     pathView: selectors.selectPathView(state),
     defaultView,
   };
 };
 
-export default connect(mapStateToProps)(Board);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      onNavigatePush: push,
+      onNavigateReplace: replace,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
 import {
   useTable,
   tableFeatures,
@@ -80,13 +79,13 @@ const ListView = React.memo(
     canEdit,
     preferredDetailsFont,
     allBoardMemberships,
+    pathname,
     onCardCreate,
     onListCreate,
     onUserPrefsUpdate,
+    onNavigatePush,
   }) => {
     const [t] = useTranslation();
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
     const tableRef = useRef(null);
     const tableInstanceRef = useRef(null);
     const resetColumnWidthsRef = useRef(null);
@@ -121,12 +120,12 @@ const ListView = React.memo(
           target = target.parentElement;
         }
 
-        navigate(withPathView(Paths.CARDS.replace(':id', id), getPathView(pathname) && 'list'));
+        onNavigatePush(withPathView(Paths.CARDS.replace(':id', id), getPathView(pathname) && 'list'));
         if (document.activeElement) {
           document.activeElement.blur();
         }
       },
-      [navigate, pathname],
+      [onNavigatePush, pathname],
     );
 
     const handleResetColumnVisibilityClick = useCallback(() => {
@@ -546,9 +545,11 @@ ListView.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  pathname: PropTypes.string.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onListCreate: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
+  onNavigatePush: PropTypes.func.isRequired,
 };
 
 ListView.defaultProps = {

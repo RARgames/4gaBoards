@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import ListView from '../components/Board/ListView';
 import { BoardMembershipRoles } from '../constants/Enums';
 import entryActions from '../entry-actions';
+import { push } from '../lib/redux-router';
 import selectors from '../selectors';
 
 const makeMapStateToProps = () => {
@@ -72,6 +73,7 @@ const makeMapStateToProps = () => {
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const { preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
     const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
+    const pathname = selectors.selectPathname(state);
 
     return {
       isCardModalOpened: !!currentCardId,
@@ -91,6 +93,7 @@ const makeMapStateToProps = () => {
       canEdit: isCurrentUserEditor,
       preferredDetailsFont,
       allBoardMemberships,
+      pathname,
     };
   };
 };
@@ -101,6 +104,7 @@ const mapDispatchToProps = (dispatch) =>
       onCardCreate: entryActions.createCard,
       onListCreate: entryActions.createListInCurrentBoard,
       onUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
+      onNavigatePush: push,
     },
     dispatch,
   );

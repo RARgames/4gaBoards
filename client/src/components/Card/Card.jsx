@@ -1,6 +1,5 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router';
 import { startTimer, stopTimer } from '@4gaboards/utils';
 import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
@@ -69,6 +68,7 @@ const Card = React.memo(
     updatedAt,
     updatedBy,
     showFullDueDates,
+    pathname,
     onUpdate,
     onMove,
     onTransfer,
@@ -93,6 +93,7 @@ const Card = React.memo(
     onTaskMove,
     onActivitiesFetch,
     onTaskActivitiesFetch,
+    onNavigatePush,
   }) => {
     const [t] = useTranslation();
     const nameEdit = useRef(null);
@@ -102,8 +103,6 @@ const Card = React.memo(
     const cardMembershipsPopupRef = useRef(null);
     const cardDueDateEditPopupRef = useRef(null);
     const cardLabelsPopupRef = useRef(null);
-    const navigate = useNavigate();
-    const { pathname } = useLocation();
 
     const isDragging = useCardDropSlot((slot) => slot?.cardId === id);
     const placeholderHeight = useCardDropSlot((slot) => (slot && slot.listId === listId && slot.placeholderIndex === index ? slot.height : null));
@@ -131,12 +130,12 @@ const Card = React.memo(
           target = target.parentElement;
         }
 
-        navigate(withPathView(Paths.CARDS.replace(':id', id), getPathView(pathname) && 'board'));
+        onNavigatePush(withPathView(Paths.CARDS.replace(':id', id), getPathView(pathname) && 'board'));
         if (document.activeElement) {
           document.activeElement.blur();
         }
       },
-      [id, navigate, pathname],
+      [id, onNavigatePush, pathname],
     );
 
     // TODO should be possible without 200ms timeout, but it's not due to other issues - somewhere else
@@ -474,6 +473,7 @@ Card.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   showFullDueDates: PropTypes.bool.isRequired,
+  pathname: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
@@ -498,6 +498,7 @@ Card.propTypes = {
   onTaskMove: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onTaskActivitiesFetch: PropTypes.func.isRequired,
+  onNavigatePush: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {

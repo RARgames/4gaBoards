@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import Header from '../components/Header';
 import entryActions from '../entry-actions';
+import { push } from '../lib/redux-router';
 import selectors from '../selectors';
 
 const mapStateToProps = (state) => {
@@ -45,6 +46,7 @@ const mapDispatchToProps = (dispatch) =>
       onNotificationChangeFilterQuery: entryActions.updateCurrentUserNotificationFilterQuery,
       onSystemNotificationSubmitResponse: entryActions.submitSystemNotificationResponse,
       onLogout: entryActions.logout,
+      onNavigatePush: push,
     },
     dispatch,
   );

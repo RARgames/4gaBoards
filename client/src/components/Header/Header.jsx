@@ -35,6 +35,7 @@ const Header = React.memo(
     onNotificationChangeFilterQuery,
     onSystemNotificationSubmitResponse,
     onLogout,
+    onNavigatePush,
   }) => {
     const [t] = useTranslation();
 
@@ -130,7 +131,7 @@ const Header = React.memo(
               {notificationCount > 0 && <span className={s.notification}>{notificationCount}</span>}
             </Button>
           </NotificationsPopup>
-          <UserPopup canEditProject={canEditProject} projectId={project?.id} isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout}>
+          <UserPopup canEditProject={canEditProject} projectId={project?.id} isAdmin={isAdmin} isLogouting={isLogouting} onLogout={onLogout} onNavigatePush={onNavigatePush}>
             <Button variant={ButtonVariant.Header} title={t('common.profileAndSettings')}>
               <User name={user.name} avatarUrl={user.avatarUrl} size="card" skipTitle />
             </Button>
@@ -162,6 +163,7 @@ Header.propTypes = {
   onNotificationChangeFilterQuery: PropTypes.func.isRequired,
   onSystemNotificationSubmitResponse: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
+  onNavigatePush: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
