@@ -5,6 +5,7 @@ import api from '../../../api';
 import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
 import request from '../request';
+import { goToBoard } from './router';
 
 export function* createList(boardId, data) {
   const nextData = {
@@ -71,6 +72,16 @@ export function* moveList(id, index) {
 }
 
 export function* deleteList(id) {
+  const { cardId, boardId } = yield select(selectors.selectPath);
+
+  if (cardId) {
+    const card = yield select(selectors.selectCardById, cardId);
+
+    if (card && card.listId === id) {
+      yield call(goToBoard, boardId);
+    }
+  }
+
   yield put(actions.deleteList(id));
 
   let list;
@@ -85,6 +96,16 @@ export function* deleteList(id) {
 }
 
 export function* handleListDelete(list) {
+  const { cardId, boardId } = yield select(selectors.selectPath);
+
+  if (cardId) {
+    const card = yield select(selectors.selectCardById, cardId);
+
+    if (card && card.listId === list.id) {
+      yield call(goToBoard, boardId);
+    }
+  }
+
   yield put(actions.handleListDelete(list));
 }
 
