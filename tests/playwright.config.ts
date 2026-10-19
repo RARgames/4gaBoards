@@ -2,10 +2,10 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e/specs',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 1 : 0,
-  workers: process.env.CI ? 1 : 4,
+  retries: process.env.CI ? 1 : 1,
+  workers: process.env.CI ? 1 : 1,
   timeout: 30_000,
   reporter: [['list'], ['html', { open: 'never' }]],
   globalSetup: './global-setup.ts',
