@@ -13,6 +13,7 @@ import { useResizeObserverSize } from '../../hooks';
 import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
 import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
 import { useListDropSlot } from '../../lib/hooks/use-list-drop-slot';
+import firefoxDndFix from '../../utils/firefox-dnd-fix';
 import CardAddPopup from '../CardAddPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import CardAdd from './CardAdd';
@@ -210,6 +211,7 @@ const List = React.memo(
             listActionsPopupRef.current?.close();
           },
         }),
+        firefoxDndFix(innerWrapper),
       ];
 
       // Header

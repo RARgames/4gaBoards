@@ -11,6 +11,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
 import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import firefoxDndFix from '../../utils/firefox-dnd-fix';
 import { withPathView, getPathView } from '../../utils/path-view';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
@@ -182,6 +183,7 @@ const Card = React.memo(
             cardLabelsPopupRef.current?.close();
           },
         }),
+        firefoxDndFix(wrapper),
         dropTargetForElements({
           element: wrapper,
           canDrop: ({ source }) => source.data.type === DroppableTypes.CARD,

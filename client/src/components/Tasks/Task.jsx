@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import DroppableTypes from '../../constants/DroppableTypes';
 import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
 import { useTaskDropSlot } from '../../lib/hooks/use-task-drop-slot';
+import firefoxDndFix from '../../utils/firefox-dnd-fix';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
 import MembershipsPopup from '../MembershipsPopup';
@@ -97,6 +98,7 @@ const Task = React.memo(
             taskDueDateEditPopupRef.current?.close();
           },
         }),
+        firefoxDndFix(wrapper),
         dropTargetForElements({
           element: wrapper,
           canDrop: ({ source }) => source.data.type === DroppableTypes.TASK && source.data.cardId === cardId && source.data.variant === variant,
