@@ -10,12 +10,21 @@ module.exports = {
     beforeId: {
       type: 'string',
     },
+    boardIds: {
+      type: 'ref',
+    },
   },
 
   async fn(inputs) {
     const criteria = {
       projectId: inputs.idOrIds,
     };
+
+    if (!_.isUndefined(inputs.boardIds)) {
+      const ids = _.isArray(inputs.boardIds) ? inputs.boardIds : [inputs.boardIds];
+
+      criteria.or = [{ boardId: ids }, { boardId: null }];
+    }
 
     if (!_.isUndefined(inputs.beforeId)) {
       criteria.id = {
