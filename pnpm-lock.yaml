@@ -118,7 +118,7 @@ importers:
         version: 2.12.0(@opentelemetry/api@1.9.1)
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: ^0.6.3
-        version: 0.6.3(react-refresh@0.19.0)(type-fest@4.20.1)(webpack-dev-server@6.1.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)))(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
+        version: 0.6.3(react-refresh@0.19.0)(type-fest@4.20.1)(webpack-dev-server@6.0.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)))(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
       '@react-hook/resize-observer':
         specifier: ^2.0.2
         version: 2.0.2(react@18.3.1)
@@ -379,7 +379,7 @@ importers:
         version: 5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)
       webpack-dev-server:
         specifier: ^6.0.0
-        version: 6.1.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
+        version: 6.0.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
       webpack-manifest-plugin:
         specifier: ^6.0.1
         version: 6.0.1(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
@@ -4144,6 +4144,10 @@ packages:
   ansi-escapes@7.3.0:
     resolution: {integrity: sha512-BvU8nYgGQBxcmMuEeUEmNTvrMVjJNSH7RgW24vXexN4Ven6qCvy4TntnvlnwnMLTVlcRQQdbRY8NKnaIoeWDNg==}
     engines: {node: '>=18'}
+
+  ansi-html-community@0.0.8:
+    resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
+    hasBin: true
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -9626,8 +9630,8 @@ packages:
       webpack:
         optional: true
 
-  webpack-dev-server@6.1.0:
-    resolution: {integrity: sha512-T52SEoefJWZDgiYRMeQn4q/w9EVIZjBNWfy/WNRR2+EosPwpUmdUY1Wj0b1Mk7+svgKXojdQTP425fJ+DN58yg==}
+  webpack-dev-server@6.0.0:
+    resolution: {integrity: sha512-q9SD4ItOGhZLeU6EGT10caDZdHjF50Pz1DtkRZZOPsfluMXOkacWKKOtSBSLVkPqKiF67eFUC0rI88U/tSFPEw==}
     engines: {node: '>= 22.15.0'}
     hasBin: true
     peerDependencies:
@@ -12914,7 +12918,7 @@ snapshots:
     dependencies:
       playwright: 1.64.0
 
-  '@pmmmwh/react-refresh-webpack-plugin@0.6.3(react-refresh@0.19.0)(type-fest@4.20.1)(webpack-dev-server@6.1.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)))(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))':
+  '@pmmmwh/react-refresh-webpack-plugin@0.6.3(react-refresh@0.19.0)(type-fest@4.20.1)(webpack-dev-server@6.0.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)))(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))':
     dependencies:
       anser: 2.3.5
       core-js-pure: 3.50.0
@@ -12926,7 +12930,7 @@ snapshots:
       webpack: 5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)
     optionalDependencies:
       type-fest: 4.20.1
-      webpack-dev-server: 6.1.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
+      webpack-dev-server: 6.0.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
 
   '@prometheus-io/client@0.16.1':
     dependencies:
@@ -13929,6 +13933,8 @@ snapshots:
   ansi-escapes@7.3.0:
     dependencies:
       environment: 1.1.0
+
+  ansi-html-community@0.0.8: {}
 
   ansi-regex@5.0.1: {}
 
@@ -20670,7 +20676,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-dev-server@6.1.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)):
+  webpack-dev-server@6.0.0(supports-color@10.2.2)(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)):
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
@@ -20679,6 +20685,7 @@ snapshots:
       '@types/serve-index': 1.9.4
       '@types/serve-static': 2.2.0
       '@types/ws': 8.18.2
+      ansi-html-community: 0.0.8
       bonjour-service: 1.4.4
       chokidar: 5.0.0
       compression: 1.8.2(supports-color@10.2.2)
