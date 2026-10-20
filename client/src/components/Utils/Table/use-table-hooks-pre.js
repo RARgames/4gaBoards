@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 
+const SORT_ICON_WIDTH = 13;
+const SORT_INDICATOR_GAP = 4;
+
 const measureTextWidth = (text, font, offset = 0) => {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
@@ -8,16 +11,26 @@ const measureTextWidth = (text, font, offset = 0) => {
   return context.measureText(text).width + offset;
 };
 
+const getSortIndicatorWidth = (sorting, columnId, font) => {
+  const sortIndex = sorting.findIndex((sort) => sort.id === columnId);
+  if (sortIndex === -1) return 0;
+
+  const indexWidth = sorting.length > 1 ? measureTextWidth(`(${sortIndex + 1})`, font) : 0;
+  return SORT_ICON_WIDTH + indexWidth + SORT_INDICATOR_GAP;
+};
+
 const asignIfLarger = (a, b) => {
   return Math.max(a, b);
 };
 
-export default (tableRef, table, { autoFit = false, autoFitScreen = true, refitKey } = {}) => {
+export default (tableRef, table, { autoFit = false, autoFitScreen = true, refitKey, sorting = [] } = {}) => {
   const tableLatestRef = useRef(table);
+  const sortingLatestRef = useRef(sorting);
 
   useEffect(() => {
     tableLatestRef.current = table;
-  }, [table]);
+    sortingLatestRef.current = sorting;
+  }, [sorting, table]);
 
   const autoSizeColumns = useCallback(
     (scrollToEnd, fitScreen, columnId) => {
@@ -50,20 +63,22 @@ export default (tableRef, table, { autoFit = false, autoFitScreen = true, refitK
           const colId = column.id;
           const minColWidth = column.columnDef.meta?.minSize ?? minColumnWidth;
           const maxColWidth = column.columnDef.meta?.maxSize ?? maxColumnWidth;
+          const sortIndicatorWidth = getSortIndicatorWidth(sortingLatestRef.current, colId, headerFont);
           minColSizes[colId] = minColWidth;
 
           if (column.columnDef.meta?.size) {
-            recommendedColSizes[colId] = column.columnDef.meta.size;
-            minColSizes[colId] = column.columnDef.meta.size;
+            const size = column.columnDef.meta.size + sortIndicatorWidth;
+            recommendedColSizes[colId] = size;
+            minColSizes[colId] = size;
             return;
           }
 
           let estimatedSize;
           if (column.columnDef.meta?.headerSize) {
-            estimatedSize = column.columnDef.meta.headerSize;
+            estimatedSize = column.columnDef.meta.headerSize + sortIndicatorWidth;
           } else {
             const header = column.columnDef.header?.toString() || '';
-            estimatedSize = measureTextWidth(header, headerFont, 10);
+            estimatedSize = measureTextWidth(header, headerFont, 10) + sortIndicatorWidth;
           }
           minColSizes[colId] = asignIfLarger(estimatedSize, minColWidth);
 

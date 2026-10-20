@@ -342,6 +342,8 @@ const UsersSettings = React.memo(
     const { handleResetColumnWidthsClick: resetColumnWidths, handleResizerMouseDown } = Table.HooksPre(tableRef, table, {
       autoFit: true,
       autoFitScreen: usersSettingsFitScreen,
+      refitKey: JSON.stringify(sorting),
+      sorting,
     });
 
     resetColumnWidthsRef.current = resetColumnWidths;

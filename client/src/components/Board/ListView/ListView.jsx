@@ -400,7 +400,8 @@ const ListView = React.memo(
     const { handleResetColumnWidthsClick: resetColumnWidths, handleResizerMouseDown } = Table.HooksPre(tableRef, table, {
       autoFit: true,
       autoFitScreen: listViewFitScreen,
-      refitKey: isCardModalOpened,
+      refitKey: `${isCardModalOpened}-${JSON.stringify(sorting)}`,
+      sorting,
     });
     resetColumnWidthsRef.current = resetColumnWidths;
 
