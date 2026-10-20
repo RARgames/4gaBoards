@@ -165,6 +165,12 @@ module.exports = {
       type: 'json',
       custom: stringArrayValidator,
     },
+    selfAssignBySpacebar: {
+      type: 'boolean',
+    },
+    rightClickContextMenu: {
+      type: 'boolean',
+    },
   },
 
   exits: {
@@ -228,6 +234,8 @@ module.exports = {
         'emailNotificationsMarkReadAsDelivered',
         'notificationTypes',
         'suppressedSystemNotificationTags',
+        'selfAssignBySpacebar',
+        'rightClickContextMenu',
       ]),
     };
 

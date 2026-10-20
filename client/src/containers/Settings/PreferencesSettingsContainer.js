@@ -29,6 +29,8 @@ const mapStateToProps = (state) => {
     emailNotificationsMarkReadAsDelivered,
     notificationTypes,
     suppressedSystemNotificationTags,
+    selfAssignBySpacebar,
+    rightClickContextMenu,
   } = selectors.selectCurrentUserPrefs(state);
   const { isAdmin, isVerified } = selectors.selectCurrentUser(state);
 
@@ -57,6 +59,8 @@ const mapStateToProps = (state) => {
     emailNotificationsMarkReadAsDelivered,
     notificationTypes,
     suppressedSystemNotificationTags,
+    selfAssignBySpacebar,
+    rightClickContextMenu,
   };
 };
 

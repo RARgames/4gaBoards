@@ -43,6 +43,8 @@ export default class extends BaseModel {
     emailNotificationsMarkReadAsDelivered: attr(),
     notificationTypes: attr(),
     suppressedSystemNotificationTags: attr(),
+    selfAssignBySpacebar: attr(),
+    rightClickContextMenu: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

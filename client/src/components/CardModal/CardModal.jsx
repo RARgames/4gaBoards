@@ -84,6 +84,7 @@ const CardModal = React.memo(
     createdBy,
     updatedAt,
     updatedBy,
+    selfAssignBySpacebar,
     onUserPrefsUpdate,
     onUpdate,
     onMarkCompleted,
@@ -129,6 +130,7 @@ const CardModal = React.memo(
     const descEditRef = useRef(null);
     const descriptionEditButtonRef = useRef(null);
     const didMountRef = useRef(false);
+    const wrapperRef = useRef(null);
     const [descriptionHeight, setDescriptionHeight] = useState(0);
     const [unsavedDesc, setUnsavedDesc] = useState(false);
     const [, getLocalDesc] = useLocalStorage(`desc-${id}`);
@@ -137,6 +139,7 @@ const CardModal = React.memo(
     const [taskShown, toggleTasksShown] = useToggle(tasksShown);
     const [attacShown, toggleAttacShown] = useToggle(attachmentsShown);
     const [commShown, toggleCommShown] = useToggle(commentsShown);
+    const isAssignedToMe = users.some((user) => user.id === userId);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
@@ -327,6 +330,50 @@ const CardModal = React.memo(
         setIsDescOpened(true);
       });
     }, []);
+
+    useEffect(() => {
+      const wrapper = wrapperRef.current;
+
+      if (!selfAssignBySpacebar || !wrapper || !userId || !canEdit) {
+        return undefined;
+      }
+
+      const handleKeyDown = (e) => {
+        if (e.code !== 'Space' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) {
+          return;
+        }
+
+        // Don't hijack space while typing or activating a control
+        if (isGalleryOpened.current || e.target.closest?.('input, textarea, select, button, a, [contenteditable="true"], [role="dialog"]')) {
+          return;
+        }
+
+        e.preventDefault(); // Prevent modal scroll
+
+        if (isAssignedToMe) {
+          onUserRemove(userId);
+        } else {
+          onUserAdd(userId);
+        }
+      };
+
+      const handleEnter = () => document.addEventListener('keydown', handleKeyDown);
+      const handleLeave = () => document.removeEventListener('keydown', handleKeyDown);
+
+      wrapper.addEventListener('mouseenter', handleEnter);
+      wrapper.addEventListener('mouseleave', handleLeave);
+
+      // Cursor may already be over the modal when the effect (re)runs
+      if (wrapper.matches(':hover')) {
+        handleEnter();
+      }
+
+      return () => {
+        wrapper.removeEventListener('mouseenter', handleEnter);
+        wrapper.removeEventListener('mouseleave', handleLeave);
+        handleLeave();
+      };
+    }, [userId, canEdit, isAssignedToMe, onUserAdd, onUserRemove, selfAssignBySpacebar]);
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
@@ -861,7 +908,11 @@ const CardModal = React.memo(
       </div>
     );
 
-    return <div className={s.wrapper}>{canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}</div>;
+    return (
+      <div ref={wrapperRef} className={s.wrapper}>
+        {canEdit ? <AttachmentAddZone onCreate={onAttachmentCreate}>{contentNode}</AttachmentAddZone> : contentNode}
+      </div>
+    );
   },
 );
 
@@ -919,6 +970,7 @@ CardModal.propTypes = {
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  selfAssignBySpacebar: PropTypes.bool.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMarkCompleted: PropTypes.func.isRequired,

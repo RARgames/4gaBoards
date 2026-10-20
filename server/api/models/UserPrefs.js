@@ -276,6 +276,16 @@ module.exports = {
       columnName: 'suppressed_system_notification_tags',
       custom: (value) => Array.isArray(value) && new Set(value).size === value.length && value.every((v) => _.isString(v) && v.length > 0),
     },
+    selfAssignBySpacebar: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'self_assign_by_spacebar',
+    },
+    rightClickContextMenu: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'right_click_context_menu',
+    },
   },
 
   tableName: 'user_prefs',

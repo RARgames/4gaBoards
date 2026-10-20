@@ -17,6 +17,7 @@
     "client:start": "pnpm -C client start",
     "preclient:test": "pnpm packages:build",
     "client:test": "pnpm -C client test",
+    "preclient:lang:test": "pnpm packages:build",
     "client:lang:test": "pnpm -C client lang:test",
     "preclient:ci:test": "pnpm packages:build",
     "client:ci:test": "pnpm -C client ci:test",

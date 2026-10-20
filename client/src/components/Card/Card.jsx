@@ -69,6 +69,9 @@ const Card = React.memo(
     updatedBy,
     showFullDueDates,
     pathname,
+    currentUserId,
+    selfAssignBySpacebar,
+    rightClickContextMenu,
     onUpdate,
     onMove,
     onTransfer,
@@ -103,6 +106,7 @@ const Card = React.memo(
     const cardMembershipsPopupRef = useRef(null);
     const cardDueDateEditPopupRef = useRef(null);
     const cardLabelsPopupRef = useRef(null);
+    const isAssignedToMe = users.some((user) => user.id === currentUserId);
     const [isNameEditing, setIsNameEditing] = useState(false);
 
     const isDragging = useCardDropSlot((slot) => slot?.cardId === id);
@@ -224,6 +228,50 @@ const Card = React.memo(
     const handleNameEditOpenChange = useCallback((isNameEditOpen) => {
       setIsNameEditing(isNameEditOpen);
     }, []);
+
+    useEffect(() => {
+      const wrapper = wrapperRef.current;
+
+      if (!selfAssignBySpacebar || !wrapper || !canEdit || !isPersisted) {
+        return undefined;
+      }
+
+      const handleKeyDown = (e) => {
+        if (e.code !== 'Space' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) {
+          return;
+        }
+
+        // Don't hijack space while typing or activating a control
+        if (e.target.closest?.('input, textarea, select, button, a, [contenteditable="true"], [role="dialog"]')) {
+          return;
+        }
+
+        e.preventDefault(); // Prevent page/list scroll
+
+        if (isAssignedToMe) {
+          onUserRemove(currentUserId, id);
+        } else {
+          onUserAdd(currentUserId, id);
+        }
+      };
+
+      const handleEnter = () => document.addEventListener('keydown', handleKeyDown);
+      const handleLeave = () => document.removeEventListener('keydown', handleKeyDown);
+
+      wrapper.addEventListener('mouseenter', handleEnter);
+      wrapper.addEventListener('mouseleave', handleLeave);
+
+      // Cursor may already be over the card when the effect (re)runs
+      if (wrapper.matches(':hover')) {
+        handleEnter();
+      }
+
+      return () => {
+        wrapper.removeEventListener('mouseenter', handleEnter);
+        wrapper.removeEventListener('mouseleave', handleLeave);
+        handleLeave();
+      };
+    }, [id, currentUserId, canEdit, isPersisted, isAssignedToMe, onUserAdd, onUserRemove, selfAssignBySpacebar]);
 
     const visibleMembersCount = 3;
     const labelIds = labels.map((label) => label.id);
@@ -479,6 +527,9 @@ Card.propTypes = {
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   showFullDueDates: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,
+  currentUserId: PropTypes.string.isRequired,
+  selfAssignBySpacebar: PropTypes.bool.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,

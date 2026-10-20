@@ -64,6 +64,8 @@ const PreferencesSettings = React.memo(
     emailNotificationsMarkReadAsDelivered,
     notificationTypes,
     suppressedSystemNotificationTags,
+    selfAssignBySpacebar,
+    rightClickContextMenu,
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
@@ -421,6 +423,18 @@ const PreferencesSettings = React.memo(
       });
     }, [onUpdate, emailNotificationsMarkReadAsDelivered]);
 
+    const handleSelfAssignBySpacebarChange = useCallback(() => {
+      onUpdate({
+        selfAssignBySpacebar: !selfAssignBySpacebar,
+      });
+    }, [onUpdate, selfAssignBySpacebar]);
+
+    const handleRightClickContextMenuChange = useCallback(() => {
+      onUpdate({
+        rightClickContextMenu: !rightClickContextMenu,
+      });
+    }, [onUpdate, rightClickContextMenu]);
+
     const data = useMemo(
       () =>
         [
@@ -556,6 +570,24 @@ const PreferencesSettings = React.memo(
             modifySettingsProps: { onChange: handleShowFullDueDatesChange, title: t('common.toggleItem', { item: t('common.showFullDueDates', { postProcess: 'lowercase' }) }) },
             currentValue: showFullDueDates ? t('common.enabled') : t('common.disabled'),
             description: t('common.descriptionShowFullDueDates'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'selfAssignBySpacebar',
+            preferences: t('common.selfAssignBySpacebar'),
+            modifySettings: selfAssignBySpacebar,
+            modifySettingsProps: { onChange: handleSelfAssignBySpacebarChange, title: t('common.toggleItem', { item: t('common.selfAssignBySpacebar', { postProcess: 'lowercase' }) }) },
+            currentValue: selfAssignBySpacebar ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionSelfAssignBySpacebar'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'rightClickContextMenu',
+            preferences: t('common.rightClickContextMenu'),
+            modifySettings: rightClickContextMenu,
+            modifySettingsProps: { onChange: handleRightClickContextMenuChange, title: t('common.toggleItem', { item: t('common.rightClickContextMenu', { postProcess: 'lowercase' }) }) },
+            currentValue: rightClickContextMenu ? t('common.enabled') : t('common.disabled'),
+            description: t('common.descriptionRightClickContextMenu'),
             group: Groups.GENERAL,
           },
           {
@@ -717,6 +749,10 @@ const PreferencesSettings = React.memo(
         handleHideClosestDueDateChange,
         showFullDueDates,
         handleShowFullDueDatesChange,
+        selfAssignBySpacebar,
+        handleSelfAssignBySpacebarChange,
+        rightClickContextMenu,
+        handleRightClickContextMenuChange,
         subscribeToOwnCards,
         handleSubscribeToOwnCardsChange,
         subscribeToNewBoards,
@@ -731,10 +767,10 @@ const PreferencesSettings = React.memo(
         selectedNotificationTypes,
         handleNotificationTypesChange,
         notificationTypesOptions,
-        suppressedSystemNotificationTags,
         suppressedSystemNotificationTagsData.text,
-        handleSuppressedSystemNotificationTagsFieldChange,
         handleSuppressedSystemNotificationTagsSubmit,
+        handleSuppressedSystemNotificationTagsFieldChange,
+        suppressedSystemNotificationTags,
         emailNotificationsEnabled,
         handleEmailNotificationsEnabledChange,
         selectedEmailNotificationsTypes,
@@ -902,6 +938,8 @@ PreferencesSettings.propTypes = {
   emailNotificationsMarkReadAsDelivered: PropTypes.bool.isRequired,
   notificationTypes: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   suppressedSystemNotificationTags: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  selfAssignBySpacebar: PropTypes.bool.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
 };
 
 PreferencesSettings.defaultProps = {
