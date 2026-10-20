@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { startTimer, stopTimer } from '@4gaboards/utils';
 import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
@@ -103,6 +103,7 @@ const Card = React.memo(
     const cardMembershipsPopupRef = useRef(null);
     const cardDueDateEditPopupRef = useRef(null);
     const cardLabelsPopupRef = useRef(null);
+    const [isNameEditing, setIsNameEditing] = useState(false);
 
     const isDragging = useCardDropSlot((slot) => slot?.cardId === id);
     const placeholderHeight = useCardDropSlot((slot) => (slot && slot.listId === listId && slot.placeholderIndex === index ? slot.height : null));
@@ -164,7 +165,7 @@ const Card = React.memo(
       return combine(
         draggable({
           element: wrapper,
-          canDrag: () => isPersisted && canEdit,
+          canDrag: () => isPersisted && canEdit && !isNameEditing,
           getInitialData: ({ input }) => ({
             ...data,
             height: card.offsetHeight,
@@ -188,7 +189,7 @@ const Card = React.memo(
             }),
         }),
       );
-    }, [id, listId, index, isPersisted, canEdit, key]);
+    }, [id, listId, index, isPersisted, canEdit, key, isNameEditing]);
 
     useDropAnimation(cardRef, key);
 
@@ -219,6 +220,10 @@ const Card = React.memo(
       },
       [onUpdate],
     );
+
+    const handleNameEditOpenChange = useCallback((isNameEditOpen) => {
+      setIsNameEditing(isNameEditOpen);
+    }, []);
 
     const visibleMembersCount = 3;
     const labelIds = labels.map((label) => label.id);
@@ -356,7 +361,7 @@ const Card = React.memo(
     return (
       <div ref={wrapperRef} className={s.wrapper}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight + CARD_PLACEHOLDER_MARGIN }} />}
-        <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
+        <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onOpenChange={handleNameEditOpenChange}>
           <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isDragging && gs.hidden)}>
             {isPersisted ? (
               <>

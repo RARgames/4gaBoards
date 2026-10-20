@@ -8,7 +8,7 @@ import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../Utils
 import * as gs from '../../global.module.scss';
 import * as s from './NameEdit.module.scss';
 
-const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
+const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onOpenChange }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
@@ -91,6 +91,10 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    onOpenChange?.(isOpen);
+  }, [isOpen, onOpenChange]);
+
   if (!isOpen) {
     return children;
   }
@@ -121,6 +125,11 @@ NameEdit.propTypes = {
   children: PropTypes.node.isRequired,
   defaultValue: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onOpenChange: PropTypes.func,
+};
+
+NameEdit.defaultProps = {
+  onOpenChange: undefined,
 };
 
 export default React.memo(NameEdit);
