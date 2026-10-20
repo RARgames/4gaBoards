@@ -1,3 +1,5 @@
+const { validateOidcUsername } = require('../../../utils/validateOidcUsername');
+
 module.exports = {
   inputs: {
     id: {
@@ -34,7 +36,7 @@ module.exports = {
 
     const email = inputs.email?.toLowerCase() || `${inputs.username}@github-sso-4ga-boards.com`;
     const name = inputs.displayName || inputs.username;
-    const isUsernameAvailable = !(await sails.helpers.users.getOne({ username: inputs.username.toLowerCase() }));
+    const isUsernameAvailable = !!validateOidcUsername(inputs.username) && !(await sails.helpers.users.getOne({ username: inputs.username.toLowerCase() }));
     let user = await sails.helpers.users.getOne({ ssoGithubId: inputs.id });
     // Default SSO login
     if (user) {
