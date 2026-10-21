@@ -137,7 +137,7 @@ const SidebarProject = React.memo(
     );
 
     return (
-      <div ref={wrapperRef} onContextMenu={handleContextMenu}>
+      <div ref={wrapperRef}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         <div ref={projectRef} className={clsx(isDragging && gs.hidden)}>
           <div
@@ -146,6 +146,7 @@ const SidebarProject = React.memo(
               headerRef.current = el;
               projectRefsCurrent[id] = el;
             }}
+            onContextMenu={handleContextMenu}
           >
             <Button variant={ButtonVariant.Icon} title={project.isCollapsed ? t('common.showBoards') : t('common.hideBoards')} className={clsx(ss.sidebarButton)} onClick={handleToggleCollapse}>
               <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(ss.collapseIcon, project.isCollapsed && ss.collapseIconCollapsed)} />
