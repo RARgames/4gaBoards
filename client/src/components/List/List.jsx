@@ -55,6 +55,7 @@ const List = React.memo(
     mailTokenCount,
     mailServiceAvailable,
     mailServiceInboundEmail,
+    rightClickContextMenu,
     onUpdate,
     onDelete,
     onToggleCompleted,
@@ -249,6 +250,23 @@ const List = React.memo(
       });
     }, [listOuterWrapperElement, listOuterWrapperScrollable]);
 
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!rightClickContextMenu || !isPersisted) {
+          return;
+        }
+
+        // Keep the native menu on links, inputs, etc.
+        if (e.target.closest('a, input, textarea, [contenteditable="true"]')) {
+          return;
+        }
+
+        e.preventDefault();
+        listActionsPopupRef.current?.open();
+      },
+      [rightClickContextMenu, isPersisted],
+    );
+
     const cardsCountText = () => {
       return isFiltered ? t('common.ofCards', { filteredCount: filteredCardIds.length, count: cardIds.length }) : t('common.cards', { count: cardIds.length });
     };
@@ -323,7 +341,7 @@ const List = React.memo(
         {placeholderNode}
         <div ref={innerWrapperRef} data-drag-scroller className={clsx(s.innerWrapper, isDragging && gs.hidden)}>
           <div ref={outerWrapperRef} className={s.outerWrapper}>
-            <div ref={headerRef} className={s.header}>
+            <div ref={headerRef} className={s.header} onContextMenu={handleContextMenu}>
               <Button variant={ButtonVariant.Icon} title={t('common.collapseList')} onClick={handleToggleCollapseClick} className={clsx(s.headerCollapseButton, !canEdit && gs.cursorDefault)}>
                 <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={s.iconRotateRight} />
               </Button>
@@ -414,6 +432,7 @@ List.propTypes = {
   mailTokenCount: PropTypes.number.isRequired,
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onToggleCompleted: PropTypes.func.isRequired,

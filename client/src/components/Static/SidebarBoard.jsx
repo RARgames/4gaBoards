@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
@@ -32,6 +32,7 @@ const SidebarBoard = React.memo(
     mailServiceAvailable,
     mailServiceInboundEmail,
     boardRefs,
+    rightClickContextMenu,
     onUpdate,
     onExport,
     onFetch,
@@ -49,6 +50,7 @@ const SidebarBoard = React.memo(
     const wrapperRef = useRef(null);
     const boardRef = useRef(null);
     const handleRef = useRef(null);
+    const boardActionsPopupRef = useRef(null);
     const boardRefsCurrent = boardRefs.current;
     const { id, isPersisted } = board;
 
@@ -93,8 +95,20 @@ const SidebarBoard = React.memo(
 
     useDropAnimation(boardRef, key);
 
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!rightClickContextMenu || !isPersisted) {
+          return;
+        }
+
+        e.preventDefault();
+        boardActionsPopupRef.current?.open();
+      },
+      [rightClickContextMenu, isPersisted],
+    );
+
     return (
-      <div ref={wrapperRef} className={s.boardDraggable}>
+      <div ref={wrapperRef} className={s.boardDraggable} onContextMenu={handleContextMenu}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         {isPersisted && (
           <div
@@ -136,6 +150,7 @@ const SidebarBoard = React.memo(
               ))}
             {board.notificationsTotal > 0 && <span className={ss.notification}>{board.notificationsTotal}</span>}
             <BoardActionsPopup
+              ref={boardActionsPopupRef}
               activities={board.activities}
               isActivitiesFetching={board.isActivitiesFetching}
               isAllActivitiesFetched={board.isAllActivitiesFetched}
@@ -197,6 +212,7 @@ SidebarBoard.propTypes = {
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
   boardRefs: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFetch: PropTypes.func.isRequired,

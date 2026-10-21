@@ -27,6 +27,7 @@ const makeMapStateToProps = () => {
     const mailTokens = selectors.selectMailTokensByListId(state, id);
     const mailTokenCount = selectors.selectMailTokenCountByListId(state, id);
     const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
+    const { rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
 
     return {
       id,
@@ -55,6 +56,7 @@ const makeMapStateToProps = () => {
       mailTokenCount,
       mailServiceAvailable,
       mailServiceInboundEmail,
+      rightClickContextMenu,
     };
   };
 };

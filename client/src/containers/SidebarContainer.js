@@ -17,7 +17,7 @@ const makeMapStateToProps = () => {
     const path = selectors.selectPathConstant(state);
     const { isAdmin } = selectors.selectCurrentUser(state);
     const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
-    const { sidebarCompact } = selectors.selectCurrentUserPrefs(state);
+    const { sidebarCompact, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
     const { projects, filteredProjects: _filteredProjects } = selectors.selectProjectsForCurrentUser(state);
     const filteredProjects = _filteredProjects.map((project) => ({
       ...project,
@@ -72,6 +72,7 @@ const makeMapStateToProps = () => {
       boardTemplates,
       mailServiceAvailable,
       mailServiceInboundEmail,
+      rightClickContextMenu,
     };
   };
 };

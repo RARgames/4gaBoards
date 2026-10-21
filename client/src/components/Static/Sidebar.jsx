@@ -43,6 +43,7 @@ const Sidebar = React.memo(
     boardTemplates,
     mailServiceAvailable,
     mailServiceInboundEmail,
+    rightClickContextMenu,
     onProjectCreate,
     onProjectUpdate,
     onProjectMove,
@@ -174,6 +175,7 @@ const Sidebar = React.memo(
         mailServiceInboundEmail={mailServiceInboundEmail}
         projectRefs={projectRefs}
         boardRefs={boardRefs}
+        rightClickContextMenu={rightClickContextMenu}
         onProjectUpdate={onProjectUpdate}
         onProjectMembershipUpdate={onProjectMembershipUpdate}
         onBoardCreate={onBoardCreate}
@@ -350,6 +352,7 @@ Sidebar.propTypes = {
   boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   mailServiceAvailable: PropTypes.bool.isRequired,
   mailServiceInboundEmail: PropTypes.string.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onProjectCreate: PropTypes.func.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onProjectMove: PropTypes.func.isRequired,

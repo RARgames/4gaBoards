@@ -275,6 +275,23 @@ const Card = React.memo(
       };
     }, [id, currentUserId, canEdit, isPersisted, isAssignedToMe, onUserAdd, onUserRemove, selfAssignBySpacebar]);
 
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!rightClickContextMenu || !isPersisted) {
+          return;
+        }
+
+        // Keep the native menu on links, inputs, etc.
+        if (e.target.closest('a, input, textarea, [contenteditable="true"]')) {
+          return;
+        }
+
+        e.preventDefault();
+        cardActionsPopupRef.current?.open();
+      },
+      [rightClickContextMenu, isPersisted],
+    );
+
     const visibleMembersCount = 3;
     const labelIds = labels.map((label) => label.id);
 
@@ -412,7 +429,7 @@ const Card = React.memo(
       <div ref={wrapperRef} className={s.wrapper}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight + CARD_PLACEHOLDER_MARGIN }} />}
         <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onOpenChange={handleNameEditOpenChange}>
-          <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isDragging && gs.hidden)}>
+          <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isDragging && gs.hidden)} onContextMenu={handleContextMenu}>
             {isPersisted ? (
               <>
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}

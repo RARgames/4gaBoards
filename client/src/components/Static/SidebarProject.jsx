@@ -35,6 +35,7 @@ const SidebarProject = React.memo(
     mailServiceInboundEmail,
     projectRefs,
     boardRefs,
+    rightClickContextMenu,
     onProjectUpdate,
     onProjectMembershipUpdate,
     onBoardCreate,
@@ -58,8 +59,10 @@ const SidebarProject = React.memo(
     const boardsRef = useRef(null);
     const headerRef = useRef(null);
     const handleRef = useRef(null);
+    const projectActionsPopupRef = useRef(null);
     const projectRefsCurrent = projectRefs.current;
     const { id } = project;
+
     const key = dragKey('project', id);
 
     const isDragging = useSidebarDropSlot((slot) => !!slot && slot.type === DroppableTypes.PROJECT && slot.id === id);
@@ -121,8 +124,20 @@ const SidebarProject = React.memo(
       onProjectMembershipUpdate(project.id, { isCollapsed: !project.isCollapsed });
     }, [project.id, project.isCollapsed, onProjectMembershipUpdate]);
 
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!rightClickContextMenu) {
+          return;
+        }
+
+        e.preventDefault();
+        projectActionsPopupRef.current?.open();
+      },
+      [rightClickContextMenu],
+    );
+
     return (
-      <div ref={wrapperRef}>
+      <div ref={wrapperRef} onContextMenu={handleContextMenu}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         <div ref={projectRef} className={clsx(isDragging && gs.hidden)}>
           <div
@@ -145,6 +160,7 @@ const SidebarProject = React.memo(
             </div>
             {project.notificationsTotal > 0 && <span className={ss.notification}>{project.notificationsTotal}</span>}
             <ProjectActionsPopup
+              ref={projectActionsPopupRef}
               activities={project.activities}
               isActivitiesFetching={project.isActivitiesFetching}
               isAllActivitiesFetched={project.isAllActivitiesFetched}
@@ -190,6 +206,7 @@ const SidebarProject = React.memo(
                   templates={boardTemplates}
                   mailServiceAvailable={mailServiceAvailable}
                   mailServiceInboundEmail={mailServiceInboundEmail}
+                  rightClickContextMenu={rightClickContextMenu}
                   onUpdate={onBoardUpdate}
                   onExport={onBoardExport}
                   onFetch={onBoardFetch}
@@ -227,6 +244,7 @@ SidebarProject.propTypes = {
   mailServiceInboundEmail: PropTypes.string.isRequired,
   projectRefs: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   boardRefs: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onProjectUpdate: PropTypes.func.isRequired,
   onProjectMembershipUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
