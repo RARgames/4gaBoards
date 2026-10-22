@@ -1,10 +1,12 @@
 import { createSelector } from 'redux-orm';
 
+import { BoardMembershipRoles } from '../constants/Enums';
 import orm from '../orm';
 import getActivityDetails from '../utils/get-activity-details';
 import getMeta from '../utils/get-meta';
 import { isLocalId } from '../utils/local-id';
 import { filterSidebarProjects } from '../utils/sidebar-filter';
+import { getMailTokens } from './helpers/mail-tokens';
 
 export const selectCurrentUserId = ({ auth: { userId } }) => userId;
 
@@ -126,6 +128,54 @@ export const selectProjectsForCurrentUser = createSelector(
     const filteredProjects = filterSidebarProjects(projects, userModel.filter);
 
     return { projects, filteredProjects };
+  },
+);
+
+export const selectFilteredProjectsWithDetailsForCurrentUser = createSelector(
+  orm,
+  selectProjectsForCurrentUser,
+  (state) => selectCurrentUserId(state),
+  ({ Project, Board }, projectsData, currentUserId) => {
+    const filteredProjects = projectsData?.filteredProjects;
+    if (!filteredProjects) {
+      return filteredProjects;
+    }
+
+    const getActivities = (model) =>
+      model
+        .getOrderedActivitiesQuerySet()
+        .toModelArray()
+        .map((activityModel) => getActivityDetails(activityModel, currentUserId));
+
+    return filteredProjects.map((project) => {
+      const projectModel = Project.withId(project.id);
+
+      return {
+        ...project,
+        activities: projectModel ? getActivities(projectModel) : [],
+        boards: project.boards.map((board) => {
+          const boardModel = Board.withId(board.id);
+
+          if (!boardModel) {
+            return { ...board, activities: [], mailTokens: [], mailTokenCount: 0, canEdit: false };
+          }
+
+          const membership = boardModel.getMembershipModelForUser(currentUserId);
+          const { id, role, hideCompletedLists } = membership ? membership.ref : {};
+          const mailTokens = getMailTokens(boardModel, currentUserId);
+
+          return {
+            ...board,
+            activities: getActivities(boardModel),
+            mailTokens,
+            mailTokenCount: mailTokens.length,
+            canEdit: role === BoardMembershipRoles.EDITOR,
+            boardMembershipId: id,
+            hideCompletedLists,
+          };
+        }),
+      };
+    });
   },
 );
 
@@ -356,6 +406,7 @@ export default {
   selectUsersExceptCurrent,
   selectCurrentUser,
   selectProjectsForCurrentUser,
+  selectFilteredProjectsWithDetailsForCurrentUser,
   selectManagedProjectsForCurrentUser,
   selectProjectsToListsForCurrentUser,
   selectNotificationsForCurrentUser,

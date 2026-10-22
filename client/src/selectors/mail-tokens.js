@@ -1,6 +1,7 @@
 import { createSelector } from 'redux-orm';
 
 import orm from '../orm';
+import { getMailTokens } from './helpers/mail-tokens';
 import { selectCurrentUserId } from './users';
 
 export const makeSelectMailTokensByListId = () =>
@@ -18,11 +19,7 @@ export const makeSelectMailTokensByListId = () =>
         return listModel;
       }
 
-      const mailTokens = listModel.getOrderedMailTokensModelArray().map((mailTokenModel) => ({
-        ...mailTokenModel.ref,
-        user: mailTokenModel.user?.ref || null,
-        isCurrentUser: mailTokenModel.userId === currentUserId,
-      }));
+      const mailTokens = getMailTokens(listModel, currentUserId);
       return mailTokens;
     },
   );
@@ -64,11 +61,7 @@ export const makeSelectMailTokensByBoardId = () =>
         return boardModel;
       }
 
-      const mailTokens = boardModel.getOrderedMailTokensModelArray().map((mailTokenModel) => ({
-        ...mailTokenModel.ref,
-        user: mailTokenModel.user?.ref || null,
-        isCurrentUser: mailTokenModel.userId === currentUserId,
-      }));
+      const mailTokens = getMailTokens(boardModel, currentUserId);
       return mailTokens;
     },
   );

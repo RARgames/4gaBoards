@@ -2,78 +2,51 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Sidebar from '../components/Static/Sidebar';
-import { BoardMembershipRoles } from '../constants/Enums';
 import entryActions from '../entry-actions';
 import selectors from '../selectors';
 
-const makeMapStateToProps = () => {
-  const selectProjectActivitiesById = selectors.makeSelectProjectActivitiesById();
-  const selectBoardActivitiesById = selectors.makeSelectBoardActivitiesById();
-  const selectCurrentUserMembershipByBoardId = selectors.makeSelectCurrentUserMembershipByBoardId();
-  const selectMailTokensByBoardId = selectors.makeSelectMailTokensByBoardId();
-  const selectMailTokenCountByBoardId = selectors.makeSelectMailTokenCountByBoardId();
+const mapStateToProps = (state) => {
+  const path = selectors.selectPathConstant(state);
+  const { isAdmin } = selectors.selectCurrentUser(state);
+  const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
+  const { sidebarCompact, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
+  const { projects } = selectors.selectProjectsForCurrentUser(state);
+  const filteredProjects = selectors.selectFilteredProjectsWithDetailsForCurrentUser(state);
+  const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
+  const boardTemplates = selectors.selectBoardTemplatesForCurrentUser(state);
+  const { projectId, boardId } = selectors.selectPath(state);
+  const filter = selectors.selectFilterForCurrentUser(state);
+  const filterQuery = filter?.query;
+  const filterTarget = filter?.target;
+  const {
+    ui: {
+      projectCreateForm: { data: defaultData, isSubmitting },
+    },
+  } = state;
+  const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
+  const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
+  const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
 
-  return (state) => {
-    const path = selectors.selectPathConstant(state);
-    const { isAdmin } = selectors.selectCurrentUser(state);
-    const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
-    const { sidebarCompact, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
-    const { projects, filteredProjects: _filteredProjects } = selectors.selectProjectsForCurrentUser(state);
-    const filteredProjects = _filteredProjects.map((project) => ({
-      ...project,
-      activities: selectProjectActivitiesById(state, project.id),
-      boards: project.boards.map((board) => {
-        const membership = selectCurrentUserMembershipByBoardId(state, board.id);
-        const isCurrentUserEditor = !!membership && membership.role === BoardMembershipRoles.EDITOR;
-        const { id, hideCompletedLists } = membership || {};
-
-        return {
-          ...board,
-          activities: selectBoardActivitiesById(state, board.id),
-          mailTokens: selectMailTokensByBoardId(state, board.id),
-          mailTokenCount: selectMailTokenCountByBoardId(state, board.id),
-          canEdit: isCurrentUserEditor,
-          boardMembershipId: id,
-          hideCompletedLists,
-        };
-      }),
-    }));
-    const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
-    const boardTemplates = selectors.selectBoardTemplatesForCurrentUser(state);
-    const { projectId, boardId } = selectors.selectPath(state);
-    const filter = selectors.selectFilterForCurrentUser(state);
-    const filterQuery = filter?.query;
-    const filterTarget = filter?.target;
-    const {
-      ui: {
-        projectCreateForm: { data: defaultData, isSubmitting },
-      },
-    } = state;
-    const instanceNotificationCount = selectors.selectInstanceNotificationsTotal(state);
-    const usersNotificationCount = selectors.selectUsersNotificationsTotal(state);
-    const { mailServiceAvailable, mailServiceInboundEmail } = selectors.selectCoreSettings(state);
-
-    return {
-      path,
-      projects,
-      filteredProjects,
-      managedProjects,
-      currProjectId: projectId,
-      currBoardId: boardId,
-      isAdmin,
-      canAddProject: projectCreationAllEnabled || isAdmin,
-      defaultData,
-      isSubmitting,
-      filterQuery,
-      filterTarget,
-      sidebarCompact,
-      instanceNotificationCount,
-      usersNotificationCount,
-      boardTemplates,
-      mailServiceAvailable,
-      mailServiceInboundEmail,
-      rightClickContextMenu,
-    };
+  return {
+    path,
+    projects,
+    filteredProjects,
+    managedProjects,
+    currProjectId: projectId,
+    currBoardId: boardId,
+    isAdmin,
+    canAddProject: projectCreationAllEnabled || isAdmin,
+    defaultData,
+    isSubmitting,
+    filterQuery,
+    filterTarget,
+    sidebarCompact,
+    instanceNotificationCount,
+    usersNotificationCount,
+    boardTemplates,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
+    rightClickContextMenu,
   };
 };
 
@@ -104,4 +77,4 @@ const mapDispatchToProps = (dispatch) =>
     dispatch,
   );
 
-export default connect(makeMapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

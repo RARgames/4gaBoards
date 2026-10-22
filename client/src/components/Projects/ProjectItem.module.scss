@@ -1,0 +1,74 @@
+:global(#app) {
+  .projectWrapper {
+    position: relative;
+    background-color: var(--backgroundDashboardTile);
+    border-radius: 5px;
+    font-size: 20px;
+    box-shadow:
+      0 3px 6px var(--shadowBlack01),
+      0 6px 12px var(--shadowBlack01);
+    transition:
+      transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+      box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: all 200ms ease;
+
+    &:hover {
+      box-shadow:
+        0 16px 32px var(--shadowBlack01),
+        0 32px 64px var(--shadowBlack01);
+      transform: translate(0, -2px);
+    }
+
+    &:hover {
+      .hoverButton {
+        opacity: 1;
+      }
+    }
+  }
+
+  .project {
+    color: var(--text0);
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .projectTitle {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+  }
+
+  .notification {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: var(--backgroundNotifications);
+    color: var(--textWhite);
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0px 6px;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    text-align: left;
+    transition: background 0.3s ease;
+    pointer-events: none;
+  }
+
+  .hoverButton {
+    opacity: 0;
+  }
+
+  .projectActionsWrapper {
+    position: absolute;
+    top: 20px;
+    right: 0;
+  }
+}
