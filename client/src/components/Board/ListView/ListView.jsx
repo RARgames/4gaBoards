@@ -75,9 +75,11 @@ const ListView = React.memo(
     listViewFitScreen,
     listViewItemsPerPage,
     showFullDueDates,
+    selfAssignBySpacebar,
     rightClickContextMenu,
     currentCardIndex,
     canEdit,
+    currentUserId,
     preferredDetailsFont,
     allBoardMemberships,
     pathname,
@@ -85,6 +87,8 @@ const ListView = React.memo(
     onListCreate,
     onUserPrefsUpdate,
     onNavigatePush,
+    onUserAdd,
+    onUserRemove,
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
@@ -93,6 +97,7 @@ const ListView = React.memo(
     const tableBodyRef = useRef(null);
     const rowRefs = useRef({});
     const [nameCellFns, setNameCellFns] = useState({});
+    const [hoveredCardId, setHoveredCardId] = useState(null);
     const prevFilteredCardIdsRef = useRef([]);
     const initialPageIndexRef = useRef(null);
     if (initialPageIndexRef.current === null) {
@@ -149,6 +154,38 @@ const ListView = React.memo(
       },
       [rightClickContextMenu],
     );
+
+    useEffect(() => {
+      if (!selfAssignBySpacebar || !canEdit || !hoveredCardId) {
+        return undefined;
+      }
+
+      const card = filteredCards.find((item) => item.id === hoveredCardId);
+      if (!card?.isPersisted) {
+        return undefined;
+      }
+
+      const handleKeyDown = (e) => {
+        if (e.code !== 'Space' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) {
+          return;
+        }
+
+        if (e.target.closest?.('input, textarea, select, button, a, [contenteditable="true"], [role="dialog"]')) {
+          return;
+        }
+
+        e.preventDefault(); // Prevent ListView from scrolling down
+
+        if (card.users.some((user) => user.id === currentUserId)) {
+          onUserRemove(currentUserId, card.id);
+        } else {
+          onUserAdd(currentUserId, card.id);
+        }
+      };
+
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [canEdit, currentUserId, filteredCards, hoveredCardId, onUserAdd, onUserRemove, selfAssignBySpacebar]);
 
     const handleResetColumnVisibilityClick = useCallback(() => {
       setColumnVisibility(DEFAULT_COLUMN_VISIBILITY);
@@ -501,6 +538,8 @@ const ListView = React.memo(
                       handleClick(e, row.original.id);
                     }}
                     onContextMenu={(e) => handleContextMenu(e, row.original.isPersisted)}
+                    onMouseEnter={() => setHoveredCardId(row.original.id)}
+                    onMouseLeave={() => setHoveredCardId(null)}
                     className={clsx(canEdit && gs.cursorPointer)}
                   >
                     {row.getVisibleCells().map((cell) => (
@@ -565,9 +604,11 @@ ListView.propTypes = {
   listViewFitScreen: PropTypes.bool.isRequired,
   listViewItemsPerPage: PropTypes.string.isRequired,
   showFullDueDates: PropTypes.bool.isRequired,
+  selfAssignBySpacebar: PropTypes.bool.isRequired,
   rightClickContextMenu: PropTypes.bool.isRequired,
   currentCardIndex: PropTypes.number,
   canEdit: PropTypes.bool.isRequired,
+  currentUserId: PropTypes.string.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   pathname: PropTypes.string.isRequired,
@@ -575,6 +616,8 @@ ListView.propTypes = {
   onListCreate: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onNavigatePush: PropTypes.func.isRequired,
+  onUserAdd: PropTypes.func.isRequired,
+  onUserRemove: PropTypes.func.isRequired,
 };
 
 ListView.defaultProps = {

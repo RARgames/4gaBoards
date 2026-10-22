@@ -67,13 +67,14 @@ const makeMapStateToProps = () => {
     });
     const labelIds = selectors.selectLabelsForCurrentBoard(state);
     const memberIds = selectors.selectMembershipsForCurrentBoard(state);
-    const { listViewStyle, listViewColumnVisibility, listViewFitScreen, listViewItemsPerPage, showFullDueDates, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
+    const { listViewStyle, listViewColumnVisibility, listViewFitScreen, listViewItemsPerPage, showFullDueDates, selfAssignBySpacebar, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
     const currentCardIndex = filteredCards.findIndex((card) => card.id === currentCardId);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const { preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
     const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const pathname = selectors.selectPathname(state);
+    const currentUserId = selectors.selectCurrentUserId(state);
 
     return {
       isCardModalOpened: !!currentCardId,
@@ -89,12 +90,14 @@ const makeMapStateToProps = () => {
       listViewFitScreen,
       listViewItemsPerPage,
       showFullDueDates,
+      selfAssignBySpacebar,
       rightClickContextMenu,
       currentCardIndex,
       canEdit: isCurrentUserEditor,
       preferredDetailsFont,
       allBoardMemberships,
       pathname,
+      currentUserId,
     };
   };
 };
@@ -106,6 +109,8 @@ const mapDispatchToProps = (dispatch) =>
       onListCreate: entryActions.createListInCurrentBoard,
       onUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
       onNavigatePush: push,
+      onUserAdd: (userId, cardId) => entryActions.addUserToCard(userId, cardId),
+      onUserRemove: (userId, cardId) => entryActions.removeUserFromCard(userId, cardId),
     },
     dispatch,
   );
