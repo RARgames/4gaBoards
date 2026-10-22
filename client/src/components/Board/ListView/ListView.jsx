@@ -75,6 +75,7 @@ const ListView = React.memo(
     listViewFitScreen,
     listViewItemsPerPage,
     showFullDueDates,
+    rightClickContextMenu,
     currentCardIndex,
     canEdit,
     preferredDetailsFont,
@@ -126,6 +127,27 @@ const ListView = React.memo(
         }
       },
       [onNavigatePush, pathname],
+    );
+
+    const handleContextMenu = useCallback(
+      (e, isPersisted) => {
+        if (!rightClickContextMenu || !isPersisted) {
+          return;
+        }
+
+        if (e.target.closest('a, input, textarea, [contenteditable="true"]')) {
+          return;
+        }
+
+        const trigger = e.currentTarget.querySelector('[data-card-context-menu-trigger]');
+        if (trigger) {
+          e.preventDefault(); // Prevent browser context menu from opening
+          trigger.dataset.contextMenuX = String(e.clientX);
+          trigger.dataset.contextMenuY = String(e.clientY);
+          trigger.click();
+        }
+      },
+      [rightClickContextMenu],
     );
 
     const handleResetColumnVisibilityClick = useCallback(() => {
@@ -478,6 +500,7 @@ const ListView = React.memo(
                       if (!row.original.isPersisted) return;
                       handleClick(e, row.original.id);
                     }}
+                    onContextMenu={(e) => handleContextMenu(e, row.original.isPersisted)}
                     className={clsx(canEdit && gs.cursorPointer)}
                   >
                     {row.getVisibleCells().map((cell) => (
@@ -542,6 +565,7 @@ ListView.propTypes = {
   listViewFitScreen: PropTypes.bool.isRequired,
   listViewItemsPerPage: PropTypes.string.isRequired,
   showFullDueDates: PropTypes.bool.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   currentCardIndex: PropTypes.number,
   canEdit: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,

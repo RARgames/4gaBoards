@@ -47,16 +47,6 @@ export default (WrappedComponent, defaultProps) => {
       [onClose],
     );
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        open: () => onOpenChange(true, undefined, 'imperative'),
-        close: () => onOpenChange(false, undefined, 'imperative'),
-        toggle: () => onOpenChange(!isOpen, undefined, 'imperative'),
-      }),
-      [onOpenChange, isOpen],
-    );
-
     const { refs, floatingStyles, context } = useFloating({
       open: isOpen,
       onOpenChange,
@@ -81,6 +71,41 @@ export default (WrappedComponent, defaultProps) => {
         }),
       ],
     });
+
+    useImperativeHandle(
+      ref,
+      () => ({
+        open: () => {
+          refs.setPositionReference(refs.domReference.current);
+          onOpenChange(true, undefined, 'imperative');
+        },
+        openAt: (x, y) => {
+          refs.setPositionReference({
+            getBoundingClientRect: () => ({
+              x,
+              y,
+              top: y,
+              right: x,
+              bottom: y,
+              left: x,
+              width: 0,
+              height: 0,
+            }),
+            contextElement: refs.domReference.current,
+          });
+          onOpenChange(true, undefined, 'imperative');
+        },
+        close: () => onOpenChange(false, undefined, 'imperative'),
+        toggle: () => onOpenChange(!isOpen, undefined, 'imperative'),
+      }),
+      [onOpenChange, isOpen, refs],
+    );
+
+    useEffect(() => {
+      if (!isOpen) {
+        refs.setPositionReference(refs.domReference.current);
+      }
+    }, [isOpen, refs]);
 
     const click = useClick(context, { enabled: !disabled });
     const dismiss = useDismiss(context, { ancestorScroll: !keepOnScroll && enableScrollDismiss });

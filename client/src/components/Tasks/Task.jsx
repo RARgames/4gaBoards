@@ -38,6 +38,7 @@ const Task = React.memo(
     dueDate,
     completedAt,
     showFullDueDates,
+    rightClickContextMenu,
     allBoardMemberships,
     boardMemberships,
     users,
@@ -151,6 +152,23 @@ const Task = React.memo(
       [onUpdate],
     );
 
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!rightClickContextMenu || !isPersisted) {
+          return;
+        }
+
+        if (e.target.closest('a, input, textarea, [contenteditable="true"]')) {
+          return;
+        }
+
+        e.stopPropagation(); // Prevent card context menu from opening
+        e.preventDefault(); // Prevent browser context menu from opening
+        taskActionsPopupRef.current?.open();
+      },
+      [rightClickContextMenu, isPersisted],
+    );
+
     let visibleMembersCount;
     let dueDateVariant;
     let userSize;
@@ -201,7 +219,7 @@ const Task = React.memo(
     );
 
     return (
-      <div ref={wrapperRef}>
+      <div ref={wrapperRef} onContextMenu={handleContextMenu}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         <div ref={taskRef} className={clsx(s.wrapper, gs.scrollableX, s.contentHoverable, isDragging && gs.hidden)}>
           <Checkbox checked={isCompleted} size={checkboxSize} disabled={!isPersisted || !canEdit} onChange={handleToggleChange} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} />
@@ -286,6 +304,7 @@ Task.propTypes = {
   dueDate: PropTypes.instanceOf(Date),
   completedAt: PropTypes.instanceOf(Date),
   showFullDueDates: PropTypes.bool.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

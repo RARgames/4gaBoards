@@ -31,6 +31,7 @@ const Tasks = React.forwardRef(
       items,
       closestDueDate,
       showFullDueDates,
+      rightClickContextMenu,
       canEdit,
       allBoardMemberships,
       boardMemberships,
@@ -149,6 +150,7 @@ const Tasks = React.forwardRef(
               dueDate={item.dueDate}
               completedAt={item.completedAt}
               showFullDueDates={showFullDueDates}
+              rightClickContextMenu={rightClickContextMenu}
               allBoardMemberships={allBoardMemberships}
               boardMemberships={boardMemberships}
               users={item.users}
@@ -220,6 +222,7 @@ Tasks.propTypes = {
   items: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   closestDueDate: PropTypes.instanceOf(Date),
   showFullDueDates: PropTypes.bool.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

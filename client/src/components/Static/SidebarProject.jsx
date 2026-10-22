@@ -130,7 +130,7 @@ const SidebarProject = React.memo(
           return;
         }
 
-        e.preventDefault();
+        e.preventDefault(); // Prevent browser context menu from opening
         projectActionsPopupRef.current?.open();
       },
       [rightClickContextMenu],

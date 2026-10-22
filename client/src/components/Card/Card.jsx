@@ -286,7 +286,7 @@ const Card = React.memo(
           return;
         }
 
-        e.preventDefault();
+        e.preventDefault(); // Prevent browser context menu from opening
         cardActionsPopupRef.current?.open();
       },
       [rightClickContextMenu, isPersisted],
@@ -342,6 +342,7 @@ const Card = React.memo(
                 items={tasks}
                 closestDueDate={closestDueDate}
                 showFullDueDates={showFullDueDates}
+                rightClickContextMenu={rightClickContextMenu}
                 canEdit={canEdit}
                 allBoardMemberships={boardAndTaskMemberships}
                 boardMemberships={boardMemberships}

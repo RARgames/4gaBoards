@@ -79,6 +79,7 @@ const makeMapStateToProps = () => {
       hideCardModalActivity,
       hideClosestDueDate,
       showFullDueDates,
+      rightClickContextMenu,
       preferredDetailsFont,
       selfAssignBySpacebar,
     } = selectors.selectCurrentUserPrefs(state);
@@ -129,6 +130,7 @@ const makeMapStateToProps = () => {
       hideCardModalActivity,
       hideClosestDueDate,
       showFullDueDates,
+      rightClickContextMenu,
       preferredDetailsFont,
       userId,
       isGithubConnected,

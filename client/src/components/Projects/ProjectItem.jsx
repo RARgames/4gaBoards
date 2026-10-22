@@ -25,7 +25,7 @@ const ProjectItem = React.memo(({ item, managedProjects, boardTemplates, isAdmin
         return;
       }
 
-      e.preventDefault();
+      e.preventDefault(); // Prevent browser context menu from opening
       projectActionsPopupRef.current?.open();
     },
     [rightClickContextMenu],

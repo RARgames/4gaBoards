@@ -261,7 +261,7 @@ const List = React.memo(
           return;
         }
 
-        e.preventDefault();
+        e.preventDefault(); // Prevent browser context menu from opening
         listActionsPopupRef.current?.open();
       },
       [rightClickContextMenu, isPersisted],

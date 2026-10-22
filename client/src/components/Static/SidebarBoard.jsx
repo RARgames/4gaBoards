@@ -101,7 +101,7 @@ const SidebarBoard = React.memo(
           return;
         }
 
-        e.preventDefault();
+        e.preventDefault(); // Prevent browser context menu from opening
         boardActionsPopupRef.current?.open();
       },
       [rightClickContextMenu, isPersisted],

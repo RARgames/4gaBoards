@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -53,14 +53,28 @@ const ActionsCell = React.memo(
     onActivitiesFetch,
   }) => {
     const [t] = useTranslation();
+    const actionsPopupRef = useRef(null);
 
     const handleNameEdit = useCallback(() => {
       onOpenNameEdit(id);
     }, [onOpenNameEdit, id]);
 
+    const handleContextMenuTriggerClick = useCallback((e) => {
+      const { contextMenuX, contextMenuY } = e.currentTarget.dataset;
+      if (contextMenuX === undefined || contextMenuY === undefined) {
+        return;
+      }
+
+      delete e.currentTarget.dataset.contextMenuX;
+      delete e.currentTarget.dataset.contextMenuY;
+      e.preventDefault(); // Prevent browser context menu from opening
+      actionsPopupRef.current?.openAt(Number(contextMenuX), Number(contextMenuY));
+    }, []);
+
     if (isPersisted) {
       return (
         <CardActionsPopup
+          ref={actionsPopupRef}
           card={{
             id,
             name,
@@ -109,7 +123,7 @@ const ActionsCell = React.memo(
           hideCloseButton
           wrapperClassName={s.popupWrapper}
         >
-          <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={s.editCardButton}>
+          <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={s.editCardButton} data-card-context-menu-trigger onClick={handleContextMenuTriggerClick}>
             <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} className={s.iconEditCardButton} />
           </Button>
         </CardActionsPopup>

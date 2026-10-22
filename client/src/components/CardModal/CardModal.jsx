@@ -61,6 +61,7 @@ const CardModal = React.memo(
     hideCardModalActivity,
     hideClosestDueDate,
     showFullDueDates,
+    rightClickContextMenu,
     preferredDetailsFont,
     userId,
     isGithubConnected,
@@ -787,6 +788,7 @@ const CardModal = React.memo(
               cardName={name}
               items={tasks}
               showFullDueDates={showFullDueDates}
+              rightClickContextMenu={rightClickContextMenu}
               canEdit={canEdit}
               allBoardMemberships={boardAndTaskMemberships}
               boardMemberships={boardMemberships}
@@ -947,6 +949,7 @@ CardModal.propTypes = {
   hideCardModalActivity: PropTypes.bool.isRequired,
   hideClosestDueDate: PropTypes.bool.isRequired,
   showFullDueDates: PropTypes.bool.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   isGithubConnected: PropTypes.bool.isRequired,

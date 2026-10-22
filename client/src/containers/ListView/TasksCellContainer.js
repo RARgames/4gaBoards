@@ -16,7 +16,7 @@ const mapStateToProps = () => {
     const closestDueDate = selectClosestDueDateByCardId(state, id);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const { name: cardName } = selectors.selectCardById(state, id);
-    const { showFullDueDates } = selectors.selectCurrentUserPrefs(state);
+    const { showFullDueDates, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
 
     return {
       cardName,
@@ -24,6 +24,7 @@ const mapStateToProps = () => {
       boardMemberships,
       closestDueDate,
       showFullDueDates,
+      rightClickContextMenu,
       canEdit: isCurrentUserEditor,
     };
   };
