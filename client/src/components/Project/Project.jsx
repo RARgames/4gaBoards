@@ -7,13 +7,40 @@ import PropTypes from 'prop-types';
 import Paths from '../../constants/Paths';
 import truncate from '../../utils/visual-truncate';
 import BoardAddPopup from '../BoardAddPopup';
-import { Button, ButtonVariant, Icon, IconType, IconSize, ProgressBar, ProgressBarSize } from '../Utils';
+import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
+import ProjectBoard from './ProjectBoard';
 
 import * as gs from '../../global.module.scss';
 import * as s from './Project.module.scss';
 
 const Project = React.memo(
-  ({ projectId, projects, filteredProjects, managedProjects, isFiltered, isAdmin, isSubscribed, boardTemplates, onBoardCreate, onBoardTemplateUpdate, onBoardTemplateDelete, onProjectMembershipUpdate }) => {
+  ({
+    projectId,
+    projects,
+    filteredProjects,
+    managedProjects,
+    isFiltered,
+    isAdmin,
+    isSubscribed,
+    boardTemplates,
+    mailServiceAvailable,
+    mailServiceInboundEmail,
+    rightClickContextMenu,
+    onBoardCreate,
+    onBoardUpdate,
+    onBoardDelete,
+    onBoardExport,
+    onBoardFetch,
+    onBoardMembershipUpdate,
+    onActivitiesBoardFetch,
+    onMailTokenCreate,
+    onMailTokenUpdate,
+    onMailTokenDelete,
+    onBoardTemplateCreate,
+    onBoardTemplateUpdate,
+    onBoardTemplateDelete,
+    onProjectMembershipUpdate,
+  }) => {
     const [t] = useTranslation();
     const headerButtonGroupRef = useRef(null);
     const headerButtonGroupOffsetRef = useRef(null);
@@ -98,28 +125,29 @@ const Project = React.memo(
         </div>
         <div className={clsx(s.boardsWrapper, gs.scrollableY, currentProject?.boards.length === 0 && s.boardsWrapperEmpty)}>
           {currentFilteredProject?.boards.map((item) => (
-            <div key={item.id} className={clsx(s.boardWrapper)}>
-              {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
-              <Link to={Paths.BOARDS.replace(':id', item.id)}>
-                <div className={s.board}>
-                  <div title={item.name} className={s.boardTitle}>
-                    {item.name}
-                  </div>
-                  <div className={s.boardProgresses}>
-                    <div className={s.boardProgress}>
-                      {t('common.cards', { context: 'title' })}:
-                      <ProgressBar value={item.cardCompleted} total={item.cardTotal} size={ProgressBarSize.Tiny} className={s.boardProgressBar} />
-                      {!(item.cardCompleted === 0 && item.cardTotal === 0) && `${item.cardCompleted}/${item.cardTotal}`}
-                    </div>
-                    <div className={s.boardProgress}>
-                      {t('common.tasks')}:
-                      <ProgressBar value={item.taskCompleted} total={item.taskTotal} size={ProgressBarSize.Tiny} className={s.boardProgressBar} />
-                      {!(item.taskCompleted === 0 && item.taskTotal === 0) && `${item.taskCompleted}/${item.taskTotal}`}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
+            <ProjectBoard
+              key={item.id}
+              id={item.id}
+              board={item}
+              isAdmin={isAdmin}
+              isProjectManager={isProjectManager}
+              templates={boardTemplates}
+              mailServiceAvailable={mailServiceAvailable}
+              mailServiceInboundEmail={mailServiceInboundEmail}
+              rightClickContextMenu={rightClickContextMenu}
+              onUpdate={onBoardUpdate}
+              onExport={onBoardExport}
+              onFetch={onBoardFetch}
+              onDelete={onBoardDelete}
+              onMembershipUpdate={onBoardMembershipUpdate}
+              onActivitiesFetch={onActivitiesBoardFetch}
+              onMailTokenCreate={onMailTokenCreate}
+              onMailTokenUpdate={onMailTokenUpdate}
+              onMailTokenDelete={onMailTokenDelete}
+              onTemplateCreate={onBoardTemplateCreate}
+              onTemplateUpdate={onBoardTemplateUpdate}
+              onTemplateDelete={onBoardTemplateDelete}
+            />
           ))}
           {currentProject?.boards.length === 0 && isProjectManager && (
             <div className={s.info}>
@@ -157,7 +185,20 @@ Project.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isSubscribed: PropTypes.bool.isRequired,
   boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  mailServiceAvailable: PropTypes.bool.isRequired,
+  mailServiceInboundEmail: PropTypes.string.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
+  onBoardUpdate: PropTypes.func.isRequired,
+  onBoardDelete: PropTypes.func.isRequired,
+  onBoardExport: PropTypes.func.isRequired,
+  onBoardFetch: PropTypes.func.isRequired,
+  onBoardMembershipUpdate: PropTypes.func.isRequired,
+  onActivitiesBoardFetch: PropTypes.func.isRequired,
+  onMailTokenCreate: PropTypes.func.isRequired,
+  onMailTokenUpdate: PropTypes.func.isRequired,
+  onMailTokenDelete: PropTypes.func.isRequired,
+  onBoardTemplateCreate: PropTypes.func.isRequired,
   onBoardTemplateUpdate: PropTypes.func.isRequired,
   onBoardTemplateDelete: PropTypes.func.isRequired,
   onProjectMembershipUpdate: PropTypes.func.isRequired,
