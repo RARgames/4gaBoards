@@ -13,8 +13,8 @@
 
   .sidebarItemBoard {
     background: var(--backgroundSidebarItem);
-    padding: 8px 0;
     display: flex;
+    align-items: center;
   }
 
   .github {
@@ -27,7 +27,7 @@
   }
 
   .boardButton {
-    padding: 0;
+    padding: 8px 0;
   }
 
   .boardCannotManage {
