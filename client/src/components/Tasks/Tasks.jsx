@@ -32,6 +32,8 @@ const Tasks = React.forwardRef(
       closestDueDate,
       showFullDueDates,
       rightClickContextMenu,
+      selfAssignBySpacebar,
+      currentUserId,
       canEdit,
       allBoardMemberships,
       boardMemberships,
@@ -151,6 +153,8 @@ const Tasks = React.forwardRef(
               completedAt={item.completedAt}
               showFullDueDates={showFullDueDates}
               rightClickContextMenu={rightClickContextMenu}
+              selfAssignBySpacebar={selfAssignBySpacebar}
+              currentUserId={currentUserId}
               allBoardMemberships={allBoardMemberships}
               boardMemberships={boardMemberships}
               users={item.users}
@@ -198,7 +202,14 @@ const Tasks = React.forwardRef(
                 {closestDueDate && (
                   <DueDate variant="tasksCard" value={closestDueDate} titlePrefix={t('common.dueDateSummary')} iconSize={IconSize.Size12} className={s.dueDateSummary} showFullDueDates={showFullDueDates} />
                 )}
-                <Button variant={ButtonVariant.Icon} title={isOpen ? t('common.hideTasks') : t('common.showTasks')} onClick={handleToggleClick} className={s.toggleTasksButton} data-prevent-card-switch>
+                <Button
+                  variant={ButtonVariant.Icon}
+                  title={isOpen ? t('common.hideTasks') : t('common.showTasks')}
+                  onClick={handleToggleClick}
+                  className={s.toggleTasksButton}
+                  data-prevent-card-switch
+                  data-self-assign-card
+                >
                   {completedItems.length}/{items.length}
                   <Icon type={IconType.TriangleDown} size={IconSize.Size8} className={clsx(s.countToggleIcon, isOpen && s.countToggleIconOpened)} />
                 </Button>
@@ -223,6 +234,8 @@ Tasks.propTypes = {
   closestDueDate: PropTypes.instanceOf(Date),
   showFullDueDates: PropTypes.bool.isRequired,
   rightClickContextMenu: PropTypes.bool.isRequired,
+  selfAssignBySpacebar: PropTypes.bool.isRequired,
+  currentUserId: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types

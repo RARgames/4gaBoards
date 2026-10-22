@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
+import useSelfAssignBySpacebar from '../../lib/hooks/use-self-assign-by-spacebar';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
 import CardActionsPopup from '../Card/CardActionsPopup';
 import DeletePopup from '../DeletePopup';
@@ -146,6 +147,9 @@ const CardModal = React.memo(
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
     const selectedListName = useMemo(() => (selectedList?.name?.startsWith('common.') ? t(selectedList.name) : selectedList?.name), [selectedList, t]);
+
+    const handleSelfAssign = useCallback(() => onUserAdd(userId), [onUserAdd, userId]);
+    const handleSelfUnassign = useCallback(() => onUserRemove(userId), [onUserRemove, userId]);
 
     useEffect(() => {
       if (!didMountRef.current) {
@@ -332,49 +336,12 @@ const CardModal = React.memo(
       });
     }, []);
 
-    useEffect(() => {
-      const wrapper = wrapperRef.current;
-
-      if (!selfAssignBySpacebar || !wrapper || !userId || !canEdit) {
-        return undefined;
-      }
-
-      const handleKeyDown = (e) => {
-        if (e.code !== 'Space' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) {
-          return;
-        }
-
-        // Don't hijack space while typing or activating a control
-        if (isGalleryOpened.current || e.target.closest?.('input, textarea, select, button, a, [contenteditable="true"], [role="dialog"]')) {
-          return;
-        }
-
-        e.preventDefault(); // Prevent modal scroll
-
-        if (isAssignedToMe) {
-          onUserRemove(userId);
-        } else {
-          onUserAdd(userId);
-        }
-      };
-
-      const handleEnter = () => document.addEventListener('keydown', handleKeyDown);
-      const handleLeave = () => document.removeEventListener('keydown', handleKeyDown);
-
-      wrapper.addEventListener('mouseenter', handleEnter);
-      wrapper.addEventListener('mouseleave', handleLeave);
-
-      // Cursor may already be over the modal when the effect (re)runs
-      if (wrapper.matches(':hover')) {
-        handleEnter();
-      }
-
-      return () => {
-        wrapper.removeEventListener('mouseenter', handleEnter);
-        wrapper.removeEventListener('mouseleave', handleLeave);
-        handleLeave();
-      };
-    }, [userId, canEdit, isAssignedToMe, onUserAdd, onUserRemove, selfAssignBySpacebar]);
+    useSelfAssignBySpacebar(wrapperRef, {
+      enabled: selfAssignBySpacebar && canEdit,
+      isAssigned: isAssignedToMe,
+      onAssign: handleSelfAssign,
+      onUnassign: handleSelfUnassign,
+    });
 
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
@@ -775,7 +742,7 @@ const CardModal = React.memo(
               <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
             </Button>
           )}
-          <Button variant={ButtonVariant.Icon} title={t('common.toggleItem', { item: t('common.tasks') })} onClick={handleToggleTasksShown} className={s.buttonToggle}>
+          <Button variant={ButtonVariant.Icon} title={t('common.toggleItem', { item: t('common.tasks') })} onClick={handleToggleTasksShown} className={s.buttonToggle} data-self-assign-card>
             <Icon type={taskShown ? IconType.Minus : IconType.Plus} size={IconSize.Size10} />
           </Button>
         </div>
@@ -789,6 +756,8 @@ const CardModal = React.memo(
               items={tasks}
               showFullDueDates={showFullDueDates}
               rightClickContextMenu={rightClickContextMenu}
+              selfAssignBySpacebar={selfAssignBySpacebar}
+              currentUserId={userId}
               canEdit={canEdit}
               allBoardMemberships={boardAndTaskMemberships}
               boardMemberships={boardMemberships}

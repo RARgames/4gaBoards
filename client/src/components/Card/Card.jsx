@@ -11,6 +11,7 @@ import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
 import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import useSelfAssignBySpacebar from '../../lib/hooks/use-self-assign-by-spacebar';
 import firefoxDndFix from '../../utils/firefox-dnd-fix';
 import { withPathView, getPathView } from '../../utils/path-view';
 import DueDate from '../DueDate';
@@ -113,6 +114,9 @@ const Card = React.memo(
     const isDragging = useCardDropSlot((slot) => slot?.cardId === id);
     const placeholderHeight = useCardDropSlot((slot) => (slot && slot.listId === listId && slot.placeholderIndex === index ? slot.height : null));
     const key = dragKey('card', id);
+
+    const handleSelfAssign = useCallback(() => onUserAdd(currentUserId, id), [onUserAdd, currentUserId, id]);
+    const handleSelfUnassign = useCallback(() => onUserRemove(currentUserId, id), [onUserRemove, currentUserId, id]);
 
     const scrollCardIntoView = useCallback(() => {
       cardRef.current?.scrollIntoView({
@@ -231,49 +235,12 @@ const Card = React.memo(
       setIsNameEditing(isNameEditOpen);
     }, []);
 
-    useEffect(() => {
-      const wrapper = wrapperRef.current;
-
-      if (!selfAssignBySpacebar || !wrapper || !canEdit || !isPersisted) {
-        return undefined;
-      }
-
-      const handleKeyDown = (e) => {
-        if (e.code !== 'Space' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) {
-          return;
-        }
-
-        // Don't hijack space while typing or activating a control
-        if (e.target.closest?.('input, textarea, select, button, a, [contenteditable="true"], [role="dialog"]')) {
-          return;
-        }
-
-        e.preventDefault(); // Prevent page/list scroll
-
-        if (isAssignedToMe) {
-          onUserRemove(currentUserId, id);
-        } else {
-          onUserAdd(currentUserId, id);
-        }
-      };
-
-      const handleEnter = () => document.addEventListener('keydown', handleKeyDown);
-      const handleLeave = () => document.removeEventListener('keydown', handleKeyDown);
-
-      wrapper.addEventListener('mouseenter', handleEnter);
-      wrapper.addEventListener('mouseleave', handleLeave);
-
-      // Cursor may already be over the card when the effect (re)runs
-      if (wrapper.matches(':hover')) {
-        handleEnter();
-      }
-
-      return () => {
-        wrapper.removeEventListener('mouseenter', handleEnter);
-        wrapper.removeEventListener('mouseleave', handleLeave);
-        handleLeave();
-      };
-    }, [id, currentUserId, canEdit, isPersisted, isAssignedToMe, onUserAdd, onUserRemove, selfAssignBySpacebar]);
+    useSelfAssignBySpacebar(wrapperRef, {
+      enabled: selfAssignBySpacebar && canEdit && isPersisted,
+      isAssigned: isAssignedToMe,
+      onAssign: handleSelfAssign,
+      onUnassign: handleSelfUnassign,
+    });
 
     const handleContextMenu = useCallback(
       (e) => {
@@ -343,6 +310,8 @@ const Card = React.memo(
                 closestDueDate={closestDueDate}
                 showFullDueDates={showFullDueDates}
                 rightClickContextMenu={rightClickContextMenu}
+                selfAssignBySpacebar={selfAssignBySpacebar}
+                currentUserId={currentUserId}
                 canEdit={canEdit}
                 allBoardMemberships={boardAndTaskMemberships}
                 boardMemberships={boardMemberships}

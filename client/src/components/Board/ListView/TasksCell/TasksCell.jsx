@@ -20,6 +20,8 @@ const TasksCell = React.memo(
     closestDueDate,
     showFullDueDates,
     rightClickContextMenu,
+    selfAssignBySpacebar,
+    currentUserId,
     canEdit,
     onTaskUpdate,
     onTaskDuplicate,
@@ -57,6 +59,8 @@ const TasksCell = React.memo(
           closestDueDate={closestDueDate}
           showFullDueDates={showFullDueDates}
           rightClickContextMenu={rightClickContextMenu}
+          selfAssignBySpacebar={selfAssignBySpacebar}
+          currentUserId={currentUserId}
           canEdit={canEdit}
           allBoardMemberships={allBoardMemberships}
           boardMemberships={boardMemberships}
@@ -86,6 +90,8 @@ TasksCell.propTypes = {
   closestDueDate: PropTypes.instanceOf(Date),
   showFullDueDates: PropTypes.bool.isRequired,
   rightClickContextMenu: PropTypes.bool.isRequired,
+  selfAssignBySpacebar: PropTypes.bool.isRequired,
+  currentUserId: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onTaskUpdate: PropTypes.func.isRequired,
   onTaskDuplicate: PropTypes.func.isRequired,

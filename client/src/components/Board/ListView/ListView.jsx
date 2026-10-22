@@ -17,6 +17,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../../constants/Paths';
+import { consumeSpaceKey } from '../../../lib/hooks/use-self-assign-by-spacebar';
 import { withPathView, getPathView } from '../../../utils/path-view';
 import CardAddPopup from '../../CardAddPopup';
 import ListAddPopup from '../../ListAddPopup';
@@ -156,25 +157,15 @@ const ListView = React.memo(
     );
 
     useEffect(() => {
-      if (!selfAssignBySpacebar || !canEdit || !hoveredCardId) {
-        return undefined;
-      }
+      if (!selfAssignBySpacebar || !canEdit || !hoveredCardId) return undefined;
 
       const card = filteredCards.find((item) => item.id === hoveredCardId);
-      if (!card?.isPersisted) {
-        return undefined;
-      }
+      if (!card?.isPersisted) return undefined;
 
       const handleKeyDown = (e) => {
-        if (e.code !== 'Space' || e.repeat || e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) {
-          return;
-        }
-
-        if (e.target.closest?.('input, textarea, select, button, a, [contenteditable="true"], [role="dialog"]')) {
-          return;
-        }
-
-        e.preventDefault(); // Prevent ListView from scrolling down
+        const row = rowRefs.current[card.id];
+        if (!row?.matches(':hover')) return; // extra check if mouse is over
+        if (!consumeSpaceKey(e, row)) return;
 
         if (card.users.some((user) => user.id === currentUserId)) {
           onUserRemove(currentUserId, card.id);

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import useSelfAssignBySpacebar from '../../lib/hooks/use-self-assign-by-spacebar';
 import { useTaskDropSlot } from '../../lib/hooks/use-task-drop-slot';
 import firefoxDndFix from '../../utils/firefox-dnd-fix';
 import DueDate from '../DueDate';
@@ -39,6 +40,8 @@ const Task = React.memo(
     completedAt,
     showFullDueDates,
     rightClickContextMenu,
+    selfAssignBySpacebar,
+    currentUserId,
     allBoardMemberships,
     boardMemberships,
     users,
@@ -72,6 +75,10 @@ const Task = React.memo(
     const isDragging = useTaskDropSlot((slot) => slot?.taskId === id && slot.variant === variant);
     const placeholderHeight = useTaskDropSlot((slot) => (slot && slot.cardId === cardId && slot.variant === variant && slot.placeholderIndex === index ? slot.height : null));
     const key = dragKey('task', `${variant}:${id}`); // Key contains variant because there could be 2 instances of tasks at the same time
+
+    const isAssignedToMe = users.some((user) => user.id === currentUserId);
+    const handleSelfAssign = useCallback(() => onUserAdd(currentUserId), [onUserAdd, currentUserId]);
+    const handleSelfUnassign = useCallback(() => onUserRemove(currentUserId), [onUserRemove, currentUserId]);
 
     useEffect(() => {
       // DnD: the whole task is the drag handle, and also a drop target (drop above/below it)
@@ -114,6 +121,13 @@ const Task = React.memo(
     }, [id, cardId, variant, index, isPersisted, canEdit, key]);
 
     useDropAnimation(taskRef, key);
+
+    useSelfAssignBySpacebar(wrapperRef, {
+      enabled: selfAssignBySpacebar && canEdit && isPersisted,
+      isAssigned: isAssignedToMe,
+      onAssign: handleSelfAssign,
+      onUnassign: handleSelfUnassign,
+    });
 
     const handleClick = useCallback(() => {
       if (isPersisted && canEdit) {
@@ -219,7 +233,7 @@ const Task = React.memo(
     );
 
     return (
-      <div ref={wrapperRef} onContextMenu={handleContextMenu}>
+      <div ref={wrapperRef} onContextMenu={handleContextMenu} data-self-assign-task>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         <div ref={taskRef} className={clsx(s.wrapper, gs.scrollableX, s.contentHoverable, isDragging && gs.hidden)}>
           <Checkbox checked={isCompleted} size={checkboxSize} disabled={!isPersisted || !canEdit} onChange={handleToggleChange} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} />
@@ -305,6 +319,8 @@ Task.propTypes = {
   completedAt: PropTypes.instanceOf(Date),
   showFullDueDates: PropTypes.bool.isRequired,
   rightClickContextMenu: PropTypes.bool.isRequired,
+  selfAssignBySpacebar: PropTypes.bool.isRequired,
+  currentUserId: PropTypes.string.isRequired,
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   users: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
