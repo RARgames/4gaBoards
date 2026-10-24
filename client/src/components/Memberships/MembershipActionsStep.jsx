@@ -7,6 +7,7 @@ import { useSteps } from '../../hooks';
 import DeleteStep from '../DeleteStep';
 import User from '../User';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
+import RoleBadge from './RoleBadge';
 
 import * as s from './MembershipActionsStep.module.scss';
 
@@ -105,6 +106,7 @@ const MembershipActionsStep = React.memo(
         <span className={s.content}>
           <div className={s.name} title={membership.user.name}>
             {membership.user.name}
+            <RoleBadge role={membership.role} className={s.role} />
           </div>
           <div className={s.details}>
             {membership.user.username && (

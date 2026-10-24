@@ -71,6 +71,8 @@
   --backgroundPopupShadow: #19232e;
   --backgroundPopupSuccess: #1d4d33;
   --backgroundPopupError: #5a2323;
+  --backgroundRoleEditor: #d3a528;
+  --backgroundRoleViewer: #17b17d;
   --borderPopupSuccess: #36c275;
   --borderPopupError: #ff6f61;
   --borderSubtle: rgba(54, 75, 97, 0.5);
@@ -262,6 +264,8 @@
   --backgroundPopupShadow: #010409;
   --backgroundPopupSuccess: #163222;
   --backgroundPopupError: #3d1919;
+  --backgroundRoleEditor: #d3a528;
+  --backgroundRoleViewer: #17b17d;
   --borderPopupSuccess: #3fb950;
   --borderPopupError: #f85149;
   --borderSubtle: rgba(88, 166, 255, 0.4);
@@ -453,6 +457,8 @@
   --backgroundPopupShadow: rgba(0, 0, 0, 0.1);
   --backgroundPopupSuccess: #e7f7eb;
   --backgroundPopupError: #fdecea;
+  --backgroundRoleEditor: #d3a528;
+  --backgroundRoleViewer: #17b17d;
   --borderPopupSuccess: #43a047;
   --borderPopupError: #e53935;
   --borderSubtle: rgba(54, 75, 97, 0.3);

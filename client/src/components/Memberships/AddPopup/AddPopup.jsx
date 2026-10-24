@@ -60,6 +60,7 @@ const AddStep = React.memo(
     );
 
     const searchField = useRef(null);
+    const membershipsByUserId = useMemo(() => new Map(memberships.map((m) => [m.userId, m])), [memberships]);
 
     const handleUserSelect = useCallback(
       (id) => {
@@ -162,6 +163,7 @@ const AddStep = React.memo(
                   email={user.email}
                   username={user.username}
                   avatarUrl={user.avatarUrl}
+                  role={membershipsByUserId.get(user.id)?.role}
                   isActive={currentUserIds.includes(user.id)}
                   onSelect={() => handleUserSelect(user.id)}
                 />

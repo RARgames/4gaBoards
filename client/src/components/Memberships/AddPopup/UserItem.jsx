@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 
 import User from '../../User';
 import { Button, Icon, IconType, IconSize } from '../../Utils';
+import RoleBadge from '../RoleBadge';
 
 import * as s from './UserItem.module.scss';
 
-const UserItem = React.memo(({ name, email, username, avatarUrl, isActive, onSelect }) => (
+const UserItem = React.memo(({ name, email, username, avatarUrl, role, isActive, onSelect }) => (
   <Button onClick={onSelect} className={s.menuItem}>
     <User name={name} avatarUrl={avatarUrl} />
     <div className={s.menuItemText} title={name}>
-      <div className={s.name}>{name}</div>
+      <div className={s.name}>
+        {name}
+        {role && <RoleBadge role={role} className={s.role} />}
+      </div>
       {email && <div className={s.email}>{email}</div>}
       {username && <div className={s.username}>{username}</div>}
     </div>
@@ -23,6 +27,7 @@ UserItem.propTypes = {
   email: PropTypes.string,
   username: PropTypes.string,
   avatarUrl: PropTypes.string,
+  role: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
@@ -31,6 +36,7 @@ UserItem.defaultProps = {
   email: undefined,
   username: undefined,
   avatarUrl: undefined,
+  role: undefined,
 };
 
 export default UserItem;
