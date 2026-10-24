@@ -67,6 +67,7 @@ const UsersSettings = React.memo(
     usersSettingsColumnVisibility,
     usersSettingsFitScreen,
     usersSettingsItemsPerPage,
+    rightClickContextMenu,
     onUserCreate,
     onUserCreateMessageDismiss,
     onUpdate,
@@ -136,6 +137,27 @@ const UsersSettings = React.memo(
     const handleResetColumnWidthsClick = useCallback(() => {
       resetColumnWidthsRef.current?.();
     }, []);
+
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!rightClickContextMenu) {
+          return;
+        }
+
+        if (e.target.closest('a, input, textarea, [contenteditable="true"]')) {
+          return;
+        }
+
+        const trigger = e.currentTarget.querySelector('[data-user-context-menu-trigger]');
+        if (trigger) {
+          e.preventDefault(); // Prevent browser context menu from opening
+          trigger.dataset.contextMenuX = String(e.clientX);
+          trigger.dataset.contextMenuY = String(e.clientY);
+          trigger.click();
+        }
+      },
+      [rightClickContextMenu],
+    );
 
     const sortFunctions = Table.HooksSorting(tableInstanceRef);
 
@@ -395,7 +417,7 @@ const UsersSettings = React.memo(
               </Table.Header>
               <Table.Body ref={tableBodyRef} className={clsx(gs.scrollableY)} style={usersSettingsStyle === 'compact' ? Table.Style.Compact : Table.Style.Default}>
                 {table.getRowModel().rows.map((row) => (
-                  <Table.Row key={row.id}>
+                  <Table.Row key={row.id} onContextMenu={handleContextMenu}>
                     {row.getVisibleCells().map((cell) => (
                       <Table.Cell key={cell.id} style={{ width: `${cell.column.getSize()}px` }}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -456,6 +478,7 @@ UsersSettings.propTypes = {
   usersSettingsColumnVisibility: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   usersSettingsFitScreen: PropTypes.bool.isRequired,
   usersSettingsItemsPerPage: PropTypes.string.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onUserCreate: PropTypes.func.isRequired,
   onUserCreateMessageDismiss: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,

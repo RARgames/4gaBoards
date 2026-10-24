@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
   );
 
   const { demoMode } = selectors.selectCoreSettings(state);
-  const { usersSettingsStyle, usersSettingsColumnVisibility, usersSettingsFitScreen, usersSettingsItemsPerPage } = selectors.selectCurrentUserPrefs(state);
+  const { usersSettingsStyle, usersSettingsColumnVisibility, usersSettingsFitScreen, usersSettingsItemsPerPage, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
 
   const {
     ui: {
@@ -69,6 +69,7 @@ const mapStateToProps = (state) => {
     usersSettingsColumnVisibility,
     usersSettingsFitScreen,
     usersSettingsItemsPerPage,
+    rightClickContextMenu,
   };
 };
 
