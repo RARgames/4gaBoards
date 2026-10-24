@@ -7,13 +7,33 @@ const DURATION = 150;
 let pending = null;
 let template = null;
 let floating = null;
+const hidden = new Set();
 
 export const dragKey = (type, id) => `${type}:${id}`;
 
 const findEls = (key) => Array.from(document.querySelectorAll(`[data-drag-key="${key}"]`));
+
+const hide = (el) => {
+  el.style.visibility = 'hidden';
+  hidden.add(el);
+};
+
+const reveal = (el) => {
+  el.style.visibility = '';
+  hidden.delete(el);
+};
+
+const revealAll = () => {
+  hidden.forEach((el) => {
+    el.style.visibility = '';
+  });
+  hidden.clear();
+};
+
 const setVisibility = (key, value) =>
   findEls(key).forEach((el) => {
-    el.style.visibility = value;
+    if (value === 'hidden') hide(el);
+    else reveal(el);
   });
 
 const sanitize = (node) => {
@@ -112,17 +132,18 @@ const play = (drop) => {
 
   const els = findEls(key);
   if (!els.length) {
+    revealAll();
     playIntoTarget(drop);
     return;
   }
 
   const el = els[els.length - 1];
-  els.slice(0, -1).forEach((other) => {
-    other.style.visibility = '';
-  });
-  const show = () => {
-    el.style.visibility = '';
-  };
+
+  hidden.delete(el);
+  revealAll();
+  hidden.add(el);
+
+  const show = () => reveal(el);
 
   const rect = el.getBoundingClientRect();
   const dx = x - grabX - rect.left;
@@ -137,7 +158,7 @@ const play = (drop) => {
 };
 
 const recordDrop = ({ key, x, y, grabX, grabY, targetEl }) => {
-  if (pending) setVisibility(pending.key, '');
+  if (pending) revealAll();
 
   const drop = { key, x, y, grabX, grabY, targetEl };
   pending = drop;
@@ -194,7 +215,7 @@ export const dropAnimation = {
 };
 
 export const hideIfPending = (el, key) => {
-  if (el && pending && pending.key === key) el.style.visibility = 'hidden';
+  if (el && pending && pending.key === key) hide(el);
 };
 
 export const useDropAnimation = (ref, key) => {
