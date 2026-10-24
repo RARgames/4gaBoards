@@ -117,9 +117,8 @@ export function* markCurrentCardCompleted(isCompleted) {
   yield call(markCardCompleted, cardId, isCompleted);
 }
 
-// eslint-disable-next-line no-unused-vars
 export function* moveCard(id, listId, index) {
-  const position = yield select(selectors.selectNextCardPosition, listId, undefined, id, true); // index = undefined for last position in list after move
+  const position = yield select(selectors.selectNextCardPosition, listId, index, id, true); // index = undefined for last position in list after move
 
   yield call(updateCard, id, {
     listId,
