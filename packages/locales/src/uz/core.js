@@ -122,6 +122,7 @@ export default {
       convertToTemplate_title: 'Shablonga aylantirish',
       copyClientId: 'Mijoz ID ni nusxalash',
       copyClientSecret: 'Mijoz sirini nusxalash',
+      copyComment: 'Izohni nusxalash',
       copyEmail: 'Email nusxalash',
       coverImage: 'Qopqoq rasmi',
       created: 'Yaratilgan',

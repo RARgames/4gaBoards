@@ -126,6 +126,7 @@ export default {
       convertToTemplate_title: 'Konwertuj na szablon',
       copyClientId: 'Kopiuj identyfikator klienta',
       copyClientSecret: 'Kopiuj sekret klienta',
+      copyComment: 'Kopiuj komentarz',
       copyEmail: 'Kopiuj e-mail',
       coverImage: 'wyrózniony obrazek',
       created: 'Utworzono',

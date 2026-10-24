@@ -118,6 +118,7 @@ export default {
       convertToTemplate_title: '转换为模板',
       copyClientId: '复制客户端 ID',
       copyClientSecret: '复制客户端密钥',
+      copyComment: '复制评论',
       copyEmail: '复制邮箱',
       coverImage: '封面图片',
       created: '创建于',

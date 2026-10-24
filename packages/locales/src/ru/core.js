@@ -130,6 +130,7 @@ export default {
       convertToTemplate_title: 'Преобразовать в шаблон',
       copyClientId: 'Скопировать ID клиента',
       copyClientSecret: 'Скопировать секрет клиента',
+      copyComment: 'Копировать комментарий',
       copyEmail: 'Скопировать e-mail',
       coverImage: 'Обложка',
       created: 'Создано',

@@ -118,6 +118,7 @@ export default {
       convertToTemplate_title: 'テンプレートに変換',
       copyClientId: 'クライアントIDをコピー',
       copyClientSecret: 'クライアントシークレットをコピー',
+      copyComment: 'コメントをコピー',
       copyEmail: 'メールをコピー',
       coverImage: 'カバー画像',
       created: '作成日',

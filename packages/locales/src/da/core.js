@@ -122,6 +122,7 @@ export default {
       convertToTemplate_title: 'Konverter til skabelon',
       copyClientId: 'Kopiér klient-id',
       copyClientSecret: 'Kopiér klienthemmelighed',
+      copyComment: 'Kopiér kommentar',
       copyEmail: 'Kopiér e-mail',
       coverImage: 'Forsidebillede',
       created: 'Oprettet',

@@ -6,6 +6,7 @@ import ActivityPopup from '../../ActivityPopup';
 import DeletePopup from '../../DeletePopup';
 import User from '../../User';
 import { Icon, IconType, IconSize, Button, ButtonVariant, MDPreview } from '../../Utils';
+import CommentActionsPopup from './CommentActionsPopup';
 import CommentEdit from './CommentEdit';
 
 import * as s from './Comment.module.scss';
@@ -29,6 +30,7 @@ const Comment = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    rightClickContextMenu,
     onUpdate,
     onDelete,
     onUserPrefsUpdate,
@@ -37,10 +39,28 @@ const Comment = React.memo(
     const [t] = useTranslation();
 
     const commentEdit = useRef(null);
+    const commentActionsPopupRef = useRef(null);
 
     const handleEditClick = useCallback(() => {
       commentEdit.current?.open();
     }, []);
+
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!rightClickContextMenu || !isPersisted) {
+          return;
+        }
+
+        // Keep the native menu on links, inputs, etc.
+        if (e.target.closest('a, input, textarea, [contenteditable="true"]')) {
+          return;
+        }
+
+        e.preventDefault(); // Prevent browser context menu from opening
+        commentActionsPopupRef.current?.openAt(e.clientX, e.clientY);
+      },
+      [rightClickContextMenu, isPersisted],
+    );
 
     return (
       <div className={s.content}>
@@ -100,21 +120,48 @@ const Comment = React.memo(
                 </DeletePopup>
               </div>
             )}
+            {rightClickContextMenu && (
+              <div className={s.popupWrapper}>
+                <CommentActionsPopup
+                  ref={commentActionsPopupRef}
+                  userName={user.name}
+                  text={data.text}
+                  canEdit={canEdit}
+                  createdAt={createdAt}
+                  createdBy={createdBy}
+                  updatedAt={updatedAt}
+                  updatedBy={updatedBy}
+                  boardMemberships={boardMemberships}
+                  activities={activities}
+                  isActivitiesFetching={isActivitiesFetching}
+                  isAllActivitiesFetched={isAllActivitiesFetched}
+                  lastActivityId={lastActivityId}
+                  onEdit={handleEditClick}
+                  onDelete={onDelete}
+                  onActivitiesFetch={onActivitiesFetch}
+                  hideCloseButton
+                >
+                  <span className={s.contextMenuAnchor} aria-hidden="true" />
+                </CommentActionsPopup>
+              </div>
+            )}
           </div>
         </div>
-        <CommentEdit
-          ref={commentEdit}
-          defaultData={data}
-          placeholder={t('common.enterComment')}
-          commentMode={commentMode}
-          isGithubConnected={isGithubConnected}
-          githubRepo={githubRepo}
-          preferredDetailsFont={preferredDetailsFont}
-          onUpdate={onUpdate}
-          onUserPrefsUpdate={onUserPrefsUpdate}
-        >
-          <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} className={s.preview} />
-        </CommentEdit>
+        <div onContextMenu={handleContextMenu}>
+          <CommentEdit
+            ref={commentEdit}
+            defaultData={data}
+            placeholder={t('common.enterComment')}
+            commentMode={commentMode}
+            isGithubConnected={isGithubConnected}
+            githubRepo={githubRepo}
+            preferredDetailsFont={preferredDetailsFont}
+            onUpdate={onUpdate}
+            onUserPrefsUpdate={onUserPrefsUpdate}
+          >
+            <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} className={s.preview} />
+          </CommentEdit>
+        </div>
       </div>
     );
   },
@@ -138,6 +185,7 @@ Comment.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,

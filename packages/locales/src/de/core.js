@@ -122,6 +122,7 @@ export default {
       convertToTemplate_title: 'In Vorlage umwandeln',
       copyClientId: 'Client-ID kopieren',
       copyClientSecret: 'Client-Geheimnis kopieren',
+      copyComment: 'Kommentar kopieren',
       copyEmail: 'E-Mail kopieren',
       coverImage: 'Titelbild',
       created: 'Erstellt',

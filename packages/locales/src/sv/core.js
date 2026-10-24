@@ -122,6 +122,7 @@ export default {
       convertToTemplate_title: 'Konvertera till mall',
       copyClientId: 'Kopiera Klient-ID',
       copyClientSecret: 'Kopiera Klienthemlighet',
+      copyComment: 'Kopiera kommentar',
       copyEmail: 'Kopiera E-post',
       coverImage: 'Omslagsbild',
       created: 'Skapad',

@@ -122,6 +122,7 @@ export default {
       convertToTemplate_title: 'Converti in modello',
       copyClientId: 'Copia ID Cliente',
       copyClientSecret: 'Copia Segreto Cliente',
+      copyComment: 'Copia commento',
       copyEmail: 'Copia Email',
       coverImage: 'Immagine di copertina',
       created: 'Creato',

@@ -22,6 +22,7 @@ const Comments = React.memo(
     commentCount,
     preferredDetailsFont,
     boardMemberships,
+    rightClickContextMenu,
     onCommentsFetch,
     onActivitiesFetch,
     onCommentCreate,
@@ -135,6 +136,7 @@ const Comments = React.memo(
                     updatedBy={item.updatedBy}
                     preferredDetailsFont={preferredDetailsFont}
                     boardMemberships={boardMemberships}
+                    rightClickContextMenu={rightClickContextMenu}
                     onUpdate={(data) => handleCommentUpdate(item.id, data)}
                     onDelete={() => handleCommentDelete(item.id)}
                     onUserPrefsUpdate={onUserPrefsUpdate}
@@ -163,13 +165,14 @@ Comments.propTypes = {
   commentCount: PropTypes.number.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  commShown: PropTypes.bool.isRequired,
+  rightClickContextMenu: PropTypes.bool.isRequired,
   onCommentsFetch: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onCommentCreate: PropTypes.func.isRequired,
   onCommentUpdate: PropTypes.func.isRequired,
   onCommentDelete: PropTypes.func.isRequired,
   toggleCommShown: PropTypes.func.isRequired,
-  commShown: PropTypes.bool.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 

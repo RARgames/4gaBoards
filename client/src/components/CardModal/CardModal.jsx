@@ -863,13 +863,14 @@ const CardModal = React.memo(
         commentCount={commentCount}
         preferredDetailsFont={preferredDetailsFont}
         boardMemberships={boardMemberships}
+        commShown={commShown}
+        rightClickContextMenu={rightClickContextMenu}
         onCommentsFetch={onCommentsFetch}
         onActivitiesFetch={onCommentActivitiesFetch}
         onCommentCreate={onCommentCreate}
         onCommentUpdate={onCommentUpdate}
         onCommentDelete={onCommentDelete}
         toggleCommShown={handleToggleCommShown}
-        commShown={commShown}
         onUserPrefsUpdate={onUserPrefsUpdate}
       />
     );

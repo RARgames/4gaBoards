@@ -122,6 +122,7 @@ export default {
       convertToTemplate_title: 'Convert to Template',
       copyClientId: 'Copy Client Id',
       copyClientSecret: 'Copy Client Secret',
+      copyComment: 'Copy Comment',
       copyEmail: 'Copy Email',
       coverImage: 'Cover Image',
       created: 'Created',

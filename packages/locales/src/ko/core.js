@@ -118,6 +118,7 @@ export default {
       convertToTemplate_title: '템플릿으로 변환',
       copyClientId: '클라이언트 ID 복사',
       copyClientSecret: '클라이언트 시크릿 복사',
+      copyComment: '댓글 복사',
       copyEmail: '이메일 복사',
       coverImage: '커버 이미지',
       created: '생성됨',

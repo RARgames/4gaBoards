@@ -126,6 +126,7 @@ export default {
       convertToTemplate_title: 'Previesť na šablónu',
       copyClientId: 'Kopírovať ID klienta',
       copyClientSecret: 'Kopírovať tajomstvo klienta',
+      copyComment: 'Kopírovať komentár',
       copyEmail: 'Kopírovať e-mail',
       coverImage: 'Titulný obrázok',
       created: 'Vytvorené',
