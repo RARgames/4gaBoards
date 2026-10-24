@@ -36,7 +36,7 @@ RUN DISABLE_ESLINT_PLUGIN=true pnpm client:build
 FROM node:24-alpine
 
 RUN apk -U upgrade
-RUN apk add bash --no-cache
+RUN apk add --no-cache bash shadow su-exec
 
 USER node
 WORKDIR /app
