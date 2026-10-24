@@ -193,7 +193,7 @@ importers:
         version: 6.2.0(webpack@5.112.0(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.31))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.31)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0))
       filesize:
         specifier: ^11.0.26
-        version: 11.0.26
+        version: 11.0.28
       find-up:
         specifier: ^8.0.0
         version: 8.0.0
@@ -5634,8 +5634,8 @@ packages:
     resolution: {integrity: sha512-Pf0dwHrWs1GcIK15ps304fmxp2AOcfNR6vOIMvCPEy6ZztKYxzRQHlOuPVWo2HRjbCLHaRTY+kD8n3RbQ0A/fw==}
     engines: {node: '>=20'}
 
-  filesize@11.0.26:
-    resolution: {integrity: sha512-CgbdcjFLDJzMUnxQxHZ5uVxREmTVkjoXnppVB0AH8X0N8Uz4CZarWZLFALLv/Ymyf6EEu1AgaLPS6laXiqBEWA==}
+  filesize@11.0.28:
+    resolution: {integrity: sha512-tsZcwUmhL0WQpsxe9Oua6FBjb0aBTRkXobZBhQdkoII0pYgy9h+cXm5tp13Fsr8dSwp1+UVDxNwAFULDpxkXaw==}
     engines: {node: '>= 10.8.0'}
 
   fill-range@7.1.1:
@@ -15667,7 +15667,7 @@ snapshots:
     dependencies:
       filename-reserved-regex: 4.1.0
 
-  filesize@11.0.26: {}
+  filesize@11.0.28: {}
 
   fill-range@7.1.1:
     dependencies:
