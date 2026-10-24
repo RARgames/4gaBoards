@@ -88,7 +88,7 @@ const List = React.memo(
     const isDragging = useListDropSlot((slot) => slot?.listId === id);
     const placeholderWidth = useListDropSlot((slot) => (slot && slot.placeholderIndex === index ? slot.width : null));
     const cardPlaceholderHeight = useCardDropSlot((slot) => (slot && slot.listId === id && slot.placeholderIndex >= filteredCardsCount ? slot.height : null));
-    const key = dragKey('list', id);
+    const key = dragKey(DroppableTypes.LIST, id);
     useDropAnimation(innerWrapperRef, key);
 
     const styleVars = useMemo(() => {

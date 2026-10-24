@@ -54,7 +54,7 @@ const SidebarBoard = React.memo(
     const boardRefsCurrent = boardRefs.current;
     const { id, isPersisted } = board;
 
-    const key = dragKey('board', id);
+    const key = dragKey(DroppableTypes.BOARD, id);
     const isDragging = useSidebarDropSlot((slot) => !!slot && slot.type === DroppableTypes.BOARD && slot.id === id);
     const placeholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.BOARD && slot.parentId === projectId && slot.placeholderIndex === index ? slot.height : null));
 

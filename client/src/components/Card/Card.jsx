@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useRef, useEffect, useState, useMemo, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { startTimer, stopTimer } from '@4gaboards/utils';
 import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
@@ -10,8 +10,9 @@ import PropTypes from 'prop-types';
 import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
 import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
-import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import { dragKey, getDragData, useDropAnimation, hideIfPending } from '../../lib/hooks/use-drop-animation';
 import useSelfAssignBySpacebar from '../../lib/hooks/use-self-assign-by-spacebar';
+import { useUserDropSlot, useUserDropped, useUserDropTarget } from '../../lib/hooks/use-user-drop-slot';
 import firefoxDndFix from '../../utils/firefox-dnd-fix';
 import { withPathView, getPathView } from '../../utils/path-view';
 import DueDate from '../DueDate';
@@ -104,19 +105,24 @@ const Card = React.memo(
     const nameEdit = useRef(null);
     const cardRef = useRef(null);
     const wrapperRef = useRef(null);
+    const droppedUserRef = useRef(null);
     const cardActionsPopupRef = useRef(null);
     const cardMembershipsPopupRef = useRef(null);
     const cardDueDateEditPopupRef = useRef(null);
     const cardLabelsPopupRef = useRef(null);
     const isAssignedToMe = users.some((user) => user.id === currentUserId);
+    const assignedUserIds = useMemo(() => users.map((u) => u.id), [users]);
     const [isNameEditing, setIsNameEditing] = useState(false);
 
     const isDragging = useCardDropSlot((slot) => slot?.cardId === id);
     const placeholderHeight = useCardDropSlot((slot) => (slot && slot.listId === listId && slot.placeholderIndex === index ? slot.height : null));
-    const key = dragKey('card', id);
+    const userDropPlaceholder = useUserDropSlot((slot) => (slot && slot.cardId === id && !slot.taskId && slot.target === DroppableTypes.CARD ? slot.user : null));
+    const droppedUserId = useUserDropped((slot) => (slot && slot.cardId === id && !slot.taskId && slot.target === DroppableTypes.CARD ? slot.userId : null));
+    const key = dragKey(DroppableTypes.CARD, id);
 
     const handleSelfAssign = useCallback(() => onUserAdd(currentUserId, id), [onUserAdd, currentUserId, id]);
     const handleSelfUnassign = useCallback(() => onUserRemove(currentUserId, id), [onUserRemove, currentUserId, id]);
+    const handleUserDrop = useCallback((userId) => onUserAdd(userId, id), [onUserAdd, id]);
 
     const scrollCardIntoView = useCallback(() => {
       cardRef.current?.scrollIntoView({
@@ -201,7 +207,19 @@ const Card = React.memo(
       );
     }, [id, listId, index, isPersisted, canEdit, key, isNameEditing]);
 
+    useUserDropTarget(cardRef, {
+      cardId: id,
+      target: DroppableTypes.CARD,
+      enabled: canEdit && isPersisted,
+      assignedUserIds,
+      onUserDrop: handleUserDrop,
+    });
+
     useDropAnimation(cardRef, key);
+
+    useLayoutEffect(() => {
+      if (droppedUserId) hideIfPending(droppedUserRef.current, dragKey(DroppableTypes.USER, droppedUserId));
+    });
 
     const handleToggleTimerClick = useCallback(() => {
       onUpdate({
@@ -275,7 +293,7 @@ const Card = React.memo(
           {notificationsTotal > 9 && <span className={clsx(s.notification, s.notificationFull)}>9+</span>}
         </div>
         {coverUrl && <img src={coverUrl} alt="" className={s.cover} draggable={false} />}
-        {(labels.length > 0 || tasks.length > 0 || description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer || users.length > 0) && (
+        {(labels.length > 0 || tasks.length > 0 || description || attachmentsCount > 0 || commentCount > 0 || dueDate || timer || users.length > 0 || userDropPlaceholder) && (
           <div className={s.details}>
             {labels.length > 0 && (
               <span className={s.labels}>
@@ -357,7 +375,7 @@ const Card = React.memo(
                 )}
               </span>
             )}
-            {users.length > 0 && (
+            {(users.length > 0 || userDropPlaceholder) && (
               <span className={clsx(s.attachments, s.attachmentsRight, s.users)}>
                 <div className={s.popupWrapper2}>
                   <MembershipsPopup
@@ -370,8 +388,18 @@ const Card = React.memo(
                     onUserEmailLookup={onUserEmailLookup}
                     offset={0}
                   >
+                    {userDropPlaceholder && (
+                      <span className={clsx(s.attachment, s.user, s.userPlaceholder)}>
+                        <User name={userDropPlaceholder.name} avatarUrl={userDropPlaceholder.avatarUrl} size="card" isMember />
+                      </span>
+                    )}
                     {users.slice(0, visibleMembersCount).map((user) => (
-                      <span key={user.id} className={clsx(s.attachment, s.user)}>
+                      <span
+                        key={user.id}
+                        className={clsx(s.attachment, s.user)}
+                        ref={user.id === droppedUserId ? droppedUserRef : undefined}
+                        data-drag-key={user.id === droppedUserId ? dragKey(DroppableTypes.USER, user.id) : undefined}
+                      >
                         <User name={user.name} avatarUrl={user.avatarUrl} size="card" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
                       </span>
                     ))}

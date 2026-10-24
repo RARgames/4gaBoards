@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { useLayoutEffect } from 'react';
 import { setCustomNativeDragPreview } from '@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview';
 
@@ -12,14 +13,13 @@ export const dragKey = (type, id) => `${type}:${id}`;
 const findEls = (key) => Array.from(document.querySelectorAll(`[data-drag-key="${key}"]`));
 const setVisibility = (key, value) =>
   findEls(key).forEach((el) => {
-    // eslint-disable-next-line no-param-reassign
     el.style.visibility = value;
   });
 
 const sanitize = (node) => {
   node.removeAttribute('data-drag-key');
   node.querySelectorAll('[data-drag-key]').forEach((n) => n.removeAttribute('data-drag-key'));
-  // eslint-disable-next-line no-param-reassign
+
   node.style.visibility = 'visible';
   return node;
 };
@@ -118,7 +118,6 @@ const play = (drop) => {
 
   const el = els[els.length - 1];
   els.slice(0, -1).forEach((other) => {
-    // eslint-disable-next-line no-param-reassign
     other.style.visibility = '';
   });
   const show = () => {
@@ -180,11 +179,22 @@ export const dropAnimation = {
   },
 
   onDrop({ source, location }) {
-    const { dragKey: key, grabX, grabY } = source.data;
+    const { dragKey: key, grabX, grabY, noCollapse } = source.data;
     if (!key) return;
     const { clientX, clientY } = location.current.input;
-    recordDrop({ key, x: clientX, y: clientY, grabX, grabY, targetEl: location.current.dropTargets[0]?.element });
+    recordDrop({
+      key,
+      x: clientX,
+      y: clientY,
+      grabX,
+      grabY,
+      targetEl: noCollapse ? undefined : location.current.dropTargets[0]?.element,
+    });
   },
+};
+
+export const hideIfPending = (el, key) => {
+  if (el && pending && pending.key === key) el.style.visibility = 'hidden';
 };
 
 export const useDropAnimation = (ref, key) => {
@@ -192,6 +202,6 @@ export const useDropAnimation = (ref, key) => {
     const el = ref.current;
     if (!el) return;
     el.dataset.dragKey = key;
-    if (pending && pending.key === key) el.style.visibility = 'hidden';
+    hideIfPending(el, key);
   });
 };

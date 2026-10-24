@@ -109,6 +109,7 @@ const BoardActions = React.memo(
             allUsers={allUsers}
             permissionsSelectStep={MembershipPermissionsSelectStep}
             canEdit={isProjectManager}
+            canDrag={canEdit}
             onCreate={onMembershipCreate}
             onUpdate={onMembershipUpdate}
             onDelete={onMembershipDelete}

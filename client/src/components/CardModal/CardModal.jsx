@@ -1,12 +1,15 @@
-import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
+import React, { useMemo, useCallback, useRef, useEffect, useState, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { createTimer, startTimer, stopTimer } from '@4gaboards/utils';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
+import DroppableTypes from '../../constants/DroppableTypes';
 import { useLocalStorage } from '../../hooks';
 import { useToggle } from '../../lib/hooks';
+import { dragKey, hideIfPending } from '../../lib/hooks/use-drop-animation';
 import useSelfAssignBySpacebar from '../../lib/hooks/use-self-assign-by-spacebar';
+import { useUserDropSlot, useUserDropped, useUserDropTarget } from '../../lib/hooks/use-user-drop-slot';
 import { registerDescriptionOpenHandler } from '../../sagas/core/services/cards';
 import CardActionsPopup from '../Card/CardActionsPopup';
 import DeletePopup from '../DeletePopup';
@@ -133,6 +136,7 @@ const CardModal = React.memo(
     const descriptionEditButtonRef = useRef(null);
     const didMountRef = useRef(false);
     const wrapperRef = useRef(null);
+    const droppedUserRef = useRef(null);
     const [descriptionHeight, setDescriptionHeight] = useState(0);
     const [unsavedDesc, setUnsavedDesc] = useState(false);
     const [, getLocalDesc] = useLocalStorage(`desc-${id}`);
@@ -142,14 +146,18 @@ const CardModal = React.memo(
     const [attacShown, toggleAttacShown] = useToggle(attachmentsShown);
     const [commShown, toggleCommShown] = useToggle(commentsShown);
     const isAssignedToMe = users.some((user) => user.id === userId);
+    const assignedUserIds = useMemo(() => users.map((user) => user.id), [users]);
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
     const selectedList = useMemo(() => (selectedBoard && selectedBoard.lists.find((list) => list.id === listId)) || null, [selectedBoard, listId]);
     const selectedListName = useMemo(() => (selectedList?.name?.startsWith('common.') ? t(selectedList.name) : selectedList?.name), [selectedList, t]);
+    const userDropPlaceholder = useUserDropSlot((slot) => (slot && slot.cardId === id && !slot.taskId && slot.target === DroppableTypes.CARDMODAL ? slot.user : null));
+    const droppedUserId = useUserDropped((slot) => (slot && slot.cardId === id && !slot.taskId && slot.target === DroppableTypes.CARDMODAL ? slot.userId : null));
 
     const handleSelfAssign = useCallback(() => onUserAdd(userId), [onUserAdd, userId]);
     const handleSelfUnassign = useCallback(() => onUserRemove(userId), [onUserRemove, userId]);
+    const handleUserDrop = useCallback((dUserId) => onUserAdd(dUserId), [onUserAdd]);
 
     useEffect(() => {
       if (!didMountRef.current) {
@@ -343,6 +351,18 @@ const CardModal = React.memo(
       onUnassign: handleSelfUnassign,
     });
 
+    useUserDropTarget(wrapperRef, {
+      cardId: id,
+      target: DroppableTypes.CARDMODAL,
+      enabled: canEdit,
+      assignedUserIds,
+      onUserDrop: handleUserDrop,
+    });
+
+    useLayoutEffect(() => {
+      if (droppedUserId) hideIfPending(droppedUserRef.current, dragKey(DroppableTypes.USER, droppedUserId));
+    });
+
     const userIds = users.map((user) => user.id);
     const labelIds = labels.map((label) => label.id);
 
@@ -496,8 +516,18 @@ const CardModal = React.memo(
           offset={0}
           disabled={!canEdit}
         >
+          {userDropPlaceholder && (
+            <span className={clsx(s.headerItem, s.user, s.userPlaceholder)}>
+              <User name={userDropPlaceholder.name} avatarUrl={userDropPlaceholder.avatarUrl} size="small" isMember />
+            </span>
+          )}
           {users.slice(0, visibleMembersCount).map((user, index) => (
-            <span key={user.id} className={clsx(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}>
+            <span
+              key={user.id}
+              className={clsx(s.headerItem, s.user, users.length <= visibleMembersCount && users.length === index + 1 && s.lastUser)}
+              ref={user.id === droppedUserId ? droppedUserRef : undefined}
+              data-drag-key={user.id === droppedUserId ? dragKey(DroppableTypes.USER, user.id) : undefined}
+            >
               <User name={user.name} avatarUrl={user.avatarUrl} size="small" isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
             </span>
           ))}

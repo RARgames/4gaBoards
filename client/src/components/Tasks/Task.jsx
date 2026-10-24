@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useMemo, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { attachClosestEdge } from '@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
@@ -7,9 +7,10 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
-import { dragKey, getDragData, useDropAnimation } from '../../lib/hooks/use-drop-animation';
+import { dragKey, getDragData, useDropAnimation, hideIfPending } from '../../lib/hooks/use-drop-animation';
 import useSelfAssignBySpacebar from '../../lib/hooks/use-self-assign-by-spacebar';
 import { useTaskDropSlot } from '../../lib/hooks/use-task-drop-slot';
+import { useUserDropSlot, useUserDropped, useUserDropTarget } from '../../lib/hooks/use-user-drop-slot';
 import firefoxDndFix from '../../utils/firefox-dnd-fix';
 import DueDate from '../DueDate';
 import DueDateEditPopup from '../DueDateEditPopup';
@@ -68,15 +69,19 @@ const Task = React.memo(
     const nameEdit = useRef(null);
     const wrapperRef = useRef(null);
     const taskRef = useRef(null);
+    const droppedUserRef = useRef(null);
     const taskActionsPopupRef = useRef(null);
     const taskDueDateEditPopupRef = useRef(null);
     const taskMembershipsPopupRef = useRef(null);
 
     const isDragging = useTaskDropSlot((slot) => slot?.taskId === id && slot.variant === variant);
     const placeholderHeight = useTaskDropSlot((slot) => (slot && slot.cardId === cardId && slot.variant === variant && slot.placeholderIndex === index ? slot.height : null));
-    const key = dragKey('task', `${variant}:${id}`); // Key contains variant because there could be 2 instances of tasks at the same time
+    const userDropPlaceholder = useUserDropSlot((slot) => (slot && slot.taskId === id && slot.target === `${DroppableTypes.TASK}-${variant}` ? slot.user : null));
+    const droppedUserId = useUserDropped((slot) => (slot && slot.taskId === id && slot.target === `${DroppableTypes.TASK}-${variant}` ? slot.userId : null));
+    const key = dragKey(DroppableTypes.TASK, `${variant}:${id}`); // Key contains variant because there could be 2 instances of tasks at the same time
 
     const isAssignedToMe = users.some((user) => user.id === currentUserId);
+    const assignedUserIds = useMemo(() => users.map((u) => u.id), [users]);
     const handleSelfAssign = useCallback(() => onUserAdd(currentUserId), [onUserAdd, currentUserId]);
     const handleSelfUnassign = useCallback(() => onUserRemove(currentUserId), [onUserRemove, currentUserId]);
 
@@ -183,6 +188,19 @@ const Task = React.memo(
       [rightClickContextMenu, isPersisted],
     );
 
+    useUserDropTarget(taskRef, {
+      cardId,
+      taskId: id,
+      target: `${DroppableTypes.TASK}-${variant}`,
+      enabled: canEdit && isPersisted,
+      assignedUserIds,
+      onUserDrop: onUserAdd,
+    });
+
+    useLayoutEffect(() => {
+      if (droppedUserId) hideIfPending(droppedUserRef.current, dragKey(DroppableTypes.USER, droppedUserId));
+    });
+
     let visibleMembersCount;
     let dueDateVariant;
     let userSize;
@@ -213,8 +231,13 @@ const Task = React.memo(
 
     const membersNode = (
       <div className={clsx(s.members, canEdit && gs.cursorPointer, isCompleted && s.itemCompleted)}>
+        {userDropPlaceholder && (
+          <span className={clsx(s.member, s.userPlaceholder)}>
+            <User name={userDropPlaceholder.name} avatarUrl={userDropPlaceholder.avatarUrl} size={userSize} isMember />
+          </span>
+        )}
         {users.slice(0, visibleMembersCount).map((user) => (
-          <span key={user.id} className={s.member}>
+          <span key={user.id} className={s.member} ref={user.id === droppedUserId ? droppedUserRef : undefined} data-drag-key={user.id === droppedUserId ? dragKey(DroppableTypes.USER, user.id) : undefined}>
             <User name={user.name} avatarUrl={user.avatarUrl} size={userSize} isMember={boardMemberships.some((m) => m.user?.id === user.id)} isNotMemberTitle={t('common.noLongerBoardMember')} />
           </span>
         ))}

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import User from '../User';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import AddPopup from './AddPopup';
+import DraggableUser from './DraggableUser';
 import MembershipActionsStep from './MembershipActionsPopup';
 
 import * as s from './Memberships.module.scss';
@@ -25,6 +26,7 @@ const Memberships = React.memo(
     deleteConfirmationContent,
     deleteConfirmationButtonContent,
     canEdit,
+    canDrag,
     canLeaveIfLast,
     onCreate,
     onUpdate,
@@ -37,7 +39,7 @@ const Memberships = React.memo(
     return (
       <div className={s.users}>
         {items.slice(0, visibleMembersCount).map((item) => (
-          <span key={item.id} className={s.user}>
+          <DraggableUser key={item.id} id={item.user.id} name={item.user.name} avatarUrl={item.user.avatarUrl} isDraggable={canDrag && item.isPersisted}>
             <MembershipActionsStep
               membership={item}
               permissionsSelectStep={permissionsSelectStep}
@@ -56,7 +58,7 @@ const Memberships = React.memo(
             >
               <User name={item.user.name} avatarUrl={item.user.avatarUrl} size="large" isDisabled={!item.isPersisted} />
             </MembershipActionsStep>
-          </span>
+          </DraggableUser>
         ))}
         {!canEdit && items.length > visibleMembersCount && (
           <Button
@@ -154,6 +156,7 @@ Memberships.propTypes = {
   deleteConfirmationContent: PropTypes.string,
   deleteConfirmationButtonContent: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
+  canDrag: PropTypes.bool,
   canLeaveIfLast: PropTypes.bool,
   onCreate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func,
@@ -172,6 +175,7 @@ Memberships.defaultProps = {
   deleteConfirmationTitle: undefined,
   deleteConfirmationContent: undefined,
   deleteConfirmationButtonContent: undefined,
+  canDrag: false,
   canLeaveIfLast: true,
   onUpdate: undefined,
   onUserEmailLookup: () => {},

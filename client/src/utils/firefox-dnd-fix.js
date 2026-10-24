@@ -10,6 +10,7 @@ const getEditableElement = (target) => {
   return target.isContentEditable ? target.closest('[contenteditable]') || target : null;
 };
 
+// Workaround for Firefox issue with editable fields - cannot move input cursor with mouse
 const firefoxDndFix = (element) => {
   if (typeof navigator === 'undefined' || !navigator.userAgent.includes('Firefox')) {
     return () => {};

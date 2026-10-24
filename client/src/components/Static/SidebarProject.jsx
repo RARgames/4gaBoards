@@ -63,7 +63,7 @@ const SidebarProject = React.memo(
     const projectRefsCurrent = projectRefs.current;
     const { id } = project;
 
-    const key = dragKey('project', id);
+    const key = dragKey(DroppableTypes.PROJECT, id);
 
     const isDragging = useSidebarDropSlot((slot) => !!slot && slot.type === DroppableTypes.PROJECT && slot.id === id);
     const placeholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.PROJECT && slot.placeholderIndex === index ? slot.height : null));
