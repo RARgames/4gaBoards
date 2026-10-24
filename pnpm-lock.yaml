@@ -178,7 +178,7 @@ importers:
         version: 1.1.6(supports-color@10.2.2)
       dotenv:
         specifier: ^18.0.7
-        version: 18.0.8
+        version: 18.0.9
       dotenv-expand:
         specifier: ^1000.0.0
         version: 1000.0.0
@@ -525,7 +525,7 @@ importers:
         version: 4.4.0
       dotenv:
         specifier: ^18.0.7
-        version: 18.0.8
+        version: 18.0.9
       fast-csv:
         specifier: ^5.0.8
         version: 5.0.8
@@ -5208,8 +5208,8 @@ packages:
     resolution: {integrity: sha512-3T4TtUjXm5iGKFEirqKjcDJ0EheFJbv9peb5xytC+HNu3l5Ygnu4dYE8yeqkppHMsh1If9C/A//EJu7IPtNu+A==}
     engines: {node: '>=16'}
 
-  dotenv@18.0.8:
-    resolution: {integrity: sha512-2KDeoFoK/zRtcnbunCDlLG5VWVMcyqeQc6iK65o231nfNAcuGrKoqUQfJFUtBI+QlShk5HKIHxwebBtUl3rEfA==}
+  dotenv@18.0.9:
+    resolution: {integrity: sha512-3fVOW4cB02R066PUSwn8O4TJyz9NckQl7F81blIbaq9jKBm2tSmOKky7ZHIXzGvkVPXCSn6jkpziBPZdGFs8Tw==}
     engines: {node: '>=12'}
     hasBin: true
 
@@ -15066,7 +15066,7 @@ snapshots:
 
   dotenv-expand@1000.0.0: {}
 
-  dotenv@18.0.8: {}
+  dotenv@18.0.9: {}
 
   dunder-proto@1.0.1:
     dependencies:
