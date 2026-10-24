@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useRef, useState, useMemo, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { autoScrollForElements } from '@atlaskit/pragmatic-drag-and-drop-auto-scroll/element';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
@@ -84,6 +84,7 @@ const List = React.memo(
     const outerWrapperRef = useRef(null);
     const cardsCount = cardIds.length;
     const filteredCardsCount = filteredCardIds.length;
+    const scrollTopRef = useRef(0);
 
     const isDragging = useListDropSlot((slot) => slot?.listId === id);
     const placeholderWidth = useListDropSlot((slot) => (slot && slot.placeholderIndex === index ? slot.width : null));
@@ -267,6 +268,17 @@ const List = React.memo(
       [rightClickContextMenu, isPersisted],
     );
 
+    const handleCardsScroll = useCallback((e) => {
+      scrollTopRef.current = e.currentTarget.scrollTop;
+    }, []);
+
+    // Restore scroll position after list reorder
+    useLayoutEffect(() => {
+      if (listWrapper.current && listWrapper.current.scrollTop !== scrollTopRef.current) {
+        listWrapper.current.scrollTop = scrollTopRef.current;
+      }
+    }, [index]);
+
     const cardsCountText = () => {
       return isFiltered ? t('common.ofCards', { filteredCount: filteredCardIds.length, count: cardIds.length }) : t('common.cards', { count: cardIds.length });
     };
@@ -393,7 +405,7 @@ const List = React.memo(
               <div className={s.headerCardsCount}>{cardsCountText()}</div>
             </div>
             {/* eslint-disable-next-line prettier/prettier */}
-          <div ref={(el) => { listWrapper.current = el; setListOuterWrapperElement(el); }} className={clsx(s.cardsInnerWrapper, gs.scrollableY, listOuterWrapperScrollable && s.cardsInnerWrapperScrollable)}
+          <div ref={(el) => { listWrapper.current = el; setListOuterWrapperElement(el); }} onScroll={handleCardsScroll} className={clsx(s.cardsInnerWrapper, gs.scrollableY, listOuterWrapperScrollable && s.cardsInnerWrapperScrollable)}
             >
               <div className={clsx(s.cardsOuterWrapper, listOuterWrapperScrollable && s.cardsOuterWrapperScrollable)}>{cardsNode}</div>
             </div>
