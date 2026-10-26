@@ -96,7 +96,7 @@ module.exports = {
     const sanitizedUser = await sails.helpers.users.sanitize(user, currentUser);
 
     if (user.id === currentUser.id) {
-      const accessToken = sails.helpers.utils.createToken(user.id, user.passwordUpdatedAt);
+      const accessToken = sails.helpers.utils.createToken(user.id, user.passwordChangedAt);
 
       await Session.create({
         accessToken,
