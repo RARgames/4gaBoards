@@ -109,7 +109,7 @@ const ProjectBoard = React.memo(
           onTemplateUpdate={onTemplateUpdate}
           onTemplateDelete={onTemplateDelete}
           position="right-start"
-          offset={10}
+          offset={4}
           hideCloseButton
           wrapperClassName={s.boardActionsWrapper}
         >

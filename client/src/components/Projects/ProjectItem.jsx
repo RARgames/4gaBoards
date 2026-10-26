@@ -71,7 +71,7 @@ const ProjectItem = React.memo(({ item, managedProjects, boardTemplates, isAdmin
         onTemplateDelete={onBoardTemplateDelete}
         onActivitiesFetch={() => onActivitiesProjectFetch(item.id)}
         position="right-start"
-        offset={10}
+        offset={4}
         hideCloseButton
         wrapperClassName={s.projectActionsWrapper}
       >
