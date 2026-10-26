@@ -101,6 +101,11 @@ module.exports = {
       );
 
     if (user) {
+      if (!_.isUndefined(values.password)) {
+        await Session.update({ userId: user.id, deletedAt: null }).set({
+          deletedAt: new Date().toUTCString(),
+        });
+      }
       if (values.password === null) {
         await ApiClient.destroy({
           userId: user.id,
