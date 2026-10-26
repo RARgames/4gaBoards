@@ -1,5 +1,7 @@
 const zxcvbn = require('zxcvbn');
 
+const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
+
 const Errors = {
   EMAIL_ALREADY_IN_USE: {
     emailAlreadyInUse: 'Email already in use',
@@ -96,7 +98,7 @@ module.exports = {
     const user = await sails.helpers.users.createOne.with({ values, request: this.req }).intercept('emailAlreadyInUse', () => Errors.EMAIL_ALREADY_IN_USE);
 
     const accessToken = sails.helpers.utils.createToken(user.id);
-    await Session.create({ accessToken, remoteAddress: this.req.connection.remoteAddress, userId: user.id, userAgent: this.req.headers['user-agent'] });
+    await Session.create({ accessToken, remoteAddress: getRemoteAddress(this.req), userId: user.id, userAgent: getUserAgent(this.req) });
     return {
       item: accessToken,
     };

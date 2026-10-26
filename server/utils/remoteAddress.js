@@ -1,4 +1,15 @@
 /**
+ * The user agent string of the client that just made a request to this application.
+ * For socket requests the header is absent on req.headers, so we fall back to the
+ * original HTTP upgrade handshake headers where the browser did send it.
+ * @param {Request} request The endpoint Request object
+ * @returns The user agent string, or undefined when not available
+ */
+const getUserAgent = (request) => {
+  return request.headers['user-agent'] || request.socket?.handshake?.headers?.['user-agent'] || undefined;
+};
+
+/**
  * The IP address of the client that just made a request to this application, whether
  * or not the TRUST_PROXY env variable is true and if endpoint accessed through a proxy.
  * @param {Request} request The endpoint Request object
@@ -24,4 +35,5 @@ const getRemoteAddress = (request) => {
 
 module.exports = {
   getRemoteAddress,
+  getUserAgent,
 };

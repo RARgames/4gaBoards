@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
-const { getRemoteAddress } = require('../../../utils/remoteAddress');
+const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
   INVALID_USERNAME_PASSWORD: {
@@ -56,7 +56,7 @@ module.exports = {
       accessToken,
       remoteAddress,
       userId: user.id,
-      userAgent: this.req.headers['user-agent'],
+      userAgent: getUserAgent(this.req),
     });
 
     return {

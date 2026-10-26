@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const zxcvbn = require('zxcvbn');
 
-const { getRemoteAddress } = require('../../../utils/remoteAddress');
+const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
   USER_NOT_FOUND: {
@@ -102,7 +102,7 @@ module.exports = {
         accessToken,
         userId: user.id,
         remoteAddress: getRemoteAddress(this.req),
-        userAgent: this.req.headers['user-agent'],
+        userAgent: getUserAgent(this.req),
       });
 
       return {

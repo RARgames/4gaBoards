@@ -1,3 +1,5 @@
+const { getRemoteAddress, getUserAgent } = require('../../utils/remoteAddress');
+
 module.exports = {
   exits: {
     registrationDisabled: {
@@ -25,7 +27,7 @@ module.exports = {
       try {
         const user = await sails.helpers.users.getCreateOneForGoogleSso.with({ id: profile.id, email: profile.emails[0].value, displayName: profile.displayName });
         const accessToken = sails.helpers.utils.createToken(user.id);
-        await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
+        await Session.create({ accessToken, remoteAddress: getRemoteAddress(req), userId: user.id, userAgent: getUserAgent(req) });
         res.redirect(`${sails.config.custom.clientUrl}/google-callback?accessToken=${accessToken}`);
         sails.log.info('Google SSO: User authentication successful:', user.id, user.email, user.name, user.ssoGoogleId);
       } catch (error) {
@@ -49,7 +51,7 @@ module.exports = {
         const email = profile.emails?.find((e) => e.primary && e.verified)?.value || profile.emails?.find((e) => e.verified)?.value || null;
         const user = await sails.helpers.users.getCreateOneForGithubSso.with({ id: profile.id, username: profile.username, displayName: profile.displayName, email });
         const accessToken = sails.helpers.utils.createToken(user.id);
-        await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
+        await Session.create({ accessToken, remoteAddress: getRemoteAddress(req), userId: user.id, userAgent: getUserAgent(req) });
         res.redirect(`${sails.config.custom.clientUrl}/github-callback?accessToken=${accessToken}`);
         sails.log.info('Github SSO: User authentication successful:', user.id, user.email, user.name, user.ssoGithubId, user.ssoGithubUsername);
       } catch (error) {
@@ -72,7 +74,7 @@ module.exports = {
       try {
         const user = await sails.helpers.users.getCreateOneForMicrosoftSso.with({ id: profile.id, email: profile.email, displayName: profile.displayName });
         const accessToken = sails.helpers.utils.createToken(user.id);
-        await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
+        await Session.create({ accessToken, remoteAddress: getRemoteAddress(req), userId: user.id, userAgent: getUserAgent(req) });
         res.redirect(`${sails.config.custom.clientUrl}/microsoft-callback?accessToken=${accessToken}`);
         sails.log.info('Microsoft SSO: User authentication successful:', user.id, user.email, user.name, user.ssoMicrosoftId);
       } catch (error) {
@@ -117,7 +119,7 @@ module.exports = {
           isAdmin: profile.isAdmin,
         });
         const accessToken = sails.helpers.utils.createToken(user.id);
-        await Session.create({ accessToken, remoteAddress: req.connection.remoteAddress, userId: user.id, userAgent: req.headers['user-agent'] });
+        await Session.create({ accessToken, remoteAddress: getRemoteAddress(req), userId: user.id, userAgent: getUserAgent(req) });
         res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?accessToken=${accessToken}`);
         sails.log.info('OIDC SSO: User authentication successful:', user.id, user.email, user.name, user.ssoOidcId);
       } catch (error) {
