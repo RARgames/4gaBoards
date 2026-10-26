@@ -67,7 +67,8 @@ const CardActionsStep = React.memo(
 
     const handleEditNameClick = useCallback(() => {
       onNameEdit();
-    }, [onNameEdit]);
+      onClose();
+    }, [onNameEdit, onClose]);
 
     const handleToggleCompletedClick = useCallback(() => {
       onMarkCompleted(!card.isCompleted);
