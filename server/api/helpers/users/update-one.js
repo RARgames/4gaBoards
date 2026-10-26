@@ -70,14 +70,12 @@ module.exports = {
     let isOnlyPasswordChange = false;
 
     if (!_.isUndefined(values.password)) {
+      isOnlyPasswordChange = Object.keys(values).length === 1;
+
       Object.assign(values, {
         password: values.password === null ? null : bcrypt.hashSync(values.password, 10),
         passwordChangedAt: new Date().toUTCString(),
       });
-
-      if (Object.keys(values).length === 1) {
-        isOnlyPasswordChange = true;
-      }
     }
 
     if (values.username) {
