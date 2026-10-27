@@ -251,7 +251,7 @@ const BoardAddStep = React.memo(({ projects, projectId, skipProjectDropdown, isA
           )}
           <div className={gs.controlsSpaceBetween}>
             <Button variant={ButtonVariant.NoBackground} title={t('common.import')} onClick={handleImportClick} className={s.importButton}>
-              <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} />
+              <Icon type={data.import ? IconType.Attach : IconType.ArrowDown} size={IconSize.Size13} className={s.icon} />
               {data.import ? data.import.file.name : t('common.import')}
             </Button>
             <Button variant={ButtonVariant.Submit} content={data.import ? t('common.importBoard', { context: 'title' }) : t('common.addBoard')} className={s.submitButton} onClick={handleSubmit} />
