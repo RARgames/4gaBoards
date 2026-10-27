@@ -5,6 +5,7 @@ import { ReactComponent as AngleLeftDouble } from '../../../assets/icons/AngleLe
 import { ReactComponent as AnyMatch } from '../../../assets/icons/AnyMatch.svg';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/ArrowDown.svg';
 import { ReactComponent as ArrowLeftBig } from '../../../assets/icons/ArrowLeftBig.svg';
+import { ReactComponent as ArrowRight } from '../../../assets/icons/ArrowRight.svg';
 import { ReactComponent as Attach } from '../../../assets/icons/Attach.svg';
 import { ReactComponent as BarsStaggered } from '../../../assets/icons/BarsStaggered.svg';
 import { ReactComponent as Bell } from '../../../assets/icons/Bell.svg';
@@ -56,6 +57,7 @@ import { ReactComponent as Star } from '../../../assets/icons/Star.svg';
 import { ReactComponent as StarHalf } from '../../../assets/icons/StarHalf.svg';
 import { ReactComponent as StarOutline } from '../../../assets/icons/StarOutline.svg';
 import { ReactComponent as Switch } from '../../../assets/icons/Switch.svg';
+import { ReactComponent as Timer } from '../../../assets/icons/Timer.svg';
 import { ReactComponent as Trash } from '../../../assets/icons/Trash.svg';
 import { ReactComponent as Trello } from '../../../assets/icons/Trello.svg';
 import { ReactComponent as TriangleDown } from '../../../assets/icons/TriangleDown.svg';
@@ -74,6 +76,7 @@ const IconType = {
   AnyMatch,
   ArrowDown,
   ArrowLeftBig,
+  ArrowRight,
   Attach,
   BarsStaggered,
   Bell,
@@ -125,6 +128,7 @@ const IconType = {
   StarHalf,
   StarOutline,
   Switch,
+  Timer,
   Trash,
   Trello,
   TriangleDown,

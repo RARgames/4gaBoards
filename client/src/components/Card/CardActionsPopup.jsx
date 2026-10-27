@@ -222,15 +222,56 @@ const CardActionsStep = React.memo(
             {card.isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')}
           </Button>
         )}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editName', { context: 'title' })} onClick={handleEditNameClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.editTimer', { context: 'title' })} onClick={handleEditTimerClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.moveCard', { context: 'title' })} onClick={handleMoveClick} />}
-        {canEdit && <Button variant={ButtonVariant.PopupContext} content={t('common.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick} />}
-        <Button variant={ButtonVariant.PopupContext} content={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink} />
-        <Button variant={ButtonVariant.PopupContext} content={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick} />
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.editName', { context: 'title' })} onClick={handleEditNameClick}>
+            <Icon type={IconType.Pencil} size={IconSize.Size13} className={s.icon} />
+            {t('common.editName', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.editMembers', { context: 'title' })} onClick={handleUsersClick}>
+            <Icon type={IconType.Users} size={IconSize.Size13} className={s.icon} />
+            {t('common.editMembers', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.editLabels', { context: 'title' })} onClick={handleLabelsClick}>
+            <Icon type={IconType.Label} size={IconSize.Size13} className={s.icon} />
+            {t('common.editLabels', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.editDueDate', { context: 'title' })} onClick={handleEditDueDateClick}>
+            <Icon type={IconType.Calendar} size={IconSize.Size13} className={s.icon} />
+            {t('common.editDueDate', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.editTimer', { context: 'title' })} onClick={handleEditTimerClick}>
+            <Icon type={IconType.Timer} size={IconSize.Size13} className={s.icon} />
+            {t('common.editTimer', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.moveCard', { context: 'title' })} onClick={handleMoveClick}>
+            <Icon type={IconType.ArrowRight} size={IconSize.Size13} className={s.icon} />
+            {t('common.moveCard', { context: 'title' })}
+          </Button>
+        )}
+        {canEdit && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.duplicateCard', { context: 'title' })} onClick={handleDuplicateClick}>
+            <Icon type={IconType.Duplicate} size={IconSize.Size13} className={s.icon} />
+            {t('common.duplicateCard', { context: 'title' })}
+          </Button>
+        )}
+        <Button variant={ButtonVariant.PopupContext} title={t('common.linkCard', { context: 'title' })} onClick={handleCopyLink}>
+          <Icon type={IconType.Link} size={IconSize.Size13} className={s.icon} />
+          {t('common.linkCard', { context: 'title' })}
+        </Button>
+        <Button variant={ButtonVariant.PopupContext} title={t('common.checkActivity', { context: 'title' })} onClick={handleActivityClick}>
+          <Icon type={IconType.Activity} size={IconSize.Size13} className={s.icon} />
+          {t('common.checkActivity', { context: 'title' })}
+        </Button>
         {canEdit && <Popup.Separator />}
         {canEdit && (
           <Button variant={ButtonVariant.PopupContext} title={t('common.deleteCard', { context: 'title' })} onClick={handleDeleteClick}>
