@@ -81,14 +81,12 @@
 
 /* Border-Box */
 *,
-*:before,
-*:after {
-  -webkit-box-sizing: inherit;
+*::before,
+*::after {
   box-sizing: inherit;
 }
 
 html {
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -97,8 +95,6 @@ input[type='text'],
 input[type='email'],
 input[type='search'],
 input[type='password'] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
@@ -114,11 +110,12 @@ body,
 
 html {
   font-size: 14px;
+  -webkit-text-size-adjust: 100%; /* Safari still needs the prefix */
 }
 
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   background: var(--backgroundColor);
   font-family: 'Museo Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -135,9 +132,9 @@ h4,
 h5 {
   font-family: inherit;
   line-height: 1.28571429em;
-  margin: calc(2rem - 0.14285714em) 0em 1rem;
+  margin: calc(2rem - 0.14285714em) 0 1rem;
   font-weight: bold;
-  padding: 0em;
+  padding: 0;
 }
 
 h1 {
@@ -166,7 +163,7 @@ h2:first-child,
 h3:first-child,
 h4:first-child,
 h5:first-child {
-  margin-top: 0em;
+  margin-top: 0;
 }
 
 h1:last-child,
@@ -174,21 +171,21 @@ h2:last-child,
 h3:last-child,
 h4:last-child,
 h5:last-child {
-  margin-bottom: 0em;
+  margin-bottom: 0;
 }
 
 /* Text margins */
 p {
-  margin: 0em 0em 1em;
+  margin: 0 0 1em;
   line-height: 1.4285em;
 }
 
 p:first-child {
-  margin-top: 0em;
+  margin-top: 0;
 }
 
 p:last-child {
-  margin-bottom: 0em;
+  margin-bottom: 0;
 }
 
 /* Links */
@@ -326,7 +323,7 @@ small {
   font-size: 80%;
 }
 
-/* Prevent `sub` and `sup` elements from affecting the line height in all browsers */
+/* Prevent sub/sup from affecting line height */
 sub,
 sup {
   font-size: 75%;
@@ -343,26 +340,19 @@ sup {
   top: -0.5em;
 }
 
-/*
-1. Change the font styles in all browsers
-2. Remove the margin in Firefox and Safari
-*/
+/* Form controls inherit fonts and lose Safari's default margin */
 button,
 input,
 optgroup,
 select,
 textarea {
   font-family: inherit;
-  /* 1 */
   font-size: 100%;
-  /* 1 */
   line-height: 1.15;
-  /* 1 */
   margin: 0;
-  /* 2 */
 }
 
-/* Remove the inheritance of text transform in Edge, Firefox, and IE */
+/* Search input consistency in Safari */
 button,
 select {
   text-transform: none;
@@ -418,20 +408,12 @@ textarea {
   height: auto;
 }
 
-/*
-1. Correct the odd appearance in Chrome and Safari
-2. Correct the outline style in Safari
-*/
 [type='search'] {
   -webkit-appearance: textfield;
-  /* 1 */
   appearance: textfield;
-  /* 1 */
   outline-offset: -2px;
-  /* 2 */
 }
 
-/* Remove the inner padding in Chrome and Safari on macOS */
 [type='search']::-webkit-search-decoration {
   -webkit-appearance: none;
 }
