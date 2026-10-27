@@ -141,6 +141,12 @@ const ListView = React.memo(
           return;
         }
 
+        // Prevent popup for closing when right-clicking inside it
+        if (!e.currentTarget.contains(e.target)) {
+          e.preventDefault(); // Prevent browser context menu from opening
+          return;
+        }
+
         if (e.target.closest('a, input, textarea, [contenteditable="true"]')) {
           return;
         }
