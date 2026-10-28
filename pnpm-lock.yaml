@@ -221,7 +221,7 @@ importers:
         version: 26.5.6(typescript@6.0.3)
       i18next-browser-languagedetector:
         specifier: ^8.2.1
-        version: 8.2.1
+        version: 8.2.3
       identity-obj-proxy:
         specifier: ^3.0.0
         version: 3.0.0
@@ -6111,8 +6111,8 @@ packages:
     resolution: {integrity: sha512-NiC0dd+VAVGq/hWsK19XCTwfx7Xr0KPtldQ11/9DHY8Ic4++bbgRhjCvRD1C/K09V7UZpwgVhQuzPPom9XVrOQ==}
     engines: {node: '>=0.4.0'}
 
-  i18next-browser-languagedetector@8.2.1:
-    resolution: {integrity: sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw==}
+  i18next-browser-languagedetector@8.2.3:
+    resolution: {integrity: sha512-0jSTK3ncpXj9MFdxRz+TVTKDkSvYH8ifB/OCmUdEMprvXC3vy7kEvdKpj0yYB72B0UKEHJLPMEeRVC/UXroWnw==}
 
   i18next@26.5.6:
     resolution: {integrity: sha512-GFWrDwGmYhOQS3bKvjA2Ir2ob9ScEdyY1UbeQJ10jyVACGQ6XxmDYqC/lxEj/IPEJlPQYNRnYffDET6TM8mnFg==}
@@ -16320,7 +16320,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  i18next-browser-languagedetector@8.2.1:
+  i18next-browser-languagedetector@8.2.3:
     dependencies:
       '@babel/runtime': 7.29.10
 
