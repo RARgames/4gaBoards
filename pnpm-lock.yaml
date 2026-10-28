@@ -134,7 +134,7 @@ importers:
         version: 2.10.3(@babel/runtime@8.0.7)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)
       '@uiw/react-md-editor':
         specifier: ^4.1.2
-        version: 4.1.3(@types/react@19.2.17)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(supports-color@10.2.2)
+        version: 4.1.6(@types/react@19.2.17)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(supports-color@10.2.2)
       address:
         specifier: ^2.0.3
         version: 2.0.3
@@ -3906,8 +3906,8 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  '@uiw/react-md-editor@4.1.3':
-    resolution: {integrity: sha512-DE7HmJKbf9ZteYvxuFo6DaU6/DE/38JrTjN6Ha+0ybOtUo6hl7MyrH8E+R7N6N5mj/AjAPlYl4zRHk8KIGGE6A==}
+  '@uiw/react-md-editor@4.1.6':
+    resolution: {integrity: sha512-KW8TYs6BTh1o8STzUPqQd2TOdraEx9ynGSyLNT58yV28+Nn8I/Bi2rxiHZz2RoJugSe1vdKbNlhnaov+uAEkKQ==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -13729,7 +13729,7 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  '@uiw/react-md-editor@4.1.3(@types/react@19.2.17)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(supports-color@10.2.2)':
+  '@uiw/react-md-editor@4.1.6(@types/react@19.2.17)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(supports-color@10.2.2)':
     dependencies:
       '@babel/runtime': 7.29.10
       '@uiw/react-markdown-preview': 5.2.1(@types/react@19.2.17)(react-dom@18.2.0(react@18.3.1))(react@18.3.1)(supports-color@10.2.2)
