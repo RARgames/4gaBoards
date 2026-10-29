@@ -37,7 +37,7 @@
 
 ## Demo
 
-[Try 4ga Boards now!](https://4gaboards.com/try)
+[Try 4ga Boards now!](https://demo.4gaboards.com)
 
 ## Documentation
 
