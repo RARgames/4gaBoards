@@ -11,6 +11,13 @@
   }
 
   .mention {
+    //TODO remove legacy
+    // --mention-ring: color-mix(in srgb, var(--mention-color) 70%, var(--mention-text, #fff));
+    // border-radius: 3px;
+    // background: color-mix(in srgb, var(--mention-color) 30%, transparent);
+    // box-shadow: 0 0 0 1px color-mix(in srgb, var(--mention-ring) 80%, transparent);
+    // -webkit-box-decoration-break: clone;
+    // box-decoration-break: clone;
     --mention-ring: color-mix(in srgb, var(--mention-color) 70%, var(--mention-text, #fff));
     --mention-line: color-mix(in srgb, var(--mention-ring) 80%, transparent);
     --mention-fill: color-mix(in srgb, var(--mention-color) 30%, transparent);
