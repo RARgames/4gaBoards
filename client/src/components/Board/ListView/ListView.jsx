@@ -69,8 +69,8 @@ const ListView = React.memo(
     isGithubConnected,
     githubRepo,
     lists,
-    labelIds,
-    memberIds,
+    boardLabels,
+    boardMemberships,
     listViewStyle,
     listViewColumnVisibility,
     listViewFitScreen,
@@ -82,7 +82,6 @@ const ListView = React.memo(
     canEdit,
     currentUserId,
     preferredDetailsFont,
-    allBoardMemberships,
     pathname,
     onCardCreate,
     onListCreate,
@@ -369,7 +368,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortFn: sortFunctions.recursiveNameSortFn,
           meta: { headerTitle: t('common.createdBy') },
-          cellProps: { getIsMember: (id) => allBoardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
+          cellProps: { getIsMember: (id) => boardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
         },
         {
           accessorKey: 'updatedAt',
@@ -387,7 +386,7 @@ const ListView = React.memo(
           enableSorting: true,
           sortFn: sortFunctions.recursiveNameSortFn,
           meta: { headerTitle: t('common.updatedBy') },
-          cellProps: { getIsMember: (id) => allBoardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
+          cellProps: { getIsMember: (id) => boardMemberships.some((m) => m.user?.id === id), isNotMemberTitle: t('common.noLongerBoardMember') },
         },
         {
           accessorKey: 'description',
@@ -430,7 +429,7 @@ const ListView = React.memo(
         handleResetColumnWidthsClick,
         handleResetColumnVisibilityClick,
         onUserPrefsUpdate,
-        allBoardMemberships,
+        boardMemberships,
         nameCellFns,
       ],
     );
@@ -572,7 +571,7 @@ const ListView = React.memo(
                     <span className={s.paginationButtonText}>{t('common.addList', { context: 'title' })}</span>
                   </Button>
                 </ListAddPopup>
-                <CardAddPopup lists={lists} labelIds={labelIds} memberIds={memberIds} onCreate={onCardCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
+                <CardAddPopup lists={lists} boardLabels={boardLabels} boardMemberships={boardMemberships} onCreate={onCardCreate} offset={5} position="top" wrapperClassName={s.popupWrapper}>
                   <Button variant={ButtonVariant.DefaultBorder} title={t('common.addCard', { context: 'title' })} className={s.paginationButton}>
                     <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.paginationButtonIcon} />
                     <span className={s.paginationButtonText}>{t('common.addCard', { context: 'title' })}</span>
@@ -594,8 +593,8 @@ ListView.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   lists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  labelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   listViewStyle: PropTypes.string.isRequired,
   listViewColumnVisibility: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   listViewFitScreen: PropTypes.bool.isRequired,
@@ -607,7 +606,6 @@ ListView.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   currentUserId: PropTypes.string.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
-  allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   pathname: PropTypes.string.isRequired,
   onCardCreate: PropTypes.func.isRequired,
   onListCreate: PropTypes.func.isRequired,

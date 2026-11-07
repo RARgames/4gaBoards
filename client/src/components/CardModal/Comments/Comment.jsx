@@ -6,6 +6,7 @@ import ActivityPopup from '../../ActivityPopup';
 import DeletePopup from '../../DeletePopup';
 import User from '../../User';
 import { Icon, IconType, IconSize, Button, ButtonVariant, MDPreview } from '../../Utils';
+import { useMentionPreviewPlugin } from '../../Utils/Mention';
 import CommentActionsPopup from './CommentActionsPopup';
 import CommentEdit from './CommentEdit';
 
@@ -30,8 +31,10 @@ const Comment = React.memo(
     updatedAt,
     updatedBy,
     boardMemberships,
+    boardLabels,
     rightClickContextMenu,
     onUpdate,
+    onMention,
     onDelete,
     onUserPrefsUpdate,
     onActivitiesFetch,
@@ -40,6 +43,7 @@ const Comment = React.memo(
 
     const commentEdit = useRef(null);
     const commentActionsPopupRef = useRef(null);
+    const mentionPreviewPlugin = useMentionPreviewPlugin({ memberships: boardMemberships, labels: boardLabels });
 
     const handleEditClick = useCallback(() => {
       commentEdit.current?.open();
@@ -156,10 +160,20 @@ const Comment = React.memo(
             isGithubConnected={isGithubConnected}
             githubRepo={githubRepo}
             preferredDetailsFont={preferredDetailsFont}
+            boardMemberships={boardMemberships}
+            boardLabels={boardLabels}
             onUpdate={onUpdate}
+            onMention={onMention}
             onUserPrefsUpdate={onUserPrefsUpdate}
           >
-            <MDPreview source={data.text} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} className={s.preview} />
+            <MDPreview
+              source={data.text}
+              isGithubConnected={isGithubConnected}
+              githubRepo={githubRepo}
+              preferredDetailsFont={preferredDetailsFont}
+              extraRehypePlugins={mentionPreviewPlugin}
+              className={s.preview}
+            />
           </CommentEdit>
         </div>
       </div>
@@ -185,8 +199,10 @@ Comment.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   rightClickContextMenu: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onMention: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,

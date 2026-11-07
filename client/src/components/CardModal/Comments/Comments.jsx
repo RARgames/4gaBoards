@@ -22,12 +22,14 @@ const Comments = React.memo(
     commentCount,
     preferredDetailsFont,
     boardMemberships,
+    boardLabels,
     rightClickContextMenu,
     onCommentsFetch,
     onActivitiesFetch,
     onCommentCreate,
     onCommentUpdate,
     onCommentDelete,
+    onMention,
     toggleCommShown,
     commShown,
     onUserPrefsUpdate,
@@ -109,7 +111,10 @@ const Comments = React.memo(
                   isGithubConnected={isGithubConnected}
                   githubRepo={githubRepo}
                   preferredDetailsFont={preferredDetailsFont}
+                  boardMemberships={boardMemberships}
+                  boardLabels={boardLabels}
                   onUpdate={onCommentCreate}
+                  onMention={onMention}
                   onUserPrefsUpdate={onUserPrefsUpdate}
                 >
                   <Button variant={ButtonVariant.Default} content={t('common.addComment')} onClick={openAddComment} />
@@ -136,8 +141,10 @@ const Comments = React.memo(
                     updatedBy={item.updatedBy}
                     preferredDetailsFont={preferredDetailsFont}
                     boardMemberships={boardMemberships}
+                    boardLabels={boardLabels}
                     rightClickContextMenu={rightClickContextMenu}
                     onUpdate={(data) => handleCommentUpdate(item.id, data)}
+                    onMention={onMention}
                     onDelete={() => handleCommentDelete(item.id)}
                     onUserPrefsUpdate={onUserPrefsUpdate}
                     onActivitiesFetch={() => onActivitiesFetch(item.id)}
@@ -165,6 +172,7 @@ Comments.propTypes = {
   commentCount: PropTypes.number.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   commShown: PropTypes.bool.isRequired,
   rightClickContextMenu: PropTypes.bool.isRequired,
   onCommentsFetch: PropTypes.func.isRequired,
@@ -172,6 +180,7 @@ Comments.propTypes = {
   onCommentCreate: PropTypes.func.isRequired,
   onCommentUpdate: PropTypes.func.isRequired,
   onCommentDelete: PropTypes.func.isRequired,
+  onMention: PropTypes.func.isRequired,
   toggleCommShown: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
 };

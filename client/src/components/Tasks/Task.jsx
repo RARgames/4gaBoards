@@ -141,9 +141,10 @@ const Task = React.memo(
     }, [isPersisted, canEdit]);
 
     const handleNameUpdate = useCallback(
-      (newName) => {
+      (newName, mentionExtras) => {
         onUpdate({
           name: newName,
+          ...(mentionExtras || {}),
         });
       },
       [onUpdate],
@@ -260,7 +261,7 @@ const Task = React.memo(
         {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         <div ref={taskRef} className={clsx(s.wrapper, gs.scrollableX, s.contentHoverable, isDragging && gs.hidden)}>
           <Checkbox checked={isCompleted} size={checkboxSize} disabled={!isPersisted || !canEdit} onChange={handleToggleChange} title={isCompleted ? t('common.markAsNotDone') : t('common.markAsDone')} />
-          <TaskEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate}>
+          <TaskEdit ref={nameEdit} defaultValue={name} boardMemberships={boardMemberships} currentUserIds={users.map((user) => user.id)} onUpdate={handleNameUpdate}>
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <span className={clsx(s.task, isCompleted && s.taskCompleted, canEdit && s.taskEditable)} onClick={handleClick} title={name}>
               {name}

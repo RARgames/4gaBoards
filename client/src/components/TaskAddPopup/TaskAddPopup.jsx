@@ -2,54 +2,41 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useForm } from '../../hooks';
-import { Button, ButtonVariant, Popup, Form, withPopup, TextArea, TextAreaVariant } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, withPopup, MentionTextArea, TextAreaVariant } from '../Utils';
+import { useMentionTriggers, useMentionValue, getCleanName, toExtras } from '../Utils/Mention';
 
 import * as gs from '../../global.module.scss';
 import * as s from './TaskAddPopup.module.scss';
 
-const DEFAULT_DATA = {
-  name: '',
-  isCollapsed: false,
-};
-
-const TaskAddStep = React.memo(({ onCreate, onBack, onClose }) => {
+const TaskAddStep = React.memo(({ boardMemberships, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
-  const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
+  const [value, submitData, handleChange, resetValue] = useMentionValue();
   const [isError, setIsError] = useState(false);
-
   const nameField = useRef(null);
+  const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, withLabels: false });
 
   const handleSubmit = useCallback(() => {
-    const cleanData = {
-      ...data,
-      name: data.name.trim(),
-    };
+    const name = getCleanName(value, submitData);
 
-    if (!cleanData.name) {
-      setData(DEFAULT_DATA);
+    if (!name) {
+      resetValue();
       nameField.current?.focus();
       setIsError(true);
       return;
     }
 
-    onCreate(cleanData);
-    setData(DEFAULT_DATA);
+    onCreate({ name, isCollapsed: false, ...toExtras(submitData, { labels: false }) });
+    resetValue();
     setIsError(false);
-
     onClose();
-  }, [data, onClose, onCreate, setData]);
+  }, [value, submitData, resetValue, onCreate, onClose]);
 
   const handleKeyDown = useCallback(
     (e) => {
       setIsError(false);
-      switch (e.key) {
-        case 'Enter': {
-          e.preventDefault(); // Prevent adding new line in TextArea
-          handleSubmit();
-          break;
-        }
-        default:
+      if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent adding new line in TextArea
+        handleSubmit();
       }
     },
     [handleSubmit],
@@ -64,7 +51,16 @@ const TaskAddStep = React.memo(({ onCreate, onBack, onClose }) => {
       <Popup.Header onBack={onBack}>{t('common.addTask')}</Popup.Header>
       <Popup.Content className={s.content}>
         <Form onKeyDown={handleKeyDown}>
-          <TextArea ref={nameField} variant={TextAreaVariant.Default} name="name" value={data.name} placeholder={t('common.enterTaskDescription')} maxRows={2} onChange={handleFieldChange} isError={isError} />
+          <MentionTextArea
+            ref={nameField}
+            variant={TextAreaVariant.Default}
+            value={value}
+            placeholder={t('common.enterTaskDescription')}
+            maxRows={2}
+            onChange={handleChange}
+            isError={isError}
+            mentionTriggers={mentionTriggers}
+          />
           <div className={gs.controls}>
             <Button variant={ButtonVariant.Submit} content={t('common.addTask')} onClick={handleSubmit} />
           </div>
@@ -75,6 +71,7 @@ const TaskAddStep = React.memo(({ onCreate, onBack, onClose }) => {
 });
 
 TaskAddStep.propTypes = {
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onCreate: PropTypes.func.isRequired,
   onBack: PropTypes.func,
   onClose: PropTypes.func.isRequired,

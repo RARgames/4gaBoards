@@ -9,6 +9,7 @@ export default function* commentsWatchers() {
     takeEvery(EntryActionTypes.COMMENTS_IN_CARD_FETCH, ({ payload: { cardId } }) => services.fetchCommentsInCard(cardId)),
     takeEvery(EntryActionTypes.COMMENT_IN_CURRENT_CARD_CREATE, ({ payload: { data } }) => services.createCommentInCurrentCard(data)),
     takeEvery(EntryActionTypes.COMMENT_UPDATE, ({ payload: { id, data } }) => services.updateComment(id, data)),
+    takeEvery(EntryActionTypes.COMMENT_MENTION_CREATE, ({ payload: { cardId, userId, comment } }) => services.createCommentMention(cardId, userId, comment)),
     takeEvery(EntryActionTypes.COMMENT_DELETE, ({ payload: { id } }) => services.deleteComment(id)),
     takeEvery(EntryActionTypes.COMMENT_CREATE_HANDLE, ({ payload: { comment } }) => services.handleCommentCreate(comment)),
     takeEvery(EntryActionTypes.COMMENT_UPDATE_HANDLE, ({ payload: { comment } }) => services.handleCommentUpdate(comment)),

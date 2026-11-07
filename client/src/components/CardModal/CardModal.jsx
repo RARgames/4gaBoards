@@ -23,6 +23,7 @@ import Timer from '../Timer';
 import TimerEditPopup from '../TimerEditPopup';
 import User from '../User';
 import { Button, ButtonVariant, Icon, IconType, IconSize, Dropdown, DropdownVariant, MDPreview, LinkifiedTextRenderer, ExternalLink } from '../Utils';
+import { useMentionPreviewPlugin, applyMentionExtras } from '../Utils/Mention';
 import AttachmentAdd from './AttachmentAdd';
 import AttachmentAddZone from './AttachmentAddZone';
 import Attachments from './Attachments';
@@ -74,7 +75,7 @@ const CardModal = React.memo(
     boardMemberships,
     boardAndCardMemberships,
     boardAndTaskMemberships,
-    allLabels,
+    boardLabels,
     canEdit,
     canEditCommentActivities,
     canEditAllCommentActivities,
@@ -92,6 +93,8 @@ const CardModal = React.memo(
     selfAssignBySpacebar,
     onUserPrefsUpdate,
     onUpdate,
+    onCardMentionCreate,
+    onCommentMentionCreate,
     onMarkCompleted,
     onMove,
     onTransfer,
@@ -147,6 +150,7 @@ const CardModal = React.memo(
     const [commShown, toggleCommShown] = useToggle(commentsShown);
     const isAssignedToMe = users.some((user) => user.id === userId);
     const assignedUserIds = useMemo(() => users.map((user) => user.id), [users]);
+    const mentionPreviewPlugin = useMentionPreviewPlugin({ memberships: boardMemberships, labels: boardLabels });
 
     const selectedProject = useMemo(() => allProjectsToLists.find((project) => project.id === projectId) || null, [allProjectsToLists, projectId]);
     const selectedBoard = useMemo(() => (selectedProject && selectedProject.boards.find((board) => board.id === boardId)) || null, [selectedProject, boardId]);
@@ -187,15 +191,6 @@ const CardModal = React.memo(
       onUserPrefsUpdate({ commentsShown: !commShown });
     }, [commShown, onUserPrefsUpdate, toggleCommShown]);
 
-    const handleNameUpdate = useCallback(
-      (newName) => {
-        onUpdate({
-          name: newName,
-        });
-      },
-      [onUpdate],
-    );
-
     const handleDescriptionUpdate = useCallback(
       (newDescription) => {
         onUpdate({
@@ -225,6 +220,22 @@ const CardModal = React.memo(
         });
       },
       [onUpdate],
+    );
+
+    const handleNameUpdate = useCallback(
+      (newName, submitData) => {
+        if (newName !== name) {
+          onUpdate({ name: newName });
+        }
+        applyMentionExtras(submitData, {
+          currentUserIds: users.map((u) => u.id),
+          currentLabelIds: labels.map((l) => l.id),
+          onUserAdd,
+          onLabelAdd,
+          onDueDateUpdate: handleDueDateUpdate,
+        });
+      },
+      [name, onUpdate, users, labels, onUserAdd, onLabelAdd, handleDueDateUpdate],
     );
 
     const handleToggleTimerClick = useCallback(() => {
@@ -373,7 +384,15 @@ const CardModal = React.memo(
             <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} className={s.headerNotificationsIcon} />
           </Button>
           <div className={s.headerTitleWrapper}>
-            <NameField defaultValue={name} onUpdate={handleNameUpdate} ref={nameEdit}>
+            <NameField
+              defaultValue={name}
+              boardLabels={boardLabels}
+              boardMemberships={boardMemberships}
+              currentUserIds={users.map((user) => user.id)}
+              currentLabelIds={labels.map((label) => label.id)}
+              onUpdate={handleNameUpdate}
+              ref={nameEdit}
+            >
               {/*  eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <div className={clsx(s.headerTitle, canEdit && gs.cursorPointer)} onClick={handleNameEdit} title={name}>
                 <LinkifiedTextRenderer text={name} iconClassName={s.linkIcon} />
@@ -415,7 +434,7 @@ const CardModal = React.memo(
             allBoardMemberships={boardAndCardMemberships}
             boardMemberships={boardMemberships}
             currentUserIds={users.map((user) => user.id)}
-            labels={allLabels}
+            labels={boardLabels}
             currentLabelIds={labels.map((label) => label.id)}
             url={url}
             canEdit={canEdit}
@@ -553,7 +572,7 @@ const CardModal = React.memo(
           {canEdit && (
             <div className={s.popupWrapper}>
               <LabelsPopup
-                items={allLabels}
+                items={boardLabels}
                 currentIds={labelIds}
                 canEdit={canEdit}
                 onSelect={onLabelAdd}
@@ -563,7 +582,7 @@ const CardModal = React.memo(
                 onDelete={onLabelDelete}
                 offset={0}
               >
-                <Button variant={ButtonVariant.Icon} title={t('common.addLabel')}>
+                <Button variant={ButtonVariant.Icon} title={t('common.addLabel', { context: 'title' })}>
                   <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton2} />
                 </Button>
               </LabelsPopup>
@@ -571,7 +590,7 @@ const CardModal = React.memo(
           )}
         </div>
         <LabelsPopup
-          items={allLabels}
+          items={boardLabels}
           currentIds={labelIds}
           canEdit={canEdit}
           onSelect={onLabelAdd}
@@ -696,7 +715,7 @@ const CardModal = React.memo(
 
     const descriptionEditOpenNode = description ? (
       <Button title={t('common.editDescription')} onClick={handleDescClick} className={clsx(s.descriptionText, s.cursorPointer)} ref={descriptionEditButtonRef}>
-        <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} />
+        <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} extraRehypePlugins={mentionPreviewPlugin} />
       </Button>
     ) : (
       <Button variant={ButtonVariant.Default} title={t('common.addDescription')} onClick={handleDescClick} className={s.descriptionButton}>
@@ -708,17 +727,19 @@ const CardModal = React.memo(
       <DescriptionEdit
         ref={descEditRef}
         defaultValue={description}
-        onUpdate={handleDescriptionUpdate}
         cardId={id}
-        onLocalDescChange={handleLocalDescChange}
-        onClose={handleDescClose}
         descriptionHeight={descriptionHeight}
         descriptionMode={descriptionMode}
-        userId={userId}
-        onUserPrefsUpdate={onUserPrefsUpdate}
         isGithubConnected={isGithubConnected}
         githubRepo={githubRepo}
         preferredDetailsFont={preferredDetailsFont}
+        boardLabels={boardLabels}
+        boardMemberships={boardMemberships}
+        onUpdate={handleDescriptionUpdate}
+        onUserPrefsUpdate={onUserPrefsUpdate}
+        onLocalDescChange={handleLocalDescChange}
+        onMention={(mentionedUserId) => onCardMentionCreate(id, mentionedUserId)}
+        onClose={handleDescClose}
       />
     ) : (
       descriptionEditOpenNode
@@ -743,7 +764,7 @@ const CardModal = React.memo(
           {descShown && canEdit && descriptionEditNode}
           {descShown && !canEdit && description && (
             <div className={s.descriptionText}>
-              <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} />
+              <MDPreview source={description} isGithubConnected={isGithubConnected} githubRepo={githubRepo} preferredDetailsFont={preferredDetailsFont} extraRehypePlugins={mentionPreviewPlugin} />
             </div>
           )}
         </div>
@@ -863,6 +884,7 @@ const CardModal = React.memo(
         commentCount={commentCount}
         preferredDetailsFont={preferredDetailsFont}
         boardMemberships={boardMemberships}
+        boardLabels={boardLabels}
         commShown={commShown}
         rightClickContextMenu={rightClickContextMenu}
         onCommentsFetch={onCommentsFetch}
@@ -870,6 +892,7 @@ const CardModal = React.memo(
         onCommentCreate={onCommentCreate}
         onCommentUpdate={onCommentUpdate}
         onCommentDelete={onCommentDelete}
+        onMention={(mentionedUserId, commentText) => onCommentMentionCreate(id, mentionedUserId, commentText)}
         toggleCommShown={handleToggleCommShown}
         onUserPrefsUpdate={onUserPrefsUpdate}
       />
@@ -958,7 +981,7 @@ CardModal.propTypes = {
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndCardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   canEditCommentActivities: PropTypes.bool.isRequired,
   canEditAllCommentActivities: PropTypes.bool.isRequired,
@@ -976,6 +999,8 @@ CardModal.propTypes = {
   selfAssignBySpacebar: PropTypes.bool.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onCardMentionCreate: PropTypes.func.isRequired,
+  onCommentMentionCreate: PropTypes.func.isRequired,
   onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,

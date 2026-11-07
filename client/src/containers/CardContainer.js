@@ -27,7 +27,7 @@ const makeMapStateToProps = () => {
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const boardAndCardMemberships = selectors.selectBoardAndCardMembershipsByCardId(state, id);
     const boardAndTaskMemberships = selectors.selectBoardAndTaskMembershipsByCardId(state, id);
-    const allLabels = selectors.selectLabelsForCurrentBoard(state);
+    const boardLabels = selectors.selectLabelsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
     const {
@@ -94,7 +94,7 @@ const makeMapStateToProps = () => {
       boardMemberships,
       boardAndCardMemberships,
       boardAndTaskMemberships,
-      allLabels,
+      boardLabels,
       canEdit: isCurrentUserEditor,
       url,
       activities,

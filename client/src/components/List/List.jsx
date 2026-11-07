@@ -38,14 +38,13 @@ const List = React.memo(
     cardIds,
     isFiltered,
     filteredCardIds,
-    labelIds,
-    memberIds,
+    boardLabels,
+    boardMemberships,
     canEdit,
     createdAt,
     createdBy,
     updatedAt,
     updatedBy,
-    boardMemberships,
     activities,
     isActivitiesFetching,
     isAllActivitiesFetched,
@@ -285,12 +284,12 @@ const List = React.memo(
 
     const cardsNode = (
       <div className={s.cards}>
-        {canEdit && addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
+        {canEdit && addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} boardLabels={boardLabels} boardMemberships={boardMemberships} />}
         {filteredCardIds.map((cardId, cardIndex) => (
           <CardContainer key={cardId} id={cardId} index={cardIndex} />
         ))}
         {cardPlaceholderHeight !== null && <div style={{ height: cardPlaceholderHeight + CARD_PLACEHOLDER_MARGIN }} />}
-        {canEdit && !addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} labelIds={labelIds} memberIds={memberIds} />}
+        {canEdit && !addCardAtTop && <CardAdd isOpen={isAddCardOpen} onCreate={handleCardCreate} onClose={handleAddCardClose} boardLabels={boardLabels} boardMemberships={boardMemberships} />}
       </div>
     );
 
@@ -317,8 +316,8 @@ const List = React.memo(
         <div className={s.headerCardsCountCollapsed}>{cardsCountText()}</div>
         <CardAddPopup
           lists={[]}
-          labelIds={labelIds}
-          memberIds={memberIds}
+          boardLabels={boardLabels}
+          boardMemberships={boardMemberships}
           forcedDefaultListId={id}
           onCreate={(listId, data, autoOpen) => onCardCreate(data, autoOpen)}
           offset={5}
@@ -427,14 +426,13 @@ List.propTypes = {
   cardIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isFiltered: PropTypes.bool.isRequired,
   filteredCardIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  labelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   createdAt: PropTypes.instanceOf(Date),
   createdBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,
   isAllActivitiesFetched: PropTypes.bool.isRequired,

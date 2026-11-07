@@ -247,7 +247,7 @@ export const selectNotificationsForCurrentUser = createSelector(
       .toModelArray()
       .map((notificationModel) => ({
         ...notificationModel.ref,
-        activity: notificationModel.activity ? getActivityDetails(notificationModel.activity, id) : undefined,
+        activity: notificationModel.activity ? getActivityDetails(notificationModel.activity, id, true) : undefined,
       }));
 
     let filteredNotifications = notifications;

@@ -2,34 +2,36 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useField } from '../../hooks';
-import { TextArea } from '../Utils';
+import { focusToEnd } from '../../hooks';
+import { MentionTextArea } from '../Utils';
+import { useMentionTriggers, useMentionValue, getCleanName, hasMentions, toExtras } from '../Utils/Mention';
 
 import * as s from './TaskEdit.module.scss';
 
-const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
+const TaskEdit = React.forwardRef(({ children, defaultValue, boardMemberships, currentUserIds, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField(null);
-  const field = useRef(null);
+  const [value, submitData, handleChange, resetValue] = useMentionValue();
   const [isError, setIsError] = useState(false);
+  const field = useRef(null);
+  const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, withLabels: false, excludeUserIds: currentUserIds });
 
   const open = useCallback(() => {
     setIsOpen(true);
-    setValue(defaultValue);
+    resetValue(defaultValue);
     setIsError(false);
-  }, [defaultValue, setValue]);
+  }, [defaultValue, resetValue]);
 
   const close = useCallback(() => {
     setIsOpen(false);
-    setValue(null);
-  }, [setValue]);
+    resetValue();
+  }, [resetValue]);
 
   const submit = useCallback(
     (blurOnEmpty = false) => {
-      const cleanValue = value.trim();
+      const name = getCleanName(value, submitData);
 
-      if (!cleanValue) {
+      if (!name) {
         if (blurOnEmpty && isError) {
           close();
           return;
@@ -39,13 +41,13 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
         return;
       }
 
-      if (cleanValue !== defaultValue) {
-        onUpdate(cleanValue);
+      if (name !== defaultValue || hasMentions(submitData)) {
+        onUpdate(name, toExtras(submitData, { labels: false }));
       }
 
       close();
     },
-    [value, defaultValue, close, isError, onUpdate],
+    [value, submitData, defaultValue, close, isError, onUpdate],
   );
 
   useImperativeHandle(
@@ -85,24 +87,27 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   }
 
   return (
-    <TextArea
+    <MentionTextArea
       ref={field}
       value={value}
       placeholder={t('common.enterTaskDescription')}
       className={s.field}
       isError={isError}
       onKeyDown={handleFieldKeyDown}
-      onChange={handleFieldChange}
+      onChange={handleChange}
       onBlur={handleBlur}
-      onFocus={handleFocus}
+      onFocus={focusToEnd}
+      mentionTriggers={mentionTriggers}
     />
   );
 });
 
-NameEdit.propTypes = {
+TaskEdit.propTypes = {
   children: PropTypes.node.isRequired,
   defaultValue: PropTypes.string.isRequired,
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
 };
 
-export default React.memo(NameEdit);
+export default React.memo(TaskEdit);

@@ -56,6 +56,7 @@ const ActivityTypes = {
   CARD_CREATE: 'cardCreate',
   CARD_DUPLICATE: 'cardDuplicate',
   CARD_UPDATE: 'cardUpdate',
+  CARD_MENTION: 'cardMention',
   CARD_MARK_AS_DONE: 'cardMarkAsDone',
   CARD_MARK_AS_NOT_DONE: 'cardMarkAsNotDone',
   CARD_MOVE: 'cardMove',
@@ -89,6 +90,7 @@ const ActivityTypes = {
   /* CARD Comment Activities */
   CARD_COMMENT_CREATE: 'cardCommentCreate',
   CARD_COMMENT_UPDATE: 'cardCommentUpdate',
+  CARD_COMMENT_MENTION: 'cardCommentMention',
   CARD_COMMENT_DELETE: 'cardCommentDelete',
 };
 

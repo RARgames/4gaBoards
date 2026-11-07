@@ -1,10 +1,11 @@
 import getMeta from './get-meta';
 import { isLocalId } from './local-id';
 
-export default (model, currentUserId) => ({
+export default (model, currentUserId, isInNotifications = false) => ({
   ...model.ref,
   ...getMeta(model),
   isPersisted: !isLocalId(model.id),
+  isMentionedUser: Boolean(isInNotifications && model.data?.userId === currentUserId),
   user: model.user
     ? {
         ...model.user.ref,

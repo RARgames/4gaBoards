@@ -26,6 +26,8 @@ const updateCard = (id, data, headers) =>
     item: transformCard(body.item),
   }));
 
+const createCardMention = (id, userId, headers) => socket.post(`/cards/${id}/mentions`, { userId }, headers);
+
 const markCardCompleted = (id, isCompleted, headers) =>
   socket.post(`/cards/${id}/mark-completed`, { isCompleted }, headers).then((body) => ({
     ...body,
@@ -68,6 +70,7 @@ export default {
   createCard,
   getCard,
   updateCard,
+  createCardMention,
   markCardCompleted,
   deleteCard,
   duplicateCard,

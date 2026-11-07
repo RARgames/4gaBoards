@@ -28,6 +28,8 @@ function buildContext(t, activity, flags) {
 
   const userName = activity.data?.userName;
   const userNameTruncated = truncateIf(userName, isTruncated, userNameTruncateLength);
+  const mentionedUserName = activity.data?.mentionedUserName;
+  const mentionedUserNameTruncated = truncateIf(mentionedUserName, isTruncated, userNameTruncateLength);
 
   return {
     t,
@@ -47,6 +49,8 @@ function buildContext(t, activity, flags) {
     projectNameTruncated,
     userName,
     userNameTruncated,
+    mentionedUserName,
+    mentionedUserNameTruncated,
     isTruncated,
     isDescriptionTruncated,
     truncateLengths: {
@@ -253,6 +257,20 @@ export const activityRenderSpec = {
 
       return null;
     },
+
+    [ActivityTypes.CARD_MENTION]: (ctx) => ({
+      key: `activity.cardMention${ctx.activity.isMentionedUser ? 'You' : ''}${ctx.hideCardDetails ? 'Short' : ''}`,
+      values: {
+        card: ctx.cardNameTruncated,
+        user: ctx.mentionedUserNameTruncated,
+        description: truncateIf(ctx.activity.data.description, ctx.isTruncated || ctx.isDescriptionTruncated, ctx.truncateLengths.description),
+      },
+      components: [
+        { slot: 'card', title: ctx.cardName },
+        { slot: 'user', title: ctx.mentionedUserName },
+        { slot: 'description', title: ctx.activity.data.description },
+      ],
+    }),
 
     [ActivityTypes.CARD_MOVE]: (ctx) => {
       let { listFromName, listToName } = ctx.activity.data;
@@ -658,6 +676,20 @@ export const activityRenderSpec = {
         ],
       };
     },
+
+    [ActivityTypes.CARD_COMMENT_MENTION]: (ctx) => ({
+      key: `activity.cardCommentMention${ctx.activity.isMentionedUser ? 'You' : ''}${ctx.hideCardDetails ? 'Short' : ''}`,
+      values: {
+        card: ctx.cardNameTruncated,
+        user: ctx.mentionedUserNameTruncated,
+        comment: truncateIf(ctx.activity.data.comment, ctx.isTruncated, ctx.truncateLengths.comment),
+      },
+      components: [
+        { slot: 'card', title: ctx.cardName },
+        { slot: 'user', title: ctx.mentionedUserName },
+        { slot: 'comment', title: ctx.activity.data.comment },
+      ],
+    }),
 
     [ActivityTypes.CARD_COMMENT_UPDATE]: (ctx) => {
       const { commentPrevText, commentText, userId } = ctx.activity.data;

@@ -191,6 +191,11 @@
 
   /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
+
+  /* Mentions */
+  --fallbackColor: #888;
+  --backgroundMentionUser: #3498db;
+  --backgroundMentionDate: #fb8500;
 }
 
 /* Github Dark Theme */
@@ -384,6 +389,11 @@
 
   /* Color Picker */
   --colorPickerInputBoxShadow: #616161;
+
+  /* Mentions */
+  --fallbackColor: #888;
+  --backgroundMentionUser: #58a6ff;
+  --backgroundMentionDate: #fb8500;
 }
 
 /* Light Theme */
@@ -577,4 +587,9 @@
 
   /* Color Picker */
   --colorPickerInputBoxShadow: #b0b0b0;
+
+  /* Mentions */
+  --fallbackColor: #888;
+  --backgroundMentionUser: #2196f3;
+  --backgroundMentionDate: #fb8c00;
 }

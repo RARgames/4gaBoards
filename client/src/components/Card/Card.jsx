@@ -24,6 +24,7 @@ import Tasks from '../Tasks';
 import Timer from '../Timer';
 import User from '../User';
 import { Button, ButtonVariant, Icon, IconType, IconSize, LinkifiedTextRenderer } from '../Utils';
+import { applyMentionExtras } from '../Utils/Mention';
 import CardActionsPopup from './CardActionsPopup';
 import NameEdit from './NameEdit';
 
@@ -58,7 +59,7 @@ const Card = React.memo(
     boardMemberships,
     boardAndCardMemberships,
     boardAndTaskMemberships,
-    allLabels,
+    boardLabels,
     url,
     activities,
     isActivitiesFetching,
@@ -227,15 +228,6 @@ const Card = React.memo(
       });
     }, [timer, onUpdate]);
 
-    const handleNameUpdate = useCallback(
-      (newName) => {
-        onUpdate({
-          name: newName,
-        });
-      },
-      [onUpdate],
-    );
-
     const handleNameEdit = useCallback(() => {
       nameEdit.current?.open();
     }, []);
@@ -247,6 +239,22 @@ const Card = React.memo(
         });
       },
       [onUpdate],
+    );
+
+    const handleNameUpdate = useCallback(
+      (newName, submitData) => {
+        if (newName !== name) {
+          onUpdate({ name: newName });
+        }
+        applyMentionExtras(submitData, {
+          currentUserIds: users.map((user) => user.id),
+          currentLabelIds: labels.map((label) => label.id),
+          onUserAdd: (userId) => onUserAdd(userId, id),
+          onLabelAdd,
+          onDueDateUpdate: handleDueDateUpdate,
+        });
+      },
+      [name, users, labels, onUpdate, onUserAdd, id, onLabelAdd, handleDueDateUpdate],
     );
 
     const handleNameEditOpenChange = useCallback((isNameEditOpen) => {
@@ -301,7 +309,7 @@ const Card = React.memo(
                   <LabelsPopup
                     ref={cardLabelsPopupRef}
                     key={label.id}
-                    items={allLabels}
+                    items={boardLabels}
                     currentIds={labelIds}
                     onSelect={onLabelAdd}
                     onDeselect={onLabelRemove}
@@ -426,7 +434,16 @@ const Card = React.memo(
     return (
       <div ref={wrapperRef} className={s.wrapper}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight + CARD_PLACEHOLDER_MARGIN }} />}
-        <NameEdit ref={nameEdit} defaultValue={name} onUpdate={handleNameUpdate} onOpenChange={handleNameEditOpenChange}>
+        <NameEdit
+          ref={nameEdit}
+          defaultValue={name}
+          boardMemberships={boardMemberships}
+          boardLabels={boardLabels}
+          currentUserIds={users.map((user) => user.id)}
+          currentLabelIds={labels.map((label) => label.id)}
+          onUpdate={handleNameUpdate}
+          onOpenChange={handleNameEditOpenChange}
+        >
           <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isDragging && gs.hidden)} onContextMenu={handleContextMenu}>
             {isPersisted ? (
               <>
@@ -457,7 +474,7 @@ const Card = React.memo(
                     allBoardMemberships={boardAndCardMemberships}
                     boardMemberships={boardMemberships}
                     currentUserIds={users.map((user) => user.id)}
-                    labels={allLabels}
+                    labels={boardLabels}
                     currentLabelIds={labels.map((label) => label.id)}
                     url={url}
                     canEdit={canEdit}
@@ -530,7 +547,7 @@ Card.propTypes = {
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndCardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardAndTaskMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   url: PropTypes.string.isRequired,
   activities: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   isActivitiesFetching: PropTypes.bool.isRequired,

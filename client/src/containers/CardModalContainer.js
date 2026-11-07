@@ -24,7 +24,7 @@ const makeMapStateToProps = () => {
     const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const boardAndCardMemberships = selectors.selectBoardAndCardMembershipsForCurrentCard(state);
     const boardAndTaskMemberships = selectors.selectBoardAndTaskMembershipsForCurrentCard(state);
-    const allLabels = selectors.selectLabelsForCurrentBoard(state);
+    const boardLabels = selectors.selectLabelsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
 
     const {
@@ -139,7 +139,7 @@ const makeMapStateToProps = () => {
       boardMemberships,
       boardAndCardMemberships,
       boardAndTaskMemberships,
-      allLabels,
+      boardLabels,
       commentCount,
       canEdit: isCurrentUserEditor,
       canEditCommentActivities: isCurrentUserEditorOrCanComment,
@@ -164,6 +164,8 @@ const mapDispatchToProps = (dispatch) =>
     {
       onUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
       onUpdate: entryActions.updateCurrentCard,
+      onCardMentionCreate: entryActions.createCardMention,
+      onCommentMentionCreate: entryActions.createCommentMention,
       onMarkCompleted: entryActions.markCurrentCardCompleted,
       onMove: entryActions.moveCurrentCard,
       onTransfer: entryActions.transferCurrentCard,

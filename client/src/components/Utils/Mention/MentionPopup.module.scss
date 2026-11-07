@@ -1,0 +1,111 @@
+:global(#app) {
+  .dropdown {
+    background: var(--backgroundDropdown);
+    border: 1px solid var(--accentSelectedDark);
+    border-radius: 3px;
+    max-height: 200px;
+    min-width: 160px;
+    z-index: 3000;
+    box-shadow: 0 2px 8px var(--shadowBlack01);
+  }
+
+  &:global([data-theme-shape='rounded']) .dropdown {
+    border-radius: 8px;
+  }
+
+  .dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    cursor: pointer;
+    color: var(--text1);
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      background: var(--backgroundDropdownHover);
+    }
+  }
+
+  &:global([data-theme-shape='rounded']) .dropdownItem {
+    border-radius: 6px;
+  }
+
+  .dropdownItemSelected {
+    background: var(--backgroundDropdownSelected);
+  }
+
+  .labelColor {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .name {
+    flex: 1;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .datePicker {
+    background: var(--backgroundDropdown);
+    border: 1px solid var(--accentSelectedDark);
+    border-radius: 3px;
+    z-index: 3000;
+    box-shadow: 0 2px 8px var(--shadowBlack01);
+    padding: 4px;
+  }
+
+  &:global([data-theme-shape='rounded']) .datePicker {
+    border-radius: 8px;
+  }
+
+  .timeStep {
+    width: 180px;
+  }
+
+  .timeButtonBase {
+    border-radius: 0;
+    color: var(--text1);
+    padding: 5px 8px;
+    font-size: 13px;
+
+    &:hover {
+      background: var(--backgroundDropdownHover);
+      color: var(--text1);
+
+      svg {
+        fill: var(--text1);
+      }
+    }
+  }
+
+  .backButton {
+    @extend .timeButtonBase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 3px 3px 0 0;
+    border-bottom: 1px solid var(--accentSelectedDark);
+  }
+
+  .timeList {
+    max-height: 180px;
+  }
+
+  .timeSlotButton {
+    @extend .timeButtonBase;
+    text-align: center;
+  }
+
+  .timeNone {
+    border-bottom: 1px solid var(--accentSelectedDark);
+    font-weight: 600;
+  }
+}

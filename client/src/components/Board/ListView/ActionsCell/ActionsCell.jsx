@@ -16,7 +16,7 @@ const ActionsCell = React.memo(
     allProjectsToLists,
     allBoardMemberships,
     boardMemberships,
-    allLabels,
+    boardLabels,
     url,
     dueDate,
     timer,
@@ -90,7 +90,7 @@ const ActionsCell = React.memo(
           allBoardMemberships={allBoardMemberships}
           boardMemberships={boardMemberships}
           currentUserIds={users.map((user) => user.id)}
-          labels={allLabels}
+          labels={boardLabels}
           currentLabelIds={labels.map((label) => label.id)}
           url={url}
           canEdit={canEdit}
@@ -142,7 +142,7 @@ ActionsCell.propTypes = {
   allProjectsToLists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   url: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   timer: PropTypes.object, // eslint-disable-line react/forbid-prop-types

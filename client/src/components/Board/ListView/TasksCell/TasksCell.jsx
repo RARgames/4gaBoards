@@ -38,7 +38,7 @@ const TasksCell = React.memo(
     if (tasks.length === 0) {
       if (canEdit) {
         return (
-          <TaskAddPopup onCreate={onTaskCreate} wrapperClassName={s.popupWrapper}>
+          <TaskAddPopup boardMemberships={boardMemberships} onCreate={onTaskCreate} wrapperClassName={s.popupWrapper}>
             <Button variant={ButtonVariant.Icon} title={t('common.addTask')} className={clsx(cellClassName, s.addButton)}>
               <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
             </Button>

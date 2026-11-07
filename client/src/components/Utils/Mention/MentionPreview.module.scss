@@ -1,0 +1,77 @@
+:global(#app) {
+  :global(.mention-user),
+  :global(.mention-label),
+  :global(.mention-date) {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    color: var(--textWhite);
+    border-radius: 3px;
+  }
+
+  :global(.mention-user) {
+    gap: 3px;
+    padding: 0 2px;
+    align-items: baseline;
+  }
+
+  :global(.mention-label) {
+    gap: 3px;
+    padding: 0px 3px;
+    margin: 1px 0;
+  }
+
+  :global(.mention-date) {
+    padding: 0 3px;
+    background: var(--backgroundAvatarCarrot);
+    margin: 1px 0;
+  }
+
+  :global(.mention-avatar) {
+    align-self: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  :global(.mention-avatar-initials) {
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--backgroundAvatarPeterRiver);
+    color: var(--textWhite);
+    font-size: 8px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  :global(.mention-avatar-initials.mention-avatar-emerald) {
+    background: var(--backgroundAvatarEmerald);
+  }
+
+  :global(.mention-avatar-initials.mention-avatar-peter-river) {
+    background: var(--backgroundAvatarPeterRiver);
+  }
+
+  :global(.mention-avatar-initials.mention-avatar-wisteria) {
+    background: var(--backgroundAvatarWisteria);
+  }
+
+  :global(.mention-avatar-initials.mention-avatar-carrot) {
+    background: var(--backgroundAvatarCarrot);
+  }
+
+  :global(.mention-avatar-initials.mention-avatar-alizarin) {
+    background: var(--backgroundAvatarAlizarin);
+  }
+
+  :global(.mention-avatar-initials.mention-avatar-turquoise) {
+    background: var(--backgroundAvatarTurquoise);
+  }
+}

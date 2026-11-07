@@ -102,11 +102,20 @@ module.exports = {
 
         let subscriptionUserIds = [];
         if (!inputs.skipNotifications) {
-          const [cardUserIds, boardUserIds] = await Promise.all([
-            sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId),
-            sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId),
-          ]);
-          subscriptionUserIds = [...new Set([...cardUserIds, ...boardUserIds])].filter((userId) => userId && !alreadyNotifiedUserIds?.includes(userId));
+          const isMention = [Action.Types.CARD_MENTION, Action.Types.CARD_COMMENT_MENTION].includes(values.type);
+          let candidateUserIds;
+          if (isMention) {
+            // Mention actions notify only the mentioned user
+            candidateUserIds = [values.data.userId];
+          } else {
+            const [cardUserIds, boardUserIds] = await Promise.all([
+              sails.helpers.cards.getSubscriptionUserIds(action.cardId, action.userId),
+              sails.helpers.boards.getSubscriptionUserIds(action.boardId, action.userId),
+            ]);
+            candidateUserIds = [...cardUserIds, ...boardUserIds];
+          }
+          subscriptionUserIds = [...new Set(candidateUserIds)].filter((userId) => userId && userId !== action.userId && !alreadyNotifiedUserIds?.includes(userId));
+
           await Promise.all(
             subscriptionUserIds.map(async (userId) =>
               sails.helpers.notifications.createOne.with({

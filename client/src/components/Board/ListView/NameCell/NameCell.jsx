@@ -3,17 +3,19 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { useField } from '../../../../hooks';
-import { TextArea, LinkifiedTextRenderer } from '../../../Utils';
+import { focusToEnd } from '../../../../hooks';
+import { MentionTextArea, LinkifiedTextRenderer } from '../../../Utils';
+import { useMentionTriggers, useMentionValue, getCleanName, hasMentions, applyMentionExtras } from '../../../Utils/Mention';
 
 import * as gs from '../../../../global.module.scss';
 import * as s from './NameCell.module.scss';
 
-const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, onUpdate, onSetNameCellFns }, ref) => {
+const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, boardMemberships, boardLabels, currentUserIds, currentLabelIds, onUpdate, onUserAdd, onLabelAdd, onSetNameCellFns }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const [value, submitData, handleChange, resetValue] = useMentionValue(defaultValue);
   const field = useRef(null);
+  const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, labels: boardLabels, excludeUserIds: currentUserIds, excludeLabelIds: currentLabelIds });
 
   const open = useCallback(() => {
     if (!canEdit) {
@@ -21,25 +23,32 @@ const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, o
     }
 
     setIsOpen(true);
-    setValue(defaultValue);
-  }, [canEdit, defaultValue, setValue]);
+    resetValue(defaultValue);
+  }, [canEdit, defaultValue, resetValue]);
 
   const close = useCallback(() => {
     setIsOpen(false);
-    setValue(null);
-  }, [setValue]);
+    resetValue();
+  }, [resetValue]);
 
   const submit = useCallback(() => {
-    const cleanValue = value.trim();
+    const name = getCleanName(value, submitData);
 
-    if (cleanValue && cleanValue !== defaultValue) {
-      onUpdate({
-        name: cleanValue,
+    if (name && (name !== defaultValue || hasMentions(submitData))) {
+      if (name !== defaultValue) {
+        onUpdate({ name });
+      }
+      applyMentionExtras(submitData, {
+        currentUserIds,
+        currentLabelIds,
+        onUserAdd,
+        onLabelAdd,
+        onDueDateUpdate: (dueDate) => onUpdate({ dueDate }),
       });
     }
 
     close();
-  }, [defaultValue, onUpdate, value, close]);
+  }, [defaultValue, onUpdate, value, submitData, close, currentUserIds, currentLabelIds, onUserAdd, onLabelAdd]);
 
   useImperativeHandle(
     ref,
@@ -90,16 +99,17 @@ const NameCell = React.forwardRef(({ id, cellClassName, defaultValue, canEdit, o
   }
 
   return (
-    <TextArea
+    <MentionTextArea
       ref={field}
       value={value}
       placeholder={t('common.enterCardName')}
       className={s.field}
       maxRows={3}
       onKeyDown={handleKeyDown}
-      onChange={handleFieldChange}
+      onChange={handleChange}
       onBlur={handleFieldBlur}
-      onFocus={handleFocus}
+      onFocus={focusToEnd}
+      mentionTriggers={mentionTriggers}
     />
   );
 });
@@ -109,7 +119,13 @@ NameCell.propTypes = {
   cellClassName: PropTypes.string,
   defaultValue: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentLabelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
+  onUserAdd: PropTypes.func.isRequired,
+  onLabelAdd: PropTypes.func.isRequired,
   onSetNameCellFns: PropTypes.func.isRequired,
 };
 

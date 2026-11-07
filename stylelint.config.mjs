@@ -13,6 +13,7 @@ export default {
             ignorePseudoClasses: ['global'],
           },
         ],
+        'scss/at-extend-no-missing-placeholder': null,
       },
     },
   ],

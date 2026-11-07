@@ -65,14 +65,13 @@ const makeMapStateToProps = () => {
     const lists = listIds.map((id) => {
       return selectors.selectListById(state, id);
     });
-    const labelIds = selectors.selectLabelsForCurrentBoard(state);
-    const memberIds = selectors.selectMembershipsForCurrentBoard(state);
+    const boardLabels = selectors.selectLabelsForCurrentBoard(state);
+    const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const { listViewStyle, listViewColumnVisibility, listViewFitScreen, listViewItemsPerPage, showFullDueDates, selfAssignBySpacebar, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
     const currentCardIndex = filteredCards.findIndex((card) => card.id === currentCardId);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
     const { preferredDetailsFont } = selectors.selectCurrentUserPrefs(state);
-    const allBoardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const pathname = selectors.selectPathname(state);
     const currentUserId = selectors.selectCurrentUserId(state);
 
@@ -83,8 +82,8 @@ const makeMapStateToProps = () => {
       isGithubConnected,
       githubRepo,
       lists,
-      labelIds,
-      memberIds,
+      boardLabels,
+      boardMemberships,
       listViewStyle,
       listViewColumnVisibility,
       listViewFitScreen,
@@ -95,7 +94,6 @@ const makeMapStateToProps = () => {
       currentCardIndex,
       canEdit: isCurrentUserEditor,
       preferredDetailsFont,
-      allBoardMemberships,
       pathname,
       currentUserId,
     };

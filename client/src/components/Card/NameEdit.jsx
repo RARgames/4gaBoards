@@ -2,45 +2,48 @@ import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } 
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useField } from '../../hooks';
-import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../Utils';
+import { focusToEnd } from '../../hooks';
+import { Button, ButtonVariant, Form, MentionTextArea, TextAreaVariant } from '../Utils';
+import { useMentionTriggers, useMentionValue, getCleanName, hasMentions } from '../Utils/Mention';
 
 import * as gs from '../../global.module.scss';
 import * as s from './NameEdit.module.scss';
 
-const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onOpenChange }, ref) => {
+const NameEdit = React.forwardRef(({ children, defaultValue, boardMemberships, boardLabels, currentUserIds, currentLabelIds, onUpdate, onOpenChange }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const [value, submitData, handleChange, resetValue] = useMentionValue(defaultValue);
   const [isError, setIsError] = useState(false);
 
   const field = useRef(null);
+  const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, labels: boardLabels, excludeUserIds: currentUserIds, excludeLabelIds: currentLabelIds });
 
   const open = useCallback(() => {
     setIsOpen(true);
-    setValue(defaultValue);
-  }, [defaultValue, setValue]);
+    resetValue(defaultValue);
+    setIsError(false);
+  }, [defaultValue, resetValue]);
 
   const close = useCallback(() => {
     setIsOpen(false);
-    setValue(null);
-  }, [setValue]);
+    resetValue();
+  }, [resetValue]);
 
   const submit = useCallback(() => {
-    const cleanValue = value.trim();
+    const name = getCleanName(value, submitData);
 
-    if (!cleanValue) {
+    if (!name) {
       field.current?.focus();
       setIsError(true);
       return;
     }
 
-    if (cleanValue !== defaultValue) {
-      onUpdate(cleanValue);
+    if (name !== defaultValue || hasMentions(submitData)) {
+      onUpdate(name, submitData);
     }
 
     close();
-  }, [value, defaultValue, close, onUpdate]);
+  }, [value, submitData, defaultValue, close, onUpdate]);
 
   const handleSubmit = useCallback(() => {
     submit();
@@ -101,17 +104,18 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onOpenCha
 
   return (
     <Form className={s.wrapper}>
-      <TextArea
+      <MentionTextArea
         ref={field}
         variant={TextAreaVariant.Default}
         value={value}
         placeholder={t('common.enterCardName')}
         maxRows={2}
         onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
+        onChange={handleChange}
         onBlur={handleBlur}
-        onFocus={handleFocus}
+        onFocus={focusToEnd}
         isError={isError}
+        mentionTriggers={mentionTriggers}
       />
       <div className={gs.controls}>
         <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} />
@@ -124,6 +128,10 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate, onOpenCha
 NameEdit.propTypes = {
   children: PropTypes.node.isRequired,
   defaultValue: PropTypes.string.isRequired,
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentLabelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
   onOpenChange: PropTypes.func,
 };

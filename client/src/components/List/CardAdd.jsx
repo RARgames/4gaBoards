@@ -3,51 +3,40 @@ import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Form, TextArea, TextAreaVariant } from '../Utils';
+import { Button, ButtonVariant, Form, Icon, IconType, IconSize, MentionTextArea, TextAreaVariant } from '../Utils';
+import { useMentionTriggers, useMentionValue, getCleanName, toExtras } from '../Utils/Mention';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAdd.module.scss';
 
-const DEFAULT_DATA = {
-  name: '',
-  isCompleted: false,
-};
-
-// eslint-disable-next-line no-unused-vars
-const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) => {
+const CardAdd = React.memo(({ isOpen, onCreate, onClose, boardLabels, boardMemberships }) => {
   const [t] = useTranslation();
-  const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
+  const [value, submitData, handleChange, resetValue] = useMentionValue();
   const [focusNameFieldState, focusNameField] = useToggle();
   const nameField = useRef(null);
   const [isError, setIsError] = useState(false);
+  const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, labels: boardLabels });
 
   const close = useCallback(() => {
-    setData(DEFAULT_DATA);
+    resetValue();
     setIsError(false);
     onClose();
-  }, [onClose, setData]);
+  }, [onClose, resetValue]);
 
   const submit = useCallback(
     (autoOpen) => {
-      const cleanData = {
-        ...data,
-        name: data.name.trim(),
-        // TODO remove example - how to submit
-        // labelIds: ['895796152710988857', '907861629801072269', '920273931925980818'],
-        // userIds: ['895703383690707969'],
-      };
+      const name = getCleanName(value, submitData);
 
-      if (!cleanData.name) {
-        setData(DEFAULT_DATA);
+      if (!name) {
+        resetValue();
         focusNameField();
         setIsError(true);
         return;
       }
 
-      onCreate(cleanData, autoOpen);
-      setData(DEFAULT_DATA);
+      onCreate({ name, isCompleted: false, ...toExtras(submitData) }, autoOpen);
+      resetValue();
 
       if (autoOpen) {
         onClose();
@@ -55,16 +44,10 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
         focusNameField();
       }
     },
-    [data, onCreate, setData, onClose, focusNameField],
+    [value, submitData, onCreate, resetValue, onClose, focusNameField],
   );
 
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
-
-  const handleCancel = useCallback(() => {
-    close();
-  }, [close]);
+  const handleSubmit = useCallback(() => submit(false), [submit]);
 
   const handleFieldKeyDown = useCallback(
     (e) => {
@@ -76,19 +59,18 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
           submit(autoOpen);
           break;
         }
-        case 'Escape': {
-          handleCancel();
+        case 'Escape':
+          close();
           break;
-        }
         default:
       }
     },
-    [submit, handleCancel],
+    [submit, close],
   );
 
   const handleBlur = useCallback(
     (e) => {
-      if (e.target.value.trim() === DEFAULT_DATA.name.trim()) {
+      if (e.target.value.trim() === '') {
         // FIXME timeout introduced to fix a bug with dragging card when CardAdd is open and List is scrollable
         setTimeout(() => {
           close();
@@ -110,21 +92,24 @@ const CardAdd = React.memo(({ isOpen, onCreate, onClose, labelIds, memberIds }) 
 
   return (
     <Form className={clsx(s.wrapper, !isOpen && s.wrapperClosed)}>
-      <TextArea
+      <MentionTextArea
         ref={nameField}
         variant={TextAreaVariant.Default}
-        name="name"
-        value={data.name}
-        placeholder={t('common.enterCardNameWithHint')}
+        value={value}
+        placeholder={t('common.enterCardName')}
         maxRows={3}
         onKeyDown={handleFieldKeyDown}
-        onChange={handleFieldChange}
+        onChange={handleChange}
         onBlur={handleBlur}
         isError={isError}
+        mentionTriggers={mentionTriggers}
       />
-      <div className={gs.controls}>
-        <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} />
-        <Button variant={ButtonVariant.Submit} content={t('common.addCard')} onClick={handleSubmit} />
+      <div className={s.controlsWrapper}>
+        <Icon type={IconType.CircleQuestion} size={IconSize.Size12} className={s.controlsInfo} title={t('common.addCardTooltipShort')} />
+        <div className={clsx(gs.controls, s.controls)}>
+          <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={close} />
+          <Button variant={ButtonVariant.Submit} content={t('common.addCard')} onClick={handleSubmit} />
+        </div>
       </div>
     </Form>
   );
@@ -134,10 +119,8 @@ CardAdd.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onCreate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  labelIds: PropTypes.array.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  memberIds: PropTypes.array.isRequired,
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default CardAdd;

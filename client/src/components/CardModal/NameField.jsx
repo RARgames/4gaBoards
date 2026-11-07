@@ -1,37 +1,39 @@
-import React, { useCallback, useEffect, useState, useRef, useImperativeHandle } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useField } from '../../hooks';
-import { TextArea } from '../Utils';
+import { focusToEnd } from '../../hooks';
+import { MentionTextArea } from '../Utils';
+import { useMentionTriggers, useMentionValue, getCleanName, hasMentions } from '../Utils/Mention';
 
 import * as s from './NameField.module.scss';
 
-const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) => {
+const NameField = React.forwardRef(({ children, defaultValue, boardLabels, boardMemberships, currentUserIds, currentLabelIds, onUpdate }, ref) => {
   const [t] = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [value, handleFieldChange, setValue, handleFocus] = useField(defaultValue);
+  const [value, submitData, handleChange, resetValue] = useMentionValue(defaultValue);
   const field = useRef(null);
+  const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, labels: boardLabels, excludeUserIds: currentUserIds, excludeLabelIds: currentLabelIds });
 
   const open = useCallback(() => {
     setIsOpen(true);
-    setValue(defaultValue);
-  }, [defaultValue, setValue]);
+    resetValue(defaultValue);
+  }, [defaultValue, resetValue]);
 
   const close = useCallback(() => {
     setIsOpen(false);
-    setValue(null);
-  }, [setValue]);
+    resetValue();
+  }, [resetValue]);
 
   const submit = useCallback(() => {
-    const cleanValue = value.trim();
+    const name = getCleanName(value, submitData);
 
-    if (cleanValue && cleanValue !== defaultValue) {
-      onUpdate(cleanValue);
+    if (name && (name !== defaultValue || hasMentions(submitData))) {
+      onUpdate(name, submitData);
     }
 
     close();
-  }, [defaultValue, onUpdate, value, close]);
+  }, [value, submitData, defaultValue, onUpdate, close]);
 
   useImperativeHandle(
     ref,
@@ -44,23 +46,15 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
 
   const handleKeyDown = useCallback(
     (e) => {
-      switch (e.key) {
-        case 'Enter':
-          e.preventDefault(); // Prevent adding new line in TextArea
-          submit();
-          break;
-        case 'Escape':
-          close();
-          break;
-        default:
+      if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent adding new line in TextArea
+        submit();
+      } else if (e.key === 'Escape') {
+        close();
       }
     },
     [close, submit],
   );
-
-  const handleFieldBlur = useCallback(() => {
-    submit();
-  }, [submit]);
 
   useEffect(() => {
     if (isOpen) {
@@ -73,16 +67,17 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
   }
 
   return (
-    <TextArea
+    <MentionTextArea
       ref={field}
       value={value}
       placeholder={t('common.enterCardName')}
       className={s.field}
       maxRows={3}
       onKeyDown={handleKeyDown}
-      onChange={handleFieldChange}
-      onBlur={handleFieldBlur}
-      onFocus={handleFocus}
+      onChange={handleChange}
+      onBlur={submit}
+      onFocus={focusToEnd}
+      mentionTriggers={mentionTriggers}
     />
   );
 });
@@ -90,6 +85,10 @@ const NameField = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =
 NameField.propTypes = {
   children: PropTypes.node.isRequired,
   defaultValue: PropTypes.string.isRequired,
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentUserIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  currentLabelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
 };
 

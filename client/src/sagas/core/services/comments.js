@@ -63,6 +63,10 @@ export function* createCommentInCurrentCard(data) {
   yield call(createComment, cardId, data);
 }
 
+export function* createCommentMention(cardId, userId, comment) {
+  yield call(request, api.createCommentMention, cardId, userId, comment);
+}
+
 export function* updateComment(id, data) {
   const originalComment = yield select(selectors.selectCommentById, id);
 
@@ -110,6 +114,7 @@ export default {
   fetchCommentsInCurrentCard,
   createComment,
   createCommentInCurrentCard,
+  createCommentMention,
   updateComment,
   deleteComment,
   handleCommentCreate,

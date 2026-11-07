@@ -15,6 +15,8 @@ const createComment = (cardId, data, headers) =>
     item: transformComment(body.item),
   }));
 
+const createCommentMention = (cardId, userId, comment, headers) => socket.post(`/comments/${cardId}/mentions`, { userId, content: comment }, headers);
+
 const updateComment = (id, data, headers) =>
   socket.patch(`/comments/${id}`, data, headers).then((body) => ({
     ...body,
@@ -42,6 +44,7 @@ const makeHandleCommentDelete = makeHandleCommentCreate;
 export default {
   getCardComments,
   createComment,
+  createCommentMention,
   updateComment,
   deleteComment,
   makeHandleCommentCreate,

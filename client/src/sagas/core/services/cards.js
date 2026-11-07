@@ -1,4 +1,4 @@
-import { call, put, select } from 'redux-saga/effects';
+import { all, call, put, select } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
@@ -44,20 +44,6 @@ export function* createCard(listId, data, autoOpen, index) {
 
   yield put(actions.createCard.success(localId, card));
 
-  if (nextData.labelIds) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const labelId of nextData.labelIds) {
-      yield call(addLabelToCard, labelId, card.id);
-    }
-  }
-
-  if (nextData.userIds) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const userId of nextData.userIds) {
-      yield call(addUserToCard, userId, card.id);
-    }
-  }
-
   if (autoOpen) {
     yield call(goToCard, card.id);
     setTimeout(() => {
@@ -66,10 +52,17 @@ export function* createCard(listId, data, autoOpen, index) {
       }
     }, 0);
   }
+
+  const { labelIds = [], userIds = [] } = nextData;
+  yield all([...labelIds.map((labelId) => call(addLabelToCard, labelId, card.id)), ...userIds.map((userId) => call(addUserToCard, userId, card.id))]);
 }
 
 export function* handleCardCreate(card) {
   yield put(actions.handleCardCreate(card));
+}
+
+export function* createCardMention(id, userId) {
+  yield call(request, api.createCardMention, id, userId);
 }
 
 export function* updateCard(id, data) {
@@ -227,6 +220,7 @@ export default {
   registerDescriptionOpenHandler,
   createCard,
   handleCardCreate,
+  createCardMention,
   updateCard,
   updateCurrentCard,
   handleCardUpdate,

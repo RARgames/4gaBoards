@@ -163,10 +163,14 @@ module.exports = {
       let activityHtml = null;
 
       if (t) {
-        const transProps = getActivityTransProps(t, action);
+        const notificationAction = {
+          ...action,
+          isMentionedUser: [Action.Types.CARD_MENTION, Action.Types.CARD_COMMENT_MENTION].includes(action.type) && action.data?.userId === notification.userId,
+        };
+        const transProps = getActivityTransProps(t, notificationAction);
 
         if (transProps) {
-          const localizedHtml = renderLocalizedHtmlFromTransProps(t, transProps, action, baseClientUrl);
+          const localizedHtml = renderLocalizedHtmlFromTransProps(t, transProps, notificationAction, baseClientUrl);
 
           if (localizedHtml) {
             activityHtml = `<p>&bull; ${localizedHtml}</p>`;

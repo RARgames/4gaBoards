@@ -27,6 +27,15 @@ const updateComment = (id, data) => ({
   },
 });
 
+const createCommentMention = (cardId, userId, comment) => ({
+  type: EntryActionTypes.COMMENT_MENTION_CREATE,
+  payload: {
+    cardId,
+    userId,
+    comment,
+  },
+});
+
 const deleteComment = (id) => ({
   type: EntryActionTypes.COMMENT_DELETE,
   payload: {
@@ -60,6 +69,7 @@ export default {
   fetchCommentsInCard,
   createCommentInCurrentCard,
   updateComment,
+  createCommentMention,
   deleteComment,
   handleCommentCreate,
   handleCommentUpdate,

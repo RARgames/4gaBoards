@@ -109,10 +109,16 @@ const rehypePlugins = [
         code: [...(defaultSchema.attributes.code || []), ['className', 'code-highlight', /^language-./]],
         div: [...(defaultSchema.attributes.div || []), ['class', 'copied'], ['data-code']], // for copy button
         ul: [...(defaultSchema.attributes.ul || []), ['className', 'contains-task-list']],
+        img: [...(defaultSchema.attributes.img || []), ['src'], ['alt'], ['className', 'mention-avatar']],
         span: [
           ...(defaultSchema.attributes.span || []),
           [
             'className',
+            'mention-user',
+            'mention-label',
+            'mention-date',
+            'mention-avatar-initials',
+            'mention-name',
             ...colorNames,
             // classNames from @uiw/react-markdown-preview/core/markdown.css
             // eslint-disable-next-line prettier/prettier

@@ -17,11 +17,10 @@ const makeMapStateToProps = () => {
     const cardIds = selectCardIdsByListId(state, id);
     const isFiltered = selectIsFilteredByListId(state, id);
     const filteredCardIds = selectFilteredCardIdsByListId(state, id);
-    const labelIds = selectors.selectLabelsForCurrentBoard(state);
-    const memberIds = selectors.selectMembershipsForCurrentBoard(state);
+    const boardLabels = selectors.selectLabelsForCurrentBoard(state);
+    const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const currentUserMembership = selectors.selectCurrentUserMembershipForCurrentBoard(state);
     const isCurrentUserEditor = !!currentUserMembership && currentUserMembership.role === BoardMembershipRoles.EDITOR;
-    const boardMemberships = selectors.selectMembershipsForCurrentBoard(state);
     const activities = selectors.selectListActivitiesById(state, id);
     const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
     const mailTokens = selectors.selectMailTokensByListId(state, id);
@@ -39,14 +38,13 @@ const makeMapStateToProps = () => {
       cardIds,
       isFiltered,
       filteredCardIds,
-      labelIds,
-      memberIds,
+      boardLabels,
+      boardMemberships,
       canEdit: isCurrentUserEditor,
       createdAt,
       createdBy,
       updatedAt,
       updatedBy,
-      boardMemberships,
       activities,
       isActivitiesFetching,
       isAllActivitiesFetched,

@@ -9,6 +9,8 @@ import { Input, InputVariant } from './Input';
 import LinkifiedTextRenderer from './LinkifiedTextRenderer';
 import { Loader, LoaderSize } from './Loader';
 import { MDEditor, MDPreview } from './Markdown';
+import MentionMDEditor from './MentionMDEditor';
+import MentionTextArea from './MentionTextArea';
 import { Message, MessageVariant } from './Message';
 import withModal from './Modal';
 import withPopup from './Popup';
@@ -39,6 +41,8 @@ export {
   LoaderSize,
   MDEditor,
   MDPreview,
+  MentionMDEditor,
+  MentionTextArea,
   Message,
   MessageVariant,
   Popup,

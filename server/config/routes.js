@@ -80,6 +80,7 @@ module.exports.routes = {
   'POST /api/lists/:listId/cards': 'cards/create',
   'GET /api/cards/:id': 'cards/show',
   'PATCH /api/cards/:id': 'cards/update',
+  'POST /api/cards/:id/mentions': 'cards/create-mention',
   'POST /api/cards/:id/duplicate': 'cards/duplicate',
   'POST /api/cards/:id/mark-completed': 'cards/mark-completed',
   'DELETE /api/cards/:id': 'cards/delete',
@@ -117,6 +118,7 @@ module.exports.routes = {
 
   'GET /api/cards/:cardId/comments': 'comments/index',
   'POST /api/cards/:cardId/comments': 'comments/create',
+  'POST /api/comments/:cardId/mentions': 'comments/create-mention',
   'PATCH /api/comments/:id': 'comments/update',
   'DELETE /api/comments/:id': 'comments/delete',
 

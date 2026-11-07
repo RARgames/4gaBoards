@@ -2,22 +2,16 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import { useForm } from '../../hooks';
 import { useDidUpdate, useToggle } from '../../lib/hooks';
-import { Button, ButtonVariant, Popup, Form, withPopup, Dropdown, DropdownVariant, TextArea, TextAreaVariant } from '../Utils';
+import { Button, ButtonVariant, Popup, Form, withPopup, Dropdown, DropdownVariant, MentionTextArea, TextAreaVariant } from '../Utils';
+import { useMentionTriggers, useMentionValue, getCleanName, toExtras } from '../Utils/Mention';
 
 import * as gs from '../../global.module.scss';
 import * as s from './CardAddPopup.module.scss';
 
-const DEFAULT_DATA = {
-  name: '',
-  isCompleted: false,
-};
-
-// eslint-disable-next-line no-unused-vars
-const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListId, onCreate, onBack, onClose }) => {
+const CardAddStep = React.memo(({ lists, boardLabels, boardMemberships, forcedDefaultListId, onCreate, onBack, onClose }) => {
   const [t] = useTranslation();
-  const [data, handleFieldChange, setData] = useForm(DEFAULT_DATA);
+  const [value, submitData, handleChange, resetValue] = useMentionValue();
   const [focusNameFieldState, focusNameField] = useToggle();
   const [isError, setIsError] = useState(false);
   const [isDropdownError, setIsDropdownError] = useState(false);
@@ -28,19 +22,14 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
   const [focusFromState, focusForm] = useToggle();
 
   const [selectedList, setSelectedList] = useState(lists.length > 0 ? lists[0] : null);
+  const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, labels: boardLabels });
 
   const handleSubmit = useCallback(
     (autoOpen, keepOpen) => {
-      const cleanData = {
-        ...data,
-        name: data.name.trim(),
-        // TODO remove example - how to submit
-        // labelIds: ['895796152710988857', '907861629801072269', '920273931925980818'],
-        // userIds: ['895703383690707969'],
-      };
+      const name = getCleanName(value, submitData);
 
-      if (!cleanData.name) {
-        setData(DEFAULT_DATA);
+      if (!name) {
+        resetValue();
         focusNameField();
         setIsError(true);
         return;
@@ -52,9 +41,8 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
         return;
       }
 
-      onCreate(selectedList ? selectedList.id : forcedDefaultListId, cleanData, autoOpen);
-      setData(DEFAULT_DATA);
-
+      onCreate(selectedList ? selectedList.id : forcedDefaultListId, { name, isCompleted: false, ...toExtras(submitData) }, autoOpen);
+      resetValue();
       setIsError(false);
       setIsDropdownError(false);
 
@@ -64,28 +52,24 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
         onClose();
       }
     },
-    [data, focusNameField, forcedDefaultListId, onClose, onCreate, selectedList, setData],
+    [value, submitData, resetValue, focusNameField, forcedDefaultListId, onClose, onCreate, selectedList],
   );
 
   const handleKeyDown = useCallback(
     (e) => {
       setIsError(false);
-      switch (e.key) {
-        case 'Enter': {
-          e.preventDefault(); // Prevent adding new line in TextArea
-          const autoOpen = e.ctrlKey;
-          const keepOpen = e.shiftKey;
-          handleSubmit(autoOpen, keepOpen);
-          break;
-        }
-        default:
+      if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent adding new line in TextArea
+        const autoOpen = e.ctrlKey;
+        const keepOpen = e.shiftKey;
+        handleSubmit(autoOpen, keepOpen);
       }
     },
     [handleSubmit],
   );
 
-  const handleListChange = useCallback((value) => {
-    setSelectedList(value);
+  const handleListChange = useCallback((list) => {
+    setSelectedList(list);
   }, []);
 
   useEffect(() => {
@@ -108,7 +92,16 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
       <Popup.Content className={s.content}>
         <Form ref={formRef} tabIndex="0" onKeyDown={handleKeyDown}>
           <div className={s.text}>{t('common.name')}</div>
-          <TextArea ref={nameField} variant={TextAreaVariant.Default} name="name" value={data.name} placeholder={t('common.enterCardNameWithHint')} maxRows={3} onChange={handleFieldChange} isError={isError} />
+          <MentionTextArea
+            ref={nameField}
+            variant={TextAreaVariant.Default}
+            value={value}
+            placeholder={t('common.enterCardName')}
+            maxRows={3}
+            onChange={handleChange}
+            isError={isError}
+            mentionTriggers={mentionTriggers}
+          />
           {!forcedDefaultListId && <div className={s.text}>{t('common.list', { context: 'title' })}</div>}
           {!forcedDefaultListId && (
             <Dropdown
@@ -138,8 +131,8 @@ const CardAddStep = React.memo(({ lists, labelIds, memberIds, forcedDefaultListI
 
 CardAddStep.propTypes = {
   lists: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  labelIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  memberIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   forcedDefaultListId: PropTypes.string,
   onCreate: PropTypes.func.isRequired,
   onBack: PropTypes.func,

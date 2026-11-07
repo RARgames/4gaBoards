@@ -6,4 +6,18 @@
   .wrapperClosed {
     display: none;
   }
+
+  .controlsWrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .controls {
+    margin-left: auto;
+  }
+
+  .controlsInfo {
+    margin-right: 6px;
+    cursor: default;
+  }
 }

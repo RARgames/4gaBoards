@@ -1,14 +1,17 @@
-import { call, put, select } from 'redux-saga/effects';
+import { all, call, put, select } from 'redux-saga/effects';
 
 import actions from '../../../actions';
 import api from '../../../api';
 import selectors from '../../../selectors';
 import { createLocalId } from '../../../utils/local-id';
 import request from '../request';
+import { addUserToTask } from './users';
 
 export function* createTask(cardId, data) {
+  const { userIds, ...restData } = data;
+
   const nextData = {
-    ...data,
+    ...restData,
     position: yield select(selectors.selectNextTaskPosition, cardId),
   };
 
@@ -31,6 +34,10 @@ export function* createTask(cardId, data) {
   }
 
   yield put(actions.createTask.success(localId, task));
+
+  if (userIds) {
+    yield all(userIds.map((userId) => call(addUserToTask, userId, task.id, cardId)));
+  }
 }
 
 export function* createTaskInCurrentCard(data) {
@@ -44,17 +51,24 @@ export function* handleTaskCreate(task) {
 }
 
 export function* updateTask(id, data) {
-  yield put(actions.updateTask(id, data));
+  const { userIds, ...restData } = data;
+
+  yield put(actions.updateTask(id, restData));
 
   let task;
   try {
-    ({ item: task } = yield call(request, api.updateTask, id, data));
+    ({ item: task } = yield call(request, api.updateTask, id, restData));
   } catch (error) {
     yield put(actions.updateTask.failure(id, error));
     return;
   }
 
   yield put(actions.updateTask.success(task));
+
+  if (userIds) {
+    const { cardId } = task;
+    yield all(userIds.map((userId) => call(addUserToTask, userId, task.id, cardId)));
+  }
 }
 
 export function* handleTaskUpdate(task) {

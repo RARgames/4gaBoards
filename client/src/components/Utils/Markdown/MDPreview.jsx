@@ -5,12 +5,15 @@ import PropTypes from 'prop-types';
 import remarkGithub from 'remark-github';
 
 import { PreferredFonts } from '../../../constants/Enums';
+import { createGithubBuildUrl } from '../Mention';
 import MDSettings from './MDSettings';
 
 import * as s from './MD.module.scss';
 
-const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, preferredDetailsFont, className, ...props }, ref) => {
-  const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo }]] : null;
+const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, preferredDetailsFont, extraRehypePlugins, className, ...props }, ref) => {
+  const remarkPlugins = isGithubConnected ? [[remarkGithub, { repository: githubRepo, buildUrl: createGithubBuildUrl(extraRehypePlugins) }]] : null;
+  const { rehypePlugins } = MDSettings;
+  const mergedRehypePlugins = extraRehypePlugins ? [...rehypePlugins, ...extraRehypePlugins] : rehypePlugins;
   const isMonospaceSelected = preferredDetailsFont === PreferredFonts.MONOSPACE;
 
   const handleClick = useCallback((e) => {
@@ -28,7 +31,7 @@ const MDPreview = React.forwardRef(({ source, isGithubConnected, githubRepo, pre
         ref={ref}
         source={source}
         remarkPlugins={remarkPlugins}
-        rehypePlugins={MDSettings.rehypePlugins}
+        rehypePlugins={mergedRehypePlugins}
         className={clsx(className, s.preview, isMonospaceSelected && s.fontMonospace)}
         {...props} // eslint-disable-line react/jsx-props-no-spreading
       />
@@ -41,6 +44,7 @@ MDPreview.propTypes = {
   isGithubConnected: PropTypes.bool,
   githubRepo: PropTypes.string,
   preferredDetailsFont: PropTypes.string.isRequired,
+  extraRehypePlugins: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   className: PropTypes.string,
 };
 
@@ -48,6 +52,7 @@ MDPreview.defaultProps = {
   source: undefined,
   isGithubConnected: false,
   githubRepo: '',
+  extraRehypePlugins: undefined,
   className: undefined,
 };
 

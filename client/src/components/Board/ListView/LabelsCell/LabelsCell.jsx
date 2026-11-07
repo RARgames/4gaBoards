@@ -9,14 +9,14 @@ import { Button, ButtonVariant, Icon, IconType, IconSize } from '../../../Utils'
 
 import * as s from './LabelsCell.module.scss';
 
-const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelDelete }) => {
+const LabelsCell = React.memo(({ labels, boardLabels, cellClassName, canEdit, onLabelAdd, onLabelRemove, onLabelCreate, onLabelUpdate, onLabelDelete }) => {
   const [t] = useTranslation();
   const labelIds = labels.map((label) => label.id);
 
   const labelsNode = labels.map((label) => (
     <LabelsPopup
       key={label.id}
-      items={allLabels}
+      items={boardLabels}
       currentIds={labelIds}
       onSelect={onLabelAdd}
       onDeselect={onLabelRemove}
@@ -34,7 +34,7 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
 
   const addLabelNode = (
     <LabelsPopup
-      items={allLabels}
+      items={boardLabels}
       currentIds={labelIds}
       onSelect={onLabelAdd}
       onDeselect={onLabelRemove}
@@ -45,7 +45,7 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
       offset={0}
       wrapperClassName={s.popupWrapper}
     >
-      <Button variant={ButtonVariant.Icon} title={t('common.addLabel')} className={clsx(cellClassName, s.addButton)}>
+      <Button variant={ButtonVariant.Icon} title={t('common.addLabel', { context: 'title' })} className={clsx(cellClassName, s.addButton)}>
         <Icon type={IconType.Plus} size={IconSize.Size10} className={s.iconAddButton} />
       </Button>
     </LabelsPopup>
@@ -60,7 +60,7 @@ const LabelsCell = React.memo(({ labels, allLabels, cellClassName, canEdit, onLa
 
 LabelsCell.propTypes = {
   labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   cellClassName: PropTypes.string,
   canEdit: PropTypes.bool.isRequired,
   onLabelAdd: PropTypes.func.isRequired,

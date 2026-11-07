@@ -39,6 +39,14 @@ const handleCardUpdate = (card) => ({
   },
 });
 
+const createCardMention = (id, userId) => ({
+  type: EntryActionTypes.CARD_MENTION_CREATE,
+  payload: {
+    id,
+    userId,
+  },
+});
+
 const markCardCompleted = (id, isCompleted) => ({
   type: EntryActionTypes.CARD_MARK_COMPLETED,
   payload: {
@@ -134,6 +142,7 @@ export default {
   updateCard,
   updateCurrentCard,
   handleCardUpdate,
+  createCardMention,
   markCardCompleted,
   markCurrentCardCompleted,
   moveCard,

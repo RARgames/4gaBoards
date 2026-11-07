@@ -1,154 +1,118 @@
-import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from 'react';
+import React, { useCallback, useImperativeHandle, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dequal } from 'dequal';
 import PropTypes from 'prop-types';
 
-import { useForm } from '../../../hooks';
-import { Button, ButtonVariant, Form, MDEditor } from '../../Utils';
+import { Button, ButtonVariant, Form, MentionMDEditor } from '../../Utils';
+import { useEditorRef, useMentionTriggers, useMentionValue, getAddedMentions } from '../../Utils/Mention';
 
 import * as gs from '../../../global.module.scss';
 import * as s from './CommentEdit.module.scss';
 
-const CommentEdit = React.forwardRef(({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, preferredDetailsFont, onUpdate, onUserPrefsUpdate }, ref) => {
-  const [t] = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
-  const [wasOpen, setWasOpen] = useState(false);
-  const [data, handleFieldChange, setData] = useForm(null);
-  const textareaRef = useRef(null);
+const CommentEdit = React.forwardRef(
+  ({ children, defaultData, placeholder, commentMode, isGithubConnected, githubRepo, preferredDetailsFont, boardMemberships, boardLabels, onUpdate, onMention, onUserPrefsUpdate }, ref) => {
+    const [t] = useTranslation();
+    const [isOpen, setIsOpen] = useState(false);
+    const [text, , handleChange, resetText] = useMentionValue();
 
-  const open = useCallback(() => {
-    setIsOpen(true);
-    setData({
-      text: '',
-      ...defaultData,
-    });
-  }, [defaultData, setData]);
+    const handleModeChange = useCallback((preview) => onUserPrefsUpdate({ commentMode: preview }), [onUserPrefsUpdate]);
+    const [textareaRef, setEditorRef] = useEditorRef(commentMode, handleModeChange);
+    const mentionTriggers = useMentionTriggers({ memberships: boardMemberships, labels: boardLabels });
 
-  const close = useCallback(() => {
-    setIsOpen(false);
-    setData(null);
-  }, [setData]);
+    const open = useCallback(() => {
+      setIsOpen(true);
+      resetText(defaultData.text || '');
+    }, [defaultData, resetText]);
 
-  const submit = useCallback(() => {
-    const cleanData = {
-      ...data,
-      text: data.text.trim(),
-    };
+    const close = useCallback(() => {
+      setIsOpen(false);
+      resetText();
+    }, [resetText]);
 
-    if (!cleanData.text) {
-      textareaRef.current?.focus();
-      return;
-    }
+    const submit = useCallback(() => {
+      const cleanData = { ...defaultData, text: text.trim() };
 
-    if (!dequal(cleanData, defaultData)) {
-      onUpdate(cleanData);
-    }
-
-    close();
-  }, [data, defaultData, close, onUpdate]);
-
-  const handleSubmit = useCallback(() => {
-    submit();
-  }, [submit]);
-
-  const handleCancel = useCallback(() => {
-    close();
-  }, [close]);
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      open,
-      close,
-    }),
-    [open, close],
-  );
-
-  const handleFieldKeyDown = useCallback(
-    (e) => {
-      if (e.ctrlKey && e.key === 'Enter') {
-        submit();
-      } else if (e.key === 'Escape') {
-        handleCancel();
-      }
-    },
-    [handleCancel, submit],
-  );
-
-  const handleChange = useCallback(
-    (value) => {
-      const e = { target: { name: 'text', value } };
-      handleFieldChange(e);
-    },
-    [handleFieldChange],
-  );
-
-  const handleBlur = useCallback(
-    (e) => {
-      if (e.relatedTarget && e.relatedTarget.closest(`.${s.editor}`)) {
+      if (!cleanData.text) {
+        textareaRef.current?.focus();
         return;
       }
 
-      if (e.target.value.trim() === defaultData.text.trim()) {
-        handleCancel();
+      if (!dequal(cleanData, defaultData)) {
+        const mentionedUserIds = getAddedMentions(defaultData.text, cleanData.text, mentionTriggers)
+          .filter((mention) => mention.type === 'users')
+          .map((mention) => mention.id);
+        onUpdate(cleanData);
+        mentionedUserIds.forEach((userId) => onMention(userId, cleanData.text));
       }
-    },
-    [defaultData.text, handleCancel],
-  );
 
-  const handlePreviewUpdate = useCallback(
-    (preview) => {
-      onUserPrefsUpdate({ commentMode: preview });
-    },
-    [onUserPrefsUpdate],
-  );
+      close();
+    }, [defaultData, text, close, textareaRef, mentionTriggers, onUpdate, onMention]);
 
-  useEffect(() => {
+    useImperativeHandle(
+      ref,
+      () => ({
+        open,
+        close,
+      }),
+      [open, close],
+    );
+
+    const handleFieldKeyDown = useCallback(
+      (e) => {
+        if (e.ctrlKey && e.key === 'Enter') {
+          submit();
+        } else if (e.key === 'Escape') {
+          close();
+        }
+      },
+      [close, submit],
+    );
+
+    const handleBlur = useCallback(
+      (e) => {
+        if (e.relatedTarget && e.relatedTarget.closest(`.${s.editor}`)) {
+          return;
+        }
+
+        if (e.target.value.trim() === defaultData.text.trim()) {
+          close();
+        }
+      },
+      [defaultData.text, close],
+    );
+
     if (!isOpen) {
-      setWasOpen(false);
+      return children;
     }
-  }, [isOpen]);
 
-  if (!isOpen) {
-    return children;
-  }
-
-  return (
-    <Form>
-      <MDEditor
-        name="text"
-        value={data.text}
-        ref={(node) => {
-          if (node) {
-            if (node.preview !== commentMode) {
-              handlePreviewUpdate(node.preview);
-            }
-            if (node.textarea && !wasOpen) {
-              setWasOpen(true);
-              textareaRef.current = node.textarea;
-            }
-          }
-        }}
-        onChange={handleChange}
-        onKeyDown={handleFieldKeyDown}
-        onBlur={handleBlur}
-        preview={commentMode}
-        textareaProps={{
-          placeholder,
-          spellCheck: 'true',
-        }}
-        isGithubConnected={isGithubConnected}
-        githubRepo={githubRepo}
-        preferredDetailsFont={preferredDetailsFont}
-        className={s.editor}
-      />
-      <div className={gs.controls}>
-        <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={handleCancel} />
-        <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={handleSubmit} />
-      </div>
-    </Form>
-  );
-});
+    return (
+      <Form>
+        <MentionMDEditor
+          name="text"
+          value={text}
+          ref={setEditorRef}
+          onChange={handleChange}
+          onKeyDown={handleFieldKeyDown}
+          onBlur={handleBlur}
+          preview={commentMode}
+          textareaProps={{
+            placeholder,
+            spellCheck: 'true',
+          }}
+          isGithubConnected={isGithubConnected}
+          githubRepo={githubRepo}
+          preferredDetailsFont={preferredDetailsFont}
+          mentionTriggers={mentionTriggers}
+          className={s.editor}
+        />
+        <div className={gs.controls}>
+          <Button variant={ButtonVariant.Cancel} content={t('common.cancel')} onClick={close} />
+          <Button variant={ButtonVariant.Submit} content={t('common.save')} onClick={submit} />
+        </div>
+      </Form>
+    );
+  },
+);
 
 CommentEdit.propTypes = {
   children: PropTypes.node.isRequired,
@@ -158,7 +122,10 @@ CommentEdit.propTypes = {
   isGithubConnected: PropTypes.bool.isRequired,
   githubRepo: PropTypes.string.isRequired,
   preferredDetailsFont: PropTypes.string.isRequired,
+  boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   onUpdate: PropTypes.func.isRequired,
+  onMention: PropTypes.func.isRequired,
   onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 

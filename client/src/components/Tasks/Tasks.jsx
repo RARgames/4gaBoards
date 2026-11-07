@@ -181,7 +181,7 @@ const Tasks = React.forwardRef(
           {placeholderHeight !== null && <div style={{ height: placeholderHeight }} />}
         </div>
         {canEdit && (
-          <TaskAdd ref={taskAddRef} onCreate={onCreate}>
+          <TaskAdd ref={taskAddRef} boardMemberships={boardMemberships} onCreate={onCreate}>
             <Button
               variant={ButtonVariant.Default}
               content={t('common.addTask')}

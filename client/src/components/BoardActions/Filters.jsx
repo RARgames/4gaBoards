@@ -19,7 +19,7 @@ const Filters = React.memo(
     labels,
     allBoardMemberships,
     boardMemberships,
-    allLabels,
+    boardLabels,
     canEdit,
     dueDate,
     justSelectedDay,
@@ -126,7 +126,7 @@ const Filters = React.memo(
         </span>
         <span className={s.filter}>
           <LabelsPopup
-            items={allLabels}
+            items={boardLabels}
             currentIds={labels.map((label) => label.id)}
             title={t('common.filterByLabels', { context: 'title' })}
             canEdit={canEdit}
@@ -203,7 +203,7 @@ Filters.propTypes = {
   labels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allBoardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   boardMemberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-  allLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  boardLabels: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   canEdit: PropTypes.bool.isRequired,
   dueDate: PropTypes.instanceOf(Date),
   justSelectedDay: PropTypes.bool,
