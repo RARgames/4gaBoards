@@ -45,7 +45,7 @@ export const formatLocalDate = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1
 export const parseLocalDate = (value) => {
   const [day, time] = value.split(' ');
   const [y, m, d] = day.split('-').map(Number);
-  const [h, min] = time ? time.split(':').map(Number) : [0, 0];
+  const [h, min] = time ? time.split(':').map(Number) : [12, 0];
   return new Date(y, m - 1, d, h, min);
 };
 
