@@ -235,6 +235,9 @@ const List = React.memo(
         cleanups.push(cardTarget(collapsedDropRef.current, cardsCount));
       }
 
+      // Area below the list
+      cleanups.push(cardTarget(innerWrapper, cardsCount));
+
       return combine(...cleanups);
     }, [id, index, isPersisted, canEdit, isCollapsed, cardsCount, filteredCardsCount, key]);
 
