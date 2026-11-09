@@ -205,6 +205,22 @@ const useMentions = ({ value, triggers, textareaRef, onChange, onMentionChange, 
       let next = restored.length > 0 ? [...kept, ...restored].sort(byPosition) : kept;
 
       // Pasted text, or a whitespace typed right after a complete token: recognize mentions, as long as they don't overlap or duplicate existing ones
+      if (!isPaste && historyRef.current.length > 0) {
+        const merged = [...next];
+        const brought = [];
+        parseMentions(text, triggers).forEach((p) => {
+          const touchesChange = p.startIndex < change.end && p.startIndex + tokenLength(p) > change.start;
+          if (touchesChange && historyRef.current.some((h) => sameMention(h, p)) && canAdd(merged, p, allowDuplicates)) {
+            merged.push(p);
+            brought.push(p);
+            notify('add', p, p.item);
+          }
+        });
+        if (brought.length > 0) {
+          historyRef.current = historyRef.current.filter((h) => !brought.some((p) => sameMention(h, p)));
+          next = merged.sort(byPosition);
+        }
+      }
       if (isPaste || typedBoundary) {
         const merged = [...next];
         parseMentions(text, triggers).forEach((p) => {
