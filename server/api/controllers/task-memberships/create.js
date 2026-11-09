@@ -5,6 +5,9 @@ const Errors = {
   CARD_NOT_FOUND: {
     cardNotFound: 'Card not found',
   },
+  TASK_NOT_FOUND: {
+    taskNotFound: 'Task not found',
+  },
   USER_NOT_FOUND: {
     userNotFound: 'User not found',
   },
@@ -39,6 +42,9 @@ module.exports = {
     cardNotFound: {
       responseType: 'notFound',
     },
+    taskNotFound: {
+      responseType: 'notFound',
+    },
     userNotFound: {
       responseType: 'notFound',
     },
@@ -63,6 +69,12 @@ module.exports = {
 
     if (boardMembership.role !== BoardMembership.Roles.EDITOR) {
       throw Errors.NOT_ENOUGH_RIGHTS;
+    }
+
+    const { task } = await sails.helpers.tasks.getProjectPath(inputs.taskId).intercept('pathNotFound', () => Errors.TASK_NOT_FOUND);
+
+    if (task.cardId !== card.id) {
+      throw Errors.TASK_NOT_FOUND;
     }
 
     const isBoardMember = await sails.helpers.users.isBoardMember(inputs.userId, card.boardId);
