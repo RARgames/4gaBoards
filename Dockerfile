@@ -1,4 +1,4 @@
-FROM node:24-alpine AS base
+FROM node:26-alpine AS base
 
 RUN npm install npm@latest --global
 RUN npm install pnpm@latest --global
@@ -33,7 +33,7 @@ RUN pnpm install --frozen-lockfile --filter client... --prod
 COPY client ./client
 RUN DISABLE_ESLINT_PLUGIN=true pnpm client:build
 
-FROM node:24-alpine
+FROM node:26-alpine
 
 RUN apk -U upgrade
 RUN apk add --no-cache bash shadow su-exec

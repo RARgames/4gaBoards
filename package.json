@@ -79,7 +79,7 @@
     "postcss-scss": "^4.0.9",
     "prettier": "^3.9.10",
     "start-server-and-test": "^3.0.13",
-    "stylelint": "^17.16.0",
+    "stylelint": "^18.0.0",
     "stylelint-config-recommended-scss": "^17.0.1"
   },
   "devEngines": {
@@ -89,7 +89,7 @@
     }
   },
   "engines": {
-    "node": "^24.11",
+    "node": "^26.13",
     "pnpm": "^12.0.0"
   }
 }
