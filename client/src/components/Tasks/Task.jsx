@@ -215,7 +215,7 @@ const Task = React.memo(
         break;
       case VARIANTS.CARDMODAL:
         visibleMembersCount = 3;
-        dueDateVariant = 'cardModal';
+        dueDateVariant = 'cardModalTasks';
         userSize = 'card';
         checkboxSize = CheckboxSize.Size20;
         break;
