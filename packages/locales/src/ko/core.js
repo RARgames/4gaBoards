@@ -41,7 +41,7 @@ export default {
       allowedRegisterDomainsPlaceholder: 'example.com;example.org',
       analytics: '분석',
       anyDomain: '모든 도메인',
-      anyMatch: '전체 일치 [Alt+V]',
+      anyMatch: '하나라도 일치 [Alt+V]',
       apiClient: 'API 클라이언트',
       apiClients: 'API 클라이언트 목록',
       applyTheme: '{{theme}} 테마로 사용자 정의 테마 덮어쓰기',
