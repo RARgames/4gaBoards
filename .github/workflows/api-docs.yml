@@ -1,0 +1,77 @@
+name: API Docs
+
+on:
+  pull_request:
+    paths:
+      - 'server/config/routes.js'
+      - 'server/api/controllers/**'
+      - 'packages/api-docs/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/config/routes.js'
+      - 'server/api/controllers/**'
+      - 'packages/api-docs/**'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7.0.1
+
+      - name: Read versions from package.json engines
+        id: versions
+        run: |
+          node -e "const p=require('./package.json'); console.log('node=' + p.engines.node); console.log('pnpm=' + p.engines.pnpm);" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: ${{ steps.versions.outputs.node }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6.1.0
+        with:
+          version: ${{ steps.versions.outputs.pnpm }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --filter @4gaboards/api-docs...
+
+      - name: Validate spec and check it covers all routes
+        run: pnpm api-docs:check
+
+  notify-docs:
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 2
+
+      - name: Detect spec changes
+        id: spec
+        run: |
+          if git diff --quiet HEAD~1 HEAD -- packages/api-docs/openapi; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Trigger 4ga Boards docs update
+        uses: peter-evans/repository-dispatch@v4.0.1
+        with:
+          token: ${{ secrets.DOCS_4GA_BOARDS_DEPLOY_TOKEN }}
+          repository: RARgames/4gaBoardsDocs
+          event-type: api-docs-updated
+          client-payload: '{"ref": "${{ github.sha }}"}'

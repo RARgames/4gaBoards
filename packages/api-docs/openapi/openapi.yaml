@@ -1,0 +1,4425 @@
+openapi: 3.1.0
+info:
+  title: 4ga Boards API
+  version: latest
+  description: |-
+    4ga Boards API
+
+    Authenticate either with an access token (`Authorization: Bearer <token>`, obtained from `POST /api/access-tokens`)
+    or with API client credentials (`X-Client-Id` and `X-Client-Secret` headers) generated in Settings/Authentication.
+
+    Successful responses wrap data in `item` / `items` (and sometimes `included`).
+  license:
+    name: MIT
+    url: https://github.com/RARgames/4gaBoards/blob/main/LICENSE
+servers:
+  - url: '{baseUrl}'
+    description: Your 4ga Boards instance (set baseUrl to its address, without a trailing slash)
+    variables:
+      baseUrl:
+        default: https://demo.4gaboards.com
+tags:
+  - name: access-tokens
+  - name: actions
+  - name: api-clients
+  - name: attachments
+  - name: auth
+  - name: board-memberships
+  - name: board-templates
+  - name: boards
+  - name: card-labels
+  - name: card-memberships
+  - name: cards
+  - name: comments
+  - name: core
+  - name: labels
+  - name: lists
+  - name: mail-tokens
+  - name: notifications
+  - name: project-managers
+  - name: project-memberships
+  - name: projects
+  - name: register
+  - name: task-memberships
+  - name: tasks
+  - name: user-prefs
+  - name: users
+paths:
+  /auth/google:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: google'
+      operationId: authGoogle
+      responses:
+        '302':
+          description: Redirect to the Google OAuth provider
+      security: []
+  /auth/google/callback:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: googleCallback'
+      operationId: authGoogleCallback
+      responses:
+        '302':
+          description: Callback from the Google OAuth provider
+      security: []
+  /auth/github:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: github'
+      operationId: authGithub
+      responses:
+        '302':
+          description: Redirect to the GitHub OAuth provider
+      security: []
+  /auth/github/callback:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: githubCallback'
+      operationId: authGithubCallback
+      responses:
+        '302':
+          description: Callback from the GitHub OAuth provider
+      security: []
+  /auth/microsoft:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: microsoft'
+      operationId: authMicrosoft
+      responses:
+        '302':
+          description: Redirect to the Microsoft OAuth provider
+      security: []
+  /auth/microsoft/callback:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: microsoftCallback'
+      operationId: authMicrosoftCallback
+      responses:
+        '302':
+          description: Callback from the Microsoft OAuth provider
+      security: []
+  /auth/oidc:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: oidc'
+      operationId: authOidc
+      responses:
+        '302':
+          description: Redirect to the OIDC OAuth provider
+      security: []
+  /auth/oidc/callback:
+    get:
+      tags:
+        - auth
+      summary: 'OAuth: oidcCallback'
+      operationId: authOidcCallback
+      responses:
+        '302':
+          description: Callback from the OIDC OAuth provider
+      security: []
+  /api/access-tokens:
+    post:
+      tags:
+        - access-tokens
+      summary: 'access tokens: create'
+      operationId: accessTokensCreate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                emailOrUsername:
+                  type: string
+                  description: Email address or username (3-16 alphanumeric characters, optionally separated by a single underscore or dot).
+                  minLength: 3
+                  maxLength: 16
+                  example: john.doe
+                password:
+                  type: string
+                  example: password123
+              required:
+                - emailOrUsername
+                - password
+      responses:
+        '200':
+          description: Access token created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  item:
+                    type: string
+                    description: Generated access token.
+                required:
+                  - item
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security: []
+  /api/access-tokens/me:
+    delete:
+      tags:
+        - access-tokens
+      summary: 'access tokens: delete'
+      operationId: accessTokensDelete
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StringItemEnvelope"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/api-clients:
+    get:
+      tags:
+        - api-clients
+      summary: 'api clients: index'
+      operationId: apiClientsIndex
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    post:
+      tags:
+        - api-clients
+      summary: 'api clients: create'
+      operationId: apiClientsCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                permissions: {}
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/api-clients/{id}:
+    patch:
+      tags:
+        - api-clients
+      summary: 'api clients: update'
+      operationId: apiClientsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                permissions: {}
+                regenerateSecret:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - api-clients
+      summary: 'api clients: delete'
+      operationId: apiClientsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/register:
+    post:
+      tags:
+        - register
+      summary: 'register: create'
+      operationId: registerCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                name:
+                  type: string
+                policy:
+                  type: boolean
+              required:
+                - email
+                - password
+                - name
+                - policy
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StringItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security: []
+  /api/core-settings-public:
+    get:
+      tags:
+        - core
+      summary: 'core: show'
+      operationId: coreShow
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security: []
+  /api/core-settings:
+    post:
+      tags:
+        - core
+      summary: 'core: update'
+      operationId: coreUpdate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                registrationEnabled:
+                  type: boolean
+                localRegistrationEnabled:
+                  type: boolean
+                ssoRegistrationEnabled:
+                  type: boolean
+                projectCreationAllEnabled:
+                  type: boolean
+                syncSsoDataOnAuth:
+                  type: boolean
+                syncSsoAdminOnAuth:
+                  type: boolean
+                allowedRegisterDomains: {}
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users:
+    get:
+      tags:
+        - users
+      summary: 'users: index'
+      operationId: usersIndex
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    post:
+      tags:
+        - users
+      summary: 'users: create'
+      operationId: usersCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                name:
+                  type: string
+                username:
+                  type:
+                    - string
+                    - 'null'
+                  pattern: ^[a-zA-Z0-9]+((_|\.)?[a-zA-Z0-9])*$
+                  minLength: 1
+                  maxLength: 16
+                phone:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                organization:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                ssoGoogleId:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                ssoGoogleEmail:
+                  type:
+                    - string
+                    - 'null'
+                  format: email
+                ssoGithubId:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                ssoGithubUsername:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                ssoGithubEmail:
+                  type:
+                    - string
+                    - 'null'
+                  format: email
+                ssoMicrosoftId:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                ssoMicrosoftEmail:
+                  type:
+                    - string
+                    - 'null'
+                  format: email
+                ssoOidcId:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                ssoOidcEmail:
+                  type:
+                    - string
+                    - 'null'
+                  format: email
+              required:
+                - email
+                - password
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{id}:
+    get:
+      tags:
+        - users
+      summary: 'users: show'
+      operationId: usersShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+|me$
+        - name: subscribe
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    patch:
+      tags:
+        - users
+      summary: 'users: update'
+      operationId: usersUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isAdmin:
+                  type: boolean
+                name:
+                  type: string
+                  minLength: 1
+                avatarUrl: {}
+                phone:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                organization:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                lastLogin: {}
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - users
+      summary: 'users: delete'
+      operationId: usersDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/find-by-email:
+    post:
+      tags:
+        - users
+      summary: 'users: find by email'
+      operationId: usersFindByEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+              required:
+                - query
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLookupEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{id}/email:
+    patch:
+      tags:
+        - users
+      summary: 'users: update email'
+      operationId: usersUpdateEmail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                currentPassword:
+                  type: string
+                  minLength: 1
+              required:
+                - email
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{id}/email-verification/request:
+    post:
+      tags:
+        - users
+      summary: 'users: request email verification'
+      operationId: usersRequestEmailVerification
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/email-verification:
+    post:
+      tags:
+        - users
+      summary: 'users: update email verification'
+      operationId: usersUpdateEmailVerification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                isVerified:
+                  type: boolean
+              required:
+                - email
+                - isVerified
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{id}/password:
+    patch:
+      tags:
+        - users
+      summary: 'users: update password'
+      operationId: usersUpdatePassword
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                currentPassword:
+                  type: string
+                  minLength: 1
+              required:
+                - password
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{id}/username:
+    patch:
+      tags:
+        - users
+      summary: 'users: update username'
+      operationId: usersUpdateUsername
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  pattern: ^[a-zA-Z0-9]+((_|\.)?[a-zA-Z0-9])*$
+                  minLength: 1
+                  maxLength: 16
+                currentPassword:
+                  type: string
+                  minLength: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{id}/avatar:
+    post:
+      tags:
+        - users
+      summary: 'users: update avatar'
+      operationId: usersUpdateAvatar
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/user-prefs/{id}:
+    get:
+      tags:
+        - user-prefs
+      summary: 'user prefs: show'
+      operationId: userPrefsShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    patch:
+      tags:
+        - user-prefs
+      summary: 'user prefs: update'
+      operationId: userPrefsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                subscribeToOwnCards:
+                  type: boolean
+                subscribeToNewBoards:
+                  type: boolean
+                subscribeToNewProjects:
+                  type: boolean
+                subscribeToUsers:
+                  type: boolean
+                subscribeToInstance:
+                  type: boolean
+                descriptionMode:
+                  type: string
+                  minLength: 1
+                commentMode:
+                  type: string
+                  minLength: 1
+                descriptionShown:
+                  type: boolean
+                tasksShown:
+                  type: boolean
+                attachmentsShown:
+                  type: boolean
+                commentsShown:
+                  type: boolean
+                sidebarCompact:
+                  type: boolean
+                defaultView:
+                  type: string
+                  minLength: 1
+                listViewStyle:
+                  type: string
+                  minLength: 1
+                listViewColumnVisibility: {}
+                listViewFitScreen:
+                  type: boolean
+                listViewItemsPerPage:
+                  type: string
+                  minLength: 1
+                usersSettingsStyle:
+                  type: string
+                  minLength: 1
+                usersSettingsColumnVisibility: {}
+                usersSettingsFitScreen:
+                  type: boolean
+                usersSettingsItemsPerPage:
+                  type: string
+                  minLength: 1
+                preferredDetailsFont:
+                  type: string
+                  minLength: 1
+                hideCardModalActivity:
+                  type: boolean
+                hideClosestDueDate:
+                  type: boolean
+                showFullDueDates:
+                  type: boolean
+                theme:
+                  type: string
+                  minLength: 1
+                themeShape:
+                  type: string
+                  minLength: 1
+                themeCustomColors: {}
+                emailNotificationsEnabled:
+                  type: boolean
+                emailNotificationsTypes: {}
+                emailNotificationsDeliveryMode:
+                  type: string
+                  minLength: 1
+                emailNotificationsMarkReadAsDelivered:
+                  type: boolean
+                notificationTypes: {}
+                suppressedSystemNotificationTags: {}
+                selfAssignBySpacebar:
+                  type: boolean
+                rightClickContextMenu:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/projects:
+    get:
+      tags:
+        - projects
+      summary: 'projects: index'
+      operationId: projectsIndex
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    post:
+      tags:
+        - projects
+      summary: 'projects: create'
+      operationId: projectsCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/projects/{id}:
+    get:
+      tags:
+        - projects
+      summary: 'projects: show'
+      operationId: projectsShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    patch:
+      tags:
+        - projects
+      summary: 'projects: update'
+      operationId: projectsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                background: {}
+                backgroundImage: {}
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - projects
+      summary: 'projects: delete'
+      operationId: projectsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/projects/{id}/background-image:
+    post:
+      tags:
+        - projects
+      summary: 'projects: update background image'
+      operationId: projectsUpdateBackgroundImage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/projects/import-getting-started:
+    get:
+      tags:
+        - projects
+      summary: 'projects: import getting started'
+      operationId: projectsImportGettingStarted
+      parameters:
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/projects/{projectId}/managers:
+    post:
+      tags:
+        - project-managers
+      summary: 'project managers: create'
+      operationId: projectManagersCreate
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  pattern: ^[0-9]+$
+              required:
+                - userId
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/project-managers/{id}:
+    delete:
+      tags:
+        - project-managers
+      summary: 'project managers: delete'
+      operationId: projectManagersDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/project-memberships:
+    get:
+      tags:
+        - project-memberships
+      summary: 'project memberships: index'
+      operationId: projectMembershipsIndex
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/project-memberships/{projectId}:
+    get:
+      tags:
+        - project-memberships
+      summary: 'project memberships: show'
+      operationId: projectMembershipsShow
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    patch:
+      tags:
+        - project-memberships
+      summary: 'project memberships: update'
+      operationId: projectMembershipsUpdate
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                isCollapsed:
+                  type: boolean
+                isSubscribed:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/projects/{projectId}/boards:
+    post:
+      tags:
+        - boards
+      summary: 'boards: create'
+      operationId: boardsCreate
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                name:
+                  type: string
+                isGithubConnected:
+                  type: boolean
+                githubRepo:
+                  type: string
+                importType:
+                  type: string
+                requestId:
+                  type: string
+                  minLength: 1
+                lists: {}
+                labels: {}
+                importNonExistingUsers:
+                  type: boolean
+                importProjectManagers:
+                  type: boolean
+                file:
+                  type: string
+                  format: binary
+              required:
+                - position
+                - name
+                - isGithubConnected
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{id}:
+    get:
+      tags:
+        - boards
+      summary: 'boards: show'
+      operationId: boardsShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: subscribe
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    patch:
+      tags:
+        - boards
+      summary: 'boards: update'
+      operationId: boardsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                isGithubConnected:
+                  type: boolean
+                githubRepo:
+                  type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - boards
+      summary: 'boards: delete'
+      operationId: boardsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{id}/export:
+    get:
+      tags:
+        - boards
+      summary: 'boards: export'
+      operationId: boardsExport
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: skipMetadata
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: skipActions
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: skipAttachments
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: skipUserAvatars
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: skipProjectBackgrounds
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExportUrlEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{boardId}/labels/find-by-name:
+    post:
+      tags:
+        - boards
+      summary: 'boards: find label by name'
+      operationId: boardsFindLabelByName
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+              required:
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabelLookupEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{boardId}/users/find-by-username:
+    post:
+      tags:
+        - boards
+      summary: 'boards: find user by username'
+      operationId: boardsFindUserByUsername
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+              required:
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardUserLookupEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/board-templates:
+    get:
+      tags:
+        - board-templates
+      summary: 'board templates: index'
+      operationId: boardTemplatesIndex
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{boardId}/templates:
+    post:
+      tags:
+        - board-templates
+      summary: 'board templates: create'
+      operationId: boardTemplatesCreate
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                isGlobal:
+                  type: boolean
+                  default: false
+              required:
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/board-templates/{id}:
+    patch:
+      tags:
+        - board-templates
+      summary: 'board templates: update'
+      operationId: boardTemplatesUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                isGlobal:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - board-templates
+      summary: 'board templates: delete'
+      operationId: boardTemplatesDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{boardId}/memberships:
+    post:
+      tags:
+        - board-memberships
+      summary: 'board memberships: create'
+      operationId: boardMembershipsCreate
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  pattern: ^[0-9]+$
+                role:
+                  type: string
+                canComment:
+                  type: boolean
+              required:
+                - userId
+                - role
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/board-memberships/{id}:
+    patch:
+      tags:
+        - board-memberships
+      summary: 'board memberships: update'
+      operationId: boardMembershipsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                canComment:
+                  type: boolean
+                isSubscribed:
+                  type: boolean
+                hideCompletedLists:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - board-memberships
+      summary: 'board memberships: delete'
+      operationId: boardMembershipsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{boardId}/labels:
+    post:
+      tags:
+        - labels
+      summary: 'labels: create'
+      operationId: labelsCreate
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                color:
+                  type: string
+              required:
+                - color
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/labels/{id}:
+    patch:
+      tags:
+        - labels
+      summary: 'labels: update'
+      operationId: labelsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                color:
+                  type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - labels
+      summary: 'labels: delete'
+      operationId: labelsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{boardId}/lists:
+    post:
+      tags:
+        - lists
+      summary: 'lists: create'
+      operationId: listsCreate
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                name:
+                  type: string
+                isCollapsed:
+                  type: boolean
+                isCompleted:
+                  type: boolean
+                  default: false
+              required:
+                - position
+                - name
+                - isCollapsed
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/lists/{id}:
+    patch:
+      tags:
+        - lists
+      summary: 'lists: update'
+      operationId: listsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                isCollapsed:
+                  type: boolean
+                isCompleted:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - lists
+      summary: 'lists: delete'
+      operationId: listsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/lists/{listId}/cards:
+    post:
+      tags:
+        - cards
+      summary: 'cards: create'
+      operationId: cardsCreate
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                name:
+                  type: string
+                description:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                dueDate:
+                  type: string
+                timer: {}
+                mailCreatorAddress:
+                  type:
+                    - string
+                    - 'null'
+                  format: email
+              required:
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{id}:
+    get:
+      tags:
+        - cards
+      summary: 'cards: show'
+      operationId: cardsShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    patch:
+      tags:
+        - cards
+      summary: 'cards: update'
+      operationId: cardsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                boardId:
+                  type: string
+                  pattern: ^[0-9]+$
+                listId:
+                  type: string
+                  pattern: ^[0-9]+$
+                coverAttachmentId:
+                  type:
+                    - string
+                    - 'null'
+                  pattern: ^[0-9]+$
+                position:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                description:
+                  type:
+                    - string
+                    - 'null'
+                  minLength: 1
+                dueDate:
+                  type:
+                    - string
+                    - 'null'
+                timer: {}
+                isSubscribed:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - cards
+      summary: 'cards: delete'
+      operationId: cardsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{id}/mentions:
+    post:
+      tags:
+        - cards
+      summary: 'cards: create mention'
+      operationId: cardsCreateMention
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  pattern: ^[0-9]+$
+              required:
+                - userId
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{id}/duplicate:
+    post:
+      tags:
+        - cards
+      summary: 'cards: duplicate'
+      operationId: cardsDuplicate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{id}/mark-completed:
+    post:
+      tags:
+        - cards
+      summary: 'cards: mark completed'
+      operationId: cardsMarkCompleted
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isCompleted:
+                  type: boolean
+              required:
+                - isCompleted
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{cardId}/memberships:
+    post:
+      tags:
+        - card-memberships
+      summary: 'card memberships: create'
+      operationId: cardMembershipsCreate
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  pattern: ^[0-9]+$
+              required:
+                - userId
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - card-memberships
+      summary: 'card memberships: delete'
+      operationId: cardMembershipsDelete
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{cardId}/labels:
+    post:
+      tags:
+        - card-labels
+      summary: 'card labels: create'
+      operationId: cardLabelsCreate
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                labelId:
+                  type: string
+                  pattern: ^[0-9]+$
+              required:
+                - labelId
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{cardId}/labels/{labelId}:
+    delete:
+      tags:
+        - card-labels
+      summary: 'card labels: delete'
+      operationId: cardLabelsDelete
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: labelId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/mailTokens/{token}/lists:
+    get:
+      tags:
+        - mail-tokens
+      summary: 'mail tokens: get list id'
+      operationId: mailTokensGetListId
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-f0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MailTokenListLookupEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/mailTokens:
+    post:
+      tags:
+        - mail-tokens
+      summary: 'mail tokens: create'
+      operationId: mailTokensCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                listId:
+                  type: string
+                  pattern: ^[0-9]+$
+                boardId:
+                  type: string
+                  pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/mailTokens/{id}:
+    patch:
+      tags:
+        - mail-tokens
+      summary: 'mail tokens: update'
+      operationId: mailTokensUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - mail-tokens
+      summary: 'mail tokens: delete'
+      operationId: mailTokensDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{cardId}/tasks:
+    post:
+      tags:
+        - tasks
+      summary: 'tasks: create'
+      operationId: tasksCreate
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                name:
+                  type: string
+                isCompleted:
+                  type: boolean
+                dueDate:
+                  type: string
+              required:
+                - name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/tasks/{id}:
+    patch:
+      tags:
+        - tasks
+      summary: 'tasks: update'
+      operationId: tasksUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                position:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                isCompleted:
+                  type: boolean
+                dueDate:
+                  type:
+                    - string
+                    - 'null'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - tasks
+      summary: 'tasks: delete'
+      operationId: tasksDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/tasks/{id}/duplicate:
+    post:
+      tags:
+        - tasks
+      summary: 'tasks: duplicate'
+      operationId: tasksDuplicate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/tasks/{taskId}/memberships:
+    post:
+      tags:
+        - task-memberships
+      summary: 'task memberships: create'
+      operationId: taskMembershipsCreate
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cardId:
+                  type: string
+                  pattern: ^[0-9]+$
+                userId:
+                  type: string
+                  pattern: ^[0-9]+$
+              required:
+                - cardId
+                - userId
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - task-memberships
+      summary: 'task memberships: delete'
+      operationId: taskMembershipsDelete
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{cardId}/attachments:
+    post:
+      tags:
+        - attachments
+      summary: 'attachments: create'
+      operationId: attachmentsCreate
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                requestId:
+                  type: string
+                  minLength: 1
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/attachments/{id}:
+    patch:
+      tags:
+        - attachments
+      summary: 'attachments: update'
+      operationId: attachmentsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - attachments
+      summary: 'attachments: delete'
+      operationId: attachmentsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/attachments/{attachmentId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index attachment actions'
+      operationId: actionsIndexAttachmentActions
+      parameters:
+        - name: attachmentId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/comments/{commentId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index comment actions'
+      operationId: actionsIndexCommentActions
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/tasks/{taskId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index task actions'
+      operationId: actionsIndexTaskActions
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{cardId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index card actions'
+      operationId: actionsIndexCardActions
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/lists/{listId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index list actions'
+      operationId: actionsIndexListActions
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/boards/{boardId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index board actions'
+      operationId: actionsIndexBoardActions
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/projects/{projectId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index project actions'
+      operationId: actionsIndexProjectActions
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{userId}/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index user actions'
+      operationId: actionsIndexUserActions
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/users/{userAccountId}/account-actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index user account actions'
+      operationId: actionsIndexUserAccountActions
+      parameters:
+        - name: userAccountId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/instance/actions:
+    get:
+      tags:
+        - actions
+      summary: 'actions: index instance actions'
+      operationId: actionsIndexInstanceActions
+      parameters:
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/cards/{cardId}/comments:
+    get:
+      tags:
+        - comments
+      summary: 'comments: index'
+      operationId: commentsIndex
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: beforeId
+          in: query
+          required: false
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    post:
+      tags:
+        - comments
+      summary: 'comments: create'
+      operationId: commentsCreate
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+              required:
+                - text
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/comments/{cardId}/mentions:
+    post:
+      tags:
+        - comments
+      summary: 'comments: create mention'
+      operationId: commentsCreateMention
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  pattern: ^[0-9]+$
+                content:
+                  type: string
+                  minLength: 1
+              required:
+                - userId
+                - content
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/comments/{id}:
+    patch:
+      tags:
+        - comments
+      summary: 'comments: update'
+      operationId: commentsUpdate
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - comments
+      summary: 'comments: delete'
+      operationId: commentsDelete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/notifications:
+    get:
+      tags:
+        - notifications
+      summary: 'notifications: index'
+      operationId: notificationsIndex
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    patch:
+      tags:
+        - notifications
+      summary: 'notifications: mark all as'
+      operationId: notificationsMarkAllAs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isRead:
+                  type: boolean
+              required:
+                - isRead
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - notifications
+      summary: 'notifications: delete all'
+      operationId: notificationsDeleteAll
+      parameters:
+        - name: deleteIsReadOnly
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/notifications/{id}:
+    get:
+      tags:
+        - notifications
+      summary: 'notifications: show'
+      operationId: notificationsShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/notifications/{ids}:
+    patch:
+      tags:
+        - notifications
+      summary: 'notifications: update'
+      operationId: notificationsUpdate
+      parameters:
+        - name: ids
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+(,[0-9]+)*$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isRead:
+                  type: boolean
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+    delete:
+      tags:
+        - notifications
+      summary: 'notifications: delete'
+      operationId: notificationsDelete
+      parameters:
+        - name: ids
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+(,[0-9]+)*$
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemsEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /api/notifications/receive-system-notification:
+    post:
+      tags:
+        - notifications
+      summary: 'notifications: receive system notification'
+      operationId: notificationsReceiveSystemNotification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                instanceId:
+                  type: string
+                id:
+                  type: string
+                  pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$
+                type:
+                  type: string
+                  enum:
+                    - default
+                    - poll
+                tag:
+                  type: string
+                title:
+                  type: string
+                content:
+                  type:
+                    - string
+                    - 'null'
+                answers: {}
+                targetUsers:
+                  type: string
+                  enum:
+                    - admins
+                    - all
+              required:
+                - instanceId
+                - id
+                - type
+                - tag
+                - title
+                - targetUsers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SystemNotificationReceipt"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security: []
+  /api/notifications/{id}/submit-system-notification-response:
+    post:
+      tags:
+        - notifications
+      summary: 'notifications: submit system notification response'
+      operationId: notificationsSubmitSystemNotificationResponse
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answer:
+                  type: string
+              required:
+                - answer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemEnvelope"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /attachments/{id}/download/{filename}:
+    get:
+      tags:
+        - attachments
+      summary: 'attachments: download'
+      operationId: attachmentsDownload
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File contents
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /attachments/{id}/download/thumbnails/cover-256.{extension}:
+    get:
+      tags:
+        - attachments
+      summary: 'attachments: download thumbnail'
+      operationId: attachmentsDownloadThumbnail
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: extension
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File contents
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+  /exports/{id}/{filename}:
+    get:
+      tags:
+        - boards
+      summary: 'boards: download'
+      operationId: boardsDownload
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File contents
+          content:
+            application/gzip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Access token from `POST /api/access-tokens`.
+    clientId:
+      type: apiKey
+      in: header
+      name: X-Client-Id
+      description: API client id. Use together with `X-Client-Secret`.
+    clientSecret:
+      type: apiKey
+      in: header
+      name: X-Client-Secret
+      description: API client secret. Use together with `X-Client-Id`.
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          examples:
+            - E_NOT_FOUND
+        message:
+          type: string
+    Entity:
+      type: object
+      description: Resource object returned by the API.
+      additionalProperties: true
+    ItemEnvelope:
+      type: object
+      properties:
+        item:
+          $ref: "#/components/schemas/Entity"
+      required:
+        - item
+    ItemsEnvelope:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Entity"
+      required:
+        - items
+    ItemWithIncludedEnvelope:
+      type: object
+      properties:
+        item: &a1
+          $ref: "#/components/schemas/Entity"
+        included:
+          type: object
+          additionalProperties:
+            type: array
+            items: *a1
+      required:
+        - item
+        - included
+    ItemsWithIncludedEnvelope:
+      type: object
+      properties:
+        items:
+          type: array
+          items: &a1
+            $ref: "#/components/schemas/Entity"
+        included:
+          type: object
+          additionalProperties:
+            type: array
+            items: *a1
+      required:
+        - items
+        - included
+    StringItemEnvelope:
+      type: object
+      properties:
+        item:
+          type: string
+      required:
+        - item
+    UserLookupEnvelope:
+      type: object
+      properties:
+        item:
+          anyOf:
+            - type: object
+              properties:
+                id:
+                  type: integer
+                email:
+                  type: string
+                  format: email
+              required:
+                - id
+                - email
+            - type: "null"
+      required:
+        - item
+    LabelLookupEnvelope:
+      type: object
+      properties:
+        item:
+          type: object
+          properties:
+            labelId:
+              type:
+                - integer
+                - "null"
+          required:
+            - labelId
+      required:
+        - item
+    BoardUserLookupEnvelope:
+      type: object
+      properties:
+        item:
+          type: object
+          properties:
+            userId:
+              type:
+                - integer
+                - "null"
+          required:
+            - userId
+      required:
+        - item
+    MailTokenListLookupEnvelope:
+      type: object
+      properties:
+        item:
+          type: object
+          properties:
+            listId:
+              type:
+                - integer
+                - "null"
+          required:
+            - listId
+      required:
+        - item
+    ExportUrlEnvelope:
+      type: object
+      properties:
+        item:
+          type: string
+          format: uri
+          description: URL to download the generated board export.
+      required:
+        - item
+    SystemNotificationReceipt:
+      type: object
+      properties:
+        success:
+          type: boolean
+        notificationsCreatedCount:
+          type: integer
+      required:
+        - success
+        - notificationsCreatedCount
+  responses:
+    BadRequest:
+      description: Invalid or missing input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Access token or API client credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Not enough rights
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict with the current state
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Request could not be processed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

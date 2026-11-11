@@ -1,0 +1,18 @@
+{
+  "name": "@4gaboards/api-docs",
+  "version": "1.0.0",
+  "private": true,
+  "author": "RARgames",
+  "description": "OpenAPI spec for the 4ga Boards API (rendered with Swagger UI in the docs repo)",
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "^13.1.0",
+    "chalk": "^6.0.1",
+    "yaml": "^2.9.1"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "check": "node scripts/check.mjs",
+    "snapshot": "node scripts/snapshot.mjs",
+    "lint": "eslint ."
+  }
+}
