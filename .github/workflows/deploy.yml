@@ -285,7 +285,7 @@ jobs:
       - name: Trigger 4ga Boards docs update
         uses: peter-evans/repository-dispatch@v4.0.1
         with:
-          token: ${{ secrets.DOCS_REPO_TOKEN }}
+          token: ${{ secrets.DOCS_4GA_BOARDS_DEPLOY_TOKEN }}
           repository: RARgames/4gaBoardsDocs
           event-type: api-docs-updated
           client-payload: '{"ref": "${{ needs.prepare.outputs.new_tag }}"}'
