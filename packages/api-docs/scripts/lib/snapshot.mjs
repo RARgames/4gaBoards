@@ -9,8 +9,8 @@ const createSnapshot = (openapiDir, version) => {
 
   const document = YAML.parseDocument(readFileSync(path.join(openapiDir, 'openapi.yaml'), 'utf8'));
   if (document.errors.length > 0) throw document.errors[0];
-  if (document.getIn(['info', 'version']) !== 'latest') {
-    throw new Error('The working OpenAPI specification must have info.version set to latest.');
+  if (document.getIn(['info', 'version']) !== 'beta-latest') {
+    throw new Error('The working OpenAPI specification must have info.version set to beta-latest.');
   }
 
   document.setIn(['info', 'version'], version);

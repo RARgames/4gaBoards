@@ -15,8 +15,8 @@ const methods = ['get', 'post', 'put', 'patch', 'delete'];
 
 const spec = await SwaggerParser.validate(specFile);
 
-if (spec.info.version !== 'latest') {
-  console.error(chalk.red('The working openapi.yaml must have info.version set to latest.'));
+if (spec.info.version !== 'beta-latest') {
+  console.error(chalk.red('The working openapi.yaml must have info.version set to beta-latest.'));
   process.exit(1);
 }
 

@@ -187,7 +187,7 @@ const spec = {
   openapi: '3.1.0',
   info: {
     title: '4ga Boards API',
-    version: 'latest',
+    version: 'beta-latest',
     description: [
       '4ga Boards API',
       '',

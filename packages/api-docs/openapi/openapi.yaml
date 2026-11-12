@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: 4ga Boards API
-  version: latest
+  version: beta-latest
   description: |-
     Authenticate with an access token (`Authorization: Bearer <token>`, obtained from `POST /api/access-tokens`) or with API client credentials (`X-Client-Id` and `X-Client-Secret` headers) generated in Settings/Authentication.
 
