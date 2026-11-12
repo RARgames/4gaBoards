@@ -3,10 +3,7 @@ info:
   title: 4ga Boards API
   version: latest
   description: |-
-    4ga Boards API
-
-    Authenticate either with an access token (`Authorization: Bearer <token>`, obtained from `POST /api/access-tokens`)
-    or with API client credentials (`X-Client-Id` and `X-Client-Secret` headers) generated in Settings/Authentication.
+    Authenticate with an access token (`Authorization: Bearer <token>`, obtained from `POST /api/access-tokens`) or with API client credentials (`X-Client-Id` and `X-Client-Secret` headers) generated in Settings/Authentication.
 
     Successful responses wrap data in `item` / `items` (and sometimes `included`).
   license:

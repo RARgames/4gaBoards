@@ -29,7 +29,7 @@ module.exports.security = {
 
   cors: {
     allRoutes: true,
-    allowOrigins: ['http://localhost:3000'],
+    allowOrigins: ['http://localhost:3000', 'https://docs.4gaboards.com'],
     allowRequestHeaders: ['Authorization', 'traceparent', 'X-Client-Id', 'X-Client-Secret', 'Content-Type'],
     allowCredentials: true,
   },
