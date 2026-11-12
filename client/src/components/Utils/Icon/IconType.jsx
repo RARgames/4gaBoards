@@ -6,6 +6,7 @@ import { ReactComponent as AnyMatch } from '../../../assets/icons/AnyMatch.svg';
 import { ReactComponent as ArrowDown } from '../../../assets/icons/ArrowDown.svg';
 import { ReactComponent as ArrowLeftBig } from '../../../assets/icons/ArrowLeftBig.svg';
 import { ReactComponent as ArrowRight } from '../../../assets/icons/ArrowRight.svg';
+import { ReactComponent as At } from '../../../assets/icons/At.svg';
 import { ReactComponent as Attach } from '../../../assets/icons/Attach.svg';
 import { ReactComponent as BarsStaggered } from '../../../assets/icons/BarsStaggered.svg';
 import { ReactComponent as Bell } from '../../../assets/icons/Bell.svg';
@@ -77,6 +78,7 @@ const IconType = {
   ArrowDown,
   ArrowLeftBig,
   ArrowRight,
+  At,
   Attach,
   BarsStaggered,
   Bell,
