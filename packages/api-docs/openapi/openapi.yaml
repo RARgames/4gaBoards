@@ -140,13 +140,10 @@ paths:
               properties:
                 emailOrUsername:
                   type: string
-                  description: Email address or username (3-16 alphanumeric characters, optionally separated by a single underscore or dot).
                   minLength: 3
                   maxLength: 16
-                  example: john.doe
                 password:
                   type: string
-                  example: password123
               required:
                 - emailOrUsername
                 - password
@@ -180,7 +177,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StringItemEnvelope"
+                $ref: '#/components/schemas/StringItemEnvelope'
         '401':
           $ref: '#/components/responses/Unauthorized'
       security:
@@ -199,7 +196,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '401':
           $ref: '#/components/responses/Unauthorized'
       security:
@@ -226,7 +223,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -267,7 +264,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -300,7 +297,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -345,7 +342,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StringItemEnvelope"
+                $ref: '#/components/schemas/StringItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -367,7 +364,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -402,7 +399,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -427,7 +424,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '401':
           $ref: '#/components/responses/Unauthorized'
       security:
@@ -524,7 +521,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -559,7 +556,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -611,7 +608,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -642,7 +639,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -678,7 +675,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserLookupEnvelope"
+                $ref: '#/components/schemas/UserLookupEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -720,7 +717,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -754,7 +751,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -793,7 +790,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -838,7 +835,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -885,7 +882,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -928,7 +925,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -960,7 +957,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1079,7 +1076,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1104,7 +1101,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '401':
           $ref: '#/components/responses/Unauthorized'
       security:
@@ -1132,7 +1129,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1164,7 +1161,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1204,7 +1201,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1233,7 +1230,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1272,7 +1269,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1303,7 +1300,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1344,7 +1341,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1376,7 +1373,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1399,7 +1396,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '401':
           $ref: '#/components/responses/Unauthorized'
       security:
@@ -1425,7 +1422,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1466,7 +1463,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1528,7 +1525,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1567,7 +1564,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1611,7 +1608,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1640,7 +1637,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1700,7 +1697,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExportUrlEnvelope"
+                $ref: '#/components/schemas/ExportUrlEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1743,7 +1740,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LabelLookupEnvelope"
+                $ref: '#/components/schemas/LabelLookupEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1786,7 +1783,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BoardUserLookupEnvelope"
+                $ref: '#/components/schemas/BoardUserLookupEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1811,7 +1808,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '401':
           $ref: '#/components/responses/Unauthorized'
       security:
@@ -1850,7 +1847,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1894,7 +1891,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1927,7 +1924,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1975,7 +1972,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2021,7 +2018,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2052,7 +2049,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2097,7 +2094,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2142,7 +2139,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2173,7 +2170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2224,7 +2221,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2271,7 +2268,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2302,7 +2299,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2359,7 +2356,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2393,7 +2390,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2456,7 +2453,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2489,7 +2486,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2532,7 +2529,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2564,7 +2561,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2610,7 +2607,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2653,7 +2650,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2692,7 +2689,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2735,7 +2732,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2775,7 +2772,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2807,7 +2804,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MailTokenListLookupEnvelope"
+                $ref: '#/components/schemas/MailTokenListLookupEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2844,7 +2841,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2878,7 +2875,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2909,7 +2906,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2957,7 +2954,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3006,7 +3003,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3037,7 +3034,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3069,7 +3066,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3116,7 +3113,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3155,7 +3152,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3199,7 +3196,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3242,7 +3239,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3273,7 +3270,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3311,7 +3308,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3347,7 +3344,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3383,7 +3380,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3419,7 +3416,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3455,7 +3452,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3491,7 +3488,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3527,7 +3524,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3563,7 +3560,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3599,7 +3596,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3629,7 +3626,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3665,7 +3662,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3704,7 +3701,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3751,7 +3748,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3792,7 +3789,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3823,7 +3820,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3848,7 +3845,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemsWithIncludedEnvelope'
         '401':
           $ref: '#/components/responses/Unauthorized'
       security:
@@ -3876,7 +3873,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3903,7 +3900,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3931,7 +3928,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemWithIncludedEnvelope"
+                $ref: '#/components/schemas/ItemWithIncludedEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3969,7 +3966,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3998,7 +3995,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemsEnvelope"
+                $ref: '#/components/schemas/ItemsEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -4058,7 +4055,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SystemNotificationReceipt"
+                $ref: '#/components/schemas/SystemNotificationReceipt'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -4093,7 +4090,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ItemEnvelope"
+                $ref: '#/components/schemas/ItemEnvelope'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -4248,7 +4245,7 @@ components:
       type: object
       properties:
         item:
-          $ref: "#/components/schemas/Entity"
+          $ref: '#/components/schemas/Entity'
       required:
         - item
     ItemsEnvelope:
@@ -4257,14 +4254,14 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/Entity"
+            $ref: '#/components/schemas/Entity'
       required:
         - items
     ItemWithIncludedEnvelope:
       type: object
       properties:
         item: &a1
-          $ref: "#/components/schemas/Entity"
+          $ref: '#/components/schemas/Entity'
         included:
           type: object
           additionalProperties:
@@ -4279,7 +4276,7 @@ components:
         items:
           type: array
           items: &a1
-            $ref: "#/components/schemas/Entity"
+            $ref: '#/components/schemas/Entity'
         included:
           type: object
           additionalProperties:
@@ -4310,7 +4307,7 @@ components:
               required:
                 - id
                 - email
-            - type: "null"
+            - type: 'null'
       required:
         - item
     LabelLookupEnvelope:
@@ -4322,7 +4319,7 @@ components:
             labelId:
               type:
                 - integer
-                - "null"
+                - 'null'
           required:
             - labelId
       required:
@@ -4336,7 +4333,7 @@ components:
             userId:
               type:
                 - integer
-                - "null"
+                - 'null'
           required:
             - userId
       required:
@@ -4350,7 +4347,7 @@ components:
             listId:
               type:
                 - integer
-                - "null"
+                - 'null'
           required:
             - listId
       required:
