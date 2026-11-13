@@ -35,12 +35,13 @@ module.exports = {
     const { values } = inputs;
 
     const userPrefs = await UserPrefs.updateOne({ id: inputs.record.id }).set({ ...values });
+    const { sidebarShown, ...broadcastUserPrefs } = userPrefs;
 
     sails.sockets.broadcast(
       `user:${inputs.record.id}`,
       'userPrefsUpdate',
       {
-        item: userPrefs,
+        item: broadcastUserPrefs,
       },
       inputs.request,
     );

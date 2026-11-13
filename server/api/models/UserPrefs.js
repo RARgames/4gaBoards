@@ -107,6 +107,11 @@ module.exports = {
       defaultsTo: false,
       columnName: 'sidebar_compact',
     },
+    sidebarShown: {
+      type: 'boolean',
+      defaultsTo: true,
+      columnName: 'sidebar_shown',
+    },
     defaultView: {
       type: 'string',
       isIn: VIEW_MODES,

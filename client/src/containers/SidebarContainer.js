@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
   const path = selectors.selectPathConstant(state);
   const { isAdmin } = selectors.selectCurrentUser(state);
   const { projectCreationAllEnabled } = selectors.selectCoreSettings(state);
-  const { sidebarCompact, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
+  const { sidebarCompact, sidebarShown, rightClickContextMenu } = selectors.selectCurrentUserPrefs(state);
   const { projects } = selectors.selectProjectsForCurrentUser(state);
   const filteredProjects = selectors.selectFilteredProjectsWithDetailsForCurrentUser(state);
   const managedProjects = selectors.selectManagedProjectsForCurrentUser(state);
@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
     filterQuery,
     filterTarget,
     sidebarCompact,
+    sidebarShown,
     instanceNotificationCount,
     usersNotificationCount,
     boardTemplates,
@@ -73,6 +74,7 @@ const mapDispatchToProps = (dispatch) =>
       onMailTokenUpdate: (mailTokenId, boardId) => entryActions.updateMailToken(mailTokenId, { boardId }),
       onMailTokenDelete: (mailTokenId) => entryActions.deleteMailToken(mailTokenId),
       onBoardMembershipUpdate: entryActions.updateBoardMembership,
+      onUserPrefsUpdate: entryActions.updateCurrentUserPrefs,
     },
     dispatch,
   );

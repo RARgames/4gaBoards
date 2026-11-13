@@ -75,6 +75,9 @@ module.exports = {
     sidebarCompact: {
       type: 'boolean',
     },
+    sidebarShown: {
+      type: 'boolean',
+    },
     defaultView: {
       type: 'string',
       isIn: UserPrefs.VIEW_MODES,
@@ -212,6 +215,7 @@ module.exports = {
         'attachmentsShown',
         'commentsShown',
         'sidebarCompact',
+        'sidebarShown',
         'defaultView',
         'listViewStyle',
         'listViewColumnVisibility',

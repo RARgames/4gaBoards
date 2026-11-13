@@ -21,6 +21,7 @@ export default class extends BaseModel {
     attachmentsShown: attr(),
     commentsShown: attr(),
     sidebarCompact: attr(),
+    sidebarShown: attr(),
     defaultView: attr(),
     listViewStyle: attr(),
     listViewColumnVisibility: attr(),

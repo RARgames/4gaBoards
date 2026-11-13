@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
 import Paths from '../../constants/Paths';
-import { useToggle } from '../../lib/hooks';
 import { dropAnimation } from '../../lib/hooks/use-drop-animation';
 import { resolveSidebarDropSlot, setSidebarDropSlot, useSidebarDropSlot } from '../../lib/hooks/use-sidebar-drop-slot';
 import BoardAddPopup from '../BoardAddPopup';
@@ -38,6 +37,7 @@ const Sidebar = React.memo(
     filterQuery,
     filterTarget,
     sidebarCompact,
+    sidebarShown,
     instanceNotificationCount,
     usersNotificationCount,
     boardTemplates,
@@ -64,14 +64,18 @@ const Sidebar = React.memo(
     onMailTokenUpdate,
     onMailTokenDelete,
     onBoardMembershipUpdate,
+    onUserPrefsUpdate,
   }) => {
     const [t] = useTranslation();
-    const [sidebarShown, toggleSidebar] = useToggle(true);
     const projectRefs = useRef({});
     const boardRefs = useRef({});
     const scrollableRef = useRef(null);
     const isFilteringBoards = filterTarget === 'board' && !!filterQuery;
     const projectsCount = filteredProjects.length;
+
+    const toggleSidebar = useCallback(() => {
+      onUserPrefsUpdate({ sidebarShown: !sidebarShown });
+    }, [onUserPrefsUpdate, sidebarShown]);
 
     const projectsPlaceholderHeight = useSidebarDropSlot((slot) => (slot && slot.type === DroppableTypes.PROJECT && slot.placeholderIndex >= projectsCount ? slot.height : null));
 
@@ -347,6 +351,7 @@ Sidebar.propTypes = {
   filterQuery: PropTypes.string,
   filterTarget: PropTypes.string,
   sidebarCompact: PropTypes.bool.isRequired,
+  sidebarShown: PropTypes.bool.isRequired,
   instanceNotificationCount: PropTypes.number.isRequired,
   usersNotificationCount: PropTypes.number.isRequired,
   boardTemplates: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -373,6 +378,7 @@ Sidebar.propTypes = {
   onMailTokenUpdate: PropTypes.func.isRequired,
   onMailTokenDelete: PropTypes.func.isRequired,
   onBoardMembershipUpdate: PropTypes.func.isRequired,
+  onUserPrefsUpdate: PropTypes.func.isRequired,
 };
 
 Sidebar.defaultProps = {
