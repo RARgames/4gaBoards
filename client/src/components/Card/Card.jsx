@@ -293,7 +293,7 @@ const Card = React.memo(
         <div>
           <div className={s.detailsTitle}>
             <div title={name} className={clsx(s.name, isCompleted && s.nameCompleted)}>
-              {isCompleted && <Icon type={IconType.Check} size={IconSize.Size13} title={t('common.done')} />}
+              {isCompleted && <Icon type={IconType.Check} size={IconSize.Size13} title={t('common.done')} className={s.completedIcon} />}
               <LinkifiedTextRenderer text={name} />
             </div>
           </div>
@@ -451,6 +451,11 @@ const Card = React.memo(
                 <div
                   className={s.content}
                   onClick={(e) => {
+                    if (e.shiftKey) {
+                      handleNameEdit();
+                      return;
+                    }
+
                     handleClick(e);
                   }}
                 >
