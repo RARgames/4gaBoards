@@ -6,6 +6,7 @@ import ActionTypes from '../../../constants/ActionTypes';
 import Paths from '../../../constants/Paths';
 import { push, replace } from '../../../lib/redux-router';
 import selectors from '../../../selectors';
+import { withPathView } from '../../../utils/path-view';
 import request from '../request';
 
 export function* goToRoot() {
@@ -29,7 +30,8 @@ export function* goToBoard(boardId) {
 }
 
 export function* goToCard(cardId) {
-  yield put(push(Paths.CARDS.replace(':id', cardId)));
+  const view = yield select(selectors.selectPathView);
+  yield put(push(withPathView(Paths.CARDS.replace(':id', cardId), view)));
 }
 
 export function* goToPath(path) {
