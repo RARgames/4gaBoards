@@ -20,6 +20,8 @@ export default class extends BaseModel {
     registrationEnabled: attr(),
     localRegistrationEnabled: attr(),
     ssoRegistrationEnabled: attr(),
+    oidcOnlyRegistration: attr(),
+    oidcOnlyRegistrationEnforced: attr(),
     projectCreationAllEnabled: attr(),
     syncSsoDataOnAuth: attr(),
     syncSsoAdminOnAuth: attr(),

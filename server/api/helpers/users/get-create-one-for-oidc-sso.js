@@ -108,7 +108,8 @@ module.exports = {
     if (!core.registrationEnabled) {
       throw 'registrationDisabled';
     }
-    if (!core.ssoRegistrationEnabled) {
+    // OIDC-only registration keeps OIDC open even with other SSO registration switched off
+    if (!core.ssoRegistrationEnabled && !sails.helpers.core.isOidcOnlyRegistration(core)) {
       throw 'ssoRegistrationDisabled';
     }
     if (core.allowedRegisterDomains.length > 0 && !core.allowedRegisterDomains.includes(email.split('@')[1])) {

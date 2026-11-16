@@ -90,6 +90,7 @@ const Login = React.memo(
     registrationEnabled,
     localRegistrationEnabled,
     ssoRegistrationEnabled,
+    oidcOnlyRegistration,
     onAuthenticate,
     onAuthenticateSso,
     onMessageDismiss,
@@ -271,7 +272,7 @@ const Login = React.memo(
                 </div>
               </>
             )}
-            {registrationEnabled && (localRegistrationEnabled || ssoRegistrationEnabled) && (
+            {registrationEnabled && (oidcOnlyRegistration ? !!ssoAvailable[SsoTypes.OIDC] : localRegistrationEnabled || ssoRegistrationEnabled) && (
               <>
                 <div className={s.alternateActionText}>{t('common.newToBoards')}</div>
                 <div className={s.alternateActionButtonContainer}>
@@ -295,6 +296,7 @@ Login.propTypes = {
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  oidcOnlyRegistration: PropTypes.bool.isRequired,
   onAuthenticate: PropTypes.func.isRequired,
   onAuthenticateSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,

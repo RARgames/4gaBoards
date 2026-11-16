@@ -23,6 +23,8 @@ const InstanceSettings = React.memo(
     registrationEnabled,
     localRegistrationEnabled,
     ssoRegistrationEnabled,
+    oidcOnlyRegistration,
+    oidcOnlyRegistrationEnforced,
     projectCreationAllEnabled,
     syncSsoDataOnAuth,
     syncSsoAdminOnAuth,
@@ -61,6 +63,12 @@ const InstanceSettings = React.memo(
         localRegistrationEnabled: !localRegistrationEnabled,
       });
     }, [localRegistrationEnabled, onCoreSettingsUpdate]);
+
+    const handleOidcOnlyRegistrationChange = useCallback(() => {
+      onCoreSettingsUpdate({
+        oidcOnlyRegistration: !oidcOnlyRegistration,
+      });
+    }, [oidcOnlyRegistration, onCoreSettingsUpdate]);
 
     const handleSsoRegistrationEnabledChange = useCallback(() => {
       onCoreSettingsUpdate({
@@ -129,26 +137,39 @@ const InstanceSettings = React.memo(
         {
           id: 'enableLocalRegistration',
           instanceSettings: t('common.enableLocalRegistration'),
-          modifySettings: registrationEnabled && localRegistrationEnabled,
+          modifySettings: registrationEnabled && localRegistrationEnabled && !oidcOnlyRegistration,
           modifySettingsProps: {
             onChange: handleLocalRegistrationEnabledChange,
-            disabled: !registrationEnabled || demoMode,
+            disabled: !registrationEnabled || oidcOnlyRegistration || demoMode,
             title: t('common.toggleItem', { item: t('common.enableLocalRegistration', { postProcess: 'lowercase' }) }),
           },
-          currentValue: registrationEnabled && localRegistrationEnabled ? t('common.enabled') : t('common.disabled'),
+          currentValue: registrationEnabled && localRegistrationEnabled && !oidcOnlyRegistration ? t('common.enabled') : t('common.disabled'),
           description: t('common.descriptionLocalRegistration'),
         },
         {
           id: 'enableSsoRegistration',
           instanceSettings: t('common.enableSsoRegistration'),
-          modifySettings: registrationEnabled && ssoRegistrationEnabled,
+          modifySettings: registrationEnabled && (ssoRegistrationEnabled || oidcOnlyRegistration),
           modifySettingsProps: {
             onChange: handleSsoRegistrationEnabledChange,
-            disabled: !registrationEnabled || demoMode,
+            disabled: !registrationEnabled || oidcOnlyRegistration || demoMode,
             title: t('common.toggleItem', { item: t('common.enableSsoRegistration', { postProcess: 'lowercase' }) }),
           },
-          currentValue: registrationEnabled && ssoRegistrationEnabled ? t('common.enabled') : t('common.disabled'),
+          currentValue: registrationEnabled && (ssoRegistrationEnabled || oidcOnlyRegistration) ? t('common.enabled') : t('common.disabled'),
           description: t('common.descriptionSsoRegistration'),
+        },
+        {
+          id: 'oidcOnlyRegistration',
+          instanceSettings: t('common.enableOidcOnlyRegistration'),
+          modifySettings: oidcOnlyRegistration,
+          modifySettingsProps: {
+            onChange: handleOidcOnlyRegistrationChange,
+            // Forced on by OIDC_ONLY_REGISTRATION, so admins cannot switch it off here
+            disabled: !registrationEnabled || oidcOnlyRegistrationEnforced || demoMode,
+            title: t('common.toggleItem', { item: t('common.enableOidcOnlyRegistration', { postProcess: 'lowercase' }) }),
+          },
+          currentValue: oidcOnlyRegistration ? t('common.enabled') : t('common.disabled'),
+          description: oidcOnlyRegistrationEnforced ? `${t('common.descriptionOidcOnlyRegistration')} ${t('common.oidcOnlyRegistrationEnforced')}` : t('common.descriptionOidcOnlyRegistration'),
         },
         {
           id: 'enableProjectCreationAll',
@@ -204,11 +225,14 @@ const InstanceSettings = React.memo(
         handleLocalRegistrationEnabledChange,
         handleProjectCreationAllEnabledChange,
         handleRegistrationEnabledChange,
+        handleOidcOnlyRegistrationChange,
         handleSsoRegistrationEnabledChange,
         handleSyncSsoAdminOnAuthChange,
         handleSyncSsoDataOnAuthChange,
         isErrorAllowedRegisterDomains,
         localRegistrationEnabled,
+        oidcOnlyRegistration,
+        oidcOnlyRegistrationEnforced,
         projectCreationAllEnabled,
         registrationEnabled,
         ssoRegistrationEnabled,
@@ -341,6 +365,8 @@ InstanceSettings.propTypes = {
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  oidcOnlyRegistration: PropTypes.bool.isRequired,
+  oidcOnlyRegistrationEnforced: PropTypes.bool.isRequired,
   projectCreationAllEnabled: PropTypes.bool.isRequired,
   syncSsoDataOnAuth: PropTypes.bool.isRequired,
   syncSsoAdminOnAuth: PropTypes.bool.isRequired,

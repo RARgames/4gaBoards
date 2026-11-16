@@ -61,6 +61,7 @@ module.exports.custom = {
       !!process.env.OIDC_STATE_SECRET,
   },
 
+  oidcOnlyRegistrationEnforced: process.env.OIDC_ONLY_REGISTRATION === 'true',
   oidcEnabledMethods: (process.env.OIDC_ENABLED_METHODS || '')
     .split(',')
     .map((s) => s.trim())

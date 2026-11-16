@@ -14,6 +14,9 @@ module.exports = {
     ssoRegistrationEnabled: {
       type: 'boolean',
     },
+    oidcOnlyRegistration: {
+      type: 'boolean',
+    },
     projectCreationAllEnabled: {
       type: 'boolean',
     },
@@ -47,7 +50,7 @@ module.exports = {
     if (!core) {
       throw Errors.CORE_NOT_FOUND;
     }
-    const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'projectCreationAllEnabled', 'syncSsoDataOnAuth', 'syncSsoAdminOnAuth']);
+    const values = _.pick(inputs, ['registrationEnabled', 'localRegistrationEnabled', 'ssoRegistrationEnabled', 'oidcOnlyRegistration', 'projectCreationAllEnabled', 'syncSsoDataOnAuth', 'syncSsoAdminOnAuth']);
 
     if (inputs.allowedRegisterDomains !== undefined) {
       values.allowedRegisterDomains = _.uniq(inputs.allowedRegisterDomains.map((d) => d.trim().toLowerCase()).filter(Boolean));
@@ -60,6 +63,8 @@ module.exports = {
       ssoRegistrationEnabled: core.ssoRegistrationEnabled,
       localRegistrationEnabled: core.localRegistrationEnabled,
       registrationEnabled: core.registrationEnabled,
+      oidcOnlyRegistration: sails.helpers.core.isOidcOnlyRegistration(core),
+      oidcOnlyRegistrationEnforced: sails.config.custom.oidcOnlyRegistrationEnforced,
       projectCreationAllEnabled: core.projectCreationAllEnabled,
       syncSsoDataOnAuth: core.syncSsoDataOnAuth,
       syncSsoAdminOnAuth: core.syncSsoAdminOnAuth,
@@ -106,6 +111,8 @@ module.exports = {
           localRegistrationEnabled: values.localRegistrationEnabled !== undefined ? core.localRegistrationEnabled : undefined,
           prevSsoRegistrationEnabled: values.ssoRegistrationEnabled !== undefined ? prevCore.ssoRegistrationEnabled : undefined,
           ssoRegistrationEnabled: values.ssoRegistrationEnabled !== undefined ? core.ssoRegistrationEnabled : undefined,
+          prevOidcOnlyRegistration: values.oidcOnlyRegistration !== undefined ? prevCore.oidcOnlyRegistration : undefined,
+          oidcOnlyRegistration: values.oidcOnlyRegistration !== undefined ? core.oidcOnlyRegistration : undefined,
           prevProjectCreationAllEnabled: values.projectCreationAllEnabled !== undefined ? prevCore.projectCreationAllEnabled : undefined,
           projectCreationAllEnabled: values.projectCreationAllEnabled !== undefined ? core.projectCreationAllEnabled : undefined,
           prevSyncSsoDataOnAuth: values.syncSsoDataOnAuth !== undefined ? prevCore.syncSsoDataOnAuth : undefined,

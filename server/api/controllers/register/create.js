@@ -55,7 +55,7 @@ module.exports = {
     if (!core.registrationEnabled) {
       throw Errors.REGISTRATION_DISABLED;
     }
-    if (!core.localRegistrationEnabled) {
+    if (!core.localRegistrationEnabled || sails.helpers.core.isOidcOnlyRegistration(core)) {
       throw Errors.LOCAL_REGISTRATION_DISABLED;
     }
     if (zxcvbn(values.password).score < sails.config.custom.requiredPasswordStrength) {

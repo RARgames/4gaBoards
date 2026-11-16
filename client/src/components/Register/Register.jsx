@@ -98,12 +98,16 @@ const Register = React.memo(
     registrationEnabled,
     localRegistrationEnabled,
     ssoRegistrationEnabled,
+    oidcOnlyRegistration,
     onRegister,
     onAuthenticateSso,
     onMessageDismiss,
     onLoginOpen,
   }) => {
     const [t] = useTranslation();
+    // With OIDC-only registration, new accounts can only come from OIDC sign-in
+    const canRegisterLocally = registrationEnabled && localRegistrationEnabled && !oidcOnlyRegistration;
+    const canRegisterWithSso = registrationEnabled && (oidcOnlyRegistration ? !!ssoAvailable[SsoTypes.OIDC] : ssoRegistrationEnabled && Object.values(ssoAvailable).some(Boolean));
     const [isEmailError, setIsEmailError] = useState(false);
     const [isPasswordError, setIsPasswordError] = useState(false);
     const [isCheckboxError, setIsCheckboxError] = useState(false);
@@ -224,9 +228,9 @@ const Register = React.memo(
           <h1 className={s.formTitle}>{t('common.createYourAccount')}</h1>
           <div>
             {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
-            {(!registrationEnabled || (!localRegistrationEnabled && !ssoRegistrationEnabled)) && <div className={s.registrationDisabledText}>{t('error.registrationDisabled')}</div>}
+            {!canRegisterLocally && !canRegisterWithSso && <div className={s.registrationDisabledText}>{t('error.registrationDisabled')}</div>}
             <Form>
-              {registrationEnabled && localRegistrationEnabled && (
+              {canRegisterLocally && (
                 <>
                   <div className={s.inputLabel}>{t('common.email')}</div>
                   <Input
@@ -271,9 +275,9 @@ const Register = React.memo(
                 </>
               )}
             </Form>
-            {registrationEnabled && ssoRegistrationEnabled && Object.values(ssoAvailable).some(Boolean) && (
+            {canRegisterWithSso && (
               <>
-                {localRegistrationEnabled && (
+                {canRegisterLocally && (
                   <div className={s.otherOptionsTextWrapper}>
                     <div className={s.otherOptionsLine} />
                     <div className={s.otherOptionsText}>{t('common.or')}</div>
@@ -281,7 +285,7 @@ const Register = React.memo(
                   </div>
                 )}
                 <div className={s.otherOptions}>
-                  {SSO_PROVIDERS.filter((p) => ssoAvailable[p.type] && (p.type !== SsoTypes.OIDC || oidcEnabledMethods.length === 0)).map((p) => (
+                  {SSO_PROVIDERS.filter((p) => ssoAvailable[p.type] && (!oidcOnlyRegistration || p.type === SsoTypes.OIDC) && (p.type !== SsoTypes.OIDC || oidcEnabledMethods.length === 0)).map((p) => (
                     <Button key={p.type} variant={ButtonVariant.Login} title={t('common.continueWith', { provider: p.label })} onClick={() => handleSsoClick(p.type)} className={s.button}>
                       {loadingProvider === p.type ? (
                         <Loader size={LoaderSize.Small} />
@@ -333,6 +337,7 @@ Register.propTypes = {
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  oidcOnlyRegistration: PropTypes.bool.isRequired,
   onRegister: PropTypes.func.isRequired,
   onAuthenticateSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,
