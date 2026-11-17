@@ -81,7 +81,7 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, isThu
         <Button ref={field} title={t(isThumbnail ? 'common.thumbnail' : 'common.background')} onClick={handleImageClick} className={s.imageButton}>
           <div className={s.imageContainer}>
             <img src={imageCoverUrl} alt={t(isThumbnail ? 'common.thumbnail' : 'common.background')} className={s.image} />
-            {item && item.type === 'image' && (
+            {item && item.type === BackgroundTypes.IMAGE && (
               <div className={s.imageSelected}>
                 <Icon type={IconType.Star} size={IconSize.Size14} className={s.imageIcon} />
               </div>
