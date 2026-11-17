@@ -4,6 +4,32 @@ const Errors = {
   },
 };
 
+const backgroundValidator = (value) => {
+  if (_.isNull(value)) {
+    return true;
+  }
+
+  if (!_.isPlainObject(value)) {
+    return false;
+  }
+
+  if (!Object.values(Project.BackgroundTypes).includes(value.type)) {
+    return false;
+  }
+
+  if (value.type === Project.BackgroundTypes.GRADIENT && _.size(value) === 2 && Project.BACKGROUND_GRADIENTS.includes(value.name)) {
+    return true;
+  }
+
+  if (value.type === Project.BackgroundTypes.IMAGE && _.size(value) === 1) {
+    return true;
+  }
+
+  return false;
+};
+
+const backgroundImageValidator = (value) => _.isNull(value);
+
 module.exports = {
   inputs: {
     id: {
@@ -17,6 +43,22 @@ module.exports = {
     name: {
       type: 'string',
       isNotEmptyString: true,
+    },
+    background: {
+      type: 'json',
+      custom: backgroundValidator,
+    },
+    backgroundImage: {
+      type: 'json',
+      custom: backgroundImageValidator,
+    },
+    thumbnail: {
+      type: 'json',
+      custom: backgroundValidator,
+    },
+    thumbnailImage: {
+      type: 'json',
+      custom: backgroundImageValidator,
     },
     isGithubConnected: {
       type: 'boolean',
@@ -47,7 +89,7 @@ module.exports = {
       throw Errors.BOARD_NOT_FOUND; // Forbidden
     }
 
-    const values = _.pick(inputs, ['position', 'name', 'isGithubConnected', 'githubRepo']);
+    const values = _.pick(inputs, ['position', 'name', 'background', 'backgroundImage', 'thumbnail', 'thumbnailImage', 'isGithubConnected', 'githubRepo']);
 
     board = await sails.helpers.boards.updateOne.with({
       values,

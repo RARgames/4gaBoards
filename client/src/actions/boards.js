@@ -89,6 +89,28 @@ updateBoard.failure = (id, error, board) => ({
   },
 });
 
+const updateBoardBackgroundImage = (id) => ({
+  type: ActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE,
+  payload: {
+    id,
+  },
+});
+
+updateBoardBackgroundImage.success = (board) => ({
+  type: ActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE__SUCCESS,
+  payload: {
+    board,
+  },
+});
+
+updateBoardBackgroundImage.failure = (id, error) => ({
+  type: ActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE__FAILURE,
+  payload: {
+    id,
+    error,
+  },
+});
+
 const handleBoardUpdate = (board) => ({
   type: ActionTypes.BOARD_UPDATE_HANDLE,
   payload: {
@@ -161,6 +183,7 @@ export default {
   handleBoardCreate,
   fetchBoard,
   updateBoard,
+  updateBoardBackgroundImage,
   handleBoardUpdate,
   deleteBoard,
   handleBoardDelete,

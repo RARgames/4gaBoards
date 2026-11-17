@@ -1,8 +1,16 @@
 :global(#app) {
-  .wrapper {
+  .page {
     height: 100%;
     position: fixed;
     width: 100%;
     z-index: -1;
+  }
+
+  .thumbnail {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
   }
 }

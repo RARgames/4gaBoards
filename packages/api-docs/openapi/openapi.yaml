@@ -1190,8 +1190,14 @@ paths:
                 name:
                   type: string
                   minLength: 1
-                background: {}
-                backgroundImage: {}
+                background:
+                  $ref: '#/components/schemas/BackgroundStyle'
+                backgroundImage:
+                  $ref: '#/components/schemas/NullableImageReference'
+                thumbnail:
+                  $ref: '#/components/schemas/BackgroundStyle'
+                thumbnailImage:
+                  $ref: '#/components/schemas/NullableImageReference'
       responses:
         '200':
           description: Success
@@ -1257,6 +1263,12 @@ paths:
             schema:
               type: object
               properties:
+                target:
+                  type: string
+                  enum:
+                    - background
+                    - thumbnail
+                  default: background
                 file:
                   type: string
                   format: binary
@@ -1599,6 +1611,14 @@ paths:
                   type: boolean
                 githubRepo:
                   type: string
+                background:
+                  $ref: '#/components/schemas/BackgroundStyle'
+                backgroundImage:
+                  $ref: '#/components/schemas/NullableImageReference'
+                thumbnail:
+                  $ref: '#/components/schemas/BackgroundStyle'
+                thumbnailImage:
+                  $ref: '#/components/schemas/NullableImageReference'
       responses:
         '200':
           description: Success
@@ -1645,6 +1665,53 @@ paths:
         - bearerAuth: []
         - clientId: []
           clientSecret: []
+  /api/boards/{id}/background-image:
+    post:
+      tags:
+        - boards
+      summary: 'boards: update background image'
+      operationId: boardsUpdateBackgroundImage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9]+$
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                target:
+                  type: string
+                  enum:
+                    - background
+                    - thumbnail
+                  default: background
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemEnvelope'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - bearerAuth: []
+        - clientId: []
+          clientSecret: []
   /api/boards/{id}/export:
     get:
       tags:
@@ -1682,7 +1749,7 @@ paths:
           schema:
             type: boolean
             default: false
-        - name: skipProjectBackgrounds
+        - name: skipBackgroundsAndThumbnails
           in: query
           required: false
           schema:
@@ -4225,6 +4292,54 @@ components:
       name: X-Client-Secret
       description: API client secret. Use together with `X-Client-Id`.
   schemas:
+    BackgroundStyle:
+      anyOf:
+        - type: 'null'
+        - type: object
+          properties:
+            type:
+              const: gradient
+            name:
+              type: string
+              enum:
+                - old-lime
+                - ocean-dive
+                - tzepesch-style
+                - jungle-mesh
+                - strawberry-dust
+                - purple-rose
+                - sun-scream
+                - warm-rust
+                - sky-change
+                - green-eyes
+                - blue-xchange
+                - blood-orange
+                - sour-peel
+                - green-ninja
+                - algae-green
+                - coral-reef
+                - steel-grey
+                - heat-waves
+                - velvet-lounge
+                - purple-rain
+                - blue-steel
+                - blueish-curve
+                - prism-light
+                - green-mist
+                - red-curtain
+          required:
+            - type
+            - name
+          additionalProperties: false
+        - type: object
+          properties:
+            type:
+              const: image
+          required:
+            - type
+          additionalProperties: false
+    NullableImageReference:
+      type: 'null'
     Error:
       type: object
       properties:

@@ -39,6 +39,18 @@
     background: var(--backgroundColor);
   }
 
+  .wrapperWithBackground {
+    background: var(--shadowBlack05);
+
+    .title {
+      color: var(--textWhite);
+    }
+
+    .cardsCount {
+      color: var(--text1);
+    }
+  }
+
   .subscriptionButton {
     margin-right: 2px;
   }

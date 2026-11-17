@@ -58,6 +58,13 @@ module.exports = {
       type: 'json',
       columnName: 'background_image',
     },
+    thumbnail: {
+      type: 'json',
+    },
+    thumbnailImage: {
+      type: 'json',
+      columnName: 'thumbnail_image',
+    },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
@@ -89,10 +96,14 @@ module.exports = {
 
   customToJSON() {
     return {
-      ..._.omit(this, ['backgroundImage']),
+      ..._.omit(this, ['backgroundImage', 'thumbnailImage']),
       backgroundImage: this.backgroundImage && {
         url: `${sails.config.custom.projectBackgroundImagesUrl}/${this.backgroundImage.dirname}/original.${this.backgroundImage.extension}`,
         coverUrl: `${sails.config.custom.projectBackgroundImagesUrl}/${this.backgroundImage.dirname}/cover-336.${this.backgroundImage.extension}`,
+      },
+      thumbnailImage: this.thumbnailImage && {
+        url: `${sails.config.custom.projectBackgroundImagesUrl}/${this.thumbnailImage.dirname}/original.${this.thumbnailImage.extension}`,
+        coverUrl: `${sails.config.custom.projectBackgroundImagesUrl}/${this.thumbnailImage.dirname}/cover-336.${this.thumbnailImage.extension}`,
       },
     };
   },

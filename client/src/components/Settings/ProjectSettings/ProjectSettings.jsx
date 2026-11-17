@@ -20,6 +20,8 @@ const ProjectSettings = React.memo(
     name,
     background,
     backgroundImage,
+    thumbnail,
+    thumbnailImage,
     isBackgroundImageUpdating,
     managers,
     allUsers,
@@ -40,9 +42,12 @@ const ProjectSettings = React.memo(
       [onUpdate, projectId],
     );
 
-    const handleBackgroundImageDelete = useCallback(() => {
-      onUpdate(projectId, { backgroundImage: null });
-    }, [onUpdate, projectId]);
+    const handleThumbnailUpdate = useCallback(
+      (newThumbnail) => {
+        onUpdate(projectId, { thumbnail: newThumbnail });
+      },
+      [onUpdate, projectId],
+    );
 
     return (
       <div className={sShared.wrapper}>
@@ -97,9 +102,23 @@ const ProjectSettings = React.memo(
                 isImageUpdating={isBackgroundImageUpdating}
                 onUpdate={handleBackgroundUpdate}
                 onImageUpdate={(data) => {
-                  onBackgroundImageUpdate(projectId, data);
+                  onBackgroundImageUpdate(projectId, { target: 'background', ...data });
                 }}
-                onImageDelete={handleBackgroundImageDelete}
+                onImageDelete={() => onUpdate(projectId, { backgroundImage: null })}
+              />
+            </div>
+            <div className={s.action}>
+              <div className={s.text}>{t('common.thumbnail')}</div>
+              <BackgroundPane
+                item={thumbnail}
+                isThumbnail
+                imageCoverUrl={thumbnailImage && thumbnailImage.coverUrl}
+                isImageUpdating={isBackgroundImageUpdating}
+                onUpdate={handleThumbnailUpdate}
+                onImageUpdate={(data) => {
+                  onBackgroundImageUpdate(projectId, { target: 'thumbnail', ...data });
+                }}
+                onImageDelete={() => onUpdate(projectId, { thumbnailImage: null })}
               />
             </div>
             <div className={s.action}>
@@ -129,6 +148,8 @@ ProjectSettings.propTypes = {
   name: PropTypes.string.isRequired,
   background: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   backgroundImage: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  thumbnail: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  thumbnailImage: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isBackgroundImageUpdating: PropTypes.bool.isRequired,
   managers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   allUsers: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -144,6 +165,8 @@ ProjectSettings.propTypes = {
 ProjectSettings.defaultProps = {
   background: undefined,
   backgroundImage: undefined,
+  thumbnail: undefined,
+  thumbnailImage: undefined,
 };
 
 export default ProjectSettings;

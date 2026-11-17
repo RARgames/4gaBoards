@@ -1,4 +1,4 @@
-export const ProjectBackgroundTypes = {
+export const BackgroundTypes = {
   GRADIENT: 'gradient',
   IMAGE: 'image',
 };

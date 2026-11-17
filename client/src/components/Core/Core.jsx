@@ -7,7 +7,6 @@ import { Themes } from '../../constants/Enums';
 import HeaderContainer from '../../containers/HeaderContainer';
 import StaticContainer from '../../containers/StaticContainer';
 import { beautifyLink } from '../../utils/url';
-import Background from '../Background';
 import { Loader, LoaderSize, Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
 import * as s from './Core.module.scss';
@@ -79,9 +78,6 @@ const Core = React.memo(({ isInitializing, isSocketDisconnected, currentProject,
         <Loader size={LoaderSize.Massive} />
       ) : (
         <>
-          {currentProject && currentProject.background && (
-            <Background type={currentProject.background.type} name={currentProject.background.name} imageUrl={currentProject.backgroundImage && currentProject.backgroundImage.url} />
-          )}
           <HeaderContainer />
           <StaticContainer />
         </>

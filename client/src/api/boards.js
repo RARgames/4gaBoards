@@ -38,6 +38,12 @@ const updateBoard = (id, data, headers) =>
     item: transformBoard(body.item),
   }));
 
+const updateBoardBackgroundImage = (id, data, headers) =>
+  http.post(`/boards/${id}/background-image`, data, headers).then((body) => ({
+    ...body,
+    item: transformBoard(body.item),
+  }));
+
 const deleteBoard = (id, headers) =>
   socket.delete(`/boards/${id}`, undefined, headers).then((body) => ({
     ...body,
@@ -64,6 +70,7 @@ export default {
   createBoardWithImport,
   getBoard,
   updateBoard,
+  updateBoardBackgroundImage,
   deleteBoard,
   exportBoard,
   makeHandleBoardCreate,

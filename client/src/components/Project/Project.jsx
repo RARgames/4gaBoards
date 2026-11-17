@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
 import truncate from '../../utils/visual-truncate';
+import Background from '../Background';
 import BoardAddPopup from '../BoardAddPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 import ProjectBoard from './ProjectBoard';
@@ -28,6 +29,7 @@ const Project = React.memo(
     rightClickContextMenu,
     onBoardCreate,
     onBoardUpdate,
+    onBoardBackgroundImageUpdate,
     onBoardDelete,
     onBoardExport,
     onBoardFetch,
@@ -72,7 +74,8 @@ const Project = React.memo(
 
     return (
       <div className={clsx(s.wrapper)}>
-        <div className={s.header}>
+        {currentProject?.background && <Background type={currentProject.background.type} name={currentProject.background.name} imageUrl={currentProject.backgroundImage?.url} />}
+        <div className={clsx(s.header, currentProject?.background && s.headerWithBackground)}>
           <div ref={headerButtonGroupOffsetRef} />
           <div className={clsx(s.headerText)}>
             <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('common.unsubscribe') : t('common.subscribe')} onClick={handleToggleSubscriptionClick}>
@@ -139,6 +142,7 @@ const Project = React.memo(
               onExport={onBoardExport}
               onFetch={onBoardFetch}
               onDelete={onBoardDelete}
+              onBackgroundImageUpdate={onBoardBackgroundImageUpdate}
               onMembershipUpdate={onBoardMembershipUpdate}
               onActivitiesFetch={onActivitiesBoardFetch}
               onMailTokenCreate={onMailTokenCreate}
@@ -190,6 +194,7 @@ Project.propTypes = {
   rightClickContextMenu: PropTypes.bool.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
+  onBoardBackgroundImageUpdate: PropTypes.func.isRequired,
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,

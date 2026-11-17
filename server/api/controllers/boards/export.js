@@ -37,7 +37,7 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false,
     },
-    skipProjectBackgrounds: {
+    skipBackgroundsAndThumbnails: {
       type: 'boolean',
       defaultsTo: false,
     },
@@ -106,9 +106,15 @@ module.exports = {
         card.coverAttachmentId = undefined; // eslint-disable-line no-param-reassign
       });
     }
-    if (inputs.skipProjectBackgrounds) {
+    if (inputs.skipBackgroundsAndThumbnails) {
       project.backgroundImage = undefined;
       project.background = undefined;
+      project.thumbnailImage = undefined;
+      project.thumbnail = undefined;
+      board.backgroundImage = undefined;
+      board.background = undefined;
+      board.thumbnailImage = undefined;
+      board.thumbnail = undefined;
     }
 
     const data = {
@@ -193,12 +199,20 @@ module.exports = {
         );
       }
 
-      if (!inputs.skipProjectBackgrounds && project.backgroundImage !== null) {
-        const projectBackgroundDir = path.join(tempDir, 'project-background-images', project.backgroundImage.dirname);
-        fs.mkdirSync(projectBackgroundDir, { recursive: true });
-        const projectBackgroundFilename = `original.${project.backgroundImage.extension}`;
-        const projectBackgroundPath = path.join(sails.config.custom.fullProjectBackgroundImagesPath, project.backgroundImage.dirname, projectBackgroundFilename);
-        fs.copyFileSync(projectBackgroundPath, path.join(projectBackgroundDir, projectBackgroundFilename));
+      if (!inputs.skipBackgroundsAndThumbnails) {
+        const copyProjectImage = (image, archiveDirectory) => {
+          if (!image) return;
+          const imageDirectory = path.join(tempDir, archiveDirectory, image.dirname);
+          fs.mkdirSync(imageDirectory, { recursive: true });
+          const imageFilename = `original.${image.extension}`;
+          const imagePath = path.join(sails.config.custom.fullProjectBackgroundImagesPath, image.dirname, imageFilename);
+          fs.copyFileSync(imagePath, path.join(imageDirectory, imageFilename));
+        };
+
+        copyProjectImage(project.backgroundImage, 'project-background-images');
+        copyProjectImage(board.backgroundImage, 'board-background-images');
+        copyProjectImage(project.thumbnailImage, 'project-thumbnail-images');
+        copyProjectImage(board.thumbnailImage, 'board-thumbnail-images');
       }
 
       await tar.c(

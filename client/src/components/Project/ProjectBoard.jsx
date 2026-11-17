@@ -6,6 +6,7 @@ import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
+import Background from '../Background';
 import BoardActionsPopup from '../BoardActionsPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize, ProgressBar, ProgressBarSize } from '../Utils';
 
@@ -25,6 +26,7 @@ const ProjectBoard = React.memo(
     onExport,
     onFetch,
     onDelete,
+    onBackgroundImageUpdate,
     onMembershipUpdate,
     onActivitiesFetch,
     onMailTokenCreate,
@@ -50,10 +52,11 @@ const ProjectBoard = React.memo(
     );
 
     return (
-      <div className={clsx(s.boardWrapper)} onContextMenu={handleContextMenu}>
+      <div className={s.boardWrapper} onContextMenu={handleContextMenu}>
+        {board.thumbnail && <Background type={board.thumbnail.type} name={board.thumbnail.name} imageUrl={board.thumbnailImage?.coverUrl} variant="thumbnail" />}
         {board.notificationsTotal > 0 && <span className={s.notification}>{board.notificationsTotal}</span>}
         <Link to={Paths.BOARDS.replace(':id', id)}>
-          <div className={s.board}>
+          <div className={clsx(s.board, board.thumbnail && s.boardWithBackground)}>
             <div title={board.name} className={s.boardTitle}>
               {board.name}
             </div>
@@ -84,6 +87,7 @@ const ProjectBoard = React.memo(
           updatedAt={board.updatedAt}
           updatedBy={board.updatedBy}
           memberships={board.memberships}
+          board={board}
           templates={templates}
           boardName={board.name}
           isAdmin={isAdmin}
@@ -104,6 +108,7 @@ const ProjectBoard = React.memo(
           onActivitiesFetch={() => onActivitiesFetch(id)}
           onMailTokenCreate={() => onMailTokenCreate(id)}
           onMailTokenUpdate={(mailTokenId) => onMailTokenUpdate(mailTokenId, id)}
+          onBackgroundImageUpdate={(data) => onBackgroundImageUpdate(id, data)}
           onMailTokenDelete={(mailTokenId) => onMailTokenDelete(mailTokenId)}
           onTemplateCreate={(data) => onTemplateCreate(id, data)}
           onTemplateUpdate={onTemplateUpdate}
@@ -135,6 +140,7 @@ ProjectBoard.propTypes = {
   onExport: PropTypes.func.isRequired,
   onFetch: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onBackgroundImageUpdate: PropTypes.func.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,
   onActivitiesFetch: PropTypes.func.isRequired,
   onMailTokenCreate: PropTypes.func.isRequired,

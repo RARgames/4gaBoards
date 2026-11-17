@@ -10,10 +10,11 @@ import CardModalContainer from '../../containers/CardModalContainer';
 import ListViewContainer from '../../containers/ListViewContainer';
 import { dropAnimation } from '../../lib/hooks/use-drop-animation';
 import { withPathView, getPathView, stripPathView } from '../../utils/path-view';
+import Background from '../Background';
 
 import * as s from './Board.module.scss';
 
-const Board = React.memo(({ id, cardId, isCardModalOpened, pathname, pathView, defaultView, onNavigatePush, onNavigateReplace }) => {
+const Board = React.memo(({ id, board, cardId, isCardModalOpened, pathname, pathView, defaultView, onNavigatePush, onNavigateReplace }) => {
   const viewMode = pathView || defaultView;
 
   const setViewMode = useCallback((view) => onNavigatePush(withPathView(cardId ? Paths.CARDS.replace(':id', cardId) : Paths.BOARDS.replace(':id', id), view)), [onNavigatePush, id, cardId]);
@@ -41,9 +42,10 @@ const Board = React.memo(({ id, cardId, isCardModalOpened, pathname, pathView, d
 
   return (
     <div className={s.container}>
+      {board?.background && <Background type={board.background.type} name={board.background.name} imageUrl={board.backgroundImage?.url} />}
       <BoardActionsContainer boardId={id} viewMode={viewMode} onViewModeChange={setViewMode} />
       <div className={s.wrapper}>
-        {viewMode === 'board' ? <BoardViewContainer /> : <ListViewContainer />}
+        {viewMode === 'board' ? <BoardViewContainer isCustomBackground={!!board?.background} /> : <ListViewContainer />}
         {isCardModalOpened && <CardModalContainer />}
       </div>
     </div>
@@ -52,6 +54,7 @@ const Board = React.memo(({ id, cardId, isCardModalOpened, pathname, pathView, d
 
 Board.propTypes = {
   id: PropTypes.string.isRequired,
+  board: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   cardId: PropTypes.string,
   isCardModalOpened: PropTypes.bool.isRequired,
   pathname: PropTypes.string.isRequired,

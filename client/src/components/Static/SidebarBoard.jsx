@@ -34,6 +34,7 @@ const SidebarBoard = React.memo(
     boardRefs,
     rightClickContextMenu,
     onUpdate,
+    onBackgroundImageUpdate,
     onExport,
     onFetch,
     onDelete,
@@ -162,6 +163,7 @@ const SidebarBoard = React.memo(
               updatedAt={board.updatedAt}
               updatedBy={board.updatedBy}
               memberships={board.memberships}
+              board={board}
               templates={templates}
               boardName={board.name}
               isAdmin={isAdmin}
@@ -176,6 +178,7 @@ const SidebarBoard = React.memo(
               hideCompletedLists={board.hideCompletedLists}
               onMembershipUpdate={onMembershipUpdate}
               onUpdate={(data) => onUpdate(id, data)}
+              onBackgroundImageUpdate={(data) => onBackgroundImageUpdate(id, data)}
               onExport={(data) => onExport(id, data)}
               onFetch={() => onFetch(id)}
               onDelete={() => onDelete(id)}
@@ -214,6 +217,7 @@ SidebarBoard.propTypes = {
   boardRefs: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   rightClickContextMenu: PropTypes.bool.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onBackgroundImageUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFetch: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

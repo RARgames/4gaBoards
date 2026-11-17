@@ -2,6 +2,7 @@ import { attr, fk, many } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import Config from '../constants/Config';
+import { BackgroundTypes } from '../constants/Enums';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -11,6 +12,13 @@ export default class extends BaseModel {
     id: attr(),
     position: attr(),
     name: attr(),
+    background: attr(),
+    backgroundImage: attr(),
+    thumbnail: attr(),
+    thumbnailImage: attr(),
+    isBackgroundImageUpdating: attr({
+      getDefault: () => false,
+    }),
     isGithubConnected: attr(),
     githubRepo: attr(),
     cardTotal: attr({
@@ -207,8 +215,26 @@ export default class extends BaseModel {
         });
 
         break;
-      case ActionTypes.BOARD_UPDATE:
-        Board.withId(payload.id).update(payload.data);
+      case ActionTypes.BOARD_UPDATE: {
+        const boardModel = Board.withId(payload.id);
+        boardModel.update({
+          ...payload.data,
+          ...(payload.data.backgroundImage === null && boardModel.background?.type === BackgroundTypes.IMAGE && { background: null }),
+          ...(payload.data.thumbnailImage === null && boardModel.thumbnail?.type === BackgroundTypes.IMAGE && { thumbnail: null }),
+        });
+
+        break;
+      }
+      case ActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE:
+        Board.withId(payload.id).update({ isBackgroundImageUpdating: true });
+
+        break;
+      case ActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE__SUCCESS:
+        Board.withId(payload.board.id)?.update({ ...payload.board, isBackgroundImageUpdating: false });
+
+        break;
+      case ActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE__FAILURE:
+        Board.withId(payload.id)?.update({ isBackgroundImageUpdating: false });
 
         break;
       case ActionTypes.BOARD_UPDATE__FAILURE:

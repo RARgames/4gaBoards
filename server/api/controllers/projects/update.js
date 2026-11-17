@@ -49,6 +49,14 @@ module.exports = {
       type: 'json',
       custom: backgroundImageValidator,
     },
+    thumbnail: {
+      type: 'json',
+      custom: backgroundValidator,
+    },
+    thumbnailImage: {
+      type: 'json',
+      custom: backgroundImageValidator,
+    },
   },
 
   exits: {
@@ -72,7 +80,7 @@ module.exports = {
       throw Errors.PROJECT_NOT_FOUND;
     }
 
-    const values = _.pick(inputs, ['name', 'background', 'backgroundImage']);
+    const values = _.pick(inputs, ['name', 'background', 'backgroundImage', 'thumbnail', 'thumbnailImage']);
 
     project = await sails.helpers.projects.updateOne.with({
       values,

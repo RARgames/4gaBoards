@@ -37,6 +37,7 @@ const mapDispatchToProps = (dispatch) =>
     {
       onBoardCreate: entryActions.createBoard,
       onBoardUpdate: entryActions.updateBoard,
+      onBoardBackgroundImageUpdate: entryActions.updateBoardBackgroundImage,
       onBoardDelete: entryActions.deleteBoard,
       onBoardExport: entryActions.exportBoard,
       onBoardFetch: entryActions.fetchBoard,

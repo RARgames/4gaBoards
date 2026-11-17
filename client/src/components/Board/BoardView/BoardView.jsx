@@ -18,7 +18,7 @@ import * as s from './BoardView.module.scss';
 
 const LIST_PLACEHOLDER_MARGIN = 10;
 
-const BoardView = React.memo(({ listIds, canEdit, onListCreate, onListMove, onCardMove }) => {
+const BoardView = React.memo(({ listIds, isCustomBackground, canEdit, onListCreate, onListMove, onCardMove }) => {
   const [t] = useTranslation();
   const [isListAddOpened, setIsListAddOpened] = useState(false);
   const wrapper = useRef(null);
@@ -190,7 +190,7 @@ const BoardView = React.memo(({ listIds, canEdit, onListCreate, onListMove, onCa
             {isListAddOpened ? (
               <ListAdd onCreate={onListCreate} onClose={handleAddListClose} />
             ) : (
-              <Button variant={ButtonVariant.Icon} title={t('common.addList')} onClick={handleAddListClick} className={s.addListButton}>
+              <Button variant={ButtonVariant.Icon} title={t('common.addList')} onClick={handleAddListClick} className={clsx(s.addListButton, isCustomBackground && s.addListButtonWithBackground)}>
                 <Icon type={IconType.PlusMath} size={IconSize.Size13} className={s.addListButtonIcon} />
                 <span className={s.addListButtonText}>{t('common.addList')}</span>
               </Button>
@@ -204,6 +204,7 @@ const BoardView = React.memo(({ listIds, canEdit, onListCreate, onListMove, onCa
 
 BoardView.propTypes = {
   listIds: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  isCustomBackground: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   onListCreate: PropTypes.func.isRequired,
   onListMove: PropTypes.func.isRequired,

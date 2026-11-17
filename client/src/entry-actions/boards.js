@@ -38,6 +38,11 @@ const updateBoard = (id, data) => ({
   },
 });
 
+const updateBoardBackgroundImage = (id, data) => ({
+  type: EntryActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE,
+  payload: { id, data },
+});
+
 const handleBoardUpdate = (board) => ({
   type: EntryActionTypes.BOARD_UPDATE_HANDLE,
   payload: {
@@ -89,6 +94,7 @@ export default {
   handleBoardCreate,
   fetchBoard,
   updateBoard,
+  updateBoardBackgroundImage,
   handleBoardUpdate,
   moveBoard,
   deleteBoard,

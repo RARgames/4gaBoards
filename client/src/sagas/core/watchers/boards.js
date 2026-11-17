@@ -10,6 +10,7 @@ export default function* boardsWatchers() {
     takeEvery(EntryActionTypes.BOARD_CREATE_HANDLE, ({ payload: { board, requestId } }) => services.handleBoardCreate(board, requestId)),
     takeEvery(EntryActionTypes.BOARD_FETCH, ({ payload: { id } }) => services.fetchBoard(id)),
     takeEvery(EntryActionTypes.BOARD_UPDATE, ({ payload: { id, data } }) => services.updateBoard(id, data)),
+    takeEvery(EntryActionTypes.BOARD_BACKGROUND_IMAGE_UPDATE, ({ payload: { id, data } }) => services.updateBoardBackgroundImage(id, data)),
     takeEvery(EntryActionTypes.BOARD_UPDATE_HANDLE, ({ payload: { board } }) => services.handleBoardUpdate(board)),
     takeEvery(EntryActionTypes.BOARD_MOVE, ({ payload: { id, index } }) => services.moveBoard(id, index)),
     takeEvery(EntryActionTypes.BOARD_DELETE, ({ payload: { id } }) => services.deleteBoard(id)),

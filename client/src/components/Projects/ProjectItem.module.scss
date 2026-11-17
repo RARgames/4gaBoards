@@ -27,6 +27,8 @@
   }
 
   .project {
+    position: relative;
+    z-index: 1;
     color: var(--text0);
     padding: 20px;
     width: 100%;
@@ -47,6 +49,7 @@
 
   .notification {
     position: absolute;
+    z-index: 1;
     right: 0;
     top: 0;
     background: var(--backgroundNotifications);
@@ -70,5 +73,6 @@
     position: absolute;
     top: 20px;
     right: 0;
+    z-index: 2;
   }
 }

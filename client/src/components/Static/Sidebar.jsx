@@ -49,6 +49,7 @@ const Sidebar = React.memo(
     onProjectMove,
     onBoardCreate,
     onBoardUpdate,
+    onBoardBackgroundImageUpdate,
     onBoardMove,
     onBoardDelete,
     onBoardExport,
@@ -184,6 +185,7 @@ const Sidebar = React.memo(
         onProjectMembershipUpdate={onProjectMembershipUpdate}
         onBoardCreate={onBoardCreate}
         onBoardUpdate={onBoardUpdate}
+        onBoardBackgroundImageUpdate={onBoardBackgroundImageUpdate}
         onBoardDelete={onBoardDelete}
         onBoardExport={onBoardExport}
         onBoardFetch={onBoardFetch}
@@ -363,6 +365,7 @@ Sidebar.propTypes = {
   onProjectMove: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
+  onBoardBackgroundImageUpdate: PropTypes.func.isRequired,
   onBoardMove: PropTypes.func.isRequired,
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,

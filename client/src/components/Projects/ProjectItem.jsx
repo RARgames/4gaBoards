@@ -1,18 +1,14 @@
 import React, { useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import clsx from 'clsx';
-import camelCase from 'lodash/camelCase';
 import pick from 'lodash/pick';
-import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 
-import { ProjectBackgroundTypes } from '../../constants/Enums';
 import Paths from '../../constants/Paths';
+import Background from '../Background';
 import ProjectActionsPopup from '../ProjectActionsPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize } from '../Utils';
 
-import * as bs from '../../backgrounds.module.scss';
 import * as s from './ProjectItem.module.scss';
 
 const ProjectItem = React.memo(({ item, managedProjects, boardTemplates, isAdmin, rightClickContextMenu, onUpdate, onBoardCreate, onBoardTemplateUpdate, onBoardTemplateDelete, onActivitiesProjectFetch }) => {
@@ -32,13 +28,8 @@ const ProjectItem = React.memo(({ item, managedProjects, boardTemplates, isAdmin
   );
 
   return (
-    <div
-      className={clsx(s.projectWrapper, item.background && item.background.type === ProjectBackgroundTypes.GRADIENT && bs[`background${upperFirst(camelCase(item.background.name))}`])}
-      style={{
-        background: item.background && item.background.type === 'image' && `url("${item.backgroundImage.coverUrl}") center / cover`,
-      }}
-      onContextMenu={handleContextMenu}
-    >
+    <div className={s.projectWrapper} onContextMenu={handleContextMenu}>
+      {item.thumbnail && <Background type={item.thumbnail.type} name={item.thumbnail.name} imageUrl={item.thumbnailImage?.coverUrl} variant="thumbnail" />}
       {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
       <Link to={Paths.PROJECTS.replace(':id', item.id)}>
         <div className={s.project}>

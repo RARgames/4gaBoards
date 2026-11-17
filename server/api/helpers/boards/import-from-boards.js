@@ -630,6 +630,35 @@ module.exports = {
     };
 
     try {
+      const importedBackground = parseJSON(boards[0].background);
+      const importedBackgroundImage = parseJSON(boards[0].backgroundImage);
+      const importedBoardThumbnailImage = parseJSON(boards[0].thumbnailImage);
+      let backgroundImage;
+      if (importedBackgroundImage) {
+        const imagePath = sails.helpers.utils.resolveWithinDir(inputs.importTempDir, ['board-background-images', importedBackgroundImage.dirname, `original.${importedBackgroundImage.extension}`]);
+        backgroundImage = await sails.helpers.projects.processUploadedBackgroundImageFile({ fd: imagePath });
+      }
+      let boardThumbnailImage;
+      if (importedBoardThumbnailImage) {
+        const imagePath = sails.helpers.utils.resolveWithinDir(inputs.importTempDir, ['board-thumbnail-images', importedBoardThumbnailImage.dirname, `original.${importedBoardThumbnailImage.extension}`]);
+        if (fs.existsSync(imagePath)) {
+          boardThumbnailImage = await sails.helpers.projects.processUploadedBackgroundImageFile({ fd: imagePath });
+        }
+      }
+      let background = null;
+      if (importedBackground?.type === Project.BackgroundTypes.GRADIENT && Project.BACKGROUND_GRADIENTS.includes(importedBackground.name)) {
+        background = { type: Project.BackgroundTypes.GRADIENT, name: importedBackground.name };
+      } else if (importedBackground?.type === Project.BackgroundTypes.IMAGE && backgroundImage) {
+        background = { type: Project.BackgroundTypes.IMAGE };
+      }
+      if (background || backgroundImage || boardThumbnailImage) {
+        const updatedBoard = await Board.updateOne(inputs.board.id).set({
+          ...(background && { background }),
+          ...(background && { backgroundImage: backgroundImage || null }),
+          ...(boardThumbnailImage && { thumbnail: { type: 'image' }, thumbnailImage: boardThumbnailImage }),
+        });
+        Object.assign(inputs.board, updatedBoard);
+      }
       await importUsers();
       if (inputs.importProjectManagers) {
         await importProjectManagers();

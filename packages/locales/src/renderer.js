@@ -10,6 +10,48 @@ function getLabelStyle(backgroundColor) {
   };
 }
 
+function getVisualChange(previous, current, previousImage, currentImage) {
+  const isImageOnly = previous === undefined && current === undefined;
+  const previousValue = isImageOnly ? previousImage : previous;
+  const currentValue = isImageOnly ? currentImage : current;
+
+  if (previousValue === undefined && currentValue === undefined) {
+    return null;
+  }
+  if (previousValue == null && currentValue != null) {
+    return 'Add';
+  }
+  if (previousValue != null && currentValue === null) {
+    return isImageOnly ? 'ImageRemove' : 'Remove';
+  }
+  return 'Update';
+}
+
+function getVisualUpdate(ctx, scope, backgroundChange, thumbnailChange) {
+  if (!backgroundChange && !thumbnailChange) {
+    return null;
+  }
+
+  const isBoard = scope === 'board';
+  const name = isBoard ? ctx.boardName : ctx.projectName;
+  const nameTruncated = isBoard ? ctx.boardNameTruncated : ctx.projectNameTruncated;
+  const isShort = isBoard ? ctx.hideBoardDetails : ctx.hideProjectDetails;
+  let visual;
+  if (backgroundChange && thumbnailChange) {
+    visual = 'BackgroundAndThumbnailUpdate';
+  } else if (backgroundChange) {
+    visual = `Background${backgroundChange}`;
+  } else {
+    visual = `Thumbnail${thumbnailChange}`;
+  }
+
+  return {
+    key: `activity.${scope}${visual}${isShort ? 'Short' : ''}`,
+    values: { [scope]: nameTruncated },
+    components: [{ slot: scope, title: name }],
+  };
+}
+
 function buildContext(t, activity, flags) {
   const { boardNameTruncateLength = 30, cardNameTruncateLength = 30, commentTruncateLength = 30, defaultTruncateLength = 30, descriptionTruncateLength = 30, hideBoardDetails = false, hideCardDetails = false, hideLabelDetails = false, hideListDetails = false, hideProjectDetails = false, isDescriptionTruncated = false, isTruncated = false, listNameTruncateLength = 30, projectNameTruncateLength = 30, taskNameTruncateLength = 30, userNameTruncateLength = 30 } = flags;
 
@@ -1178,7 +1220,8 @@ export const activityRenderSpec = {
         };
       }
 
-      return null;
+      const { prevBackground, background, prevBackgroundImage, backgroundImage, prevThumbnail, thumbnail, prevThumbnailImage, thumbnailImage } = ctx.activity.data;
+      return getVisualUpdate(ctx, 'board', getVisualChange(prevBackground, background, prevBackgroundImage, backgroundImage), getVisualChange(prevThumbnail, thumbnail, prevThumbnailImage, thumbnailImage));
     },
 
     [ActivityTypes.BOARD_DELETE]: (ctx) => {
@@ -1266,27 +1309,8 @@ export const activityRenderSpec = {
         };
       }
 
-      if (ctx.activity.data.projectPrevBackground !== undefined || ctx.activity.data.projectBackground !== undefined || ctx.activity.data.projectPrevBackgroundImage !== undefined || ctx.activity.data.projectBackgroundImage !== undefined) {
-        const { projectPrevBackground, projectBackground, projectPrevBackgroundImage, projectBackgroundImage } = ctx.activity.data;
-        let key;
-        if ((projectPrevBackground === null && projectBackground !== null) || (projectPrevBackgroundImage === null && projectBackgroundImage !== null)) {
-          key = ctx.hideProjectDetails ? 'activity.projectBackgroundAddShort' : 'activity.projectBackgroundAdd';
-        } else if ((projectPrevBackground !== null && projectBackground === null) || (projectPrevBackgroundImage !== null && projectBackgroundImage === null)) {
-          key = ctx.hideProjectDetails ? 'activity.projectBackgroundRemoveShort' : 'activity.projectBackgroundRemove';
-        } else if ((projectPrevBackground !== null && projectBackground !== null) || (projectPrevBackgroundImage !== null && projectBackgroundImage !== null)) {
-          key = ctx.hideProjectDetails ? 'activity.projectBackgroundUpdateShort' : 'activity.projectBackgroundUpdate';
-        }
-
-        return {
-          key,
-          values: {
-            project: ctx.projectNameTruncated,
-          },
-          components: [{ slot: 'project', title: ctx.projectName }],
-        };
-      }
-
-      return null;
+      const { projectPrevBackground, projectBackground, projectPrevBackgroundImage, projectBackgroundImage, projectPrevThumbnail, projectThumbnail, projectPrevThumbnailImage, projectThumbnailImage } = ctx.activity.data;
+      return getVisualUpdate(ctx, 'project', getVisualChange(projectPrevBackground, projectBackground, projectPrevBackgroundImage, projectBackgroundImage), getVisualChange(projectPrevThumbnail, projectThumbnail, projectPrevThumbnailImage, projectThumbnailImage));
     },
 
     [ActivityTypes.PROJECT_DELETE]: (ctx) => {

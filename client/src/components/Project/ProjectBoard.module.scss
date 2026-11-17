@@ -34,26 +34,40 @@
     position: absolute;
     top: 20px;
     right: 0;
+    z-index: 2;
   }
 
   .board {
+    position: relative;
+    z-index: 1;
     color: var(--text0);
     padding: 20px 20px 12px 20px;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    border-radius: 5px;
   }
 
   .boardTitle {
-    width: 100%;
     display: -webkit-box;
+    width: 100%;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
     overflow-wrap: anywhere;
+    padding-bottom: 2px;
+    margin-bottom: -2px;
+  }
+
+  .boardWithBackground {
+    background: var(--shadowBlack04);
+
+    .boardProgress {
+      color: var(--text1);
+    }
   }
 
   .boardProgresses {
@@ -81,6 +95,7 @@
 
   .notification {
     position: absolute;
+    z-index: 1;
     right: 0;
     top: 0;
     background: var(--backgroundNotifications);

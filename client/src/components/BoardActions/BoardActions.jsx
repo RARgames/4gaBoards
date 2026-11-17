@@ -59,6 +59,7 @@ const BoardActions = React.memo(
     onLabelUpdate,
     onLabelDelete,
     onBoardUpdate,
+    onBoardBackgroundImageUpdate,
     onBoardDelete,
     onBoardExport,
     onBoardSearchParamsUpdate,
@@ -83,7 +84,7 @@ const BoardActions = React.memo(
     }, [boardMembershipId, isSubscribed, onMembershipUpdate]);
 
     return (
-      <div className={clsx(s.wrapper, gs.scrollableX)}>
+      <div className={clsx(s.wrapper, gs.scrollableX, board.background && s.wrapperWithBackground)}>
         <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('common.unsubscribe') : t('common.subscribe')} onClick={handleToggleSubscriptionClick} className={clsx(s.action, s.subscriptionButton)}>
           <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
         </Button>
@@ -93,16 +94,13 @@ const BoardActions = React.memo(
         <div className={clsx(s.cardsCount, s.action, s.cardsCountAction)}>
           {isFiltered ? t('common.ofCards', { filteredCount: filteredCardCount, count: cardCount }) : t('common.cards', { count: cardCount })}
         </div>
-        <div className={s.githubAction}>
-          <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
-            <Icon
-              type={IconType.GitHub}
-              size={IconSize.Size14}
-              className={clsx(board.isGithubConnected ? s.githubGreen : s.githubGrey)}
-              title={board.isGithubConnected ? t('common.connectedToGithub', { repo: board.githubRepo }) : t('common.notConnectedToGithub')}
-            />
-          </ConnectionsPopup>
-        </div>
+        {board.isGithubConnected && (
+          <div className={s.githubAction}>
+            <ConnectionsPopup defaultData={pick(board, ['isGithubConnected', 'githubRepo'])} onUpdate={handleConnectionsUpdate} offset={16}>
+              <Icon type={IconType.GitHub} size={IconSize.Size14} className={s.githubGreen} title={t('common.connectedToGithub', { repo: board.githubRepo })} />
+            </ConnectionsPopup>
+          </div>
+        )}
         <div className={s.action}>
           <Memberships
             items={memberships}
@@ -171,6 +169,7 @@ const BoardActions = React.memo(
             updatedAt={board.updatedAt}
             updatedBy={board.updatedBy}
             memberships={board.memberships}
+            board={board}
             templates={boardTemplates}
             isProjectManager={isProjectManager}
             canEdit={canEdit}
@@ -183,6 +182,7 @@ const BoardActions = React.memo(
             boardMembershipId={boardMembershipId}
             hideCompletedLists={hideCompletedLists}
             onMembershipUpdate={onMembershipUpdate}
+            onBackgroundImageUpdate={(data) => onBoardBackgroundImageUpdate(board.id, data)}
             onUpdate={(data) => onBoardUpdate(board.id, data)}
             onExport={(data) => onBoardExport(board.id, data)}
             onDelete={() => onBoardDelete(board.id)}
@@ -255,6 +255,7 @@ BoardActions.propTypes = {
   onLabelUpdate: PropTypes.func.isRequired,
   onLabelDelete: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
+  onBoardBackgroundImageUpdate: PropTypes.func.isRequired,
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,
   onBoardSearchParamsUpdate: PropTypes.func.isRequired,

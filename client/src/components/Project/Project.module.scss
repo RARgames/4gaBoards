@@ -15,6 +15,18 @@
     justify-content: space-between;
   }
 
+  .headerWithBackground {
+    background: var(--shadowBlack05);
+
+    .headerText {
+      color: var(--textWhite);
+    }
+
+    .headerDetails {
+      color: var(--text2);
+    }
+  }
+
   .headerText {
     padding: 0 2px;
     display: inline;

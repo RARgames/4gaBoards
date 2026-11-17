@@ -124,6 +124,7 @@
   --shadowBlack015: rgba(0, 0, 0, 0.15);
   --shadowBlack02: rgba(0, 0, 0, 0.2);
   --shadowBlack03: rgba(0, 0, 0, 0.3);
+  --shadowBlack04: rgba(0, 0, 0, 0.4);
   --shadowBlack05: rgba(0, 0, 0, 0.5);
   --shadowBlack06: rgba(0, 0, 0, 0.6);
   --shadowBlack08: rgba(0, 0, 0, 0.8);
@@ -322,6 +323,7 @@
   --shadowBlack015: rgba(1, 4, 9, 0.25);
   --shadowBlack02: rgba(1, 4, 9, 0.3);
   --shadowBlack03: rgba(1, 4, 9, 0.4);
+  --shadowBlack04: rgba(1, 4, 9, 0.5);
   --shadowBlack05: rgba(1, 4, 9, 0.6);
   --shadowBlack06: rgba(1, 4, 9, 0.7);
   --shadowBlack08: rgba(1, 4, 9, 0.9);
@@ -520,6 +522,7 @@
   --shadowBlack015: rgba(0, 0, 0, 0.15);
   --shadowBlack02: rgba(0, 0, 0, 0.2);
   --shadowBlack03: rgba(0, 0, 0, 0.3);
+  --shadowBlack04: rgba(0, 0, 0, 0.4);
   --shadowBlack05: rgba(0, 0, 0, 0.5);
   --shadowBlack06: rgba(0, 0, 0, 0.6);
   --shadowBlack08: rgba(0, 0, 0, 0.8);

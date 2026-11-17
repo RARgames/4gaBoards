@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useSteps } from '../../hooks';
 import { ActivityStep } from '../ActivityPopup';
+import { BoardBackgroundStep } from '../BoardBackgroundPopup';
 import BoardTemplateAddStep from '../BoardTemplateAddStep';
 import BoardTemplateManagerStep from '../BoardTemplateManagerStep';
 import { ConnectionsStep } from '../ConnectionsPopup';
@@ -17,6 +18,7 @@ import * as s from './BoardActionsPopup.module.scss';
 
 const StepTypes = {
   RENAME: 'RENAME',
+  BACKGROUND: 'BACKGROUND',
   GITHUB: 'GITHUB',
   EXPORT: 'EXPORT',
   DELETE: 'DELETE',
@@ -52,7 +54,9 @@ const BoardActionsStep = React.memo(
     boardMembershipId,
     hideCompletedLists,
     onMembershipUpdate,
+    board,
     onUpdate,
+    onBackgroundImageUpdate,
     onExport,
     onFetch,
     onDelete,
@@ -129,6 +133,8 @@ const BoardActionsStep = React.memo(
           );
         case StepTypes.GITHUB:
           return <ConnectionsStep defaultData={defaultDataGithub} onUpdate={onUpdate} onBack={handleBack} onClose={onClose} />;
+        case StepTypes.BACKGROUND:
+          return <BoardBackgroundStep board={board} onUpdate={onUpdate} onImageUpdate={onBackgroundImageUpdate} onBack={handleBack} />;
         case StepTypes.EXPORT:
           return <ExportStep title={t('common.exportBoard', { context: 'title' })} onExport={onExport} onBack={handleBack} onClose={onClose} />;
         case StepTypes.DELETE:
@@ -214,6 +220,12 @@ const BoardActionsStep = React.memo(
           </Button>
         )}
         {isProjectManager && (
+          <Button variant={ButtonVariant.PopupContext} title={t('common.setBackgroundAndThumbnail')} onClick={() => openStep(StepTypes.BACKGROUND)}>
+            <Icon type={IconType.Image} size={IconSize.Size13} className={s.icon} />
+            {t('common.setBackgroundAndThumbnail')}
+          </Button>
+        )}
+        {isProjectManager && (
           <Button variant={ButtonVariant.PopupContext} title={t('common.exportBoard', { context: 'title' })} onClick={() => openStep(StepTypes.EXPORT)}>
             <Icon type={IconType.Board} size={IconSize.Size13} className={s.icon} />
             {t('common.exportBoard', { context: 'title' })}
@@ -268,6 +280,7 @@ BoardActionsStep.propTypes = {
   updatedAt: PropTypes.instanceOf(Date),
   updatedBy: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   memberships: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+  board: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   isProjectManager: PropTypes.bool.isRequired,
   canEdit: PropTypes.bool.isRequired,
   mailTokens: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
@@ -281,6 +294,7 @@ BoardActionsStep.propTypes = {
   boardMembershipId: PropTypes.string.isRequired,
   hideCompletedLists: PropTypes.bool.isRequired,
   onMembershipUpdate: PropTypes.func.isRequired,
+  onBackgroundImageUpdate: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onFetch: PropTypes.func,

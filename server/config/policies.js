@@ -24,6 +24,7 @@ module.exports.policies = {
   'access-tokens/create': 'rate-limit-auth',
   'attachments/create': ['is-authenticated', 'rate-limit-upload'],
   'boards/create': ['is-authenticated', 'rate-limit-upload'],
+  'boards/update-background-image': ['is-authenticated', 'rate-limit-upload'],
   'projects/update-background-image': ['is-authenticated', 'rate-limit-upload'],
   'users/update-avatar': ['is-authenticated', 'rate-limit-upload'],
 

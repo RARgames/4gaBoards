@@ -40,6 +40,7 @@ const SidebarProject = React.memo(
     onProjectMembershipUpdate,
     onBoardCreate,
     onBoardUpdate,
+    onBoardBackgroundImageUpdate,
     onBoardDelete,
     onBoardExport,
     onBoardFetch,
@@ -209,6 +210,7 @@ const SidebarProject = React.memo(
                   mailServiceInboundEmail={mailServiceInboundEmail}
                   rightClickContextMenu={rightClickContextMenu}
                   onUpdate={onBoardUpdate}
+                  onBackgroundImageUpdate={onBoardBackgroundImageUpdate}
                   onExport={onBoardExport}
                   onFetch={onBoardFetch}
                   onDelete={onBoardDelete}
@@ -250,6 +252,7 @@ SidebarProject.propTypes = {
   onProjectMembershipUpdate: PropTypes.func.isRequired,
   onBoardCreate: PropTypes.func.isRequired,
   onBoardUpdate: PropTypes.func.isRequired,
+  onBoardBackgroundImageUpdate: PropTypes.func.isRequired,
   onBoardDelete: PropTypes.func.isRequired,
   onBoardExport: PropTypes.func.isRequired,
   onBoardFetch: PropTypes.func.isRequired,

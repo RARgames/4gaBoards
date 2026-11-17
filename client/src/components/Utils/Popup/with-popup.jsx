@@ -136,7 +136,7 @@ export default (WrappedComponent, defaultProps) => {
         </div>
         {isOpen && (
           <FloatingPortal>
-            <FloatingFocusManager context={context} modal={false} returnFocus={false}>
+            <FloatingFocusManager context={context} modal={false} returnFocus={false} initialFocus={-1}>
               {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
               <div
                 className={clsx(s.popup, className, defaultProps?.className)}

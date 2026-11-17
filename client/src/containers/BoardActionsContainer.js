@@ -79,6 +79,7 @@ const mapDispatchToProps = (dispatch, ownProps) =>
       onLabelUpdate: entryActions.updateLabel,
       onLabelDelete: entryActions.deleteLabel,
       onBoardUpdate: entryActions.updateBoard,
+      onBoardBackgroundImageUpdate: entryActions.updateBoardBackgroundImage,
       onBoardDelete: entryActions.deleteBoard,
       onBoardExport: entryActions.exportBoard,
       onBoardSearchParamsUpdate: (searchParams) => entryActions.updateBoardSearchParams(ownProps.boardId, searchParams),

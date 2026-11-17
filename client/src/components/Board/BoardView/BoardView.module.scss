@@ -32,6 +32,19 @@
     }
   }
 
+  .addListButtonWithBackground {
+    background: var(--shadowBlack05);
+    color: var(--text2);
+
+    svg {
+      fill: var(--text2);
+    }
+
+    &:hover {
+      background: var(--shadowBlack06);
+    }
+  }
+
   &:global([data-theme-shape='rounded']) .addListButton {
     border-radius: 8px;
   }
@@ -46,6 +59,7 @@
     display: inline-block;
     font-size: 14px;
     line-height: 20px;
-    vertical-align: top;
+    vertical-align: middle;
+    margin-left: 4px;
   }
 }

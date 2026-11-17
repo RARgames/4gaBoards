@@ -64,7 +64,7 @@ module.exports = {
       const cardStats = cardStatsByBoard[board.id];
       const taskStats = taskStatsByBoard[board.id];
       return {
-        ...board,
+        ...board.toJSON(),
         cardTotal: cardStats.total,
         cardCompleted: cardStats.completed,
         taskTotal: taskStats.total,

@@ -115,6 +115,20 @@ export function* handleBoardUpdate(board) {
   yield put(actions.handleBoardUpdate(board));
 }
 
+export function* updateBoardBackgroundImage(id, data) {
+  yield put(actions.updateBoardBackgroundImage(id));
+
+  let board;
+  try {
+    ({ item: board } = yield call(request, api.updateBoardBackgroundImage, id, data));
+  } catch (error) {
+    yield put(actions.updateBoardBackgroundImage.failure(id, error));
+    return;
+  }
+
+  yield put(actions.updateBoardBackgroundImage.success(board));
+}
+
 export function* moveBoard(id, index) {
   const { projectId } = yield select(selectors.selectBoardById, id);
   const position = yield select(selectors.selectNextBoardPosition, projectId, index, id);
@@ -176,6 +190,7 @@ export default {
   handleBoardCreate,
   fetchBoard,
   updateBoard,
+  updateBoardBackgroundImage,
   handleBoardUpdate,
   moveBoard,
   deleteBoard,

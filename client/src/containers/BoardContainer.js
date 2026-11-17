@@ -8,9 +8,11 @@ import selectors from '../selectors';
 const mapStateToProps = (state) => {
   const { cardId, boardId } = selectors.selectPath(state);
   const { defaultView } = selectors.selectCurrentUserPrefs(state);
+  const board = selectors.selectBoardById(state, boardId);
 
   return {
     id: boardId,
+    board,
     cardId,
     isCardModalOpened: !!cardId,
     pathname: selectors.selectPathname(state),

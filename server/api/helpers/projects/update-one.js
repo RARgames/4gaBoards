@@ -14,6 +14,14 @@ const valuesValidator = (value) => {
     return false;
   }
 
+  if (!_.isNil(value.thumbnail) && !_.isPlainObject(value.thumbnail)) {
+    return false;
+  }
+
+  if (!_.isNil(value.thumbnailImage) && !_.isPlainObject(value.thumbnailImage)) {
+    return false;
+  }
+
   return true;
 };
 
@@ -39,6 +47,7 @@ module.exports = {
 
   exits: {
     backgroundImageInValuesMustNotBeNull: {},
+    thumbnailImageInValuesMustNotBeNull: {},
   },
 
   async fn(inputs) {
@@ -52,22 +61,56 @@ module.exports = {
       values.background = null;
     }
 
-    let project;
+    if (values.thumbnailImage) {
+      values.thumbnail = {
+        type: 'image',
+      };
+    } else if (_.isNull(values.thumbnailImage) && inputs.record.thumbnail?.type === 'image') {
+      values.thumbnail = null;
+    }
+
+    // Guards: setting type "image" without sending a new image is only allowed if the project already has one
+    const criteria = { id: inputs.record.id };
+    let isGuarded = false;
+    let isBackgroundGuarded = false;
+    let isThumbnailGuarded = false;
+
     if (values.background && values.background.type === 'image') {
       if (_.isNull(values.backgroundImage)) {
         throw 'backgroundImageInValuesMustNotBeNull';
       }
 
       if (_.isUndefined(values.backgroundImage)) {
-        project = await Project.updateOne({
-          id: inputs.record.id,
-          backgroundImage: {
-            '!=': null,
-          },
-        }).set({ updatedById: currentUser.id, ...values });
+        criteria.backgroundImage = { '!=': null };
+        isBackgroundGuarded = true;
+        isGuarded = true;
+      }
+    }
 
-        if (!project) {
+    if (values.thumbnail && values.thumbnail.type === 'image') {
+      if (_.isNull(values.thumbnailImage)) {
+        throw 'thumbnailImageInValuesMustNotBeNull';
+      }
+
+      if (_.isUndefined(values.thumbnailImage)) {
+        criteria.thumbnailImage = { '!=': null };
+        isThumbnailGuarded = true;
+        isGuarded = true;
+      }
+    }
+
+    let project;
+    if (isGuarded) {
+      project = await Project.updateOne(criteria).set({ updatedById: currentUser.id, ...values });
+
+      if (!project) {
+        const current = await Project.findOne(inputs.record.id);
+
+        if (isBackgroundGuarded && !current?.backgroundImage) {
           delete values.background;
+        }
+        if (isThumbnailGuarded && !current?.thumbnailImage) {
+          delete values.thumbnail;
         }
       }
     }
@@ -80,6 +123,14 @@ module.exports = {
       if (inputs.record.backgroundImage && (!project.backgroundImage || project.backgroundImage.dirname !== inputs.record.backgroundImage.dirname)) {
         try {
           rimraf.sync(path.join(sails.config.custom.projectBackgroundImagesPath, inputs.record.backgroundImage.dirname));
+        } catch (error) {
+          sails.log.warn(error.stack);
+        }
+      }
+
+      if (inputs.record.thumbnailImage && (!project.thumbnailImage || project.thumbnailImage.dirname !== inputs.record.thumbnailImage.dirname)) {
+        try {
+          rimraf.sync(path.join(sails.config.custom.projectBackgroundImagesPath, inputs.record.thumbnailImage.dirname));
         } catch (error) {
           sails.log.warn(error.stack);
         }
@@ -111,6 +162,10 @@ module.exports = {
             projectBackground: values.background !== undefined ? project.background : undefined,
             projectPrevBackgroundImage: values.backgroundImage !== undefined ? inputs.record.backgroundImage : undefined,
             projectBackgroundImage: values.backgroundImage !== undefined ? project.backgroundImage : undefined,
+            projectPrevThumbnail: values.thumbnail !== undefined ? inputs.record.thumbnail : undefined,
+            projectThumbnail: values.thumbnail !== undefined ? project.thumbnail : undefined,
+            projectPrevThumbnailImage: values.thumbnailImage !== undefined ? inputs.record.thumbnailImage : undefined,
+            projectThumbnailImage: values.thumbnailImage !== undefined ? project.thumbnailImage : undefined,
           },
         },
         currentUser,

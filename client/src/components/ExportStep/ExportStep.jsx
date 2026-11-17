@@ -19,7 +19,7 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
 
   const [skipAttachments, toggleSkipAttachments] = useToggle(false);
   const [skipUserAvatars, toggleSkipUserAvatars] = useToggle(false);
-  const [skipProjectBackgrounds, toggleSkipProjectBackgrounds] = useToggle(false);
+  const [skipBackgroundsAndThumbnails, toggleSkipBackgroundsAndThumbnails] = useToggle(false);
   const [skipMetadata, toggleSkipMetadata] = useToggle(false);
   const [skipActions, toggleSkipActions] = useToggle(true);
   const [step, openStep, handleBack] = useSteps();
@@ -28,14 +28,14 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
     const data = {
       skipAttachments,
       skipUserAvatars,
-      skipProjectBackgrounds,
+      skipBackgroundsAndThumbnails,
       skipMetadata,
       skipActions,
     };
 
     onExport(data);
     openStep(StepTypes.EXPORT_CONFIRMATION);
-  }, [skipAttachments, skipUserAvatars, skipProjectBackgrounds, skipMetadata, skipActions, onExport, openStep]);
+  }, [skipAttachments, skipUserAvatars, skipBackgroundsAndThumbnails, skipMetadata, skipActions, onExport, openStep]);
 
   const handleFormKeyDown = useCallback(
     (e) => {
@@ -62,7 +62,7 @@ const ExportStep = React.memo(({ title, onExport, onBack, onClose }) => {
           <div className={s.wrapper}>
             <Checkbox checked={skipAttachments} label={t('common.exportSkipAttachments')} onChange={toggleSkipAttachments} wrapperClassName={s.checkboxWrapper} />
             <Checkbox checked={skipUserAvatars} label={t('common.exportSkipUserAvatars')} onChange={toggleSkipUserAvatars} wrapperClassName={s.checkboxWrapper} />
-            <Checkbox checked={skipProjectBackgrounds} label={t('common.exportSkipProjectBackgrounds')} onChange={toggleSkipProjectBackgrounds} wrapperClassName={s.checkboxWrapper} />
+            <Checkbox checked={skipBackgroundsAndThumbnails} label={t('common.exportSkipBackgroundsAndThumbnails')} onChange={toggleSkipBackgroundsAndThumbnails} wrapperClassName={s.checkboxWrapper} />
             <Checkbox checked={skipMetadata} label={t('common.exportSkipMetadata')} onChange={toggleSkipMetadata} wrapperClassName={s.checkboxWrapper} />
             <Checkbox checked={skipActions} label={t('common.exportSkipActions')} onChange={toggleSkipActions} wrapperClassName={s.checkboxWrapper} />
           </div>

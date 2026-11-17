@@ -8,7 +8,7 @@ import selectors from '../../selectors';
 const mapStateToProps = (state) => {
   const users = selectors.selectUsers(state);
   const { projectId } = selectors.selectPath(state);
-  const { name, background, backgroundImage, isBackgroundImageUpdating } = selectors.selectProject(state, projectId);
+  const { name, background, backgroundImage, thumbnail, thumbnailImage, isBackgroundImageUpdating } = selectors.selectProject(state, projectId);
   const managers = selectors.selectManagersForProject(state, projectId);
   const isManager = selectors.selectIsCurrentUserManagerForCurrentProject(state);
 
@@ -17,6 +17,8 @@ const mapStateToProps = (state) => {
     name,
     background,
     backgroundImage,
+    thumbnail,
+    thumbnailImage,
     isBackgroundImageUpdating,
     managers,
     allUsers: users,

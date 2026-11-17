@@ -21,6 +21,11 @@ module.exports = {
       regex: /^[0-9]+$/,
       required: true,
     },
+    target: {
+      type: 'string',
+      isIn: ['background', 'thumbnail'],
+      defaultsTo: 'background',
+    },
   },
 
   exits: {
@@ -83,14 +88,13 @@ module.exports = {
 
     project = await sails.helpers.projects.updateOne.with({
       record: project,
-      values: {
-        backgroundImage: fileData,
-      },
+      values: { [inputs.target === 'thumbnail' ? 'thumbnailImage' : 'backgroundImage']: fileData },
       currentUser,
       request: this.req,
     });
 
     if (!project) {
+      rimraf.sync(path.join(sails.config.custom.projectBackgroundImagesPath, fileData.dirname));
       throw Errors.PROJECT_NOT_FOUND;
     }
 

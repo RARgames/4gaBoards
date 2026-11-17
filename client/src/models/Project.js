@@ -2,7 +2,7 @@ import { attr, many, fk } from 'redux-orm';
 
 import ActionTypes from '../constants/ActionTypes';
 import Config from '../constants/Config';
-import { ProjectBackgroundTypes } from '../constants/Enums';
+import { BackgroundTypes } from '../constants/Enums';
 import BaseModel from './BaseModel';
 
 export default class extends BaseModel {
@@ -14,10 +14,12 @@ export default class extends BaseModel {
     name: attr(),
     background: attr(),
     backgroundImage: attr(),
-    isCollapsed: attr(),
+    thumbnail: attr(),
+    thumbnailImage: attr(),
     isBackgroundImageUpdating: attr({
       getDefault: () => false,
     }),
+    isCollapsed: attr(),
     managerUsers: many({
       to: 'User',
       through: 'ProjectManager',
@@ -99,12 +101,12 @@ export default class extends BaseModel {
 
         break;
       case ActionTypes.PROJECT_UPDATE: {
-        const project = Project.withId(payload.id);
-        project.update(payload.data);
-
-        if (payload.data.backgroundImage === null && project.background && project.background.type === ProjectBackgroundTypes.IMAGE) {
-          project.background = null;
-        }
+        const projectModel = Project.withId(payload.id);
+        projectModel.update({
+          ...payload.data,
+          ...(payload.data.backgroundImage === null && projectModel.background?.type === BackgroundTypes.IMAGE && { background: null }),
+          ...(payload.data.thumbnailImage === null && projectModel.thumbnail?.type === BackgroundTypes.IMAGE && { thumbnail: null }),
+        });
 
         break;
       }

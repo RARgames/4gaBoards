@@ -55,6 +55,7 @@ module.exports.routes = {
   'POST /api/projects/:projectId/boards': 'boards/create',
   'GET /api/boards/:id': 'boards/show',
   'PATCH /api/boards/:id': 'boards/update',
+  'POST /api/boards/:id/background-image': 'boards/update-background-image',
   'DELETE /api/boards/:id': 'boards/delete',
   'GET /api/boards/:id/export': 'boards/export',
   'POST /api/boards/:boardId/labels/find-by-name': 'boards/find-label-by-name',
