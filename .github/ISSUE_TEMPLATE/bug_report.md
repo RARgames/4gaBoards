@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a bug report
 title: "[BUG] Title"
-labels: bug
+labels: bug, enhancement
 assignees: ''
 
 ---
@@ -24,3 +24,6 @@ assignees: ''
 
 
 **Screenshots** _(optional)_
+
+
+**Please star 4ga Boards if you find it useful**
