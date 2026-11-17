@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import Paths from '../../constants/Paths';
@@ -13,7 +14,7 @@ import { Loader, LoaderSize } from '../Utils';
 
 import * as s from './Static.module.scss';
 
-function Static({ path, projectId, cardId, board }) {
+function Static({ path, projectId, cardId, board, hasBackground }) {
   const [t] = useTranslation();
   if (
     [
@@ -114,8 +115,9 @@ function Static({ path, projectId, cardId, board }) {
     );
   }
 
+  // The project background (drawn by Core behind everything) shows through the board
   return (
-    <div className={s.wrapper}>
+    <div className={clsx(s.wrapper, hasBackground && s.wrapperWithBackground)}>
       <SidebarContainer>
         <BoardContainer />
       </SidebarContainer>
@@ -128,6 +130,7 @@ Static.propTypes = {
   projectId: PropTypes.string,
   cardId: PropTypes.string,
   board: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  hasBackground: PropTypes.bool.isRequired,
 };
 
 Static.defaultProps = {
