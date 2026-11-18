@@ -47,41 +47,46 @@ const AttachmentAddZone = React.memo(({ children, onCreate }) => {
 
   useEffect(() => {
     const handlePaste = (e) => {
-      if (!e.clipboardData) {
+      // Prevent duplicated processing
+      if (!e.clipboardData || e.defaultPrevented) {
         return;
       }
 
       const { files, items } = e.clipboardData; // BUG Firefox does not provide multiple files: https://bugzilla.mozilla.org/show_bug.cgi?id=864052
 
       if (files.length > 0) {
+        e.preventDefault(); // Mark the event as handled
         [...files].forEach((file) => {
           submit(file);
         });
         return;
       }
 
-      if (items.length === 0) {
+      // Fallback for browsers that do not support clipboardData.files
+      const fileItems = [...items].filter((it) => it.kind === 'file');
+      if (fileItems.length > 0) {
+        e.preventDefault(); // Mark the event as handled
+        fileItems.forEach((it) => {
+          const file = it.getAsFile();
+          if (file) {
+            submit(file);
+          }
+        });
         return;
       }
 
       const item = items[0];
 
-      if (item.kind === 'string') {
+      if (item && item.kind === 'string') {
         if (['input', 'textarea'].includes(e.target.tagName.toLowerCase()) && e.target === document.activeElement) {
           // Allows input to be pasted into input fields
           return;
         }
 
+        e.preventDefault(); // Mark the event as handled
         openModal({ content: e.clipboardData.getData('Text') });
         modalRef.current?.setIsOpen(true);
       }
-
-      // Not used actively - fallback for browsers that do not support clipboardData.files
-      [...items].forEach((it) => {
-        if (it.kind === 'file') {
-          submit(it.getAsFile());
-        }
-      });
     };
 
     window.addEventListener('paste', handlePaste);
