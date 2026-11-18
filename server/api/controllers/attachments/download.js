@@ -43,10 +43,10 @@ module.exports = {
       throw Errors.ATTACHMENT_NOT_FOUND;
     }
 
-    this.res.type(attachment.filename);
-    if (!attachment.image && path.extname(attachment.filename) !== '.pdf') {
-      this.res.set('Content-Disposition', 'attachment');
-    }
+    this.res.type('application/octet-stream');
+    this.res.set('Content-Disposition', 'attachment');
+    this.res.set('X-Content-Type-Options', 'nosniff');
+    this.res.set('Content-Security-Policy', "sandbox; default-src 'none'");
     this.res.set('Cache-Control', `private, max-age=${sails.config.custom.cacheMaxAge}`);
 
     return exits.success(fs.createReadStream(filePath));
