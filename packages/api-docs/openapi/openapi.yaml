@@ -162,6 +162,31 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
       security: []
+  /api/session:
+    get:
+      tags:
+        - access-tokens
+      summary: 'access tokens: show session'
+      operationId: accessTokensShowSession
+      responses:
+        '200':
+          description: Browser session cookie set successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  item:
+                    type: boolean
+                    const: true
+                required:
+                  - item
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bearerAuth: []
   /api/access-tokens/me:
     delete:
       tags:
@@ -1292,17 +1317,19 @@ paths:
         - clientId: []
           clientSecret: []
   /api/projects/import-getting-started:
-    get:
+    post:
       tags:
         - projects
       summary: 'projects: import getting started'
       operationId: projectsImportGettingStarted
-      parameters:
-        - name: language
-          in: query
-          required: false
-          schema:
-            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  type: string
       responses:
         '200':
           description: Success
@@ -1314,6 +1341,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
       security:
