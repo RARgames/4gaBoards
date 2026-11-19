@@ -395,6 +395,7 @@ const Card = React.memo(
                     onUserDeselect={(userId) => onUserRemove(userId, id)}
                     onUserEmailLookup={onUserEmailLookup}
                     offset={0}
+                    disabled={!canEdit}
                   >
                     {userDropPlaceholder && (
                       <span className={clsx(s.attachment, s.user, s.userPlaceholder)}>
