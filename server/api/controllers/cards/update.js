@@ -13,6 +13,9 @@ const Errors = {
   LIST_NOT_FOUND: {
     listNotFound: 'List not found',
   },
+  ATTACHMENT_NOT_FOUND: {
+    attachmentNotFound: 'Attachment not found',
+  },
   LIST_MUST_BE_PRESENT: {
     listMustBePresent: 'List must be present',
   },
@@ -98,6 +101,9 @@ module.exports = {
     listNotFound: {
       responseType: 'notFound',
     },
+    attachmentNotFound: {
+      responseType: 'notFound',
+    },
     listMustBePresent: {
       responseType: 'unprocessableEntity',
     },
@@ -158,6 +164,17 @@ module.exports = {
 
       if (!nextList) {
         throw Errors.LIST_NOT_FOUND; // Forbidden
+      }
+    }
+
+    if (!_.isUndefined(inputs.coverAttachmentId) && !_.isNull(inputs.coverAttachmentId)) {
+      const coverAttachment = await Attachment.findOne({
+        id: inputs.coverAttachmentId,
+        cardId: card.id,
+      });
+
+      if (!coverAttachment) {
+        throw Errors.ATTACHMENT_NOT_FOUND; // Forbidden
       }
     }
 
