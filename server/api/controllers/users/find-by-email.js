@@ -1,3 +1,9 @@
+const Errors = {
+  NOT_ENOUGH_RIGHTS: {
+    notEnoughRights: 'Not enough rights',
+  },
+};
+
 module.exports = {
   inputs: {
     query: {
@@ -7,7 +13,22 @@ module.exports = {
     },
   },
 
+  exits: {
+    notEnoughRights: {
+      responseType: 'forbidden',
+    },
+  },
+
   async fn(inputs) {
+    const { currentUser } = this.req;
+
+    if (!currentUser.isAdmin) {
+      const managerProjectIds = await sails.helpers.users.getManagerProjectIds(currentUser.id);
+      if (managerProjectIds.length === 0) {
+        throw Errors.NOT_ENOUGH_RIGHTS;
+      }
+    }
+
     const query = inputs.query.trim().toLowerCase();
 
     if (!query.includes('@')) {
