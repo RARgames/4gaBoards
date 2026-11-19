@@ -126,7 +126,7 @@
     "unist-util-visit": "^5.2.0",
     "validator": "^13.15.35",
     "webpack": "^5.111.1",
-    "webpack-dev-server": "^6.0.0",
+    "webpack-dev-server": "^6.1.0",
     "webpack-manifest-plugin": "^6.0.1",
     "whatwg-fetch": "^3.6.20",
     "workbox-webpack-plugin": "^7.4.1",
