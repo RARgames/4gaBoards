@@ -51,7 +51,7 @@ const deleteProject = (id, headers) =>
   }));
 
 const importGettingStartedProject = (data, headers) =>
-  socket.get('/projects/import-getting-started', data, headers).then((body) => ({
+  socket.post('/projects/import-getting-started', data, headers).then((body) => ({
     ...body,
     item: transformProject(body.item),
     included: {
