@@ -40,7 +40,11 @@ const createSocketEventsChannel = () =>
       emit(entryActions.handleUserUpdate(item));
     });
 
-    const handleUserDelete = api.makeHandleUserDelete(({ item }) => {
+    const handleUserDelete = api.makeHandleUserDelete(({ item, excludedSocketId }) => {
+      if (excludedSocketId && excludedSocketId === socket.getId()) {
+        return;
+      }
+
       emit(entryActions.handleUserDelete(item));
     });
 

@@ -1,9 +1,7 @@
-import { call, fork, join, put, select, take } from 'redux-saga/effects';
+import { call, fork, join, put, take } from 'redux-saga/effects';
 
 import actions from '../../actions';
 import ErrorCodes from '../../constants/ErrorCodes';
-import selectors from '../../selectors';
-import { removeAccessToken } from '../../utils/access-token-storage';
 
 let lastRequestTask;
 
@@ -14,15 +12,10 @@ function* queueRequest(method, ...args) {
     } catch {} // eslint-disable-line no-empty
   }
 
-  const accessToken = yield select(selectors.selectAccessToken);
-
   try {
-    return yield call(method, ...args, {
-      Authorization: `Bearer ${accessToken}`,
-    });
+    return yield call(method, ...args);
   } catch (error) {
     if (error.code === ErrorCodes.UNAUTHORIZED) {
-      yield call(removeAccessToken);
       yield put(actions.logout()); // TODO: next url
       yield take();
     }

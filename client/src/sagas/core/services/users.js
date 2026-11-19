@@ -3,7 +3,6 @@ import { call, put, select } from 'redux-saga/effects';
 import actions from '../../../actions';
 import api from '../../../api';
 import selectors from '../../../selectors';
-import { setAccessToken } from '../../../utils/access-token-storage';
 import request from '../request';
 import { logout } from './core';
 
@@ -128,22 +127,19 @@ export function* updateUserPassword(id, data) {
   yield put(actions.updateUserPassword(id, data));
 
   let user;
-  let accessTokens;
-
   try {
-    ({ item: user, included: { accessTokens } = {} } = yield call(request, api.updateUserPassword, id, data));
+    ({ item: user } = yield call(request, api.updateUserPassword, id, data));
   } catch (error) {
     yield put(actions.updateUserPassword.failure(id, error));
     return;
   }
 
-  const accessToken = accessTokens && accessTokens[0];
+  yield put(actions.updateUserPassword.success(user));
 
-  if (accessToken) {
-    yield call(setAccessToken, accessToken);
+  const currentUserId = yield select(selectors.selectCurrentUserId);
+  if (id === currentUserId) {
+    window.location.reload();
   }
-
-  yield put(actions.updateUserPassword.success(user, accessToken));
 }
 
 export function* updateCurrentUserPassword(data) {

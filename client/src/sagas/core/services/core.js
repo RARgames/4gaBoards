@@ -4,7 +4,6 @@ import actions from '../../../actions';
 import api from '../../../api';
 import i18n from '../../../i18n';
 import selectors from '../../../selectors';
-import { removeAccessToken } from '../../../utils/access-token-storage';
 import { initializeHyperDX, setHyperDXUserInfo } from '../../../utils/hyperdx-init';
 import request from '../request';
 import requests from '../requests';
@@ -84,8 +83,6 @@ export function* changeCoreLanguage(language) {
 }
 
 export function* logout(invalidateAccessToken = true) {
-  yield call(removeAccessToken);
-
   if (invalidateAccessToken) {
     yield put(actions.logout.invalidateAccessToken());
 

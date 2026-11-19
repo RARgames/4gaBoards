@@ -126,11 +126,10 @@ const updateUserPassword = (id, data) => ({
   },
 });
 
-updateUserPassword.success = (user, accessToken) => ({
+updateUserPassword.success = (user) => ({
   type: ActionTypes.USER_PASSWORD_UPDATE__SUCCESS,
   payload: {
     user,
-    accessToken,
   },
 });
 

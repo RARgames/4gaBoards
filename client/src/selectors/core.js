@@ -8,8 +8,6 @@ import getMeta from '../utils/get-meta';
 import { filterSidebarBoards, filterSidebarProjects } from '../utils/sidebar-filter';
 import { selectCurrentUserId } from './users';
 
-export const selectAccessToken = ({ auth: { accessToken } }) => accessToken;
-
 export const selectIsCoreInitializing = ({ core: { isInitializing } }) => isInitializing;
 
 export const selectIsLogouting = ({ core: { isLogouting } }) => isLogouting;
@@ -233,7 +231,6 @@ export const makeSelectUsersNotificationsTotal = () =>
 export const selectUsersNotificationsTotal = makeSelectUsersNotificationsTotal();
 
 export default {
-  selectAccessToken,
   selectIsCoreInitializing,
   selectIsLogouting,
   selectCoreSettings,

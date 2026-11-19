@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const zxcvbn = require('zxcvbn');
 
+const { isBrowserRequest, setAccessTokenCookie } = require('../../../utils/browser-session');
 const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
@@ -52,6 +53,11 @@ module.exports = {
 
   async fn(inputs) {
     const { currentUser } = this.req;
+    const isBrowser = isBrowserRequest(this.req, sails.config.custom.clientUrl);
+
+    if (isBrowser && this.req.isSocket) {
+      throw Errors.INSUFFICIENT_PERMISSIONS;
+    }
 
     if (zxcvbn(inputs.password).score < sails.config.custom.requiredPasswordStrength) {
       throw Errors.WEAK_PASSWORD;
@@ -104,6 +110,11 @@ module.exports = {
         remoteAddress: getRemoteAddress(this.req),
         userAgent: getUserAgent(this.req),
       });
+
+      if (isBrowser && !this.req.isSocket) {
+        setAccessTokenCookie(this.res, accessToken, sails.config.custom.baseUrl);
+        return { item: sanitizedUser };
+      }
 
       return {
         item: sanitizedUser,

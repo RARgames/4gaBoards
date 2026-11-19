@@ -52,11 +52,15 @@ const requestUserEmailVerification = (id, headers) =>
     item: transformUser(body.item),
   }));
 
-const updateUserPassword = (id, data, headers) =>
-  socket.patch(`/users/${id}/password`, transformUserData(data), headers).then((body) => ({
+const updateUserPassword = (id, data, headers) => {
+  const socketId = socket.getId();
+  const requestHeaders = socketId ? { ...headers, 'X-4gaBoards-Socket-ID': socketId } : headers;
+
+  return http.patch(`/users/${id}/password`, transformUserData(data), requestHeaders).then((body) => ({
     ...body,
     item: transformUser(body.item),
   }));
+};
 
 const updateUserUsername = (id, data, headers) =>
   socket.patch(`/users/${id}/username`, transformUserData(data), headers).then((body) => ({

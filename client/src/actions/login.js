@@ -7,11 +7,9 @@ const authenticate = (data) => ({
   },
 });
 
-authenticate.success = (accessToken) => ({
+authenticate.success = () => ({
   type: ActionTypes.AUTHENTICATE__SUCCESS,
-  payload: {
-    accessToken,
-  },
+  payload: {},
 });
 
 authenticate.failure = (error) => ({
@@ -34,11 +32,10 @@ const authenticateSso = (provider, method) => ({
   },
 });
 
-authenticateSso.success = (provider, accessToken) => ({
+authenticateSso.success = (provider) => ({
   type: ActionTypes.AUTHENTICATE_SSO__SUCCESS,
   payload: {
     provider,
-    accessToken,
   },
 });
 
@@ -67,11 +64,9 @@ const register = (data) => ({
   },
 });
 
-register.success = (accessToken) => ({
+register.success = () => ({
   type: ActionTypes.REGISTER__SUCCESS,
-  payload: {
-    accessToken,
-  },
+  payload: {},
 });
 
 register.failure = (error) => ({

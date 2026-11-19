@@ -30,7 +30,7 @@ module.exports.security = {
   cors: {
     allRoutes: true,
     allowOrigins: ['http://localhost:3000', 'https://docs.4gaboards.com'],
-    allowRequestHeaders: ['Authorization', 'traceparent', 'X-Client-Id', 'X-Client-Secret', 'Content-Type'],
+    allowRequestHeaders: ['Authorization', 'traceparent', 'X-Client-Id', 'X-Client-Secret', 'Content-Type', 'X-4gaBoards-Request', 'X-4gaBoards-Socket-ID'],
     allowCredentials: true,
   },
 

@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
+const { isBrowserRequest, setAccessTokenCookie } = require('../../../utils/browser-session');
 const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
@@ -58,6 +59,12 @@ module.exports = {
       userId: user.id,
       userAgent: getUserAgent(this.req),
     });
+
+    // If the request is from a browser, set the access token in a cookie and return a success response without the token. Cookie cannot be set for socket requests
+    if (!this.req.isSocket && isBrowserRequest(this.req, sails.config.custom.clientUrl)) {
+      setAccessTokenCookie(this.res, accessToken, sails.config.custom.baseUrl);
+      return { item: true };
+    }
 
     return {
       item: accessToken,

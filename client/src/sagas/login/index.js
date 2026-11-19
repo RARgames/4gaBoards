@@ -4,6 +4,8 @@ import { all, call, cancel, fork, take, spawn, select } from 'redux-saga/effects
 import ActionTypes from '../../constants/ActionTypes';
 import selectors from '../../selectors';
 import coreServices from '../core/services';
+import { authenticateSsoCallback } from './services/login';
+import { handleLocationChange } from './services/router';
 import watchers from './watchers';
 
 function* postLoginSaga() {
@@ -20,8 +22,14 @@ function* postLoginSaga() {
   yield call(coreServices.updateCurrentUser, data);
 }
 
-export default function* loginSaga() {
+export default function* loginSaga(ssoProvider) {
   const watcherTasks = yield all(watchers.map((watcher) => fork(watcher)));
+
+  if (ssoProvider) {
+    yield fork(authenticateSsoCallback, ssoProvider);
+  } else {
+    yield call(handleLocationChange);
+  }
 
   yield take([ActionTypes.AUTHENTICATE__SUCCESS, ActionTypes.AUTHENTICATE_SSO__SUCCESS, ActionTypes.REGISTER__SUCCESS]);
   yield cancel(watcherTasks);

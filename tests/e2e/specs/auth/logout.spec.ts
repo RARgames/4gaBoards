@@ -22,5 +22,6 @@ test.describe('Logout', () => {
 
     // Should redirect to login page
     await expect(page).toHaveURL(/\/login/);
+    expect((await page.context().cookies()).find(({ name }) => name === 'accessToken')).toBeUndefined();
   });
 });

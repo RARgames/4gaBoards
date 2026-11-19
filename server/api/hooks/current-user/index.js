@@ -6,6 +6,8 @@
  * @docs        :: https://sailsjs.com/docs/concepts/extending-sails/hooks
  */
 
+const { isBrowserRequest } = require('../../../utils/browser-session');
+
 module.exports = function defineCurrentUserHook(sails) {
   const TOKEN_PATTERN = /^Bearer /;
 
@@ -23,9 +25,12 @@ module.exports = function defineCurrentUserHook(sails) {
         '/api/*': {
           async fn(req, res, next) {
             const { authorization: authorizationHeader } = req.headers;
+            const accessToken =
+              authorizationHeader && TOKEN_PATTERN.test(authorizationHeader)
+                ? authorizationHeader.replace(TOKEN_PATTERN, '')
+                : isBrowserRequest(req, sails.config.custom.clientUrl) && req.cookies && req.cookies.accessToken;
 
-            if (authorizationHeader && TOKEN_PATTERN.test(authorizationHeader)) {
-              const accessToken = authorizationHeader.replace(TOKEN_PATTERN, '');
+            if (accessToken) {
               const currentUser = await sails.helpers.utils.getUser(accessToken);
 
               if (currentUser) {

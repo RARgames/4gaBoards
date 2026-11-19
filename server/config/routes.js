@@ -9,6 +9,7 @@ module.exports.routes = {
   'GET /auth/oidc/callback': 'AuthController.oidcCallback',
 
   'POST /api/access-tokens': 'access-tokens/create',
+  'GET /api/session': 'access-tokens/show-session',
   'DELETE /api/access-tokens/me': 'access-tokens/delete',
 
   'GET /api/api-clients': 'api-clients/index',

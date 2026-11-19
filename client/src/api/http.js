@@ -4,15 +4,16 @@ import Config from '../constants/Config';
 
 const http = {};
 
-['POST', 'GET'].forEach((method) => {
+['POST', 'GET', 'PATCH', 'DELETE'].forEach((method) => {
   http[method.toLowerCase()] = (url, data = {}, headers = {}) => {
-    const isPostMethod = method === 'POST';
+    const hasBody = method === 'POST' || method === 'PATCH';
     const options = {
       method,
-      headers,
+      credentials: 'include',
+      headers: { ...headers, 'X-4gaBoards-Request': '1' },
     };
 
-    if (isPostMethod) {
+    if (hasBody) {
       const formData = new FormData();
 
       Object.keys(data).forEach((key) => {

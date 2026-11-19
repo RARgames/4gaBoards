@@ -1,5 +1,6 @@
 const zxcvbn = require('zxcvbn');
 
+const { isBrowserRequest, setAccessTokenCookie } = require('../../../utils/browser-session');
 const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
@@ -99,6 +100,12 @@ module.exports = {
 
     const accessToken = sails.helpers.utils.createToken(user.id);
     await Session.create({ accessToken, remoteAddress: getRemoteAddress(this.req), userId: user.id, userAgent: getUserAgent(this.req) });
+
+    if (!this.req.isSocket && isBrowserRequest(this.req, sails.config.custom.clientUrl)) {
+      setAccessTokenCookie(this.res, accessToken, sails.config.custom.baseUrl);
+      return { item: true };
+    }
+
     return {
       item: accessToken,
     };

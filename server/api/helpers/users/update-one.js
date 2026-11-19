@@ -27,6 +27,40 @@ const valuesValidator = (value) => {
   return true;
 };
 
+const getSocketToOmit = (request, userId, currentUserId) => {
+  if (request?.isSocket) {
+    return request;
+  }
+
+  if (userId !== currentUserId) {
+    return undefined;
+  }
+
+  const socketId = request.headers['x-4gaboards-socket-id'];
+  if (!socketId) {
+    return undefined;
+  }
+
+  try {
+    const socket = sails.sockets.get(socketId);
+    return socket.rooms.has(`@user:${userId}`) ? socket : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+const getSocketIdToOmit = (request, userId, currentUserId) => {
+  if (request?.isSocket) {
+    return sails.sockets.getId(request);
+  }
+
+  if (userId === currentUserId) {
+    return request?.headers?.['x-4gaboards-socket-id'];
+  }
+
+  return undefined;
+};
+
 module.exports = {
   inputs: {
     record: {
@@ -122,14 +156,17 @@ module.exports = {
 
       if (!_.isUndefined(values.password)) {
         const sanitizedUser = await sails.helpers.users.sanitize(user, user);
+        const socketToOmit = getSocketToOmit(inputs.request, user.id, currentUser.id);
+        const excludedSocketId = getSocketIdToOmit(inputs.request, user.id, currentUser.id);
 
         sails.sockets.broadcast(
           `user:${user.id}`,
           'userDelete', // TODO: introduce separate event
           {
             item: sanitizedUser,
+            excludedSocketId,
           },
-          inputs.request,
+          socketToOmit,
         );
 
         if (user.id === currentUser.id && inputs.request && inputs.request.isSocket) {

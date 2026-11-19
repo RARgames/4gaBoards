@@ -5,21 +5,18 @@ import api from '../../../api';
 import Paths from '../../../constants/Paths';
 import { replace } from '../../../lib/redux-router';
 import selectors from '../../../selectors';
-import { setAccessToken } from '../../../utils/access-token-storage';
 
 export function* authenticate(data) {
   yield put(actions.authenticate(data));
 
-  let accessToken;
   try {
-    ({ item: accessToken } = yield call(api.createAccessToken, data));
+    yield call(api.createAccessToken, data);
   } catch (error) {
     yield put(actions.authenticate.failure(error));
     return;
   }
 
-  yield call(setAccessToken, accessToken);
-  yield put(actions.authenticate.success(accessToken));
+  yield put(actions.authenticate.success());
 }
 
 export function* clearAuthenticateError() {
@@ -45,7 +42,6 @@ export function* authenticateSso(provider, method) {
 
 export function* authenticateSsoCallback(provider) {
   const params = new URLSearchParams(window.location.search);
-  const accessToken = params.get('accessToken');
   const err = params.get('error');
   yield put(replace(Paths.LOGIN));
 
@@ -53,10 +49,10 @@ export function* authenticateSsoCallback(provider) {
     yield put(actions.authenticateSso.failure(provider, { code: 'E_UNAUTHORIZED', message: err }));
     return;
   }
-  if (accessToken !== null) {
-    yield call(setAccessToken, accessToken);
-    yield put(actions.authenticateSso.success(provider, accessToken));
-  } else {
+  try {
+    yield call(api.getCurrentSession);
+    yield put(actions.authenticateSso.success(provider));
+  } catch {
     yield put(actions.authenticateSso.failure(provider, { code: 'E_UNAUTHORIZED', message: 'Unknown error' }));
   }
 }
@@ -74,16 +70,14 @@ export function* loginOpen() {
 export function* register(data) {
   yield put(actions.register(data));
 
-  let accessToken;
   try {
-    ({ item: accessToken } = yield call(api.register, data));
+    yield call(api.register, data);
   } catch (error) {
     yield put(actions.register.failure(error));
     return;
   }
 
-  yield call(setAccessToken, accessToken);
-  yield put(actions.register.success(accessToken));
+  yield put(actions.register.success());
 }
 
 export function* clearRegisterError() {
