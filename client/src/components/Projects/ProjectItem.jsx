@@ -36,6 +36,11 @@ const ProjectItem = React.memo(({ item, managedProjects, boardTemplates, isAdmin
           <div title={item.name} className={s.projectTitle}>
             {item.name}
           </div>
+          <div className={s.projectDetails}>
+            <div className={s.projectDetail}>
+              {t('common.boards', { context: 'title' })}: {item.boards?.length ?? 0}
+            </div>
+          </div>
         </div>
       </Link>
       <ProjectActionsPopup
