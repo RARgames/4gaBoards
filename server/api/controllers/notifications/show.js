@@ -1,7 +1,5 @@
 const Errors = {
-  NOTIFICATION_NOT_FOUND: {
-    notificationNotFound: 'Notification not found',
-  },
+  NOTIFICATION_NOT_FOUND: { notificationNotFound: 'Notification not found' },
 };
 
 module.exports = {
@@ -14,9 +12,7 @@ module.exports = {
   },
 
   exits: {
-    notificationNotFound: {
-      responseType: 'notFound',
-    },
+    notificationNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

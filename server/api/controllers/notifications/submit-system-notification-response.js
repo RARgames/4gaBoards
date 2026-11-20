@@ -3,21 +3,11 @@ const crypto = require('crypto');
 const { createSignature } = require('../../../utils/systemNotificationSignature');
 
 const Errors = {
-  NOTIFICATION_NOT_FOUND: {
-    notificationNotFound: 'Notification not found',
-  },
-  NOT_A_POLL: {
-    notAPoll: 'System Notification does not contain a poll',
-  },
-  INVALID_ANSWER: {
-    invalidAnswer: 'Invalid answer',
-  },
-  CORE_NOT_FOUND: {
-    coreNotFound: 'Core not found',
-  },
-  RESPONSE_SUBMIT_FAILED: {
-    responseSubmitFailed: 'Failed to submit system notification response',
-  },
+  NOTIFICATION_NOT_FOUND: { notificationNotFound: 'Notification not found' },
+  NOT_A_POLL: { notAPoll: 'System Notification does not contain a poll' },
+  INVALID_ANSWER: { invalidAnswer: 'Invalid answer' },
+  CORE_NOT_FOUND: { coreNotFound: 'Core not found' },
+  RESPONSE_SUBMIT_FAILED: { responseSubmitFailed: 'Failed to submit system notification response' },
 };
 
 module.exports = {
@@ -34,21 +24,11 @@ module.exports = {
   },
 
   exits: {
-    notificationNotFound: {
-      responseType: 'notFound',
-    },
-    notAPoll: {
-      responseType: 'badRequest',
-    },
-    invalidAnswer: {
-      responseType: 'badRequest',
-    },
-    coreNotFound: {
-      responseType: 'notFound',
-    },
-    responseSubmitFailed: {
-      responseType: 'serverError',
-    },
+    notificationNotFound: { responseType: 'notFound' },
+    notAPoll: { responseType: 'badRequest' },
+    invalidAnswer: { responseType: 'badRequest' },
+    coreNotFound: { responseType: 'notFound' },
+    responseSubmitFailed: { responseType: 'serverError' },
   },
 
   async fn(inputs) {

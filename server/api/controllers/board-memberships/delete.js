@@ -1,7 +1,5 @@
 const Errors = {
-  BOARD_MEMBERSHIP_NOT_FOUND: {
-    boardMembershipNotFound: 'Board membership not found',
-  },
+  BOARD_MEMBERSHIP_NOT_FOUND: { boardMembershipNotFound: 'Board membership not found' },
 };
 
 module.exports = {
@@ -14,9 +12,7 @@ module.exports = {
   },
 
   exits: {
-    boardMembershipNotFound: {
-      responseType: 'notFound',
-    },
+    boardMembershipNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

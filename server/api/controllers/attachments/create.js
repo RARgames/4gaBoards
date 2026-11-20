@@ -2,15 +2,9 @@ const util = require('util');
 const { v4: uuid } = require('uuid');
 
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
-  NO_FILE_WAS_UPLOADED: {
-    noFileWasUploaded: 'No file was uploaded',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
+  NO_FILE_WAS_UPLOADED: { noFileWasUploaded: 'No file was uploaded' },
 };
 
 module.exports = {
@@ -27,18 +21,10 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    cardNotFound: {
-      responseType: 'notFound',
-    },
-    noFileWasUploaded: {
-      responseType: 'unprocessableEntity',
-    },
-    uploadError: {
-      responseType: 'unprocessableEntity',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    cardNotFound: { responseType: 'notFound' },
+    noFileWasUploaded: { responseType: 'unprocessableEntity' },
+    uploadError: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs, exits) {

@@ -1,7 +1,5 @@
 const Errors = {
-  PROJECT_MANAGER_NOT_FOUND: {
-    projectManagerNotFound: 'Project manager not found',
-  },
+  PROJECT_MANAGER_NOT_FOUND: { projectManagerNotFound: 'Project manager not found' },
 };
 
 module.exports = {
@@ -14,9 +12,7 @@ module.exports = {
   },
 
   exits: {
-    projectManagerNotFound: {
-      responseType: 'notFound',
-    },
+    projectManagerNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

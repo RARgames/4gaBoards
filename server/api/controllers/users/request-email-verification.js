@@ -1,10 +1,6 @@
 const Errors = {
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  COOLDOWN_ACTIVE: {
-    cooldownActive: 'Please wait before requesting another verification email',
-  },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  COOLDOWN_ACTIVE: { cooldownActive: 'Please wait before requesting another verification email' },
 };
 
 module.exports = {
@@ -17,12 +13,8 @@ module.exports = {
   },
 
   exits: {
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    cooldownActive: {
-      responseType: 'tooManyRequests',
-    },
+    userNotFound: { responseType: 'notFound' },
+    cooldownActive: { responseType: 'tooManyRequests' },
   },
 
   async fn(inputs) {

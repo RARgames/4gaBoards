@@ -1,15 +1,9 @@
 const zxcvbn = require('zxcvbn');
 
 const Errors = {
-  EMAIL_ALREADY_IN_USE: {
-    emailAlreadyInUse: 'Email already in use',
-  },
-  USERNAME_ALREADY_IN_USE: {
-    usernameAlreadyInUse: 'Username already in use',
-  },
-  WEAK_PASSWORD: {
-    weakPassword: 'Weak password',
-  },
+  EMAIL_ALREADY_IN_USE: { emailAlreadyInUse: 'Email already in use' },
+  USERNAME_ALREADY_IN_USE: { usernameAlreadyInUse: 'Username already in use' },
+  WEAK_PASSWORD: { weakPassword: 'Weak password' },
 };
 
 module.exports = {
@@ -93,15 +87,9 @@ module.exports = {
   },
 
   exits: {
-    emailAlreadyInUse: {
-      responseType: 'conflict',
-    },
-    usernameAlreadyInUse: {
-      responseType: 'conflict',
-    },
-    weakPassword: {
-      responseType: 'conflict',
-    },
+    emailAlreadyInUse: { responseType: 'conflict' },
+    usernameAlreadyInUse: { responseType: 'conflict' },
+    weakPassword: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

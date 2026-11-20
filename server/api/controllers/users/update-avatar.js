@@ -3,15 +3,9 @@ const util = require('util');
 const { v4: uuid } = require('uuid');
 
 const Errors = {
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  NO_FILE_WAS_UPLOADED: {
-    noFileWasUploaded: 'No file was uploaded',
-  },
-  FILE_IS_NOT_IMAGE: {
-    fileIsNotImage: 'File is not image',
-  },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  NO_FILE_WAS_UPLOADED: { noFileWasUploaded: 'No file was uploaded' },
+  FILE_IS_NOT_IMAGE: { fileIsNotImage: 'File is not image' },
 };
 
 module.exports = {
@@ -24,18 +18,10 @@ module.exports = {
   },
 
   exits: {
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    noFileWasUploaded: {
-      responseType: 'unprocessableEntity',
-    },
-    fileIsNotImage: {
-      responseType: 'unprocessableEntity',
-    },
-    uploadError: {
-      responseType: 'unprocessableEntity',
-    },
+    userNotFound: { responseType: 'notFound' },
+    noFileWasUploaded: { responseType: 'unprocessableEntity' },
+    fileIsNotImage: { responseType: 'unprocessableEntity' },
+    uploadError: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs, exits) {

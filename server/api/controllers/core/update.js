@@ -1,10 +1,6 @@
 const Errors = {
-  CORE_NOT_FOUND: {
-    coreNotFound: 'Core not found',
-  },
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
+  CORE_NOT_FOUND: { coreNotFound: 'Core not found' },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
 };
 
 module.exports = {
@@ -33,12 +29,8 @@ module.exports = {
   },
 
   exits: {
-    coreNotFound: {
-      responseType: 'notFound',
-    },
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
+    coreNotFound: { responseType: 'notFound' },
+    insufficientPermissions: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

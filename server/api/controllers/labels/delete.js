@@ -1,10 +1,6 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  LABEL_NOT_FOUND: {
-    labelNotFound: 'Label not found',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  LABEL_NOT_FOUND: { labelNotFound: 'Label not found' },
 };
 
 module.exports = {
@@ -17,12 +13,8 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    labelNotFound: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    labelNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

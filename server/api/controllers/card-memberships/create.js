@@ -1,16 +1,8 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  USER_ALREADY_CARD_MEMBER: {
-    userAlreadyCardMember: 'User already card member',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  USER_ALREADY_CARD_MEMBER: { userAlreadyCardMember: 'User already card member' },
 };
 
 module.exports = {
@@ -28,18 +20,10 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    cardNotFound: {
-      responseType: 'notFound',
-    },
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    userAlreadyCardMember: {
-      responseType: 'conflict',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    cardNotFound: { responseType: 'notFound' },
+    userNotFound: { responseType: 'notFound' },
+    userAlreadyCardMember: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

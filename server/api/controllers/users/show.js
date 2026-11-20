@@ -1,7 +1,5 @@
 const Errors = {
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
 };
 
 const CURRENT_USER_ID = 'me';
@@ -19,9 +17,7 @@ module.exports = {
   },
 
   exits: {
-    userNotFound: {
-      responseType: 'notFound',
-    },
+    userNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

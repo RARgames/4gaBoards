@@ -1,7 +1,5 @@
 const Errors = {
-  TASK_NOT_FOUND: {
-    taskNotFound: 'Task not found',
-  },
+  TASK_NOT_FOUND: { taskNotFound: 'Task not found' },
 };
 
 module.exports = {
@@ -18,9 +16,7 @@ module.exports = {
   },
 
   exits: {
-    taskNotFound: {
-      responseType: 'notFound',
-    },
+    taskNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

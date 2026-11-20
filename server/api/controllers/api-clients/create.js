@@ -1,7 +1,5 @@
 const Errors = {
-  INVALID_PERMISSIONS: {
-    invalidPermissions: 'Invalid permissions',
-  },
+  INVALID_PERMISSIONS: { invalidPermissions: 'Invalid permissions' },
 };
 
 module.exports = {
@@ -15,9 +13,7 @@ module.exports = {
   },
 
   exits: {
-    invalidPermissions: {
-      responseType: 'unprocessableEntity',
-    },
+    invalidPermissions: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs) {

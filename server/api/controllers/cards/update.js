@@ -1,27 +1,13 @@
 const moment = require('moment');
 
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
-  LIST_NOT_FOUND: {
-    listNotFound: 'List not found',
-  },
-  ATTACHMENT_NOT_FOUND: {
-    attachmentNotFound: 'Attachment not found',
-  },
-  LIST_MUST_BE_PRESENT: {
-    listMustBePresent: 'List must be present',
-  },
-  POSITION_MUST_BE_PRESENT: {
-    positionMustBePresent: 'Position must be present',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
+  LIST_NOT_FOUND: { listNotFound: 'List not found' },
+  ATTACHMENT_NOT_FOUND: { attachmentNotFound: 'Attachment not found' },
+  LIST_MUST_BE_PRESENT: { listMustBePresent: 'List must be present' },
+  POSITION_MUST_BE_PRESENT: { positionMustBePresent: 'Position must be present' },
 };
 
 const dueDateValidator = (value) => moment(value, moment.ISO_8601, true).isValid();
@@ -89,27 +75,13 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    cardNotFound: {
-      responseType: 'notFound',
-    },
-    boardNotFound: {
-      responseType: 'notFound',
-    },
-    listNotFound: {
-      responseType: 'notFound',
-    },
-    attachmentNotFound: {
-      responseType: 'notFound',
-    },
-    listMustBePresent: {
-      responseType: 'unprocessableEntity',
-    },
-    positionMustBePresent: {
-      responseType: 'unprocessableEntity',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    cardNotFound: { responseType: 'notFound' },
+    boardNotFound: { responseType: 'notFound' },
+    listNotFound: { responseType: 'notFound' },
+    attachmentNotFound: { responseType: 'notFound' },
+    listMustBePresent: { responseType: 'unprocessableEntity' },
+    positionMustBePresent: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs) {

@@ -1,7 +1,5 @@
 const Errors = {
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
 };
 
 module.exports = {
@@ -17,9 +15,7 @@ module.exports = {
   },
 
   exits: {
-    boardNotFound: {
-      responseType: 'notFound',
-    },
+    boardNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

@@ -2,9 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const Errors = {
-  ATTACHMENT_NOT_FOUND: {
-    attachmentNotFound: 'Attachment not found',
-  },
+  ATTACHMENT_NOT_FOUND: { attachmentNotFound: 'Attachment not found' },
 };
 
 module.exports = {
@@ -17,9 +15,7 @@ module.exports = {
   },
 
   exits: {
-    attachmentNotFound: {
-      responseType: 'notFound',
-    },
+    attachmentNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs, exits) {

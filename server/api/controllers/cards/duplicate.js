@@ -1,22 +1,10 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
-  LIST_NOT_FOUND: {
-    listNotFound: 'List not found',
-  },
-  POSITION_MUST_BE_PRESENT: {
-    positionMustBeInValues: 'Position must be present in values',
-  },
-  LABEL_ALREADY_IN_CARD: {
-    labelAlreadyInCard: 'Label already in card',
-  },
-  USER_ALREADY_CARD_MEMBER: {
-    userAlreadyCardMember: 'User already card member',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
+  LIST_NOT_FOUND: { listNotFound: 'List not found' },
+  POSITION_MUST_BE_PRESENT: { positionMustBeInValues: 'Position must be present in values' },
+  LABEL_ALREADY_IN_CARD: { labelAlreadyInCard: 'Label already in card' },
+  USER_ALREADY_CARD_MEMBER: { userAlreadyCardMember: 'User already card member' },
 };
 
 module.exports = {
@@ -29,24 +17,12 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    cardNotFound: {
-      responseType: 'notFound',
-    },
-    listNotFound: {
-      responseType: 'notFound',
-    },
-    positionMustBeInValues: {
-      responseType: 'unprocessableEntity',
-    },
-    labelAlreadyInCard: {
-      responseType: 'conflict',
-    },
-    userAlreadyCardMember: {
-      responseType: 'conflict',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    cardNotFound: { responseType: 'notFound' },
+    listNotFound: { responseType: 'notFound' },
+    positionMustBeInValues: { responseType: 'unprocessableEntity' },
+    labelAlreadyInCard: { responseType: 'conflict' },
+    userAlreadyCardMember: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

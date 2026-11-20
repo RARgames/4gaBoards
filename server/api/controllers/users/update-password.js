@@ -5,18 +5,10 @@ const { isBrowserRequest, setAccessTokenCookie } = require('../../../utils/brows
 const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  INVALID_CURRENT_PASSWORD: {
-    invalidCurrentPassword: 'Invalid current password',
-  },
-  WEAK_PASSWORD: {
-    weakPassword: 'Weak password',
-  },
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  INVALID_CURRENT_PASSWORD: { invalidCurrentPassword: 'Invalid current password' },
+  WEAK_PASSWORD: { weakPassword: 'Weak password' },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
 };
 
 module.exports = {
@@ -37,18 +29,10 @@ module.exports = {
   },
 
   exits: {
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    invalidCurrentPassword: {
-      responseType: 'forbidden',
-    },
-    weakPassword: {
-      responseType: 'conflict',
-    },
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
+    userNotFound: { responseType: 'notFound' },
+    invalidCurrentPassword: { responseType: 'forbidden' },
+    weakPassword: { responseType: 'conflict' },
+    insufficientPermissions: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

@@ -1,7 +1,5 @@
 const Errors = {
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
 };
 
 module.exports = {
@@ -14,9 +12,7 @@ module.exports = {
   },
 
   exits: {
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
+    insufficientPermissions: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

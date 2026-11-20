@@ -1,10 +1,6 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
 };
 
 module.exports = {
@@ -33,12 +29,8 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    boardNotFound: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    boardNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

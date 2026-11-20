@@ -4,27 +4,13 @@ const { isBrowserRequest, setAccessTokenCookie } = require('../../../utils/brows
 const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
-  EMAIL_ALREADY_IN_USE: {
-    emailAlreadyInUse: 'Email already in use',
-  },
-  WEAK_PASSWORD: {
-    weakPassword: 'Weak password',
-  },
-  POLICY_NOT_ACCEPTED: {
-    policyNotAccepted: 'Policy not accepted',
-  },
-  CORE_NOT_FOUND: {
-    coreNotFound: 'coreNotFound',
-  },
-  REGISTRATION_DISABLED: {
-    registrationDisabled: 'registrationDisabled',
-  },
-  LOCAL_REGISTRATION_DISABLED: {
-    localRegistrationDisabled: 'localRegistrationDisabled',
-  },
-  DOMAIN_NOT_ALLOWED: {
-    domainNotAllowed: 'domainNotAllowed',
-  },
+  EMAIL_ALREADY_IN_USE: { emailAlreadyInUse: 'Email already in use' },
+  WEAK_PASSWORD: { weakPassword: 'Weak password' },
+  POLICY_NOT_ACCEPTED: { policyNotAccepted: 'Policy not accepted' },
+  CORE_NOT_FOUND: { coreNotFound: 'coreNotFound' },
+  REGISTRATION_DISABLED: { registrationDisabled: 'registrationDisabled' },
+  LOCAL_REGISTRATION_DISABLED: { localRegistrationDisabled: 'localRegistrationDisabled' },
+  DOMAIN_NOT_ALLOWED: { domainNotAllowed: 'domainNotAllowed' },
 };
 
 module.exports = {
@@ -49,27 +35,13 @@ module.exports = {
   },
 
   exits: {
-    emailAlreadyInUse: {
-      responseType: 'conflict',
-    },
-    weakPassword: {
-      responseType: 'conflict',
-    },
-    policyNotAccepted: {
-      responseType: 'conflict',
-    },
-    coreNotFound: {
-      responseType: 'notFound',
-    },
-    registrationDisabled: {
-      responseType: 'forbidden',
-    },
-    localRegistrationDisabled: {
-      responseType: 'forbidden',
-    },
-    domainNotAllowed: {
-      responseType: 'forbidden',
-    },
+    emailAlreadyInUse: { responseType: 'conflict' },
+    weakPassword: { responseType: 'conflict' },
+    policyNotAccepted: { responseType: 'conflict' },
+    coreNotFound: { responseType: 'notFound' },
+    registrationDisabled: { responseType: 'forbidden' },
+    localRegistrationDisabled: { responseType: 'forbidden' },
+    domainNotAllowed: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

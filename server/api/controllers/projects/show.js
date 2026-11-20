@@ -1,7 +1,5 @@
 const Errors = {
-  PROJECT_NOT_FOUND: {
-    projectNotFound: 'Project not found',
-  },
+  PROJECT_NOT_FOUND: { projectNotFound: 'Project not found' },
 };
 
 module.exports = {
@@ -14,9 +12,7 @@ module.exports = {
   },
 
   exits: {
-    projectNotFound: {
-      responseType: 'notFound',
-    },
+    projectNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

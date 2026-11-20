@@ -5,9 +5,7 @@ const { isBrowserRequest, setAccessTokenCookie } = require('../../../utils/brows
 const { getRemoteAddress, getUserAgent } = require('../../../utils/remoteAddress');
 
 const Errors = {
-  INVALID_USERNAME_PASSWORD: {
-    invalidUsernamePassword: 'Invalid username or password',
-  },
+  INVALID_USERNAME_PASSWORD: { invalidUsernamePassword: 'Invalid username or password' },
 };
 
 const emailOrUsernameValidator = (value) => (value.includes('@') ? validator.isEmail(value) : value.length >= 3 && value.length <= 16 && /^[a-zA-Z0-9]+((_|\.)?[a-zA-Z0-9])*$/.test(value));
@@ -26,9 +24,7 @@ module.exports = {
   },
 
   exits: {
-    invalidUsernamePassword: {
-      responseType: 'unauthorized',
-    },
+    invalidUsernamePassword: { responseType: 'unauthorized' },
   },
 
   async fn(inputs) {

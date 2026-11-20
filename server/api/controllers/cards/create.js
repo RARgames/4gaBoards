@@ -1,15 +1,9 @@
 const moment = require('moment');
 
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  LIST_NOT_FOUND: {
-    listNotFound: 'List not found',
-  },
-  POSITION_MUST_BE_PRESENT: {
-    positionMustBePresent: 'Position must be present',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  LIST_NOT_FOUND: { listNotFound: 'List not found' },
+  POSITION_MUST_BE_PRESENT: { positionMustBePresent: 'Position must be present' },
 };
 
 const dueDateValidator = (value) => moment(value, moment.ISO_8601, true).isValid();
@@ -65,15 +59,9 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    listNotFound: {
-      responseType: 'notFound',
-    },
-    positionMustBePresent: {
-      responseType: 'unprocessableEntity',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    listNotFound: { responseType: 'notFound' },
+    positionMustBePresent: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs) {

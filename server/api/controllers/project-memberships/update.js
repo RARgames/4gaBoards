@@ -1,7 +1,5 @@
 const Errors = {
-  PROJECT_MEMBERSHIP_NOT_FOUND: {
-    projectMembershipNotFound: 'Project membership not found',
-  },
+  PROJECT_MEMBERSHIP_NOT_FOUND: { projectMembershipNotFound: 'Project membership not found' },
 };
 
 module.exports = {
@@ -23,9 +21,7 @@ module.exports = {
   },
 
   exits: {
-    projectMembershipNotFound: {
-      responseType: 'notFound',
-    },
+    projectMembershipNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

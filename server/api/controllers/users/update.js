@@ -1,10 +1,6 @@
 const Errors = {
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
 };
 
 const avatarUrlValidator = (value) => _.isNull(value);
@@ -43,12 +39,8 @@ module.exports = {
   },
 
   exits: {
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
+    userNotFound: { responseType: 'notFound' },
+    insufficientPermissions: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

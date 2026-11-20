@@ -1,13 +1,7 @@
 const Errors = {
-  API_CLIENT_NOT_FOUND: {
-    apiClientNotFound: 'API client not found',
-  },
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  INVALID_PERMISSIONS: {
-    invalidPermissions: 'Invalid permissions',
-  },
+  API_CLIENT_NOT_FOUND: { apiClientNotFound: 'API client not found' },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  INVALID_PERMISSIONS: { invalidPermissions: 'Invalid permissions' },
 };
 
 module.exports = {
@@ -28,15 +22,9 @@ module.exports = {
   },
 
   exits: {
-    apiClientNotFound: {
-      responseType: 'notFound',
-    },
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    invalidPermissions: {
-      responseType: 'unprocessableEntity',
-    },
+    apiClientNotFound: { responseType: 'notFound' },
+    notEnoughRights: { responseType: 'forbidden' },
+    invalidPermissions: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs) {

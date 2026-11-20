@@ -1,10 +1,6 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  LIST_NOT_FOUND: {
-    listNotFound: 'List not found',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  LIST_NOT_FOUND: { listNotFound: 'List not found' },
 };
 
 module.exports = {
@@ -30,12 +26,8 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    listNotFound: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    listNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

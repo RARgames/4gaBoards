@@ -1,18 +1,10 @@
 const bcrypt = require('bcrypt');
 
 const Errors = {
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  INVALID_CURRENT_PASSWORD: {
-    invalidCurrentPassword: 'Invalid current password',
-  },
-  USERNAME_ALREADY_IN_USE: {
-    usernameAlreadyInUse: 'Username already in use',
-  },
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  INVALID_CURRENT_PASSWORD: { invalidCurrentPassword: 'Invalid current password' },
+  USERNAME_ALREADY_IN_USE: { usernameAlreadyInUse: 'Username already in use' },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
 };
 
 module.exports = {
@@ -36,18 +28,10 @@ module.exports = {
   },
 
   exits: {
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    invalidCurrentPassword: {
-      responseType: 'forbidden',
-    },
-    usernameAlreadyInUse: {
-      responseType: 'conflict',
-    },
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
+    userNotFound: { responseType: 'notFound' },
+    invalidCurrentPassword: { responseType: 'forbidden' },
+    usernameAlreadyInUse: { responseType: 'conflict' },
+    insufficientPermissions: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

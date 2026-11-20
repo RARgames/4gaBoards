@@ -1,7 +1,5 @@
 const Errors = {
-  INSTANCE_NOT_FOUND: {
-    instanceNotFound: 'Instance not found',
-  },
+  INSTANCE_NOT_FOUND: { instanceNotFound: 'Instance not found' },
 };
 
 module.exports = {
@@ -13,9 +11,7 @@ module.exports = {
   },
 
   exits: {
-    instanceNotFound: {
-      responseType: 'notFound',
-    },
+    instanceNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

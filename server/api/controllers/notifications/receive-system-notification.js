@@ -5,15 +5,9 @@
 const { verifySignature } = require('../../../utils/systemNotificationSignature');
 
 const Errors = {
-  UNAUTHORIZED: {
-    unauthorized: 'Invalid instanceId',
-  },
-  INVALID_SIGNATURE: {
-    invalidSignature: 'Invalid signature',
-  },
-  INVALID_PAYLOAD: {
-    invalidPayload: 'Invalid notification payload',
-  },
+  UNAUTHORIZED: { unauthorized: 'Invalid instanceId' },
+  INVALID_SIGNATURE: { invalidSignature: 'Invalid signature' },
+  INVALID_PAYLOAD: { invalidPayload: 'Invalid notification payload' },
 };
 
 module.exports = {
@@ -55,15 +49,9 @@ module.exports = {
   },
 
   exits: {
-    unauthorized: {
-      responseType: 'unauthorized',
-    },
-    invalidSignature: {
-      responseType: 'unauthorized',
-    },
-    invalidPayload: {
-      responseType: 'badRequest',
-    },
+    unauthorized: { responseType: 'unauthorized' },
+    invalidSignature: { responseType: 'unauthorized' },
+    invalidPayload: { responseType: 'badRequest' },
   },
 
   async fn(inputs) {

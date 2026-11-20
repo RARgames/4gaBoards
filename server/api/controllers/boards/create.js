@@ -2,24 +2,12 @@ const util = require('util');
 const { v4: uuid } = require('uuid');
 
 const Errors = {
-  PROJECT_NOT_FOUND: {
-    projectNotFound: 'Project not found',
-  },
-  BOARD_CREATE_FAILED: {
-    boardCreateFailed: 'Board create failed',
-  },
-  IMPORT_FROM_BOARD_FAILED: {
-    importFromBoardFailed: 'Import from board failed',
-  },
-  NO_IMPORT_FILE_WAS_UPLOADED: {
-    noImportFileWasUploaded: 'No import file was uploaded',
-  },
-  INVALID_IMPORT_FILE: {
-    invalidImportFile: 'Invalid import file',
-  },
-  USER_ALREADY_BOARD_MEMBER: {
-    userAlreadyBoardMember: 'User already board member',
-  },
+  PROJECT_NOT_FOUND: { projectNotFound: 'Project not found' },
+  BOARD_CREATE_FAILED: { boardCreateFailed: 'Board create failed' },
+  IMPORT_FROM_BOARD_FAILED: { importFromBoardFailed: 'Import from board failed' },
+  NO_IMPORT_FILE_WAS_UPLOADED: { noImportFileWasUploaded: 'No import file was uploaded' },
+  INVALID_IMPORT_FILE: { invalidImportFile: 'Invalid import file' },
+  USER_ALREADY_BOARD_MEMBER: { userAlreadyBoardMember: 'User already board member' },
 };
 
 module.exports = {
@@ -67,21 +55,11 @@ module.exports = {
   },
 
   exits: {
-    projectNotFound: {
-      responseType: 'notFound',
-    },
-    boardCreateFailed: {
-      responseType: 'notFound',
-    },
-    noImportFileWasUploaded: {
-      responseType: 'unprocessableEntity',
-    },
-    uploadError: {
-      responseType: 'unprocessableEntity',
-    },
-    userAlreadyBoardMember: {
-      responseType: 'conflict',
-    },
+    projectNotFound: { responseType: 'notFound' },
+    boardCreateFailed: { responseType: 'notFound' },
+    noImportFileWasUploaded: { responseType: 'unprocessableEntity' },
+    uploadError: { responseType: 'unprocessableEntity' },
+    userAlreadyBoardMember: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

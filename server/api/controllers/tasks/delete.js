@@ -1,10 +1,6 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  TASK_NOT_FOUND: {
-    taskNotFound: 'Task not found',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  TASK_NOT_FOUND: { taskNotFound: 'Task not found' },
 };
 
 module.exports = {
@@ -17,12 +13,8 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    taskNotFound: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    taskNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

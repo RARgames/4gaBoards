@@ -1,10 +1,6 @@
 const Errors = {
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
 };
 
 module.exports = {
@@ -21,12 +17,8 @@ module.exports = {
   },
 
   exits: {
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
-    userNotFound: {
-      responseType: 'notFound',
-    },
+    insufficientPermissions: { responseType: 'forbidden' },
+    userNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

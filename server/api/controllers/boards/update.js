@@ -1,9 +1,7 @@
 const { isValidColor } = require('../../../utils/colorValidator');
 
 const Errors = {
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
 };
 
 const backgroundValidator = (value) => {
@@ -75,9 +73,7 @@ module.exports = {
   },
 
   exits: {
-    boardNotFound: {
-      responseType: 'notFound',
-    },
+    boardNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

@@ -1,16 +1,8 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
-  LABEL_NOT_FOUND: {
-    labelNotFound: 'Label not found',
-  },
-  LABEL_ALREADY_IN_CARD: {
-    labelAlreadyInCard: 'Label already in card',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
+  LABEL_NOT_FOUND: { labelNotFound: 'Label not found' },
+  LABEL_ALREADY_IN_CARD: { labelAlreadyInCard: 'Label already in card' },
 };
 
 module.exports = {
@@ -28,18 +20,10 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    cardNotFound: {
-      responseType: 'notFound',
-    },
-    labelNotFound: {
-      responseType: 'notFound',
-    },
-    labelAlreadyInCard: {
-      responseType: 'conflict',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    cardNotFound: { responseType: 'notFound' },
+    labelNotFound: { responseType: 'notFound' },
+    labelAlreadyInCard: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

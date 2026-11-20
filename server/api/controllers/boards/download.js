@@ -2,12 +2,8 @@ const { default: filenamify } = require('filenamify');
 const fs = require('fs');
 
 const Errors = {
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
-  FILE_NOT_FOUND: {
-    fileNotFound: 'File not found',
-  },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
+  FILE_NOT_FOUND: { fileNotFound: 'File not found' },
 };
 
 module.exports = {
@@ -24,12 +20,8 @@ module.exports = {
   },
 
   exits: {
-    boardNotFound: {
-      responseType: 'notFound',
-    },
-    fileNotFound: {
-      responseType: 'notFound',
-    },
+    boardNotFound: { responseType: 'notFound' },
+    fileNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs, exits) {

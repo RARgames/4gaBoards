@@ -1,16 +1,8 @@
 const Errors = {
-  PROJECT_NOT_FOUND: {
-    projectNotFound: 'Project not found',
-  },
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  USER_ALREADY_PROJECT_MANAGER: {
-    userAlreadyProjectManager: 'User already project manager',
-  },
-  USER_ALREADY_BOARD_MEMBER: {
-    userAlreadyBoardMember: 'User already board member',
-  },
+  PROJECT_NOT_FOUND: { projectNotFound: 'Project not found' },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  USER_ALREADY_PROJECT_MANAGER: { userAlreadyProjectManager: 'User already project manager' },
+  USER_ALREADY_BOARD_MEMBER: { userAlreadyBoardMember: 'User already board member' },
 };
 
 module.exports = {
@@ -28,18 +20,10 @@ module.exports = {
   },
 
   exits: {
-    projectNotFound: {
-      responseType: 'notFound',
-    },
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    userAlreadyProjectManager: {
-      responseType: 'conflict',
-    },
-    userAlreadyBoardMember: {
-      responseType: 'conflict',
-    },
+    projectNotFound: { responseType: 'notFound' },
+    userNotFound: { responseType: 'notFound' },
+    userAlreadyProjectManager: { responseType: 'conflict' },
+    userAlreadyBoardMember: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

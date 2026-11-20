@@ -1,16 +1,8 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CORE_NOT_FOUND: {
-    coreNotFound: 'coreNotFound',
-  },
-  PROJECT_NOT_FOUND: {
-    projectNotFound: 'Project not found',
-  },
-  BOARD_CREATE_FAILED: {
-    boardCreateFailed: 'Board create failed',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CORE_NOT_FOUND: { coreNotFound: 'coreNotFound' },
+  PROJECT_NOT_FOUND: { projectNotFound: 'Project not found' },
+  BOARD_CREATE_FAILED: { boardCreateFailed: 'Board create failed' },
 };
 
 module.exports = {
@@ -21,18 +13,10 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    coreNotFound: {
-      responseType: 'notFound',
-    },
-    projectNotFound: {
-      responseType: 'notFound',
-    },
-    boardCreateFailed: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    coreNotFound: { responseType: 'notFound' },
+    projectNotFound: { responseType: 'notFound' },
+    boardCreateFailed: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

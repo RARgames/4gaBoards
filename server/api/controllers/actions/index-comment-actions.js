@@ -1,7 +1,5 @@
 const Errors = {
-  COMMENT_NOT_FOUND: {
-    commentNotFound: 'Comment not found',
-  },
+  COMMENT_NOT_FOUND: { commentNotFound: 'Comment not found' },
 };
 
 module.exports = {
@@ -18,9 +16,7 @@ module.exports = {
   },
 
   exits: {
-    commentNotFound: {
-      responseType: 'notFound',
-    },
+    commentNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

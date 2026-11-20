@@ -1,15 +1,9 @@
 const validator = require('validator');
 
 const Errors = {
-  USER_PREFS_NOT_FOUND: {
-    userPrefsNotFound: 'User prefs not found',
-  },
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
+  USER_PREFS_NOT_FOUND: { userPrefsNotFound: 'User prefs not found' },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
 };
 
 const columnVisibilityValidator = (value) => _.isObject(value) && _.every(value, (v) => typeof v === 'boolean');
@@ -177,15 +171,9 @@ module.exports = {
   },
 
   exits: {
-    userPrefsNotFound: {
-      responseType: 'notFound',
-    },
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
+    userPrefsNotFound: { responseType: 'notFound' },
+    userNotFound: { responseType: 'notFound' },
+    insufficientPermissions: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

@@ -1,16 +1,8 @@
 const Errors = {
-  MISSING_RELATIONS: {
-    missingRelations: 'Missing required related entities',
-  },
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  PROJECT_NOT_FOUND: {
-    projectNotFound: 'Project not found',
-  },
-  MAIL_TOKEN_NOT_FOUND: {
-    mailTokenNotFound: 'Mail token not found',
-  },
+  MISSING_RELATIONS: { missingRelations: 'Missing required related entities' },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  PROJECT_NOT_FOUND: { projectNotFound: 'Project not found' },
+  MAIL_TOKEN_NOT_FOUND: { mailTokenNotFound: 'Mail token not found' },
 };
 
 module.exports = {
@@ -23,18 +15,10 @@ module.exports = {
   },
 
   exits: {
-    missingRelations: {
-      responseType: 'badRequest',
-    },
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    projectNotFound: {
-      responseType: 'notFound',
-    },
-    mailTokenNotFound: {
-      responseType: 'notFound',
-    },
+    missingRelations: { responseType: 'badRequest' },
+    notEnoughRights: { responseType: 'forbidden' },
+    projectNotFound: { responseType: 'notFound' },
+    mailTokenNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

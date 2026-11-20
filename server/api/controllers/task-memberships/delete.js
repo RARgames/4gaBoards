@@ -1,13 +1,7 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  TASK_NOT_FOUND: {
-    taskNotFound: 'Task not found',
-  },
-  USER_NOT_TASK_MEMBER: {
-    userNotTaskMember: 'User not task member',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  TASK_NOT_FOUND: { taskNotFound: 'Task not found' },
+  USER_NOT_TASK_MEMBER: { userNotTaskMember: 'User not task member' },
 };
 
 module.exports = {
@@ -25,15 +19,9 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    taskNotFound: {
-      responseType: 'notFound',
-    },
-    userNotTaskMember: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    taskNotFound: { responseType: 'notFound' },
+    userNotTaskMember: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

@@ -1,10 +1,6 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  ATTACHMENT_NOT_FOUND: {
-    attachmentNotFound: 'Attachment not found',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  ATTACHMENT_NOT_FOUND: { attachmentNotFound: 'Attachment not found' },
 };
 
 module.exports = {
@@ -21,12 +17,8 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    attachmentNotFound: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    attachmentNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

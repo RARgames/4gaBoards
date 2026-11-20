@@ -1,13 +1,7 @@
 const Errors = {
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  USER_ALREADY_BOARD_MEMBER: {
-    userAlreadyBoardMember: 'User already board member',
-  },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  USER_ALREADY_BOARD_MEMBER: { userAlreadyBoardMember: 'User already board member' },
 };
 
 module.exports = {
@@ -33,15 +27,9 @@ module.exports = {
   },
 
   exits: {
-    boardNotFound: {
-      responseType: 'notFound',
-    },
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    userAlreadyBoardMember: {
-      responseType: 'conflict',
-    },
+    boardNotFound: { responseType: 'notFound' },
+    userNotFound: { responseType: 'notFound' },
+    userAlreadyBoardMember: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

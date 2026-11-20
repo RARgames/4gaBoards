@@ -1,7 +1,5 @@
 const Errors = {
-  LIST_NOT_FOUND: {
-    listNotFound: 'List not found',
-  },
+  LIST_NOT_FOUND: { listNotFound: 'List not found' },
 };
 
 module.exports = {
@@ -18,9 +16,7 @@ module.exports = {
   },
 
   exits: {
-    listNotFound: {
-      responseType: 'notFound',
-    },
+    listNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

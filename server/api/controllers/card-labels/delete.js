@@ -1,13 +1,7 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
-  LABEL_NOT_IN_CARD: {
-    labelNotInCard: 'Label not in card',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
+  LABEL_NOT_IN_CARD: { labelNotInCard: 'Label not in card' },
 };
 
 module.exports = {
@@ -25,15 +19,9 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    cardNotFound: {
-      responseType: 'notFound',
-    },
-    labelNotInCard: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    cardNotFound: { responseType: 'notFound' },
+    labelNotInCard: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

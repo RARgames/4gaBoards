@@ -1,7 +1,5 @@
 const Errors = {
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
 };
 
 module.exports = {
@@ -14,9 +12,7 @@ module.exports = {
   },
 
   exits: {
-    cardNotFound: {
-      responseType: 'notFound',
-    },
+    cardNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

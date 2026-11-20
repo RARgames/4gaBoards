@@ -1,15 +1,9 @@
 const { isValidColor } = require('../../../utils/colorValidator');
 
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  LABEL_NOT_FOUND: {
-    labelNotFound: 'Label not found',
-  },
-  INVALID_NAME: {
-    invalidName: 'Invalid name',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  LABEL_NOT_FOUND: { labelNotFound: 'Label not found' },
+  INVALID_NAME: { invalidName: 'Invalid name' },
 };
 
 module.exports = {
@@ -31,15 +25,9 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    labelNotFound: {
-      responseType: 'notFound',
-    },
-    invalidName: {
-      responseType: 'forbidden',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    labelNotFound: { responseType: 'notFound' },
+    invalidName: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

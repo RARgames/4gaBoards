@@ -1,13 +1,7 @@
 const Errors = {
-  BOARD_TEMPLATE_NOT_FOUND: {
-    boardTemplateNotFound: 'Board template not found',
-  },
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  INVALID_NAME: {
-    invalidName: 'Invalid name',
-  },
+  BOARD_TEMPLATE_NOT_FOUND: { boardTemplateNotFound: 'Board template not found' },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  INVALID_NAME: { invalidName: 'Invalid name' },
 };
 
 module.exports = {
@@ -26,15 +20,9 @@ module.exports = {
   },
 
   exits: {
-    boardTemplateNotFound: {
-      responseType: 'notFound',
-    },
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    invalidName: {
-      responseType: 'unprocessableEntity',
-    },
+    boardTemplateNotFound: { responseType: 'notFound' },
+    notEnoughRights: { responseType: 'forbidden' },
+    invalidName: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs) {

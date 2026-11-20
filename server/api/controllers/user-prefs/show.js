@@ -1,10 +1,6 @@
 const Errors = {
-  USER_PREFS_NOT_FOUND: {
-    userPrefsNotFound: 'User prefs not found',
-  },
-  INSUFFICIENT_PERMISSIONS: {
-    insufficientPermissions: 'Insufficient permissions',
-  },
+  USER_PREFS_NOT_FOUND: { userPrefsNotFound: 'User prefs not found' },
+  INSUFFICIENT_PERMISSIONS: { insufficientPermissions: 'Insufficient permissions' },
 };
 
 module.exports = {
@@ -17,12 +13,8 @@ module.exports = {
   },
 
   exits: {
-    userPrefsNotFound: {
-      responseType: 'notFound',
-    },
-    insufficientPermissions: {
-      responseType: 'forbidden',
-    },
+    userPrefsNotFound: { responseType: 'notFound' },
+    insufficientPermissions: { responseType: 'forbidden' },
   },
 
   async fn(inputs) {

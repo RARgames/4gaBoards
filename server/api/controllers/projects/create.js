@@ -1,10 +1,6 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CORE_NOT_FOUND: {
-    coreNotFound: 'coreNotFound',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CORE_NOT_FOUND: { coreNotFound: 'coreNotFound' },
 };
 
 module.exports = {
@@ -16,12 +12,8 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    coreNotFound: {
-      responseType: 'notFound',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    coreNotFound: { responseType: 'notFound' },
   },
 
   async fn(inputs) {

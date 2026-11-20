@@ -1,16 +1,8 @@
 const Errors = {
-  MISSING_RELATIONS: {
-    missingRelations: 'Missing required related entities',
-  },
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
-  MAIL_TOKEN_ALREADY_EXISTS: {
-    mailTokenAlreadyExists: 'Mail token already exists for this user',
-  },
+  MISSING_RELATIONS: { missingRelations: 'Missing required related entities' },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
+  MAIL_TOKEN_ALREADY_EXISTS: { mailTokenAlreadyExists: 'Mail token already exists for this user' },
 };
 
 module.exports = {
@@ -26,18 +18,10 @@ module.exports = {
   },
 
   exits: {
-    missingRelations: {
-      responseType: 'badRequest',
-    },
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    boardNotFound: {
-      responseType: 'notFound',
-    },
-    mailTokenAlreadyExists: {
-      responseType: 'conflict',
-    },
+    missingRelations: { responseType: 'badRequest' },
+    notEnoughRights: { responseType: 'forbidden' },
+    boardNotFound: { responseType: 'notFound' },
+    mailTokenAlreadyExists: { responseType: 'conflict' },
   },
 
   async fn(inputs) {

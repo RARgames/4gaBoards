@@ -6,12 +6,8 @@ const tar = require('tar');
 const sanitizeItem = require('../../utils/sanitize-item');
 
 const Errors = {
-  BOARD_NOT_FOUND: {
-    boardNotFound: 'Board not found',
-  },
-  EXPORT_ERROR: {
-    exportError: 'Export error',
-  },
+  BOARD_NOT_FOUND: { boardNotFound: 'Board not found' },
+  EXPORT_ERROR: { exportError: 'Export error' },
 };
 
 module.exports = {
@@ -44,12 +40,8 @@ module.exports = {
   },
 
   exits: {
-    boardNotFound: {
-      responseType: 'notFound',
-    },
-    exportError: {
-      responseType: 'unprocessableEntity',
-    },
+    boardNotFound: { responseType: 'notFound' },
+    exportError: { responseType: 'unprocessableEntity' },
   },
 
   async fn(inputs) {

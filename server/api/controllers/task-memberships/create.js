@@ -1,19 +1,9 @@
 const Errors = {
-  NOT_ENOUGH_RIGHTS: {
-    notEnoughRights: 'Not enough rights',
-  },
-  CARD_NOT_FOUND: {
-    cardNotFound: 'Card not found',
-  },
-  TASK_NOT_FOUND: {
-    taskNotFound: 'Task not found',
-  },
-  USER_NOT_FOUND: {
-    userNotFound: 'User not found',
-  },
-  USER_ALREADY_TASK_MEMBER: {
-    userAlreadyTaskMember: 'User already task member',
-  },
+  NOT_ENOUGH_RIGHTS: { notEnoughRights: 'Not enough rights' },
+  CARD_NOT_FOUND: { cardNotFound: 'Card not found' },
+  TASK_NOT_FOUND: { taskNotFound: 'Task not found' },
+  USER_NOT_FOUND: { userNotFound: 'User not found' },
+  USER_ALREADY_TASK_MEMBER: { userAlreadyTaskMember: 'User already task member' },
 };
 
 module.exports = {
@@ -36,21 +26,11 @@ module.exports = {
   },
 
   exits: {
-    notEnoughRights: {
-      responseType: 'forbidden',
-    },
-    cardNotFound: {
-      responseType: 'notFound',
-    },
-    taskNotFound: {
-      responseType: 'notFound',
-    },
-    userNotFound: {
-      responseType: 'notFound',
-    },
-    userAlreadyTaskMember: {
-      responseType: 'conflict',
-    },
+    notEnoughRights: { responseType: 'forbidden' },
+    cardNotFound: { responseType: 'notFound' },
+    taskNotFound: { responseType: 'notFound' },
+    userNotFound: { responseType: 'notFound' },
+    userAlreadyTaskMember: { responseType: 'conflict' },
   },
 
   async fn(inputs) {
