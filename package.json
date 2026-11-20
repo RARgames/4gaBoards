@@ -67,23 +67,23 @@
     "husky": "^9.1.7"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^8.0.7",
+    "@babel/eslint-parser": "^8.1.2",
     "concurrently": "^10.0.7",
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import-x": "^4.18.0",
+    "eslint-plugin-import-x": "^4.18.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-perfectionist": "^5.13.0",
+    "eslint-plugin-perfectionist": "^5.14.0",
     "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "lint-staged": "^17.6.0",
+    "lint-staged": "^17.6.1",
     "postcss-scss": "^4.0.9",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "start-server-and-test": "^3.0.13",
     "stylelint": "^18.0.0",
-    "stylelint-config-recommended-scss": "^17.0.1"
+    "stylelint-config-recommended-scss": "^18.0.0"
   },
   "devEngines": {
     "packageManager": {
