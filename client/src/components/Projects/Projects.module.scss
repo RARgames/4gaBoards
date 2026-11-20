@@ -11,11 +11,13 @@
     color: var(--text1);
     padding: 10px 20px;
     text-align: center;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
   }
 
   .headerText {
+    grid-column: 2;
     padding: 0 2px;
   }
 
@@ -25,10 +27,11 @@
   }
 
   .headerButtonGroup {
+    grid-column: 3;
     display: flex;
     gap: 20px;
-    flex-wrap: wrap;
     justify-content: flex-end;
+    white-space: nowrap;
   }
 
   .headerButton {
@@ -39,7 +42,8 @@
     padding: 0;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    white-space: nowrap;
     justify-content: center;
   }
 
@@ -51,14 +55,10 @@
     flex: 1 1 auto;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(clamp(120px, calc(18.18vw + 54.55px), 200px), 1fr)); //Lineary interpolate from 200px at 800px to 120px at 360px
     grid-auto-rows: 120px;
     gap: 20px;
     padding: 10px 20px 20px 20px;
-
-    @media (max-width: 240px) {
-      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    }
   }
 
   .projectsWrapperEmpty {
@@ -90,5 +90,18 @@
     font-size: 20px;
     margin: 0 auto;
     align-self: center;
+  }
+
+  @media (max-width: 800px) {
+    .header {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      row-gap: 8px;
+    }
+
+    .headerText,
+    .headerButtonGroup {
+      grid-column: 1;
+    }
   }
 }

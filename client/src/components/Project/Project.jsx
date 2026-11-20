@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import clsx from 'clsx';
@@ -44,8 +44,6 @@ const Project = React.memo(
     onProjectMembershipUpdate,
   }) => {
     const [t] = useTranslation();
-    const headerButtonGroupRef = useRef(null);
-    const headerButtonGroupOffsetRef = useRef(null);
     const currentFilteredProject = filteredProjects.find((project) => project.id === projectId);
     const currentProject = projects.find((project) => project.id === projectId);
     const isProjectManager = managedProjects.some((p) => p.id === projectId);
@@ -66,19 +64,12 @@ const Project = React.memo(
       });
     }, [projectId, isSubscribed, onProjectMembershipUpdate]);
 
-    useEffect(() => {
-      if (headerButtonGroupRef.current) {
-        headerButtonGroupOffsetRef.current.style.width = `${headerButtonGroupRef.current.offsetWidth}px`;
-      }
-    }, [projectId]);
-
     return (
       <div className={clsx(s.wrapper)}>
         {currentProject?.background && (
           <Background type={currentProject.background.type} name={currentProject.background.name} color={currentProject.background.color} imageUrl={currentProject.backgroundImage?.url} />
         )}
         <div className={clsx(s.header, currentProject?.background && s.headerWithBackground)}>
-          <div ref={headerButtonGroupOffsetRef} />
           <div className={clsx(s.headerText)}>
             <Button variant={ButtonVariant.Icon} title={isSubscribed ? t('common.unsubscribe') : t('common.subscribe')} onClick={handleToggleSubscriptionClick}>
               <Icon type={isSubscribed ? IconType.Bell : IconType.BellEmpty} size={IconSize.Size14} />
@@ -88,7 +79,7 @@ const Project = React.memo(
             </div>
             <div className={s.headerDetails}>[{getBoardsText()}]</div>
           </div>
-          <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
+          <div className={s.headerButtonGroup}>
             {isProjectManager && (
               <div className={s.headerButton}>
                 <BoardAddPopup

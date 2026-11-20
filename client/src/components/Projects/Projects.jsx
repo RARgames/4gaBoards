@@ -30,8 +30,6 @@ const Projects = React.memo(
     onActivitiesProjectFetch,
   }) => {
     const [t] = useTranslation();
-    const headerButtonGroupRef = useRef(null);
-    const headerButtonGroupOffsetRef = useRef(null);
 
     const getProjectsText = () => {
       if (!isFiltered) {
@@ -45,20 +43,13 @@ const Projects = React.memo(
       return `[${t('common.boards', { count: boardsCount, context: 'title' })}]`;
     };
 
-    useEffect(() => {
-      if (headerButtonGroupRef.current) {
-        headerButtonGroupOffsetRef.current.style.width = `${headerButtonGroupRef.current.offsetWidth}px`;
-      }
-    }, []);
-
     return (
       <div className={s.wrapper}>
         <div className={s.header}>
-          <div ref={headerButtonGroupOffsetRef} />
           <div className={clsx(s.headerText)}>
             <span>{getProjectsText()}</span> <span className={s.headerDetails}>{getBoardsText()}</span>
           </div>
-          <div ref={headerButtonGroupRef} className={s.headerButtonGroup}>
+          <div className={s.headerButtonGroup}>
             {canAdd && (
               <div className={s.headerButton}>
                 <ProjectAddPopup defaultData={defaultData} isSubmitting={isSubmitting} onCreate={onCreate} offset={16} position="bottom">

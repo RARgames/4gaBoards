@@ -19,7 +19,7 @@
   .sidebar {
     background-color: var(--backgroundSidebar);
     color: var(--text0);
-    width: 230px;
+    width: clamp(150px, calc(18.18vw + 84.55px), 230px); //Lineary interpolate from 230px at 800px to 150px at 360px
     height: 100%;
     box-shadow: 2px 0 5px var(--shadowBlack01);
     display: flex;
