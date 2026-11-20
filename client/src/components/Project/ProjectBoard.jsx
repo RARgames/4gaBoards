@@ -53,7 +53,7 @@ const ProjectBoard = React.memo(
 
     return (
       <div className={s.boardWrapper} onContextMenu={handleContextMenu}>
-        {board.thumbnail && <Background type={board.thumbnail.type} name={board.thumbnail.name} imageUrl={board.thumbnailImage?.coverUrl} variant="thumbnail" />}
+        {board.thumbnail && <Background type={board.thumbnail.type} name={board.thumbnail.name} color={board.thumbnail.color} imageUrl={board.thumbnailImage?.coverUrl} variant="thumbnail" />}
         {board.notificationsTotal > 0 && <span className={s.notification}>{board.notificationsTotal}</span>}
         <Link to={Paths.BOARDS.replace(':id', id)}>
           <div className={clsx(s.board, board.thumbnail && s.boardWithBackground)}>

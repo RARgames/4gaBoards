@@ -1,4 +1,5 @@
 export const BackgroundTypes = {
+  COLOR: 'color',
   GRADIENT: 'gradient',
   IMAGE: 'image',
 };

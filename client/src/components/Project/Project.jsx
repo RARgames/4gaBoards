@@ -74,7 +74,9 @@ const Project = React.memo(
 
     return (
       <div className={clsx(s.wrapper)}>
-        {currentProject?.background && <Background type={currentProject.background.type} name={currentProject.background.name} imageUrl={currentProject.backgroundImage?.url} />}
+        {currentProject?.background && (
+          <Background type={currentProject.background.type} name={currentProject.background.name} color={currentProject.background.color} imageUrl={currentProject.backgroundImage?.url} />
+        )}
         <div className={clsx(s.header, currentProject?.background && s.headerWithBackground)}>
           <div ref={headerButtonGroupOffsetRef} />
           <div className={clsx(s.headerText)}>

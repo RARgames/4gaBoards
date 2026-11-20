@@ -42,7 +42,7 @@ const Board = React.memo(({ id, board, cardId, isCardModalOpened, pathname, path
 
   return (
     <div className={s.container}>
-      {board?.background && <Background type={board.background.type} name={board.background.name} imageUrl={board.backgroundImage?.url} />}
+      {board?.background && <Background type={board.background.type} name={board.background.name} color={board.background.color} imageUrl={board.backgroundImage?.url} />}
       <BoardActionsContainer boardId={id} viewMode={viewMode} onViewModeChange={setViewMode} />
       <div className={s.wrapper}>
         {viewMode === 'board' ? <BoardViewContainer isCustomBackground={!!board?.background} /> : <ListViewContainer />}

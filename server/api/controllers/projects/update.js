@@ -1,3 +1,5 @@
+const { isValidColor } = require('../../../utils/colorValidator');
+
 const Errors = {
   PROJECT_NOT_FOUND: {
     projectNotFound: 'Project not found',
@@ -15,6 +17,10 @@ const backgroundValidator = (value) => {
 
   if (!Object.values(Project.BackgroundTypes).includes(value.type)) {
     return false;
+  }
+
+  if (value.type === Project.BackgroundTypes.COLOR && _.size(value) === 2 && isValidColor(value.color)) {
+    return true;
   }
 
   if (value.type === Project.BackgroundTypes.GRADIENT && _.size(value) === 2 && Project.BACKGROUND_GRADIENTS.includes(value.name)) {

@@ -24,6 +24,29 @@
     }
   }
 
+  .colorButtonWrapper {
+    float: left;
+  }
+
+  .colorButton {
+    display: flex;
+    float: none;
+
+    &:hover {
+      .colorIcon {
+        fill: var(--text1);
+      }
+    }
+  }
+
+  .colorIcon {
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    right: 3px;
+    top: 3px;
+  }
+
   .gradientButtonActive:before {
     bottom: 3px;
     color: var(--textWhite);

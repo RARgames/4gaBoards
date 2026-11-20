@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 
 import { BackgroundTypes } from '../../../constants/Enums';
 import ProjectBackgroundGradients from '../../../constants/ProjectBackgroundGradients';
+import ColorPickerPopup from '../../ColorPickerPopup';
 import { Button, ButtonVariant, Icon, IconType, IconSize, FilePicker } from '../../Utils';
 
 import * as bs from '../../../backgrounds.module.scss';
@@ -42,6 +43,20 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, isThu
     }
   }, [item, onUpdate]);
 
+  const handleColorUpdate = useCallback(
+    (color) => {
+      const background = {
+        type: BackgroundTypes.COLOR,
+        color,
+      };
+
+      if (!dequal(background, item)) {
+        onUpdate(background);
+      }
+    },
+    [item, onUpdate],
+  );
+
   const handleFileSelect = useCallback(
     (file) => {
       onImageUpdate({
@@ -66,6 +81,21 @@ const BackgroundPane = React.memo(({ item, imageCoverUrl, isImageUpdating, isThu
   return (
     <>
       <div className={s.gradientButtons}>
+        <ColorPickerPopup
+          defaultValue={item?.type === BackgroundTypes.COLOR ? item.color : '#944a4a'}
+          allowUnchangedSubmit={item?.type !== BackgroundTypes.COLOR}
+          onUpdate={handleColorUpdate}
+          wrapperClassName={s.colorButtonWrapper}
+        >
+          <Button
+            variant={ButtonVariant.NoBackground}
+            title={t('common.editColor')}
+            className={clsx(s.gradientButton, s.colorButton, item?.type === BackgroundTypes.COLOR && s.gradientButtonActive)}
+            style={{ backgroundColor: item?.type === BackgroundTypes.COLOR ? item.color : '#944a4a' }}
+          >
+            <Icon type={IconType.FillDrip} size={IconSize.Size18} className={s.colorIcon} />
+          </Button>
+        </ColorPickerPopup>
         {ProjectBackgroundGradients.map((gradient) => (
           <Button
             variant={ButtonVariant.NoBackground}

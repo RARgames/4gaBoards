@@ -646,7 +646,9 @@ module.exports = {
         }
       }
       let background = null;
-      if (importedBackground?.type === Project.BackgroundTypes.GRADIENT && Project.BACKGROUND_GRADIENTS.includes(importedBackground.name)) {
+      if (importedBackground?.type === Project.BackgroundTypes.COLOR && isValidColor(importedBackground.color)) {
+        background = { type: Project.BackgroundTypes.COLOR, color: importedBackground.color };
+      } else if (importedBackground?.type === Project.BackgroundTypes.GRADIENT && Project.BACKGROUND_GRADIENTS.includes(importedBackground.name)) {
         background = { type: Project.BackgroundTypes.GRADIENT, name: importedBackground.name };
       } else if (importedBackground?.type === Project.BackgroundTypes.IMAGE && backgroundImage) {
         background = { type: Project.BackgroundTypes.IMAGE };

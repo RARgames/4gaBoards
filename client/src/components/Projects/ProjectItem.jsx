@@ -29,7 +29,7 @@ const ProjectItem = React.memo(({ item, managedProjects, boardTemplates, isAdmin
 
   return (
     <div className={s.projectWrapper} onContextMenu={handleContextMenu}>
-      {item.thumbnail && <Background type={item.thumbnail.type} name={item.thumbnail.name} imageUrl={item.thumbnailImage?.coverUrl} variant="thumbnail" />}
+      {item.thumbnail && <Background type={item.thumbnail.type} name={item.thumbnail.name} color={item.thumbnail.color} imageUrl={item.thumbnailImage?.coverUrl} variant="thumbnail" />}
       {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
       <Link to={Paths.PROJECTS.replace(':id', item.id)}>
         <div className={s.project}>

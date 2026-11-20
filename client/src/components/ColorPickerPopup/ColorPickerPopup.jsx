@@ -12,17 +12,17 @@ import Popup from '../Utils/PopupElements';
 import * as gs from '../../global.module.scss';
 import * as s from './ColorPickerPopup.module.scss';
 
-const ColorPickerStep = React.memo(({ defaultValue, onUpdate, onClose }) => {
+const ColorPickerStep = React.memo(({ defaultValue, allowUnchangedSubmit, onUpdate, onClose }) => {
   const [t] = useTranslation();
   const colorPickerRef = useRef(null);
   const [value, setValue] = useState(defaultValue);
 
   const submit = useCallback(() => {
-    if (value !== defaultValue) {
+    if (allowUnchangedSubmit || value !== defaultValue) {
       onUpdate(value);
     }
     onClose();
-  }, [value, defaultValue, onUpdate, onClose]);
+  }, [allowUnchangedSubmit, value, defaultValue, onUpdate, onClose]);
 
   const handleSubmit = useCallback(() => {
     submit();
@@ -64,8 +64,13 @@ const ColorPickerStep = React.memo(({ defaultValue, onUpdate, onClose }) => {
 
 ColorPickerStep.propTypes = {
   defaultValue: PropTypes.string.isRequired,
+  allowUnchangedSubmit: PropTypes.bool,
   onUpdate: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+};
+
+ColorPickerStep.defaultProps = {
+  allowUnchangedSubmit: false,
 };
 
 export default withPopup(ColorPickerStep, { hideCloseButton: true });
