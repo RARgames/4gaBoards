@@ -35,6 +35,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    border-radius: 5px;
   }
 
   .projectTitle {
@@ -49,6 +50,10 @@
     overflow-wrap: anywhere;
   }
 
+  .projectWithBackground {
+    background: var(--shadowBlack04);
+  }
+
   .projectDetails {
     display: flex;
     flex-direction: column;
@@ -58,7 +63,7 @@
   .projectDetail {
     flex: 0 0 auto;
     width: fit-content;
-    color: var(--text1);
+    color: var(--text2);
     font-size: 12px;
     line-height: 12px;
     white-space: nowrap;
@@ -71,7 +76,7 @@
 
   .notification {
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     right: 0;
     top: 0;
     background: var(--backgroundNotifications);

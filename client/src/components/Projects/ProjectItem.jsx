@@ -1,6 +1,7 @@
 import React, { useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
+import clsx from 'clsx';
 import pick from 'lodash/pick';
 import PropTypes from 'prop-types';
 
@@ -32,7 +33,7 @@ const ProjectItem = React.memo(({ item, managedProjects, boardTemplates, isAdmin
       {item.thumbnail && <Background type={item.thumbnail.type} name={item.thumbnail.name} color={item.thumbnail.color} imageUrl={item.thumbnailImage?.coverUrl} variant="thumbnail" />}
       {item.notificationsTotal > 0 && <span className={s.notification}>{item.notificationsTotal}</span>}
       <Link to={Paths.PROJECTS.replace(':id', item.id)}>
-        <div className={s.project}>
+        <div className={clsx(s.project, item.thumbnail && s.projectWithBackground)}>
           <div title={item.name} className={s.projectTitle}>
             {item.name}
           </div>
