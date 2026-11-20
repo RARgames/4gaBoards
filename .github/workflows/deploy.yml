@@ -216,7 +216,7 @@ jobs:
           node-version: ${{ steps.versions.outputs.node }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6.1.0
+        uses: pnpm/action-setup@v6.1.1
         with:
           version: ${{ steps.versions.outputs.pnpm }}
 
@@ -261,7 +261,7 @@ jobs:
 
       - name: Release
         id: create_release
-        uses: softprops/action-gh-release@v3.0.3
+        uses: softprops/action-gh-release@v3.0.4
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
           tag_name: '${{ needs.prepare.outputs.new_tag }}'
