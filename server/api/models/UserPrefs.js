@@ -17,6 +17,7 @@ const LIST_ITEMS_PER_PAGE = ['25', '50', '100', '250', '500', '1000', 'all'];
 const PREFERRED_FONTS = ['default', 'monospace'];
 const THEME_SHAPES = ['default', 'rounded'];
 const THEMES = ['default', 'github-dark', 'light', 'custom'];
+const CARD_NAME_EDIT_MODES = ['shiftClick', 'rightClick', 'leftClick'];
 const EmailNotificationsDeliveryModes = {
   INSTANT: 'instant',
   BATCHED: 'batched',
@@ -31,6 +32,7 @@ module.exports = {
   PREFERRED_FONTS,
   THEME_SHAPES,
   THEMES,
+  CARD_NAME_EDIT_MODES,
   EmailNotificationsDeliveryModes,
 
   attributes: {
@@ -290,6 +292,12 @@ module.exports = {
       type: 'boolean',
       defaultsTo: true,
       columnName: 'right_click_context_menu',
+    },
+    cardNameEditMode: {
+      type: 'string',
+      isIn: CARD_NAME_EDIT_MODES,
+      defaultsTo: 'shiftClick',
+      columnName: 'card_name_edit_mode',
     },
   },
 

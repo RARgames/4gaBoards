@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
     suppressedSystemNotificationTags,
     selfAssignBySpacebar,
     rightClickContextMenu,
+    cardNameEditMode,
   } = selectors.selectCurrentUserPrefs(state);
   const { isAdmin, isVerified } = selectors.selectCurrentUser(state);
 
@@ -61,6 +62,7 @@ const mapStateToProps = (state) => {
     suppressedSystemNotificationTags,
     selfAssignBySpacebar,
     rightClickContextMenu,
+    cardNameEditMode,
   };
 };
 

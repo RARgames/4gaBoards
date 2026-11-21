@@ -9,6 +9,12 @@ export const BoardMembershipRoles = {
   VIEWER: 'viewer',
 };
 
+export const CardNameEditModes = {
+  SHIFT_CLICK: 'shiftClick',
+  RIGHT_CLICK: 'rightClick',
+  LEFT_CLICK: 'leftClick',
+};
+
 export const ResizeObserverSizeTypes = {
   OFFSET_HEIGHT: 'offsetHeight',
   OFFSET_WIDTH: 'offsetWidth',

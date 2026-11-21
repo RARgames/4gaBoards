@@ -1094,6 +1094,9 @@ paths:
                   type: boolean
                 rightClickContextMenu:
                   type: boolean
+                cardNameEditMode:
+                  type: string
+                  enum: [shiftClick, rightClick, leftClick]
       responses:
         '200':
           description: Success

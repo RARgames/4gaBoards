@@ -168,6 +168,11 @@ module.exports = {
     rightClickContextMenu: {
       type: 'boolean',
     },
+    cardNameEditMode: {
+      type: 'string',
+      isIn: UserPrefs.CARD_NAME_EDIT_MODES,
+      isNotEmptyString: true,
+    },
   },
 
   exits: {
@@ -228,6 +233,7 @@ module.exports = {
         'suppressedSystemNotificationTags',
         'selfAssignBySpacebar',
         'rightClickContextMenu',
+        'cardNameEditMode',
       ]),
     };
 

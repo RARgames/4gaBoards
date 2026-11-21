@@ -17,7 +17,7 @@ import clsx from 'clsx';
 import uniq from 'lodash/uniq';
 import PropTypes from 'prop-types';
 
-import { ThemeShapes, Themes, NotificationsDeliveryModes } from '../../../constants/Enums';
+import { CardNameEditModes, ThemeShapes, Themes, NotificationsDeliveryModes } from '../../../constants/Enums';
 import { useForm } from '../../../hooks';
 import { Table } from '../../Utils';
 import CustomThemeButton from './CustomThemeButton';
@@ -66,6 +66,7 @@ const PreferencesSettings = React.memo(
     suppressedSystemNotificationTags,
     selfAssignBySpacebar,
     rightClickContextMenu,
+    cardNameEditMode,
   }) => {
     const [t] = useTranslation();
     const tableRef = useRef(null);
@@ -78,10 +79,7 @@ const PreferencesSettings = React.memo(
 
     const languages = useMemo(
       () => [
-        {
-          id: 'auto',
-          name: t('common.detectAutomatically'),
-        },
+        { id: 'auto', name: t('common.detectAutomatically') },
         ...locales.map((locale) => ({
           id: locale.language,
           flags: locale.flags,
@@ -94,14 +92,8 @@ const PreferencesSettings = React.memo(
 
     const defaultViews = useMemo(
       () => [
-        {
-          id: 'list',
-          name: t('common.listView'),
-        },
-        {
-          id: 'board',
-          name: t('common.boardView'),
-        },
+        { id: 'list', name: t('common.listView') },
+        { id: 'board', name: t('common.boardView') },
       ],
       [t],
     );
@@ -109,14 +101,8 @@ const PreferencesSettings = React.memo(
 
     const listStyles = useMemo(
       () => [
-        {
-          id: 'default',
-          name: t('common.default'),
-        },
-        {
-          id: 'compact',
-          name: t('common.compact'),
-        },
+        { id: 'default', name: t('common.default') },
+        { id: 'compact', name: t('common.compact') },
       ],
       [t],
     );
@@ -125,16 +111,20 @@ const PreferencesSettings = React.memo(
 
     const selectedUsersSettingsStyle = useMemo(() => listStyles.find((style) => style.id === usersSettingsStyle), [listStyles, usersSettingsStyle]);
 
+    const cardNameEditModes = useMemo(
+      () => [
+        { id: CardNameEditModes.SHIFT_CLICK, name: t('common.cardNameEditModeShiftClick') },
+        { id: CardNameEditModes.RIGHT_CLICK, name: t('common.cardNameEditModeRightClick') },
+        { id: CardNameEditModes.LEFT_CLICK, name: t('common.cardNameEditModeLeftClick') },
+      ],
+      [t],
+    );
+    const selectedCardNameEditMode = useMemo(() => cardNameEditModes.find((mode) => mode.id === cardNameEditMode), [cardNameEditMode, cardNameEditModes]);
+
     const preferredFonts = useMemo(
       () => [
-        {
-          id: 'default',
-          name: t('common.default'),
-        },
-        {
-          id: 'monospace',
-          name: t('common.monospace'),
-        },
+        { id: 'default', name: t('common.default') },
+        { id: 'monospace', name: t('common.monospace') },
       ],
       [t],
     );
@@ -143,25 +133,10 @@ const PreferencesSettings = React.memo(
 
     const themes = useMemo(
       () => [
-        {
-          id: Themes.DEFAULT,
-          name: t('common.themeDefault'),
-        },
-        {
-          id: Themes.GITHUB_DARK,
-          name: t('common.themeGithubDark'),
-          badge: t('common.beta'),
-        },
-        {
-          id: Themes.LIGHT,
-          name: t('common.themeLight'),
-          badge: t('common.beta'),
-        },
-        {
-          id: Themes.CUSTOM,
-          name: t('common.themeCustom'),
-          badge: t('common.beta'),
-        },
+        { id: Themes.DEFAULT, name: t('common.themeDefault') },
+        { id: Themes.GITHUB_DARK, name: t('common.themeGithubDark'), badge: t('common.beta') },
+        { id: Themes.LIGHT, name: t('common.themeLight'), badge: t('common.beta') },
+        { id: Themes.CUSTOM, name: t('common.themeCustom'), badge: t('common.beta') },
       ],
       [t],
     );
@@ -170,14 +145,8 @@ const PreferencesSettings = React.memo(
 
     const themeShapes = useMemo(
       () => [
-        {
-          id: ThemeShapes.DEFAULT,
-          name: t('common.themeShapeDefault'),
-        },
-        {
-          id: ThemeShapes.ROUNDED,
-          name: t('common.themeShapeRounded'),
-        },
+        { id: ThemeShapes.DEFAULT, name: t('common.themeShapeDefault') },
+        { id: ThemeShapes.ROUNDED, name: t('common.themeShapeRounded') },
       ],
       [t],
     );
@@ -186,42 +155,15 @@ const PreferencesSettings = React.memo(
 
     const notificationTypesOptions = useMemo(
       () => [
-        {
-          id: ActivityScopes.INSTANCE,
-          name: t('activity.instanceShort'),
-        },
-        {
-          id: ActivityScopes.USER,
-          name: t('activity.userShort'),
-        },
-        {
-          id: ActivityScopes.PROJECT,
-          name: t('activity.projectShort'),
-        },
-        {
-          id: ActivityScopes.BOARD,
-          name: t('activity.boardShort'),
-        },
-        {
-          id: ActivityScopes.LIST,
-          name: t('activity.listShort'),
-        },
-        {
-          id: ActivityScopes.CARD,
-          name: t('activity.cardShort'),
-        },
-        {
-          id: ActivityScopes.TASK,
-          name: t('activity.taskShort'),
-        },
-        {
-          id: ActivityScopes.COMMENT,
-          name: t('activity.commentShort'),
-        },
-        {
-          id: ActivityScopes.ATTACHMENT,
-          name: t('common.attachment'),
-        },
+        { id: ActivityScopes.INSTANCE, name: t('activity.instanceShort') },
+        { id: ActivityScopes.USER, name: t('activity.userShort') },
+        { id: ActivityScopes.PROJECT, name: t('activity.projectShort') },
+        { id: ActivityScopes.BOARD, name: t('activity.boardShort') },
+        { id: ActivityScopes.LIST, name: t('activity.listShort') },
+        { id: ActivityScopes.CARD, name: t('activity.cardShort') },
+        { id: ActivityScopes.TASK, name: t('activity.taskShort') },
+        { id: ActivityScopes.COMMENT, name: t('activity.commentShort') },
+        { id: ActivityScopes.ATTACHMENT, name: t('common.attachment') },
       ],
       [t],
     );
@@ -240,18 +182,9 @@ const PreferencesSettings = React.memo(
 
     const emailNotificationsDeliveryModes = useMemo(
       () => [
-        {
-          id: NotificationsDeliveryModes.INSTANT,
-          name: t('common.emailNotificationsDeliveryModeInstant'),
-        },
-        {
-          id: NotificationsDeliveryModes.BATCHED,
-          name: t('common.emailNotificationsDeliveryModeBatched'),
-        },
-        {
-          id: NotificationsDeliveryModes.INSTANT_THEN_BATCHED,
-          name: t('common.emailNotificationsDeliveryModeInstantThenBatched'),
-        },
+        { id: NotificationsDeliveryModes.INSTANT, name: t('common.emailNotificationsDeliveryModeInstant') },
+        { id: NotificationsDeliveryModes.BATCHED, name: t('common.emailNotificationsDeliveryModeBatched') },
+        { id: NotificationsDeliveryModes.INSTANT_THEN_BATCHED, name: t('common.emailNotificationsDeliveryModeInstantThenBatched') },
       ],
       [t],
     );
@@ -435,6 +368,13 @@ const PreferencesSettings = React.memo(
       });
     }, [onUpdate, rightClickContextMenu]);
 
+    const handleCardNameEditModeChange = useCallback(
+      (value) => {
+        onUpdate({ cardNameEditMode: value.id });
+      },
+      [onUpdate],
+    );
+
     const data = useMemo(
       () =>
         [
@@ -451,13 +391,7 @@ const PreferencesSettings = React.memo(
             id: 'theme',
             preferences: t('common.theme'),
             modifySettings: selectedTheme,
-            modifySettingsProps: {
-              onChange: handleThemeChange,
-              options: themes,
-              placeholder: selectedTheme.name,
-              isSearchable: true,
-              selectFirstOnSearch: true,
-            },
+            modifySettingsProps: { onChange: handleThemeChange, options: themes, placeholder: selectedTheme.name, isSearchable: true, selectFirstOnSearch: true },
             currentValue: selectedTheme.name,
             description: t('common.descriptionTheme'),
             group: Groups.GENERAL,
@@ -466,10 +400,7 @@ const PreferencesSettings = React.memo(
             id: 'customTheme',
             preferences: t('common.customTheme'),
             modifySettings: selectedTheme,
-            modifySettingsProps: {
-              isCustomComponent: true,
-              CustomComponent: CustomThemeButton,
-            },
+            modifySettingsProps: { isCustomComponent: true, CustomComponent: CustomThemeButton },
             currentValue: t('common.customized'),
             description: t('common.descriptionCustomTheme'),
             group: Groups.GENERAL,
@@ -478,12 +409,7 @@ const PreferencesSettings = React.memo(
             id: 'themeShape',
             preferences: t('common.themeShape'),
             modifySettings: selectedThemeShape,
-            modifySettingsProps: {
-              isCustomComponent: true,
-              CustomComponent: ThemeShapeSelector,
-              onChange: handleThemeShapeChange,
-              options: themeShapes,
-            },
+            modifySettingsProps: { isCustomComponent: true, CustomComponent: ThemeShapeSelector, onChange: handleThemeShapeChange, options: themeShapes },
             currentValue: selectedThemeShape.name,
             description: t('common.descriptionThemeShape'),
             group: Groups.GENERAL,
@@ -492,13 +418,7 @@ const PreferencesSettings = React.memo(
             id: 'preferredDetailsFont',
             preferences: t('common.preferredDetailsFont'),
             modifySettings: selectedPreferredDetailsFont,
-            modifySettingsProps: {
-              onChange: handlePreferredDetailsFontChange,
-              options: preferredFonts,
-              placeholder: selectedPreferredDetailsFont.name,
-              isSearchable: true,
-              selectFirstOnSearch: true,
-            },
+            modifySettingsProps: { onChange: handlePreferredDetailsFontChange, options: preferredFonts, placeholder: selectedPreferredDetailsFont.name },
             currentValue: selectedPreferredDetailsFont.name,
             description: t('common.descriptionPreferredDetailsFont'),
             group: Groups.GENERAL,
@@ -507,7 +427,7 @@ const PreferencesSettings = React.memo(
             id: 'defaultView',
             preferences: t('common.defaultView'),
             modifySettings: selectedDefaultView,
-            modifySettingsProps: { onChange: handleDefaultViewChange, options: defaultViews, placeholder: selectedDefaultView.name, isSearchable: true, selectFirstOnSearch: true },
+            modifySettingsProps: { onChange: handleDefaultViewChange, options: defaultViews, placeholder: selectedDefaultView.name },
             currentValue: selectedDefaultView.name,
             description: t('common.descriptionDefaultView'),
             group: Groups.GENERAL,
@@ -525,7 +445,7 @@ const PreferencesSettings = React.memo(
             id: 'listViewStyle',
             preferences: t('common.listViewStyle'),
             modifySettings: selectedListViewStyle,
-            modifySettingsProps: { onChange: handleListViewStyleChange, options: listStyles, placeholder: selectedListViewStyle.name, isSearchable: true, selectFirstOnSearch: true },
+            modifySettingsProps: { onChange: handleListViewStyleChange, options: listStyles, placeholder: selectedListViewStyle.name },
             currentValue: selectedListViewStyle.name,
             description: t('common.descriptionListViewStyle'),
             group: Groups.GENERAL,
@@ -534,13 +454,7 @@ const PreferencesSettings = React.memo(
             id: 'usersSettingsStyle',
             preferences: t('common.usersSettingsStyle'),
             modifySettings: selectedUsersSettingsStyle,
-            modifySettingsProps: {
-              onChange: handleUsersSettingsStyleChange,
-              options: listStyles,
-              placeholder: selectedUsersSettingsStyle.name,
-              isSearchable: true,
-              selectFirstOnSearch: true,
-            },
+            modifySettingsProps: { onChange: handleUsersSettingsStyleChange, options: listStyles, placeholder: selectedUsersSettingsStyle.name },
             currentValue: selectedUsersSettingsStyle.name,
             description: t('common.descriptionUsersSettingsStyle'),
             group: Groups.GENERAL,
@@ -588,6 +502,15 @@ const PreferencesSettings = React.memo(
             modifySettingsProps: { onChange: handleRightClickContextMenuChange, title: t('common.toggleItem', { item: t('common.rightClickContextMenu', { postProcess: 'lowercase' }) }) },
             currentValue: rightClickContextMenu ? t('common.enabled') : t('common.disabled'),
             description: t('common.descriptionRightClickContextMenu'),
+            group: Groups.GENERAL,
+          },
+          {
+            id: 'cardNameEditMode',
+            preferences: t('common.cardNameEditMode'),
+            modifySettings: selectedCardNameEditMode,
+            modifySettingsProps: { onChange: handleCardNameEditModeChange, options: cardNameEditModes, placeholder: selectedCardNameEditMode.name },
+            currentValue: selectedCardNameEditMode.name,
+            description: t('common.descriptionCardNameEditMode'),
             group: Groups.GENERAL,
           },
           {
@@ -639,12 +562,7 @@ const PreferencesSettings = React.memo(
             id: 'notificationTypes',
             preferences: t('common.notificationTypes'),
             modifySettings: selectedNotificationTypes,
-            modifySettingsProps: {
-              isCustomComponent: true,
-              CustomComponent: NotificationTypesSelector,
-              onChange: handleNotificationTypesChange,
-              options: notificationTypesOptions,
-            },
+            modifySettingsProps: { isCustomComponent: true, CustomComponent: NotificationTypesSelector, onChange: handleNotificationTypesChange, options: notificationTypesOptions },
             currentValue: selectedNotificationTypes.map((v) => v.name).join(', '),
             description: t('common.descriptionNotificationTypes'),
             group: Groups.NOTIFICATIONS,
@@ -691,13 +609,7 @@ const PreferencesSettings = React.memo(
             id: 'emailNotificationsDeliveryMode',
             preferences: t('common.emailNotificationsDeliveryMode'),
             modifySettings: selectedEmailNotificationsDeliveryMode,
-            modifySettingsProps: {
-              onChange: handleEmailNotificationsDeliveryModeChange,
-              options: emailNotificationsDeliveryModes,
-              placeholder: selectedEmailNotificationsDeliveryMode.name,
-              isSearchable: true,
-              selectFirstOnSearch: true,
-            },
+            modifySettingsProps: { onChange: handleEmailNotificationsDeliveryModeChange, options: emailNotificationsDeliveryModes, placeholder: selectedEmailNotificationsDeliveryMode.name },
             currentValue: selectedEmailNotificationsDeliveryMode.name,
             description: t('common.descriptionEmailNotificationsDeliveryMode'),
             group: Groups.EMAIL_NOTIFICATIONS,
@@ -753,6 +665,9 @@ const PreferencesSettings = React.memo(
         handleSelfAssignBySpacebarChange,
         rightClickContextMenu,
         handleRightClickContextMenuChange,
+        selectedCardNameEditMode,
+        handleCardNameEditModeChange,
+        cardNameEditModes,
         subscribeToOwnCards,
         handleSubscribeToOwnCardsChange,
         subscribeToNewBoards,
@@ -940,6 +855,7 @@ PreferencesSettings.propTypes = {
   suppressedSystemNotificationTags: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
   selfAssignBySpacebar: PropTypes.bool.isRequired,
   rightClickContextMenu: PropTypes.bool.isRequired,
+  cardNameEditMode: PropTypes.oneOf(Object.values(CardNameEditModes)).isRequired,
 };
 
 PreferencesSettings.defaultProps = {

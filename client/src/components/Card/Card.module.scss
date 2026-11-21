@@ -18,6 +18,10 @@
     opacity: 0;
   }
 
+  .editCardButtonHidden {
+    visibility: hidden;
+  }
+
   .attachment {
     display: inline-block;
     line-height: 0;
@@ -70,6 +74,12 @@
 
   &:global([data-theme-shape='rounded']) .cardOpen {
     border-radius: 8px;
+  }
+
+  .cardEditing {
+    &:hover {
+      background: var(--backgroundCard);
+    }
   }
 
   .content {

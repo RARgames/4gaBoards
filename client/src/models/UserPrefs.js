@@ -46,6 +46,7 @@ export default class extends BaseModel {
     suppressedSystemNotificationTags: attr(),
     selfAssignBySpacebar: attr(),
     rightClickContextMenu: attr(),
+    cardNameEditMode: attr(),
   };
 
   static reducer({ type, payload }, UserPrefs) {

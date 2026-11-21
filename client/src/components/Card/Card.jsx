@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import DroppableTypes from '../../constants/DroppableTypes';
+import { CardNameEditModes } from '../../constants/Enums';
 import Paths from '../../constants/Paths';
 import { useCardDropSlot } from '../../lib/hooks/use-card-drop-slot';
 import { dragKey, getDragData, useDropAnimation, hideIfPending } from '../../lib/hooks/use-drop-animation';
@@ -76,6 +77,7 @@ const Card = React.memo(
     currentUserId,
     selfAssignBySpacebar,
     rightClickContextMenu,
+    cardNameEditMode,
     onUpdate,
     onMove,
     onTransfer,
@@ -270,7 +272,8 @@ const Card = React.memo(
 
     const handleContextMenu = useCallback(
       (e) => {
-        if (!rightClickContextMenu || !isPersisted) {
+        const shouldOpenNameEdit = canEdit && cardNameEditMode === CardNameEditModes.RIGHT_CLICK;
+        if ((!rightClickContextMenu && !shouldOpenNameEdit) || !isPersisted) {
           return;
         }
 
@@ -279,10 +282,15 @@ const Card = React.memo(
           return;
         }
 
-        e.preventDefault(); // Prevent browser context menu from opening
-        cardActionsPopupRef.current?.open();
+        e.preventDefault();
+        if (shouldOpenNameEdit) {
+          handleNameEdit();
+        }
+        if (rightClickContextMenu) {
+          cardActionsPopupRef.current?.open();
+        }
       },
-      [rightClickContextMenu, isPersisted],
+      [rightClickContextMenu, isPersisted, canEdit, cardNameEditMode, handleNameEdit],
     );
 
     const visibleMembersCount = 3;
@@ -294,7 +302,9 @@ const Card = React.memo(
           <div className={s.detailsTitle}>
             <div title={name} className={clsx(s.name, isCompleted && s.nameCompleted)}>
               {isCompleted && <Icon type={IconType.Check} size={IconSize.Size13} title={t('common.done')} className={s.completedIcon} />}
-              <LinkifiedTextRenderer text={name} />
+              <span data-card-name>
+                <LinkifiedTextRenderer text={name} />
+              </span>
             </div>
           </div>
           {notificationsTotal > 0 && notificationsTotal <= 9 && <span className={s.notification}>{notificationsTotal}</span>}
@@ -435,24 +445,26 @@ const Card = React.memo(
     return (
       <div ref={wrapperRef} className={s.wrapper}>
         {placeholderHeight !== null && <div style={{ height: placeholderHeight + CARD_PLACEHOLDER_MARGIN }} />}
-        <NameEdit
-          ref={nameEdit}
-          defaultValue={name}
-          boardMemberships={boardMemberships}
-          boardLabels={boardLabels}
-          currentUserIds={users.map((user) => user.id)}
-          currentLabelIds={labels.map((label) => label.id)}
-          onUpdate={handleNameUpdate}
-          onOpenChange={handleNameEditOpenChange}
-        >
-          <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isDragging && gs.hidden)} onContextMenu={handleContextMenu}>
-            {isPersisted ? (
-              <>
+        <div ref={cardRef} className={clsx(s.card, isOpen && s.cardOpen, isNameEditing && s.cardEditing, isDragging && gs.hidden)} onContextMenu={handleContextMenu}>
+          {isPersisted ? (
+            <>
+              <NameEdit
+                ref={nameEdit}
+                defaultValue={name}
+                boardMemberships={boardMemberships}
+                boardLabels={boardLabels}
+                currentUserIds={users.map((user) => user.id)}
+                currentLabelIds={labels.map((label) => label.id)}
+                onUpdate={handleNameUpdate}
+                onOpenChange={handleNameEditOpenChange}
+              >
                 {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
                 <div
                   className={s.content}
                   onClick={(e) => {
-                    if (e.shiftKey) {
+                    const isShiftClickEdit = cardNameEditMode === CardNameEditModes.SHIFT_CLICK && e.shiftKey;
+                    const isLeftClickEdit = cardNameEditMode === CardNameEditModes.LEFT_CLICK && e.target.closest('[data-card-name]');
+                    if (canEdit && (isShiftClickEdit || isLeftClickEdit)) {
                       handleNameEdit();
                       return;
                     }
@@ -462,67 +474,67 @@ const Card = React.memo(
                 >
                   {contentNode}
                 </div>
-                <div className={s.popupWrapper}>
-                  <CardActionsPopup
-                    ref={cardActionsPopupRef}
-                    card={{
-                      id,
-                      name,
-                      isCompleted,
-                      dueDate,
-                      timer,
-                      boardId,
-                      listId,
-                      projectId,
-                      lastActivityId,
-                    }}
-                    projectsToLists={allProjectsToLists}
-                    allBoardMemberships={boardAndCardMemberships}
-                    boardMemberships={boardMemberships}
-                    currentUserIds={users.map((user) => user.id)}
-                    labels={boardLabels}
-                    currentLabelIds={labels.map((label) => label.id)}
-                    url={url}
-                    canEdit={canEdit}
-                    createdAt={createdAt}
-                    createdBy={createdBy}
-                    updatedAt={updatedAt}
-                    updatedBy={updatedBy}
-                    activities={activities}
-                    isActivitiesFetching={isActivitiesFetching}
-                    isAllActivitiesFetched={isAllActivitiesFetched}
-                    onActivitiesFetch={onActivitiesFetch}
-                    onNameEdit={handleNameEdit}
-                    onUpdate={onUpdate}
-                    onMarkCompleted={onMarkCompleted}
-                    onMove={onMove}
-                    onTransfer={onTransfer}
-                    onDuplicate={onDuplicate}
-                    onDelete={onDelete}
-                    onUserAdd={onUserAdd}
-                    onUserRemove={onUserRemove}
-                    onUserEmailLookup={onUserEmailLookup}
-                    onBoardFetch={onBoardFetch}
-                    onLabelAdd={onLabelAdd}
-                    onLabelRemove={onLabelRemove}
-                    onLabelCreate={onLabelCreate}
-                    onLabelUpdate={onLabelUpdate}
-                    onLabelDelete={onLabelDelete}
-                    position="left-start"
-                    offset={0}
-                    hideCloseButton
-                  >
-                    <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={s.editCardButton}>
-                      <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
-                    </Button>
-                  </CardActionsPopup>
-                </div>
-              </>
-            ) : (
-              <span className={s.content}>{contentNode}</span>
-            )}
-          </div>
-        </NameEdit>
+              </NameEdit>
+              <div className={s.popupWrapper}>
+                <CardActionsPopup
+                  ref={cardActionsPopupRef}
+                  card={{
+                    id,
+                    name,
+                    isCompleted,
+                    dueDate,
+                    timer,
+                    boardId,
+                    listId,
+                    projectId,
+                    lastActivityId,
+                  }}
+                  projectsToLists={allProjectsToLists}
+                  allBoardMemberships={boardAndCardMemberships}
+                  boardMemberships={boardMemberships}
+                  currentUserIds={users.map((user) => user.id)}
+                  labels={boardLabels}
+                  currentLabelIds={labels.map((label) => label.id)}
+                  url={url}
+                  canEdit={canEdit}
+                  createdAt={createdAt}
+                  createdBy={createdBy}
+                  updatedAt={updatedAt}
+                  updatedBy={updatedBy}
+                  activities={activities}
+                  isActivitiesFetching={isActivitiesFetching}
+                  isAllActivitiesFetched={isAllActivitiesFetched}
+                  onActivitiesFetch={onActivitiesFetch}
+                  onNameEdit={handleNameEdit}
+                  onUpdate={onUpdate}
+                  onMarkCompleted={onMarkCompleted}
+                  onMove={onMove}
+                  onTransfer={onTransfer}
+                  onDuplicate={onDuplicate}
+                  onDelete={onDelete}
+                  onUserAdd={onUserAdd}
+                  onUserRemove={onUserRemove}
+                  onUserEmailLookup={onUserEmailLookup}
+                  onBoardFetch={onBoardFetch}
+                  onLabelAdd={onLabelAdd}
+                  onLabelRemove={onLabelRemove}
+                  onLabelCreate={onLabelCreate}
+                  onLabelUpdate={onLabelUpdate}
+                  onLabelDelete={onLabelDelete}
+                  position={cardNameEditMode === CardNameEditModes.RIGHT_CLICK ? 'right-start' : 'left-start'}
+                  offset={0}
+                  hideCloseButton
+                >
+                  <Button variant={ButtonVariant.Icon} title={t('common.editCard')} className={clsx(s.editCardButton, isNameEditing && s.editCardButtonHidden)}>
+                    <Icon type={IconType.EllipsisVertical} size={IconSize.Size13} />
+                  </Button>
+                </CardActionsPopup>
+              </div>
+            </>
+          ) : (
+            <span className={s.content}>{contentNode}</span>
+          )}
+        </div>
       </div>
     );
   },
@@ -570,6 +582,7 @@ Card.propTypes = {
   currentUserId: PropTypes.string.isRequired,
   selfAssignBySpacebar: PropTypes.bool.isRequired,
   rightClickContextMenu: PropTypes.bool.isRequired,
+  cardNameEditMode: PropTypes.oneOf(Object.values(CardNameEditModes)),
   onUpdate: PropTypes.func.isRequired,
   onMarkCompleted: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
@@ -609,6 +622,7 @@ Card.defaultProps = {
   createdBy: undefined,
   updatedAt: undefined,
   updatedBy: undefined,
+  cardNameEditMode: CardNameEditModes.SHIFT_CLICK,
 };
 
 export default Card;
