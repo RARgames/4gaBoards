@@ -93,11 +93,11 @@ const Dropdown = React.forwardRef(
     }, [isOpen]);
 
     const getOptions = useCallback(() => {
-      if (!searchValue) {
+      if (!isSearchable || !searchValue) {
         return options;
       }
       return options.filter((item) => getItemLabel(item).toLowerCase().startsWith(searchValue.toLowerCase()));
-    }, [options, searchValue, getItemLabel]);
+    }, [options, searchValue, getItemLabel, isSearchable]);
 
     useEffect(() => {
       if (selectFirstOnSearch && searchValue && searchValue.length > 0) {
@@ -220,9 +220,13 @@ const Dropdown = React.forwardRef(
       [selectedItem],
     );
 
-    const handleSearch = useCallback((e) => {
-      setSearchValue(e.target.value);
-    }, []);
+    const handleSearch = useCallback(
+      (e) => {
+        if (!isSearchable) return;
+        setSearchValue(e.target.value);
+      },
+      [isSearchable],
+    );
 
     const handleKeyDown = useCallback(
       (e) => {
@@ -235,7 +239,7 @@ const Dropdown = React.forwardRef(
           }
           case 'ArrowDown': {
             const currIndex = getCurrItemIndex();
-            const nextIndex = Math.min(getOptions(0).length - 1, currIndex + 1);
+            const nextIndex = Math.min(getOptions().length - 1, currIndex + 1);
             selectItemByIndex(nextIndex);
             break;
           }
@@ -317,7 +321,7 @@ const Dropdown = React.forwardRef(
             onChange={handleSearch}
             value={searchValue}
             ref={dropdown}
-            className={clsx(s.dropdownSearchInput, isError && s.dropdownSearchInputError, inputClassName)}
+            className={clsx(s.dropdownSearchInput, !isSearchable && s.dropdownSearchInputReadOnly, isError && s.dropdownSearchInputError, inputClassName)}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}

@@ -113,6 +113,11 @@
     border-radius: 8px;
   }
 
+  .dropdownSearchInputReadOnly {
+    caret-color: transparent;
+    cursor: pointer;
+  }
+
   .icon {
     margin-right: 6px;
   }
