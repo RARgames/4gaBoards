@@ -244,8 +244,8 @@ export const activityRenderSpec = {
           key,
           values: {
             card: ctx.cardNameTruncated,
-            timer: formatTimerActivities({ startedAt: data.cardTimer?.startedAt, total: data.cardTimer?.total }),
-            prevTimer: formatTimerActivities({ startedAt: data.cardPrevTimer?.startedAt, total: data.cardPrevTimer?.total }),
+            timer: formatTimerActivities({ startedAt: data.cardTimer?.startedAt, total: data.cardTimer?.total }, ctx.activity.createdAt),
+            prevTimer: formatTimerActivities({ startedAt: state === 'stop' ? null : data.cardPrevTimer?.startedAt, total: data.cardPrevTimer?.total }, ctx.activity.createdAt),
           },
           components: [
             { slot: 'card', title: ctx.cardName },

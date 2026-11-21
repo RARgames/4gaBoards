@@ -1,6 +1,7 @@
-export const getFullSeconds = ({ startedAt, total }) => {
+export const getFullSeconds = ({ startedAt, total }, at = new Date()) => {
   if (startedAt) {
-    return Math.floor((new Date() - startedAt) / 1000) + total;
+    const elapsed = Math.max(0, Math.floor((new Date(at) - new Date(startedAt)) / 1000));
+    return elapsed + total;
   }
 
   return total;
@@ -26,8 +27,8 @@ export const stopTimer = (timer) => ({
   total: getFullSeconds(timer),
 });
 
-export const getTimerParts = (timer) => {
-  const fullSeconds = getFullSeconds(timer);
+export const getTimerParts = (timer, at) => {
+  const fullSeconds = getFullSeconds(timer, at);
 
   const hours = Math.floor(fullSeconds / 3600);
   const minutes = Math.floor((fullSeconds - hours * 3600) / 60);
@@ -70,10 +71,10 @@ export const getTimerState = (prev, next) => {
   return 'none';
 };
 
-export const formatTimerActivities = (timer) => {
-  let { hours, minutes, seconds } = getTimerParts(timer);
+export const formatTimerActivities = (timer, at) => {
+  let { hours, minutes, seconds } = getTimerParts(timer, at);
   if ([hours, minutes, seconds].every(Number.isNaN)) {
-    ({ hours, minutes, seconds } = getTimerParts({ ...timer, startedAt: null }));
+    ({ hours, minutes, seconds } = getTimerParts({ ...timer, startedAt: null }, at));
   }
 
   const formatPart = (part) => {
