@@ -26,6 +26,11 @@ module.exports = {
       defaultsTo: true,
       columnName: 'sso_registration_enabled',
     },
+    oidcOnlyRegistration: {
+      type: 'boolean',
+      defaultsTo: false,
+      columnName: 'oidc_only_registration',
+    },
     projectCreationAllEnabled: {
       type: 'boolean',
       defaultsTo: true,

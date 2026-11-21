@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
       registerForm: { data: defaultData, isSubmitting, error },
     },
   } = state;
-  const { ssoAvailable, oidcEnabledMethods, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled } = selectors.selectCoreSettings(state);
+  const { ssoAvailable, oidcEnabledMethods, registrationEnabled, localRegistrationEnabled, ssoRegistrationEnabled, oidcOnlyRegistration } = selectors.selectCoreSettings(state);
 
   return {
     defaultData,
@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
     registrationEnabled,
     localRegistrationEnabled,
     ssoRegistrationEnabled,
+    oidcOnlyRegistration: !!oidcOnlyRegistration,
     error,
   };
 };
