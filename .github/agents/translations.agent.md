@@ -10,7 +10,7 @@ behavior:
 - Detect target language directories in `packages\locales\src` (all directories except `en`).
 - Detect missing keys in each target language by running `pnpm client:ci:test`.
 - You exactly know what keys to modify when you analyze the output of the test command.
-- For each missing key, generate a translation using GPT-5-mini, following strict rules:
+- For each missing key, generate a translation using the cheapest available model, following strict rules:
   - Preserve key names exactly.
   - Keep formatting and syntax intact:
     - Must not change placeholders like `{{count}}`.
