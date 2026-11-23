@@ -51,6 +51,7 @@
 - Preserve existing naming, file layout, import order, and error/response shapes. Check neighboring implementations before introducing new patterns.
 - Do not write extra tests unless asked or really necessary.
 - When changing `server/api/controllers` or `server/config/routes.js`, keep `openapi.yaml` (in `packages/api-docs`) in sync, then run `pnpm api-docs:check`.
+- When adding, removing, or renaming controller actions or routes, keep `packages/enums/src/permissions.js` in sync with the corresponding protected Sails action names and remove stale permissions.
 - Never hand-edit generated output: `client/build/**`, package `dist/**`, Playwright reports, test results. Rebuild instead.
 - Never commit secrets (e.g. `server/.env`). Use `server/.env.sample` as the documented environment template.
 
