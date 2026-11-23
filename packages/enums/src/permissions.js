@@ -40,8 +40,11 @@ const Permissions = {
   BOARD_CREATE: 'boards.create',
   BOARD_DETAILS: 'boards.show',
   BOARD_UPDATE: 'boards.update',
+  BOARD_UPDATE_BACKGROUND_IMAGE: 'boards.update-background-image',
   BOARD_DELETE: 'boards.delete',
   BOARD_EXPORT: 'boards.export',
+  BOARD_FIND_LABEL_BY_NAME: 'boards.find-label-by-name',
+  BOARD_FIND_USER_BY_USERNAME: 'boards.find-user-by-username',
 
   BOARDTEMPLATE_LIST: 'board-templates.index',
   BOARDTEMPLATE_CREATE: 'board-templates.create',
@@ -63,7 +66,9 @@ const Permissions = {
   CARD_CREATE: 'cards.create',
   CARD_DETAILS: 'cards.show',
   CARD_UPDATE: 'cards.update',
+  CARD_CREATE_MENTION: 'cards.create-mention',
   CARD_DUPLICATE: 'cards.duplicate',
+  CARD_MARK_COMPLETED: 'cards.mark-completed',
   CARD_DELETE: 'cards.delete',
 
   CARDMEMBERSHIP_CREATE: 'card-memberships.create',
@@ -102,15 +107,17 @@ const Permissions = {
 
   COMMENT_LIST: 'comments.index',
   COMMENT_CREATE: 'comments.create',
+  COMMENT_CREATE_MENTION: 'comments.create-mention',
   COMMENT_UPDATE: 'comments.update',
   COMMENT_DELETE: 'comments.delete',
 
   NOTIFICATION_LIST: 'notifications.index',
   NOTIFICATION_DETAILS: 'notifications.show',
   NOTIFICATION_UPDATE: 'notifications.update',
-  NOTIFICATION_MARK_AS_READ: 'notifications.mark-as-read',
+  NOTIFICATION_MARK_ALL_AS: 'notifications.mark-all-as',
   NOTIFICATION_DELETE: 'notifications.delete',
   NOTIFICATION_DELETE_ALL: 'notifications.delete-all',
+  NOTIFICATION_SUBMIT_SYSTEM_NOTIFICATION_RESPONSE: 'notifications.submit-system-notification-response',
 
   ATTACHMENT_DOWNLOAD: 'attachments.download',
   ATTACHMENT_DOWNLOAD_THUMBNAIL: 'attachments.download-thumbnail',
