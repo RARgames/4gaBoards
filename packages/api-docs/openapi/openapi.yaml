@@ -4309,6 +4309,34 @@ paths:
         - bearerAuth: []
         - clientId: []
           clientSecret: []
+  /manifest.json:
+    get:
+      tags:
+        - core
+      summary: 'Get web app manifest'
+      operationId: manifestShow
+      responses:
+        '200':
+          description: Web app manifest
+          content:
+            application/json:
+              schema:
+                type: object
+      security: []
+  /service-worker.js:
+    get:
+      tags:
+        - core
+      summary: 'Get service worker'
+      operationId: serviceWorkerShow
+      responses:
+        '200':
+          description: Service worker JavaScript
+          content:
+            application/javascript:
+              schema:
+                type: string
+      security: []
 components:
   securitySchemes:
     bearerAuth:
