@@ -36,7 +36,7 @@ const getSocketToOmit = (request, userId, currentUserId) => {
     return undefined;
   }
 
-  const socketId = request.headers['x-4gaboards-socket-id'];
+  const socketId = request?.headers?.['x-4gaboards-socket-id'];
   if (!socketId) {
     return undefined;
   }
