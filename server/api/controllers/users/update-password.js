@@ -37,7 +37,7 @@ module.exports = {
 
   async fn(inputs) {
     const { currentUser } = this.req;
-    const isBrowser = isBrowserRequest(this.req, sails.config.custom.clientUrl);
+    const isBrowser = isBrowserRequest(this.req, sails.config.custom.publicUrls);
 
     if (isBrowser && this.req.isSocket) {
       throw Errors.INSUFFICIENT_PERMISSIONS;

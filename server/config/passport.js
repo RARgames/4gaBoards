@@ -95,6 +95,9 @@ async function setupOIDC() {
           clientSecret: process.env.OIDC_CLIENT_SECRET,
           pkceEnabled,
           callbackURL: `${process.env.BASE_URL}/auth/oidc/callback`,
+          clientUrl: process.env.BASE_URL,
+          publicUrls: sails.config.custom.publicUrls,
+          permissiveProxy: sails.config.custom.permissiveOidcProxy,
           scope: ['openid', 'profile', 'email'],
         },
         (accessToken, refreshToken, profile, done) => {

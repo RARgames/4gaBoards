@@ -9,17 +9,19 @@ const crypto = require('crypto');
 const { Strategy } = require('passport-strategy');
 
 const { checkOidcAdminStatus } = require('../utils/checkOidcAdminStatus');
+const { getRequestPublicUrl } = require('../utils/public-urls');
 const { validateOidcUsername } = require('../utils/validateOidcUsername');
 
 const createCodeVerifier = () => crypto.randomBytes(32).toString('base64url');
 const createCodeChallenge = (codeVerifier) => crypto.createHash('sha256').update(codeVerifier).digest('base64url');
 const getStateEncryptionKey = () => crypto.createHash('sha256').update(process.env.OIDC_STATE_SECRET).digest();
 
-async function createOidcState(codeVerifier) {
+async function createOidcState(codeVerifier, callbackURL) {
   const { EncryptJWT } = await import('jose');
   return new EncryptJWT({
     nonce: crypto.randomUUID(),
     ...(codeVerifier && { codeVerifier }),
+    callbackURL,
   })
     .setProtectedHeader({ alg: 'dir', enc: 'A256GCM', typ: 'JWT' })
     .setIssuedAt()
@@ -46,6 +48,9 @@ class OIDCStrategy extends Strategy {
    * @param {string} options.clientID - OAuth2 client ID
    * @param {string} [options.clientSecret] - OAuth2 client secret
    * @param {string} options.callbackURL - Callback URL for this application
+   * @param {string} options.clientUrl - Client URL for this application
+   * @param {Array<string>} [options.publicUrls] - List of public URLs for permissive proxy
+   * @param {boolean} [options.permissiveProxy] - Allow callback URL to be determined from request public URL
    * @param {boolean} [options.pkceEnabled] - Enable PKCE (S256)
    * @param {Array<string>} [options.scope] - OAuth2 scopes (default: ['openid', 'profile', 'email'])
    * @param {Function} verify - Passport verify callback function
@@ -61,8 +66,18 @@ class OIDCStrategy extends Strategy {
     this.clientID = options.clientID;
     this.clientSecret = options.clientSecret;
     this.callbackURL = options.callbackURL;
+    this.clientUrl = options.clientUrl;
+    this.publicUrls = options.publicUrls || [];
+    this.permissiveProxy = options.permissiveProxy || false;
     this.pkceEnabled = options.pkceEnabled;
     this.scope = options.scope || ['openid', 'profile', 'email'];
+  }
+
+  getCallbackURL(req) {
+    if (!this.permissiveProxy) return this.callbackURL;
+
+    const publicUrl = getRequestPublicUrl(req, this.publicUrls, this.clientUrl);
+    return `${publicUrl}/auth/oidc/callback`;
   }
 
   /**
@@ -93,11 +108,12 @@ class OIDCStrategy extends Strategy {
     }
 
     const codeVerifier = this.pkceEnabled ? createCodeVerifier() : undefined;
-    const state = await createOidcState(codeVerifier);
+    const callbackURL = this.getCallbackURL(req);
+    const state = await createOidcState(codeVerifier, callbackURL);
     const authURL = new URL(this.authorizationURL);
     authURL.search = new URLSearchParams({
       client_id: this.clientID,
-      redirect_uri: this.callbackURL,
+      redirect_uri: callbackURL,
       scope: this.scope.join(' '),
       response_type: 'code',
       state,
@@ -132,7 +148,7 @@ class OIDCStrategy extends Strategy {
         body: new URLSearchParams({
           grant_type: 'authorization_code',
           code: req.query.code,
-          redirect_uri: this.callbackURL,
+          redirect_uri: state.callbackURL || this.callbackURL,
           client_id: this.clientID,
           ...(this.clientSecret && { client_secret: this.clientSecret }),
           ...(this.pkceEnabled && { code_verifier: state.codeVerifier }),

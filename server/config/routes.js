@@ -149,9 +149,11 @@ module.exports.routes = {
   },
 
   'GET /.well-known/assetlinks.json': 'assetlinks/show',
+  'GET /manifest.json': 'manifest/show',
+  'GET /service-worker.js': 'service-worker/show',
 
   'GET /*': {
-    view: 'index',
+    action: 'client/show',
     skipAssets: true,
   },
 };

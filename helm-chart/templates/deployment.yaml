@@ -54,6 +54,10 @@ spec:
             value: {{ .Values.env.required.SECRET_KEY }}
           - name: CLIENT_URL
             value: {{ .Values.env.optional.CLIENT_URL }}
+          - name: CLIENT_URLS
+            value: {{ .Values.env.optional.CLIENT_URLS }}
+          - name: PERMISSIVE_OIDC_PROXY
+            value: {{ .Values.env.optional.PERMISSIVE_OIDC_PROXY }}
           - name: INSTANCE_NAME
             value: {{ .Values.env.optional.INSTANCE_NAME }}
           - name: DEFAULT_ADMIN_USERNAME

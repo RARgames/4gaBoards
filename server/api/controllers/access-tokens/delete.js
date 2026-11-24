@@ -11,7 +11,7 @@ module.exports = {
       deletedAt: new Date().toUTCString(),
     });
 
-    if (isBrowserRequest(this.req, sails.config.custom.clientUrl)) {
+    if (isBrowserRequest(this.req, sails.config.custom.publicUrls)) {
       if (!this.req.isSocket) {
         clearAccessTokenCookie(this.res);
       }

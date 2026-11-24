@@ -57,7 +57,7 @@ module.exports = {
     });
 
     // If the request is from a browser, set the access token in a cookie and return a success response without the token. Cookie cannot be set for socket requests
-    if (!this.req.isSocket && isBrowserRequest(this.req, sails.config.custom.clientUrl)) {
+    if (!this.req.isSocket && isBrowserRequest(this.req, sails.config.custom.publicUrls)) {
       setAccessTokenCookie(this.res, accessToken, sails.config.custom.baseUrl);
       return { item: true };
     }

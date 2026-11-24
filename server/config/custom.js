@@ -1,21 +1,19 @@
 /**
- * Custom configuration
- * (sails.config.custom)
- *
- * One-off settings specific to your application.
- *
- * For more information on custom configuration, visit:
- * https://sailsjs.com/config/custom
+ * Custom configuration (sails.config.custom)
  */
 
 const path = require('path');
 const sails = require('sails');
 
+const { getPublicUrls } = require('../utils/public-urls');
+
 const oidcPkceEnabled = process.env.OIDC_PKCE_ENABLED !== 'false';
+const publicUrls = getPublicUrls();
 
 module.exports.custom = {
   baseUrl: process.env.BASE_URL,
   clientUrl: process.env.CLIENT_URL || (process.env.NODE_ENV === 'production' ? process.env.BASE_URL : 'http://localhost:3000'),
+  publicUrls,
   instanceName: process.env.INSTANCE_NAME || '4gaboards.com',
 
   tokenExpiresIn: parseInt(process.env.TOKEN_EXPIRES_IN, 10) || 365,
@@ -66,6 +64,7 @@ module.exports.custom = {
     .map((s) => s.trim())
     .filter((s) => s.length > 0)
     .filter((s) => s && process.env[`OIDC_DISABLE_HINT_${s.toUpperCase()}`] !== 'true'),
+  permissiveOidcProxy: process.env.PERMISSIVE_OIDC_PROXY === 'true',
 
   mailServiceAvailable: false,
   mailServiceInboundEmail: process.env.MAIL_SERVICE_INBOUND_EMAIL,

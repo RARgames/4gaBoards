@@ -73,7 +73,7 @@ module.exports = {
     const accessToken = sails.helpers.utils.createToken(user.id);
     await Session.create({ accessToken, remoteAddress: getRemoteAddress(this.req), userId: user.id, userAgent: getUserAgent(this.req) });
 
-    if (!this.req.isSocket && isBrowserRequest(this.req, sails.config.custom.clientUrl)) {
+    if (!this.req.isSocket && isBrowserRequest(this.req, sails.config.custom.publicUrls)) {
       setAccessTokenCookie(this.res, accessToken, sails.config.custom.baseUrl);
       return { item: true };
     }

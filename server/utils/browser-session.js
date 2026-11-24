@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 
-const isBrowserRequest = (req, clientUrl) => {
-  if (req.headers['x-4gaboards-request'] !== '1') {
+const isBrowserRequest = (req, clientUrls) => {
+  const applicationRequestHeader = Object.entries(req.headers).find(([name]) => name.toLowerCase() === 'x-4gaboards-request')?.[1];
+  if (applicationRequestHeader !== '1') {
     return false;
   }
 
@@ -11,7 +12,8 @@ const isBrowserRequest = (req, clientUrl) => {
   }
 
   try {
-    return origin === new URL(clientUrl).origin;
+    const trustedOrigins = (Array.isArray(clientUrls) ? clientUrls : [clientUrls]).map((url) => new URL(url).origin);
+    return trustedOrigins.includes(origin);
   } catch {
     return false;
   }

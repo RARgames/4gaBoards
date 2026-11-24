@@ -1,5 +1,8 @@
 const { setAccessTokenCookie } = require('../../utils/browser-session');
+const { getRequestPublicUrl } = require('../../utils/public-urls');
 const { getRemoteAddress, getUserAgent } = require('../../utils/remoteAddress');
+
+const getOidcClientUrl = (req) => (sails.config.custom.permissiveOidcProxy ? getRequestPublicUrl(req, sails.config.custom.publicUrls, sails.config.custom.clientUrl) : sails.config.custom.clientUrl);
 
 module.exports = {
   exits: {
@@ -88,20 +91,21 @@ module.exports = {
   },
 
   oidc(req, res, next) {
-    sails.config.passport.authenticate('oidc', { failureRedirect: '/login' })(req, res, next);
+    sails.config.passport.authenticate('oidc', { failureRedirect: `${getOidcClientUrl(req)}/login` })(req, res, next);
   },
 
   oidcCallback(req, res, next) {
-    sails.config.passport.authenticate('oidc', { failureRedirect: '/login' }, async function authenticateUser(err, profile) {
+    const clientUrl = getOidcClientUrl(req);
+    sails.config.passport.authenticate('oidc', { failureRedirect: `${clientUrl}/login` }, async function authenticateUser(err, profile) {
       if (err) {
         sails.log.error('OIDC callback error:', err);
         const errorCode = err.code || err.message || 'unknown';
-        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=${encodeURIComponent(errorCode)}`);
+        res.redirect(`${clientUrl}/oidc-callback?error=${encodeURIComponent(errorCode)}`);
         return;
       }
       if (!profile) {
         sails.log.error('OIDC callback: No profile returned');
-        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=no_profile`);
+        res.redirect(`${clientUrl}/oidc-callback?error=no_profile`);
         return;
       }
 
@@ -125,12 +129,12 @@ module.exports = {
         const accessToken = sails.helpers.utils.createToken(user.id);
         await Session.create({ accessToken, remoteAddress: getRemoteAddress(req), userId: user.id, userAgent: getUserAgent(req) });
         setAccessTokenCookie(res, accessToken, sails.config.custom.baseUrl);
-        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?success=1`);
+        res.redirect(`${clientUrl}/oidc-callback?success=1`);
         sails.log.info('OIDC SSO: User authentication successful:', user.id, user.email, user.name, user.ssoOidcId);
       } catch (error) {
         sails.log.error('OIDC callback: Error creating user or session', error);
         const errorCode = error.code || error.message || 'unknown';
-        res.redirect(`${sails.config.custom.clientUrl}/oidc-callback?error=${encodeURIComponent(errorCode)}`);
+        res.redirect(`${clientUrl}/oidc-callback?error=${encodeURIComponent(errorCode)}`);
       }
     })(req, res, next);
   },

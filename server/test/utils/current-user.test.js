@@ -5,12 +5,36 @@ const assert = require('node:assert/strict');
 const deleteAccessToken = require('../../api/controllers/access-tokens/delete');
 const updatePassword = require('../../api/controllers/users/update-password');
 const defineCurrentUserHook = require('../../api/hooks/current-user');
-const { setAccessTokenCookie } = require('../../utils/browser-session');
+const { isBrowserRequest, setAccessTokenCookie } = require('../../utils/browser-session');
+const { getPublicUrls, getRequestPublicUrl } = require('../../utils/public-urls');
+
+describe('public URLs', () => {
+  const urls = ['https://test.4gaboards.com', 'https://app.4gaboards.com/instance/test'];
+
+  it('loads canonical and additional public URLs from the environment', () => {
+    assert.deepEqual(getPublicUrls({ BASE_URL: urls[0], CLIENT_URLS: `${urls[1]};${urls[1]}` }), urls);
+  });
+
+  it('selects the public URL matching the forwarded host and prefix', () => {
+    const req = {
+      headers: {
+        host: 'server.internal:1337',
+        'x-forwarded-host': 'app.4gaboards.com',
+        'x-forwarded-prefix': '/instance/test',
+        'x-forwarded-proto': 'https',
+      },
+      protocol: 'http',
+    };
+
+    assert.equal(getRequestPublicUrl(req, urls, urls[0]), urls[1]);
+    assert.equal(isBrowserRequest({ headers: { 'x-4gaboards-request': '1', origin: 'https://app.4gaboards.com' }, isSocket: true }, urls), true);
+  });
+});
 
 describe('current-user API authentication', () => {
   const currentUser = { id: '1' };
   const sails = {
-    config: { custom: { clientUrl: 'https://boards.example' } },
+    config: { custom: { clientUrl: 'https://boards.example', publicUrls: ['https://boards.example'] } },
     helpers: { utils: { getUser: async (token) => (token === 'valid-token' ? currentUser : null) } },
     sockets: { join: () => {} },
   };
@@ -96,7 +120,7 @@ describe('browser session cookies', () => {
   it('does not return a revoked token to a browser socket', async () => {
     const previousSails = global.sails;
     const previousSession = global.Session;
-    global.sails = { config: { custom: { clientUrl: 'https://boards.example' } } };
+    global.sails = { config: { custom: { clientUrl: 'https://boards.example', publicUrls: ['https://boards.example'] } } };
     global.Session = { updateOne: () => ({ set: async () => {} }) };
 
     try {
@@ -118,7 +142,7 @@ describe('browser session cookies', () => {
     let tokenIssuedAt;
     global._ = lodash;
     global.sails = {
-      config: { custom: { clientUrl: 'https://boards.example', baseUrl: 'https://boards.example', requiredPasswordStrength: 0 } },
+      config: { custom: { clientUrl: 'https://boards.example', publicUrls: ['https://boards.example'], baseUrl: 'https://boards.example', requiredPasswordStrength: 0 } },
       helpers: {
         users: { getOne: async () => user, updateOne: { with: async () => user }, sanitize: async () => user },
         utils: {
@@ -144,7 +168,7 @@ describe('browser session cookies', () => {
       const result = await updatePassword.fn.call({ req, res }, { id: user.id, password: 'new-password' });
 
       assert.deepEqual(result, { item: user });
-      assert.equal(tokenIssuedAt.getTime(), new Date(user.passwordChangedAt).getTime());
+      assert.equal(new Date(tokenIssuedAt).getTime(), new Date(user.passwordChangedAt).getTime());
       assert.equal(cookie.value, token);
       assert.equal(cookie.options.httpOnly, true);
     } finally {
@@ -156,7 +180,7 @@ describe('browser session cookies', () => {
 
   it('rejects cookie-based password rotation over a socket', async () => {
     const previousSails = global.sails;
-    global.sails = { config: { custom: { clientUrl: 'https://boards.example' } } };
+    global.sails = { config: { custom: { clientUrl: 'https://boards.example', publicUrls: ['https://boards.example'] } } };
 
     try {
       const req = { currentUser: { id: '1' }, isSocket: true, headers: { 'x-4gaBoards-Request': '1', origin: 'https://boards.example' } };

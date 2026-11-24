@@ -12,8 +12,8 @@ const OPTIONS = {
   callbackURL: 'https://boards.example/auth/oidc/callback',
 };
 
-function createStrategy(pkceEnabled) {
-  const strategy = new OIDCStrategy({ ...OPTIONS, pkceEnabled }, () => {});
+function createStrategy(pkceEnabled, overrides = {}) {
+  const strategy = new OIDCStrategy({ ...OPTIONS, pkceEnabled, ...overrides }, () => {});
   strategy.redirect = (url) => url;
   return strategy;
 }
@@ -58,5 +58,46 @@ describe('OIDCStrategy', () => {
 
     expect(params.get('code_challenge_method')).to.equal('S256');
     expect(params.get('code_challenge')).to.equal(codeChallenge);
+  });
+
+  it('uses the request public URL when permissive OIDC proxy mode is enabled', async () => {
+    const alternateUrl = 'https://app.4gaboards.com/instance/test';
+    const req = {
+      query: {},
+      protocol: 'https',
+      headers: {
+        host: 'server.internal:1337',
+        'x-forwarded-host': 'app.4gaboards.com',
+        'x-forwarded-proto': 'https',
+        'x-forwarded-prefix': '/instance/test',
+      },
+    };
+    const strategy = createStrategy(false, {
+      publicUrl: 'https://test.4gaboards.com',
+      publicUrls: ['https://test.4gaboards.com', alternateUrl],
+      permissiveProxy: true,
+    });
+
+    const params = new URL(await strategy.startAuth(req)).searchParams;
+    const callbackURL = `${alternateUrl}/auth/oidc/callback`;
+
+    expect(params.get('redirect_uri')).to.equal(callbackURL);
+    expect((await decryptState(params.get('state'))).payload.callbackURL).to.equal(callbackURL);
+  });
+
+  it('keeps the canonical callback when permissive OIDC proxy mode is disabled', async () => {
+    const req = {
+      query: {},
+      protocol: 'https',
+      headers: { host: 'app.4gaboards.com', 'x-forwarded-prefix': '/instance/test' },
+    };
+    const strategy = createStrategy(false, {
+      publicUrl: 'https://test.4gaboards.com',
+      publicUrls: ['https://test.4gaboards.com', 'https://app.4gaboards.com/instance/test'],
+    });
+
+    const params = new URL(await strategy.startAuth(req)).searchParams;
+
+    expect(params.get('redirect_uri')).to.equal(OPTIONS.callbackURL);
   });
 });

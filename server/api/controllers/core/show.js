@@ -1,3 +1,5 @@
+const { getRequestPublicUrl } = require('../../../utils/public-urls');
+
 const Errors = {
   CORE_NOT_FOUND: { coreNotFound: 'Core not found' },
 };
@@ -16,6 +18,11 @@ module.exports = {
     }
 
     const allowedRegisterDomains = core.allowedRegisterDomains.join(';');
+    const publicUrl = getRequestPublicUrl(this.req, sails.config.custom.publicUrls, sails.config.custom.baseUrl);
+    const ssoUrls = {
+      ...sails.config.custom.ssoUrls,
+      ...(sails.config.custom.permissiveOidcProxy && { oidc: `${publicUrl}/auth/oidc` }),
+    };
 
     return {
       item: {
@@ -27,7 +34,7 @@ module.exports = {
         syncSsoDataOnAuth: core.syncSsoDataOnAuth,
         syncSsoAdminOnAuth: core.syncSsoAdminOnAuth,
         allowedRegisterDomains,
-        ssoUrls: sails.config.custom.ssoUrls,
+        ssoUrls,
         ssoAvailable: sails.config.custom.ssoAvailable,
         oidcEnabledMethods: sails.config.custom.oidcEnabledMethods,
         demoMode: sails.config.custom.demoMode,

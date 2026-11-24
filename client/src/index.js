@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import Root from './components/Root';
+import Config from './constants/Config';
 import history from './history';
 import store from './store';
 import './i18n';
@@ -14,6 +15,8 @@ root.render(React.createElement(Root, { store, history }));
 
 if (process.env.NODE_ENV === 'production' && typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    const serviceWorkerPath = `${Config.BASE_PATH}/service-worker.js`;
+    const serviceWorkerScope = `${Config.BASE_PATH}/`;
+    navigator.serviceWorker.register(serviceWorkerPath, { scope: serviceWorkerScope }).catch(() => {});
   });
 }

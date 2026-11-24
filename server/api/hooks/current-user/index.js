@@ -28,7 +28,7 @@ module.exports = function defineCurrentUserHook(sails) {
             const accessToken =
               authorizationHeader && TOKEN_PATTERN.test(authorizationHeader)
                 ? authorizationHeader.replace(TOKEN_PATTERN, '')
-                : isBrowserRequest(req, sails.config.custom.clientUrl) && req.cookies && req.cookies.accessToken;
+                : isBrowserRequest(req, sails.config.custom.publicUrls) && req.cookies && req.cookies.accessToken;
 
             if (accessToken) {
               const currentUser = await sails.helpers.utils.getUser(accessToken);
