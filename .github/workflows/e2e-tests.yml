@@ -40,6 +40,7 @@ jobs:
         run: |
           docker compose -f docker-compose-dev.yml up -d --wait
           cp server/.env.sample server/.env
+          sed -i 's|^BASE_URL=.*|BASE_URL=http://localhost:3000|' server/.env
           pnpm server:db:init
 
       - name: Start 4ga Boards and run tests
