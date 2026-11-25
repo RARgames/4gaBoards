@@ -14,22 +14,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7.0.1
 
+      - name: Read versions from package.json engines
+        id: versions
+        run: |
+          node -e "const p=require('./package.json'); console.log('node=' + p.engines.node); console.log('pnpm=' + p.engines.pnpm);" >> "$GITHUB_OUTPUT"
+
       - name: Setup Node
         uses: actions/setup-node@v7.1.0
         with:
-          node-version: 26
+          node-version: ${{ steps.versions.outputs.node }}
 
-      - name: Get pnpm version from package.json
-        id: pnpm_version
-        run: |
-          version=$(jq -r '.engines.pnpm' package.json | sed 's/[^0-9.]//g')
-          echo "version=$version" >> $GITHUB_OUTPUT
-
-      - name: Install pnpm
-        run: npm install -g pnpm@${{ steps.pnpm_version.outputs.version }}
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6.1.1
+        with:
+          version: ${{ steps.versions.outputs.pnpm }}
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile --filter tests
 
       - name: Install chromium
         working-directory: tests
