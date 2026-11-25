@@ -11,6 +11,8 @@ import Attachment from './Attachment';
 import * as s from './Attachments.module.scss';
 
 const INITIALLY_VISIBLE = 4;
+// Formats the server streams with a video content type (see attachments/download)
+const VIDEO_EXTENSIONS_REGEX = /\.(mp4|m4v|webm)$/i;
 
 const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, onDelete, onCoverUpdate, onGalleryOpen, onGalleryClose, onActivitiesFetch }) => {
   const [t] = useTranslation();
@@ -45,6 +47,18 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
     (gallery) => {
       onGalleryOpen();
 
+      // Let native video controls (seek bar, volume) handle the pointer instead of the swipe/close gestures
+      gallery.on('pointerDown', (e) => {
+        if (e.originalEvent.target.closest('video')) {
+          e.preventDefault();
+        }
+      });
+
+      // Stop playback when switching slides, closing removes the video anyway
+      gallery.on('change', () => {
+        gallery.element.querySelectorAll('video').forEach((video) => video.pause());
+      });
+
       gallery.on('destroy', () => {
         onGalleryClose();
       });
@@ -58,18 +72,24 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
 
   const galleryItemsNode = items.map((item, index) => {
     const isPdf = item.url && item.url.endsWith('.pdf');
+    const isVideo = item.url && VIDEO_EXTENSIONS_REGEX.test(item.url);
 
     let props;
     if (item.image) {
       props = item.image;
+    } else if (isPdf) {
+      props = {
+        // eslint-disable-next-line jsx-a11y/alt-text
+        content: <object data={item.url} type="application/pdf" className={clsx(s.content, s.contentPdf)} />,
+      };
+    } else if (isVideo) {
+      props = {
+        // eslint-disable-next-line jsx-a11y/media-has-caption
+        content: <video src={item.url} controls preload="metadata" className={clsx(s.content, s.contentVideo)} />,
+      };
     } else {
       props = {
-        content: isPdf ? (
-          // eslint-disable-next-line jsx-a11y/alt-text
-          <object data={item.url} type="application/pdf" className={clsx(s.content, s.contentPdf)} />
-        ) : (
-          <span className={clsx(s.content, s.contentError)}>{t('common.thereIsNoPreviewAvailableForThisAttachment')}</span>
-        ),
+        content: <span className={clsx(s.content, s.contentError)}>{t('common.thereIsNoPreviewAvailableForThisAttachment')}</span>,
       };
     }
 
@@ -101,7 +121,7 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
               updatedAt={item.updatedAt}
               updatedBy={item.updatedBy}
               boardMemberships={boardMemberships}
-              onClick={item.image || isPdf ? open : undefined}
+              onClick={item.image || isPdf || isVideo ? open : undefined}
               onCoverSelect={() => handleCoverSelect(item.id)}
               onCoverDeselect={handleCoverDeselect}
               onUpdate={(data) => handleUpdate(item.id, data)}

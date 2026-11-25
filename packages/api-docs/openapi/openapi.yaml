@@ -4219,11 +4219,32 @@ paths:
           required: true
           schema:
             type: string
+        - name: Range
+          in: header
+          required: false
+          description: Single byte range, e.g. `bytes=0-1023`. Multiple ranges return the full file.
+          schema:
+            type: string
       responses:
         '200':
-          description: File contents
+          description: File contents. Videos (`mp4`, `m4v`, `webm`) are served as `video/*`, everything else as `application/octet-stream`.
           content:
             application/octet-stream:
+              schema:
+                type: string
+                format: binary
+            video/*:
+              schema:
+                type: string
+                format: binary
+        '206':
+          description: Requested byte range of the file, see the `Content-Range` header
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+            video/*:
               schema:
                 type: string
                 format: binary
@@ -4233,6 +4254,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+        '416':
+          description: Requested range is outside the file, `Content-Range` holds the file size
       security:
         - bearerAuth: []
         - clientId: []
