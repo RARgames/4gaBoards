@@ -1,8 +1,8 @@
 module.exports = {
-  async fn() {
+  async fn(inputs, exits) {
     const { androidPackageName, androidSha256Fingerprint } = sails.config.custom;
 
-    return this.res.json([
+    return exits.success([
       {
         relation: ['delegate_permission/common.handle_all_urls'],
         target: {

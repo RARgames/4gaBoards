@@ -19,9 +19,8 @@
  * https://sailsjs.com/docs/concepts/deployment
  */
 
-const url = require('url');
-
 const { customLogger } = require('../../utils/logger');
+const { getPublicUrls } = require('../../utils/public-urls');
 
 module.exports = {
   /**
@@ -218,7 +217,7 @@ module.exports = {
      *
      */
 
-    onlyAllowOrigins: [new url.URL(process.env.BASE_URL).origin],
+    onlyAllowOrigins: [...new Set(getPublicUrls().map((publicUrl) => new URL(publicUrl).origin))],
 
     /**
      *

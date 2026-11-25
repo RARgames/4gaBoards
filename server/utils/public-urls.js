@@ -22,12 +22,17 @@ const getFirstHeaderValue = (req, name) =>
     .trim();
 
 const getRequestPublicUrl = (req, publicUrls, fallbackUrl) => {
-  const host = getFirstHeaderValue(req, 'x-forwarded-host');
-  const protocol = getFirstHeaderValue(req, 'x-forwarded-proto');
+  const host = getFirstHeaderValue(req, 'x-forwarded-host') || getFirstHeaderValue(req, 'host');
+  const protocol = getFirstHeaderValue(req, 'x-forwarded-proto') || req.protocol || 'http';
   const prefix = getFirstHeaderValue(req, 'x-forwarded-prefix');
-  const publicUrl = host ? `${protocol || req.protocol || 'http'}://${host}${prefix ? `/${prefix.replace(/^\/+|\/+$/g, '')}` : ''}` : undefined;
+  if (!host) return fallbackUrl;
 
-  return publicUrls.includes(publicUrl) ? publicUrl : fallbackUrl;
+  const origin = `${protocol}://${host}`;
+  const matchingUrls = publicUrls.filter((publicUrl) => new URL(publicUrl).origin === origin);
+  if (matchingUrls.length === 1) return matchingUrls[0];
+
+  const normalizedPrefix = prefix ? `/${prefix.replace(/^\/+|\/+$/g, '')}` : '';
+  return matchingUrls.find((publicUrl) => new URL(publicUrl).pathname.replace(/\/$/, '') === normalizedPrefix) || fallbackUrl;
 };
 
 module.exports = { getPublicUrls, getRequestPublicUrl };

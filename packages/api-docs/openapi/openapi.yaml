@@ -4337,6 +4337,20 @@ paths:
               schema:
                 type: string
       security: []
+  /index.html:
+    get:
+      tags:
+        - core
+      summary: 'Get web application shell'
+      operationId: clientIndexShow
+      responses:
+        '200':
+          description: Rendered web application HTML
+          content:
+            text/html:
+              schema:
+                type: string
+      security: []
 components:
   securitySchemes:
     bearerAuth:

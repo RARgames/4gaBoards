@@ -29,6 +29,15 @@ describe('public URLs', () => {
     assert.equal(getRequestPublicUrl(req, urls, urls[0]), urls[1]);
     assert.equal(isBrowserRequest({ headers: { 'x-4gaboards-request': '1', origin: 'https://app.4gaboards.com' }, isSocket: true }, urls), true);
   });
+
+  it('selects the only URL configured for a direct host without forwarded prefix', () => {
+    const req = {
+      headers: { host: 'app.4gaboards.com' },
+      protocol: 'https',
+    };
+
+    assert.equal(getRequestPublicUrl(req, urls, urls[0]), urls[1]);
+  });
 });
 
 describe('current-user API authentication', () => {
