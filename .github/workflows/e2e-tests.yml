@@ -30,7 +30,7 @@ jobs:
           version: ${{ steps.versions.outputs.pnpm }}
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --filter tests
+        run: pnpm install --frozen-lockfile
 
       - name: Install chromium
         working-directory: tests
