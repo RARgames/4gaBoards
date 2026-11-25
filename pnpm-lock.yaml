@@ -287,7 +287,7 @@ importers:
         version: 18.2.0(react@18.3.1)
       react-dropzone:
         specifier: ^20.2.0
-        version: 20.2.0(@types/react@19.2.17)(react@18.3.1)
+        version: 20.2.1(@types/react@19.2.17)(react@18.3.1)
       react-i18next:
         specifier: ^18.0.2
         version: 18.0.2(@types/react@19.2.17)(i18next@27.2.1(typescript@6.0.3))(react@18.3.1)(typescript@6.0.3)
@@ -5864,8 +5864,8 @@ packages:
     peerDependencies:
       webpack: ^4.0.0 || ^5.0.0
 
-  file-selector@5.0.1:
-    resolution: {integrity: sha512-v0g/PTeuQgvKCBrVRsfVudvwXlRHSWHEQkVgKawgCGHkEpKA1clp3Om5jvEVhz8G9W/mOYjJH9FhkH4C888PgQ==}
+  file-selector@5.0.3:
+    resolution: {integrity: sha512-d15nlW+KKq82TlItRvCHtJ8NXCX0nwz2SEUR1MOT8W50c5q2se551ZFdhITFrWohl/5wbRPfMMF9jq4Oj1xRGQ==}
     engines: {node: '>= 22'}
 
   filelist@1.0.6:
@@ -8480,8 +8480,8 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  react-dropzone@20.2.0:
-    resolution: {integrity: sha512-FRlcSp6UFT9Etg57U4+g6O6qF/jH7sUh2Hz67lQlrZJa/3FjfAFvw7DwDSItiG2vBUXTdh2wroEwXPPg7o/jkg==}
+  react-dropzone@20.2.1:
+    resolution: {integrity: sha512-8ldzI42a+iz6jlC5t0HoOO5ce65dU8ZGo8ZpesL2E57JByC8LBUieMrkGj97YYfgMaYKwkhpkfYxKOCKAekywA==}
     engines: {node: '>= 22'}
     peerDependencies:
       '@types/react': '*'
@@ -16070,7 +16070,7 @@ snapshots:
       schema-utils: 3.3.0
       webpack: 5.112.2(clean-css@5.3.3)(cssnano@7.1.9(postcss@8.5.33))(csso@5.0.5)(html-minifier-terser@6.1.0)(postcss@8.5.33)(sharp@0.35.5(@types/node@26.6.4))(svgo@4.1.0)
 
-  file-selector@5.0.1: {}
+  file-selector@5.0.3: {}
 
   filelist@1.0.6:
     dependencies:
@@ -19266,10 +19266,10 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-dropzone@20.2.0(@types/react@19.2.17)(react@18.3.1):
+  react-dropzone@20.2.1(@types/react@19.2.17)(react@18.3.1):
     dependencies:
       attr-accept: 4.0.1
-      file-selector: 5.0.1
+      file-selector: 5.0.3
       react: 18.3.1
     optionalDependencies:
       '@types/react': 19.2.17
@@ -20162,7 +20162,7 @@ snapshots:
     dependencies:
       '@img/colour': 1.1.0
       detect-libc: 2.1.2
-      semver: 7.8.5
+      semver: 7.8.6
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.35.5
       '@img/sharp-darwin-x64': 0.35.5
