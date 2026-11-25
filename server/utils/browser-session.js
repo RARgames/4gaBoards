@@ -11,12 +11,15 @@ const isBrowserRequest = (req, clientUrls) => {
     return !req.isSocket;
   }
 
-  try {
-    const trustedOrigins = (Array.isArray(clientUrls) ? clientUrls : [clientUrls]).map((url) => new URL(url).origin);
-    return trustedOrigins.includes(origin);
-  } catch {
-    return false;
-  }
+  const trustedOrigins = (Array.isArray(clientUrls) ? clientUrls : [clientUrls]).flatMap((url) => {
+    try {
+      return [new URL(url).origin];
+    } catch {
+      return [];
+    }
+  });
+
+  return trustedOrigins.includes(origin);
 };
 
 const setAccessTokenCookie = (res, accessToken, baseUrl) => {

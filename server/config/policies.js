@@ -30,6 +30,9 @@ module.exports.policies = {
 
   'core/show': true,
   'assetlinks/show': true,
+  'manifest/show': true,
+  'service-worker/show': true,
+  'client/show': true,
   'auth/*': true,
   'register/create': true,
   'notifications/receive-system-notification': true,
