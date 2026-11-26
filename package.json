@@ -78,11 +78,11 @@
     "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
-    "lint-staged": "^17.6.1",
+    "lint-staged": "^17.6.2",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.10.1",
     "start-server-and-test": "^3.0.13",
-    "stylelint": "^18.0.0",
+    "stylelint": "^18.1.0",
     "stylelint-config-recommended-scss": "^18.0.0"
   },
   "devEngines": {
