@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18-alpine
+    image: postgres:19-alpine
     restart: unless-stopped
     volumes:
       - db-data-18:/var/lib/postgresql
