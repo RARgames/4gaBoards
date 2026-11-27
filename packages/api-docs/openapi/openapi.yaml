@@ -4227,7 +4227,7 @@ paths:
             type: string
       responses:
         '200':
-          description: File contents. Videos (`mp4`, `m4v`, `webm`) are served as `video/*`, everything else as `application/octet-stream`.
+          description: File contents. Videos (`mp4`, `m4v`, `webm`, `mkv`, `mov`) are served as `video/*`, everything else as `application/octet-stream`.
           content:
             application/octet-stream:
               schema:

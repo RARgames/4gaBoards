@@ -3,6 +3,7 @@ const path = require('path');
 
 const Errors = {
   ATTACHMENT_NOT_FOUND: { attachmentNotFound: 'Attachment not found' },
+  RANGE_NOT_SATISFIABLE: { rangeNotSatisfiable: 'Range not satisfiable' },
 };
 
 // Video formats browsers can play natively, served with their real type so <video> can stream them
@@ -46,15 +47,24 @@ module.exports = {
 
     const filePath = path.join(sails.config.custom.attachmentsPath, attachment.dirname, attachment.filename);
 
-    if (!fs.existsSync(filePath)) {
-      throw Errors.ATTACHMENT_NOT_FOUND;
+    let size;
+
+    try {
+      ({ size } = await fs.promises.stat(filePath));
+    } catch (error) {
+      if (error.code === 'ENOENT' || error.code === 'ENOTDIR') {
+        throw Errors.ATTACHMENT_NOT_FOUND;
+      }
+
+      throw error;
     }
 
-    const { size } = fs.statSync(filePath);
-    const videoType = VIDEO_TYPES.get(path.extname(attachment.filename).slice(1).toLowerCase());
+    const fileType = path.extname(attachment.filename).slice(1).toLowerCase();
+    const isPdf = fileType === 'pdf';
+    const mimeType = VIDEO_TYPES.get(fileType) || (isPdf ? 'application/pdf' : 'application/octet-stream');
 
-    this.res.type(videoType || 'application/octet-stream');
-    this.res.set('Content-Disposition', 'attachment');
+    this.res.type(mimeType);
+    this.res.set('Content-Disposition', videoType || isPdf ? 'inline' : 'attachment');
     this.res.set('X-Content-Type-Options', 'nosniff');
     this.res.set('Content-Security-Policy', "sandbox; default-src 'none'");
     this.res.set('Cache-Control', `private, max-age=${sails.config.custom.cacheMaxAge}`);
@@ -63,9 +73,9 @@ module.exports = {
     // Single byte range (video seeking, resumed downloads); multiple ranges get the full file
     const ranges = this.req.range(size, { combine: true });
 
-    if (ranges === -1) {
+    if (ranges === -1 || ranges === -2) {
       this.res.set('Content-Range', `bytes */${size}`);
-      throw 'rangeNotSatisfiable';
+      throw Errors.RANGE_NOT_SATISFIABLE;
     }
 
     const range = Array.isArray(ranges) && ranges.type === 'bytes' && ranges.length === 1 ? ranges[0] : undefined;
@@ -73,6 +83,14 @@ module.exports = {
 
     // Release the file when the client aborts, players cancel requests on every seek
     this.res.once('close', () => stream.destroy());
+    stream.once('error', () => {
+      if (this.res.headersSent) {
+        this.res.destroy();
+        return;
+      }
+
+      this.res.sendStatus(500);
+    });
 
     if (range) {
       this.res.set('Content-Range', `bytes ${range.start}-${range.end}/${size}`);
