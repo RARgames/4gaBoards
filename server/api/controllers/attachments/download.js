@@ -10,6 +10,8 @@ const VIDEO_TYPES = new Map([
   ['mp4', 'video/mp4'],
   ['m4v', 'video/mp4'],
   ['webm', 'video/webm'],
+  ['mkv', 'video/webm'], // mkv is not supported, but we can usually serve it as webm
+  ['mov', 'video/mp4'], // mov is not supported, but we can usually serve it as mp4
 ]);
 
 module.exports = {

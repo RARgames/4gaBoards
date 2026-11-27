@@ -7,12 +7,13 @@ import PropTypes from 'prop-types';
 import { useToggle } from '../../../lib/hooks';
 import { Button, ButtonVariant } from '../../Utils';
 import Attachment from './Attachment';
+import VideoItem from './VideoItem';
 
 import * as s from './Attachments.module.scss';
 
 const INITIALLY_VISIBLE = 4;
 // Formats the server streams with a video content type (see attachments/download)
-const VIDEO_EXTENSIONS_REGEX = /\.(mp4|m4v|webm)$/i;
+const VIDEO_EXTENSIONS_REGEX = /\.(mp4|m4v|webm|mkv|mov)$/i;
 
 const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, onDelete, onCoverUpdate, onGalleryOpen, onGalleryClose, onActivitiesFetch }) => {
   const [t] = useTranslation();
@@ -84,8 +85,7 @@ const Attachments = React.memo(({ items, canEdit, boardMemberships, onUpdate, on
       };
     } else if (isVideo) {
       props = {
-        // eslint-disable-next-line jsx-a11y/media-has-caption
-        content: <video src={item.url} controls preload="metadata" className={clsx(s.content, s.contentVideo)} />,
+        content: <VideoItem url={item.url} className={clsx(s.content, s.contentVideo)} errorClassName={clsx(s.content, s.contentError)} />,
       };
     } else {
       props = {
