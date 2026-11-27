@@ -61,10 +61,11 @@ module.exports = {
 
     const fileType = path.extname(attachment.filename).slice(1).toLowerCase();
     const isPdf = fileType === 'pdf';
+    const isVideo = VIDEO_TYPES.has(fileType);
     const mimeType = VIDEO_TYPES.get(fileType) || (isPdf ? 'application/pdf' : 'application/octet-stream');
 
     this.res.type(mimeType);
-    this.res.set('Content-Disposition', videoType || isPdf ? 'inline' : 'attachment');
+    this.res.set('Content-Disposition', isVideo || isPdf ? 'inline' : 'attachment');
     this.res.set('X-Content-Type-Options', 'nosniff');
     this.res.set('Content-Security-Policy', "sandbox; default-src 'none'");
     this.res.set('Cache-Control', `private, max-age=${sails.config.custom.cacheMaxAge}`);
