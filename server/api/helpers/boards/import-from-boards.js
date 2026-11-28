@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const { isValidColor } = require('../../../utils/colorValidator');
+const { isValidColor, toLabelColor } = require('../../../utils/colorValidator');
 
 const parseJSON = (json) => {
   try {
@@ -291,7 +291,7 @@ module.exports = {
           const newLabel = await Label.create({
             boardId: inputs.board.id,
             name: label.name || null,
-            color: isValidColor(label.color) ? label.color : '#e04556',
+            color: toLabelColor(label.color),
             position: label.position,
             createdAt: parseJSON(label.createdAt),
             createdById: allUsers[label.createdById]?.id ?? currentUser.id,

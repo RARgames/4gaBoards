@@ -1,4 +1,4 @@
-const { isValidColor } = require('../../../utils/colorValidator');
+const { toLabelColor } = require('../../../utils/colorValidator');
 
 module.exports = {
   inputs: {
@@ -129,7 +129,7 @@ module.exports = {
           const boardsLabel = await Label.create({
             boardId: inputs.board.id,
             name: trelloLabel.name || null,
-            color: isValidColor(trelloLabel.color) ? trelloLabel.color : '#e04556',
+            color: toLabelColor(trelloLabel.color),
             position: sails.config.custom.positionGap * (index + 1),
             createdById: currentUser.id,
           }).fetch();
