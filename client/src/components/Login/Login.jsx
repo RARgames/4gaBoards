@@ -90,6 +90,7 @@ const Login = React.memo(
     registrationEnabled,
     localRegistrationEnabled,
     ssoRegistrationEnabled,
+    oidcOnlyRegistration,
     onAuthenticate,
     onAuthenticateSso,
     onMessageDismiss,
@@ -113,6 +114,10 @@ const Login = React.memo(
     const passwordField = useRef(null);
 
     const mainTitle = '4ga Boards';
+
+    // With OIDC-only registration every account signs in through OIDC, so the password form is hidden.
+    // /login?local brings it back, so an account with a password can still get in.
+    const showLocalLogin = !oidcOnlyRegistration || !ssoAvailable[SsoTypes.OIDC] || new URLSearchParams(window.location.search).has('local');
 
     useEffect(() => {
       document.title = `${t('common.login')} | ${mainTitle}`;
@@ -197,47 +202,51 @@ const Login = React.memo(
           <h1 className={s.formTitle}>{t('common.logInToBoards')}</h1>
           <div>
             {message && <Message variant={message.type === 'error' ? MessageVariant.Error : MessageVariant.Warning} content={t(message.content)} onDismiss={onMessageDismiss} className={s.message} />}
-            <Form>
-              <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
-              <Input
-                ref={emailOrUsernameField}
-                variant={InputVariant.LoginRegister}
-                name="emailOrUsername"
-                value={data.emailOrUsername}
-                readOnly={isSubmitting}
-                onKeyDown={handleUsernameKeyDown}
-                onChange={handleFieldChange}
-                isError={isUsernameError}
-              />
-              <div className={s.inputLabel}>{t('common.password')}</div>
-              <Input.Password
-                ref={passwordField}
-                variant={InputVariant.LoginRegister}
-                name="password"
-                value={data.password}
-                readOnly={isSubmitting}
-                onKeyDown={handlePasswordKeyDown}
-                onChange={handleFieldChange}
-                isError={isPasswordError}
-              />
-              <Button variant={ButtonVariant.Login} type="submit" title={t('common.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
-                {loadingProvider === 'local' ? (
-                  <Loader size={LoaderSize.Small} />
-                ) : (
-                  <>
-                    {t('common.logIn')}
-                    <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
-                  </>
-                )}
-              </Button>
-            </Form>
+            {showLocalLogin && (
+              <Form>
+                <div className={s.inputLabel}>{t('common.emailOrUsername')}</div>
+                <Input
+                  ref={emailOrUsernameField}
+                  variant={InputVariant.LoginRegister}
+                  name="emailOrUsername"
+                  value={data.emailOrUsername}
+                  readOnly={isSubmitting}
+                  onKeyDown={handleUsernameKeyDown}
+                  onChange={handleFieldChange}
+                  isError={isUsernameError}
+                />
+                <div className={s.inputLabel}>{t('common.password')}</div>
+                <Input.Password
+                  ref={passwordField}
+                  variant={InputVariant.LoginRegister}
+                  name="password"
+                  value={data.password}
+                  readOnly={isSubmitting}
+                  onKeyDown={handlePasswordKeyDown}
+                  onChange={handleFieldChange}
+                  isError={isPasswordError}
+                />
+                <Button variant={ButtonVariant.Login} type="submit" title={t('common.logIn')} disabled={isSubmitting} className={clsx(s.submitButton, s.button)} onClick={handleSubmit}>
+                  {loadingProvider === 'local' ? (
+                    <Loader size={LoaderSize.Small} />
+                  ) : (
+                    <>
+                      {t('common.logIn')}
+                      <Icon type={IconType.ArrowDown} size={IconSize.Size20} className={s.submitButtonIcon} />
+                    </>
+                  )}
+                </Button>
+              </Form>
+            )}
             {Object.values(ssoAvailable).some(Boolean) && (
               <>
-                <div className={s.otherOptionsTextWrapper}>
-                  <div className={s.otherOptionsLine} />
-                  <div className={s.otherOptionsText}>{t('common.or')}</div>
-                  <div className={s.otherOptionsLine} />
-                </div>
+                {showLocalLogin && (
+                  <div className={s.otherOptionsTextWrapper}>
+                    <div className={s.otherOptionsLine} />
+                    <div className={s.otherOptionsText}>{t('common.or')}</div>
+                    <div className={s.otherOptionsLine} />
+                  </div>
+                )}
                 <div className={s.otherOptions}>
                   {SSO_PROVIDERS.filter((p) => ssoAvailable[p.type] && (p.type !== SsoTypes.OIDC || oidcEnabledMethods.length === 0)).map((p) => (
                     <Button key={p.type} variant={ButtonVariant.Login} title={t('common.continueWith', { provider: p.label })} onClick={() => handleSsoClick(p.type)} className={s.button}>
@@ -271,7 +280,7 @@ const Login = React.memo(
                 </div>
               </>
             )}
-            {registrationEnabled && (localRegistrationEnabled || ssoRegistrationEnabled) && (
+            {registrationEnabled && (oidcOnlyRegistration ? !!ssoAvailable[SsoTypes.OIDC] : localRegistrationEnabled || ssoRegistrationEnabled) && (
               <>
                 <div className={s.alternateActionText}>{t('common.newToBoards')}</div>
                 <div className={s.alternateActionButtonContainer}>
@@ -295,6 +304,7 @@ Login.propTypes = {
   registrationEnabled: PropTypes.bool.isRequired,
   localRegistrationEnabled: PropTypes.bool.isRequired,
   ssoRegistrationEnabled: PropTypes.bool.isRequired,
+  oidcOnlyRegistration: PropTypes.bool.isRequired,
   onAuthenticate: PropTypes.func.isRequired,
   onAuthenticateSso: PropTypes.func.isRequired,
   onMessageDismiss: PropTypes.func.isRequired,

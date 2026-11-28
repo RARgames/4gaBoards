@@ -30,6 +30,8 @@ module.exports = {
         ssoRegistrationEnabled: core.ssoRegistrationEnabled,
         localRegistrationEnabled: core.localRegistrationEnabled,
         registrationEnabled: core.registrationEnabled,
+        oidcOnlyRegistration: sails.helpers.core.isOidcOnlyRegistration(core),
+        oidcOnlyRegistrationEnforced: sails.config.custom.oidcOnlyRegistrationEnforced,
         projectCreationAllEnabled: core.projectCreationAllEnabled,
         syncSsoDataOnAuth: core.syncSsoDataOnAuth,
         syncSsoAdminOnAuth: core.syncSsoAdminOnAuth,

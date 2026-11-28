@@ -76,7 +76,7 @@ module.exports = {
     if (!core.registrationEnabled) {
       throw 'registrationDisabled';
     }
-    if (!core.ssoRegistrationEnabled) {
+    if (!core.ssoRegistrationEnabled || sails.helpers.core.isOidcOnlyRegistration(core)) {
       throw 'ssoRegistrationDisabled';
     }
     if (core.allowedRegisterDomains.length > 0 && !core.allowedRegisterDomains.includes(email.split('@')[1])) {
