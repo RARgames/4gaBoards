@@ -603,7 +603,7 @@ importers:
         version: 0.35.5(@types/node@26.6.10)
       tar:
         specifier: ^7.5.23
-        version: 7.5.23
+        version: 7.5.24
       uuid:
         specifier: ^14.0.3
         version: 14.0.3
@@ -9230,8 +9230,8 @@ packages:
     resolution: {integrity: sha512-NHFiWnAbMJxNNpBwiO7jJVGDuqMxT9/oV8v57RR+fgBQShkJil5inGD8/xWy0hjLyHQyX1tu27QANhlz3KBqCg==}
     engines: {node: '>=6'}
 
-  tar@7.5.23:
-    resolution: {integrity: sha512-lkukzdoGngZHJZXxW4S/E4Fp9ghTDlyZXrQGRNoJ/LXvDKcXUTq2sg5yQe74po7Voea6n/IN09+wE/QvJMiifA==}
+  tar@7.5.24:
+    resolution: {integrity: sha512-to/OxuCk5DeVONcjjODT7aeoRq5NIPPlfPc0tNML+wLlnf6u5BcJz97Uukv3pT3jzorkFhUevylkAiBr+ZmV2w==}
     engines: {node: '>=18'}
 
   tarn@3.1.2:
@@ -20258,7 +20258,7 @@ snapshots:
 
   tapable@2.3.4: {}
 
-  tar@7.5.23:
+  tar@7.5.24:
     dependencies:
       '@isaacs/fs-minipass': 4.0.1
       chownr: 3.0.0
